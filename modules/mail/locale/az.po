@@ -11,20 +11,20 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Azerbaijani\n"
 "Language: az_AZ\n"
-"PO-Revision-Date: 2026-03-24 11:09\n"
+"PO-Revision-Date: 2026-03-24 21:41\n"
 
 #: modules/mail/includes/delete.php:15
 msgid "Deleting messages"
-msgstr ""
+msgstr "Məlumatların silinməsi"
 
 #: modules/mail/includes/delete.php:28
 msgid "Message does not exist"
-msgstr ""
+msgstr "Məlumatların silinməsi"
 
 #: modules/mail/includes/delete.php:45
 #: modules/mail/includes/delete.php:74
 msgid "Message deleted"
-msgstr ""
+msgstr "Silindi mesaj"
 
 #: modules/mail/includes/delete.php:47
 #: modules/mail/includes/delete.php:76
@@ -35,11 +35,11 @@ msgstr ""
 #: modules/mail/templates/files.phtml:76
 #: modules/mail/templates/messages.phtml:199
 msgid "Back"
-msgstr ""
+msgstr "Geri"
 
 #: modules/mail/includes/delete.php:83
 msgid "You really want to remove the message?"
-msgstr ""
+msgstr "Siz, həqiqətən, istədiyiniz mesajı silmək?"
 
 #: modules/mail/includes/delete.php:85
 #: modules/mail/includes/deluser.php:15
@@ -51,31 +51,31 @@ msgstr ""
 #: modules/mail/includes/write.php:91
 #: modules/mail/templates/messages.phtml:176
 msgid "Delete"
-msgstr ""
+msgstr "Sil"
 
 #: modules/mail/includes/delete.php:102
 msgid "The message for removal isn't chosen"
-msgstr ""
+msgstr "Mesajı silmək üçün deyil seçilib"
 
 #: modules/mail/includes/deluser.php:43
 msgid "Contact deleted"
-msgstr ""
+msgstr "Əlaqə silindi"
 
 #: modules/mail/includes/deluser.php:51
 msgid "When you delete a contact is deleted and all correspondence with him.<br>Are you sure you want to delete?"
-msgstr ""
+msgstr "Zaman silmək kontaktı çıxarılır və bütün yazışmalar ona.<br>siz əmin silmək istəyirsiniz?"
 
 #: modules/mail/includes/deluser.php:70
 msgid "Contact for removal isn't chosen"
-msgstr ""
+msgstr "Mesajı silmək üçün deyil seçilib"
 
 #: modules/mail/includes/files.php:15
 msgid "Files"
-msgstr ""
+msgstr "Faylları"
 
 #: modules/mail/includes/ignor.php:15
 msgid "Blacklist"
-msgstr ""
+msgstr "Qara siyahı"
 
 #: modules/mail/includes/ignor.php:29
 #: modules/mail/includes/ignor.php:91
@@ -83,15 +83,15 @@ msgstr ""
 #: modules/mail/includes/write.php:33
 #: modules/mail/includes/write.php:148
 msgid "User does not exists"
-msgstr ""
+msgstr "İstifadəçi mövcud deyil"
 
 #: modules/mail/includes/ignor.php:40
 msgid "User not blocked"
-msgstr ""
+msgstr "İstifadəçi bağlanacaq"
 
 #: modules/mail/includes/ignor.php:43
 msgid "User is unblocked"
-msgstr ""
+msgstr "İstifadəçi oxunuş üçün"
 
 #: modules/mail/includes/ignor.php:52
 #: modules/mail/includes/ignor.php:109
@@ -101,33 +101,33 @@ msgstr ""
 #: modules/mail/includes/input.php:82
 #: modules/mail/includes/output.php:74
 msgid "Continue"
-msgstr ""
+msgstr "Davam"
 
 #: modules/mail/includes/ignor.php:58
 msgid "You really want to unblock contact?"
-msgstr ""
+msgstr "Siz, həqiqətən, istədiyiniz kilidini açmaq əlaqə?"
 
 #: modules/mail/includes/ignor.php:60
 #: modules/mail/includes/ignor.php:224
 msgid "Unblock"
-msgstr ""
+msgstr "Blockdan çıxar"
 
 #: modules/mail/includes/ignor.php:77
 #: modules/mail/includes/ignor.php:164
 msgid "Contact isn't chosen"
-msgstr ""
+msgstr "Əlaqə deyil seçilib"
 
 #: modules/mail/includes/ignor.php:107
 msgid "This user can not be blocked"
-msgstr ""
+msgstr "Bu istifadəçi heç bağlana bilər"
 
 #: modules/mail/includes/ignor.php:136
 msgid "User is blocked"
-msgstr ""
+msgstr "İstifadəçi oxunuş üçün"
 
 #: modules/mail/includes/ignor.php:145
 msgid "You really want to block contact?"
-msgstr ""
+msgstr "Siz, həqiqətən, istədiyiniz kilidini açmaq əlaqə?"
 
 #: modules/mail/includes/ignor.php:147
 msgid "Block"
@@ -136,106 +136,106 @@ msgstr ""
 #: modules/mail/includes/ignor.php:174
 #: modules/mail/includes/index.php:89
 msgid "My Contacts"
-msgstr ""
+msgstr "Şəxslərim"
 
 #: modules/mail/includes/ignor.php:179
 #: modules/mail/includes/index.php:94
 msgid "Blocklist"
-msgstr ""
+msgstr "Əngəlli siyahısı"
 
 #: modules/mail/includes/ignor.php:216
 #: modules/mail/includes/index.php:130
 #: modules/mail/includes/input.php:103
 #: modules/mail/includes/output.php:95
 msgid "Correspondence"
-msgstr ""
+msgstr "Qiyabi oyun"
 
 #: modules/mail/includes/index.php:15
 msgid "Contacts"
-msgstr ""
+msgstr "Əlaqə"
 
 #: modules/mail/includes/index.php:42
 msgid "You cannot add yourself as a contact"
-msgstr ""
+msgstr "Özünüzü dost kimi əlavə edə bilməzsiz."
 
 #: modules/mail/includes/index.php:64
 msgid "User has been added to your contact list"
-msgstr ""
+msgstr "İstifadəçi əlavə sizin əlaqə siyahısı"
 
 #: modules/mail/includes/index.php:72
 msgid "You really want to add contact?"
-msgstr ""
+msgstr "Siz, həqiqətən, istədiyiniz kilidini açmaq əlaqə?"
 
 #: modules/mail/includes/index.php:74
 msgid "Add"
-msgstr ""
+msgstr "Əlavə et"
 
 #: modules/mail/includes/index.php:138
 #: modules/mail/includes/input.php:111
 #: modules/mail/includes/output.php:103
 msgid "Block User"
-msgstr ""
+msgstr "İstifadəçiyi əngəlləyin"
 
 #: modules/mail/includes/input.php:17
 msgid "Incoming messages"
-msgstr ""
+msgstr "Gələn mesajlar"
 
 #: modules/mail/includes/load.php:15
 #: modules/mail/includes/write.php:21
 #: modules/mail/index.php:77
 msgid "Mail"
-msgstr ""
+msgstr "Mesaj"
 
 #: modules/mail/includes/load.php:24
 #: modules/mail/includes/load.php:36
 msgid "Such file does not exist"
-msgstr ""
+msgstr "Fayl mövcud deyil"
 
 #: modules/mail/includes/load.php:38
 msgid "No file selected"
-msgstr ""
+msgstr "Fayl seçilmədi"
 
 #: modules/mail/includes/output.php:17
 msgid "Sent messages"
-msgstr ""
+msgstr "Göndərilən mesajları"
 
 #: modules/mail/includes/write.php:42
 #: modules/mail/templates/messages.phtml:184
 msgid "Clear messages"
-msgstr ""
+msgstr "mesaj ici"
 
 #: modules/mail/includes/write.php:81
 msgid "Messages are deleted"
-msgstr ""
+msgstr "mesaj silindi"
 
 #: modules/mail/includes/write.php:89
 msgid "Confirm the deletion of messages"
-msgstr ""
+msgstr "Təsdiq aradan qaldırılması mesajlar"
 
 #: modules/mail/includes/write.php:126
 msgid "Specify the recipient's login"
-msgstr ""
+msgstr "Qeyd giriş alıcı"
 
 #: modules/mail/includes/write.php:130
 msgid "Message cannot be empty"
-msgstr ""
+msgstr "İstifadəçi adı boş olmamalıdır"
 
 #: modules/mail/includes/write.php:134
 msgid "You cannot send messages to yourself"
-msgstr ""
+msgstr "Özünüzə mesaj göndərə bilməzsiniz."
 
 #: modules/mail/includes/write.php:140
 #, php-format
 msgid "You cannot add the message so often. Please, wait %d sec."
-msgstr ""
+msgstr "Yeni mesaj yazmaq üçün %d dəq gözləyin"
 
 #: modules/mail/includes/write.php:163
 msgid "To this user can write only contacts"
-msgstr ""
+msgstr "Bu istifadəçiyə yaza bilərlər, yalnız əlaqə"
 
 #: modules/mail/includes/write.php:169
 msgid "To this user can write only friends"
-msgstr ""
+msgstr "Bu istifadəçiyə yaza bilərlər, yalnız əlaqə"
 
 #: modules/mail/includes/write.php:197
 #: modules/mail/includes/write.php:207
@@ -243,97 +243,97 @@ msgstr ""
 #: modules/mail/includes/write.php:394
 #: modules/mail/includes/write.php:397
 msgid "Error uploading file"
-msgstr ""
+msgstr "Yükləmə səhv"
 
 #: modules/mail/includes/write.php:282
 msgid "It is forbidden to upload files without a name"
-msgstr ""
+msgstr "Qadağandır faylları olmadan adına"
 
 #: modules/mail/includes/write.php:286
 msgid "It is forbidden to upload files without extension"
-msgstr ""
+msgstr "Qadağandır faylları olmadan genişləndirilməsi"
 
 #: modules/mail/includes/write.php:290
 msgid "The size of the file exceeds the maximum allowable upload"
-msgstr ""
+msgstr "Fayl ölçüsü son dərəcə çoxdur icazə verilən downloads"
 
 #: modules/mail/includes/write.php:294
 msgid "File name contains invalid characters"
-msgstr ""
+msgstr "Faylın adında etibarsız simvollar var"
 
 #: modules/mail/includes/write.php:298
 msgid "Forbidden file type! By uploading permitted only files with the following extension"
-msgstr ""
+msgstr "Məhdud fayl növü! Yükləmə icazə yalnız faylları ilə aşağıdakı genişləndirilməsi"
 
 #: modules/mail/includes/write.php:314
 msgid "The user at your ignore list. Sending the message is impossible."
-msgstr ""
+msgstr "İstifadəçi öz игнор-yarpaq. Mesaj göndərmək mümkün deyil."
 
 #: modules/mail/includes/write.php:326
 msgid "The user added you in the ignore list. Sending the message isn't possible."
-msgstr ""
+msgstr "İstifadəçi əlavə edib sizi игнор-yarpaq. Mesaj göndərmək mümkün deyil."
 
 #: modules/mail/includes/write.php:413
 msgid "Message already exists"
-msgstr ""
+msgstr "Email artıq mövcuddur"
 
 #: modules/mail/index.php:80
 msgid "My Account"
-msgstr ""
+msgstr "Hesabım"
 
 #: modules/mail/templates/confirm.phtml:40
 msgid "Cancel"
-msgstr ""
+msgstr "Ləğv Et"
 
 #: modules/mail/templates/contact_list.phtml:38
 #: modules/mail/templates/conversations.phtml:31
 #: modules/mail/templates/files.phtml:31
 #: modules/mail/templates/messages.phtml:73
 msgid "The list is empty"
-msgstr ""
+msgstr "Siyahı boşdur"
 
 #: modules/mail/templates/contact_list.phtml:62
 #: modules/mail/templates/conversations.phtml:62
 msgid "message"
 msgid_plural "messages"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Mesaj"
+msgstr[1] "Mesajlar"
 
 #: modules/mail/templates/contact_list.phtml:64
 msgid "unread message"
 msgid_plural "unread messages"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "1 oxunmamış mesaj"
+msgstr[1] "Oxunmamış mesaj"
 
 #: modules/mail/templates/contact_list.phtml:89
 #: modules/mail/templates/conversations.phtml:102
 #: modules/mail/templates/files.phtml:72
 #: modules/mail/templates/messages.phtml:195
 msgid "Total:"
-msgstr ""
+msgstr "Ümumi"
 
 #: modules/mail/templates/conversations.phtml:65
 msgid "Last:"
-msgstr ""
+msgstr "Son"
 
 #: modules/mail/templates/messages.phtml:40
 #: modules/mail/templates/messages.phtml:48
 msgid "To Whom"
-msgstr ""
+msgstr "Kimə"
 
 #: modules/mail/templates/messages.phtml:53
 msgid "Message"
-msgstr ""
+msgstr "Mesaj"
 
 #: modules/mail/templates/messages.phtml:60
 msgid "Choose file"
-msgstr ""
+msgstr "Faylı seçin"
 
 #: modules/mail/templates/messages.phtml:63
 msgid "Send"
-msgstr ""
+msgstr "Göndər"
 
 #: modules/mail/templates/messages.phtml:128
 msgid "Attached files"
-msgstr ""
+msgstr "Əlavə files"
 

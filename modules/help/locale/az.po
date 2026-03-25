@@ -11,40 +11,40 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Azerbaijani\n"
 "Language: az_AZ\n"
-"PO-Revision-Date: 2026-03-24 11:08\n"
+"PO-Revision-Date: 2026-03-24 21:41\n"
 
 #: modules/help/includes/admsmilies.php:20
 #: modules/help/includes/smilies.php:35
 msgid "For administration"
-msgstr ""
+msgstr "Adminstrasiya üçün"
 
 #: modules/help/includes/admsmilies.php:21
 #: modules/help/includes/my_smilies.php:22
 #: modules/help/includes/usersmilies.php:39
 #: modules/help/templates/index.phtml:31
 msgid "Smilies"
-msgstr ""
+msgstr "Smayllar"
 
 #: modules/help/includes/admsmilies.php:32
 msgid "Access forbidden"
-msgstr ""
+msgstr "Giriş qadağandır"
 
 #: modules/help/includes/avatars.php:20
 #: modules/help/templates/index.phtml:30
 msgid "Avatars"
-msgstr ""
+msgstr "Avatar"
 
 #: modules/help/includes/avatars.php:37
 msgid "Avatar has been successfully applied"
-msgstr ""
+msgstr "Avatar uğurla tətbiq olundu"
 
 #: modules/help/includes/avatars.php:39
 msgid "Continue"
-msgstr ""
+msgstr "Davam"
 
 #: modules/help/includes/avatars.php:48
 msgid "An error occurred"
-msgstr ""
+msgstr "Xəta baş verdi"
 
 #: modules/help/includes/avatars.php:50
 #: modules/help/templates/avatar_list.phtml:65
@@ -56,91 +56,91 @@ msgstr ""
 #: modules/help/templates/smiles.phtml:48
 #: modules/help/templates/smiles_list.phtml:88
 msgid "Back"
-msgstr ""
+msgstr "Geri"
 
 #: modules/help/includes/avatars.php:55
 msgid "Set to Profile"
-msgstr ""
+msgstr "Profilə tətbiq et"
 
 #: modules/help/includes/avatars.php:58
 msgid "Are you sure you want to set yourself this avatar?"
-msgstr ""
+msgstr "Bu avatarı profilə yükləmək istəyirsiz?"
 
 #: modules/help/includes/avatars.php:61
 msgid "Save"
-msgstr ""
+msgstr "Saxla"
 
 #: modules/help/includes/forum.php:15
 #: modules/help/templates/index.phtml:28
 msgid "Forum rules"
-msgstr ""
+msgstr "Forumun qaydaları"
 
 #: modules/help/includes/my_smilies.php:21
 #: modules/help/includes/smilies.php:27
 #: modules/help/templates/smiles_list.phtml:45
 msgid "My smilies"
-msgstr ""
+msgstr "Smayllarım"
 
 #: modules/help/includes/smilies.php:19
 msgid "Smiles"
-msgstr ""
+msgstr "Smayllar"
 
 #: modules/help/includes/tags.php:15
 #: modules/help/templates/index.phtml:29
 msgid "bbCode Tags"
-msgstr ""
+msgstr "BBkodlar"
 
 #: modules/help/index.php:54
 msgid "Information, FAQ"
-msgstr ""
+msgstr "Məlumat, suallar və cavablar"
 
 #: modules/help/index.php:64
 msgid "Animals"
-msgstr ""
+msgstr "Heyvanlar"
 
 #: modules/help/index.php:65
 msgid "Brawl, Weapons"
-msgstr ""
+msgstr "Döyüş, Silah,"
 
 #: modules/help/index.php:66
 msgid "Emotions"
-msgstr ""
+msgstr "Emosiyalar"
 
 #: modules/help/index.php:67
 msgid "Flowers"
-msgstr ""
+msgstr "Güllər"
 
 #: modules/help/index.php:68
 msgid "Food, Alcohol"
-msgstr ""
+msgstr "Qida, Alkoqol"
 
 #: modules/help/index.php:69
 msgid "Gestures"
-msgstr ""
+msgstr "Hərəkətlər"
 
 #: modules/help/index.php:70
 msgid "Holidays"
-msgstr ""
+msgstr "Bayramlar"
 
 #: modules/help/index.php:71
 msgid "Love"
-msgstr ""
+msgstr "Sevgi"
 
 #: modules/help/index.php:72
 msgid "Miscellaneous"
-msgstr ""
+msgstr "Müxtəlif"
 
 #: modules/help/index.php:73
 msgid "Music, Dancing"
-msgstr ""
+msgstr "Musiqi, Rəqslər"
 
 #: modules/help/index.php:74
 msgid "Sports"
-msgstr ""
+msgstr "İdman"
 
 #: modules/help/index.php:75
 msgid "Technology"
-msgstr ""
+msgstr "\"Texnologiya\""
 
 #: modules/help/templates/avatar_list.phtml:33
 #: modules/help/templates/avatars.phtml:34
@@ -148,176 +148,176 @@ msgstr ""
 #: modules/help/templates/smiles.phtml:34
 #: modules/help/templates/smiles_list.phtml:33
 msgid "The list is empty"
-msgstr ""
+msgstr "Siyahı boşdur"
 
 #: modules/help/templates/avatar_list.phtml:61
 #: modules/help/templates/my_smiles_list.phtml:77
 #: modules/help/templates/smiles_list.phtml:84
 msgid "Total:"
-msgstr ""
+msgstr "Ümumi"
 
 #: modules/help/templates/bbcode.phtml:30
 msgid "PHP code"
-msgstr ""
+msgstr "PHP kodu"
 
 #: modules/help/templates/bbcode.phtml:33
 msgid "Link name"
-msgstr ""
+msgstr "Link adı"
 
 #: modules/help/templates/bbcode.phtml:34
 msgid "URL Link"
-msgstr ""
+msgstr "Linki"
 
 #: modules/help/templates/bbcode.phtml:38
 msgid "Bold"
-msgstr ""
+msgstr "Qalın"
 
 #: modules/help/templates/bbcode.phtml:42
 msgid "Italic"
-msgstr ""
+msgstr "Əyri"
 
 #: modules/help/templates/bbcode.phtml:46
 msgid "Underline"
-msgstr ""
+msgstr "Altı xəttli"
 
 #: modules/help/templates/bbcode.phtml:50
 msgid "Strike"
-msgstr ""
+msgstr "Zərbə"
 
 #: modules/help/templates/bbcode.phtml:54
 msgid "Red"
-msgstr ""
+msgstr "Qırmızı"
 
 #: modules/help/templates/bbcode.phtml:58
 msgid "Green"
-msgstr ""
+msgstr "Yaşıl"
 
 #: modules/help/templates/bbcode.phtml:62
 msgid "Blue"
-msgstr ""
+msgstr "Mavi"
 
 #: modules/help/templates/bbcode.phtml:66
 msgid "Text Color"
-msgstr ""
+msgstr "Mətnin rəngi"
 
 #: modules/help/templates/bbcode.phtml:70
 msgid "Background Color"
-msgstr ""
+msgstr "Arxa plan rəngi"
 
 #: modules/help/templates/bbcode.phtml:74
 msgid "Quote"
-msgstr ""
+msgstr "Sitat gətirmək"
 
 #: modules/help/templates/bbcode.phtml:78
 msgid "Bulleted list"
-msgstr ""
+msgstr "Bullet siyahısı"
 
 #: modules/help/templates/bbcode.phtml:81
 msgid "Title"
-msgstr ""
+msgstr "Başlıq"
 
 #: modules/help/templates/bbcode.phtml:81
 msgid "Text"
-msgstr ""
+msgstr "Mətn"
 
 #: modules/help/templates/bbcode.phtml:82
 msgid "Spoiler"
-msgstr ""
+msgstr "Spoyler"
 
 #: modules/help/templates/confirm.phtml:40
 msgid "Cancel"
-msgstr ""
+msgstr "Ləğv et"
 
 #: modules/help/templates/forum_rules.phtml:26
 msgid "FORBIDDEN"
-msgstr ""
+msgstr "Qadağandır"
 
 #: modules/help/templates/forum_rules.phtml:28
 msgid "Advertising messages"
-msgstr ""
+msgstr "Reklam mesajları"
 
 #: modules/help/templates/forum_rules.phtml:29
 msgid "The messages containing direct propagation of racial, national and religious animosity"
-msgstr ""
+msgstr "Şəkilli mesajlar birbaşa təbliğat irqi, milli və dini düşmənçiliyə"
 
 #: modules/help/templates/forum_rules.phtml:30
 msgid "Any abusive, obscene, vulgar, slanderous, hateful, threatening and sexually-oriented messages or any other material that may violate any applicable laws"
-msgstr ""
+msgstr "Təhqiramiz, ki ədəbsiz, вульгарный, böhtan, nifrət, təhlükəli və cinsi yönümlü bir mesaj və ya hər hansı digər material poza bilər, hər hansı qanun"
 
 #: modules/help/templates/forum_rules.phtml:31
 msgid "The messages obviously offending someone, espcially forum users"
-msgstr ""
+msgstr "Mesaj aydın оскорбляющие kimsə, xüsusilə форумчанам"
 
 #: modules/help/templates/forum_rules.phtml:32
 msgid "Purposely to deform a writing of nicknames of other users for the purpose of giving to the message an offensive shade"
-msgstr ""
+msgstr "Qəsdən təhrif yazı iştirakçılarının digər istifadəçilər vermək məqsədilə post təhqiramiz toxumalıdır"
 
 #: modules/help/templates/forum_rules.phtml:33
 msgid "Publishing deleted by moderator messages repeatedly"
-msgstr ""
+msgstr "Nəşr uzaq mesajları dəfələrlə moderator"
 
 #: modules/help/templates/forum_rules.phtml:34
 msgid "Post messages not related to the topic"
-msgstr ""
+msgstr "Heç постить mesajlar aid olmayan mövzu"
 
 #: modules/help/templates/forum_rules.phtml:35
 msgid "Continuing topics that have been closed by moderator"
-msgstr ""
+msgstr "Davam edən mövzular bağlanıb moderator"
 
 #: modules/help/templates/forum_rules.phtml:38
 msgid "ABSOLUTELY FORBIDDEN"
-msgstr ""
+msgstr "QƏTİ ŞƏKİLDƏ QADAĞAN"
 
 #: modules/help/templates/forum_rules.phtml:40
 msgid "Writing in the public topics a discontent with inappropriate actions of other users and discussing about moderators working. Use private messages for this purpose"
-msgstr ""
+msgstr "Yazmaq ictimai bölmələrdə narazılıq неадекватными hərəkətləri ilə digər istifadəçilərin müzakirə moderatörleriyle işləyir. İstifadə şəxsi mesaj bunun üçün"
 
 #: modules/help/templates/forum_rules.phtml:41
 msgid "Register the nicknames having offensive tone for other users"
-msgstr ""
+msgstr "Qeydiyyat iştirakçılarının olan təhqiramiz tonu üçün digər istifadəçilər"
 
 #: modules/help/templates/forum_rules.phtml:44
 msgid "UNACCEPTABLE"
-msgstr ""
+msgstr "Yolverilməzdir"
 
 #: modules/help/templates/forum_rules.phtml:46
 msgid "Quote full messages of the previous user and quote the messages already containing other quotes"
-msgstr ""
+msgstr "Sitat mesajlar əvvəlki istifadəçi sitat gətirmək mesajları, artıq olan digər quote"
 
 #: modules/help/templates/forum_rules.phtml:47
 msgid "Post messages only contains external link"
-msgstr ""
+msgstr "Yerləşdirmək mesajlar ehtiva yalnız link xarici resurs"
 
 #: modules/help/templates/forum_rules.phtml:48
 msgid "Post messages written in translite"
-msgstr ""
+msgstr "Göndərmək üçün mesaj yazdığı транслите"
 
 #: modules/help/templates/forum_rules.phtml:49
 msgid "Posting of purposeless messages: consisting of smileys only or posts like \"Ok\", \"What?\", \"Who is there?\", etc."
-msgstr ""
+msgstr "Yerləşdirilməsi axmaq mesaj ibarət yalnız mimikalar daxil olmaqla və ya mesaj növü \"Ok\", \"nə?\" \"Kim var?\", və s."
 
 #: modules/help/templates/forum_rules.phtml:54
 msgid "Message posted despite the above warnings will be changed or deleted."
-msgstr ""
+msgstr "Mesaj baxmayaraq, yuxarıda xəbərdarlıq dəyişdirilir və ya silinir."
 
 #: modules/help/templates/forum_rules.phtml:55
 msgid "This rule applies to all members and moderators, repeated actions will make you get ban or even lose your account."
-msgstr ""
+msgstr "Bu qayda isə, bütün iştirakçıların və moderatörleriyle, təkrar fəaliyyət imkan verir almaq qadağan və ya hətta itirmək hesabı."
 
 #: modules/help/templates/my_smiles_list.phtml:36
 msgid "Add Smilies"
-msgstr ""
+msgstr "Əlavə Смайлы"
 
 #: modules/help/templates/my_smiles_list.phtml:55
 #: modules/help/templates/smiles_list.phtml:62
 msgid "or"
-msgstr ""
+msgstr "və ya"
 
 #: modules/help/templates/my_smiles_list.phtml:64
 msgid "Delete"
-msgstr ""
+msgstr "Sil"
 
 #: modules/help/templates/smiles_list.phtml:71
 msgid "Add"
-msgstr ""
+msgstr "Əlavə et"
 

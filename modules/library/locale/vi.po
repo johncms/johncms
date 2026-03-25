@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
-"PO-Revision-Date: 2026-03-24 11:09\n"
+"PO-Revision-Date: 2026-03-24 21:40\n"
 
 #: modules/library/classes/Hashtags.php:258
 #: modules/library/includes/tags.php:70
@@ -23,57 +23,57 @@ msgstr ""
 #: modules/library/templates/tags.phtml:58
 #: modules/library/templates/top.phtml:60
 msgid "The list is empty"
-msgstr ""
+msgstr "Danh sách này trống"
 
 #: modules/library/includes/addnew.php:28
 #: modules/library/templates/booklist.phtml:52
 msgid "Write Article"
-msgstr ""
+msgstr "Viết bài"
 
 #: modules/library/includes/addnew.php:43
 #, php-format
 msgid "You cannot add the Article so often<br>Please, wait %d sec."
-msgstr ""
+msgstr "Bạn không thể thêm các bài viết như vậy thường xuyên <br>xin vui lòng, chờ %d sec."
 
 #: modules/library/includes/addnew.php:46
 #: modules/library/includes/mkdir.php:30
 msgid "You have not entered the name"
-msgstr ""
+msgstr "Bạn chưa nhập tên"
 
 #: modules/library/includes/addnew.php:59
 msgid "The file is invalid encoding, preferably UTF-8"
-msgstr ""
+msgstr "Tập tin là không hợp lệ mã hóa, tốt nhất là UTF-8"
 
 #: modules/library/includes/addnew.php:64
 msgid "Error uploading"
-msgstr ""
+msgstr "Lỗi tải lên"
 
 #: modules/library/includes/addnew.php:67
 msgid "Invalid file format allowed * .txt"
-msgstr ""
+msgstr "Định dạng tệp không hợp lệ được phép * .txt"
 
 #: modules/library/includes/addnew.php:70
 msgid "You have not entered text"
-msgstr ""
+msgstr "Bạn chưa nhập văn bản"
 
 #: modules/library/includes/addnew.php:112
 #: modules/library/includes/moder.php:79
 msgid "Photo uploading error"
-msgstr ""
+msgstr "Ảnh tải lên lỗi"
 
 #: modules/library/includes/comments.php:24
 #: modules/library/includes/comments.php:43
 #: modules/library/index.php:70
 msgid "Access forbidden"
-msgstr ""
+msgstr "Truy cập bị từ chối"
 
 #: modules/library/includes/comments.php:73
 msgid "Comments"
-msgstr ""
+msgstr "Bình luận"
 
 #: modules/library/includes/comments.php:81
 msgid "Wrong data"
-msgstr ""
+msgstr "Lỗi dữ liệu"
 
 #: modules/library/includes/del.php:39
 #: modules/library/templates/book.phtml:83
@@ -86,132 +86,132 @@ msgstr ""
 #: modules/library/templates/premod.phtml:45
 #: modules/library/templates/sectionslist.phtml:65
 msgid "Delete"
-msgstr ""
+msgstr "Xóa"
 
 #: modules/library/includes/del.php:52
 msgid "Section does not exist"
-msgstr ""
+msgstr "Phần không tồn tại"
 
 #: modules/library/includes/del.php:88
 #, php-format
 msgid "Successfully deleted:<br>Directories: (%d)<br>Articles: (%d)<br>Tags: (%d)<br>Comments: (%d)<br>Images: (%d)"
-msgstr ""
+msgstr "Xóa bỏ thành công: <br>thư mục: bài viết (%d) <br>: (%d) <br>Tags: (%d) <br>bình luận: hình ảnh (%d) <br>: (%d)"
 
 #: modules/library/includes/del.php:106
 msgid "Articles do not exist"
-msgstr ""
+msgstr "Bài viết không tồn tại"
 
 #: modules/library/includes/download.php:51
 msgid "Author name"
-msgstr ""
+msgstr "Tên tác giả"
 
 #: modules/library/includes/download.php:52
 msgid "Author last name"
-msgstr ""
+msgstr "Tác giả tên cuối cùng"
 
 #: modules/library/includes/download.php:54
 msgid "Name of the book"
-msgstr ""
+msgstr "Tên của cuốn sách"
 
 #: modules/library/includes/download.php:56
 msgid "Date"
-msgstr ""
+msgstr "Ngày"
 
 #: modules/library/includes/lastcom.php:15
 #: modules/library/templates/main.phtml:40
 msgid "Latest comments"
-msgstr ""
+msgstr "Bình luận mới nhất"
 
 #: modules/library/includes/mkdir.php:19
 #: modules/library/templates/main.phtml:71
 msgid "Create Section"
-msgstr ""
+msgstr "Tạo phần"
 
 #: modules/library/includes/mkdir.php:32
 msgid "Repeat"
-msgstr ""
+msgstr "Lặp lại"
 
 #: modules/library/includes/moder.php:147
 msgid "The ROOT"
-msgstr ""
+msgstr "Thư mục gốc (ROOT)"
 
 #: modules/library/includes/moder.php:161
 msgid "Edit Section"
-msgstr ""
+msgstr "Chỉnh sửa chuyên mục"
 
 #: modules/library/includes/moder.php:161
 msgid "Edit Article"
-msgstr ""
+msgstr "Chỉnh sửa bài viết"
 
 #: modules/library/includes/new.php:27
 #: modules/library/templates/main.phtml:34
 msgid "New Articles"
-msgstr ""
+msgstr "Bài Viết Mới"
 
 #: modules/library/includes/search.php:23
 #: modules/library/templates/main.phtml:37
 #: modules/library/templates/search.phtml:37
 msgid "Search"
-msgstr ""
+msgstr "Tìm kiếm"
 
 #: modules/library/includes/tagcloud.php:19
 msgid "Sorted by alphabetical"
-msgstr ""
+msgstr "Sắp xếp theo thứ tự chữ cái"
 
 #: modules/library/includes/tagcloud.php:20
 msgid "Sorted by relevance"
-msgstr ""
+msgstr "Sắp xếp theo mức độ liên quan"
 
 #: modules/library/includes/tags.php:19
 #: modules/library/templates/addnew.phtml:84
 #: modules/library/templates/moder.phtml:77
 msgid "Tags"
-msgstr ""
+msgstr "Nhãn"
 
 #: modules/library/includes/top.php:20
 #: modules/library/templates/main.phtml:39
 msgid "Rating articles"
-msgstr ""
+msgstr "Đánh giá bài viết"
 
 #: modules/library/includes/top.php:27
 msgid "Most readings"
-msgstr ""
+msgstr "Đọc nhiều nhất"
 
 #: modules/library/includes/top.php:32
 msgid "By rating"
-msgstr ""
+msgstr "Bằng cách đánh giá"
 
 #: modules/library/includes/top.php:37
 msgid "By comments"
-msgstr ""
+msgstr "Bởi bình luận"
 
 #: modules/library/index.php:62
 #: modules/library/templates/helpers/printNavPanel.phtml:2
 #: modules/library/templates/tagcloud.phtml:2
 msgid "Library"
-msgstr ""
+msgstr "Thư viện"
 
 #: modules/library/index.php:68
 #: modules/library/templates/main.phtml:28
 msgid "Library is closed"
-msgstr ""
+msgstr "Thư viện đã đóng cửa"
 
 #: modules/library/templates/addnew.phtml:30
 msgid "Article added"
-msgstr ""
+msgstr "Bài viết mới nhất được gửi"
 
 #: modules/library/templates/addnew.phtml:34
 msgid "To Article"
-msgstr ""
+msgstr "Bài viết"
 
 #: modules/library/templates/addnew.phtml:36
 msgid "Thank you for what we have written. After checking moderated, your Article will be published in the library."
-msgstr ""
+msgstr "Cảm ơn bạn cho những gì chúng tôi đã viết. Sau khi kiểm tra kiểm duyệt, bài viết của bạn sẽ được công bố trong thư viện."
 
 #: modules/library/templates/addnew.phtml:37
 #: modules/library/templates/mkdir.phtml:34
 msgid "To Section"
-msgstr ""
+msgstr "Phần"
 
 #: modules/library/templates/addnew.phtml:52
 #: modules/library/templates/addnew.phtml:53
@@ -220,41 +220,41 @@ msgstr ""
 #: modules/library/templates/moder.phtml:49
 #: modules/library/templates/moder.phtml:50
 msgid "Title"
-msgstr ""
+msgstr "Tiêu đề"
 
 #: modules/library/templates/addnew.phtml:57
 #: modules/library/templates/moder.phtml:60
 msgid "Announce"
-msgstr ""
+msgstr "Thông báo"
 
 #: modules/library/templates/addnew.phtml:62
 #: modules/library/templates/moder.phtml:68
 msgid "Text"
-msgstr ""
+msgstr "Văn bản"
 
 #: modules/library/templates/addnew.phtml:69
 #: modules/library/templates/moder.phtml:126
 msgid "Commenting on the Article"
-msgstr ""
+msgstr "Bình luận về bài viết"
 
 #: modules/library/templates/addnew.phtml:74
 #: modules/library/templates/moder.phtml:44
 msgid "To upload a photo"
-msgstr ""
+msgstr "Để tải lên một hình ảnh"
 
 #: modules/library/templates/addnew.phtml:79
 msgid "Select the text file"
-msgstr ""
+msgstr "Chọn các tập tin văn bản"
 
 #: modules/library/templates/addnew.phtml:80
 msgid "Text entry field will be ignored"
-msgstr ""
+msgstr "Trường nhập văn bản sẽ được bỏ qua"
 
 #: modules/library/templates/addnew.phtml:89
 #: modules/library/templates/mkdir.phtml:70
 #: modules/library/templates/moder.phtml:135
 msgid "Save"
-msgstr ""
+msgstr "Lưu"
 
 #: modules/library/templates/addnew.phtml:90
 #: modules/library/templates/del.phtml:43
@@ -265,46 +265,46 @@ msgstr ""
 #: modules/library/templates/mkdir.phtml:71
 #: modules/library/templates/moder.phtml:136
 msgid "Cancel"
-msgstr ""
+msgstr "Hủy bỏ"
 
 #: modules/library/templates/book.phtml:41
 msgid "Download file"
-msgstr ""
+msgstr "Tải tập tin"
 
 #: modules/library/templates/book.phtml:50
 msgid "The Tags:"
-msgstr ""
+msgstr "Các thẻ:"
 
 #: modules/library/templates/book.phtml:55
 msgid "Who added:"
-msgstr ""
+msgstr "Những người thêm vào:"
 
 #: modules/library/templates/book.phtml:59
 #: modules/library/templates/booklist.phtml:33
 #: modules/library/templates/new.phtml:38
 #: modules/library/templates/top.phtml:46
 msgid "Rating:"
-msgstr ""
+msgstr "Xếp hạng:"
 
 #: modules/library/templates/book.phtml:63
 #: modules/library/templates/search.phtml:49
 #: modules/library/templates/tags.phtml:39
 msgid "Number of readings:"
-msgstr ""
+msgstr "Số bài đọc:"
 
 #: modules/library/templates/book.phtml:68
 #: modules/library/templates/new.phtml:42
 #: modules/library/templates/tags.phtml:43
 #: modules/library/templates/top.phtml:50
 msgid "Comments:"
-msgstr ""
+msgstr "Bình luận: "
 
 #: modules/library/templates/book.phtml:82
 #: modules/library/templates/booklist.phtml:54
 #: modules/library/templates/helpers/sectionListAdminPanel.phtml:7
 #: modules/library/templates/sectionslist.phtml:64
 msgid "Edit"
-msgstr ""
+msgstr "Chỉnh sửa"
 
 #: modules/library/templates/booklist.phtml:32
 #: modules/library/templates/lastcom.phtml:31
@@ -314,7 +314,7 @@ msgstr ""
 #: modules/library/templates/tags.phtml:36
 #: modules/library/templates/top.phtml:43
 msgid "Author:"
-msgstr ""
+msgstr "Tác giả:"
 
 #: modules/library/templates/booklist.phtml:44
 #: modules/library/templates/new.phtml:50
@@ -323,11 +323,11 @@ msgstr ""
 #: modules/library/templates/sectionslist.phtml:56
 #: modules/library/templates/tags.phtml:50
 msgid "Total"
-msgstr ""
+msgstr "Tổng cộng"
 
 #: modules/library/templates/del.phtml:34
 msgid "Successful transfer"
-msgstr ""
+msgstr "Chuyển thành công"
 
 #: modules/library/templates/del.phtml:36
 #: modules/library/templates/del.phtml:71
@@ -338,137 +338,137 @@ msgstr ""
 #: modules/library/templates/moder.phtml:140
 #: modules/library/templates/top.phtml:64
 msgid "Back"
-msgstr ""
+msgstr "Quay lại"
 
 #: modules/library/templates/del.phtml:40
 msgid "Are you sure you want to move the contents?"
-msgstr ""
+msgstr "Bạn có chắc muốn di chuyển nội dung?"
 
 #: modules/library/templates/del.phtml:42
 msgid "Move"
-msgstr ""
+msgstr "Di chuyển"
 
 #: modules/library/templates/del.phtml:53
 #: modules/library/templates/moder.phtml:108
 msgid "Move to Section"
-msgstr ""
+msgstr "Di chuyển đến mục"
 
 #: modules/library/templates/del.phtml:64
 #: modules/library/templates/premod.phtml:44
 msgid "Approve"
-msgstr ""
+msgstr "Duyệt"
 
 #: modules/library/templates/del.phtml:69
 msgid "There are no Sections for moving"
-msgstr ""
+msgstr "Không có phần không để di chuyển"
 
 #: modules/library/templates/del.phtml:81
 msgid "Are you sure you want to delete content?"
-msgstr ""
+msgstr "Bạn có chắc bạn muốn xóa nội dung?"
 
 #: modules/library/templates/del.phtml:90
 msgid "Section is not empty"
-msgstr ""
+msgstr "Phần không phải là sản phẩm nào"
 
 #: modules/library/templates/del.phtml:93
 msgid "Select action"
-msgstr ""
+msgstr "Chọn lệnh"
 
 #: modules/library/templates/del.phtml:97
 msgid "Delete with movement"
-msgstr ""
+msgstr "Xóa với phong trào"
 
 #: modules/library/templates/del.phtml:101
 msgid "Delete all Sections and Articles"
-msgstr ""
+msgstr "Xóa tất cả các mục và các bài viết"
 
 #: modules/library/templates/del.phtml:104
 msgid "Do"
-msgstr ""
+msgstr "Làm"
 
 #: modules/library/templates/del.phtml:113
 #: modules/library/templates/del.phtml:125
 #: modules/library/templates/del.phtml:137
 msgid "Delete confirmation"
-msgstr ""
+msgstr "Xác nhận xóa bỏ"
 
 #: modules/library/templates/del.phtml:145
 #: modules/library/templates/del.phtml:154
 msgid "Deleted"
-msgstr ""
+msgstr "Xóa thành công"
 
 #: modules/library/templates/helpers/printvote.phtml:2
 msgid "Select a rating:"
-msgstr ""
+msgstr "Chọn một đánh giá:"
 
 #: modules/library/templates/helpers/printvote.phtml:8
 msgid "Vote"
-msgstr ""
+msgstr "Bình chọn cho tài liệu"
 
 #: modules/library/templates/helpers/sectionListAdminPanel.phtml:2
 msgid "Up"
-msgstr ""
+msgstr "Lên"
 
 #: modules/library/templates/helpers/sectionListAdminPanel.phtml:5
 msgid "Down"
-msgstr ""
+msgstr "Xuống"
 
 #: modules/library/templates/mkdir.phtml:30
 msgid "Section created"
-msgstr ""
+msgstr "Phần tạo"
 
 #: modules/library/templates/mkdir.phtml:55
 #: modules/library/templates/moder.phtml:55
 msgid "Section description"
-msgstr ""
+msgstr "Phần mô tả"
 
 #: modules/library/templates/mkdir.phtml:59
 #: modules/library/templates/moder.phtml:84
 msgid "Section type"
-msgstr ""
+msgstr "Phần loại"
 
 #: modules/library/templates/mkdir.phtml:62
 #: modules/library/templates/moder.phtml:87
 msgid "Articles"
-msgstr ""
+msgstr "Bài viết"
 
 #: modules/library/templates/mkdir.phtml:66
 #: modules/library/templates/moder.phtml:91
 msgid "Sections"
-msgstr ""
+msgstr "Phần"
 
 #: modules/library/templates/moder.phtml:31
 msgid "Changed"
-msgstr ""
+msgstr "Thay đổi"
 
 #: modules/library/templates/moder.phtml:73
 msgid "The text of the Article can not be edited, a large amount of data !!!"
-msgstr ""
+msgstr "Bài viết có thể không sửa được, dữ liệu quá lớn!!!"
 
 #: modules/library/templates/moder.phtml:96
 msgid "Allow users to add their Articles?"
-msgstr ""
+msgstr "Cho phép người dùng thêm bài Viết của mình?"
 
 #: modules/library/templates/moder.phtml:99
 msgid "Yes"
-msgstr ""
+msgstr "Có"
 
 #: modules/library/templates/moder.phtml:103
 msgid "No"
-msgstr ""
+msgstr "Không"
 
 #: modules/library/templates/moder.phtml:122
 msgid "Verified"
-msgstr ""
+msgstr "Đã xác nhận"
 
 #: modules/library/templates/moder.phtml:129
 msgid "Number of readings"
-msgstr ""
+msgstr "Số đọc"
 
 #: modules/library/templates/new.phtml:32
 #: modules/library/templates/top.phtml:40
 msgid "Section:"
-msgstr ""
+msgstr "Phần:"
 
 #: modules/library/templates/new.phtml:55
 #: modules/library/templates/premod.phtml:58
@@ -476,56 +476,56 @@ msgstr ""
 #: modules/library/templates/tagcloud.phtml:6
 #: modules/library/templates/tags.phtml:54
 msgid "To Library"
-msgstr ""
+msgstr "Đến Thư viện"
 
 #: modules/library/templates/premod.phtml:20
 #: modules/library/templates/premod.phtml:21
 msgid "Moderation Articles"
-msgstr ""
+msgstr "Kiểm duyệt bài viết"
 
 #: modules/library/templates/premod.phtml:27
 msgid "All Articles added in database"
-msgstr ""
+msgstr "Tất cả bài viết đã được thêm vào CSDL"
 
 #: modules/library/templates/premod.phtml:30
 msgid "Article"
-msgstr ""
+msgstr "Bài viết"
 
 #: modules/library/templates/premod.phtml:30
 msgid "Added to the database"
-msgstr ""
+msgstr "Đã thêm vào CSDL"
 
 #: modules/library/templates/premod.phtml:56
 msgid "Approve all"
-msgstr ""
+msgstr "Chấp nhận tất cả"
 
 #: modules/library/templates/search.phtml:27
 #: modules/library/templates/search.phtml:28
 msgid "Search query"
-msgstr ""
+msgstr "Truy vấn tìm kiếm"
 
 #: modules/library/templates/search.phtml:34
 msgid "Search in titles Articles"
-msgstr ""
+msgstr "Tìm kiếm trong tiêu đề bài viết"
 
 #: modules/library/templates/search.phtml:68
 msgid "Length of query: 4 min 64 max<br>Search is case-insensitive letters<br>Results are sorted by relevance"
-msgstr ""
+msgstr "Chiều dài của truy vấn: tối thiểu 4, tối 64 ký tự <br>Tìm kiếm là trường hợp nhạy cảm <br>Kết quả được sắp xếp theo mức độ liên quan"
 
 #: modules/library/templates/search.phtml:75
 msgid "New Search"
-msgstr ""
+msgstr "Tìm kiếm mới"
 
 #: modules/library/templates/sectionslist.phtml:63
 msgid "Create"
-msgstr ""
+msgstr "Tạo mới"
 
 #: modules/library/templates/tagcloud.phtml:2
 msgid "Tag Cloud"
-msgstr ""
+msgstr "Tag Đám Mây"
 
 #: modules/library/templates/tagcloud.phtml:4
 #: modules/library/templates/top.phtml:27
 msgid "Sort"
-msgstr ""
+msgstr "Săp xếp"
 

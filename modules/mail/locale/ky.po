@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Kyrgyz\n"
 "Language: ky_KG\n"
-"PO-Revision-Date: 2026-03-24 13:17\n"
+"PO-Revision-Date: 2026-03-24 21:41\n"
 
 #: modules/mail/includes/delete.php:15
 msgid "Deleting messages"
@@ -24,7 +24,7 @@ msgstr "Мындай билдирүү жок"
 #: modules/mail/includes/delete.php:45
 #: modules/mail/includes/delete.php:74
 msgid "Message deleted"
-msgstr "Билдирүү өчүрүлдү"
+msgstr "Билдирүү жок кылынды"
 
 #: modules/mail/includes/delete.php:47
 #: modules/mail/includes/delete.php:76
@@ -39,7 +39,7 @@ msgstr "Артка"
 
 #: modules/mail/includes/delete.php:83
 msgid "You really want to remove the message?"
-msgstr "Билдирүүнү чын эле өчүргүңүз келеби?"
+msgstr "Билдирүүнү чын эле жок кылгыңыз келеби?"
 
 #: modules/mail/includes/delete.php:85
 #: modules/mail/includes/deluser.php:15
@@ -55,15 +55,15 @@ msgstr "Өчүрүү"
 
 #: modules/mail/includes/delete.php:102
 msgid "The message for removal isn't chosen"
-msgstr "Өчүрүү үчүн билдирүү тандалган жок"
+msgstr "Жок кылуу үчүн билдирүү тандалган жок"
 
 #: modules/mail/includes/deluser.php:43
 msgid "Contact deleted"
-msgstr "Байланыш өчүрүлдү"
+msgstr "Байланыш жок кылынды"
 
 #: modules/mail/includes/deluser.php:51
 msgid "When you delete a contact is deleted and all correspondence with him.<br>Are you sure you want to delete?"
-msgstr "Байланышты өчүргөндө, анын ичиндеги бардык жазышуулар өчөт. <br> Чын эле өчүргүңүз келеби?"
+msgstr "Байланышты өчөргөндө, анын ичиндеги бардык жазышуулар өчөт. <br> Чын эле өчүргүңүз келеби?"
 
 #: modules/mail/includes/deluser.php:70
 msgid "Contact for removal isn't chosen"
@@ -91,7 +91,7 @@ msgstr "Колдонуучу бөгөттөлгөн эмес"
 
 #: modules/mail/includes/ignor.php:43
 msgid "User is unblocked"
-msgstr "Колдонуучуну бөгөттөн чыгарылды"
+msgstr "Колдонуучунун кулпусу ачылды"
 
 #: modules/mail/includes/ignor.php:52
 #: modules/mail/includes/ignor.php:109
@@ -105,12 +105,12 @@ msgstr "Улантуу"
 
 #: modules/mail/includes/ignor.php:58
 msgid "You really want to unblock contact?"
-msgstr "Чын эле байланышты бөгөттөн чыгаргыңыз келеби?"
+msgstr "Чын эле байланыштын кулпусун ачкыңыз келеби?"
 
 #: modules/mail/includes/ignor.php:60
 #: modules/mail/includes/ignor.php:224
 msgid "Unblock"
-msgstr "Бөгөттөөдөн чыгуу"
+msgstr "Тосмалоону ачуу"
 
 #: modules/mail/includes/ignor.php:77
 #: modules/mail/includes/ignor.php:164
@@ -119,7 +119,7 @@ msgstr "Байланыш тандалган жок"
 
 #: modules/mail/includes/ignor.php:107
 msgid "This user can not be blocked"
-msgstr "Бул колдонуучуну бөгөттөө мүмкүн эмес"
+msgstr "Бул колдонуучуну тосмолоого мүмкүн эмес"
 
 #: modules/mail/includes/ignor.php:136
 msgid "User is blocked"
@@ -127,11 +127,11 @@ msgstr "Колдонуучу бөгөттөлгөн"
 
 #: modules/mail/includes/ignor.php:145
 msgid "You really want to block contact?"
-msgstr "Сиз чын эле байланышты бөгөттөйсүзбү?"
+msgstr "Сиз чын эле кааласаңыз, байланышты тосмолойсузбу?"
 
 #: modules/mail/includes/ignor.php:147
 msgid "Block"
-msgstr "Бөгөттөө"
+msgstr "Тосмолоо"
 
 #: modules/mail/includes/ignor.php:174
 #: modules/mail/includes/index.php:89
@@ -174,7 +174,7 @@ msgstr "Кошуу"
 #: modules/mail/includes/input.php:111
 #: modules/mail/includes/output.php:103
 msgid "Block User"
-msgstr "Колдонуучуну бөгөттөө"
+msgstr "Колдонуучуну тосмолоо"
 
 #: modules/mail/includes/input.php:17
 msgid "Incoming messages"
@@ -184,7 +184,7 @@ msgstr "Келген билдирүүлөр"
 #: modules/mail/includes/write.php:21
 #: modules/mail/index.php:77
 msgid "Mail"
-msgstr "Почта"
+msgstr "Электрондук дарек"
 
 #: modules/mail/includes/load.php:24
 #: modules/mail/includes/load.php:36
@@ -206,15 +206,15 @@ msgstr "Билдирүүлөрдү тазалоо"
 
 #: modules/mail/includes/write.php:81
 msgid "Messages are deleted"
-msgstr "Билдирүүлөр өчүрүлдү"
+msgstr "Билдирүүлөр жок кылынды"
 
 #: modules/mail/includes/write.php:89
 msgid "Confirm the deletion of messages"
-msgstr "Билдирүүнү өчүрүүнү ырастаңыз"
+msgstr "Билдирүүнү жок кылууну ырастаңыз"
 
 #: modules/mail/includes/write.php:126
 msgid "Specify the recipient's login"
-msgstr "Алуучунун логинин көрсөтүңүз"
+msgstr "Алуучунун логин киргизиңиз"
 
 #: modules/mail/includes/write.php:130
 msgid "Message cannot be empty"
@@ -302,7 +302,7 @@ msgstr[1] "Билдирүүлөр"
 #: modules/mail/templates/contact_list.phtml:64
 msgid "unread message"
 msgid_plural "unread messages"
-msgstr[0] "окулбаган билдирүү"
+msgstr[0] "окулбаган билдирүүлөр"
 msgstr[1] "окулбаган билдирүүлөр"
 
 #: modules/mail/templates/contact_list.phtml:89

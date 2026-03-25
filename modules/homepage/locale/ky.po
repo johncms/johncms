@@ -11,11 +11,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Kyrgyz\n"
 "Language: ky_KG\n"
-"PO-Revision-Date: 2026-03-24 13:17\n"
+"PO-Revision-Date: 2026-03-24 21:41\n"
 
 #: modules/homepage/templates/index.phtml:13
 msgid "Free, Open Source content management system"
-msgstr "Акысыз жана ачык булактуу мазмунду башкаруу системасы"
+msgstr "Акысыз ачык баштапкы коддуу мазмундуу башкаруу системасы"
 
 #: modules/homepage/templates/index.phtml:20
 msgid "Download"
@@ -23,7 +23,7 @@ msgstr "Жүктөө"
 
 #: modules/homepage/templates/index.phtml:26
 msgid "Documentation"
-msgstr "Документтер"
+msgstr "Документация"
 
 #: modules/homepage/templates/index.phtml:53
 #: modules/homepage/templates/index.phtml:137
@@ -40,7 +40,7 @@ msgstr "Адаптивдүү белги"
 
 #: modules/homepage/templates/index.phtml:172
 msgid "Your site will appear equally well on both computers and mobile devices."
-msgstr "Сайтыңыз компьютерлерде да, мобилдик түзмөктөрдө да бирдей жакшы көрүнөт."
+msgstr "Сиздин сайт компьютерде жана мобилдик түзмөктөрдө бирдей көрүнөт."
 
 #: modules/homepage/templates/index.phtml:179
 msgid "Template System"
@@ -64,12 +64,12 @@ msgstr "Көп тилдүү"
 
 #: modules/homepage/templates/index.phtml:202
 msgid "Reach the maximum audience in different languages. Several languages have already been built into the system.<br>And if you don't have the desired language, you can easily add it using advanced translation tools that support johnCMS."
-msgstr "Көп тилдүүлүк менен эң көп аудиторияңызга жетиңиз. Системага бир нече тил эчак эле киргизилген.<br>\n"
+msgstr "Көп тилдүүлүк менен эң көп аудиторияңызга жетиңиз. Системага бир нече тил мурунтан эле киргизилген.<br>\n"
 "Эгер зарыл тил жок болсо, анда JohnCMS менен иштөөнү колдогон котормо куралдарынын жардамы менен аны оңой эле кошо аласыз."
 
 #: modules/homepage/templates/index.phtml:211
 msgid "Modularity"
-msgstr "Модулдук"
+msgstr "Модульдук"
 
 #: modules/homepage/templates/index.phtml:214
 msgid "The most popular modules are built into the system.<br>You can install ready-made additional modules, create them yourself or order development of new modules from other developers."

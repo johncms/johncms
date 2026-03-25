@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
-"PO-Revision-Date: 2026-03-24 13:16\n"
+"PO-Revision-Date: 2026-03-24 21:39\n"
 
 #: modules/downloads/includes/bookmark.php:29
 #: modules/downloads/includes/comments.php:31
@@ -83,7 +83,7 @@ msgstr "Комментарии"
 #: modules/downloads/includes/comments_review.php:30
 #: modules/downloads/templates/comments_review.phtml:30
 msgid "Comments are disabled"
-msgstr "Комментарии отключены"
+msgstr "Комментарии закрыты"
 
 #: modules/downloads/includes/comments.php:45
 #: modules/downloads/includes/comments.php:47
@@ -143,13 +143,13 @@ msgstr "Повторить"
 #: modules/downloads/includes/fileControl/edit_screen.php:107
 #: modules/downloads/includes/fileControl/edit_screen.php:118
 msgid "Upload screenshot"
-msgstr "Добавить скриншот"
+msgstr "Выгрузить скриншот"
 
 #: modules/downloads/includes/fileControl/edit_screen.php:109
 #: modules/downloads/templates/file_import_result.phtml:34
 #: modules/downloads/templates/file_upload_result.phtml:34
 msgid "Screenshot is attached"
-msgstr "Скриншот добавлен"
+msgstr "Скриншот прикреплен"
 
 #: modules/downloads/includes/fileControl/edit_screen.php:111
 #: modules/downloads/includes/fileControl/files_more.php:237
@@ -168,7 +168,7 @@ msgstr "Назад"
 #: modules/downloads/templates/file_import_result.phtml:36
 #: modules/downloads/templates/file_upload_result.phtml:36
 msgid "Screenshot not attached"
-msgstr "Скриншот не добавлен"
+msgstr "Скриншот не прикреплен"
 
 #: modules/downloads/includes/fileControl/files_more.php:56
 msgid "Additional files"
@@ -192,7 +192,7 @@ msgstr "Ошибка"
 #: modules/downloads/includes/fileControl/files_more.php:188
 #: modules/downloads/includes/files_upload.php:74
 msgid "The weight of the file exceeds"
-msgstr "Размер файла превышает"
+msgstr "Вес файла превышает"
 
 #: modules/downloads/includes/fileControl/files_more.php:192
 #: modules/downloads/includes/files_import.php:83
@@ -250,7 +250,7 @@ msgstr "Каталог не существует"
 
 #: modules/downloads/includes/files_import.php:87
 msgid "The file name length must not exceed 100 characters"
-msgstr "Длина имени файла не должна превышать 100 символов"
+msgstr "Длина имени файла не должна превышать 30 символов"
 
 #: modules/downloads/includes/files_import.php:91
 msgid "The file name contains invalid characters"
@@ -355,7 +355,7 @@ msgstr "Папка создана"
 #: modules/downloads/templates/file_import_result.phtml:40
 #: modules/downloads/templates/file_upload_result.phtml:46
 msgid "Continue"
-msgstr "Далее"
+msgstr "Продолжить"
 
 #: modules/downloads/includes/folder_add.php:136
 msgid "Error creating categories"
@@ -525,11 +525,11 @@ msgstr "Список пуст"
 
 #: modules/downloads/templates/comments_review.phtml:57
 msgid "Edited:"
-msgstr "Изменено:"
+msgstr "Изменен"
 
 #: modules/downloads/templates/comments_review.phtml:58
 msgid "Edited"
-msgstr "Изменено"
+msgstr "Изменен"
 
 #: modules/downloads/templates/comments_review.phtml:109
 #: modules/downloads/templates/files_more.phtml:39
@@ -552,7 +552,7 @@ msgstr "Удалить"
 #: modules/downloads/templates/delete_file.phtml:30
 #: modules/downloads/templates/folder_delete.phtml:29
 msgid "Do you really want to delete?"
-msgstr "Вы действительно хотите удалить?"
+msgstr "Действительно хотите удалить?"
 
 #: modules/downloads/templates/delete_additional.phtml:36
 #: modules/downloads/templates/delete_file.phtml:36
@@ -769,7 +769,7 @@ msgstr "по возрастанию"
 
 #: modules/downloads/templates/index.phtml:96
 msgid "Sort"
-msgstr "Cортировать"
+msgstr "Сортировка"
 
 #: modules/downloads/templates/index.phtml:132
 msgid "Import File"
@@ -822,7 +822,7 @@ msgstr "Весь Загруз центр"
 
 #: modules/downloads/templates/scan_dir.phtml:51
 msgid "Added"
-msgstr "Добавлено"
+msgstr "Добавил"
 
 #: modules/downloads/templates/scan_dir.phtml:52
 msgid "Categories"

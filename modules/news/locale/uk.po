@@ -11,11 +11,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
-"PO-Revision-Date: 2026-03-24 13:17\n"
+"PO-Revision-Date: 2026-03-24 21:40\n"
 
 #: modules/news/src/Application/Article.php:52
 msgid "The requested article was not found."
-msgstr ""
+msgstr "Запитувана стаття не була знайдена."
 
 #: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:33
 #: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:36
@@ -125,7 +125,7 @@ msgstr "Розділ успішно видалено"
 
 #: modules/news/src/Application/Controllers/CommentsController.php:47
 msgid "Bad Request"
-msgstr ""
+msgstr "Неправильний запит"
 
 #: modules/news/src/Application/Controllers/CommentsController.php:131
 msgid "You have a ban!"
@@ -145,11 +145,11 @@ msgstr "Введіть текст коментаря"
 
 #: modules/news/src/Application/Controllers/CommentsController.php:192
 msgid "The comment was deleted successfully"
-msgstr "Коментар був успішно видалений"
+msgstr "Компонент було успішно видалено."
 
 #: modules/news/src/Application/Controllers/CommentsController.php:199
 msgid "Access denied"
-msgstr "У доступі відмовлено"
+msgstr "Відмовлено в доступі"
 
 #: modules/news/src/Application/Controllers/SearchController.php:35
 msgid "Search"
@@ -173,7 +173,7 @@ msgstr "Розділ не знайдено"
 
 #: modules/news/templates/admin/add_article.phtml:21
 msgid "Active"
-msgstr "Активний"
+msgstr "Увімкнено"
 
 #: modules/news/templates/admin/add_article.phtml:25
 #: modules/news/templates/admin/add_article.phtml:33
@@ -239,11 +239,11 @@ msgstr "Введіть слова або фрази розділені кома�
 
 #: modules/news/templates/admin/add_article.phtml:119
 msgid "Preview text"
-msgstr ""
+msgstr "Попередній перегляд тексту"
 
 #: modules/news/templates/admin/add_article.phtml:131
 msgid "Text"
-msgstr ""
+msgstr "Текст"
 
 #: modules/news/templates/admin/add_article.phtml:139
 #: modules/news/templates/admin/add_section.phtml:68
@@ -301,7 +301,7 @@ msgstr "Скасувати"
 
 #: modules/news/templates/admin/index.phtml:22
 msgid "Content management"
-msgstr "Управління контентом"
+msgstr "Управління вмістом"
 
 #: modules/news/templates/admin/sections.phtml:40
 msgid "Add section"
@@ -377,12 +377,12 @@ msgstr "0 - завжди показувати."
 
 #: modules/news/templates/admin/settings.phtml:48
 msgid "Meta tags for the main page"
-msgstr "Мета-теги для головної сторінки"
+msgstr "Мета-теґи для головної сторінки"
 
 #: modules/news/templates/admin/settings.phtml:50
 #: modules/news/templates/admin/settings.phtml:57
 msgid "Module name"
-msgstr "Назва модуля"
+msgstr "Назва модулю"
 
 #: modules/news/templates/admin/settings.phtml:76
 msgid "Meta tag templates for sections"
@@ -393,7 +393,7 @@ msgstr "Шаблони мета-тегів для секцій"
 #: modules/news/templates/admin/settings.phtml:108
 #: modules/news/templates/admin/settings.phtml:115
 msgid "Title"
-msgstr "Заголовок"
+msgstr "Назва"
 
 #: modules/news/templates/admin/settings.phtml:106
 msgid "Meta tag templates for articles"
@@ -409,11 +409,11 @@ msgstr "Автор:"
 
 #: modules/news/templates/public/article.phtml:30
 msgid "Tags:"
-msgstr "Теги:"
+msgstr "Мітки:"
 
 #: modules/news/templates/public/article.phtml:36
 msgid "Rating:"
-msgstr "Рейтинг:"
+msgstr "Оцінка:"
 
 #: modules/news/templates/public/article.phtml:57
 msgid "Write a comment"
@@ -425,7 +425,7 @@ msgstr "Надіслати"
 
 #: modules/news/templates/public/article.phtml:60
 msgid "Quote"
-msgstr "Цитата"
+msgstr "Цитувати"
 
 #: modules/news/templates/public/article.phtml:61
 msgid "Reply"
@@ -441,7 +441,7 @@ msgstr "Ви не ввійшли. Ви повинні <a href=\"/login/\">уві
 
 #: modules/news/templates/public/index.phtml:16
 msgid "Admin panel"
-msgstr "Адмін-панель"
+msgstr "Панель адміністратора"
 
 #: modules/news/templates/public/index.phtml:23
 #: modules/news/templates/public/search.phtml:14
@@ -455,5 +455,5 @@ msgstr "Пошук не дав жодних результатів."
 
 #: modules/news/templates/public/search_by_tags.phtml:14
 msgid "Enter a tag"
-msgstr "Введіть тег"
+msgstr "Введіть мітку"
 

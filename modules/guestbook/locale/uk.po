@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
-"PO-Revision-Date: 2026-03-24 13:16\n"
+"PO-Revision-Date: 2026-03-24 21:39\n"
 
 #: modules/guestbook/src/Application/Controllers/DeleteEntryController.php:59
 msgid "The message was deleted"
@@ -40,7 +40,7 @@ msgstr "Гостьова книга закрита"
 
 #: modules/guestbook/src/Application/Controllers/GuestbookController.php:65
 msgid "Your message was added successfully"
-msgstr "Ваше повідомлення успішно додано"
+msgstr "Ваше повідомлення успішно відправлено."
 
 #: modules/guestbook/src/Application/Controllers/ReplyController.php:34
 #: modules/guestbook/templates/index.phtml:191
@@ -93,7 +93,7 @@ msgstr "Очистити все"
 #: modules/guestbook/templates/clear.phtml:25
 #: modules/guestbook/templates/index.phtml:221
 msgid "Clear"
-msgstr "Чисто"
+msgstr "Очистити"
 
 #: modules/guestbook/templates/clear.phtml:26
 #: modules/guestbook/templates/confirm_delete.phtml:15
@@ -121,7 +121,7 @@ msgstr "Автор"
 #: modules/guestbook/templates/edit.phtml:15
 #: modules/guestbook/templates/index.phtml:62
 msgid "Message"
-msgstr ""
+msgstr "Повідомлення"
 
 #: modules/guestbook/templates/edit.phtml:21
 #: modules/guestbook/templates/reply.phtml:30
@@ -135,25 +135,25 @@ msgstr "Назад"
 
 #: modules/guestbook/templates/index.phtml:21
 msgid "The guestbook is closed"
-msgstr ""
+msgstr "Гостьова закрита"
 
 #: modules/guestbook/templates/index.phtml:44
 #: modules/guestbook/templates/index.phtml:52
 msgid "Name"
-msgstr "Назва"
+msgstr "Ім'я"
 
 #: modules/guestbook/templates/index.phtml:69
 msgid "Verification code"
-msgstr "Код перевірки"
+msgstr "Перевірочний код"
 
 #: modules/guestbook/templates/index.phtml:71
 #: modules/guestbook/templates/index.phtml:79
 msgid "Symbols on the picture"
-msgstr "Символи, які зображені на картинці"
+msgstr "Символи з картинки"
 
 #: modules/guestbook/templates/index.phtml:85
 msgid "If you cannot see the image code, enable graphics in your browser and refresh this page"
-msgstr ""
+msgstr "Якщо Ви не бачите малюнок з кодом, увімкніть підтримку графіки в налаштуваннях браузера та перезавантажте сторінку"
 
 #: modules/guestbook/templates/index.phtml:90
 msgid "Write"
@@ -161,7 +161,7 @@ msgstr "Написати"
 
 #: modules/guestbook/templates/index.phtml:101
 msgid "For registered users only"
-msgstr ""
+msgstr "Тільки для зареєстрованих користувачів"
 
 #: modules/guestbook/templates/index.phtml:109
 msgid "The guestbook is empty.<br><strong>Be the first! :)</strong>"
@@ -173,7 +173,7 @@ msgstr "Гість"
 
 #: modules/guestbook/templates/index.phtml:154
 msgid "Edited:"
-msgstr "Змінено:"
+msgstr "Відредаговано:"
 
 #: modules/guestbook/templates/index.phtml:155
 msgid "Edited"

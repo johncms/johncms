@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
-"PO-Revision-Date: 2026-03-24 13:17\n"
+"PO-Revision-Date: 2026-03-24 21:39\n"
 
 #: modules/homepage/templates/index.phtml:13
 msgid "Free, Open Source content management system"
@@ -40,7 +40,7 @@ msgstr "Адаптивная разметка"
 
 #: modules/homepage/templates/index.phtml:172
 msgid "Your site will appear equally well on both computers and mobile devices."
-msgstr "Ваш сайт будет одинаково хорошо выглядеть как на компьютерах, так и на мобильных устройствах."
+msgstr "Ваш сайт будет одинаково хорошо отображаться как на компьютерах, так и на мобильных устройствах."
 
 #: modules/homepage/templates/index.phtml:179
 msgid "Template System"

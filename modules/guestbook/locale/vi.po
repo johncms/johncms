@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
-"PO-Revision-Date: 2026-03-24 11:07\n"
+"PO-Revision-Date: 2026-03-24 21:40\n"
 
 #: modules/guestbook/src/Application/Controllers/DeleteEntryController.php:59
 msgid "The message was deleted"
@@ -20,7 +20,7 @@ msgstr ""
 #: modules/guestbook/src/Application/Controllers/EditEntryController.php:34
 #: modules/guestbook/templates/edit.phtml:3
 msgid "Edit message"
-msgstr ""
+msgstr "Chỉnh sửa tin nhắn"
 
 #: modules/guestbook/src/Application/Controllers/EditEntryController.php:69
 msgid "The message was saved"
@@ -28,15 +28,15 @@ msgstr ""
 
 #: modules/guestbook/src/Application/Controllers/GuestbookController.php:38
 msgid "Guestbook"
-msgstr ""
+msgstr "Lưu bút Của Bạn"
 
 #: modules/guestbook/src/Application/Controllers/GuestbookController.php:38
 msgid "Admin Club"
-msgstr ""
+msgstr "Dành cho BQT"
 
 #: modules/guestbook/src/Application/Controllers/GuestbookController.php:48
 msgid "Guestbook is closed"
-msgstr ""
+msgstr "Lưu bị đóng cửa"
 
 #: modules/guestbook/src/Application/Controllers/GuestbookController.php:65
 msgid "Your message was added successfully"
@@ -48,7 +48,7 @@ msgstr ""
 #: modules/guestbook/templates/reply.phtml:11
 #: modules/guestbook/templates/reply.phtml:24
 msgid "Reply"
-msgstr ""
+msgstr "Trả lời"
 
 #: modules/guestbook/src/Application/Controllers/ReplyController.php:69
 msgid "Your reply to the message was saved"
@@ -60,126 +60,126 @@ msgstr ""
 
 #: modules/guestbook/src/Application/Services/GuestbookService.php:193
 msgid "All messages older than 1 day were deleted"
-msgstr ""
+msgstr "Tất cả các tin nhắn cũ hơn 1 ngày đã bị xóa"
 
 #: modules/guestbook/src/Application/Services/GuestbookService.php:209
 msgid "Full clearing is finished"
-msgstr ""
+msgstr "Toàn thanh toán bù trừ xong"
 
 #: modules/guestbook/src/Application/Services/GuestbookService.php:225
 msgid "All messages older than 1 week were deleted"
-msgstr ""
+msgstr "Tất cả các tin nhắn cũ hơn 1 tuần đã bị xóa"
 
 #: modules/guestbook/templates/clear.phtml:5
 msgid "Clear guestbook"
-msgstr ""
+msgstr "Dọn dẹp lưu bút"
 
 #: modules/guestbook/templates/clear.phtml:10
 msgid "Clearing parameters"
-msgstr ""
+msgstr "Xóa cài đặt"
 
 #: modules/guestbook/templates/clear.phtml:13
 msgid "Older than 1 week"
-msgstr ""
+msgstr "Cách đây hơn 1 tuần"
 
 #: modules/guestbook/templates/clear.phtml:17
 msgid "Older than 1 day"
-msgstr ""
+msgstr "Cũ hơn 1 ngày"
 
 #: modules/guestbook/templates/clear.phtml:21
 msgid "Clear all"
-msgstr ""
+msgstr "Xoá tất cả các bài viết"
 
 #: modules/guestbook/templates/clear.phtml:25
 #: modules/guestbook/templates/index.phtml:221
 msgid "Clear"
-msgstr ""
+msgstr "Xoá"
 
 #: modules/guestbook/templates/clear.phtml:26
 #: modules/guestbook/templates/confirm_delete.phtml:15
 msgid "Cancel"
-msgstr ""
+msgstr "Hủy bỏ"
 
 #: modules/guestbook/templates/confirm_delete.phtml:6
 msgid "Delete message"
-msgstr ""
+msgstr "Xóa bài viết"
 
 #: modules/guestbook/templates/confirm_delete.phtml:11
 msgid "Do you really want to delete?"
-msgstr ""
+msgstr "Bạn có thực sự muốn xóa?"
 
 #: modules/guestbook/templates/confirm_delete.phtml:14
 #: modules/guestbook/templates/index.phtml:206
 msgid "Delete"
-msgstr ""
+msgstr "Xóa"
 
 #: modules/guestbook/templates/edit.phtml:10
 #: modules/guestbook/templates/reply.phtml:18
 msgid "Author"
-msgstr ""
+msgstr "Tác giả"
 
 #: modules/guestbook/templates/edit.phtml:15
 #: modules/guestbook/templates/index.phtml:62
 msgid "Message"
-msgstr ""
+msgstr "Mặt cười"
 
 #: modules/guestbook/templates/edit.phtml:21
 #: modules/guestbook/templates/reply.phtml:30
 msgid "Save"
-msgstr ""
+msgstr "Lưu"
 
 #: modules/guestbook/templates/edit.phtml:22
 #: modules/guestbook/templates/reply.phtml:31
 msgid "Back"
-msgstr ""
+msgstr "Quay lại"
 
 #: modules/guestbook/templates/index.phtml:21
 msgid "The guestbook is closed"
-msgstr ""
+msgstr "Lưu bút sẽ được đóng"
 
 #: modules/guestbook/templates/index.phtml:44
 #: modules/guestbook/templates/index.phtml:52
 msgid "Name"
-msgstr ""
+msgstr "Họ tên"
 
 #: modules/guestbook/templates/index.phtml:69
 msgid "Verification code"
-msgstr ""
+msgstr "Mã xác minh"
 
 #: modules/guestbook/templates/index.phtml:71
 #: modules/guestbook/templates/index.phtml:79
 msgid "Symbols on the picture"
-msgstr ""
+msgstr "Các ký hiệu trên hình ảnh"
 
 #: modules/guestbook/templates/index.phtml:85
 msgid "If you cannot see the image code, enable graphics in your browser and refresh this page"
-msgstr ""
+msgstr "Có thể không nhìn thấy mã hình ảnh, hãy làm mới trang này"
 
 #: modules/guestbook/templates/index.phtml:90
 msgid "Write"
-msgstr ""
+msgstr "Viết"
 
 #: modules/guestbook/templates/index.phtml:101
 msgid "For registered users only"
-msgstr ""
+msgstr "Cho người dùng đăng ký"
 
 #: modules/guestbook/templates/index.phtml:109
 msgid "The guestbook is empty.<br><strong>Be the first! :)</strong>"
-msgstr ""
+msgstr "Các bút là trống rỗng.<br><strong>Be đầu tiên! :)</strong>"
 
 #: modules/guestbook/templates/index.phtml:146
 msgid "Guest"
-msgstr ""
+msgstr "Khách"
 
 #: modules/guestbook/templates/index.phtml:154
 msgid "Edited:"
-msgstr ""
+msgstr "Chỉnh sửa:"
 
 #: modules/guestbook/templates/index.phtml:155
 msgid "Edited"
-msgstr ""
+msgstr "Đã sửa"
 
 #: modules/guestbook/templates/index.phtml:205
 msgid "Edit"
-msgstr ""
+msgstr "Chỉnh sửa"
 

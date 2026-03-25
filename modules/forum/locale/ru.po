@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
-"PO-Revision-Date: 2026-03-24 13:16\n"
+"PO-Revision-Date: 2026-03-24 21:39\n"
 
 #: modules/forum/src/Application/Controllers/AddFileController.php:55
 #: modules/forum/src/Application/Controllers/AddFileController.php:66
@@ -166,7 +166,7 @@ msgstr "Опрос добавлен"
 #: modules/forum/src/Application/Controllers/AddVoteController.php:100
 #: modules/forum/src/Application/Controllers/EditVoteController.php:116
 msgid "Continue"
-msgstr "Далее"
+msgstr "Продолжить"
 
 #: modules/forum/src/Application/Controllers/AddVoteController.php:111
 msgid "The required fields are not filled"
@@ -517,7 +517,7 @@ msgstr "Просмотр поста"
 
 #: modules/forum/src/Application/Controllers/SubmitVoteController.php:64
 msgid "Vote accepted"
-msgstr "Голос принят"
+msgstr "Ваш голос принят"
 
 #: modules/forum/src/Application/Controllers/TopicsPeriodController.php:58
 #, php-format
@@ -526,7 +526,7 @@ msgstr "Всего за период %d часов"
 
 #: modules/forum/src/Application/Controllers/TopicsPeriodController.php:73
 msgid "There is nothing new in this forum for selected period"
-msgstr "Нет новых сообщений за выбранный период"
+msgstr "За выбранный период нового на форуме нет"
 
 #: modules/forum/src/Application/Controllers/UploadFileController.php:39
 #: modules/forum/src/Application/Controllers/UploadFileController.php:50
@@ -609,7 +609,7 @@ msgstr "В теме"
 #: modules/forum/src/Application/Services/ForumVisitorRowMapper.php:43
 #: modules/forum/src/Application/Services/ForumVisitorRowMapper.php:71
 msgid "Guest"
-msgstr "Гость"
+msgstr "Гости"
 
 #: modules/forum/src/Application/Services/ForumVisitorRowMapper.php:92
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:282
@@ -657,7 +657,7 @@ msgstr "Запрещенный тип файла!<br>К отправке раз�
 
 #: modules/forum/src/Application/UseCases/EnsureEditPostAccessUseCase.php:29
 msgid "You cannot edit posts of higher administration"
-msgstr "Вы не можете редактировать анкету старшего Вас по должности"
+msgstr "Вы не можете редактировать сообщение старшего Вас по должности"
 
 #: modules/forum/src/Application/UseCases/EnsureEditPostAccessUseCase.php:37
 msgid "You are trying to change another's post"
@@ -761,7 +761,7 @@ msgstr "Макс. размер"
 
 #: modules/forum/templates/add_file.phtml:47
 msgid "Upload"
-msgstr "Загрузить"
+msgstr "Выгрузить"
 
 #: modules/forum/templates/add_poll.phtml:31
 #: modules/forum/templates/add_poll.phtml:32
@@ -865,7 +865,7 @@ msgstr "Удалить"
 #: modules/forum/templates/delete_topic.phtml:31
 #: modules/forum/templates/mass_delete.phtml:31
 msgid "Do you really want to delete?"
-msgstr "Вы действительно хотите удалить?"
+msgstr "Действительно хотите удалить?"
 
 #: modules/forum/templates/delete_file.phtml:41
 #: modules/forum/templates/delete_post.phtml:50
@@ -932,7 +932,7 @@ msgstr "Фильтрация позволит отображать посты т
 
 #: modules/forum/templates/filter_by_author.phtml:64
 msgid "Filter"
-msgstr "Фильтр"
+msgstr "Фильтровать"
 
 #: modules/forum/templates/filter_by_author.phtml:66
 #: modules/forum/templates/topic.phtml:47
@@ -947,7 +947,7 @@ msgstr "Правила форума"
 #: modules/forum/templates/forum_search.phtml:31
 #: modules/forum/templates/forum_search.phtml:32
 msgid "Search query"
-msgstr "Запрос"
+msgstr "Поисковый запрос"
 
 #: modules/forum/templates/forum_search.phtml:34
 msgid "Length of query: 4min., 64maks.<br>Search is case insensitive <br>Results are sorted by relevance."
@@ -978,7 +978,7 @@ msgstr "Перейти к сообщению"
 
 #: modules/forum/templates/forum_search.phtml:83
 msgid "Search History"
-msgstr "История поиска"
+msgstr "История поисковых запросов"
 
 #: modules/forum/templates/forum_search.phtml:91
 msgid "Clear history"
@@ -998,7 +998,7 @@ msgstr "Последняя активность"
 
 #: modules/forum/templates/index.phtml:37
 msgid "Files"
-msgstr "Файлы форума"
+msgstr "Файлы"
 
 #: modules/forum/templates/move_topic.phtml:33
 msgid "Category"
@@ -1022,7 +1022,7 @@ msgstr "Другие категории"
 
 #: modules/forum/templates/new_topic.phtml:71
 msgid "Title"
-msgstr "Заголовок"
+msgstr "Название"
 
 #: modules/forum/templates/new_topic.phtml:105
 #: modules/forum/templates/reply_message.phtml:55
@@ -1094,12 +1094,12 @@ msgstr "Файлы раздела"
 
 #: modules/forum/templates/section.phtml:45
 msgid "There are no sections in this category"
-msgstr "В этой категории нет разделов"
+msgstr "В данной категории разделов нет"
 
 #: modules/forum/templates/show_post.phtml:62
 #: modules/forum/templates/topic.phtml:251
 msgid "Edited:"
-msgstr "Изменено:"
+msgstr "Изм.:"
 
 #: modules/forum/templates/show_post.phtml:63
 #: modules/forum/templates/topic.phtml:252
@@ -1152,7 +1152,7 @@ msgstr "Всего голосов"
 
 #: modules/forum/templates/topic.phtml:260
 msgid "Post deleted:"
-msgstr "Пост удален:"
+msgstr "Пост удалил:"
 
 #: modules/forum/templates/topic.phtml:261
 msgid "Deleted"
@@ -1212,7 +1212,7 @@ msgstr "Кто здесь"
 
 #: modules/forum/templates/topics.phtml:40
 msgid "No topics in this section"
-msgstr "В этом разделе нет тем"
+msgstr "В данном разделе нет ни одной темы"
 
 #: modules/forum/templates/topics.phtml:95
 msgid "Last page"

@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Azerbaijani\n"
 "Language: az_AZ\n"
-"PO-Revision-Date: 2026-03-24 13:18\n"
+"PO-Revision-Date: 2026-03-24 21:41\n"
 
 #: config/notifications.global.php:20
 #: config/places.global.php:17
@@ -21,12 +21,12 @@ msgstr ""
 
 #: config/notifications.global.php:23
 msgid "New reply on the forum"
-msgstr ""
+msgstr "Yeni cavab forumda"
 
 #: config/notifications.global.php:32
 #, php-format
 msgid "<a href=\"%s\">User <b>%s</b> responded to your message in the topic %s</a>"
-msgstr ""
+msgstr "İstifadəçi <a href=\"%s\"> <b>%s</b> cavab mesaj mövzu %s</a>"
 
 #: config/notifications.global.php:39
 msgid "Karma"
@@ -34,28 +34,28 @@ msgstr ""
 
 #: config/notifications.global.php:42
 msgid "New vote in karma"
-msgstr ""
+msgstr "Yeni səsvermə karma"
 
 #: config/notifications.global.php:43
 msgid "User <b>#user_name#</b> voted in <a href=\"#karma_url#\">your karma</a>."
-msgstr ""
+msgstr "İstifadəçi <b>#istifadəçi adı#</b> səs <a href=\"#karma_url#\">sizin karma</a>."
 
 #: config/places.global.php:12
 msgid "On the Homepage"
-msgstr ""
+msgstr "Əsas səhifəyə"
 
 #: config/places.global.php:13
 msgid "Watching the photo album"
-msgstr ""
+msgstr "Baxın foto albom"
 
 #: config/places.global.php:14
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:102
 msgid "Users"
-msgstr ""
+msgstr "İstifadəçilərr"
 
 #: config/places.global.php:15
 msgid "Users List"
-msgstr ""
+msgstr "İstifadəçi Siyahıısı"
 
 #: config/places.global.php:16
 #: system/src/Comments.php:168
@@ -77,12 +77,12 @@ msgstr "Qonaq Otaqi"
 
 #: config/places.global.php:19
 msgid "Reading the FAQ"
-msgstr ""
+msgstr "Oxu suallar və cavabları"
 
 #: config/places.global.php:20
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:90
 msgid "Library"
-msgstr ""
+msgstr "Kitabxana Hekayeler"
 
 #: config/places.global.php:21
 #: modules/login/index.php:68
@@ -99,34 +99,34 @@ msgstr "Daxil ol"
 
 #: config/places.global.php:22
 msgid "Personal correspondence"
-msgstr ""
+msgstr "Şəxsi yazıshma"
 
 #: config/places.global.php:23
 msgid "Reading the news"
-msgstr ""
+msgstr "xəbərləri oxu"
 
 #: config/places.global.php:24
 msgid "Profile"
-msgstr ""
+msgstr "Profilim"
 
 #: config/places.global.php:25
 msgid "Redirect on external link to another site"
-msgstr ""
+msgstr "Yönlendirme xarici keçidlər başqa bir sayta"
 
 #: config/places.global.php:26
 msgid "Registered on the site"
-msgstr ""
+msgstr "Yoxlanılır saytında admin"
 
 #: config/places.global.php:27
 msgid "List of users"
-msgstr ""
+msgstr "İstifadəçilər"
 
 #: config/places.global.php:28
 #: config/places.global.php:29
 #: config/places.global.php:30
 #: config/places.global.php:31
 msgid "Who is online?"
-msgstr ""
+msgstr "online kim var?"
 
 #: modules/language/templates/index.phtml:10
 msgid "Select language"
@@ -146,15 +146,15 @@ msgstr "Şəxsi"
 #: modules/login/templates/logout.phtml:5
 #: modules/login/templates/logout.phtml:11
 msgid "Logout"
-msgstr ""
+msgstr "Çıxış"
 
 #: modules/login/index.php:78
 msgid "You have not entered login"
-msgstr ""
+msgstr "Siz mətni daxil etmədiniz"
 
 #: modules/login/index.php:82
 msgid "You have not entered password"
-msgstr ""
+msgstr "Parolu daxil etmədiniz"
 
 #: modules/login/index.php:100
 #: system/src/Validator/messages.php:17
@@ -164,46 +164,46 @@ msgstr "Təhlükəsizlik kodu düzgün deyil"
 #: modules/login/index.php:150
 #: modules/login/index.php:154
 msgid "Authorization failed"
-msgstr ""
+msgstr "Səhv avtorizasiya"
 
 #: modules/login/templates/captcha.phtml:10
 #: modules/login/templates/captcha.phtml:19
 msgid "Verification code"
-msgstr ""
+msgstr "Təsdiqləmə kodu"
 
 #: modules/login/templates/captcha.phtml:12
 msgid "Enter verification code"
-msgstr ""
+msgstr "Təsdiqləmə kodunu daxil edin"
 
 #: modules/login/templates/captcha.phtml:28
 msgid "Continue"
-msgstr ""
+msgstr "Davam"
 
 #: modules/login/templates/confirm.phtml:20
 msgid "You didn't confirm your email address. Please check your email and follow the instructions in it."
-msgstr ""
+msgstr "Siz təsdiq e-poçt ünvanınızı. Edin, edin və e-poçt və təlimatlara əməl edin ona."
 
 #: modules/login/templates/confirm.phtml:28
 msgid "Sorry, but your request for registration is not considered yet. Please, be patient."
-msgstr ""
+msgstr "Bağışlayın, amma sizin üçün ərizə qeydiyyata hələ baxdığı məsələ. Səbr edin."
 
 #: modules/login/templates/login.phtml:10
 msgid "Authorization"
-msgstr ""
+msgstr "Avtorizasiya"
 
 #: modules/login/templates/login.phtml:15
 #: modules/login/templates/login.phtml:23
 msgid "Username"
-msgstr ""
+msgstr "İstifadəçi adı"
 
 #: modules/login/templates/login.phtml:27
 #: modules/login/templates/login.phtml:35
 msgid "Password"
-msgstr ""
+msgstr "Parol"
 
 #: modules/login/templates/login.phtml:39
 msgid "Forgot password?"
-msgstr ""
+msgstr "Şifrəni unutmusunuz?"
 
 #: modules/login/templates/login.phtml:41
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:79
@@ -212,7 +212,7 @@ msgstr "Qeydiyyat"
 
 #: modules/login/templates/logout.phtml:9
 msgid "Are you sure you want to leave the site?"
-msgstr ""
+msgstr "Siz əmin deyilsinizsə tərk sayta?"
 
 #: modules/login/templates/logout.phtml:12
 #: modules/notifications/templates/settings.phtml:50
@@ -337,21 +337,21 @@ msgstr "Siz axtarır, bir şey mövcud deyil və ya idi köçürülüb"
 
 #: system/src-legacy/Bbcode.php:158
 msgid "Added"
-msgstr ""
+msgstr "Əlavə edildi"
 
 #: system/src-legacy/Tools.php:175
 msgid "ERROR"
-msgstr ""
+msgstr "Səhv"
 
 #: system/src-legacy/Tools.php:315
 msgid "Somewhere on the site"
-msgstr ""
+msgstr "Haradasa saytında"
 
 #: system/src-legacy/Tools.php:506
 msgid "Day"
 msgid_plural "Days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Gün"
+msgstr[1] "Gün"
 
 #: system/src/Checker/SystemChecker.php:29
 msgid "PHP version"
@@ -671,39 +671,39 @@ msgstr "Yolverilməz növü verdi. Simli, tam вещественное, məntiql
 
 #: themes/default/templates/system/app/debug.phtml:15
 msgid "Sql query log"
-msgstr ""
+msgstr "Jurnal SQL sorğu"
 
 #: themes/default/templates/system/app/debug.phtml:26
 msgid "Query"
-msgstr ""
+msgstr "Sorğu"
 
 #: themes/default/templates/system/app/debug.phtml:27
 msgid "Bindings"
-msgstr ""
+msgstr "Məcburi"
 
 #: themes/default/templates/system/app/debug.phtml:28
 msgid "Time"
-msgstr ""
+msgstr "Vaxt"
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:39
 msgid "News archive"
-msgstr ""
+msgstr "Arxiv xəbərlər"
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:113
 msgid "Photo Albums"
-msgstr ""
+msgstr "Foto albom"
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:124
 msgid "Information, FAQ"
-msgstr ""
+msgstr "Məlumat, suallar və cavablar"
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:135
 msgid "Admin Panel"
-msgstr ""
+msgstr "Admin Paneli"
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:144
 msgid "Admin Chat"
-msgstr ""
+msgstr "Admin klubu"
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:183
 msgid "Set Light Theme"
@@ -727,7 +727,7 @@ msgstr "Məktub avtomatik olaraq yaradılan. Edin de. <br> üçün bizə müraci
 
 #: themes/default/templates/system/mail/templates/changed_email_notification.phtml:10
 msgid "Changing email address"
-msgstr ""
+msgstr "E-poçt ünvanını dəyişdir"
 
 #: themes/default/templates/system/mail/templates/changed_email_notification.phtml:13
 #: themes/default/templates/system/mail/templates/confirm_email_change.phtml:13
@@ -754,7 +754,7 @@ msgstr "Əgər siz hələ başlamamışıq proseduru növbədə elektron poçt, 
 
 #: themes/default/templates/system/mail/templates/confirm_email_change.phtml:10
 msgid "Confirm email change"
-msgstr ""
+msgstr "Təsdiq dəyişdirilməsi və e-poçt ünvanları"
 
 #: themes/default/templates/system/mail/templates/confirm_email_change.phtml:18
 msgid "To continue please click the confirm button"
@@ -771,7 +771,7 @@ msgstr "Əgər siz hələ də qeydiyyatdan saytda edin проигнорируй�
 
 #: themes/default/templates/system/mail/templates/registration.phtml:10
 msgid "Registration on the website"
-msgstr ""
+msgstr "Qeydiyyatın veb saytında qeydiyyat"
 
 #: themes/default/templates/system/mail/templates/registration.phtml:15
 #, php-format

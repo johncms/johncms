@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Indonesian\n"
 "Language: id_ID\n"
-"PO-Revision-Date: 2026-03-24 11:09\n"
+"PO-Revision-Date: 2026-03-24 21:40\n"
 
 #: modules/news/src/Application/Article.php:52
 msgid "The requested article was not found."
@@ -32,7 +32,7 @@ msgstr ""
 #: modules/news/src/Application/MetaTagsManager.php:38
 #: modules/news/src/Application/MetaTagsManager.php:39
 msgid "News"
-msgstr ""
+msgstr "Berita"
 
 #: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:41
 #: modules/news/src/Application/Controllers/Admin/AdminController.php:48
@@ -243,13 +243,13 @@ msgstr ""
 
 #: modules/news/templates/admin/add_article.phtml:131
 msgid "Text"
-msgstr ""
+msgstr "Isi"
 
 #: modules/news/templates/admin/add_article.phtml:139
 #: modules/news/templates/admin/add_section.phtml:68
 #: modules/news/templates/admin/settings.phtml:138
 msgid "Save"
-msgstr ""
+msgstr "Simpan"
 
 #: modules/news/templates/admin/add_article.phtml:140
 #: modules/news/templates/admin/add_section.phtml:69
@@ -285,19 +285,19 @@ msgstr ""
 
 #: modules/news/templates/admin/del.phtml:25
 msgid "Do you really want to delete?"
-msgstr ""
+msgstr "Apakah Anda ingin menghapus ini?"
 
 #: modules/news/templates/admin/del.phtml:28
 #: modules/news/templates/admin/sections.phtml:70
 #: modules/news/templates/admin/sections.phtml:97
 #: modules/news/templates/public/article.phtml:59
 msgid "Delete"
-msgstr ""
+msgstr "Hapus"
 
 #: modules/news/templates/admin/del.phtml:29
 #: modules/news/templates/admin/settings.phtml:139
 msgid "Cancel"
-msgstr ""
+msgstr "Batal"
 
 #: modules/news/templates/admin/index.phtml:22
 msgid "Content management"
@@ -339,7 +339,7 @@ msgstr ""
 #: modules/news/templates/admin/sections.phtml:69
 #: modules/news/templates/admin/sections.phtml:96
 msgid "Edit"
-msgstr ""
+msgstr "Sunting"
 
 #: modules/news/templates/admin/sections.phtml:79
 msgid "Section"
@@ -393,7 +393,7 @@ msgstr ""
 #: modules/news/templates/admin/settings.phtml:108
 #: modules/news/templates/admin/settings.phtml:115
 msgid "Title"
-msgstr ""
+msgstr "Judul"
 
 #: modules/news/templates/admin/settings.phtml:106
 msgid "Meta tag templates for articles"

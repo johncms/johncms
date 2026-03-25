@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
-"PO-Revision-Date: 2026-03-24 11:07\n"
+"PO-Revision-Date: 2026-03-24 21:38\n"
 
 #: modules/guestbook/src/Application/Controllers/DeleteEntryController.php:59
 msgid "The message was deleted"
@@ -20,7 +20,7 @@ msgstr ""
 #: modules/guestbook/src/Application/Controllers/EditEntryController.php:34
 #: modules/guestbook/templates/edit.phtml:3
 msgid "Edit message"
-msgstr ""
+msgstr "Editeaza mesaj"
 
 #: modules/guestbook/src/Application/Controllers/EditEntryController.php:69
 msgid "The message was saved"
@@ -32,11 +32,11 @@ msgstr ""
 
 #: modules/guestbook/src/Application/Controllers/GuestbookController.php:38
 msgid "Admin Club"
-msgstr ""
+msgstr "Club-Admin"
 
 #: modules/guestbook/src/Application/Controllers/GuestbookController.php:48
 msgid "Guestbook is closed"
-msgstr ""
+msgstr "Guestbook este închis"
 
 #: modules/guestbook/src/Application/Controllers/GuestbookController.php:65
 msgid "Your message was added successfully"
@@ -48,7 +48,7 @@ msgstr ""
 #: modules/guestbook/templates/reply.phtml:11
 #: modules/guestbook/templates/reply.phtml:24
 msgid "Reply"
-msgstr ""
+msgstr "Raspunde"
 
 #: modules/guestbook/src/Application/Controllers/ReplyController.php:69
 msgid "Your reply to the message was saved"
@@ -60,126 +60,127 @@ msgstr ""
 
 #: modules/guestbook/src/Application/Services/GuestbookService.php:193
 msgid "All messages older than 1 day were deleted"
-msgstr ""
+msgstr "Toate mesajele mai vechi de o zi au fost sterse"
 
 #: modules/guestbook/src/Application/Services/GuestbookService.php:209
 msgid "Full clearing is finished"
-msgstr ""
+msgstr "Stergere totala finalizata"
 
 #: modules/guestbook/src/Application/Services/GuestbookService.php:225
 msgid "All messages older than 1 week were deleted"
-msgstr ""
+msgstr "Toate mesajele mai vechi de o saptamana au fost sterse"
 
 #: modules/guestbook/templates/clear.phtml:5
 msgid "Clear guestbook"
-msgstr ""
+msgstr "Goliţi cartea de oaspeţi"
 
 #: modules/guestbook/templates/clear.phtml:10
 msgid "Clearing parameters"
-msgstr ""
+msgstr "Sterge parametri"
 
 #: modules/guestbook/templates/clear.phtml:13
 msgid "Older than 1 week"
-msgstr ""
+msgstr "Mai vechi de o saptamana"
 
 #: modules/guestbook/templates/clear.phtml:17
 msgid "Older than 1 day"
-msgstr ""
+msgstr "Mai vechi de o zi"
 
 #: modules/guestbook/templates/clear.phtml:21
 msgid "Clear all"
-msgstr ""
+msgstr "Sterge tot"
 
 #: modules/guestbook/templates/clear.phtml:25
 #: modules/guestbook/templates/index.phtml:221
 msgid "Clear"
-msgstr ""
+msgstr "Sterge"
 
 #: modules/guestbook/templates/clear.phtml:26
 #: modules/guestbook/templates/confirm_delete.phtml:15
 msgid "Cancel"
-msgstr ""
+msgstr "Anuleaza"
 
 #: modules/guestbook/templates/confirm_delete.phtml:6
 msgid "Delete message"
-msgstr ""
+msgstr "Şterge mesajul"
 
 #: modules/guestbook/templates/confirm_delete.phtml:11
 msgid "Do you really want to delete?"
-msgstr ""
+msgstr "Doriţi într-adevăr să ştergeţi?"
 
 #: modules/guestbook/templates/confirm_delete.phtml:14
 #: modules/guestbook/templates/index.phtml:206
 msgid "Delete"
-msgstr ""
+msgstr "Șterge"
 
 #: modules/guestbook/templates/edit.phtml:10
 #: modules/guestbook/templates/reply.phtml:18
 msgid "Author"
-msgstr ""
+msgstr "Autor"
 
 #: modules/guestbook/templates/edit.phtml:15
 #: modules/guestbook/templates/index.phtml:62
 msgid "Message"
-msgstr ""
+msgstr "Mesaj"
 
 #: modules/guestbook/templates/edit.phtml:21
 #: modules/guestbook/templates/reply.phtml:30
 msgid "Save"
-msgstr ""
+msgstr "Salveaza"
 
 #: modules/guestbook/templates/edit.phtml:22
 #: modules/guestbook/templates/reply.phtml:31
 msgid "Back"
-msgstr ""
+msgstr "Înapoi"
 
 #: modules/guestbook/templates/index.phtml:21
 msgid "The guestbook is closed"
-msgstr ""
+msgstr "Guestbook este închis"
 
 #: modules/guestbook/templates/index.phtml:44
 #: modules/guestbook/templates/index.phtml:52
 msgid "Name"
-msgstr ""
+msgstr "Nume"
 
 #: modules/guestbook/templates/index.phtml:69
 msgid "Verification code"
-msgstr ""
+msgstr "Codul de verificare"
 
 #: modules/guestbook/templates/index.phtml:71
 #: modules/guestbook/templates/index.phtml:79
 msgid "Symbols on the picture"
-msgstr ""
+msgstr "Simbolurile din imagine"
 
 #: modules/guestbook/templates/index.phtml:85
 msgid "If you cannot see the image code, enable graphics in your browser and refresh this page"
-msgstr ""
+msgstr "Daca nu poti vedea codul din imagine, activeaza grafica in browser si reincarca pagina"
 
 #: modules/guestbook/templates/index.phtml:90
 msgid "Write"
-msgstr ""
+msgstr "Scrie"
 
 #: modules/guestbook/templates/index.phtml:101
 msgid "For registered users only"
-msgstr ""
+msgstr "Doar pentru utilizatori inregistrati"
 
 #: modules/guestbook/templates/index.phtml:109
 msgid "The guestbook is empty.<br><strong>Be the first! :)</strong>"
-msgstr ""
+msgstr "Nici un mesaj .<br><strong>\n"
+"Fii primul care scrie! :)</strong>"
 
 #: modules/guestbook/templates/index.phtml:146
 msgid "Guest"
-msgstr ""
+msgstr "Oaspete"
 
 #: modules/guestbook/templates/index.phtml:154
 msgid "Edited:"
-msgstr ""
+msgstr "Editat:"
 
 #: modules/guestbook/templates/index.phtml:155
 msgid "Edited"
-msgstr ""
+msgstr "Editat:"
 
 #: modules/guestbook/templates/index.phtml:205
 msgid "Edit"
-msgstr ""
+msgstr "Editeaza"
 

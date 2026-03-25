@@ -11,51 +11,51 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
-"PO-Revision-Date: 2026-03-24 13:18\n"
+"PO-Revision-Date: 2026-03-24 21:39\n"
 
 #: config/notifications.global.php:20
 #: config/places.global.php:17
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:51
 msgid "Forum"
-msgstr ""
+msgstr "Форум"
 
 #: config/notifications.global.php:23
 msgid "New reply on the forum"
-msgstr ""
+msgstr "Новый ответ на форуме"
 
 #: config/notifications.global.php:32
 #, php-format
 msgid "<a href=\"%s\">User <b>%s</b> responded to your message in the topic %s</a>"
-msgstr ""
+msgstr "<a href=\"%s\">Пользователь <b>%s</b> ответил на ваше сообщение в теме %s</a>"
 
 #: config/notifications.global.php:39
 msgid "Karma"
-msgstr ""
+msgstr "Карма"
 
 #: config/notifications.global.php:42
 msgid "New vote in karma"
-msgstr ""
+msgstr "Новый голос в карме"
 
 #: config/notifications.global.php:43
 msgid "User <b>#user_name#</b> voted in <a href=\"#karma_url#\">your karma</a>."
-msgstr ""
+msgstr "Пользователь <b>#user_name#</b> проголосовал в <a href=\"#karma_url#\">вашей карме</a>."
 
 #: config/places.global.php:12
 msgid "On the Homepage"
-msgstr ""
+msgstr "На главной странице"
 
 #: config/places.global.php:13
 msgid "Watching the photo album"
-msgstr ""
+msgstr "Смотрит фотоальбом"
 
 #: config/places.global.php:14
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:102
 msgid "Users"
-msgstr ""
+msgstr "Пользователи"
 
 #: config/places.global.php:15
 msgid "Users List"
-msgstr ""
+msgstr "Список пользователей"
 
 #: config/places.global.php:16
 #: system/src/Comments.php:168
@@ -77,12 +77,12 @@ msgstr "Гостевая"
 
 #: config/places.global.php:19
 msgid "Reading the FAQ"
-msgstr ""
+msgstr "Читает FAQ"
 
 #: config/places.global.php:20
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:90
 msgid "Library"
-msgstr ""
+msgstr "Библиотека"
 
 #: config/places.global.php:21
 #: modules/login/index.php:68
@@ -99,34 +99,34 @@ msgstr "Вход"
 
 #: config/places.global.php:22
 msgid "Personal correspondence"
-msgstr ""
+msgstr "Личная переписка"
 
 #: config/places.global.php:23
 msgid "Reading the news"
-msgstr ""
+msgstr "Читает новости"
 
 #: config/places.global.php:24
 msgid "Profile"
-msgstr ""
+msgstr "Профиль"
 
 #: config/places.global.php:25
 msgid "Redirect on external link to another site"
-msgstr ""
+msgstr "Переходит по внешней ссылке на другой сайт"
 
 #: config/places.global.php:26
 msgid "Registered on the site"
-msgstr ""
+msgstr "Регистрируется на сайте"
 
 #: config/places.global.php:27
 msgid "List of users"
-msgstr ""
+msgstr "Список пользователей"
 
 #: config/places.global.php:28
 #: config/places.global.php:29
 #: config/places.global.php:30
 #: config/places.global.php:31
 msgid "Who is online?"
-msgstr ""
+msgstr "Кто онлайн?"
 
 #: modules/language/templates/index.phtml:10
 msgid "Select language"
@@ -146,15 +146,15 @@ msgstr "Личное"
 #: modules/login/templates/logout.phtml:5
 #: modules/login/templates/logout.phtml:11
 msgid "Logout"
-msgstr ""
+msgstr "Выход"
 
 #: modules/login/index.php:78
 msgid "You have not entered login"
-msgstr ""
+msgstr "Вы не ввели логин"
 
 #: modules/login/index.php:82
 msgid "You have not entered password"
-msgstr ""
+msgstr "Вы не ввели пароль"
 
 #: modules/login/index.php:100
 #: system/src/Validator/messages.php:17
@@ -164,46 +164,46 @@ msgstr "Проверочный код введен неверно"
 #: modules/login/index.php:150
 #: modules/login/index.php:154
 msgid "Authorization failed"
-msgstr ""
+msgstr "Ошибка авторизации"
 
 #: modules/login/templates/captcha.phtml:10
 #: modules/login/templates/captcha.phtml:19
 msgid "Verification code"
-msgstr ""
+msgstr "Проверочный код"
 
 #: modules/login/templates/captcha.phtml:12
 msgid "Enter verification code"
-msgstr ""
+msgstr "Введите проверочный код"
 
 #: modules/login/templates/captcha.phtml:28
 msgid "Continue"
-msgstr ""
+msgstr "Продолжить"
 
 #: modules/login/templates/confirm.phtml:20
 msgid "You didn't confirm your email address. Please check your email and follow the instructions in it."
-msgstr ""
+msgstr "Вы не подтвердили ваш адрес электронной почты. Пожалуйста, проверьте вашу электронную почту и следуйте инструкциям в письме."
 
 #: modules/login/templates/confirm.phtml:28
 msgid "Sorry, but your request for registration is not considered yet. Please, be patient."
-msgstr ""
+msgstr "Извините, но ваша заявка на регистрацию еще не рассмотрена. Пожалуйста, будьте терпеливы."
 
 #: modules/login/templates/login.phtml:10
 msgid "Authorization"
-msgstr ""
+msgstr "Авторизация"
 
 #: modules/login/templates/login.phtml:15
 #: modules/login/templates/login.phtml:23
 msgid "Username"
-msgstr ""
+msgstr "Ваш логин"
 
 #: modules/login/templates/login.phtml:27
 #: modules/login/templates/login.phtml:35
 msgid "Password"
-msgstr ""
+msgstr "Пароль"
 
 #: modules/login/templates/login.phtml:39
 msgid "Forgot password?"
-msgstr ""
+msgstr "Забыли пароль?"
 
 #: modules/login/templates/login.phtml:41
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:79
@@ -212,7 +212,7 @@ msgstr "Регистрация"
 
 #: modules/login/templates/logout.phtml:9
 msgid "Are you sure you want to leave the site?"
-msgstr ""
+msgstr "Вы уверены, что хотите покинуть этот сайт?"
 
 #: modules/login/templates/logout.phtml:12
 #: modules/notifications/templates/settings.phtml:50
@@ -337,23 +337,23 @@ msgstr "Страница, которую Вы ищете, не существу�
 
 #: system/src-legacy/Bbcode.php:158
 msgid "Added"
-msgstr ""
+msgstr "Добавлено"
 
 #: system/src-legacy/Tools.php:175
 msgid "ERROR"
-msgstr ""
+msgstr "ОШИБКА"
 
 #: system/src-legacy/Tools.php:315
 msgid "Somewhere on the site"
-msgstr ""
+msgstr "Где-то на сайте"
 
 #: system/src-legacy/Tools.php:506
 msgid "Day"
 msgid_plural "Days"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "день"
+msgstr[1] "дня"
+msgstr[2] "дней"
+msgstr[3] "дня"
 
 #: system/src/Checker/SystemChecker.php:29
 msgid "PHP version"
@@ -674,47 +674,47 @@ msgstr "Недопустимый тип данных. Ожидается стр�
 
 #: themes/default/templates/system/app/debug.phtml:15
 msgid "Sql query log"
-msgstr ""
+msgstr "Журнал SQL запросов"
 
 #: themes/default/templates/system/app/debug.phtml:26
 msgid "Query"
-msgstr ""
+msgstr "Запрос"
 
 #: themes/default/templates/system/app/debug.phtml:27
 msgid "Bindings"
-msgstr ""
+msgstr "Привязки"
 
 #: themes/default/templates/system/app/debug.phtml:28
 msgid "Time"
-msgstr ""
+msgstr "Время"
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:39
 msgid "News archive"
-msgstr ""
+msgstr "Архив новостей"
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:113
 msgid "Photo Albums"
-msgstr ""
+msgstr "Фотоальбомы"
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:124
 msgid "Information, FAQ"
-msgstr ""
+msgstr "Информация, FAQ"
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:135
 msgid "Admin Panel"
-msgstr ""
+msgstr "Админ панель"
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:144
 msgid "Admin Chat"
-msgstr ""
+msgstr "Админ Чат"
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:183
 msgid "Set Light Theme"
-msgstr ""
+msgstr "Установить светлую тему"
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:183
 msgid "Set Dark Theme"
-msgstr ""
+msgstr "Установить темную тему"
 
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:23
 msgid "Log In"
@@ -730,7 +730,7 @@ msgstr "Email сгенерировано автоматически. Пожал�
 
 #: themes/default/templates/system/mail/templates/changed_email_notification.phtml:10
 msgid "Changing email address"
-msgstr ""
+msgstr "Изменение адреса электронной почты"
 
 #: themes/default/templates/system/mail/templates/changed_email_notification.phtml:13
 #: themes/default/templates/system/mail/templates/confirm_email_change.phtml:13
@@ -757,7 +757,7 @@ msgstr "Если вы не начинали процедуру изменени�
 
 #: themes/default/templates/system/mail/templates/confirm_email_change.phtml:10
 msgid "Confirm email change"
-msgstr ""
+msgstr "Подтвердите изменение электронной почты"
 
 #: themes/default/templates/system/mail/templates/confirm_email_change.phtml:18
 msgid "To continue please click the confirm button"
@@ -774,7 +774,7 @@ msgstr "Если вы не регистрировались на нашем са
 
 #: themes/default/templates/system/mail/templates/registration.phtml:10
 msgid "Registration on the website"
-msgstr ""
+msgstr "Регистрация на сайте"
 
 #: themes/default/templates/system/mail/templates/registration.phtml:15
 #, php-format

@@ -11,53 +11,53 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Lithuanian\n"
 "Language: lt_LT\n"
-"PO-Revision-Date: 2026-03-24 11:06\n"
+"PO-Revision-Date: 2026-03-24 21:39\n"
 
 #: modules/community/includes/administration.php:33
 #: modules/community/includes/administration.php:39
 #: modules/community/includes/administration.php:40
 #: modules/community/templates/index.phtml:45
 msgid "Administration"
-msgstr ""
+msgstr "Administravimas"
 
 #: modules/community/includes/birthdays.php:25
 #: modules/community/includes/birthdays.php:31
 #: modules/community/includes/birthdays.php:32
 #: modules/community/templates/index.phtml:50
 msgid "Birthdays"
-msgstr ""
+msgstr "Gimtadienis"
 
 #: modules/community/includes/search.php:23
 #: modules/community/templates/search.phtml:81
 #: modules/community/templates/users.phtml:50
 msgid "User Search"
-msgstr ""
+msgstr "Vartotojo Paieška"
 
 #: modules/community/includes/search.php:32
 #: modules/community/includes/search.php:36
 #: modules/community/templates/index.phtml:32
 msgid "Nickname"
-msgstr ""
+msgstr "Slapyvardis"
 
 #: modules/community/includes/search.php:32
 msgid "Invalid length"
-msgstr ""
+msgstr "Neleistinas ilgis"
 
 #: modules/community/includes/search.php:36
 msgid "Invalid characters"
-msgstr ""
+msgstr "Klaidingi simboliai"
 
 #: modules/community/includes/top.php:21
 msgid "Forum"
-msgstr ""
+msgstr "Forumas"
 
 #: modules/community/includes/top.php:26
 msgid "Guestbook"
-msgstr ""
+msgstr "Svečių Knyga"
 
 #: modules/community/includes/top.php:31
 msgid "Comments"
-msgstr ""
+msgstr "Komentarai"
 
 #: modules/community/includes/top.php:39
 msgid "Karma"
@@ -65,104 +65,104 @@ msgstr ""
 
 #: modules/community/includes/top.php:50
 msgid "Most active in Guestbook"
-msgstr ""
+msgstr "Aktyviausieji Svečių knygoje"
 
 #: modules/community/includes/top.php:57
 msgid "Most commentators"
-msgstr ""
+msgstr "Dažniausi komentatoriai"
 
 #: modules/community/includes/top.php:65
 msgid "Best Karma"
-msgstr ""
+msgstr "Geriausia Karma"
 
 #: modules/community/includes/top.php:73
 msgid "Most active in Forum"
-msgstr ""
+msgstr "Aktyviausi Forume"
 
 #: modules/community/includes/users.php:28
 #: modules/community/includes/users.php:34
 #: modules/community/includes/users.php:35
 msgid "List of users"
-msgstr ""
+msgstr "Vartotojų sąrašas"
 
 #: modules/community/index.php:55
 msgid "Community"
-msgstr ""
+msgstr "Bendruomenė"
 
 #: modules/community/index.php:66
 msgid "For registered users only"
-msgstr ""
+msgstr "Tik registruotiems Vartotojams"
 
 #: modules/community/templates/index.phtml:30
 #: modules/community/templates/search.phtml:43
 msgid "Look for the User"
-msgstr ""
+msgstr "Ieškoti vartotoja"
 
 #: modules/community/templates/index.phtml:34
 #: modules/community/templates/search.phtml:47
 msgid "Search"
-msgstr ""
+msgstr "Paieška"
 
 #: modules/community/templates/index.phtml:37
 #: modules/community/templates/search.phtml:50
 msgid "The search is performed by Nickname and are case-insensitive."
-msgstr ""
+msgstr "Paieška atliekama pagal vartotojo slapyvardį, nejautrus didžiosioms arba mažosioms raidėms."
 
 #: modules/community/templates/index.phtml:41
 msgid "Users"
-msgstr ""
+msgstr "Vartotojai"
 
 #: modules/community/templates/index.phtml:55
 msgid "Top Activity"
-msgstr ""
+msgstr "Top Aktyvumas"
 
 #: modules/community/templates/search.phtml:45
 msgid "Username"
-msgstr ""
+msgstr "Vartotojo vardas"
 
 #: modules/community/templates/search.phtml:64
 #: modules/community/templates/top.phtml:40
 #: modules/community/templates/users.phtml:33
 msgid "List is empty"
-msgstr ""
+msgstr "Sąrašas tuščias"
 
 #: modules/community/templates/search.phtml:71
 #: modules/community/templates/users.phtml:40
 msgid "Total"
-msgstr ""
+msgstr "Viso"
 
 #: modules/community/templates/search.phtml:84
 #: modules/community/templates/top.phtml:47
 #: modules/community/templates/users.phtml:53
 msgid "Back"
-msgstr ""
+msgstr "Atgal"
 
 #: modules/community/templates/user_row.phtml:61
 #: modules/community/templates/user_row.phtml:67
 msgid "post"
 msgid_plural "posts"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "pranešimas"
+msgstr[1] "pareigybės"
+msgstr[2] "pareigybės"
+msgstr[3] "pareigybės"
 
 #: modules/community/templates/user_row.phtml:63
 msgid "comment"
 msgid_plural "comments"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "Komentaras"
+msgstr[1] "Komentarai"
+msgstr[2] "Komentarai"
+msgstr[3] "Komentarai"
 
 #: modules/community/templates/user_row.phtml:65
 msgid "point"
 msgid_plural "points"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "taškas"
+msgstr[1] "taškai"
+msgstr[2] "taškai"
+msgstr[3] "taškai"
 
 #: modules/community/templates/user_row.phtml:89
 msgid "Delete"
-msgstr ""
+msgstr "Ištrinti"
 

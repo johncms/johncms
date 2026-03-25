@@ -11,40 +11,40 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
-"PO-Revision-Date: 2026-03-24 11:07\n"
+"PO-Revision-Date: 2026-03-24 21:38\n"
 
 #: modules/help/includes/admsmilies.php:20
 #: modules/help/includes/smilies.php:35
 msgid "For administration"
-msgstr ""
+msgstr "Pentru administratie"
 
 #: modules/help/includes/admsmilies.php:21
 #: modules/help/includes/my_smilies.php:22
 #: modules/help/includes/usersmilies.php:39
 #: modules/help/templates/index.phtml:31
 msgid "Smilies"
-msgstr ""
+msgstr "Emoticoane"
 
 #: modules/help/includes/admsmilies.php:32
 msgid "Access forbidden"
-msgstr ""
+msgstr "Acess interzis"
 
 #: modules/help/includes/avatars.php:20
 #: modules/help/templates/index.phtml:30
 msgid "Avatars"
-msgstr ""
+msgstr "Avatare"
 
 #: modules/help/includes/avatars.php:37
 msgid "Avatar has been successfully applied"
-msgstr ""
+msgstr "Avatarul a fost aplicat cu sucess"
 
 #: modules/help/includes/avatars.php:39
 msgid "Continue"
-msgstr ""
+msgstr "Continua"
 
 #: modules/help/includes/avatars.php:48
 msgid "An error occurred"
-msgstr ""
+msgstr "EROARE"
 
 #: modules/help/includes/avatars.php:50
 #: modules/help/templates/avatar_list.phtml:65
@@ -56,91 +56,91 @@ msgstr ""
 #: modules/help/templates/smiles.phtml:48
 #: modules/help/templates/smiles_list.phtml:88
 msgid "Back"
-msgstr ""
+msgstr "Înapoi"
 
 #: modules/help/includes/avatars.php:55
 msgid "Set to Profile"
-msgstr ""
+msgstr "Seteaza la profil"
 
 #: modules/help/includes/avatars.php:58
 msgid "Are you sure you want to set yourself this avatar?"
-msgstr ""
+msgstr "Esti sigur ca vrei sa iti setezi acest avatar?"
 
 #: modules/help/includes/avatars.php:61
 msgid "Save"
-msgstr ""
+msgstr "Salveaza"
 
 #: modules/help/includes/forum.php:15
 #: modules/help/templates/index.phtml:28
 msgid "Forum rules"
-msgstr ""
+msgstr "Reguli in forum"
 
 #: modules/help/includes/my_smilies.php:21
 #: modules/help/includes/smilies.php:27
 #: modules/help/templates/smiles_list.phtml:45
 msgid "My smilies"
-msgstr ""
+msgstr "Emoticoanele mele"
 
 #: modules/help/includes/smilies.php:19
 msgid "Smiles"
-msgstr ""
+msgstr "Zâmbete"
 
 #: modules/help/includes/tags.php:15
 #: modules/help/templates/index.phtml:29
 msgid "bbCode Tags"
-msgstr ""
+msgstr "Coduri BB"
 
 #: modules/help/index.php:54
 msgid "Information, FAQ"
-msgstr ""
+msgstr "Informatii, Reguli"
 
 #: modules/help/index.php:64
 msgid "Animals"
-msgstr ""
+msgstr "Animale"
 
 #: modules/help/index.php:65
 msgid "Brawl, Weapons"
-msgstr ""
+msgstr "Arme"
 
 #: modules/help/index.php:66
 msgid "Emotions"
-msgstr ""
+msgstr "Emotii"
 
 #: modules/help/index.php:67
 msgid "Flowers"
-msgstr ""
+msgstr "Flori"
 
 #: modules/help/index.php:68
 msgid "Food, Alcohol"
-msgstr ""
+msgstr "Mancare, Alcool"
 
 #: modules/help/index.php:69
 msgid "Gestures"
-msgstr ""
+msgstr "Gesturi"
 
 #: modules/help/index.php:70
 msgid "Holidays"
-msgstr ""
+msgstr "Sarbatori"
 
 #: modules/help/index.php:71
 msgid "Love"
-msgstr ""
+msgstr "Dragoste"
 
 #: modules/help/index.php:72
 msgid "Miscellaneous"
-msgstr ""
+msgstr "Diverse"
 
 #: modules/help/index.php:73
 msgid "Music, Dancing"
-msgstr ""
+msgstr "Muzica, Dans"
 
 #: modules/help/index.php:74
 msgid "Sports"
-msgstr ""
+msgstr "Sporturi"
 
 #: modules/help/index.php:75
 msgid "Technology"
-msgstr ""
+msgstr "Tehnologie"
 
 #: modules/help/templates/avatar_list.phtml:33
 #: modules/help/templates/avatars.phtml:34
@@ -148,73 +148,73 @@ msgstr ""
 #: modules/help/templates/smiles.phtml:34
 #: modules/help/templates/smiles_list.phtml:33
 msgid "The list is empty"
-msgstr ""
+msgstr "Lista este goală"
 
 #: modules/help/templates/avatar_list.phtml:61
 #: modules/help/templates/my_smiles_list.phtml:77
 #: modules/help/templates/smiles_list.phtml:84
 msgid "Total:"
-msgstr ""
+msgstr "Total"
 
 #: modules/help/templates/bbcode.phtml:30
 msgid "PHP code"
-msgstr ""
+msgstr "Cod PHP"
 
 #: modules/help/templates/bbcode.phtml:33
 msgid "Link name"
-msgstr ""
+msgstr "Nume link"
 
 #: modules/help/templates/bbcode.phtml:34
 msgid "URL Link"
-msgstr ""
+msgstr "Adresa URL"
 
 #: modules/help/templates/bbcode.phtml:38
 msgid "Bold"
-msgstr ""
+msgstr "Ingrosat"
 
 #: modules/help/templates/bbcode.phtml:42
 msgid "Italic"
-msgstr ""
+msgstr "Inclinat"
 
 #: modules/help/templates/bbcode.phtml:46
 msgid "Underline"
-msgstr ""
+msgstr "Subliniat"
 
 #: modules/help/templates/bbcode.phtml:50
 msgid "Strike"
-msgstr ""
+msgstr "Taiat"
 
 #: modules/help/templates/bbcode.phtml:54
 msgid "Red"
-msgstr ""
+msgstr "Rosu"
 
 #: modules/help/templates/bbcode.phtml:58
 msgid "Green"
-msgstr ""
+msgstr "Verde"
 
 #: modules/help/templates/bbcode.phtml:62
 msgid "Blue"
-msgstr ""
+msgstr "Albastru"
 
 #: modules/help/templates/bbcode.phtml:66
 msgid "Text Color"
-msgstr ""
+msgstr "Culoare text"
 
 #: modules/help/templates/bbcode.phtml:70
 msgid "Background Color"
-msgstr ""
+msgstr "Culoare fundal"
 
 #: modules/help/templates/bbcode.phtml:74
 msgid "Quote"
-msgstr ""
+msgstr "Citeaza"
 
 #: modules/help/templates/bbcode.phtml:78
 msgid "Bulleted list"
-msgstr ""
+msgstr "Lista cu marcatori"
 
 #: modules/help/templates/bbcode.phtml:81
 msgid "Title"
-msgstr ""
+msgstr "Titlu"
 
 #: modules/help/templates/bbcode.phtml:81
 msgid "Text"
@@ -222,102 +222,102 @@ msgstr ""
 
 #: modules/help/templates/bbcode.phtml:82
 msgid "Spoiler"
-msgstr ""
+msgstr "Pumnal"
 
 #: modules/help/templates/confirm.phtml:40
 msgid "Cancel"
-msgstr ""
+msgstr "Anuleaza"
 
 #: modules/help/templates/forum_rules.phtml:26
 msgid "FORBIDDEN"
-msgstr ""
+msgstr "INTERZIS"
 
 #: modules/help/templates/forum_rules.phtml:28
 msgid "Advertising messages"
-msgstr ""
+msgstr "Mesajele cu reclame"
 
 #: modules/help/templates/forum_rules.phtml:29
 msgid "The messages containing direct propagation of racial, national and religious animosity"
-msgstr ""
+msgstr "Mesajele care conțin propagarea directă a anonimarii rasiale, naționale și religioase"
 
 #: modules/help/templates/forum_rules.phtml:30
 msgid "Any abusive, obscene, vulgar, slanderous, hateful, threatening and sexually-oriented messages or any other material that may violate any applicable laws"
-msgstr ""
+msgstr "Orice mesaj abuziv, obscene, vulgar, amenintator, plin de ura, cu orientare sexuala sau orice alt material care violeaza orice lege in aplicare"
 
 #: modules/help/templates/forum_rules.phtml:31
 msgid "The messages obviously offending someone, espcially forum users"
-msgstr ""
+msgstr "Mesajele ofensatoare catre cineva, in special utilizatorilor din forum"
 
 #: modules/help/templates/forum_rules.phtml:32
 msgid "Purposely to deform a writing of nicknames of other users for the purpose of giving to the message an offensive shade"
-msgstr ""
+msgstr "Dinadins pentru a deforma o scriere de porecle ale altor utilizatori cu scopul de a da mesajului o nuanță ofensivă"
 
 #: modules/help/templates/forum_rules.phtml:33
 msgid "Publishing deleted by moderator messages repeatedly"
-msgstr ""
+msgstr "Postare mesaje șterse de către moderator în mod repetat"
 
 #: modules/help/templates/forum_rules.phtml:34
 msgid "Post messages not related to the topic"
-msgstr ""
+msgstr "Postarea mesajelor care nu au legatura cu topicul"
 
 #: modules/help/templates/forum_rules.phtml:35
 msgid "Continuing topics that have been closed by moderator"
-msgstr ""
+msgstr "Continuare topicului care a fost inchis de in moderator"
 
 #: modules/help/templates/forum_rules.phtml:38
 msgid "ABSOLUTELY FORBIDDEN"
-msgstr ""
+msgstr "ABSOLUT INTERZIS"
 
 #: modules/help/templates/forum_rules.phtml:40
 msgid "Writing in the public topics a discontent with inappropriate actions of other users and discussing about moderators working. Use private messages for this purpose"
-msgstr ""
+msgstr "Scrierea in topicurile publice o nemulțumire cu acțiunile inadecvate ale altor utilizatori și de a discuta despre munca moderatorilor de. Utilizați mesajele private în acest scop"
 
 #: modules/help/templates/forum_rules.phtml:41
 msgid "Register the nicknames having offensive tone for other users"
-msgstr ""
+msgstr "Inregistrarea unui nume de utilizator ofensator catre alti utilizatori"
 
 #: modules/help/templates/forum_rules.phtml:44
 msgid "UNACCEPTABLE"
-msgstr ""
+msgstr "NEACCEPTAT"
 
 #: modules/help/templates/forum_rules.phtml:46
 msgid "Quote full messages of the previous user and quote the messages already containing other quotes"
-msgstr ""
+msgstr "Citarea intregului mesaj a unui utilizator anterior si citarea unu mesaj care contine deja alt citat"
 
 #: modules/help/templates/forum_rules.phtml:47
 msgid "Post messages only contains external link"
-msgstr ""
+msgstr "Postarea mesajelor care contin adrese de site-uri externe"
 
 #: modules/help/templates/forum_rules.phtml:48
 msgid "Post messages written in translite"
-msgstr ""
+msgstr "Postarea mesajelor in alta limba"
 
 #: modules/help/templates/forum_rules.phtml:49
 msgid "Posting of purposeless messages: consisting of smileys only or posts like \"Ok\", \"What?\", \"Who is there?\", etc."
-msgstr ""
+msgstr "Postarea mesajelor scurte: cele care contin doar emoticoane sau postari precum \"Ok\", \"Nu\", \"Nu stiu\", etc."
 
 #: modules/help/templates/forum_rules.phtml:54
 msgid "Message posted despite the above warnings will be changed or deleted."
-msgstr ""
+msgstr "Mesajele postate in ciuda avertizarilor vor fi modificate sau sterse."
 
 #: modules/help/templates/forum_rules.phtml:55
 msgid "This rule applies to all members and moderators, repeated actions will make you get ban or even lose your account."
-msgstr ""
+msgstr "Aceste reguli se aplica tuturor membrilor si moderatorilor, actiunile repetate vor duce la banare sau pierderea contului."
 
 #: modules/help/templates/my_smiles_list.phtml:36
 msgid "Add Smilies"
-msgstr ""
+msgstr "Adauga emoticon"
 
 #: modules/help/templates/my_smiles_list.phtml:55
 #: modules/help/templates/smiles_list.phtml:62
 msgid "or"
-msgstr ""
+msgstr "sau"
 
 #: modules/help/templates/my_smiles_list.phtml:64
 msgid "Delete"
-msgstr ""
+msgstr "Șterge"
 
 #: modules/help/templates/smiles_list.phtml:71
 msgid "Add"
-msgstr ""
+msgstr "Adauga"
 

@@ -11,11 +11,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
-"PO-Revision-Date: 2026-03-24 11:09\n"
+"PO-Revision-Date: 2026-03-24 21:40\n"
 
 #: modules/news/src/Application/Article.php:52
 msgid "The requested article was not found."
-msgstr ""
+msgstr "Yêu cầu không được tìm thấy."
 
 #: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:33
 #: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:36
@@ -32,47 +32,47 @@ msgstr ""
 #: modules/news/src/Application/MetaTagsManager.php:38
 #: modules/news/src/Application/MetaTagsManager.php:39
 msgid "News"
-msgstr ""
+msgstr "Tin tức"
 
 #: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:41
 #: modules/news/src/Application/Controllers/Admin/AdminController.php:48
 #: modules/news/src/Application/Controllers/Admin/AdminSectionController.php:35
 msgid "Section list"
-msgstr ""
+msgstr "Danh sách thư mục"
 
 #: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:56
 #: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:57
 #: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:74
 #: modules/news/templates/admin/sections.phtml:39
 msgid "Add article"
-msgstr ""
+msgstr "Tạo thông báo mới"
 
 #: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:103
 #: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:205
 msgid "The article name cannot be empty"
-msgstr ""
+msgstr "Tiêu đề thông báo không được để trống."
 
 #: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:133
 msgid "The article was created successfully"
-msgstr ""
+msgstr "Tạo thành công thông báo."
 
 #: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:137
 #: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:236
 msgid "An article with this code already exists"
-msgstr ""
+msgstr "Thông báo này đã tồn tại."
 
 #: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:158
 #: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:159
 msgid "Edit article"
-msgstr ""
+msgstr "Chỉnh sửa thông báo."
 
 #: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:232
 msgid "The article was updated successfully"
-msgstr ""
+msgstr "Tạo thành công thông báo."
 
 #: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:285
 msgid "The article was successfully deleted"
-msgstr ""
+msgstr "Thông báo đã được xóa thành công."
 
 #: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:311
 #: modules/news/src/Application/Controllers/CommentsController.php:217
@@ -83,127 +83,127 @@ msgstr ""
 #: modules/news/src/Application/Controllers/Admin/AdminController.php:98
 #: modules/news/templates/admin/index.phtml:34
 msgid "Settings"
-msgstr ""
+msgstr "Cài đặt"
 
 #: modules/news/src/Application/Controllers/Admin/AdminController.php:139
 msgid "Settings saved!"
-msgstr ""
+msgstr "Cài đặt đã được lưu!"
 
 #: modules/news/src/Application/Controllers/Admin/AdminSectionController.php:50
 #: modules/news/src/Application/Controllers/Admin/AdminSectionController.php:51
 #: modules/news/src/Application/Controllers/Admin/AdminSectionController.php:68
 msgid "Create section"
-msgstr ""
+msgstr "Tạo mục"
 
 #: modules/news/src/Application/Controllers/Admin/AdminSectionController.php:90
 #: modules/news/src/Application/Controllers/Admin/AdminSectionController.php:172
 msgid "The section name cannot be empty"
-msgstr ""
+msgstr "Tiêu đề mục không được để trống."
 
 #: modules/news/src/Application/Controllers/Admin/AdminSectionController.php:116
 msgid "The section was created successfully"
-msgstr ""
+msgstr "Tạo thành công thư mục."
 
 #: modules/news/src/Application/Controllers/Admin/AdminSectionController.php:120
 #: modules/news/src/Application/Controllers/Admin/AdminSectionController.php:195
 msgid "A section with this code already exists"
-msgstr ""
+msgstr "Mục này đã tồn tại."
 
 #: modules/news/src/Application/Controllers/Admin/AdminSectionController.php:138
 #: modules/news/src/Application/Controllers/Admin/AdminSectionController.php:141
 #: modules/news/src/Application/Controllers/Admin/AdminSectionController.php:142
 msgid "Edit section"
-msgstr ""
+msgstr "Sửa mục"
 
 #: modules/news/src/Application/Controllers/Admin/AdminSectionController.php:191
 msgid "The section was updated successfully"
-msgstr ""
+msgstr "Tạo thành công thư mục."
 
 #: modules/news/src/Application/Controllers/Admin/AdminSectionController.php:240
 msgid "The section was successfully deleted"
-msgstr ""
+msgstr "Thư mục đã được xóa thành công."
 
 #: modules/news/src/Application/Controllers/CommentsController.php:47
 msgid "Bad Request"
-msgstr ""
+msgstr "Yêu cầu lỗi"
 
 #: modules/news/src/Application/Controllers/CommentsController.php:131
 msgid "You have a ban!"
-msgstr ""
+msgstr "Tài khoản cuả bạn bị khoá!"
 
 #: modules/news/src/Application/Controllers/CommentsController.php:136
 msgid "You are not logged in"
-msgstr ""
+msgstr "Bạn chưa đăng nhập"
 
 #: modules/news/src/Application/Controllers/CommentsController.php:160
 msgid "The comment was added successfully"
-msgstr ""
+msgstr "Nhận xét đã được thêm thành công"
 
 #: modules/news/src/Application/Controllers/CommentsController.php:163
 msgid "Enter the comment text"
-msgstr ""
+msgstr "Nhập nội dung bình luận"
 
 #: modules/news/src/Application/Controllers/CommentsController.php:192
 msgid "The comment was deleted successfully"
-msgstr ""
+msgstr "Nhận xét đã được xóa thành công"
 
 #: modules/news/src/Application/Controllers/CommentsController.php:199
 msgid "Access denied"
-msgstr ""
+msgstr "Truy cập bị từ chối"
 
 #: modules/news/src/Application/Controllers/SearchController.php:35
 msgid "Search"
-msgstr ""
+msgstr "Tìm kiếm"
 
 #: modules/news/src/Application/Controllers/SearchController.php:73
 msgid "Search by tags"
-msgstr ""
+msgstr "Tìm kiếm theo thẻ"
 
 #: modules/news/src/Application/Controllers/VoteController.php:32
 msgid "The user is not authorized"
-msgstr ""
+msgstr "Người dùng không có quyền"
 
 #: modules/news/src/Application/Controllers/VoteController.php:48
 msgid "Your vote is accepted"
-msgstr ""
+msgstr "Phiếu bầu của bạn được chấp nhận"
 
 #: modules/news/src/Application/Section.php:76
 msgid "The requested section was not found."
-msgstr ""
+msgstr "Yêu cầu không được tìm thấy."
 
 #: modules/news/templates/admin/add_article.phtml:21
 msgid "Active"
-msgstr ""
+msgstr "Hoạt động"
 
 #: modules/news/templates/admin/add_article.phtml:25
 #: modules/news/templates/admin/add_article.phtml:33
 msgid "Article name"
-msgstr ""
+msgstr "Tên tiêu đề"
 
 #: modules/news/templates/admin/add_article.phtml:37
 #: modules/news/templates/admin/add_article.phtml:45
 msgid "Page title"
-msgstr ""
+msgstr "Tiêu đề Trang"
 
 #: modules/news/templates/admin/add_article.phtml:49
 #: modules/news/templates/admin/add_article.phtml:56
 msgid "Active from"
-msgstr ""
+msgstr "Hoạt động từ"
 
 #: modules/news/templates/admin/add_article.phtml:60
 #: modules/news/templates/admin/add_article.phtml:67
 msgid "Active to"
-msgstr ""
+msgstr "Kích hoạt tới"
 
 #: modules/news/templates/admin/add_article.phtml:71
 #: modules/news/templates/admin/add_article.phtml:78
 msgid "Article code"
-msgstr ""
+msgstr "Mã tiêu đề"
 
 #: modules/news/templates/admin/add_article.phtml:80
 #: modules/news/templates/admin/add_section.phtml:39
 msgid "Leave it empty for automatic generation"
-msgstr ""
+msgstr "Bỏ trống để tạo tự động"
 
 #: modules/news/templates/admin/add_article.phtml:83
 #: modules/news/templates/admin/add_article.phtml:90
@@ -216,7 +216,7 @@ msgstr ""
 #: modules/news/templates/admin/settings.phtml:119
 #: modules/news/templates/admin/settings.phtml:126
 msgid "Keywords"
-msgstr ""
+msgstr "Từ khóa"
 
 #: modules/news/templates/admin/add_article.phtml:94
 #: modules/news/templates/admin/add_article.phtml:101
@@ -226,234 +226,234 @@ msgstr ""
 #: modules/news/templates/admin/settings.phtml:100
 #: modules/news/templates/admin/settings.phtml:130
 msgid "Description"
-msgstr ""
+msgstr "Mô tả"
 
 #: modules/news/templates/admin/add_article.phtml:105
 #: modules/news/templates/admin/add_article.phtml:112
 msgid "Tags"
-msgstr ""
+msgstr "Thẻ"
 
 #: modules/news/templates/admin/add_article.phtml:114
 msgid "Enter words or phrases separated by commas"
-msgstr ""
+msgstr "Nhập các từ hoặc cụm từ được phân tách bằng dấu phẩy ,"
 
 #: modules/news/templates/admin/add_article.phtml:119
 msgid "Preview text"
-msgstr ""
+msgstr "Xem trước văn bản"
 
 #: modules/news/templates/admin/add_article.phtml:131
 msgid "Text"
-msgstr ""
+msgstr "Văn bản"
 
 #: modules/news/templates/admin/add_article.phtml:139
 #: modules/news/templates/admin/add_section.phtml:68
 #: modules/news/templates/admin/settings.phtml:138
 msgid "Save"
-msgstr ""
+msgstr "Lưu"
 
 #: modules/news/templates/admin/add_article.phtml:140
 #: modules/news/templates/admin/add_section.phtml:69
 #: modules/news/templates/public/article.phtml:92
 msgid "Back"
-msgstr ""
+msgstr "Quay lại"
 
 #: modules/news/templates/admin/add_section.phtml:18
 #: modules/news/templates/admin/add_section.phtml:26
 msgid "Section name"
-msgstr ""
+msgstr "Tên mục"
 
 #: modules/news/templates/admin/add_section.phtml:30
 #: modules/news/templates/admin/add_section.phtml:37
 msgid "Section code"
-msgstr ""
+msgstr "Mã tùy chọn"
 
 #: modules/news/templates/admin/add_section.phtml:64
 msgid "Text after a list"
-msgstr ""
+msgstr "Văn bản sau danh sách"
 
 #: modules/news/templates/admin/del.phtml:11
 msgid "Confirm the action"
-msgstr ""
+msgstr "Xác nhận hành động này"
 
 #: modules/news/templates/admin/del.phtml:20
 msgid "Section:"
-msgstr ""
+msgstr "Phần:"
 
 #: modules/news/templates/admin/del.phtml:23
 msgid "Article:"
-msgstr ""
+msgstr "Bài viết"
 
 #: modules/news/templates/admin/del.phtml:25
 msgid "Do you really want to delete?"
-msgstr ""
+msgstr "Bạn có thực sự muốn xóa?"
 
 #: modules/news/templates/admin/del.phtml:28
 #: modules/news/templates/admin/sections.phtml:70
 #: modules/news/templates/admin/sections.phtml:97
 #: modules/news/templates/public/article.phtml:59
 msgid "Delete"
-msgstr ""
+msgstr "Xóa"
 
 #: modules/news/templates/admin/del.phtml:29
 #: modules/news/templates/admin/settings.phtml:139
 msgid "Cancel"
-msgstr ""
+msgstr "Hủy bỏ"
 
 #: modules/news/templates/admin/index.phtml:22
 msgid "Content management"
-msgstr ""
+msgstr "Quản lý nội dung"
 
 #: modules/news/templates/admin/sections.phtml:40
 msgid "Add section"
-msgstr ""
+msgstr "Thêm phần"
 
 #: modules/news/templates/admin/sections.phtml:48
 #: modules/news/templates/admin/sections.phtml:102
 msgid "Name"
-msgstr ""
+msgstr "Tên"
 
 #: modules/news/templates/admin/sections.phtml:49
 #: modules/news/templates/admin/sections.phtml:78
 #: modules/news/templates/admin/sections.phtml:103
 msgid "Code"
-msgstr ""
+msgstr "Mã"
 
 #: modules/news/templates/admin/sections.phtml:50
 #: modules/news/templates/admin/sections.phtml:79
 #: modules/news/templates/admin/sections.phtml:104
 msgid "Type"
-msgstr ""
+msgstr "Loại"
 
 #: modules/news/templates/admin/sections.phtml:51
 #: modules/news/templates/admin/sections.phtml:80
 #: modules/news/templates/admin/sections.phtml:105
 msgid "Created at"
-msgstr ""
+msgstr "Đã tạo lúc"
 
 #: modules/news/templates/admin/sections.phtml:52
 #: modules/news/templates/admin/sections.phtml:81
 #: modules/news/templates/admin/sections.phtml:106
 msgid "Updated at"
-msgstr ""
+msgstr "Đã cập nhật lúc"
 
 #: modules/news/templates/admin/sections.phtml:69
 #: modules/news/templates/admin/sections.phtml:96
 msgid "Edit"
-msgstr ""
+msgstr "Chỉnh sửa"
 
 #: modules/news/templates/admin/sections.phtml:79
 msgid "Section"
-msgstr ""
+msgstr "Mục"
 
 #: modules/news/templates/admin/sections.phtml:104
 msgid "Article"
-msgstr ""
+msgstr "Bài viết"
 
 #: modules/news/templates/admin/sections.phtml:111
 #: modules/news/templates/public/article.phtml:63
 #: modules/news/templates/public/index.phtml:82
 msgid "The list is empty"
-msgstr ""
+msgstr "Danh sách này là trống rỗng"
 
 #: modules/news/templates/admin/settings.phtml:30
 msgid "Home page settings"
-msgstr ""
+msgstr "Thiết lập trang chủ"
 
 #: modules/news/templates/admin/settings.phtml:35
 msgid "Show on home page"
-msgstr ""
+msgstr "Hiển thị trên trang nhất"
 
 #: modules/news/templates/admin/settings.phtml:39
 msgid "Quantity of news"
-msgstr ""
+msgstr "Số tin tức"
 
 #: modules/news/templates/admin/settings.phtml:43
 msgid "How many days to show?"
-msgstr ""
+msgstr "Hiển thị trong bao nhiêu ngày?"
 
 #: modules/news/templates/admin/settings.phtml:45
 msgid "0 - always display."
-msgstr ""
+msgstr "Luôn hiển thị."
 
 #: modules/news/templates/admin/settings.phtml:48
 msgid "Meta tags for the main page"
-msgstr ""
+msgstr "Thẻ meta cho trang chủ"
 
 #: modules/news/templates/admin/settings.phtml:50
 #: modules/news/templates/admin/settings.phtml:57
 msgid "Module name"
-msgstr ""
+msgstr "Tên mô-đun"
 
 #: modules/news/templates/admin/settings.phtml:76
 msgid "Meta tag templates for sections"
-msgstr ""
+msgstr "Thẻ meta cho lựa chọn"
 
 #: modules/news/templates/admin/settings.phtml:78
 #: modules/news/templates/admin/settings.phtml:85
 #: modules/news/templates/admin/settings.phtml:108
 #: modules/news/templates/admin/settings.phtml:115
 msgid "Title"
-msgstr ""
+msgstr "Tiêu đề"
 
 #: modules/news/templates/admin/settings.phtml:106
 msgid "Meta tag templates for articles"
-msgstr ""
+msgstr "Thẻ meta cho bài viết"
 
 #: modules/news/templates/public/article.phtml:25
 msgid "Published:"
-msgstr ""
+msgstr "Xuất bản"
 
 #: modules/news/templates/public/article.phtml:27
 msgid "Author:"
-msgstr ""
+msgstr "Tác giả:"
 
 #: modules/news/templates/public/article.phtml:30
 msgid "Tags:"
-msgstr ""
+msgstr "Thẻ:"
 
 #: modules/news/templates/public/article.phtml:36
 msgid "Rating:"
-msgstr ""
+msgstr "Xếp hạng:"
 
 #: modules/news/templates/public/article.phtml:57
 msgid "Write a comment"
-msgstr ""
+msgstr "Viết một lời nhận xét"
 
 #: modules/news/templates/public/article.phtml:58
 msgid "Send"
-msgstr ""
+msgstr "Gửi"
 
 #: modules/news/templates/public/article.phtml:60
 msgid "Quote"
-msgstr ""
+msgstr "Trích dẫn"
 
 #: modules/news/templates/public/article.phtml:61
 msgid "Reply"
-msgstr ""
+msgstr "Trả lời"
 
 #: modules/news/templates/public/article.phtml:62
 msgid "Comments"
-msgstr ""
+msgstr "Bình luận"
 
 #: modules/news/templates/public/article.phtml:86
 msgid "You are not logged in. You must be <a href=\"/login/\">logged in</a> to comment."
-msgstr ""
+msgstr "Bạn chưa đăng nhập. Bạn cần <a href=\"/login/\">đăng nhập</a> để bình luận."
 
 #: modules/news/templates/public/index.phtml:16
 msgid "Admin panel"
-msgstr ""
+msgstr "Bảng Quản Trị"
 
 #: modules/news/templates/public/index.phtml:23
 #: modules/news/templates/public/search.phtml:14
 msgid "Search query"
-msgstr ""
+msgstr "Truy vấn tìm kiếm"
 
 #: modules/news/templates/public/search.phtml:63
 #: modules/news/templates/public/search_by_tags.phtml:63
 msgid "The search didn't yield any results."
-msgstr ""
+msgstr "Tìm kiếm không có kết quả nào."
 
 #: modules/news/templates/public/search_by_tags.phtml:14
 msgid "Enter a tag"
-msgstr ""
+msgstr " Nhập thẻ tags"
 

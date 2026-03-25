@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
-"PO-Revision-Date: 2026-03-24 11:08\n"
+"PO-Revision-Date: 2026-03-24 21:39\n"
 
 #: modules/library/classes/Hashtags.php:258
 #: modules/library/includes/tags.php:70
@@ -23,57 +23,57 @@ msgstr ""
 #: modules/library/templates/tags.phtml:58
 #: modules/library/templates/top.phtml:60
 msgid "The list is empty"
-msgstr ""
+msgstr "Lista jest pusta"
 
 #: modules/library/includes/addnew.php:28
 #: modules/library/templates/booklist.phtml:52
 msgid "Write Article"
-msgstr ""
+msgstr "Napisz artykuł"
 
 #: modules/library/includes/addnew.php:43
 #, php-format
 msgid "You cannot add the Article so often<br>Please, wait %d sec."
-msgstr ""
+msgstr "Nie wolno pisać wiadomość tak szybko!<br>Proszę, odczekać."
 
 #: modules/library/includes/addnew.php:46
 #: modules/library/includes/mkdir.php:30
 msgid "You have not entered the name"
-msgstr ""
+msgstr "Nie wpisałeś nazwy"
 
 #: modules/library/includes/addnew.php:59
 msgid "The file is invalid encoding, preferably UTF-8"
-msgstr ""
+msgstr "Plik jest nieprawidłowo kodowany, najlepiej w UTF-8"
 
 #: modules/library/includes/addnew.php:64
 msgid "Error uploading"
-msgstr ""
+msgstr "Błąd podczas przesyłania"
 
 #: modules/library/includes/addnew.php:67
 msgid "Invalid file format allowed * .txt"
-msgstr ""
+msgstr "Nieprawidłowy plik w formacie * .txt"
 
 #: modules/library/includes/addnew.php:70
 msgid "You have not entered text"
-msgstr ""
+msgstr "Nie wpisałeś tekstu"
 
 #: modules/library/includes/addnew.php:112
 #: modules/library/includes/moder.php:79
 msgid "Photo uploading error"
-msgstr ""
+msgstr "Błąd podczas przesyłania"
 
 #: modules/library/includes/comments.php:24
 #: modules/library/includes/comments.php:43
 #: modules/library/index.php:70
 msgid "Access forbidden"
-msgstr ""
+msgstr "Dostęp zabroniony"
 
 #: modules/library/includes/comments.php:73
 msgid "Comments"
-msgstr ""
+msgstr "Komentarze"
 
 #: modules/library/includes/comments.php:81
 msgid "Wrong data"
-msgstr ""
+msgstr "Nieprawidłowe dane"
 
 #: modules/library/includes/del.php:39
 #: modules/library/templates/book.phtml:83
@@ -86,132 +86,132 @@ msgstr ""
 #: modules/library/templates/premod.phtml:45
 #: modules/library/templates/sectionslist.phtml:65
 msgid "Delete"
-msgstr ""
+msgstr "Usuń"
 
 #: modules/library/includes/del.php:52
 msgid "Section does not exist"
-msgstr ""
+msgstr "Sekcja nie istnieje"
 
 #: modules/library/includes/del.php:88
 #, php-format
 msgid "Successfully deleted:<br>Directories: (%d)<br>Articles: (%d)<br>Tags: (%d)<br>Comments: (%d)<br>Images: (%d)"
-msgstr ""
+msgstr "Pomyślnie usunięto: <br>Katalogi: (%d) <br>Artykuły: (%d) <br>Tagi: (%d) <br>Komentarze: (%d) <br>Zdjécia: (%d)"
 
 #: modules/library/includes/del.php:106
 msgid "Articles do not exist"
-msgstr ""
+msgstr "Artykuły nie istnieją"
 
 #: modules/library/includes/download.php:51
 msgid "Author name"
-msgstr ""
+msgstr "Nazwa autora"
 
 #: modules/library/includes/download.php:52
 msgid "Author last name"
-msgstr ""
+msgstr "Nazwisko autora"
 
 #: modules/library/includes/download.php:54
 msgid "Name of the book"
-msgstr ""
+msgstr "Tytuł książki"
 
 #: modules/library/includes/download.php:56
 msgid "Date"
-msgstr ""
+msgstr "Data"
 
 #: modules/library/includes/lastcom.php:15
 #: modules/library/templates/main.phtml:40
 msgid "Latest comments"
-msgstr ""
+msgstr "Ostatnie komentarze"
 
 #: modules/library/includes/mkdir.php:19
 #: modules/library/templates/main.phtml:71
 msgid "Create Section"
-msgstr ""
+msgstr "Utwórz sekcje"
 
 #: modules/library/includes/mkdir.php:32
 msgid "Repeat"
-msgstr ""
+msgstr "Powtórz"
 
 #: modules/library/includes/moder.php:147
 msgid "The ROOT"
-msgstr ""
+msgstr "Katalog GŁÓWNY"
 
 #: modules/library/includes/moder.php:161
 msgid "Edit Section"
-msgstr ""
+msgstr "Edytuj sekcję"
 
 #: modules/library/includes/moder.php:161
 msgid "Edit Article"
-msgstr ""
+msgstr "Edycja artykułu"
 
 #: modules/library/includes/new.php:27
 #: modules/library/templates/main.phtml:34
 msgid "New Articles"
-msgstr ""
+msgstr "Nowe artykuły"
 
 #: modules/library/includes/search.php:23
 #: modules/library/templates/main.phtml:37
 #: modules/library/templates/search.phtml:37
 msgid "Search"
-msgstr ""
+msgstr "Szukaj"
 
 #: modules/library/includes/tagcloud.php:19
 msgid "Sorted by alphabetical"
-msgstr ""
+msgstr "Posortowane alfabetycznie"
 
 #: modules/library/includes/tagcloud.php:20
 msgid "Sorted by relevance"
-msgstr ""
+msgstr "Sortuj według trafności"
 
 #: modules/library/includes/tags.php:19
 #: modules/library/templates/addnew.phtml:84
 #: modules/library/templates/moder.phtml:77
 msgid "Tags"
-msgstr ""
+msgstr "Tagi"
 
 #: modules/library/includes/top.php:20
 #: modules/library/templates/main.phtml:39
 msgid "Rating articles"
-msgstr ""
+msgstr "Ocena artykułów"
 
 #: modules/library/includes/top.php:27
 msgid "Most readings"
-msgstr ""
+msgstr "Większość czytań"
 
 #: modules/library/includes/top.php:32
 msgid "By rating"
-msgstr ""
+msgstr "Według oceny"
 
 #: modules/library/includes/top.php:37
 msgid "By comments"
-msgstr ""
+msgstr "Według komentarzy"
 
 #: modules/library/index.php:62
 #: modules/library/templates/helpers/printNavPanel.phtml:2
 #: modules/library/templates/tagcloud.phtml:2
 msgid "Library"
-msgstr ""
+msgstr "Biblioteka"
 
 #: modules/library/index.php:68
 #: modules/library/templates/main.phtml:28
 msgid "Library is closed"
-msgstr ""
+msgstr "Biblioteka jest zamknięta"
 
 #: modules/library/templates/addnew.phtml:30
 msgid "Article added"
-msgstr ""
+msgstr "Artykuł dodany"
 
 #: modules/library/templates/addnew.phtml:34
 msgid "To Article"
-msgstr ""
+msgstr "Do artykułu"
 
 #: modules/library/templates/addnew.phtml:36
 msgid "Thank you for what we have written. After checking moderated, your Article will be published in the library."
-msgstr ""
+msgstr "Dziękuję za to, co napisałeś. Po sprawdzeniu przez moderatora twój artykuł zostanie opublikowany w bibliotece."
 
 #: modules/library/templates/addnew.phtml:37
 #: modules/library/templates/mkdir.phtml:34
 msgid "To Section"
-msgstr ""
+msgstr "Do sekcji"
 
 #: modules/library/templates/addnew.phtml:52
 #: modules/library/templates/addnew.phtml:53
@@ -220,41 +220,41 @@ msgstr ""
 #: modules/library/templates/moder.phtml:49
 #: modules/library/templates/moder.phtml:50
 msgid "Title"
-msgstr ""
+msgstr "Tytuł"
 
 #: modules/library/templates/addnew.phtml:57
 #: modules/library/templates/moder.phtml:60
 msgid "Announce"
-msgstr ""
+msgstr "Ogłosić"
 
 #: modules/library/templates/addnew.phtml:62
 #: modules/library/templates/moder.phtml:68
 msgid "Text"
-msgstr ""
+msgstr "Tekst"
 
 #: modules/library/templates/addnew.phtml:69
 #: modules/library/templates/moder.phtml:126
 msgid "Commenting on the Article"
-msgstr ""
+msgstr "Komentuje artykuł"
 
 #: modules/library/templates/addnew.phtml:74
 #: modules/library/templates/moder.phtml:44
 msgid "To upload a photo"
-msgstr ""
+msgstr "Aby przesłać zdjęcie"
 
 #: modules/library/templates/addnew.phtml:79
 msgid "Select the text file"
-msgstr ""
+msgstr "Wybierz plik tekstowy"
 
 #: modules/library/templates/addnew.phtml:80
 msgid "Text entry field will be ignored"
-msgstr ""
+msgstr "Pole wprowadzania tekstu zostanie zignorowane"
 
 #: modules/library/templates/addnew.phtml:89
 #: modules/library/templates/mkdir.phtml:70
 #: modules/library/templates/moder.phtml:135
 msgid "Save"
-msgstr ""
+msgstr "Zapisz"
 
 #: modules/library/templates/addnew.phtml:90
 #: modules/library/templates/del.phtml:43
@@ -265,46 +265,46 @@ msgstr ""
 #: modules/library/templates/mkdir.phtml:71
 #: modules/library/templates/moder.phtml:136
 msgid "Cancel"
-msgstr ""
+msgstr "Anuluj"
 
 #: modules/library/templates/book.phtml:41
 msgid "Download file"
-msgstr ""
+msgstr "Pobierz plik"
 
 #: modules/library/templates/book.phtml:50
 msgid "The Tags:"
-msgstr ""
+msgstr "Tagi:"
 
 #: modules/library/templates/book.phtml:55
 msgid "Who added:"
-msgstr ""
+msgstr "Kto dodał:"
 
 #: modules/library/templates/book.phtml:59
 #: modules/library/templates/booklist.phtml:33
 #: modules/library/templates/new.phtml:38
 #: modules/library/templates/top.phtml:46
 msgid "Rating:"
-msgstr ""
+msgstr "Ocena:"
 
 #: modules/library/templates/book.phtml:63
 #: modules/library/templates/search.phtml:49
 #: modules/library/templates/tags.phtml:39
 msgid "Number of readings:"
-msgstr ""
+msgstr "Liczba odczytów:"
 
 #: modules/library/templates/book.phtml:68
 #: modules/library/templates/new.phtml:42
 #: modules/library/templates/tags.phtml:43
 #: modules/library/templates/top.phtml:50
 msgid "Comments:"
-msgstr ""
+msgstr "Komentarze:"
 
 #: modules/library/templates/book.phtml:82
 #: modules/library/templates/booklist.phtml:54
 #: modules/library/templates/helpers/sectionListAdminPanel.phtml:7
 #: modules/library/templates/sectionslist.phtml:64
 msgid "Edit"
-msgstr ""
+msgstr "Edytuj"
 
 #: modules/library/templates/booklist.phtml:32
 #: modules/library/templates/lastcom.phtml:31
@@ -314,7 +314,7 @@ msgstr ""
 #: modules/library/templates/tags.phtml:36
 #: modules/library/templates/top.phtml:43
 msgid "Author:"
-msgstr ""
+msgstr "Autor:"
 
 #: modules/library/templates/booklist.phtml:44
 #: modules/library/templates/new.phtml:50
@@ -323,11 +323,11 @@ msgstr ""
 #: modules/library/templates/sectionslist.phtml:56
 #: modules/library/templates/tags.phtml:50
 msgid "Total"
-msgstr ""
+msgstr "Wszystkich"
 
 #: modules/library/templates/del.phtml:34
 msgid "Successful transfer"
-msgstr ""
+msgstr "Udane przeniesienie"
 
 #: modules/library/templates/del.phtml:36
 #: modules/library/templates/del.phtml:71
@@ -338,137 +338,137 @@ msgstr ""
 #: modules/library/templates/moder.phtml:140
 #: modules/library/templates/top.phtml:64
 msgid "Back"
-msgstr ""
+msgstr "Powrót"
 
 #: modules/library/templates/del.phtml:40
 msgid "Are you sure you want to move the contents?"
-msgstr ""
+msgstr "Czy na pewno chcesz usunąć tę zawartość?"
 
 #: modules/library/templates/del.phtml:42
 msgid "Move"
-msgstr ""
+msgstr "Przenieś"
 
 #: modules/library/templates/del.phtml:53
 #: modules/library/templates/moder.phtml:108
 msgid "Move to Section"
-msgstr ""
+msgstr "Przejdź do sekcji"
 
 #: modules/library/templates/del.phtml:64
 #: modules/library/templates/premod.phtml:44
 msgid "Approve"
-msgstr ""
+msgstr "Akceptuj"
 
 #: modules/library/templates/del.phtml:69
 msgid "There are no Sections for moving"
-msgstr ""
+msgstr "Nie można przenieść"
 
 #: modules/library/templates/del.phtml:81
 msgid "Are you sure you want to delete content?"
-msgstr ""
+msgstr "Czy na pewno chcesz usunąć tę zawartość?"
 
 #: modules/library/templates/del.phtml:90
 msgid "Section is not empty"
-msgstr ""
+msgstr "Sekcja nie jest pusta"
 
 #: modules/library/templates/del.phtml:93
 msgid "Select action"
-msgstr ""
+msgstr "Wybierz akcję"
 
 #: modules/library/templates/del.phtml:97
 msgid "Delete with movement"
-msgstr ""
+msgstr "Usuń z ruchem"
 
 #: modules/library/templates/del.phtml:101
 msgid "Delete all Sections and Articles"
-msgstr ""
+msgstr "Usuń wszystkie rozdziały i artykuły"
 
 #: modules/library/templates/del.phtml:104
 msgid "Do"
-msgstr ""
+msgstr "Zrobić"
 
 #: modules/library/templates/del.phtml:113
 #: modules/library/templates/del.phtml:125
 #: modules/library/templates/del.phtml:137
 msgid "Delete confirmation"
-msgstr ""
+msgstr "Potwierdzenie procesu usuwania"
 
 #: modules/library/templates/del.phtml:145
 #: modules/library/templates/del.phtml:154
 msgid "Deleted"
-msgstr ""
+msgstr "Usunięto"
 
 #: modules/library/templates/helpers/printvote.phtml:2
 msgid "Select a rating:"
-msgstr ""
+msgstr "Wybierz ocenę:"
 
 #: modules/library/templates/helpers/printvote.phtml:8
 msgid "Vote"
-msgstr ""
+msgstr "Głosuj"
 
 #: modules/library/templates/helpers/sectionListAdminPanel.phtml:2
 msgid "Up"
-msgstr ""
+msgstr "W górę"
 
 #: modules/library/templates/helpers/sectionListAdminPanel.phtml:5
 msgid "Down"
-msgstr ""
+msgstr "W dół"
 
 #: modules/library/templates/mkdir.phtml:30
 msgid "Section created"
-msgstr ""
+msgstr "Utworzono sekcję"
 
 #: modules/library/templates/mkdir.phtml:55
 #: modules/library/templates/moder.phtml:55
 msgid "Section description"
-msgstr ""
+msgstr "Opis sekcji"
 
 #: modules/library/templates/mkdir.phtml:59
 #: modules/library/templates/moder.phtml:84
 msgid "Section type"
-msgstr ""
+msgstr "Typ sekcji"
 
 #: modules/library/templates/mkdir.phtml:62
 #: modules/library/templates/moder.phtml:87
 msgid "Articles"
-msgstr ""
+msgstr "Artykuły"
 
 #: modules/library/templates/mkdir.phtml:66
 #: modules/library/templates/moder.phtml:91
 msgid "Sections"
-msgstr ""
+msgstr "Sekcje"
 
 #: modules/library/templates/moder.phtml:31
 msgid "Changed"
-msgstr ""
+msgstr "Zmieniono"
 
 #: modules/library/templates/moder.phtml:73
 msgid "The text of the Article can not be edited, a large amount of data !!!"
-msgstr ""
+msgstr "Tekst tego artykułu nie może być edytowany, zawiera dużą ilość danych!!!"
 
 #: modules/library/templates/moder.phtml:96
 msgid "Allow users to add their Articles?"
-msgstr ""
+msgstr "Zezwól użytkownikom na dodawanie swoich artykułów"
 
 #: modules/library/templates/moder.phtml:99
 msgid "Yes"
-msgstr ""
+msgstr "Jo"
 
 #: modules/library/templates/moder.phtml:103
 msgid "No"
-msgstr ""
+msgstr "Nie"
 
 #: modules/library/templates/moder.phtml:122
 msgid "Verified"
-msgstr ""
+msgstr "Zweryfikowano"
 
 #: modules/library/templates/moder.phtml:129
 msgid "Number of readings"
-msgstr ""
+msgstr "Ilość czytań"
 
 #: modules/library/templates/new.phtml:32
 #: modules/library/templates/top.phtml:40
 msgid "Section:"
-msgstr ""
+msgstr "Sekcja:"
 
 #: modules/library/templates/new.phtml:55
 #: modules/library/templates/premod.phtml:58
@@ -476,56 +476,56 @@ msgstr ""
 #: modules/library/templates/tagcloud.phtml:6
 #: modules/library/templates/tags.phtml:54
 msgid "To Library"
-msgstr ""
+msgstr "Do biblioteki"
 
 #: modules/library/templates/premod.phtml:20
 #: modules/library/templates/premod.phtml:21
 msgid "Moderation Articles"
-msgstr ""
+msgstr "Moderacja artykułów"
 
 #: modules/library/templates/premod.phtml:27
 msgid "All Articles added in database"
-msgstr ""
+msgstr "Wszystkie artykuły dodane do bazy danych"
 
 #: modules/library/templates/premod.phtml:30
 msgid "Article"
-msgstr ""
+msgstr "Artykuł"
 
 #: modules/library/templates/premod.phtml:30
 msgid "Added to the database"
-msgstr ""
+msgstr "Dodany do bazy danych"
 
 #: modules/library/templates/premod.phtml:56
 msgid "Approve all"
-msgstr ""
+msgstr "Zatwierdź wszystkie"
 
 #: modules/library/templates/search.phtml:27
 #: modules/library/templates/search.phtml:28
 msgid "Search query"
-msgstr ""
+msgstr "Szukaj zapytania"
 
 #: modules/library/templates/search.phtml:34
 msgid "Search in titles Articles"
-msgstr ""
+msgstr "Szukaj po tytułach artykułów"
 
 #: modules/library/templates/search.phtml:68
 msgid "Length of query: 4 min 64 max<br>Search is case-insensitive letters<br>Results are sorted by relevance"
-msgstr ""
+msgstr "Długość zapytania: 4min, 64maks..<br>Szukaj po wielkość liter <br>Wyniki są sortowane według trafności"
 
 #: modules/library/templates/search.phtml:75
 msgid "New Search"
-msgstr ""
+msgstr "Nowe wyszukiwanie"
 
 #: modules/library/templates/sectionslist.phtml:63
 msgid "Create"
-msgstr ""
+msgstr "Utwórz"
 
 #: modules/library/templates/tagcloud.phtml:2
 msgid "Tag Cloud"
-msgstr ""
+msgstr "Chmura tagów"
 
 #: modules/library/templates/tagcloud.phtml:4
 #: modules/library/templates/top.phtml:27
 msgid "Sort"
-msgstr ""
+msgstr "Sortuj"
 

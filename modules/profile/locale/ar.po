@@ -11,13 +11,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
-"PO-Revision-Date: 2026-03-24 11:10\n"
+"PO-Revision-Date: 2026-03-24 21:38\n"
 
 #: modules/profile/includes/activity.php:25
 #: modules/profile/templates/index.phtml:253
 #: modules/profile/templates/stat.phtml:50
 msgid "Activity"
-msgstr ""
+msgstr "النشاط"
 
 #: modules/profile/includes/activity.php:27
 #: modules/profile/includes/edit.php:52
@@ -26,70 +26,70 @@ msgstr ""
 #: modules/profile/includes/reset.php:20
 #: modules/profile/templates/office.phtml:32
 msgid "Profile"
-msgstr ""
+msgstr "الملف الشخصي"
 
 #: modules/profile/includes/activity.php:27
 #: modules/profile/includes/edit.php:52
 #: modules/profile/includes/images.php:159
 #: modules/profile/includes/index.php:24
 msgid "My Profile"
-msgstr ""
+msgstr "ملفي الشخصي"
 
 #: modules/profile/includes/activity.php:33
 msgid "Messages"
-msgstr ""
+msgstr "الرسائل"
 
 #: modules/profile/includes/activity.php:38
 msgid "Themes"
-msgstr ""
+msgstr "الثيمات"
 
 #: modules/profile/includes/activity.php:43
 #: modules/profile/includes/ban.php:392
 #: modules/profile/templates/ban.phtml:45
 #: modules/profile/templates/stat.phtml:54
 msgid "Comments"
-msgstr ""
+msgstr "التعليقات"
 
 #: modules/profile/includes/ban.php:16
 msgid "Ban the User"
-msgstr ""
+msgstr "حظر المستخدم"
 
 #: modules/profile/includes/ban.php:30
 msgid "You do not have enought rights to ban this user"
-msgstr ""
+msgstr "ليس لديك حقوق كافية لحظر هذا المستخدم"
 
 #: modules/profile/includes/ban.php:44
 msgid "Reason not specified"
-msgstr ""
+msgstr "لم يتم تحديد السبب"
 
 #: modules/profile/includes/ban.php:48
 msgid "There is no required data"
-msgstr ""
+msgstr "لا توجد أي بيانات مطلوبة"
 
 #: modules/profile/includes/ban.php:58
 msgid "You have no rights to ban in this section"
-msgstr ""
+msgstr "لديك أية حقوق لحظر في هذا للقسم"
 
 #: modules/profile/includes/ban.php:62
 msgid "Ban already active"
-msgstr ""
+msgstr "الحظر نشط بالفعل"
 
 #: modules/profile/includes/ban.php:143
 msgid "System"
-msgstr ""
+msgstr "نظام"
 
 #: modules/profile/includes/ban.php:147
 #: modules/profile/includes/index.php:151
 msgid "Ban"
-msgstr ""
+msgstr "الحظر"
 
 #: modules/profile/includes/ban.php:158
 msgid "User banned"
-msgstr ""
+msgstr "تم حظر المستخدم"
 
 #: modules/profile/includes/ban.php:192
 msgid "Ban termination"
-msgstr ""
+msgstr "إنهاء الحظر"
 
 #: modules/profile/includes/ban.php:200
 #: modules/profile/includes/ban.php:258
@@ -97,35 +97,35 @@ msgstr ""
 #: modules/profile/includes/ban.php:324
 #: modules/profile/skl.php:141
 msgid "Wrong data"
-msgstr ""
+msgstr "بيانات خاطئة"
 
 #: modules/profile/includes/ban.php:212
 msgid "Ban not active"
-msgstr ""
+msgstr "الحظر غير فعال"
 
 #: modules/profile/includes/ban.php:223
 msgid "Ban terminated"
-msgstr ""
+msgstr "تم إنهاء الحظر"
 
 #: modules/profile/includes/ban.php:228
 msgid "Ban time is going to the end. Infrigement will be saved in the bans history"
-msgstr ""
+msgstr "ستكون النهاية وقت الحظر. سيتم حفظ في تاريخ الحظر"
 
 #: modules/profile/includes/ban.php:229
 msgid "Terminate Ban"
-msgstr ""
+msgstr "إنهاء الحظر"
 
 #: modules/profile/includes/ban.php:268
 msgid "Delete ban"
-msgstr ""
+msgstr "حذف الحظر"
 
 #: modules/profile/includes/ban.php:300
 msgid "Ban deleted"
-msgstr ""
+msgstr "تم حذف الحظر"
 
 #: modules/profile/includes/ban.php:305
 msgid "Removing ban along with a record in the bans history"
-msgstr ""
+msgstr "إزالة الحظر جنبا إلى جنب مع سجل الحظر التاريخ"
 
 #: modules/profile/includes/ban.php:306
 #: modules/profile/includes/index.php:145
@@ -133,42 +133,42 @@ msgstr ""
 #: modules/profile/templates/edit.phtml:128
 #: modules/profile/templates/karma_delete.phtml:33
 msgid "Delete"
-msgstr ""
+msgstr "حذف"
 
 #: modules/profile/includes/ban.php:334
 msgid "Violations history"
-msgstr ""
+msgstr "تاريخ الانتهاكات"
 
 #: modules/profile/includes/ban.php:344
 msgid "Violations history cleared"
-msgstr ""
+msgstr "تم مسح سجل الانتهاكات"
 
 #: modules/profile/includes/ban.php:349
 msgid "Are you sure want to clean entire history of user violations?"
-msgstr ""
+msgstr "هل تريد بالتأكيد لتنظيف تاريخ الانتهاكات المستخدم بأكمله؟"
 
 #: modules/profile/includes/ban.php:350
 msgid "Clear"
-msgstr ""
+msgstr "تنظيف"
 
 #: modules/profile/includes/ban.php:368
 msgid "Violations history can be cleared by Supervisor only"
-msgstr ""
+msgstr "يمكنك مسح محفوظات انتهاكات من المشرف فقط"
 
 #: modules/profile/includes/ban.php:377
 msgid "Violations History"
-msgstr ""
+msgstr "سجل الانتهاكات"
 
 #: modules/profile/includes/ban.php:389
 #: modules/profile/templates/ban.phtml:37
 msgid "Full block"
-msgstr ""
+msgstr "حظر دائم"
 
 #: modules/profile/includes/ban.php:390
 #: modules/profile/includes/ban.php:391
 #: modules/profile/templates/ban.phtml:41
 msgid "Private messages"
-msgstr ""
+msgstr "الرسائل الخاصة"
 
 #: modules/profile/includes/ban.php:393
 #: modules/profile/includes/settings.php:45
@@ -176,7 +176,7 @@ msgstr ""
 #: modules/profile/templates/ban.phtml:55
 #: modules/profile/templates/stat.phtml:52
 msgid "Forum"
-msgstr ""
+msgstr "منتديات"
 
 #: modules/profile/includes/ban.php:394
 #: modules/profile/includes/guestbook.php:16
@@ -186,40 +186,40 @@ msgstr ""
 #: modules/profile/templates/office.phtml:42
 #: modules/profile/templates/stat.phtml:53
 msgid "Guestbook"
-msgstr ""
+msgstr "سجل الزوار"
 
 #: modules/profile/includes/ban.php:395
 #: modules/profile/templates/ban.phtml:61
 msgid "Library"
-msgstr ""
+msgstr "مَكتبَة"
 
 #: modules/profile/includes/ban.php:405
 #: modules/profile/templates/ban.phtml:87
 msgid "Till cancel"
-msgstr ""
+msgstr "حتى إلغاء الأمر"
 
 #: modules/profile/includes/ban.php:416
 msgid "Cancel Ban"
-msgstr ""
+msgstr "إلغاء الحظر"
 
 #: modules/profile/includes/ban.php:422
 msgid "Delete Ban"
-msgstr ""
+msgstr "حذف الحظر"
 
 #: modules/profile/includes/confirm_new_email.php:19
 #: modules/profile/includes/confirm_new_email.php:20
 msgid "Email confirmation"
-msgstr ""
+msgstr "تأكيد البريد الإلكتروني"
 
 #: modules/profile/includes/edit.php:20
 #: modules/profile/templates/office.phtml:86
 msgid "Edit Profile"
-msgstr ""
+msgstr "تعديل الملف الشخصي"
 
 #: modules/profile/includes/edit.php:35
 #: modules/profile/includes/images.php:23
 msgid "You cannot edit profile of higher administration"
-msgstr ""
+msgstr "لا يمكنك تحرير مناصب الإدارة العليا"
 
 #: modules/profile/includes/edit.php:47
 #: modules/profile/includes/ip.php:24
@@ -227,40 +227,40 @@ msgstr ""
 #: modules/profile/includes/password.php:25
 #: modules/profile/includes/settings.php:31
 msgid "Access forbidden"
-msgstr ""
+msgstr "ممنوع الوصول"
 
 #: modules/profile/includes/edit.php:86
 msgid "Avatar is successfully removed"
-msgstr ""
+msgstr "يتم بنجاح إزالة الصورة الرمزية"
 
 #: modules/profile/includes/edit.php:93
 msgid "Photo is successfully removed"
-msgstr ""
+msgstr "تتم إزالة الصور بنجاح"
 
 #: modules/profile/includes/edit.php:169
 msgid "Confirm email change"
-msgstr ""
+msgstr "تأكيد البريد الإلكتروني تغيير"
 
 #: modules/profile/includes/edit.php:186
 msgid "The procedure for changing the email address was started"
-msgstr ""
+msgstr "إجراءات تغيير عنوان البريد الإلكتروني بدأ"
 
 #: modules/profile/includes/edit.php:196
 msgid "Data saved"
-msgstr ""
+msgstr "تم حفظ البيانات بنجاح "
 
 #: modules/profile/includes/images.php:36
 msgid "Upload Avatar"
-msgstr ""
+msgstr "رفع صورة رمزية"
 
 #: modules/profile/includes/images.php:42
 #: modules/profile/includes/images.php:94
 msgid "The weight of the file exceeds"
-msgstr ""
+msgstr "يتجاوز وزن الملف"
 
 #: modules/profile/includes/images.php:64
 msgid "The avatar is successfully uploaded"
-msgstr ""
+msgstr "تم تحميل الصورة الرمزية بنجاح"
 
 #: modules/profile/includes/images.php:66
 #: modules/profile/includes/images.php:135
@@ -268,86 +268,86 @@ msgstr ""
 #: modules/profile/includes/password.php:83
 #: modules/profile/templates/restore_password.phtml:43
 msgid "Continue"
-msgstr ""
+msgstr "متابعه"
 
 #: modules/profile/includes/images.php:81
 #: modules/profile/includes/images.php:150
 #: modules/profile/includes/password.php:94
 msgid "Repeat"
-msgstr ""
+msgstr "التكرار"
 
 #: modules/profile/includes/images.php:88
 msgid "Upload Photo"
-msgstr ""
+msgstr "تحميل صورة"
 
 #: modules/profile/includes/images.php:133
 msgid "The photo is successfully uploaded"
-msgstr ""
+msgstr "تم تحميل الصورة الرمزية بنجاح"
 
 #: modules/profile/includes/index.php:24
 #: modules/profile/includes/karma.php:20
 #: modules/profile/index.php:58
 #: modules/profile/index.php:78
 msgid "User Profile"
-msgstr ""
+msgstr "ملف تعريف المستخدم"
 
 #: modules/profile/includes/index.php:94
 #: modules/profile/templates/stat.phtml:32
 msgid "Pending confirmation"
-msgstr ""
+msgstr "في انتظار التأكيد"
 
 #: modules/profile/includes/index.php:99
 msgid "E-mail address is not confirmed"
-msgstr ""
+msgstr "عنوان البريد الإلكتروني غير صالح"
 
 #: modules/profile/includes/index.php:126
 msgid "Add to Contacts"
-msgstr ""
+msgstr "إضافة إلى جهات الاتصال"
 
 #: modules/profile/includes/index.php:131
 msgid "Remove from Contacts"
-msgstr ""
+msgstr "إزالة من جهات الاتصال"
 
 #: modules/profile/includes/index.php:139
 msgid "Edit"
-msgstr ""
+msgstr "تحرير"
 
 #: modules/profile/includes/ip.php:15
 #: modules/profile/templates/index.phtml:86
 msgid "IP History"
-msgstr ""
+msgstr "سجل ip"
 
 #: modules/profile/includes/karma.php:17
 #: modules/profile/includes/karma.php:21
 #: modules/profile/templates/index.phtml:119
 msgid "Karma"
-msgstr ""
+msgstr "الاعجاب"
 
 #: modules/profile/includes/karma.php:42
 msgid "It is forbidden to vote for administration"
-msgstr ""
+msgstr "يمنع التصويت للإدارة"
 
 #: modules/profile/includes/karma.php:46
 msgid "Cheating karma is forbidden"
-msgstr ""
+msgstr "يمنع الغش بالاعجاب"
 
 #: modules/profile/includes/karma.php:51
 #, php-format
 msgid "Users can take part in voting if they have stayed on a site not less %s and their score on the forum %d posts."
-msgstr ""
+msgstr "يمكن للمستخدمين المشاركة في التصويت إذا كانوا أقاموا على الموقع لا تقل %s و تقدمهم في المنتدى %d الوظائف."
 
 #: modules/profile/includes/karma.php:52
 msgid "days"
-msgstr ""
+msgstr "أيام"
 
 #: modules/profile/includes/karma.php:60
 msgid "You can vote for single user just one time for 24 hours"
-msgstr ""
+msgstr "يمكنك التصويت لمستخدم واحد مرة واحدة فقط لمدة 24 ساعة"
 
 #: modules/profile/includes/karma.php:66
 #, php-format
 msgid "You have exceeded the limit of votes. New voices will be added %s"
-msgstr ""
+msgstr "لقد تجاوزت الحد الأقصى للتصويت. سيتم إضافة أصوات جديدة %s"
 
 #: modules/profile/includes/karma.php:77
 #: modules/profile/includes/karma.php:167
@@ -357,105 +357,105 @@ msgstr ""
 #: modules/profile/templates/restore_password_result.phtml:19
 #: modules/profile/templates/stat.phtml:58
 msgid "Back"
-msgstr ""
+msgstr "رجوع"
 
 #: modules/profile/includes/karma.php:136
 msgid "You have successfully voted"
-msgstr ""
+msgstr "قمت بالتصويت بنجاح."
 
 #: modules/profile/includes/karma.php:147
 msgid "Vote for"
-msgstr ""
+msgstr "صوت لـ"
 
 #: modules/profile/includes/karma.php:165
 msgid "You are not allowed to vote for users"
-msgstr ""
+msgstr "غير مسموح لك بالتصويت لصالح المستخدمين"
 
 #: modules/profile/includes/karma.php:201
 msgid "Do you really want to delete comment?"
-msgstr ""
+msgstr "هل تريد حقاً حذف التعليق؟"
 
 #: modules/profile/includes/karma.php:234
 msgid "Do you really want to delete all reviews about user?"
-msgstr ""
+msgstr "هل تريد حذف كافة ملاحظات حول المستخدم حقاً؟"
 
 #: modules/profile/includes/karma.php:252
 msgid "New responses"
-msgstr ""
+msgstr "ردود جديدة"
 
 #: modules/profile/includes/karma.php:287
 msgid "All"
-msgstr ""
+msgstr "جميع"
 
 #: modules/profile/includes/karma.php:292
 #: modules/profile/templates/index.phtml:134
 #: modules/profile/templates/karma_vote.phtml:41
 msgid "Positive"
-msgstr ""
+msgstr "إيجابية"
 
 #: modules/profile/includes/karma.php:297
 #: modules/profile/templates/index.phtml:140
 #: modules/profile/templates/karma_vote.phtml:45
 msgid "Negative"
-msgstr ""
+msgstr "السلبية"
 
 #: modules/profile/includes/office.php:15
 #: modules/profile/includes/settings.php:22
 msgid "My Account"
-msgstr ""
+msgstr "حسابي"
 
 #: modules/profile/includes/password.php:15
 #: modules/profile/includes/password.php:16
 #: modules/profile/templates/edit.phtml:278
 #: modules/profile/templates/office.phtml:87
 msgid "Change Password"
-msgstr ""
+msgstr "تغيير كلمة السر"
 
 #: modules/profile/includes/password.php:43
 #: modules/profile/includes/password.php:46
 msgid "It is necessary to fill in all fields"
-msgstr ""
+msgstr "من الضروري تعبئة كافة الحقول"
 
 #: modules/profile/includes/password.php:51
 msgid "Old password entered incorrectly"
-msgstr ""
+msgstr "كلمة المرور القديمة دخلت بشكل غير صحيح"
 
 #: modules/profile/includes/password.php:55
 msgid "The password confirmation you entered is wrong"
-msgstr ""
+msgstr "تأكيد كلمة المرور الذي أدخلته خاطئ"
 
 #: modules/profile/includes/password.php:59
 msgid "The password must contain at least 3 characters"
-msgstr ""
+msgstr "كلمة المرور يجب أن تحتوي على الأقل 3 أحرف"
 
 #: modules/profile/includes/password.php:81
 msgid "Password successfully changed"
-msgstr ""
+msgstr "تم تغيير كلمة المرور بنجاح"
 
 #: modules/profile/includes/reset.php:19
 msgid "Reset user settings"
-msgstr ""
+msgstr "إعادة تعيين إعدادات المستخدم"
 
 #: modules/profile/includes/reset.php:36
 #, php-format
 msgid "For user %s default settings were set."
-msgstr ""
+msgstr "تم تعيين الإعدادات الافتراضية للمستخدم %s."
 
 #: modules/profile/includes/settings.php:17
 #: modules/profile/includes/settings.php:23
 #: modules/profile/templates/office.phtml:83
 msgid "Settings"
-msgstr ""
+msgstr "الإعدادات"
 
 #: modules/profile/includes/settings.php:40
 #: modules/profile/includes/settings.php:152
 msgid "General setting"
-msgstr ""
+msgstr "الإعدادات العامة"
 
 #: modules/profile/includes/settings.php:50
 #: modules/profile/includes/settings.php:70
 msgid "Mail"
-msgstr ""
+msgstr "البريـــد"
 
 #: modules/profile/includes/settings.php:57
 msgid "Auto"
@@ -473,27 +473,27 @@ msgstr ""
 #: modules/profile/includes/settings.php:125
 #: modules/profile/includes/settings.php:208
 msgid "Settings saved successfully"
-msgstr ""
+msgstr "تم حفظ الإعدادات بنجاح"
 
 #: modules/profile/includes/settings.php:135
 #: modules/profile/includes/settings.php:213
 msgid "Default settings are set"
-msgstr ""
+msgstr "يتم تعيين الإعدادات الافتراضية"
 
 #: modules/profile/includes/stat.php:16
 #: modules/profile/includes/stat.php:19
 #: modules/profile/templates/index.phtml:265
 #: modules/profile/templates/stat.phtml:26
 msgid "Statistic"
-msgstr ""
+msgstr "الإحصائيات"
 
 #: modules/profile/index.php:60
 msgid "For registered users only"
-msgstr ""
+msgstr "للمستخدمين المسجلين فقط"
 
 #: modules/profile/index.php:80
 msgid "This User does not exists"
-msgstr ""
+msgstr "هذا المستخدم غير موجود"
 
 #: modules/profile/skl.php:42
 #: modules/profile/templates/restore_password.phtml:4
@@ -503,100 +503,100 @@ msgstr ""
 #: modules/profile/templates/restore_password_result.phtml:5
 #: modules/profile/templates/restore_password_result.phtml:10
 msgid "Restore password"
-msgstr ""
+msgstr "استعادة كلمة المرور"
 
 #: modules/profile/skl.php:70
 msgid "The required fields are not filled"
-msgstr ""
+msgstr "لا يتم ملء الحقول المطلوبة"
 
 #: modules/profile/skl.php:72
 msgid "Incorrect code"
-msgstr ""
+msgstr "رمز غير صحيح!"
 
 #: modules/profile/skl.php:86
 msgid "Invalid Email address"
-msgstr ""
+msgstr "عنوان البريد الإلكتروني غير صالح"
 
 #: modules/profile/skl.php:90
 msgid "Password can be recovered 1 time per day"
-msgstr ""
+msgstr "كلمة المرور يمكن استردادها 1 مره في اليوم الواحد"
 
 #: modules/profile/skl.php:93
 #: modules/profile/skl.php:160
 msgid "User does not exists"
-msgstr ""
+msgstr "المستخدم غير موجود"
 
 #: modules/profile/skl.php:109
 msgid "Password recovery"
-msgstr ""
+msgstr "استعادة كلمة السر"
 
 #: modules/profile/skl.php:119
 msgid "Check your e-mail for further information"
-msgstr ""
+msgstr "التحقق من البريد الإلكتروني الخاص بك للحصول على مزيد من المعلومات"
 
 #: modules/profile/skl.php:151
 msgid "Password recovery is impossible"
-msgstr ""
+msgstr "عفوا! لقد قمت باستعادة كلمة المرور مسبقآ"
 
 #: modules/profile/skl.php:155
 msgid "Time allotted for the password recovery has been exceeded"
-msgstr ""
+msgstr "تم تجاوز الوقت المخصص لاسترداد كلمة المرور"
 
 #: modules/profile/skl.php:176
 msgid "Your new password"
-msgstr ""
+msgstr "كلمة المرور الجديدة"
 
 #: modules/profile/skl.php:187
 msgid "Password successfully changed.<br>New password sent to your E-mail address."
-msgstr ""
+msgstr "تغيير كلمة المرور بنجاح. <br>كلمة المرور الجديدة أرسلت إلى عنوان البريد الإلكتروني الخاص بك."
 
 #: modules/profile/templates/activity.phtml:37
 #: modules/profile/templates/ip_history.phtml:46
 #: modules/profile/templates/karma.phtml:38
 msgid "The list is empty"
-msgstr ""
+msgstr "فارغة"
 
 #: modules/profile/templates/activity.phtml:53
 #: modules/profile/templates/ip_history.phtml:66
 #: modules/profile/templates/karma.phtml:82
 msgid "Total:"
-msgstr ""
+msgstr "مجموع"
 
 #: modules/profile/templates/ban.phtml:31
 msgid "Ban:"
-msgstr ""
+msgstr "الحظر"
 
 #: modules/profile/templates/ban.phtml:33
 msgid "Ban type"
-msgstr ""
+msgstr "نوع الحظر"
 
 #: modules/profile/templates/ban.phtml:65
 msgid "Ban time"
-msgstr ""
+msgstr "وقت الحظر"
 
 #: modules/profile/templates/ban.phtml:67
 msgid "Time"
-msgstr ""
+msgstr "الوقت"
 
 #: modules/profile/templates/ban.phtml:72
 msgid "Minutes (60 max.)"
-msgstr ""
+msgstr "دقيقة (60 كحد أقصى)."
 
 #: modules/profile/templates/ban.phtml:76
 msgid "Hours (24 max.)"
-msgstr ""
+msgstr "ساعات (24 كحد أقصى)."
 
 #: modules/profile/templates/ban.phtml:81
 msgid "Days (30 max.)"
-msgstr ""
+msgstr "يوما (30 كحد أقصى.)"
 
 #: modules/profile/templates/ban.phtml:92
 msgid "Reason"
-msgstr ""
+msgstr "السبب"
 
 #: modules/profile/templates/ban.phtml:98
 msgid "Apply Ban"
-msgstr ""
+msgstr "تطبيق الحظر"
 
 #: modules/profile/templates/ban.phtml:99
 #: modules/profile/templates/ban_cancel.phtml:32
@@ -609,165 +609,165 @@ msgstr ""
 #: modules/profile/templates/password.phtml:63
 #: modules/profile/templates/settings.phtml:125
 msgid "Cancel"
-msgstr ""
+msgstr "الغاء"
 
 #: modules/profile/templates/ban_history.phtml:25
 msgid "User:"
-msgstr ""
+msgstr "المستخدم:"
 
 #: modules/profile/templates/ban_history.phtml:37
 msgid "Active"
-msgstr ""
+msgstr "نشط"
 
 #: modules/profile/templates/ban_history.phtml:46
 msgid "Blocked by:"
-msgstr ""
+msgstr "محظور بواسطة:"
 
 #: modules/profile/templates/ban_history.phtml:50
 msgid "Time:"
-msgstr ""
+msgstr "الوقت"
 
 #: modules/profile/templates/ban_history.phtml:54
 msgid "Remains:"
-msgstr ""
+msgstr "متبقى"
 
 #: modules/profile/templates/ban_history.phtml:73
 msgid "List is empty"
-msgstr ""
+msgstr "القائمة فارغة"
 
 #: modules/profile/templates/ban_history.phtml:80
 msgid "Total"
-msgstr ""
+msgstr "مجموع"
 
 #: modules/profile/templates/ban_history.phtml:90
 msgid "Clear history"
-msgstr ""
+msgstr "مسح المحفوظات"
 
 #: modules/profile/templates/confirm_new_email.phtml:12
 msgid "User is not found"
-msgstr ""
+msgstr "المستخدم غير موجود"
 
 #: modules/profile/templates/confirm_new_email.phtml:14
 msgid "Thanks! Your e-mail has been successfully confirmed."
-msgstr ""
+msgstr "وذلك بفضل! البريد الإلكتروني الخاص بك بنجاح تأكيد."
 
 #: modules/profile/templates/confirm_new_email.phtml:16
 msgid "Error when confirming e-mail. Invalid confirmation code."
-msgstr ""
+msgstr "خطأ عند تأكيد البريد الإلكتروني. صالح رمز التأكيد."
 
 #: modules/profile/templates/edit.phtml:52
 #: modules/profile/templates/restore_password.phtml:12
 #: modules/profile/templates/restore_password.phtml:18
 msgid "Username"
-msgstr ""
+msgstr "اسم المستخدم"
 
 #: modules/profile/templates/edit.phtml:57
 #: modules/profile/templates/edit.phtml:64
 #: modules/profile/templates/edit.phtml:75
 msgid "Nickname"
-msgstr ""
+msgstr "الكنية"
 
 #: modules/profile/templates/edit.phtml:71
 msgid "Min.2, Max. 20"
-msgstr ""
+msgstr "الحد الأدنى 2، الحد. 30"
 
 #: modules/profile/templates/edit.phtml:79
 #: modules/profile/templates/edit.phtml:85
 #: modules/profile/templates/index.phtml:165
 msgid "Status"
-msgstr ""
+msgstr "الحالة"
 
 #: modules/profile/templates/edit.phtml:91
 msgid "Max. 50"
-msgstr ""
+msgstr "الحد. 500"
 
 #: modules/profile/templates/edit.phtml:95
 msgid "Avatar"
-msgstr ""
+msgstr "الصورة الشخصية"
 
 #: modules/profile/templates/edit.phtml:103
 #: modules/profile/templates/edit.phtml:126
 msgid "Upload"
-msgstr ""
+msgstr "رفع"
 
 #: modules/profile/templates/edit.phtml:105
 msgid "Select in Catalog"
-msgstr ""
+msgstr "حدد في الكتالوج"
 
 #: modules/profile/templates/edit.phtml:115
 #: modules/profile/templates/edit.phtml:119
 #: modules/profile/templates/index.phtml:157
 msgid "Photo"
-msgstr ""
+msgstr "صورة"
 
 #: modules/profile/templates/edit.phtml:133
 msgid "Personal info"
-msgstr ""
+msgstr "المعلومات الشخصية"
 
 #: modules/profile/templates/edit.phtml:136
 #: modules/profile/templates/edit.phtml:142
 msgid "Your name"
-msgstr ""
+msgstr "اسمك"
 
 #: modules/profile/templates/edit.phtml:150
 msgid "Date of birth (d.m.y)"
-msgstr ""
+msgstr "تاريخ الميلاد (d.m.y)"
 
 #: modules/profile/templates/edit.phtml:153
 msgid "Day"
-msgstr ""
+msgstr "اليوم"
 
 #: modules/profile/templates/edit.phtml:161
 msgid "Month"
-msgstr ""
+msgstr "شهر"
 
 #: modules/profile/templates/edit.phtml:169
 msgid "Year"
-msgstr ""
+msgstr "سنة"
 
 #: modules/profile/templates/edit.phtml:179
 #: modules/profile/templates/edit.phtml:185
 #: modules/profile/templates/index.phtml:189
 msgid "City, Country"
-msgstr ""
+msgstr "المدينة / الدولة"
 
 #: modules/profile/templates/edit.phtml:192
 msgid "About myself"
-msgstr ""
+msgstr "عن نفسي"
 
 #: modules/profile/templates/edit.phtml:196
 #: modules/profile/templates/office.phtml:70
 #: modules/profile/templates/office.phtml:74
 msgid "Contacts"
-msgstr ""
+msgstr "جهات الاتصال"
 
 #: modules/profile/templates/edit.phtml:198
 #: modules/profile/templates/edit.phtml:204
 #: modules/profile/templates/index.phtml:204
 msgid "Phone number"
-msgstr ""
+msgstr "رقم الهاتف"
 
 #: modules/profile/templates/edit.phtml:211
 #: modules/profile/templates/edit.phtml:217
 #: modules/profile/templates/index.phtml:210
 msgid "E-mail"
-msgstr ""
+msgstr "البريد الإلكتروني"
 
 #: modules/profile/templates/edit.phtml:224
 msgid "The new email address is:"
-msgstr ""
+msgstr "إضافة بريد إلكتروني جديد"
 
 #: modules/profile/templates/edit.phtml:225
 msgid "Please check your email and confirm it."
-msgstr ""
+msgstr "الرجاء التحقق من بريدك الإلكتروني للحصول علي رمز التاكيد."
 
 #: modules/profile/templates/edit.phtml:232
 msgid "Show in Profile"
-msgstr ""
+msgstr "عرض الملف الشخصي"
 
 #: modules/profile/templates/edit.phtml:234
 msgid "Warning! Write your e-mail correctly. Your password will be sent to the email address on record for this account."
-msgstr ""
+msgstr "تحذير! كتابة البريد الإلكتروني الخاص بك بشكل صحيح. سيتم إرسال كلمة المرور الخاصة بك إلى عنوان البريد الإلكتروني في سجل لهذا الحساب."
 
 #: modules/profile/templates/edit.phtml:237
 #: modules/profile/templates/edit.phtml:243
@@ -779,69 +779,69 @@ msgstr ""
 #: modules/profile/templates/edit.phtml:257
 #: modules/profile/templates/index.phtml:225
 msgid "Site"
-msgstr ""
+msgstr "الموقع"
 
 #: modules/profile/templates/edit.phtml:265
 msgid "Administrative Functions"
-msgstr ""
+msgstr "المهام الإدارية"
 
 #: modules/profile/templates/edit.phtml:268
 msgid "Admin notes"
-msgstr ""
+msgstr "ملاحظات المشرف"
 
 #: modules/profile/templates/edit.phtml:275
 msgid "Prohibit Karma"
-msgstr ""
+msgstr "حظر الاعجاب"
 
 #: modules/profile/templates/edit.phtml:280
 msgid "Reset User options to default"
-msgstr ""
+msgstr "إعادة تعيين خيارات المستخدم الافتراضية"
 
 #: modules/profile/templates/edit.phtml:284
 msgid "Select gender"
-msgstr ""
+msgstr "حدد نوع الجنس"
 
 #: modules/profile/templates/edit.phtml:287
 #: modules/profile/templates/index.phtml:179
 msgid "Man"
-msgstr ""
+msgstr "ذكـــر"
 
 #: modules/profile/templates/edit.phtml:291
 #: modules/profile/templates/index.phtml:181
 msgid "Woman"
-msgstr ""
+msgstr "انثـــــى"
 
 #: modules/profile/templates/edit.phtml:295
 msgid "Position on the Site"
-msgstr ""
+msgstr "موقف بشأن الموقع"
 
 #: modules/profile/templates/edit.phtml:298
 msgid "User"
-msgstr ""
+msgstr "مستخدم"
 
 #: modules/profile/templates/edit.phtml:302
 msgid "Forum Moderator"
-msgstr ""
+msgstr "مشرف المنتدى"
 
 #: modules/profile/templates/edit.phtml:306
 msgid "Download Moderator"
-msgstr ""
+msgstr "تحميل مشرف"
 
 #: modules/profile/templates/edit.phtml:310
 msgid "Library Moderator"
-msgstr ""
+msgstr "مكتبة مشرف"
 
 #: modules/profile/templates/edit.phtml:314
 msgid "Super Moderator"
-msgstr ""
+msgstr "المشرف الممتاز"
 
 #: modules/profile/templates/edit.phtml:320
 msgid "Administrator"
-msgstr ""
+msgstr "مدير النظام"
 
 #: modules/profile/templates/edit.phtml:324
 msgid "Supervisor"
-msgstr ""
+msgstr "مشرف"
 
 #: modules/profile/templates/edit.phtml:332
 #: modules/profile/templates/forum_settings.phtml:73
@@ -850,304 +850,304 @@ msgstr ""
 #: modules/profile/templates/password.phtml:62
 #: modules/profile/templates/settings.phtml:124
 msgid "Save"
-msgstr ""
+msgstr "حفظ"
 
 #: modules/profile/templates/forum_settings.phtml:42
 msgid "Basic settings"
-msgstr ""
+msgstr "الإعدادات الأساسية"
 
 #: modules/profile/templates/forum_settings.phtml:46
 msgid "Inverse sorting"
-msgstr ""
+msgstr "فرز معكوس"
 
 #: modules/profile/templates/forum_settings.phtml:50
 msgid "Use the form of a quick answer"
-msgstr ""
+msgstr "استخدم النموذج لإجابة سريعة"
 
 #: modules/profile/templates/forum_settings.phtml:54
 msgid "Preview of messages"
-msgstr ""
+msgstr "معاينة الرسائل"
 
 #: modules/profile/templates/forum_settings.phtml:57
 msgid "Attach first post"
-msgstr ""
+msgstr "إرفاق المشاركة الأولى"
 
 #: modules/profile/templates/forum_settings.phtml:61
 msgid "Always"
-msgstr ""
+msgstr "دومًا"
 
 #: modules/profile/templates/forum_settings.phtml:65
 msgid "In unread topics"
-msgstr ""
+msgstr "في مواضيع غير مقروءة"
 
 #: modules/profile/templates/forum_settings.phtml:69
 msgid "Never"
-msgstr ""
+msgstr "ابدًا"
 
 #: modules/profile/templates/forum_settings.phtml:75
 #: modules/profile/templates/settings.phtml:128
 msgid "Reset Settings"
-msgstr ""
+msgstr "إعادة تعيين الإعدادات"
 
 #: modules/profile/templates/images.phtml:51
 msgid "Choose file"
-msgstr ""
+msgstr "إختيار ملف"
 
 #: modules/profile/templates/images.phtml:54
 #, php-format
 msgid "Allowed image formats: JPG, PNG, GIF. File size should not exceed %d kb.<br>The new image will replace old (if was)."
-msgstr ""
+msgstr "يسمح تنسيقات الصور: JPG، PNG، GIF. يجب إلا يتجاوز حجم الملف %d kb. <br>صورة جديدة سوف تحل محل القديمة (إذا كان)."
 
 #: modules/profile/templates/index.phtml:44
 #: modules/profile/templates/index.phtml:69
 #: modules/profile/templates/stat.phtml:45
 msgid "Last visit"
-msgstr ""
+msgstr "آخر زيارة:"
 
 #: modules/profile/templates/index.phtml:44
 msgid "Online"
-msgstr ""
+msgstr "متصل"
 
 #: modules/profile/templates/index.phtml:56
 msgid "User is banned"
-msgstr ""
+msgstr "المستخدم محظور"
 
 #: modules/profile/templates/index.phtml:59
 msgid "Reason:"
-msgstr ""
+msgstr "السبب"
 
 #: modules/profile/templates/index.phtml:65
 msgid "Violations"
-msgstr ""
+msgstr "الانتهاكات"
 
 #: modules/profile/templates/index.phtml:74
 msgid "User Agent"
-msgstr ""
+msgstr "وكيل المستخدم"
 
 #: modules/profile/templates/index.phtml:76
 msgid "Ip"
-msgstr ""
+msgstr "آي"
 
 #: modules/profile/templates/index.phtml:77
 #: modules/profile/templates/index.phtml:80
 msgid "Whois"
-msgstr ""
+msgstr "من"
 
 #: modules/profile/templates/index.phtml:95
 msgid "Write"
-msgstr ""
+msgstr "اكتب"
 
 #: modules/profile/templates/index.phtml:98
 msgid "Block"
-msgstr ""
+msgstr "حظر"
 
 #: modules/profile/templates/index.phtml:100
 msgid "Unblock"
-msgstr ""
+msgstr "رفع الحظر"
 
 #: modules/profile/templates/index.phtml:104
 msgid "Actions"
-msgstr ""
+msgstr "الإجراءات"
 
 #: modules/profile/templates/index.phtml:113
 msgid "Edit profile"
-msgstr ""
+msgstr "تعديل الملف الشخصي"
 
 #: modules/profile/templates/index.phtml:126
 msgid "vote"
 msgid_plural "votes"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "الأصوات"
+msgstr[1] "صوت"
+msgstr[2] "الأصوات"
+msgstr[3] "الأصوات"
+msgstr[4] "الأصوات"
+msgstr[5] "الأصوات"
 
 #: modules/profile/templates/index.phtml:146
 #: modules/profile/templates/karma_vote.phtml:65
 msgid "Vote"
-msgstr ""
+msgstr "تصويت"
 
 #: modules/profile/templates/index.phtml:154
 msgid "Information"
-msgstr ""
+msgstr "المعلومات"
 
 #: modules/profile/templates/index.phtml:171
 msgid "Birthday"
-msgstr ""
+msgstr "عيد ميلاد"
 
 #: modules/profile/templates/index.phtml:176
 msgid "Gender"
-msgstr ""
+msgstr "نوع الجنس"
 
 #: modules/profile/templates/index.phtml:183
 msgid "Not specified"
-msgstr ""
+msgstr "غير محدد"
 
 #: modules/profile/templates/index.phtml:213
 msgid "hidden"
-msgstr ""
+msgstr "أُخْفِيَتْ"
 
 #: modules/profile/templates/index.phtml:236
 msgid "Admin Notes"
-msgstr ""
+msgstr "ملاحظات المشرف"
 
 #: modules/profile/templates/index.phtml:277
 #: modules/profile/templates/office.phtml:38
 msgid "Photo Album"
-msgstr ""
+msgstr "ألبوم الصور"
 
 #: modules/profile/templates/ip_history.phtml:38
 msgid "IP address"
-msgstr ""
+msgstr "عنوان IP"
 
 #: modules/profile/templates/ip_history.phtml:39
 msgid "Date"
-msgstr ""
+msgstr "تاريخ"
 
 #: modules/profile/templates/karma.phtml:71
 msgid "Reset Karma"
-msgstr ""
+msgstr "اعادة تعيين المعجبين"
 
 #: modules/profile/templates/karma_vote.phtml:38
 msgid "Type of vote"
-msgstr ""
+msgstr "نوع من الأصوات"
 
 #: modules/profile/templates/karma_vote.phtml:49
 msgid "Votes quantity"
-msgstr ""
+msgstr "كمية الأصوات"
 
 #: modules/profile/templates/karma_vote.phtml:58
 msgid "Comment"
-msgstr ""
+msgstr "أضف تعليق"
 
 #: modules/profile/templates/karma_vote.phtml:60
 msgid "Min. 2, Max. 500 characters"
-msgstr ""
+msgstr "الحد الأدنى 2، الحد الاقصى. 500 حرف"
 
 #: modules/profile/templates/mail_settings.phtml:44
 msgid "Who can write you?"
-msgstr ""
+msgstr "الذين يمكن أن يكتب لك؟"
 
 #: modules/profile/templates/mail_settings.phtml:48
 msgid "All can write"
-msgstr ""
+msgstr "كل ما يمكن أن يكتب"
 
 #: modules/profile/templates/mail_settings.phtml:52
 msgid "Only my contacts"
-msgstr ""
+msgstr "فقط الأصدقاء"
 
 #: modules/profile/templates/message_row.phtml:29
 msgid "To message"
-msgstr ""
+msgstr "رسالة"
 
 #: modules/profile/templates/office.phtml:28
 msgid "My Pages"
-msgstr ""
+msgstr "صفحاتي"
 
 #: modules/profile/templates/office.phtml:35
 msgid "Statistics"
-msgstr ""
+msgstr "الإحصائيات"
 
 #: modules/profile/templates/office.phtml:47
 msgid "My Mailbox"
-msgstr ""
+msgstr "صندوق بريدي"
 
 #: modules/profile/templates/office.phtml:51
 msgid "Received"
-msgstr ""
+msgstr "المستلمة"
 
 #: modules/profile/templates/office.phtml:58
 msgid "Sent"
-msgstr ""
+msgstr "مرسلة"
 
 #: modules/profile/templates/office.phtml:65
 msgid "Files"
-msgstr ""
+msgstr "الملفات"
 
 #: modules/profile/templates/office.phtml:78
 msgid "Blocked"
-msgstr ""
+msgstr "تم الحظر"
 
 #: modules/profile/templates/office.phtml:88
 msgid "System Settings"
-msgstr ""
+msgstr "إعدادات النظام"
 
 #: modules/profile/templates/password.phtml:30
 #: modules/profile/templates/password.phtml:36
 msgid "Enter old password"
-msgstr ""
+msgstr "أدخل كلمة المرور القديمة"
 
 #: modules/profile/templates/password.phtml:42
 #: modules/profile/templates/password.phtml:48
 msgid "Enter new password"
-msgstr ""
+msgstr "أدخل كلمة مرور جديدة"
 
 #: modules/profile/templates/password.phtml:52
 #: modules/profile/templates/password.phtml:58
 msgid "Repeat password"
-msgstr ""
+msgstr "تكرار كلمة المرور"
 
 #: modules/profile/templates/restore_password.phtml:22
 #: modules/profile/templates/restore_password.phtml:28
 msgid "Your E-mail"
-msgstr ""
+msgstr "البريد الإلكتروني الخاص بك"
 
 #: modules/profile/templates/restore_password.phtml:31
 #: modules/profile/templates/restore_password.phtml:40
 msgid "Verification code"
-msgstr ""
+msgstr "رمز التحقق"
 
 #: modules/profile/templates/restore_password.phtml:33
 msgid "Enter verification code"
-msgstr ""
+msgstr "أدخل رمز التحقق"
 
 #: modules/profile/templates/restore_password.phtml:46
 msgid "Password will be send to E-mail address specified in your profile.<br />WARNING !! If E-mail address has not been specified in your profile, you will not be able to recover your password."
-msgstr ""
+msgstr "كلمة المرور سيتم إرسالها إلى عنوان البريد الإلكتروني المحدد في ملف التعريف الخاص بك.<br />تحذير!! إذا كان عنوان البريد الإلكتروني لم يتم تحديده في ملف التعريف الخاص بك, سوف لا تكون قادرة على استرداد كلمة المرور الخاصة بك."
 
 #: modules/profile/templates/settings.phtml:45
 msgid "Time settings"
-msgstr ""
+msgstr "استعادة الخيارات الإفتراضية"
 
 #: modules/profile/templates/settings.phtml:47
 #: modules/profile/templates/settings.phtml:55
 msgid "Shift of time"
-msgstr ""
+msgstr "تحول في الوقت"
 
 #: modules/profile/templates/settings.phtml:58
 msgid "System time"
-msgstr ""
+msgstr "وقت النظام"
 
 #: modules/profile/templates/settings.phtml:62
 msgid "System Functions"
-msgstr ""
+msgstr "وظائف النظام"
 
 #: modules/profile/templates/settings.phtml:65
 msgid "Direct URL"
-msgstr ""
+msgstr "رابط مباشر"
 
 #: modules/profile/templates/settings.phtml:69
 msgid "Youtube Player"
-msgstr ""
+msgstr "مشغل Youtube"
 
 #: modules/profile/templates/settings.phtml:72
 msgid "Text entering"
-msgstr ""
+msgstr "إدخال النص"
 
 #: modules/profile/templates/settings.phtml:74
 #: modules/profile/templates/settings.phtml:81
 msgid "Height of field"
-msgstr ""
+msgstr "ارتفاع حقل"
 
 #: modules/profile/templates/settings.phtml:85
 msgid "Appearance"
-msgstr ""
+msgstr "المظهر"
 
 #: modules/profile/templates/settings.phtml:87
 #: modules/profile/templates/settings.phtml:94
 msgid "Size of Lists"
-msgstr ""
+msgstr "حجم قوائم"
 
 #: modules/profile/templates/settings.phtml:99
 msgid "Theme"
@@ -1156,21 +1156,21 @@ msgstr ""
 #: modules/profile/templates/settings.phtml:110
 #: modules/profile/templates/settings.phtml:112
 msgid "Select Language"
-msgstr ""
+msgstr "اختر اللغة"
 
 #: modules/profile/templates/settings.phtml:117
 msgid "Site Default"
-msgstr ""
+msgstr "الموقع الافتراضي"
 
 #: modules/profile/templates/stat.phtml:34
 msgid "Registration confirmed"
-msgstr ""
+msgstr "التسجيل أكتمل"
 
 #: modules/profile/templates/stat.phtml:36
 msgid "Free registration"
-msgstr ""
+msgstr "التسجيل مجاني"
 
 #: modules/profile/templates/stat.phtml:41
 msgid "Registered"
-msgstr ""
+msgstr "تم التسجيل"
 

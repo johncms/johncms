@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
-"PO-Revision-Date: 2026-03-24 11:07\n"
+"PO-Revision-Date: 2026-03-24 21:38\n"
 
 #: modules/guestbook/src/Application/Controllers/DeleteEntryController.php:59
 msgid "The message was deleted"
@@ -20,7 +20,7 @@ msgstr ""
 #: modules/guestbook/src/Application/Controllers/EditEntryController.php:34
 #: modules/guestbook/templates/edit.phtml:3
 msgid "Edit message"
-msgstr ""
+msgstr "تحرير الرسالة"
 
 #: modules/guestbook/src/Application/Controllers/EditEntryController.php:69
 msgid "The message was saved"
@@ -28,15 +28,15 @@ msgstr ""
 
 #: modules/guestbook/src/Application/Controllers/GuestbookController.php:38
 msgid "Guestbook"
-msgstr ""
+msgstr "سجل الزوار"
 
 #: modules/guestbook/src/Application/Controllers/GuestbookController.php:38
 msgid "Admin Club"
-msgstr ""
+msgstr "نادي المشرفين"
 
 #: modules/guestbook/src/Application/Controllers/GuestbookController.php:48
 msgid "Guestbook is closed"
-msgstr ""
+msgstr "سجل الزوار مغلق"
 
 #: modules/guestbook/src/Application/Controllers/GuestbookController.php:65
 msgid "Your message was added successfully"
@@ -48,7 +48,7 @@ msgstr ""
 #: modules/guestbook/templates/reply.phtml:11
 #: modules/guestbook/templates/reply.phtml:24
 msgid "Reply"
-msgstr ""
+msgstr "رد "
 
 #: modules/guestbook/src/Application/Controllers/ReplyController.php:69
 msgid "Your reply to the message was saved"
@@ -60,126 +60,126 @@ msgstr ""
 
 #: modules/guestbook/src/Application/Services/GuestbookService.php:193
 msgid "All messages older than 1 day were deleted"
-msgstr ""
+msgstr "تم حذف جميع الرسائل الأقدم من يوم 1"
 
 #: modules/guestbook/src/Application/Services/GuestbookService.php:209
 msgid "Full clearing is finished"
-msgstr ""
+msgstr "الانتهاء من تطهير كامل"
 
 #: modules/guestbook/src/Application/Services/GuestbookService.php:225
 msgid "All messages older than 1 week were deleted"
-msgstr ""
+msgstr "جميع رسائل أقدم من 1 أسبوع تم حذفها"
 
 #: modules/guestbook/templates/clear.phtml:5
 msgid "Clear guestbook"
-msgstr ""
+msgstr "پاک کردن کتاب مهمان"
 
 #: modules/guestbook/templates/clear.phtml:10
 msgid "Clearing parameters"
-msgstr ""
+msgstr "مسح المعلمات"
 
 #: modules/guestbook/templates/clear.phtml:13
 msgid "Older than 1 week"
-msgstr ""
+msgstr "اقدم من اسبوع"
 
 #: modules/guestbook/templates/clear.phtml:17
 msgid "Older than 1 day"
-msgstr ""
+msgstr "اقدم من اسبوع"
 
 #: modules/guestbook/templates/clear.phtml:21
 msgid "Clear all"
-msgstr ""
+msgstr "تنظيف الكل"
 
 #: modules/guestbook/templates/clear.phtml:25
 #: modules/guestbook/templates/index.phtml:221
 msgid "Clear"
-msgstr ""
+msgstr "مسح"
 
 #: modules/guestbook/templates/clear.phtml:26
 #: modules/guestbook/templates/confirm_delete.phtml:15
 msgid "Cancel"
-msgstr ""
+msgstr "إلغاء الأمر"
 
 #: modules/guestbook/templates/confirm_delete.phtml:6
 msgid "Delete message"
-msgstr ""
+msgstr "حذف الرسالة"
 
 #: modules/guestbook/templates/confirm_delete.phtml:11
 msgid "Do you really want to delete?"
-msgstr ""
+msgstr "هل ترغب بالحذف ؟"
 
 #: modules/guestbook/templates/confirm_delete.phtml:14
 #: modules/guestbook/templates/index.phtml:206
 msgid "Delete"
-msgstr ""
+msgstr "حذف"
 
 #: modules/guestbook/templates/edit.phtml:10
 #: modules/guestbook/templates/reply.phtml:18
 msgid "Author"
-msgstr ""
+msgstr "الكاتب"
 
 #: modules/guestbook/templates/edit.phtml:15
 #: modules/guestbook/templates/index.phtml:62
 msgid "Message"
-msgstr ""
+msgstr "الرسالة"
 
 #: modules/guestbook/templates/edit.phtml:21
 #: modules/guestbook/templates/reply.phtml:30
 msgid "Save"
-msgstr ""
+msgstr "حفظ"
 
 #: modules/guestbook/templates/edit.phtml:22
 #: modules/guestbook/templates/reply.phtml:31
 msgid "Back"
-msgstr ""
+msgstr "الرجوع"
 
 #: modules/guestbook/templates/index.phtml:21
 msgid "The guestbook is closed"
-msgstr ""
+msgstr "سجل الزوار مغلق"
 
 #: modules/guestbook/templates/index.phtml:44
 #: modules/guestbook/templates/index.phtml:52
 msgid "Name"
-msgstr ""
+msgstr "الاسم"
 
 #: modules/guestbook/templates/index.phtml:69
 msgid "Verification code"
-msgstr ""
+msgstr "رمز التحقق"
 
 #: modules/guestbook/templates/index.phtml:71
 #: modules/guestbook/templates/index.phtml:79
 msgid "Symbols on the picture"
-msgstr ""
+msgstr "الرموز في الصورة"
 
 #: modules/guestbook/templates/index.phtml:85
 msgid "If you cannot see the image code, enable graphics in your browser and refresh this page"
-msgstr ""
+msgstr "إذا كنت لا ترى رمز الصورة، يرجى تمكين الرسومات في المستعرض الخاص بك ثم قم بتحديث هذه الصفحة"
 
 #: modules/guestbook/templates/index.phtml:90
 msgid "Write"
-msgstr ""
+msgstr "اكتب"
 
 #: modules/guestbook/templates/index.phtml:101
 msgid "For registered users only"
-msgstr ""
+msgstr "للمستخدمين المسجلين فقط"
 
 #: modules/guestbook/templates/index.phtml:109
 msgid "The guestbook is empty.<br><strong>Be the first! :)</strong>"
-msgstr ""
+msgstr "سجل الزوار فارغ. <br><strong>أن تكون الأول!:)</strong>"
 
 #: modules/guestbook/templates/index.phtml:146
 msgid "Guest"
-msgstr ""
+msgstr "زائر"
 
 #: modules/guestbook/templates/index.phtml:154
 msgid "Edited:"
-msgstr ""
+msgstr "تحرير:"
 
 #: modules/guestbook/templates/index.phtml:155
 msgid "Edited"
-msgstr ""
+msgstr "تحرير:"
 
 #: modules/guestbook/templates/index.phtml:205
 msgid "Edit"
-msgstr ""
+msgstr "تحرير"
 

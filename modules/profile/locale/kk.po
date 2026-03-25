@@ -11,13 +11,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Kazakh\n"
 "Language: kk_KZ\n"
-"PO-Revision-Date: 2026-03-24 11:10\n"
+"PO-Revision-Date: 2026-03-24 21:40\n"
 
 #: modules/profile/includes/activity.php:25
 #: modules/profile/templates/index.phtml:253
 #: modules/profile/templates/stat.phtml:50
 msgid "Activity"
-msgstr ""
+msgstr "Белсенділік"
 
 #: modules/profile/includes/activity.php:27
 #: modules/profile/includes/edit.php:52
@@ -26,70 +26,70 @@ msgstr ""
 #: modules/profile/includes/reset.php:20
 #: modules/profile/templates/office.phtml:32
 msgid "Profile"
-msgstr ""
+msgstr "Профиль"
 
 #: modules/profile/includes/activity.php:27
 #: modules/profile/includes/edit.php:52
 #: modules/profile/includes/images.php:159
 #: modules/profile/includes/index.php:24
 msgid "My Profile"
-msgstr ""
+msgstr "Менің профилім"
 
 #: modules/profile/includes/activity.php:33
 msgid "Messages"
-msgstr ""
+msgstr "Хабарлама"
 
 #: modules/profile/includes/activity.php:38
 msgid "Themes"
-msgstr ""
+msgstr "Тақырыптар"
 
 #: modules/profile/includes/activity.php:43
 #: modules/profile/includes/ban.php:392
 #: modules/profile/templates/ban.phtml:45
 #: modules/profile/templates/stat.phtml:54
 msgid "Comments"
-msgstr ""
+msgstr "Пікірлер"
 
 #: modules/profile/includes/ban.php:16
 msgid "Ban the User"
-msgstr ""
+msgstr "Қолданушыға бан беру"
 
 #: modules/profile/includes/ban.php:30
 msgid "You do not have enought rights to ban this user"
-msgstr ""
+msgstr "Сізде жеткілікті құқықтары жоқ"
 
 #: modules/profile/includes/ban.php:44
 msgid "Reason not specified"
-msgstr ""
+msgstr "Себебі көрсетілмеген"
 
 #: modules/profile/includes/ban.php:48
 msgid "There is no required data"
-msgstr ""
+msgstr "Қажетті деректер жоқ"
 
 #: modules/profile/includes/ban.php:58
 msgid "You have no rights to ban in this section"
-msgstr ""
+msgstr "Сіздің бұл бөлімде тыйым салуға құқығыңыз жоқ"
 
 #: modules/profile/includes/ban.php:62
 msgid "Ban already active"
-msgstr ""
+msgstr "Мұндай тыйым бұрыннан бар"
 
 #: modules/profile/includes/ban.php:143
 msgid "System"
-msgstr ""
+msgstr "Система"
 
 #: modules/profile/includes/ban.php:147
 #: modules/profile/includes/index.php:151
 msgid "Ban"
-msgstr ""
+msgstr "Тыйым салу"
 
 #: modules/profile/includes/ban.php:158
 msgid "User banned"
-msgstr ""
+msgstr "Пайдаланушы тыйым салынған"
 
 #: modules/profile/includes/ban.php:192
 msgid "Ban termination"
-msgstr ""
+msgstr "Тыйым салуды тоқтату"
 
 #: modules/profile/includes/ban.php:200
 #: modules/profile/includes/ban.php:258
@@ -97,35 +97,35 @@ msgstr ""
 #: modules/profile/includes/ban.php:324
 #: modules/profile/skl.php:141
 msgid "Wrong data"
-msgstr ""
+msgstr "Дұрыс емес мәліметтер"
 
 #: modules/profile/includes/ban.php:212
 msgid "Ban not active"
-msgstr ""
+msgstr "Тыйым салу қолданылмайды"
 
 #: modules/profile/includes/ban.php:223
 msgid "Ban terminated"
-msgstr ""
+msgstr "Пайдаланушыға тыйым салу тоқтатылды"
 
 #: modules/profile/includes/ban.php:228
 msgid "Ban time is going to the end. Infrigement will be saved in the bans history"
-msgstr ""
+msgstr "Бұзушылықтар тарихындағы жазбаларды сақтай отырып, белсенді банның әрекеті тоқтатылады"
 
 #: modules/profile/includes/ban.php:229
 msgid "Terminate Ban"
-msgstr ""
+msgstr "Тыйым салуды болдырмаңыз"
 
 #: modules/profile/includes/ban.php:268
 msgid "Delete ban"
-msgstr ""
+msgstr "Тыйым салуды алып тастаңыз"
 
 #: modules/profile/includes/ban.php:300
 msgid "Ban deleted"
-msgstr ""
+msgstr "Тыйым салу жойылды"
 
 #: modules/profile/includes/ban.php:305
 msgid "Removing ban along with a record in the bans history"
-msgstr ""
+msgstr "Тыйым салу бұзушылықтар тарихындағы жазумен бірге тыйым салынады"
 
 #: modules/profile/includes/ban.php:306
 #: modules/profile/includes/index.php:145
@@ -133,42 +133,42 @@ msgstr ""
 #: modules/profile/templates/edit.phtml:128
 #: modules/profile/templates/karma_delete.phtml:33
 msgid "Delete"
-msgstr ""
+msgstr "Өшіру"
 
 #: modules/profile/includes/ban.php:334
 msgid "Violations history"
-msgstr ""
+msgstr "Бұзушылықтардың тарихы"
 
 #: modules/profile/includes/ban.php:344
 msgid "Violations history cleared"
-msgstr ""
+msgstr "Бұзушылықтар тарихы тазаланды"
 
 #: modules/profile/includes/ban.php:349
 msgid "Are you sure want to clean entire history of user violations?"
-msgstr ""
+msgstr "Осы пайдаланушының бұзушылық тарихын толығымен өшіргіңіз келе ме?"
 
 #: modules/profile/includes/ban.php:350
 msgid "Clear"
-msgstr ""
+msgstr "Тазарту"
 
 #: modules/profile/includes/ban.php:368
 msgid "Violations history can be cleared by Supervisor only"
-msgstr ""
+msgstr "Құқық бұзушылықтар тарихын тек Супервайзорлар ғана өшіре алады"
 
 #: modules/profile/includes/ban.php:377
 msgid "Violations History"
-msgstr ""
+msgstr "Бұзушылықтардың тарихы"
 
 #: modules/profile/includes/ban.php:389
 #: modules/profile/templates/ban.phtml:37
 msgid "Full block"
-msgstr ""
+msgstr "Толық құлыптау"
 
 #: modules/profile/includes/ban.php:390
 #: modules/profile/includes/ban.php:391
 #: modules/profile/templates/ban.phtml:41
 msgid "Private messages"
-msgstr ""
+msgstr "Жеке хабарламалар"
 
 #: modules/profile/includes/ban.php:393
 #: modules/profile/includes/settings.php:45
@@ -176,7 +176,7 @@ msgstr ""
 #: modules/profile/templates/ban.phtml:55
 #: modules/profile/templates/stat.phtml:52
 msgid "Forum"
-msgstr ""
+msgstr "Форум"
 
 #: modules/profile/includes/ban.php:394
 #: modules/profile/includes/guestbook.php:16
@@ -186,40 +186,40 @@ msgstr ""
 #: modules/profile/templates/office.phtml:42
 #: modules/profile/templates/stat.phtml:53
 msgid "Guestbook"
-msgstr ""
+msgstr "Қонақ кітәпшасы"
 
 #: modules/profile/includes/ban.php:395
 #: modules/profile/templates/ban.phtml:61
 msgid "Library"
-msgstr ""
+msgstr "Кітапхана"
 
 #: modules/profile/includes/ban.php:405
 #: modules/profile/templates/ban.phtml:87
 msgid "Till cancel"
-msgstr ""
+msgstr "Бас тартуға дейін"
 
 #: modules/profile/includes/ban.php:416
 msgid "Cancel Ban"
-msgstr ""
+msgstr "Салынған тыйымды жою"
 
 #: modules/profile/includes/ban.php:422
 msgid "Delete Ban"
-msgstr ""
+msgstr "Тыйым салуды алып тастаңыз"
 
 #: modules/profile/includes/confirm_new_email.php:19
 #: modules/profile/includes/confirm_new_email.php:20
 msgid "Email confirmation"
-msgstr ""
+msgstr "Электрондық поштаны растау"
 
 #: modules/profile/includes/edit.php:20
 #: modules/profile/templates/office.phtml:86
 msgid "Edit Profile"
-msgstr ""
+msgstr "Профилді өңдеу"
 
 #: modules/profile/includes/edit.php:35
 #: modules/profile/includes/images.php:23
 msgid "You cannot edit profile of higher administration"
-msgstr ""
+msgstr "Сіз өзіңіздің жоғары пайдаланушы профилін өзгерте алмайсыз"
 
 #: modules/profile/includes/edit.php:47
 #: modules/profile/includes/ip.php:24
@@ -227,19 +227,19 @@ msgstr ""
 #: modules/profile/includes/password.php:25
 #: modules/profile/includes/settings.php:31
 msgid "Access forbidden"
-msgstr ""
+msgstr "Рұқсат жоқ"
 
 #: modules/profile/includes/edit.php:86
 msgid "Avatar is successfully removed"
-msgstr ""
+msgstr "Аватар сәтті жойылды"
 
 #: modules/profile/includes/edit.php:93
 msgid "Photo is successfully removed"
-msgstr ""
+msgstr "Фотосурет сәтті жойылды"
 
 #: modules/profile/includes/edit.php:169
 msgid "Confirm email change"
-msgstr ""
+msgstr "Электрондық поштаның өзгеруін растаңыз"
 
 #: modules/profile/includes/edit.php:186
 msgid "The procedure for changing the email address was started"
@@ -256,7 +256,7 @@ msgstr ""
 #: modules/profile/includes/images.php:42
 #: modules/profile/includes/images.php:94
 msgid "The weight of the file exceeds"
-msgstr ""
+msgstr "Файл көлемі асып кетті"
 
 #: modules/profile/includes/images.php:64
 msgid "The avatar is successfully uploaded"
@@ -268,17 +268,17 @@ msgstr ""
 #: modules/profile/includes/password.php:83
 #: modules/profile/templates/restore_password.phtml:43
 msgid "Continue"
-msgstr ""
+msgstr "Жалғастыру"
 
 #: modules/profile/includes/images.php:81
 #: modules/profile/includes/images.php:150
 #: modules/profile/includes/password.php:94
 msgid "Repeat"
-msgstr ""
+msgstr "Қайталау"
 
 #: modules/profile/includes/images.php:88
 msgid "Upload Photo"
-msgstr ""
+msgstr "Fotosy'ret ju'kteldi"
 
 #: modules/profile/includes/images.php:133
 msgid "The photo is successfully uploaded"
@@ -302,7 +302,7 @@ msgstr ""
 
 #: modules/profile/includes/index.php:126
 msgid "Add to Contacts"
-msgstr ""
+msgstr "Контакттарға қосу"
 
 #: modules/profile/includes/index.php:131
 msgid "Remove from Contacts"
@@ -310,18 +310,18 @@ msgstr ""
 
 #: modules/profile/includes/index.php:139
 msgid "Edit"
-msgstr ""
+msgstr "Өзгерту"
 
 #: modules/profile/includes/ip.php:15
 #: modules/profile/templates/index.phtml:86
 msgid "IP History"
-msgstr ""
+msgstr "IP тарихы"
 
 #: modules/profile/includes/karma.php:17
 #: modules/profile/includes/karma.php:21
 #: modules/profile/templates/index.phtml:119
 msgid "Karma"
-msgstr ""
+msgstr "Карма"
 
 #: modules/profile/includes/karma.php:42
 msgid "It is forbidden to vote for administration"
@@ -338,7 +338,7 @@ msgstr ""
 
 #: modules/profile/includes/karma.php:52
 msgid "days"
-msgstr ""
+msgstr "күндер"
 
 #: modules/profile/includes/karma.php:60
 msgid "You can vote for single user just one time for 24 hours"
@@ -357,7 +357,7 @@ msgstr ""
 #: modules/profile/templates/restore_password_result.phtml:19
 #: modules/profile/templates/stat.phtml:58
 msgid "Back"
-msgstr ""
+msgstr "Артқа"
 
 #: modules/profile/includes/karma.php:136
 msgid "You have successfully voted"
@@ -385,31 +385,31 @@ msgstr ""
 
 #: modules/profile/includes/karma.php:287
 msgid "All"
-msgstr ""
+msgstr "Барлығы"
 
 #: modules/profile/includes/karma.php:292
 #: modules/profile/templates/index.phtml:134
 #: modules/profile/templates/karma_vote.phtml:41
 msgid "Positive"
-msgstr ""
+msgstr "Оң"
 
 #: modules/profile/includes/karma.php:297
 #: modules/profile/templates/index.phtml:140
 #: modules/profile/templates/karma_vote.phtml:45
 msgid "Negative"
-msgstr ""
+msgstr "Теріс"
 
 #: modules/profile/includes/office.php:15
 #: modules/profile/includes/settings.php:22
 msgid "My Account"
-msgstr ""
+msgstr "Жеке бөлме"
 
 #: modules/profile/includes/password.php:15
 #: modules/profile/includes/password.php:16
 #: modules/profile/templates/edit.phtml:278
 #: modules/profile/templates/office.phtml:87
 msgid "Change Password"
-msgstr ""
+msgstr "Құпиясөзді өзгерту"
 
 #: modules/profile/includes/password.php:43
 #: modules/profile/includes/password.php:46
@@ -426,15 +426,15 @@ msgstr ""
 
 #: modules/profile/includes/password.php:59
 msgid "The password must contain at least 3 characters"
-msgstr ""
+msgstr "Құписөз құрамы 3 симболдан кем болмауы керек"
 
 #: modules/profile/includes/password.php:81
 msgid "Password successfully changed"
-msgstr ""
+msgstr "Құпия сөз  табысты өзгертілді"
 
 #: modules/profile/includes/reset.php:19
 msgid "Reset user settings"
-msgstr ""
+msgstr "Параметрлерді қалпына келтіру"
 
 #: modules/profile/includes/reset.php:36
 #, php-format
@@ -445,17 +445,17 @@ msgstr ""
 #: modules/profile/includes/settings.php:23
 #: modules/profile/templates/office.phtml:83
 msgid "Settings"
-msgstr ""
+msgstr "Баптаулар"
 
 #: modules/profile/includes/settings.php:40
 #: modules/profile/includes/settings.php:152
 msgid "General setting"
-msgstr ""
+msgstr "Жалпы параметрлер"
 
 #: modules/profile/includes/settings.php:50
 #: modules/profile/includes/settings.php:70
 msgid "Mail"
-msgstr ""
+msgstr "Пошта"
 
 #: modules/profile/includes/settings.php:57
 msgid "Auto"
@@ -473,7 +473,7 @@ msgstr ""
 #: modules/profile/includes/settings.php:125
 #: modules/profile/includes/settings.php:208
 msgid "Settings saved successfully"
-msgstr ""
+msgstr "Параметрлер сәтті сақталды"
 
 #: modules/profile/includes/settings.php:135
 #: modules/profile/includes/settings.php:213
@@ -485,15 +485,15 @@ msgstr ""
 #: modules/profile/templates/index.phtml:265
 #: modules/profile/templates/stat.phtml:26
 msgid "Statistic"
-msgstr ""
+msgstr "Статистика"
 
 #: modules/profile/index.php:60
 msgid "For registered users only"
-msgstr ""
+msgstr "Тек қана тіркелген қолданушылар үшін"
 
 #: modules/profile/index.php:80
 msgid "This User does not exists"
-msgstr ""
+msgstr "Ондай қолданушы жоқ"
 
 #: modules/profile/skl.php:42
 #: modules/profile/templates/restore_password.phtml:4
@@ -507,7 +507,7 @@ msgstr ""
 
 #: modules/profile/skl.php:70
 msgid "The required fields are not filled"
-msgstr ""
+msgstr "Міндетті жолдар толтырылмаған"
 
 #: modules/profile/skl.php:72
 msgid "Incorrect code"
@@ -515,7 +515,7 @@ msgstr ""
 
 #: modules/profile/skl.php:86
 msgid "Invalid Email address"
-msgstr ""
+msgstr "Емейл мекені жарамсыз"
 
 #: modules/profile/skl.php:90
 msgid "Password can be recovered 1 time per day"
@@ -524,11 +524,11 @@ msgstr ""
 #: modules/profile/skl.php:93
 #: modules/profile/skl.php:160
 msgid "User does not exists"
-msgstr ""
+msgstr "Ондай қолданушы жоқ"
 
 #: modules/profile/skl.php:109
 msgid "Password recovery"
-msgstr ""
+msgstr "Кілтсөзді қалпына келтіру"
 
 #: modules/profile/skl.php:119
 msgid "Check your e-mail for further information"
@@ -544,7 +544,7 @@ msgstr ""
 
 #: modules/profile/skl.php:176
 msgid "Your new password"
-msgstr ""
+msgstr "Сіздің Құпиясөзіңіз"
 
 #: modules/profile/skl.php:187
 msgid "Password successfully changed.<br>New password sent to your E-mail address."
@@ -554,17 +554,17 @@ msgstr ""
 #: modules/profile/templates/ip_history.phtml:46
 #: modules/profile/templates/karma.phtml:38
 msgid "The list is empty"
-msgstr ""
+msgstr "Тізім бос"
 
 #: modules/profile/templates/activity.phtml:53
 #: modules/profile/templates/ip_history.phtml:66
 #: modules/profile/templates/karma.phtml:82
 msgid "Total:"
-msgstr ""
+msgstr "Барлығы:"
 
 #: modules/profile/templates/ban.phtml:31
 msgid "Ban:"
-msgstr ""
+msgstr "Тыйым салу"
 
 #: modules/profile/templates/ban.phtml:33
 msgid "Ban type"
@@ -576,7 +576,7 @@ msgstr ""
 
 #: modules/profile/templates/ban.phtml:67
 msgid "Time"
-msgstr ""
+msgstr "Уақыт"
 
 #: modules/profile/templates/ban.phtml:72
 msgid "Minutes (60 max.)"
@@ -584,7 +584,7 @@ msgstr ""
 
 #: modules/profile/templates/ban.phtml:76
 msgid "Hours (24 max.)"
-msgstr ""
+msgstr "Сағат (24 макс.)"
 
 #: modules/profile/templates/ban.phtml:81
 msgid "Days (30 max.)"
@@ -592,7 +592,7 @@ msgstr ""
 
 #: modules/profile/templates/ban.phtml:92
 msgid "Reason"
-msgstr ""
+msgstr "Себеп"
 
 #: modules/profile/templates/ban.phtml:98
 msgid "Apply Ban"
@@ -609,11 +609,11 @@ msgstr ""
 #: modules/profile/templates/password.phtml:63
 #: modules/profile/templates/settings.phtml:125
 msgid "Cancel"
-msgstr ""
+msgstr "Бас тарту"
 
 #: modules/profile/templates/ban_history.phtml:25
 msgid "User:"
-msgstr ""
+msgstr "Қолданушы:"
 
 #: modules/profile/templates/ban_history.phtml:37
 msgid "Active"
@@ -625,89 +625,89 @@ msgstr ""
 
 #: modules/profile/templates/ban_history.phtml:50
 msgid "Time:"
-msgstr ""
+msgstr "Уақыты:"
 
 #: modules/profile/templates/ban_history.phtml:54
 msgid "Remains:"
-msgstr ""
+msgstr "Қалады:"
 
 #: modules/profile/templates/ban_history.phtml:73
 msgid "List is empty"
-msgstr ""
+msgstr "Тізім бос"
 
 #: modules/profile/templates/ban_history.phtml:80
 msgid "Total"
-msgstr ""
+msgstr "Барлығы"
 
 #: modules/profile/templates/ban_history.phtml:90
 msgid "Clear history"
-msgstr ""
+msgstr "Тарихты тазалау"
 
 #: modules/profile/templates/confirm_new_email.phtml:12
 msgid "User is not found"
-msgstr ""
+msgstr "Қолданушы табылған жоқ"
 
 #: modules/profile/templates/confirm_new_email.phtml:14
 msgid "Thanks! Your e-mail has been successfully confirmed."
-msgstr ""
+msgstr "Рахмет! Сіздің электрондық поштаңыз сәтті расталды."
 
 #: modules/profile/templates/confirm_new_email.phtml:16
 msgid "Error when confirming e-mail. Invalid confirmation code."
-msgstr ""
+msgstr "Электрондық поштаны растау кезінде қате шықты. Растау коды қате."
 
 #: modules/profile/templates/edit.phtml:52
 #: modules/profile/templates/restore_password.phtml:12
 #: modules/profile/templates/restore_password.phtml:18
 msgid "Username"
-msgstr ""
+msgstr "Қолданушы аты"
 
 #: modules/profile/templates/edit.phtml:57
 #: modules/profile/templates/edit.phtml:64
 #: modules/profile/templates/edit.phtml:75
 msgid "Nickname"
-msgstr ""
+msgstr "Лақап аты"
 
 #: modules/profile/templates/edit.phtml:71
 msgid "Min.2, Max. 20"
-msgstr ""
+msgstr "Мин.2, Макс. 20"
 
 #: modules/profile/templates/edit.phtml:79
 #: modules/profile/templates/edit.phtml:85
 #: modules/profile/templates/index.phtml:165
 msgid "Status"
-msgstr ""
+msgstr "Мәртебе"
 
 #: modules/profile/templates/edit.phtml:91
 msgid "Max. 50"
-msgstr ""
+msgstr "Макс. 50"
 
 #: modules/profile/templates/edit.phtml:95
 msgid "Avatar"
-msgstr ""
+msgstr "Аватар"
 
 #: modules/profile/templates/edit.phtml:103
 #: modules/profile/templates/edit.phtml:126
 msgid "Upload"
-msgstr ""
+msgstr "Жүктеу"
 
 #: modules/profile/templates/edit.phtml:105
 msgid "Select in Catalog"
-msgstr ""
+msgstr "Каталогында таңдаңыз"
 
 #: modules/profile/templates/edit.phtml:115
 #: modules/profile/templates/edit.phtml:119
 #: modules/profile/templates/index.phtml:157
 msgid "Photo"
-msgstr ""
+msgstr "Сурет"
 
 #: modules/profile/templates/edit.phtml:133
 msgid "Personal info"
-msgstr ""
+msgstr "Жеке мәліметтер"
 
 #: modules/profile/templates/edit.phtml:136
 #: modules/profile/templates/edit.phtml:142
 msgid "Your name"
-msgstr ""
+msgstr "Сіздің атыңыз"
 
 #: modules/profile/templates/edit.phtml:150
 msgid "Date of birth (d.m.y)"
@@ -715,37 +715,37 @@ msgstr ""
 
 #: modules/profile/templates/edit.phtml:153
 msgid "Day"
-msgstr ""
+msgstr "Күні"
 
 #: modules/profile/templates/edit.phtml:161
 msgid "Month"
-msgstr ""
+msgstr "Ай"
 
 #: modules/profile/templates/edit.phtml:169
 msgid "Year"
-msgstr ""
+msgstr "Жыл"
 
 #: modules/profile/templates/edit.phtml:179
 #: modules/profile/templates/edit.phtml:185
 #: modules/profile/templates/index.phtml:189
 msgid "City, Country"
-msgstr ""
+msgstr "Қала, Ел"
 
 #: modules/profile/templates/edit.phtml:192
 msgid "About myself"
-msgstr ""
+msgstr "Өзіңіз туралы"
 
 #: modules/profile/templates/edit.phtml:196
 #: modules/profile/templates/office.phtml:70
 #: modules/profile/templates/office.phtml:74
 msgid "Contacts"
-msgstr ""
+msgstr "Менің контактілерім"
 
 #: modules/profile/templates/edit.phtml:198
 #: modules/profile/templates/edit.phtml:204
 #: modules/profile/templates/index.phtml:204
 msgid "Phone number"
-msgstr ""
+msgstr "Телефон нөмірі"
 
 #: modules/profile/templates/edit.phtml:211
 #: modules/profile/templates/edit.phtml:217
@@ -755,7 +755,7 @@ msgstr ""
 
 #: modules/profile/templates/edit.phtml:224
 msgid "The new email address is:"
-msgstr ""
+msgstr "Жаңа электрондық пошта мекенжайы:"
 
 #: modules/profile/templates/edit.phtml:225
 msgid "Please check your email and confirm it."
@@ -763,7 +763,7 @@ msgstr ""
 
 #: modules/profile/templates/edit.phtml:232
 msgid "Show in Profile"
-msgstr ""
+msgstr "Профилде көрсету"
 
 #: modules/profile/templates/edit.phtml:234
 msgid "Warning! Write your e-mail correctly. Your password will be sent to the email address on record for this account."
@@ -773,21 +773,21 @@ msgstr ""
 #: modules/profile/templates/edit.phtml:243
 #: modules/profile/templates/index.phtml:219
 msgid "Skype"
-msgstr ""
+msgstr "Скайп"
 
 #: modules/profile/templates/edit.phtml:251
 #: modules/profile/templates/edit.phtml:257
 #: modules/profile/templates/index.phtml:225
 msgid "Site"
-msgstr ""
+msgstr "Сайт"
 
 #: modules/profile/templates/edit.phtml:265
 msgid "Administrative Functions"
-msgstr ""
+msgstr "Әкімшілік Функциялары"
 
 #: modules/profile/templates/edit.phtml:268
 msgid "Admin notes"
-msgstr ""
+msgstr "Админ ескертулер"
 
 #: modules/profile/templates/edit.phtml:275
 msgid "Prohibit Karma"
@@ -799,17 +799,17 @@ msgstr ""
 
 #: modules/profile/templates/edit.phtml:284
 msgid "Select gender"
-msgstr ""
+msgstr "Жынысыңызды таңдаңыз"
 
 #: modules/profile/templates/edit.phtml:287
 #: modules/profile/templates/index.phtml:179
 msgid "Man"
-msgstr ""
+msgstr "Ер адам"
 
 #: modules/profile/templates/edit.phtml:291
 #: modules/profile/templates/index.phtml:181
 msgid "Woman"
-msgstr ""
+msgstr "Әйел адам"
 
 #: modules/profile/templates/edit.phtml:295
 msgid "Position on the Site"
@@ -817,7 +817,7 @@ msgstr ""
 
 #: modules/profile/templates/edit.phtml:298
 msgid "User"
-msgstr ""
+msgstr "Қолданушы"
 
 #: modules/profile/templates/edit.phtml:302
 msgid "Forum Moderator"
@@ -829,19 +829,19 @@ msgstr ""
 
 #: modules/profile/templates/edit.phtml:310
 msgid "Library Moderator"
-msgstr ""
+msgstr "Кітапхана модераторы"
 
 #: modules/profile/templates/edit.phtml:314
 msgid "Super Moderator"
-msgstr ""
+msgstr "Супер модератор"
 
 #: modules/profile/templates/edit.phtml:320
 msgid "Administrator"
-msgstr ""
+msgstr "Әкімшілер"
 
 #: modules/profile/templates/edit.phtml:324
 msgid "Supervisor"
-msgstr ""
+msgstr "Супервайзер"
 
 #: modules/profile/templates/edit.phtml:332
 #: modules/profile/templates/forum_settings.phtml:73
@@ -850,11 +850,11 @@ msgstr ""
 #: modules/profile/templates/password.phtml:62
 #: modules/profile/templates/settings.phtml:124
 msgid "Save"
-msgstr ""
+msgstr "Сақтау"
 
 #: modules/profile/templates/forum_settings.phtml:42
 msgid "Basic settings"
-msgstr ""
+msgstr "Негізгі баптаулар"
 
 #: modules/profile/templates/forum_settings.phtml:46
 msgid "Inverse sorting"
@@ -882,16 +882,16 @@ msgstr ""
 
 #: modules/profile/templates/forum_settings.phtml:69
 msgid "Never"
-msgstr ""
+msgstr "Ешқашан"
 
 #: modules/profile/templates/forum_settings.phtml:75
 #: modules/profile/templates/settings.phtml:128
 msgid "Reset Settings"
-msgstr ""
+msgstr "Параметрлерді қалпына келтіру"
 
 #: modules/profile/templates/images.phtml:51
 msgid "Choose file"
-msgstr ""
+msgstr "Файлды таңдау"
 
 #: modules/profile/templates/images.phtml:54
 #, php-format
@@ -906,7 +906,7 @@ msgstr ""
 
 #: modules/profile/templates/index.phtml:44
 msgid "Online"
-msgstr ""
+msgstr "Желіде"
 
 #: modules/profile/templates/index.phtml:56
 msgid "User is banned"
@@ -914,7 +914,7 @@ msgstr ""
 
 #: modules/profile/templates/index.phtml:59
 msgid "Reason:"
-msgstr ""
+msgstr "Себеп:"
 
 #: modules/profile/templates/index.phtml:65
 msgid "Violations"
@@ -926,7 +926,7 @@ msgstr ""
 
 #: modules/profile/templates/index.phtml:76
 msgid "Ip"
-msgstr ""
+msgstr "IP"
 
 #: modules/profile/templates/index.phtml:77
 #: modules/profile/templates/index.phtml:80
@@ -935,71 +935,71 @@ msgstr ""
 
 #: modules/profile/templates/index.phtml:95
 msgid "Write"
-msgstr ""
+msgstr "Жазу"
 
 #: modules/profile/templates/index.phtml:98
 msgid "Block"
-msgstr ""
+msgstr "Бұғаттау"
 
 #: modules/profile/templates/index.phtml:100
 msgid "Unblock"
-msgstr ""
+msgstr "Бұғаттан шығару"
 
 #: modules/profile/templates/index.phtml:104
 msgid "Actions"
-msgstr ""
+msgstr "Іс-әрекеттер"
 
 #: modules/profile/templates/index.phtml:113
 msgid "Edit profile"
-msgstr ""
+msgstr "Профилді өңдеу"
 
 #: modules/profile/templates/index.phtml:126
 msgid "vote"
 msgid_plural "votes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "дауыс беру"
+msgstr[1] "дауыс беру"
 
 #: modules/profile/templates/index.phtml:146
 #: modules/profile/templates/karma_vote.phtml:65
 msgid "Vote"
-msgstr ""
+msgstr "Дауыс беру"
 
 #: modules/profile/templates/index.phtml:154
 msgid "Information"
-msgstr ""
+msgstr "Мәлімет"
 
 #: modules/profile/templates/index.phtml:171
 msgid "Birthday"
-msgstr ""
+msgstr "Туылған күні"
 
 #: modules/profile/templates/index.phtml:176
 msgid "Gender"
-msgstr ""
+msgstr "Жынысы"
 
 #: modules/profile/templates/index.phtml:183
 msgid "Not specified"
-msgstr ""
+msgstr "Көрсетілмеген"
 
 #: modules/profile/templates/index.phtml:213
 msgid "hidden"
-msgstr ""
+msgstr "жасырын"
 
 #: modules/profile/templates/index.phtml:236
 msgid "Admin Notes"
-msgstr ""
+msgstr "Админ Ескертулер"
 
 #: modules/profile/templates/index.phtml:277
 #: modules/profile/templates/office.phtml:38
 msgid "Photo Album"
-msgstr ""
+msgstr "Фотоальбом"
 
 #: modules/profile/templates/ip_history.phtml:38
 msgid "IP address"
-msgstr ""
+msgstr "IP мекен-жай"
 
 #: modules/profile/templates/ip_history.phtml:39
 msgid "Date"
-msgstr ""
+msgstr "Күні"
 
 #: modules/profile/templates/karma.phtml:71
 msgid "Reset Karma"
@@ -1007,19 +1007,19 @@ msgstr ""
 
 #: modules/profile/templates/karma_vote.phtml:38
 msgid "Type of vote"
-msgstr ""
+msgstr "Дауыс беру түрі"
 
 #: modules/profile/templates/karma_vote.phtml:49
 msgid "Votes quantity"
-msgstr ""
+msgstr "Дауыстар саны"
 
 #: modules/profile/templates/karma_vote.phtml:58
 msgid "Comment"
-msgstr ""
+msgstr "Пікір"
 
 #: modules/profile/templates/karma_vote.phtml:60
 msgid "Min. 2, Max. 500 characters"
-msgstr ""
+msgstr "Мин. 2, Макс. 500 рәміздер"
 
 #: modules/profile/templates/mail_settings.phtml:44
 msgid "Who can write you?"
@@ -1043,7 +1043,7 @@ msgstr ""
 
 #: modules/profile/templates/office.phtml:35
 msgid "Statistics"
-msgstr ""
+msgstr "Статистика"
 
 #: modules/profile/templates/office.phtml:47
 msgid "My Mailbox"
@@ -1051,23 +1051,23 @@ msgstr ""
 
 #: modules/profile/templates/office.phtml:51
 msgid "Received"
-msgstr ""
+msgstr "Алынған"
 
 #: modules/profile/templates/office.phtml:58
 msgid "Sent"
-msgstr ""
+msgstr "Жөнелтілді"
 
 #: modules/profile/templates/office.phtml:65
 msgid "Files"
-msgstr ""
+msgstr "Файлдар"
 
 #: modules/profile/templates/office.phtml:78
 msgid "Blocked"
-msgstr ""
+msgstr "Бұғаттау"
 
 #: modules/profile/templates/office.phtml:88
 msgid "System Settings"
-msgstr ""
+msgstr "Система баптаулары"
 
 #: modules/profile/templates/password.phtml:30
 #: modules/profile/templates/password.phtml:36
@@ -1077,26 +1077,26 @@ msgstr ""
 #: modules/profile/templates/password.phtml:42
 #: modules/profile/templates/password.phtml:48
 msgid "Enter new password"
-msgstr ""
+msgstr "Жаңа құпия сөзді енгізіңіз"
 
 #: modules/profile/templates/password.phtml:52
 #: modules/profile/templates/password.phtml:58
 msgid "Repeat password"
-msgstr ""
+msgstr "Құпия сөзді қайталаңыз"
 
 #: modules/profile/templates/restore_password.phtml:22
 #: modules/profile/templates/restore_password.phtml:28
 msgid "Your E-mail"
-msgstr ""
+msgstr "Сіздің Электрондық поштаңыз"
 
 #: modules/profile/templates/restore_password.phtml:31
 #: modules/profile/templates/restore_password.phtml:40
 msgid "Verification code"
-msgstr ""
+msgstr "Тексеру коды"
 
 #: modules/profile/templates/restore_password.phtml:33
 msgid "Enter verification code"
-msgstr ""
+msgstr "Растау кодын енгізіңіз"
 
 #: modules/profile/templates/restore_password.phtml:46
 msgid "Password will be send to E-mail address specified in your profile.<br />WARNING !! If E-mail address has not been specified in your profile, you will not be able to recover your password."
@@ -1104,7 +1104,7 @@ msgstr ""
 
 #: modules/profile/templates/settings.phtml:45
 msgid "Time settings"
-msgstr ""
+msgstr "Сағат баптаулары"
 
 #: modules/profile/templates/settings.phtml:47
 #: modules/profile/templates/settings.phtml:55
@@ -1121,7 +1121,7 @@ msgstr ""
 
 #: modules/profile/templates/settings.phtml:65
 msgid "Direct URL"
-msgstr ""
+msgstr "Тікелей сілтеме"
 
 #: modules/profile/templates/settings.phtml:69
 msgid "Youtube Player"
@@ -1138,7 +1138,7 @@ msgstr ""
 
 #: modules/profile/templates/settings.phtml:85
 msgid "Appearance"
-msgstr ""
+msgstr "Сыртқы түрі"
 
 #: modules/profile/templates/settings.phtml:87
 #: modules/profile/templates/settings.phtml:94
@@ -1152,7 +1152,7 @@ msgstr ""
 #: modules/profile/templates/settings.phtml:110
 #: modules/profile/templates/settings.phtml:112
 msgid "Select Language"
-msgstr ""
+msgstr "Тілді таңдаңыз"
 
 #: modules/profile/templates/settings.phtml:117
 msgid "Site Default"

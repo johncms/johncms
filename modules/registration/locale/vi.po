@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
-"PO-Revision-Date: 2026-03-24 11:11\n"
+"PO-Revision-Date: 2026-03-24 21:40\n"
 
 #: modules/registration/index.php:50
 #: modules/registration/templates/index.phtml:4
@@ -23,53 +23,53 @@ msgstr ""
 #: modules/registration/templates/registration_result.phtml:4
 #: modules/registration/templates/registration_result.phtml:5
 msgid "Registration"
-msgstr ""
+msgstr "Đăng ký"
 
 #: modules/registration/index.php:169
 msgid "Registration on the website"
-msgstr ""
+msgstr "Đăng ký trên trang web"
 
 #: modules/registration/templates/email_confirmed.phtml:11
 #: modules/registration/templates/email_confirmed.phtml:12
 msgid "Email confirmation"
-msgstr ""
+msgstr "Xác nhận email"
 
 #: modules/registration/templates/email_confirmed.phtml:17
 msgid "User is not found"
-msgstr ""
+msgstr "Không tìm thấy người dùng"
 
 #: modules/registration/templates/email_confirmed.phtml:19
 msgid "Thanks! Your e-mail has been successfully confirmed."
-msgstr ""
+msgstr "Cảm ơn! E-mail của bạn đã được xác nhận."
 
 #: modules/registration/templates/email_confirmed.phtml:26
 msgid "Error when confirming e-mail. Invalid confirmation code."
-msgstr ""
+msgstr "Lỗi khi xác nhận e-mail. Không hợp lệ mã xác nhận."
 
 #: modules/registration/templates/index.phtml:13
 msgid "You can get authorized on the site after confirmation of your registration."
-msgstr ""
+msgstr "Bạn có thể nhận được ủy quyền trên trang web sau khi xác nhận đăng ký của bạn."
 
 #: modules/registration/templates/index.phtml:21
 msgid "Please, do not register names like 111, shhhh, uuuu, etc. They will be deleted. <br /> Also all the profiles registered via proxy servers will be deleted"
-msgstr ""
+msgstr "Xin vui lòng đăng ký với tên gồm các kí tự là 0 đến 9, a đến z, các ký tự khác không được phép sử dụng. <br> Cũng loại bỏ tất cả cấu hình đã được đăng ký sử dụng máy chủ proxy"
 
 #: modules/registration/templates/index.phtml:25
 msgid "Choose Nickname"
-msgstr ""
+msgstr "Chọn Nickname"
 
 #: modules/registration/templates/index.phtml:34
 msgid "Username"
-msgstr ""
+msgstr "Tên tài khoản"
 
 #: modules/registration/templates/index.phtml:40
 msgid "Min. 2, Max. 20 characters.<br />Allowed letters of the russian and latin alphabets, numbers and symbols - = @ ! ? ~ _ ( ) [ ] . * (Except zero)"
-msgstr ""
+msgstr "Tối thiểu là 2, tối đa là 15 ký tự.<br>Được sử dụng chữ cái Latin, số và các ký hiệu khác - = @ ! ? ~ _ ( ) [ ] . * (Ngoại trừ số 0)"
 
 #: modules/registration/templates/index.phtml:44
 #: modules/registration/templates/index.phtml:53
 msgid "Assign a password"
-msgstr ""
+msgstr "Chỉ định một mật khẩu"
 
 #: modules/registration/templates/index.phtml:61
 #: modules/registration/templates/index.phtml:68
@@ -78,71 +78,71 @@ msgstr ""
 
 #: modules/registration/templates/index.phtml:76
 msgid "Select Gender"
-msgstr ""
+msgstr "Chọn Giới tính"
 
 #: modules/registration/templates/index.phtml:79
 msgid "Man"
-msgstr ""
+msgstr "Hot Boy"
 
 #: modules/registration/templates/index.phtml:80
 msgid "Woman"
-msgstr ""
+msgstr "Hot Girl"
 
 #: modules/registration/templates/index.phtml:87
 #: modules/registration/templates/index.phtml:94
 msgid "Your name"
-msgstr ""
+msgstr "Tên của bạn"
 
 #: modules/registration/templates/index.phtml:101
 msgid "Tell us a little about yourself"
-msgstr ""
+msgstr "Cho chúng tôi biết một chút về bản thân"
 
 #: modules/registration/templates/index.phtml:108
 #: modules/registration/templates/index.phtml:118
 msgid "Verification code"
-msgstr ""
+msgstr "Mã xác minh"
 
 #: modules/registration/templates/index.phtml:110
 msgid "Enter verification code"
-msgstr ""
+msgstr "Nhập mã xác minh"
 
 #: modules/registration/templates/index.phtml:124
 msgid "If you cannot see the image code, enable graphics in your browser and refresh this page"
-msgstr ""
+msgstr "Có thể không nhìn thấy mã hình ảnh, hãy làm mới trang này"
 
 #: modules/registration/templates/registration_closed.phtml:12
 msgid "Registration is temporarily closed"
-msgstr ""
+msgstr "Đăng ký tạm thời đóng cửa"
 
 #: modules/registration/templates/registration_result.phtml:9
 msgid "Your registration data"
-msgstr ""
+msgstr "Thông tin bạn đăng ký"
 
 #: modules/registration/templates/registration_result.phtml:11
 msgid "Congratulations! You have successfully registered on the site."
-msgstr ""
+msgstr "Chúc mừng! Bạn đã thành công đăng ký trên trang web."
 
 #: modules/registration/templates/registration_result.phtml:14
 msgid "Your ID"
-msgstr ""
+msgstr "ID của bạn"
 
 #: modules/registration/templates/registration_result.phtml:15
 msgid "Your Username"
-msgstr ""
+msgstr "Tên tài khoản"
 
 #: modules/registration/templates/registration_result.phtml:16
 msgid "Your Password"
-msgstr ""
+msgstr "Mật khẩu của bạn"
 
 #: modules/registration/templates/registration_result.phtml:19
 msgid "Now you just need to confirm your email address.<br> Please check your email and follow the instructions in it."
-msgstr ""
+msgstr "Bây giờ bạn chỉ cần để xác nhận địa chỉ email của bạn.<br> Xin vui lòng kiểm tra email, và làm theo những hướng dẫn trong đó."
 
 #: modules/registration/templates/registration_result.phtml:21
 msgid "Please, wait until a moderator approves your registration"
-msgstr ""
+msgstr "Tài khoản của bạn đang chờ xác nhận đăng ký của quản trị viên bằng cách kiểm duyệt"
 
 #: modules/registration/templates/registration_result.phtml:23
 msgid "Enter"
-msgstr ""
+msgstr "Xác nhận"
 

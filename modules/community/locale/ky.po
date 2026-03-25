@@ -11,14 +11,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Kyrgyz\n"
 "Language: ky_KG\n"
-"PO-Revision-Date: 2026-03-24 13:16\n"
+"PO-Revision-Date: 2026-03-24 21:41\n"
 
 #: modules/community/includes/administration.php:33
 #: modules/community/includes/administration.php:39
 #: modules/community/includes/administration.php:40
 #: modules/community/templates/index.phtml:45
 msgid "Administration"
-msgstr "Администратор"
+msgstr "Администрация"
 
 #: modules/community/includes/birthdays.php:25
 #: modules/community/includes/birthdays.php:31
@@ -45,7 +45,7 @@ msgstr "Узундугу туура эмес"
 
 #: modules/community/includes/search.php:36
 msgid "Invalid characters"
-msgstr "Жол берилбеген белгилер"
+msgstr "Жол берилбеген символдор"
 
 #: modules/community/includes/top.php:21
 msgid "Forum"
@@ -57,7 +57,7 @@ msgstr "Конок китеби"
 
 #: modules/community/includes/top.php:31
 msgid "Comments"
-msgstr "Пикирлер"
+msgstr "Билдирүүлөр"
 
 #: modules/community/includes/top.php:39
 msgid "Karma"
@@ -69,7 +69,7 @@ msgstr "Эң аракетчил  Конок китебинде"
 
 #: modules/community/includes/top.php:57
 msgid "Most commentators"
-msgstr "Эң көп пикирлер"
+msgstr "Эң көп комментарийлер"
 
 #: modules/community/includes/top.php:65
 msgid "Best Karma"
@@ -114,11 +114,11 @@ msgstr "Колдонуучулар"
 
 #: modules/community/templates/index.phtml:55
 msgid "Top Activity"
-msgstr "Эң аракетчилдер"
+msgstr "Сайт эң аракетчилдер"
 
 #: modules/community/templates/search.phtml:45
 msgid "Username"
-msgstr "Колдонуучу аты"
+msgstr "Сиздин ысымыңыз"
 
 #: modules/community/templates/search.phtml:64
 #: modules/community/templates/top.phtml:40
@@ -141,20 +141,20 @@ msgstr "Артка"
 #: modules/community/templates/user_row.phtml:67
 msgid "post"
 msgid_plural "posts"
-msgstr[0] "билдирүү"
-msgstr[1] "билдирүүлөр"
+msgstr[0] "пост"
+msgstr[1] "посттор"
 
 #: modules/community/templates/user_row.phtml:63
 msgid "comment"
 msgid_plural "comments"
-msgstr[0] "пикир"
-msgstr[1] "пикирлер"
+msgstr[0] "билдирүү"
+msgstr[1] "билдирүүлөр"
 
 #: modules/community/templates/user_row.phtml:65
 msgid "point"
 msgid_plural "points"
-msgstr[0] "упай"
-msgstr[1] "упайлар"
+msgstr[0] "балл"
+msgstr[1] "балл"
 
 #: modules/community/templates/user_row.phtml:89
 msgid "Delete"

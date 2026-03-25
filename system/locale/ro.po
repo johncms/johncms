@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
-"PO-Revision-Date: 2026-03-24 13:18\n"
+"PO-Revision-Date: 2026-03-24 21:38\n"
 
 #: config/notifications.global.php:20
 #: config/places.global.php:17
@@ -21,12 +21,12 @@ msgstr ""
 
 #: config/notifications.global.php:23
 msgid "New reply on the forum"
-msgstr ""
+msgstr "Răspuns nou pe forum"
 
 #: config/notifications.global.php:32
 #, php-format
 msgid "<a href=\"%s\">User <b>%s</b> responded to your message in the topic %s</a>"
-msgstr ""
+msgstr "<a href=\"%s\">Utilizatorul <b>%s</b> a raspuns la mesajul tau în subiectul %s</a>"
 
 #: config/notifications.global.php:39
 msgid "Karma"
@@ -34,28 +34,28 @@ msgstr ""
 
 #: config/notifications.global.php:42
 msgid "New vote in karma"
-msgstr ""
+msgstr "Votare nouă în karma"
 
 #: config/notifications.global.php:43
 msgid "User <b>#user_name#</b> voted in <a href=\"#karma_url#\">your karma</a>."
-msgstr ""
+msgstr "Utilizatorul <b>#user_name#</b> a votat în <a href=\"#karma_url#\">karma</a>."
 
 #: config/places.global.php:12
 msgid "On the Homepage"
-msgstr ""
+msgstr "Pe pagina principală"
 
 #: config/places.global.php:13
 msgid "Watching the photo album"
-msgstr ""
+msgstr "Urmărire album foto"
 
 #: config/places.global.php:14
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:102
 msgid "Users"
-msgstr ""
+msgstr "Utilizatori"
 
 #: config/places.global.php:15
 msgid "Users List"
-msgstr ""
+msgstr "Lista de utilizatori"
 
 #: config/places.global.php:16
 #: system/src/Comments.php:168
@@ -77,12 +77,12 @@ msgstr ""
 
 #: config/places.global.php:19
 msgid "Reading the FAQ"
-msgstr ""
+msgstr "Citește FAQ"
 
 #: config/places.global.php:20
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:90
 msgid "Library"
-msgstr ""
+msgstr "Librarie"
 
 #: config/places.global.php:21
 #: modules/login/index.php:68
@@ -99,34 +99,34 @@ msgstr "Logare"
 
 #: config/places.global.php:22
 msgid "Personal correspondence"
-msgstr ""
+msgstr "Corespondenta personala cu"
 
 #: config/places.global.php:23
 msgid "Reading the news"
-msgstr ""
+msgstr "Citește FAQ"
 
 #: config/places.global.php:24
 msgid "Profile"
-msgstr ""
+msgstr "Profil"
 
 #: config/places.global.php:25
 msgid "Redirect on external link to another site"
-msgstr ""
+msgstr "Redirecționare către un alt site"
 
 #: config/places.global.php:26
 msgid "Registered on the site"
-msgstr ""
+msgstr "Înregistrat pe site"
 
 #: config/places.global.php:27
 msgid "List of users"
-msgstr ""
+msgstr "Lista Utilizatori"
 
 #: config/places.global.php:28
 #: config/places.global.php:29
 #: config/places.global.php:30
 #: config/places.global.php:31
 msgid "Who is online?"
-msgstr ""
+msgstr "Cine este online?"
 
 #: modules/language/templates/index.phtml:10
 msgid "Select language"
@@ -146,15 +146,15 @@ msgstr ""
 #: modules/login/templates/logout.phtml:5
 #: modules/login/templates/logout.phtml:11
 msgid "Logout"
-msgstr ""
+msgstr "Deconectare"
 
 #: modules/login/index.php:78
 msgid "You have not entered login"
-msgstr ""
+msgstr "Nu ați introdus autentificarea"
 
 #: modules/login/index.php:82
 msgid "You have not entered password"
-msgstr ""
+msgstr "Nu ai introdus nici o parola"
 
 #: modules/login/index.php:100
 #: system/src/Validator/messages.php:17
@@ -164,46 +164,46 @@ msgstr "Codul de securitate este incorect"
 #: modules/login/index.php:150
 #: modules/login/index.php:154
 msgid "Authorization failed"
-msgstr ""
+msgstr "Autorizarea a eșuat"
 
 #: modules/login/templates/captcha.phtml:10
 #: modules/login/templates/captcha.phtml:19
 msgid "Verification code"
-msgstr ""
+msgstr "Cod de verificare"
 
 #: modules/login/templates/captcha.phtml:12
 msgid "Enter verification code"
-msgstr ""
+msgstr "Introduceți codul de verificare"
 
 #: modules/login/templates/captcha.phtml:28
 msgid "Continue"
-msgstr ""
+msgstr "Continua"
 
 #: modules/login/templates/confirm.phtml:20
 msgid "You didn't confirm your email address. Please check your email and follow the instructions in it."
-msgstr ""
+msgstr "Acum trebuie doar sa confirmati adresa dvs. de e-mail.<br> Va rugam sa va verificati e-mailul si sa urmati instructiunile din acesta."
 
 #: modules/login/templates/confirm.phtml:28
 msgid "Sorry, but your request for registration is not considered yet. Please, be patient."
-msgstr ""
+msgstr "Ne pare rău, dar solicitarea dvs. de înregistrare nu este încă luată în considerare. Vă rugăm să aveți răbdare."
 
 #: modules/login/templates/login.phtml:10
 msgid "Authorization"
-msgstr ""
+msgstr "Autorizare"
 
 #: modules/login/templates/login.phtml:15
 #: modules/login/templates/login.phtml:23
 msgid "Username"
-msgstr ""
+msgstr "Nume"
 
 #: modules/login/templates/login.phtml:27
 #: modules/login/templates/login.phtml:35
 msgid "Password"
-msgstr ""
+msgstr "Parola"
 
 #: modules/login/templates/login.phtml:39
 msgid "Forgot password?"
-msgstr ""
+msgstr "Ai uitat parola?"
 
 #: modules/login/templates/login.phtml:41
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:79
@@ -212,7 +212,7 @@ msgstr "Inregistrare"
 
 #: modules/login/templates/logout.phtml:9
 msgid "Are you sure you want to leave the site?"
-msgstr ""
+msgstr "Ești sigur că vrei să părăsești site-ul?"
 
 #: modules/login/templates/logout.phtml:12
 #: modules/notifications/templates/settings.phtml:50
@@ -337,22 +337,22 @@ msgstr "Căutați ceva care nu există sau care s-a mutat"
 
 #: system/src-legacy/Bbcode.php:158
 msgid "Added"
-msgstr ""
+msgstr "Adaugat"
 
 #: system/src-legacy/Tools.php:175
 msgid "ERROR"
-msgstr ""
+msgstr "EROARE"
 
 #: system/src-legacy/Tools.php:315
 msgid "Somewhere on the site"
-msgstr ""
+msgstr "Undeva pe site"
 
 #: system/src-legacy/Tools.php:506
 msgid "Day"
 msgid_plural "Days"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Ziua"
+msgstr[1] "Zile"
+msgstr[2] "Zile"
 
 #: system/src/Checker/SystemChecker.php:29
 msgid "PHP version"
@@ -673,35 +673,35 @@ msgstr "Tip nevalid dat. Șir, întreg, float, boolean sau array așteptat"
 
 #: themes/default/templates/system/app/debug.phtml:15
 msgid "Sql query log"
-msgstr ""
+msgstr "Jurnal de interogare Sql"
 
 #: themes/default/templates/system/app/debug.phtml:26
 msgid "Query"
-msgstr ""
+msgstr "Interogare"
 
 #: themes/default/templates/system/app/debug.phtml:27
 msgid "Bindings"
-msgstr ""
+msgstr "Legături"
 
 #: themes/default/templates/system/app/debug.phtml:28
 msgid "Time"
-msgstr ""
+msgstr "Timpul"
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:39
 msgid "News archive"
-msgstr ""
+msgstr "Arhiva Stiri"
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:113
 msgid "Photo Albums"
-msgstr ""
+msgstr "Albume Foto"
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:124
 msgid "Information, FAQ"
-msgstr ""
+msgstr "Informatii, Reguli"
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:135
 msgid "Admin Panel"
-msgstr ""
+msgstr "Panou Admin"
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:144
 msgid "Admin Chat"
@@ -729,7 +729,7 @@ msgstr "E-mailul este generat automat. Vă rugăm să nu răspundeți la acesta.
 
 #: themes/default/templates/system/mail/templates/changed_email_notification.phtml:10
 msgid "Changing email address"
-msgstr ""
+msgstr "Schimbați adresa de e-mail"
 
 #: themes/default/templates/system/mail/templates/changed_email_notification.phtml:13
 #: themes/default/templates/system/mail/templates/confirm_email_change.phtml:13
@@ -756,7 +756,7 @@ msgstr "Dacă nu ați început procedura de schimbare a e-mailului, vă rugăm s
 
 #: themes/default/templates/system/mail/templates/confirm_email_change.phtml:10
 msgid "Confirm email change"
-msgstr ""
+msgstr "Confirmă schimbarea adresei de e-mail"
 
 #: themes/default/templates/system/mail/templates/confirm_email_change.phtml:18
 msgid "To continue please click the confirm button"
@@ -773,7 +773,7 @@ msgstr "Dacă nu v-aţi înregistrat pe site-ul nostru, vă rugăm să ignoraţi
 
 #: themes/default/templates/system/mail/templates/registration.phtml:10
 msgid "Registration on the website"
-msgstr ""
+msgstr "Inregistrare pe site"
 
 #: themes/default/templates/system/mail/templates/registration.phtml:15
 #, php-format

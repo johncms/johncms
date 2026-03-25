@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Kyrgyz\n"
 "Language: ky_KG\n"
-"PO-Revision-Date: 2026-03-24 13:15\n"
+"PO-Revision-Date: 2026-03-24 21:41\n"
 
 #: modules/admin/includes/access.php:17
 #: modules/admin/templates/sidebar-admin-menu.phtml:145
@@ -1787,7 +1787,7 @@ msgstr "Темалар"
 
 #: modules/admin/templates/sidebar-admin-menu.phtml:60
 msgid "On registration"
-msgstr ""
+msgstr "Катталуу"
 
 #: modules/admin/templates/sidebar-admin-menu.phtml:106
 msgid "Antiflood"

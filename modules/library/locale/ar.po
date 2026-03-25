@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
-"PO-Revision-Date: 2026-03-24 11:08\n"
+"PO-Revision-Date: 2026-03-24 21:38\n"
 
 #: modules/library/classes/Hashtags.php:258
 #: modules/library/includes/tags.php:70
@@ -23,57 +23,57 @@ msgstr ""
 #: modules/library/templates/tags.phtml:58
 #: modules/library/templates/top.phtml:60
 msgid "The list is empty"
-msgstr ""
+msgstr "فارغة"
 
 #: modules/library/includes/addnew.php:28
 #: modules/library/templates/booklist.phtml:52
 msgid "Write Article"
-msgstr ""
+msgstr "كتابة المقالة"
 
 #: modules/library/includes/addnew.php:43
 #, php-format
 msgid "You cannot add the Article so often<br>Please, wait %d sec."
-msgstr ""
+msgstr "لا يمكنك إضافة هذه المادة في كثير من الأحيان <br>الرجاء الانتظار %d ثانية."
 
 #: modules/library/includes/addnew.php:46
 #: modules/library/includes/mkdir.php:30
 msgid "You have not entered the name"
-msgstr ""
+msgstr "لم تقم بإدخال اسم"
 
 #: modules/library/includes/addnew.php:59
 msgid "The file is invalid encoding, preferably UTF-8"
-msgstr ""
+msgstr "الملف ترميز غير صحيحة، ويفضل UTF-8"
 
 #: modules/library/includes/addnew.php:64
 msgid "Error uploading"
-msgstr ""
+msgstr "خطأ في تحميل"
 
 #: modules/library/includes/addnew.php:67
 msgid "Invalid file format allowed * .txt"
-msgstr ""
+msgstr "تنسيق الملف غير صالح سمح * .txt"
 
 #: modules/library/includes/addnew.php:70
 msgid "You have not entered text"
-msgstr ""
+msgstr "لم تقم بإدخال النص"
 
 #: modules/library/includes/addnew.php:112
 #: modules/library/includes/moder.php:79
 msgid "Photo uploading error"
-msgstr ""
+msgstr "خطأ في تحميل الصورة"
 
 #: modules/library/includes/comments.php:24
 #: modules/library/includes/comments.php:43
 #: modules/library/index.php:70
 msgid "Access forbidden"
-msgstr ""
+msgstr "ممنوع الوصول"
 
 #: modules/library/includes/comments.php:73
 msgid "Comments"
-msgstr ""
+msgstr "التعليقات"
 
 #: modules/library/includes/comments.php:81
 msgid "Wrong data"
-msgstr ""
+msgstr "بيانات خاطئة"
 
 #: modules/library/includes/del.php:39
 #: modules/library/templates/book.phtml:83
@@ -86,132 +86,132 @@ msgstr ""
 #: modules/library/templates/premod.phtml:45
 #: modules/library/templates/sectionslist.phtml:65
 msgid "Delete"
-msgstr ""
+msgstr "حذف"
 
 #: modules/library/includes/del.php:52
 msgid "Section does not exist"
-msgstr ""
+msgstr "المقطع غير موجود"
 
 #: modules/library/includes/del.php:88
 #, php-format
 msgid "Successfully deleted:<br>Directories: (%d)<br>Articles: (%d)<br>Tags: (%d)<br>Comments: (%d)<br>Images: (%d)"
-msgstr ""
+msgstr "حذف بنجاح: <br>الدلائل: المواد (%d) <br>: (%d) <br>العلامات: تعليقات (%d) <br>: الصور (%d) <br>: (%d)"
 
 #: modules/library/includes/del.php:106
 msgid "Articles do not exist"
-msgstr ""
+msgstr "لا توجد مواد"
 
 #: modules/library/includes/download.php:51
 msgid "Author name"
-msgstr ""
+msgstr "اسم الكاتب"
 
 #: modules/library/includes/download.php:52
 msgid "Author last name"
-msgstr ""
+msgstr "اسم المؤلف الأخير"
 
 #: modules/library/includes/download.php:54
 msgid "Name of the book"
-msgstr ""
+msgstr "اسم الكتاب"
 
 #: modules/library/includes/download.php:56
 msgid "Date"
-msgstr ""
+msgstr "تاريخ"
 
 #: modules/library/includes/lastcom.php:15
 #: modules/library/templates/main.phtml:40
 msgid "Latest comments"
-msgstr ""
+msgstr "أحدث التعليقات"
 
 #: modules/library/includes/mkdir.php:19
 #: modules/library/templates/main.phtml:71
 msgid "Create Section"
-msgstr ""
+msgstr "إنشاء قسم"
 
 #: modules/library/includes/mkdir.php:32
 msgid "Repeat"
-msgstr ""
+msgstr "كرر"
 
 #: modules/library/includes/moder.php:147
 msgid "The ROOT"
-msgstr ""
+msgstr "الجذر"
 
 #: modules/library/includes/moder.php:161
 msgid "Edit Section"
-msgstr ""
+msgstr "تحرير قسم"
 
 #: modules/library/includes/moder.php:161
 msgid "Edit Article"
-msgstr ""
+msgstr "تحرير المادة"
 
 #: modules/library/includes/new.php:27
 #: modules/library/templates/main.phtml:34
 msgid "New Articles"
-msgstr ""
+msgstr "مقالات جديدة"
 
 #: modules/library/includes/search.php:23
 #: modules/library/templates/main.phtml:37
 #: modules/library/templates/search.phtml:37
 msgid "Search"
-msgstr ""
+msgstr "ابـحث"
 
 #: modules/library/includes/tagcloud.php:19
 msgid "Sorted by alphabetical"
-msgstr ""
+msgstr "فرز حسب الأبجدية"
 
 #: modules/library/includes/tagcloud.php:20
 msgid "Sorted by relevance"
-msgstr ""
+msgstr "مرتبة حسب أهميتها"
 
 #: modules/library/includes/tags.php:19
 #: modules/library/templates/addnew.phtml:84
 #: modules/library/templates/moder.phtml:77
 msgid "Tags"
-msgstr ""
+msgstr "وسوم"
 
 #: modules/library/includes/top.php:20
 #: modules/library/templates/main.phtml:39
 msgid "Rating articles"
-msgstr ""
+msgstr "تصنيف المواد"
 
 #: modules/library/includes/top.php:27
 msgid "Most readings"
-msgstr ""
+msgstr "معظم القراءات"
 
 #: modules/library/includes/top.php:32
 msgid "By rating"
-msgstr ""
+msgstr "بحسب التقييم"
 
 #: modules/library/includes/top.php:37
 msgid "By comments"
-msgstr ""
+msgstr "من خلال التعليقات"
 
 #: modules/library/index.php:62
 #: modules/library/templates/helpers/printNavPanel.phtml:2
 #: modules/library/templates/tagcloud.phtml:2
 msgid "Library"
-msgstr ""
+msgstr "مَكتبَة"
 
 #: modules/library/index.php:68
 #: modules/library/templates/main.phtml:28
 msgid "Library is closed"
-msgstr ""
+msgstr "يتم إغلاق مكتبة"
 
 #: modules/library/templates/addnew.phtml:30
 msgid "Article added"
-msgstr ""
+msgstr "المادة المضافة"
 
 #: modules/library/templates/addnew.phtml:34
 msgid "To Article"
-msgstr ""
+msgstr "للمادة"
 
 #: modules/library/templates/addnew.phtml:36
 msgid "Thank you for what we have written. After checking moderated, your Article will be published in the library."
-msgstr ""
+msgstr "شكرا لك على ما كتبت. بعد التحقق من الادارة، سيتم نشر المادة الخاصة بك في المكتبة."
 
 #: modules/library/templates/addnew.phtml:37
 #: modules/library/templates/mkdir.phtml:34
 msgid "To Section"
-msgstr ""
+msgstr "إلى قسم"
 
 #: modules/library/templates/addnew.phtml:52
 #: modules/library/templates/addnew.phtml:53
@@ -220,41 +220,41 @@ msgstr ""
 #: modules/library/templates/moder.phtml:49
 #: modules/library/templates/moder.phtml:50
 msgid "Title"
-msgstr ""
+msgstr "عنوان"
 
 #: modules/library/templates/addnew.phtml:57
 #: modules/library/templates/moder.phtml:60
 msgid "Announce"
-msgstr ""
+msgstr "أعلن"
 
 #: modules/library/templates/addnew.phtml:62
 #: modules/library/templates/moder.phtml:68
 msgid "Text"
-msgstr ""
+msgstr "نص"
 
 #: modules/library/templates/addnew.phtml:69
 #: modules/library/templates/moder.phtml:126
 msgid "Commenting on the Article"
-msgstr ""
+msgstr "التعليقات على الأخبار"
 
 #: modules/library/templates/addnew.phtml:74
 #: modules/library/templates/moder.phtml:44
 msgid "To upload a photo"
-msgstr ""
+msgstr "لإضافة صور"
 
 #: modules/library/templates/addnew.phtml:79
 msgid "Select the text file"
-msgstr ""
+msgstr "حدد ملف نصي"
 
 #: modules/library/templates/addnew.phtml:80
 msgid "Text entry field will be ignored"
-msgstr ""
+msgstr "سيتم تجاهل حقل إدخال النص"
 
 #: modules/library/templates/addnew.phtml:89
 #: modules/library/templates/mkdir.phtml:70
 #: modules/library/templates/moder.phtml:135
 msgid "Save"
-msgstr ""
+msgstr "حفظ"
 
 #: modules/library/templates/addnew.phtml:90
 #: modules/library/templates/del.phtml:43
@@ -265,46 +265,46 @@ msgstr ""
 #: modules/library/templates/mkdir.phtml:71
 #: modules/library/templates/moder.phtml:136
 msgid "Cancel"
-msgstr ""
+msgstr "إلغاء الأمر"
 
 #: modules/library/templates/book.phtml:41
 msgid "Download file"
-msgstr ""
+msgstr "تنزيل الملف"
 
 #: modules/library/templates/book.phtml:50
 msgid "The Tags:"
-msgstr ""
+msgstr "العلامات"
 
 #: modules/library/templates/book.phtml:55
 msgid "Who added:"
-msgstr ""
+msgstr "الذي أضاف"
 
 #: modules/library/templates/book.phtml:59
 #: modules/library/templates/booklist.phtml:33
 #: modules/library/templates/new.phtml:38
 #: modules/library/templates/top.phtml:46
 msgid "Rating:"
-msgstr ""
+msgstr "تصنيف"
 
 #: modules/library/templates/book.phtml:63
 #: modules/library/templates/search.phtml:49
 #: modules/library/templates/tags.phtml:39
 msgid "Number of readings:"
-msgstr ""
+msgstr "عدد القراءات"
 
 #: modules/library/templates/book.phtml:68
 #: modules/library/templates/new.phtml:42
 #: modules/library/templates/tags.phtml:43
 #: modules/library/templates/top.phtml:50
 msgid "Comments:"
-msgstr ""
+msgstr "التعليقات"
 
 #: modules/library/templates/book.phtml:82
 #: modules/library/templates/booklist.phtml:54
 #: modules/library/templates/helpers/sectionListAdminPanel.phtml:7
 #: modules/library/templates/sectionslist.phtml:64
 msgid "Edit"
-msgstr ""
+msgstr "تحرير"
 
 #: modules/library/templates/booklist.phtml:32
 #: modules/library/templates/lastcom.phtml:31
@@ -314,7 +314,7 @@ msgstr ""
 #: modules/library/templates/tags.phtml:36
 #: modules/library/templates/top.phtml:43
 msgid "Author:"
-msgstr ""
+msgstr "الكاتب"
 
 #: modules/library/templates/booklist.phtml:44
 #: modules/library/templates/new.phtml:50
@@ -323,11 +323,11 @@ msgstr ""
 #: modules/library/templates/sectionslist.phtml:56
 #: modules/library/templates/tags.phtml:50
 msgid "Total"
-msgstr ""
+msgstr "مجموع"
 
 #: modules/library/templates/del.phtml:34
 msgid "Successful transfer"
-msgstr ""
+msgstr "نجاح نقل"
 
 #: modules/library/templates/del.phtml:36
 #: modules/library/templates/del.phtml:71
@@ -338,137 +338,137 @@ msgstr ""
 #: modules/library/templates/moder.phtml:140
 #: modules/library/templates/top.phtml:64
 msgid "Back"
-msgstr ""
+msgstr "الرجوع للخلف"
 
 #: modules/library/templates/del.phtml:40
 msgid "Are you sure you want to move the contents?"
-msgstr ""
+msgstr "هل أنت متأكد من أنك تريد نقل المحتويات؟"
 
 #: modules/library/templates/del.phtml:42
 msgid "Move"
-msgstr ""
+msgstr "نقل"
 
 #: modules/library/templates/del.phtml:53
 #: modules/library/templates/moder.phtml:108
 msgid "Move to Section"
-msgstr ""
+msgstr "الانتقال إلى مقطع"
 
 #: modules/library/templates/del.phtml:64
 #: modules/library/templates/premod.phtml:44
 msgid "Approve"
-msgstr ""
+msgstr "الموافقة على"
 
 #: modules/library/templates/del.phtml:69
 msgid "There are no Sections for moving"
-msgstr ""
+msgstr "هناك لا توجد أقسام للانتقال"
 
 #: modules/library/templates/del.phtml:81
 msgid "Are you sure you want to delete content?"
-msgstr ""
+msgstr "هل أنت متأكد من أنك تريد حذف هذا المحتوى؟"
 
 #: modules/library/templates/del.phtml:90
 msgid "Section is not empty"
-msgstr ""
+msgstr "القسم ليس فارغا"
 
 #: modules/library/templates/del.phtml:93
 msgid "Select action"
-msgstr ""
+msgstr "حدد الإجراء"
 
 #: modules/library/templates/del.phtml:97
 msgid "Delete with movement"
-msgstr ""
+msgstr "حذف مع حركة"
 
 #: modules/library/templates/del.phtml:101
 msgid "Delete all Sections and Articles"
-msgstr ""
+msgstr "حذف كافة الأقسام والمواد"
 
 #: modules/library/templates/del.phtml:104
 msgid "Do"
-msgstr ""
+msgstr "هل"
 
 #: modules/library/templates/del.phtml:113
 #: modules/library/templates/del.phtml:125
 #: modules/library/templates/del.phtml:137
 msgid "Delete confirmation"
-msgstr ""
+msgstr "تأكيد حذف"
 
 #: modules/library/templates/del.phtml:145
 #: modules/library/templates/del.phtml:154
 msgid "Deleted"
-msgstr ""
+msgstr "تم حذف"
 
 #: modules/library/templates/helpers/printvote.phtml:2
 msgid "Select a rating:"
-msgstr ""
+msgstr "اختر تقييم:"
 
 #: modules/library/templates/helpers/printvote.phtml:8
 msgid "Vote"
-msgstr ""
+msgstr "تصويت"
 
 #: modules/library/templates/helpers/sectionListAdminPanel.phtml:2
 msgid "Up"
-msgstr ""
+msgstr "فوق"
 
 #: modules/library/templates/helpers/sectionListAdminPanel.phtml:5
 msgid "Down"
-msgstr ""
+msgstr "تحت"
 
 #: modules/library/templates/mkdir.phtml:30
 msgid "Section created"
-msgstr ""
+msgstr "تم إنشاء قسم"
 
 #: modules/library/templates/mkdir.phtml:55
 #: modules/library/templates/moder.phtml:55
 msgid "Section description"
-msgstr ""
+msgstr "وصف القسم"
 
 #: modules/library/templates/mkdir.phtml:59
 #: modules/library/templates/moder.phtml:84
 msgid "Section type"
-msgstr ""
+msgstr "نوع القسم"
 
 #: modules/library/templates/mkdir.phtml:62
 #: modules/library/templates/moder.phtml:87
 msgid "Articles"
-msgstr ""
+msgstr "مقالات"
 
 #: modules/library/templates/mkdir.phtml:66
 #: modules/library/templates/moder.phtml:91
 msgid "Sections"
-msgstr ""
+msgstr "الأقسام"
 
 #: modules/library/templates/moder.phtml:31
 msgid "Changed"
-msgstr ""
+msgstr "تم التغيير"
 
 #: modules/library/templates/moder.phtml:73
 msgid "The text of the Article can not be edited, a large amount of data !!!"
-msgstr ""
+msgstr "لا يمكن تحرير نص المادة، كمية كبيرة من البيانات!!!"
 
 #: modules/library/templates/moder.phtml:96
 msgid "Allow users to add their Articles?"
-msgstr ""
+msgstr "السماح للمستخدمين بإضافة المواد؟"
 
 #: modules/library/templates/moder.phtml:99
 msgid "Yes"
-msgstr ""
+msgstr "نعم"
 
 #: modules/library/templates/moder.phtml:103
 msgid "No"
-msgstr ""
+msgstr "لا"
 
 #: modules/library/templates/moder.phtml:122
 msgid "Verified"
-msgstr ""
+msgstr "تم التحقق"
 
 #: modules/library/templates/moder.phtml:129
 msgid "Number of readings"
-msgstr ""
+msgstr "عدد القراءات"
 
 #: modules/library/templates/new.phtml:32
 #: modules/library/templates/top.phtml:40
 msgid "Section:"
-msgstr ""
+msgstr "القسم:"
 
 #: modules/library/templates/new.phtml:55
 #: modules/library/templates/premod.phtml:58
@@ -476,56 +476,56 @@ msgstr ""
 #: modules/library/templates/tagcloud.phtml:6
 #: modules/library/templates/tags.phtml:54
 msgid "To Library"
-msgstr ""
+msgstr "إلى المكتبة"
 
 #: modules/library/templates/premod.phtml:20
 #: modules/library/templates/premod.phtml:21
 msgid "Moderation Articles"
-msgstr ""
+msgstr "أدوات الإشراف"
 
 #: modules/library/templates/premod.phtml:27
 msgid "All Articles added in database"
-msgstr ""
+msgstr "جميع المواد المضافة في قاعدة البيانات"
 
 #: modules/library/templates/premod.phtml:30
 msgid "Article"
-msgstr ""
+msgstr "مقالة"
 
 #: modules/library/templates/premod.phtml:30
 msgid "Added to the database"
-msgstr ""
+msgstr "تم اضافته في قاعدة البيانات"
 
 #: modules/library/templates/premod.phtml:56
 msgid "Approve all"
-msgstr ""
+msgstr "الموافقة على كل"
 
 #: modules/library/templates/search.phtml:27
 #: modules/library/templates/search.phtml:28
 msgid "Search query"
-msgstr ""
+msgstr "استعلام البحث"
 
 #: modules/library/templates/search.phtml:34
 msgid "Search in titles Articles"
-msgstr ""
+msgstr "البحث في عناوين المقالات"
 
 #: modules/library/templates/search.phtml:68
 msgid "Length of query: 4 min 64 max<br>Search is case-insensitive letters<br>Results are sorted by relevance"
-msgstr ""
+msgstr "طول الاستعلام: هو مين 4 64 حد<br>البحث عن الأحرف متحسسة لحالة الأحرف <br>يتم فرز النتائج حسب أهميتها"
 
 #: modules/library/templates/search.phtml:75
 msgid "New Search"
-msgstr ""
+msgstr "بحث جديد"
 
 #: modules/library/templates/sectionslist.phtml:63
 msgid "Create"
-msgstr ""
+msgstr "إنشاء"
 
 #: modules/library/templates/tagcloud.phtml:2
 msgid "Tag Cloud"
-msgstr ""
+msgstr "سحابة الكلمة الدلالية"
 
 #: modules/library/templates/tagcloud.phtml:4
 #: modules/library/templates/top.phtml:27
 msgid "Sort"
-msgstr ""
+msgstr "الترتيب"
 

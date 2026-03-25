@@ -11,47 +11,47 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Kazakh\n"
 "Language: kk_KZ\n"
-"PO-Revision-Date: 2026-03-24 11:05\n"
+"PO-Revision-Date: 2026-03-24 21:40\n"
 
 #: modules/admin/includes/access.php:17
 #: modules/admin/templates/sidebar-admin-menu.phtml:145
 msgid "Permissions"
-msgstr ""
+msgstr "Рұқсаттар"
 
 #: modules/admin/includes/adminlist.php:22
 #: modules/admin/templates/sidebar-admin-menu.phtml:79
 msgid "Administration"
-msgstr ""
+msgstr "Әкімшілік"
 
 #: modules/admin/includes/adminlist.php:36
 msgid "Supervisors"
-msgstr ""
+msgstr "Супервайзер"
 
 #: modules/admin/includes/adminlist.php:56
 msgid "Administrators"
-msgstr ""
+msgstr "Әкімшілер"
 
 #: modules/admin/includes/adminlist.php:76
 msgid "Super Moderators"
-msgstr ""
+msgstr "Супер модератор"
 
 #: modules/admin/includes/adminlist.php:96
 msgid "Moderators"
-msgstr ""
+msgstr "Модераторлар"
 
 #: modules/admin/includes/ads.php:21
 #: modules/admin/templates/sidebar-admin-menu.phtml:169
 msgid "Advertisement"
-msgstr ""
+msgstr "Жарнама"
 
 #: modules/admin/includes/ads.php:28
 msgid "Edit link"
-msgstr ""
+msgstr "Сілтемені өзгерту"
 
 #: modules/admin/includes/ads.php:28
 #: modules/admin/templates/ads_index.phtml:85
 msgid "Add link"
-msgstr ""
+msgstr "Сілтеме қосу"
 
 #: modules/admin/includes/ads.php:43
 #: modules/admin/includes/counters.php:91
@@ -68,33 +68,33 @@ msgstr ""
 #: modules/admin/includes/reg.php:146
 #: modules/admin/includes/usr_del.php:47
 msgid "Wrong data"
-msgstr ""
+msgstr "Мәліметтер дұрыс емес"
 
 #: modules/admin/includes/ads.php:71
 #: modules/admin/includes/counters.php:230
 #: modules/admin/includes/counters.php:320
 msgid "The required fields are not filled"
-msgstr ""
+msgstr "Міндетті жолдар толтырылмаған"
 
 #: modules/admin/includes/ads.php:82
 msgid "This place is occupied"
-msgstr ""
+msgstr "Бұл орын бос емес"
 
 #: modules/admin/includes/ads.php:88
 msgid "Invalid characters"
-msgstr ""
+msgstr "Жазуға болмайтын таңбалар"
 
 #: modules/admin/includes/ads.php:91
 msgid "Color is specified incorrectly"
-msgstr ""
+msgstr "Түсі қате көрсетілген"
 
 #: modules/admin/includes/ads.php:199
 msgid "Link successfully changed"
-msgstr ""
+msgstr "Сілтеме сәтті өзгертілді"
 
 #: modules/admin/includes/ads.php:199
 msgid "Link successfully added"
-msgstr ""
+msgstr "Сілтеме сәтті қосылды"
 
 #: modules/admin/includes/ads.php:201
 #: modules/admin/includes/antispy.php:228
@@ -108,7 +108,7 @@ msgstr ""
 #: modules/admin/includes/usr_clean.php:75
 #: modules/admin/templates/users/captcha.phtml:34
 msgid "Continue"
-msgstr ""
+msgstr "Жалғастыру"
 
 #: modules/admin/includes/ads.php:278
 #: modules/admin/includes/ipban.php:452
@@ -125,99 +125,99 @@ msgstr ""
 #: modules/admin/templates/user_clean_confirm.phtml:36
 #: modules/admin/templates/usr_del.phtml:57
 msgid "Delete"
-msgstr ""
+msgstr "Жою"
 
 #: modules/admin/includes/ads.php:290
 msgid "Are you sure want to delete link?"
-msgstr ""
+msgstr "Бұл сілтемені жойғыңыз келетініне сенімдіміз бе?"
 
 #: modules/admin/includes/ads.php:312
 msgid "Are you sure you want to delete all inactive links?"
-msgstr ""
+msgstr "Сіз барлық активті емес сілтемелерді жойғыңыз келетініне сенімдіміз бе?"
 
 #: modules/admin/includes/ads.php:345
 #: modules/admin/templates/ads_add.phtml:82
 msgid "Before the menu"
-msgstr ""
+msgstr "Мәзірге дейін"
 
 #: modules/admin/includes/ads.php:350
 #: modules/admin/templates/ads_add.phtml:86
 msgid "After the menu"
-msgstr ""
+msgstr "Мәзірден кейін"
 
 #: modules/admin/includes/ads.php:355
 #: modules/admin/templates/ads_add.phtml:90
 msgid "At the top of the page"
-msgstr ""
+msgstr "Беттің жоғарғы жағында"
 
 #: modules/admin/includes/ads.php:360
 #: modules/admin/templates/ads_add.phtml:94
 msgid "At the bottom of the page"
-msgstr ""
+msgstr "Беттің төменгі жағында"
 
 #: modules/admin/includes/ads.php:366
 #: modules/admin/templates/ads_add.phtml:99
 msgid "All pages"
-msgstr ""
+msgstr "Барлық беттерде"
 
 #: modules/admin/includes/ads.php:367
 #: modules/admin/templates/ads_add.phtml:103
 msgid "Only on Homepage"
-msgstr ""
+msgstr "Тек басты бетте"
 
 #: modules/admin/includes/ads.php:368
 #: modules/admin/templates/ads_add.phtml:107
 msgid "On all, except Homepage"
-msgstr ""
+msgstr "Басты беттен басқа барлық бетте"
 
 #: modules/admin/includes/ads.php:371
 #: modules/admin/templates/ads_add.phtml:69
 msgid "Everyone"
-msgstr ""
+msgstr "Барлығына"
 
 #: modules/admin/includes/ads.php:372
 #: modules/admin/templates/ads_add.phtml:73
 msgid "Guests"
-msgstr ""
+msgstr "Қонақтар"
 
 #: modules/admin/includes/ads.php:373
 #: modules/admin/templates/ads_add.phtml:77
 #: modules/admin/templates/sidebar-admin-menu.phtml:31
 #: modules/admin/templates/sidebar-admin-menu.phtml:70
 msgid "Users"
-msgstr ""
+msgstr "Қолданушылар"
 
 #: modules/admin/includes/ads.php:395
 #: modules/admin/includes/ads.php:398
 msgid "hits"
-msgstr ""
+msgstr "көргендер"
 
 #: modules/admin/includes/ads.php:415
 msgid "Color:"
-msgstr ""
+msgstr "Түс:"
 
 #: modules/admin/includes/ads.php:418
 #: modules/admin/templates/ads_add.phtml:112
 msgid "Bold"
-msgstr ""
+msgstr "Жуан"
 
 #: modules/admin/includes/ads.php:421
 #: modules/admin/templates/ads_add.phtml:116
 msgid "Italic"
-msgstr ""
+msgstr "Көлбеу"
 
 #: modules/admin/includes/ads.php:424
 #: modules/admin/templates/ads_add.phtml:120
 msgid "Underline"
-msgstr ""
+msgstr "Асты сызылған"
 
 #: modules/admin/includes/antiflood.php:22
 msgid "Antiflood Settings"
-msgstr ""
+msgstr "Антифлуд параметрлері"
 
 #: modules/admin/includes/antiflood.php:76
 msgid "ERROR: Can not write system.local.php"
-msgstr ""
+msgstr "ҚАТЕ: system.local.php файлын жаза алмаймын"
 
 #: modules/admin/includes/antiflood.php:82
 #: modules/admin/includes/karma.php:76
@@ -225,12 +225,12 @@ msgstr ""
 #: modules/admin/templates/forum/settings.phtml:14
 #: modules/admin/templates/settings.phtml:15
 msgid "Settings are saved successfully"
-msgstr ""
+msgstr "Параметрлер сәтті сақталды"
 
 #: modules/admin/includes/antispy.php:21
 #: modules/admin/templates/sidebar-admin-menu.phtml:263
 msgid "Anti-Spyware"
-msgstr ""
+msgstr "Антишпион"
 
 #: modules/admin/includes/antispy.php:31
 #: modules/admin/includes/counters.php:31
@@ -249,27 +249,27 @@ msgstr ""
 #: modules/admin/templates/access.phtml:111
 #: modules/admin/templates/access.phtml:148
 msgid "Access denied"
-msgstr ""
+msgstr "Рұқсат жоқ"
 
 #: modules/admin/includes/antispy.php:168
 #: modules/admin/templates/antispy.phtml:30
 msgid "Snapshot scan"
-msgstr ""
+msgstr "Сурет бойынша сканерлеу"
 
 #: modules/admin/includes/antispy.php:175
 msgid "Snapshot is not created"
-msgstr ""
+msgstr "Суретті жасауда қате шықты"
 
 #: modules/admin/includes/antispy.php:180
 #: modules/admin/includes/antispy.php:214
 #: modules/admin/templates/antispy.phtml:36
 #: modules/admin/templates/antispy_create_confirm.phtml:37
 msgid "Create snapshot"
-msgstr ""
+msgstr "Сурет құру"
 
 #: modules/admin/includes/antispy.php:201
 msgid "Excellent!<br>All files are consistent with previously made image."
-msgstr ""
+msgstr "Өте жақсы!<br>Барлық файлдар бұрын жасалған кескінге сәйкес келеді"
 
 #: modules/admin/includes/antispy.php:206
 #: modules/admin/includes/forum/add.php:45
@@ -308,97 +308,97 @@ msgstr ""
 #: modules/admin/templates/reg_list.phtml:64
 #: modules/admin/templates/search_ip.phtml:80
 msgid "Back"
-msgstr ""
+msgstr "Артқа"
 
 #: modules/admin/includes/antispy.php:223
 msgid "Snapshot successfully created"
-msgstr ""
+msgstr "Сурет сәтті құрылды"
 
 #: modules/admin/includes/ban_panel.php:24
 #: modules/admin/templates/sidebar-admin-menu.phtml:88
 msgid "Ban Panel"
-msgstr ""
+msgstr "Бан панелі"
 
 #: modules/admin/includes/ban_panel.php:36
 msgid "Amnesty is available for supervisors only"
-msgstr ""
+msgstr "Рақымшылық тек супервайзерлерге ғана қол жетімді"
 
 #: modules/admin/includes/ban_panel.php:41
 #: modules/admin/includes/ban_panel.php:66
 #: modules/admin/templates/ban_panel.phtml:62
 msgid "Amnesty"
-msgstr ""
+msgstr "Рақымшылық жасау"
 
 #: modules/admin/includes/ban_panel.php:54
 msgid "Amnesty has been successful"
-msgstr ""
+msgstr "Рақымшылық сәтті өтті"
 
 #: modules/admin/includes/ban_panel.php:75
 msgid "All the users with active bans were unbanned (Except for bans &quot;till cancel&quot;)"
-msgstr ""
+msgstr "Бірнеше ескерту алған барлық пайдаланушылар босатылды (тыйым салынған &quot;қоспағанда&quot;)"
 
 #: modules/admin/includes/ban_panel.php:97
 msgid "Term"
-msgstr ""
+msgstr "Мерзімі"
 
 #: modules/admin/includes/ban_panel.php:102
 msgid "Violations"
-msgstr ""
+msgstr "Ереже бұзушылықтар"
 
 #: modules/admin/includes/ban_panel.php:133
 msgid "Violations history"
-msgstr ""
+msgstr "Бұзушылықтардың тарихы"
 
 #: modules/admin/includes/counters.php:22
 #: modules/admin/templates/sidebar-admin-menu.phtml:178
 msgid "Counters"
-msgstr ""
+msgstr "Санауыштар"
 
 #: modules/admin/includes/counters.php:45
 #: modules/admin/templates/counters_form.phtml:82
 msgid "Viewing"
-msgstr ""
+msgstr "Қарау"
 
 #: modules/admin/includes/counters.php:59
 msgid "On all pages showing option 1"
-msgstr ""
+msgstr "Барлық беттерде 1-нұсқа көрсетіледі"
 
 #: modules/admin/includes/counters.php:63
 msgid "On all pages showing option 2"
-msgstr ""
+msgstr "Барлық беттерде 2-нұсқа көрсетіледі"
 
 #: modules/admin/includes/counters.php:67
 msgid "On the main showing option 1, on the other pages option 2"
-msgstr ""
+msgstr "Басты бетте 1 нұсқасы, басқа беттерде 2 нұсқасы көрсетіледі"
 
 #: modules/admin/includes/counters.php:175
 msgid "Counter deleted"
-msgstr ""
+msgstr "Есептегіш жойылды"
 
 #: modules/admin/includes/counters.php:186
 msgid "Delete:"
-msgstr ""
+msgstr "Өшіру:"
 
 #: modules/admin/includes/counters.php:187
 #: modules/admin/includes/forum/del.php:302
 msgid "Do you really want to delete?"
-msgstr ""
+msgstr "Сіз шынымен жойғыңыз келеді ме?"
 
 #: modules/admin/includes/counters.php:404
 msgid "Counter successfully changed"
-msgstr ""
+msgstr "Есептегіш сәтті өзгертілді"
 
 #: modules/admin/includes/counters.php:404
 msgid "Counter successfully added"
-msgstr ""
+msgstr "Есептегіш сәтті өзгертілді"
 
 #: modules/admin/includes/emoticons.php:21
 msgid "Smilies"
-msgstr ""
+msgstr "Смайлдар"
 
 #: modules/admin/includes/emoticons.php:61
 msgid "Smilie cache updated successfully"
-msgstr ""
+msgstr "Кэш смайлдары сәтті жаңартылды"
 
 #: modules/admin/includes/emoticons.php:61
 #: modules/admin/templates/forum/hidden_posts.phtml:122
@@ -406,33 +406,33 @@ msgstr ""
 #: modules/admin/templates/user_clean_confirm.phtml:31
 #: modules/admin/templates/userlist.phtml:28
 msgid "Total"
-msgstr ""
+msgstr "Барлығы"
 
 #: modules/admin/includes/emoticons.php:75
 msgid "Error updating cache"
-msgstr ""
+msgstr "Кэшті жаңарту кезінде қате пайда болды"
 
 #: modules/admin/includes/forum.php:23
 msgid "Forum Management"
-msgstr ""
+msgstr "Форумды Басқару"
 
 #: modules/admin/includes/forum/add.php:23
 msgid "Add Section"
-msgstr ""
+msgstr "Бөлімді қосу"
 
 #: modules/admin/includes/forum/add.php:23
 msgid "Add Category"
-msgstr ""
+msgstr "Санат қосу"
 
 #: modules/admin/includes/forum/add.php:40
 #: modules/admin/includes/forum/del.php:30
 #: modules/admin/includes/forum/edit.php:40
 msgid "Invalid ID"
-msgstr ""
+msgstr "Жарамсыз ID"
 
 #: modules/admin/includes/forum/add.php:109
 msgid "You have not entered Title"
-msgstr ""
+msgstr "Сіз ат енгізген жоқсыз"
 
 #: modules/admin/includes/forum/add.php:113
 #: modules/admin/templates/ads_add.phtml:47
@@ -445,123 +445,123 @@ msgstr ""
 #: modules/admin/templates/forum/edit.phtml:38
 #: modules/admin/templates/settings.phtml:66
 msgid "Title"
-msgstr ""
+msgstr "Тақырып"
 
 #: modules/admin/includes/forum/add.php:113
 msgid "Invalid length"
-msgstr ""
+msgstr "Ұзындығы дұрыс емес"
 
 #: modules/admin/includes/forum/add.php:117
 msgid "Description should be at least 2 characters in length"
-msgstr ""
+msgstr "Сипаттама кемінде 2 таңбадан тұруы керек"
 
 #: modules/admin/includes/forum/cat.php:24
 #: modules/admin/templates/forum/index.phtml:41
 msgid "Forum structure"
-msgstr ""
+msgstr "Форумның құрылымы"
 
 #: modules/admin/includes/forum/cat.php:34
 msgid "List of sections"
-msgstr ""
+msgstr "Бөлімдерінің тізімі"
 
 #: modules/admin/includes/forum/cat.php:52
 msgid "List of categories"
-msgstr ""
+msgstr "Санаттар тізімі"
 
 #: modules/admin/includes/forum/del.php:45
 msgid "Delete section"
-msgstr ""
+msgstr "Бөлімді өшіру"
 
 #: modules/admin/includes/forum/del.php:45
 msgid "Delete category"
-msgstr ""
+msgstr "Санатты жою"
 
 #: modules/admin/includes/forum/del.php:111
 #: modules/admin/includes/forum/del.php:293
 msgid "Category deleted"
-msgstr ""
+msgstr "Санат жойылды"
 
 #: modules/admin/includes/forum/del.php:113
 #: modules/admin/includes/forum/del.php:193
 msgid "All content has been moved to"
-msgstr ""
+msgstr "Барлық мазмұн жылжытылды"
 
 #: modules/admin/includes/forum/del.php:113
 msgid "selected category"
-msgstr ""
+msgstr "таңдалған санатты"
 
 #: modules/admin/includes/forum/del.php:191
 #: modules/admin/includes/forum/del.php:293
 msgid "Section deleted"
-msgstr ""
+msgstr "Бөлім жойылды"
 
 #: modules/admin/includes/forum/del.php:193
 msgid "selected section"
-msgstr ""
+msgstr "таңдалған бөлім"
 
 #: modules/admin/includes/forum/del.php:249
 msgid "Section with all contents are removed"
-msgstr ""
+msgstr "Барлық мазмұн бөлімі жойылды"
 
 #: modules/admin/includes/forum/del.php:254
 #: modules/admin/includes/forum/del.php:298
 msgid "Go to category"
-msgstr ""
+msgstr "Категорияға өту"
 
 #: modules/admin/includes/forum/edit.php:28
 msgid "Edit Section"
-msgstr ""
+msgstr "Бөлімді өзгерту"
 
 #: modules/admin/includes/forum/edit.php:160
 msgid "Please select a valid parent"
-msgstr ""
+msgstr "Өтінеміз, жарамды ата-ана бөлігін таңдаңыз"
 
 #: modules/admin/includes/forum/hposts.php:23
 #: modules/admin/templates/forum/index.phtml:42
 msgid "Hidden posts"
-msgstr ""
+msgstr "Жасырын жазбалар"
 
 #: modules/admin/includes/forum/hposts.php:36
 #: modules/admin/includes/forum/hposts.php:114
 msgid "by topic"
-msgstr ""
+msgstr "тақырыбы бойынша"
 
 #: modules/admin/includes/forum/hposts.php:40
 #: modules/admin/includes/forum/hposts.php:118
 #: modules/admin/includes/forum/htopics.php:35
 #: modules/admin/includes/forum/htopics.php:109
 msgid "by author"
-msgstr ""
+msgstr "Автор бойынша"
 
 #: modules/admin/includes/forum/hposts.php:50
 #: modules/admin/includes/forum/htopics.php:51
 msgid "Access forbidden"
-msgstr ""
+msgstr "Рұқсат жоқ"
 
 #: modules/admin/includes/forum/htopics.php:23
 #: modules/admin/templates/forum/index.phtml:43
 msgid "Hidden topics"
-msgstr ""
+msgstr "Жасырын тақырыптар"
 
 #: modules/admin/includes/forum/htopics.php:41
 #: modules/admin/includes/forum/htopics.php:113
 msgid "by section"
-msgstr ""
+msgstr "бөлім бойынша"
 
 #: modules/admin/includes/forum/settings.php:32
 #: modules/admin/templates/forum/settings.phtml:7
 msgid "Forum Settings"
-msgstr ""
+msgstr "Форум Баптаулары"
 
 #: modules/admin/includes/ipban.php:21
 #: modules/admin/templates/sidebar-admin-menu.phtml:271
 msgid "Ban by IP"
-msgstr ""
+msgstr "IP-ге тыйым салу"
 
 #: modules/admin/includes/ipban.php:43
 #: modules/admin/templates/ipban_add_confirm.phtml:61
 msgid "Add Ban"
-msgstr ""
+msgstr "Тыйым салу"
 
 #: modules/admin/includes/ipban.php:58
 #: modules/admin/includes/ipban.php:106
@@ -572,21 +572,21 @@ msgstr ""
 #: modules/admin/includes/search_ip.php:78
 #: modules/admin/includes/search_ip.php:85
 msgid "Invalid IP"
-msgstr ""
+msgstr "Жарамсыз IP"
 
 #: modules/admin/includes/ipban.php:81
 #: modules/admin/includes/search_ip.php:53
 msgid "First IP is entered incorrectly"
-msgstr ""
+msgstr "Бірінші мекен-жай дұрыс енгізілмеген"
 
 #: modules/admin/includes/ipban.php:89
 #: modules/admin/includes/search_ip.php:61
 msgid "Second IP is entered incorrectly"
-msgstr ""
+msgstr "Екінші мекен-жай дұрыс енгізілмеген"
 
 #: modules/admin/includes/ipban.php:130
 msgid "Address you entered conflicts with other who in the database"
-msgstr ""
+msgstr "Сіз енгізген мекен-жай дерекқордағы басқаларға қайшы келеді"
 
 #: modules/admin/includes/ipban.php:138
 #: modules/admin/includes/ipban.php:199
@@ -595,7 +595,7 @@ msgstr ""
 #: modules/admin/templates/ads_index.phtml:52
 #: modules/admin/templates/ipban_add.phtml:53
 msgid "Redirect"
-msgstr ""
+msgstr "Қайта бағыттау"
 
 #: modules/admin/includes/ipban.php:142
 #: modules/admin/includes/ipban.php:204
@@ -604,7 +604,7 @@ msgstr ""
 #: modules/admin/templates/access.phtml:136
 #: modules/admin/templates/ipban_add.phtml:49
 msgid "Registration"
-msgstr ""
+msgstr "Тіркелу"
 
 #: modules/admin/includes/ipban.php:146
 #: modules/admin/includes/ipban.php:208
@@ -612,42 +612,42 @@ msgstr ""
 #: modules/admin/includes/ipban.php:504
 #: modules/admin/templates/ipban_add.phtml:45
 msgid "Block"
-msgstr ""
+msgstr "Бұғаттау"
 
 #: modules/admin/includes/ipban.php:175
 msgid "Ban impossible. Your own IP address in the range"
-msgstr ""
+msgstr "Тыйым салу мүмкін емес. Сіздің жеке IP мекенжайыңыз ауқымда"
 
 #: modules/admin/includes/ipban.php:183
 msgid "Ban range address"
-msgstr ""
+msgstr "Мекен-жайы ауқымына тыйым салыңыз"
 
 #: modules/admin/includes/ipban.php:188
 msgid "Ban on the subnet mask"
-msgstr ""
+msgstr "Ішкі желі маскасына тыйым салыңыз"
 
 #: modules/admin/includes/ipban.php:193
 msgid "Ban IP address"
-msgstr ""
+msgstr "IP-мекен-жайға тыйым салу"
 
 #: modules/admin/includes/ipban.php:200
 #: modules/admin/templates/ads_index.phtml:53
 #: modules/admin/templates/counters_form.phtml:60
 msgid "Default"
-msgstr ""
+msgstr "Әдепкі"
 
 #: modules/admin/includes/ipban.php:216
 #: modules/admin/includes/ipban.php:413
 msgid "Not specified"
-msgstr ""
+msgstr "Көрсетілмеген"
 
 #: modules/admin/includes/ipban.php:314
 msgid "Are you sure you wan to unban all IP?"
-msgstr ""
+msgstr "Сіз сенімдісіз бе, %NAME% құлпын ашу керек пе?"
 
 #: modules/admin/includes/ipban.php:316
 msgid "Perform"
-msgstr ""
+msgstr "Орындау"
 
 #: modules/admin/includes/ipban.php:318
 #: modules/admin/includes/ipban.php:454
@@ -674,23 +674,23 @@ msgstr ""
 #: modules/admin/templates/user_clean_confirm.phtml:37
 #: modules/admin/templates/usr_del.phtml:58
 msgid "Cancel"
-msgstr ""
+msgstr "Бас тарту"
 
 #: modules/admin/includes/ipban.php:332
 msgid "Ban details"
-msgstr ""
+msgstr "Тыйым салу туралы мәліметтер"
 
 #: modules/admin/includes/ipban.php:383
 msgid "This address not in the database"
-msgstr ""
+msgstr "Ондай адрес базада жоқ"
 
 #: modules/admin/includes/ipban.php:441
 msgid "Ban has been successfully removed"
-msgstr ""
+msgstr "Бан жойылды"
 
 #: modules/admin/includes/ipban.php:450
 msgid "Are you sure you want to remove the ban?"
-msgstr ""
+msgstr "Сіз банды жойғыңыз келетініне сенімдісіз бе?"
 
 #: modules/admin/includes/ipban.php:469
 #: modules/admin/templates/ip_whois.phtml:19
@@ -699,121 +699,121 @@ msgstr ""
 #: modules/admin/templates/search_ip.phtml:41
 #: modules/admin/templates/sidebar-admin-menu.phtml:51
 msgid "Search"
-msgstr ""
+msgstr "Іздеу"
 
 #: modules/admin/includes/karma.php:23
 #: modules/admin/templates/sidebar-admin-menu.phtml:114
 msgid "Karma"
-msgstr ""
+msgstr "Карма"
 
 #: modules/admin/includes/karma.php:43
 msgid "Karma is cleared"
-msgstr ""
+msgstr "Карма тазаланды"
 
 #: modules/admin/includes/karma.php:45
 msgid "You really want to clear the Karma?"
-msgstr ""
+msgstr "Сіз карманы тазалағыңыз келетініне сенімдісіз бе?"
 
 #: modules/admin/includes/languages.php:25
 #: modules/admin/includes/languages/index.php:30
 msgid "Languages"
-msgstr ""
+msgstr "Тілдері"
 
 #: modules/admin/includes/languages/delete.php:26
 msgid "The language was successfully deleted"
-msgstr ""
+msgstr "Тіл жойылды"
 
 #: modules/admin/includes/languages/install.php:26
 msgid "The language was successfully installed"
-msgstr ""
+msgstr "Тіл орнатылды"
 
 #: modules/admin/includes/languages/manage.php:29
 #: modules/admin/includes/languages/manage.php:30
 #: modules/admin/includes/languages/manage.php:34
 #: modules/admin/templates/languages/index.phtml:32
 msgid "Managing languages"
-msgstr ""
+msgstr "Тілдерді басқару"
 
 #: modules/admin/includes/languages/update.php:26
 msgid "The language was successfully updated"
-msgstr ""
+msgstr "Тіл жаңартылды"
 
 #: modules/admin/includes/reg.php:23
 msgid "Registration confirmation"
-msgstr ""
+msgstr "Тіркелуді растау"
 
 #: modules/admin/includes/reg.php:49
 #: modules/admin/includes/reg.php:64
 msgid "Registration is confirmed"
-msgstr ""
+msgstr "Тіркелу расталды"
 
 #: modules/admin/includes/reg.php:95
 #: modules/admin/includes/usr_del.php:116
 msgid "User deleted"
-msgstr ""
+msgstr "Пайдаланушы жойылды"
 
 #: modules/admin/includes/reg.php:110
 msgid "All unconfirmed registrations were removed"
-msgstr ""
+msgstr "Барлық расталмаған тіркелулер жойылды"
 
 #: modules/admin/includes/reg.php:135
 msgid "All unconfirmed registrations with selected IP were deleted"
-msgstr ""
+msgstr "Барлық таңдалған IP бойынша расталмаған тіркелулер жойылды"
 
 #: modules/admin/includes/reg.php:164
 msgid "Approve"
-msgstr ""
+msgstr "Растау"
 
 #: modules/admin/includes/reg.php:172
 msgid "Remove IP"
-msgstr ""
+msgstr "IP жойыңыз"
 
 #: modules/admin/includes/search_ip.php:28
 #: modules/admin/templates/search_ip.phtml:37
 #: modules/admin/templates/search_ip.phtml:39
 msgid "Search IP"
-msgstr ""
+msgstr "Іздеу IP"
 
 #: modules/admin/includes/search_ip.php:34
 msgid "Actual IP"
-msgstr ""
+msgstr "Нақты IP"
 
 #: modules/admin/includes/search_ip.php:39
 msgid "IP history"
-msgstr ""
+msgstr "IP тарихы"
 
 #: modules/admin/includes/settings.php:31
 #: modules/admin/templates/settings.phtml:8
 #: modules/admin/templates/sidebar-admin-menu.phtml:209
 #: modules/admin/templates/smilies.phtml:8
 msgid "System Settings"
-msgstr ""
+msgstr "Жүйелік баптаулар"
 
 #: modules/admin/includes/userlist.php:25
 #: modules/admin/templates/userlist.phtml:3
 msgid "List of Users"
-msgstr ""
+msgstr "Қолданушылар тізімі"
 
 #: modules/admin/includes/usr_clean.php:20
 #: modules/admin/templates/sidebar-admin-menu.phtml:98
 msgid "Database cleanup"
-msgstr ""
+msgstr "Базаны тазалау"
 
 #: modules/admin/includes/usr_clean.php:73
 msgid "Inactive profiles deleted"
-msgstr ""
+msgstr "Белсенді емес профильдер жойылды"
 
 #: modules/admin/includes/usr_del.php:25
 msgid "Delete user"
-msgstr ""
+msgstr "Пайдаланушыны жою"
 
 #: modules/admin/includes/usr_del.php:41
 msgid "You cannot delete higher administration"
-msgstr ""
+msgstr "Сіз өзіңіздің жоғары пайдаланушы үлкендерді жоя алмайсыз"
 
 #: modules/admin/includes/usr_del.php:44
 msgid "User does not exists"
-msgstr ""
+msgstr "Ондай қолданушы жоқ"
 
 #: modules/admin/index.php:50
 #: modules/admin/src/Application/Controllers/BaseAdminController.php:41
@@ -823,7 +823,7 @@ msgstr ""
 #: modules/admin/templates/smilies.phtml:8
 #: modules/admin/templates/userlist.phtml:3
 msgid "Admin Panel"
-msgstr ""
+msgstr "Әкімшілік панелі"
 
 #: modules/admin/src/Application/Controllers/System/SystemCheckController.php:26
 #: modules/admin/src/Application/Controllers/System/SystemCheckController.php:27
@@ -863,7 +863,7 @@ msgstr ""
 #: modules/admin/templates/sidebar-admin-menu.phtml:153
 #: modules/admin/templates/usr_del.phtml:51
 msgid "Forum"
-msgstr ""
+msgstr "Форум"
 
 #: modules/admin/templates/access.phtml:40
 #: modules/admin/templates/access.phtml:62
@@ -872,7 +872,7 @@ msgstr ""
 #: modules/admin/templates/access.phtml:126
 #: modules/admin/templates/access.phtml:140
 msgid "Access is allowed"
-msgstr ""
+msgstr "Рұқсат ашық"
 
 #: modules/admin/templates/access.phtml:44
 #: modules/admin/templates/access.phtml:66
@@ -880,41 +880,41 @@ msgstr ""
 #: modules/admin/templates/access.phtml:107
 #: modules/admin/templates/access.phtml:130
 msgid "Only for authorized"
-msgstr ""
+msgstr "Тек сайтқа тіркелгендер үшін ғана"
 
 #: modules/admin/templates/access.phtml:48
 msgid "Read only"
-msgstr ""
+msgstr "Тек оқуға арналған"
 
 #: modules/admin/templates/access.phtml:58
 msgid "Guestbook"
-msgstr ""
+msgstr "Қонақ кітәпшасы"
 
 #: modules/admin/templates/access.phtml:76
 msgid "Library"
-msgstr ""
+msgstr "Кітапхана"
 
 #: modules/admin/templates/access.phtml:93
 #: modules/admin/templates/access.phtml:116
 #: modules/admin/templates/usr_del.phtml:44
 msgid "Comments"
-msgstr ""
+msgstr "Пікірлер"
 
 #: modules/admin/templates/access.phtml:99
 msgid "Downloads"
-msgstr ""
+msgstr "Жүктеулер"
 
 #: modules/admin/templates/access.phtml:122
 msgid "Community"
-msgstr ""
+msgstr "Бірлестіктер"
 
 #: modules/admin/templates/access.phtml:144
 msgid "With moderation"
-msgstr ""
+msgstr "Модерациямен"
 
 #: modules/admin/templates/access.phtml:154
 msgid "Administrators always have access to all closed modules and comments"
-msgstr ""
+msgstr "Әкімші барлық жеке модульдер мен түсініктемелерге әрқашан қол жеткізе алады."
 
 #: modules/admin/templates/access.phtml:156
 #: modules/admin/templates/ads_add.phtml:123
@@ -928,7 +928,7 @@ msgstr ""
 #: modules/admin/templates/languages/index.phtml:28
 #: modules/admin/templates/settings.phtml:86
 msgid "Save"
-msgstr ""
+msgstr "Сақтау"
 
 #: modules/admin/templates/admin_list.phtml:32
 #: modules/admin/templates/ads_index.phtml:69
@@ -940,7 +940,7 @@ msgstr ""
 #: modules/admin/templates/ipban.phtml:47
 #: modules/admin/templates/reg_list.phtml:39
 msgid "The list is empty"
-msgstr ""
+msgstr "Тізім бос"
 
 #: modules/admin/templates/admin_list.phtml:46
 #: modules/admin/templates/ads_index.phtml:80
@@ -950,48 +950,48 @@ msgstr ""
 #: modules/admin/templates/reg_list.phtml:56
 #: modules/admin/templates/search_ip.phtml:76
 msgid "Total:"
-msgstr ""
+msgstr "Барлығы:"
 
 #: modules/admin/templates/ads_add.phtml:38
 #: modules/admin/templates/ads_add.phtml:39
 msgid "Link"
-msgstr ""
+msgstr "Сілтеме"
 
 #: modules/admin/templates/ads_add.phtml:43
 #: modules/admin/templates/ads_index.phtml:52
 msgid "Direct Link"
-msgstr ""
+msgstr "Тікелей Сілтеме"
 
 #: modules/admin/templates/ads_add.phtml:44
 msgid "Click statistics won't be counted, If the direct link is turned on"
-msgstr ""
+msgstr "Егерде тіке сілтеме қосылган жағдайда статистика есепке алынбайды"
 
 #: modules/admin/templates/ads_add.phtml:49
 msgid "To change the name when updating pages, you must wtite names trought the symbol |"
-msgstr ""
+msgstr "Атауын өзгерту үшін парақша жаңарғаннан кейін атауларды | осындай таңбамен жазып шығың"
 
 #: modules/admin/templates/ads_add.phtml:52
 #: modules/admin/templates/ads_add.phtml:53
 msgid "Color"
-msgstr ""
+msgstr "Түс"
 
 #: modules/admin/templates/ads_add.phtml:54
 msgid "In the format FFFFFF, if you do not want to use link color, simply do not fill this field"
-msgstr ""
+msgstr "Егерде түспен белгілегіңіз келсе түстің атауын FFFFFF жазын немесе жәй бос қалдыраберін"
 
 #: modules/admin/templates/ads_add.phtml:57
 #: modules/admin/templates/ads_add.phtml:58
 msgid "Hits"
-msgstr ""
+msgstr "Сілтемемен өткендер"
 
 #: modules/admin/templates/ads_add.phtml:59
 msgid "Number of hits for link existence which will be automatically removed from the page<br>0 - Unlimited"
-msgstr ""
+msgstr "Өтпелер саны, осыдан кейін сілтеме автоматты түрде жойылады<br>0 - шектеусіз"
 
 #: modules/admin/templates/ads_add.phtml:62
 #: modules/admin/templates/ads_add.phtml:63
 msgid "Days"
-msgstr ""
+msgstr "Күндер"
 
 #: modules/admin/templates/ads_add.phtml:64
 msgid "Number of days for link existence which will be automatically removed from the page<br>0 - Unlimited"
@@ -1001,86 +1001,86 @@ msgstr ""
 #: modules/admin/templates/ads_index.phtml:49
 #: modules/admin/templates/ads_index.phtml:60
 msgid "Show"
-msgstr ""
+msgstr "Көрсету"
 
 #: modules/admin/templates/ads_add.phtml:79
 msgid "Place"
-msgstr ""
+msgstr "Орын"
 
 #: modules/admin/templates/ads_add.phtml:96
 msgid "Layout"
-msgstr ""
+msgstr "Орналастыру"
 
 #: modules/admin/templates/ads_add.phtml:109
 msgid "Styling links"
-msgstr ""
+msgstr "Таңдау (белгілеу)"
 
 #: modules/admin/templates/ads_index.phtml:40
 #: modules/admin/templates/counters.phtml:52
 msgid "On"
-msgstr ""
+msgstr "Қосулы"
 
 #: modules/admin/templates/ads_index.phtml:42
 #: modules/admin/templates/counters.phtml:54
 msgid "Off"
-msgstr ""
+msgstr "Өшірулі"
 
 #: modules/admin/templates/ads_index.phtml:47
 msgid "Start date"
-msgstr ""
+msgstr "Басталу күні"
 
 #: modules/admin/templates/ads_index.phtml:48
 msgid "Disposition"
-msgstr ""
+msgstr "Орналасуы"
 
 #: modules/admin/templates/ads_index.phtml:50
 msgid "Agreement"
-msgstr ""
+msgstr "Келісім"
 
 #: modules/admin/templates/ads_index.phtml:51
 msgid "Remains"
-msgstr ""
+msgstr "Қалды"
 
 #: modules/admin/templates/ads_index.phtml:52
 msgid "Link type"
-msgstr ""
+msgstr "Сілтеме түрі"
 
 #: modules/admin/templates/ads_index.phtml:53
 msgid "Style settings"
-msgstr ""
+msgstr "Стиль параметрлери"
 
 #: modules/admin/templates/ads_index.phtml:56
 #: modules/admin/templates/counters.phtml:59
 msgid "Up"
-msgstr ""
+msgstr "Жоғары"
 
 #: modules/admin/templates/ads_index.phtml:57
 #: modules/admin/templates/counters.phtml:60
 msgid "Down"
-msgstr ""
+msgstr "Төмен"
 
 #: modules/admin/templates/ads_index.phtml:58
 #: modules/admin/templates/counters.phtml:61
 #: modules/admin/templates/counters_view.phtml:59
 #: modules/admin/templates/forum/structure.phtml:54
 msgid "Edit"
-msgstr ""
+msgstr "Өзгерту"
 
 #: modules/admin/templates/ads_index.phtml:60
 msgid "Hide"
-msgstr ""
+msgstr "Жасыру"
 
 #: modules/admin/templates/ads_index.phtml:86
 msgid "Delete inactive links"
-msgstr ""
+msgstr "Белсенді емес сілтемелерді алып тастаңыз"
 
 #: modules/admin/templates/amnesty.phtml:32
 msgid "Unban all"
-msgstr ""
+msgstr "Барлығын босатыңыз"
 
 #: modules/admin/templates/amnesty.phtml:36
 msgid "Clear Ban database"
-msgstr ""
+msgstr "Барлық тыйымдарды алып тастаңыз"
 
 #: modules/admin/templates/amnesty.phtml:40
 msgid "&quot;Unban All&quot; - terminating all active bans<br>&quot;Clear Database&quot; - terminates all bans and clears an offenses history"
@@ -1088,172 +1088,172 @@ msgstr ""
 
 #: modules/admin/templates/antiflood.phtml:37
 msgid "Operation mode"
-msgstr ""
+msgstr "Жұмыс режимі"
 
 #: modules/admin/templates/antiflood.phtml:41
 #: modules/admin/templates/antiflood.phtml:60
 msgid "Day"
-msgstr ""
+msgstr "Күні"
 
 #: modules/admin/templates/antiflood.phtml:45
 #: modules/admin/templates/antiflood.phtml:64
 msgid "Night"
-msgstr ""
+msgstr "Түн"
 
 #: modules/admin/templates/antiflood.phtml:49
 msgid "Day / Night"
-msgstr ""
+msgstr "Күн / Түн"
 
 #: modules/admin/templates/antiflood.phtml:50
 msgid "Automatic change from day to night mode, according to specified time set"
-msgstr ""
+msgstr "Параметрлерде белгіленген уақытқа сәйкес күндізгіден түнгі режимге автоматты түрде өту"
 
 #: modules/admin/templates/antiflood.phtml:54
 msgid "Adaptive"
-msgstr ""
+msgstr "Бейімді"
 
 #: modules/admin/templates/antiflood.phtml:55
 msgid "If one of administration is online (on the site), the system work in &quot;day&quot; mode, if administration is offline, it switch to &quot;night&quot;"
-msgstr ""
+msgstr "Егер сайтта Әкімшілік тарапынан біреу болса, жүйе &quot;күндізгі&quot; режимде жұмыс істейді, әйтпесе ол &quot;түнгі&quot; режимге өтеді"
 
 #: modules/admin/templates/antiflood.phtml:58
 msgid "Time limit"
-msgstr ""
+msgstr "Уақыт лимиті"
 
 #: modules/admin/templates/antiflood.phtml:67
 msgid "Day mode"
-msgstr ""
+msgstr "Күндізгі режим"
 
 #: modules/admin/templates/antiflood.phtml:69
 msgid "Beginning of day"
-msgstr ""
+msgstr "Күннің басталуы"
 
 #: modules/admin/templates/antiflood.phtml:73
 msgid "End of day"
-msgstr ""
+msgstr "Күннің соңы"
 
 #: modules/admin/templates/antispy.phtml:26
 msgid "Scan mode"
-msgstr ""
+msgstr "Сканерлеу режимі"
 
 #: modules/admin/templates/antispy.phtml:32
 msgid "Compare the list of files and checksums with pre-made way. Allows you to identify unknow files, and unauthorized changes."
-msgstr ""
+msgstr "Файлдардың тізімі мен тексеру кестесін алдын-ала анықталған кескінмен салыстыру. Белгісіз файлдарды және рұқсат етілмеген өзгертулерді анықтайды."
 
 #: modules/admin/templates/antispy.phtml:38
 msgid "Takes a snapshot of all script files from the site calculates their checksums and stored in the database."
-msgstr ""
+msgstr "Сайттың барлық сценарийлерінің суреттері түсіріліп, олардың тексеру кестелері есептеліп, мәліметтер базасында сақталады."
 
 #: modules/admin/templates/antispy_create_confirm.phtml:29
 msgid "WARNING!!!<br>Before continuing make sure that all the files have been identified in the scanning mode distribution reliable and contain no unauthorized modifications."
-msgstr ""
+msgstr "НАЗАР АУДАРЫҢЫЗ!!! <br> Жұмысты бастамас бұрын, Таратудың қарап шығу режимінде анықталған барлық файлдардың сенімді екендігіне және рұқсат етілмеген өзгертулердің жоқ екеніне көз жеткізіңіз."
 
 #: modules/admin/templates/antispy_create_confirm.phtml:33
 msgid "This procedure creates a list of all script files to your site, calculates the checksums and writes to the database, for later comparison."
-msgstr ""
+msgstr "Бұл процедура сіздің сайтыңыздағы барлық сценарий файлдарының тізімін жасайды, олардың тексеру кестелерін есептейді және оларды салыстыру үшін дерекқорға орналастырады"
 
 #: modules/admin/templates/antispy_scan_result.phtml:29
 msgid "Snapshot Inconsistency<br>Warning! You need to pay attention to all files from the list. They have been added or modified since the image created."
-msgstr ""
+msgstr "Сурет сәйкессіздігі <br> Назар аударыңыз !!! Сіз осы тізімдегі барлық файлдарға назар аударуыңыз керек. Олар кескін жасалғаннан кейін қосылды немесе өзгертілді."
 
 #: modules/admin/templates/antispy_scan_result.phtml:34
 msgid "List of files"
-msgstr ""
+msgstr "Файлдар тізімі"
 
 #: modules/admin/templates/ban_panel.phtml:30
 #: modules/admin/templates/userlist.phtml:10
 msgid "Sort"
-msgstr ""
+msgstr "Сұрыптау"
 
 #: modules/admin/templates/counters.phtml:71
 #: modules/admin/templates/forum/add.phtml:84
 #: modules/admin/templates/forum/structure.phtml:61
 #: modules/admin/templates/ipban.phtml:74
 msgid "Add"
-msgstr ""
+msgstr "Қосу"
 
 #: modules/admin/templates/counters_add_confirm.phtml:44
 #: modules/admin/templates/counters_form.phtml:46
 #: modules/admin/templates/counters_form.phtml:68
 #: modules/admin/templates/counters_view.phtml:42
 msgid "Option 1"
-msgstr ""
+msgstr "1-нұсқа"
 
 #: modules/admin/templates/counters_add_confirm.phtml:47
 #: modules/admin/templates/counters_form.phtml:51
 #: modules/admin/templates/counters_form.phtml:72
 #: modules/admin/templates/counters_view.phtml:45
 msgid "Option 2"
-msgstr ""
+msgstr "2-нұсқа"
 
 #: modules/admin/templates/counters_add_confirm.phtml:59
 msgid "If the counter are displayed correctly and without errors, click &quot;Save&quot;.<br>Otherwise, click back button and correct errors."
-msgstr ""
+msgstr "Егер есептегіштер дұрыс және қатесіз көрсетілсе, &quot;есте сақтау&quot; батырмасын басыңыз.<br>әйтпесе, &quot;артқа&quot; батырмасын басыңыз және қателерді түзетіңіз"
 
 #: modules/admin/templates/counters_form.phtml:42
 #: modules/admin/templates/counters_form.phtml:43
 msgid "Name"
-msgstr ""
+msgstr "Аты"
 
 #: modules/admin/templates/counters_form.phtml:48
 msgid "Code for main page"
-msgstr ""
+msgstr "Басты бетке арналған код"
 
 #: modules/admin/templates/counters_form.phtml:53
 msgid "Code for other pages"
-msgstr ""
+msgstr "Басқа беттерге арналған код"
 
 #: modules/admin/templates/counters_form.phtml:56
 msgid "Display mode"
-msgstr ""
+msgstr "Бейнелеу режимі"
 
 #: modules/admin/templates/counters_form.phtml:63
 msgid "On the main showing option 1, on the other pages option 2.<br>If &quot;option 2&quot; not filled, counter would only appear on the main page."
-msgstr ""
+msgstr "Опция-1 Негізгі парақта, Опция-2 басқа парақтарда көрсетілген<br>Егер &quot;Опция-2&quot; өрісі толтырылмаса, онда есептегіш тек Басты бетте көрсетіледі"
 
 #: modules/admin/templates/counters_form.phtml:76
 msgid "WARNING!"
-msgstr ""
+msgstr "Ескерту!"
 
 #: modules/admin/templates/counters_form.phtml:77
 msgid "Make sure you have correctly entered the code. It must meet the standard of XML"
-msgstr ""
+msgstr "Кодты дұрыс енгізгеніңізге көз жеткізіңіз. Ол XML стандартына сәйкес болуы керек."
 
 #: modules/admin/templates/counters_form.phtml:78
 msgid "If you click &quot;View&quot; and XHTML errors occured, then click &quot;Back&quot; button in your browser, return to this form and correct the errors."
-msgstr ""
+msgstr "Егер сіз &quot;көріністі&quot; бассаңыз және бет дұрыс көрсетілмесе, пішінге оралу үшін браузерде &quot;артқа&quot; түймесін басыңыз және қателерді түзетіңіз."
 
 #: modules/admin/templates/counters_view.phtml:34
 msgid "Status:"
-msgstr ""
+msgstr "Мәртебе:"
 
 #: modules/admin/templates/counters_view.phtml:36
 msgid "Enabled"
-msgstr ""
+msgstr "Енгізілген"
 
 #: modules/admin/templates/counters_view.phtml:38
 msgid "Disabled"
-msgstr ""
+msgstr "Өшірілген"
 
 #: modules/admin/templates/counters_view.phtml:48
 msgid "Display mode:"
-msgstr ""
+msgstr "Бейнелеу режимі:"
 
 #: modules/admin/templates/counters_view.phtml:55
 msgid "Disable"
-msgstr ""
+msgstr "Өшірілген"
 
 #: modules/admin/templates/counters_view.phtml:57
 msgid "Enable"
-msgstr ""
+msgstr "Енгізілген"
 
 #: modules/admin/templates/forum/add.phtml:38
 msgid "Parent section:"
-msgstr ""
+msgstr "Жоғарғы бөлім:"
 
 #: modules/admin/templates/forum/add.phtml:44
 msgid "Min. 2, Max. 30 characters"
-msgstr ""
+msgstr "Мин. 2, Макс. 30 рәміздер"
 
 #: modules/admin/templates/forum/add.phtml:48
 #: modules/admin/templates/forum/edit.phtml:53
@@ -1265,24 +1265,24 @@ msgstr ""
 #: modules/admin/templates/system/system_check.phtml:49
 #: modules/admin/templates/system/system_check.phtml:57
 msgid "Description"
-msgstr ""
+msgstr "Сипаттамасы"
 
 #: modules/admin/templates/forum/add.phtml:50
 #: modules/admin/templates/forum/edit.phtml:55
 msgid "Optional field"
-msgstr ""
+msgstr "Толтыру міндетті емес"
 
 #: modules/admin/templates/forum/add.phtml:50
 #: modules/admin/templates/forum/edit.phtml:55
 msgid "Min. 2, Max. 500 characters"
-msgstr ""
+msgstr "Мин. 2, Макс. 500 рәміздер"
 
 #: modules/admin/templates/forum/add.phtml:54
 #: modules/admin/templates/forum/add.phtml:57
 #: modules/admin/templates/forum/edit.phtml:67
 #: modules/admin/templates/forum/edit.phtml:70
 msgid "Common access"
-msgstr ""
+msgstr "Ортақ пайдалану"
 
 #: modules/admin/templates/forum/add.phtml:61
 #: modules/admin/templates/forum/edit.phtml:74
@@ -1302,7 +1302,7 @@ msgstr ""
 #: modules/admin/templates/forum/add.phtml:73
 #: modules/admin/templates/forum/edit.phtml:85
 msgid "Section type"
-msgstr ""
+msgstr "Бөлімнің түрі"
 
 #: modules/admin/templates/forum/add.phtml:76
 #: modules/admin/templates/forum/edit.phtml:88
@@ -1312,7 +1312,7 @@ msgstr ""
 #: modules/admin/templates/forum/add.phtml:80
 #: modules/admin/templates/forum/edit.phtml:92
 msgid "For topics"
-msgstr ""
+msgstr "Тақырыптар үшін"
 
 #: modules/admin/templates/forum/del_confirm_move.phtml:29
 msgid "<h3>WARNING!</h3>There are subsections. Move them to another category."
@@ -1321,7 +1321,7 @@ msgstr ""
 #: modules/admin/templates/forum/del_confirm_move.phtml:35
 #: modules/admin/templates/forum/edit.phtml:96
 msgid "Category"
-msgstr ""
+msgstr "Бөлімдер"
 
 #: modules/admin/templates/forum/del_confirm_move.phtml:42
 msgid "All categories, topics, and files will be moved into selected category. Old category will be removed."
@@ -1330,7 +1330,7 @@ msgstr ""
 #: modules/admin/templates/forum/del_confirm_move.phtml:45
 #: modules/admin/templates/forum/del_confirm_move_topics.phtml:51
 msgid "Move"
-msgstr ""
+msgstr "Көшіру"
 
 #: modules/admin/templates/forum/del_confirm_move.phtml:51
 #: modules/admin/templates/forum/del_confirm_move_topics.phtml:55
@@ -1343,7 +1343,7 @@ msgstr ""
 
 #: modules/admin/templates/forum/del_confirm_move.phtml:54
 msgid "subsections"
-msgstr ""
+msgstr "бағынысты бөлімдер"
 
 #: modules/admin/templates/forum/del_confirm_move_topics.phtml:29
 msgid "<h3>WARNING!</h3>There are topics in the section. You must move them to another section."
@@ -1351,19 +1351,19 @@ msgstr ""
 
 #: modules/admin/templates/forum/del_confirm_move_topics.phtml:34
 msgid "Select section"
-msgstr ""
+msgstr "Бөлімін таңдаңыз"
 
 #: modules/admin/templates/forum/del_confirm_move_topics.phtml:41
 msgid "Other category"
-msgstr ""
+msgstr "Басқа санат"
 
 #: modules/admin/templates/forum/del_confirm_move_topics.phtml:48
 msgid "All the topics and files will be moved to selected section. Old section will be deleted."
-msgstr ""
+msgstr "Барлық тақырыптар мен файлдар таңдалған бөлімге ауыстырылады <br> Ескі бөлім жойылады"
 
 #: modules/admin/templates/forum/del_confirm_move_topics.phtml:56
 msgid "WARNING! All the information will be deleted"
-msgstr ""
+msgstr "Ескерту! Барлық ақпарат жойылады"
 
 #: modules/admin/templates/forum/edit.phtml:43
 msgid "Min. 2, Max. 150 characters"
@@ -1372,11 +1372,11 @@ msgstr ""
 #: modules/admin/templates/forum/edit.phtml:47
 #: modules/admin/templates/forum/edit.phtml:48
 msgid "Order"
-msgstr ""
+msgstr "Тәртібі"
 
 #: modules/admin/templates/forum/edit.phtml:49
 msgid "Only numbers"
-msgstr ""
+msgstr "Тек сандар"
 
 #: modules/admin/templates/forum/edit.phtml:59
 msgid "Meta description"
@@ -1389,82 +1389,82 @@ msgstr ""
 #: modules/admin/templates/forum/hidden_posts.phtml:29
 #: modules/admin/templates/forum/hidden_topics.phtml:29
 msgid "Filtered:"
-msgstr ""
+msgstr "Сүзілген:"
 
 #: modules/admin/templates/forum/hidden_posts.phtml:48
 msgid "Go to page"
-msgstr ""
+msgstr "Бетіне өту"
 
 #: modules/admin/templates/forum/hidden_posts.phtml:61
 #: modules/admin/templates/forum/hidden_topics.phtml:57
 msgid "Topic:"
-msgstr ""
+msgstr "Тақырып:"
 
 #: modules/admin/templates/forum/hidden_posts.phtml:85
 msgid "Edited:"
-msgstr ""
+msgstr "Өзгертілген:"
 
 #: modules/admin/templates/forum/hidden_posts.phtml:89
 msgid "Post deleted:"
-msgstr ""
+msgstr "Хабар жойылды:"
 
 #: modules/admin/templates/forum/hidden_posts.phtml:91
 msgid "Post restored by:"
-msgstr ""
+msgstr "Хабар қалпына келтірілді:"
 
 #: modules/admin/templates/forum/hidden_posts.phtml:95
 #: modules/admin/templates/forum/hidden_topics.phtml:91
 msgid "Filter:"
-msgstr ""
+msgstr "Сүзгі:"
 
 #: modules/admin/templates/forum/hidden_posts.phtml:115
 #: modules/admin/templates/forum/hidden_topics.phtml:111
 #: modules/admin/templates/reg_list.phtml:59
 msgid "Delete all"
-msgstr ""
+msgstr "Барлығын өшіру"
 
 #: modules/admin/templates/forum/hidden_topics.phtml:61
 msgid "Path:"
-msgstr ""
+msgstr "Жолы:"
 
 #: modules/admin/templates/forum/hidden_topics.phtml:87
 msgid "Topic deleted:"
-msgstr ""
+msgstr "Тақырып жойылды:"
 
 #: modules/admin/templates/forum/index.phtml:27
 msgid "Statistic"
-msgstr ""
+msgstr "Статистика"
 
 #: modules/admin/templates/forum/index.phtml:29
 msgid "Categories"
-msgstr ""
+msgstr "Бөлімдер"
 
 #: modules/admin/templates/forum/index.phtml:30
 #: modules/admin/templates/forum/settings.phtml:35
 msgid "Sections"
-msgstr ""
+msgstr "Бөлімдер"
 
 #: modules/admin/templates/forum/index.phtml:31
 #: modules/admin/templates/forum/settings.phtml:46
 msgid "Topics"
-msgstr ""
+msgstr "Тақырыптар"
 
 #: modules/admin/templates/forum/index.phtml:32
 msgid "Messages"
-msgstr ""
+msgstr "Хабарламалар"
 
 #: modules/admin/templates/forum/index.phtml:33
 msgid "Files"
-msgstr ""
+msgstr "Файлдар"
 
 #: modules/admin/templates/forum/index.phtml:34
 msgid "Votes"
-msgstr ""
+msgstr "Day'ys bery'"
 
 #: modules/admin/templates/forum/index.phtml:36
 #: modules/admin/templates/forum/index.phtml:39
 msgid "Settings"
-msgstr ""
+msgstr "Баптаулар"
 
 #: modules/admin/templates/forum/settings.phtml:19
 msgid "Common settings"
@@ -1514,36 +1514,36 @@ msgstr ""
 
 #: modules/admin/templates/forum/structure.phtml:47
 msgid "View"
-msgstr ""
+msgstr "Қараулар"
 
 #: modules/admin/templates/index.phtml:3
 msgid "Dashboard"
-msgstr ""
+msgstr "Аспаптар панелі"
 
 #: modules/admin/templates/index.phtml:6
 msgid "Show admin menu"
-msgstr ""
+msgstr "Әкімшілік"
 
 #: modules/admin/templates/index.phtml:14
 msgid "registered visitors today"
-msgstr ""
+msgstr "бүгін тіркелген пайдаланушылар"
 
 #: modules/admin/templates/index.phtml:22
 msgid "users registered today"
-msgstr ""
+msgstr "бүгін тіркелді"
 
 #: modules/admin/templates/index.phtml:30
 msgid "posts on the forum today"
-msgstr ""
+msgstr "форумның хабарламалары бүгін"
 
 #: modules/admin/templates/ip_whois.phtml:15
 msgid "IP Address"
-msgstr ""
+msgstr "IP мекен-жай"
 
 #: modules/admin/templates/ip_whois.phtml:25
 #: modules/admin/templates/search_ip.phtml:64
 msgid "Search results"
-msgstr ""
+msgstr "Izdey' na'ti'jeleri"
 
 #: modules/admin/templates/ipban.phtml:39
 #: modules/admin/templates/ipban_add.phtml:38
@@ -1551,151 +1551,151 @@ msgstr ""
 #: modules/admin/templates/ipban_search.phtml:32
 #: modules/admin/templates/ipban_search.phtml:33
 msgid "IP address"
-msgstr ""
+msgstr "IP мекен-жай"
 
 #: modules/admin/templates/ipban.phtml:40
 #: modules/admin/templates/ipban_add.phtml:63
 #: modules/admin/templates/ipban_add_confirm.phtml:47
 msgid "Reason"
-msgstr ""
+msgstr "Себеп"
 
 #: modules/admin/templates/ipban.phtml:77
 msgid "Unban all IP"
-msgstr ""
+msgstr "Барлық IP құлпын ашыңыз"
 
 #: modules/admin/templates/ipban_add.phtml:42
 #: modules/admin/templates/ipban_add_confirm.phtml:40
 msgid "Ban type"
-msgstr ""
+msgstr "Тыйым салу түрі"
 
 #: modules/admin/templates/ipban_add.phtml:57
 #: modules/admin/templates/ipban_add.phtml:58
 msgid "Redirect URL"
-msgstr ""
+msgstr "URL - Қайта бағыттау"
 
 #: modules/admin/templates/ipban_add.phtml:59
 msgid "If the ban on Redirect, then specify the URL"
-msgstr ""
+msgstr "Егер тыйым қайта бағытталса, онда URL мекенжайын көрсетіңіз"
 
 #: modules/admin/templates/ipban_add.phtml:68
 msgid "Example:"
-msgstr ""
+msgstr "Мысалы:"
 
 #: modules/admin/templates/ipban_add.phtml:69
 msgid "Ban one address"
-msgstr ""
+msgstr "Бір мекен-жайға тыйым салыңыз"
 
 #: modules/admin/templates/ipban_add.phtml:70
 msgid "Ban range of address"
-msgstr ""
+msgstr "Мекенжай ауқымына тыйым салу"
 
 #: modules/admin/templates/ipban_add.phtml:71
 msgid "Ban on a mask. There will banned from the entrie subnet, begining with address 0 and ending with 255"
-msgstr ""
+msgstr "Маска арқылы тыйым салу. 0 бастап 255 дейін барлық ішкі желі мекенжайлары бұғатталады"
 
 #: modules/admin/templates/ipban_add_confirm.phtml:37
 msgid "Ban mode"
-msgstr ""
+msgstr "Құлыптау режимі"
 
 #: modules/admin/templates/ipban_add_confirm.phtml:44
 msgid "Redirect URL:"
-msgstr ""
+msgstr "URL - Қайта бағыттау:"
 
 #: modules/admin/templates/ipban_add_confirm.phtml:57
 msgid "Please, check up correctness of the input data"
-msgstr ""
+msgstr "Деректердің дұрыс енгізілуін тексеріңіз"
 
 #: modules/admin/templates/ipban_detail.phtml:33
 msgid "Ban type:"
-msgstr ""
+msgstr "Тыйым салу түрі:"
 
 #: modules/admin/templates/ipban_detail.phtml:37
 msgid "Redirect to:"
-msgstr ""
+msgstr "URL - Қайта бағыттау:"
 
 #: modules/admin/templates/ipban_detail.phtml:41
 msgid "Reason:"
-msgstr ""
+msgstr "Себеп:"
 
 #: modules/admin/templates/ipban_detail.phtml:44
 msgid "Banned by:"
-msgstr ""
+msgstr "Бұғатталған:"
 
 #: modules/admin/templates/ipban_detail.phtml:47
 msgid "Date:"
-msgstr ""
+msgstr "Күні:"
 
 #: modules/admin/templates/ipban_detail.phtml:50
 msgid "Time:"
-msgstr ""
+msgstr "Уақыты:"
 
 #: modules/admin/templates/ipban_detail.phtml:53
 msgid "Delete Ban"
-msgstr ""
+msgstr "Тыйым салуды алып тастаңыз"
 
 #: modules/admin/templates/ipban_search.phtml:36
 msgid "Enter a single address, mask and range are not allowed"
-msgstr ""
+msgstr "Бір адресті енгізіңіз, маска және ауқымдар жарамсыз"
 
 #: modules/admin/templates/karma.phtml:39
 msgid "Voices per day"
-msgstr ""
+msgstr "Бір күндегі дауыс беру"
 
 #: modules/admin/templates/karma.phtml:43
 msgid "Restriction for vote"
-msgstr ""
+msgstr "Дауыс беруге шектеулер"
 
 #: modules/admin/templates/karma.phtml:46
 msgid "Forum posts"
-msgstr ""
+msgstr "Форум хабарламалары"
 
 #: modules/admin/templates/karma.phtml:50
 msgid "General Settings"
-msgstr ""
+msgstr "Жалпы параметрлер"
 
 #: modules/admin/templates/karma.phtml:54
 msgid "Switch module ON"
-msgstr ""
+msgstr "Модульді қосыңыз"
 
 #: modules/admin/templates/karma.phtml:59
 msgid "Forbid to vote for the administration"
-msgstr ""
+msgstr "Әкімшілік үшін дауыс беруге тыйым салу"
 
 #: modules/admin/templates/karma.phtml:66
 msgid "Clear Karma"
-msgstr ""
+msgstr "Карманы тазалау"
 
 #: modules/admin/templates/karma_clean_confirm.phtml:34
 msgid "Clear"
-msgstr ""
+msgstr "Тазалау"
 
 #: modules/admin/templates/languages/index.phtml:12
 msgid "Descriptions have been updated successfully"
-msgstr ""
+msgstr "Сипаттамалар сәтті жаңартылды."
 
 #: modules/admin/templates/languages/index.phtml:17
 msgid "Default language"
-msgstr ""
+msgstr "Әдепкі тіл"
 
 #: modules/admin/templates/languages/index.phtml:29
 msgid "Update List"
-msgstr ""
+msgstr "Тізімін жаңарту"
 
 #: modules/admin/templates/languages/manage.phtml:24
 msgid "Version:"
-msgstr ""
+msgstr "Нұсқа:"
 
 #: modules/admin/templates/languages/manage.phtml:26
 msgid "New version:"
-msgstr ""
+msgstr "Жаңа нұсқа:"
 
 #: modules/admin/templates/languages/manage.phtml:29
 msgid "Installed"
-msgstr ""
+msgstr "Орнатылған"
 
 #: modules/admin/templates/languages/manage.phtml:31
 msgid "Not installed"
-msgstr ""
+msgstr "Орнатылмаған"
 
 #: modules/admin/templates/languages/manage.phtml:36
 msgid "The language files of this language are not writable! "
@@ -1703,119 +1703,119 @@ msgstr ""
 
 #: modules/admin/templates/languages/manage.phtml:41
 msgid "Install"
-msgstr ""
+msgstr "Орнату"
 
 #: modules/admin/templates/languages/manage.phtml:44
 msgid "Update"
-msgstr ""
+msgstr "Жаңарту"
 
 #: modules/admin/templates/reg_list.phtml:58
 msgid "Confirm all"
-msgstr ""
+msgstr "Барлығын растау"
 
 #: modules/admin/templates/search_ip.phtml:45
 msgid "Sample queries:"
-msgstr ""
+msgstr "Сұраулардың мысалдары:"
 
 #: modules/admin/templates/search_ip.phtml:46
 msgid "Search for a single address"
-msgstr ""
+msgstr "Бір адресті іздеу"
 
 #: modules/admin/templates/search_ip.phtml:47
 msgid "Search a range address (forbidden to use mask symbol *)"
-msgstr ""
+msgstr "Мекенжай ауқымы бойынша іздеу (маска белгісі * тыйым салынады)"
 
 #: modules/admin/templates/search_ip.phtml:48
 msgid "Search mask. Will be found all subnet addresses starting with 0 and ending with 255"
-msgstr ""
+msgstr "Маска бойынша іздеу. 0-ден 255-ке дейінгі барлық ішкі желі мекен-жайлары анықталады"
 
 #: modules/admin/templates/search_ip.phtml:60
 msgid "At your request, nothing found"
-msgstr ""
+msgstr "Сіздің сұранысыңыз бойынша ештеңе табылмады"
 
 #: modules/admin/templates/settings.phtml:21
 msgid "Common Settings"
-msgstr ""
+msgstr "Жалпы Параметрлер"
 
 #: modules/admin/templates/settings.phtml:23
 msgid "Web site address without the slash at the end"
-msgstr ""
+msgstr "Сайттың мекенжайы соңында сызылған сызықсыз"
 
 #: modules/admin/templates/settings.phtml:27
 msgid "Site copyright"
-msgstr ""
+msgstr "Сайттың авторлық құқығы"
 
 #: modules/admin/templates/settings.phtml:31
 msgid "Site Email"
-msgstr ""
+msgstr "Сайттың электрондық поштасы"
 
 #: modules/admin/templates/settings.phtml:35
 msgid "Max. file size"
-msgstr ""
+msgstr "Макс. файлдың көлемі"
 
 #: modules/admin/templates/settings.phtml:40
 msgid "Gzip compression"
-msgstr ""
+msgstr "Gzip сығу"
 
 #: modules/admin/templates/settings.phtml:45
 msgid "E-mail is required for registration"
-msgstr ""
+msgstr "Электрондық пошта мекенжайы тіркеу кезінде міндетті"
 
 #: modules/admin/templates/settings.phtml:49
 msgid "Request a confirmation email to activate the user's account."
-msgstr ""
+msgstr "Пайдаланушының тіркелгі іске қосу үшін электрондық поштаны растауды талап етіңіз."
 
 #: modules/admin/templates/settings.phtml:53
 msgid "Time shift"
-msgstr ""
+msgstr "Уақыттың ауысуы"
 
 #: modules/admin/templates/settings.phtml:59
 msgid "System Time"
-msgstr ""
+msgstr "Жүйе уақыты"
 
 #: modules/admin/templates/settings.phtml:64
 msgid "META tags"
-msgstr ""
+msgstr "META тегтері"
 
 #: modules/admin/templates/settings.phtml:70
 msgid "Keywords"
-msgstr ""
+msgstr "Түйін сөздер"
 
 #: modules/admin/templates/settings.phtml:79
 msgid "Themes"
-msgstr ""
+msgstr "Тақырыптар"
 
 #: modules/admin/templates/sidebar-admin-menu.phtml:60
 msgid "On registration"
-msgstr ""
+msgstr "Тіркелу"
 
 #: modules/admin/templates/sidebar-admin-menu.phtml:106
 msgid "Antiflood"
-msgstr ""
+msgstr "Антифлуд"
 
 #: modules/admin/templates/sidebar-admin-menu.phtml:128
 msgid "Modules"
-msgstr ""
+msgstr "Модульдер"
 
 #: modules/admin/templates/sidebar-admin-menu.phtml:161
 msgid "News"
-msgstr ""
+msgstr "Жаңалықтар"
 
 #: modules/admin/templates/sidebar-admin-menu.phtml:192
 msgid "System"
-msgstr ""
+msgstr "Жүйе"
 
 #: modules/admin/templates/sidebar-admin-menu.phtml:217
 msgid "Update Smilies"
-msgstr ""
+msgstr "Смайлдарды жаңарту"
 
 #: modules/admin/templates/sidebar-admin-menu.phtml:225
 msgid "Language Settings"
-msgstr ""
+msgstr "Тіл баптаулары"
 
 #: modules/admin/templates/sidebar-admin-menu.phtml:246
 msgid "Security"
-msgstr ""
+msgstr "Қауіпсіздік"
 
 #: modules/admin/templates/system/system_check.phtml:3
 msgid "Required parameters"
@@ -1846,15 +1846,15 @@ msgstr ""
 
 #: modules/admin/templates/user_clean_confirm.phtml:29
 msgid "This category includes profiles, recorded more than 6 months ago, with the date of last visit for more than 5 months ago and with zero activity.<br>Can safely remove them."
-msgstr ""
+msgstr "Бұл санатқа 6 ай бұрын тіркелген профильдер жатады, соңғы сапар күні 5 ай бұрын және нөлдік белсенділігі бар.<br>оларды жоюға болады."
 
 #: modules/admin/templates/userlist.phtml:13
 msgid "Nickname"
-msgstr ""
+msgstr "Лақап аты"
 
 #: modules/admin/templates/userlist.phtml:22
 msgid "List is empty"
-msgstr ""
+msgstr "Тізім бос"
 
 #: modules/admin/templates/users/captcha.phtml:16
 #: modules/admin/templates/users/captcha.phtml:25
@@ -1881,13 +1881,13 @@ msgstr ""
 
 #: modules/admin/templates/usr_del.phtml:31
 msgid "Delete user:"
-msgstr ""
+msgstr "Пайдаланушыны жою"
 
 #: modules/admin/templates/usr_del.phtml:32
 msgid "Are you sure that you want to delete this user?"
-msgstr ""
+msgstr "Сіз осы пайдаланушыны шынымен жойғыңыз келе ме?"
 
 #: modules/admin/templates/usr_del.phtml:54
 msgid "All threads and posts created by the user go in the hidden state"
-msgstr ""
+msgstr "Пайдаланушы жасаған барлық тақырыптар мен жазбалар жасырын күйге өтеді"
 

@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
-"PO-Revision-Date: 2026-03-24 13:16\n"
+"PO-Revision-Date: 2026-03-24 21:39\n"
 
 #: modules/community/includes/administration.php:33
 #: modules/community/includes/administration.php:39
@@ -41,7 +41,7 @@ msgstr "Нікнейм"
 
 #: modules/community/includes/search.php:32
 msgid "Invalid length"
-msgstr "Неприпустима кількість символів"
+msgstr "Неправильна довжина"
 
 #: modules/community/includes/search.php:36
 msgid "Invalid characters"
@@ -65,15 +65,15 @@ msgstr "Карма"
 
 #: modules/community/includes/top.php:50
 msgid "Most active in Guestbook"
-msgstr "Найактивніші в Гостьовій"
+msgstr "Найбільш активні в гостьовій книзі"
 
 #: modules/community/includes/top.php:57
 msgid "Most commentators"
-msgstr "Найактивніші коментатори "
+msgstr "Більшість коментаторів"
 
 #: modules/community/includes/top.php:65
 msgid "Best Karma"
-msgstr "Найдобріші"
+msgstr "Краща карма"
 
 #: modules/community/includes/top.php:73
 msgid "Most active in Forum"
@@ -106,7 +106,7 @@ msgstr "Пошук"
 #: modules/community/templates/index.phtml:37
 #: modules/community/templates/search.phtml:50
 msgid "The search is performed by Nickname and are case-insensitive."
-msgstr "Пошук здійснюється по Нікнейму і не залежить від регістру."
+msgstr "Пошук здійснюється по ніку і не залежить від регістру."
 
 #: modules/community/templates/index.phtml:41
 msgid "Users"
@@ -124,25 +124,25 @@ msgstr "Ім'я користувача"
 #: modules/community/templates/top.phtml:40
 #: modules/community/templates/users.phtml:33
 msgid "List is empty"
-msgstr "Нічого не знайдено"
+msgstr "Список порожній"
 
 #: modules/community/templates/search.phtml:71
 #: modules/community/templates/users.phtml:40
 msgid "Total"
-msgstr "Всього"
+msgstr "Разом"
 
 #: modules/community/templates/search.phtml:84
 #: modules/community/templates/top.phtml:47
 #: modules/community/templates/users.phtml:53
 msgid "Back"
-msgstr "Назад"
+msgstr "Повернутися"
 
 #: modules/community/templates/user_row.phtml:61
 #: modules/community/templates/user_row.phtml:67
 msgid "post"
 msgid_plural "posts"
 msgstr[0] "пост"
-msgstr[1] "пости"
+msgstr[1] "посту"
 msgstr[2] "постів"
 msgstr[3] "постів"
 
@@ -152,15 +152,15 @@ msgid_plural "comments"
 msgstr[0] "коментар"
 msgstr[1] "коментарі"
 msgstr[2] "коментарів"
-msgstr[3] "коментарів"
+msgstr[3] "коментарі"
 
 #: modules/community/templates/user_row.phtml:65
 msgid "point"
 msgid_plural "points"
-msgstr[0] "бал"
-msgstr[1] "бали"
-msgstr[2] "балів"
-msgstr[3] "балів"
+msgstr[0] "пункт"
+msgstr[1] "пункту"
+msgstr[2] "пунктів"
+msgstr[3] "пунктів"
 
 #: modules/community/templates/user_row.phtml:89
 msgid "Delete"

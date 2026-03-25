@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Kyrgyz\n"
 "Language: ky_KG\n"
-"PO-Revision-Date: 2026-03-24 13:17\n"
+"PO-Revision-Date: 2026-03-24 21:41\n"
 
 #: modules/news/src/Application/Article.php:52
 msgid "The requested article was not found."
@@ -243,7 +243,7 @@ msgstr ""
 
 #: modules/news/templates/admin/add_article.phtml:131
 msgid "Text"
-msgstr ""
+msgstr "Текст"
 
 #: modules/news/templates/admin/add_article.phtml:139
 #: modules/news/templates/admin/add_section.phtml:68
@@ -285,7 +285,7 @@ msgstr "Макала:"
 
 #: modules/news/templates/admin/del.phtml:25
 msgid "Do you really want to delete?"
-msgstr "Чын эле өчүргүңүз келеби?"
+msgstr "Сиз чын эле өчүрүп таштайсызбы?"
 
 #: modules/news/templates/admin/del.phtml:28
 #: modules/news/templates/admin/sections.phtml:70

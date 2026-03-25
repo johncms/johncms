@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
-"PO-Revision-Date: 2026-03-24 13:17\n"
+"PO-Revision-Date: 2026-03-24 21:40\n"
 
 #: modules/library/classes/Hashtags.php:258
 #: modules/library/includes/tags.php:70
@@ -38,7 +38,7 @@ msgstr "Ви не можете додавати статті так часто <
 #: modules/library/includes/addnew.php:46
 #: modules/library/includes/mkdir.php:30
 msgid "You have not entered the name"
-msgstr "Ви не ввели назву "
+msgstr "Ви не ввели ім'я"
 
 #: modules/library/includes/addnew.php:59
 msgid "The file is invalid encoding, preferably UTF-8"
@@ -160,7 +160,7 @@ msgstr "Відсортовано за алфавітом"
 
 #: modules/library/includes/tagcloud.php:20
 msgid "Sorted by relevance"
-msgstr "Відсортовано за релевантністю"
+msgstr "Впорядкувати за релевантністю"
 
 #: modules/library/includes/tags.php:19
 #: modules/library/templates/addnew.phtml:84
@@ -175,7 +175,7 @@ msgstr "Рейтинг статей"
 
 #: modules/library/includes/top.php:27
 msgid "Most readings"
-msgstr "Найпопулярніші "
+msgstr "Більшість читань"
 
 #: modules/library/includes/top.php:32
 msgid "By rating"
@@ -183,7 +183,7 @@ msgstr "За рейтингом"
 
 #: modules/library/includes/top.php:37
 msgid "By comments"
-msgstr "За кількістю коментарів"
+msgstr "За коментарями"
 
 #: modules/library/index.php:62
 #: modules/library/templates/helpers/printNavPanel.phtml:2
@@ -225,7 +225,7 @@ msgstr "Назва"
 #: modules/library/templates/addnew.phtml:57
 #: modules/library/templates/moder.phtml:60
 msgid "Announce"
-msgstr "Анонс "
+msgstr "Оголошення"
 
 #: modules/library/templates/addnew.phtml:62
 #: modules/library/templates/moder.phtml:68
@@ -235,12 +235,12 @@ msgstr "Текст"
 #: modules/library/templates/addnew.phtml:69
 #: modules/library/templates/moder.phtml:126
 msgid "Commenting on the Article"
-msgstr "Коментування статті"
+msgstr "Коментуючи статтю"
 
 #: modules/library/templates/addnew.phtml:74
 #: modules/library/templates/moder.phtml:44
 msgid "To upload a photo"
-msgstr "До завантаження фотографій "
+msgstr "Щоб завантажити фото"
 
 #: modules/library/templates/addnew.phtml:79
 msgid "Select the text file"
@@ -269,7 +269,7 @@ msgstr "Скасувати"
 
 #: modules/library/templates/book.phtml:41
 msgid "Download file"
-msgstr "Звантажити файл"
+msgstr "Завантаження файлу"
 
 #: modules/library/templates/book.phtml:50
 msgid "The Tags:"
@@ -290,7 +290,7 @@ msgstr "Рейтинг:"
 #: modules/library/templates/search.phtml:49
 #: modules/library/templates/tags.phtml:39
 msgid "Number of readings:"
-msgstr "Кількість переглядів:"
+msgstr "Кількість прочитань:"
 
 #: modules/library/templates/book.phtml:68
 #: modules/library/templates/new.phtml:42
@@ -338,7 +338,7 @@ msgstr "Успішно переміщено"
 #: modules/library/templates/moder.phtml:140
 #: modules/library/templates/top.phtml:64
 msgid "Back"
-msgstr "Назад"
+msgstr "Повернутися"
 
 #: modules/library/templates/del.phtml:40
 msgid "Are you sure you want to move the contents?"
@@ -368,7 +368,7 @@ msgstr "Ви дійсно бажаєте видалити контент?"
 
 #: modules/library/templates/del.phtml:90
 msgid "Section is not empty"
-msgstr "Розділ не порожній "
+msgstr "Розділ не є порожнім"
 
 #: modules/library/templates/del.phtml:93
 msgid "Select action"
@@ -384,7 +384,7 @@ msgstr "Видалити всі розділи та статті"
 
 #: modules/library/templates/del.phtml:104
 msgid "Do"
-msgstr "Виконати"
+msgstr "Зробити"
 
 #: modules/library/templates/del.phtml:113
 #: modules/library/templates/del.phtml:125
@@ -443,7 +443,7 @@ msgstr "Змінено"
 
 #: modules/library/templates/moder.phtml:73
 msgid "The text of the Article can not be edited, a large amount of data !!!"
-msgstr "Текст статті неможливо відредагувати, завеликий об'єм даних!!!"
+msgstr "Текст статті не можна редагувати, великий об'єм даних!!!"
 
 #: modules/library/templates/moder.phtml:96
 msgid "Allow users to add their Articles?"
@@ -463,12 +463,12 @@ msgstr "Підтверджений"
 
 #: modules/library/templates/moder.phtml:129
 msgid "Number of readings"
-msgstr "Кількість переглядів:"
+msgstr "Кількість читань"
 
 #: modules/library/templates/new.phtml:32
 #: modules/library/templates/top.phtml:40
 msgid "Section:"
-msgstr "Розділ:"
+msgstr "Секція:"
 
 #: modules/library/templates/new.phtml:55
 #: modules/library/templates/premod.phtml:58
@@ -497,7 +497,7 @@ msgstr "Додано в базу даних"
 
 #: modules/library/templates/premod.phtml:56
 msgid "Approve all"
-msgstr "Схвалити всі"
+msgstr "Затвердити всі"
 
 #: modules/library/templates/search.phtml:27
 #: modules/library/templates/search.phtml:28

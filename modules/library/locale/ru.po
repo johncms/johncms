@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
-"PO-Revision-Date: 2026-03-24 13:17\n"
+"PO-Revision-Date: 2026-03-24 21:39\n"
 
 #: modules/library/classes/Hashtags.php:258
 #: modules/library/includes/tags.php:70
@@ -137,7 +137,7 @@ msgstr "Корень"
 
 #: modules/library/includes/moder.php:161
 msgid "Edit Section"
-msgstr "Редактировать раздел"
+msgstr "Изменить раздел"
 
 #: modules/library/includes/moder.php:161
 msgid "Edit Article"
@@ -166,7 +166,7 @@ msgstr "Сортировка по релевантности"
 #: modules/library/templates/addnew.phtml:84
 #: modules/library/templates/moder.phtml:77
 msgid "Tags"
-msgstr "Теги"
+msgstr "Тэги"
 
 #: modules/library/includes/top.php:20
 #: modules/library/templates/main.phtml:39
@@ -502,7 +502,7 @@ msgstr "Одобрить все"
 #: modules/library/templates/search.phtml:27
 #: modules/library/templates/search.phtml:28
 msgid "Search query"
-msgstr "Поисковый запрос"
+msgstr "Запрос"
 
 #: modules/library/templates/search.phtml:34
 msgid "Search in titles Articles"

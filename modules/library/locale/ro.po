@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
-"PO-Revision-Date: 2026-03-24 11:08\n"
+"PO-Revision-Date: 2026-03-24 21:38\n"
 
 #: modules/library/classes/Hashtags.php:258
 #: modules/library/includes/tags.php:70
@@ -23,57 +23,57 @@ msgstr ""
 #: modules/library/templates/tags.phtml:58
 #: modules/library/templates/top.phtml:60
 msgid "The list is empty"
-msgstr ""
+msgstr "Lista este goală"
 
 #: modules/library/includes/addnew.php:28
 #: modules/library/templates/booklist.phtml:52
 msgid "Write Article"
-msgstr ""
+msgstr "Scrie articol"
 
 #: modules/library/includes/addnew.php:43
 #, php-format
 msgid "You cannot add the Article so often<br>Please, wait %d sec."
-msgstr ""
+msgstr "Nu puteţi adăuga un articol atât de des<br>Vă rog, aşteptaţi %d sec."
 
 #: modules/library/includes/addnew.php:46
 #: modules/library/includes/mkdir.php:30
 msgid "You have not entered the name"
-msgstr ""
+msgstr "Nu ati introdus numele"
 
 #: modules/library/includes/addnew.php:59
 msgid "The file is invalid encoding, preferably UTF-8"
-msgstr ""
+msgstr "Fişierul este codificat invalid, preferabil UTF-8"
 
 #: modules/library/includes/addnew.php:64
 msgid "Error uploading"
-msgstr ""
+msgstr "Eroare de încărcare"
 
 #: modules/library/includes/addnew.php:67
 msgid "Invalid file format allowed * .txt"
-msgstr ""
+msgstr "Format de fişier nevalid permis * .txt"
 
 #: modules/library/includes/addnew.php:70
 msgid "You have not entered text"
-msgstr ""
+msgstr "Nu ai introdus nici un text"
 
 #: modules/library/includes/addnew.php:112
 #: modules/library/includes/moder.php:79
 msgid "Photo uploading error"
-msgstr ""
+msgstr "Incarcare poza esuata"
 
 #: modules/library/includes/comments.php:24
 #: modules/library/includes/comments.php:43
 #: modules/library/index.php:70
 msgid "Access forbidden"
-msgstr ""
+msgstr "Acess interzis"
 
 #: modules/library/includes/comments.php:73
 msgid "Comments"
-msgstr ""
+msgstr "Comentarii"
 
 #: modules/library/includes/comments.php:81
 msgid "Wrong data"
-msgstr ""
+msgstr "Date gresite"
 
 #: modules/library/includes/del.php:39
 #: modules/library/templates/book.phtml:83
@@ -86,132 +86,132 @@ msgstr ""
 #: modules/library/templates/premod.phtml:45
 #: modules/library/templates/sectionslist.phtml:65
 msgid "Delete"
-msgstr ""
+msgstr "Șterge"
 
 #: modules/library/includes/del.php:52
 msgid "Section does not exist"
-msgstr ""
+msgstr "Sectiunea nu exista"
 
 #: modules/library/includes/del.php:88
 #, php-format
 msgid "Successfully deleted:<br>Directories: (%d)<br>Articles: (%d)<br>Tags: (%d)<br>Comments: (%d)<br>Images: (%d)"
-msgstr ""
+msgstr "Sters cu success:<br>Directoare: (%d)<br>Articole: (%d)<br>Taguri: (%d)<br>Comentarii: (%d)<br>Imagini: (%d)"
 
 #: modules/library/includes/del.php:106
 msgid "Articles do not exist"
-msgstr ""
+msgstr "Articolul nu exista"
 
 #: modules/library/includes/download.php:51
 msgid "Author name"
-msgstr ""
+msgstr "Numele autorului"
 
 #: modules/library/includes/download.php:52
 msgid "Author last name"
-msgstr ""
+msgstr "Prenumele autorului"
 
 #: modules/library/includes/download.php:54
 msgid "Name of the book"
-msgstr ""
+msgstr "Numele cartii"
 
 #: modules/library/includes/download.php:56
 msgid "Date"
-msgstr ""
+msgstr "Data"
 
 #: modules/library/includes/lastcom.php:15
 #: modules/library/templates/main.phtml:40
 msgid "Latest comments"
-msgstr ""
+msgstr "Ultimele comentarii"
 
 #: modules/library/includes/mkdir.php:19
 #: modules/library/templates/main.phtml:71
 msgid "Create Section"
-msgstr ""
+msgstr "Creeaza sectiune"
 
 #: modules/library/includes/mkdir.php:32
 msgid "Repeat"
-msgstr ""
+msgstr "Repetă"
 
 #: modules/library/includes/moder.php:147
 msgid "The ROOT"
-msgstr ""
+msgstr "Rădăcină"
 
 #: modules/library/includes/moder.php:161
 msgid "Edit Section"
-msgstr ""
+msgstr "Editeaza sectiune"
 
 #: modules/library/includes/moder.php:161
 msgid "Edit Article"
-msgstr ""
+msgstr "Editeaza articol"
 
 #: modules/library/includes/new.php:27
 #: modules/library/templates/main.phtml:34
 msgid "New Articles"
-msgstr ""
+msgstr "Articole noi"
 
 #: modules/library/includes/search.php:23
 #: modules/library/templates/main.phtml:37
 #: modules/library/templates/search.phtml:37
 msgid "Search"
-msgstr ""
+msgstr "Cauta"
 
 #: modules/library/includes/tagcloud.php:19
 msgid "Sorted by alphabetical"
-msgstr ""
+msgstr "In ordine alfabetica"
 
 #: modules/library/includes/tagcloud.php:20
 msgid "Sorted by relevance"
-msgstr ""
+msgstr "Sortare după relevanță"
 
 #: modules/library/includes/tags.php:19
 #: modules/library/templates/addnew.phtml:84
 #: modules/library/templates/moder.phtml:77
 msgid "Tags"
-msgstr ""
+msgstr "Taguri"
 
 #: modules/library/includes/top.php:20
 #: modules/library/templates/main.phtml:39
 msgid "Rating articles"
-msgstr ""
+msgstr "Voteaza articole"
 
 #: modules/library/includes/top.php:27
 msgid "Most readings"
-msgstr ""
+msgstr "Cele mai citite"
 
 #: modules/library/includes/top.php:32
 msgid "By rating"
-msgstr ""
+msgstr "Dupa voturi"
 
 #: modules/library/includes/top.php:37
 msgid "By comments"
-msgstr ""
+msgstr "Dupa comentarii"
 
 #: modules/library/index.php:62
 #: modules/library/templates/helpers/printNavPanel.phtml:2
 #: modules/library/templates/tagcloud.phtml:2
 msgid "Library"
-msgstr ""
+msgstr "Librarie"
 
 #: modules/library/index.php:68
 #: modules/library/templates/main.phtml:28
 msgid "Library is closed"
-msgstr ""
+msgstr "Libraria este inchisa"
 
 #: modules/library/templates/addnew.phtml:30
 msgid "Article added"
-msgstr ""
+msgstr "Articol adaugat"
 
 #: modules/library/templates/addnew.phtml:34
 msgid "To Article"
-msgstr ""
+msgstr "La articol"
 
 #: modules/library/templates/addnew.phtml:36
 msgid "Thank you for what we have written. After checking moderated, your Article will be published in the library."
-msgstr ""
+msgstr "Multumim pentru ce ai scris. Dupa ce va fi verificat de in moderator, Articolul va fi publicat in Librarie."
 
 #: modules/library/templates/addnew.phtml:37
 #: modules/library/templates/mkdir.phtml:34
 msgid "To Section"
-msgstr ""
+msgstr "La sectiune"
 
 #: modules/library/templates/addnew.phtml:52
 #: modules/library/templates/addnew.phtml:53
@@ -220,12 +220,12 @@ msgstr ""
 #: modules/library/templates/moder.phtml:49
 #: modules/library/templates/moder.phtml:50
 msgid "Title"
-msgstr ""
+msgstr "Titlu"
 
 #: modules/library/templates/addnew.phtml:57
 #: modules/library/templates/moder.phtml:60
 msgid "Announce"
-msgstr ""
+msgstr "Anunt"
 
 #: modules/library/templates/addnew.phtml:62
 #: modules/library/templates/moder.phtml:68
@@ -235,26 +235,26 @@ msgstr ""
 #: modules/library/templates/addnew.phtml:69
 #: modules/library/templates/moder.phtml:126
 msgid "Commenting on the Article"
-msgstr ""
+msgstr "Comenteaza in articol"
 
 #: modules/library/templates/addnew.phtml:74
 #: modules/library/templates/moder.phtml:44
 msgid "To upload a photo"
-msgstr ""
+msgstr "De a incarca o poza"
 
 #: modules/library/templates/addnew.phtml:79
 msgid "Select the text file"
-msgstr ""
+msgstr "Selecteaza textul fisierului"
 
 #: modules/library/templates/addnew.phtml:80
 msgid "Text entry field will be ignored"
-msgstr ""
+msgstr "Câmpul de introducere a textului va fi ignorat"
 
 #: modules/library/templates/addnew.phtml:89
 #: modules/library/templates/mkdir.phtml:70
 #: modules/library/templates/moder.phtml:135
 msgid "Save"
-msgstr ""
+msgstr "Salveaza"
 
 #: modules/library/templates/addnew.phtml:90
 #: modules/library/templates/del.phtml:43
@@ -265,46 +265,46 @@ msgstr ""
 #: modules/library/templates/mkdir.phtml:71
 #: modules/library/templates/moder.phtml:136
 msgid "Cancel"
-msgstr ""
+msgstr "Anuleaza"
 
 #: modules/library/templates/book.phtml:41
 msgid "Download file"
-msgstr ""
+msgstr "Descarca fisier"
 
 #: modules/library/templates/book.phtml:50
 msgid "The Tags:"
-msgstr ""
+msgstr "Taguri"
 
 #: modules/library/templates/book.phtml:55
 msgid "Who added:"
-msgstr ""
+msgstr "Cine a adaugat"
 
 #: modules/library/templates/book.phtml:59
 #: modules/library/templates/booklist.phtml:33
 #: modules/library/templates/new.phtml:38
 #: modules/library/templates/top.phtml:46
 msgid "Rating:"
-msgstr ""
+msgstr "Voturi"
 
 #: modules/library/templates/book.phtml:63
 #: modules/library/templates/search.phtml:49
 #: modules/library/templates/tags.phtml:39
 msgid "Number of readings:"
-msgstr ""
+msgstr "Numarul de citiri"
 
 #: modules/library/templates/book.phtml:68
 #: modules/library/templates/new.phtml:42
 #: modules/library/templates/tags.phtml:43
 #: modules/library/templates/top.phtml:50
 msgid "Comments:"
-msgstr ""
+msgstr "Comentarii"
 
 #: modules/library/templates/book.phtml:82
 #: modules/library/templates/booklist.phtml:54
 #: modules/library/templates/helpers/sectionListAdminPanel.phtml:7
 #: modules/library/templates/sectionslist.phtml:64
 msgid "Edit"
-msgstr ""
+msgstr "Editeaza"
 
 #: modules/library/templates/booklist.phtml:32
 #: modules/library/templates/lastcom.phtml:31
@@ -314,7 +314,7 @@ msgstr ""
 #: modules/library/templates/tags.phtml:36
 #: modules/library/templates/top.phtml:43
 msgid "Author:"
-msgstr ""
+msgstr "Autor"
 
 #: modules/library/templates/booklist.phtml:44
 #: modules/library/templates/new.phtml:50
@@ -323,11 +323,11 @@ msgstr ""
 #: modules/library/templates/sectionslist.phtml:56
 #: modules/library/templates/tags.phtml:50
 msgid "Total"
-msgstr ""
+msgstr "Toatal"
 
 #: modules/library/templates/del.phtml:34
 msgid "Successful transfer"
-msgstr ""
+msgstr "Transfer cu sucess"
 
 #: modules/library/templates/del.phtml:36
 #: modules/library/templates/del.phtml:71
@@ -338,137 +338,137 @@ msgstr ""
 #: modules/library/templates/moder.phtml:140
 #: modules/library/templates/top.phtml:64
 msgid "Back"
-msgstr ""
+msgstr "Înapoi"
 
 #: modules/library/templates/del.phtml:40
 msgid "Are you sure you want to move the contents?"
-msgstr ""
+msgstr "Esti sigur ca vrei sa muti continutul?"
 
 #: modules/library/templates/del.phtml:42
 msgid "Move"
-msgstr ""
+msgstr "Muta"
 
 #: modules/library/templates/del.phtml:53
 #: modules/library/templates/moder.phtml:108
 msgid "Move to Section"
-msgstr ""
+msgstr "Muta la sectiunea"
 
 #: modules/library/templates/del.phtml:64
 #: modules/library/templates/premod.phtml:44
 msgid "Approve"
-msgstr ""
+msgstr "Aproba"
 
 #: modules/library/templates/del.phtml:69
 msgid "There are no Sections for moving"
-msgstr ""
+msgstr "Nu sunt sectiuni de mutat"
 
 #: modules/library/templates/del.phtml:81
 msgid "Are you sure you want to delete content?"
-msgstr ""
+msgstr "Esti sigur ca vrei sa stergi continutul?"
 
 #: modules/library/templates/del.phtml:90
 msgid "Section is not empty"
-msgstr ""
+msgstr "Sectiunea nu este goala"
 
 #: modules/library/templates/del.phtml:93
 msgid "Select action"
-msgstr ""
+msgstr "Selecteaza actiune"
 
 #: modules/library/templates/del.phtml:97
 msgid "Delete with movement"
-msgstr ""
+msgstr "Șterge cu mișcare"
 
 #: modules/library/templates/del.phtml:101
 msgid "Delete all Sections and Articles"
-msgstr ""
+msgstr "Sterge toate sectiune su articolele"
 
 #: modules/library/templates/del.phtml:104
 msgid "Do"
-msgstr ""
+msgstr "Fă"
 
 #: modules/library/templates/del.phtml:113
 #: modules/library/templates/del.phtml:125
 #: modules/library/templates/del.phtml:137
 msgid "Delete confirmation"
-msgstr ""
+msgstr "Sterge confirmare"
 
 #: modules/library/templates/del.phtml:145
 #: modules/library/templates/del.phtml:154
 msgid "Deleted"
-msgstr ""
+msgstr "Sters"
 
 #: modules/library/templates/helpers/printvote.phtml:2
 msgid "Select a rating:"
-msgstr ""
+msgstr "Selectează un rating:"
 
 #: modules/library/templates/helpers/printvote.phtml:8
 msgid "Vote"
-msgstr ""
+msgstr "Voteaza"
 
 #: modules/library/templates/helpers/sectionListAdminPanel.phtml:2
 msgid "Up"
-msgstr ""
+msgstr "Sus"
 
 #: modules/library/templates/helpers/sectionListAdminPanel.phtml:5
 msgid "Down"
-msgstr ""
+msgstr "Jos"
 
 #: modules/library/templates/mkdir.phtml:30
 msgid "Section created"
-msgstr ""
+msgstr "Sectiune creeata"
 
 #: modules/library/templates/mkdir.phtml:55
 #: modules/library/templates/moder.phtml:55
 msgid "Section description"
-msgstr ""
+msgstr "Descriere sectiune"
 
 #: modules/library/templates/mkdir.phtml:59
 #: modules/library/templates/moder.phtml:84
 msgid "Section type"
-msgstr ""
+msgstr "Tipul sectiunii"
 
 #: modules/library/templates/mkdir.phtml:62
 #: modules/library/templates/moder.phtml:87
 msgid "Articles"
-msgstr ""
+msgstr "Articole"
 
 #: modules/library/templates/mkdir.phtml:66
 #: modules/library/templates/moder.phtml:91
 msgid "Sections"
-msgstr ""
+msgstr "Sectiuni"
 
 #: modules/library/templates/moder.phtml:31
 msgid "Changed"
-msgstr ""
+msgstr "Schimbat"
 
 #: modules/library/templates/moder.phtml:73
 msgid "The text of the Article can not be edited, a large amount of data !!!"
-msgstr ""
+msgstr "Textul articolului nu poate fi editat, o cantitate prea mare de date !!!"
 
 #: modules/library/templates/moder.phtml:96
 msgid "Allow users to add their Articles?"
-msgstr ""
+msgstr "Permite utilozatorilor sa adauge articole?"
 
 #: modules/library/templates/moder.phtml:99
 msgid "Yes"
-msgstr ""
+msgstr "Da"
 
 #: modules/library/templates/moder.phtml:103
 msgid "No"
-msgstr ""
+msgstr "Nu"
 
 #: modules/library/templates/moder.phtml:122
 msgid "Verified"
-msgstr ""
+msgstr "Verificat"
 
 #: modules/library/templates/moder.phtml:129
 msgid "Number of readings"
-msgstr ""
+msgstr "Numarul de citiri"
 
 #: modules/library/templates/new.phtml:32
 #: modules/library/templates/top.phtml:40
 msgid "Section:"
-msgstr ""
+msgstr "Secțiune:"
 
 #: modules/library/templates/new.phtml:55
 #: modules/library/templates/premod.phtml:58
@@ -476,56 +476,56 @@ msgstr ""
 #: modules/library/templates/tagcloud.phtml:6
 #: modules/library/templates/tags.phtml:54
 msgid "To Library"
-msgstr ""
+msgstr "La librarie"
 
 #: modules/library/templates/premod.phtml:20
 #: modules/library/templates/premod.phtml:21
 msgid "Moderation Articles"
-msgstr ""
+msgstr "Articole de moderat"
 
 #: modules/library/templates/premod.phtml:27
 msgid "All Articles added in database"
-msgstr ""
+msgstr "Toate articolele adaugate in baza de date"
 
 #: modules/library/templates/premod.phtml:30
 msgid "Article"
-msgstr ""
+msgstr "Articol"
 
 #: modules/library/templates/premod.phtml:30
 msgid "Added to the database"
-msgstr ""
+msgstr "Adaugat in baza de date"
 
 #: modules/library/templates/premod.phtml:56
 msgid "Approve all"
-msgstr ""
+msgstr "Aproba toate"
 
 #: modules/library/templates/search.phtml:27
 #: modules/library/templates/search.phtml:28
 msgid "Search query"
-msgstr ""
+msgstr "Interogare căutare"
 
 #: modules/library/templates/search.phtml:34
 msgid "Search in titles Articles"
-msgstr ""
+msgstr "Cauta in titlul articolului"
 
 #: modules/library/templates/search.phtml:68
 msgid "Length of query: 4 min 64 max<br>Search is case-insensitive letters<br>Results are sorted by relevance"
-msgstr ""
+msgstr "Lungimea cautarii: 4 min. 64 max.<br>Rezultatele sunt sortate dupa relevanta "
 
 #: modules/library/templates/search.phtml:75
 msgid "New Search"
-msgstr ""
+msgstr "Cautare noua"
 
 #: modules/library/templates/sectionslist.phtml:63
 msgid "Create"
-msgstr ""
+msgstr "Creeaza"
 
 #: modules/library/templates/tagcloud.phtml:2
 msgid "Tag Cloud"
-msgstr ""
+msgstr "Nor de etichete"
 
 #: modules/library/templates/tagcloud.phtml:4
 #: modules/library/templates/top.phtml:27
 msgid "Sort"
-msgstr ""
+msgstr "Sorteaza"
 

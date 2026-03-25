@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Kyrgyz\n"
 "Language: ky_KG\n"
-"PO-Revision-Date: 2026-03-24 13:19\n"
+"PO-Revision-Date: 2026-03-24 21:41\n"
 
 #: install/index.php:66
 #: install/steps/step_1.php:23
@@ -228,7 +228,7 @@ msgstr "Сайттын дареги"
 #: install/templates/step_4.phtml:32
 #: install/templates/step_4.phtml:39
 msgid "E-mail"
-msgstr ""
+msgstr "Электрондук почта дареги"
 
 #: install/templates/step_4.phtml:46
 msgid "Administrator data"

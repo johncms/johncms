@@ -11,51 +11,51 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
-"PO-Revision-Date: 2026-03-24 13:18\n"
+"PO-Revision-Date: 2026-03-24 21:38\n"
 
 #: config/notifications.global.php:20
 #: config/places.global.php:17
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:51
 msgid "Forum"
-msgstr ""
+msgstr "منتديات"
 
 #: config/notifications.global.php:23
 msgid "New reply on the forum"
-msgstr ""
+msgstr "رد جديد على المنتدى"
 
 #: config/notifications.global.php:32
 #, php-format
 msgid "<a href=\"%s\">User <b>%s</b> responded to your message in the topic %s</a>"
-msgstr ""
+msgstr "<a href=\"%s\">المستخدم <b>%s</b> ردت على رسالتك في الموضوع %s</a>"
 
 #: config/notifications.global.php:39
 msgid "Karma"
-msgstr ""
+msgstr "الاعجاب"
 
 #: config/notifications.global.php:42
 msgid "New vote in karma"
-msgstr ""
+msgstr "تصويت جديد في كارما"
 
 #: config/notifications.global.php:43
 msgid "User <b>#user_name#</b> voted in <a href=\"#karma_url#\">your karma</a>."
-msgstr ""
+msgstr "المستخدم <b>#user_name#</b> صوت في <a href=\"#karma_url#\">karma الخاص بك</a>."
 
 #: config/places.global.php:12
 msgid "On the Homepage"
-msgstr ""
+msgstr "على الصفحة الرئيسية"
 
 #: config/places.global.php:13
 msgid "Watching the photo album"
-msgstr ""
+msgstr "مشاهدة ألبوم الصورة"
 
 #: config/places.global.php:14
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:102
 msgid "Users"
-msgstr ""
+msgstr "الاعضاء"
 
 #: config/places.global.php:15
 msgid "Users List"
-msgstr ""
+msgstr "قائمة المستخدمين"
 
 #: config/places.global.php:16
 #: system/src/Comments.php:168
@@ -77,12 +77,12 @@ msgstr "سجل الزوار"
 
 #: config/places.global.php:19
 msgid "Reading the FAQ"
-msgstr ""
+msgstr "قراءة الأسئلة الشائعة"
 
 #: config/places.global.php:20
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:90
 msgid "Library"
-msgstr ""
+msgstr "مَكتبَة"
 
 #: config/places.global.php:21
 #: modules/login/index.php:68
@@ -99,34 +99,34 @@ msgstr "تسجيل دخول"
 
 #: config/places.global.php:22
 msgid "Personal correspondence"
-msgstr ""
+msgstr "المراسلات الشخصية"
 
 #: config/places.global.php:23
 msgid "Reading the news"
-msgstr ""
+msgstr "قراءة الأخبار"
 
 #: config/places.global.php:24
 msgid "Profile"
-msgstr ""
+msgstr "الملف الشخصي"
 
 #: config/places.global.php:25
 msgid "Redirect on external link to another site"
-msgstr ""
+msgstr "إعادة توجيه على الرابط الخارجي إلى موقع آخر"
 
 #: config/places.global.php:26
 msgid "Registered on the site"
-msgstr ""
+msgstr "مسجل في الموقع"
 
 #: config/places.global.php:27
 msgid "List of users"
-msgstr ""
+msgstr "قائمة المستخدمين"
 
 #: config/places.global.php:28
 #: config/places.global.php:29
 #: config/places.global.php:30
 #: config/places.global.php:31
 msgid "Who is online?"
-msgstr ""
+msgstr "المتواجدون الآن؟"
 
 #: modules/language/templates/index.phtml:10
 msgid "Select language"
@@ -146,15 +146,15 @@ msgstr "الملف الشخصي"
 #: modules/login/templates/logout.phtml:5
 #: modules/login/templates/logout.phtml:11
 msgid "Logout"
-msgstr ""
+msgstr "تسجيل الخروج"
 
 #: modules/login/index.php:78
 msgid "You have not entered login"
-msgstr ""
+msgstr "لم تقم بإدخال تسجيل الدخول"
 
 #: modules/login/index.php:82
 msgid "You have not entered password"
-msgstr ""
+msgstr "لم تقم بإدخال العنوان"
 
 #: modules/login/index.php:100
 #: system/src/Validator/messages.php:17
@@ -164,46 +164,46 @@ msgstr "رمز الأمان غير صحيح"
 #: modules/login/index.php:150
 #: modules/login/index.php:154
 msgid "Authorization failed"
-msgstr ""
+msgstr "فشل التفويض"
 
 #: modules/login/templates/captcha.phtml:10
 #: modules/login/templates/captcha.phtml:19
 msgid "Verification code"
-msgstr ""
+msgstr "رمز التحقق"
 
 #: modules/login/templates/captcha.phtml:12
 msgid "Enter verification code"
-msgstr ""
+msgstr "أدخل رمز التحقق"
 
 #: modules/login/templates/captcha.phtml:28
 msgid "Continue"
-msgstr ""
+msgstr "متابعه"
 
 #: modules/login/templates/confirm.phtml:20
 msgid "You didn't confirm your email address. Please check your email and follow the instructions in it."
-msgstr ""
+msgstr "الآن تحتاج فقط إلى تأكيد عنوان البريد الإلكتروني الخاص بك.<br> يرجى التحقق من البريد الإلكتروني الخاص بك واتبع التعليمات في ذلك."
 
 #: modules/login/templates/confirm.phtml:28
 msgid "Sorry, but your request for registration is not considered yet. Please, be patient."
-msgstr ""
+msgstr "عذراً، لكن طلبك للتسجيل لم ينظر فيه بعد. يرجى التحلي بالصبر."
 
 #: modules/login/templates/login.phtml:10
 msgid "Authorization"
-msgstr ""
+msgstr "التصريح"
 
 #: modules/login/templates/login.phtml:15
 #: modules/login/templates/login.phtml:23
 msgid "Username"
-msgstr ""
+msgstr "اسم المستخدم"
 
 #: modules/login/templates/login.phtml:27
 #: modules/login/templates/login.phtml:35
 msgid "Password"
-msgstr ""
+msgstr "كلمة المرور:"
 
 #: modules/login/templates/login.phtml:39
 msgid "Forgot password?"
-msgstr ""
+msgstr "نسيت كلمة المرور؟"
 
 #: modules/login/templates/login.phtml:41
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:79
@@ -212,7 +212,7 @@ msgstr "تسجيل"
 
 #: modules/login/templates/logout.phtml:9
 msgid "Are you sure you want to leave the site?"
-msgstr ""
+msgstr "هل أنت متأكد من أنك تريد مغادرة الموقع؟"
 
 #: modules/login/templates/logout.phtml:12
 #: modules/notifications/templates/settings.phtml:50
@@ -337,25 +337,25 @@ msgstr "أنت تبحث عن شيء غير موجود أو قد يكون قد ن
 
 #: system/src-legacy/Bbcode.php:158
 msgid "Added"
-msgstr ""
+msgstr "تمت الاضافة"
 
 #: system/src-legacy/Tools.php:175
 msgid "ERROR"
-msgstr ""
+msgstr "خطأ"
 
 #: system/src-legacy/Tools.php:315
 msgid "Somewhere on the site"
-msgstr ""
+msgstr "مكان ما على الموقع"
 
 #: system/src-legacy/Tools.php:506
 msgid "Day"
 msgid_plural "Days"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+msgstr[0] "ايام"
+msgstr[1] "اليوم"
+msgstr[2] "ايام"
+msgstr[3] "ايام"
+msgstr[4] "ايام"
+msgstr[5] "ايام"
 
 #: system/src/Checker/SystemChecker.php:29
 msgid "PHP version"
@@ -675,39 +675,39 @@ msgstr "نوع غير صالح. السلسلة ، عدد صحيح، عوامة �
 
 #: themes/default/templates/system/app/debug.phtml:15
 msgid "Sql query log"
-msgstr ""
+msgstr "سجل استعلام Sql"
 
 #: themes/default/templates/system/app/debug.phtml:26
 msgid "Query"
-msgstr ""
+msgstr "الاستعلام"
 
 #: themes/default/templates/system/app/debug.phtml:27
 msgid "Bindings"
-msgstr ""
+msgstr "الرموز"
 
 #: themes/default/templates/system/app/debug.phtml:28
 msgid "Time"
-msgstr ""
+msgstr "الوقت"
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:39
 msgid "News archive"
-msgstr ""
+msgstr "أرشيف الأخبار"
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:113
 msgid "Photo Albums"
-msgstr ""
+msgstr "ألبومات الصور"
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:124
 msgid "Information, FAQ"
-msgstr ""
+msgstr "معلومات، أسئلة وأجوبة"
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:135
 msgid "Admin Panel"
-msgstr ""
+msgstr "لوحه الاداره"
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:144
 msgid "Admin Chat"
-msgstr ""
+msgstr "الدردشة الاداريه"
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:183
 msgid "Set Light Theme"
@@ -731,7 +731,7 @@ msgstr "يتم إنشاء البريد الإلكتروني تلقائيًا. ا
 
 #: themes/default/templates/system/mail/templates/changed_email_notification.phtml:10
 msgid "Changing email address"
-msgstr ""
+msgstr "تغيير عنوان البريد الإلكتروني"
 
 #: themes/default/templates/system/mail/templates/changed_email_notification.phtml:13
 #: themes/default/templates/system/mail/templates/confirm_email_change.phtml:13
@@ -758,7 +758,7 @@ msgstr "إذا لم تكن قد بدأت إجراءات تغيير البريد 
 
 #: themes/default/templates/system/mail/templates/confirm_email_change.phtml:10
 msgid "Confirm email change"
-msgstr ""
+msgstr "تأكيد تغيير البريد الإلكتروني"
 
 #: themes/default/templates/system/mail/templates/confirm_email_change.phtml:18
 msgid "To continue please click the confirm button"
@@ -775,7 +775,7 @@ msgstr "إذا لم تقم بالتسجيل في موقعنا، يرجى تجا�
 
 #: themes/default/templates/system/mail/templates/registration.phtml:10
 msgid "Registration on the website"
-msgstr ""
+msgstr "التسجيل في الموقع"
 
 #: themes/default/templates/system/mail/templates/registration.phtml:15
 #, php-format

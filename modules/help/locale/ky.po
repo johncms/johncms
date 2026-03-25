@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Kyrgyz\n"
 "Language: ky_KG\n"
-"PO-Revision-Date: 2026-03-24 13:16\n"
+"PO-Revision-Date: 2026-03-24 21:41\n"
 
 #: modules/help/includes/admsmilies.php:20
 #: modules/help/includes/smilies.php:35
@@ -100,7 +100,7 @@ msgstr "Жаныбарлар"
 
 #: modules/help/index.php:65
 msgid "Brawl, Weapons"
-msgstr "Уруш, Куралдар"
+msgstr "Уруш, курал-жарактар"
 
 #: modules/help/index.php:66
 msgid "Emotions"
@@ -112,11 +112,11 @@ msgstr "Гүлдөр"
 
 #: modules/help/index.php:68
 msgid "Food, Alcohol"
-msgstr "Тамак, Ичимдик"
+msgstr "Тамак-аш, ичимдик"
 
 #: modules/help/index.php:69
 msgid "Gestures"
-msgstr "Кыймыл, Ымдоо, Белги берүү"
+msgstr "Кыймыл - аракет, ымдоо,  белги берүү"
 
 #: modules/help/index.php:70
 msgid "Holidays"
@@ -132,7 +132,7 @@ msgstr "Ар түрдүү"
 
 #: modules/help/index.php:73
 msgid "Music, Dancing"
-msgstr "Ыр, Бий"
+msgstr "Ыр, бий"
 
 #: modules/help/index.php:74
 msgid "Sports"
@@ -140,7 +140,7 @@ msgstr "Спорт"
 
 #: modules/help/index.php:75
 msgid "Technology"
-msgstr "Технология"
+msgstr "Техника"
 
 #: modules/help/templates/avatar_list.phtml:33
 #: modules/help/templates/avatars.phtml:34
@@ -154,7 +154,7 @@ msgstr "Тизмеси бош"
 #: modules/help/templates/my_smiles_list.phtml:77
 #: modules/help/templates/smiles_list.phtml:84
 msgid "Total:"
-msgstr "Баары:"
+msgstr "Баары"
 
 #: modules/help/templates/bbcode.phtml:30
 msgid "PHP code"
@@ -206,7 +206,7 @@ msgstr "Фондун түсү"
 
 #: modules/help/templates/bbcode.phtml:74
 msgid "Quote"
-msgstr "Цитата"
+msgstr "Цитаталар"
 
 #: modules/help/templates/bbcode.phtml:78
 msgid "Bulleted list"
@@ -230,7 +230,7 @@ msgstr "Токтотуу"
 
 #: modules/help/templates/forum_rules.phtml:26
 msgid "FORBIDDEN"
-msgstr "ТЫЮУ САЛЫНГАН"
+msgstr "Тыюу салынган"
 
 #: modules/help/templates/forum_rules.phtml:28
 msgid "Advertising messages"
@@ -254,7 +254,7 @@ msgstr "Башка колдонуучулардын Ник аттарынын о
 
 #: modules/help/templates/forum_rules.phtml:33
 msgid "Publishing deleted by moderator messages repeatedly"
-msgstr "Модератор өчүргөн билдирүүлөрдү кайра жарыялоо"
+msgstr "Модератор жок кылган билдирүүлөрдү кайра жарыялоо"
 
 #: modules/help/templates/forum_rules.phtml:34
 msgid "Post messages not related to the topic"
@@ -270,7 +270,7 @@ msgstr "КАТУУ ТЫЮУ САЛЫНАТ"
 
 #: modules/help/templates/forum_rules.phtml:40
 msgid "Writing in the public topics a discontent with inappropriate actions of other users and discussing about moderators working. Use private messages for this purpose"
-msgstr "Коомдук бөлүктөрдөгү башка колдонуучулардын орунсуз аракеттерине коомчулуктун нааразычылыгын билдирип, модераторлордун ишин талкуулабаңыз. Бул үчүн жеке билдирүүлөрдү колдонуңуз."
+msgstr "Коомдук бөлүмдөрдөгү башка колдонуучулардын орунсуз аракеттерине коомчулуктун нааразычылыгын билдирип, модераторлордун ишин талкуулабаңыз. Бул үчүн жеке билдирүүлөрдү колдонуңуз."
 
 #: modules/help/templates/forum_rules.phtml:41
 msgid "Register the nicknames having offensive tone for other users"
@@ -278,7 +278,7 @@ msgstr "Башка колдонуучулар үчүн шылдыңдоочу Н
 
 #: modules/help/templates/forum_rules.phtml:44
 msgid "UNACCEPTABLE"
-msgstr "КАБЫЛ КЫЛЫНБАЙТ"
+msgstr "Кабыл кылынбайт"
 
 #: modules/help/templates/forum_rules.phtml:46
 msgid "Quote full messages of the previous user and quote the messages already containing other quotes"
@@ -298,7 +298,7 @@ msgstr "Жөн гана шылдыңдоо сөздөрү же \"макул\", \
 
 #: modules/help/templates/forum_rules.phtml:54
 msgid "Message posted despite the above warnings will be changed or deleted."
-msgstr "Жогорудагы эскертүүлөргө карабастан жарыяланган билдирүүлөр өзгөртүлөт же өчүрүлөт."
+msgstr "Жогорудагы эскертүүлөргө карабастан жарыяланган билдирүүлөр өзгөртүлөт же жок кылынат."
 
 #: modules/help/templates/forum_rules.phtml:55
 msgid "This rule applies to all members and moderators, repeated actions will make you get ban or even lose your account."
