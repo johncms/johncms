@@ -14,7 +14,6 @@ use Johncms\NavChain;
 use Johncms\System\Http\Request;
 use Johncms\System\Http\Session;
 use Johncms\System\View\Render;
-use Johncms\Users\User;
 
 final readonly class GuestbookController
 {
@@ -28,7 +27,6 @@ final readonly class GuestbookController
         private GuestbookAccess $access,
         private ListGuestbookEntriesUseCase $guestbookEntries,
         private GuestbookForm $form,
-        private User $user,
     ) {
         $this->controllerContext->initModule('guestbook');
     }
@@ -44,8 +42,7 @@ final readonly class GuestbookController
         $baseUrl = '/guestbook/';
         $this->navChain->add($pageTitle, $baseUrl);
 
-        $guestbookIsClosed = config('johncms.mod_guest');
-        if (! $guestbookIsClosed && $this->user->rights < 7) {
+        if ($this->access->isClosed() && ! $this->access->canClear()) {
             echo $this->render->render(
                 'system::pages/result',
                 [

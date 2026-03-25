@@ -37,7 +37,7 @@ class GuestbookForm
     public function getFormData(): array
     {
         $form_data = [
-            'name'       => htmlspecialchars((string) $this->request->getPost('name', '')),
+            'name'       => (string) $this->request->getPost('name', ''),
             'message'    => $this->request->getPost('message', ''),
             'csrf_token' => $this->request->getPost('csrf_token', ''),
             'code'       => $this->request->getPost('code', ''),

@@ -24,9 +24,21 @@ final readonly class UploadFileController
 
     public function __invoke(): string
     {
+        header('Content-Type: application/json');
+
         try {
             /** @var UploadedFile[] $files */
             $files = $this->request->getUploadedFiles();
+            if (! isset($files['upload'])) {
+                return json_encode(
+                    [
+                        'error' => [
+                            'message' => __('Wrong data'),
+                        ],
+                    ]
+                );
+            }
+
             $file_info = new FileInfo($files['upload']->getClientFilename());
             if (! $file_info->isImage()) {
                 return json_encode(
@@ -45,12 +57,16 @@ final readonly class UploadFileController
                 'uploaded' => 1,
                 'url'      => $file->url,
             ];
-            header('Content-Type: application/json');
             return json_encode($file_array);
         } catch (FilesystemException | Exception $e) {
             http_response_code(500);
-            header('Content-Type: application/json');
-            return json_encode(['errors' => $e->getMessage()]);
+            return json_encode(
+                [
+                    'error' => [
+                        'message' => $e->getMessage(),
+                    ],
+                ]
+            );
         }
     }
 }

@@ -17,7 +17,8 @@ final readonly class GuestbookAccess
     public function canWrite(): bool
     {
         return ($this->user->isValid() || $this->config['mod_guest'] === 2)
-            && ! isset($this->user->ban['1'], $this->user->ban['13']);
+            && ! isset($this->user->ban['1'])
+            && ! isset($this->user->ban['13']);
     }
 
     public function canClear(): bool

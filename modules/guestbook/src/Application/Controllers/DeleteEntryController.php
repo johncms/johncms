@@ -40,7 +40,31 @@ final readonly class DeleteEntryController
             }
             // We clean the Guest, according to the specified parameters
             $id = $this->request->getPost('id', 0, FILTER_VALIDATE_INT);
+            if (! $id) {
+                return $this->render->render(
+                    'system::pages/result',
+                    [
+                        'title'    => __('Delete message'),
+                        'message'  => __('Wrong data'),
+                        'type'     => 'alert-danger',
+                        'back_url' => $baseUrl,
+                    ]
+                );
+            }
+
             $post = (new GuestbookEntry())->find($id);
+            if (! $post) {
+                return $this->render->render(
+                    'system::pages/result',
+                    [
+                        'title'    => __('Delete message'),
+                        'message'  => __('Wrong data'),
+                        'type'     => 'alert-danger',
+                        'back_url' => $baseUrl,
+                    ]
+                );
+            }
+
             if (! empty($post->attached_files)) {
                 foreach ($post->attached_files as $attached_file) {
                     try {
