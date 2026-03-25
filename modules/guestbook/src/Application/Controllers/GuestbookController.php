@@ -36,6 +36,11 @@ final readonly class GuestbookController
     public function __invoke(): string
     {
         $pageTitle = $this->guestbook->isGuestbook() ? __('Guestbook') : __('Admin Club');
+        $page = max(1, (int) $this->request->getQuery('page', 1));
+        $title = $pageTitle;
+        if ($page > 1) {
+            $title .= ' - ' . d__('system', 'Page') . ' ' . $page;
+        }
         $baseUrl = '/guestbook/';
         $this->navChain->add($pageTitle, $baseUrl);
 
@@ -53,7 +58,11 @@ final readonly class GuestbookController
             exit;
         }
 
-        $this->render->addData(['title' => $pageTitle, 'page_title' => $pageTitle]);
+        $this->render->addData([
+            'title'       => $title,
+            'page_title'  => $pageTitle,
+            'description' => $title,
+        ]);
 
         $flash_errors = $this->session->getFlash('errors');
         $errors = $flash_errors ?? [];
