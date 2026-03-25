@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
-"PO-Revision-Date: 2026-03-25 18:37\n"
+"PO-Revision-Date: 2026-03-25 18:41\n"
 
 #: config/notifications.global.php:20
 #: config/places.global.php:17
@@ -876,5 +876,5 @@ msgstr "Изменен"
 #: modules/forum/src/Application/Controllers/ForumTopicController.php:150
 #: modules/forum/src/Application/Controllers/ForumTopicController.php:159
 msgid "Page"
-msgstr ""
+msgstr "Страница"
 
