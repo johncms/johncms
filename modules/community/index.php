@@ -73,7 +73,6 @@ if (! $config['active'] && ! $user->isValid()) {
 $actions = [
     'index',
     'search',
-    'top',
 ];
 
 if (($key = array_search($act, $actions)) !== false) {
