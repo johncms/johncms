@@ -83,7 +83,8 @@
             "Johncms\\Modules\\Admin\\": "modules/admin/src/",
             "Johncms\\Modules\\Homepage\\": "modules/homepage/src/",
             "Johncms\\Modules\\News\\": "modules/news/src/",
-            "Johncms\\Modules\\Forum\\": "modules/forum/src/"
+            "Johncms\\Modules\\Forum\\": "modules/forum/src/",
+            "Johncms\\Modules\\Community\\": "modules/community/src/"
         }
     },
     "bin": [

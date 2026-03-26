@@ -71,7 +71,6 @@ if (! $config['active'] && ! $user->isValid()) {
 
 // Переключаем режимы работы
 $actions = [
-    'administration',
     'birthdays',
     'index',
     'search',

@@ -17,15 +17,15 @@
 $this->layout(
     'system::layout/default',
     [
-        'title'      => $this->e($title),
-        'page_title' => $this->e($page_title),
+        'title'      => $title,
+        'page_title' => $page_title,
     ]
 );
 ?>
 <!-- List of Users -->
 <?php if ($total): ?>
     <?php foreach ($list as $usr): ?>
-        <?= $this->fetch('users::user_row', ['item' => $usr]) ?>
+        <?= $this->fetch('community::user_row', ['item' => $usr]) ?>
     <?php endforeach ?>
 <?php else: ?>
     <div class="row">
