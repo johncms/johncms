@@ -15,6 +15,8 @@ interface CommunityUserRepositoryInterface
 
     public function paginateBirthdayUsers(int $perPage, int $day, int $month): LengthAwarePaginator;
 
+    public function paginateUsersByLatinNameLike(int $perPage, string $searchLike): LengthAwarePaginator;
+
     public function getTopForumUsers(int $limit): Collection;
 
     public function getTopGuestbookUsers(int $limit): Collection;

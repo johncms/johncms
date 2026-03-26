@@ -72,7 +72,6 @@ if (! $config['active'] && ! $user->isValid()) {
 // Переключаем режимы работы
 $actions = [
     'index',
-    'search',
 ];
 
 if (($key = array_search($act, $actions)) !== false) {

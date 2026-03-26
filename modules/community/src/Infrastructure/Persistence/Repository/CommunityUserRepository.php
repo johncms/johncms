@@ -36,6 +36,15 @@ final class CommunityUserRepository implements CommunityUserRepositoryInterface
             ->paginate($perPage);
     }
 
+    public function paginateUsersByLatinNameLike(int $perPage, string $searchLike): LengthAwarePaginator
+    {
+        return User::query()
+            ->approved()
+            ->where('name_lat', 'LIKE', $searchLike)
+            ->orderBy('name')
+            ->paginate($perPage);
+    }
+
     public function getTopForumUsers(int $limit): Collection
     {
         return User::query()
