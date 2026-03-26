@@ -61,6 +61,8 @@ use Johncms\Modules\Forum\Application\Controllers\ViewForumVisitorsController;
 use Johncms\Modules\Forum\Application\Controllers\ViewTopicVisitorsController;
 use Johncms\Modules\Forum\Application\Controllers\ClearForumSearchHistoryController;
 use Johncms\Modules\Community\Application\Controllers\AdministrationController;
+use Johncms\Modules\Community\Application\Controllers\CommunityBirthdaysController;
+use Johncms\Modules\Community\Application\Controllers\CommunityUsersController;
 use Johncms\System\Users\User;
 
 return static function (RouteCollector $map, User $user) {
@@ -68,6 +70,8 @@ return static function (RouteCollector $map, User $user) {
     $map->get('/rss[/]', 'modules/rss/index.php');                                                                             // RSS
     $map->addRoute(['GET', 'POST'], '/album[/[{action}]]', 'modules/album/index.php');                                         // Photo Album
     $map->addRoute(['GET'], '/community/administration/', AdministrationController::class);
+    $map->addRoute(['GET'], '/community/birthdays/', CommunityBirthdaysController::class);
+    $map->addRoute(['GET'], '/community/users/', CommunityUsersController::class);
     $map->addRoute(['GET', 'POST'], '/community/[{action}/[{mod}/]]', 'modules/community/index.php');                          // Users community
     $map->addRoute(['GET', 'POST'], '/downloads[/]', 'modules/downloads/index.php');                                           // Downloads
     $map->addRoute(['GET', 'POST'], '/forum[/]', ForumIndexController::class);                                                  // Forum

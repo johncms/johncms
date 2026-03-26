@@ -71,11 +71,9 @@ if (! $config['active'] && ! $user->isValid()) {
 
 // Переключаем режимы работы
 $actions = [
-    'birthdays',
     'index',
     'search',
     'top',
-    'users',
 ];
 
 if (($key = array_search($act, $actions)) !== false) {

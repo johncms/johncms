@@ -18,4 +18,20 @@ final class CommunityUserRepository implements CommunityUserRepositoryInterface
             ->orderByDesc('rights')
             ->paginate($perPage);
     }
+
+    public function paginateApprovedUsers(int $perPage): LengthAwarePaginator
+    {
+        return User::query()
+            ->approved()
+            ->paginate($perPage);
+    }
+
+    public function paginateBirthdayUsers(int $perPage, int $day, int $month): LengthAwarePaginator
+    {
+        return User::query()
+            ->approved()
+            ->where('dayb', '=', $day)
+            ->where('monthb', '=', $month)
+            ->paginate($perPage);
+    }
 }
