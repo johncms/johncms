@@ -11,6 +11,24 @@ use Johncms\Users\User;
 
 final class CommunityUserRepository implements CommunityUserRepositoryInterface
 {
+    public function countAdministrationUsers(): int
+    {
+        return User::query()
+            ->where('rights', '>', 0)
+            ->toBase()
+            ->count();
+    }
+
+    public function countBirthdayUsers(int $day, int $month): int
+    {
+        return User::query()
+            ->where('dayb', '=', $day)
+            ->where('monthb', '=', $month)
+            ->where('preg', '=', 1)
+            ->toBase()
+            ->count();
+    }
+
     public function paginateAdministrationUsers(int $perPage): LengthAwarePaginator
     {
         return User::query()

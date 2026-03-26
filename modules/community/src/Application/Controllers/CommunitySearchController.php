@@ -46,7 +46,7 @@ final readonly class CommunitySearchController
         $this->navChain->add($result->pageTitle);
 
         return $this->render->render(
-            'community::community_search',
+            'community::search',
             [
                 'title'      => $result->title,
                 'page_title' => $result->pageTitle,

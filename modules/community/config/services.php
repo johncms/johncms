@@ -19,6 +19,10 @@ return static function (ContainerConfigurator $container): void {
                 MODULES_PATH . 'community/src/Application/DTO',
             ]
         )
+        ->bind(
+            '$counters',
+            service('counters')
+        )
         ->autowire()
         ->autoconfigure()
         ->public();

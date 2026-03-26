@@ -48,7 +48,7 @@ final readonly class CommunityTopController
         $this->navChain->add($result->pageTitle);
 
         return $this->render->render(
-            'community::community_top',
+            'community::top',
             [
                 'title'      => $result->title,
                 'page_title' => $result->pageTitle,

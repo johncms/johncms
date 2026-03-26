@@ -22,6 +22,9 @@ $this->layout(
     ]
 );
 ?>
+<?php $this->push('meta') ?>
+    <meta name="robots" content="noindex,follow">
+<?php $this->stop(); ?>
 
 <?php if (! empty($data['errors'])): ?>
     <div class="row">
@@ -42,7 +45,7 @@ $this->layout(
         <form action="/community/search/" method="get" class="mb-3">
             <label for="search"><?= __('Look for the User') ?></label>
             <div class="input-group">
-                <input type="text" name="search" id="search" class="form-control" placeholder="<?= __('Username') ?>" value="<?= $data['search_query'] ?>">
+                <input type="text" name="search" id="search" class="form-control" placeholder="<?= __('Username') ?>" value="<?= $this->e($data['search_query']) ?>">
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary" type="submit"><?= __('Search') ?></button>
                 </div>
@@ -56,7 +59,7 @@ $this->layout(
 <!-- List of Users -->
 <?php if ($data['total']): ?>
     <?php foreach ($data['list'] as $usr): ?>
-        <?= $this->fetch('users::user_row', ['item' => $usr]) ?>
+        <?= $this->fetch('community::user_row', ['item' => $usr]) ?>
     <?php endforeach ?>
 <?php else: ?>
     <div class="row">
@@ -68,7 +71,7 @@ $this->layout(
 
 <?php if ($data['total']): ?>
     <div>
-        <div><?= __('Total') ?>: <?= $data['total'] ?></div>
+        <div><?= __('Total') ?>: <?= (int) $data['total'] ?></div>
         <!-- Page switching -->
         <?php if ($data['total'] > $user->config->kmess): ?>
             <div class="mt-1"><?= $data['pagination'] ?></div>

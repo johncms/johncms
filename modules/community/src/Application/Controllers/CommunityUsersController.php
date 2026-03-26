@@ -43,7 +43,7 @@ final readonly class CommunityUsersController
         $this->navChain->add($result->pageTitle);
 
         return $this->render->render(
-            'community::community_users',
+            'community::users',
             [
                 'pagination' => $result->pagination,
                 'title'      => $result->title,

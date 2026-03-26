@@ -9,6 +9,10 @@ use Illuminate\Database\Eloquent\Collection;
 
 interface CommunityUserRepositoryInterface
 {
+    public function countAdministrationUsers(): int;
+
+    public function countBirthdayUsers(int $day, int $month): int;
+
     public function paginateAdministrationUsers(int $perPage): LengthAwarePaginator;
 
     public function paginateApprovedUsers(int $perPage): LengthAwarePaginator;
