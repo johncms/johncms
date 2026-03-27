@@ -65,10 +65,10 @@ final readonly class ChangeTopicController
         }
 
         $formData = [
-            'name'             => $this->request->getPost('name', $topic->name),
-            'meta_keywords'    => $this->request->getPost('meta_keywords', $topic->meta_keywords),
-            'meta_description' => $this->request->getPost('meta_description', $topic->meta_description),
-            'csrf_token'       => $this->request->getPost('csrf_token', ''),
+            'name'             => (string) $this->request->getPost('name', $topic->name),
+            'meta_keywords'    => (string) $this->request->getPost('meta_keywords', $topic->meta_keywords ?? ''),
+            'meta_description' => (string) $this->request->getPost('meta_description', $topic->meta_description ?? ''),
+            'csrf_token'       => (string) $this->request->getPost('csrf_token', ''),
         ];
 
         $errors = [];
