@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Azerbaijani\n"
 "Language: az_AZ\n"
-"PO-Revision-Date: 2026-03-25 18:42\n"
+"PO-Revision-Date: 2026-03-27 20:03\n"
 
 #: modules/forum/src/Application/Controllers/AddFileController.php:55
 #: modules/forum/src/Application/Controllers/AddFileController.php:66
@@ -241,7 +241,6 @@ msgstr "Müəllifə görə filtrləmə"
 #: modules/forum/src/Application/Controllers/ForumSearchController.php:64
 #: modules/forum/src/Application/Controllers/ForumSearchController.php:73
 #: modules/forum/src/Application/Controllers/ForumSearchController.php:78
-#: modules/forum/src/Application/Controllers/ForumSearchController.php:79
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:91
 msgid "Forum search"
 msgstr "Forum Axtarışı"
@@ -311,7 +310,7 @@ msgstr "This site does not exist or has been deleted."
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:36
 #: modules/forum/src/Application/ForumUtils.php:69
 #: modules/forum/templates/files_list.phtml:154
-#: modules/forum/templates/forum_search.phtml:95
+#: modules/forum/templates/forum_search.phtml:93
 #: modules/forum/templates/new_topics.phtml:124
 #: modules/forum/templates/show_post.phtml:149
 msgid "Forum"
@@ -395,6 +394,11 @@ msgstr "Forumun qaydaları"
 #: modules/forum/src/Application/Controllers/ForumSearchController.php:65
 msgid "Invalid length"
 msgstr "Yanlış vaxtölçən müddəti"
+
+#: modules/forum/src/Application/Controllers/ForumSearchController.php:77
+#, php-format
+msgid "Search results for: %s"
+msgstr ""
 
 #: modules/forum/src/Application/Controllers/LatestTopicsController.php:38
 msgid "Last 10"
@@ -918,7 +922,7 @@ msgid "To topic"
 msgstr "mövzu üzrə"
 
 #: modules/forum/templates/files_list.phtml:144
-#: modules/forum/templates/forum_search.phtml:74
+#: modules/forum/templates/forum_search.phtml:72
 #: modules/forum/templates/new_topics.phtml:107
 #: modules/forum/templates/topic.phtml:459
 #: modules/forum/templates/topics.phtml:111
@@ -945,43 +949,43 @@ msgstr "Ləğv Filter"
 msgid "Forum rules"
 msgstr "Forumun qaydaları"
 
-#: modules/forum/templates/forum_search.phtml:31
-#: modules/forum/templates/forum_search.phtml:32
+#: modules/forum/templates/forum_search.phtml:29
+#: modules/forum/templates/forum_search.phtml:30
 msgid "Search query"
 msgstr "Axtarış sorğusu"
 
-#: modules/forum/templates/forum_search.phtml:34
+#: modules/forum/templates/forum_search.phtml:32
 msgid "Length of query: 4min., 64maks.<br>Search is case insensitive <br>Results are sorted by relevance."
 msgstr "Uzunluğu sorğu: 4 dəq 64 Max<br>axtarış asılı deyil reyestrinin məktubları<br>nəticələri sıralanır aidiyyəti üzrə"
 
-#: modules/forum/templates/forum_search.phtml:39
+#: modules/forum/templates/forum_search.phtml:37
 msgid "Search in the topic names"
 msgstr "Axtarış adları mövzular"
 
-#: modules/forum/templates/forum_search.phtml:42
+#: modules/forum/templates/forum_search.phtml:40
 #: modules/forum/templates/header.phtml:73
 msgid "Search"
 msgstr "Axtar:"
 
-#: modules/forum/templates/forum_search.phtml:47
+#: modules/forum/templates/forum_search.phtml:45
 msgid "Your search did not match any results"
 msgstr "Yoxdur gözləmək heç bir nəticə"
 
-#: modules/forum/templates/forum_search.phtml:59
+#: modules/forum/templates/forum_search.phtml:57
 #: modules/forum/templates/new_topics.phtml:96
 #: modules/forum/templates/topics.phtml:105
 msgid "Author"
 msgstr "Müəllif"
 
-#: modules/forum/templates/forum_search.phtml:62
+#: modules/forum/templates/forum_search.phtml:60
 msgid "Go to Message"
 msgstr "Mesajlara get"
 
-#: modules/forum/templates/forum_search.phtml:83
+#: modules/forum/templates/forum_search.phtml:81
 msgid "Search History"
 msgstr "Axtarış tarixcəsi"
 
-#: modules/forum/templates/forum_search.phtml:91
+#: modules/forum/templates/forum_search.phtml:89
 msgid "Clear history"
 msgstr "Keçmişi təmizlə"
 
