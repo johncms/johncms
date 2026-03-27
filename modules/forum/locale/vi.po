@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
-"PO-Revision-Date: 2026-03-25 18:41\n"
+"PO-Revision-Date: 2026-03-27 20:02\n"
 
 #: modules/forum/src/Application/Controllers/AddFileController.php:55
 #: modules/forum/src/Application/Controllers/AddFileController.php:66
@@ -241,7 +241,6 @@ msgstr "Lọc theo tác giả"
 #: modules/forum/src/Application/Controllers/ForumSearchController.php:64
 #: modules/forum/src/Application/Controllers/ForumSearchController.php:73
 #: modules/forum/src/Application/Controllers/ForumSearchController.php:78
-#: modules/forum/src/Application/Controllers/ForumSearchController.php:79
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:91
 msgid "Forum search"
 msgstr "Về tìm kiếm"
@@ -311,7 +310,7 @@ msgstr "Bài viết không tồn tại hoặc đã bị xóa"
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:36
 #: modules/forum/src/Application/ForumUtils.php:69
 #: modules/forum/templates/files_list.phtml:154
-#: modules/forum/templates/forum_search.phtml:95
+#: modules/forum/templates/forum_search.phtml:93
 #: modules/forum/templates/new_topics.phtml:124
 #: modules/forum/templates/show_post.phtml:149
 msgid "Forum"
@@ -395,6 +394,11 @@ msgstr "Diễn Tập Tin"
 #: modules/forum/src/Application/Controllers/ForumSearchController.php:65
 msgid "Invalid length"
 msgstr "Chiều dài không hợp lệ"
+
+#: modules/forum/src/Application/Controllers/ForumSearchController.php:77
+#, php-format
+msgid "Search results for: %s"
+msgstr ""
 
 #: modules/forum/src/Application/Controllers/LatestTopicsController.php:38
 msgid "Last 10"
@@ -918,7 +922,7 @@ msgid "To topic"
 msgstr "Cho chủ đề"
 
 #: modules/forum/templates/files_list.phtml:144
-#: modules/forum/templates/forum_search.phtml:74
+#: modules/forum/templates/forum_search.phtml:72
 #: modules/forum/templates/new_topics.phtml:107
 #: modules/forum/templates/topic.phtml:459
 #: modules/forum/templates/topics.phtml:111
@@ -945,43 +949,43 @@ msgstr "Huỷ bộ lọc"
 msgid "Forum rules"
 msgstr "Nội quy diễn đàn"
 
-#: modules/forum/templates/forum_search.phtml:31
-#: modules/forum/templates/forum_search.phtml:32
+#: modules/forum/templates/forum_search.phtml:29
+#: modules/forum/templates/forum_search.phtml:30
 msgid "Search query"
 msgstr "Truy vấn tìm kiếm"
 
-#: modules/forum/templates/forum_search.phtml:34
+#: modules/forum/templates/forum_search.phtml:32
 msgid "Length of query: 4min., 64maks.<br>Search is case insensitive <br>Results are sorted by relevance."
 msgstr "Chiều dài của từ khóa chỉ được phép có từ 4-64 kí tự.<br>Tìm kiếm là trường hợp bài viết hay chủ đề <br>Kết quả được sắp xếp theo độ liên quan."
 
-#: modules/forum/templates/forum_search.phtml:39
+#: modules/forum/templates/forum_search.phtml:37
 msgid "Search in the topic names"
 msgstr "Tìm kiếm trong chủ đề"
 
-#: modules/forum/templates/forum_search.phtml:42
+#: modules/forum/templates/forum_search.phtml:40
 #: modules/forum/templates/header.phtml:73
 msgid "Search"
 msgstr "Tìm kiếm"
 
-#: modules/forum/templates/forum_search.phtml:47
+#: modules/forum/templates/forum_search.phtml:45
 msgid "Your search did not match any results"
 msgstr "Tìm kiếm của bạn không phù hợp"
 
-#: modules/forum/templates/forum_search.phtml:59
+#: modules/forum/templates/forum_search.phtml:57
 #: modules/forum/templates/new_topics.phtml:96
 #: modules/forum/templates/topics.phtml:105
 msgid "Author"
 msgstr "Tác giả"
 
-#: modules/forum/templates/forum_search.phtml:62
+#: modules/forum/templates/forum_search.phtml:60
 msgid "Go to Message"
 msgstr "Đi để tin Nhắn"
 
-#: modules/forum/templates/forum_search.phtml:83
+#: modules/forum/templates/forum_search.phtml:81
 msgid "Search History"
 msgstr "Tìm kiếm lịch sử"
 
-#: modules/forum/templates/forum_search.phtml:91
+#: modules/forum/templates/forum_search.phtml:89
 msgid "Clear history"
 msgstr "Xóa lịch sử"
 
