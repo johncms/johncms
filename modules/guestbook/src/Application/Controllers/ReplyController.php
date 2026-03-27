@@ -9,6 +9,7 @@ use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Guestbook\Domain\Models\GuestbookEntry;
 use Johncms\System\Http\Request;
 use Johncms\System\Http\Session;
+use Johncms\System\Utility\EditorContentNormalizer;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
@@ -21,6 +22,7 @@ final readonly class ReplyController
         private Render $render,
         private Session $session,
         private User $user,
+        private EditorContentNormalizer $editorContentNormalizer,
     ) {
         $this->context->initModule('guestbook');
     }
@@ -40,7 +42,9 @@ final readonly class ReplyController
         }
 
         $form_data = [
-            'message'        => $this->request->getPost('message', $message->otvet),
+            'message'        => $this->editorContentNormalizer->trimEdgeEmptyBlocks(
+                (string) $this->request->getPost('message', $message->otvet)
+            ),
             'csrf_token'     => $this->request->getPost('csrf_token', ''),
             'attached_files' => (array) $this->request->getPost('attached_files', [], FILTER_VALIDATE_INT),
         ];

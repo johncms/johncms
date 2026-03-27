@@ -16,6 +16,7 @@ use Johncms\Modules\Forum\Application\UseCases\GetEditPostContextUseCase;
 use Johncms\Security\Csrf;
 use Johncms\System\Http\Request;
 use Johncms\System\Legacy\Tools;
+use Johncms\System\Utility\EditorContentNormalizer;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
@@ -27,6 +28,7 @@ final readonly class EditPostController
         private Render $render,
         private Request $request,
         private Tools $tools,
+        private EditorContentNormalizer $editorContentNormalizer,
         private Csrf $csrf,
         private User $currentUser,
         private EnsureForumAccessUseCase $forumAccessUseCase,
@@ -75,7 +77,8 @@ final readonly class EditPostController
         }
 
         if ($this->request->getPost('submit') !== null) {
-            $msg = trim((string) $this->request->getPost('msg', ''));
+            $msg = $this->editorContentNormalizer->trimEdgeEmptyBlocks((string) $this->request->getPost('msg', ''));
+            $msg = trim($msg);
             $attachedFiles = (array) $this->request->getPost('attached_files', [], FILTER_VALIDATE_INT);
             if ($msg === '') {
                 return $this->render->render(

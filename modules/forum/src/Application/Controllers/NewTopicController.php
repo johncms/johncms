@@ -19,6 +19,7 @@ use Johncms\Modules\Forum\Domain\Models\ForumTopic;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
 use Johncms\System\Legacy\Tools;
+use Johncms\System\Utility\EditorContentNormalizer;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
@@ -31,6 +32,7 @@ final readonly class NewTopicController
         private Render $render,
         private Request $request,
         private Tools $tools,
+        private EditorContentNormalizer $editorContentNormalizer,
         private \HTMLPurifier $purifier,
         private Embed $embed,
         private NavChain $navChain,
@@ -93,7 +95,9 @@ final readonly class NewTopicController
 
         $data = [
             'name'       => $this->request->getPost('th', ''),
-            'message'    => ForumUtils::topicLink($this->request->getPost('msg', '')),
+            'message'    => $this->editorContentNormalizer->trimEdgeEmptyBlocks(
+                ForumUtils::topicLink((string) $this->request->getPost('msg', ''))
+            ),
             'csrf_token' => $this->request->getPost('csrf_token', ''),
             'add_files'  => (int) $this->request->getPost('addfiles', 0),
             'attached_files' => (array) $this->request->getPost('attached_files', [], FILTER_VALIDATE_INT),

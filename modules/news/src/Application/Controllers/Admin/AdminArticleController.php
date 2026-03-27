@@ -18,6 +18,7 @@ use Johncms\Modules\News\Domain\Models\NewsSearchIndex;
 use Johncms\Modules\News\Domain\Models\NewsSection;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
+use Johncms\System\Utility\EditorContentNormalizer;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use League\Flysystem\FilesystemException;
@@ -28,6 +29,7 @@ final readonly class AdminArticleController
         private AdminControllerContext $controllerContext,
         private Render $render,
         private NavChain $navChain,
+        private EditorContentNormalizer $editorContentNormalizer,
     ) {
         $this->controllerContext->initModule('news');
         $this->navChain->add(__('News'), '/admin/news/');
@@ -99,6 +101,9 @@ final readonly class AdminArticleController
         $errors = [];
         // Processing the sent data from the form.
         if ($request->getMethod() === 'POST') {
+            $data['fields']['preview_text'] = $this->editorContentNormalizer->trimEdgeEmptyBlocks($data['fields']['preview_text']);
+            $data['fields']['text'] = $this->editorContentNormalizer->trimEdgeEmptyBlocks($data['fields']['text']);
+
             if (empty($data['fields']['name'])) {
                 $errors[] = __('The article name cannot be empty');
             }
@@ -201,6 +206,9 @@ final readonly class AdminArticleController
         $errors = [];
         // Processing the sent data from the form.
         if ($request->getMethod() === 'POST') {
+            $data['fields']['preview_text'] = $this->editorContentNormalizer->trimEdgeEmptyBlocks($data['fields']['preview_text']);
+            $data['fields']['text'] = $this->editorContentNormalizer->trimEdgeEmptyBlocks($data['fields']['text']);
+
             if (empty($data['fields']['name'])) {
                 $errors[] = __('The article name cannot be empty');
             }

@@ -14,6 +14,7 @@ namespace Johncms\Modules\Guestbook\Application\Forms;
 
 use Johncms\Modules\Guestbook\Domain\Models\GuestbookEntry;
 use Johncms\System\Http\Request;
+use Johncms\System\Utility\EditorContentNormalizer;
 use Johncms\Users\User;
 
 class GuestbookForm
@@ -24,10 +25,14 @@ class GuestbookForm
     /** @var User */
     protected $user;
 
+    /** @var EditorContentNormalizer */
+    protected $editorContentNormalizer;
+
     public function __construct()
     {
         $this->request = di(Request::class);
         $this->user = di(User::class);
+        $this->editorContentNormalizer = di(EditorContentNormalizer::class);
     }
 
     /**
@@ -38,7 +43,7 @@ class GuestbookForm
     {
         $form_data = [
             'name'       => (string) $this->request->getPost('name', ''),
-            'message'    => $this->request->getPost('message', ''),
+            'message'    => $this->editorContentNormalizer->trimEdgeEmptyBlocks((string) $this->request->getPost('message', '')),
             'csrf_token' => $this->request->getPost('csrf_token', ''),
             'code'       => $this->request->getPost('code', ''),
         ];

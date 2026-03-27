@@ -17,6 +17,7 @@ use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
 use Johncms\System\Http\Request;
 use Johncms\System\Http\Session;
 use Johncms\System\Legacy\Tools;
+use Johncms\System\Utility\EditorContentNormalizer;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Simba77\EmbedMedia\Embed;
@@ -29,6 +30,7 @@ final readonly class ReplyMessageController
         private Request $request,
         private Session $session,
         private Tools $tools,
+        private EditorContentNormalizer $editorContentNormalizer,
         private \HTMLPurifier $purifier,
         private Embed $embed,
         private User $currentUser,
@@ -120,7 +122,8 @@ final readonly class ReplyMessageController
             );
         }
 
-        $msg = trim((string) $this->request->getPost('msg', ''));
+        $msg = $this->editorContentNormalizer->trimEdgeEmptyBlocks((string) $this->request->getPost('msg', ''));
+        $msg = trim($msg);
         $addFiles = $this->request->getPost('addfiles') !== null;
         $attachedFiles = (array) $this->request->getPost('attached_files', [], FILTER_VALIDATE_INT);
 
