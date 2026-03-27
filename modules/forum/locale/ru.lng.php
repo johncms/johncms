@@ -24,6 +24,7 @@
       'Change the topic' => 'Изменить тему',
       'Filter by author' => 'Фильтр по автору',
       'Forum search' => 'Поиск форума',
+      'Search results for: %s' => 'Результаты поиска по запросу: %s',
       'Curators' => 'Кураторы',
       'Topic has been deleted or does not exists' => 'Тема удалена, или не существует',
       'Error' => 'Ошибка',

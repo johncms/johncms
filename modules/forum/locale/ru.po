@@ -246,6 +246,10 @@ msgstr "Фильтр по автору"
 msgid "Forum search"
 msgstr "Поиск форума"
 
+#: modules/forum/src/Application/Controllers/ForumSearchController.php:75
+msgid "Search results for: %s"
+msgstr "Результаты поиска по запросу: %s"
+
 #: modules/forum/src/Application/Controllers/CuratorsController.php:55
 #: modules/forum/src/Application/Controllers/CuratorsController.php:56
 #: modules/forum/src/Application/Controllers/CuratorsController.php:101
@@ -1231,4 +1235,3 @@ msgstr "Пользователи"
 #: modules/forum/templates/who.phtml:39
 msgid "Guests"
 msgstr "Гости"
-
