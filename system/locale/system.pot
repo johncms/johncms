@@ -859,7 +859,10 @@ msgstr ""
 msgid "Edited"
 msgstr ""
 
+#: modules/forum/src/Application/Controllers/ForumSearchController.php:120
+#: modules/forum/src/Application/Controllers/ForumSearchController.php:129
 #: modules/forum/src/Application/Controllers/ForumTopicController.php:150
 #: modules/forum/src/Application/Controllers/ForumTopicController.php:159
+#: modules/guestbook/src/Application/Controllers/GuestbookController.php:40
 msgid "Page"
 msgstr ""
