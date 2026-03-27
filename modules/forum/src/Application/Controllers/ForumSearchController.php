@@ -72,11 +72,22 @@ final readonly class ForumSearchController
         $this->navChain->add(__('Forum'), '/forum/');
         $this->navChain->add(__('Forum search'));
 
+        $currentPage = $this->resolveCurrentPage($result->start, (int) $this->currentUser->config->kmess);
+        $searchTitle = $result->query !== ''
+            ? __('Search results for: %s', $result->query)
+            : __('Forum search');
+
+        $this->render->addData(
+            [
+                'title'       => $this->buildSearchDocumentTitle($searchTitle, $currentPage),
+                'page_title'  => $searchTitle,
+                'description' => $this->buildSearchDescription($searchTitle, $currentPage),
+            ]
+        );
+
         return $this->render->render(
             'forum::forum_search',
             [
-                'title'             => __('Forum search'),
-                'page_title'        => __('Forum search'),
                 'pagination'        => $this->tools->displayPagination(
                     '/forum/search/?' . ($result->searchInTopicNames ? 't=1&amp;' : '') . 'search=' . urlencode($result->query) . '&amp;',
                     $result->start,
@@ -91,5 +102,30 @@ final readonly class ForumSearchController
                 'history_reset_url' => '/forum/search/history/clear/',
             ]
         );
+    }
+
+    private function resolveCurrentPage(int $start, int $perPage): int
+    {
+        $safePerPage = max(1, $perPage);
+
+        return (int) floor(max(0, $start) / $safePerPage) + 1;
+    }
+
+    private function buildSearchDocumentTitle(string $baseTitle, int $page): string
+    {
+        if ($page <= 1) {
+            return $baseTitle;
+        }
+
+        return $baseTitle . ' — ' . d__('system', 'Page') . ' ' . $page;
+    }
+
+    private function buildSearchDescription(string $baseDescription, int $page): string
+    {
+        if ($page <= 1) {
+            return $baseDescription;
+        }
+
+        return $baseDescription . ' — ' . d__('system', 'Page') . ' ' . $page;
     }
 }

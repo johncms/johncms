@@ -9,21 +9,16 @@
  */
 
 /**
- * @var $title
- * @var $page_title
- * @var $sections
- * @var $online
- * @var $files_count
- * @var $unread_count
+ * @var string $query
+ * @var bool $search_t
+ * @var array<int, array<string, mixed>> $results
+ * @var int $total
+ * @var string $pagination
+ * @var array<int, string> $search_history
+ * @var string $history_reset_url
  */
 
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $page_title,
-    ]
-);
+$this->layout('system::layout/default');
 ?>
 <?php $this->push('meta') ?>
     <meta name="robots" content="noindex,follow">
