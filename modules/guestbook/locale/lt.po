@@ -11,9 +11,21 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Lithuanian\n"
 "Language: lt_LT\n"
-"PO-Revision-Date: 2026-03-24 21:39\n"
+"PO-Revision-Date: 2026-03-27 20:02\n"
 
+#: modules/guestbook/src/Application/Controllers/DeleteEntryController.php:46
 #: modules/guestbook/src/Application/Controllers/DeleteEntryController.php:59
+#: modules/guestbook/templates/confirm_delete.phtml:6
+msgid "Delete message"
+msgstr "Pašalinti pranešimą"
+
+#: modules/guestbook/src/Application/Controllers/DeleteEntryController.php:47
+#: modules/guestbook/src/Application/Controllers/DeleteEntryController.php:60
+#: modules/guestbook/src/Application/Controllers/UploadFileController.php:36
+msgid "Wrong data"
+msgstr ""
+
+#: modules/guestbook/src/Application/Controllers/DeleteEntryController.php:87
 msgid "The message was deleted"
 msgstr ""
 
@@ -26,19 +38,19 @@ msgstr "Redaguoti pranešimą"
 msgid "The message was saved"
 msgstr ""
 
-#: modules/guestbook/src/Application/Controllers/GuestbookController.php:38
+#: modules/guestbook/src/Application/Controllers/GuestbookController.php:36
 msgid "Guestbook"
 msgstr "Svečių Knyga"
 
-#: modules/guestbook/src/Application/Controllers/GuestbookController.php:38
+#: modules/guestbook/src/Application/Controllers/GuestbookController.php:36
 msgid "Admin Club"
 msgstr "Admin-Klubas"
 
-#: modules/guestbook/src/Application/Controllers/GuestbookController.php:48
+#: modules/guestbook/src/Application/Controllers/GuestbookController.php:50
 msgid "Guestbook is closed"
 msgstr "Svečių knygą uždarytą"
 
-#: modules/guestbook/src/Application/Controllers/GuestbookController.php:65
+#: modules/guestbook/src/Application/Controllers/GuestbookController.php:71
 msgid "Your message was added successfully"
 msgstr ""
 
@@ -54,19 +66,19 @@ msgstr "Atsakyti"
 msgid "Your reply to the message was saved"
 msgstr ""
 
-#: modules/guestbook/src/Application/Controllers/UploadFileController.php:35
+#: modules/guestbook/src/Application/Controllers/UploadFileController.php:47
 msgid "Only images are allowed"
 msgstr ""
 
-#: modules/guestbook/src/Application/Services/GuestbookService.php:193
+#: modules/guestbook/src/Application/Services/GuestbookService.php:188
 msgid "All messages older than 1 day were deleted"
 msgstr "Ištrinti visi pranešimai, vyresnieji už 1 dieną"
 
-#: modules/guestbook/src/Application/Services/GuestbookService.php:209
+#: modules/guestbook/src/Application/Services/GuestbookService.php:199
 msgid "Full clearing is finished"
 msgstr "Viskas išvalytą sėkmingai"
 
-#: modules/guestbook/src/Application/Services/GuestbookService.php:225
+#: modules/guestbook/src/Application/Services/GuestbookService.php:210
 msgid "All messages older than 1 week were deleted"
 msgstr "Ištrinti visi pranešimai, vyresni 1 savaitės"
 
@@ -99,10 +111,6 @@ msgstr "Išvalyti"
 #: modules/guestbook/templates/confirm_delete.phtml:15
 msgid "Cancel"
 msgstr "Atšaukti"
-
-#: modules/guestbook/templates/confirm_delete.phtml:6
-msgid "Delete message"
-msgstr "Pašalinti pranešimą"
 
 #: modules/guestbook/templates/confirm_delete.phtml:11
 msgid "Do you really want to delete?"
