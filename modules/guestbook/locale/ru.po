@@ -11,9 +11,21 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
-"PO-Revision-Date: 2026-03-24 21:39\n"
+"PO-Revision-Date: 2026-03-27 20:02\n"
 
+#: modules/guestbook/src/Application/Controllers/DeleteEntryController.php:46
 #: modules/guestbook/src/Application/Controllers/DeleteEntryController.php:59
+#: modules/guestbook/templates/confirm_delete.phtml:6
+msgid "Delete message"
+msgstr "Удалить сообщение"
+
+#: modules/guestbook/src/Application/Controllers/DeleteEntryController.php:47
+#: modules/guestbook/src/Application/Controllers/DeleteEntryController.php:60
+#: modules/guestbook/src/Application/Controllers/UploadFileController.php:36
+msgid "Wrong data"
+msgstr "Неверные данные"
+
+#: modules/guestbook/src/Application/Controllers/DeleteEntryController.php:87
 msgid "The message was deleted"
 msgstr "Сообщение удалено"
 
@@ -26,19 +38,19 @@ msgstr "Изменить сообщение"
 msgid "The message was saved"
 msgstr "Сообщение сохранено"
 
-#: modules/guestbook/src/Application/Controllers/GuestbookController.php:38
+#: modules/guestbook/src/Application/Controllers/GuestbookController.php:36
 msgid "Guestbook"
 msgstr "Гостевая"
 
-#: modules/guestbook/src/Application/Controllers/GuestbookController.php:38
+#: modules/guestbook/src/Application/Controllers/GuestbookController.php:36
 msgid "Admin Club"
 msgstr "Админ клуб"
 
-#: modules/guestbook/src/Application/Controllers/GuestbookController.php:48
+#: modules/guestbook/src/Application/Controllers/GuestbookController.php:50
 msgid "Guestbook is closed"
 msgstr "Гостевая закрыта"
 
-#: modules/guestbook/src/Application/Controllers/GuestbookController.php:65
+#: modules/guestbook/src/Application/Controllers/GuestbookController.php:71
 msgid "Your message was added successfully"
 msgstr "Сообщение успешно отправлено"
 
@@ -54,19 +66,19 @@ msgstr "Ответить"
 msgid "Your reply to the message was saved"
 msgstr "Ваш ответ на сообщение сохранён"
 
-#: modules/guestbook/src/Application/Controllers/UploadFileController.php:35
+#: modules/guestbook/src/Application/Controllers/UploadFileController.php:47
 msgid "Only images are allowed"
 msgstr "Разрешены только изображения"
 
-#: modules/guestbook/src/Application/Services/GuestbookService.php:193
+#: modules/guestbook/src/Application/Services/GuestbookService.php:188
 msgid "All messages older than 1 day were deleted"
 msgstr "Удалены все сообщения, старше 1 дня"
 
-#: modules/guestbook/src/Application/Services/GuestbookService.php:209
+#: modules/guestbook/src/Application/Services/GuestbookService.php:199
 msgid "Full clearing is finished"
 msgstr "Проведена полная очистка"
 
-#: modules/guestbook/src/Application/Services/GuestbookService.php:225
+#: modules/guestbook/src/Application/Services/GuestbookService.php:210
 msgid "All messages older than 1 week were deleted"
 msgstr "Удалены все сообщения, старше 1 недели"
 
@@ -99,10 +111,6 @@ msgstr "Очистить"
 #: modules/guestbook/templates/confirm_delete.phtml:15
 msgid "Cancel"
 msgstr "Отмена"
-
-#: modules/guestbook/templates/confirm_delete.phtml:6
-msgid "Delete message"
-msgstr "Удалить сообщение"
 
 #: modules/guestbook/templates/confirm_delete.phtml:11
 msgid "Do you really want to delete?"

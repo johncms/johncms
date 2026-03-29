@@ -11,9 +11,21 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Kyrgyz\n"
 "Language: ky_KG\n"
-"PO-Revision-Date: 2026-03-24 21:41\n"
+"PO-Revision-Date: 2026-03-27 20:03\n"
 
+#: modules/guestbook/src/Application/Controllers/DeleteEntryController.php:46
 #: modules/guestbook/src/Application/Controllers/DeleteEntryController.php:59
+#: modules/guestbook/templates/confirm_delete.phtml:6
+msgid "Delete message"
+msgstr "Билдирүүнү өчүрүү"
+
+#: modules/guestbook/src/Application/Controllers/DeleteEntryController.php:47
+#: modules/guestbook/src/Application/Controllers/DeleteEntryController.php:60
+#: modules/guestbook/src/Application/Controllers/UploadFileController.php:36
+msgid "Wrong data"
+msgstr ""
+
+#: modules/guestbook/src/Application/Controllers/DeleteEntryController.php:87
 msgid "The message was deleted"
 msgstr "Билдирүү өчүрүлдү"
 
@@ -26,19 +38,19 @@ msgstr "Билдирүү оңдоо"
 msgid "The message was saved"
 msgstr "Билдирүү сакталды"
 
-#: modules/guestbook/src/Application/Controllers/GuestbookController.php:38
+#: modules/guestbook/src/Application/Controllers/GuestbookController.php:36
 msgid "Guestbook"
 msgstr "Конок китеби"
 
-#: modules/guestbook/src/Application/Controllers/GuestbookController.php:38
+#: modules/guestbook/src/Application/Controllers/GuestbookController.php:36
 msgid "Admin Club"
 msgstr "Админ клубу"
 
-#: modules/guestbook/src/Application/Controllers/GuestbookController.php:48
+#: modules/guestbook/src/Application/Controllers/GuestbookController.php:50
 msgid "Guestbook is closed"
 msgstr "Конок китеби жабык"
 
-#: modules/guestbook/src/Application/Controllers/GuestbookController.php:65
+#: modules/guestbook/src/Application/Controllers/GuestbookController.php:71
 msgid "Your message was added successfully"
 msgstr "Билдирүү ийгиликтүү жөнөтүлдү"
 
@@ -54,19 +66,19 @@ msgstr "Жооп берүү"
 msgid "Your reply to the message was saved"
 msgstr "Билдирүүгө берген жообуңуз сакталды"
 
-#: modules/guestbook/src/Application/Controllers/UploadFileController.php:35
+#: modules/guestbook/src/Application/Controllers/UploadFileController.php:47
 msgid "Only images are allowed"
 msgstr "Сүрөттөргө гана уруксат берилет"
 
-#: modules/guestbook/src/Application/Services/GuestbookService.php:193
+#: modules/guestbook/src/Application/Services/GuestbookService.php:188
 msgid "All messages older than 1 day were deleted"
 msgstr "Бардык билдирүүлөр, 1 күндөн ашканы өчүрүлдү"
 
-#: modules/guestbook/src/Application/Services/GuestbookService.php:209
+#: modules/guestbook/src/Application/Services/GuestbookService.php:199
 msgid "Full clearing is finished"
 msgstr "Толук тазалоо бүттү"
 
-#: modules/guestbook/src/Application/Services/GuestbookService.php:225
+#: modules/guestbook/src/Application/Services/GuestbookService.php:210
 msgid "All messages older than 1 week were deleted"
 msgstr "Бардык билдирүүлөр, 1 жумадан ашканы өчүрүлдү"
 
@@ -99,10 +111,6 @@ msgstr "Тазалоо"
 #: modules/guestbook/templates/confirm_delete.phtml:15
 msgid "Cancel"
 msgstr "Токтотуу"
-
-#: modules/guestbook/templates/confirm_delete.phtml:6
-msgid "Delete message"
-msgstr "Билдирүүнү өчүрүү"
 
 #: modules/guestbook/templates/confirm_delete.phtml:11
 msgid "Do you really want to delete?"

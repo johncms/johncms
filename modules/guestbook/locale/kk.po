@@ -11,9 +11,21 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Kazakh\n"
 "Language: kk_KZ\n"
-"PO-Revision-Date: 2026-03-24 21:40\n"
+"PO-Revision-Date: 2026-03-27 20:03\n"
 
+#: modules/guestbook/src/Application/Controllers/DeleteEntryController.php:46
 #: modules/guestbook/src/Application/Controllers/DeleteEntryController.php:59
+#: modules/guestbook/templates/confirm_delete.phtml:6
+msgid "Delete message"
+msgstr "Хабарламаны жою"
+
+#: modules/guestbook/src/Application/Controllers/DeleteEntryController.php:47
+#: modules/guestbook/src/Application/Controllers/DeleteEntryController.php:60
+#: modules/guestbook/src/Application/Controllers/UploadFileController.php:36
+msgid "Wrong data"
+msgstr ""
+
+#: modules/guestbook/src/Application/Controllers/DeleteEntryController.php:87
 msgid "The message was deleted"
 msgstr ""
 
@@ -26,19 +38,19 @@ msgstr "Хабарларды өзгерту"
 msgid "The message was saved"
 msgstr ""
 
-#: modules/guestbook/src/Application/Controllers/GuestbookController.php:38
+#: modules/guestbook/src/Application/Controllers/GuestbookController.php:36
 msgid "Guestbook"
 msgstr "Қонақ кітәпшасы"
 
-#: modules/guestbook/src/Application/Controllers/GuestbookController.php:38
+#: modules/guestbook/src/Application/Controllers/GuestbookController.php:36
 msgid "Admin Club"
 msgstr "Админ Чат"
 
-#: modules/guestbook/src/Application/Controllers/GuestbookController.php:48
+#: modules/guestbook/src/Application/Controllers/GuestbookController.php:50
 msgid "Guestbook is closed"
 msgstr "Қонақ бөлмесі жабық"
 
-#: modules/guestbook/src/Application/Controllers/GuestbookController.php:65
+#: modules/guestbook/src/Application/Controllers/GuestbookController.php:71
 msgid "Your message was added successfully"
 msgstr ""
 
@@ -54,19 +66,19 @@ msgstr "Жауап беру"
 msgid "Your reply to the message was saved"
 msgstr ""
 
-#: modules/guestbook/src/Application/Controllers/UploadFileController.php:35
+#: modules/guestbook/src/Application/Controllers/UploadFileController.php:47
 msgid "Only images are allowed"
 msgstr ""
 
-#: modules/guestbook/src/Application/Services/GuestbookService.php:193
+#: modules/guestbook/src/Application/Services/GuestbookService.php:188
 msgid "All messages older than 1 day were deleted"
 msgstr "1 күннен асқан барлық хабарлар жойылады"
 
-#: modules/guestbook/src/Application/Services/GuestbookService.php:209
+#: modules/guestbook/src/Application/Services/GuestbookService.php:199
 msgid "Full clearing is finished"
 msgstr "Толық тазалау аяқталды"
 
-#: modules/guestbook/src/Application/Services/GuestbookService.php:225
+#: modules/guestbook/src/Application/Services/GuestbookService.php:210
 msgid "All messages older than 1 week were deleted"
 msgstr "1 аптадан асқан барлық хабарлар жойылады"
 
@@ -99,10 +111,6 @@ msgstr "Тазарту"
 #: modules/guestbook/templates/confirm_delete.phtml:15
 msgid "Cancel"
 msgstr "Бас тарту"
-
-#: modules/guestbook/templates/confirm_delete.phtml:6
-msgid "Delete message"
-msgstr "Хабарламаны жою"
 
 #: modules/guestbook/templates/confirm_delete.phtml:11
 msgid "Do you really want to delete?"
