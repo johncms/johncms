@@ -55,4 +55,9 @@ interface ForumTopicRepositoryInterface
     public function save(ForumTopic $topic): void;
 
     public function incrementViewCount(int $topicId): void;
+
+    /**
+     * @return iterable<int, ForumTopic>
+     */
+    public function getCursorForSitemap(): iterable;
 }

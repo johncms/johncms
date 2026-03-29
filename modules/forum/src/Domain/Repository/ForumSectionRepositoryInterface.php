@@ -36,4 +36,9 @@ interface ForumSectionRepositoryInterface
      * @return ForumSection[]
      */
     public function getOtherCategories(int $excludeCategoryId): array;
+
+    /**
+     * @return Collection<int, ForumSection>
+     */
+    public function getAllForSitemap(): Collection;
 }

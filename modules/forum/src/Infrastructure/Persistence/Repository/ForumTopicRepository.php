@@ -257,4 +257,12 @@ final class ForumTopicRepository implements ForumTopicRepositoryInterface
             ->where('id', $topicId)
             ->increment('view_count');
     }
+
+    public function getCursorForSitemap(): iterable
+    {
+        return ForumTopic::query()
+            ->select(['id', 'section_id', 'slug', 'last_post_date'])
+            ->orderBy('id')
+            ->cursor();
+    }
 }

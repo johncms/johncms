@@ -86,4 +86,13 @@ final class ForumSectionRepository implements ForumSectionRepositoryInterface
             ->get()
             ->all();
     }
+
+    public function getAllForSitemap(): Collection
+    {
+        return ForumSection::query()
+            ->select(['id', 'parent', 'slug'])
+            ->orderBy('sort')
+            ->orderBy('id')
+            ->get();
+    }
 }

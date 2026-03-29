@@ -22,6 +22,7 @@ use Johncms\NavChain;
 use Johncms\Router\RouteCollectorFactory;
 use Johncms\Security\Csrf;
 use Johncms\Security\HTMLPurifier;
+use Johncms\Sitemap\SitemapGenerator;
 use Johncms\System\Http\Environment;
 use Johncms\System\Http\Request;
 use Johncms\System\Http\RequestFactory;
@@ -59,6 +60,7 @@ return static function (ContainerConfigurator $container): void {
                 ROOT_PATH . 'system/src/Modules',
                 ROOT_PATH . 'system/src/Validator',
                 ROOT_PATH . 'system/src/Ads.php',
+                ROOT_PATH . 'system/src/Sitemap/SitemapUrlEntry.php',
             ]
         )
         ->autowire()
@@ -93,6 +95,7 @@ return static function (ContainerConfigurator $container): void {
     $services->set(Render::class)->factory(service(RenderEngineFactory::class));
     $services->set(Translator::class)->factory(service(TranslatorServiceFactory::class));
     $services->set(Cache::class)->factory([Cache::class, 'create']);
+    $services->set(SitemapGenerator::class)->arg('$moduleProviders', tagged_iterator('johncms.sitemap_provider'));
     $services->set(MediaEmbed::class)->factory([MediaEmbed::class, 'create']);
     $services->set(Embed::class)->factory([MediaEmbed::class, 'create']);
     $services->set(Theme::class)->factory([Theme::class, 'create']);
