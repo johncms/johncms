@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.5/phpunit.xsd"
+         bootstrap="tests/bootstrap.php"
+         cacheDirectory="data/cache/.phpunit.cache"
+         executionOrder="depends,defects"
+         beStrictAboutOutputDuringTests="true"
+         failOnRisky="true"
+         failOnWarning="true">
+    <testsuites>
+        <testsuite name="unit">
+            <directory>tests/Unit</directory>
+        </testsuite>
+    </testsuites>
+
+    <source>
+        <include>
+            <directory suffix=".php">system/src</directory>
+            <directory suffix=".php">modules/guestbook/src</directory>
+            <directory suffix=".php">modules/admin/src</directory>
+            <directory suffix=".php">modules/homepage/src</directory>
+            <directory suffix=".php">modules/news/src</directory>
+            <directory suffix=".php">modules/forum/src</directory>
+            <directory suffix=".php">modules/community/src</directory>
+        </include>
+    </source>
+</phpunit>
