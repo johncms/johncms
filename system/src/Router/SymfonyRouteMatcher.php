@@ -24,12 +24,16 @@ final class SymfonyRouteMatcher
         try {
             $attributes = $this->matcher->match($path);
             $handler = $attributes['_handler'] ?? null;
-            unset($attributes['_handler'], $attributes['_route'], $attributes['_route_mapping']);
+            $middlewares = isset($attributes['_middlewares']) && is_array($attributes['_middlewares'])
+                ? $attributes['_middlewares']
+                : [];
+            unset($attributes['_handler'], $attributes['_middlewares'], $attributes['_route'], $attributes['_route_mapping']);
 
             return new RouteMatchResult(
                 status: RouteMatchResult::FOUND,
                 handler: $handler,
                 params: $attributes,
+                middlewares: $middlewares,
             );
         } catch (MethodNotAllowedException $exception) {
             return new RouteMatchResult(

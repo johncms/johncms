@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 use Johncms\Exceptions\PageNotFoundException;
 use Johncms\Mail\EmailSender;
+use Johncms\Router\MiddlewareDispatcher;
 use Johncms\Router\RouteMatchResult;
 use Johncms\Router\SymfonyRouteMatcher;
+use Johncms\System\Http\Request;
 
 // If the system is not installed, redirect to the installer.
 if (! is_file('config/autoload/database.local.php')) {
@@ -49,44 +51,55 @@ switch ($match->status) {
         new Johncms\System\Users\UserStat($container);
 
         // Set the current route parameters to the request object
-        $container->get(\Johncms\System\Http\Request::class)->setCurrentRouteParams($match->params);
+        $request = $container->get(\Johncms\System\Http\Request::class);
+        $request->setCurrentRouteParams($match->params);
         $invoker = $container->get(\Johncms\Http\Controller\ActionInvoker::class);
+        $middlewareDispatcher = $container->get(MiddlewareDispatcher::class);
         try {
             $handler = $match->handler;
             $vars = $match->params;
+            $result = $middlewareDispatcher->dispatch(
+                request: $request,
+                middlewares: $match->middlewares,
+                handler: static function (Request $request) use ($container, $handler, $invoker, $vars): mixed {
+                    if (
+                        is_array($handler)
+                        && class_exists($handler[0])
+                    ) {
+                        $controller = $container->get($handler[0]);
+                        return $invoker->invoke(
+                            controller:  $controller,
+                            method:      $handler[1],
+                            routeParams: $vars,
+                        );
+                    }
 
-            if (
-                is_array($handler)
-                && class_exists($handler[0])
-            ) {
-                $controller = $container->get($handler[0]);
-                echo $invoker->invoke(
-                    controller:  $controller,
-                    method:      $handler[1],
-                    routeParams: $vars,
-                );
-                break;
-            }
+                    // Invokable controller
+                    if (
+                        is_string($handler)
+                        && class_exists($handler)
+                        && method_exists($handler, '__invoke')
+                    ) {
+                        $controller = $container->get($handler);
+                        return $invoker->invoke(
+                            controller:  $controller,
+                            method:      '__invoke',
+                            routeParams: $vars,
+                        );
+                    }
 
-            // Invokable controller
-            if (
-                is_string($handler)
-                && class_exists($handler)
-                && method_exists($handler, '__invoke')
-            ) {
-                $controller = $container->get($handler);
-                echo $invoker->invoke(
-                    controller:  $controller,
-                    method:      '__invoke',
-                    routeParams: $vars,
-                );
-                break;
-            }
+                    // Legacy include
+                    if (is_string($handler)) {
+                        include ROOT_PATH . $handler;
+                        return null;
+                    }
 
-            // Legacy include
-            if (is_string($handler)) {
-                include ROOT_PATH . $handler;
-                break;
+                    return null;
+                },
+            );
+
+            if ($result !== null) {
+                echo $result;
             }
         } catch (PageNotFoundException $exception) {
             pageNotFound($exception->getTemplate(), $exception->getTitle(), $exception->getMessage());

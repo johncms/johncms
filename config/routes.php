@@ -49,6 +49,9 @@ use Johncms\Modules\Forum\Application\Controllers\UploadFileController;
 use Johncms\Modules\Forum\Application\Controllers\ViewForumVisitorsController;
 use Johncms\Modules\Forum\Application\Controllers\ViewTopicVisitorsController;
 use Johncms\Modules\Guestbook\Application\Controllers\GuestbookController;
+use Johncms\Modules\Guestbook\Application\Middlewares\GuestbookCleanAccessMiddleware;
+use Johncms\Modules\Guestbook\Application\Middlewares\GuestbookEditAccessMiddleware;
+use Johncms\Modules\Guestbook\Application\Middlewares\GuestbookReplyAccessMiddleware;
 use Johncms\Modules\News\Application\Controllers\Admin\AdminArticleController;
 use Johncms\Modules\News\Application\Controllers\Admin\AdminController;
 use Johncms\Modules\News\Application\Controllers\Admin\AdminSectionController;
@@ -116,18 +119,20 @@ return static function (RouteCollection $router, User $user): void {
 
     $router->map(['GET', 'POST'], '/guestbook', GuestbookController::class);
     $router->map(['GET', 'POST'], '/guestbook/ga', \Johncms\Modules\Guestbook\Application\Controllers\SwitchTypeController::class);
+    $router
+        ->map(['GET', 'POST'], '/guestbook/edit', \Johncms\Modules\Guestbook\Application\Controllers\EditEntryController::class)
+        ->addMiddleware(GuestbookEditAccessMiddleware::class);
+    $router
+        ->map(['GET', 'POST'], '/guestbook/delpost', \Johncms\Modules\Guestbook\Application\Controllers\DeleteEntryController::class)
+        ->addMiddleware(GuestbookEditAccessMiddleware::class);
+    $router
+        ->map(['GET', 'POST'], '/guestbook/otvet', \Johncms\Modules\Guestbook\Application\Controllers\ReplyController::class)
+        ->addMiddleware(GuestbookReplyAccessMiddleware::class);
+    $router
+        ->map(['GET', 'POST'], '/guestbook/clean', \Johncms\Modules\Guestbook\Application\Controllers\ClearGuestbookController::class)
+        ->addMiddleware(GuestbookCleanAccessMiddleware::class);
     if ($user->isValid()) {
         $router->map(['GET', 'POST'], '/guestbook/upload_file', \Johncms\Modules\Guestbook\Application\Controllers\UploadFileController::class);
-    }
-    if ($user->isValid() && $user->rights > 0) {
-        $router->map(['GET', 'POST'], '/guestbook/edit', \Johncms\Modules\Guestbook\Application\Controllers\EditEntryController::class);
-        $router->map(['GET', 'POST'], '/guestbook/delpost', \Johncms\Modules\Guestbook\Application\Controllers\DeleteEntryController::class);
-    }
-    if ($user->isValid() && $user->rights >= 6) {
-        $router->map(['GET', 'POST'], '/guestbook/otvet', \Johncms\Modules\Guestbook\Application\Controllers\ReplyController::class);
-    }
-    if ($user->isValid() && $user->rights >= 7) {
-        $router->map(['GET', 'POST'], '/guestbook/clean', \Johncms\Modules\Guestbook\Application\Controllers\ClearGuestbookController::class);
     }
 
     $router->map(['GET', 'POST'], '/help', 'modules/help/index.php');

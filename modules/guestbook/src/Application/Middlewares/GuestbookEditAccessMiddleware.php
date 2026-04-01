@@ -1,0 +1,27 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Johncms\Modules\Guestbook\Application\Middlewares;
+
+use Johncms\Exceptions\PageNotFoundException;
+use Johncms\Router\MiddlewareInterface;
+use Johncms\System\Http\Request;
+use Johncms\System\Users\User;
+
+final readonly class GuestbookEditAccessMiddleware implements MiddlewareInterface
+{
+    public function __construct(
+        private User $user
+    ) {
+    }
+
+    public function handle(Request $request, callable $next): mixed
+    {
+        if (! $this->user->isValid() || $this->user->rights <= 0) {
+            throw new PageNotFoundException();
+        }
+
+        return $next($request);
+    }
+}

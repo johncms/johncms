@@ -13,12 +13,14 @@ final class RouteMatchResult
     /**
      * @param array<int, string> $allowedMethods
      * @param array<string, mixed> $params
+     * @param list<mixed> $middlewares
      */
     public function __construct(
         public readonly string $status,
         public readonly mixed $handler = null,
         public readonly array $params = [],
         public readonly array $allowedMethods = [],
+        public readonly array $middlewares = [],
     ) {
     }
 }
