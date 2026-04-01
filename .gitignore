@@ -50,3 +50,6 @@ docker-compose.override.yml
 # Generated sitemap files
 /sitemap.xml
 /sitemap-*.xml
+
+# Codex runtime marker
+.codex

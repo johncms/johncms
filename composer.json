@@ -57,11 +57,11 @@
         "mobicms/captcha": "^4.0",
         "mobicms/render": "^2.0",
         "monolog/monolog": "^3.9",
-        "nikic/fast-route": "^1.3",
         "simba77/ckeditor-media-embed": "^1.1",
         "symfony/config": "^7.4",
         "symfony/dependency-injection": "^7.4",
-        "symfony/mailer": "^v7.4.0"
+        "symfony/mailer": "^v7.4.0",
+        "symfony/routing": "^7.4"
     },
     "require-dev": {
         "gettext/gettext": "^5.5",

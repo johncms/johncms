@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use FastRoute\RouteCollector;
 use Intervention\Image\ImageManager;
 use Johncms\Ads;
 use Johncms\AdsFactory;
@@ -20,6 +19,8 @@ use Johncms\Mail\MailFactory;
 use Johncms\Media\MediaEmbed;
 use Johncms\NavChain;
 use Johncms\Router\RouteCollectorFactory;
+use Johncms\Router\RequestContextFactory;
+use Johncms\Router\SymfonyRouteMatcher;
 use Johncms\Security\Csrf;
 use Johncms\Security\HTMLPurifier;
 use Johncms\Sitemap\SitemapGenerator;
@@ -39,6 +40,10 @@ use Johncms\System\View\Theme;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 use Simba77\EmbedMedia\Embed;
+use Symfony\Component\Routing\Matcher\UrlMatcher;
+use Symfony\Component\Routing\Matcher\UrlMatcherInterface;
+use Symfony\Component\Routing\RequestContext;
+use Symfony\Component\Routing\RouteCollection;
 
 return static function (ContainerConfigurator $container): void {
     $services = $container->services()
@@ -58,6 +63,10 @@ return static function (ContainerConfigurator $container): void {
                 ROOT_PATH . 'system/src/Config',
                 ROOT_PATH . 'system/src/Files',
                 ROOT_PATH . 'system/src/Modules',
+                ROOT_PATH . 'system/src/Router/Route.php',
+                ROOT_PATH . 'system/src/Router/RouteCollection.php',
+                ROOT_PATH . 'system/src/Router/RouteRequirements.php',
+                ROOT_PATH . 'system/src/Router/RouteMatchResult.php',
                 ROOT_PATH . 'system/src/Validator',
                 ROOT_PATH . 'system/src/Ads.php',
                 ROOT_PATH . 'system/src/Sitemap/SitemapUrlEntry.php',
@@ -91,7 +100,13 @@ return static function (ContainerConfigurator $container): void {
     $services->set(Assets::class)->factory([Assets::class, 'create']);
     $services->set(Avatar::class)->factory([Avatar::class, 'create']);
     $services->set(Environment::class)->factory([Environment::class, 'create']);
-    $services->set(RouteCollector::class)->factory(service(RouteCollectorFactory::class));
+    $services->set(RouteCollection::class)->factory(service(RouteCollectorFactory::class));
+    $services->set(RequestContext::class)->factory([RequestContextFactory::class, 'createFromGlobals']);
+    $services->set(UrlMatcher::class)
+        ->arg('$routes', service(RouteCollection::class))
+        ->arg('$context', service(RequestContext::class));
+    $services->alias(UrlMatcherInterface::class, UrlMatcher::class);
+    $services->set(SymfonyRouteMatcher::class);
     $services->set(Render::class)->factory(service(RenderEngineFactory::class));
     $services->set(Translator::class)->factory(service(TranslatorServiceFactory::class));
     $services->set(Cache::class)->factory([Cache::class, 'create']);

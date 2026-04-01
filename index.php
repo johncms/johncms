@@ -2,11 +2,10 @@
 
 declare(strict_types=1);
 
-use FastRoute\Dispatcher;
-use FastRoute\Dispatcher\GroupCountBased;
-use FastRoute\RouteCollector;
 use Johncms\Exceptions\PageNotFoundException;
 use Johncms\Mail\EmailSender;
+use Johncms\Router\RouteMatchResult;
+use Johncms\Router\SymfonyRouteMatcher;
 
 // If the system is not installed, redirect to the installer.
 if (! is_file('config/autoload/database.local.php')) {
@@ -22,36 +21,39 @@ $logger = $container->get(\Psr\Log\LoggerInterface::class);
     logger:    $logger,
     container: $container
 ))->registerHandlers();
-$dispatcher = new GroupCountBased($container->get(RouteCollector::class)->getData());
+$uri = (static function () {
+    $uri = $_SERVER['REQUEST_URI'];
+    if (false !== $pos = strpos($uri, '?')) {
+        $uri = substr($uri, 0, $pos);
+    }
 
-$match = $dispatcher->dispatch(
-    $_SERVER['REQUEST_METHOD'],
-    (static function () {
-        $uri = $_SERVER['REQUEST_URI'];
-        if (false !== $pos = strpos($uri, '?')) {
-            $uri = substr($uri, 0, $pos);
+    $uri = rawurldecode($uri);
+    if ($uri !== '/') {
+        $uri = rtrim($uri, '/');
+        if ($uri === '') {
+            $uri = '/';
         }
+    }
 
-        $uri = rawurldecode($uri);
-        if ($uri === '/forum/index.php' || $uri === '/forum/index.php/') {
-            return '/forum';
-        }
+    if ($uri === '/forum/index.php' || $uri === '/forum/index.php/') {
+        return '/forum';
+    }
 
-        return $uri;
-    })()
-);
+    return $uri;
+})();
+$match = $container->get(SymfonyRouteMatcher::class)->dispatch($_SERVER['REQUEST_METHOD'], $uri);
 
-switch ($match[0]) {
-    case Dispatcher::FOUND:
+switch ($match->status) {
+    case RouteMatchResult::FOUND:
         // Register the location of the visitor on the site
         new Johncms\System\Users\UserStat($container);
 
         // Set the current route parameters to the request object
-        $container->get(\Johncms\System\Http\Request::class)->setCurrentRouteParams($match[2]);
+        $container->get(\Johncms\System\Http\Request::class)->setCurrentRouteParams($match->params);
         $invoker = $container->get(\Johncms\Http\Controller\ActionInvoker::class);
         try {
-            $handler = $match[1];
-            $vars = $match[2];
+            $handler = $match->handler;
+            $vars = $match->params;
 
             if (
                 is_array($handler)
@@ -91,7 +93,7 @@ switch ($match[0]) {
         }
         break;
 
-    case Dispatcher::METHOD_NOT_ALLOWED:
+    case RouteMatchResult::METHOD_NOT_ALLOWED:
         echo '405 Method Not Allowed';
         break;
 

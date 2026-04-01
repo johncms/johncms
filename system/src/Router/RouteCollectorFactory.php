@@ -12,26 +12,26 @@ declare(strict_types=1);
 
 namespace Johncms\Router;
 
-use FastRoute\DataGenerator\GroupCountBased;
-use FastRoute\RouteCollector;
-use FastRoute\RouteParser\Std as RouteParser;
 use Johncms\System\Users\User;
 use Psr\Container\ContainerInterface;
+use Symfony\Component\Routing\RouteCollection as SymfonyRouteCollection;
 
 class RouteCollectorFactory
 {
-    public function __invoke(ContainerInterface $container): RouteCollector
+    public function __invoke(ContainerInterface $container): SymfonyRouteCollection
     {
         /** @var User $user */
         $user = $container->get(User::class);
-        $router = new RouteCollector(new RouteParser(), new GroupCountBased());
+
+        $router = new RouteCollection(new RouteRequirements());
         $this->addRoutesFromConfig($router, $user);
 
-        return $router;
+        return $router->compile();
     }
 
-    private function addRoutesFromConfig(RouteCollector $map, User $user): void
+    private function addRoutesFromConfig(RouteCollection $router, User $user): void
     {
-        (require CONFIG_PATH . 'routes.php')($map, $user);
+        $registerRoutes = require CONFIG_PATH . 'routes.php';
+        $registerRoutes($router, $user);
     }
 }

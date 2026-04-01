@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /**
- * @var FastRoute\RouteCollector $map
+ * @var \Johncms\Router\RouteCollection $router
  */
 
 // Пример файла для маршрутов дополнительных модулей.
@@ -15,4 +15,13 @@ declare(strict_types=1);
  * modules/contacts/index.php - Это путь к точке входа в наш модуль
  */
 
-$map->addRoute(['GET', 'POST'], '/contacts/[{city}/[{id:\d+}/[{street}/]]]', 'modules/contacts/index.php');
+$router
+    ->map(['GET', 'POST'], '/contacts/{city}/{id}/{street}', 'modules/contacts/index.php')
+    ->defaults([
+        'city' => null,
+        'id' => null,
+        'street' => null,
+    ])
+    ->requirements([
+        'id' => '\d+',
+    ]);
