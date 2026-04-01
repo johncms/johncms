@@ -101,7 +101,7 @@ return static function (ContainerConfigurator $container): void {
     $services->set(Avatar::class)->factory([Avatar::class, 'create']);
     $services->set(Environment::class)->factory([Environment::class, 'create']);
     $services->set(RouteCollection::class)->factory(service(RouteCollectorFactory::class));
-    $services->set(RequestContext::class)->factory([RequestContextFactory::class, 'createFromGlobals']);
+    $services->set(RequestContext::class)->factory(service(RequestContextFactory::class));
     $services->set(UrlMatcher::class)
         ->arg('$routes', service(RouteCollection::class))
         ->arg('$context', service(RequestContext::class));
