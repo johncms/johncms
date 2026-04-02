@@ -238,3 +238,9 @@ composer cs-check
 
 * UI build succeeds if frontend code was changed.
 * Services and repositories are injected via interfaces.
+
+## Docker Command Policy
+
+* Run all `php` and `composer` commands inside the `php-fpm` Docker container.
+* Use the same execution pattern as in `makefile` (for example via `docker exec ... ${COMPOSE_PROJECT_NAME}.php-fpm ...`).
+* Do not rely on host PHP/Composer versions for checks, tests, or dependency operations.
