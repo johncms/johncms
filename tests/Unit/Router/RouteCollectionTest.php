@@ -54,4 +54,24 @@ final class RouteCollectionTest extends TestCase
         self::assertNotNull($compiledRoute);
         self::assertSame(['group_middleware', 'route_middleware'], $compiledRoute->getDefault('_middlewares'));
     }
+
+    public function testNestedGroupAppliesOwnMiddlewaresToRoutes(): void
+    {
+        $collection = (new RouteCollection())
+            ->addMiddleware('root_middleware');
+
+        $collection
+            ->group('/api', static function (RouteCollection $group): void {
+                $group->addMiddleware('group_middleware');
+                $group->get('/items', 'items_handler')
+                    ->addMiddleware('route_middleware')
+                    ->setName('api.items');
+            });
+
+        $compiledRoute = $collection->compile()->get('api.items');
+
+        self::assertNotNull($compiledRoute);
+        self::assertSame('/api/items', $compiledRoute->getPath());
+        self::assertSame(['group_middleware', 'route_middleware'], $compiledRoute->getDefault('_middlewares'));
+    }
 }
