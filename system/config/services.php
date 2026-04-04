@@ -75,6 +75,8 @@ return static function (ContainerConfigurator $container): void {
                 ROOT_PATH . 'system/src/Validator',
                 ROOT_PATH . 'system/src/Ads.php',
                 ROOT_PATH . 'system/src/Sitemap/SitemapUrlEntry.php',
+                ROOT_PATH . 'system/src/Scheduler/AsScheduledTask.php',
+                ROOT_PATH . 'system/src/Scheduler/ScheduledTaskDefinition.php',
             ]
         )
         ->autowire()
@@ -119,6 +121,9 @@ return static function (ContainerConfigurator $container): void {
     $services->set(MediaEmbed::class)->factory([MediaEmbed::class, 'create']);
     $services->set(Embed::class)->factory([MediaEmbed::class, 'create']);
     $services->set(Theme::class)->factory([Theme::class, 'create']);
+    $services->set(\Johncms\Scheduler\ScheduleMutexInterface::class, \Johncms\Scheduler\FileScheduleMutex::class);
+    $services->set(\Johncms\Scheduler\ScheduledTaskRegistry::class)
+        ->arg('$commands', tagged_iterator('johncms.console_command'));
     $services->set(Application::class)
         ->factory(service(\Johncms\Console\ConsoleApplicationFactory::class))
         ->arg('$commands', tagged_iterator('johncms.console_command'));
