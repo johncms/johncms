@@ -1,0 +1,32 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+use Johncms\Container\PSRContainerFactory;
+use Johncms\Logs\GlobalErrorHandler;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\Console\Application;
+
+chdir(dirname(__DIR__, 2));
+
+const CONSOLE_MODE = true;
+
+require 'system/bootstrap.php';
+
+$container = PSRContainerFactory::getContainer();
+$logger = $container->get(LoggerInterface::class);
+
+(new GlobalErrorHandler(
+    logger: $logger,
+    container: $container
+))->registerHandlers();
+
+try {
+    $application = $container->get(Application::class);
+    exit($application->run());
+} catch (Throwable $exception) {
+    $logger->error('Console command failed.', ['exception' => $exception]);
+    fwrite(STDERR, $exception->getMessage() . PHP_EOL);
+    exit(1);
+}

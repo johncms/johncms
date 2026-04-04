@@ -40,6 +40,8 @@ use Johncms\System\View\Theme;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 use Simba77\EmbedMedia\Embed;
+use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\Matcher\UrlMatcherInterface;
 use Symfony\Component\Routing\RequestContext;
@@ -51,6 +53,9 @@ return static function (ContainerConfigurator $container): void {
         ->autowire()
         ->autoconfigure()
         ->public();
+
+    // Any Symfony Console Command service is auto-registered in the CLI application.
+    $services->instanceof(Command::class)->tag('johncms.console_command');
 
     $services->load(
         'Johncms\\',
@@ -114,4 +119,7 @@ return static function (ContainerConfigurator $container): void {
     $services->set(MediaEmbed::class)->factory([MediaEmbed::class, 'create']);
     $services->set(Embed::class)->factory([MediaEmbed::class, 'create']);
     $services->set(Theme::class)->factory([Theme::class, 'create']);
+    $services->set(Application::class)
+        ->factory(service(\Johncms\Console\ConsoleApplicationFactory::class))
+        ->arg('$commands', tagged_iterator('johncms.console_command'));
 };

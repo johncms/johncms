@@ -93,10 +93,6 @@
             "Tests\\": "tests/"
         }
     },
-    "bin": [
-        "system/bin/scan",
-        "system/bin/translate"
-    ],
     "scripts": {
         "check": [
             "@cs-check"
@@ -107,8 +103,8 @@
         "psalm-fix": "XDG_CACHE_HOME=/tmp/.cache psalm --alter --issues=MissingReturnType,MissingParamType",
         "test": "phpunit --colors=always",
         "test:unit": "phpunit --testsuite unit --colors=always",
-        "translate": "translate",
-        "translate-scan": "scan"
+        "translate": "php system/bin/console i18n:translate",
+        "translate-scan": "php system/bin/console i18n:scan"
     },
   "repositories": [
     {
