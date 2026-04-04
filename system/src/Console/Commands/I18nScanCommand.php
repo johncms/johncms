@@ -14,6 +14,7 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
     name: 'i18n:scan',
@@ -24,9 +25,10 @@ final class I18nScanCommand extends Command
 {
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $io = new SymfonyStyle($input, $output);
         $xml = $this->loadConfig();
         if ($xml === null) {
-            $output->writeln('<error>Configuration file translate.xml or translate.xml.dist not found, or contains errors.</error>');
+            $io->error('Configuration file translate.xml or translate.xml.dist not found, or contains errors.');
             return self::FAILURE;
         }
 
@@ -44,7 +46,7 @@ final class I18nScanCommand extends Command
         }
 
         if ($translations === []) {
-            $output->writeln('<error>No valid domains found in translation config.</error>');
+            $io->error('No valid domains found in translation config.');
             return self::FAILURE;
         }
 
@@ -90,7 +92,7 @@ final class I18nScanCommand extends Command
             $generator->generateFile($domainTranslations, $targetFile);
         }
 
-        $output->writeln('<info>Language templates have been created successfully.</info>');
+        $io->success('Language templates have been created successfully.');
         return self::SUCCESS;
     }
 

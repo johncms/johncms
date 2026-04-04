@@ -11,6 +11,7 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Throwable;
 
 #[AsCommand(
@@ -29,17 +30,18 @@ final class CronGenerateSitemapCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $io = new SymfonyStyle($input, $output);
         try {
             $this->sitemapGenerator->generate();
             $this->logger->info('Sitemap has been generated successfully.');
-            $output->writeln('<info>Sitemap has been generated successfully.</info>');
+            $io->success('Sitemap has been generated successfully.');
             return self::SUCCESS;
         } catch (Throwable $exception) {
             $this->logger->error(
                 'Sitemap generation failed.',
                 ['exception' => $exception]
             );
-            $output->writeln('<error>Sitemap generation failed.</error>');
+            $io->error('Sitemap generation failed.');
             return self::FAILURE;
         }
     }

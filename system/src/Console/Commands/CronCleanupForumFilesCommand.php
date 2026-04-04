@@ -11,6 +11,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
     name: 'forum:cleanup-orphan-files',
@@ -43,23 +44,24 @@ final class CronCleanupForumFilesCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $io = new SymfonyStyle($input, $output);
         $ttlHours = (int) $input->getOption('ttl-hours');
         $batchSize = (int) $input->getOption('batch-size');
 
         if ($ttlHours < 1) {
-            $output->writeln('<error>The --ttl-hours option must be greater than 0.</error>');
+            $io->error('The --ttl-hours option must be greater than 0.');
             return self::FAILURE;
         }
 
         if ($batchSize < 1) {
-            $output->writeln('<error>The --batch-size option must be greater than 0.</error>');
+            $io->error('The --batch-size option must be greater than 0.');
             return self::FAILURE;
         }
 
         $this->cleanupOrphanForumFilesUseCase->execute($ttlHours, $batchSize);
-        $output->writeln(
+        $io->success(
             sprintf(
-                '<info>Forum orphan files cleanup finished (ttl=%dh, batch=%d).</info>',
+                'Forum orphan files cleanup finished (ttl=%dh, batch=%d).',
                 $ttlHours,
                 $batchSize
             )

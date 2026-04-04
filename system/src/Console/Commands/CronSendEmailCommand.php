@@ -11,6 +11,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
     name: 'mail:send-pending',
@@ -31,14 +32,15 @@ final class CronSendEmailCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $io = new SymfonyStyle($input, $output);
         $limit = (int) $input->getOption('limit');
         if ($limit < 1) {
-            $output->writeln('<error>The --limit option must be greater than 0.</error>');
+            $io->error('The --limit option must be greater than 0.');
             return self::FAILURE;
         }
 
         EmailSender::send($limit);
-        $output->writeln(sprintf('<info>Processed email queue with limit %d.</info>', $limit));
+        $io->success(sprintf('Processed email queue with limit %d.', $limit));
 
         return self::SUCCESS;
     }

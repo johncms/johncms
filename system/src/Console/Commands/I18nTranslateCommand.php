@@ -10,6 +10,7 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
     name: 'i18n:translate',
@@ -20,6 +21,7 @@ final class I18nTranslateCommand extends Command
 {
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $io = new SymfonyStyle($input, $output);
         $loader = new PoLoader();
         $generator = new ArrayGenerator();
         $processedFiles = 0;
@@ -34,8 +36,8 @@ final class I18nTranslateCommand extends Command
             $processedFiles++;
         }
 
-        $output->writeln('<info>Languages have been successfully updated.</info>');
-        $output->writeln(sprintf('<comment>Processed .po files: %d</comment>', $processedFiles));
+        $io->success('Languages have been successfully updated.');
+        $io->text(sprintf('Processed .po files: %d', $processedFiles));
 
         return self::SUCCESS;
     }

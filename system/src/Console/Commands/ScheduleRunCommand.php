@@ -11,6 +11,7 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
     name: 'schedule:run',
@@ -26,16 +27,17 @@ final class ScheduleRunCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $io = new SymfonyStyle($input, $output);
         $application = $this->getApplication();
         if (! $application instanceof Application) {
-            $output->writeln('<error>Console application is unavailable.</error>');
+            $io->error('Console application is unavailable.');
             return self::FAILURE;
         }
 
         return $this->scheduleRunner->runDueTasks(
             now: new DateTimeImmutable('now'),
             application: $application,
-            output: $output,
+            output: $io,
         );
     }
 }
