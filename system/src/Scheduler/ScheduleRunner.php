@@ -64,7 +64,7 @@ final readonly class ScheduleRunner
     private function isDue(ScheduledTaskDefinition $task, DateTimeImmutable $now): bool
     {
         try {
-            $cronExpression = CronExpression::factory($task->expression);
+            $cronExpression = new CronExpression($task->expression);
             return $cronExpression->isDue($now, $task->timezone);
         } catch (Throwable $exception) {
             $this->logger->error(

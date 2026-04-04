@@ -23,7 +23,6 @@ final class CronSendEmailCommand extends Command
     {
         $this->addOption(
             name: 'limit',
-            shortcut: null,
             mode: InputOption::VALUE_REQUIRED,
             description: 'Max number of queued emails to process',
             default: 5

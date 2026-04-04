@@ -21,8 +21,8 @@ use Throwable;
 final class CronGenerateSitemapCommand extends Command
 {
     public function __construct(
-        private SitemapGenerator $sitemapGenerator,
-        private LoggerInterface $logger,
+        private readonly SitemapGenerator $sitemapGenerator,
+        private readonly LoggerInterface $logger,
     ) {
         parent::__construct();
     }

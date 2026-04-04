@@ -20,7 +20,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 final class CronCleanupForumFilesCommand extends Command
 {
     public function __construct(
-        private CleanupOrphanForumFilesUseCase $cleanupOrphanForumFilesUseCase,
+        private readonly CleanupOrphanForumFilesUseCase $cleanupOrphanForumFilesUseCase,
     ) {
         parent::__construct();
     }
@@ -29,14 +29,12 @@ final class CronCleanupForumFilesCommand extends Command
     {
         $this->addOption(
             name: 'ttl-hours',
-            shortcut: null,
             mode: InputOption::VALUE_REQUIRED,
             description: 'Delete files older than this amount of hours',
             default: 24
         );
         $this->addOption(
             name: 'batch-size',
-            shortcut: null,
             mode: InputOption::VALUE_REQUIRED,
             description: 'Maximum number of files to process in one run',
             default: 500

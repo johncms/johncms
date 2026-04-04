@@ -21,7 +21,7 @@ use Throwable;
 final class ScheduleListCommand extends Command
 {
     public function __construct(
-        private ScheduledTaskRegistry $taskRegistry,
+        private readonly ScheduledTaskRegistry $taskRegistry,
     ) {
         parent::__construct();
     }
@@ -59,13 +59,8 @@ final class ScheduleListCommand extends Command
     private function nextRunAt(ScheduledTaskDefinition $task): string
     {
         try {
-            $expression = CronExpression::factory($task->expression);
-            $nextRun = $expression->getNextRunDate(
-                currentTime: 'now',
-                nth: 0,
-                allowCurrentDate: false,
-                timeZone: $task->timezone
-            );
+            $expression = new CronExpression($task->expression);
+            $nextRun = $expression->getNextRunDate(timeZone: $task->timezone);
 
             return $nextRun->format('Y-m-d H:i:s');
         } catch (Throwable) {
