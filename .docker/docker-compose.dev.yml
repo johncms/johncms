@@ -36,7 +36,7 @@ services:
       ofelia.enabled: "true"
       ofelia.job-exec.php-cli.schedule: "@every 1m"
       ofelia.job-exec.php-cli.user: www-data
-      ofelia.job-exec.php-cli.command: "php /app/system/cron.php"
+      ofelia.job-exec.php-cli.command: "php /app/system/bin/console schedule:run --no-interaction"
 
 networks:
   web:
