@@ -80,7 +80,9 @@ if ($total && $user->rights) {
     }
 }
 
-$data['pagination'] = $tools->displayPagination('?', $start, $total, $user->config->kmess);
+$data['pagination'] = $total > $user->config->kmess
+    ? $tools->displayPagination('?', $start, $total, $user->config->kmess)
+    : '';
 $data['total'] = $total;
 $data['items'] = $items ?? [];
 
