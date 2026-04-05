@@ -29,6 +29,7 @@ final readonly class HomepageController
         $news_config = config('news');
         $this->render->addData(
             [
+                'canonical'   => (string) $config['homeurl'] . '/',
                 'title'       => $config['meta_title'] ?? '',
                 'keywords'    => $config['meta_key'],
                 'description' => $config['meta_desc'],
