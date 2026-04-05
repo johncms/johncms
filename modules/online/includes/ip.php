@@ -58,24 +58,20 @@ if ($end > $total) {
 }
 
 arsort($ip_array);
-$i = 0;
-
-foreach ($ip_array as $key => $val) {
-    $ip_list[$i] = [$key => $val];
-    ++$i;
-}
 $items = [];
 if ($total && $user->rights) {
-    for ($i = $start; $i < $end; $i++) {
-        $ipLong = key($ip_list[$i]);
+    $currentIp = $env->getIp();
+    $ipList = array_slice($ip_array, $start, $end - $start, true);
+
+    foreach ($ipList as $ipLong => $count) {
         $ip = long2ip((int) $ipLong);
 
         $items[] = [
             'ip'              => $ip,
             'search_ip'       => '/admin/search_ip/?ip=' . $ip,
             'whois_ip'        => '/admin/ip_whois/?ip=' . $ip,
-            'current_user_ip' => ($ipLong === di(Johncms\System\Http\Environment::class)->getIp()),
-            'count'           => $ip_list[$i][$ipLong],
+            'current_user_ip' => ((string) $ipLong === (string) $currentIp),
+            'count'           => $count,
         ];
     }
 }
