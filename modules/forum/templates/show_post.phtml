@@ -18,6 +18,9 @@
 
 $this->layout('system::layout/default');
 ?>
+<?php $this->push('meta') ?>
+    <meta name="robots" content="noindex,follow">
+<?php $this->stop(); ?>
 
 <div class="new_post-item border-bottom shadow mb-2 <?= $post->isDeleted ? ' deleted-post' : '' ?>">
     <div class="new_post-header d-flex justify-content-between">

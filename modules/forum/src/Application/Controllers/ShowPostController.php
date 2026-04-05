@@ -75,8 +75,13 @@ final readonly class ShowPostController
         $this->render->addData(
             [
                 'canonical'  => $result['canonical'],
-                'title'      => __('Show post'),
-                'page_title' => __('Show post'),
+                'title'      => $this->buildPostMetaTitle((int) $result['post']->id, (string) $result['topic']->name),
+                'page_title' => $this->buildPostMetaTitle((int) $result['post']->id, (string) $result['topic']->name),
+                'description' => $this->buildPostMetaDescription(
+                    (int) $result['post']->id,
+                    (string) $result['topic']->name,
+                    (string) ($result['topic']->calculated_meta_description ?? '')
+                ),
             ]
         );
         $this->navChain->add(__('Forum'), '/forum/');
@@ -111,5 +116,21 @@ final readonly class ShowPostController
         }
 
         return array_merge($setForumDefault, $setForum);
+    }
+
+    private function buildPostMetaTitle(int $postId, string $topicName): string
+    {
+        return sprintf('%s #%d: %s', __('Show post'), $postId, $topicName);
+    }
+
+    private function buildPostMetaDescription(int $postId, string $topicName, string $topicDescription): string
+    {
+        $postLabel = sprintf('%s #%d', __('Show post'), $postId);
+
+        if ($topicDescription !== '') {
+            return sprintf('%s - %s', $topicDescription, $postLabel);
+        }
+
+        return sprintf('%s: %s', $postLabel, $topicName);
     }
 }
