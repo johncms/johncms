@@ -45,7 +45,10 @@ if ($user->rights) {
 // Список активных IP, со счетчиком обращений
 $ip_array = array_count_values($env->getIpLog());
 $total = count($ip_array);
-$start = max(0, (int) ($start ?? 0));
+$page = isset($_REQUEST['page']) && (int) $_REQUEST['page'] > 0 ? (int) $_REQUEST['page'] : 1;
+$start = isset($_REQUEST['page'])
+    ? $page * $user->config->kmess - $user->config->kmess
+    : (isset($_GET['start']) ? abs((int) $_GET['start']) : 0);
 
 if ($start >= $total) {
     // Исправляем запрос на несуществующую страницу
