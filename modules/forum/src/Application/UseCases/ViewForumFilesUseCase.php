@@ -395,25 +395,22 @@ final readonly class ViewForumFilesUseCase
      */
     private function buildSeoMeta(ForumFilesQueryDTO $query, array $context, string $caption): array
     {
-        $contextId = $context['contextId'];
         $contextName = (string) ($context['contextName'] ?? '');
         $page = (int) floor($query->start / max(1, (int) $this->currentUser->config->kmess)) + 1;
 
-        $title = $caption;
-        if ($contextId > 0) {
-            $title .= ' #' . $contextId;
-        }
+        $baseTitle = $caption;
         if ($contextName !== '') {
-            $title .= ': ' . $contextName;
+            $baseTitle .= ': ' . $contextName;
         }
 
         if ($query->fileType > 0) {
             $fileTypeName = $this->getFileTypes()[$query->fileType] ?? '';
             if ($fileTypeName !== '') {
-                $title .= ' - ' . $fileTypeName;
+                $baseTitle .= ' - ' . $fileTypeName;
             }
         }
 
+        $title = $baseTitle;
         if ($page > 1) {
             $title .= ' - ' . d__('system', 'Page') . ' ' . $page;
         }
@@ -444,7 +441,7 @@ final readonly class ViewForumFilesUseCase
 
         return [
             'title'       => $title,
-            'page_title'  => $title,
+            'page_title'  => $baseTitle,
             'description' => $description,
             'canonical'   => $canonical,
         ];
