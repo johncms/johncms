@@ -54,6 +54,7 @@ final readonly class ForumIndexController
 
         $this->render->addData(
             [
+                'canonical'   => (string) config('johncms.homeurl') . '/forum/',
                 'keywords'    => $result->keywords,
                 'description' => $result->description,
             ]
