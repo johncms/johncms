@@ -38,6 +38,11 @@ $user = di(User::class);
 $view = di(Render::class);
 $nav_chain = di(NavChain::class);
 
+$page = isset($_REQUEST['page']) ? max(1, (int) $_REQUEST['page']) : 0;
+$start = $page > 0
+    ? ($page - 1) * (int) $user->config->kmess
+    : (isset($_GET['start']) ? abs((int) $_GET['start']) : 0);
+
 // Register the module languages domain and folder
 di(Translator::class)->addTranslationDomain('downloads', __DIR__ . '/locale');
 
