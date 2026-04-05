@@ -62,12 +62,26 @@ class LengthAwarePaginator extends AbstractPaginator implements Arrayable, Array
      */
     protected function setCurrentPage($currentPage, $pageName): int
     {
+        /** @var \Johncms\System\Http\Request $request */
+        $request = di(\Johncms\System\Http\Request::class);
+        $hasPageInQuery = array_key_exists($pageName, $request->getQueryParams());
+
         $currentPage = $currentPage ?: static::resolveCurrentPage($pageName);
         if (! $this->isValidPageNumber($currentPage)) {
             return 1;
         }
 
-        return min((int) $currentPage, $this->lastPage());
+        if ($hasPageInQuery && (int) $currentPage === 1) {
+            header('Location: ' . $this->url(1));
+            exit;
+        }
+
+        if ($currentPage > $this->lastPage()) {
+            header('Location: ' . $this->url($this->lastPage()));
+            exit;
+        }
+
+        return (int) $currentPage;
     }
 
     /**
