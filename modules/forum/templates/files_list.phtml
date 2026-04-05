@@ -11,14 +11,18 @@
 /**
  * @var $title
  * @var $page_title
+ * @var $description
+ * @var $canonical
  * @var $files
  */
 
 $this->layout(
     'system::layout/default',
     [
-        'title'      => $title,
-        'page_title' => $page_title,
+        'title'       => $title,
+        'page_title'  => $page_title,
+        'description' => $description ?? null,
+        'canonical'   => $canonical ?? null,
     ]
 );
 ?>

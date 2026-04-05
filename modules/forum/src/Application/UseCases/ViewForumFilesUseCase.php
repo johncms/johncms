@@ -50,6 +50,7 @@ final readonly class ViewForumFilesUseCase
      *   caption: string,
      *   contextName: ?string,
      *   contextUrl: ?string,
+     *   contextType: string,
      *   categoryId: ?int,
      *   sectionId: ?int,
      *   topicId: ?int,
@@ -68,6 +69,7 @@ final readonly class ViewForumFilesUseCase
                 'caption'     => __('Category Files'),
                 'contextName' => $section->name,
                 'contextUrl'  => $section->url,
+                'contextType' => 'category',
                 'categoryId'  => $section->id,
                 'sectionId'   => null,
                 'topicId'     => null,
@@ -85,6 +87,7 @@ final readonly class ViewForumFilesUseCase
                 'caption'     => __('Section files'),
                 'contextName' => $section->name,
                 'contextUrl'  => $section->url,
+                'contextType' => 'section',
                 'categoryId'  => null,
                 'sectionId'   => $section->id,
                 'topicId'     => null,
@@ -102,6 +105,7 @@ final readonly class ViewForumFilesUseCase
                 'caption'     => __('Topic Files'),
                 'contextName' => $topic->name,
                 'contextUrl'  => $topic->url,
+                'contextType' => 'topic',
                 'categoryId'  => null,
                 'sectionId'   => null,
                 'topicId'     => $topic->id,
@@ -113,6 +117,7 @@ final readonly class ViewForumFilesUseCase
             'caption'     => __('Forum Files'),
             'contextName' => null,
             'contextUrl'  => null,
+            'contextType' => 'forum',
             'categoryId'  => null,
             'sectionId'   => null,
             'topicId'     => null,
@@ -125,6 +130,7 @@ final readonly class ViewForumFilesUseCase
      *   caption: string,
      *   contextName: ?string,
      *   contextUrl: ?string,
+     *   contextType: string,
      *   categoryId: ?int,
      *   sectionId: ?int,
      *   topicId: ?int,
@@ -140,6 +146,7 @@ final readonly class ViewForumFilesUseCase
         $total = $this->fileRepository->countForListing($countQuery);
 
         $caption = $query->isNew ? __('New Files') : $context['caption'];
+        $seoMeta = $this->buildSeoMeta($query, $context, $caption);
         $files = [];
 
         if ($total > 0) {
@@ -165,8 +172,10 @@ final readonly class ViewForumFilesUseCase
             contextUrl: $context['contextUrl'],
             template: 'forum::files_list',
             viewData: [
-                'title'         => $caption,
-                'page_title'    => $caption,
+                'title'         => $seoMeta['title'],
+                'page_title'    => $seoMeta['page_title'],
+                'description'   => $seoMeta['description'],
+                'canonical'     => $seoMeta['canonical'],
                 'pagination'    => $this->tools->displayPagination('/forum/files/?' . ($query->isNew ? 'new' : 'do=' . $query->fileType) . $lnk . '&amp;', $query->start, $total, $this->currentUser->config->kmess),
                 'back_url'      => '/forum/files/' . ($lnk !== '' ? '?' . str_replace('&amp;', '', $lnk) : ''),
                 'back_url_name' => __('List of sections'),
@@ -182,6 +191,7 @@ final readonly class ViewForumFilesUseCase
      *   caption: string,
      *   contextName: ?string,
      *   contextUrl: ?string,
+     *   contextType: string,
      *   categoryId: ?int,
      *   sectionId: ?int,
      *   topicId: ?int,
@@ -192,6 +202,11 @@ final readonly class ViewForumFilesUseCase
     {
         $types = $this->getFileTypes();
         $scope = $this->createScopeQuery($context, $this->currentUser->rights >= 7);
+        $seoMeta = $this->buildSeoMeta(
+            new ForumFilesQueryDTO(start: 0, contextCategoryId: $context['categoryId'] ?? 0, contextSectionId: $context['sectionId'] ?? 0, contextTopicId: $context['topicId'] ?? 0, fileType: 0, isNew: false),
+            $context,
+            $context['caption']
+        );
 
         $countNew = $this->fileRepository->countByQuery(ForumFileCountQuery::forNew($scope, $newFrom));
 
@@ -217,8 +232,10 @@ final readonly class ViewForumFilesUseCase
             contextUrl: $context['contextUrl'],
             template: 'forum::files_sections',
             viewData: [
-                'title'      => $context['caption'],
-                'page_title' => $context['caption'],
+                'title'       => $seoMeta['title'],
+                'page_title'  => $seoMeta['page_title'],
+                'description' => $seoMeta['description'],
+                'canonical'   => $seoMeta['canonical'],
                 'back_url'   => $context['contextUrl'] ?? '/forum/',
                 'sections'   => $sections,
                 'total'      => $total,
@@ -346,6 +363,7 @@ final readonly class ViewForumFilesUseCase
      *   caption: string,
      *   contextName: ?string,
      *   contextUrl: ?string,
+     *   contextType: string,
      *   categoryId: ?int,
      *   sectionId: ?int,
      *   topicId: ?int,
@@ -360,5 +378,75 @@ final readonly class ViewForumFilesUseCase
             topicId: $context['topicId'],
             includeDeleted: $includeDeleted,
         );
+    }
+
+    /**
+     * @param array{
+     *   caption: string,
+     *   contextName: ?string,
+     *   contextUrl: ?string,
+     *   contextType: string,
+     *   categoryId: ?int,
+     *   sectionId: ?int,
+     *   topicId: ?int,
+     *   contextId: int
+     * } $context
+     * @return array{title: string, page_title: string, description: string, canonical: string}
+     */
+    private function buildSeoMeta(ForumFilesQueryDTO $query, array $context, string $caption): array
+    {
+        $contextId = $context['contextId'];
+        $contextName = (string) ($context['contextName'] ?? '');
+        $page = (int) floor($query->start / max(1, (int) $this->currentUser->config->kmess)) + 1;
+
+        $title = $caption;
+        if ($contextId > 0) {
+            $title .= ' #' . $contextId;
+        }
+        if ($contextName !== '') {
+            $title .= ': ' . $contextName;
+        }
+
+        if ($query->fileType > 0) {
+            $fileTypeName = $this->getFileTypes()[$query->fileType] ?? '';
+            if ($fileTypeName !== '') {
+                $title .= ' - ' . $fileTypeName;
+            }
+        }
+
+        if ($page > 1) {
+            $title .= ' - ' . d__('system', 'Page') . ' ' . $page;
+        }
+
+        $description = $title;
+
+        $canonicalParams = [];
+        if ($query->isNew) {
+            $canonicalParams['new'] = 1;
+        } elseif ($query->fileType > 0) {
+            $canonicalParams['do'] = $query->fileType;
+        }
+        if ($query->contextCategoryId > 0) {
+            $canonicalParams['c'] = $query->contextCategoryId;
+        } elseif ($query->contextSectionId > 0) {
+            $canonicalParams['s'] = $query->contextSectionId;
+        } elseif ($query->contextTopicId > 0) {
+            $canonicalParams['t'] = $query->contextTopicId;
+        }
+        if ($page > 1) {
+            $canonicalParams['page'] = $page;
+        }
+
+        $canonical = config('johncms.homeurl') . '/forum/files/';
+        if ($canonicalParams !== []) {
+            $canonical .= '?' . http_build_query($canonicalParams);
+        }
+
+        return [
+            'title'       => $title,
+            'page_title'  => $title,
+            'description' => $description,
+            'canonical'   => $canonical,
+        ];
     }
 }
