@@ -45,6 +45,7 @@ if ($user->rights) {
 // Список активных IP, со счетчиком обращений
 $ip_array = array_count_values($env->getIpLog());
 $total = count($ip_array);
+$start = max(0, (int) ($start ?? 0));
 
 if ($start >= $total) {
     // Исправляем запрос на несуществующую страницу
