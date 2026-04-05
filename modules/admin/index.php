@@ -46,6 +46,10 @@ $id = $request->getQuery('id', 0, FILTER_VALIDATE_INT);
 $act = $route['action'] ?? 'index';
 $mod = trim(htmlspecialchars((string) $request->getQuery('mod', '')));
 $do = trim(htmlspecialchars((string) $request->getQuery('do', '')));
+$page = isset($_REQUEST['page']) ? max(1, (int) $_REQUEST['page']) : 0;
+$start = $page > 0
+    ? ($page - 1) * (int) $user->config->kmess
+    : (isset($_GET['start']) ? abs((int) $_GET['start']) : 0);
 
 $nav_chain->add(__('Admin Panel'), '/admin/');
 
