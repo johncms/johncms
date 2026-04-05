@@ -139,13 +139,14 @@ class ForumUtils
         /** @var User $user */
         $user = di(User::class);
         $upfp = $user->set_forum['upfp'] ?? 0;
-        $message = (new ForumMessage())
+        $perPage = max(1, (int) $user->config->kmess);
+        $totalMessages = (new ForumMessage())
             ->where('topic_id', '=', $topic_id)
             ->where('forum_messages.id', empty($upfp) ? '<=' : '>=', $post_id)
             ->orderBy('id', empty($upfp) ? 'ASC' : 'DESC')
-            ->paginate($user->config->kmess);
+            ->count();
 
-        $page = $message->lastPage();
+        $page = max(1, (int) ceil($totalMessages / $perPage));
         $topicUrl = di(ForumTopicPathService::class)->getTopicUrlById($topic_id, $page > 1 ? $page : null);
 
         return $topicUrl ?? '/forum/';
