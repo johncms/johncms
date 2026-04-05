@@ -45,8 +45,8 @@ di(Translator::class)->addTranslationDomain('help', __DIR__ . '/locale');
 $id = $request->getQuery('id', 0, FILTER_SANITIZE_NUMBER_INT);
 $act = (string) $request->getQuery('act', '');
 $mod = htmlspecialchars((string) $request->getQuery('mod', ''));
-$page = isset($_REQUEST['page']) ? max(1, (int) $_REQUEST['page']) : 0;
-$start = $page > 0
+$page = isset($_REQUEST['page']) ? max(1, (int) $_REQUEST['page']) : 1;
+$start = isset($_REQUEST['page'])
     ? ($page - 1) * (int) $user->config->kmess
     : (isset($_GET['start']) ? abs((int) $_GET['start']) : 0);
 
