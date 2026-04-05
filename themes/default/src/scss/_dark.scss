@@ -89,7 +89,7 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 
 :not(pre) > code[class*="language-"],
 pre[class*="language-"] {
-  background: #2d2d2d;
+  background: #2d2d2d69;
 }
 
 .token.comment,
@@ -99,18 +99,39 @@ pre[class*="language-"] {
   color: #3d92ed;
 }
 
+.token.comment {
+  color: #9198a1;
+
+  .token.keyword {
+    color: #9198a1;
+  }
+
+  .token.class-name {
+    .token.keyword {
+      color: #d2d3d5;
+    }
+  }
+
+  .token.parameter {
+    color: #d2a8ff;
+  }
+}
+
 .token.punctuation {
   color: #ccc;
 }
 
-.token.property,
+.token.property {
+  color: #f08d49;
+}
+
 .token.tag,
 .token.boolean,
 .token.number,
 .token.constant,
 .token.symbol,
 .token.deleted {
-  color: #989898;
+  color: #9198a1;
 }
 
 .token.selector,
@@ -131,6 +152,10 @@ pre[class*="language-"] {
   background: transparent;
 }
 
+.token.single-quoted-string.string {
+  color: #66934b;
+}
+
 .token.atrule,
 .token.attr-value,
 .token.keyword {
@@ -145,7 +170,7 @@ pre[class*="language-"] {
 .token.regex,
 .token.important,
 .token.variable {
-  color: #7b659c;
+  color: #d2a8ff;
 }
 
 .line-numbers .line-numbers-rows {
