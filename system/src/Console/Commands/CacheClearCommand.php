@@ -17,6 +17,10 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 )]
 final class CacheClearCommand extends Command
 {
+    private const PRESERVED_FILES = [
+        'smilies-list.cache',
+    ];
+
     public function __construct(
         private readonly string $cachePath = CACHE_PATH,
     ) {
@@ -62,7 +66,7 @@ final class CacheClearCommand extends Command
         }
 
         foreach ($items as $item) {
-            if ($item === '.' || $item === '..' || $item === '.gitkeep') {
+            if ($item === '.' || $item === '..' || $item === '.gitkeep' || in_array($item, self::PRESERVED_FILES, true)) {
                 continue;
             }
 

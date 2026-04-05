@@ -12,17 +12,17 @@ declare(strict_types=1);
 
 use Library\Hashtags;
 use Library\Utils;
-use Psr\Http\Message\ServerRequestInterface;
+use Johncms\System\Http\Request;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-$request = di(ServerRequestInterface::class);
+$request = di(Request::class);
 
 /**
  * @var PDO $db
  * @var Johncms\System\Users\User $user
  * @var Johncms\System\View\Render $view
- * @var  ServerRequestInterface $request
+ * @var Request $request
  */
 
 $title = __('Write Article');

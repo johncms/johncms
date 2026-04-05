@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 use Downloads\Download;
 use Johncms\NavChain;
-use Psr\Http\Message\ServerRequestInterface;
+use Johncms\System\Http\Request;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
@@ -21,9 +21,9 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var Johncms\System\Users\User $user
  * @var $urls
  * @var NavChain $nav_chain
- * @var ServerRequestInterface $request
+ * @var Request $request
  */
-$request = di(ServerRequestInterface::class);
+$request = di(Request::class);
 
 $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . "' AND (`type` = 2 OR `type` = 3)  LIMIT 1");
 $res_down = $req_down->fetch();

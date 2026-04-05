@@ -16,7 +16,6 @@ use Johncms\System\Http\Request;
 use Library\Hashtags;
 use Library\Tree;
 use Library\Utils;
-use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * @var PDO $db

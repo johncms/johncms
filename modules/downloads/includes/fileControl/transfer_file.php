@@ -10,17 +10,17 @@
 
 declare(strict_types=1);
 
-use Psr\Http\Message\ServerRequestInterface;
+use Johncms\System\Http\Request;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /**
  * @var PDO $db
  * @var Johncms\System\Users\User $user
- * @var ServerRequestInterface $request
+ * @var Request $request
  */
 
-$request = di(ServerRequestInterface::class);
+$request = di(Request::class);
 $get = $request->getQueryParams();
 
 $req_down = $db->query("SELECT * FROM `download__files` WHERE `id` = '" . $id . "' AND (`type` = 2 OR `type` = 3)  LIMIT 1");
