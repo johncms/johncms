@@ -282,6 +282,38 @@ label {
   }
 }
 
+.post-footer {
+  .user-ip {
+    color: #d7d7d7;
+  }
+
+  .useragent {
+    color: #ababab !important;
+  }
+}
+
+.user-row.bg-yellow-light {
+  background: rgb(97 73 28 / 35%) !important;
+}
+
+.user-row {
+  background: rgb(255 255 255 / 2%);
+  border-bottom-color: #323232 !important;
+  transition: background-color .15s ease-in-out;
+
+  &:hover {
+    background: rgb(255 255 255 / 4%);
+  }
+
+  .user-login {
+    color: #dcdcdc;
+  }
+
+  .post-footer {
+    border-top-color: #383838 !important;
+  }
+}
+
 .new_post-item {
   .post-title {
     color: #dddddd;
