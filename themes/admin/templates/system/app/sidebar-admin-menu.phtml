@@ -18,6 +18,12 @@ $library_counters = $counters->libraryCounters();
 $users_counters = $counters->usersCounters();
 $album_counters = $counters->albumCounters();
 $news_counters = $counters->news();
+$theme = di(\Johncms\System\View\Theme::class);
+$currentTheme = $theme->getCurrentTheme();
+$isDarkTheme = $theme->isDarkTheme($currentTheme);
+$themeToggleTitle = $isDarkTheme ? d__('system', 'Set Light Theme') : d__('system', 'Set Dark Theme');
+$themeToggleIcon = $isDarkTheme ? 'sun' : 'moon';
+$themeIconSprite = $this->asset('icons/sprite.svg', true);
 ?>
 <div style="background-color: #bd0719; height: 5px">&nbsp;</div>
 
@@ -303,4 +309,21 @@ $news_counters = $counters->news();
             </button>
         </div>
     <?php endif ?>
+    <div class="mt-1">
+        <button
+            type="button"
+            class="btn btn-link p-0"
+            data-theme-toggle
+            data-current-theme="<?= $this->e($currentTheme) ?>"
+            data-icon-sprite="<?= $this->e($themeIconSprite) ?>"
+            data-title-dark="<?= $this->e(d__('system', 'Set Dark Theme')) ?>"
+            data-title-light="<?= $this->e(d__('system', 'Set Light Theme')) ?>"
+            title="<?= $this->e($themeToggleTitle) ?>"
+            aria-label="<?= $this->e($themeToggleTitle) ?>"
+        >
+            <svg class="icon m-0">
+                <use xlink:href="<?= $themeIconSprite ?>#<?= $themeToggleIcon ?>"/>
+            </svg>
+        </button>
+    </div>
 </div>

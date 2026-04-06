@@ -9,6 +9,7 @@
 $counters = $container->get('counters');
 $notifications = $counters->notifications();
 $analytics = $counters->counters();
+$theme = di(\Johncms\System\View\Theme::class);
 ?>
 <!DOCTYPE html>
 <html lang="<?= $locale ?>" dir="<?= $locale === 'ar' ? 'rtl' : 'ltr' ?>">
@@ -48,7 +49,7 @@ $analytics = $counters->counters();
     <link rel="alternate" type="application/rss+xml" title="RSS News" href="<?= $config['homeurl'] ?>/rss/">
     <title><?= (isset($title) ? $this->e($title) : $config['copyright']) ?></title>
 </head>
-<body>
+<body class="<?= $theme->getCurrentTheme() ?>">
 <div class="wrapper min-vh-100 d-flex flex-column justify-content-between" id="app">
     <div class="page_layout justify-content-end d-flex w-100">
         <div class="sidebar">
