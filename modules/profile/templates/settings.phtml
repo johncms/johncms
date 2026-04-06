@@ -95,17 +95,6 @@ $userConfig = $user->config;
         >
     </div>
 
-    <div class="form-group">
-        <label for="skin"><?= __('Theme') ?></label>
-        <select class="form-control" id="skin" name="skin">
-            <?php foreach ($data['themes'] as $key => $theme): ?>
-                <option value="<?= $key ?>"
-                    <?= ($key === $userConfig->skin || ($key === 'auto' && empty($userConfig->skin))) ? 'selected' : '' ?>
-                ><?= $theme['name'] ?></option>
-            <?php endforeach; ?>
-        </select>
-    </div>
-
     <?php if (! empty($data['lng_list'])): ?>
         <h3><?= __('Select Language') ?></h3>
         <div class="form-group">

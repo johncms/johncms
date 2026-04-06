@@ -120,7 +120,7 @@ return static function (ContainerConfigurator $container): void {
     $services->set(SitemapGenerator::class)->arg('$moduleProviders', tagged_iterator('johncms.sitemap_provider'));
     $services->set(MediaEmbed::class)->factory([MediaEmbed::class, 'create']);
     $services->set(Embed::class)->factory([MediaEmbed::class, 'create']);
-    $services->set(Theme::class)->factory([Theme::class, 'create']);
+    $services->set(Theme::class);
     $services->set(\Johncms\Scheduler\ScheduleMutexInterface::class, \Johncms\Scheduler\FileScheduleMutex::class);
     $services->set(\Johncms\Scheduler\ScheduledTaskRegistry::class)
         ->arg('$commands', tagged_iterator('johncms.console_command'));
