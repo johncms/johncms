@@ -103,13 +103,19 @@ function is_contact($id = 0)
     static $user_id = null;
     static $return = 0;
 
-    if (! $user->is_valid && ! $id) {
+    if (! $user || ! $user->is_valid) {
         return 0;
     }
 
     if (null === $user_id || $id != $user_id) {
         $user_id = $id;
-        $req = $db->query("SELECT * FROM `cms_contact` WHERE `user_id` = '" . $user->id . "' AND `from_id` = '$id'");
+        $currentUserId = (int) ($user->id ?? 0);
+        if ($currentUserId <= 0) {
+            return 0;
+        }
+
+        $contactUserId = (int) $id;
+        $req = $db->query("SELECT * FROM `cms_contact` WHERE `user_id` = '$currentUserId' AND `from_id` = '$contactUserId'");
 
         if ($req->rowCount()) {
             $res = $req->fetch();
