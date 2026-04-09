@@ -78,5 +78,4 @@ final readonly class ClearFilterByAuthorController
 
         redirect($topic->url);
     }
-
 }

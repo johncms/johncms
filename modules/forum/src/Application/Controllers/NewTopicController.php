@@ -208,5 +208,4 @@ final readonly class NewTopicController
 
         return array_merge($setForumDefault, $setForum);
     }
-
 }

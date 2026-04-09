@@ -156,5 +156,4 @@ final readonly class EditPostController
 
         return array_merge($setForumDefault, $setForum);
     }
-
 }

@@ -93,5 +93,4 @@ final readonly class SetFilterByAuthorController
 
         redirect($topic->url);
     }
-
 }

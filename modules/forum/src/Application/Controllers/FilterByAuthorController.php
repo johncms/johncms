@@ -90,5 +90,4 @@ final readonly class FilterByAuthorController
             ]
         );
     }
-
 }

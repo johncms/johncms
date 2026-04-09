@@ -110,5 +110,4 @@ final readonly class CuratorsController
             ]
         );
     }
-
 }
