@@ -235,14 +235,22 @@ class Counters
     public function online()
     {
         $file = CACHE_PATH . 'count-online.cache';
+        $users = 0;
+        $guests = 0;
+        $hasValidCache = false;
 
         if (file_exists($file) && filemtime($file) > (time() - 10)) {
             $res = json_decode(file_get_contents($file), true);
-            $users = $res['users'];
-            $guests = $res['guests'];
-        } else {
-            $users = $this->db->query('SELECT COUNT(*) FROM `users` WHERE `lastdate` > ' . (time() - 300))->fetchColumn();
-            $guests = $this->db->query('SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > ' . (time() - 300))->fetchColumn();
+            if (is_array($res) && isset($res['users'], $res['guests'])) {
+                $users = (int) $res['users'];
+                $guests = (int) $res['guests'];
+                $hasValidCache = true;
+            }
+        }
+
+        if (! $hasValidCache) {
+            $users = (int) $this->db->query('SELECT COUNT(*) FROM `users` WHERE `lastdate` > ' . (time() - 300))->fetchColumn();
+            $guests = (int) $this->db->query('SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > ' . (time() - 300))->fetchColumn();
 
             file_put_contents($file, json_encode(['users' => $users, 'guests' => $guests]), LOCK_EX);
         }
