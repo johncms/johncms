@@ -62,7 +62,7 @@ final readonly class CuratorsController
         }
 
         $topic = $context['topic'];
-        $start = (int) $this->request->getQuery('start', 0);
+        $page = max(1, (int) $this->request->getQuery('page', 1));
         $total = count($context['candidates']);
 
         $selectedUsers = ! empty($topic->curators) ? $topic->curators : [];
@@ -101,8 +101,8 @@ final readonly class CuratorsController
                 'title'         => __('Curators'),
                 'page_title'    => __('Curators'),
                 'id'            => $topic->id,
-                'start'         => $start,
-                'back_url'      => $topic->url . ($start > 0 ? '?start=' . $start : ''),
+                'page'          => $page,
+                'back_url'      => $topic->url . ($page > 1 ? '?page=' . $page : ''),
                 'total'         => $total,
                 'curators_list' => $curatorsList,
                 'topic'         => $topic,
@@ -110,4 +110,5 @@ final readonly class CuratorsController
             ]
         );
     }
+
 }

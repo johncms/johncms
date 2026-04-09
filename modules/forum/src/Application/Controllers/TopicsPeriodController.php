@@ -47,10 +47,11 @@ final readonly class TopicsPeriodController
         if ($hours <= 0) {
             $hours = 24;
         }
+        $start = (max(1, (int) $this->request->getQuery('page', 1)) - 1) * (int) $this->currentUser->config->kmess;
 
         $result = $this->viewTopicsByPeriodUseCase->execute(
             new TopicsPeriodQueryDTO(
-                start: max(0, (int) $this->request->getQuery('start', 0)),
+                start: $start,
                 hours: min(999, $hours),
             )
         );
@@ -64,7 +65,7 @@ final readonly class TopicsPeriodController
             [
                 'pagination'    => $this->tools->displayPagination(
                     '/forum/topics-period/?vr=' . $result->hours . '&amp;',
-                    max(0, (int) $this->request->getQuery('start', 0)),
+                    $start,
                     $result->total,
                     $this->currentUser->config->kmess
                 ),

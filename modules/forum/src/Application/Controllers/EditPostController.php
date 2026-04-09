@@ -43,6 +43,8 @@ final readonly class EditPostController
 
     public function __invoke(int $id): string
     {
+        $page = max(1, (int) $this->request->getQuery('page', 1));
+
         try {
             $this->forumAccessUseCase->execute();
         } catch (ForumAccessDeniedException $exception) {
@@ -87,7 +89,7 @@ final readonly class EditPostController
                         'title'         => __('Edit Message'),
                         'type'          => 'alert-danger',
                         'message'       => __('You have not entered the message'),
-                        'back_url'      => '/forum/edit-post/' . $id . '/?start=' . (int) $this->request->getQuery('start', 0),
+                        'back_url'      => '/forum/edit-post/' . $id . '/' . ($page > 1 ? '?page=' . $page : ''),
                         'back_url_name' => __('Repeat'),
                     ]
                 );
@@ -129,7 +131,7 @@ final readonly class EditPostController
                 'page_title'     => __('Edit Message'),
                 'id'             => $id,
                 'msg'            => $message,
-                'start'          => (int) $this->request->getQuery('start', 0),
+                'page'           => $page,
                 'back_url'       => $context->backUrl,
                 'settings_forum' => $this->getForumSettings(),
                 'csrf_token'     => $this->csrf->getToken(),
@@ -154,4 +156,5 @@ final readonly class EditPostController
 
         return array_merge($setForumDefault, $setForum);
     }
+
 }

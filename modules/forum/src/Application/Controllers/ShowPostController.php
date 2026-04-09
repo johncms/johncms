@@ -12,7 +12,6 @@ use Johncms\Modules\Forum\Application\UseCases\ViewPostUseCase;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\ForumUtils;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 
@@ -21,7 +20,6 @@ final readonly class ShowPostController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private User $currentUser,
         private NavChain $navChain,
         private EnsureForumAccessUseCase $forumAccessUseCase,
@@ -49,12 +47,9 @@ final readonly class ShowPostController
             );
         }
 
-        $start = (int) $this->request->getQuery('start', 0);
-
         try {
             $result = $this->viewPostUseCase->execute(
                 postId: $id,
-                start: $start,
                 forumSettings: $this->getForumSettings(),
                 homeUrl: (string) config('johncms.homeurl')
             );

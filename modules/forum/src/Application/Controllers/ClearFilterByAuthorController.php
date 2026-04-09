@@ -37,7 +37,7 @@ final readonly class ClearFilterByAuthorController
             return $this->forumErrorRenderer->render($this->render, $exception);
         }
 
-        $start = max(0, (int) $this->request->getQuery('start', 0));
+        $page = max(1, (int) $this->request->getQuery('page', 1));
 
         $validator = new Validator(
             ['csrf_token' => (string) $this->request->getPost('csrf_token', '')],
@@ -52,7 +52,7 @@ final readonly class ClearFilterByAuthorController
                     'page_title'    => __('Filter by author'),
                     'type'          => 'alert-danger',
                     'message'       => __('Wrong data'),
-                    'back_url'      => '/forum/filter/' . $id . '/?start=' . $start,
+                    'back_url'      => '/forum/filter/' . $id . '/' . ($page > 1 ? '?page=' . $page : ''),
                     'back_url_name' => __('Back'),
                 ]
             );
@@ -78,4 +78,5 @@ final readonly class ClearFilterByAuthorController
 
         redirect($topic->url);
     }
+
 }

@@ -47,7 +47,7 @@ final readonly class NewMessageController
 
     public function __invoke(int $id): string
     {
-        $start = (int) $this->request->getQuery('start', 0);
+        $page = max(1, (int) $this->request->getQuery('page', 1));
 
         try {
             $this->forumAccessUseCase->execute();
@@ -100,7 +100,7 @@ final readonly class NewMessageController
                     'title'         => __('New message'),
                     'type'          => 'alert-danger',
                     'message'       => sprintf(__('You cannot add the message so often<br>Please, wait %d sec.'), $flood),
-                    'back_url'      => $topic->url . ($start > 0 ? '?start=' . $start : ''),
+                    'back_url'      => $this->buildTopicBackUrl($topic->url, $page),
                     'back_url_name' => __('Back'),
                 ]
             );
@@ -137,7 +137,7 @@ final readonly class NewMessageController
                         'title'         => __('New message'),
                         'type'          => 'alert-danger',
                         'message'       => __('Message already exists'),
-                        'back_url'      => $topic->url . ($start > 0 ? '?start=' . $start : ''),
+                        'back_url'      => $this->buildTopicBackUrl($topic->url, $page),
                         'back_url_name' => __('Back'),
                     ]
                 );
@@ -181,12 +181,12 @@ final readonly class NewMessageController
                 'id'                => $topic->id,
                 'token'             => $token,
                 'topic'             => $topic,
-                'form_action'       => '/forum/new-message/' . $topic->id . '/?start=' . $start,
+                'form_action'       => '/forum/new-message/' . $topic->id . '/' . ($page > 1 ? '?page=' . $page : ''),
                 'add_file'          => $addFiles,
                 'msg'               => $msg === '' ? '' : $this->tools->checkout($msg, 0, 0),
                 'settings_forum'    => $this->getForumSettings(),
                 'show_post_preview' => ($msg !== '' && $this->request->getPost('submit') === null),
-                'back_url'          => $topic->url . ($start > 0 ? '?start=' . $start : ''),
+                'back_url'          => $this->buildTopicBackUrl($topic->url, $page),
                 'preview_message'   => $msgPreview,
                 'is_new_message'    => true,
             ]
@@ -225,5 +225,14 @@ final readonly class NewMessageController
         $this->session->set('token', $token);
 
         return $token;
+    }
+
+    private function buildTopicBackUrl(string $topicUrl, int $page): string
+    {
+        if ($page <= 1) {
+            return $topicUrl;
+        }
+
+        return $topicUrl . '?page=' . $page;
     }
 }

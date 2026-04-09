@@ -32,7 +32,7 @@ final readonly class ViewPostUseCase
     /**
      * @return array{post: ViewPostDTO, topic: mixed, canonical: string}
      */
-    public function execute(int $postId, int $start, array $forumSettings, string $homeUrl): array
+    public function execute(int $postId, array $forumSettings, string $homeUrl): array
     {
         $message = $this->messageRepository->findById($postId);
         if ($message === null) {
@@ -68,11 +68,10 @@ final readonly class ViewPostUseCase
 
         $files = $this->getFiles($message);
         $moderation = $this->getModerationInfo($message);
-        $actions = $this->getActions($message->id, $message->user_id, $start, (bool) $message->topic?->closed);
-
-        $page = $this->getMessagePage($message, $forumSettings);
-        $backToTopicUrl = $this->topicPathService->getTopicUrl($message->topic, $page);
-        $canonical = $homeUrl . $this->topicPathService->getTopicUrl($message->topic, $page > 1 ? $page : null);
+        $messagePage = $this->getMessagePage($message, $forumSettings);
+        $actions = $this->getActions($message->id, $message->user_id, $messagePage, (bool) $message->topic?->closed);
+        $backToTopicUrl = $this->topicPathService->getTopicUrl($message->topic, $messagePage);
+        $canonical = $homeUrl . $this->topicPathService->getTopicUrl($message->topic, $messagePage > 1 ? $messagePage : null);
 
         $post = new ViewPostDTO(
             id: $message->id,
@@ -142,7 +141,7 @@ final readonly class ViewPostUseCase
         );
     }
 
-    private function getActions(int $postId, ?int $authorId, int $start, bool $isTopicClosed): PostActionsDTO
+    private function getActions(int $postId, ?int $authorId, int $page, bool $isTopicClosed): PostActionsDTO
     {
         $replyUrl = null;
         $quoteUrl = null;
@@ -154,8 +153,8 @@ final readonly class ViewPostUseCase
             && $this->currentUser->id !== $authorId
             && (! $isTopicClosed || $canReplyInClosedTopic)
         ) {
-            $replyUrl = '/forum/reply-message/' . $postId . '/?start=' . $start;
-            $quoteUrl = '/forum/reply-message/' . $postId . '/?start=' . $start . '&amp;quote=1';
+            $replyUrl = '/forum/reply-message/' . $postId . '/' . ($page > 1 ? '?page=' . $page : '');
+            $quoteUrl = '/forum/reply-message/' . $postId . '/' . ($page > 1 ? '?page=' . $page . '&amp;quote=1' : '?quote=1');
         }
 
         return new PostActionsDTO($replyUrl, $quoteUrl);

@@ -43,12 +43,14 @@ final readonly class ForumTopicController
         }
 
         $setForum = $this->getForumSettings();
+        $perPage = (int) $this->currentUser->config->kmess;
         $page = max(1, (int) $this->request->getQuery('page', 1));
-        $start = max(0, (int) $this->request->getQuery('start', 0));
-        if ($page === 1 && $start > 0) {
-            $page = (int) floor($start / max(1, (int) $this->currentUser->config->kmess)) + 1;
+        if ($page === 1) {
+            $start = max(0, (int) $this->request->getQuery('start', 0));
+            if ($start > 0) {
+                $page = (int) floor($start / max(1, $perPage)) + 1;
+            }
         }
-        $start = ($page - 1) * (int) $this->currentUser->config->kmess;
 
         $filterByUsers = [];
         $filterTopicId = isset($_SESSION['fsort_id']) ? (int) $_SESSION['fsort_id'] : 0;
@@ -60,7 +62,6 @@ final readonly class ForumTopicController
         try {
             $result = $this->viewForumTopicUseCase->execute(
                 path: $path,
-                start: $start,
                 page: $page,
                 showClip: $this->request->getQuery('clip') !== null,
                 showVoteResult: $this->request->getQuery('vote_result') !== null,

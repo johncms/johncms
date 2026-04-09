@@ -47,7 +47,7 @@ final readonly class ReplyMessageController
 
     public function __invoke(int $id): string
     {
-        $start = (int) $this->request->getQuery('start', 0);
+        $page = max(1, (int) $this->request->getQuery('page', 1));
 
         try {
             $this->forumAccessUseCase->execute();
@@ -116,7 +116,7 @@ final readonly class ReplyMessageController
                     'title'         => __('New message'),
                     'type'          => 'alert-danger',
                     'message'       => sprintf(__('You cannot add the message so often<br>Please, wait %d sec.'), $flood),
-                    'back_url'      => $topic->url . ($start > 0 ? '?start=' . $start : ''),
+                    'back_url'      => $this->buildTopicBackUrl($topic->url, $page),
                     'back_url_name' => __('Back'),
                 ]
             );
@@ -138,7 +138,7 @@ final readonly class ReplyMessageController
                         'title'         => __('New message'),
                         'type'          => 'alert-danger',
                         'message'       => __('You have not entered the message'),
-                        'back_url'      => $this->getReplyUrl($id),
+                        'back_url'      => $this->getReplyUrl($id, $page),
                         'back_url_name' => __('Repeat'),
                     ]
                 );
@@ -165,7 +165,7 @@ final readonly class ReplyMessageController
                         'title'         => __('New message'),
                         'type'          => 'alert-danger',
                         'message'       => __('Message already exists'),
-                        'back_url'      => $topic->url . ($start > 0 ? '?start=' . $start : ''),
+                        'back_url'      => $this->buildTopicBackUrl($topic->url, $page),
                         'back_url_name' => __('Back'),
                     ]
                 );
@@ -219,14 +219,14 @@ final readonly class ReplyMessageController
                 'id'                => $sourceMessage->id,
                 'token'             => $token,
                 'topic'             => $topic,
-                'form_action'       => $this->getReplyUrl($sourceMessage->id, $start),
+                'form_action'       => $this->getReplyUrl($sourceMessage->id, $page),
                 'is_quote'          => $isQuote,
                 'add_file'          => $addFiles,
                 'msg'               => $msg === '' ? '' : $this->tools->checkout($msg, 0, 0),
                 'message'           => $sourceMessage,
                 'settings_forum'    => $this->getForumSettings(),
                 'show_post_preview' => ($this->request->getPost('submit') === null && $this->request->getPost('msg') !== null),
-                'back_url'          => $topic->url . ($start > 0 ? '?start=' . $start : ''),
+                'back_url'          => $this->buildTopicBackUrl($topic->url, $page),
                 'is_new_message'    => false,
                 'preview_message'   => $msgPreview,
             ]
@@ -267,16 +267,25 @@ final readonly class ReplyMessageController
         return $token;
     }
 
-    private function getReplyUrl(int $messageId, int $start = 0): string
+    private function getReplyUrl(int $messageId, int $page = 1): string
     {
         $url = '/forum/reply-message/' . $messageId . '/';
-        if ($start > 0) {
-            $url .= '?start=' . $start;
+        if ($page > 1) {
+            $url .= '?page=' . $page;
         }
         if ($this->request->getQuery('quote') !== null) {
-            $url .= ($start > 0 ? '&amp;' : '?') . 'quote=1';
+            $url .= ($page > 1 ? '&amp;' : '?') . 'quote=1';
         }
 
         return $url;
+    }
+
+    private function buildTopicBackUrl(string $topicUrl, int $page): string
+    {
+        if ($page <= 1) {
+            return $topicUrl;
+        }
+
+        return $topicUrl . '?page=' . $page;
     }
 }

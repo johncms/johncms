@@ -47,11 +47,11 @@ final readonly class PollVotersController
 
         try {
             $this->accessUseCase->execute($id);
-            $start = $this->resolveStart();
+            $page = max(1, (int) $this->request->getQuery('page', 1));
             $result = $this->viewPollVotersUseCase->execute(
                 new PollVotersQueryDTO(
                     topicId: $id,
-                    start: $start,
+                    page: $page,
                 )
             );
         } catch (ForumAccessDeniedException $exception) {
@@ -90,7 +90,7 @@ final readonly class PollVotersController
                 'items'         => $result->items,
                 'pagination'    => $this->tools->displayPagination(
                     '/forum/poll-voters/' . $id . '/?',
-                    $start,
+                    ($page - 1) * (int) $this->currentUser->config->kmess,
                     $result->total,
                     $this->currentUser->config->kmess
                 ),
@@ -99,12 +99,5 @@ final readonly class PollVotersController
                 'topic_url'     => $this->topicPathService->getTopicUrlById($id) ?? '/forum/',
             ]
         );
-    }
-
-    private function resolveStart(): int
-    {
-        $page = max(1, (int) $this->request->getQuery('page', 1));
-
-        return ($page - 1) * (int) $this->currentUser->config->kmess;
     }
 }

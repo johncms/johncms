@@ -40,7 +40,7 @@ final readonly class FilterByAuthorController
             return $this->forumErrorRenderer->render($this->render, $exception);
         }
 
-        $start = max(0, (int) $this->request->getQuery('start', 0));
+        $page = max(1, (int) $this->request->getQuery('page', 1));
 
         try {
             $context = $this->viewFilterByAuthorUseCase->execute($id);
@@ -52,7 +52,7 @@ final readonly class FilterByAuthorController
                     'title'         => __('Filter by author'),
                     'page_title'    => __('Filter by author'),
                     'message'       => __('Wrong data'),
-                    'back_url'      => '/forum/filter/' . $id . '/?start=' . $start,
+                    'back_url'      => '/forum/filter/' . $id . '/' . ($page > 1 ? '?page=' . $page : ''),
                     'back_url_name' => __('Back'),
                 ]
             );
@@ -78,17 +78,17 @@ final readonly class FilterByAuthorController
                 'title'               => __('Filter by author'),
                 'page_title'          => __('Filter by author'),
                 'id'                  => $context->topic->id,
-                'start'               => $start,
-                'back_url'            => $context->topic->url . ($start > 0 ? '?start=' . $start : ''),
+                'back_url'            => $context->topic->url . ($page > 1 ? '?page=' . $page : ''),
                 'total'               => count($context->authors),
                 'list'                => $context->authors,
                 'topic'               => $context->topic,
                 'saved'               => false,
                 'selected_user_ids'   => $selectedUsers,
-                'set_filter_action'   => '/forum/filter/' . $context->topic->id . '/set/?start=' . $start,
-                'clear_filter_action' => '/forum/filter/' . $context->topic->id . '/clear/?start=' . $start,
+                'set_filter_action'   => '/forum/filter/' . $context->topic->id . '/set/' . ($page > 1 ? '?page=' . $page : ''),
+                'clear_filter_action' => '/forum/filter/' . $context->topic->id . '/clear/' . ($page > 1 ? '?page=' . $page : ''),
                 'csrf_token'          => $this->csrf->getToken(),
             ]
         );
     }
+
 }

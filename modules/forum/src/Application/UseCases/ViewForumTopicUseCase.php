@@ -42,7 +42,6 @@ final readonly class ViewForumTopicUseCase
      */
     public function execute(
         string $path,
-        int $start,
         int $page,
         bool $showClip,
         bool $showVoteResult,
@@ -95,11 +94,13 @@ final readonly class ViewForumTopicUseCase
         }
 
         $isFilterEnabled = $filterEnabled && $filterTopicId === $topic->id;
+        $perPage = (int) $this->currentUser->config->kmess;
+        $start = ($page - 1) * $perPage;
 
         $messagesPaginator = $this->messageRepository->paginateByTopicIdWithUsersAndFiles(
             topicId: $topic->id,
             upfp: ! empty($setForum['upfp']),
-            perPage: (int) $this->currentUser->config->kmess,
+            perPage: $perPage,
             filterUserIds: $isFilterEnabled ? $filterByUsers : [],
         );
         $total = $messagesPaginator->total();
@@ -115,7 +116,7 @@ final readonly class ViewForumTopicUseCase
             || (
                 (int) $setForum['postclip'] === 2
                 && (
-                    (! empty($setForum['upfp']) && $start < (int) ceil($total - $this->currentUser->config->kmess))
+                    (! empty($setForum['upfp']) && $start < (int) ceil($total - $perPage))
                     || (empty($setForum['upfp']) && $start > 0)
                 )
             )
@@ -126,7 +127,7 @@ final readonly class ViewForumTopicUseCase
         $i = 1;
         $canReplyInClosedTopic = $this->currentUser->rights === 3 || $this->currentUser->rights >= 6;
         $messages = $messagesPaginator->getCollection()->map(
-            function (ForumMessage $message) use ($curator, $setForum, $access, &$i, $start, $total, $topic, $canReplyInClosedTopic): ForumMessage {
+            function (ForumMessage $message) use ($curator, $setForum, $access, &$i, $start, $total, $topic, $canReplyInClosedTopic, $page): ForumMessage {
                 if (
                     (
                         (($this->currentUser->rights === 3 || $this->currentUser->rights >= 6 || $curator)
@@ -154,8 +155,8 @@ final readonly class ViewForumTopicUseCase
                     && $this->currentUser->isValid()
                     && (! $topic->closed || $canReplyInClosedTopic)
                 ) {
-                    $message->reply_url = '/forum/reply-message/' . $message->id . '/?start=' . $start;
-                    $message->quote_url = '/forum/reply-message/' . $message->id . '/?start=' . $start . '&amp;quote=1';
+                    $message->reply_url = '/forum/reply-message/' . $message->id . '/' . ($page > 1 ? '?page=' . $page : '');
+                    $message->quote_url = '/forum/reply-message/' . $message->id . '/' . ($page > 1 ? '?page=' . $page . '&amp;quote=1' : '?quote=1');
                 }
 
                 ++$i;
@@ -216,7 +217,7 @@ final readonly class ViewForumTopicUseCase
                 'curators_array'   => $curatorsArray,
                 'view_count'       => $topic->view_count,
                 'pagination'       => $messagesPaginator->render(),
-                'start'            => $start,
+                'page'             => $page,
                 'id'               => $topic->id,
                 'token'            => $token,
                 'settings_forum'   => $setForum,

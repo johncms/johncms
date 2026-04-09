@@ -44,9 +44,13 @@ final class ForumLegacyRedirectResolver
                 $params['new'] = 1;
             }
 
+            $page = isset($query['page']) ? abs((int) $query['page']) : 0;
             $start = isset($query['start']) ? abs((int) $query['start']) : 0;
-            if ($start > 0) {
-                $params['start'] = $start;
+            if ($page <= 1 && $start > 0) {
+                $page = (int) floor($start / max(1, (int) $this->currentUser->config->kmess)) + 1;
+            }
+            if ($page > 1) {
+                $params['page'] = $page;
             }
 
             if ($params === []) {
@@ -74,9 +78,13 @@ final class ForumLegacyRedirectResolver
 
             $url = '/forum/post/' . $id . '/';
 
+            $page = isset($query['page']) ? abs((int) $query['page']) : 0;
             $start = isset($query['start']) ? abs((int) $query['start']) : 0;
-            if ($start > 0) {
-                $url .= '?start=' . $start;
+            if ($page <= 1 && $start > 0) {
+                $page = (int) floor($start / max(1, (int) $this->currentUser->config->kmess)) + 1;
+            }
+            if ($page > 1) {
+                $url .= '?page=' . $page;
             }
 
             return $url;
@@ -92,9 +100,13 @@ final class ForumLegacyRedirectResolver
                     $params['vr'] = $vr;
                 }
 
+                $page = isset($query['page']) ? abs((int) $query['page']) : 0;
                 $start = isset($query['start']) ? abs((int) $query['start']) : 0;
-                if ($start > 0) {
-                    $params['start'] = $start;
+                if ($page <= 1 && $start > 0) {
+                    $page = (int) floor($start / max(1, (int) $this->currentUser->config->kmess)) + 1;
+                }
+                if ($page > 1) {
+                    $params['page'] = $page;
                 }
 
                 return '/forum/topics-period/' . ($params === [] ? '' : '?' . http_build_query($params));
@@ -105,9 +117,13 @@ final class ForumLegacyRedirectResolver
             }
 
             if ($this->currentUser->isValid()) {
+                $page = isset($query['page']) ? abs((int) $query['page']) : 0;
                 $start = isset($query['start']) ? abs((int) $query['start']) : 0;
-                if ($start > 0) {
-                    return '/forum/unread/?' . http_build_query(['start' => $start]);
+                if ($page <= 1 && $start > 0) {
+                    $page = (int) floor($start / max(1, (int) $this->currentUser->config->kmess)) + 1;
+                }
+                if ($page > 1) {
+                    return '/forum/unread/?' . http_build_query(['page' => $page]);
                 }
 
                 return '/forum/unread/';

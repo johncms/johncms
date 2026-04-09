@@ -25,6 +25,8 @@ final readonly class ViewPollVotersUseCase
             throw new ForumValidationException('Poll not found.');
         }
 
+        $limit = (int) $this->currentUser->config->kmess;
+        $start = (max(1, $query->page) - 1) * max(1, $limit);
         $total = $this->voteRepository->countUsersByTopic($query->topicId);
         $items = [];
 
@@ -32,8 +34,8 @@ final readonly class ViewPollVotersUseCase
             $items = $this->mapItems(
                 $this->voteRepository->getUsersByTopic(
                     topicId: $query->topicId,
-                    start: $query->start,
-                    limit: (int) $this->currentUser->config->kmess,
+                    start: $start,
+                    limit: $limit,
                 )
             );
         }

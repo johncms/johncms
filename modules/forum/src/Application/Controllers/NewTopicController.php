@@ -49,7 +49,7 @@ final readonly class NewTopicController
 
     public function __invoke(int $id): string
     {
-        $start = (int) $this->request->getQuery('start', 0);
+        $page = max(1, (int) $this->request->getQuery('page', 1));
 
         try {
             $this->forumAccessUseCase->execute();
@@ -87,7 +87,7 @@ final readonly class NewTopicController
                     'title'         => __('New Topic'),
                     'type'          => 'alert-danger',
                     'message'       => sprintf(__('You cannot add the message so often<br>Please, wait %d sec.'), $flood),
-                    'back_url'      => $section->url . ($start > 0 ? '?start=' . $start : ''),
+                    'back_url'      => $section->url . ($page > 1 ? '?page=' . $page : ''),
                     'back_url_name' => __('Back'),
                 ]
             );
@@ -208,4 +208,5 @@ final readonly class NewTopicController
 
         return array_merge($setForumDefault, $setForum);
     }
+
 }

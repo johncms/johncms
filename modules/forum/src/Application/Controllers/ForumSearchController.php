@@ -43,15 +43,13 @@ final readonly class ForumSearchController
 
         $search = rawurldecode(trim((string) $this->request->getQuery('search', '')));
         $searchInTopicNames = $this->request->getQuery('t') !== null;
-        $page = max(0, (int) $this->request->getQuery('page', 0));
-        $start = $page > 0
-            ? ($page - 1) * (int) $this->currentUser->config->kmess
-            : max(0, (int) $this->request->getQuery('start', 0));
+        $page = max(1, (int) $this->request->getQuery('page', 1));
+        $offset = ($page - 1) * (int) $this->currentUser->config->kmess;
 
         try {
             $result = $this->viewForumSearchUseCase->execute(
                 new ForumSearchQueryDTO(
-                    start: $start,
+                    start: $offset,
                     search: $search,
                     searchInTopicNames: $searchInTopicNames,
                 )
@@ -72,16 +70,15 @@ final readonly class ForumSearchController
         $this->navChain->add(__('Forum'), '/forum/');
         $this->navChain->add(__('Forum search'));
 
-        $currentPage = $this->resolveCurrentPage($result->start, (int) $this->currentUser->config->kmess);
         $searchTitle = $result->query !== ''
             ? __('Search results for: %s', $result->query)
             : __('Forum search');
 
         $this->render->addData(
             [
-                'title'       => $this->buildSearchDocumentTitle($searchTitle, $currentPage),
+                'title'       => $this->buildSearchDocumentTitle($searchTitle, $page),
                 'page_title'  => $searchTitle,
-                'description' => $this->buildSearchDescription($searchTitle, $currentPage),
+                'description' => $this->buildSearchDescription($searchTitle, $page),
             ]
         );
 
@@ -90,7 +87,7 @@ final readonly class ForumSearchController
             [
                 'pagination'        => $this->tools->displayPagination(
                     '/forum/search/?' . ($result->searchInTopicNames ? 't=1&amp;' : '') . 'search=' . urlencode($result->query) . '&amp;',
-                    $result->start,
+                    $offset,
                     $result->total,
                     $this->currentUser->config->kmess
                 ),
@@ -102,13 +99,6 @@ final readonly class ForumSearchController
                 'history_reset_url' => '/forum/search/history/clear/',
             ]
         );
-    }
-
-    private function resolveCurrentPage(int $start, int $perPage): int
-    {
-        $safePerPage = max(1, $perPage);
-
-        return (int) floor(max(0, $start) / $safePerPage) + 1;
     }
 
     private function buildSearchDocumentTitle(string $baseTitle, int $page): string

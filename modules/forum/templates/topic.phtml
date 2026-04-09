@@ -14,6 +14,7 @@
  * @var $files_count
  * @var $unread_count
  * @var $pagination
+ * @var $page
  * @var $settings_forum
  * @var \Johncms\Modules\Forum\Domain\Models\ForumTopic $topic
  * @var $write_access
@@ -42,7 +43,7 @@ $this->layout('system::layout/default');
         <div>
             <?= __('Filter by author is activated') ?>
         </div>
-        <form action="/forum/filter/<?= $id ?>/clear/" method="post" class="mt-2">
+        <form action="/forum/filter/<?= $id ?>/clear/<?= $page > 1 ? '?page=' . $page : '' ?>" method="post" class="mt-2">
             <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
             <button type="submit" class="btn btn-link p-0"><?= __('Cancel Filter') ?></button>
         </form>
@@ -115,7 +116,7 @@ $this->layout('system::layout/default');
 <?php endif; ?>
 
 <?php if ($write_access && $settings_forum['upfp']): ?>
-    <form name="new_message" action="/forum/new-message/<?= $id ?>/?start=<?= $start ?>" method="post" class="mb-3">
+    <form name="new_message" action="/forum/new-message/<?= $id ?>/<?= $page > 1 ? '?page=' . $page : '' ?>" method="post" class="mb-3">
         <?php if (! empty($settings_forum['farea'])): ?>
             <input type="hidden" name="token" value="<?= $token ?>"/>
             <div class="form-group">
@@ -396,7 +397,7 @@ $this->layout('system::layout/default');
                 <?php endif; ?>
 
                 <?php if ($user->rights >= 7): ?>
-                    <a class="dropdown-item" href="/forum/curators/<?= $id ?>/?start=<?= $start ?>"><?= __('Curators of the Topic') ?></a>
+                    <a class="dropdown-item" href="/forum/curators/<?= $id ?>/<?= $page > 1 ? '?page=' . $page : '' ?>"><?= __('Curators of the Topic') ?></a>
                 <?php endif; ?>
 
                 <a class="dropdown-item" href="/forum/change-topic/<?= $id ?>/"><?= __('Change the topic') ?></a>
@@ -427,7 +428,7 @@ $this->layout('system::layout/default');
 <?php endif; ?>
 
 <?php if ($write_access && ! $settings_forum['upfp']): ?>
-    <form name="new_message" action="/forum/new-message/<?= $id ?>/?start=<?= $start ?>" method="post" class="mt-1 mb-2">
+    <form name="new_message" action="/forum/new-message/<?= $id ?>/<?= $page > 1 ? '?page=' . $page : '' ?>" method="post" class="mt-1 mb-2">
         <?php if (! empty($settings_forum['farea'])): ?>
             <input type="hidden" name="token" value="<?= $token ?>"/>
             <div class="form-group">
@@ -470,12 +471,12 @@ $this->layout('system::layout/default');
 <div>
     <div>
         <?php if ($filter_by_author): ?>
-            <form action="/forum/filter/<?= $id ?>/clear/" method="post">
+            <form action="/forum/filter/<?= $id ?>/clear/<?= $page > 1 ? '?page=' . $page : '' ?>" method="post">
                 <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
                 <button type="submit" class="btn btn-link p-0"><?= __('Cancel Filter') ?></button>
             </form>
         <?php else: ?>
-            <a href="/forum/filter/<?= $id ?>/?start=<?= $start ?>"><?= __('Filter by author') ?></a>
+            <a href="/forum/filter/<?= $id ?>/<?= $page > 1 ? '?page=' . $page : '' ?>"><?= __('Filter by author') ?></a>
         <?php endif; ?>
     </div>
 </div>

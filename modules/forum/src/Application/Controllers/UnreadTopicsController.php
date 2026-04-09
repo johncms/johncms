@@ -44,10 +44,11 @@ final readonly class UnreadTopicsController
         } catch (ForumAccessDeniedException $exception) {
             return $this->forumErrorRenderer->render($this->render, $exception);
         }
+        $start = (max(1, (int) $this->request->getQuery('page', 1)) - 1) * (int) $this->currentUser->config->kmess;
 
         $result = $this->viewUnreadTopicsUseCase->execute(
             new UnreadTopicsQueryDTO(
-                start: max(0, (int) $this->request->getQuery('start', 0)),
+                start: $start,
             )
         );
 
@@ -58,7 +59,7 @@ final readonly class UnreadTopicsController
         return $this->render->render(
             'forum::new_topics',
             [
-                'pagination'           => $this->buildPagination((int) $this->request->getQuery('start', 0), $result->total),
+                'pagination'           => $this->buildPagination($start, $result->total),
                 'title'                => $caption,
                 'page_title'           => $caption,
                 'empty_message'        => __('The list is empty'),

@@ -8,7 +8,7 @@ final readonly class PollVotersQueryDTO
 {
     public function __construct(
         public int $topicId,
-        public int $start,
+        public int $page,
     ) {
     }
 }

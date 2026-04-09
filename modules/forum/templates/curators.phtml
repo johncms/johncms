@@ -13,7 +13,7 @@
  * @var $page_title
  * @var $curators_list
  * @var $back_url
- * @var $start
+ * @var $page
  * @var \Johncms\Modules\Forum\Domain\Models\ForumTopic $topic
  * @var $saved
  */
@@ -30,7 +30,7 @@ $this->layout(
 <?php if ($saved): ?>
     <div class="alert alert-success"><?= __('Changes saved') ?></div>
 <?php endif; ?>
-<form action="/forum/curators/<?= $id ?>/?start=<?= $start ?>" method="post">
+<form action="/forum/curators/<?= $id ?>/<?= $page > 1 ? '?page=' . $page : '' ?>" method="post">
     <?php if (empty($curators_list)): ?>
         <div class="alert alert-info">
             <?= __('The list is empty') ?>

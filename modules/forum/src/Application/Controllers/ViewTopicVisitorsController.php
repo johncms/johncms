@@ -59,12 +59,13 @@ final readonly class ViewTopicVisitorsController
         }
 
         $showGuests = $this->request->getQuery('mode') === 'guests';
+        $start = (max(1, (int) $this->request->getQuery('page', 1)) - 1) * (int) $this->currentUser->config->kmess;
 
         try {
             $result = $this->viewTopicVisitorsUseCase->execute(
                 $id,
                 new ForumVisitorsQueryDTO(
-                    start: $this->resolveStart(),
+                    start: $start,
                     guests: $showGuests,
                 )
             );
@@ -96,7 +97,7 @@ final readonly class ViewTopicVisitorsController
                 'items'           => $result->items,
                 'pagination'      => $this->tools->displayPagination(
                     '/forum/topic-visitors/' . $id . '/?' . ($showGuests ? 'mode=guests&amp;' : ''),
-                    $result->start,
+                    $start,
                     $result->total,
                     $this->currentUser->config->kmess
                 ),
@@ -110,12 +111,5 @@ final readonly class ViewTopicVisitorsController
                 'topic_url'       => $this->topicPathService->getTopicUrlById($id) ?? '/forum/',
             ]
         );
-    }
-
-    private function resolveStart(): int
-    {
-        $page = max(1, (int) $this->request->getQuery('page', 1));
-
-        return ($page - 1) * (int) $this->currentUser->config->kmess;
     }
 }

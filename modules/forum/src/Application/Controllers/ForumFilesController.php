@@ -38,9 +38,10 @@ final readonly class ForumFilesController
         } catch (ForumAccessDeniedException $exception) {
             return $this->forumErrorRenderer->render($this->render, $exception);
         }
+        $start = (max(1, (int) $this->request->getQuery('page', 1)) - 1) * (int) $this->currentUser->config->kmess;
 
         $query = new ForumFilesQueryDTO(
-            start: $this->resolveStart(),
+            start: $start,
             contextCategoryId: max(0, (int) $this->request->getQuery('c', 0)),
             contextSectionId: max(0, (int) $this->request->getQuery('s', 0)),
             contextTopicId: max(0, (int) $this->request->getQuery('t', 0)),
@@ -76,12 +77,5 @@ final readonly class ForumFilesController
     private function normalizeFileType(int $fileType): int
     {
         return $fileType > 0 && $fileType < 10 ? $fileType : 0;
-    }
-
-    private function resolveStart(): int
-    {
-        $page = max(1, (int) $this->request->getQuery('page', 1));
-
-        return ($page - 1) * (int) $this->currentUser->config->kmess;
     }
 }

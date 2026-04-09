@@ -15,6 +15,7 @@
  * @var $preview_message
  * @var $back_url
  * @var $msg
+ * @var $page
  * @var $csrf_token
  * @var \Johncms\Users\User $message_author
  */
@@ -28,7 +29,7 @@ $this->layout(
 );
 ?>
 
-<form name="edit_post" action="/forum/edit-post/<?= $id ?>/?start=<?= $start ?>" method="post">
+<form name="edit_post" action="/forum/edit-post/<?= $id ?>/<?= $page > 1 ? '?page=' . $page : '' ?>" method="post">
     <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
     <?= $this->fetch(
         'system::app/ckeditor',
