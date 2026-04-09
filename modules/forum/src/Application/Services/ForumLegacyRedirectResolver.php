@@ -19,6 +19,8 @@ final class ForumLegacyRedirectResolver
 
     public function resolve(array $query): ?string
     {
+        checkRedirect();
+
         $act = isset($query['act']) ? trim((string) $query['act']) : '';
 
         if ($act === 'files') {
