@@ -279,8 +279,8 @@ class Database
 
         $connection->statement(
             "INSERT INTO `guest` (`adm`, `time`, `user_id`, `name`, `text`, `ip`, `browser`, `admin`, `otvet`, `otime`) VALUES
-(1, $now, 1, 'admin', 'Добро пожаловать в Админ Клуб!\r\nСюда имеют доступ ТОЛЬКО Модераторы и Администраторы.\r\nПростым пользователям доступ сюда закрыт.', 2130706433, 'Opera/9.51', '', '', 0),
-(0, $now, 1, 'admin', 'Добро пожаловать в Гостевую!', 2130706433, 'Opera/9.51', 'admin', 'Проверка ответа Администратора', $now),
+(1, $now, 1, 'admin', 'Добро пожаловать в Админ Клуб!\r\nСюда имеют доступ ТОЛЬКО Модераторы и Администраторы.\r\nПростым пользователям доступ сюда закрыт.', 2130706433, 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36', '', '', 0),
+(0, $now, 1, 'admin', 'Добро пожаловать в Гостевую!', 2130706433, 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36', 'admin', 'Проверка ответа Администратора', $now),
 (0, $now, 1, 'admin', 'Гостевая поддерживает полноценное форматирование текста в визуальном редакторе:<br>
 <span style=\"font-weight: bold\">жирный</span><br>
 <span style=\"font-style:italic\">курсив</span><br>
@@ -288,7 +288,7 @@ class Database
 <span style=\"color:red\">красный</span><br>
 <span style=\"color:green\">зеленый</span><br>
 <span style=\"color:blue\">синий</span><br>
-Вставку ссылок: <a href=\"https://johncms.com\">https://johncms.com</a>, картинок, таблиц, видео и многого другого', 2130706433, 'Opera/9.51', '', '', 0);"
+Вставку ссылок: <a href=\"https://johncms.com\">https://johncms.com</a>, картинок, таблиц, видео и многого другого', 2130706433, 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36', '', '', 0);"
         );
     }
 }
