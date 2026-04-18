@@ -11,12 +11,21 @@
 declare(strict_types=1);
 
 use Illuminate\Pagination\LengthAwarePaginator;
+use Johncms\Modules\Forum\Application\Services\ForumVisitorPlaceFormatter;
+use Johncms\System\i18n\Translator;
 use Johncms\Users\User;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
 /** @var Johncms\System\Http\Environment $env */
 $env = di(Johncms\System\Http\Environment::class);
+
+$forumPlaceFormatter = null;
+try {
+    $forumPlaceFormatter = di(ForumVisitorPlaceFormatter::class);
+    di(Translator::class)->addTranslationDomain('forum', MODULES_PATH . 'forum/locale', false);
+} catch (Throwable) {
+}
 
 $data = [];
 $data['filters'] = [
@@ -54,9 +63,12 @@ $total = $users->total();
 
 if ($total) {
     $items = $users->getItems()->map(
-        static function ($user) use ($tools) {
+        static function ($user) use ($tools, $forumPlaceFormatter) {
             /** @var $user User */
-            $user->place_name = $tools->displayPlace((string) $user->place);
+            $place = (string) $user->place;
+            $user->place_name = $forumPlaceFormatter !== null && str_starts_with($place, '/forum')
+                ? $forumPlaceFormatter->format($place)
+                : $tools->displayPlace($place);
             $user->display_date = $tools->displayDate($user->sestime);
             return $user;
         }
