@@ -84,16 +84,16 @@ final readonly class ForumVisitorPlaceFormatter
         }
 
         return match ($place) {
-            'forum' => '<a href="/forum/">' . __('In the forum Main') . '</a>',
-            'who' => __('Here, in the List'),
-            'files' => '<a href="/forum/files/">' . __('Looking forum files') . '</a>',
-            'new' => '<a href="' . ($this->currentUser->isValid() ? '/forum/unread/' : '/forum/latest-topics/') . '">' . __('In the unreads') . '</a>',
-            'search' => '<a href="/forum/search/">' . __('Forum search') . '</a>',
+            'forum' => '<a href="/forum/">' . d__('forum', 'In the forum Main') . '</a>',
+            'who' => d__('forum', 'Here, in the List'),
+            'files' => '<a href="/forum/files/">' . d__('forum', 'Looking forum files') . '</a>',
+            'new' => '<a href="' . ($this->currentUser->isValid() ? '/forum/unread/' : '/forum/latest-topics/') . '">' . d__('forum', 'In the unreads') . '</a>',
+            'search' => '<a href="/forum/search/">' . d__('forum', 'Forum search') . '</a>',
             'section' => $this->formatCategoryPlace($placeId),
             'topics' => $this->formatSectionPlace($placeId),
             'say', 'topic' => $this->formatTopicPlace($place, $placeId, $actType),
             'show_post' => $this->formatShowPostPlace($placeId),
-            default => '<a href="/forum/">' . __('In the forum Main') . '</a>',
+            default => '<a href="/forum/">' . d__('forum', 'In the forum Main') . '</a>',
         };
     }
 
@@ -101,20 +101,20 @@ final readonly class ForumVisitorPlaceFormatter
     {
         $section = $this->sectionRepository->findById($sectionId);
         if ($section === null) {
-            return '<a href="/forum/">' . __('In the forum Main') . '</a>';
+            return '<a href="/forum/">' . d__('forum', 'In the forum Main') . '</a>';
         }
 
-        return __('In the Category') . ' &quot;<a href="' . $section->url . '">' . $this->escapeName($section->name) . '</a>&quot;';
+        return d__('forum', 'In the Category') . ' &quot;<a href="' . $section->url . '">' . $this->escapeName($section->name) . '</a>&quot;';
     }
 
     private function formatSectionPlace(int $sectionId): string
     {
         $section = $this->sectionRepository->findById($sectionId);
         if ($section === null) {
-            return '<a href="/forum/">' . __('In the forum Main') . '</a>';
+            return '<a href="/forum/">' . d__('forum', 'In the forum Main') . '</a>';
         }
 
-        return __('In the Section') . ' &quot;<a href="' . $section->url . '">' . $this->escapeName($section->name) . '</a>&quot;';
+        return d__('forum', 'In the Section') . ' &quot;<a href="' . $section->url . '">' . $this->escapeName($section->name) . '</a>&quot;';
     }
 
     private function formatTopicPlace(string $place, int $placeId, string $actType): string
@@ -133,30 +133,30 @@ final readonly class ForumVisitorPlaceFormatter
         }
 
         if ($topic === null) {
-            return '<a href="/forum/">' . __('In the forum Main') . '</a>';
+            return '<a href="/forum/">' . d__('forum', 'In the forum Main') . '</a>';
         }
 
         $link = '<a href="' . $this->topicPathService->getTopicUrl($topic) . '">' . $this->escapeName($topic->name) . '</a>';
 
         if ($actType === 'reply') {
-            return __('Answers in the Topic') . ' &quot;' . $link . '&quot;';
+            return d__('forum', 'Answers in the Topic') . ' &quot;' . $link . '&quot;';
         }
 
         if ($place === 'say') {
-            return __('Writes in the Topic') . ' &quot;' . $link . '&quot;';
+            return d__('forum', 'Writes in the Topic') . ' &quot;' . $link . '&quot;';
         }
 
-        return __('In the Topic') . ' &quot;' . $link . '&quot;';
+        return d__('forum', 'In the Topic') . ' &quot;' . $link . '&quot;';
     }
 
     private function formatShowPostPlace(int $messageId): string
     {
         $message = $this->messageRepository->findById($messageId);
         if ($message === null || $message->topic === null) {
-            return '<a href="/forum/">' . __('In the forum Main') . '</a>';
+            return '<a href="/forum/">' . d__('forum', 'In the forum Main') . '</a>';
         }
 
-        return __('In the Topic') . ' &quot;<a href="' . $this->topicPathService->getTopicUrl($message->topic) . '">' . $this->escapeName($message->topic->name) . '</a>&quot;';
+        return d__('forum', 'In the Topic') . ' &quot;<a href="' . $this->topicPathService->getTopicUrl($message->topic) . '">' . $this->escapeName($message->topic->name) . '</a>&quot;';
     }
 
     private function escapeName(?string $name): string
