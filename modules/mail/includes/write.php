@@ -409,7 +409,7 @@ if (isset($_POST['submit']) && empty($user->ban['1']) && empty($user->ban['3']) 
         "
         )->fetch();
 
-        if ($rres['text'] === $text) {
+        if ($rres && $rres['text'] === $text) {
             $error[] = __('Message already exists');
         }
     }

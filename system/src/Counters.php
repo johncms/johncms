@@ -304,8 +304,10 @@ class Counters
         $file = CACHE_PATH . 'counters-forum.cache';
         $new_messages = 0;
 
-        if (file_exists($file) && filemtime($file) > (time() - 600)) {
-            $res = json_decode(file_get_contents($file), true);
+        $res = file_exists($file) && filemtime($file) > (time() - 600)
+            ? json_decode(file_get_contents($file), true)
+            : null;
+        if (is_array($res)) {
             $topics = $res['topics'];
             $message = $res['messages'];
         } else {

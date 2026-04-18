@@ -19,9 +19,9 @@ if ($locale !== 'en') {
         upload_url="/guestbook/upload_file/"
         name="message"
         language="<?= $locale ?>"
-        errors="<?= $errors ?>"
+        errors="<?= $errors ?? '' ?>"
         id="message2"
-        label="<?= $label ?>"
-        value="<?= $value ?>"
+        label="<?= $label ?? '' ?>"
+        value="<?= $value ?? '' ?>"
     ></ckeditor-input-component>
 </div>
