@@ -27,12 +27,37 @@ $view->addData(
     ]
 );
 
+$defaultHost = 'localhost';
+$defaultUser = '';
+$defaultPassword = '';
+$defaultDatabase = 'johncms';
+
+if (file_exists('/.dockerenv')) {
+    $envFile = dirname(__DIR__, 2) . '/.env';
+    if (file_exists($envFile)) {
+        $env = [];
+        foreach (file($envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $line) {
+            $line = trim($line);
+            if (str_starts_with($line, '#') || ! str_contains($line, '=')) {
+                continue;
+            }
+            [$key, $value] = explode('=', $line, 2);
+            $env[trim($key)] = trim($value, " \t\"'");
+        }
+        $projectName     = $env['COMPOSE_PROJECT_NAME'] ?? '';
+        $defaultHost     = $projectName !== '' ? $projectName . '.mariadb' : $defaultHost;
+        $defaultUser     = $env['DB_USERNAME'] ?? $defaultUser;
+        $defaultPassword = $env['DB_PASSWORD'] ?? $defaultPassword;
+        $defaultDatabase = $env['DB_DATABASE'] ?? $defaultDatabase;
+    }
+}
+
 $fields = [
-    'db_host'     => $request->getPost('db_host', 'localhost'),
+    'db_host'     => $request->getPost('db_host', $defaultHost),
     'db_port'     => $request->getPost('db_port', 3306, FILTER_VALIDATE_INT),
-    'db_name'     => $request->getPost('db_name', 'johncms'),
-    'db_user'     => $request->getPost('db_user', ''),
-    'db_password' => $request->getPost('db_password', ''),
+    'db_name'     => $request->getPost('db_name', $defaultDatabase),
+    'db_user'     => $request->getPost('db_user', $defaultUser),
+    'db_password' => $request->getPost('db_password', $defaultPassword),
 ];
 
 $errors = [];
