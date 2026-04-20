@@ -60,6 +60,7 @@
         "monolog/monolog": "^3.9",
         "simba77/ckeditor-media-embed": "^1.1",
         "symfony/config": "^7.4",
+        "symfony/console": "^7.4",
         "symfony/dependency-injection": "^7.4",
         "symfony/mailer": "^v7.4.0",
         "symfony/routing": "^7.4"
