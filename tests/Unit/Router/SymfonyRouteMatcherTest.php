@@ -58,6 +58,21 @@ final class SymfonyRouteMatcherTest extends TestCase
         self::assertContains('GET', $result->allowedMethods);
     }
 
+    public function testHigherPriorityRouteIsMatchedFirstForSamePath(): void
+    {
+        $routes = new RouteCollection();
+        $routes->add('homepage.index', new Route('/', ['_handler' => 'default_handler'], [], [], '', [], ['GET']), 0);
+        $routes->add('custom.homepage', new Route('/', ['_handler' => 'override_handler'], [], [], '', [], ['GET']), 1);
+
+        $context = new RequestContext();
+        $matcher = new SymfonyRouteMatcher(new UrlMatcher($routes, $context), $context);
+
+        $result = $matcher->dispatch('GET', '/');
+
+        self::assertSame(RouteMatchResult::FOUND, $result->status);
+        self::assertSame('override_handler', $result->handler);
+    }
+
     public function testDispatchReturnsNotFoundResult(): void
     {
         $routes = new RouteCollection();

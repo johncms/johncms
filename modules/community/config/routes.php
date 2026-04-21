@@ -12,10 +12,10 @@ use Johncms\Router\RouteCollection;
 use Johncms\System\Users\User;
 
 return static function (RouteCollection $router, User $user): void {
-    $router->get('/community', CommunityIndexController::class);
-    $router->get('/community/administration', AdministrationController::class);
-    $router->get('/community/birthdays', CommunityBirthdaysController::class);
-    $router->get('/community/search', CommunitySearchController::class);
-    $router->get('/community/top/{mod}', CommunityTopController::class)->defaults(['mod' => null]);
-    $router->get('/community/users', CommunityUsersController::class);
+    $router->get('/community', CommunityIndexController::class)->name('community.index');
+    $router->get('/community/administration', AdministrationController::class)->name('community.administration');
+    $router->get('/community/birthdays', CommunityBirthdaysController::class)->name('community.birthdays');
+    $router->get('/community/search', CommunitySearchController::class)->name('community.search');
+    $router->get('/community/top/{mod}', CommunityTopController::class)->name('community.top')->defaults(['mod' => null]);
+    $router->get('/community/users', CommunityUsersController::class)->name('community.users');
 };

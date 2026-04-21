@@ -16,21 +16,25 @@ use Johncms\Router\RouteCollection;
 use Johncms\System\Users\User;
 
 return static function (RouteCollection $router, User $user): void {
-    $router->map(['GET', 'POST'], '/guestbook', GuestbookController::class);
-    $router->map(['GET', 'POST'], '/guestbook/ga', SwitchTypeController::class);
+    $router->map(['GET', 'POST'], '/guestbook', GuestbookController::class)->name('guestbook.index');
+    $router->map(['GET', 'POST'], '/guestbook/ga', SwitchTypeController::class)->name('guestbook.switch_type');
     $router
         ->map(['GET', 'POST'], '/guestbook/edit', EditEntryController::class)
+        ->name('guestbook.edit')
         ->addMiddleware(GuestbookEditAccessMiddleware::class);
     $router
         ->map(['GET', 'POST'], '/guestbook/delpost', DeleteEntryController::class)
+        ->name('guestbook.delete')
         ->addMiddleware(GuestbookEditAccessMiddleware::class);
     $router
         ->map(['GET', 'POST'], '/guestbook/otvet', ReplyController::class)
+        ->name('guestbook.reply')
         ->addMiddleware(GuestbookReplyAccessMiddleware::class);
     $router
         ->map(['GET', 'POST'], '/guestbook/clean', ClearGuestbookController::class)
+        ->name('guestbook.clean')
         ->addMiddleware(GuestbookCleanAccessMiddleware::class);
     if ($user->isValid()) {
-        $router->map(['GET', 'POST'], '/guestbook/upload_file', UploadFileController::class);
+        $router->map(['GET', 'POST'], '/guestbook/upload_file', UploadFileController::class)->name('guestbook.upload_file');
     }
 };

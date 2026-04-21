@@ -8,9 +8,9 @@ use Johncms\Router\RouteCollection;
 use Johncms\System\Users\User;
 
 return static function (RouteCollection $router, User $user): void {
-    $router->map(['GET', 'POST'], '/admin/login', [UsersController::class, 'login']);
+    $router->map(['GET', 'POST'], '/admin/login', [UsersController::class, 'login'])->name('admin.login');
     if ($user->rights >= 6 && $user->isValid()) {
-        $router->map(['GET', 'POST'], '/admin/system_check', [SystemCheckController::class, 'index']);
+        $router->map(['GET', 'POST'], '/admin/system_check', [SystemCheckController::class, 'index'])->name('admin.system_check');
     }
-    $router->map(['GET', 'POST'], '/admin/{action}', 'modules/admin/index.php')->defaults(['action' => null]);
+    $router->map(['GET', 'POST'], '/admin/{action}', 'modules/admin/index.php')->name('admin.index')->defaults(['action' => null]);
 };

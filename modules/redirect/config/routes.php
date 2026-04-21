@@ -6,5 +6,5 @@ use Johncms\Router\RouteCollection;
 use Johncms\System\Users\User;
 
 return static function (RouteCollection $router, User $user): void {
-    $router->map(['GET', 'POST'], '/redirect', 'modules/redirect/index.php');
+    $router->map(['GET', 'POST'], '/redirect', 'modules/redirect/index.php')->name('redirect.index');
 };
