@@ -5,7 +5,9 @@ declare(strict_types=1);
 use Johncms\Router\RouteCollection;
 use Johncms\System\Users\User;
 
-// Пример файла для маршрутов дополнительных модулей.
+// УСТАРЕЛО: config/routes.local.php устарел и будет удалён в будущих версиях.
+// Перенесите маршруты в modules/{name}/config/routes.php — файл подхватывается автоматически.
+//
 // Для использования файла, убрать расширение .example
 // Должно получиться routes.local.php
 

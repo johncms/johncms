@@ -48,6 +48,10 @@ class RouteCollectorFactory
     private function addLocalRoutes(RouteCollection $router, User $user): void
     {
         if (is_file(CONFIG_PATH . 'routes.local.php')) {
+            trigger_error(
+                'config/routes.local.php is deprecated. Move your routes to modules/{name}/config/routes.php instead.',
+                E_USER_DEPRECATED
+            );
             $registerRoutes = require CONFIG_PATH . 'routes.local.php';
             $registerRoutes($router, $user);
         }

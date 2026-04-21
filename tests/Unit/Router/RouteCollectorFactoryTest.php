@@ -56,6 +56,7 @@ final class RouteCollectorFactoryTest extends TestCase
         file_put_contents($localRoutesFile, $content);
 
         try {
+            $this->expectUserDeprecationMessageMatches('/config\/routes\.local\.php is deprecated/');
             $routes = (new RouteCollectorFactory())($this->container);
             $localRoute = $this->findRouteByPath($routes, '/test-local-route');
             self::assertNotNull($localRoute, 'Route from routes.local.php should be loaded');
