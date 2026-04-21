@@ -239,6 +239,12 @@ composer cs-check
 * UI build succeeds if frontend code was changed.
 * Services and repositories are injected via interfaces.
 
+## Documentation
+
+* `docs/` — GitBook documentation submodule.
+* File names must be in English (e.g. `getting-started.md`), not transliterated Russian.
+* When adding or removing pages, always update `docs/SUMMARY.md` to reflect the change.
+
 ## Docker Command Policy
 
 * Run all `php` and `composer` commands inside the `php-fpm` Docker container.
