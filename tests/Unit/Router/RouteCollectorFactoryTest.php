@@ -12,31 +12,65 @@ use Symfony\Component\Routing\RouteCollection;
 
 final class RouteCollectorFactoryTest extends TestCase
 {
-    public function testInvokeBuildsCompiledCollectionFromConfigRoutes(): void
+    private ContainerInterface $container;
+
+    protected function setUp(): void
     {
         $user = new User();
-        $container = $this->createMock(ContainerInterface::class);
-        $container->expects(self::once())
-            ->method('get')
-            ->with(User::class)
-            ->willReturn($user);
+        $this->container = $this->createMock(ContainerInterface::class);
+        $this->container->method('get')->with(User::class)->willReturn($user);
+    }
 
-        $factory = new RouteCollectorFactory();
-        $routes = $factory($container);
+    public function testModuleRoutesAreLoaded(): void
+    {
+        $routes = (new RouteCollectorFactory())($this->container);
 
         self::assertInstanceOf(RouteCollection::class, $routes);
         self::assertGreaterThan(0, $routes->count());
 
         $forumDownloadRoute = $this->findRouteByPath($routes, '/forum/download-file/{id}');
-        self::assertNotNull($forumDownloadRoute);
+        self::assertNotNull($forumDownloadRoute, 'Forum route should be loaded from module config');
         self::assertSame('\d+', $forumDownloadRoute->getRequirement('id'));
 
         $guestbookCleanRoute = $this->findRouteByPath($routes, '/guestbook/clean');
-        self::assertNotNull($guestbookCleanRoute);
+        self::assertNotNull($guestbookCleanRoute, 'Guestbook route should be loaded from module config');
         self::assertSame(
             [\Johncms\Modules\Guestbook\Application\Middlewares\GuestbookCleanAccessMiddleware::class],
             $guestbookCleanRoute->getDefault('_middlewares')
         );
+    }
+
+    public function testLocalRoutesAreLoadedWhenFileExists(): void
+    {
+        $localRoutesFile = CONFIG_PATH . 'routes.local.php';
+        $content = <<<'PHP'
+            <?php
+            declare(strict_types=1);
+            use Johncms\Router\RouteCollection;
+            use Johncms\System\Users\User;
+            return static function (RouteCollection $router, User $user): void {
+                $router->get('/test-local-route', 'modules/test/index.php');
+            };
+            PHP;
+
+        file_put_contents($localRoutesFile, $content);
+
+        try {
+            $routes = (new RouteCollectorFactory())($this->container);
+            $localRoute = $this->findRouteByPath($routes, '/test-local-route');
+            self::assertNotNull($localRoute, 'Route from routes.local.php should be loaded');
+        } finally {
+            unlink($localRoutesFile);
+        }
+    }
+
+    public function testNoErrorWhenLocalRoutesFileMissing(): void
+    {
+        $localRoutesFile = CONFIG_PATH . 'routes.local.php';
+        self::assertFileDoesNotExist($localRoutesFile);
+
+        $routes = (new RouteCollectorFactory())($this->container);
+        self::assertInstanceOf(RouteCollection::class, $routes);
     }
 
     private function findRouteByPath(RouteCollection $routes, string $path): ?\Symfony\Component\Routing\Route

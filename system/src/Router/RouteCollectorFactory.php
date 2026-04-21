@@ -25,6 +25,8 @@ class RouteCollectorFactory
 
         $router = new RouteCollection(new RouteRequirements());
         $this->addRoutesFromConfig($router, $user);
+        $this->addModuleRoutes($router, $user);
+        $this->addLocalRoutes($router, $user);
 
         return $router->compile();
     }
@@ -33,5 +35,21 @@ class RouteCollectorFactory
     {
         $registerRoutes = require CONFIG_PATH . 'routes.php';
         $registerRoutes($router, $user);
+    }
+
+    private function addModuleRoutes(RouteCollection $router, User $user): void
+    {
+        foreach (glob(MODULES_PATH . '*/config/routes.php') as $file) {
+            $registerRoutes = require $file;
+            $registerRoutes($router, $user);
+        }
+    }
+
+    private function addLocalRoutes(RouteCollection $router, User $user): void
+    {
+        if (is_file(CONFIG_PATH . 'routes.local.php')) {
+            $registerRoutes = require CONFIG_PATH . 'routes.local.php';
+            $registerRoutes($router, $user);
+        }
     }
 }

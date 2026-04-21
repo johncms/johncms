@@ -2,26 +2,26 @@
 
 declare(strict_types=1);
 
-/**
- * @var \Johncms\Router\RouteCollection $router
- */
+use Johncms\Router\RouteCollection;
+use Johncms\System\Users\User;
 
 // Пример файла для маршрутов дополнительных модулей.
 // Для использования файла, убрать расширение .example
 // Должно получиться routes.local.php
 
-/*
- * /contacts/ - Это адрес страницы по которому будет доступен наш модуль
- * modules/contacts/index.php - Это путь к точке входа в наш модуль
- */
-
-$router
-    ->map(['GET', 'POST'], '/contacts/{city}/{id}/{street}', 'modules/contacts/index.php')
-    ->defaults([
-        'city' => null,
-        'id' => null,
-        'street' => null,
-    ])
-    ->requirements([
-        'id' => '\d+',
-    ]);
+return static function (RouteCollection $router, User $user): void {
+    /*
+     * /contacts/ - Это адрес страницы по которому будет доступен наш модуль
+     * modules/contacts/index.php - Это путь к точке входа в наш модуль
+     */
+    $router
+        ->map(['GET', 'POST'], '/contacts/{city}/{id}/{street}', 'modules/contacts/index.php')
+        ->defaults([
+            'city'   => null,
+            'id'     => null,
+            'street' => null,
+        ])
+        ->requirements([
+            'id' => '\d+',
+        ]);
+};

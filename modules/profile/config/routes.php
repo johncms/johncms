@@ -6,4 +6,6 @@ use Johncms\Router\RouteCollection;
 use Johncms\System\Users\User;
 
 return static function (RouteCollection $router, User $user): void {
+    $router->map(['GET', 'POST'], '/profile/skl.php', 'modules/profile/skl.php');
+    $router->map(['GET', 'POST'], '/profile', 'modules/profile/index.php');
 };
