@@ -11,7 +11,6 @@ use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Application\UseCases\DeleteVoteUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureDeleteVoteAccessUseCase;
-use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\System\Http\Request;
 use Johncms\System\View\Render;
 
@@ -21,7 +20,6 @@ final readonly class DeleteVoteController
         private ControllerContext $controllerContext,
         private Render $render,
         private Request $request,
-        private EnsureForumAccessUseCase $forumAccessUseCase,
         private ForumErrorRenderer $forumErrorRenderer,
         private EnsureDeleteVoteAccessUseCase $accessUseCase,
         private DeleteVoteUseCase $deleteVoteUseCase,
@@ -32,12 +30,6 @@ final readonly class DeleteVoteController
 
     public function __invoke(int $id): string
     {
-        try {
-            $this->forumAccessUseCase->execute();
-        } catch (ForumAccessDeniedException $exception) {
-            return $this->forumErrorRenderer->render($this->render, $exception);
-        }
-
         try {
             $this->accessUseCase->execute($id);
         } catch (ForumAccessDeniedException $exception) {

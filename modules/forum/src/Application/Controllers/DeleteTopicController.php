@@ -11,7 +11,6 @@ use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\Services\ForumSectionPathService;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Application\UseCases\DeleteTopicUseCase;
-use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetDeleteTopicContextUseCase;
 use Johncms\System\Http\Request;
 use Johncms\System\View\Render;
@@ -24,7 +23,6 @@ final readonly class DeleteTopicController
         private Render $render,
         private Request $request,
         private User $user,
-        private EnsureForumAccessUseCase $forumAccessUseCase,
         private ForumErrorRenderer $forumErrorRenderer,
         private GetDeleteTopicContextUseCase $contextUseCase,
         private DeleteTopicUseCase $deleteTopicUseCase,
@@ -39,12 +37,6 @@ final readonly class DeleteTopicController
      */
     public function __invoke(int $id): string
     {
-        try {
-            $this->forumAccessUseCase->execute();
-        } catch (ForumAccessDeniedException $exception) {
-            return $this->forumErrorRenderer->render($this->render, $exception);
-        }
-
         try {
             $topic = $this->contextUseCase->execute($id);
         } catch (ForumAccessDeniedException $exception) {

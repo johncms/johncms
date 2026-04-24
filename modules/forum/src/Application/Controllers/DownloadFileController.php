@@ -5,9 +5,6 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
-use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
-use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
-use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\Modules\Forum\Domain\Repository\ForumFileRepositoryInterface;
 use Johncms\System\View\Render;
 
@@ -16,8 +13,6 @@ final readonly class DownloadFileController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private EnsureForumAccessUseCase $forumAccessUseCase,
-        private ForumErrorRenderer $forumErrorRenderer,
         private ForumFileRepositoryInterface $fileRepository,
     ) {
         $this->controllerContext->initModule('forum');
@@ -25,12 +20,6 @@ final readonly class DownloadFileController
 
     public function __invoke(int $id): string
     {
-        try {
-            $this->forumAccessUseCase->execute();
-        } catch (ForumAccessDeniedException $exception) {
-            return $this->forumErrorRenderer->render($this->render, $exception);
-        }
-
         $file = $this->fileRepository->findById($id);
         if ($file === null) {
             return $this->renderNotFound();

@@ -5,9 +5,6 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
-use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
-use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
-use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\ViewLatestTopicsUseCase;
 use Johncms\NavChain;
 use Johncms\System\View\Render;
@@ -18,8 +15,6 @@ final readonly class LatestTopicsController
         private ControllerContext $controllerContext,
         private Render $render,
         private NavChain $navChain,
-        private EnsureForumAccessUseCase $forumAccessUseCase,
-        private ForumErrorRenderer $forumErrorRenderer,
         private ViewLatestTopicsUseCase $viewLatestTopicsUseCase,
     ) {
         $this->controllerContext->initModule('forum');
@@ -27,12 +22,6 @@ final readonly class LatestTopicsController
 
     public function __invoke(): string
     {
-        try {
-            $this->forumAccessUseCase->execute();
-        } catch (ForumAccessDeniedException $exception) {
-            return $this->forumErrorRenderer->render($this->render, $exception);
-        }
-
         $result = $this->viewLatestTopicsUseCase->execute();
 
         $caption = __('Last 10');

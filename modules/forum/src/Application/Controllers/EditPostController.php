@@ -11,7 +11,6 @@ use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\AttachUploadedFilesToMessageUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EditPostUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureEditPostAccessUseCase;
-use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetEditPostContextUseCase;
 use Johncms\Security\Csrf;
 use Johncms\System\Http\Request;
@@ -31,7 +30,6 @@ final readonly class EditPostController
         private EditorContentNormalizer $editorContentNormalizer,
         private Csrf $csrf,
         private User $currentUser,
-        private EnsureForumAccessUseCase $forumAccessUseCase,
         private ForumErrorRenderer $forumErrorRenderer,
         private GetEditPostContextUseCase $contextUseCase,
         private EnsureEditPostAccessUseCase $accessUseCase,
@@ -44,12 +42,6 @@ final readonly class EditPostController
     public function __invoke(int $id): string
     {
         $page = max(1, (int) $this->request->getQuery('page', 1));
-
-        try {
-            $this->forumAccessUseCase->execute();
-        } catch (ForumAccessDeniedException $exception) {
-            return $this->forumErrorRenderer->render($this->render, $exception);
-        }
 
         try {
             $context = $this->contextUseCase->execute($id, $this->getForumSettings());

@@ -12,7 +12,6 @@ use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\Services\ForumSectionPathService;
 use Johncms\Modules\Forum\Application\UseCases\AttachUploadedFilesToMessageUseCase;
 use Johncms\Modules\Forum\Application\UseCases\CreateTopicUseCase;
-use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetNewTopicContextUseCase;
 use Johncms\Modules\Forum\Domain\Models\ForumMessage;
 use Johncms\Modules\Forum\Domain\Models\ForumTopic;
@@ -37,7 +36,6 @@ final readonly class NewTopicController
         private Embed $embed,
         private NavChain $navChain,
         private User $currentUser,
-        private EnsureForumAccessUseCase $forumAccessUseCase,
         private ForumErrorRenderer $forumErrorRenderer,
         private GetNewTopicContextUseCase $contextUseCase,
         private CreateTopicUseCase $createTopicUseCase,
@@ -50,19 +48,6 @@ final readonly class NewTopicController
     public function __invoke(int $id): string
     {
         $page = max(1, (int) $this->request->getQuery('page', 1));
-
-        try {
-            $this->forumAccessUseCase->execute();
-        } catch (ForumAccessDeniedException $exception) {
-            return $this->forumErrorRenderer->render(
-                $this->render,
-                $exception,
-                [
-                    'back_url'      => $this->sectionPathService->getSectionUrlById($id) ?? '/forum/',
-                    'back_url_name' => __('Go to Section'),
-                ]
-            );
-        }
 
         try {
             $section = $this->contextUseCase->execute($id);

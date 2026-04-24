@@ -9,7 +9,6 @@ use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\ChangeTopicUseCase;
-use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetChangeTopicContextUseCase;
 use Johncms\Modules\Forum\Domain\Models\ForumTopic;
 use Johncms\System\Http\Request;
@@ -22,7 +21,6 @@ final readonly class ChangeTopicController
         private ControllerContext $controllerContext,
         private Render $render,
         private Request $request,
-        private EnsureForumAccessUseCase $forumAccessUseCase,
         private ForumErrorRenderer $forumErrorRenderer,
         private GetChangeTopicContextUseCase $contextUseCase,
         private ChangeTopicUseCase $changeTopicUseCase,
@@ -32,22 +30,6 @@ final readonly class ChangeTopicController
 
     public function __invoke(int $id): string
     {
-        try {
-            $this->forumAccessUseCase->execute();
-        } catch (ForumAccessDeniedException $exception) {
-            return $this->forumErrorRenderer->render(
-                $this->render,
-                $exception,
-                [
-                    'title'         => __('Access forbidden'),
-                    'type'          => 'alert-danger',
-                    'message'       => __('Access forbidden'),
-                    'back_url'      => '/forum/',
-                    'back_url_name' => __('Back'),
-                ]
-            );
-        }
-
         try {
             $topic = $this->contextUseCase->execute($id);
         } catch (ForumAccessDeniedException | ForumNotFoundException $exception) {

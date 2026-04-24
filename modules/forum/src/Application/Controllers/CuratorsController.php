@@ -8,7 +8,6 @@ use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
-use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetCuratorsContextUseCase;
 use Johncms\Modules\Forum\Application\UseCases\UpdateCuratorsUseCase;
 use Johncms\System\Http\Request;
@@ -20,7 +19,6 @@ final readonly class CuratorsController
         private ControllerContext $controllerContext,
         private Render $render,
         private Request $request,
-        private EnsureForumAccessUseCase $forumAccessUseCase,
         private ForumErrorRenderer $forumErrorRenderer,
         private GetCuratorsContextUseCase $contextUseCase,
         private UpdateCuratorsUseCase $updateCuratorsUseCase,
@@ -30,12 +28,6 @@ final readonly class CuratorsController
 
     public function __invoke(int $id): string
     {
-        try {
-            $this->forumAccessUseCase->execute();
-        } catch (ForumAccessDeniedException $exception) {
-            return $this->forumErrorRenderer->render($this->render, $exception);
-        }
-
         try {
             $context = $this->contextUseCase->execute($id);
         } catch (ForumAccessDeniedException $exception) {

@@ -6,10 +6,8 @@ namespace Johncms\Modules\Forum\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Forum\Application\DTO\ForumFilesQueryDTO;
-use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
-use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\ViewForumFilesUseCase;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
@@ -24,7 +22,6 @@ final readonly class ForumFilesController
         private Request $request,
         private NavChain $navChain,
         private User $currentUser,
-        private EnsureForumAccessUseCase $forumAccessUseCase,
         private ForumErrorRenderer $forumErrorRenderer,
         private ViewForumFilesUseCase $viewForumFilesUseCase,
     ) {
@@ -33,11 +30,6 @@ final readonly class ForumFilesController
 
     public function __invoke(): string
     {
-        try {
-            $this->forumAccessUseCase->execute();
-        } catch (ForumAccessDeniedException $exception) {
-            return $this->forumErrorRenderer->render($this->render, $exception);
-        }
         $start = (max(1, (int) $this->request->getQuery('page', 1)) - 1) * (int) $this->currentUser->config->kmess;
 
         $query = new ForumFilesQueryDTO(

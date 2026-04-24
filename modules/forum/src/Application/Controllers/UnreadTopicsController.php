@@ -8,7 +8,6 @@ use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Forum\Application\DTO\UnreadTopicsQueryDTO;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
-use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumUserAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\ViewUnreadTopicsUseCase;
 use Johncms\NavChain;
@@ -28,7 +27,6 @@ final readonly class UnreadTopicsController
         private Csrf $csrf,
         private Tools $tools,
         private User $currentUser,
-        private EnsureForumAccessUseCase $forumAccessUseCase,
         private EnsureForumUserAccessUseCase $forumUserAccessUseCase,
         private ForumErrorRenderer $forumErrorRenderer,
         private ViewUnreadTopicsUseCase $viewUnreadTopicsUseCase,
@@ -39,7 +37,6 @@ final readonly class UnreadTopicsController
     public function __invoke(): string
     {
         try {
-            $this->forumAccessUseCase->execute();
             $this->forumUserAccessUseCase->execute();
         } catch (ForumAccessDeniedException $exception) {
             return $this->forumErrorRenderer->render($this->render, $exception);

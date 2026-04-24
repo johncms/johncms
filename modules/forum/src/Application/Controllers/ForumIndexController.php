@@ -5,10 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
-use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
-use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\Services\ForumLegacyRedirectResolver;
-use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\ViewForumIndexUseCase;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
@@ -23,8 +20,6 @@ final readonly class ForumIndexController
         private Request $request,
         private NavChain $navChain,
         private Tools $tools,
-        private EnsureForumAccessUseCase $forumAccessUseCase,
-        private ForumErrorRenderer $forumErrorRenderer,
         private ForumLegacyRedirectResolver $legacyRedirectResolver,
         private ViewForumIndexUseCase $viewForumIndexUseCase,
     ) {
@@ -38,12 +33,6 @@ final readonly class ForumIndexController
             http_response_code(301);
             header('Location: ' . $legacyRedirectUrl);
             exit;
-        }
-
-        try {
-            $this->forumAccessUseCase->execute();
-        } catch (ForumAccessDeniedException $exception) {
-            return $this->forumErrorRenderer->render($this->render, $exception);
         }
 
         /** @var \Johncms\Counters $counters */

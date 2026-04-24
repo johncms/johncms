@@ -10,7 +10,6 @@ use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Application\UseCases\AttachUploadedFilesToMessageUseCase;
-use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetNewMessageContextUseCase;
 use Johncms\Modules\Forum\Application\UseCases\PostMessageUseCase;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
@@ -35,7 +34,6 @@ final readonly class NewMessageController
         private Embed $embed,
         private User $currentUser,
         private ForumMessageRepositoryInterface $messageRepository,
-        private EnsureForumAccessUseCase $forumAccessUseCase,
         private ForumErrorRenderer $forumErrorRenderer,
         private GetNewMessageContextUseCase $contextUseCase,
         private PostMessageUseCase $postMessageUseCase,
@@ -48,19 +46,6 @@ final readonly class NewMessageController
     public function __invoke(int $id): string
     {
         $page = max(1, (int) $this->request->getQuery('page', 1));
-
-        try {
-            $this->forumAccessUseCase->execute();
-        } catch (ForumAccessDeniedException $exception) {
-            return $this->forumErrorRenderer->render(
-                $this->render,
-                $exception,
-                [
-                    'back_url'      => '/forum/',
-                    'back_url_name' => __('Back'),
-                ]
-            );
-        }
 
         try {
             $topic = $this->contextUseCase->execute($id);

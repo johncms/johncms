@@ -11,7 +11,6 @@ use Johncms\Modules\Forum\Application\Exceptions\UploadExpiredException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Application\UseCases\AttachFileToPostUseCase;
-use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetAttachFileContextUseCase;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\System\Http\Request;
@@ -23,7 +22,6 @@ final readonly class AddFileController
         private ControllerContext $controllerContext,
         private Render $render,
         private Request $request,
-        private EnsureForumAccessUseCase $forumAccessUseCase,
         private ForumErrorRenderer $forumErrorRenderer,
         private GetAttachFileContextUseCase $contextUseCase,
         private AttachFileToPostUseCase $attachFileToPostUseCase,
@@ -37,12 +35,6 @@ final readonly class AddFileController
         $config = config('johncms');
         $forumConfig = config('forum');
         $page = (int) $this->request->getQuery('page', 1);
-
-        try {
-            $this->forumAccessUseCase->execute();
-        } catch (ForumAccessDeniedException $exception) {
-            return $this->forumErrorRenderer->render($this->render, $exception);
-        }
 
         try {
             $context = $this->contextUseCase->execute($id, $page);

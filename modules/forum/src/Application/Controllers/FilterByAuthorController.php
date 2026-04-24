@@ -6,9 +6,7 @@ namespace Johncms\Modules\Forum\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Forum\Application\Exceptions\ForumValidationException;
-use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
-use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\ViewFilterByAuthorUseCase;
 use Johncms\NavChain;
 use Johncms\Security\Csrf;
@@ -25,7 +23,6 @@ final readonly class FilterByAuthorController
         private Session $session,
         private NavChain $navChain,
         private Csrf $csrf,
-        private EnsureForumAccessUseCase $forumAccessUseCase,
         private ForumErrorRenderer $forumErrorRenderer,
         private ViewFilterByAuthorUseCase $viewFilterByAuthorUseCase,
     ) {
@@ -34,12 +31,6 @@ final readonly class FilterByAuthorController
 
     public function __invoke(int $id): string
     {
-        try {
-            $this->forumAccessUseCase->execute();
-        } catch (ForumAccessDeniedException $exception) {
-            return $this->forumErrorRenderer->render($this->render, $exception);
-        }
-
         $page = max(1, (int) $this->request->getQuery('page', 1));
 
         try {

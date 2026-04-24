@@ -4,11 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\Controllers;
 
-use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\ForumUtils;
-use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
-use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\ViewForumSectionUseCase;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
@@ -22,8 +19,6 @@ final readonly class ForumSectionController
         private Request $request,
         private Tools $tools,
         private NavChain $navChain,
-        private EnsureForumAccessUseCase $forumAccessUseCase,
-        private ForumErrorRenderer $forumErrorRenderer,
         private ViewForumSectionUseCase $viewForumSectionUseCase,
     ) {
     }
@@ -31,12 +26,6 @@ final readonly class ForumSectionController
     public function __invoke(string $sectionPath): string
     {
         unset($_SESSION['fsort_id'], $_SESSION['fsort_users']);
-
-        try {
-            $this->forumAccessUseCase->execute();
-        } catch (ForumAccessDeniedException $exception) {
-            return $this->forumErrorRenderer->render($this->render, $exception);
-        }
 
         $page = max(1, (int) $this->request->getQuery('page', 1));
 

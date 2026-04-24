@@ -8,7 +8,6 @@ use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Forum\Application\DTO\ForumVisitorsQueryDTO;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
-use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumUserAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\ViewForumVisitorsUseCase;
 use Johncms\NavChain;
@@ -26,7 +25,6 @@ final readonly class ViewForumVisitorsController
         private NavChain $navChain,
         private Tools $tools,
         private User $currentUser,
-        private EnsureForumAccessUseCase $forumAccessUseCase,
         private EnsureForumUserAccessUseCase $forumUserAccessUseCase,
         private ForumErrorRenderer $forumErrorRenderer,
         private ViewForumVisitorsUseCase $viewForumVisitorsUseCase,
@@ -37,7 +35,6 @@ final readonly class ViewForumVisitorsController
     public function __invoke(): string
     {
         try {
-            $this->forumAccessUseCase->execute();
             $this->forumUserAccessUseCase->execute();
         } catch (ForumAccessDeniedException $exception) {
             return $this->forumErrorRenderer->render($this->render, $exception);

@@ -4,11 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\Controllers;
 
-use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\ForumUtils;
-use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
-use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\ViewForumTopicUseCase;
 use Johncms\NavChain;
 use Johncms\Security\Csrf;
@@ -26,8 +23,6 @@ final readonly class ForumTopicController
         private Tools $tools,
         private User $currentUser,
         private NavChain $navChain,
-        private EnsureForumAccessUseCase $forumAccessUseCase,
-        private ForumErrorRenderer $forumErrorRenderer,
         private ViewForumTopicUseCase $viewForumTopicUseCase,
         private Csrf $csrf,
         private Bbcode $bbcode,
@@ -36,12 +31,6 @@ final readonly class ForumTopicController
 
     public function __invoke(string $path): string
     {
-        try {
-            $this->forumAccessUseCase->execute();
-        } catch (ForumAccessDeniedException $exception) {
-            return $this->forumErrorRenderer->render($this->render, $exception);
-        }
-
         $setForum = $this->getForumSettings();
         $perPage = (int) $this->currentUser->config->kmess;
         $page = max(1, (int) $this->request->getQuery('page', 1));

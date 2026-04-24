@@ -8,7 +8,6 @@ use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
-use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureMoveTopicAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetMoveTopicContextUseCase;
 use Johncms\Modules\Forum\Application\UseCases\MoveTopicUseCase;
@@ -24,7 +23,6 @@ final readonly class MoveTopicController
         private Render $render,
         private Request $request,
         private Csrf $csrf,
-        private EnsureForumAccessUseCase $forumAccessUseCase,
         private ForumErrorRenderer $forumErrorRenderer,
         private EnsureMoveTopicAccessUseCase $accessUseCase,
         private GetMoveTopicContextUseCase $contextUseCase,
@@ -35,12 +33,6 @@ final readonly class MoveTopicController
 
     public function __invoke(int $id): string
     {
-        try {
-            $this->forumAccessUseCase->execute();
-        } catch (ForumAccessDeniedException $exception) {
-            return $this->forumErrorRenderer->render($this->render, $exception);
-        }
-
         try {
             $this->accessUseCase->execute();
             $other = $this->request->getQuery('other', null, FILTER_VALIDATE_INT);
