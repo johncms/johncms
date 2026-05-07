@@ -142,7 +142,6 @@ $actions = [
     'comments'        => 'comments.php',
     'files_upload'    => 'files_upload.php',
     'load_file'       => 'fileControl/load_file.php',
-    'new_files'       => 'files_new.php',
     'redirect'        => 'redirect.php',
     'review_comments' => 'comments_review.php',
     'search'          => 'search.php',
@@ -210,13 +209,13 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
         $total_new = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'  AND `time` > $old AND `dir` LIKE '" . ($res_down_cat['dir']) . "%'")->fetchColumn();
 
         if ($total_new) {
-            $new_url = $url . '?act=new_files&amp;id=' . $id;
+            $new_url = '/downloads/new/?id=' . $id;
         }
     } else {
         $total_new = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'  AND `time` > $old")->fetchColumn();
 
         if ($total_new) {
-            $new_url = $url . '?act=new_files';
+            $new_url = '/downloads/new/';
         }
     }
     $urls['new'] = $new_url ?? '';

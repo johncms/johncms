@@ -8,7 +8,7 @@
  * @link      https://johncms.com JohnCMS Project
  */
 
-namespace Downloads\Install;
+namespace Johncms\Modules\Downloads\Install;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Schema\Blueprint;

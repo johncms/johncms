@@ -87,6 +87,8 @@
             "Johncms\\Modules\\Homepage\\": "modules/homepage/src/",
             "Johncms\\Modules\\News\\": "modules/news/src/",
             "Johncms\\Modules\\Forum\\": "modules/forum/src/",
+            "Johncms\\Modules\\Downloads\\": "modules/downloads/src/",
+            "Downloads\\": "modules/downloads/classes/",
             "Johncms\\Modules\\Community\\": "modules/community/src/"
         }
     },

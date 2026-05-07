@@ -1,5 +1,6 @@
 # Common ignores
 /.idea
+/.claude
 /config/autoload/*.local.php
 /config/*.local.php
 /dist
