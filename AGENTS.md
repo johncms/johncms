@@ -205,6 +205,44 @@ Security principle: **escape on output, not on input**.
 * Avoid double-escaping: data should be escaped exactly once, at the final output boundary.
 * Repositories/use cases/controllers must not mix persistence with presentation escaping.
 
+## Page Title and Description with Pagination
+
+When building document `title` or meta `description` for paginated pages, apply the suffix only from page 2 onward using the translation key `d__('system', 'Page')`:
+
+**Title:**
+
+```php
+private function buildDocumentTitle(string $title, int $page): string
+{
+    if ($page <= 1) {
+        return $title;
+    }
+
+    return $title . ' — ' . d__('system', 'Page') . ' ' . $page;
+}
+```
+
+**Description:**
+
+```php
+private function buildDescription(string $description, int $page): string
+{
+    if ($page <= 1 || $description === '') {
+        return $description;
+    }
+
+    return $description . ' — ' . d__('system', 'Page') . ' ' . $page;
+}
+```
+
+Rules:
+
+* Page 1 receives no suffix — title and description stay unchanged.
+* Description is returned unchanged if it is empty, regardless of page number.
+* The separator is ` — ` (em dash with spaces).
+* Always use `d__('system', 'Page')` for the translated word "Page"; never hardcode it.
+* Apply this pattern consistently across all modules that render paginated pages.
+
 ## Commit Messages
 
 Use **Conventional Commits**.
