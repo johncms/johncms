@@ -144,7 +144,6 @@ $actions = [
     'load_file'       => 'fileControl/load_file.php',
     'redirect'        => 'redirect.php',
     'review_comments' => 'comments_review.php',
-    'search'          => 'search.php',
     'top_users'       => 'top_users.php',
     'user_files'      => 'files_user.php',
     'view'            => 'view.php',
@@ -175,6 +174,11 @@ $redirects = [
         2       => '/downloads/top/commented/',
         default => '/downloads/top/',
     },
+    'search' => static fn () => '/downloads/search/' . (
+        isset($_GET['search']) && $_GET['search'] !== ''
+            ? '?search=' . rawurlencode(trim($_GET['search'])) . ($id ? '&id=1' : '')
+            : ''
+    ),
 ];
 
 if (isset($redirects[$act])) {

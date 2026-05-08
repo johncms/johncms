@@ -18,7 +18,7 @@ final class DownloadFileRepository implements DownloadFileRepositoryInterface
     {
         $threshold = time() - self::NEW_FILES_THRESHOLD_SECONDS;
 
-        $query = DownloadFile::where('type', 2)->where('time', '>', $threshold);
+        $query = DownloadFile::query()->where('type', 2)->where('time', '>', $threshold);
 
         if ($directoryPrefix !== null) {
             $query->where('dir', 'like', $directoryPrefix . '%');
@@ -29,9 +29,22 @@ final class DownloadFileRepository implements DownloadFileRepositoryInterface
 
     public function getTopFiles(DownloadTopSort $sort, int $limit): Collection
     {
-        return DownloadFile::where('type', 2)
+        return DownloadFile::query()
+            ->where('type', 2)
             ->orderByDesc($sort->column())
             ->limit($limit)
             ->get();
+    }
+
+    public function searchFiles(string $query, bool $searchInDescription, int $page, int $perPage): LengthAwarePaginator
+    {
+        $like = '%' . strtr($query, ['_' => '\\_', '%' => '\\%', '*' => '%']) . '%';
+        $column = $searchInDescription ? 'about' : 'rus_name';
+
+        return DownloadFile::query()
+            ->where('type', 2)
+            ->where($column, 'like', $like)
+            ->orderBy('rus_name')
+            ->paginate($perPage, page: $page);
     }
 }

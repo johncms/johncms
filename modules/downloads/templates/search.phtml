@@ -9,32 +9,20 @@
  */
 
 /**
- * @var $title
- * @var $page_title
  * @var $files
  * @var $total
  * @var $urls
  * @var $pagination
  * @var $show_empty_info
  * @var $search_query
+ * @var $search_in_description
+ * @var \Johncms\Users\User $user
  */
 
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $page_title,
-    ]
-);
+$this->layout('system::layout/default');
 ?>
 
-<?php if (! $config['mod_down']): ?>
-    <div class="alert alert-danger border-0 shadow">
-        <?= __('Downloads are closed') ?>
-    </div>
-<?php endif; ?>
-
-<form action="?act=search" method="post" class="mb-3">
+<form action="/downloads/search/" method="get" class="mb-3">
     <div class="form-group">
         <label for="search_query"><?= __('Search query') ?></label>
         <input type="text" class="form-control" id="search_query" placeholder="<?= __('Search query') ?>"
@@ -42,11 +30,11 @@ $this->layout(
     </div>
     <div class="form-group">
         <div class="custom-control custom-checkbox mb-3">
-            <input type="checkbox" class="custom-control-input" name="id" value="1" id="search_t" <?= ($id ? 'checked="checked"' : '') ?>>
+            <input type="checkbox" class="custom-control-input" name="id" value="1" id="search_t" <?= ($search_in_description ? 'checked="checked"' : '') ?>>
             <label class="custom-control-label" for="search_t"><?= __('Search in description') ?></label>
         </div>
     </div>
-    <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Search') ?></button>
+    <button type="submit" class="btn btn-primary"><?= __('Search') ?></button>
 </form>
 
 <?php if (empty($files) && $show_empty_info): ?>
@@ -75,7 +63,7 @@ $this->layout(
 
 <div class="mt-2">
     <div class="pb-2">
-        <a href="?act=search"><?= __('New Search') ?></a>
+        <a href="/downloads/search/"><?= __('New Search') ?></a>
     </div>
 
     <a href="<?= $urls['downloads'] ?>"><?= __('Downloads') ?></a>
