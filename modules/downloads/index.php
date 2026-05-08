@@ -145,7 +145,6 @@ $actions = [
     'redirect'        => 'redirect.php',
     'review_comments' => 'comments_review.php',
     'search'          => 'search.php',
-    'top_files'       => 'files_top.php',
     'top_users'       => 'top_users.php',
     'user_files'      => 'files_user.php',
     'view'            => 'view.php',
@@ -167,6 +166,20 @@ if (($user->rights >= 6 || $user->rights === 4)) {
         'scan_dir'      => 'scan_dir.php',
     ];
     $actions = array_merge($actions, $admin_actions);
+}
+
+$redirects = [
+    'new_files' => static fn () => '/downloads/new/' . ($id ? '?id=' . $id : ''),
+    'top_files' => static fn () => match($id) {
+        1       => '/downloads/top/downloaded/',
+        2       => '/downloads/top/commented/',
+        default => '/downloads/top/',
+    },
+];
+
+if (isset($redirects[$act])) {
+    header('Location: ' . $redirects[$act](), true, 301);
+    exit;
 }
 
 if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {

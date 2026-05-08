@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Johncms\Modules\Downloads\Infrastructure\Persistence\Repository;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
+use Johncms\Modules\Downloads\Domain\Enums\DownloadTopSort;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\Modules\Downloads\Domain\Repository\DownloadFileRepositoryInterface;
 
@@ -23,5 +25,13 @@ final class DownloadFileRepository implements DownloadFileRepositoryInterface
         }
 
         return $query->orderByDesc('time')->paginate($perPage, page: $page);
+    }
+
+    public function getTopFiles(DownloadTopSort $sort, int $limit): Collection
+    {
+        return DownloadFile::where('type', 2)
+            ->orderByDesc($sort->column())
+            ->limit($limit)
+            ->get();
     }
 }
