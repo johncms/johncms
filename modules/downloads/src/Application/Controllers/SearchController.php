@@ -35,7 +35,7 @@ final readonly class SearchController
         $page = max(1, (int) $this->request->getQuery('page', 1));
 
         $this->navChain->add(__('Downloads'), '/downloads/');
-        $this->navChain->add(__('Search'));
+        $this->navChain->add(__('Search'), '/downloads/search/');
 
         if (! empty($rawQuery) && mb_strlen($rawQuery) < 2 || mb_strlen($rawQuery) > 64) {
             return $this->render->render(
@@ -50,18 +50,17 @@ final readonly class SearchController
             );
         }
 
-        $pageTitle = __('Search results');
-        $documentTitle = $pageTitle . ' — ' . __('Downloads');
-
-        $this->render->addData(
-            [
-                'title'       => $this->buildDocumentTitle($documentTitle, $page),
-                'page_title'  => $pageTitle,
-                'description' => $this->buildDescription($documentTitle, $page),
-            ]
-        );
-
         if (empty($rawQuery)) {
+            $pageTitle = __('Search');
+            $documentTitle = $pageTitle . ' — ' . __('Downloads');
+            $this->render->addData(
+                [
+                    'title'       => $documentTitle,
+                    'page_title'  => $pageTitle,
+                    'description' => $documentTitle,
+                ]
+            );
+
             return $this->render->render(
                 'downloads::search',
                 [
@@ -77,6 +76,17 @@ final readonly class SearchController
         }
 
         $result = $this->useCase->execute($rawQuery, $searchInDescription, $page, $this->currentUser->config->kmess);
+
+        $pageTitle = __('Search results for: %s', $result->searchQuery);
+        $documentTitle = $pageTitle . ' — ' . __('Downloads');
+
+        $this->render->addData(
+            [
+                'title'       => $this->buildDocumentTitle($documentTitle, $page),
+                'page_title'  => $pageTitle,
+                'description' => $this->buildDescription($documentTitle, $page),
+            ]
+        );
 
         $files = [];
         foreach ($result->files as $file) {
