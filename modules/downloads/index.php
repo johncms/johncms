@@ -168,7 +168,7 @@ $redirects = [
     'new_files'  => static fn () => '/downloads/new/' . ($id ? '?id=' . $id : ''),
     'top_users'  => static fn () => '/downloads/top-users/',
     'user_files' => static fn () => $id > 0 ? '/downloads/user-files/' . $id . '/' : '/downloads/',
-    'top_files' => static fn () => match($id) {
+    'top_files' => static fn () => match ($id) {
         1       => '/downloads/top/downloaded/',
         2       => '/downloads/top/commented/',
         default => '/downloads/top/',

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\PageMeta;
 use Johncms\Modules\Downloads\Application\UseCases\ViewTopUsersUseCase;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
@@ -54,10 +55,11 @@ final readonly class TopUsersController
         $this->navChain->add(__('Downloads'), '/downloads/');
         $this->navChain->add($pageTitle);
 
+        $meta = new PageMeta($documentTitle, $page);
         $this->render->addData([
-            'title'       => $this->buildDocumentTitle($documentTitle, $page),
+            'title'       => $meta->title,
             'page_title'  => $pageTitle,
-            'description' => $this->buildDescription($documentTitle, $page),
+            'description' => $meta->description,
         ]);
 
         return $this->render->render(
@@ -74,23 +76,5 @@ final readonly class TopUsersController
                 'urls'       => ['downloads' => '/downloads/'],
             ]
         );
-    }
-
-    private function buildDocumentTitle(string $title, int $page): string
-    {
-        if ($page <= 1) {
-            return $title;
-        }
-
-        return $title . ' — ' . d__('system', 'Page') . ' ' . $page;
-    }
-
-    private function buildDescription(string $description, int $page): string
-    {
-        if ($page <= 1 || $description === '') {
-            return $description;
-        }
-
-        return $description . ' — ' . d__('system', 'Page') . ' ' . $page;
     }
 }

@@ -37,7 +37,7 @@ final readonly class TopFilesController
             $files[] = Download::displayFile($file->toArray());
         }
 
-        $pageTitle = match($downloadSort) {
+        $pageTitle = match ($downloadSort) {
             DownloadTopSort::Commented  => __('Most Commented'),
             DownloadTopSort::Downloaded => __('Most Downloaded'),
             DownloadTopSort::Popular    => __('Popular Files'),
