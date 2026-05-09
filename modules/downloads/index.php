@@ -141,7 +141,6 @@ $actions = [
     'comments'           => 'comments.php',
     'files_upload'    => 'files_upload.php',
     'load_file'       => 'fileControl/load_file.php',
-    'redirect'        => 'redirect.php',
     'view'            => 'view.php',
 ];
 
