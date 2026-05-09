@@ -8,6 +8,7 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator as ConcretePaginator;
 use Johncms\Modules\Downloads\Domain\Enums\DownloadTopSort;
+use Johncms\Modules\Downloads\Domain\Models\DownloadComment;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\Modules\Downloads\Domain\Repository\DownloadFileRepositoryInterface;
 use Johncms\Users\User as UserModel;
@@ -97,6 +98,21 @@ final class DownloadFileRepository implements DownloadFileRepositoryInterface
             ->where('download__bookmark.user_id', $userId)
             ->select('download__files.*', 'download__bookmark.id as bid')
             ->orderByDesc('download__files.time')
+            ->paginate($perPage, page: $page);
+    }
+
+    public function paginateCommentsReview(int $page, int $perPage): LengthAwarePaginator
+    {
+        return DownloadComment::query()
+            ->leftJoin('users', 'download__comments.user_id', '=', 'users.id')
+            ->leftJoin('download__files', 'download__comments.sub_id', '=', 'download__files.id')
+            ->select(
+                'download__comments.*',
+                'download__comments.id as cid',
+                'users.rights as user_rights',
+                'download__files.rus_name'
+            )
+            ->orderByDesc('download__comments.time')
             ->paginate($perPage, page: $page);
     }
 }

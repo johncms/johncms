@@ -9,27 +9,13 @@
  */
 
 /**
- * @var $title
- * @var $page_title
- * @var $files
- * @var $buttons
- * @var $urls
+ * @var array $data
+ * @var array $urls
+ * @var \Johncms\Users\User $user
  */
 
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $page_title,
-    ]
-);
+$this->layout('system::layout/default');
 ?>
-
-<?php if (! $config['mod_down_comm']): ?>
-    <div class="alert alert-danger border-0 shadow">
-        <?= __('Comments are disabled') ?>
-    </div>
-<?php endif; ?>
 
 <!-- Отображаем комментарии -->
 <?php if (empty($data['items'])): ?>

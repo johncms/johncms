@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Johncms\Modules\Downloads\Application\Controllers\CommentsReviewController;
 use Johncms\Modules\Downloads\Application\Controllers\FavoritesController;
 use Johncms\Modules\Downloads\Application\Controllers\NewFilesController;
 use Johncms\Modules\Downloads\Application\Controllers\SearchController;
@@ -12,6 +13,7 @@ use Johncms\Router\RouteCollection;
 use Johncms\System\Users\User;
 
 return static function (RouteCollection $router, User $user): void {
+    $router->get('/downloads/comments-review', CommentsReviewController::class)->name('downloads.comments_review');
     $router->get('/downloads/favorites', FavoritesController::class)->name('downloads.favorites');
     $router->get('/downloads/new', NewFilesController::class)->name('downloads.new_files');
     $router->get('/downloads/top', TopFilesController::class)->name('downloads.top_files');

@@ -138,11 +138,10 @@ $defaultExt = [
 
 // Переключаем режимы работы
 $actions = [
-    'comments'        => 'comments.php',
+    'comments'           => 'comments.php',
     'files_upload'    => 'files_upload.php',
     'load_file'       => 'fileControl/load_file.php',
     'redirect'        => 'redirect.php',
-    'review_comments' => 'comments_review.php',
     'view'            => 'view.php',
 ];
 
@@ -165,7 +164,8 @@ if (($user->rights >= 6 || $user->rights === 4)) {
 }
 
 $redirects = [
-    'bookmark'   => static fn () => '/downloads/favorites/',
+    'bookmark'        => static fn () => '/downloads/favorites/',
+    'review_comments' => static fn () => '/downloads/comments-review/',
     'new_files'  => static fn () => '/downloads/new/' . ($id ? '?id=' . $id : ''),
     'top_users'  => static fn () => '/downloads/top-users/',
     'user_files' => static fn () => $id > 0 ? '/downloads/user-files/' . $id . '/' : '/downloads/',
