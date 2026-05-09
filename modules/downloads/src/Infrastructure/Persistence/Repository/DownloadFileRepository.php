@@ -80,4 +80,13 @@ final class DownloadFileRepository implements DownloadFileRepositoryInterface
 
         return new ConcretePaginator($items, $filesPaginator->total(), $perPage, $page);
     }
+
+    public function paginateUserFiles(int $userId, int $page, int $perPage): LengthAwarePaginator
+    {
+        return DownloadFile::query()
+            ->where('type', 2)
+            ->where('user_id', $userId)
+            ->orderByDesc('time')
+            ->paginate($perPage, page: $page);
+    }
 }

@@ -39,7 +39,7 @@ final readonly class TopUsersController
                 'name'                    => $userModel->name,
                 'user_is_online'          => $userModel->is_online,
                 'user_profile_link'       => ($this->currentUser->isValid() && $this->currentUser->id !== $userModel->id) ? $userModel->profile_url : '',
-                'files_link'              => '<a href="/downloads/?act=user_files&amp;id=' . $userModel->id . '">' . __('User Files') . ': ' . $userModel->files_count . '</a>',
+                'files_link'              => '<a href="/downloads/user-files/' . $userModel->id . '/">' . __('User Files') . ': ' . $userModel->files_count . '</a>',
                 'search_ip_url'           => $userModel->search_ip_url,
                 'ip'                      => $userModel->ip,
                 'search_ip_via_proxy_url' => $userModel->search_ip_via_proxy_url,

@@ -9,21 +9,15 @@
  */
 
 /**
- * @var $title
- * @var $page_title
- * @var $files
- * @var $pagination
- * @var $urls
- * @var $show_user
+ * @var array $show_user
+ * @var array $files
+ * @var string $pagination
+ * @var int $total
+ * @var array $urls
+ * @var \Johncms\Users\User $user
  */
 
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $page_title,
-    ]
-);
+$this->layout('system::layout/default');
 ?>
 <?= $this->fetch('downloads::user_row', ['item' => $show_user]) ?>
 <?php if (empty($files)): ?>
@@ -41,7 +35,6 @@ $this->layout(
 <?php if ($total): ?>
     <div>
         <div><?= __('Total') ?>: <?= $total ?></div>
-        <!-- Page switching -->
         <?php if ($total > $user->config->kmess): ?>
             <div class="mt-1"><?= $pagination ?></div>
         <?php endif ?>

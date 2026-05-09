@@ -17,4 +17,6 @@ interface DownloadFileRepositoryInterface
     public function searchFiles(string $query, bool $searchInDescription, int $page, int $perPage): LengthAwarePaginator;
 
     public function paginateTopUsers(int $page, int $perPage): LengthAwarePaginator;
+
+    public function paginateUserFiles(int $userId, int $page, int $perPage): LengthAwarePaginator;
 }
