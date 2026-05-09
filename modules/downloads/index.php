@@ -138,7 +138,6 @@ $defaultExt = [
 
 // Переключаем режимы работы
 $actions = [
-    'bookmark'        => 'bookmark.php',
     'comments'        => 'comments.php',
     'files_upload'    => 'files_upload.php',
     'load_file'       => 'fileControl/load_file.php',
@@ -166,6 +165,7 @@ if (($user->rights >= 6 || $user->rights === 4)) {
 }
 
 $redirects = [
+    'bookmark'   => static fn () => '/downloads/favorites/',
     'new_files'  => static fn () => '/downloads/new/' . ($id ? '?id=' . $id : ''),
     'top_users'  => static fn () => '/downloads/top-users/',
     'user_files' => static fn () => $id > 0 ? '/downloads/user-files/' . $id . '/' : '/downloads/',

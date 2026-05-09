@@ -9,28 +9,15 @@
  */
 
 /**
- * @var $title
- * @var $page_title
- * @var $files
- * @var $total_files
- * @var $urls
- * @var $pagination
+ * @var array $files
+ * @var int $total_files
+ * @var string $pagination
+ * @var array $urls
+ * @var \Johncms\Users\User $user
  */
 
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $page_title,
-    ]
-);
+$this->layout('system::layout/default');
 ?>
-
-<?php if (! $config['mod_down']): ?>
-    <div class="alert alert-danger border-0 shadow">
-        <?= __('Downloads are closed') ?>
-    </div>
-<?php endif; ?>
 
 <?php if (empty($files)): ?>
     <div class="alert alert-info"><?= __('List is empty') ?></div>
@@ -43,7 +30,6 @@ $this->layout(
 <?php if ($total_files): ?>
     <div>
         <div><?= __('Total') ?>: <?= $total_files ?></div>
-        <!-- Page switching -->
         <?php if ($total_files > $user->config->kmess): ?>
             <div class="mt-1"><?= $pagination ?></div>
         <?php endif ?>

@@ -19,4 +19,6 @@ interface DownloadFileRepositoryInterface
     public function paginateTopUsers(int $page, int $perPage): LengthAwarePaginator;
 
     public function paginateUserFiles(int $userId, int $page, int $perPage): LengthAwarePaginator;
+
+    public function paginateFavorites(int $userId, int $page, int $perPage): LengthAwarePaginator;
 }

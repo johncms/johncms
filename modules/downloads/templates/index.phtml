@@ -160,7 +160,7 @@ $this->layout(
             <?php if ($user->rights >= 7 || (isset($config['mod_down_comm']) && $config['mod_down_comm'])): ?>
                 <a href="?act=review_comments"><?= __('Review comments') ?></a><br>
             <?php endif; ?>
-            <a href="?act=bookmark"><?= __('Favorites') ?></a>
+            <a href="/downloads/favorites/"><?= __('Favorites') ?></a>
         <?php endif; ?>
     </div>
 </div>

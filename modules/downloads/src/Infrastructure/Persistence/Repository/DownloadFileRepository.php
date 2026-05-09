@@ -89,4 +89,14 @@ final class DownloadFileRepository implements DownloadFileRepositoryInterface
             ->orderByDesc('time')
             ->paginate($perPage, page: $page);
     }
+
+    public function paginateFavorites(int $userId, int $page, int $perPage): LengthAwarePaginator
+    {
+        return DownloadFile::query()
+            ->join('download__bookmark', 'download__files.id', '=', 'download__bookmark.file_id')
+            ->where('download__bookmark.user_id', $userId)
+            ->select('download__files.*', 'download__bookmark.id as bid')
+            ->orderByDesc('download__files.time')
+            ->paginate($perPage, page: $page);
+    }
 }
