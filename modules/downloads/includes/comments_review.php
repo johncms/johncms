@@ -68,7 +68,7 @@ if ($total) {
         $res['edit_url'] = '';
         $res['delete_url'] = '';
         $res['has_edit'] = '';
-        $res['file_url'] = '?act=view&amp;id=' . $res['sub_id'];
+        $res['file_url'] = '/downloads/files/' . $res['sub_id'] . '/';
         $res['comments_url'] = '?act=comments&amp;id=' . $res['sub_id'];
 
         $text = $tools->checkout($res['text'], 1, 1);

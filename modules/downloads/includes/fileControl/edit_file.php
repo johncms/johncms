@@ -100,7 +100,7 @@ if ($request->getMethod() === 'POST') {
             $tagsWriter->WriteTags();
         }
 
-        header('Location: ?act=view&id=' . $id);
+        header('Location: /downloads/files/' . $id . '/');
     } else {
         echo $view->render(
             'system::pages/result',

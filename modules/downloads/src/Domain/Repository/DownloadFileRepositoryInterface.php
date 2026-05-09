@@ -7,6 +7,7 @@ namespace Johncms\Modules\Downloads\Domain\Repository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Johncms\Modules\Downloads\Domain\Enums\DownloadTopSort;
+use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 
 interface DownloadFileRepositoryInterface
 {
@@ -23,4 +24,8 @@ interface DownloadFileRepositoryInterface
     public function paginateFavorites(int $userId, int $page, int $perPage): LengthAwarePaginator;
 
     public function paginateCommentsReview(int $page, int $perPage): LengthAwarePaginator;
+
+    public function findFile(int $id): ?DownloadFile;
+
+    public function findAdditionalFiles(int $fileId): Collection;
 }

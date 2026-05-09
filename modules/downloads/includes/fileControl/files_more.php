@@ -52,7 +52,7 @@ $post = $request->getParsedBody();
 $del = isset($get['del']) ? (int) $get['del'] : false;
 $edit = isset($get['edit']) ? (int) $get['edit'] : false;
 $base_file_name = htmlspecialchars($res_down['rus_name']);
-$nav_chain->add($base_file_name, '?act=view&id=' . $id);
+$nav_chain->add($base_file_name, '/downloads/files/' . $id . '/');
 $nav_chain->add(__('Additional files'));
 if ($edit) {
     // Изменяем файл
@@ -233,7 +233,7 @@ if ($edit) {
                         'title'         => __('File attached'),
                         'type'          => 'alert-success',
                         'message'       => __('File attached'),
-                        'back_url'      => '?id=' . $id . '&amp;act=view',
+                        'back_url'      => '/downloads/files/' . $id . '/',
                         'back_url_name' => __('Back'),
                     ]
                 );

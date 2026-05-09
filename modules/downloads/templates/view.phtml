@@ -9,19 +9,13 @@
  */
 
 /**
- * @var $title
- * @var $page_title
- * @var $in_bookmarks
- * @var $file
+ * @var int $id
+ * @var array $file
+ * @var int $in_bookmarks
+ * @var array $urls
  */
 
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $page_title,
-    ]
-);
+$this->layout('system::layout/default');
 ?>
 
 <?php if (! $config['mod_down']): ?>
@@ -30,7 +24,7 @@ $this->layout(
     </div>
 <?php endif; ?>
 
-<?php if (isset($file['vote_accepted'])): ?>
+<?php if (! empty($file['vote_accepted'])): ?>
     <div class="row">
         <div class="col-md-6">
             <div class="alert alert-success border-0 shadow">
@@ -69,7 +63,7 @@ $this->layout(
 <?php if ($file['file_type'] === 'video'): ?>
     <div class="row">
         <div class="col-xl-8">
-            <div class="embed-responsive embed-responsive-16by9">
+            <div class="ratio ratio-16x9">
                 <video src="<?= $file['main_file']['source_url'] ?>" controls></video>
             </div>
         </div>
@@ -96,7 +90,7 @@ $this->layout(
     <div><?= __('Downloads:') ?> <?= $file['field'] ?></div>
     <div><?= __('Rating:') ?>
         <?php if ($file['can_vote']): ?>
-            <a href="?act=view&amp;id=<?= $id ?>&amp;plus" class="btn btn-sm btn-like">
+            <a href="/downloads/files/<?= $id ?>?plus" class="btn btn-sm btn-like">
                 <svg class="icon download-button-icon me-1 mt-n1">
                     <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#like"/>
                 </svg>
@@ -104,7 +98,7 @@ $this->layout(
         <?php endif; ?>
         <span><?= implode(' / ', $file['rate']) ?></span>
         <?php if ($file['can_vote']): ?>
-            <a href="?act=view&amp;id=<?= $id ?>&amp;minus" class="btn btn-sm btn-dislike">
+            <a href="/downloads/files/<?= $id ?>?minus" class="btn btn-sm btn-dislike">
                 <svg class="icon download-button-icon me-1 mt-n1">
                     <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#dislike"/>
                 </svg>
@@ -134,7 +128,7 @@ $this->layout(
         <svg class="icon download-button-icon me-1">
             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#forum"/>
         </svg>
-        <a href="?act=comments&amp;id=<?= $id ?>"><?= __('Comments') ?></a> (<?= $file['comm_count'] ?>)
+        <a href="/downloads/?act=comments&amp;id=<?= $id ?>"><?= __('Comments') ?></a> (<?= $file['comm_count'] ?>)
     </div>
 <?php endif; ?>
 <div class="mt-4">
@@ -146,11 +140,11 @@ $this->layout(
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <?php if (! empty($id)): ?>
-                        <a class="dropdown-item" href="?act=edit_file&amp;id=<?= $id ?>"><?= __('Edit File') ?></a>
-                        <a class="dropdown-item" href="?act=edit_screen&amp;id=<?= $id ?>"><?= __('Managing Screenshots') ?></a>
-                        <a class="dropdown-item" href="?act=files_more&amp;id=<?= $id ?>"><?= __('Additional Files') ?></a>
-                        <a class="dropdown-item" href="?act=delete_file&amp;do=clean&amp;id=<?= $id ?>"><?= __('Delete File') ?></a>
-                        <a class="dropdown-item" href="?act=transfer_file&amp;id=<?= $id ?>"><?= __('Move File') ?></a>
+                        <a class="dropdown-item" href="/downloads/?act=edit_file&amp;id=<?= $id ?>"><?= __('Edit File') ?></a>
+                        <a class="dropdown-item" href="/downloads/?act=edit_screen&amp;id=<?= $id ?>"><?= __('Managing Screenshots') ?></a>
+                        <a class="dropdown-item" href="/downloads/?act=files_more&amp;id=<?= $id ?>"><?= __('Additional Files') ?></a>
+                        <a class="dropdown-item" href="/downloads/?act=delete_file&amp;do=clean&amp;id=<?= $id ?>"><?= __('Delete File') ?></a>
+                        <a class="dropdown-item" href="/downloads/?act=transfer_file&amp;id=<?= $id ?>"><?= __('Move File') ?></a>
                     <?php endif; ?>
                 </div>
             </div>
@@ -159,9 +153,9 @@ $this->layout(
     <?php if ($user->isValid()): ?>
         <div class="mt-3">
             <?php if ($in_bookmarks): ?>
-                <a href="?act=view&amp;id=<?= $id ?>&amp;delBookmark"><?= __('Remove from Favorites') ?></a>
+                <a href="/downloads/files/<?= $id ?>?delBookmark"><?= __('Remove from Favorites') ?></a>
             <?php else: ?>
-                <a href="?act=view&amp;id=<?= $id ?>&amp;addBookmark"><?= __('Add to Favorites') ?></a>
+                <a href="/downloads/files/<?= $id ?>?addBookmark"><?= __('Add to Favorites') ?></a>
             <?php endif; ?>
         </div>
     <?php endif; ?>

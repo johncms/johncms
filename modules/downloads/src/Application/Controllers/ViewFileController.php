@@ -1,0 +1,197 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Johncms\Modules\Downloads\Application\Controllers;
+
+use Downloads\Download;
+use Downloads\Screen;
+use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\PageMeta;
+use Johncms\Modules\Downloads\Application\Exceptions\FileNotFoundException;
+use Johncms\Modules\Downloads\Application\Services\FileMediaInfoService;
+use Johncms\Modules\Downloads\Application\UseCases\ToggleBookmarkUseCase;
+use Johncms\Modules\Downloads\Application\UseCases\ViewFileUseCase;
+use Johncms\Modules\Downloads\Application\UseCases\VoteOnFileUseCase;
+use Johncms\NavChain;
+use Johncms\System\Http\Request;
+use Johncms\System\Http\Session;
+use Johncms\System\Legacy\Tools;
+use Johncms\System\View\Render;
+use Johncms\Users\User;
+
+final readonly class ViewFileController
+{
+    public function __construct(
+        private ControllerContext $controllerContext,
+        private Render $render,
+        private Request $request,
+        private NavChain $navChain,
+        private Tools $tools,
+        private User $currentUser,
+        private Session $session,
+        private ViewFileUseCase $viewFileUseCase,
+        private VoteOnFileUseCase $voteUseCase,
+        private ToggleBookmarkUseCase $bookmarkUseCase,
+        private FileMediaInfoService $mediaInfoService,
+    ) {
+        $this->controllerContext->initModule('downloads');
+    }
+
+    public function __invoke(int $id): string
+    {
+        try {
+            $result = $this->viewFileUseCase->execute($id);
+        } catch (FileNotFoundException) {
+            http_response_code(404);
+            return $this->render->render(
+                'system::pages/result',
+                [
+                    'title'         => __('File not found'),
+                    'type'          => 'alert-danger',
+                    'message'       => __('File not found'),
+                    'back_url'      => '/downloads/',
+                    'back_url_name' => __('Downloads'),
+                ]
+            );
+        }
+
+        $file = $result->file;
+
+        if (! is_file($file->dir . '/' . $file->name)) {
+            http_response_code(404);
+            return $this->render->render(
+                'system::pages/result',
+                [
+                    'title'         => __('File not found'),
+                    'type'          => 'alert-danger',
+                    'message'       => __('File not found'),
+                    'back_url'      => '/downloads/',
+                    'back_url_name' => __('Downloads'),
+                ]
+            );
+        }
+
+        if ($file->type === 3 && $this->currentUser->rights < 6 && $this->currentUser->rights !== 4) {
+            http_response_code(403);
+            return $this->render->render(
+                'system::pages/result',
+                [
+                    'title'         => __('The file is awaiting moderation'),
+                    'type'          => 'alert-danger',
+                    'message'       => __('The file is awaiting moderation'),
+                    'back_url'      => '/downloads/',
+                    'back_url_name' => __('Downloads'),
+                ]
+            );
+        }
+
+        // Voting (session state is an HTTP concern, stays here)
+        $sessionIndex = 'rate_file_' . $id;
+        $hasVoteAction = $this->request->getQuery('plus') !== null || $this->request->getQuery('minus') !== null;
+        $isPlus = $this->request->getQuery('plus') !== null;
+
+        $vote = $this->voteUseCase->execute(
+            $id,
+            $isPlus,
+            ! $this->currentUser->isValid() || $this->session->has($sessionIndex) || ! $hasVoteAction
+        );
+
+        if ($vote->wasAccepted) {
+            $this->session->set($sessionIndex, true);
+        }
+
+        // Bookmarks
+        $bookmarkAction = null;
+        if ($this->currentUser->isValid()) {
+            if ($this->request->getQuery('addBookmark') !== null) {
+                $bookmarkAction = 'add';
+            } elseif ($this->request->getQuery('delBookmark') !== null) {
+                $bookmarkAction = 'remove';
+            }
+        }
+
+        $inBookmarks = $this->currentUser->isValid()
+            ? $this->bookmarkUseCase->execute($id, $this->currentUser->id, $bookmarkAction)
+            : 0;
+
+        // Breadcrumbs
+        $this->navChain->add(__('Downloads'), '/downloads/');
+        Download::navigation(['dir' => $file->dir, 'refid' => 1, 'count' => 0]);
+        $this->navChain->add($file->rus_name);
+
+        // File display data
+        $extension = strtolower(pathinfo($file->name, PATHINFO_EXTENSION));
+        $mediaInfo = $this->mediaInfoService->build(
+            $file->dir . '/' . $file->name,
+            $extension,
+            Screen::getScreens($id)
+        );
+
+        $fileData = array_merge($file->toArray(), [
+            'file_type'        => $mediaInfo->fileType,
+            'file_properties'  => $mediaInfo->fileProperties,
+            'screenshots'      => $mediaInfo->screenshots,
+            'image_info'       => $mediaInfo->imageInfo,
+            'description'      => $this->tools->checkout($file->about, 1, 1),
+            'upload_user'      => $result->uploadUser
+                ? ['id' => $result->uploadUser->id, 'name' => $result->uploadUser->name]
+                : ['id' => 0, 'name' => ''],
+            'can_vote'         => ! $this->session->has($sessionIndex) && $this->currentUser->isValid(),
+            'vote_accepted'    => $vote->wasAccepted,
+            'rate'             => [$vote->plus, $vote->minus],
+            'main_file'        => $this->buildDownloadLink($file->dir, $file->name, $file->rus_name, $file->size, $id),
+            'additional_files' => [],
+        ]);
+
+        foreach ($result->additionalFiles as $moreFile) {
+            $fileData['additional_files'][] = $this->buildDownloadLink(
+                $file->dir,
+                $moreFile->name,
+                $moreFile->rus_name,
+                $moreFile->size ?? null,
+                $id,
+                $moreFile->id
+            );
+        }
+
+        $pageTitle = htmlspecialchars($file->rus_name);
+        $meta = new PageMeta($pageTitle . ' — ' . __('Downloads'), 1);
+        $this->render->addData([
+            'title'       => $meta->title,
+            'page_title'  => $pageTitle,
+            'description' => $meta->description,
+        ]);
+
+        return $this->render->render(
+            'downloads::view',
+            [
+                'id'           => $id,
+                'file'         => $fileData,
+                'in_bookmarks' => $inBookmarks,
+                'urls'         => [
+                    'downloads' => '/downloads/',
+                    'back'      => '/downloads/?id=' . $file->refid,
+                ],
+            ]
+        );
+    }
+
+    private function buildDownloadLink(
+        string $dir,
+        string $name,
+        string $displayName,
+        ?int $size,
+        int $fileId,
+        ?int $moreId = null
+    ): array {
+        $fsPath = $dir . '/' . $name;
+        $moreLink = $moreId !== null ? '&amp;more=' . $moreId : '';
+        return [
+            'source_url' => '/' . $fsPath,
+            'url'        => '/downloads/?act=load_file&amp;id=' . $fileId . $moreLink,
+            'name'       => $displayName,
+            'size'       => Download::displayFileSize($size ?? (is_file($fsPath) ? filesize($fsPath) : 0)),
+        ];
+    }
+}

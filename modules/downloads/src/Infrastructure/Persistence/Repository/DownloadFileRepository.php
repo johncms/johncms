@@ -10,6 +10,7 @@ use Illuminate\Pagination\LengthAwarePaginator as ConcretePaginator;
 use Johncms\Modules\Downloads\Domain\Enums\DownloadTopSort;
 use Johncms\Modules\Downloads\Domain\Models\DownloadComment;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
+use Johncms\Modules\Downloads\Domain\Models\DownloadMoreFile;
 use Johncms\Modules\Downloads\Domain\Repository\DownloadFileRepositoryInterface;
 use Johncms\Users\User as UserModel;
 
@@ -114,5 +115,20 @@ final class DownloadFileRepository implements DownloadFileRepositoryInterface
             )
             ->orderByDesc('download__comments.time')
             ->paginate($perPage, page: $page);
+    }
+
+    public function findFile(int $id): ?DownloadFile
+    {
+        return DownloadFile::query()
+            ->whereIn('type', [2, 3])
+            ->find($id);
+    }
+
+    public function findAdditionalFiles(int $fileId): Collection
+    {
+        return DownloadMoreFile::query()
+            ->where('refid', $fileId)
+            ->orderBy('time')
+            ->get();
     }
 }

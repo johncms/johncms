@@ -53,7 +53,7 @@ if (($res_down['type'] === 3 && $user->rights < 6 && $user->rights !== 4) || ! $
 }
 
 Download::navigation(['dir' => $res_down['dir'], 'refid' => 1, 'count' => 0]);
-$nav_chain->add(htmlspecialchars($res_down['rus_name']), '/downloads/?act=view&id=' . $res_down['id']);
+$nav_chain->add(htmlspecialchars($res_down['rus_name']), '/downloads/files/' . $res_down['id'] . '/');
 $nav_chain->add(__('Comments'), '/downloads/?act=comments&id=' . $res_down['id']);
 
 $title_pages = htmlspecialchars(mb_substr($res_down['rus_name'], 0, 30));
@@ -86,7 +86,7 @@ $arg = [
     // Namespace для шаблонов. Заменить для кастомных шаблонов
     'templates_namespace' => 'system',
     // Ссылка на страницу назад
-    'back_url'            => '/downloads/?act=view&id=' . $res_down['id'],
+    'back_url'            => '/downloads/files/' . $res_down['id'] . '/',
 ];
 
 // Показываем комментарии

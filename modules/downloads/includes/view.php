@@ -47,9 +47,9 @@ if ($res_down['type'] === 3 && $user->rights < 6 && $user->rights !== 4) {
     echo $view->render(
         'system::pages/result',
         [
-            'title'         => __('The file is on moderation'),
+            'title'         => __('The file is awaiting moderation'),
             'type'          => 'alert-danger',
-            'message'       => __('The file is on moderation'),
+            'message'       => __('The file is awaiting moderation'),
             'back_url'      => $url,
             'back_url_name' => __('Downloads'),
         ]

@@ -20,7 +20,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
  * @var Johncms\System\Users\User $user
  */
 
-$title = __('Files on moderation');
+$title = __('Files awaiting moderation');
 
 if ($id) {
     $db->exec("UPDATE `download__files` SET `type` = 2 WHERE `id` = '" . $id . "' LIMIT 1");

@@ -64,7 +64,7 @@ class Download // phpcs:ignore
         $config = config('johncms');
 
         $file['icon'] = $assets->url('images/old/system/' . $icon_id . '.png');
-        $file['detail_url'] = '?act=view&amp;id=' . $res_down['id'];
+        $file['detail_url'] = '/downloads/files/' . $res_down['id'] . '/';
         $file['filtered_name'] = htmlspecialchars($res_down['rus_name']);
 
         $file['is_new'] = ($res_down['time'] > $old);
@@ -178,7 +178,7 @@ class Download // phpcs:ignore
                     ) . "') ORDER BY `id`"
                 );
                 while ($res_cat = $req_cat->fetch()) {
-                    $nav_chain->add(htmlspecialchars($res_cat['rus_name']), '?id=' . $res_cat['id']);
+                    $nav_chain->add(htmlspecialchars($res_cat['rus_name']), '/downloads/?id=' . $res_cat['id']);
                 }
             }
         }

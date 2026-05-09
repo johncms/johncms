@@ -25,7 +25,7 @@ class Screen
     public static function getScreens(int $file_id): array
     {
         $screens = [];
-        $dir = DOWNLOADS_SCR . $file_id;
+        $dir = UPLOAD_PATH . 'downloads' . DS . 'screen' . DS . $file_id;
         if (is_dir($dir)) {
             $files = scandir($dir);
             foreach ($files as $file) {

@@ -166,7 +166,7 @@ if ($request->getMethod() === 'POST') {
                 }
             }
 
-            $urls['view_file_url'] = '?act=view&amp;id=' . $file_id;
+            $urls['view_file_url'] = '/downloads/files/' . $file_id . '/';
             $dirid = $id;
             $sql = '';
             $i = 0;

@@ -132,7 +132,7 @@ if ($user->rights > 6) {
                     'id'         => $id,
                     'urls'       => $urls,
                     'action_url' => '?act=transfer_file&amp;id=' . $id . '&amp;catId=' . $catId . '&amp;do=transfer&amp;yes',
-                    'back_url'   => '?act=view&amp;id=' . $id,
+                    'back_url'   => '/downloads/files/' . $id . '/',
                 ]
             );
         }
@@ -161,7 +161,7 @@ if ($user->rights > 6) {
                 'type'          => 'alert-success',
                 'urls'          => $urls,
                 'sections'      => $sections,
-                'back_url'      => '?act=view&amp;id=' . $id,
+                'back_url'      => '/downloads/files/' . $id . '/',
                 'back_url_name' => __('Back'),
             ]
         );

@@ -102,6 +102,6 @@ echo $view->render(
         'urls'         => $urls,
         'delete_token' => $delete_token,
         'action_url'   => '?act=delete_file&amp;id=' . $id,
-        'back_url'     => '?act=view&amp;id=' . $id,
+        'back_url'     => '/downloads/files/' . $id . '/',
     ]
 );

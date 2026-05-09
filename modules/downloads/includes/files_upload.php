@@ -158,7 +158,7 @@ if ($req->rowCount() && is_dir($res['dir'])) {
 
                         $urls['view_file_url'] = '';
                         if (! $set_down['mod'] || $user->rights > 6 || $user->rights === 4) {
-                            $urls['view_file_url'] = '?act=view&amp;id=' . $file_id;
+                            $urls['view_file_url'] = '/downloads/files/' . $file_id . '/';
                             $dirid = $id;
                             $sql = '';
                             $i = 0;
