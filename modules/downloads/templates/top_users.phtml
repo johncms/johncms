@@ -9,27 +9,15 @@
  */
 
 /**
- * @var $title
- * @var $page_title
- * @var $files
- * @var $buttons
- * @var $urls
+ * @var array $users
+ * @var string $pagination
+ * @var int $total
+ * @var array $urls
+ * @var \Johncms\Users\User $user
  */
 
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $page_title,
-    ]
-);
+$this->layout('system::layout/default');
 ?>
-
-<?php if (! $config['mod_down']): ?>
-    <div class="alert alert-danger border-0 shadow">
-        <?= __('Downloads are closed') ?>
-    </div>
-<?php endif; ?>
 
 <?php if (empty($users)): ?>
     <div class="alert alert-info"><?= __('List is empty') ?></div>
@@ -38,6 +26,10 @@ $this->layout(
 <?php foreach ($users as $list_user): ?>
     <?= $this->fetch('downloads::user_row', ['item' => $list_user]) ?>
 <?php endforeach; ?>
+
+<?php if ($total > $user->config->kmess): ?>
+    <div class="mt-2"><?= $pagination ?></div>
+<?php endif; ?>
 
 <div class="mt-3">
     <a href="<?= $urls['downloads'] ?>"><?= __('Downloads') ?></a>

@@ -144,7 +144,6 @@ $actions = [
     'load_file'       => 'fileControl/load_file.php',
     'redirect'        => 'redirect.php',
     'review_comments' => 'comments_review.php',
-    'top_users'       => 'top_users.php',
     'user_files'      => 'files_user.php',
     'view'            => 'view.php',
 ];
@@ -168,7 +167,8 @@ if (($user->rights >= 6 || $user->rights === 4)) {
 }
 
 $redirects = [
-    'new_files' => static fn () => '/downloads/new/' . ($id ? '?id=' . $id : ''),
+    'new_files'  => static fn () => '/downloads/new/' . ($id ? '?id=' . $id : ''),
+    'top_users'  => static fn () => '/downloads/top-users/',
     'top_files' => static fn () => match($id) {
         1       => '/downloads/top/downloaded/',
         2       => '/downloads/top/commented/',

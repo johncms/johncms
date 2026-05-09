@@ -6,9 +6,11 @@ namespace Johncms\Modules\Downloads\Infrastructure\Persistence\Repository;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator as ConcretePaginator;
 use Johncms\Modules\Downloads\Domain\Enums\DownloadTopSort;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\Modules\Downloads\Domain\Repository\DownloadFileRepositoryInterface;
+use Johncms\Users\User as UserModel;
 
 final class DownloadFileRepository implements DownloadFileRepositoryInterface
 {
@@ -46,5 +48,36 @@ final class DownloadFileRepository implements DownloadFileRepositoryInterface
             ->where($column, 'like', $like)
             ->orderBy('rus_name')
             ->paginate($perPage, page: $page);
+    }
+
+    public function paginateTopUsers(int $page, int $perPage): LengthAwarePaginator
+    {
+        // GROUP BY on download__files.user_id avoids MySQL ONLY_FULL_GROUP_BY issues
+        $filesPaginator = DownloadFile::query()
+            ->select('user_id')
+            ->selectRaw('COUNT(*) AS files_count')
+            ->where('type', '<>', 3)
+            ->where('user_id', '>', 0)
+            ->groupBy('user_id')
+            ->orderByDesc('files_count')
+            ->paginate($perPage, page: $page);
+
+        $fileCountsByUserId = collect($filesPaginator->items())
+            ->pluck('files_count', 'user_id');
+
+        $userModels = UserModel::query()
+            ->whereIn('id', $fileCountsByUserId->keys()->all())
+            ->get()
+            ->keyBy('id');
+
+        $items = $fileCountsByUserId->keys()->map(function ($userId) use ($userModels, $fileCountsByUserId) {
+            $user = $userModels->get($userId);
+            if ($user !== null) {
+                $user->files_count = $fileCountsByUserId[$userId];
+            }
+            return $user;
+        })->filter()->values();
+
+        return new ConcretePaginator($items, $filesPaginator->total(), $perPage, $page);
     }
 }

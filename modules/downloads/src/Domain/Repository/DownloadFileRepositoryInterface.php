@@ -15,4 +15,6 @@ interface DownloadFileRepositoryInterface
     public function getTopFiles(DownloadTopSort $sort, int $limit): Collection;
 
     public function searchFiles(string $query, bool $searchInDescription, int $page, int $perPage): LengthAwarePaginator;
+
+    public function paginateTopUsers(int $page, int $perPage): LengthAwarePaginator;
 }
