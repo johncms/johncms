@@ -29,10 +29,9 @@ use Johncms\Modules\Downloads\Application\Controllers\ViewFileController;
 use Johncms\Modules\Downloads\Application\Middlewares\DownloadsAccessMiddleware;
 use Johncms\Modules\Downloads\Application\Middlewares\DownloadsAdminMiddleware;
 use Johncms\Router\RouteCollection;
-use Johncms\System\Users\User;
 
-return static function (RouteCollection $router, User $user): void {
-    $group = $router->group('', function (RouteCollection $r): void {
+return static function (RouteCollection $router): void {
+    $router->group('', function (RouteCollection $r): void {
         $r->get('/downloads/comments-review', CommentsReviewController::class)->name('downloads.comments_review');
         $r->get('/downloads/favorites', FavoritesController::class)->name('downloads.favorites');
         $r->get('/downloads/new', NewFilesController::class)->name('downloads.new_files');
@@ -47,10 +46,10 @@ return static function (RouteCollection $router, User $user): void {
         $r->map(['GET', 'POST'], '/downloads/upload/{id:number}', FilesUploadController::class)->name('downloads.upload');
 
         $r->map(['GET', 'POST'], '/downloads', IndexController::class)->name('downloads.index');
-    });
-    $group->addMiddleware(DownloadsAccessMiddleware::class);
+    })
+        ->addMiddleware(DownloadsAccessMiddleware::class);
 
-    $adminGroup = $router->group('', function (RouteCollection $r): void {
+    $router->group('', function (RouteCollection $r): void {
         $r->map(['GET', 'POST'], '/downloads/delete-file/{id:number}', DeleteFileController::class)->name('downloads.delete_file');
         $r->map(['GET', 'POST'], '/downloads/edit-file/{id:number}', EditFileController::class)->name('downloads.edit_file');
         $r->map(['GET', 'POST'], '/downloads/edit-screen/{id:number}', EditScreenController::class)->name('downloads.edit_screen');
@@ -63,7 +62,7 @@ return static function (RouteCollection $router, User $user): void {
         $r->map(['GET', 'POST'], '/downloads/categories/{id:number}/delete', DeleteCategoryController::class)->name('downloads.delete_category');
         $r->get('/downloads/recount', RecountController::class)->name('downloads.recount');
         $r->get('/downloads/scan-dir', ScanDirectoryController::class)->name('downloads.scan_dir');
-    });
-    $adminGroup->addMiddleware(DownloadsAccessMiddleware::class);
-    $adminGroup->addMiddleware(DownloadsAdminMiddleware::class);
+    })
+        ->addMiddleware(DownloadsAccessMiddleware::class)
+        ->addMiddleware(DownloadsAdminMiddleware::class);
 };
