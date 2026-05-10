@@ -16,13 +16,7 @@
  * @var $extensions
  */
 
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $page_title,
-    ]
-);
+$this->layout('system::layout/default');
 ?>
 
 <form name="file_import_form" action="<?= $action_url ?>" method="post" enctype="multipart/form-data">
@@ -30,13 +24,13 @@ $this->layout(
     <div class="form-group">
         <label for="url"><?= __('Link to file') ?></label>
         <input type="text" class="form-control" id="url" placeholder="<?= __('Link to file') ?>"
-               name="fail" value="" required>
+               name="url" value="" required>
     </div>
 
     <div class="form-group">
         <label for="new_file"><?= __('Save as') ?></label>
         <input type="text" class="form-control" id="new_file" placeholder="<?= __('Save as') ?>"
-               name="new_file" value="" maxlength="100">
+               name="filename" value="" maxlength="100">
         <div class="text-muted small"><?= __('max. 100 characters') ?></div>
     </div>
 
@@ -50,7 +44,7 @@ $this->layout(
     <div class="form-group">
         <label for="name_link"><?= __('Link to download file') ?></label>
         <input type="text" class="form-control" id="name_link" placeholder="<?= __('Link to download file') ?>"
-               name="name_link" value="<?= __('Download') ?>" maxlength="200" required>
+               name="link_text" value="<?= __('Download') ?>" maxlength="200" required>
     </div>
 
     <div class="form-group">
@@ -63,7 +57,7 @@ $this->layout(
     <div class="form-group">
         <label for="desc"><?= __('Description') ?></label>
         <div><?= $bbcode ?></div>
-        <textarea id="desc" class="form-control" maxlength="65000" name="opis" cols="24" rows="4"></textarea>
+        <textarea id="desc" class="form-control" maxlength="65000" name="description" cols="24" rows="4"></textarea>
     </div>
 
     <div class="alert alert-warning mt-3">
@@ -72,6 +66,6 @@ $this->layout(
 
     <div>
         <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Save') ?></button>
-        <a href="?id=<?= $id ?>" class="btn btn-secondary"><?= __('Cancel') ?></a>
+        <a href="/downloads/?id=<?= $id ?>" class="btn btn-secondary"><?= __('Cancel') ?></a>
     </div>
 </form>
