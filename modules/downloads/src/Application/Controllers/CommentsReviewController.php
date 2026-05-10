@@ -78,7 +78,7 @@ final readonly class CommentsReviewController
                 'reply_author_url'        => $replyAuthorUrl,
                 'reply_author_name'       => $replyAuthorName,
                 'file_url'                => '/downloads/files/' . $comment->sub_id . '/',
-                'comments_url'            => '/downloads/?act=comments&id=' . $comment->sub_id,
+                'comments_url'            => '/downloads/comments/' . $comment->sub_id,
                 'rus_name'                => htmlspecialchars($comment->rus_name ?? ''),
                 'search_ip_url'           => '/admin/search_ip/?ip=' . long2ip((int) ($attrs['author_ip'] ?? 0)),
                 'ip'                      => long2ip((int) ($attrs['author_ip'] ?? 0)),

@@ -120,11 +120,14 @@ class Comments
         $this->templates_namespace = ! empty($arg['templates_namespace']) ? $arg['templates_namespace'] : 'system';
         $homeurl = config('johncms.homeurl', '');
 
-        if (! empty($arg['sub_id_name']) && ! empty($arg['sub_id'])) {
+        if (! empty($arg['sub_id'])) {
             $this->sub_id = $arg['sub_id'];
+        }
+
+        if (! empty($arg['sub_id_name']) && ! empty($arg['sub_id'])) {
             $this->url = $arg['script'] . '&amp;' . $arg['sub_id_name'] . '=' . $arg['sub_id'];
         } else {
-            $this->url = $arg['script'];
+            $this->url = $arg['script'] ?? '';
         }
 
         $this->item = isset($_GET['item']) ? abs((int) ($_GET['item'])) : false;
@@ -204,7 +207,7 @@ class Comments
                                         'title'         => d__('system', 'Downloads'),
                                         'type'          => 'alert-danger',
                                         'message'       => $message['error'],
-                                        'back_url'      => $this->url . '&amp;mod=reply&amp;item=' . $this->item,
+                                        'back_url'      => $this->buildUrl('&amp;mod=reply&amp;item=' . $this->item),
                                         'back_url_name' => d__('system', 'Back'),
                                     ]
                                 );
@@ -304,7 +307,7 @@ class Comments
                                         'title'         => d__('system', 'Downloads'),
                                         'type'          => 'alert-danger',
                                         'message'       => $message['error'],
-                                        'back_url'      => $this->url . '&amp;mod=edit&amp;item=' . $this->item,
+                                        'back_url'      => $this->buildUrl('&amp;mod=edit&amp;item=' . $this->item),
                                         'back_url_name' => d__('system', 'Back'),
                                     ]
                                 );
@@ -379,9 +382,9 @@ class Comments
                         header('Location: ' . str_replace('&amp;', '&', $this->url));
                     } else {
                         $data = [
-                            'delete_url' => $this->url . '&amp;mod=del&amp;item=' . $this->item . '&amp;yes',
+                            'delete_url' => $this->buildUrl('&amp;mod=del&amp;item=' . $this->item . '&amp;yes'),
                             'back_url'   => $this->url,
-                            'clear_url'  => $this->url . '&amp;mod=del&amp;item=' . $this->item . '&amp;yes&amp;all',
+                            'clear_url'  => $this->buildUrl('&amp;mod=del&amp;item=' . $this->item . '&amp;yes&amp;all'),
                         ];
 
                         echo $this->view->render(
@@ -441,13 +444,13 @@ class Comments
                         $res['edit_url'] = '';
                         $res['delete_url'] = '';
                         if ($this->access_reply) {
-                            $res['reply_url'] = $this->url . '&amp;mod=reply&amp;item=' . $res['subid'];
+                            $res['reply_url'] = $this->buildUrl('&amp;mod=reply&amp;item=' . $res['subid']);
                         }
                         if ($this->access_edit) {
-                            $res['edit_url'] = $this->url . '&amp;mod=edit&amp;item=' . $res['subid'];
+                            $res['edit_url'] = $this->buildUrl('&amp;mod=edit&amp;item=' . $res['subid']);
                         }
                         if ($this->access_delete) {
-                            $res['delete_url'] = $this->url . '&amp;mod=del&amp;item=' . $res['subid'];
+                            $res['delete_url'] = $this->buildUrl('&amp;mod=del&amp;item=' . $res['subid']);
                         }
 
                         $res['has_edit'] = ($this->access_edit || $this->access_delete);
@@ -486,7 +489,7 @@ class Comments
                 }
 
                 if ($this->total > $this->systemUser->config->kmess) {
-                    $data['pagination'] = $this->tools->displayPagination($this->url . '&amp;', $start, $this->total, $this->systemUser->config->kmess);
+                    $data['pagination'] = $this->tools->displayPagination($this->queryBase(), $start, $this->total, $this->systemUser->config->kmess);
                 }
 
                 echo $this->view->render(
@@ -559,7 +562,7 @@ class Comments
         return $this->view->render(
             $this->templates_namespace . '::pages/comments_form',
             [
-                'action_url' => $this->url . $submit_link,
+                'action_url' => $this->buildUrl($submit_link),
                 'text'       => $text,
                 'reply'      => $reply,
                 'max_length' => $this->max_lenght,
@@ -631,5 +634,21 @@ class Comments
         }
 
         return (int) $total;
+    }
+
+    /** Builds a URL with query params appended, using '?' or '&amp;' as the separator. */
+    private function buildUrl(string $extra = ''): string
+    {
+        if ($extra === '') {
+            return $this->url;
+        }
+        $sep = str_contains($this->url, '?') ? '&amp;' : '?';
+        return $this->url . $sep . preg_replace('/^&amp;/', '', $extra);
+    }
+
+    /** Returns the base URL ready for appending 'key=val' pairs (ends with '?' or '&amp;'). */
+    private function queryBase(): string
+    {
+        return $this->url . (str_contains($this->url, '?') ? '&amp;' : '?');
     }
 }

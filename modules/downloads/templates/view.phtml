@@ -128,7 +128,7 @@ $this->layout('system::layout/default');
         <svg class="icon download-button-icon me-1">
             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#forum"/>
         </svg>
-        <a href="/downloads/?act=comments&amp;id=<?= $id ?>"><?= __('Comments') ?></a> (<?= $file['comm_count'] ?>)
+        <a href="/downloads/comments/<?= $id ?>"><?= __('Comments') ?></a> (<?= $file['comm_count'] ?>)
     </div>
 <?php endif; ?>
 <div class="mt-4">

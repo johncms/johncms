@@ -138,7 +138,6 @@ $defaultExt = [
 
 // Переключаем режимы работы
 $actions = [
-    'comments'    => 'comments.php',
     'files_upload' => 'files_upload.php',
     'load_file'   => 'fileControl/load_file.php',
 ];
@@ -177,7 +176,8 @@ $redirects = [
             ? '?search=' . rawurlencode(trim($_GET['search'])) . ($id ? '&id=1' : '')
             : ''
     ),
-    'view' => static fn () => $id > 0 ? '/downloads/files/' . $id . '/' : '/downloads/',
+    'view'     => static fn () => $id > 0 ? '/downloads/files/' . $id . '/' : '/downloads/',
+    'comments' => static fn () => $id > 0 ? '/downloads/comments/' . $id : '/downloads/',
 ];
 
 if (isset($redirects[$act])) {

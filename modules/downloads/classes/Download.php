@@ -84,7 +84,7 @@ class Download // phpcs:ignore
 
         $file['comments_url'] = '';
         if ($config['mod_down_comm'] || $systemUser->rights >= 7) {
-            $file['comments_url'] = '?act=comments&amp;id=' . $res_down['id'];
+            $file['comments_url'] = '/downloads/comments/' . $res_down['id'];
         }
 
         return $file;
