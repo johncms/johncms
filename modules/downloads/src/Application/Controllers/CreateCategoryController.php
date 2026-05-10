@@ -56,7 +56,7 @@ final readonly class CreateCategoryController
             }
             $baseDir = $parentCategory->dir;
         } else {
-            $baseDir = \UPLOAD_PATH . 'downloads' . \DS . 'files';
+            $baseDir = 'upload/downloads/files';
         }
 
         $baseUrl = '/downloads/categories/create' . ($refid ? '?refid=' . $refid : '');

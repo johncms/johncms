@@ -54,8 +54,12 @@ final readonly class ScanDirectoryController
 
     private function handleClean(int $id): string
     {
-        DownloadFile::query()->each(function (DownloadFile $file): void {
-            if (! file_exists($file->dir . '/' . $file->name)) {
+        $seenRealFiles = [];
+        DownloadFile::query()->orderBy('id')->each(function (DownloadFile $file) use (&$seenRealFiles): void {
+            $realFile = realpath($file->dir . '/' . $file->name);
+            $isDuplicate = $realFile !== false && isset($seenRealFiles[$realFile]);
+
+            if ($realFile === false || ! file_exists($realFile) || $isDuplicate) {
                 DownloadMoreFile::query()->where('refid', $file->id)->each(function (DownloadMoreFile $more) use ($file): void {
                     @unlink($file->dir . '/' . $more->name);
                 });
@@ -63,20 +67,36 @@ final readonly class ScanDirectoryController
                 DownloadBookmark::query()->where('file_id', $file->id)->delete();
                 DownloadComment::query()->where('sub_id', $file->id)->delete();
                 $file->delete();
+                return;
+            }
+
+            $seenRealFiles[$realFile] = true;
+        });
+
+        DownloadMoreFile::query()->each(function (DownloadMoreFile $more): void {
+            $parentFile = DownloadFile::query()->find($more->refid);
+            if ($parentFile === null) {
+                $more->delete();
+                return;
+            }
+            $realFile = realpath($parentFile->dir . '/' . $more->name);
+            if ($realFile === false || ! file_exists($realFile)) {
+                $more->delete();
             }
         });
 
-        DownloadCategory::query()->each(function (DownloadCategory $category): void {
-            if (! is_dir($category->dir)) {
-                $fileIds = DownloadFile::query()->where('refid', $category->id)->pluck('id')->all();
-                if (! empty($fileIds)) {
-                    DownloadBookmark::query()->whereIn('file_id', $fileIds)->delete();
-                    DownloadComment::query()->whereIn('sub_id', $fileIds)->delete();
-                    DownloadMoreFile::query()->whereIn('refid', $fileIds)->delete();
-                }
-                DownloadFile::query()->where('refid', $category->id)->delete();
+        $seenRealDirs = [];
+        DownloadCategory::query()->orderBy('id')->each(function (DownloadCategory $category) use (&$seenRealDirs): void {
+            $realDir = realpath($category->dir);
+            $isDuplicate = $realDir !== false && isset($seenRealDirs[$realDir]);
+
+            if ($realDir === false || ! is_dir($realDir) || $isDuplicate) {
+                $this->deleteCategoryFiles($category->id);
                 $category->delete();
+                return;
             }
+
+            $seenRealDirs[$realDir] = true;
         });
 
         DownloadCategory::query()->each(function (DownloadCategory $category): void {
@@ -91,6 +111,17 @@ final readonly class ScanDirectoryController
             'back_url'      => '/downloads/' . ($id ? '?id=' . $id : ''),
             'back_url_name' => __('Back'),
         ]);
+    }
+
+    private function deleteCategoryFiles(int $categoryId): void
+    {
+        $fileIds = DownloadFile::query()->where('refid', $categoryId)->pluck('id')->all();
+        if (! empty($fileIds)) {
+            DownloadBookmark::query()->whereIn('file_id', $fileIds)->delete();
+            DownloadComment::query()->whereIn('sub_id', $fileIds)->delete();
+            DownloadMoreFile::query()->whereIn('refid', $fileIds)->delete();
+        }
+        DownloadFile::query()->where('refid', $categoryId)->delete();
     }
 
     private function handleScan(int $id): string
@@ -112,7 +143,7 @@ final readonly class ScanDirectoryController
             }
             $scanDir = $category->dir;
         } else {
-            $scanDir = \UPLOAD_PATH . 'downloads' . \DS . 'files';
+            $scanDir = 'upload/downloads/files';
         }
 
         $updatedInfo = [];
