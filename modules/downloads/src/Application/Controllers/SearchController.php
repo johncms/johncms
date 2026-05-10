@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
-use Downloads\Download;
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Modules\Downloads\Application\FilePresenter;
 use Johncms\Http\PageMeta;
 use Johncms\Modules\Downloads\Application\UseCases\SearchFilesUseCase;
 use Johncms\NavChain;
@@ -24,6 +24,7 @@ final readonly class SearchController
         private Tools $tools,
         private User $currentUser,
         private SearchFilesUseCase $useCase,
+        private FilePresenter $filePresenter,
     ) {
         $this->controllerContext->initModule('downloads');
     }
@@ -92,7 +93,7 @@ final readonly class SearchController
 
         $files = [];
         foreach ($result->files as $file) {
-            $files[] = Download::displayFile($file->toArray());
+            $files[] = $this->filePresenter->present($file->toArray());
         }
 
         $paginationParams = http_build_query(['search' => $result->searchQuery, 'id' => $searchInDescription ? 1 : 0]);

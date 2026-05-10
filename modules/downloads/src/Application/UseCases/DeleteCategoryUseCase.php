@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Downloads\Application\UseCases;
 
-use Downloads\Screen;
+use Johncms\Modules\Downloads\Domain\Services\ScreenService;
 use Johncms\Modules\Downloads\Domain\Models\DownloadBookmark;
 use Johncms\Modules\Downloads\Domain\Models\DownloadCategory;
 use Johncms\Modules\Downloads\Domain\Models\DownloadComment;
@@ -16,7 +16,7 @@ final readonly class DeleteCategoryUseCase
     public function execute(DownloadCategory $category): void
     {
         DownloadFile::query()->where('refid', $category->id)->each(function (DownloadFile $file): void {
-            foreach (Screen::getScreens($file->id) as $screen) {
+            foreach (ScreenService::getScreens($file->id) as $screen) {
                 @unlink($screen['path']);
             }
             @rmdir(\UPLOAD_PATH . 'downloads' . \DS . 'screen' . \DS . $file->id);

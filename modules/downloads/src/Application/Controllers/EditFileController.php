@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
-use Downloads\Download;
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Modules\Downloads\Application\Services\CategoryNavService;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
@@ -23,6 +23,7 @@ final readonly class EditFileController
         private Request $request,
         private NavChain $navChain,
         private Bbcode $bbcode,
+        private CategoryNavService $categoryNavService,
     ) {
         $this->controllerContext->initModule('downloads');
     }
@@ -50,7 +51,7 @@ final readonly class EditFileController
         ]);
 
         $this->navChain->add(__('Downloads'), '/downloads/');
-        Download::navigation(['dir' => $file->dir, 'refid' => 1, 'count' => 0]);
+        $this->categoryNavService->buildForFileDir($file->dir);
         $this->navChain->add(htmlspecialchars($file->rus_name), '/downloads/files/' . $id . '/');
         $this->navChain->add(__('Edit File'));
 
@@ -93,7 +94,7 @@ final readonly class EditFileController
         if (! empty($audioTags) && ! empty($post['audio'])) {
             $saveTags = [];
             foreach ($audioTags as $key => $tag) {
-                $saveTags[$key][0] = Download::mp3tagsOut($post['audio'][$key] ?? '', 1);
+                $saveTags[$key][0] = iconv('UTF-8', 'windows-1251', $post['audio'][$key] ?? '');
             }
 
             $tagsWriter = new \getid3_writetags();
@@ -124,7 +125,7 @@ final readonly class EditFileController
 
         $tags = [];
         foreach (self::AUDIO_TAG_KEYS as $key) {
-            $tags[$key] = Download::mp3tagsOut($tagsArray[$key][0] ?? '');
+            $tags[$key] = htmlspecialchars(iconv('windows-1251', 'UTF-8', $tagsArray[$key][0] ?? ''));
         }
 
         return $tags;

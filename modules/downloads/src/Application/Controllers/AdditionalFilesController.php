@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
-use Downloads\Download;
 use Johncms\FileInfo;
+use Johncms\Modules\Downloads\Application\FilePresenter;
+use Johncms\Modules\Downloads\Application\Services\CategoryNavService;
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\Modules\Downloads\Domain\Models\DownloadMoreFile;
@@ -31,6 +32,7 @@ final readonly class AdditionalFilesController
         private Session $session,
         private NavChain $navChain,
         private Tools $tools,
+        private CategoryNavService $categoryNavService,
     ) {
         $this->controllerContext->initModule('downloads');
     }
@@ -47,7 +49,7 @@ final readonly class AdditionalFilesController
         }
 
         $this->navChain->add(__('Downloads'), '/downloads/');
-        Download::navigation(['dir' => $file->dir, 'refid' => 1, 'count' => 0]);
+        $this->categoryNavService->buildForFileDir($file->dir);
         $this->navChain->add(htmlspecialchars($file->rus_name), '/downloads/files/' . $id . '/');
         $this->navChain->add(__('Additional files'));
 
@@ -85,7 +87,7 @@ final readonly class AdditionalFilesController
                 'name'         => $more->name,
                 'rus_name'     => htmlspecialchars($more->rus_name),
                 'display_date' => $this->tools->displayDate($more->time),
-                'display_size' => Download::displayFileSize($more->size),
+                'display_size' => FilePresenter::formatFileSize($more->size),
                 'edit_url'     => $baseUrl . '?edit=' . $more->id,
                 'delete_url'   => $baseUrl . '?del=' . $more->id,
             ];

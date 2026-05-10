@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
-use Downloads\Download;
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Modules\Downloads\Application\FilePresenter;
 use Johncms\Http\PageMeta;
 use Johncms\Modules\Downloads\Application\Exceptions\DownloadNotFoundException;
 use Johncms\Modules\Downloads\Application\UseCases\ViewNewFilesUseCase;
@@ -25,6 +25,7 @@ final readonly class NewFilesController
         private Tools $tools,
         private User $currentUser,
         private ViewNewFilesUseCase $useCase,
+        private FilePresenter $filePresenter,
     ) {
         $this->controllerContext->initModule('downloads');
     }
@@ -51,7 +52,7 @@ final readonly class NewFilesController
 
         $files = [];
         foreach ($result->files as $file) {
-            $files[] = Download::displayFile($file->toArray());
+            $files[] = $this->filePresenter->present($file->toArray());
         }
 
         $this->navChain->add(__('Downloads'), '/downloads/');

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
-use Downloads\Download;
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Modules\Downloads\Application\FilePresenter;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
@@ -22,6 +22,7 @@ final readonly class FilesModerationController
         private NavChain $navChain,
         private Tools $tools,
         private User $currentUser,
+        private FilePresenter $filePresenter,
     ) {
         $this->controllerContext->initModule('downloads');
     }
@@ -95,7 +96,7 @@ final readonly class FilesModerationController
                 ->get();
 
             foreach ($rows as $file) {
-                $row = Download::displayFile($file->toArray());
+                $row = $this->filePresenter->present($file->toArray());
                 $row['accept_url'] = '/downloads/moderation?accept=' . $file->id;
                 $row['delete_url'] = '/downloads/delete-file/' . $file->id . '/';
                 $files[] = $row;

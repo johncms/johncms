@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
-use Downloads\Download;
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Modules\Downloads\Application\Services\CategoryNavService;
 use Johncms\Modules\Downloads\Application\Exceptions\FileNotFoundException;
 use Johncms\Modules\Downloads\Application\UseCases\DeleteFileUseCase;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
@@ -23,6 +23,7 @@ final readonly class DeleteFileController
         private Session $session,
         private NavChain $navChain,
         private DeleteFileUseCase $deleteFileUseCase,
+        private CategoryNavService $categoryNavService,
     ) {
         $this->controllerContext->initModule('downloads');
     }
@@ -52,7 +53,7 @@ final readonly class DeleteFileController
         ]);
 
         $this->navChain->add(__('Downloads'), '/downloads/');
-        Download::navigation(['dir' => $file->dir, 'refid' => 1, 'count' => 0]);
+        $this->categoryNavService->buildForFileDir($file->dir);
         $this->navChain->add($pageTitle, '/downloads/files/' . $id . '/');
         $this->navChain->add(__('Delete File'));
 

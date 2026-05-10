@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
-use Downloads\Download;
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Modules\Downloads\Application\FilePresenter;
 use Johncms\Http\PageMeta;
 use Johncms\Modules\Downloads\Application\Exceptions\UserNotFoundException;
 use Johncms\Modules\Downloads\Application\UseCases\ViewUserFilesUseCase;
@@ -25,6 +25,7 @@ final readonly class UserFilesController
         private Tools $tools,
         private User $currentUser,
         private ViewUserFilesUseCase $useCase,
+        private FilePresenter $filePresenter,
     ) {
         $this->controllerContext->initModule('downloads');
     }
@@ -67,7 +68,7 @@ final readonly class UserFilesController
 
         $files = [];
         foreach ($result->files as $file) {
-            $files[] = Download::displayFile($file->toArray());
+            $files[] = $this->filePresenter->present($file->toArray());
         }
 
         $pageTitle = __('User Files');

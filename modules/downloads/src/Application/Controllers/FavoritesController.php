@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
-use Downloads\Download;
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Modules\Downloads\Application\FilePresenter;
 use Johncms\Http\PageMeta;
 use Johncms\Modules\Downloads\Application\UseCases\ViewFavoritesUseCase;
 use Johncms\NavChain;
@@ -24,6 +24,7 @@ final readonly class FavoritesController
         private Tools $tools,
         private User $currentUser,
         private ViewFavoritesUseCase $useCase,
+        private FilePresenter $filePresenter,
     ) {
         $this->controllerContext->initModule('downloads');
     }
@@ -48,7 +49,7 @@ final readonly class FavoritesController
 
         $files = [];
         foreach ($result->files as $file) {
-            $files[] = Download::displayFile($file->toArray());
+            $files[] = $this->filePresenter->present($file->toArray());
         }
 
         $pageTitle = __('Favorites');

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Downloads\Application\UseCases;
 
-use Downloads\Screen;
+use Johncms\Modules\Downloads\Domain\Services\ScreenService;
 use Johncms\Modules\Downloads\Application\Exceptions\FileNotFoundException;
 use Johncms\Modules\Downloads\Domain\Models\DownloadBookmark;
 use Johncms\Modules\Downloads\Domain\Models\DownloadCategory;
@@ -28,7 +28,7 @@ final readonly class DeleteFileUseCase
             throw new FileNotFoundException();
         }
 
-        foreach (Screen::getScreens($id) as $screen) {
+        foreach (ScreenService::getScreens($id) as $screen) {
             @unlink($screen['path']);
         }
         @rmdir(\UPLOAD_PATH . 'downloads' . \DS . 'screen' . \DS . $id);

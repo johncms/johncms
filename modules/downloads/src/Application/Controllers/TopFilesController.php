@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
-use Downloads\Download;
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Modules\Downloads\Application\FilePresenter;
 use Johncms\Modules\Downloads\Application\UseCases\ViewTopFilesUseCase;
 use Johncms\Modules\Downloads\Domain\Enums\DownloadTopSort;
 use Johncms\NavChain;
@@ -20,6 +20,7 @@ final readonly class TopFilesController
         private NavChain $navChain,
         private User $currentUser,
         private ViewTopFilesUseCase $useCase,
+        private FilePresenter $filePresenter,
     ) {
         $this->controllerContext->initModule('downloads');
     }
@@ -34,7 +35,7 @@ final readonly class TopFilesController
 
         $files = [];
         foreach ($result->files as $file) {
-            $files[] = Download::displayFile($file->toArray());
+            $files[] = $this->filePresenter->present($file->toArray());
         }
 
         $pageTitle = match ($downloadSort) {

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
-use Downloads\Download;
-use Downloads\Screen;
 use Exception;
+use Johncms\Modules\Downloads\Application\Services\CategoryNavService;
+use Johncms\Modules\Downloads\Domain\Services\ScreenService;
 use Intervention\Image\ImageManager;
 use Johncms\FileInfo;
 use Johncms\Http\Controller\ControllerContext;
@@ -25,6 +25,7 @@ final readonly class EditScreenController
         private Session $session,
         private NavChain $navChain,
         private ImageManager $imageManager,
+        private CategoryNavService $categoryNavService,
     ) {
         $this->controllerContext->initModule('downloads');
     }
@@ -59,13 +60,13 @@ final readonly class EditScreenController
         ]);
 
         $this->navChain->add(__('Downloads'), '/downloads/');
-        Download::navigation(['dir' => $file->dir, 'refid' => 1, 'count' => 0]);
+        $this->categoryNavService->buildForFileDir($file->dir);
         $this->navChain->add($pageTitle, '/downloads/files/' . $id . '/');
         $this->navChain->add(__('Managing Screenshots'));
 
         return $this->render->render('downloads::edit_screen', [
             'id'           => $id,
-            'screens'      => Screen::getScreens($id),
+            'screens'      => ScreenService::getScreens($id),
             'delete_token' => $deleteToken,
             'action_url'   => '/downloads/edit-screen/' . $id . '/',
         ]);

@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
-use Downloads\Download;
-use Downloads\Screen;
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Modules\Downloads\Application\FilePresenter;
+use Johncms\Modules\Downloads\Application\Services\CategoryNavService;
+use Johncms\Modules\Downloads\Domain\Services\ScreenService;
 use Johncms\Http\PageMeta;
 use Johncms\Modules\Downloads\Application\Exceptions\FileNotFoundException;
 use Johncms\Modules\Downloads\Application\Services\FileMediaInfoService;
@@ -34,6 +35,8 @@ final readonly class ViewFileController
         private VoteOnFileUseCase $voteUseCase,
         private ToggleBookmarkUseCase $bookmarkUseCase,
         private FileMediaInfoService $mediaInfoService,
+        private FilePresenter $filePresenter,
+        private CategoryNavService $categoryNavService,
     ) {
         $this->controllerContext->initModule('downloads');
     }
@@ -117,7 +120,7 @@ final readonly class ViewFileController
 
         // Breadcrumbs
         $this->navChain->add(__('Downloads'), '/downloads/');
-        Download::navigation(['dir' => $file->dir, 'refid' => 1, 'count' => 0]);
+        $this->categoryNavService->buildForFileDir($file->dir);
         $this->navChain->add($file->rus_name);
 
         // File display data
@@ -125,7 +128,7 @@ final readonly class ViewFileController
         $mediaInfo = $this->mediaInfoService->build(
             $file->dir . '/' . $file->name,
             $extension,
-            Screen::getScreens($id)
+            ScreenService::getScreens($id)
         );
 
         $fileData = array_merge($file->toArray(), [
@@ -191,7 +194,7 @@ final readonly class ViewFileController
             'source_url' => '/' . $fsPath,
             'url'        => '/downloads/load/' . $fileId . '/' . $moreLink,
             'name'       => $displayName,
-            'size'       => Download::displayFileSize($size ?? (is_file($fsPath) ? filesize($fsPath) : 0)),
+            'size'       => FilePresenter::formatFileSize($size ?? (is_file($fsPath) ? filesize($fsPath) : 0)),
         ];
     }
 }
