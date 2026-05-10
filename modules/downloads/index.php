@@ -141,7 +141,6 @@ $actions = [];
 
 if (($user->rights >= 6 || $user->rights === 4)) {
     $admin_actions = [
-        'folder_delete' => 'folder_delete.php',
         'recount'       => 'recount.php',
         'scan_dir'      => 'scan_dir.php',
     ];
@@ -254,7 +253,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
                 $res_down['up_url'] = '/downloads/categories/' . $res_down['id'] . '/edit?do=up';
                 $res_down['down_url'] = '/downloads/categories/' . $res_down['id'] . '/edit?do=down';
                 $res_down['edit_url'] = '/downloads/categories/' . $res_down['id'] . '/edit';
-                $res_down['delete_url'] = $url . '?act=folder_delete&amp;id=' . $res_down['id'];
+                $res_down['delete_url'] = '/downloads/categories/' . $res_down['id'] . '/delete';
 
                 $res_down['has_edit'] = $user->rights == 4 || $user->rights >= 6;
 

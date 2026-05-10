@@ -142,7 +142,7 @@ $this->layout(
                     <a class="dropdown-item" href="?act=scan_dir&amp;id=<?= $id ?? '' ?>"><?= __('Update Files') ?></a>
                     <?php if (! empty($id)): ?>
                         <a class="dropdown-item" href="?act=folder_edit&amp;id=<?= $id ?>"><?= __('Change Folder') ?></a>
-                        <a class="dropdown-item" href="?act=folder_delete&amp;id=<?= $id ?>"><?= __('Delete Folder') ?></a>
+                        <a class="dropdown-item" href="/downloads/categories/<?= $id ?>/delete"><?= __('Delete Folder') ?></a>
                         <a class="dropdown-item" href="?act=scan_dir&amp;do=clean&amp;id=<?= $id ?>"><?= __('Remove missing files') ?></a>
                         <a class="dropdown-item" href="?act=recount&amp;id=<?= $id ?>"><?= __('Update counters') ?></a>
                     <?php endif; ?>
