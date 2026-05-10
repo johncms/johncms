@@ -12,7 +12,8 @@ final readonly class EnsureDownloadsAccessUseCase
 {
     public function __construct(
         private User $currentUser,
-    ) {}
+    ) {
+    }
 
     /**
      * @throws DownloadsAccessDeniedException

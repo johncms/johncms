@@ -17,7 +17,8 @@ final readonly class DownloadsAccessMiddleware implements MiddlewareInterface
         private EnsureDownloadsAccessUseCase $ensureDownloadsAccessUseCase,
         private DownloadsErrorRenderer $downloadsErrorRenderer,
         private Render $render,
-    ) {}
+    ) {
+    }
 
     public function handle(Request $request, callable $next): mixed
     {

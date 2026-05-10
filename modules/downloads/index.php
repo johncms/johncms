@@ -141,7 +141,6 @@ $actions = [];
 
 if (($user->rights >= 6 || $user->rights === 4)) {
     $admin_actions = [
-        'delete_file'   => 'fileControl/delete_file.php',
         'edit_file'     => 'fileControl/edit_file.php',
         'edit_screen'   => 'fileControl/edit_screen.php',
         'files_more'    => 'fileControl/files_more.php',

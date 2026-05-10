@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Johncms\Modules\Downloads\Application\Controllers\CommentsReviewController;
+use Johncms\Modules\Downloads\Application\Controllers\DeleteFileController;
 use Johncms\Modules\Downloads\Application\Controllers\FavoritesController;
 use Johncms\Modules\Downloads\Application\Controllers\FileCommentsController;
 use Johncms\Modules\Downloads\Application\Controllers\FilesUploadController;
@@ -14,11 +15,12 @@ use Johncms\Modules\Downloads\Application\Controllers\TopUsersController;
 use Johncms\Modules\Downloads\Application\Controllers\UserFilesController;
 use Johncms\Modules\Downloads\Application\Controllers\ViewFileController;
 use Johncms\Modules\Downloads\Application\Middlewares\DownloadsAccessMiddleware;
+use Johncms\Modules\Downloads\Application\Middlewares\DownloadsAdminMiddleware;
 use Johncms\Router\RouteCollection;
 use Johncms\System\Users\User;
 
 return static function (RouteCollection $router, User $user): void {
-    $group = $router->group('', function (RouteCollection $r) use ($user): void {
+    $group = $router->group('', function (RouteCollection $r): void {
         $r->get('/downloads/comments-review', CommentsReviewController::class)->name('downloads.comments_review');
         $r->get('/downloads/favorites', FavoritesController::class)->name('downloads.favorites');
         $r->get('/downloads/new', NewFilesController::class)->name('downloads.new_files');
@@ -35,4 +37,10 @@ return static function (RouteCollection $router, User $user): void {
         $r->map(['GET', 'POST'], '/downloads', 'modules/downloads/index.php')->name('downloads.index');
     });
     $group->addMiddleware(DownloadsAccessMiddleware::class);
+
+    $adminGroup = $router->group('', function (RouteCollection $r): void {
+        $r->map(['GET', 'POST'], '/downloads/delete-file/{id:number}', DeleteFileController::class)->name('downloads.delete_file');
+    });
+    $adminGroup->addMiddleware(DownloadsAccessMiddleware::class);
+    $adminGroup->addMiddleware(DownloadsAdminMiddleware::class);
 };
