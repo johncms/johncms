@@ -17,13 +17,7 @@
  * @var $show_user
  */
 
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $page_title,
-    ]
-);
+$this->layout('system::layout/default');
 ?>
 <?php if (empty($files)): ?>
     <div class="row">
@@ -37,7 +31,7 @@ $this->layout(
     <?php endforeach; ?>
 <?php endif; ?>
 
-<form action="?act=mod_files" method="post" class="mb-2 mt-3">
+<form action="/downloads/moderation" method="post" class="mb-2 mt-3">
     <input type="submit" name="all_mod" class="btn btn-primary" value="<?= __('Accept all files') ?>"/>
 </form>
 

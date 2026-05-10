@@ -141,7 +141,6 @@ $actions = [];
 
 if (($user->rights >= 6 || $user->rights === 4)) {
     $admin_actions = [
-        'mod_files'     => 'files_moderation.php',
         'folder_add'    => 'folder_add.php',
         'folder_delete' => 'folder_delete.php',
         'folder_edit'   => 'folder_edit.php',
@@ -233,7 +232,7 @@ if (isset($actions[$act]) && is_file(__DIR__ . '/includes/' . $actions[$act])) {
         $mod_files = $db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '3'")->fetchColumn();
 
         if ($mod_files > 0) {
-            $urls['mod_files'] = $url . '?act=mod_files';
+            $urls['mod_files'] = '/downloads/moderation';
         }
     }
 

@@ -47,7 +47,7 @@ if ($user->rights >= 7) {
     if (! empty($all_counters['downloads_mod'])) {
         $notifications[] = [
             'name'    => __('Downloads on moderation'),
-            'url'     => '/downloads/?act=mod_files',
+            'url'     => '/downloads/moderation',
             'counter' => ! empty($all_counters['downloads_mod']),
             'type'    => 'info',
         ];

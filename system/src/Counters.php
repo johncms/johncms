@@ -103,7 +103,7 @@ class Counters
 
         if ($this->user->rights == 4 || $this->user->rights >= 6) {
             if ($mod) {
-                $total .= '&nbsp;/&nbsp;<span class="red"><a href="downloads/?act=mod_files">м. ' . $mod . '</a></span>';
+                $total .= '&nbsp;/&nbsp;<span class="red"><a href="/downloads/moderation">м. ' . $mod . '</a></span>';
             }
         }
 
