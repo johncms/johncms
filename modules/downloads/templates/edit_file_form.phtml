@@ -17,13 +17,7 @@
  * @var bool $edit_form
  */
 
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $page_title,
-    ]
-);
+$this->layout('system::layout/default');
 ?>
 
 <form name="file_edit_form" action="<?= $action_url ?>" method="post">

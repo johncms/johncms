@@ -140,7 +140,7 @@ $this->layout('system::layout/default');
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <?php if (! empty($id)): ?>
-                        <a class="dropdown-item" href="/downloads/?act=edit_file&amp;id=<?= $id ?>"><?= __('Edit File') ?></a>
+                        <a class="dropdown-item" href="/downloads/edit-file/<?= $id ?>/"><?= __('Edit File') ?></a>
                         <a class="dropdown-item" href="/downloads/?act=edit_screen&amp;id=<?= $id ?>"><?= __('Managing Screenshots') ?></a>
                         <a class="dropdown-item" href="/downloads/?act=files_more&amp;id=<?= $id ?>"><?= __('Additional Files') ?></a>
                         <a class="dropdown-item" href="/downloads/delete-file/<?= $id ?>/"><?= __('Delete File') ?></a>

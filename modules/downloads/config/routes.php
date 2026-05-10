@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Johncms\Modules\Downloads\Application\Controllers\CommentsReviewController;
 use Johncms\Modules\Downloads\Application\Controllers\DeleteFileController;
+use Johncms\Modules\Downloads\Application\Controllers\EditFileController;
 use Johncms\Modules\Downloads\Application\Controllers\FavoritesController;
 use Johncms\Modules\Downloads\Application\Controllers\FileCommentsController;
 use Johncms\Modules\Downloads\Application\Controllers\FilesUploadController;
@@ -40,6 +41,7 @@ return static function (RouteCollection $router, User $user): void {
 
     $adminGroup = $router->group('', function (RouteCollection $r): void {
         $r->map(['GET', 'POST'], '/downloads/delete-file/{id:number}', DeleteFileController::class)->name('downloads.delete_file');
+        $r->map(['GET', 'POST'], '/downloads/edit-file/{id:number}', EditFileController::class)->name('downloads.edit_file');
     });
     $adminGroup->addMiddleware(DownloadsAccessMiddleware::class);
     $adminGroup->addMiddleware(DownloadsAdminMiddleware::class);
