@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Johncms\Modules\Downloads\Application\Controllers\AdditionalFilesController;
+use Johncms\Modules\Downloads\Application\Controllers\IndexController;
 use Johncms\Modules\Downloads\Application\Controllers\CreateCategoryController;
 use Johncms\Modules\Downloads\Application\Controllers\DeleteCategoryController;
 use Johncms\Modules\Downloads\Application\Controllers\EditCategoryController;
@@ -45,7 +46,7 @@ return static function (RouteCollection $router, User $user): void {
         $r->map(['GET', 'POST'], '/downloads/comments/{id:number}', FileCommentsController::class)->name('downloads.file_comments');
         $r->map(['GET', 'POST'], '/downloads/upload/{id:number}', FilesUploadController::class)->name('downloads.upload');
 
-        $r->map(['GET', 'POST'], '/downloads', 'modules/downloads/index.php')->name('downloads.index');
+        $r->map(['GET', 'POST'], '/downloads', IndexController::class)->name('downloads.index');
     });
     $group->addMiddleware(DownloadsAccessMiddleware::class);
 
