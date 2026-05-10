@@ -142,7 +142,7 @@ $this->layout('system::layout/default');
                     <?php if (! empty($id)): ?>
                         <a class="dropdown-item" href="/downloads/edit-file/<?= $id ?>/"><?= __('Edit File') ?></a>
                         <a class="dropdown-item" href="/downloads/edit-screen/<?= $id ?>/"><?= __('Managing Screenshots') ?></a>
-                        <a class="dropdown-item" href="/downloads/?act=files_more&amp;id=<?= $id ?>"><?= __('Additional Files') ?></a>
+                        <a class="dropdown-item" href="/downloads/additional-files/<?= $id ?>/"><?= __('Additional Files') ?></a>
                         <a class="dropdown-item" href="/downloads/delete-file/<?= $id ?>/"><?= __('Delete File') ?></a>
                         <a class="dropdown-item" href="/downloads/?act=transfer_file&amp;id=<?= $id ?>"><?= __('Move File') ?></a>
                     <?php endif; ?>
