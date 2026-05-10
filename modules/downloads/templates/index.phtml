@@ -139,11 +139,11 @@ $this->layout(
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="/downloads/categories/create<?= $id ? '?refid=' . $id : '' ?>"><?= __('Create Folder') ?></a>
-                    <a class="dropdown-item" href="?act=scan_dir&amp;id=<?= $id ?? '' ?>"><?= __('Update Files') ?></a>
+                    <a class="dropdown-item" href="/downloads/scan-dir<?= $id ? '?id=' . $id : '' ?>"><?= __('Update Files') ?></a>
                     <?php if (! empty($id)): ?>
-                        <a class="dropdown-item" href="?act=folder_edit&amp;id=<?= $id ?>"><?= __('Change Folder') ?></a>
+                        <a class="dropdown-item" href="/downloads/categories/<?= $id ?>/edit"><?= __('Change Folder') ?></a>
                         <a class="dropdown-item" href="/downloads/categories/<?= $id ?>/delete"><?= __('Delete Folder') ?></a>
-                        <a class="dropdown-item" href="?act=scan_dir&amp;do=clean&amp;id=<?= $id ?>"><?= __('Remove missing files') ?></a>
+                        <a class="dropdown-item" href="/downloads/scan-dir?do=clean&amp;id=<?= $id ?>"><?= __('Remove missing files') ?></a>
                         <a class="dropdown-item" href="/downloads/recount<?= $id ? '?id=' . $id : '' ?>"><?= __('Update counters') ?></a>
                     <?php endif; ?>
                 </div>

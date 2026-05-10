@@ -16,13 +16,7 @@
  * @var $select_mode
  */
 
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $page_title,
-    ]
-);
+$this->layout('system::layout/default');
 ?>
 
 <?php if (! $config['mod_down']): ?>
@@ -34,14 +28,14 @@ $this->layout(
     <div>
         <?php if ($id): ?>
             <div>
-                <a href="?act=scan_dir&amp;yes&amp;id=<?= $id ?>&amp;mod=1" class="btn btn-outline-primary btn-sm mb-2"><?= __('Current folder') ?></a>
+                <a href="/downloads/scan-dir?yes&amp;id=<?= $id ?>&amp;mod=1" class="btn btn-outline-primary btn-sm mb-2"><?= __('Current folder') ?></a>
             </div>
             <div>
-                <a href="?act=scan_dir&amp;yes&amp;id=<?= $id ?>" class="btn btn-outline-primary btn-sm mb-2"><?= __('Current folder and all subfolders') ?></a>
+                <a href="/downloads/scan-dir?yes&amp;id=<?= $id ?>" class="btn btn-outline-primary btn-sm mb-2"><?= __('Current folder and all subfolders') ?></a>
             </div>
         <?php endif; ?>
         <div>
-            <a href="?act=scan_dir&amp;yes" class="btn btn-outline-primary btn-sm mb-2"><?= __('Entire Downloads') ?></a>
+            <a href="/downloads/scan-dir?yes" class="btn btn-outline-primary btn-sm mb-2"><?= __('Entire Downloads') ?></a>
         </div>
     </div>
 <?php else: ?>
@@ -57,12 +51,12 @@ $this->layout(
     </div>
     <div>
         <div>
-            <a href="?act=scan_dir&amp;do=clean&amp;id=<?= $id ?>"><?= __('Remove missing files') ?></a>
+            <a href="/downloads/scan-dir?do=clean<?= $id ? '&amp;id=' . $id : '' ?>"><?= __('Remove missing files') ?></a>
         </div>
         <div>
-            <a href="?act=recount&amp;do=clean&amp;id=<?= $id ?>"><?= __('Update counters') ?></a>
+            <a href="/downloads/recount<?= $id ? '?id=' . $id : '' ?>"><?= __('Update counters') ?></a>
         </div>
-        <a href="?act=scan_dir&amp;yes"><?= __('Entire Downloads') ?></a>
+        <a href="/downloads/scan-dir?yes"><?= __('Entire Downloads') ?></a>
         <div class="mt-2">
             <a href="<?= $urls['downloads'] ?>"><?= __('Downloads') ?></a>
         </div>
