@@ -7,6 +7,7 @@ namespace Johncms\Modules\Downloads\Application\Controllers;
 use Downloads\Download;
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
+use Johncms\NavChain;
 use Johncms\System\Http\Request;
 use Johncms\System\Legacy\Bbcode;
 use Johncms\System\View\Render;
@@ -20,6 +21,7 @@ final readonly class EditFileController
         private ControllerContext $controllerContext,
         private Render $render,
         private Request $request,
+        private NavChain $navChain,
         private Bbcode $bbcode,
     ) {
         $this->controllerContext->initModule('downloads');
@@ -46,6 +48,11 @@ final readonly class EditFileController
             'title'      => __('Edit File'),
             'page_title' => __('Edit File'),
         ]);
+
+        $this->navChain->add(__('Downloads'), '/downloads/');
+        Download::navigation(['dir' => $file->dir, 'refid' => 1, 'count' => 0]);
+        $this->navChain->add(htmlspecialchars($file->rus_name), '/downloads/files/' . $id . '/');
+        $this->navChain->add(__('Edit File'));
 
         return $this->render->render('downloads::edit_file_form', [
             'id'         => $id,

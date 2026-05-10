@@ -17,13 +17,7 @@
  * @var $delete_token
  */
 
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $page_title,
-    ]
-);
+$this->layout('system::layout/default');
 ?>
 
 <?php if (! empty($screens)): ?>
@@ -36,7 +30,7 @@ $this->layout(
                 </a>
                 <div class="media-body">
                     <h5 class="fw-bold mt-0"><?= $file['file_name'] ?></h5>
-                    <form action="?act=edit_screen&amp;id=<?= $id ?>&amp;do=<?= $file['file_name'] ?>" method="post">
+                    <form action="/downloads/edit-screen/<?= $id ?>/?do=<?= $file['file_name'] ?>" method="post">
                         <input type="hidden" name="delete_token" value="<?= $delete_token ?>">
                         <button type="submit" class="btn btn-danger btn-sm"><?= __('Delete') ?></button>
                     </form>
