@@ -139,7 +139,6 @@ $defaultExt = [
 // Переключаем режимы работы
 $actions = [
     'files_upload' => 'files_upload.php',
-    'load_file'   => 'fileControl/load_file.php',
 ];
 
 if (($user->rights >= 6 || $user->rights === 4)) {

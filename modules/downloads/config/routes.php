@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Johncms\Modules\Downloads\Application\Controllers\CommentsReviewController;
 use Johncms\Modules\Downloads\Application\Controllers\FavoritesController;
 use Johncms\Modules\Downloads\Application\Controllers\FileCommentsController;
+use Johncms\Modules\Downloads\Application\Controllers\LoadFileController;
 use Johncms\Modules\Downloads\Application\Controllers\NewFilesController;
 use Johncms\Modules\Downloads\Application\Controllers\SearchController;
 use Johncms\Modules\Downloads\Application\Controllers\TopFilesController;
@@ -24,6 +25,7 @@ return static function (RouteCollection $router, User $user): void {
     $router->get('/downloads/top-users', TopUsersController::class)->name('downloads.top_users');
     $router->get('/downloads/user-files/{id:number}', UserFilesController::class)->name('downloads.user_files');
     $router->get('/downloads/files/{id:number}', ViewFileController::class)->name('downloads.view_file');
+    $router->get('/downloads/load/{id:number}', LoadFileController::class)->name('downloads.load_file');
     $router->map(['GET', 'POST'], '/downloads/comments/{id:number}', FileCommentsController::class)->name('downloads.file_comments');
 
     $router->map(['GET', 'POST'], '/downloads', 'modules/downloads/index.php')->name('downloads.index');

@@ -186,10 +186,10 @@ final readonly class ViewFileController
         ?int $moreId = null
     ): array {
         $fsPath = $dir . '/' . $name;
-        $moreLink = $moreId !== null ? '&amp;more=' . $moreId : '';
+        $moreLink = $moreId !== null ? '?more=' . $moreId : '';
         return [
             'source_url' => '/' . $fsPath,
-            'url'        => '/downloads/?act=load_file&amp;id=' . $fileId . $moreLink,
+            'url'        => '/downloads/load/' . $fileId . '/' . $moreLink,
             'name'       => $displayName,
             'size'       => Download::displayFileSize($size ?? (is_file($fsPath) ? filesize($fsPath) : 0)),
         ];
