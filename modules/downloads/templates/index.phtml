@@ -128,7 +128,7 @@ $this->layout(
                         <?= __('Add file') ?>
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="?act=files_upload&amp;id=<?= $id ?>"><?= __('Upload File') ?></a>
+                        <a class="dropdown-item" href="/downloads/upload/<?= $id ?>/"><?= __('Upload File') ?></a>
                         <a class="dropdown-item" href="?act=import&amp;id=<?= $id ?>"><?= __('Import File') ?></a>
                     </div>
                 </div>
@@ -150,7 +150,7 @@ $this->layout(
             </div>
         </div>
     <?php elseif ($can_upload): ?>
-        <div><a href="?act=files_upload&amp;id=<?= $id ?>" class="btn btn-primary"><?= __('Upload File') ?></a></div>
+        <div><a href="/downloads/upload/<?= $id ?>/" class="btn btn-primary"><?= __('Upload File') ?></a></div>
     <?php endif; ?>
 
     <div class="mt-2">

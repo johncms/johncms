@@ -137,9 +137,7 @@ $defaultExt = [
 ];
 
 // Переключаем режимы работы
-$actions = [
-    'files_upload' => 'files_upload.php',
-];
+$actions = [];
 
 if (($user->rights >= 6 || $user->rights === 4)) {
     $admin_actions = [

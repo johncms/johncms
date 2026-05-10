@@ -19,13 +19,7 @@
  * @var $screen_attached_error
  */
 
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $page_title,
-    ]
-);
+$this->layout('system::layout/default');
 ?>
 
 <div class="alert alert-success">
@@ -48,6 +42,6 @@ $this->layout(
 <?php endif; ?>
 
 <div>
-    <a href="?act=files_upload&amp;id=<?= $id ?>" class="btn btn-primary"><?= __('Upload more') ?></a>
-    <a href="?id=<?= $id ?>" class="btn btn-secondary"><?= __('Cancel') ?></a>
+    <a href="/downloads/upload/<?= $id ?>/" class="btn btn-primary"><?= __('Upload more') ?></a>
+    <a href="/downloads/?id=<?= $id ?>" class="btn btn-secondary"><?= __('Cancel') ?></a>
 </div>

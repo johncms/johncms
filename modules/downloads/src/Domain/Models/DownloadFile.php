@@ -10,4 +10,17 @@ final class DownloadFile extends Model
 {
     protected $table = 'download__files';
     public $timestamps = false;
+
+    protected $fillable = [
+        'refid',
+        'dir',
+        'time',
+        'name',
+        'text',
+        'rus_name',
+        'type',
+        'user_id',
+        'about',
+        'desc',
+    ];
 }

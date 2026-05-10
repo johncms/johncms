@@ -16,13 +16,7 @@
  * @var $extensions
  */
 
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $page_title,
-    ]
-);
+$this->layout('system::layout/default');
 ?>
 
 <form name="file_upload_form" action="<?= $action_url ?>" method="post" enctype="multipart/form-data">
@@ -75,6 +69,6 @@ $this->layout(
 
     <div>
         <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Save') ?></button>
-        <a href="?id=<?= $id ?>" class="btn btn-secondary"><?= __('Cancel') ?></a>
+        <a href="/downloads/?id=<?= $id ?>" class="btn btn-secondary"><?= __('Cancel') ?></a>
     </div>
 </form>
