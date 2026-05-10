@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Johncms\Modules\Downloads\Application\Controllers\AdditionalFilesController;
+use Johncms\Modules\Downloads\Application\Controllers\CreateCategoryController;
 use Johncms\Modules\Downloads\Application\Controllers\FilesModerationController;
 use Johncms\Modules\Downloads\Application\Controllers\ImportFileController;
 use Johncms\Modules\Downloads\Application\Controllers\CommentsReviewController;
@@ -52,6 +53,7 @@ return static function (RouteCollection $router, User $user): void {
         $r->get('/downloads/move-file/{id:number}', MoveFileController::class)->name('downloads.move_file');
         $r->map(['GET', 'POST'], '/downloads/import/{id:number}', ImportFileController::class)->name('downloads.import');
         $r->map(['GET', 'POST'], '/downloads/moderation', FilesModerationController::class)->name('downloads.moderation');
+        $r->map(['GET', 'POST'], '/downloads/categories/create', CreateCategoryController::class)->name('downloads.create_category');
     });
     $adminGroup->addMiddleware(DownloadsAccessMiddleware::class);
     $adminGroup->addMiddleware(DownloadsAdminMiddleware::class);

@@ -17,13 +17,7 @@
  * @var bool $edit_form
  */
 
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $page_title,
-    ]
-);
+$this->layout('system::layout/default');
 ?>
 
 <form name="folder_form" action="<?= $action_url ?>" method="post">
@@ -58,6 +52,6 @@ $this->layout(
     <?php endif; ?>
     <div>
         <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Save') ?></button>
-        <a href="?id=<?= $id ?>" class="btn btn-secondary"><?= __('Cancel') ?></a>
+        <a href="/downloads/?id=<?= $id ?>" class="btn btn-secondary"><?= __('Cancel') ?></a>
     </div>
 </form>

@@ -141,7 +141,6 @@ $actions = [];
 
 if (($user->rights >= 6 || $user->rights === 4)) {
     $admin_actions = [
-        'folder_add'    => 'folder_add.php',
         'folder_delete' => 'folder_delete.php',
         'folder_edit'   => 'folder_edit.php',
         'recount'       => 'recount.php',

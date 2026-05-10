@@ -138,7 +138,7 @@ $this->layout(
                     <?= __('Section actions') ?>
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="?act=folder_add&amp;id=<?= $id ?? '' ?>"><?= __('Create Folder') ?></a>
+                    <a class="dropdown-item" href="/downloads/categories/create<?= $id ? '?refid=' . $id : '' ?>"><?= __('Create Folder') ?></a>
                     <a class="dropdown-item" href="?act=scan_dir&amp;id=<?= $id ?? '' ?>"><?= __('Update Files') ?></a>
                     <?php if (! empty($id)): ?>
                         <a class="dropdown-item" href="?act=folder_edit&amp;id=<?= $id ?>"><?= __('Change Folder') ?></a>
