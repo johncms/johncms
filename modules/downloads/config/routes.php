@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Johncms\Modules\Downloads\Application\Controllers\AdditionalFilesController;
 use Johncms\Modules\Downloads\Application\Controllers\CreateCategoryController;
+use Johncms\Modules\Downloads\Application\Controllers\EditCategoryController;
 use Johncms\Modules\Downloads\Application\Controllers\FilesModerationController;
 use Johncms\Modules\Downloads\Application\Controllers\ImportFileController;
 use Johncms\Modules\Downloads\Application\Controllers\CommentsReviewController;
@@ -54,6 +55,7 @@ return static function (RouteCollection $router, User $user): void {
         $r->map(['GET', 'POST'], '/downloads/import/{id:number}', ImportFileController::class)->name('downloads.import');
         $r->map(['GET', 'POST'], '/downloads/moderation', FilesModerationController::class)->name('downloads.moderation');
         $r->map(['GET', 'POST'], '/downloads/categories/create', CreateCategoryController::class)->name('downloads.create_category');
+        $r->map(['GET', 'POST'], '/downloads/categories/{id:number}/edit', EditCategoryController::class)->name('downloads.edit_category');
     });
     $adminGroup->addMiddleware(DownloadsAccessMiddleware::class);
     $adminGroup->addMiddleware(DownloadsAdminMiddleware::class);
