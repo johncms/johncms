@@ -141,7 +141,6 @@ $actions = [];
 
 if (($user->rights >= 6 || $user->rights === 4)) {
     $admin_actions = [
-        'transfer_file' => 'fileControl/transfer_file.php',
         'import'        => 'files_import.php',
         'mod_files'     => 'files_moderation.php',
         'folder_add'    => 'folder_add.php',

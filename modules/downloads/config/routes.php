@@ -6,6 +6,7 @@ use Johncms\Modules\Downloads\Application\Controllers\AdditionalFilesController;
 use Johncms\Modules\Downloads\Application\Controllers\CommentsReviewController;
 use Johncms\Modules\Downloads\Application\Controllers\DeleteFileController;
 use Johncms\Modules\Downloads\Application\Controllers\EditFileController;
+use Johncms\Modules\Downloads\Application\Controllers\MoveFileController;
 use Johncms\Modules\Downloads\Application\Controllers\EditScreenController;
 use Johncms\Modules\Downloads\Application\Controllers\FavoritesController;
 use Johncms\Modules\Downloads\Application\Controllers\FileCommentsController;
@@ -46,6 +47,7 @@ return static function (RouteCollection $router, User $user): void {
         $r->map(['GET', 'POST'], '/downloads/edit-file/{id:number}', EditFileController::class)->name('downloads.edit_file');
         $r->map(['GET', 'POST'], '/downloads/edit-screen/{id:number}', EditScreenController::class)->name('downloads.edit_screen');
         $r->map(['GET', 'POST'], '/downloads/additional-files/{id:number}', AdditionalFilesController::class)->name('downloads.additional_files');
+        $r->get('/downloads/move-file/{id:number}', MoveFileController::class)->name('downloads.move_file');
     });
     $adminGroup->addMiddleware(DownloadsAccessMiddleware::class);
     $adminGroup->addMiddleware(DownloadsAdminMiddleware::class);
