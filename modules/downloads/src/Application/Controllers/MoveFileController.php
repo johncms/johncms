@@ -115,7 +115,7 @@ final readonly class MoveFileController
                 'title'         => __('Move File'),
                 'type'          => 'alert-success',
                 'message'       => __('The file has been moved'),
-                'back_url'      => '/downloads/?act=recount',
+                'back_url'      => '/downloads/recount',
                 'back_url_name' => __('Update counters'),
             ]);
         }

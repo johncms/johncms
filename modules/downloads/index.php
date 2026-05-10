@@ -141,7 +141,6 @@ $actions = [];
 
 if (($user->rights >= 6 || $user->rights === 4)) {
     $admin_actions = [
-        'recount'       => 'recount.php',
         'scan_dir'      => 'scan_dir.php',
     ];
     $actions = array_merge($actions, $admin_actions);

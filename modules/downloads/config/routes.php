@@ -6,6 +6,7 @@ use Johncms\Modules\Downloads\Application\Controllers\AdditionalFilesController;
 use Johncms\Modules\Downloads\Application\Controllers\CreateCategoryController;
 use Johncms\Modules\Downloads\Application\Controllers\DeleteCategoryController;
 use Johncms\Modules\Downloads\Application\Controllers\EditCategoryController;
+use Johncms\Modules\Downloads\Application\Controllers\RecountController;
 use Johncms\Modules\Downloads\Application\Controllers\FilesModerationController;
 use Johncms\Modules\Downloads\Application\Controllers\ImportFileController;
 use Johncms\Modules\Downloads\Application\Controllers\CommentsReviewController;
@@ -58,6 +59,7 @@ return static function (RouteCollection $router, User $user): void {
         $r->map(['GET', 'POST'], '/downloads/categories/create', CreateCategoryController::class)->name('downloads.create_category');
         $r->map(['GET', 'POST'], '/downloads/categories/{id:number}/edit', EditCategoryController::class)->name('downloads.edit_category');
         $r->map(['GET', 'POST'], '/downloads/categories/{id:number}/delete', DeleteCategoryController::class)->name('downloads.delete_category');
+        $r->get('/downloads/recount', RecountController::class)->name('downloads.recount');
     });
     $adminGroup->addMiddleware(DownloadsAccessMiddleware::class);
     $adminGroup->addMiddleware(DownloadsAdminMiddleware::class);
