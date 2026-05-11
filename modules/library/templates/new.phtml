@@ -8,28 +8,16 @@
  * @link      https://johncms.com JohnCMS Project
  */
 
-/**
- * @var $title
- * @var $page_title
- * @var $data
- */
-
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $page_title ?? $title,
-    ]
-);
+$this->layout('system::layout/default');
 ?>
 <?php if ($total) : ?>
-    <?php foreach ($list() as $newlist): ?>
+    <?php foreach ($items as $newlist): ?>
         <div class="new_post-item without_avatar">
-            <a href="?id=<?= $newlist['id'] ?>" class="card-title h3"><?= $newlist['name'] ?></a>
+            <a href="/library/?id=<?= $newlist['id'] ?>" class="card-title h3"><?= $newlist['name'] ?></a>
             <div class="post-body"><?= $newlist['announce'] ?></div>
             <div class="text-muted small d-flex align-items-center flex-wrap">
                 <div class="me-2">
-                    <span><?= __('Section:') ?></span> <a href="?do=dir&amp;id=<?= $newlist['cat_id'] ?>"><?= $newlist['catalog_name'] ?></a>
+                    <span><?= __('Section:') ?></span> <a href="/library/?do=dir&amp;id=<?= $newlist['cat_id'] ?>"><?= $newlist['catalog_name'] ?></a>
                 </div>
                 <div class="me-2">
                     <span><?= __('Author:') ?></span><?= $newlist['who'] ?>
@@ -39,7 +27,7 @@ $this->layout(
                 </div>
                 <div>
                     <?php if ($newlist['comments']) : ?>
-                        <a href="?act=comments&amp;id=<?= $newlist['id'] ?>"><?= __('Comments:') ?></a>
+                        <a href="/library/?act=comments&amp;id=<?= $newlist['id'] ?>"><?= __('Comments:') ?></a>
                         (<?= $newlist['comm_count'] ?>)
                     <?php endif; ?>
                 </div>
@@ -52,5 +40,5 @@ $this->layout(
     <div><?= $pagination ?></div>
 <?php endif ?>
 <div class="mt-2">
-    <a href="?"><?= __('To Library') ?></a>
+    <a href="/library/"><?= __('To Library') ?></a>
 </div>

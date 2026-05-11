@@ -23,7 +23,7 @@ $this->layout('system::layout/default');
 </div>
 
 <?php if ($total) : ?>
-    <?php foreach ($list() as $top) : ?>
+    <?php foreach ($items as $top) : ?>
         <div class="new_post-item without_avatar">
             <a href="/library/?id=<?= $top['id'] ?>" class="post-title"><?= $top['name'] ?></a>
             <div class="post-body"><?= $top['announce'] ?></div>

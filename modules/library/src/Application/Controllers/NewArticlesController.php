@@ -1,0 +1,84 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Johncms\Modules\Library\Application\Controllers;
+
+use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\PageMeta;
+use Johncms\Modules\Library\Domain\Models\LibraryCategory;
+use Johncms\Modules\Library\Domain\Repository\LibraryTextRepositoryInterface;
+use Johncms\NavChain;
+use Johncms\System\Http\Request;
+use Johncms\System\Legacy\Tools;
+use Johncms\System\View\Render;
+use Johncms\Users\User;
+use Library\Hashtags;
+use Library\Rating;
+
+final readonly class NewArticlesController
+{
+    public function __construct(
+        private ControllerContext $controllerContext,
+        private Render $render,
+        private NavChain $navChain,
+        private Request $request,
+        private Tools $tools,
+        private User $currentUser,
+        private LibraryTextRepositoryInterface $repository,
+    ) {
+        $this->controllerContext->initModule('library');
+    }
+
+    public function __invoke(): string
+    {
+        $page = max(1, (int) $this->request->getQuery('page', 1));
+        $kmess = $this->currentUser->config->kmess;
+
+        $pageTitle = __('New Articles');
+        $meta = new PageMeta($pageTitle . ' — ' . __('Library'), $page);
+
+        $this->navChain->add(__('Library'), '/library/');
+        $this->navChain->add($pageTitle);
+
+        $this->render->addData([
+            'title'       => $meta->title,
+            'page_title'  => $pageTitle,
+            'description' => $meta->description,
+        ]);
+
+        $total = $this->repository->countNew();
+        $texts = $total ? $this->repository->getNew($page, $kmess) : collect();
+
+        $items = [];
+        foreach ($texts as $text) {
+            $obj = new Hashtags($text->id);
+            $rate = new Rating($text->id);
+            $category = LibraryCategory::query()->find($text->cat_id);
+
+            $uploader = $text->uploader_id
+                ? '<a href="' . config('johncms')['homeurl'] . '/profile/?user=' . $text->uploader_id . '">' . $this->tools->checkout($text->uploader) . '</a>'
+                : $this->tools->checkout($text->uploader);
+
+            $items[] = [
+                'id'           => $text->id,
+                'name'         => $this->tools->checkout($text->name),
+                'announce'     => $this->tools->checkout($text->announce, 0, 0),
+                'cover'        => file_exists(UPLOAD_PATH . 'library/images/small/' . $text->id . '.png'),
+                'tags'         => $obj->getAllStatTags() ? $obj->getAllStatTags(1) : null,
+                'ratingView'   => $rate->viewRate(1),
+                'who'          => $uploader . ' (' . $this->tools->displayDate($text->time) . ')',
+                'cat_id'       => $text->cat_id,
+                'catalog_name' => $category ? $this->tools->checkout($category->name) : '',
+                'comments'     => $text->comments,
+                'comm_count'   => $text->comm_count,
+            ];
+        }
+
+        return $this->render->render('library::new', [
+            'total'      => $total,
+            'pagination' => $this->tools->displayPagination('/library/new?', ($page - 1) * $kmess, $total, $kmess),
+            'items'      => $items,
+        ]);
+    }
+}

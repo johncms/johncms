@@ -6,13 +6,14 @@ namespace Johncms\Modules\Library\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\PageMeta;
+use Johncms\Modules\Library\Domain\Models\LibraryCategory;
+use Johncms\Modules\Library\Domain\Repository\LibraryTextRepositoryInterface;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
 use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Library\Hashtags;
 use Library\Rating;
-use PDO;
 
 final readonly class TopController
 {
@@ -22,7 +23,7 @@ final readonly class TopController
         private NavChain $navChain,
         private Request $request,
         private Tools $tools,
-        private PDO $db,
+        private LibraryTextRepositoryInterface $repository,
     ) {
         $this->controllerContext->initModule('library');
     }
@@ -50,67 +51,44 @@ final readonly class TopController
             'comm'   => ['name' => __('By comments'),   'url' => '/library/top?sort=comm',   'active' => $sort === 'comm'],
         ];
 
-        $field = $sort === 'comm' ? '`comm_count`' : '`count_views`';
-
-        if ($sort === 'read' || $sort === 'comm') {
-            $total = $this->db->query('SELECT COUNT(*) FROM `library_texts` WHERE ' . $field . ' > 0')->fetchColumn();
+        if ($sort === 'rating') {
+            $total = $this->repository->countTopByRating();
+            $texts = $total ? $this->repository->getTopByRating(20) : collect();
         } else {
-            $total = $this->db->query('SELECT COUNT(*) FROM `cms_library_rating`')->fetchColumn(0);
+            $field = $sort === 'comm' ? 'comm_count' : 'count_views';
+            $total = $this->repository->countTopByField($field);
+            $texts = $total ? $this->repository->getTopByField($field, 20) : collect();
         }
 
-        $req = null;
-        if ($total) {
-            if ($sort === 'read' || $sort === 'comm') {
-                $req = $this->db->query(
-                    'SELECT `id`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `cat_id`, `comments`, `comm_count`, `announce`
-                    FROM `library_texts`
-                    WHERE ' . $field . ' > 0
-                    ORDER BY ' . $field . ' DESC
-                    LIMIT 20'
-                );
-            } else {
-                $req = $this->db->query(
-                    'SELECT `t`.*, `r`.`cnt`, `r`.`avg`
-                    FROM `library_texts` `t`
-                    JOIN (
-                        SELECT `st_id`, COUNT(*) AS `cnt`, AVG(`point`) AS `avg`
-                        FROM `cms_library_rating`
-                        GROUP BY `st_id`
-                    ) `r` ON `r`.`st_id` = `t`.`id`
-                    ORDER BY `r`.`avg` DESC, `r`.`cnt` DESC
-                    LIMIT 20'
-                );
-            }
-        }
+        $items = [];
+        foreach ($texts as $text) {
+            $obj = new Hashtags($text->id);
+            $rate = new Rating($text->id);
+            $category = LibraryCategory::query()->find($text->cat_id);
 
-        $tools = $this->tools;
-        $db = $this->db;
+            $uploader = $text->uploader_id
+                ? '<a href="' . config('johncms')['homeurl'] . '/profile/?user=' . $text->uploader_id . '">' . $this->tools->checkout($text->uploader) . '</a>'
+                : $this->tools->checkout($text->uploader);
+
+            $items[] = [
+                'id'          => $text->id,
+                'name'        => $this->tools->checkout($text->name),
+                'announce'    => $this->tools->checkout($text->announce, 0, 0),
+                'cover'       => file_exists(UPLOAD_PATH . 'library/images/small/' . $text->id . '.png'),
+                'tags'        => $obj->getAllStatTags() ? $obj->getAllStatTags(1) : null,
+                'ratingView'  => $rate->viewRate(1),
+                'who'         => $uploader . ' (' . $this->tools->displayDate($text->time) . ')',
+                'cat_id'      => $text->cat_id,
+                'cat_name'    => $category ? $this->tools->checkout($category->name) : '',
+                'comments'    => $text->comments,
+                'comm_count'  => $text->comm_count,
+            ];
+        }
 
         return $this->render->render('library::top', [
             'data'  => ['filters' => $filters],
             'total' => $total,
-            'list'  => static function () use ($req, $tools, $db) {
-                while ($res = $req->fetch()) {
-                    $res['cover'] = file_exists(UPLOAD_PATH . 'library/images/small/' . $res['id'] . '.png');
-
-                    $obj = new Hashtags($res['id']);
-                    $res['tags'] = $obj->getAllStatTags() ? $obj->getAllStatTags(1) : null;
-
-                    $rate = new Rating($res['id']);
-                    $res['ratingView'] = $rate->viewRate(1);
-
-                    $uploader = $res['uploader_id']
-                        ? '<a href="' . config('johncms')['homeurl'] . '/profile/?user=' . $res['uploader_id'] . '">' . $tools->checkout($res['uploader']) . '</a>'
-                        : $tools->checkout($res['uploader']);
-
-                    $res['who'] = $uploader . ' (' . $tools->displayDate($res['time']) . ')';
-                    $res['cat_name'] = $tools->checkout($db->query('SELECT `name` FROM `library_cats` WHERE `id` = ' . $res['cat_id'])->fetchColumn());
-                    $res['name'] = $tools->checkout($res['name']);
-                    $res['announce'] = $tools->checkout($res['announce'], 0, 0);
-
-                    yield $res;
-                }
-            },
+            'items' => $items,
         ]);
     }
 }

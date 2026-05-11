@@ -112,7 +112,6 @@ $array_includes = [
     'mkdir',
     'moder',
     'move',
-    'new',
     'premod',
     'search',
     'tags',
