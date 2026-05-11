@@ -8,21 +8,9 @@
  * @link      https://johncms.com JohnCMS Project
  */
 
-/**
- * @var $title
- * @var $page_title
- * @var $data
- */
-
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $page_title,
-    ]
-);
+$this->layout('system::layout/default');
 ?>
-<form action="?act=search" method="post" class="mb-3">
+<form action="/library/search" method="get" class="mb-3">
     <div class="form-group">
         <label for="search"><?= __('Search query') ?></label>
         <input type="text" class="form-control" id="search" placeholder="<?= __('Search query') ?>"
@@ -30,16 +18,16 @@ $this->layout(
     </div>
     <div class="form-group">
         <div class="custom-control custom-checkbox mb-3">
-            <input type="checkbox" class="custom-control-input" name="t" value="1" id="search_t" <?= $search_t ?>>
+            <input type="checkbox" class="custom-control-input" name="t" value="1" id="search_t" <?= $search_t ? 'checked="checked"' : '' ?>>
             <label class="custom-control-label" for="search_t"><?= __('Search in titles Articles') ?></label>
         </div>
     </div>
     <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Search') ?></button>
 </form>
 <?php if ($total) : ?>
-    <?php foreach ($list as $search) : ?>
+    <?php foreach ($items as $search) : ?>
         <div class="new_post-item without_avatar">
-            <a href="?id=<?= $search['id'] ?>" class="card-title h3"><?= $search['name'] ?></a>
+            <a href="/library/?id=<?= $search['id'] ?>" class="card-title h3"><?= $search['name'] ?></a>
             <div class="post-body"><?= $search['text'] ?></div>
             <div class="text-muted small d-flex align-items-center flex-wrap">
                 <div class="me-2">
@@ -72,7 +60,7 @@ $this->layout(
 
 <div class="mt-2">
     <?php if ($search) : ?>
-        <a href="?act=search"><?= __('New Search') ?></a><br>
+        <a href="/library/search"><?= __('New Search') ?></a><br>
     <?php endif; ?>
-    <a href="?"><?= __('To Library') ?></a>
+    <a href="/library/"><?= __('To Library') ?></a>
 </div>

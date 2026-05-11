@@ -22,4 +22,9 @@ interface LibraryTextRepositoryInterface
 
     /** @return Collection<int, \Johncms\Modules\Library\Domain\Models\LibraryText> */
     public function getNew(int $page, int $perPage): Collection;
+
+    public function searchCount(string $query, bool $inTitle): int;
+
+    /** @return Collection<int, \Johncms\Modules\Library\Domain\Models\LibraryText> */
+    public function search(string $query, bool $inTitle, int $page, int $perPage): Collection;
 }

@@ -113,7 +113,6 @@ $array_includes = [
     'moder',
     'move',
     'premod',
-    'search',
     'tags',
     'tagcloud',
     'lastcom',

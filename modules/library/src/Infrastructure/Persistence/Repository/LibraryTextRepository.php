@@ -61,4 +61,23 @@ class LibraryTextRepository implements LibraryTextRepositoryInterface
             ->forPage($page, $perPage)
             ->get();
     }
+
+    public function searchCount(string $query, bool $inTitle): int
+    {
+        $field = $inTitle ? 'name' : 'text';
+        return LibraryText::query()
+            ->whereRaw('MATCH (`' . $field . '`) AGAINST (? IN BOOLEAN MODE)', [$query])
+            ->count();
+    }
+
+    public function search(string $query, bool $inTitle, int $page, int $perPage): Collection
+    {
+        $field = $inTitle ? 'name' : 'text';
+        return LibraryText::query()
+            ->selectRaw('*, MATCH (`' . $field . '`) AGAINST (? IN BOOLEAN MODE) AS `rel`', [$query])
+            ->whereRaw('MATCH (`' . $field . '`) AGAINST (? IN BOOLEAN MODE)', [$query])
+            ->orderByDesc('rel')
+            ->forPage($page, $perPage)
+            ->get();
+    }
 }

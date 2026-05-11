@@ -61,6 +61,7 @@ class Installer extends \Johncms\Modules\Installer
             }
         );
         $connection->statement('ALTER TABLE `library_texts` ADD FULLTEXT `text` (`text`)');
+        $connection->statement('ALTER TABLE `library_texts` ADD FULLTEXT `idx_name` (`name`)');
 
         $schema->create(
             'library_tags',
