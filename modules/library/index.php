@@ -115,7 +115,6 @@ $array_includes = [
     'new',
     'premod',
     'search',
-    'top',
     'tags',
     'tagcloud',
     'lastcom',

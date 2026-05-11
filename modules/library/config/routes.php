@@ -2,9 +2,15 @@
 
 declare(strict_types=1);
 
+use Johncms\Modules\Library\Application\Controllers\TopController;
+use Johncms\Modules\Library\Application\Middlewares\LibraryAccessMiddleware;
 use Johncms\Router\RouteCollection;
-use Johncms\System\Users\User;
 
-return static function (RouteCollection $router, User $user): void {
-    $router->map(['GET', 'POST'], '/library', 'modules/library/index.php')->name('library.index');
+return static function (RouteCollection $router): void {
+    $router->group('', function (RouteCollection $r): void {
+        $r->get('/library/top', TopController::class)->name('library.top');
+
+        $r->map(['GET', 'POST'], '/library', 'modules/library/index.php')->name('library.index');
+    })
+        ->addMiddleware(LibraryAccessMiddleware::class);
 };

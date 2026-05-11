@@ -9,18 +9,10 @@
  */
 
 /**
- * @var $title
- * @var $page_title
  * @var $data
  */
 
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $page_title ?? $title,
-    ]
-);
+$this->layout('system::layout/default');
 ?>
 
 <div class="mb-3">
@@ -33,11 +25,11 @@ $this->layout(
 <?php if ($total) : ?>
     <?php foreach ($list() as $top) : ?>
         <div class="new_post-item without_avatar">
-            <a href="?id=<?= $top['id'] ?>" class="post-title"><?= $top['name'] ?></a>
+            <a href="/library/?id=<?= $top['id'] ?>" class="post-title"><?= $top['name'] ?></a>
             <div class="post-body"><?= $top['announce'] ?></div>
             <div class="text-muted small d-flex align-items-center flex-wrap">
                 <div class="me-2">
-                    <span><?= __('Section:') ?></span> <a href="?do=dir&amp;id=<?= $top['cat_id'] ?>"><?= $top['cat_name'] ?></a>
+                    <span><?= __('Section:') ?></span> <a href="/library/?do=dir&amp;id=<?= $top['cat_id'] ?>"><?= $top['cat_name'] ?></a>
                 </div>
                 <div class="me-2">
                     <span><?= __('Author:') ?></span><?= $top['who'] ?>
@@ -47,7 +39,7 @@ $this->layout(
                 </div>
                 <div>
                     <?php if ($top['comments']) : ?>
-                        <a href="?act=comments&amp;id=<?= $top['id'] ?>"><?= __('Comments:') ?></a>
+                        <a href="/library/?act=comments&amp;id=<?= $top['id'] ?>"><?= __('Comments:') ?></a>
                         (<?= $top['comm_count'] ?>)
                     <?php endif; ?>
                 </div>
@@ -61,4 +53,4 @@ $this->layout(
         </div>
     </div>
 <?php endif; ?>
-<div class="phdr"><a href="?"><?= __('Back') ?></a></div>
+<div class="phdr"><a href="/library/"><?= __('Back') ?></a></div>
