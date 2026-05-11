@@ -89,7 +89,8 @@
             "Johncms\\Modules\\Forum\\": "modules/forum/src/",
             "Johncms\\Modules\\Downloads\\": "modules/downloads/src/",
             "Downloads\\": "modules/downloads/classes/",
-            "Johncms\\Modules\\Community\\": "modules/community/src/"
+            "Johncms\\Modules\\Community\\": "modules/community/src/",
+            "Johncms\\Modules\\Online\\": "modules/online/src/"
         }
     },
     "autoload-dev": {
