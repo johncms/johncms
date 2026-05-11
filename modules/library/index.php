@@ -105,7 +105,6 @@ if ($id > 0) {
 }
 
 $array_includes = [
-    'addnew',
     'comments',
     'del',
     'download',
