@@ -8,44 +8,15 @@
  * @link      https://johncms.com JohnCMS Project
  */
 
-/**
- * @var $title
- * @var $page_title
- * @var $data
- */
-
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $page_title ?? $title,
-    ]
-);
+$this->layout('system::layout/default');
 ?>
 <?php if ($created) : ?>
-    <?= $this->fetch(
-        'system::app/alert',
-        [
-            'alert_type' => 'alert-success',
-            'alert'      => __('Section created'),
-        ]
-    ) ?>
+    <?= $this->fetch('system::app/alert', ['alert_type' => 'alert-success', 'alert' => __('Section created')]) ?>
     <div class="mt-3">
-        <a href="?do=dir&amp;id=<?= $id ?>"><?= __('To Section') ?></a>
+        <a href="/library/<?= $parent_id ? '?do=dir&id=' . $parent_id : '' ?>"><?= __('To Section') ?></a>
     </div>
 <?php else : ?>
-
-    <?php if ($error) : ?>
-        <?= $this->fetch(
-            'system::app/alert',
-            [
-                'alert_type' => 'alert-danger',
-                'alert'      => $error,
-            ]
-        ) ?>
-    <?php endif; ?>
-
-    <form action="?act=mkdir&amp;id=<?= $id ?>" method="post">
+    <form action="<?= $form_url ?>" method="post">
         <div class="form-group">
             <label for="name"><?= __('Title') ?></label>
             <input type="text" name="name" class="form-control" id="name" placeholder="<?= __('Title') ?>" required>
@@ -68,8 +39,7 @@ $this->layout(
 
         <div class="mt-3">
             <input type="submit" name="submit" value="<?= __('Save') ?>" class="btn btn-primary">
-            <a href="?" class="btn btn-secondary"><?= __('Cancel') ?></a>
+            <a href="/library/" class="btn btn-secondary"><?= __('Cancel') ?></a>
         </div>
     </form>
-
 <?php endif; ?>

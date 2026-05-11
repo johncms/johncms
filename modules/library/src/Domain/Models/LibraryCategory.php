@@ -11,4 +11,13 @@ class LibraryCategory extends Model
     protected $table = 'library_cats';
 
     public $timestamps = false;
+
+    protected $fillable = [
+        'parent',
+        'name',
+        'description',
+        'dir',
+        'pos',
+        'user_add',
+    ];
 }

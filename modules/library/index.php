@@ -108,7 +108,6 @@ $array_includes = [
     'comments',
     'del',
     'download',
-    'mkdir',
     'moder',
     'move',
     'premod',
