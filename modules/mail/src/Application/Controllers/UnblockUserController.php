@@ -10,7 +10,7 @@ use Johncms\NavChain;
 use Johncms\System\Http\Request;
 use Johncms\System\View\Render;
 
-final readonly class BlocklistController
+final readonly class UnblockUserController
 {
     public function __construct(
         private ControllerContext $controllerContext,
@@ -22,7 +22,7 @@ final readonly class BlocklistController
         $this->controllerContext->initModule('mail');
     }
 
-    public function unblock(int $userId): string
+    public function __invoke(int $userId): string
     {
         if ($this->request->getMethod() === 'POST') {
             $this->unblockUserUseCase->execute($userId);
