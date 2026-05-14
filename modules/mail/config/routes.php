@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Johncms\Modules\Mail\Application\Controllers\AddContactController;
 use Johncms\Modules\Mail\Application\Controllers\BlocklistController;
 use Johncms\Modules\Mail\Application\Controllers\BlocklistIndexController;
+use Johncms\Modules\Mail\Application\Controllers\BlockUserController;
 use Johncms\Modules\Mail\Application\Controllers\ContactController;
 use Johncms\Modules\Mail\Application\Middlewares\AuthorizedUserMiddleware;
 use Johncms\Router\RouteCollection;
@@ -19,7 +20,7 @@ return static function (RouteCollection $router): void {
         $r->get('/mail/add/{id:number}', [AddContactController::class, 'confirm'])->name('mail.add.confirm');
         $r->post('/mail/add/{id:number}', [AddContactController::class, 'add'])->name('mail.add');
         $r->get('/mail/blocklist', BlocklistIndexController::class)->name('mail.blocklist');
-        $r->map(['GET', 'POST'], '/mail/block/{id:number}', [BlocklistController::class, 'block'])->name('mail.block');
+        $r->map(['GET', 'POST'], '/mail/block/{id:number}', BlockUserController::class)->name('mail.block');
         $r->map(['GET', 'POST'], '/mail/unblock/{id:number}', [BlocklistController::class, 'unblock'])->name('mail.unblock');
     });
     $mailGroup->addMiddleware(AuthorizedUserMiddleware::class);
