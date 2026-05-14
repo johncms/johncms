@@ -40,7 +40,7 @@ $this->layout(
                 </div>
                 <div>
                     <?php if ($tags['comments']) : ?>
-                        <a href="?act=comments&amp;id=<?= $tags['id'] ?>"><?= __('Comments:') ?></a>
+                        <a href="/library/article/<?= $tags['id'] ?>/comments"><?= __('Comments:') ?></a>
                         (<?= $tags['comm_count'] ?>)
                     <?php endif; ?>
                 </div>

@@ -27,7 +27,7 @@ $this->layout('system::layout/default');
                 </div>
                 <div>
                     <?php if ($newlist['comments']) : ?>
-                        <a href="/library/?act=comments&amp;id=<?= $newlist['id'] ?>"><?= __('Comments:') ?></a>
+                        <a href="/library/article/<?= $newlist['id'] ?>/comments"><?= __('Comments:') ?></a>
                         (<?= $newlist['comm_count'] ?>)
                     <?php endif; ?>
                 </div>

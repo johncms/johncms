@@ -496,7 +496,7 @@ class Comments
                     $this->templates_namespace . '::pages/comments_list',
                     [
                         'title'      => $arg['title'],
-                        'page_title' => $arg['title'],
+                        'page_title' => $arg['page_title'] ?? $arg['title'],
                         'data'       => $data,
                         'back_url'   => $this->back_url,
 

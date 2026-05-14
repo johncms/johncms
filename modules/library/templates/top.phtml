@@ -39,7 +39,7 @@ $this->layout('system::layout/default');
                 </div>
                 <div>
                     <?php if ($top['comments']) : ?>
-                        <a href="/library/?act=comments&amp;id=<?= $top['id'] ?>"><?= __('Comments:') ?></a>
+                        <a href="/library/article/<?= $top['id'] ?>/comments"><?= __('Comments:') ?></a>
                         (<?= $top['comm_count'] ?>)
                     <?php endif; ?>
                 </div>

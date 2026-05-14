@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
 use Johncms\Comments;
-use Johncms\Modules\Downloads\Application\Services\CategoryNavService;
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\PageMeta;
+use Johncms\Modules\Downloads\Application\Services\CategoryNavService;
 use Johncms\Modules\Downloads\Application\Exceptions\FileNotFoundException;
 use Johncms\Modules\Downloads\Domain\Repository\DownloadFileRepositoryInterface;
 use Johncms\NavChain;
@@ -102,7 +103,7 @@ final readonly class FileCommentsController
         $shortName = mb_strlen($file->rus_name) > 30
             ? mb_substr($file->rus_name, 0, 30) . '...'
             : $file->rus_name;
-        $pageTitle = htmlspecialchars($shortName) . ' — ' . __('Comments');
+        $documentTitle = htmlspecialchars($shortName) . ' — ' . __('Comments') . ' — ' . __('Downloads');
 
         // Set globals required by the legacy Comments class
         global $mod, $start;
@@ -111,6 +112,8 @@ final readonly class FileCommentsController
         $start = isset($_REQUEST['page'])
             ? ($page - 1) * (int) $this->currentUser->config->kmess
             : (isset($_GET['start']) ? abs((int) $_GET['start']) : 0);
+
+        $meta = new PageMeta($documentTitle, $page);
 
         // Comments renders a complete page (including layout) internally, so capture and return as-is.
         ob_start();
@@ -124,7 +127,8 @@ final readonly class FileCommentsController
             'owner_delete'        => false,
             'owner_reply'         => false,
             'owner_edit'          => false,
-            'title'               => $pageTitle,
+            'title'               => $meta->title,
+            'page_title'          => __('Comments'),
             'templates_namespace' => 'system',
             'back_url'            => '/downloads/files/' . $id . '/',
         ]);

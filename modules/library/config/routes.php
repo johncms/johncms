@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Johncms\Modules\Library\Application\Controllers\ArticleCommentsController;
 use Johncms\Modules\Library\Application\Controllers\CreateArticleController;
 use Johncms\Modules\Library\Application\Controllers\CreateSectionController;
 use Johncms\Modules\Library\Application\Controllers\NewArticlesController;
@@ -17,6 +18,7 @@ return static function (RouteCollection $router): void {
         $r->get('/library/search', SearchController::class)->name('library.search');
         $r->map(['GET', 'POST'], '/library/article/create', CreateArticleController::class)->name('library.article.create');
         $r->map(['GET', 'POST'], '/library/section/create', CreateSectionController::class)->name('library.section.create');
+        $r->map(['GET', 'POST'], '/library/article/{id:number}/comments', ArticleCommentsController::class)->name('library.article.comments');
 
         $r->map(['GET', 'POST'], '/library', 'modules/library/index.php')->name('library.index');
     })

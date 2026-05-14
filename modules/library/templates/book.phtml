@@ -65,7 +65,7 @@ $this->layout(
         </div>
         <?php if ($res['comments']) : ?>
             <div>
-                <a href="?act=comments&amp;id=<?= $res['id'] ?>"><?= __('Comments:') ?></a> (<?= $res['comm_count'] ?>)
+                <a href="/library/article/<?= $res['id'] ?>/comments"><?= __('Comments:') ?></a> (<?= $res['comm_count'] ?>)
             </div>
         <?php endif; ?>
     </div>
