@@ -42,7 +42,7 @@ $this->layout(
                 </div>
                 <div class="mt-2">
                     <a href="?act=premod&amp;yes&amp;id=<?= $premod['id'] ?>" class="pe-2"><?= __('Approve') ?></a>
-                    <a href="?act=del&amp;type=article&amp;id=<?= $premod['id'] ?>"><?= __('Delete') ?></a>
+                    <a href="/library/article/<?= $premod['id'] ?>/delete"><?= __('Delete') ?></a>
                 </div>
             </div>
         </div>

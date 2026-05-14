@@ -10,6 +10,7 @@
 
 declare(strict_types=1);
 
+use Johncms\Modules\Library\Application\Services\LibraryLegacyRedirectResolver;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
 use Johncms\System\Legacy\Tools;
@@ -51,6 +52,12 @@ $loader->addPrefix('Library', __DIR__ . '/classes');
 // Регистрируем Namespace для шаблонов модуля
 $view->addFolder('library', __DIR__ . '/templates/');
 $view->addFolder('libraryHelpers', __DIR__ . '/templates/helpers/');
+
+$legacyRedirect = di(LibraryLegacyRedirectResolver::class)->resolve($_GET);
+if ($legacyRedirect !== null) {
+    header('Location: ' . $legacyRedirect, true, 301);
+    exit;
+}
 
 $id = $request->getQuery('id', 0, FILTER_VALIDATE_INT);
 $act = htmlspecialchars((string) $request->getQuery('act', ''));

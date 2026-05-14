@@ -37,7 +37,7 @@ $this->layout(
             <div class="mb-3">
                 <?php if ($res['cover']): ?>
                     <div><img src="../upload/library/images/big/<?= $id ?>.png" alt="screen"/></div>
-                    <div class="alarm"><a href="?act=del&amp;type=image&amp;id=<?= $id ?>">Удалить обложку</a></div>
+                    <div class="alarm"><a href="/library/article/<?= $id ?>/image/delete">Удалить обложку</a></div>
                 <?php endif; ?>
                 <div class="custom-file mt-2">
                     <input type="file" class="custom-file-input" id="image" name="image" aria-describedby="file_label">

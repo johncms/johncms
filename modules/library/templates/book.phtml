@@ -80,6 +80,6 @@ $this->layout(
 <?php if ($moderMenu) : ?>
     <div class="mt-2">
         <a href="?act=moder&amp;type=article&amp;id=<?= $res['id'] ?>" class="btn btn-primary"><?= __('Edit') ?></a>
-        <a href="?act=del&amp;type=article&amp;id=<?= $res['id'] ?>" class="btn btn-danger"><?= __('Delete') ?></a>
+        <a href="/library/article/<?= $res['id'] ?>/delete" class="btn btn-danger"><?= __('Delete') ?></a>
     </div>
 <?php endif; ?>
