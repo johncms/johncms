@@ -1,121 +1,75 @@
 # JohnCMS Module Refactoring Guide
 
-## Purpose
+Step-by-step instructions for refactoring legacy modules to the modern layered architecture. Based on the successful forum module refactoring.
 
-Step-by-step instructions for refactoring legacy JohnCMS modules to the modern layered architecture (Application/Domain/Infrastructure). Based on the successful refactoring of the forum module.
-
-## Table of Contents
+## Overview
 
 1. [Prerequisites](#prerequisites)
-2. [Docker Environment](#docker-environment)
-3. [General Principles](#general-principles)
-4. [Step 1: Analysis and Planning](#step-1-analysis-and-planning)
-5. [Step 2: Create Base Structure](#step-2-create-base-structure)
-6. [Step 3: Create Domain Models](#step-3-create-domain-models)
-7. [Step 4: Create Infrastructure](#step-4-create-infrastructure)
-8. [Step 5: Configure Services](#step-5-configure-services)
-9. [Step 6: Refactor Actions](#step-6-refactor-actions)
-10. [Step 7: Testing](#step-7-testing)
-11. [Step 8: Cleanup](#step-8-cleanup)
-12. [Patterns](#patterns)
+2. [Step 1: Analysis](#step-1-analysis)
+3. [Step 2: Create Structure](#step-2-create-structure)
+4. [Step 3: Create Domain](#step-3-create-domain)
+5. [Step 4: Create Infrastructure](#step-4-create-infrastructure)
+6. [Step 5: Refactor Actions](#step-5-refactor-actions)
+7. [Step 6: Testing & Cleanup](#step-6-testing--cleanup)
+
+## Iteration Process
+
+Work on **one page at a time**:
+
+1. Agent refactors a single action
+2. User reviews and requests fixes if needed
+3. User commits the changes
+4. Only then proceed to the next action
+
+Do not refactor multiple pages in one request.
+
+## Action Limits
+
+- Keep controller + use case in a single request (no splitting)
+- If a page requires many files, prioritize core functionality first
+- If analysis takes too long, ask user to clarify scope
+
+## Parallel Operations
+
+Use parallel execution when operations are independent:
+
+- Reading multiple files → use multiple read calls in one message
+- Running independent checks (cs-check, psalm) → run in parallel
+- Analyzing multiple files → use Task tool with explore agent
 
 ## Prerequisites
 
 - PHP 8.2+
-- Docker environment
-- Understanding of JohnCMS architecture (see AGENTS.md)
+- Docker environment (see [AGENTS.md](./AGENTS.md) for commands)
+- Understanding of JohnCMS architecture
 
-## Docker Environment
+## Step 1: Analysis
 
-All PHP and Composer commands must run inside the `php-fpm` container:
-
-```bash
-docker exec ${COMPOSE_PROJECT_NAME}.php-fpm php <command>
-docker exec ${COMPOSE_PROJECT_NAME}.php-fpm composer <command>
-```
-
-## General Principles
-
-1. **Refactor gradually** – page-by-page (act-by-act), starting with simple actions
-2. **Preserve backward compatibility** – replace old `?act=` URLs with new routes; add legacy redirects if needed
-3. **Follow layered architecture** – Application → Domain ← Infrastructure
-4. **Use dependency injection** – inject interfaces, not implementations
-5. **Keep repositories thin** – only data access, no business logic
-6. **Escape on output** – never escape on input
-
-## Step 1: Analysis and Planning
-
-### 1.1 Understand the Current Module
 - List all `act` parameters and their include files
-- Identify database tables and templates
-- Map business logic flow
+- Study database schema: `SHOW CREATE TABLE cms_<module>_<table>;`
+- Reference existing modules (forum, mail, downloads) for patterns
 
-### 1.2 Study Database Schema
-```sql
-SHOW CREATE TABLE cms_<module>_<table>;
-```
+## Step 2: Create Structure
 
-### 1.3 Reference Example Modules
-Study the forum module (`modules/forum/`) for patterns:
-- Directory structure
-- Repository interfaces
-- Use Case patterns
-- Controller organization
-
-## Step 2: Create Base Structure
-
-### 2.1 Create Source Directory
-```bash
-mkdir -p modules/<module>/src/{Application,Domain,Infrastructure}
-```
-
-### 2.2 Directory Structure
+Create directory structure:
 ```
 modules/<module>/src/
-├── Application/
-│   ├── Controllers/
-│   ├── UseCases/
-│   ├── DTO/
-│   └── Services/
-├── Domain/
-│   ├── Models/
-│   ├── Repository/
-│   ├── Entities/
-│   └── Enums/
-└── Infrastructure/
-    └── Persistence/
-        └── Repository/
+├── Application/{Controllers,UseCases,DTO,Services,Middleware}
+├── Domain/{Models,Repository,Entities,Enums}
+└── Infrastructure/Persistence/Repository
 ```
 
-### 2.3 Update composer.json
-Add PSR‑4 namespace mapping:
+Update `composer.json` with PSR-4 autoload:
 ```json
-{
-    "autoload": {
-        "psr-4": {
-            "Johncms\\Modules\\<Module>\\": "modules/<module>/src/"
-        }
-    }
-}
-```
-Run:
-```bash
-docker exec ${COMPOSE_PROJECT_NAME}.php-fpm composer dump-autoload
+"Johncms\\Modules\\<Module>\\": "modules/<module>/src/"
 ```
 
-## Step 3: Create Domain Models
+Run `composer dump-autoload` in php-fpm container.
 
-### 3.1 Eloquent Models
-Create models for each database table in `Domain/Models/`:
+## Step 3: Create Domain
+
+**Models** in `Domain/Models/`:
 ```php
-<?php
-
-declare(strict_types=1);
-
-namespace Johncms\Modules\Mail\Domain\Models;
-
-use Illuminate\Database\Eloquent\Model;
-
 class MailMessage extends Model
 {
     protected $table = 'cms_mail';
@@ -123,147 +77,52 @@ class MailMessage extends Model
 }
 ```
 
-### 3.2 Repository Interfaces
-Create interfaces in `Domain/Repository/`:
+**Repository Interfaces** in `Domain/Repository/`:
 ```php
-<?php
-
-declare(strict_types=1);
-
-namespace Johncms\Modules\Mail\Domain\Repository;
-
 interface ContactRepositoryInterface
 {
     public function getContacts(int $userId): Collection;
-    public function addContact(int $userId, int $contactId): Contact;
 }
 ```
 
 ## Step 4: Create Infrastructure
 
-### 4.1 Repository Implementations
-Create Eloquent implementations in `Infrastructure/Persistence/Repository/`:
+**Repository Implementations** in `Infrastructure/Persistence/Repository/`:
 ```php
-<?php
-
-declare(strict_types=1);
-
-namespace Johncms\Modules\Mail\Infrastructure\Persistence\Repository;
-
-use Johncms\Modules\Mail\Domain\Repository\ContactRepositoryInterface;
-
 class EloquentContactRepository implements ContactRepositoryInterface
 {
     public function getContacts(int $userId): Collection
     {
-        return Contact::query()
-            ->where('user_id', $userId)
-            ->get();
+        return Contact::query()->where('user_id', $userId)->get();
     }
 }
 ```
 
-## Step 5: Configure Services
-
-Create `config/services.php` using Symfony DI ContainerConfigurator:
-
+**Services Configuration** in `config/services.php`:
 ```php
-<?php
-
-declare(strict_types=1);
-
-namespace Symfony\Component\DependencyInjection\Loader\Configurator;
-
-use Johncms\Modules\Mail\Domain\Repository\ContactRepositoryInterface;
-use Johncms\Modules\Mail\Infrastructure\Persistence\Repository\EloquentContactRepository;
-
 return static function (ContainerConfigurator $container): void {
     $services = $container->services();
 
-    // Autoload all Application classes (Controllers, Use Cases, Services)
     $services->load(
-        'Johncms\\Modules\\Mail\\Application\\',
-        MODULES_PATH . 'mail/src/Application'
+        'Johncms\\Modules\\<Module>\\Application\\',
+        MODULES_PATH . '<module>/src/Application'
     )
-        ->exclude([
-            MODULES_PATH . 'mail/src/Application/DTO',
-            MODULES_PATH . 'mail/src/Application/Exceptions',
-        ])
+        ->exclude([...])
         ->autowire()
         ->autoconfigure()
         ->public();
 
-    // Autoload Infrastructure classes
-    $services->load(
-        'Johncms\\Modules\\Mail\\Infrastructure\\',
-        MODULES_PATH . 'mail/src/Infrastructure'
-    )
-        ->autowire()
-        ->autoconfigure();
-
-    // Register repository implementations
     $services->set(ContactRepositoryInterface::class, EloquentContactRepository::class)->public();
 };
 ```
 
-**Key points:**
-- `$services->load()` autowires all classes in the specified directory
-- Exclude DTOs and Exceptions from autowiring
-- Repositories are explicitly set to implement their interfaces
-- Use `->public()` for services that need to be accessible outside the container
+## Step 5: Refactor Actions
 
-## Step 6: Refactor Actions
+Refactor page-by-page, starting with simple read-only actions.
 
-Refactor page‑by‑page, starting with simple read‑only actions.
+### Controller Pattern
 
-### 6.1 Pattern for Each Action
-
-1. **Analyze** the legacy `includes/<action>.php`
-2. **Create DTOs** in `Application/DTO/`
-3. **Create Use Cases** in `Application/UseCases/`
-4. **Create Controller** in `Application/Controllers/`
-5. **Update template** (if needed)
-6. **Add routes** in `config/routes.php`
-
-### 6.2 Use Case Examples
-
-**Simple read Use Case:**
 ```php
-final readonly class GetContactListUseCase
-{
-    public function __construct(
-        private ContactRepositoryInterface $contactRepository,
-    ) {}
-
-    public function execute(int $userId, int $page, int $perPage): ContactListResultDTO
-    {
-        $contacts = $this->contactRepository->getPaginated($userId, $page, $perPage);
-        return new ContactListResultDTO($contacts);
-    }
-}
-```
-
-**Access Guard Pattern** (for complex actions):
-- `Ensure*AccessUseCase` – performs access checks (throws exceptions)
-- `Get*ContextUseCase` – returns context DTO
-- `*UseCase` – performs the main action
-
-### 6.3 Invokable Controller Example
-```php
-<?php
-
-declare(strict_types=1);
-
-namespace Johncms\Modules\Mail\Application\Controllers;
-
-use Johncms\Http\Controller\ControllerContext;
-use Johncms\Http\PageMeta;
-use Johncms\Modules\Mail\Application\UseCases\GetContactListUseCase;
-use Johncms\NavChain;
-use Johncms\System\Http\Request;
-use Johncms\System\Users\User;
-use Johncms\System\View\Render;
-
 final readonly class ContactController
 {
     public function __construct(
@@ -281,136 +140,79 @@ final readonly class ContactController
     {
         $userId = (int) $this->user->id;
         $page = max(1, (int) $this->request->getQuery('page', 1));
-        $perPage = $this->user->config->kmess;
         
-        $result = $this->getContactListUseCase->execute($userId, $page, $perPage);
+        $result = $this->getContactListUseCase->execute($userId, $page);
         
         $this->navChain->add(__('Mail'), '/mail/');
         $this->navChain->add(__('Contacts'));
         
-        $pageTitle = __('Contacts');
-        $meta = new PageMeta($pageTitle, $page);
+        $meta = new PageMeta(__('Contacts'), $page);
         $this->render->addData([
             'title'       => $meta->title,
-            'page_title'  => $pageTitle,
+            'page_title'  => __('Contacts'),
             'description' => $meta->description,
         ]);
         
-        return $this->render->render('mail::contact_list', [
-            'data' => ['items' => $result->contacts],
-        ]);
+        return $this->render->render('mail::contact_list', ['data' => ['items' => $result->contacts]]);
     }
 }
 ```
 
-### 6.4 Routes
-Update `config/routes.php` (follow forum/mail patterns):
+### Use Case Pattern
 
 ```php
-<?php
+final readonly class GetContactListUseCase
+{
+    public function __construct(
+        private ContactRepositoryInterface $contactRepository,
+    ) {}
 
-declare(strict_types=1);
-
-use Johncms\Modules\Mail\Application\Controllers\ContactController;
-use Johncms\Router\RouteCollection;
-use Johncms\System\Users\User;
-
-return static function (RouteCollection $router, User $user): void {
-    if ($user->isValid()) {
-        // Invokable controller (single action)
-        $router->get('/mail/', ContactController::class)->name('mail.index');
-        $router->get('/mail/contacts/', ContactController::class)->name('mail.contacts');
-        
-        // For multi-action controllers: [Controller::class, 'method']
-        // $router->get('/mail/blocklist', [BlocklistController::class, 'index']);
-        
-        // POST routes for form submissions
-        // $router->post('/mail/contacts/add/{id:number}', AddContactController::class);
+    public function execute(int $userId, int $page, int $perPage): ContactListResultDTO
+    {
+        $contacts = $this->contactRepository->getPaginated($userId, $page, $perPage);
+        return new ContactListResultDTO($contacts);
     }
+}
+```
+
+And in controller:
+```php
+$result = $this->getContactListUseCase->execute($userId, $page, $this->user->config->kmess);
+```
+
+### Middleware for Authorization
+
+Create `src/Application/Middlewares/AuthorizedUserMiddleware.php`:
+```php
+final readonly class AuthorizedUserMiddleware implements MiddlewareInterface
+{
+    public function __construct(private User $user) {}
+
+    public function handle(Request $request, callable $next): mixed
+    {
+        if (! $this->user->isValid()) {
+            pageNotFound();
+        }
+        return $next($request);
+    }
+}
+```
+
+### Routes
+
+```php
+return static function (RouteCollection $router): void {
+    $mailGroup = $router->group('', function (RouteCollection $r): void {
+        $r->get('/mail/contacts/', ContactController::class);
+        // ... other routes
+    });
+    $mailGroup->addMiddleware(AuthorizedUserMiddleware::class);
 };
-```
-
-## Step 7: Testing
-
-### 7.1 Code Style
-```bash
-docker exec ${COMPOSE_PROJECT_NAME}.php-fpm composer cs-check
-docker exec ${COMPOSE_PROJECT_NAME}.php-fpm composer cs-fix
-```
-
-### 7.2 Static Analysis
-```bash
-docker exec ${COMPOSE_PROJECT_NAME}.php-fpm composer psalm
-```
-
-### 7.3 Verify Functionality
-- Test new routes
-- Check data display and pagination
-- Verify form submissions
-- Test access controls
-
-## Step 8: Cleanup
-
-After all actions are refactored and tested:
-1. Remove `includes/` directory
-2. Remove old templates (or keep as backup)
-3. Update `index.php` to use new architecture
-4. Update module documentation in `docs/` (if applicable)
-
-## Patterns
-
-### Access Guard Pattern
-```php
-try {
-    $this->ensureAccessUseCase->execute($userId, $targetId);
-    $context = $this->getContextUseCase->execute($targetId);
-    
-    if ($request->isPost()) {
-        $result = $this->actionUseCase->execute($userId, $context, $requestData);
-        return redirect($result->redirectUrl);
-    }
-    
-    return $this->renderForm($context);
-} catch (AccessDeniedException $e) {
-    return $this->renderError(__('Access denied'), 403);
-}
-```
-
-### Repository Design
-**Good** (only data access):
-```php
-public function getPaginatedContacts(int $userId, int $page, int $perPage): LengthAwarePaginator
-{
-    return Contact::query()
-        ->where('user_id', $userId)
-        ->paginate($perPage, ['*'], 'page', $page);
-}
-```
-
-**Bad** (business logic in repository):
-```php
-public function getContactsWithMessageCount(int $userId): array
-{
-    $contacts = /* ... query ... */;
-    foreach ($contacts as &$contact) {
-        $contact['message_count'] = $this->countMessages($contact['id']); // Move to Use Case!
-    }
-    return $contacts;
-}
 ```
 
 ### Legacy Redirects
 
-Handle old `?act=` URLs with a redirect resolver service (pattern from forum):
-
-**1. Create Redirect Resolver:**
 ```php
-<?php
-
-declare(strict_types=1);
-
-namespace Johncms\Modules\Mail\Application\Services;
-
 final class MailLegacyRedirectResolver
 {
     public function resolve(array $queryParams): ?string
@@ -419,127 +221,42 @@ final class MailLegacyRedirectResolver
             return null;
         }
 
-        $act = $queryParams['act'];
-        
-        return match ($act) {
-            'index'    => '/mail/contacts/',
-            'ignor'    => '/mail/blocklist/',
-            'write'    => isset($queryParams['id']) 
-                ? '/mail/conversation/' . (int)$queryParams['id'] . '/'
-                : null,
-            default    => null,
+        return match ($queryParams['act']) {
+            'index' => '/mail/contacts/',
+            'ignor' => '/mail/blocklist/',
+            default => null,
         };
     }
 }
 ```
 
-**2. Use in Controller:**
-```php
-public function __invoke(): string
-{
-    // Check for legacy redirect before processing request
-    $legacyRedirect = $this->legacyRedirectResolver->resolve(
-        $this->request->getQueryParams()
-    );
-    
-    if ($legacyRedirect !== null) {
-        http_response_code(301);
-        header('Location: ' . $legacyRedirect);
-        exit;
-    }
-    
-    // Normal controller logic...
-}
+## Step 6: Testing & Cleanup
+
+**Code style:**
+```bash
+docker exec ${COMPOSE_PROJECT_NAME}.php-fpm composer cs-check
 ```
 
-**3. Register in services.php:**
-```php
-$services->set(MailLegacyRedirectResolver::class)->autowire()->public();
-```
+**After testing:**
+1. Remove legacy `includes/` directory
+2. Remove or archive old templates
+3. Update module documentation in `docs/`
 
-### Page Titles with Pagination and Template Variables
+## Key Patterns
 
-For pages that support pagination, use the built‑in `PageMeta` class to generate proper `<title>` and meta `description` tags:
+**Access Guard Pattern** (for complex write operations):
+- `Ensure*AccessUseCase` — throws exceptions on access denial
+- `Get*ContextUseCase` — returns context DTO
+- `*UseCase` — performs the action
 
-**1. Import PageMeta:**
-```php
-use Johncms\Http\PageMeta;
-```
+**Repository Rules:**
+- Only data access, no business logic
+- Use query builder methods, not raw loops
+- Return typed collections or paginators
 
-**2. Create PageMeta in Controller and add variables via addData:**
-```php
-public function __invoke(): string
-{
-    $page = max(1, (int) $this->request->getQuery('page', 1));
-    $pageTitle = d__('module', 'Page Title');  // Main title (without "Page N")
-    
-    $meta = new PageMeta($pageTitle, $page);
-    $this->render->addData([
-        'title'       => $meta->title,        // Includes " — Page N" suffix for page > 1
-        'page_title'  => $pageTitle,          // Original title (for template heading)
-        'description' => $meta->description,  // Same as title but with description fallback
-    ]);
-    
-    // Rest of controller logic...
-}
-```
+**Template Variables:**
+- Use `$this->render->addData()` for global variables (title, page_title, description)
+- Do not pass them again in `render()` call
+- Use `PageMeta` for pagination: `new PageMeta($title, $page)`
 
-**Important:** Variables added via `$this->render->addData()` are automatically available in all templates (including the layout template). Do **NOT** pass them again when rendering a specific template:
-
-```php
-// ✅ CORRECT: addData once, no duplicate passing
-$this->render->addData([
-    'title' => 'My Title',
-    'page_title' => 'My Page Title',
-]);
-
-return $this->render->render('module::template', [
-    'data' => $result,  // Only module-specific data
-]);
-
-// ❌ WRONG: redundant passing
-return $this->render->render('module::template', [
-    'title' => 'My Title',      // Already in addData
-    'page_title' => 'My Title', // Already in addData  
-    'data' => $result,
-]);
-```
-
-**3. Template simplification:**
-In your template file, use `$this->layout()` without passing title/page_title:
-
-```php
-<?php
-/**
- * @var $data
- */
-$this->layout('system::layout/default');
-?>
-<!-- Template content -->
-```
-
-The `system::layout/default` layout will automatically receive `$title` and `$page_title` from the global template data added via `addData()`.
-
-**How PageMeta works:**
-- **Page 1:** `PageMeta('Contacts', 1)` → title = `'Contacts'`, description = `'Contacts'`
-- **Page 2:** `PageMeta('Contacts', 2)` → title = `'Contacts — Page 2'`, description = `'Contacts — Page 2'`
-- **Custom description:** `PageMeta('Contacts', 2, 'User contact list')` → title = `'Contacts — Page 2'`, description = `'User contact list — Page 2'`
-
-**Rules:**
-- Always use `d__('system', 'Page')` for the word "Page" (translation)
-- The suffix (` — Page N`) is added only from page 2 onward
-- If a custom description is not provided, the title is used as description
-- Apply consistently across all paginated pages in the module
-- Use `addData()` for global template variables (title, page_title, description, canonical, keywords, etc.)
-- Never pass the same variables both via `addData()` and template render arguments
-
-### Error Handling
-```php
-try {
-    $result = $useCase->execute($data);
-} catch (NotFoundException $e) {
-    return $this->renderError(__('Record not found'), 404);
-} catch (AccessDeniedException $e) {
-    return $this->renderError(__('Access denied'), 403);
-}
-```
+See [AGENTS.md](./AGENTS.md) for architecture principles and PHP style rules.
