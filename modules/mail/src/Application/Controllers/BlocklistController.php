@@ -6,7 +6,6 @@ namespace Johncms\Modules\Mail\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Mail\Application\UseCases\BlockUserUseCase;
-use Johncms\Modules\Mail\Application\UseCases\GetBlocklistUseCase;
 use Johncms\Modules\Mail\Application\UseCases\UnblockUserUseCase;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
@@ -19,33 +18,10 @@ final readonly class BlocklistController
         private Render $render,
         private Request $request,
         private NavChain $navChain,
-        private GetBlocklistUseCase $getBlocklistUseCase,
         private BlockUserUseCase $blockUserUseCase,
         private UnblockUserUseCase $unblockUserUseCase,
     ) {
         $this->controllerContext->initModule('mail');
-    }
-
-    public function index(): string
-    {
-        $result = $this->getBlocklistUseCase->execute();
-
-        $this->navChain->add(__('My Account'), '/profile/?act=office');
-        $this->navChain->add(__('Mail'), '/mail/');
-        $this->navChain->add(__('Blacklist'), '/mail/blocklist');
-
-        $this->render->addData([
-            'title' => __('Blacklist'),
-            'page_title' => __('Blacklist'),
-        ]);
-
-        return $this->render->render(
-            'mail::blocklist',
-            [
-                'blocklist' => $result['blocklist'],
-                'total' => $result['total'],
-            ]
-        );
     }
 
     public function block(int $userId): string

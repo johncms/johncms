@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Johncms\Modules\Mail\Application\Controllers\AddContactController;
 use Johncms\Modules\Mail\Application\Controllers\BlocklistController;
+use Johncms\Modules\Mail\Application\Controllers\BlocklistIndexController;
 use Johncms\Modules\Mail\Application\Controllers\ContactController;
 use Johncms\Modules\Mail\Application\Middlewares\AuthorizedUserMiddleware;
 use Johncms\Router\RouteCollection;
@@ -14,10 +15,10 @@ return static function (RouteCollection $router): void {
 
     // New routes (require authenticated user)
     $mailGroup = $router->group('', function (RouteCollection $r): void {
-        $r->get('/mail/', [ContactController::class])->name('mail.contacts');
+        $r->get('/mail/', ContactController::class)->name('mail.contacts');
         $r->get('/mail/add/{id:number}', [AddContactController::class, 'confirm'])->name('mail.add.confirm');
         $r->post('/mail/add/{id:number}', [AddContactController::class, 'add'])->name('mail.add');
-        $r->get('/mail/blocklist', [BlocklistController::class, 'index'])->name('mail.blocklist');
+        $r->get('/mail/blocklist', BlocklistIndexController::class)->name('mail.blocklist');
         $r->map(['GET', 'POST'], '/mail/block/{id:number}', [BlocklistController::class, 'block'])->name('mail.block');
         $r->map(['GET', 'POST'], '/mail/unblock/{id:number}', [BlocklistController::class, 'unblock'])->name('mail.unblock');
     });
