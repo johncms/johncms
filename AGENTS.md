@@ -86,6 +86,7 @@ Guidelines:
 * If a repository method needs non-trivial loops, regex parsing, or deep condition trees, move that logic out of the repository.
 * Prefer model query builder `get()` in repositories and return typed collections when downstream code needs model fields, mutators, and IDE autocompletion.
 * Use `toBase()` only when raw DB rows are explicitly required; do not mix model and raw-row contracts in the same repository API.
+* Always start queries with `Model::query()->...` instead of `Model::where(...)` directly — `::query()` returns a typed `Builder<Model>` that gives correct IDE autocompletion.
 
 ### Legacy Code Rules
 
@@ -207,41 +208,27 @@ Security principle: **escape on output, not on input**.
 
 ## Page Title and Description with Pagination
 
-When building document `title` or meta `description` for paginated pages, apply the suffix only from page 2 onward using the translation key `d__('system', 'Page')`:
-
-**Title:**
+Use `Johncms\Http\PageMeta` to build the document `title` and meta `description` for paginated pages. It appends the page suffix automatically from page 2 onward.
 
 ```php
-private function buildDocumentTitle(string $title, int $page): string
-{
-    if ($page <= 1) {
-        return $title;
-    }
+use Johncms\Http\PageMeta;
 
-    return $title . ' — ' . d__('system', 'Page') . ' ' . $page;
-}
-```
+$meta = new PageMeta($documentTitle, $page);
+// or with explicit description:
+$meta = new PageMeta($documentTitle, $page, $description);
 
-**Description:**
-
-```php
-private function buildDescription(string $description, int $page): string
-{
-    if ($page <= 1 || $description === '') {
-        return $description;
-    }
-
-    return $description . ' — ' . d__('system', 'Page') . ' ' . $page;
-}
+$this->render->addData([
+    'title'       => $meta->title,
+    'page_title'  => __('Page Heading'),
+    'description' => $meta->description,
+]);
 ```
 
 Rules:
 
-* Page 1 receives no suffix — title and description stay unchanged.
-* Description is returned unchanged if it is empty, regardless of page number.
-* The separator is ` — ` (em dash with spaces).
-* Always use `d__('system', 'Page')` for the translated word "Page"; never hardcode it.
-* Apply this pattern consistently across all modules that render paginated pages.
+* Page 1 receives no suffix — `title` and `description` stay unchanged.
+* If `description` is omitted or empty, `PageMeta` uses `title` as the base for the description.
+* The separator is ` — ` (em dash with spaces), followed by the translated word "Page" from `d__('system', 'Page')`.
 
 ## Commit Messages
 
@@ -270,9 +257,18 @@ Before committing:
 
 * Changes are scoped to the task.
 * No unrelated files were modified.
-* Backend style check passes:
+* Backend style check and tests pass:
 
-composer cs-check
+```bash
+docker exec $(docker ps -q -f name=johncms9.php-fpm) composer cs-check
+docker exec $(docker ps -q -f name=johncms9.php-fpm) composer test
+```
+
+Fix style violations with:
+
+```bash
+docker exec $(docker ps -q -f name=johncms9.php-fpm) composer cs-fix
+```
 
 * UI build succeeds if frontend code was changed.
 * Services and repositories are injected via interfaces.
@@ -286,5 +282,5 @@ composer cs-check
 ## Docker Command Policy
 
 * Run all `php` and `composer` commands inside the `php-fpm` Docker container.
-* Use the same execution pattern as in `makefile` (for example via `docker exec ... ${COMPOSE_PROJECT_NAME}.php-fpm ...`).
+* Use `docker exec $(docker ps -q -f name=johncms9.php-fpm) <command>` to target the container.
 * Do not rely on host PHP/Composer versions for checks, tests, or dependency operations.

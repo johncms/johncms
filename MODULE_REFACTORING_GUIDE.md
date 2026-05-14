@@ -266,10 +266,7 @@ final class MailLegacyRedirectResolver
 
 ## Step 6: Testing & Cleanup
 
-**Code style:**
-```bash
-docker exec ${COMPOSE_PROJECT_NAME}.php-fpm composer cs-check
-```
+Run the pre-commit checklist from [AGENTS.md](./AGENTS.md#pre-commit-checklist) before every commit.
 
 **After testing:**
 1. Remove legacy `includes/` directory
@@ -293,26 +290,12 @@ After migrating a page, also grep the entire module folder for old `?act=foo` re
 grep -r "act=foo" modules/<name>/
 ```
 
-## Key Patterns
+## Template Notes
 
-**Access Guard Pattern** (for complex write operations):
-- `Ensure*AccessUseCase` — throws exceptions on access denial
-- `Get*ContextUseCase` — returns context DTO
-- `*UseCase` — performs the action
-
-**Repository Rules:**
-- Only data access, no business logic
-- Use query builder methods, not raw loops
-- Return typed collections or paginators
-
-**Template Variables:**
-- Use `$this->render->addData()` for global variables (title, page_title, description)
-- Do not pass them again in `render()` call
-- Use `PageMeta` for pagination: `new PageMeta($title, $page)`
-- The template calls `$this->layout('system::layout/default')` without arguments
+- Templates call `$this->layout('system::layout/default')` without arguments.
 - Global Plates variables (e.g. `$user`) are not passed explicitly; IDE won't see them — add a `@var` annotation with the FQCN. Note: `use` statements do not work in `.phtml` files, so use the fully-qualified class name:
   ```php
   /** @var \Johncms\Users\User $user */
   ```
 
-See [AGENTS.md](./AGENTS.md) for architecture principles and PHP style rules.
+See [AGENTS.md](./AGENTS.md) for architecture principles, repository rules, access guard pattern, PHP style rules, and the pre-commit checklist.
