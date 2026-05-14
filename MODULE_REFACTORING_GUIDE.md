@@ -64,7 +64,35 @@ Update `composer.json` with PSR-4 autoload:
 "Johncms\\Modules\\<Module>\\": "modules/<module>/src/"
 ```
 
-Run `composer dump-autoload` in php-fpm container.
+Run `composer dump-autoload` in php-fpm container:
+```bash
+docker exec $(docker ps -q -f name=johncms9.php-fpm) composer dump-autoload
+```
+
+### Migrate Installer
+
+Copy `modules/<name>/Install/Installer.php` to `modules/<name>/src/Install/Installer.php` and update the namespace:
+
+```
+ModuleName\Install  →  Johncms\Modules\ModuleName\Install
+```
+
+Then delete the old directory:
+```
+modules/<name>/Install/Installer.php
+modules/<name>/Install/              (now empty)
+```
+
+> Installer discovery supports both the old (`ModuleName\Install\Installer`) and new (`Johncms\Modules\ModuleName\Install\Installer`) namespaces — the module admin page keeps working during migration.
+
+### Empty `src/` subdirectories
+
+Create the three top-level folders immediately even if they are empty:
+```bash
+mkdir -p modules/<name>/src/Application modules/<name>/src/Domain modules/<name>/src/Infrastructure
+```
+
+Empty directories are not tracked by git, but they must exist on disk — otherwise Symfony DI will fail when loading `services.php`.
 
 ## Step 3: Create Domain
 
@@ -107,7 +135,7 @@ return static function (ContainerConfigurator $container): void {
         'Johncms\\Modules\\<Module>\\Application\\',
         MODULES_PATH . '<module>/src/Application'
     )
-        ->exclude([...])
+        // Add ->exclude([...]) for DTO and Exceptions directories only when they exist
         ->autowire()
         ->autoconfigure()
         ->public();
@@ -210,6 +238,12 @@ return static function (RouteCollection $router): void {
 };
 ```
 
+**Trailing slash convention:** define routes *without* a trailing slash (`/downloads/search`), but use a trailing slash in template and controller links (`/downloads/search/`). `index.php` normalises URIs with `rtrim` before matching, so both variants work at runtime.
+
+**Clean URL mapping examples:**
+- `?action=search` → `/downloads/search/`
+- `?action=view&id={id}` → `/downloads/view/{id:number}/`
+
 ### Legacy Redirects
 
 ```php
@@ -242,6 +276,23 @@ docker exec ${COMPOSE_PROJECT_NAME}.php-fpm composer cs-check
 2. Remove or archive old templates
 3. Update module documentation in `docs/`
 
+### Template link absolutization
+
+When a template moves to a new route but other pages of the same module are still served by the catch-all `index.php`, relative links like `?id=X` resolve against the new URL and break navigation. Make all same-module links absolute as part of each controller extraction:
+
+```
+?id=X              → /module_name/?id=X
+?act=foo           → /module_name/?act=foo
+?act=foo&id=X      → /module_name/?act=foo&id=X
+?do=dir&id=X       → /module_name/?do=dir&id=X
+```
+
+After migrating a page, also grep the entire module folder for old `?act=foo` references in other templates and controllers and update them to the new clean URL:
+
+```bash
+grep -r "act=foo" modules/<name>/
+```
+
 ## Key Patterns
 
 **Access Guard Pattern** (for complex write operations):
@@ -258,5 +309,10 @@ docker exec ${COMPOSE_PROJECT_NAME}.php-fpm composer cs-check
 - Use `$this->render->addData()` for global variables (title, page_title, description)
 - Do not pass them again in `render()` call
 - Use `PageMeta` for pagination: `new PageMeta($title, $page)`
+- The template calls `$this->layout('system::layout/default')` without arguments
+- Global Plates variables (e.g. `$user`) are not passed explicitly; IDE won't see them — add a `@var` annotation with the FQCN. Note: `use` statements do not work in `.phtml` files, so use the fully-qualified class name:
+  ```php
+  /** @var \Johncms\Users\User $user */
+  ```
 
 See [AGENTS.md](./AGENTS.md) for architecture principles and PHP style rules.
