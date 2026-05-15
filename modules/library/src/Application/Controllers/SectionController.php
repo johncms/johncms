@@ -30,6 +30,7 @@ final readonly class SectionController
         private User $currentUser,
     ) {
         $this->controllerContext->initModule('library');
+        $this->render->addFolder('libraryHelpers', MODULES_PATH . 'library/templates/helpers/');
     }
 
     public function __invoke(int $id): string

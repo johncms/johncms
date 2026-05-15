@@ -26,6 +26,7 @@ final readonly class LibraryIndexController
         private User $currentUser,
     ) {
         $this->controllerContext->initModule('library');
+        $this->render->addFolder('libraryHelpers', MODULES_PATH . 'library/templates/helpers/');
     }
 
     public function __invoke(): string

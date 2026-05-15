@@ -28,6 +28,7 @@ final readonly class NewArticlesController
         private LibraryTextRepositoryInterface $repository,
     ) {
         $this->controllerContext->initModule('library');
+        $this->render->addFolder('libraryHelpers', MODULES_PATH . 'library/templates/helpers/');
     }
 
     public function __invoke(): string

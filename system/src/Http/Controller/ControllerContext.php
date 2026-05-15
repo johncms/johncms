@@ -26,11 +26,6 @@ final readonly class ControllerContext
             MODULES_PATH . $moduleName . '/templates/'
         );
 
-        $helpersPath = MODULES_PATH . $moduleName . '/templates/helpers/';
-        if (is_dir($helpersPath)) {
-            $this->render->addFolder($moduleName . 'Helpers', $helpersPath);
-        }
-
         $this->translator->addTranslationDomain(
             $moduleName,
             MODULES_PATH . $moduleName . '/locale'
