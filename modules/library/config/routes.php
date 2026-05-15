@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Johncms\Modules\Library\Application\Controllers\ArticleCommentsController;
 use Johncms\Modules\Library\Application\Controllers\MoveSectionController;
+use Johncms\Modules\Library\Application\Controllers\PremodController;
 use Johncms\Modules\Library\Application\Controllers\CreateArticleController;
 use Johncms\Modules\Library\Application\Controllers\CreateSectionController;
 use Johncms\Modules\Library\Application\Controllers\DeleteArticleController;
@@ -26,6 +27,7 @@ return static function (RouteCollection $router): void {
         $r->map(['GET', 'POST'], '/library/article/create', CreateArticleController::class)->name('library.article.create');
         $r->map(['GET', 'POST'], '/library/section/create', CreateSectionController::class)->name('library.section.create');
         $r->map(['GET', 'POST'], '/library/article/{id:number}/comments', ArticleCommentsController::class)->name('library.article.comments');
+        $r->get('/library/premod', PremodController::class)->name('library.premod');
         $r->get('/library/section/{parentId:number}/move/{direction}/{positionIndex:number}', MoveSectionController::class)->name('library.section.move');
         $r->get('/library/article/{id:number}/download/{type}', DownloadArticleController::class)->name('library.article.download');
         $r->map(['GET', 'POST'], '/library/article/{id:number}/edit', EditArticleController::class)->name('library.article.edit');

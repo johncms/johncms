@@ -1,58 +1,48 @@
 <?php
 
 /**
- * This file is part of JohnCMS Content Management System.
- *
- * @copyright JohnCMS Community
- * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
- * @link      https://johncms.com JohnCMS Project
+ * @var string|null $approvedName
+ * @var bool        $approvedAll
+ * @var int         $total
+ * @var array[]     $articles
+ * @var string      $pagination
+ * @var \Johncms\Users\User $user
  */
 
-/**
- * @var $title
- * @var $page_title
- * @var $data
- */
-
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => __('Moderation Articles'),
-        'page_title' => __('Moderation Articles'),
-    ]
-);
+$this->layout('system::layout/default');
 ?>
 
-<?php if (isset($_GET['all'])) : ?>
+<?php if ($approvedAll) : ?>
     <div class="alert alert-success"><?= __('All Articles added in database') ?></div>
+<?php elseif ($approvedName !== null) : ?>
+    <div class="alert alert-success">
+        <?= __('Article') ?> <strong><?= $this->e($approvedName) ?></strong> <?= __('Added to the database') ?>
+    </div>
 <?php endif; ?>
-<?php if ($id && isset($_GET['yes'])) : ?>
-    <div class="alert alert-success"><?= __('Article') ?> <strong><?= $article ?></strong> <?= __('Added to the database') ?></div>
-<?php endif; ?>
+
 <?php if ($total) : ?>
-    <?php $i = 0; ?>
-    <?php foreach ($list() as $premod) : ?>
+    <?php foreach ($articles as $article) : ?>
         <div class="card mb-3 shadow border-0">
             <div class="card-body">
-                <a href="?id=<?= $premod['id'] ?>" class="card-title h3"><?= $premod['name'] ?></a>
+                <a href="/library/?id=<?= $article['id'] ?>" class="card-title h3"><?= $this->e($article['name']) ?></a>
                 <div class="text-muted small d-flex align-items-center flex-wrap mt-1">
                     <div class="me-2">
-                        <span><?= __('Author:') ?></span><?= $premod['who'] ?>
+                        <span><?= __('Author:') ?></span><?= $article['who'] ?>
                     </div>
                 </div>
                 <div class="mt-2">
-                    <a href="?act=premod&amp;yes&amp;id=<?= $premod['id'] ?>" class="pe-2"><?= __('Approve') ?></a>
-                    <a href="/library/article/<?= $premod['id'] ?>/delete"><?= __('Delete') ?></a>
+                    <a href="/library/premod?approve=<?= $article['id'] ?>" class="pe-2"><?= __('Approve') ?></a>
+                    <a href="/library/article/<?= $article['id'] ?>/delete"><?= __('Delete') ?></a>
                 </div>
             </div>
         </div>
     <?php endforeach; ?>
+    <div><?= __('Total') ?>: <?= $total ?></div>
+    <?php if ($total > $user->config->kmess) : ?>
+        <div><?= $pagination ?></div>
+    <?php endif; ?>
+    <div class="mt-2"><a href="/library/premod?approve-all"><?= __('Approve all') ?></a></div>
+<?php else : ?>
+    <div class="alert alert-info"><?= __('No articles pending moderation.') ?></div>
 <?php endif; ?>
-<div><?= __('Total') ?>: <?= $total ?></div>
-<?php if ($total > $user->config->kmess): ?>
-    <div><?= $pagination ?></div>
-<?php endif ?>
-<?php if ($total) : ?>
-    <div><a href="?act=premod&amp;all"><?= __('Approve all') ?></a></div>
-<?php endif ?>
-<p><a href="?"><?= __('To Library') ?></a></p>
+<p><a href="/library/"><?= __('To Library') ?></a></p>

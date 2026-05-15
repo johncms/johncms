@@ -111,7 +111,6 @@ if ($id > 0) {
 }
 
 $array_includes = [
-    'premod',
     'tags',
     'tagcloud',
     'lastcom',

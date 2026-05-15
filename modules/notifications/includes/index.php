@@ -37,7 +37,7 @@ if ($user->rights >= 7) {
     if (! empty($all_counters['library_mod'])) {
         $notifications[] = [
             'name'    => __('Articles on moderation'),
-            'url'     => '/library/?act=premod',
+            'url'     => '/library/premod',
             'counter' => $all_counters['library_mod'],
             'type'    => 'info',
         ];

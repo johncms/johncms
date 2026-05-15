@@ -221,7 +221,7 @@ class Counters
         }
 
         if (($this->user->rights == 5 || $this->user->rights >= 6) && $mod) {
-            $total .= '&#160;/&#160;<span class="red"><a href="' . $this->homeurl . '/library/?act=premod">M:' . $mod . '</a></span>';
+            $total .= '&#160;/&#160;<span class="red"><a href="' . $this->homeurl . '/library/premod">M:' . $mod . '</a></span>';
         }
 
         return $total;

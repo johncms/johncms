@@ -86,7 +86,7 @@ class Utils
         $db = di(PDO::class);
         return $db->query(
             'SELECT COUNT(*) FROM `' . ($dir ? 'library_cats' : 'library_texts') . '` WHERE '
-            . ($dir ? '`parent` = ' . $id : '`cat_id` = ' . $id)
+            . ($dir ? '`parent` = ' . $id : '`cat_id` = ' . $id . ' AND `premod` = 1')
         )->fetchColumn();
     }
 
