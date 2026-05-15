@@ -61,7 +61,7 @@ $this->layout(
 <?php if ($admin) : ?>
     <div class="mt-3">
         <a href="/library/section/create?id=<?= $id ?>" class="btn btn-primary"><?= __('Create') ?></a>
-        <a href="?act=moder&amp;type=dir&amp;id=<?= $id ?>" class="btn btn-primary"><?= __('Edit') ?></a>
+        <a href="/library/section/<?= $id ?>/edit" class="btn btn-primary"><?= __('Edit') ?></a>
         <a href="/library/section/<?= $id ?>/delete" class="btn btn-danger"><?= __('Delete') ?></a>
     </div>
 <?php endif; ?>

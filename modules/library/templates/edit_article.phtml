@@ -1,0 +1,100 @@
+<?php
+
+/**
+ * @var int                                                             $id
+ * @var bool                                                            $saved
+ * @var \Johncms\Modules\Library\Domain\Models\LibraryText|null        $article
+ * @var \Illuminate\Database\Eloquent\Collection|null                   $categories
+ * @var string|null                                                     $tags
+ * @var bool|null                                                       $isAdmin
+ * @var string|null                                                     $bbcode
+ * @var \Johncms\Users\User                                             $user
+ */
+
+$this->layout('system::layout/default');
+?>
+
+<?php if ($saved) : ?>
+    <div class="alert alert-success"><?= __('Changes saved successfully.') ?></div>
+    <div class="mt-2"><a href="/library/?id=<?= $id ?>"><?= __('Back to Article') ?></a></div>
+<?php else : ?>
+    <form action="/library/article/<?= $id ?>/edit" method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            <?php if ($article->cover ?? file_exists(UPLOAD_PATH . 'library/images/small/' . $id . '.png')) : ?>
+                <div><img src="/upload/library/images/big/<?= $id ?>.png" alt="cover"/></div>
+                <div class="alarm"><a href="/library/article/<?= $id ?>/image/delete"><?= __('Delete Cover Image') ?></a></div>
+            <?php endif; ?>
+            <div class="custom-file mt-2">
+                <input type="file" class="custom-file-input" id="image" name="image" aria-describedby="file_label">
+                <label class="custom-file-label" for="image"><?= __('To upload a photo') ?></label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="name"><?= __('Title') ?></label>
+            <input type="text" name="name" class="form-control" id="name"
+                   value="<?= $this->e($article->name) ?>"
+                   placeholder="<?= __('Title') ?>" required>
+        </div>
+
+        <div class="form-group">
+            <label for="announce"><?= __('Announce') ?></label>
+            <textarea class="form-control" rows="<?= $user->config->fieldHeight ?>"
+                      name="announce" id="announce"><?= $this->e($article->announce ?? '') ?></textarea>
+        </div>
+
+        <?php if (mb_strlen((string) $article->text) < 500000) : ?>
+            <div class="form-group">
+                <label for="text"><?= __('Text') ?></label>
+                <div><?= $bbcode ?></div>
+                <textarea class="form-control" rows="<?= $user->config->fieldHeight ?>"
+                          name="text" id="text"><?= $this->e($article->text ?? '') ?></textarea>
+            </div>
+        <?php else : ?>
+            <div class="alert alert-info"><?= __('The text of the Article can not be edited, a large amount of data !!!') ?></div>
+            <input type="hidden" name="text" value="do_not_change">
+        <?php endif; ?>
+
+        <div class="form-group">
+            <label for="tags"><?= __('Tags') ?></label>
+            <input name="tags" class="form-control" type="text" id="tags" value="<?= $this->e($tags ?? '') ?>">
+        </div>
+
+        <?php if ($isAdmin) : ?>
+            <?php if ($categories->isNotEmpty()) : ?>
+                <div class="mt-2">
+                    <label for="move"><?= __('Move to Section') ?></label>
+                    <select name="move" class="form-control" id="move">
+                        <?php foreach ($categories as $cat) : ?>
+                            <option value="<?= $cat->id ?>"
+                                <?= $article->cat_id == $cat->id ? 'selected="selected"' : '' ?>>
+                                <?= $this->e($cat->name) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            <?php endif; ?>
+
+            <div class="custom-control custom-checkbox mt-3">
+                <input type="checkbox" class="custom-control-input" name="premod" value="1" id="premod"
+                    <?= $article->premod > 0 ? 'checked="checked"' : '' ?>>
+                <label class="custom-control-label" for="premod"><?= __('Verified') ?></label>
+            </div>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" name="comments" value="1" id="comments"
+                    <?= $article->comments > 0 ? 'checked="checked"' : '' ?>>
+                <label class="custom-control-label" for="comments"><?= __('Commenting on the Article') ?></label>
+            </div>
+            <div class="form-group mt-3">
+                <label for="count_views"><?= __('Number of readings') ?></label>
+                <input type="text" name="count_views" id="count_views" class="form-control"
+                       value="<?= (int) $article->count_views ?>"/>
+            </div>
+        <?php endif; ?>
+
+        <div class="mt-3">
+            <input type="submit" name="submit" value="<?= __('Save') ?>" class="btn btn-primary">
+            <a href="/library/?id=<?= $id ?>" class="btn btn-secondary"><?= __('Cancel') ?></a>
+        </div>
+    </form>
+<?php endif; ?>
