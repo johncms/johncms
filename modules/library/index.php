@@ -55,6 +55,11 @@ $view->addFolder('libraryHelpers', __DIR__ . '/templates/helpers/');
 $id = $request->getQuery('id', 0, FILTER_VALIDATE_INT);
 $act = htmlspecialchars((string) $request->getQuery('act', ''));
 
+if ($act === 'lastcom') {
+    header('Location: /library/latest-comments', true, 301);
+    exit;
+}
+
 if ($act === 'tags' && isset($_GET['tag'])) {
     header('Location: /library/tags?tag=' . urlencode($_GET['tag']), true, 301);
     exit;
@@ -115,10 +120,7 @@ if ($id > 0) {
     }
 }
 
-$array_includes = [
-    'tagcloud',
-    'lastcom',
-];
+$array_includes = [];
 
 if (! in_array($act, $array_includes, true)) {
     $act = 'index';
