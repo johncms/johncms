@@ -45,7 +45,7 @@ class Links
      */
     private $tools;
 
-    public function __construct($in, $link_url = '?act=tags&amp;tag=')
+    public function __construct($in, $link_url = '/library/tags?tag=')
     {
         $this->link_url = $link_url;
         $this->in = $in;

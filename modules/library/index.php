@@ -55,6 +55,11 @@ $view->addFolder('libraryHelpers', __DIR__ . '/templates/helpers/');
 $id = $request->getQuery('id', 0, FILTER_VALIDATE_INT);
 $act = htmlspecialchars((string) $request->getQuery('act', ''));
 
+if ($act === 'tags' && isset($_GET['tag'])) {
+    header('Location: /library/tags?tag=' . urlencode($_GET['tag']), true, 301);
+    exit;
+}
+
 if ($act === 'download' && $id > 0) {
     $type = isset($_GET['type']) && in_array($_GET['type'], ['txt', 'fb2'], true) ? $_GET['type'] : 'txt';
     header('Location: /library/article/' . $id . '/download/' . $type, true, 301);
@@ -111,7 +116,6 @@ if ($id > 0) {
 }
 
 $array_includes = [
-    'tags',
     'tagcloud',
     'lastcom',
 ];

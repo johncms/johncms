@@ -1,61 +1,42 @@
 <?php
 
 /**
- * This file is part of JohnCMS Content Management System.
- *
- * @copyright JohnCMS Community
- * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
- * @link      https://johncms.com JohnCMS Project
+ * @var int         $total
+ * @var array[]     $list
+ * @var string      $tag
+ * @var string      $pagination
+ * @var \Johncms\Users\User $user
  */
 
-/**
- * @var $title
- * @var $page_title
- * @var $data
- */
-
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $page_title ?? $title,
-    ]
-);
+$this->layout('system::layout/default');
 ?>
-<?php if ($total) : ?>
-    <?php foreach ($list as $tags) : ?>
-        <div class="new_post-item without_avatar">
 
-            <a href="?id=<?= $tags['id'] ?>" class="card-title h3"><?= $tags['name'] ?></a>
-            <div class="post-body"><?= $tags['text'] ?></div>
-            <div class="mb-1">
-                <?= $tags['tags'] ?>
+<?php foreach ($list as $article) : ?>
+    <div class="new_post-item without_avatar">
+        <a href="/library/?id=<?= $article['id'] ?>" class="card-title h3"><?= $this->e($article['name']) ?></a>
+        <div class="post-body"><?= $article['text'] ?></div>
+        <?php if ($article['tags']) : ?>
+            <div class="mb-1"><?= $article['tags'] ?></div>
+        <?php endif; ?>
+        <div class="text-muted small d-flex align-items-center flex-wrap">
+            <div class="me-2">
+                <span><?= __('Author:') ?></span><?= $article['who'] ?>
             </div>
-            <div class="text-muted small d-flex align-items-center flex-wrap">
-                <div class="me-2">
-                    <span><?= __('Author:') ?></span><?= $tags['who'] ?>
-                </div>
-                <div class="me-2">
-                    <span><?= __('Number of readings:') ?></span><?= $tags['count_views'] ?>
-                </div>
-                <div>
-                    <?php if ($tags['comments']) : ?>
-                        <a href="/library/article/<?= $tags['id'] ?>/comments"><?= __('Comments:') ?></a>
-                        (<?= $tags['comm_count'] ?>)
-                    <?php endif; ?>
-                </div>
+            <div class="me-2">
+                <span><?= __('Number of readings:') ?></span><?= $article['count_views'] ?>
             </div>
-        </div>
-    <?php endforeach; ?>
-    <div class="mt-3"><?= __('Total') ?>: <?= $total ?></div>
-    <?php if ($total > $user->config->kmess): ?>
-        <div><?= $pagination ?></div>
-    <?php endif ?>
-    <p><a href="?"><?= __('To Library') ?></a></p>
-<?php else: ?>
-    <div class="row">
-        <div class="col-md-5">
-            <div class="alert alert-info shadow border-0"><?= __('The list is empty') ?></div>
+            <div>
+                <?php if ($article['comments']) : ?>
+                    <a href="/library/article/<?= $article['id'] ?>/comments"><?= __('Comments:') ?></a>
+                    (<?= $article['comm_count'] ?>)
+                <?php endif; ?>
+            </div>
         </div>
     </div>
+<?php endforeach; ?>
+
+<div class="mt-3"><?= __('Total') ?>: <?= $total ?></div>
+<?php if ($total > $user->config->kmess) : ?>
+    <div><?= $pagination ?></div>
 <?php endif; ?>
+<p><a href="/library/"><?= __('To Library') ?></a></p>
