@@ -10,7 +10,6 @@
 
 declare(strict_types=1);
 
-use Johncms\Modules\Library\Application\Services\LibraryLegacyRedirectResolver;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
 use Johncms\System\Legacy\Tools;
@@ -53,14 +52,14 @@ $loader->addPrefix('Library', __DIR__ . '/classes');
 $view->addFolder('library', __DIR__ . '/templates/');
 $view->addFolder('libraryHelpers', __DIR__ . '/templates/helpers/');
 
-$legacyRedirect = di(LibraryLegacyRedirectResolver::class)->resolve($_GET);
-if ($legacyRedirect !== null) {
-    header('Location: ' . $legacyRedirect, true, 301);
-    exit;
-}
-
 $id = $request->getQuery('id', 0, FILTER_VALIDATE_INT);
 $act = htmlspecialchars((string) $request->getQuery('act', ''));
+
+if ($act === 'download' && $id > 0) {
+    $type = isset($_GET['type']) && in_array($_GET['type'], ['txt', 'fb2'], true) ? $_GET['type'] : 'txt';
+    header('Location: /library/article/' . $id . '/download/' . $type, true, 301);
+    exit;
+}
 $mod = htmlspecialchars((string) $request->getQuery('mod', ''));
 $do = isset($_REQUEST['do']) ? trim($_REQUEST['do']) : false;
 $page = isset($_REQUEST['page']) ? max(1, (int) $_REQUEST['page']) : 1;
@@ -112,8 +111,6 @@ if ($id > 0) {
 }
 
 $array_includes = [
-    'del',
-    'download',
     'moder',
     'move',
     'premod',

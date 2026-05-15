@@ -40,8 +40,8 @@ $this->layout(
     <span class="me-2">
         <?= __('Download file') ?>
     </span>
-    <a href="?act=download&amp;type=txt&amp;id=<?= $res['id'] ?>" class="btn btn-outline-secondary btn-sm">txt</a>
-    <a href="?act=download&amp;type=fb2&amp;id=<?= $res['id'] ?>" class="btn btn-outline-secondary btn-sm">fb2</a>
+    <a href="/library/article/<?= $res['id'] ?>/download/txt" class="btn btn-outline-secondary btn-sm">txt</a>
+    <a href="/library/article/<?= $res['id'] ?>/download/fb2" class="btn btn-outline-secondary btn-sm">fb2</a>
 </div>
 <?php if ($page === 1) : ?>
     <div class="border-top border-bottom mt-3 mb-1 pb-2 pt-2 text-muted">
