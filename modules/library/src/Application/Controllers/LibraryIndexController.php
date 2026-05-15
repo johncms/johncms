@@ -12,8 +12,8 @@ use Johncms\NavChain;
 use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
-use Library\Utils;
-use Library\ViewHelper;
+use Johncms\Modules\Library\Application\Services\Utils;
+use Johncms\Modules\Library\Application\Services\ViewHelper;
 
 final readonly class LibraryIndexController
 {

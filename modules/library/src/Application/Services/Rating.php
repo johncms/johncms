@@ -10,55 +10,28 @@
 
 declare(strict_types=1);
 
-namespace Library;
+namespace Johncms\Modules\Library\Application\Services;
 
 use Johncms\System\Users\User;
 use Johncms\System\View\Extension\Assets;
 use PDO;
 
-/**
- * Звездный рейтинг статей
- * Class Rating
- *
- * @package Library
- * @author  Koenig(Compolomus)
- */
 class Rating
 {
-    /**
-     * @var Assets
-     */
-    private $asset;
+    private Assets $asset;
 
-    /**
-     * @var PDO
-     */
-    private $db;
+    private PDO $db;
 
-    /**
-     * обязательный аргумент, индификатор статьи
-     *
-     * @var int
-     */
-    private $lib_id;
+    private int $lib_id;
 
-    /**
-     * Rating constructor.
-     *
-     * @param int $id
-     */
     public function __construct(int $id)
     {
-        $this->db = di(PDO::class);
-        $this->asset = di(Assets::class);
-
+        $this->db     = di(PDO::class);
+        $this->asset  = di(Assets::class);
         $this->lib_id = $id;
         $this->check();
     }
 
-    /**
-     * Чекер события нажатия кнопки
-     */
     private function check(): void
     {
         if (isset($_POST['rating_submit'])) {
@@ -66,18 +39,12 @@ class Rating
         }
     }
 
-    /**
-     * Добавление|обновление рейтинговой звезды
-     *
-     * @param $point (0 - 5)
-     * return redirect на страницу для голосования
-     */
     private function addVote(int $point): void
     {
         $user = di(User::class);
 
         $point = in_array($point, range(0, 5), true) ? $point : 0;
-        $stmt = $this->db->prepare('SELECT COUNT(*) FROM `cms_library_rating` WHERE `user_id` = ? AND `st_id` = ?');
+        $stmt  = $this->db->prepare('SELECT COUNT(*) FROM `cms_library_rating` WHERE `user_id` = ? AND `st_id` = ?');
         $stmt->execute([$user->id, $this->lib_id]);
         if ($stmt->fetchColumn() > 0) {
             $stmt = $this->db->prepare('UPDATE `cms_library_rating` SET `point` = ? WHERE `user_id` = ? AND `st_id` = ?');
@@ -90,11 +57,6 @@ class Rating
         exit;
     }
 
-    /**
-     * Получение средней оценки (количество закрашенных звезд)
-     *
-     * @return int
-     */
     private function getRate(): int
     {
         $stmt = $this->db->prepare('SELECT AVG(`point`) FROM `cms_library_rating` WHERE `st_id` = ?');
@@ -103,12 +65,6 @@ class Rating
         return (int) (floor($stmt->fetchColumn() * 2) / 2);
     }
 
-    /**
-     * Вывод закрашенных звезд по рейтингу
-     *
-     * @param int $anchor
-     * @return string
-     */
     public function viewRate(int $anchor = 0): string
     {
         $stmt = $this->db->prepare('SELECT COUNT(*) FROM `cms_library_rating` WHERE `st_id` = ?');
@@ -118,16 +74,11 @@ class Rating
         return '<img src="' . $url . '" alt="">' . ' (' . $stmt->fetchColumn() . ')';
     }
 
-    /**
-     * Вывод формы для голосования
-     *
-     * @return string
-     */
     public function printVote(): string
     {
         $user = di(User::class);
 
-        $stmt = $this->db->prepare('SELECT `point` FROM `cms_library_rating` WHERE `user_id` = ? AND `st_id` = ? LIMIT 1');
+        $stmt     = $this->db->prepare('SELECT `point` FROM `cms_library_rating` WHERE `user_id` = ? AND `st_id` = ? LIMIT 1');
         $userVote = $stmt->execute([$user->id, $this->lib_id]) ? $stmt->fetchColumn() : -1;
 
         return ViewHelper::printVote($this->lib_id, $userVote);

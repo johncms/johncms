@@ -12,7 +12,7 @@ use Johncms\System\Http\Request;
 use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
-use Library\Hashtags;
+use Johncms\Modules\Library\Application\Services\Hashtags;
 
 final readonly class TagsController
 {

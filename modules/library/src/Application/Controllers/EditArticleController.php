@@ -13,9 +13,9 @@ use Johncms\System\Legacy\Bbcode;
 use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
-use Library\Hashtags;
-use Library\Tree;
-use Library\Utils;
+use Johncms\Modules\Library\Application\Services\Hashtags;
+use Johncms\Modules\Library\Application\Services\Tree;
+use Johncms\Modules\Library\Application\Services\Utils;
 
 final readonly class EditArticleController
 {

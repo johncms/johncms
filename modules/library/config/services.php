@@ -14,6 +14,7 @@ return static function (ContainerConfigurator $container): void {
         'Johncms\\Modules\\Library\\Application\\',
         MODULES_PATH . 'library/src/Application'
     )
+        ->exclude([MODULES_PATH . 'library/src/Application/Services'])
         ->autowire()
         ->autoconfigure()
         ->public();

@@ -13,8 +13,8 @@ use Johncms\System\Http\Request;
 use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
-use Library\Hashtags;
-use Library\Rating;
+use Johncms\Modules\Library\Application\Services\Hashtags;
+use Johncms\Modules\Library\Application\Services\Rating;
 
 final readonly class NewArticlesController
 {

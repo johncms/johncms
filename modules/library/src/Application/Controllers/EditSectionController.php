@@ -12,7 +12,7 @@ use Johncms\NavChain;
 use Johncms\System\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
-use Library\Tree;
+use Johncms\Modules\Library\Application\Services\Tree;
 
 final readonly class EditSectionController
 {

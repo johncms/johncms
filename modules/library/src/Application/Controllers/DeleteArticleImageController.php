@@ -11,8 +11,8 @@ use Johncms\System\Http\Request;
 use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
-use Library\Tree;
-use Library\Utils;
+use Johncms\Modules\Library\Application\Services\Tree;
+use Johncms\Modules\Library\Application\Services\Utils;
 
 final readonly class DeleteArticleImageController
 {

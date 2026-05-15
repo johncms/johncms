@@ -10,63 +10,33 @@
 
 declare(strict_types=1);
 
-namespace Library;
+namespace Johncms\Modules\Library\Application\Services;
 
-use Johncms\System\Legacy\Tools;
 use PDO;
 
-/**
- * Класс дерева (Nested Sets)
- * Class Tree
- *
- * @package Library
- * @author  Koenig(Compolomus)
- */
 class Tree
 {
-    /**
-     * Массив результата
-     *
-     * @var array
-     */
-    private $result = [];
+    private array $result = [];
 
-    /**
-     * Массив количества удаленных объектов
-     *
-     * @var array
-     */
-    private $cleaned = ['images' => 0, 'comments' => 0, 'tags' => 0];
+    private array $cleaned = ['images' => 0, 'comments' => 0, 'tags' => 0];
 
-    /**
-     * Обязательный аргумент, индификатор текущей вложенности parent
-     *
-     * @var int
-     */
-    private $start_id;
+    private int $start_id;
 
-    /** @var PDO $db */
-    private $db;
+    private PDO $db;
 
     public function __construct(int $id)
     {
         $this->start_id = $id;
-        $this->db = di(PDO::class);
+        $this->db       = di(PDO::class);
     }
 
-    /**
-     * Рекурсивно проходит по дереву собирая в массив типы и уникальные иды каталогов
-     *
-     * @param int $id
-     * @return Tree
-     */
     public function getAllChildsId(int $id = 0): self
     {
-        $id = (int) ($id === 0 ? $this->start_id : $id);
+        $id   = (int) ($id === 0 ? $this->start_id : $id);
         $stmt = $this->db->prepare('SELECT `dir` FROM `library_cats` WHERE `id` = ? LIMIT 1');
         $stmt->execute([$id]);
         $dirtype = (bool) $stmt->fetchColumn();
-        $stmt = $this->db->prepare('SELECT `id` FROM ' . ($dirtype ? '`library_cats`' : '`library_texts`') . ' WHERE ' . ($dirtype ? '`parent`' : '`cat_id`') . ' = ?');
+        $stmt    = $this->db->prepare('SELECT `id` FROM ' . ($dirtype ? '`library_cats`' : '`library_texts`') . ' WHERE ' . ($dirtype ? '`parent`' : '`cat_id`') . ' = ?');
         $stmt->execute([$id]);
         $this->result['dirs'][$id] = $id;
         if ($stmt->rowCount()) {
@@ -81,13 +51,7 @@ class Tree
         return $this;
     }
 
-    /**
-     * Очистка статей, удаляет комментарии, картинки и теги от статей
-     *
-     * @param mixed $data
-     * @return array
-     */
-    public function cleanTrash($data): array
+    public function cleanTrash(mixed $data): array
     {
         if (! is_array($data)) {
             $stmt = $this->db->prepare('DELETE FROM `cms_library_comments` WHERE `sub_id` = ?');
@@ -97,7 +61,6 @@ class Tree
             $obj = new Hashtags($data);
             $this->cleaned['tags'] += $obj->delTags();
 
-            // Utils::unlinkImages($data); ???
             if (file_exists(UPLOAD_PATH . 'library/images/small/' . $data . '.png')) {
                 unlink(UPLOAD_PATH . 'library/images/big/' . $data . '.png');
                 unlink(UPLOAD_PATH . 'library/images/orig/' . $data . '.png');
@@ -111,21 +74,15 @@ class Tree
         return $this->cleaned;
     }
 
-    /**
-     * Удаляет ветку , возвращает количество удаленных каталогов, статей, тегов, коментариев и изображений в массиве
-     *
-     * @param void
-     * @return array
-     */
     public function cleanDir(): array
     {
         $array = $this->result();
-        $dirs = array_key_exists('dirs', $array) ? $array['dirs'] : 0;
+        $dirs  = array_key_exists('dirs', $array) ? $array['dirs'] : 0;
         $texts = array_key_exists('texts', $array) ? $array['texts'] : 0;
 
         $trash = $this->cleanTrash($array['texts']);
 
-        $place_holders_dirs = implode(', ', array_fill(0, count($dirs), '?'));
+        $place_holders_dirs  = implode(', ', array_fill(0, count($dirs), '?'));
         $place_holders_texts = implode(',', array_fill(0, count($texts), '?'));
 
         $stmt = $this->db->prepare('DELETE FROM `library_cats` WHERE `id` IN(' . $place_holders_dirs . ')');
@@ -142,16 +99,10 @@ class Tree
         return array_merge(['dirs' => $dirs, 'texts' => $texts], $trash);
     }
 
-    /**
-     * Рекурсивно проходит по ветке и собирает дочерние вложения
-     *
-     * @param int $parent
-     * @return Tree
-     */
     public function getChildsDir(int $parent = 0): self
     {
         $parent = (int) ($parent === 0 ? $this->start_id : $parent);
-        $stmt = $this->db->prepare('SELECT `id` FROM `library_cats` WHERE `parent` = ? AND `dir` = 1');
+        $stmt   = $this->db->prepare('SELECT `id` FROM `library_cats` WHERE `parent` = ? AND `dir` = 1');
         $stmt->execute([$parent]);
         if ($stmt->rowCount()) {
             while ($child = $stmt->fetch()) {
@@ -163,18 +114,12 @@ class Tree
         return $this;
     }
 
-    /**
-     * Рекурсивно проходит по дереву до корня, собирает массив с идами и именами разделов
-     *
-     * @param int $id
-     * @return Tree
-     */
     public function processNavPanel(int $id = 0): self
     {
-        $id = (int) ($id === 0 ? $this->start_id : $id);
+        $id   = (int) ($id === 0 ? $this->start_id : $id);
         $stmt = $this->db->prepare('SELECT `id`, `name`, `parent` FROM `library_cats` WHERE `id` = ? LIMIT 1');
         $stmt->execute([$id]);
-        $parent = $stmt->fetch();
+        $parent       = $stmt->fetch();
         $this->result[] = ['id' => $parent['id'], 'name' => $parent['name']];
         if ($parent['parent'] !== 0) {
             $this->processNavPanel($parent['parent']);
@@ -185,22 +130,11 @@ class Tree
         return $this;
     }
 
-    /**
-     * Собирает ссылки в верхнюю панель навигации
-     *
-     * @param void
-     * @return void
-     */
     public function printNavPanel(): void
     {
         ViewHelper::printNavPanel($this->result());
     }
 
-    /**
-     * Получение результата
-     *
-     * @return array
-     */
     public function result(): array
     {
         return $this->result;
