@@ -3,7 +3,10 @@
 declare(strict_types=1);
 
 use Johncms\Modules\Library\Application\Controllers\ArticleCommentsController;
+use Johncms\Modules\Library\Application\Controllers\ArticleController;
+use Johncms\Modules\Library\Application\Controllers\LibraryIndexController;
 use Johncms\Modules\Library\Application\Controllers\MoveSectionController;
+use Johncms\Modules\Library\Application\Controllers\SectionController;
 use Johncms\Modules\Library\Application\Controllers\PremodController;
 use Johncms\Modules\Library\Application\Controllers\LatestCommentsController;
 use Johncms\Modules\Library\Application\Controllers\TagsController;
@@ -40,7 +43,9 @@ return static function (RouteCollection $router): void {
         $r->get('/library/article/{id:number}/image/delete', DeleteArticleImageController::class)->name('library.article.image.delete');
         $r->map(['GET', 'POST'], '/library/section/{id:number}/delete', DeleteSectionController::class)->name('library.section.delete');
 
-        $r->map(['GET', 'POST'], '/library', 'modules/library/index.php')->name('library.index');
+        $r->get('/library', LibraryIndexController::class)->name('library.index');
+        $r->get('/library/section/{id:number}', SectionController::class)->name('library.section');
+        $r->map(['GET', 'POST'], '/library/article/{id:number}', ArticleController::class)->name('library.article');
     })
         ->addMiddleware(LibraryAccessMiddleware::class);
 };

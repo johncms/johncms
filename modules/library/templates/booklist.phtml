@@ -14,19 +14,13 @@
  * @var $data
  */
 
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $page_title ?? $title,
-    ]
-);
+$this->layout('system::layout/default');
 ?>
 <?php if ($total) : ?>
     <!-- Listing Sections -->
-    <?php foreach ($list() as $booklist): ?>
+    <?php foreach ($list as $booklist): ?>
         <div class="new_post-item without_avatar">
-            <a href="?id=<?= $booklist['id'] ?>" class="post-title"><?= $booklist['name'] ?></a>
+            <a href="/library/article/<?= $booklist['id'] ?>" class="post-title"><?= $this->e($booklist['name']) ?></a>
             <div class="post-body"><?= $booklist['announce'] ?></div>
             <div class="text-muted small d-flex align-items-center flex-wrap">
                 <span class="pe-2"><span><?= __('Author:') ?></span>&nbsp;<?= $booklist['who'] ?>,</span>

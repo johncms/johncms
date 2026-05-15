@@ -14,22 +14,16 @@
  * @var $data
  */
 
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $page_title ?? $title,
-    ]
-);
+$this->layout('system::layout/default');
 ?>
 <?php if ($total) : ?>
     <!-- Listing Sections -->
     <?php $i = 0; ?>
-    <?php foreach ($list() as $section): ?>
+    <?php foreach ($list as $section): ?>
         <div class="shadow border-radius-12 forum-section post-item mb-2">
             <div class="section-header d-flex justify-content-between <?= (empty($category['desc']) ? 'border-0 pb-0' : '') ?>">
                 <div class="d-flex align-items-center">
-                    <a href="?do=dir&amp;id=<?= $section['id'] ?>" class="text-dark-brown"><?= $section['name'] ?></a>
+                    <a href="/library/section/<?= $section['id'] ?>" class="text-dark-brown"><?= $this->e($section['name']) ?></a>
                     <span class="badge rounded-pill text-bg-light border ms-3"><?= $section['libCounter'] ?></span>
                 </div>
             </div>

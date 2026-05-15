@@ -14,13 +14,7 @@
  * @var $data
  */
 
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $page_title ?? $title,
-    ]
-);
+$this->layout('system::layout/default');
 ?>
 
 <?php if (! $config['mod_lib']): ?>
@@ -42,11 +36,11 @@ $this->layout(
 
 <?php if ($total) : ?>
     <!-- Listing Sections -->
-    <?php foreach ($list() as $main) : ?>
+    <?php foreach ($list as $main) : ?>
         <div class="forum-section">
             <div class="section-header d-flex justify-content-between <?= (empty($category['desc']) ? 'border-0 pb-0' : '') ?>">
                 <div class="d-flex align-items-center">
-                    <a href="?do=dir&amp;id=<?= $main['id'] ?>" class="text-dark-brown"><?= $main['name'] ?></a>
+                    <a href="/library/section/<?= $main['id'] ?>" class="text-dark-brown"><?= $main['name'] ?></a>
                     <span class="badge rounded-pill counter-badge border ms-3"><?= $main['libCounter'] ?></span>
                 </div>
             </div>

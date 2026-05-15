@@ -41,7 +41,7 @@ class ViewHelper
         $tools = di(Tools::class);
         $nav_chain = di(NavChain::class);
         foreach ($data as $key => $value) {
-            $nav_chain->add($tools->checkout($value['name']), '/library/?do=dir&id=' . $value['id']);
+            $nav_chain->add($tools->checkout($value['name']), '/library/section/' . $value['id']);
         }
     }
 

@@ -14,17 +14,11 @@
  * @var $data
  */
 
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $page_title ?? $title,
-    ]
-);
+$this->layout('system::layout/default');
 ?>
 <?php if ($page === 1 && $cover) : ?>
-    <a href="../upload/library/images/orig/<?= $res['id'] ?>.png" class="float-lg-left pe-3">
-        <img src="../upload/library/images/big/<?= $res['id'] ?>.png" alt="screen" class="img-thumbnail">
+    <a href="/upload/library/images/orig/<?= $res['id'] ?>.png" class="float-lg-left pe-3">
+        <img src="/upload/library/images/big/<?= $res['id'] ?>.png" alt="screen" class="img-thumbnail">
     </a>
 <?php endif; ?>
 <div class="pb-3 pt-2">

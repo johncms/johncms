@@ -19,7 +19,7 @@ $this->layout('system::layout/default');
         <div><?= sprintf(__('Are you sure you want to delete the article "%s"? This action cannot be undone.'), $this->e($name)) ?></div>
         <div class="mt-2">
             <a href="/library/article/<?= $id ?>/delete?yes" class="btn btn-danger btn-sm"><?= __('Yes, Delete') ?></a>
-            <a href="/library/?id=<?= $id ?>" class="btn btn-secondary btn-sm"><?= __('Cancel') ?></a>
+            <a href="/library/article/<?= $id ?>" class="btn btn-secondary btn-sm"><?= __('Cancel') ?></a>
         </div>
     </div>
 <?php endif; ?>

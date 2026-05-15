@@ -55,21 +55,6 @@ $view->addFolder('libraryHelpers', __DIR__ . '/templates/helpers/');
 $id = $request->getQuery('id', 0, FILTER_VALIDATE_INT);
 $act = htmlspecialchars((string) $request->getQuery('act', ''));
 
-if ($act === 'lastcom') {
-    header('Location: /library/latest-comments', true, 301);
-    exit;
-}
-
-if ($act === 'tags' && isset($_GET['tag'])) {
-    header('Location: /library/tags?tag=' . urlencode($_GET['tag']), true, 301);
-    exit;
-}
-
-if ($act === 'download' && $id > 0) {
-    $type = isset($_GET['type']) && in_array($_GET['type'], ['txt', 'fb2'], true) ? $_GET['type'] : 'txt';
-    header('Location: /library/article/' . $id . '/download/' . $type, true, 301);
-    exit;
-}
 $mod = htmlspecialchars((string) $request->getQuery('mod', ''));
 $do = isset($_REQUEST['do']) ? trim($_REQUEST['do']) : false;
 $page = isset($_REQUEST['page']) ? max(1, (int) $_REQUEST['page']) : 1;
