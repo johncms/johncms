@@ -42,7 +42,7 @@ $this->layout(
 
             <?php if (! empty($data['user_smiles_current'])): ?>
                 <div class="alert alert-info">
-                    <a href="?act=my_smilies"><?= __('My smilies') ?></a>
+                    <a href="/help/smilies/my/"><?= __('My smilies') ?></a>
                     (<?= $data['user_smiles_current'] ?> / <?= $data['user_smiles_max'] ?>)
                 </div>
             <?php endif; ?>

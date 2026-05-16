@@ -33,7 +33,7 @@ $this->layout(
             'alert'      => __('The list is empty'),
         ]
     ) ?>
-    <a href="?act=smilies" class="btn btn-primary mt-3"><?= __('Add Smilies') ?></a>
+    <a href="/help/smilies/" class="btn btn-primary mt-3"><?= __('Add Smilies') ?></a>
 <?php else: ?>
     <?php if ($user->isValid()): ?>
         <form action="<?= $data['form_action'] ?>" method="post">
