@@ -10,7 +10,6 @@ use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Downloads\Domain\Models\DownloadCategory;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\System\Http\Request;
-use Johncms\System\Legacy\Bbcode;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 
@@ -28,7 +27,6 @@ final readonly class ImportFileController
         private Render $render,
         private Request $request,
         private User $currentUser,
-        private Bbcode $bbcode,
         private ImageManager $imageManager,
     ) {
         $this->controllerContext->initModule('downloads');
@@ -66,7 +64,6 @@ final readonly class ImportFileController
             'id'         => $id,
             'action_url' => $baseUrl,
             'extensions' => implode(', ', $allowedExtensions),
-            'bbcode'     => $this->bbcode->buttons('file_import_form', 'desc'),
         ]);
     }
 

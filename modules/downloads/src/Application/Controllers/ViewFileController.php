@@ -17,7 +17,6 @@ use Johncms\Modules\Downloads\Application\UseCases\VoteOnFileUseCase;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
 use Johncms\System\Http\Session;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 
@@ -28,7 +27,6 @@ final readonly class ViewFileController
         private Render $render,
         private Request $request,
         private NavChain $navChain,
-        private Tools $tools,
         private User $currentUser,
         private Session $session,
         private ViewFileUseCase $viewFileUseCase,
@@ -136,7 +134,7 @@ final readonly class ViewFileController
             'file_properties'  => $mediaInfo->fileProperties,
             'screenshots'      => $mediaInfo->screenshots,
             'image_info'       => $mediaInfo->imageInfo,
-            'description'      => $this->tools->checkout($file->about, 1, 1),
+            'description'      => $file->about_html,
             'upload_user'      => $result->uploadUser
                 ? ['id' => $result->uploadUser->id, 'name' => $result->uploadUser->name]
                 : ['id' => 0, 'name' => ''],

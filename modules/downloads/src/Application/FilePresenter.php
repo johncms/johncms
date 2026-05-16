@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Downloads\Application;
 
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Extension\Assets;
 use Johncms\Users\User;
 
@@ -30,7 +29,6 @@ final class FilePresenter
     public function __construct(
         private Assets $assets,
         private User $currentUser,
-        private Tools $tools,
     ) {
     }
 
@@ -55,7 +53,7 @@ final class FilePresenter
 
         $file['preview_text'] = '';
         if ($file['about']) {
-            $about = html_entity_decode(strip_tags($this->tools->checkout($file['about'], 0, 1)));
+            $about = html_entity_decode(strip_tags((string) $file['about']));
             $file['preview_text'] = htmlentities(mb_strimwidth($about, 0, 94, '...'));
         }
 

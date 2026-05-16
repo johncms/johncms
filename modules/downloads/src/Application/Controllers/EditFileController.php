@@ -9,7 +9,6 @@ use Johncms\Modules\Downloads\Application\Services\CategoryNavService;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
-use Johncms\System\Legacy\Bbcode;
 use Johncms\System\View\Render;
 
 final readonly class EditFileController
@@ -22,7 +21,6 @@ final readonly class EditFileController
         private Render $render,
         private Request $request,
         private NavChain $navChain,
-        private Bbcode $bbcode,
         private CategoryNavService $categoryNavService,
     ) {
         $this->controllerContext->initModule('downloads');
@@ -60,11 +58,10 @@ final readonly class EditFileController
             'file_data'  => [
                 'text'      => htmlspecialchars($file->rus_name),
                 'name_link' => htmlspecialchars($file->text),
-                'desc'      => htmlentities($file->about, ENT_QUOTES, 'UTF-8'),
+                'desc'      => htmlspecialchars($file->about, ENT_QUOTES, 'UTF-8'),
             ],
             'audio_tags' => $audioTags,
             'action_url' => '/downloads/edit-file/' . $id . '/',
-            'bbcode'     => $this->bbcode->buttons('file_edit_form', 'desc'),
         ]);
     }
 

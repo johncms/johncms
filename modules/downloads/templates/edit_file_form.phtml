@@ -32,9 +32,16 @@ $this->layout('system::layout/default');
                name="name_link" value="<?= $file_data['name_link'] ?>" maxlength="200" required>
     </div>
     <div class="form-group">
-        <label for="desc"><?= __('Description') ?></label>
-        <div><?= $bbcode ?></div>
-        <textarea id="desc" class="form-control" maxlength="65000" name="desc" cols="24" rows="4"><?= $file_data['desc'] ?></textarea>
+        <?= $this->fetch(
+            'system::app/ckeditor',
+            [
+                'label'        => __('Description'),
+                'errors'       => '',
+                'value'        => $file_data['desc'],
+                'name'         => 'desc',
+                'allow_upload' => false,
+            ]
+        ) ?>
     </div>
     <?php if (! empty($audio_tags)): ?>
         <div>

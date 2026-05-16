@@ -55,9 +55,16 @@ $this->layout('system::layout/default');
     </div>
 
     <div class="form-group">
-        <label for="desc"><?= __('Description') ?></label>
-        <div><?= $bbcode ?></div>
-        <textarea id="desc" class="form-control" maxlength="65000" name="description" cols="24" rows="4"></textarea>
+        <?= $this->fetch(
+            'system::app/ckeditor',
+            [
+                'label'        => __('Description'),
+                'errors'       => '',
+                'value'        => '',
+                'name'         => 'description',
+                'allow_upload' => false,
+            ]
+        ) ?>
     </div>
 
     <div class="alert alert-warning mt-3">

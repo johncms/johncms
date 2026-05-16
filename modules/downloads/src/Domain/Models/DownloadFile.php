@@ -5,6 +5,10 @@ declare(strict_types=1);
 namespace Johncms\Modules\Downloads\Domain\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Johncms\Media\MediaEmbed;
+use Johncms\Security\HTMLPurifier;
+use Johncms\System\Legacy\Tools;
+use Simba77\EmbedMedia\Embed;
 
 final class DownloadFile extends Model
 {
@@ -23,4 +27,23 @@ final class DownloadFile extends Model
         'about',
         'desc',
     ];
+
+    protected \HTMLPurifier $purifier;
+    protected Embed $media;
+    protected Tools $tools;
+
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        $this->purifier = di(HTMLPurifier::class);
+        $this->media = di(MediaEmbed::class);
+        $this->tools = di(Tools::class);
+    }
+
+    public function getAboutHtmlAttribute(): string
+    {
+        $text = $this->purifier->purify((string) $this->about);
+        $text = $this->media->embedMedia($text);
+        return $this->tools->smilies($text);
+    }
 }
