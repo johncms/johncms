@@ -6,13 +6,11 @@ namespace Johncms\Modules\Library\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
-use Johncms\System\Legacy\Bbcode;
 
 final readonly class DownloadArticleController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Bbcode $bbcode,
     ) {
         $this->controllerContext->initModule('library');
     }
@@ -47,7 +45,19 @@ final readonly class DownloadArticleController
 
     private function buildTxt(LibraryText $article): string
     {
-        return $this->bbcode->notags($article->text);
+        return $this->htmlToPlainText((string) $article->text);
+    }
+
+    /**
+     * Converts article HTML to plain text, keeping paragraph breaks as new lines.
+     */
+    private function htmlToPlainText(string $html): string
+    {
+        $text = preg_replace('#</p\s*>|<br\s*/?>|</div\s*>|</h[1-6]\s*>#i', PHP_EOL, $html);
+        $text = strip_tags((string) $text);
+        $text = html_entity_decode($text, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+
+        return trim($text);
     }
 
     private function buildFb2(LibraryText $article): string
@@ -59,12 +69,15 @@ final readonly class DownloadArticleController
             $coverBase64 = chunk_split(base64_encode((string) file_get_contents($coverPath)));
         }
 
-        $text = $this->bbcode->notags($article->text);
-        $body = str_replace(
-            '<p></p>',
-            '<empty-line/>',
-            str_replace(PHP_EOL, '</p>' . PHP_EOL . '<p>', $text)
-        );
+        $plain = $this->htmlToPlainText((string) $article->text);
+        $paragraphs = preg_split('/\R+/u', $plain) ?: [];
+        $body = '';
+        foreach ($paragraphs as $paragraph) {
+            $paragraph = trim($paragraph);
+            $body .= $paragraph === ''
+                ? '<empty-line/>' . PHP_EOL
+                : '<p>' . htmlspecialchars($paragraph, ENT_XML1) . '</p>' . PHP_EOL;
+        }
 
         $out = '<?xml version="1.0" encoding="utf-8"?>' . PHP_EOL
             . '<FictionBook xmlns="http://www.gribuser.ru/xml/fictionbook/2.0" xmlns:l="http://www.w3.org/1999/xlink">' . PHP_EOL
@@ -89,7 +102,7 @@ final readonly class DownloadArticleController
             . '</document-info>' . PHP_EOL
             . '</description>' . PHP_EOL
             . '<body><title><p>' . htmlspecialchars($article->name, ENT_XML1) . '</p></title>' . PHP_EOL
-            . '<section><p>' . $body . '</p></section>' . PHP_EOL
+            . '<section>' . $body . '</section>' . PHP_EOL
             . '</body>' . PHP_EOL;
 
         if ($coverBase64) {

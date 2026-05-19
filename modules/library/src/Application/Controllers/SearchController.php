@@ -86,9 +86,10 @@ final readonly class SearchController
                 $texts = $this->repository->search($query, $inTitle, $page, $kmess);
 
                 foreach ($texts as $text) {
+                    $plainText = trim((string) preg_replace('/\s+/u', ' ', strip_tags((string) $text->text)));
                     $pos = 100;
                     foreach ($words as $word) {
-                        if (($found = mb_stripos($text->text, str_replace('*', '', $word))) !== false) {
+                        if (($found = mb_stripos($plainText, str_replace('*', '', $word))) !== false) {
                             $pos = $found;
                             break;
                         }
@@ -96,7 +97,7 @@ final readonly class SearchController
                     $pos = $pos < 100 ? 100 : $pos;
 
                     $name = $this->tools->checkout($text->name);
-                    $excerpt = $this->tools->checkout(mb_substr($text->text, $pos - 100, 400), 1);
+                    $excerpt = $this->tools->checkout(mb_substr($plainText, $pos - 100, 400));
 
                     foreach ($words as $word) {
                         if ($inTitle) {

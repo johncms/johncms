@@ -12,11 +12,10 @@ use Johncms\System\Http\Request;
 use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
+use Johncms\Modules\Library\Application\Services\ArticleTextRenderer;
 use Johncms\Modules\Library\Application\Services\Hashtags;
 use Johncms\Modules\Library\Application\Services\Rating;
 use Johncms\Modules\Library\Application\Services\Tree;
-use Johncms\Modules\Library\Application\Services\Utils;
-use PDO;
 
 final readonly class ArticleController
 {
@@ -27,7 +26,6 @@ final readonly class ArticleController
         private Request $request,
         private Tools $tools,
         private User $currentUser,
-        private PDO $db,
     ) {
         $this->controllerContext->initModule('library');
         $this->render->addFolder('libraryHelpers', MODULES_PATH . 'library/templates/helpers/');
@@ -51,22 +49,12 @@ final readonly class ArticleController
             $article->increment('count_views');
         }
 
-        $symbols    = 7000;
-        $textLength = (int) $this->db->query("SELECT CHAR_LENGTH(`text`) FROM `library_texts` WHERE `id` = $id LIMIT 1")->fetchColumn();
-        $countPages = max(1, (int) ceil($textLength / $symbols));
-        $page       = max(1, min((int) $this->request->getQuery('page', 1), $countPages));
+        $textRenderer = new ArticleTextRenderer();
+        $pages        = $textRenderer->splitIntoPages((string) $article->text);
+        $countPages   = count($pages);
+        $page         = max(1, min((int) $this->request->getQuery('page', 1), $countPages));
 
-        $offset  = $page === 1 ? 1 : ($page - 1) * $symbols;
-        $rawText = (string) $this->db->query("SELECT SUBSTRING(`text`, $offset, " . ($symbols + 100) . ") FROM `library_texts` WHERE `id` = $id")->fetchColumn();
-        $tmp     = mb_substr($rawText, $symbols, 100);
-
-        $start  = $page === 1 ? 0 : min(Utils::position($rawText, PHP_EOL), Utils::position($rawText, ' '));
-        $length = ($countPages === 1 || $page === $countPages)
-            ? $symbols
-            : $symbols + min(Utils::position($tmp, PHP_EOL), Utils::position($tmp, ' ')) - $start;
-
-        $text = $this->tools->checkout(mb_substr($rawText, $start, $length), 1, 1);
-        $text = $this->tools->smilies($text, $this->currentUser->rights ? 1 : 0);
+        $text = $textRenderer->renderPage($pages[$page - 1], $this->currentUser->rights > 0);
 
         $isAdmin   = $this->currentUser->rights > 4;
         $moderMenu = $isAdmin || ($this->currentUser->isValid() && (int) $article->uploader_id === (int) $this->currentUser->id);

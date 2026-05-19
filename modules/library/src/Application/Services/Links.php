@@ -20,6 +20,8 @@ class Links
 
     private array $in;
 
+    private array $links = [];
+
     private string $res = '';
 
     private Tools $tools;
@@ -34,7 +36,8 @@ class Links
     public function proccess(string $tpl): self|false
     {
         if ($this->in) {
-            $this->res = implode('', array_map([$this, $tpl], $this->in));
+            $this->links = array_map([$this, $tpl], $this->in);
+            $this->res   = implode('', $this->links);
 
             return $this;
         }
@@ -55,7 +58,7 @@ class Links
     public function linkSeparator(string $separator = ' | '): self|false
     {
         if ($this->in) {
-            $this->res = implode($separator, $this->res !== '' ? str_split($this->res, 1) : $this->in);
+            $this->res = implode($separator, $this->links !== [] ? $this->links : $this->in);
 
             return $this;
         }

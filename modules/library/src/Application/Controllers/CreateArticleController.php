@@ -99,7 +99,7 @@ final readonly class CreateArticleController
                 } else {
                     $errors[] = __('The file is invalid encoding, preferably UTF-8');
                 }
-                $text = trim($content);
+                $text = $this->plainTextToHtml(trim($content));
             } else {
                 $errors[] = __('Invalid file format allowed * .txt');
             }
@@ -173,7 +173,23 @@ final readonly class CreateArticleController
             'success'   => $cid !== null && empty($errors),
             'approved'  => $approved,
             'cid'       => $cid,
-            'bbcode'    => \di(\Johncms\System\Legacy\Bbcode::class)->buttons('form', 'text'),
         ]);
+    }
+
+    /**
+     * Converts a plain text file upload into simple paragraph HTML.
+     */
+    private function plainTextToHtml(string $text): string
+    {
+        $lines = preg_split('/\R/u', $text) ?: [];
+        $paragraphs = [];
+        foreach ($lines as $line) {
+            $line = trim($line);
+            if ($line !== '') {
+                $paragraphs[] = '<p>' . htmlspecialchars($line, ENT_QUOTES, 'UTF-8') . '</p>';
+            }
+        }
+
+        return implode('', $paragraphs);
     }
 }

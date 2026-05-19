@@ -91,7 +91,7 @@ final readonly class TagsController
             $list[] = [
                 'id'          => $article->id,
                 'name'        => $article->name,
-                'text'        => $this->tools->checkout($article->text_preview, 0, 2),
+                'text'        => $this->tools->checkout(strip_tags((string) $article->text_preview)),
                 'cover'       => file_exists(UPLOAD_PATH . 'library/images/small/' . $article->id . '.png'),
                 'who'         => $uploader . ' (' . $this->tools->displayDate($article->time) . ')',
                 'count_views' => $article->count_views,

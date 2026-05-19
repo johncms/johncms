@@ -9,7 +9,6 @@ use Johncms\Modules\Library\Domain\Models\LibraryCategory;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
-use Johncms\System\Legacy\Bbcode;
 use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
@@ -25,7 +24,6 @@ final readonly class EditArticleController
         private NavChain $navChain,
         private Request $request,
         private Tools $tools,
-        private Bbcode $bbcode,
         private User $currentUser,
     ) {
         $this->controllerContext->initModule('library');
@@ -90,7 +88,6 @@ final readonly class EditArticleController
             'tags'       => $tags,
             'isAdmin'    => $isAdmin,
             'saved'      => false,
-            'bbcode'     => $this->bbcode->buttons('form', 'text'),
         ]);
     }
 
