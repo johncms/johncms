@@ -10,6 +10,7 @@ Detailed change can see in the [repository log](https://github.com/johncms/johnc
 - Роутер: автоматическое обнаружение маршрутов модулей из `modules/*/config/routes.php`.
 - Загрузки: Заменен редактор BB-кодов на полноценный CKEditor в формах добавления, редактирования и импорта файлов. Добавлен конвертер `install/downloads_description_converter.php` для миграции существующих описаний из BB-кодов в HTML.
 - Библиотека: Заменен редактор BB-кодов на полноценный CKEditor при создании и редактировании статей. Добавлен конвертер `install/library_text_converter.php` для миграции существующих текстов статей из BB-кодов в HTML.
+- Комментарии (загрузки, библиотека): Заменен редактор BB-кодов на CKEditor. Добавлены конвертеры `install/downloads_comments_converter.php` и `install/library_comments_converter.php` для миграции существующих комментариев из BB-кодов в HTML.
 
 #### Fixed
 - Загрузки: Исправлена обработка путей при сканировании директорий и очистке осиротевших файлов.

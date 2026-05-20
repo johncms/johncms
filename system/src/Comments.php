@@ -13,10 +13,12 @@ declare(strict_types=1);
 namespace Johncms;
 
 use Johncms\Container\PSRContainerFactory;
+use Johncms\Media\MediaEmbed;
+use Johncms\Security\HTMLPurifier;
 use Johncms\System\Http\Environment;
 use Johncms\System\Users\User;
-use Johncms\System\Legacy\Bbcode;
 use Johncms\System\Legacy\Tools;
+use Johncms\System\Utility\EditorContentNormalizer;
 use Johncms\System\View\Render;
 use PDO;
 
@@ -54,6 +56,12 @@ class Comments
 
     /** @var Tools */
     private $tools;
+
+    /** @var HTMLPurifier */
+    private $purifier;
+
+    /** @var MediaEmbed */
+    private $embed;
 
     /** @var User */
     private $systemUser;
@@ -111,6 +119,8 @@ class Comments
         $this->systemUser = $container->get(User::class);
         $this->view = di(Render::class);
         $this->nav_chain = di(NavChain::class);
+        $this->purifier = di(HTMLPurifier::class);
+        $this->embed = di(MediaEmbed::class);
 
         $kmess = $this->systemUser->config->kmess;
 
@@ -193,7 +203,7 @@ class Comments
                                 '
                                 )->execute(
                                     [
-                                        $message['text'],
+                                        $this->purifier->purify($message['text']),
                                         serialize($attributes),
                                         $this->item,
                                     ]
@@ -216,8 +226,8 @@ class Comments
                             $data = [];
                             $text = '<a href="' . $homeurl . '/profile/?user=' . $res['user_id'] . '"><b>' . $attributes['author_name'] . '</b></a>' .
                                 ' (' . $this->tools->displayDate($res['time']) . ')<br />' .
-                                $this->tools->checkout($res['text']);
-                            $reply = $this->tools->checkout($res['reply']);
+                                $this->purifier->purify($res['text']);
+                            $reply = $res['reply'];
                             $data['message_form'] = $this->msgForm('&amp;mod=reply&amp;item=' . $this->item, $text, $reply);
 
                             $data['back_url'] = $this->url;
@@ -293,7 +303,7 @@ class Comments
                                 '
                                 )->execute(
                                     [
-                                        $message['text'] ?? '',
+                                        $this->purifier->purify($message['text'] ?? ''),
                                         serialize($attributes),
                                         $this->item,
                                     ]
@@ -315,8 +325,8 @@ class Comments
                         } else {
                             $author = '<a href="' . $homeurl . '/profile/?user=' . $res['user_id'] . '"><b>' . $attributes['author_name'] . '</b></a>';
                             $author .= ' (' . $this->tools->displayDate($res['time']) . ')<br />';
-                            $author .= $this->tools->checkout($res['text'], 1, 1);
-                            $text = $this->tools->checkout($res['text']);
+                            $author .= $this->purifier->purify($res['text']);
+                            $text = $res['text'];
                             $data = [];
                             $data['message_form'] = $this->msgForm('&amp;mod=edit&amp;item=' . $this->item, $author, $text);
                             $data['back_url'] = $this->url;
@@ -455,7 +465,8 @@ class Comments
 
                         $res['has_edit'] = ($this->access_edit || $this->access_delete);
 
-                        $text = $this->tools->checkout($res['text'], 1, 1);
+                        $text = $this->purifier->purify($res['text']);
+                        $text = $this->embed->embedMedia($text);
                         $text = $this->tools->smilies($text, $res['rights'] >= 1 ? 1 : 0);
 
                         $res['post_text'] = $text;
@@ -469,7 +480,8 @@ class Comments
 
                         $res['reply_text'] = '';
                         if (! empty($res['reply'])) {
-                            $reply = $this->tools->checkout($res['reply'], 1, 1);
+                            $reply = $this->purifier->purify($res['reply']);
+                            $reply = $this->embed->embedMedia($reply);
                             $reply = $this->tools->smilies($reply, $attributes['reply_rights'] >= 1 ? 1 : 0);
                             $res['reply_text'] = $reply;
                             $res['reply_time'] = $this->tools->displayDate($attributes['reply_time']);
@@ -540,7 +552,7 @@ class Comments
             [
                 (int) ($this->sub_id),
                 $this->systemUser->id,
-                $message,
+                $this->purifier->purify($message),
                 time(),
                 serialize($attributes),
             ]
@@ -565,8 +577,6 @@ class Comments
                 'action_url' => $this->buildUrl($submit_link),
                 'text'       => $text,
                 'reply'      => $reply,
-                'max_length' => $this->max_lenght,
-                'bb_codes'   => di(Bbcode::class)->buttons('form', 'message'),
                 'code'       => rand(1000, 9999),
             ]
         );
@@ -581,7 +591,8 @@ class Comments
     private function msgCheck(bool $rpt_check = false)
     {
         $error = [];
-        $message = isset($_POST['message']) ? mb_substr(trim($_POST['message']), 0, $this->max_lenght) : '';
+        $normalizer = new EditorContentNormalizer();
+        $message = $normalizer->trimEdgeEmptyBlocks(isset($_POST['message']) ? trim($_POST['message']) : '');
         $code = isset($_POST['code']) ? (int) ($_POST['code']) : null;
         $code_chk = $_SESSION['code'] ?? null;
 

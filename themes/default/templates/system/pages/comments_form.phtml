@@ -1,10 +1,9 @@
 <?php
 /**
- * @var string $message
- * @var string $max_length
  * @var string $action_url
  * @var string $code
- * @var string $bb_codes
+ * @var string $text
+ * @var string $reply
  */
 
 ?>
@@ -18,13 +17,16 @@
         </div>
     <?php endif; ?>
 
-    <div class="form-group">
-        <label for="message"><?= d__('system', 'Message') ?></label>
-        <div>
-            <?= $bb_codes ?>
-        </div>
-        <textarea rows="<?= $user->config->fieldHeight ?>" name="message" id="message" required class="form-control"><?= $reply ?? '' ?></textarea>
-        <div class="text-muted">Max: <?= $max_length ?></div>
-    </div>
-    <input type="submit" class="btn btn-primary" name="submit" value="<?= d__('system', 'Send') ?>"/>
+    <?= $this->fetch(
+        'system::app/ckeditor',
+        [
+            'label'        => d__('system', 'Message'),
+            'name'         => 'message',
+            'value'        => $this->e($reply ?? ''),
+            'errors'       => '',
+            'allow_upload' => false,
+        ]
+    ) ?>
+
+    <input type="submit" class="btn btn-primary mt-3" name="submit" value="<?= d__('system', 'Send') ?>"/>
 </form>
