@@ -88,4 +88,24 @@ interface MailMessageRepositoryInterface
      * @return \Illuminate\Database\Eloquent\Collection|\Johncms\Modules\Mail\Domain\Models\MailMessage[]
      */
     public function getMessagesBetween(int $userId, int $contactId): \Illuminate\Database\Eloquent\Collection;
+
+    /**
+     * Get incoming conversations grouped by sender with last message preview.
+     *
+     * @param int $userId Recipient user ID
+     * @param int $perPage Items per page
+     * @param int $page Page number
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator Paginator with conversation items
+     */
+    public function getIncomingConversations(int $userId, int $perPage, int $page): \Illuminate\Contracts\Pagination\LengthAwarePaginator;
+
+    /**
+     * Get outgoing conversations grouped by recipient with last message preview.
+     *
+     * @param int $userId Sender user ID
+     * @param int $perPage Items per page
+     * @param int $page Page number
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator Paginator with conversation items
+     */
+    public function getOutgoingConversations(int $userId, int $perPage, int $page): \Illuminate\Contracts\Pagination\LengthAwarePaginator;
 }

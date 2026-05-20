@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Mail\Infrastructure\Persistence\Repository;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Johncms\Modules\Mail\Domain\Models\MailMessage;
 use Johncms\Modules\Mail\Domain\Repository\MailMessageRepositoryInterface;
@@ -179,5 +179,19 @@ class EloquentMailMessageRepository implements MailMessageRepositoryInterface
             ->where('spam', '!=', 1)
             ->where('delete', '!=', $userId)
             ->get();
+    }
+
+    public function getIncomingConversations(int $userId, int $perPage, int $page): \Illuminate\Contracts\Pagination\LengthAwarePaginator
+    {
+        // TODO: Implement proper query
+        // Temporary implementation returning empty paginator
+        return new LengthAwarePaginator([], 0, $perPage, $page);
+    }
+
+    public function getOutgoingConversations(int $userId, int $perPage, int $page): \Illuminate\Contracts\Pagination\LengthAwarePaginator
+    {
+        // TODO: Implement proper query
+        // Temporary implementation returning empty paginator
+        return new LengthAwarePaginator([], 0, $perPage, $page);
     }
 }
