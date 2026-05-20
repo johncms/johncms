@@ -20,4 +20,21 @@ final readonly class ConversationItemDTO
         public ?string $status = null,
     ) {
     }
+
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'count_message' => $this->countMessage,
+            'display_date' => $this->displayDate,
+            'preview_text' => $this->previewText,
+            'unread' => $this->unread,
+            'write_url' => $this->writeUrl,
+            'buttons' => $this->buttons,
+            'user_is_online' => $this->userIsOnline,
+            'user_rights_name' => $this->userRightsName,
+            'status' => $this->status,
+        ];
+    }
 }

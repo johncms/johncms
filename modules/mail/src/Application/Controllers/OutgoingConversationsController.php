@@ -7,13 +7,13 @@ namespace Johncms\Modules\Mail\Application\Controllers;
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\PageMeta;
 use Johncms\Modules\Mail\Application\Services\MailLegacyRedirectResolver;
-use Johncms\Modules\Mail\Application\UseCases\GetIncomingConversationsUseCase;
+use Johncms\Modules\Mail\Application\UseCases\GetOutgoingConversationsUseCase;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 
-final readonly class IncomingConversationsController
+final readonly class OutgoingConversationsController
 {
     public function __construct(
         private ControllerContext $controllerContext,
@@ -21,7 +21,7 @@ final readonly class IncomingConversationsController
         private Request $request,
         private NavChain $navChain,
         private User $currentUser,
-        private GetIncomingConversationsUseCase $getIncomingConversationsUseCase,
+        private GetOutgoingConversationsUseCase $getOutgoingConversationsUseCase,
         private MailLegacyRedirectResolver $legacyRedirectResolver,
     ) {
         $this->controllerContext->initModule('mail');
@@ -39,11 +39,11 @@ final readonly class IncomingConversationsController
         $page = max(1, (int) $this->request->getQuery('page', 1));
         $perPage = $this->currentUser->config->kmess;
 
-        $result = $this->getIncomingConversationsUseCase->execute($page, $perPage);
+        $result = $this->getOutgoingConversationsUseCase->execute($page, $perPage);
 
-        $this->navChain->add(__('Incoming messages'), '/mail/incoming/');
+        $this->navChain->add(__('Sent messages'), '/mail/outgoing/');
 
-        $pageTitle = __('Incoming messages');
+        $pageTitle = __('Sent messages');
         $meta = new PageMeta($pageTitle, $page);
         $this->render->addData([
             'title'       => $meta->title,

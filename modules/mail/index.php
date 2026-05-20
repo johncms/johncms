@@ -13,9 +13,10 @@ declare(strict_types=1);
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
 use Johncms\System\Legacy\Tools;
-use Johncms\System\Users\User;
+use Johncms\Users\User;
 use Johncms\System\View\Render;
 use Johncms\System\i18n\Translator;
+use Johncms\Modules\Mail\Application\Services\MailLegacyRedirectResolver;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
@@ -52,6 +53,15 @@ $start = isset($_REQUEST['page'])
     ? ($page - 1) * (int) $user->config->kmess
     : (isset($_GET['start']) ? abs((int) $_GET['start']) : 0);
 
+// Redirect legacy URLs to new routes
+$legacyRedirectResolver = new \Johncms\Modules\Mail\Application\Services\MailLegacyRedirectResolver($user);
+$redirectUrl = $legacyRedirectResolver->resolve($request->getQueryParams());
+if ($redirectUrl !== null) {
+    http_response_code(301);
+    header('Location: ' . $redirectUrl);
+    exit;
+}
+
 if (isset($_SESSION['ref'])) {
     unset($_SESSION['ref']);
 }
@@ -87,13 +97,8 @@ $nav_chain->add(__('My Account'), '/profile/?act=office');
 $mods = [
     'ignor',
     'write',
-    'deluser',
     'load',
     'files',
-    'input',
-    'output',
-    'delete',
-    'index',
 ];
 
 //Проверка выбора функции

@@ -229,8 +229,44 @@ class EloquentMailMessageRepository implements MailMessageRepositoryInterface
 
     public function getOutgoingConversations(int $userId, int $perPage, int $page): \Illuminate\Contracts\Pagination\LengthAwarePaginator
     {
-        // TODO: Implement proper query
-        // Temporary implementation returning empty paginator
-        return new LengthAwarePaginator([], 0, $perPage, $page);
+        $query = DB::table('cms_mail as m')
+            ->select(['u.*', DB::raw('MAX(m.time) as last_time')])
+            ->join('users as u', 'm.from_id', '=', 'u.id')
+            ->leftJoin('cms_contact as c', function ($join) use ($userId) {
+                $join->on('c.from_id', '=', 'm.from_id')
+                    ->where('c.user_id', '=', $userId);
+            })
+            ->where('m.user_id', $userId)
+            ->where('m.delete', '!=', $userId)
+            ->where('m.sys', 0)
+            ->where(function ($q) {
+                $q->where('c.ban', '!=', 1)
+                    ->orWhereNull('c.ban');
+            })
+            ->groupBy('m.from_id', 'u.id')
+            ->orderByDesc('last_time');
+
+        $paginator = $query->paginate($perPage, ['*'], 'page', $page);
+
+        // Convert stdClass items to User models with last_time attribute
+        $userIds = collect($paginator->items())->pluck('id')->all();
+        $users = User::query()->whereIn('id', $userIds)->get()->keyBy('id');
+
+        $items = collect($paginator->items())->map(function ($row) use ($users) {
+            $user = $users[$row->id] ?? null;
+            if ($user) {
+                $user->last_time = $row->last_time;
+                return $user;
+            }
+            return null;
+        })->filter();
+
+        return new LengthAwarePaginator(
+            $items,
+            $paginator->total(),
+            $paginator->perPage(),
+            $paginator->currentPage(),
+            ['path' => LengthAwarePaginator::resolveCurrentPath()]
+        );
     }
 }

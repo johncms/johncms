@@ -67,10 +67,9 @@ final class MailLegacyRedirectResolver
             return '/mail/incoming/';
         }
 
-        // act=output -> outgoing messages (to be implemented)
+        // act=output -> outgoing messages
         if ($act === 'output') {
-            // TODO: implement outgoing controller
-            return null;
+            return '/mail/outgoing/';
         }
 
         return null;

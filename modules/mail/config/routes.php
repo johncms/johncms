@@ -9,6 +9,7 @@ use Johncms\Modules\Mail\Application\Controllers\ContactController;
 use Johncms\Modules\Mail\Application\Controllers\DeleteContactController;
 use Johncms\Modules\Mail\Application\Controllers\DeleteMessageController;
 use Johncms\Modules\Mail\Application\Controllers\IncomingConversationsController;
+use Johncms\Modules\Mail\Application\Controllers\OutgoingConversationsController;
 use Johncms\Modules\Mail\Application\Controllers\UnblockUserController;
 use Johncms\Modules\Mail\Application\Middlewares\AuthorizedUserMiddleware;
 use Johncms\Router\RouteCollection;
@@ -21,6 +22,7 @@ return static function (RouteCollection $router): void {
     $mailGroup = $router->group('', function (RouteCollection $r): void {
         $r->get('/mail/', ContactController::class)->name('mail.contacts');
         $r->get('/mail/incoming/', IncomingConversationsController::class)->name('mail.incoming');
+        $r->get('/mail/outgoing/', OutgoingConversationsController::class)->name('mail.outgoing');
         $r->get('/mail/add/{id:number}', [AddContactController::class, 'confirm'])->name('mail.add.confirm');
         $r->post('/mail/add/{id:number}', [AddContactController::class, 'add'])->name('mail.add');
         $r->get('/mail/blocklist', BlocklistIndexController::class)->name('mail.blocklist');
