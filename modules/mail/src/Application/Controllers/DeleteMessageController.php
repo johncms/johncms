@@ -31,21 +31,21 @@ final readonly class DeleteMessageController
             return $this->renderError($e->getMessage());
         }
 
-        $this->navChain->add(d__('mail', 'Messages'), '/mail/');
-        $this->navChain->add(d__('mail', 'Delete message'));
+        $this->navChain->add(__('Messages'), '/mail/');
+        $this->navChain->add(__('Delete message'));
 
         $data = [
             'form_action'     => '/mail/delete/' . $id,
-            'message'         => d__('mail', 'You really want to remove the message?'),
+            'message'         => __('You really want to remove the message?'),
             'back_url'        => $context->backUrl,
-            'submit_btn_name' => d__('mail', 'Delete'),
+            'submit_btn_name' => __('Delete'),
         ];
 
         return $this->render->render(
             'mail::confirm',
             [
-                'title'      => d__('mail', 'Deleting messages'),
-                'page_title' => d__('mail', 'Deleting messages'),
+                'title'      => __('Deleting messages'),
+                'page_title' => __('Deleting messages'),
                 'data'       => $data,
             ]
         );
@@ -62,11 +62,11 @@ final readonly class DeleteMessageController
         return $this->render->render(
             'system::pages/result',
             [
-                'title'         => d__('mail', 'Deleting messages'),
+                'title'         => __('Deleting messages'),
                 'type'          => 'alert-success',
-                'message'       => d__('mail', 'Message deleted'),
+                'message'       => __('Message deleted'),
                 'back_url'      => '/mail/',
-                'back_url_name' => d__('mail', 'Back'),
+                'back_url_name' => __('Back'),
             ]
         );
     }
@@ -76,7 +76,7 @@ final readonly class DeleteMessageController
         return $this->render->render(
             'system::pages/result',
             [
-                'title'   => d__('mail', 'Deleting messages'),
+                'title'   => __('Deleting messages'),
                 'type'    => 'alert-danger',
                 'message' => $message,
                 'back_url' => '/mail/',

@@ -27,12 +27,12 @@ final readonly class GetContactListUseCase
 
         $filters = [
             'all' => [
-                'name' => d__('mail', 'My Contacts'),
+                'name' => __('My Contacts'),
                 'url' => '/mail/',
                 'active' => true,
             ],
             'positive' => [
-                'name' => d__('mail', 'Blocklist'),
+                'name' => __('Blocklist'),
                 'url' => '/mail/blocklist',
                 'active' => false,
             ],
@@ -81,15 +81,15 @@ final readonly class GetContactListUseCase
         return [
             [
                 'url' => '?act=write&amp;id=' . $contactId,
-                'name' => d__('mail', 'Correspondence'),
+                'name' => __('Correspondence'),
             ],
             [
                 'url' => '/mail/delete-contact/' . $contactId,
-                'name' => d__('mail', 'Delete'),
+                'name' => __('Delete'),
             ],
             [
                 'url' => '/mail/block/' . $contactId,
-                'name' => d__('mail', 'Block User'),
+                'name' => __('Block User'),
             ],
         ];
     }

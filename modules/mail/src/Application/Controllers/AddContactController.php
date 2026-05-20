@@ -33,21 +33,21 @@ final readonly class AddContactController
             return $this->renderError($e->getMessage());
         }
 
-        $this->navChain->add(d__('mail', 'Contacts'), '/mail/');
-        $this->navChain->add(d__('mail', 'Add Contact'));
+        $this->navChain->add(__('Contacts'), '/mail/');
+        $this->navChain->add(__('Add Contact'));
 
         $data = [
             'form_action'     => '/mail/add/' . $id,
-            'message'         => d__('mail', 'You really want to add contact?'),
+            'message'         => __('You really want to add contact?'),
             'back_url'        => '/profile/?user=' . $id,
-            'submit_btn_name' => d__('mail', 'Add'),
+            'submit_btn_name' => __('Add'),
         ];
 
         return $this->render->render(
             'mail::confirm',
             [
-                'title'      => d__('mail', 'Add Contact'),
-                'page_title' => d__('mail', 'Add Contact'),
+                'title'      => __('Add Contact'),
+                'page_title' => __('Add Contact'),
                 'data'       => $data,
             ]
         );
@@ -64,11 +64,11 @@ final readonly class AddContactController
         return $this->render->render(
             'system::pages/result',
             [
-                'title'         => d__('mail', 'Add Contact'),
+                'title'         => __('Add Contact'),
                 'type'          => 'alert-success',
-                'message'       => d__('mail', 'User has been added to your contact list'),
+                'message'       => __('User has been added to your contact list'),
                 'back_url'      => '/mail/',
-                'back_url_name' => d__('mail', 'Continue'),
+                'back_url_name' => __('Continue'),
             ]
         );
     }
@@ -78,7 +78,7 @@ final readonly class AddContactController
         return $this->render->render(
             'system::pages/result',
             [
-                'title'   => d__('mail', 'Add Contact'),
+                'title'   => __('Add Contact'),
                 'type'    => 'alert-danger',
                 'message' => $message,
                 'back_url' => '/mail/',

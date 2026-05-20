@@ -41,9 +41,9 @@ final readonly class ContactController
 
         $result = $this->getContactListUseCase->execute($page, $perPage);
 
-        $this->navChain->add(d__('mail', 'Contacts'), '/mail/');
+        $this->navChain->add(__('Contacts'), '/mail/');
 
-        $pageTitle = d__('mail', 'Contacts');
+        $pageTitle = __('Contacts');
         $meta = new PageMeta($pageTitle, $page);
         $this->render->addData([
             'title'       => $meta->title,

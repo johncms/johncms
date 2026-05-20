@@ -31,21 +31,21 @@ final readonly class DeleteContactController
             return $this->renderError($e->getMessage());
         }
 
-        $this->navChain->add(d__('mail', 'Contacts'), '/mail/');
-        $this->navChain->add(d__('mail', 'Delete contact'));
+        $this->navChain->add(__('Contacts'), '/mail/');
+        $this->navChain->add(__('Delete contact'));
 
         $data = [
             'form_action'     => '/mail/delete-contact/' . $id,
-            'message'         => d__('mail', 'When you delete a contact is deleted and all correspondence with him.<br>Are you sure you want to delete?'),
+            'message'         => __('When you delete a contact is deleted and all correspondence with him.<br>Are you sure you want to delete?'),
             'back_url'        => $context->backUrl,
-            'submit_btn_name' => d__('mail', 'Delete'),
+            'submit_btn_name' => __('Delete'),
         ];
 
         return $this->render->render(
             'mail::confirm',
             [
-                'title'      => d__('mail', 'Delete'),
-                'page_title' => d__('mail', 'Delete'),
+                'title'      => __('Delete'),
+                'page_title' => __('Delete'),
                 'data'       => $data,
             ]
         );
@@ -62,11 +62,11 @@ final readonly class DeleteContactController
         return $this->render->render(
             'system::pages/result',
             [
-                'title'         => d__('mail', 'Delete'),
+                'title'         => __('Delete'),
                 'type'          => 'alert-success',
-                'message'       => d__('mail', 'Contact deleted'),
+                'message'       => __('Contact deleted'),
                 'back_url'      => '/mail/',
-                'back_url_name' => d__('mail', 'Back'),
+                'back_url_name' => __('Back'),
             ]
         );
     }
@@ -76,7 +76,7 @@ final readonly class DeleteContactController
         return $this->render->render(
             'system::pages/result',
             [
-                'title'   => d__('mail', 'Delete'),
+                'title'   => __('Delete'),
                 'type'    => 'alert-danger',
                 'message' => $message,
                 'back_url' => '/mail/',
