@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
+use Johncms\Modules\Registration\Application\Controllers\ConfirmEmailController;
+use Johncms\Modules\Registration\Application\Controllers\RegistrationController;
 use Johncms\Router\RouteCollection;
-use Johncms\System\Users\User;
 
-return static function (RouteCollection $router, User $user): void {
-    $router->map(['GET', 'POST'], '/registration', 'modules/registration/index.php')->name('registration.index');
+return static function (RouteCollection $router): void {
+    $router->map(['GET', 'POST'], '/registration', RegistrationController::class)->name('registration.index');
+    $router->get('/registration/confirm-email', ConfirmEmailController::class)->name('registration.confirm_email');
 };
