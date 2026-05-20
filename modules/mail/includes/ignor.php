@@ -54,7 +54,7 @@ if (isset($_GET['del'])) {
             );
         } else {
             $data = [
-                'form_action'     => '?act=ignor&amp;id=' . $id . '&amp;del',
+                'form_action'     => '/mail/unblock/' . $id,
                 'message'         => __('You really want to unblock contact?'),
                 'back_url'        => '/profile/?user=' . $id,
                 'submit_btn_name' => __('Unblock'),
@@ -141,7 +141,7 @@ if (isset($_GET['del'])) {
             }
         } else {
             $data = [
-                'form_action'     => '?act=ignor&amp;id=' . $id . '&amp;add',
+                'form_action'     => '/mail/block/' . $id,
                 'message'         => __('You really want to block contact?'),
                 'back_url'        => (isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : './'),
                 'submit_btn_name' => __('Block'),
@@ -216,11 +216,11 @@ if (isset($_GET['del'])) {
                     'name' => __('Correspondence'),
                 ],
                 [
-                    'url'  => '?act=deluser&amp;id=' . $row['id'],
+                    'url'  => '/mail/delete-contact/' . $row['id'],
                     'name' => __('Delete'),
                 ],
                 [
-                    'url'  => '?act=ignor&amp;id=' . $row['id'] . '&amp;del',
+                    'url'  => '/mail/unblock/' . $row['id'],
                     'name' => __('Unblock'),
                 ],
             ];

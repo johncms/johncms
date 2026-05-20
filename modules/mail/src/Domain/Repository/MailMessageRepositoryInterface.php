@@ -79,4 +79,13 @@ interface MailMessageRepositoryInterface
      * @return int
      */
     public function countNewMessagesFrom(int $userId, int $contactId): int;
+
+    /**
+     * Get all messages between two users (excluding system/spam).
+     *
+     * @param int $userId First user ID
+     * @param int $contactId Second user ID
+     * @return \Illuminate\Database\Eloquent\Collection|\Johncms\Modules\Mail\Domain\Models\MailMessage[]
+     */
+    public function getMessagesBetween(int $userId, int $contactId): \Illuminate\Database\Eloquent\Collection;
 }

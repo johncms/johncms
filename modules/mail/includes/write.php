@@ -495,7 +495,7 @@ if ($id) {
                 ];
             }
             $row['browser'] = htmlspecialchars($row['browser']);
-            $row['delete_url'] = '?act=delete&amp;id=' . $row['mid'];
+            $row['delete_url'] = '/mail/delete/' . $row['mid'];
 
             $items[] = $row;
         }

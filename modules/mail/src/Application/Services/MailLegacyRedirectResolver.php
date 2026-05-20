@@ -46,6 +46,22 @@ final class MailLegacyRedirectResolver
         // act=ignor with id (without add) -> maybe unblock? but legacy doesn't have separate unblock page
         // We'll ignore for now
 
+        // act=delete -> delete message
+        if ($act === 'delete' && isset($query['id'])) {
+            $id = (int) $query['id'];
+            if ($id > 0) {
+                return '/mail/delete/' . $id;
+            }
+        }
+
+        // act=deluser -> delete contact
+        if ($act === 'deluser' && isset($query['id'])) {
+            $id = (int) $query['id'];
+            if ($id > 0) {
+                return '/mail/delete-contact/' . $id;
+            }
+        }
+
         return null;
     }
 }

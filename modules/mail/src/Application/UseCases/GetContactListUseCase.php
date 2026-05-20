@@ -84,11 +84,11 @@ final readonly class GetContactListUseCase
                 'name' => d__('mail', 'Correspondence'),
             ],
             [
-                'url' => '?act=deluser&amp;id=' . $contactId,
+                'url' => '/mail/delete-contact/' . $contactId,
                 'name' => d__('mail', 'Delete'),
             ],
             [
-                'url' => '?act=ignor&amp;id=' . $contactId . '&amp;add',
+                'url' => '/mail/block/' . $contactId,
                 'name' => d__('mail', 'Block User'),
             ],
         ];

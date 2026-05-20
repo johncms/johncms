@@ -163,4 +163,21 @@ class EloquentMailMessageRepository implements MailMessageRepositoryInterface
             ->where('delete', '!=', $userId)
             ->count();
     }
+
+    public function getMessagesBetween(int $userId, int $contactId): \Illuminate\Database\Eloquent\Collection
+    {
+        return MailMessage::query()
+            ->where(function (\Illuminate\Database\Eloquent\Builder $query) use ($userId, $contactId) {
+                $query->where('user_id', $userId)
+                    ->where('from_id', $contactId);
+            })
+            ->orWhere(function (\Illuminate\Database\Eloquent\Builder $query) use ($userId, $contactId) {
+                $query->where('user_id', $contactId)
+                    ->where('from_id', $userId);
+            })
+            ->where('sys', '!=', 1)
+            ->where('spam', '!=', 1)
+            ->where('delete', '!=', $userId)
+            ->get();
+    }
 }

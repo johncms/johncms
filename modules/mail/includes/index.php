@@ -130,11 +130,11 @@ if ($id) {
                     'name' => __('Correspondence'),
                 ],
                 [
-                    'url'  => '?act=deluser&amp;id=' . $row['id'],
+                    'url'  => '/mail/delete-contact/' . $row['id'],
                     'name' => __('Delete'),
                 ],
                 [
-                    'url'  => '?act=ignor&amp;id=' . $row['id'] . '&amp;add',
+                    'url'  => '/mail/block/' . $row['id'],
                     'name' => __('Block User'),
                 ],
             ];
