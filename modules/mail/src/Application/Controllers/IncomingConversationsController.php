@@ -55,7 +55,7 @@ final readonly class IncomingConversationsController
             'mail::conversations',
             [
                 'data' => [
-                    'items' => $result->items,
+                    'items' => $result->items->map(fn ($item) => (array) $item)->all(),
                     'total' => $result->total,
                     'pagination' => $result->pagination,
                     'back_url' => $result->backUrl,
