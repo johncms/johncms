@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
+use Johncms\Modules\Login\Application\Controllers\LoginController;
+use Johncms\Modules\Login\Application\Controllers\LogoutController;
 use Johncms\Router\RouteCollection;
-use Johncms\System\Users\User;
 
-return static function (RouteCollection $router, User $user): void {
-    $router->map(['GET', 'POST'], '/login', 'modules/login/index.php')->name('login.index');
+return static function (RouteCollection $router): void {
+    $router->map(['GET', 'POST'], '/login', LoginController::class)->name('login.index');
+    $router->map(['GET', 'POST'], '/logout', LogoutController::class)->name('login.logout');
 };

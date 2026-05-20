@@ -95,6 +95,7 @@
             "Johncms\\Modules\\Library\\": "modules/library/src/",
             "Johncms\\Modules\\Mail\\": "modules/mail/src/",
             "Johncms\\Modules\\Language\\": "modules/language/src/",
+            "Johncms\\Modules\\Login\\": "modules/login/src/",
             "Library\\": "modules/library/classes/"
         }
     },
