@@ -56,7 +56,6 @@ if (! $isHomePage && ! empty($baseTitle) && $baseTitle !== (string) $config['cop
     <link rel="mask-icon" href="<?= $this->asset('images/icon.svg') ?>" color="#586776">
     <link rel="manifest" href="<?= $this->asset('site.webmanifest') ?>">
     <?= $this->section('styles', '') ?>
-    <link rel="alternate" type="application/rss+xml" title="RSS News" href="<?= $config['homeurl'] ?>/rss/">
     <title><?= $this->e($documentTitle) ?></title>
 </head>
 <body class="<?= $theme->getCurrentTheme() ?>">

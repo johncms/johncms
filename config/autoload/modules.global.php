@@ -28,7 +28,6 @@ return [
             'profile',
             'redirect',
             'registration',
-            'rss',
         ],
         'system_modules'    => [
             'admin',
