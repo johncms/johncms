@@ -8,7 +8,9 @@
  * @link      https://johncms.com JohnCMS Project
  */
 
-namespace Redirect\Install;
+declare(strict_types=1);
+
+namespace Johncms\Modules\Redirect\Install;
 
 class Installer extends \Johncms\Modules\Installer
 {

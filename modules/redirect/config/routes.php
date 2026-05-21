@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
+use Johncms\Modules\Redirect\Application\Controllers\RedirectController;
 use Johncms\Router\RouteCollection;
-use Johncms\System\Users\User;
 
-return static function (RouteCollection $router, User $user): void {
-    $router->map(['GET', 'POST'], '/redirect', 'modules/redirect/index.php')->name('redirect.index');
+return static function (RouteCollection $router): void {
+    $router->map(['GET', 'POST'], '/redirect', RedirectController::class)->name('redirect.index');
 };
