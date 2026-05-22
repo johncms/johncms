@@ -53,6 +53,7 @@ final readonly class LibraryIndexController
             $i++;
             $list[] = [
                 'id'                    => $section->id,
+                'url'                   => $section->url,
                 'name'                  => $this->tools->checkout($section->name),
                 'dir'                   => $section->dir,
                 'description'           => $section->description ? $this->tools->checkout($section->description) : null,

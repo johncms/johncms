@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Johncms\Modules\Library\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Modules\Library\Application\Services\LibraryCategoryPathService;
+use Johncms\Modules\Library\Application\Services\LibrarySlugService;
 use Johncms\Modules\Library\Domain\Models\LibraryCategory;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
@@ -19,6 +21,8 @@ final readonly class CreateSectionController
         private NavChain $navChain,
         private Request $request,
         private User $currentUser,
+        private LibrarySlugService $slugService,
+        private LibraryCategoryPathService $categoryPathService,
     ) {
         $this->controllerContext->initModule('library');
     }
@@ -69,11 +73,13 @@ final readonly class CreateSectionController
             ]);
         }
 
-        $pos = (int) LibraryCategory::query()->max('id') + 1;
+        $pos  = (int) LibraryCategory::query()->max('id') + 1;
+        $slug = $this->slugService->generateCategorySlug($name, $parentId);
 
         LibraryCategory::query()->create([
             'parent'      => $parentId,
             'name'        => $name,
+            'slug'        => $slug,
             'description' => trim((string) ($post['description'] ?? '')),
             'dir'         => (int) ($post['type'] ?? 0),
             'pos'         => $pos,
@@ -84,10 +90,15 @@ final readonly class CreateSectionController
 
     private function renderForm(int $parentId, string $formUrl, bool $created): string
     {
+        $parentUrl = $parentId > 0
+            ? $this->categoryPathService->getCategoryUrlById($parentId) ?? '/library/'
+            : '/library/';
+
         return $this->render->render('library::section_create', [
-            'form_url'  => $formUrl,
-            'parent_id' => $parentId,
-            'created'   => $created,
+            'form_url'   => $formUrl,
+            'parent_id'  => $parentId,
+            'parent_url' => $parentUrl,
+            'created'    => $created,
         ]);
     }
 }

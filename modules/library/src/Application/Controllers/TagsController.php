@@ -72,7 +72,7 @@ final readonly class TagsController
         $ids = array_slice($articleIds, ($page - 1) * $kmess, $kmess);
 
         $articles = LibraryText::query()
-            ->selectRaw('`id`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `comm_count`, `comments`, SUBSTRING(`text`, 1, 200) as `text_preview`')
+            ->selectRaw('`id`, `cat_id`, `slug`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `comm_count`, `comments`, SUBSTRING(`text`, 1, 200) as `text_preview`')
             ->whereIn('id', $ids)
             ->get()
             ->keyBy('id');
@@ -90,6 +90,7 @@ final readonly class TagsController
             $tags      = (new Hashtags($article->id))->getAllStatTags(1);
             $list[] = [
                 'id'          => $article->id,
+                'url'         => $article->url,
                 'name'        => $article->name,
                 'text'        => $this->tools->checkout(strip_tags((string) $article->text_preview)),
                 'cover'       => file_exists(UPLOAD_PATH . 'library/images/small/' . $article->id . '.png'),

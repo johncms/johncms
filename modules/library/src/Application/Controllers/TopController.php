@@ -73,6 +73,7 @@ final readonly class TopController
 
             $items[] = [
                 'id'          => $text->id,
+                'url'         => $text->url,
                 'name'        => $this->tools->checkout($text->name),
                 'announce'    => $this->tools->checkout($text->announce, 0, 0),
                 'cover'       => file_exists(UPLOAD_PATH . 'library/images/small/' . $text->id . '.png'),
@@ -80,6 +81,7 @@ final readonly class TopController
                 'ratingView'  => $rate->viewRate(1),
                 'who'         => $uploader . ' (' . $this->tools->displayDate($text->time) . ')',
                 'cat_id'      => $text->cat_id,
+                'cat_url'     => $category ? $category->url : '/library/',
                 'cat_name'    => $category ? $this->tools->checkout($category->name) : '',
                 'comments'    => $text->comments,
                 'comm_count'  => $text->comm_count,

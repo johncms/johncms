@@ -13,7 +13,7 @@ $this->layout('system::layout/default');
 <?php if ($created) : ?>
     <?= $this->fetch('system::app/alert', ['alert_type' => 'alert-success', 'alert' => __('Section created')]) ?>
     <div class="mt-3">
-        <a href="<?= $parent_id ? '/library/section/' . $parent_id : '/library/' ?>"><?= __('To Section') ?></a>
+        <a href="<?= $parent_url ?>"><?= __('To Section') ?></a>
     </div>
 <?php else : ?>
     <form action="<?= $form_url ?>" method="post">

@@ -52,7 +52,7 @@ final readonly class DeleteArticleController
         $dirNav = new Tree($article->cat_id);
         $dirNav->processNavPanel();
         $dirNav->printNavPanel();
-        $this->navChain->add($this->tools->checkout($article->name), '/library/?id=' . $id);
+        $this->navChain->add($this->tools->checkout($article->name), $article->url);
         $this->navChain->add(__('Delete Article'));
 
         $this->render->addData([
@@ -69,9 +69,10 @@ final readonly class DeleteArticleController
         }
 
         return $this->render->render('library::delete_article', [
-            'id'      => $id,
-            'name'    => $article->name,
-            'deleted' => $deleted,
+            'id'          => $id,
+            'article_url' => $article->url,
+            'name'        => $article->name,
+            'deleted'     => $deleted,
         ]);
     }
 }

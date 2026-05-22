@@ -6,6 +6,9 @@ namespace Johncms\Modules\Library\Application\Controllers;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Modules\Library\Application\Services\LibraryArticlePathService;
+use Johncms\Modules\Library\Application\Services\LibraryCategoryPathService;
+use Johncms\Modules\Library\Application\Services\LibrarySlugService;
 use Johncms\Modules\Library\Domain\Models\LibraryCategory;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
@@ -25,6 +28,9 @@ final readonly class CreateArticleController
         private Request $request,
         private Tools $tools,
         private User $currentUser,
+        private LibrarySlugService $slugService,
+        private LibraryArticlePathService $articlePathService,
+        private LibraryCategoryPathService $categoryPathService,
     ) {
         $this->controllerContext->initModule('library');
     }
@@ -61,7 +67,7 @@ final readonly class CreateArticleController
             return $this->handlePost($catId, $isAdmin, $formUrl);
         }
 
-        return $this->renderForm($catId, $formUrl, '', '', '', '', [], false, null);
+        return $this->renderForm($catId, $formUrl, '', '', '', '', [], false, null, null);
     }
 
     private function handlePost(int $catId, bool $isAdmin, string $formUrl): string
@@ -114,9 +120,12 @@ final readonly class CreateArticleController
             return $this->renderForm($catId, $formUrl, $name, $announce, (string) ($post['text'] ?? ''), $tag, $errors, false, null);
         }
 
+        $slug = $this->slugService->generateArticleSlug($name, $catId);
+
         $article = LibraryText::query()->create([
             'cat_id'      => $catId,
             'name'        => $name,
+            'slug'        => $slug,
             'announce'    => $announce,
             'text'        => $text,
             'uploader'    => $this->currentUser->name,
@@ -148,7 +157,9 @@ final readonly class CreateArticleController
 
         Capsule::table('users')->where('id', $this->currentUser->id)->update(['lastpost' => time()]);
 
-        return $this->renderForm($catId, $formUrl, '', '', '', '', $errors, $isAdmin, $cid);
+        $articleUrl = $cid !== null ? $this->articlePathService->getArticleUrlById($cid) : null;
+
+        return $this->renderForm($catId, $formUrl, '', '', '', '', $errors, $isAdmin, $cid, $articleUrl);
     }
 
     private function renderForm(
@@ -161,18 +172,23 @@ final readonly class CreateArticleController
         array $errors,
         bool $approved,
         ?int $cid,
+        ?string $articleUrl,
     ): string {
+        $catUrl = $this->categoryPathService->getCategoryUrlById($catId) ?? '/library/';
+
         return $this->render->render('library::article_create', [
-            'form_url'  => $formUrl,
-            'cat_id'    => $catId,
-            'name'      => $name,
-            'announce'  => $announce,
-            'text'      => $text,
-            'tag'       => $tag,
-            'errors'    => $errors,
-            'success'   => $cid !== null && empty($errors),
-            'approved'  => $approved,
-            'cid'       => $cid,
+            'form_url'    => $formUrl,
+            'cat_id'      => $catId,
+            'cat_url'     => $catUrl,
+            'name'        => $name,
+            'announce'    => $announce,
+            'text'        => $text,
+            'tag'         => $tag,
+            'errors'      => $errors,
+            'success'     => $cid !== null && empty($errors),
+            'approved'    => $approved,
+            'cid'         => $cid,
+            'article_url' => $articleUrl,
         ]);
     }
 

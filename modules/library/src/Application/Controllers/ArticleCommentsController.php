@@ -7,6 +7,7 @@ namespace Johncms\Modules\Library\Application\Controllers;
 use Johncms\Comments;
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\PageMeta;
+use Johncms\Modules\Library\Application\Services\LibraryArticlePathService;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
@@ -24,6 +25,7 @@ final readonly class ArticleCommentsController
         private Request $request,
         private Tools $tools,
         private User $currentUser,
+        private LibraryArticlePathService $articlePathService,
     ) {
         $this->controllerContext->initModule('library');
     }
@@ -64,7 +66,8 @@ final readonly class ArticleCommentsController
             : $article->name;
         $documentTitle = $this->tools->checkout($shortName) . ' — ' . __('Comments') . ' — ' . __('Library');
 
-        $this->navChain->add($articleName, '/library/?id=' . $id);
+        $articleUrl = $this->articlePathService->getArticleUrlById($id) ?? '/library/';
+        $this->navChain->add($articleName, $articleUrl);
         $this->navChain->add(__('Comments'));
 
         global $mod, $start;
@@ -88,7 +91,7 @@ final readonly class ArticleCommentsController
             'owner_edit'     => false,
             'title'          => $meta->title,
             'page_title'     => __('Comments'),
-            'back_url'       => '/library/?id=' . $id,
+            'back_url'       => $articleUrl,
         ]);
         $output = (string) ob_get_clean();
 

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Library\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\PageMeta;
+use Johncms\Modules\Library\Application\Services\LibraryCategoryPathService;
 use Johncms\Modules\Library\Domain\Models\LibraryCategory;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
@@ -22,20 +22,18 @@ use Johncms\Modules\Library\Application\Services\ViewHelper;
 final readonly class SectionController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private Render $render,
         private NavChain $navChain,
         private Request $request,
         private Tools $tools,
         private User $currentUser,
+        private LibraryCategoryPathService $categoryPathService,
     ) {
-        $this->controllerContext->initModule('library');
-        $this->render->addFolder('libraryHelpers', MODULES_PATH . 'library/templates/helpers/');
     }
 
-    public function __invoke(int $id): string
+    public function __invoke(string $categoryPath): string
     {
-        $category = LibraryCategory::query()->find($id);
+        $category = $this->categoryPathService->findCategoryByPath($categoryPath);
 
         if ($category === null) {
             http_response_code(404);
@@ -46,6 +44,8 @@ final readonly class SectionController
             ]);
         }
 
+        $id = $category->id;
+
         $this->navChain->add(__('Library'), '/library/');
         $dirNav = new Tree($id);
         $dirNav->processNavPanel();
@@ -54,22 +54,23 @@ final readonly class SectionController
         $isAdmin = $this->currentUser->rights > 4;
 
         if ($category->dir) {
-            return $this->renderSectionsList($id, $category->name, $isAdmin);
+            return $this->renderSectionsList($category, $isAdmin);
         }
 
-        return $this->renderBookList($id, $category, $isAdmin);
+        return $this->renderBookList($category, $isAdmin);
     }
 
-    private function renderSectionsList(int $id, string $name, bool $isAdmin): string
+    private function renderSectionsList(LibraryCategory $category, bool $isAdmin): string
     {
+        $id    = $category->id;
         $page  = max(1, (int) $this->request->getQuery('page', 1));
         $kmess = $this->currentUser->config->kmess;
         $total = LibraryCategory::query()->where('parent', $id)->count();
 
-        $meta = new PageMeta($name . ' — ' . __('Library'), $page);
+        $meta = new PageMeta($category->name . ' — ' . __('Library'), $page);
         $this->render->addData([
             'title'      => $meta->title,
-            'page_title' => $name,
+            'page_title' => $category->name,
         ]);
 
         $offset   = ($page - 1) * $kmess;
@@ -86,6 +87,7 @@ final readonly class SectionController
             $i++;
             $list[] = [
                 'id'                    => $section->id,
+                'url'                   => $section->url,
                 'name'                  => $this->tools->checkout($section->name),
                 'description'           => $section->description ? $this->tools->checkout($section->description) : null,
                 'libCounter'            => Utils::libCounter($section->id, $section->dir),
@@ -94,16 +96,18 @@ final readonly class SectionController
         }
 
         return $this->render->render('library::sectionslist', [
-            'total'      => $total,
-            'admin'      => $isAdmin,
-            'id'         => $id,
-            'list'       => $list,
-            'pagination' => $this->tools->displayPagination('/library/section/' . $id . '?', $offset, $total, $kmess),
+            'total'        => $total,
+            'admin'        => $isAdmin,
+            'id'           => $id,
+            'category_url' => $category->url,
+            'list'         => $list,
+            'pagination'   => $this->tools->displayPagination($category->url . '?', $offset, $total, $kmess),
         ]);
     }
 
-    private function renderBookList(int $id, LibraryCategory $category, bool $isAdmin): string
+    private function renderBookList(LibraryCategory $category, bool $isAdmin): string
     {
+        $id    = $category->id;
         $page  = max(1, (int) $this->request->getQuery('page', 1));
         $kmess = $this->currentUser->config->kmess;
         $total = LibraryText::query()->where('cat_id', $id)->where('premod', 1)->count();
@@ -118,7 +122,7 @@ final readonly class SectionController
         $offset    = ($page - 1) * $kmess;
 
         $articles = LibraryText::query()
-            ->select(['id', 'name', 'time', 'uploader', 'uploader_id', 'count_views', 'comm_count', 'comments', 'announce'])
+            ->select(['id', 'cat_id', 'slug', 'name', 'time', 'uploader', 'uploader_id', 'count_views', 'comm_count', 'comments', 'announce'])
             ->where('cat_id', $id)
             ->where('premod', 1)
             ->orderByDesc('id')
@@ -135,6 +139,7 @@ final readonly class SectionController
             $rate = new Rating($article->id);
             $list[] = [
                 'id'         => $article->id,
+                'url'        => $article->url,
                 'name'       => $article->name,
                 'announce'   => $this->tools->checkout($article->announce, 0, 0),
                 'who'        => $uploader . '&nbsp;(' . $this->tools->displayDate($article->time) . ')',
@@ -148,8 +153,9 @@ final readonly class SectionController
             'admin'      => $isAdmin,
             'moderMenu'  => $moderMenu,
             'id'         => $id,
+            'category_url' => $category->url,
             'list'       => $list,
-            'pagination' => $this->tools->displayPagination('/library/section/' . $id . '?', $offset, $total, $kmess),
+            'pagination' => $this->tools->displayPagination($category->url . '?', $offset, $total, $kmess),
         ]);
     }
 }

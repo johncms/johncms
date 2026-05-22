@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Library\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\PageMeta;
+use Johncms\Modules\Library\Application\Services\LibraryArticlePathService;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
@@ -20,19 +20,23 @@ use Johncms\Modules\Library\Application\Services\Tree;
 final readonly class ArticleController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private Render $render,
         private NavChain $navChain,
         private Request $request,
         private Tools $tools,
         private User $currentUser,
+        private LibraryArticlePathService $articlePathService,
     ) {
-        $this->controllerContext->initModule('library');
-        $this->render->addFolder('libraryHelpers', MODULES_PATH . 'library/templates/helpers/');
     }
 
-    public function __invoke(int $id): string
+    public function __invoke(string $libraryPath): string
     {
+        $parsed = $this->articlePathService->parseArticlePath('/library/' . ltrim($libraryPath, '/'));
+        if ($parsed === null) {
+            pageNotFound();
+        }
+
+        $id = $parsed['articleId'];
         $article = LibraryText::query()->find($id);
 
         if ($article === null || (! $article->premod && ! ($this->currentUser->rights > 4))) {
@@ -93,9 +97,12 @@ final readonly class ArticleController
             $cover = file_exists(UPLOAD_PATH . 'library/images/big/' . $id . '.png');
         }
 
+        $articleUrl = $article->url;
+
         return $this->render->render('library::book', [
             'res'         => [
                 'id'          => $article->id,
+                'url'         => $articleUrl,
                 'text'        => $text,
                 'name'        => $pageTitle,
                 'count_views' => $article->count_views,
@@ -110,7 +117,7 @@ final readonly class ArticleController
             'ratingView'  => $ratingView,
             'cover'       => $cover,
             'moderMenu'   => $moderMenu,
-            'pagination'  => $this->tools->displayPagination('/library/article/' . $id . '?', $page - 1, $countPages, 1),
+            'pagination'  => $this->tools->displayPagination($articleUrl . '?', $page - 1, $countPages, 1),
         ]);
     }
 }

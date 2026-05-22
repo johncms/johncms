@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Library\Domain\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Johncms\Modules\Library\Application\Services\LibraryArticlePathService;
 
 class LibraryText extends Model
 {
@@ -15,6 +16,7 @@ class LibraryText extends Model
     protected $fillable = [
         'cat_id',
         'name',
+        'slug',
         'announce',
         'text',
         'uploader',
@@ -23,4 +25,9 @@ class LibraryText extends Model
         'comments',
         'time',
     ];
+
+    public function getUrlAttribute(): string
+    {
+        return di(LibraryArticlePathService::class)->getArticleUrl($this);
+    }
 }

@@ -24,7 +24,7 @@ $this->layout('system::layout/default');
     <?php foreach ($articles as $article) : ?>
         <div class="card mb-3 shadow border-0">
             <div class="card-body">
-                <a href="/library/article/<?= $article['id'] ?>" class="card-title h3"><?= $this->e($article['name']) ?></a>
+                <a href="<?= $article['url'] ?>" class="card-title h3"><?= $this->e($article['name']) ?></a>
                 <div class="text-muted small d-flex align-items-center flex-wrap mt-1">
                     <div class="me-2">
                         <span><?= __('Author:') ?></span><?= $article['who'] ?>

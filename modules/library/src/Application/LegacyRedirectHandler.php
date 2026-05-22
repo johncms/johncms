@@ -4,12 +4,17 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Library\Application;
 
+use Johncms\Modules\Library\Application\Services\LibraryArticlePathService;
+use Johncms\Modules\Library\Application\Services\LibraryCategoryPathService;
 use Johncms\System\Http\Request;
 
 final readonly class LegacyRedirectHandler
 {
-    public function __construct(private Request $request)
-    {
+    public function __construct(
+        private Request $request,
+        private LibraryCategoryPathService $categoryPathService,
+        private LibraryArticlePathService $articlePathService,
+    ) {
     }
 
     public function handle(): void
@@ -29,12 +34,14 @@ final readonly class LegacyRedirectHandler
         }
 
         if ($id > 0 && $do === 'dir') {
-            header('Location: /library/section/' . $id, true, 301);
+            $url = $this->categoryPathService->getCategoryUrlById($id) ?? '/library/';
+            header('Location: ' . $url, true, 301);
             exit;
         }
 
         if ($id > 0 && $do === '') {
-            header('Location: /library/article/' . $id, true, 301);
+            $url = $this->articlePathService->getArticleUrlById($id) ?? '/library/';
+            header('Location: ' . $url, true, 301);
             exit;
         }
 

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Library\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Modules\Library\Application\Services\LibrarySlugService;
 use Johncms\Modules\Library\Domain\Models\LibraryCategory;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
@@ -25,6 +26,7 @@ final readonly class EditArticleController
         private Request $request,
         private Tools $tools,
         private User $currentUser,
+        private LibrarySlugService $slugService,
     ) {
         $this->controllerContext->initModule('library');
     }
@@ -59,7 +61,7 @@ final readonly class EditArticleController
         $dirNav = new Tree($article->cat_id);
         $dirNav->processNavPanel();
         $dirNav->printNavPanel();
-        $this->navChain->add($this->tools->checkout($article->name), '/library/?id=' . $id);
+        $this->navChain->add($this->tools->checkout($article->name), $article->url);
         $this->navChain->add(__('Edit Article'));
 
         $this->render->addData([
@@ -69,9 +71,11 @@ final readonly class EditArticleController
 
         if ($this->request->getMethod() === 'POST') {
             $this->save($id, $article, $isAdmin);
+            $article->refresh();
             return $this->render->render('library::edit_article', [
-                'id'    => $id,
-                'saved' => true,
+                'id'          => $id,
+                'article_url' => $article->url,
+                'saved'       => true,
             ]);
         }
 
@@ -82,12 +86,13 @@ final readonly class EditArticleController
         $tags = (new Hashtags($id))->getAllStatTags() ?: '';
 
         return $this->render->render('library::edit_article', [
-            'id'         => $id,
-            'article'    => $article,
-            'categories' => $categories,
-            'tags'       => $tags,
-            'isAdmin'    => $isAdmin,
-            'saved'      => false,
+            'id'          => $id,
+            'article_url' => $article->url,
+            'article'     => $article,
+            'categories'  => $categories,
+            'tags'        => $tags,
+            'isAdmin'     => $isAdmin,
+            'saved'       => false,
         ]);
     }
 
@@ -114,9 +119,17 @@ final readonly class EditArticleController
             }
         }
 
-        $fields = [
-            'name' => mb_substr(trim((string) ($post['name'] ?? '')), 0, 100),
-        ];
+        $newName  = mb_substr(trim((string) ($post['name'] ?? '')), 0, 100);
+        $newCatId = isset($post['move']) ? (int) $post['move'] : (int) $article->cat_id;
+
+        $nameChanged = $newName !== $article->name;
+        $catChanged  = $newCatId !== (int) $article->cat_id;
+
+        $fields = ['name' => $newName];
+
+        if ($nameChanged || $catChanged) {
+            $fields['slug'] = $this->slugService->generateArticleSlug($newName, $newCatId, $id);
+        }
 
         if (($post['text'] ?? '') !== 'do_not_change') {
             $fields['text'] = trim((string) ($post['text'] ?? ''));
@@ -126,8 +139,8 @@ final readonly class EditArticleController
             $fields['announce'] = mb_substr(trim((string) $post['announce']), 0, 500);
         }
 
-        if (isset($post['move'])) {
-            $fields['cat_id'] = (int) $post['move'];
+        if ($catChanged) {
+            $fields['cat_id'] = $newCatId;
         }
 
         if ($isAdmin) {

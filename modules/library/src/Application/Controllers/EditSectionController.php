@@ -6,6 +6,8 @@ namespace Johncms\Modules\Library\Application\Controllers;
 
 use Illuminate\Database\Eloquent\Collection;
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Modules\Library\Application\Services\LibraryCategoryPathService;
+use Johncms\Modules\Library\Application\Services\LibrarySlugService;
 use Johncms\Modules\Library\Domain\Models\LibraryCategory;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
@@ -22,6 +24,8 @@ final readonly class EditSectionController
         private NavChain $navChain,
         private Request $request,
         private User $currentUser,
+        private LibrarySlugService $slugService,
+        private LibraryCategoryPathService $categoryPathService,
     ) {
         $this->controllerContext->initModule('library');
     }
@@ -62,8 +66,9 @@ final readonly class EditSectionController
         if ($this->request->getMethod() === 'POST') {
             $this->save($id, $category);
             return $this->render->render('library::edit_section', [
-                'id'    => $id,
-                'saved' => true,
+                'id'           => $id,
+                'category_url' => $category->url,
+                'saved'        => true,
             ]);
         }
 
@@ -74,6 +79,7 @@ final readonly class EditSectionController
 
         return $this->render->render('library::edit_section', [
             'id'             => $id,
+            'category_url'   => $category->url,
             'category'       => $category,
             'isEmpty'        => $isEmpty,
             'parentSections' => $parentSections,
@@ -85,10 +91,22 @@ final readonly class EditSectionController
     {
         $post = $this->request->getParsedBody();
 
+        $newName     = mb_substr(trim((string) ($post['name'] ?? '')), 0, 100);
+        $newParentId = isset($post['move']) && LibraryCategory::query()->count() > 1
+            ? (int) $post['move']
+            : (int) $category->parent;
+
         $fields = [
-            'name'        => mb_substr(trim((string) ($post['name'] ?? '')), 0, 100),
+            'name'        => $newName,
             'description' => trim((string) ($post['description'] ?? '')),
         ];
+
+        $nameChanged   = $newName !== $category->name;
+        $parentChanged = $newParentId !== (int) $category->parent;
+
+        if ($nameChanged || $parentChanged) {
+            $fields['slug'] = $this->slugService->generateCategorySlug($newName, $newParentId, $id);
+        }
 
         $isEmpty = ! LibraryCategory::query()->where('parent', $id)->exists()
             && ! LibraryText::query()->where('cat_id', $id)->exists();
@@ -101,8 +119,8 @@ final readonly class EditSectionController
             $fields['user_add'] = (int) $post['user_add'];
         }
 
-        if (isset($post['move']) && LibraryCategory::query()->count() > 1) {
-            $fields['parent'] = (int) $post['move'];
+        if ($parentChanged) {
+            $fields['parent'] = $newParentId;
         }
 
         $category->update($fields);

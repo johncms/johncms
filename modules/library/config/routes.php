@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Johncms\Modules\Library\Application\Controllers\ArticleCommentsController;
 use Johncms\Modules\Library\Application\Controllers\ArticleController;
 use Johncms\Modules\Library\Application\Controllers\LibraryIndexController;
+use Johncms\Modules\Library\Application\Controllers\LibraryPathController;
 use Johncms\Modules\Library\Application\Controllers\MoveSectionController;
 use Johncms\Modules\Library\Application\Controllers\SectionController;
 use Johncms\Modules\Library\Application\Controllers\PremodController;
@@ -44,8 +45,9 @@ return static function (RouteCollection $router): void {
         $r->map(['GET', 'POST'], '/library/section/{id:number}/delete', DeleteSectionController::class)->name('library.section.delete');
 
         $r->get('/library', LibraryIndexController::class)->name('library.index');
-        $r->get('/library/section/{id:number}', SectionController::class)->name('library.section');
-        $r->map(['GET', 'POST'], '/library/article/{id:number}', ArticleController::class)->name('library.article');
+        $r->map(['GET', 'POST'], '/library/{libraryPath}', LibraryPathController::class)
+            ->name('library.path')
+            ->requirements(['libraryPath' => '[a-z0-9\\-/]+']);
     })
         ->addMiddleware(LibraryAccessMiddleware::class);
 };

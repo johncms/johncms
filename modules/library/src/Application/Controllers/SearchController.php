@@ -113,6 +113,7 @@ final readonly class SearchController
 
                     $items[] = [
                         'id'          => $text->id,
+                        'url'         => $text->url,
                         'name'        => $name,
                         'text'        => $excerpt,
                         'author'      => $author,

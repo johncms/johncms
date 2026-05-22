@@ -75,7 +75,7 @@ final readonly class PremodController
         $offset = ($page - 1) * $kmess;
 
         $articles = LibraryText::query()
-            ->select(['id', 'name', 'time', 'uploader', 'uploader_id', 'cat_id'])
+            ->select(['id', 'cat_id', 'slug', 'name', 'time', 'uploader', 'uploader_id'])
             ->where('premod', 0)
             ->orderByDesc('time')
             ->offset($offset)
@@ -88,9 +88,10 @@ final readonly class PremodController
                 ? '<a href="' . config('johncms')['homeurl'] . '/profile/?user=' . $article->uploader_id . '">' . $this->tools->checkout($article->uploader) . '</a>'
                 : $this->tools->checkout($article->uploader);
             $articleData[] = [
-                'id'  => $article->id,
+                'id'   => $article->id,
+                'url'  => $article->url,
                 'name' => $article->name,
-                'who' => $uploader . ' (' . $this->tools->displayDate($article->time) . ')',
+                'who'  => $uploader . ' (' . $this->tools->displayDate($article->time) . ')',
             ];
         }
 
