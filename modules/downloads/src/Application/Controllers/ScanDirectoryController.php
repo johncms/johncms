@@ -6,6 +6,7 @@ namespace Johncms\Modules\Downloads\Application\Controllers;
 
 use Johncms\FileInfo;
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Modules\Downloads\Application\Services\DownloadCategoryPathService;
 use Johncms\Modules\Downloads\Domain\Models\DownloadBookmark;
 use Johncms\Modules\Downloads\Domain\Models\DownloadCategory;
 use Johncms\Modules\Downloads\Domain\Models\DownloadComment;
@@ -26,6 +27,7 @@ final readonly class ScanDirectoryController
         private Request $request,
         private NavChain $navChain,
         private User $currentUser,
+        private DownloadCategoryPathService $categoryPathService,
     ) {
         $this->controllerContext->initModule('downloads');
     }
@@ -104,11 +106,15 @@ final readonly class ScanDirectoryController
             $category->update(['total' => $count]);
         });
 
+        $backUrl = $id > 0
+            ? ($this->categoryPathService->getCategoryUrlById($id) ?? '/downloads/')
+            : '/downloads/';
+
         return $this->render->render('system::pages/result', [
             'title'         => __('Remove missing files'),
             'type'          => 'alert-success',
             'message'       => __('Database successfully updated'),
-            'back_url'      => '/downloads/' . ($id ? '?id=' . $id : ''),
+            'back_url'      => $backUrl,
             'back_url_name' => __('Back'),
         ]);
     }
@@ -154,12 +160,16 @@ final readonly class ScanDirectoryController
             $selectMode = false;
         }
 
+        $backUrl = isset($category)
+            ? $this->categoryPathService->getCategoryUrl($category)
+            : '/downloads/';
+
         return $this->render->render('downloads::scan_dir', [
             'id'           => $id,
             'urls'         => ['downloads' => '/downloads/'],
             'updated_info' => $updatedInfo,
             'select_mode'  => $selectMode,
-            'back_url'     => '/downloads/' . ($id ? '?id=' . $id : ''),
+            'back_url'     => $backUrl,
             'back_name'    => __('Back'),
         ]);
     }

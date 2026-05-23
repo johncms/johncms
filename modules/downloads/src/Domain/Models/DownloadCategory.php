@@ -10,5 +10,5 @@ final class DownloadCategory extends Model
 {
     protected $table = 'download__category';
     public $timestamps = false;
-    protected $fillable = ['refid', 'dir', 'sort', 'name', 'desc', 'field', 'text', 'rus_name', 'total'];
+    protected $fillable = ['refid', 'dir', 'sort', 'name', 'slug', 'desc', 'field', 'text', 'rus_name', 'total'];
 }

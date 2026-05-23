@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\PageMeta;
 use Johncms\Modules\Downloads\Application\FilePresenter;
 use Johncms\Modules\Downloads\Application\Services\DownloadCategoryPathService;
-use Johncms\Modules\Downloads\Application\Services\DownloadLegacyRedirectResolver;
 use Johncms\Modules\Downloads\Domain\Models\DownloadCategory;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\NavChain;
@@ -16,41 +15,41 @@ use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 
-final readonly class IndexController
+final readonly class DownloadCategoryController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private Render $render,
         private Request $request,
         private NavChain $navChain,
         private Tools $tools,
         private User $currentUser,
         private FilePresenter $filePresenter,
-        private DownloadLegacyRedirectResolver $legacyRedirectResolver,
         private DownloadCategoryPathService $categoryPathService,
     ) {
-        $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(): string
+    public function __invoke(string $categoryPath): string
     {
-        $redirect = $this->legacyRedirectResolver->resolve($this->request->getQueryParams());
-        if ($redirect !== null) {
-            http_response_code(301);
-            header('Location: ' . $redirect);
-            exit;
+        $category = $this->categoryPathService->findCategoryByPath($categoryPath);
+        if ($category === null) {
+            pageNotFound();
         }
 
         $page = max(1, (int) $this->request->getQuery('page', 1));
         $kmess = $this->currentUser->config->kmess;
 
         $this->navChain->add(__('Downloads'), '/downloads/');
+        $this->buildNavChain($category);
 
-        $title = __('Downloads');
+        $title = $category->rus_name;
+        $meta = new PageMeta($title, $page);
         $this->render->addData([
-            'title'      => $title,
-            'page_title' => $title,
+            'title'       => $meta->title,
+            'page_title'  => $title,
+            'description' => $meta->description,
         ]);
+
+        $canUpload = (bool) $category->field && $this->currentUser->isValid();
 
         $old = time() - 259200;
         $GLOBALS['old'] = $old;
@@ -58,19 +57,22 @@ final readonly class IndexController
         $totalNew = DownloadFile::query()
             ->where('type', 2)
             ->where('time', '>', $old)
+            ->where('dir', 'like', $category->dir . '%')
             ->count();
+
+        $categoryUrl = $this->categoryPathService->getCategoryUrl($category);
 
         $urls = [
             'downloads'   => '/downloads/',
-            'new'         => $totalNew > 0 ? '/downloads/new/' : '',
-            'sort_action' => '',
+            'new'         => $totalNew > 0 ? '/downloads/new/?dir=' . urlencode($category->dir) : '',
+            'sort_action' => $categoryUrl,
         ];
 
-        $totalCat = DownloadCategory::query()->where('refid', 0)->count();
+        $totalCat = DownloadCategory::query()->where('refid', $category->id)->count();
         $categories = [];
         if ($totalCat > 0) {
             $hasEdit = $this->currentUser->rights === 4 || $this->currentUser->rights >= 6;
-            DownloadCategory::query()->where('refid', 0)->orderBy('sort')->each(
+            DownloadCategory::query()->where('refid', $category->id)->orderBy('sort')->each(
                 function (DownloadCategory $cat) use (&$categories, $hasEdit): void {
                     $categories[] = [
                         'id'         => $cat->id,
@@ -90,7 +92,7 @@ final readonly class IndexController
             );
         }
 
-        $totalFiles = DownloadFile::query()->where('refid', 0)->where('type', '<', 3)->count();
+        $totalFiles = DownloadFile::query()->where('refid', $category->id)->where('type', '<', 3)->count();
         $files = [];
 
         if ($totalFiles > 0) {
@@ -117,7 +119,7 @@ final readonly class IndexController
             $sortDir = ($_SESSION['sort_down2'] ?? 0) ? 'asc' : 'desc';
 
             $rows = DownloadFile::query()
-                ->where('refid', 0)
+                ->where('refid', $category->id)
                 ->where('type', '<', 3)
                 ->orderBy('type')
                 ->orderBy($sortColumn, $sortDir)
@@ -131,10 +133,10 @@ final readonly class IndexController
         }
 
         return $this->render->render('downloads::index', [
-            'id'          => 0,
+            'id'          => $category->id,
             'urls'        => $urls,
             'pagination'  => $this->tools->displayPagination(
-                '/downloads/?',
+                $categoryUrl . '?',
                 ($page - 1) * $kmess,
                 $totalFiles,
                 $kmess
@@ -144,7 +146,25 @@ final readonly class IndexController
             'total_new'   => $totalNew,
             'categories'  => $categories,
             'total_cat'   => $totalCat,
-            'can_upload'  => false,
+            'can_upload'  => $canUpload,
         ]);
+    }
+
+    private function buildNavChain(DownloadCategory $category): void
+    {
+        $ancestors = [];
+        $current = $category;
+        while ($current->refid > 0) {
+            $parent = DownloadCategory::query()->find($current->refid);
+            if ($parent === null) {
+                break;
+            }
+            $ancestors[] = $parent;
+            $current = $parent;
+        }
+        foreach (array_reverse($ancestors) as $ancestor) {
+            $this->navChain->add(htmlspecialchars($ancestor->rus_name), $this->categoryPathService->getCategoryUrl($ancestor));
+        }
+        $this->navChain->add(htmlspecialchars($category->rus_name));
     }
 }

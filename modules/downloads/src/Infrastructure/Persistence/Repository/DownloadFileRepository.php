@@ -22,7 +22,7 @@ final class DownloadFileRepository implements DownloadFileRepositoryInterface
     {
         $threshold = time() - self::NEW_FILES_THRESHOLD_SECONDS;
 
-        $query = DownloadFile::query()->where('type', 2)->where('time', '>', $threshold);
+        $query = DownloadFile::query()->with('category')->where('type', 2)->where('time', '>', $threshold);
 
         if ($directoryPrefix !== null) {
             $query->where('dir', 'like', $directoryPrefix . '%');
@@ -34,6 +34,7 @@ final class DownloadFileRepository implements DownloadFileRepositoryInterface
     public function getTopFiles(DownloadTopSort $sort, int $limit): Collection
     {
         return DownloadFile::query()
+            ->with('category')
             ->where('type', 2)
             ->orderByDesc($sort->column())
             ->limit($limit)
@@ -46,6 +47,7 @@ final class DownloadFileRepository implements DownloadFileRepositoryInterface
         $column = $searchInDescription ? 'about' : 'rus_name';
 
         return DownloadFile::query()
+            ->with('category')
             ->where('type', 2)
             ->where($column, 'like', $like)
             ->orderBy('rus_name')
@@ -86,6 +88,7 @@ final class DownloadFileRepository implements DownloadFileRepositoryInterface
     public function paginateUserFiles(int $userId, int $page, int $perPage): LengthAwarePaginator
     {
         return DownloadFile::query()
+            ->with('category')
             ->where('type', 2)
             ->where('user_id', $userId)
             ->orderByDesc('time')
@@ -95,6 +98,7 @@ final class DownloadFileRepository implements DownloadFileRepositoryInterface
     public function paginateFavorites(int $userId, int $page, int $perPage): LengthAwarePaginator
     {
         return DownloadFile::query()
+            ->with('category')
             ->join('download__bookmark', 'download__files.id', '=', 'download__bookmark.file_id')
             ->where('download__bookmark.user_id', $userId)
             ->select('download__files.*', 'download__bookmark.id as bid')
@@ -122,6 +126,23 @@ final class DownloadFileRepository implements DownloadFileRepositoryInterface
         return DownloadFile::query()
             ->whereIn('type', [2, 3])
             ->find($id);
+    }
+
+    public function findFileWithCategory(int $id): ?DownloadFile
+    {
+        return DownloadFile::query()
+            ->with('category')
+            ->whereIn('type', [2, 3])
+            ->find($id);
+    }
+
+    public function existsByCategoryAndSlug(int $categoryId, string $slug, ?int $excludeFileId = null): bool
+    {
+        return DownloadFile::query()
+            ->where('refid', $categoryId)
+            ->where('slug', $slug)
+            ->when($excludeFileId !== null, fn ($q) => $q->where('id', '!=', $excludeFileId))
+            ->exists();
     }
 
     public function findAdditionalFiles(int $fileId): Collection

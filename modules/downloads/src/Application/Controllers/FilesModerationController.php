@@ -96,7 +96,7 @@ final readonly class FilesModerationController
                 ->get();
 
             foreach ($rows as $file) {
-                $row = $this->filePresenter->present($file->toArray());
+                $row = $this->filePresenter->present($file);
                 $row['accept_url'] = '/downloads/moderation?accept=' . $file->id;
                 $row['delete_url'] = '/downloads/delete-file/' . $file->id . '/';
                 $files[] = $row;

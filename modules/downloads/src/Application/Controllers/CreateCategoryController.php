@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Modules\Downloads\Application\Services\DownloadCategoryPathService;
+use Johncms\Modules\Downloads\Application\Services\DownloadSlugService;
 use Johncms\Modules\Downloads\Domain\Models\DownloadCategory;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
@@ -26,6 +28,8 @@ final readonly class CreateCategoryController
         private Request $request,
         private NavChain $navChain,
         private User $currentUser,
+        private DownloadSlugService $slugService,
+        private DownloadCategoryPathService $categoryPathService,
     ) {
         $this->controllerContext->initModule('downloads');
     }
@@ -42,6 +46,7 @@ final readonly class CreateCategoryController
             'page_title' => __('Create Folder'),
         ]);
 
+        $parentCategory = null;
         if ($refid > 0) {
             $parentCategory = DownloadCategory::query()->find($refid);
             if ($parentCategory === null || ! is_dir($parentCategory->dir)) {
@@ -59,6 +64,10 @@ final readonly class CreateCategoryController
             $baseDir = 'upload/downloads/files';
         }
 
+        $cancelUrl = $parentCategory !== null
+            ? $this->categoryPathService->getCategoryUrl($parentCategory)
+            : '/downloads/';
+
         $baseUrl = '/downloads/categories/create' . ($refid ? '?refid=' . $refid : '');
 
         if ($this->request->getMethod() === 'POST') {
@@ -68,6 +77,7 @@ final readonly class CreateCategoryController
         return $this->render->render('downloads::folder_form', [
             'id'            => $refid,
             'action_url'    => $baseUrl,
+            'cancel_url'    => $cancelUrl,
             'extensions'    => implode(', ', self::DEFAULT_EXTENSIONS),
             'edit_form'     => false,
             'folder_params' => ['name' => '', 'rus_name' => '', 'desc' => '', 'user_down' => '', 'format' => ''],
@@ -130,11 +140,14 @@ final readonly class CreateCategoryController
 
         chmod($dir, 0777);
 
+        $slug = $this->slugService->generateUniqueCategorySlug($rusName, $refid);
+
         $category = DownloadCategory::query()->create([
             'refid'    => $refid,
             'dir'      => $dir,
             'sort'     => time(),
             'name'     => $name,
+            'slug'     => $slug,
             'desc'     => $desc,
             'field'    => $userDown,
             'text'     => $format,
@@ -145,7 +158,7 @@ final readonly class CreateCategoryController
             'title'         => __('Create Folder'),
             'type'          => 'alert-success',
             'message'       => __('The Folder is created'),
-            'back_url'      => '/downloads/?id=' . $category->id,
+            'back_url'      => $this->categoryPathService->getCategoryUrl($category),
             'back_url_name' => __('Continue'),
         ]);
     }

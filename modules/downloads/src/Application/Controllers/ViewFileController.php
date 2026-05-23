@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Downloads\Application\FilePresenter;
 use Johncms\Modules\Downloads\Application\Services\CategoryNavService;
+use Johncms\Modules\Downloads\Application\Services\DownloadCategoryPathService;
+use Johncms\Modules\Downloads\Application\Services\DownloadFilePathService;
+use Johncms\Modules\Downloads\Domain\Models\DownloadCategory;
 use Johncms\Modules\Downloads\Domain\Services\ScreenService;
 use Johncms\Http\PageMeta;
 use Johncms\Modules\Downloads\Application\Exceptions\FileNotFoundException;
@@ -23,7 +25,6 @@ use Johncms\Users\User;
 final readonly class ViewFileController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private Render $render,
         private Request $request,
         private NavChain $navChain,
@@ -35,12 +36,20 @@ final readonly class ViewFileController
         private FileMediaInfoService $mediaInfoService,
         private FilePresenter $filePresenter,
         private CategoryNavService $categoryNavService,
+        private DownloadFilePathService $filePathService,
+        private DownloadCategoryPathService $categoryPathService,
     ) {
-        $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(int $id): string
+    public function __invoke(string $filePath): string
     {
+        $parsed = $this->filePathService->parseFilePath('/downloads/' . ltrim($filePath, '/'));
+        if ($parsed === null) {
+            pageNotFound();
+        }
+
+        $id = $parsed['fileId'];
+
         try {
             $result = $this->viewFileUseCase->execute($id);
         } catch (FileNotFoundException) {
@@ -58,6 +67,24 @@ final readonly class ViewFileController
         }
 
         $file = $result->file;
+        $canonicalFileSlug = $this->filePathService->getFileSlug($file);
+        if ($canonicalFileSlug !== $parsed['fileSlug']) {
+            pageNotFound();
+        }
+
+        if ((int) $file->refid === 0) {
+            if ($parsed['categoryPath'] !== '') {
+                pageNotFound();
+            }
+        } else {
+            $file->loadMissing('category');
+            if ($file->category !== null) {
+                $canonicalCatPath = $this->categoryPathService->getCategoryPath($file->category);
+                if ($canonicalCatPath !== $parsed['categoryPath']) {
+                    pageNotFound();
+                }
+            }
+        }
 
         if (! is_file($file->dir . '/' . $file->name)) {
             http_response_code(404);
@@ -118,7 +145,11 @@ final readonly class ViewFileController
 
         // Breadcrumbs
         $this->navChain->add(__('Downloads'), '/downloads/');
-        $this->categoryNavService->buildForFileDir($file->dir);
+        if ($file->category !== null) {
+            $this->buildCategoryNavChain($file->category);
+        } else {
+            $this->categoryNavService->buildForFileDir($file->dir);
+        }
         $this->navChain->add($file->rus_name);
 
         // File display data
@@ -164,18 +195,41 @@ final readonly class ViewFileController
             'description' => $meta->description,
         ]);
 
+        $fileUrl = $this->filePathService->getFileUrl($file);
+
         return $this->render->render(
             'downloads::view',
             [
                 'id'           => $id,
+                'file_url'     => $fileUrl,
                 'file'         => $fileData,
                 'in_bookmarks' => $inBookmarks,
                 'urls'         => [
                     'downloads' => '/downloads/',
-                    'back'      => '/downloads/?id=' . $file->refid,
+                    'back'      => $file->category !== null
+                        ? $this->categoryPathService->getCategoryUrl($file->category)
+                        : '/downloads/',
                 ],
             ]
         );
+    }
+
+    private function buildCategoryNavChain(DownloadCategory $category): void
+    {
+        $ancestors = [];
+        $current = $category;
+        while ($current->refid > 0) {
+            $parent = DownloadCategory::query()->find($current->refid);
+            if ($parent === null) {
+                break;
+            }
+            $ancestors[] = $parent;
+            $current = $parent;
+        }
+        foreach (array_reverse($ancestors) as $ancestor) {
+            $this->navChain->add(htmlspecialchars($ancestor->rus_name), $this->categoryPathService->getCategoryUrl($ancestor));
+        }
+        $this->navChain->add(htmlspecialchars($category->rus_name), $this->categoryPathService->getCategoryUrl($category));
     }
 
     private function buildDownloadLink(

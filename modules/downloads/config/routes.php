@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Johncms\Modules\Downloads\Application\Controllers\AdditionalFilesController;
+use Johncms\Modules\Downloads\Application\Controllers\DownloadPathController;
 use Johncms\Modules\Downloads\Application\Controllers\IndexController;
 use Johncms\Modules\Downloads\Application\Controllers\CreateCategoryController;
 use Johncms\Modules\Downloads\Application\Controllers\DeleteCategoryController;
@@ -25,7 +26,6 @@ use Johncms\Modules\Downloads\Application\Controllers\SearchController;
 use Johncms\Modules\Downloads\Application\Controllers\TopFilesController;
 use Johncms\Modules\Downloads\Application\Controllers\TopUsersController;
 use Johncms\Modules\Downloads\Application\Controllers\UserFilesController;
-use Johncms\Modules\Downloads\Application\Controllers\ViewFileController;
 use Johncms\Modules\Downloads\Application\Middlewares\DownloadsAccessMiddleware;
 use Johncms\Modules\Downloads\Application\Middlewares\DownloadsAdminMiddleware;
 use Johncms\Router\RouteCollection;
@@ -40,7 +40,6 @@ return static function (RouteCollection $router): void {
         $r->get('/downloads/search', SearchController::class)->name('downloads.search');
         $r->get('/downloads/top-users', TopUsersController::class)->name('downloads.top_users');
         $r->get('/downloads/user-files/{id:number}', UserFilesController::class)->name('downloads.user_files');
-        $r->get('/downloads/files/{id:number}', ViewFileController::class)->name('downloads.view_file');
         $r->get('/downloads/load/{id:number}', LoadFileController::class)->name('downloads.load_file');
         $r->map(['GET', 'POST'], '/downloads/comments/{id:number}', FileCommentsController::class)->name('downloads.file_comments');
         $r->map(['GET', 'POST'], '/downloads/upload/{id:number}', FilesUploadController::class)->name('downloads.upload');
@@ -65,4 +64,10 @@ return static function (RouteCollection $router): void {
     })
         ->addMiddleware(DownloadsAccessMiddleware::class)
         ->addMiddleware(DownloadsAdminMiddleware::class);
+
+    // Slug-based catch-all — must be registered last so specific routes take priority
+    $router->group('', function (RouteCollection $r): void {
+        $r->map(['GET', 'POST'], '/downloads/{categoryPath}', DownloadPathController::class)->name('downloads.path')->requirements(['categoryPath' => '[a-z0-9\\-/]+']);
+    })
+        ->addMiddleware(DownloadsAccessMiddleware::class);
 };

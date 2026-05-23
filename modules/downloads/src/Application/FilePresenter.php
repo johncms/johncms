@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Downloads\Application;
 
+use Johncms\Modules\Downloads\Application\Services\DownloadFilePathService;
+use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\System\View\Extension\Assets;
 use Johncms\Users\User;
 
@@ -29,40 +31,42 @@ final class FilePresenter
     public function __construct(
         private Assets $assets,
         private User $currentUser,
+        private DownloadFilePathService $filePathService,
     ) {
     }
 
-    public function present(array $file, bool $withRating = false): array
+    public function present(DownloadFile $file, bool $withRating = false): array
     {
         $old = $GLOBALS['old'] ?? 0;
         $config = config('johncms');
-        $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
+        $extension = pathinfo($file->name, PATHINFO_EXTENSION);
         $iconId = self::EXTENSIONS[$extension] ?? 9;
 
-        $file['icon'] = $this->assets->url('images/old/system/' . $iconId . '.png');
-        $file['detail_url'] = '/downloads/files/' . $file['id'] . '/';
-        $file['filtered_name'] = htmlspecialchars($file['rus_name']);
-        $file['is_new'] = $file['time'] > $old;
+        $data = $file->toArray();
+        $data['icon'] = $this->assets->url('images/old/system/' . $iconId . '.png');
+        $data['detail_url'] = $this->filePathService->getFileUrl($file);
+        $data['filtered_name'] = htmlspecialchars($file->rus_name);
+        $data['is_new'] = $file->time > $old;
 
-        $file['rating'] = [];
+        $data['rating'] = [];
         if ($withRating) {
-            $parts = explode('|', $file['rate']);
-            $file['rating']['plus'] = $parts[0];
-            $file['rating']['minus'] = $parts[1];
+            $parts = explode('|', $file->rate);
+            $data['rating']['plus'] = $parts[0];
+            $data['rating']['minus'] = $parts[1];
         }
 
-        $file['preview_text'] = '';
-        if ($file['about']) {
-            $about = html_entity_decode(strip_tags((string) $file['about']));
-            $file['preview_text'] = htmlentities(mb_strimwidth($about, 0, 94, '...'));
+        $data['preview_text'] = '';
+        if ($file->about) {
+            $about = html_entity_decode(strip_tags((string) $file->about));
+            $data['preview_text'] = htmlentities(mb_strimwidth($about, 0, 94, '...'));
         }
 
-        $file['comments_url'] = '';
+        $data['comments_url'] = '';
         if ($config['mod_down_comm'] || $this->currentUser->rights >= 7) {
-            $file['comments_url'] = '/downloads/comments/' . $file['id'];
+            $data['comments_url'] = '/downloads/comments/' . $file->id;
         }
 
-        return $file;
+        return $data;
     }
 
     public static function formatFileSize(int|float $size): string

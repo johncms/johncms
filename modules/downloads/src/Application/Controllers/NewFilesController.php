@@ -52,7 +52,7 @@ final readonly class NewFilesController
 
         $files = [];
         foreach ($result->files as $file) {
-            $files[] = $this->filePresenter->present($file->toArray());
+            $files[] = $this->filePresenter->present($file);
         }
 
         $this->navChain->add(__('Downloads'), '/downloads/');

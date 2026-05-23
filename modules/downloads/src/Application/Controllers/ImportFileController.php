@@ -7,6 +7,8 @@ namespace Johncms\Modules\Downloads\Application\Controllers;
 use Exception;
 use Intervention\Image\ImageManager;
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Modules\Downloads\Application\Services\DownloadCategoryPathService;
+use Johncms\Modules\Downloads\Application\Services\DownloadFilePathService;
 use Johncms\Modules\Downloads\Domain\Models\DownloadCategory;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\System\Http\Request;
@@ -28,6 +30,8 @@ final readonly class ImportFileController
         private Request $request,
         private User $currentUser,
         private ImageManager $imageManager,
+        private DownloadFilePathService $filePathService,
+        private DownloadCategoryPathService $categoryPathService,
     ) {
         $this->controllerContext->initModule('downloads');
     }
@@ -63,6 +67,7 @@ final readonly class ImportFileController
         return $this->render->render('downloads::import', [
             'id'         => $id,
             'action_url' => $baseUrl,
+            'cancel_url' => $this->categoryPathService->getCategoryUrl($category),
             'extensions' => implode(', ', $allowedExtensions),
         ]);
     }
@@ -178,7 +183,10 @@ final readonly class ImportFileController
 
         return $this->render->render('downloads::file_import_result', [
             'id'                    => $id,
-            'urls'                  => ['view_file_url' => '/downloads/files/' . $file->id . '/'],
+            'urls'                  => [
+                'view_file_url' => $this->filePathService->getFileUrl($file),
+                'category_url'  => $this->categoryPathService->getCategoryUrl($category),
+            ],
             'screen_attached'       => $screenAttached,
             'screen_attached_error' => $screenError,
         ]);

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Modules\Downloads\Application\Services\DownloadCategoryPathService;
 use Johncms\Modules\Downloads\Application\UseCases\DeleteCategoryUseCase;
 use Johncms\Modules\Downloads\Domain\Models\DownloadCategory;
 use Johncms\NavChain;
@@ -19,6 +20,7 @@ final readonly class DeleteCategoryController
         private Request $request,
         private NavChain $navChain,
         private DeleteCategoryUseCase $deleteCategoryUseCase,
+        private DownloadCategoryPathService $categoryPathService,
     ) {
         $this->controllerContext->initModule('downloads');
     }
@@ -60,14 +62,17 @@ final readonly class DeleteCategoryController
         if ($this->request->getMethod() === 'POST') {
             $refid = (int) $category->refid;
             $this->deleteCategoryUseCase->execute($category);
-            header('Location: /downloads/?id=' . $refid);
+            $redirectUrl = $refid > 0
+                ? ($this->categoryPathService->getCategoryUrlById($refid) ?? '/downloads/')
+                : '/downloads/';
+            header('Location: ' . $redirectUrl);
             exit;
         }
 
         return $this->render->render('downloads::folder_delete', [
             'folder_name' => htmlspecialchars($category->rus_name),
             'action_url'  => '/downloads/categories/' . $id . '/delete',
-            'back_url'    => '/downloads/?id=' . $id,
+            'back_url'    => $this->categoryPathService->getCategoryUrl($category),
         ]);
     }
 }

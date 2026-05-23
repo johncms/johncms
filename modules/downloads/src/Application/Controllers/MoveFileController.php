@@ -6,6 +6,7 @@ namespace Johncms\Modules\Downloads\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Downloads\Application\Services\CategoryNavService;
+use Johncms\Modules\Downloads\Application\Services\DownloadFilePathService;
 use Johncms\Modules\Downloads\Application\UseCases\MoveFileUseCase;
 use Johncms\Modules\Downloads\Domain\Models\DownloadCategory;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
@@ -24,6 +25,7 @@ final readonly class MoveFileController
         private User $currentUser,
         private MoveFileUseCase $moveFileUseCase,
         private CategoryNavService $categoryNavService,
+        private DownloadFilePathService $filePathService,
     ) {
         $this->controllerContext->initModule('downloads');
     }
@@ -45,7 +47,7 @@ final readonly class MoveFileController
 
         $this->navChain->add(__('Downloads'), '/downloads/');
         $this->categoryNavService->buildForFileDir($file->dir);
-        $this->navChain->add(htmlspecialchars($file->rus_name), '/downloads/files/' . $id . '/');
+        $this->navChain->add(htmlspecialchars($file->rus_name), $this->filePathService->getFileUrl($file));
         $this->navChain->add(__('Move File'));
 
         $baseUrl = '/downloads/move-file/' . $id . '/';
@@ -92,7 +94,7 @@ final readonly class MoveFileController
         return $this->render->render('downloads::move_file', [
             'id'       => $id,
             'sections' => $sections,
-            'back_url' => '/downloads/files/' . $id . '/',
+            'back_url' => $this->filePathService->getFileUrl($file),
             'urls'     => ['move_to_current_url' => $moveToCurrentUrl],
         ]);
     }
@@ -130,7 +132,7 @@ final readonly class MoveFileController
         return $this->render->render('downloads::move_file_confirm', [
             'id'         => $id,
             'action_url' => $baseUrl . '?catId=' . $catId . '&do=transfer&yes',
-            'back_url'   => '/downloads/files/' . $id . '/',
+            'back_url'   => $this->filePathService->getFileUrl($file),
         ]);
     }
 

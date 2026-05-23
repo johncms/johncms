@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Modules\Downloads\Application\Services\DownloadCategoryPathService;
+use Johncms\Modules\Downloads\Application\Services\DownloadSlugService;
 use Johncms\Modules\Downloads\Domain\Models\DownloadCategory;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
@@ -26,6 +28,8 @@ final readonly class EditCategoryController
         private Request $request,
         private NavChain $navChain,
         private User $currentUser,
+        private DownloadSlugService $slugService,
+        private DownloadCategoryPathService $categoryPathService,
     ) {
         $this->controllerContext->initModule('downloads');
     }
@@ -80,7 +84,10 @@ final readonly class EditCategoryController
             $sibling->save();
         }
 
-        header('Location: /downloads/?id=' . $category->refid);
+        $backUrl = $category->refid > 0
+            ? ($this->categoryPathService->getCategoryUrlById((int) $category->refid) ?? '/downloads/')
+            : '/downloads/';
+        header('Location: ' . $backUrl);
         exit;
     }
 
@@ -119,14 +126,17 @@ final readonly class EditCategoryController
             ]);
         }
 
+        $slug = $this->slugService->generateUniqueCategorySlug($rusName, (int) $category->refid, $id);
+
         $category->update([
             'field'    => $userDown,
             'text'     => $format,
             'desc'     => $desc,
             'rus_name' => $rusName,
+            'slug'     => $slug,
         ]);
 
-        header('Location: /downloads/?id=' . $id);
+        header('Location: ' . $this->categoryPathService->getCategoryUrl($category));
         exit;
     }
 
@@ -135,6 +145,7 @@ final readonly class EditCategoryController
         return $this->render->render('downloads::folder_form', [
             'id'            => $id,
             'action_url'    => '/downloads/categories/' . $id . '/edit',
+            'cancel_url'    => $this->categoryPathService->getCategoryUrl($category),
             'extensions'    => implode(', ', self::DEFAULT_EXTENSIONS),
             'edit_form'     => true,
             'folder_params' => [

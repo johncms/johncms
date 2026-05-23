@@ -7,6 +7,7 @@ namespace Johncms\Modules\Downloads\Application\Controllers;
 use Johncms\FileInfo;
 use Johncms\Modules\Downloads\Application\FilePresenter;
 use Johncms\Modules\Downloads\Application\Services\CategoryNavService;
+use Johncms\Modules\Downloads\Application\Services\DownloadFilePathService;
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\Modules\Downloads\Domain\Models\DownloadMoreFile;
@@ -33,6 +34,7 @@ final readonly class AdditionalFilesController
         private NavChain $navChain,
         private Tools $tools,
         private CategoryNavService $categoryNavService,
+        private DownloadFilePathService $filePathService,
     ) {
         $this->controllerContext->initModule('downloads');
     }
@@ -50,7 +52,7 @@ final readonly class AdditionalFilesController
 
         $this->navChain->add(__('Downloads'), '/downloads/');
         $this->categoryNavService->buildForFileDir($file->dir);
-        $this->navChain->add(htmlspecialchars($file->rus_name), '/downloads/files/' . $id . '/');
+        $this->navChain->add(htmlspecialchars($file->rus_name), $this->filePathService->getFileUrl($file));
         $this->navChain->add(__('Additional files'));
 
         $baseUrl = '/downloads/additional-files/' . $id . '/';
@@ -98,6 +100,7 @@ final readonly class AdditionalFilesController
             'additional_files' => $additionalFiles,
             'action_url'       => $baseUrl,
             'extensions'       => implode(', ', self::DEFAULT_EXTENSIONS),
+            'file_url'         => $this->filePathService->getFileUrl($file),
         ]);
     }
 
@@ -268,7 +271,7 @@ final readonly class AdditionalFilesController
                         'title'         => __('File attached'),
                         'type'          => 'alert-success',
                         'message'       => __('File attached'),
-                        'back_url'      => '/downloads/files/' . $id . '/',
+                        'back_url'      => $this->filePathService->getFileUrl($file),
                         'back_url_name' => __('Back'),
                     ]);
                 }

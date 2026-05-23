@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Downloads\Domain\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Johncms\Media\MediaEmbed;
 use Johncms\Security\HTMLPurifier;
 use Johncms\System\Legacy\Tools;
@@ -20,6 +21,7 @@ final class DownloadFile extends Model
         'dir',
         'time',
         'name',
+        'slug',
         'text',
         'rus_name',
         'type',
@@ -38,6 +40,11 @@ final class DownloadFile extends Model
         $this->purifier = di(HTMLPurifier::class);
         $this->media = di(MediaEmbed::class);
         $this->tools = di(Tools::class);
+    }
+
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(DownloadCategory::class, 'refid');
     }
 
     public function getAboutHtmlAttribute(): string

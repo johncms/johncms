@@ -11,6 +11,14 @@ final class DownloadCategoryRepository implements DownloadCategoryRepositoryInte
 {
     public function findById(int $id): ?DownloadCategory
     {
-        return DownloadCategory::find($id);
+        return DownloadCategory::query()->find($id);
+    }
+
+    public function findByParentAndSlug(int $parentId, string $slug): ?DownloadCategory
+    {
+        return DownloadCategory::query()
+            ->where('refid', $parentId)
+            ->where('slug', $slug)
+            ->first();
     }
 }

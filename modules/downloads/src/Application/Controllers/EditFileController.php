@@ -6,6 +6,8 @@ namespace Johncms\Modules\Downloads\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Downloads\Application\Services\CategoryNavService;
+use Johncms\Modules\Downloads\Application\Services\DownloadFilePathService;
+use Johncms\Modules\Downloads\Application\Services\DownloadSlugService;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
@@ -22,6 +24,8 @@ final readonly class EditFileController
         private Request $request,
         private NavChain $navChain,
         private CategoryNavService $categoryNavService,
+        private DownloadFilePathService $filePathService,
+        private DownloadSlugService $slugService,
     ) {
         $this->controllerContext->initModule('downloads');
     }
@@ -50,7 +54,7 @@ final readonly class EditFileController
 
         $this->navChain->add(__('Downloads'), '/downloads/');
         $this->categoryNavService->buildForFileDir($file->dir);
-        $this->navChain->add(htmlspecialchars($file->rus_name), '/downloads/files/' . $id . '/');
+        $this->navChain->add(htmlspecialchars($file->rus_name), $this->filePathService->getFileUrl($file));
         $this->navChain->add(__('Edit File'));
 
         return $this->render->render('downloads::edit_file_form', [
@@ -60,8 +64,9 @@ final readonly class EditFileController
                 'name_link' => htmlspecialchars($file->text),
                 'desc'      => htmlspecialchars($file->about, ENT_QUOTES, 'UTF-8'),
             ],
-            'audio_tags' => $audioTags,
-            'action_url' => '/downloads/edit-file/' . $id . '/',
+            'audio_tags'  => $audioTags,
+            'action_url'  => '/downloads/edit-file/' . $id . '/',
+            'file_url'    => $this->filePathService->getFileUrl($file),
         ]);
     }
 
@@ -82,8 +87,11 @@ final readonly class EditFileController
             ]);
         }
 
+        $slug = $this->slugService->generateUniqueFileSlug($name, (int) $file->refid, $id);
+
         $file->update([
             'rus_name' => $name,
+            'slug'     => $slug,
             'text'     => $nameLink,
             'about'    => $desc,
         ]);
@@ -102,8 +110,9 @@ final readonly class EditFileController
             $tagsWriter->WriteTags();
         }
 
+        $fileUrl = $this->filePathService->getFileUrl($file);
         http_response_code(302);
-        header('Location: /downloads/files/' . $id . '/');
+        header('Location: ' . $fileUrl);
         exit;
     }
 

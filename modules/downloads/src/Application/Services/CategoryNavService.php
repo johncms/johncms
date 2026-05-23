@@ -6,11 +6,13 @@ namespace Johncms\Modules\Downloads\Application\Services;
 
 use Johncms\Modules\Downloads\Domain\Models\DownloadCategory;
 use Johncms\NavChain;
+use Johncms\Modules\Downloads\Application\Services\DownloadCategoryPathService;
 
 final class CategoryNavService
 {
     public function __construct(
         private NavChain $navChain,
+        private DownloadCategoryPathService $categoryPathService,
     ) {
     }
 
@@ -34,7 +36,7 @@ final class CategoryNavService
             ->whereIn('dir', $dirs)
             ->orderBy('id')
             ->each(function (DownloadCategory $cat): void {
-                $this->navChain->add(htmlspecialchars($cat->rus_name), '/downloads/?id=' . $cat->id);
+                $this->navChain->add(htmlspecialchars($cat->rus_name), $this->categoryPathService->getCategoryUrl($cat));
             });
     }
 }

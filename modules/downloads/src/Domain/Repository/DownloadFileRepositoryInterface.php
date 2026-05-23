@@ -27,5 +27,9 @@ interface DownloadFileRepositoryInterface
 
     public function findFile(int $id): ?DownloadFile;
 
+    public function findFileWithCategory(int $id): ?DownloadFile;
+
+    public function existsByCategoryAndSlug(int $categoryId, string $slug, ?int $excludeFileId = null): bool;
+
     public function findAdditionalFiles(int $fileId): Collection;
 }

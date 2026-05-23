@@ -8,6 +8,7 @@ use Johncms\Comments;
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\PageMeta;
 use Johncms\Modules\Downloads\Application\Services\CategoryNavService;
+use Johncms\Modules\Downloads\Application\Services\DownloadFilePathService;
 use Johncms\Modules\Downloads\Application\Exceptions\FileNotFoundException;
 use Johncms\Modules\Downloads\Domain\Repository\DownloadFileRepositoryInterface;
 use Johncms\NavChain;
@@ -25,6 +26,7 @@ final readonly class FileCommentsController
         private User $currentUser,
         private DownloadFileRepositoryInterface $fileRepository,
         private CategoryNavService $categoryNavService,
+        private DownloadFilePathService $filePathService,
     ) {
         $this->controllerContext->initModule('downloads');
     }
@@ -97,7 +99,7 @@ final readonly class FileCommentsController
         // Breadcrumbs
         $this->navChain->add(__('Downloads'), '/downloads/');
         $this->categoryNavService->buildForFileDir($file->dir);
-        $this->navChain->add(htmlspecialchars($file->rus_name), '/downloads/files/' . $id . '/');
+        $this->navChain->add(htmlspecialchars($file->rus_name), $this->filePathService->getFileUrl($file));
         $this->navChain->add(__('Comments'));
 
         $shortName = mb_strlen($file->rus_name) > 30
@@ -130,7 +132,7 @@ final readonly class FileCommentsController
             'title'               => $meta->title,
             'page_title'          => __('Comments'),
             'templates_namespace' => 'system',
-            'back_url'            => '/downloads/files/' . $id . '/',
+            'back_url'            => $this->filePathService->getFileUrl($file),
         ]);
         return (string) ob_get_clean();
     }

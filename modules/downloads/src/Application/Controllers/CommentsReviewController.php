@@ -6,6 +6,7 @@ namespace Johncms\Modules\Downloads\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\PageMeta;
+use Johncms\Modules\Downloads\Application\Services\DownloadFilePathService;
 use Johncms\Modules\Downloads\Application\UseCases\ViewCommentsReviewUseCase;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
@@ -23,6 +24,7 @@ final readonly class CommentsReviewController
         private Tools $tools,
         private User $currentUser,
         private ViewCommentsReviewUseCase $useCase,
+        private DownloadFilePathService $filePathService,
     ) {
         $this->controllerContext->initModule('downloads');
     }
@@ -77,7 +79,7 @@ final readonly class CommentsReviewController
                 'reply_time'              => $replyTime,
                 'reply_author_url'        => $replyAuthorUrl,
                 'reply_author_name'       => $replyAuthorName,
-                'file_url'                => '/downloads/files/' . $comment->sub_id . '/',
+                'file_url'                => $this->filePathService->getFileUrlById((int) $comment->sub_id) ?? '/downloads/',
                 'comments_url'            => '/downloads/comments/' . $comment->sub_id,
                 'rus_name'                => htmlspecialchars($comment->rus_name ?? ''),
                 'search_ip_url'           => '/admin/search_ip/?ip=' . long2ip((int) ($attrs['author_ip'] ?? 0)),

@@ -47,11 +47,13 @@ class Installer extends \Johncms\Modules\Installer
                 $table->text('dir');
                 $table->integer('sort')->default(0);
                 $table->text('name');
+                $table->string('slug')->nullable();
                 $table->integer('total')->unsigned()->default(0)->index('total');
                 $table->text('rus_name');
                 $table->text('text');
                 $table->integer('field')->unsigned()->default(0);
                 $table->text('desc');
+                $table->unique(['refid', 'slug'], 'download__category_refid_slug_unique');
             }
         );
 
@@ -81,12 +83,14 @@ class Installer extends \Johncms\Modules\Installer
                 $table->integer('type')->unsigned()->default(0)->index('type');
                 $table->integer('user_id')->unsigned()->default(0)->index('user_id');
                 $table->text('rus_name');
+                $table->string('slug')->nullable();
                 $table->text('text');
                 $table->integer('field')->unsigned()->default(0);
                 $table->string('rate')->default('0|0');
                 $table->text('about');
                 $table->text('desc');
                 $table->integer('comm_count')->unsigned()->default(0)->index('comm_count');
+                $table->unique(['refid', 'slug'], 'download__files_refid_slug_unique');
             }
         );
 

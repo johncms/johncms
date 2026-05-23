@@ -93,7 +93,7 @@ final readonly class SearchController
 
         $files = [];
         foreach ($result->files as $file) {
-            $files[] = $this->filePresenter->present($file->toArray());
+            $files[] = $this->filePresenter->present($file);
         }
 
         $paginationParams = http_build_query(['search' => $result->searchQuery, 'id' => $searchInDescription ? 1 : 0]);

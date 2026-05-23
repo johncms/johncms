@@ -8,6 +8,9 @@ use Exception;
 use Intervention\Image\ImageManager;
 use Johncms\FileInfo;
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Modules\Downloads\Application\Services\DownloadCategoryPathService;
+use Johncms\Modules\Downloads\Application\Services\DownloadFilePathService;
+use Johncms\Modules\Downloads\Application\Services\DownloadSlugService;
 use Johncms\Modules\Downloads\Domain\Models\DownloadCategory;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\NavChain;
@@ -31,6 +34,9 @@ final readonly class FilesUploadController
         private NavChain $navChain,
         private User $currentUser,
         private ImageManager $imageManager,
+        private DownloadSlugService $slugService,
+        private DownloadFilePathService $filePathService,
+        private DownloadCategoryPathService $categoryPathService,
     ) {
         $this->controllerContext->initModule('downloads');
     }
@@ -47,7 +53,7 @@ final readonly class FilesUploadController
         $canUpload = $isAdmin || ($category->field && $this->currentUser->isValid());
 
         if (! $canUpload) {
-            return $this->error(__('Access forbidden'), '/downloads/?id=' . $id);
+            return $this->error(__('Access forbidden'), $this->categoryPathService->getCategoryUrl($category));
         }
 
         $allowedExtensions = $category->field
@@ -67,6 +73,7 @@ final readonly class FilesUploadController
         return $this->render->render('downloads::file_upload', [
             'id'         => $id,
             'action_url' => '/downloads/upload/' . $id . '/',
+            'cancel_url' => $this->categoryPathService->getCategoryUrl($category),
             'extensions' => implode(', ', $allowedExtensions),
         ]);
     }
@@ -144,13 +151,17 @@ final readonly class FilesUploadController
             $type = 3;
         }
 
+        $displayNameTruncated = mb_substr($displayName, 0, 200);
+        $slug = $this->slugService->generateUniqueFileSlug($displayNameTruncated, $id);
+
         $file = DownloadFile::query()->create([
             'refid'    => $id,
             'dir'      => $categoryDir,
             'time'     => time(),
             'name'     => $fname,
+            'slug'     => $slug,
             'text'     => $linkText,
-            'rus_name' => mb_substr($displayName, 0, 200),
+            'rus_name' => $displayNameTruncated,
             'type'     => $type,
             'user_id'  => $this->currentUser->id,
             'about'    => $description,
@@ -181,13 +192,18 @@ final readonly class FilesUploadController
 
         $viewFileUrl = '';
         if (! $moderation) {
-            $viewFileUrl = '/downloads/files/' . $file->id . '/';
+            $viewFileUrl = $this->filePathService->getFileUrlById($file->id) ?? '/downloads/';
             $this->incrementCategoryCounters($id);
         }
 
+        $category = DownloadCategory::query()->find($id);
+        $categoryUrl = $category !== null
+            ? $this->categoryPathService->getCategoryUrl($category)
+            : '/downloads/';
+
         return $this->render->render('downloads::file_upload_result', [
             'id'                    => $id,
-            'urls'                  => ['view_file_url' => $viewFileUrl],
+            'urls'                  => ['view_file_url' => $viewFileUrl, 'category_url' => $categoryUrl],
             'moderation'            => $moderation,
             'screen_attached'       => $screenAttached,
             'screen_attached_error' => $screenError,
