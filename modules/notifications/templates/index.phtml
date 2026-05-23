@@ -1,24 +1,17 @@
 <?php
 /**
- * @var array $notifications
- * @var array $breadcrumbs
- * @var \Johncms\Notifications\Notification $item
+ * @var array $data
+ * @var \Johncms\Users\User $user
  */
 
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => __('Notifications'),
-        'page_title' => __('Notifications'),
-    ]
-);
+$this->layout('system::layout/default');
 ?>
 <?php if (! empty($data['message'])): ?>
     <?= $this->fetch(
         'system::app/alert',
         [
             'alert_type' => 'alert-success',
-            'alert'      => $data['message'],
+            'alert'      => $this->e($data['message']),
         ]
     ) ?>
 <?php endif; ?>
@@ -29,16 +22,16 @@ $this->layout(
 <?php elseif (! empty($data['notifications'])): ?>
     <div class="small-full-width list-items overflow-hidden border-top">
         <?php foreach ($data['notifications'] as $notification): ?>
-            <a href="<?= $notification['url'] ?>" class="list-item d-flex border-bottom ps-lg-0">
+            <a href="<?= $this->e($notification['url']) ?>" class="list-item d-flex border-bottom ps-lg-0">
                 <div class="flex-grow-1 item-content">
-                    <div class="item-name"><?= $notification['name'] ?></div>
+                    <div class="item-name"><?= $this->e($notification['name']) ?></div>
                     <?php if (! empty($notification['description'])): ?>
-                        <div class="item-desc"><?= $notification['description'] ?></div>
+                        <div class="item-desc"><?= $this->e($notification['description']) ?></div>
                     <?php endif; ?>
                 </div>
                 <?php if (! empty($notification['counter'])): ?>
                     <div class="icon-right d-flex align-items-center pe-0">
-                        <div class="badge bg-danger rounded-pill"><?= $notification['counter'] ?></div>
+                        <div class="badge bg-danger rounded-pill"><?= $this->e((string) $notification['counter']) ?></div>
                     </div>
                 <?php endif; ?>
                 <div class="icon-right">
@@ -55,7 +48,7 @@ $this->layout(
         <?php foreach ($data['items'] as $item): ?>
             <div class="new_post-item without_avatar">
                 <div class="post-body">
-                    <div class="small text-muted"><?= $item->created_at ?></div>
+                    <div class="small text-muted"><?= $this->e((string) $item->created_at) ?></div>
                     <div>
                         <?= $item->message ?>
                     </div>
@@ -65,7 +58,6 @@ $this->layout(
     </div>
     <div>
         <div><?= __('Total') ?>: <?= $data['total'] ?></div>
-        <!-- Page switching -->
         <?php if ($data['total'] > $user->config->kmess): ?>
             <div class="mt-1"><?= $data['pagination'] ?></div>
         <?php endif ?>

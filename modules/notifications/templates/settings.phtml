@@ -1,24 +1,10 @@
 <?php
 
 /**
- * This file is part of JohnCMS Content Management System.
- *
- * @copyright JohnCMS Community
- * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
- * @link      https://johncms.com JohnCMS Project
+ * @var array $data
  */
 
-/**
- * @var $data
- */
-
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $data['title'],
-        'page_title' => $data['page_title'],
-    ]
-);
+$this->layout('system::layout/default');
 ?>
 
 <div class="row">
@@ -28,14 +14,14 @@ $this->layout(
                 'system::app/alert',
                 [
                     'alert_type' => 'alert-success',
-                    'alert'      => $data['message'],
+                    'alert'      => $this->e($data['message']),
                 ]
             ) ?>
         <?php endif; ?>
         <div class="card shadow border-0">
-            <form action="<?= $data['form_action'] ?>" method="post">
+            <form action="<?= $this->e($data['form_action']) ?>" method="post">
                 <div class="card-body">
-                    <h3><?= $data['title'] ?></h3>
+                    <h3><?= $this->e($data['title']) ?></h3>
                     <div class="custom-control custom-checkbox mb-3">
                         <input type="checkbox"
                                class="custom-control-input"
@@ -47,7 +33,7 @@ $this->layout(
                     <div class="d-flex flex-wrap justify-content-between">
                         <div class="mb-1 me-1">
                             <input type="submit" name="submit" value="<?= __('Save') ?>" class="btn btn-primary"/>
-                            <a href="<?= $data['back_url'] ?>" class="btn btn-secondary"><?= __('Cancel') ?></a>
+                            <a href="<?= $this->e($data['back_url']) ?>" class="btn btn-secondary"><?= __('Cancel') ?></a>
                         </div>
                     </div>
                 </div>

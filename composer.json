@@ -94,6 +94,7 @@
             "Johncms\\Modules\\Help\\": "modules/help/src/",
             "Johncms\\Modules\\Library\\": "modules/library/src/",
             "Johncms\\Modules\\Mail\\": "modules/mail/src/",
+            "Johncms\\Modules\\Notifications\\": "modules/notifications/src/",
             "Johncms\\Modules\\Language\\": "modules/language/src/",
             "Johncms\\Modules\\Login\\": "modules/login/src/",
             "Johncms\\Modules\\Redirect\\": "modules/redirect/src/",
