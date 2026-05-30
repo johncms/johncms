@@ -63,6 +63,15 @@ interface ContactRepositoryInterface
     public function removeContact(int $userId, int $contactId): void;
 
     /**
+     * Update the last-activity time of a contact record.
+     *
+     * @param int $userId Owner ID
+     * @param int $contactId Contact user ID
+     * @param int $time Unix timestamp
+     */
+    public function updateContactTime(int $userId, int $contactId, int $time): void;
+
+    /**
      * Block a user (add to blacklist).
      *
      * @param int $userId Owner ID

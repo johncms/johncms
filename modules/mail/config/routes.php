@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Johncms\Modules\Mail\Application\Controllers\AddContactController;
 use Johncms\Modules\Mail\Application\Controllers\BlocklistIndexController;
 use Johncms\Modules\Mail\Application\Controllers\BlockUserController;
+use Johncms\Modules\Mail\Application\Controllers\ClearConversationController;
 use Johncms\Modules\Mail\Application\Controllers\ContactController;
 use Johncms\Modules\Mail\Application\Controllers\DeleteContactController;
 use Johncms\Modules\Mail\Application\Controllers\DeleteMessageController;
@@ -18,10 +19,7 @@ use Johncms\Modules\Mail\Application\Middlewares\AuthorizedUserMiddleware;
 use Johncms\Router\RouteCollection;
 
 return static function (RouteCollection $router): void {
-    // Old legacy route (keep for compatibility during transition)
-    $router->map(['GET', 'POST'], '/mail', 'modules/mail/index.php')->name('mail.index')->priority(-1);
-
-    // New routes (require authenticated user)
+    // All routes require an authenticated user
     $mailGroup = $router->group('', function (RouteCollection $r): void {
         $r->get('/mail', ContactController::class)->name('mail.contacts');
         $r->get('/mail/incoming', IncomingConversationsController::class)->name('mail.incoming');
@@ -38,6 +36,9 @@ return static function (RouteCollection $router): void {
         $r->get('/mail/load/{id:number}', DownloadFileController::class)->name('mail.load');
         $r->get('/mail/files', FilesController::class)->name('mail.files');
         $r->get('/mail/write/{id:number}', [WriteController::class, 'conversation'])->name('mail.write');
+        $r->post('/mail/write/{id:number}', [WriteController::class, 'send'])->name('mail.write.send');
+        $r->get('/mail/clear/{id:number}', [ClearConversationController::class, 'confirm'])->name('mail.clear.confirm');
+        $r->post('/mail/clear/{id:number}', [ClearConversationController::class, 'clear'])->name('mail.clear');
     });
     $mailGroup->addMiddleware(AuthorizedUserMiddleware::class);
 };

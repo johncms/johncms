@@ -6,12 +6,16 @@ namespace Johncms\Modules\Mail\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\PageMeta;
+use Johncms\Modules\Mail\Application\DTO\SendMessageCommand;
+use Johncms\Modules\Mail\Application\Exceptions\SendMessageException;
 use Johncms\Modules\Mail\Application\Exceptions\UserNotFoundException;
 use Johncms\Modules\Mail\Application\UseCases\GetConversationUseCase;
+use Johncms\Modules\Mail\Application\UseCases\SendMessageUseCase;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
+use Psr\Http\Message\UploadedFileInterface;
 
 final readonly class WriteController
 {
@@ -22,8 +26,41 @@ final readonly class WriteController
         private NavChain $navChain,
         private User $currentUser,
         private GetConversationUseCase $getConversationUseCase,
+        private SendMessageUseCase $sendMessageUseCase,
     ) {
         $this->controllerContext->initModule('mail');
+    }
+
+    public function send(int $id): string
+    {
+        $text = trim((string) $this->request->getPost('text', ''));
+
+        $files = $this->request->getUploadedFiles();
+        $file = $files['fail'] ?? null;
+        if (! $file instanceof UploadedFileInterface || $file->getError() === UPLOAD_ERR_NO_FILE) {
+            $file = null;
+        }
+
+        try {
+            $this->sendMessageUseCase->execute(new SendMessageCommand(
+                recipientId: $id,
+                text: $text,
+                file: $file,
+            ));
+        } catch (SendMessageException $exception) {
+            return $this->render->render(
+                'system::pages/result',
+                [
+                    'title'         => __('Mail'),
+                    'type'          => 'alert-danger',
+                    'message'       => $exception->getMessage(),
+                    'back_url'      => '/mail/write/' . $id,
+                    'back_url_name' => __('Back'),
+                ]
+            );
+        }
+
+        redirect('/mail/write/' . $id);
     }
 
     public function conversation(int $id): string

@@ -12,6 +12,11 @@ interface MailMessageRepositoryInterface
     public function findById(int $id): ?MailMessage;
 
     /**
+     * Get the last message authored by $authorId addressed to $recipientId.
+     */
+    public function getLastMessageBetween(int $authorId, int $recipientId): ?MailMessage;
+
+    /**
      * Get conversation between two users.
      *
      * @param int $userId Current user ID
@@ -65,11 +70,6 @@ interface MailMessageRepositoryInterface
     public function markAsReadByIds(array $ids): void;
 
     public function incrementDownloadCount(int $id): void;
-
-    /**
-     * Delete all messages between two users (clear conversation).
-     */
-    public function clearConversation(int $userId, int $contactId): void;
 
     /**
      * Count total messages between two users (excluding system/spam/deleted).

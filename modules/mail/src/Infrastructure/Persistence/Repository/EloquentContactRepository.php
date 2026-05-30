@@ -56,6 +56,14 @@ class EloquentContactRepository implements ContactRepositoryInterface
             ->delete();
     }
 
+    public function updateContactTime(int $userId, int $contactId, int $time): void
+    {
+        Contact::query()
+            ->where('user_id', $userId)
+            ->where('from_id', $contactId)
+            ->update(['time' => $time]);
+    }
+
     public function blockUser(int $userId, int $blockedUserId): Contact
     {
         $contact = $this->findContact($userId, $blockedUserId);

@@ -18,6 +18,15 @@ class EloquentMailMessageRepository implements MailMessageRepositoryInterface
         return MailMessage::query()->find($id);
     }
 
+    public function getLastMessageBetween(int $authorId, int $recipientId): ?MailMessage
+    {
+        return MailMessage::query()
+            ->where('user_id', $authorId)
+            ->where('from_id', $recipientId)
+            ->orderByDesc('id')
+            ->first();
+    }
+
     public function getConversation(int $userId, int $contactId, int $perPage): LengthAwarePaginator
     {
         return MailMessage::query()
@@ -139,21 +148,6 @@ class EloquentMailMessageRepository implements MailMessageRepositoryInterface
     public function incrementDownloadCount(int $id): void
     {
         MailMessage::query()->where('id', $id)->increment('count');
-    }
-
-    public function clearConversation(int $userId, int $contactId): void
-    {
-        // Mark messages as deleted for both users
-        MailMessage::query()
-            ->where(function (Builder $query) use ($userId, $contactId) {
-                $query->where('user_id', $userId)
-                    ->where('from_id', $contactId);
-            })
-            ->orWhere(function (Builder $query) use ($userId, $contactId) {
-                $query->where('user_id', $contactId)
-                    ->where('from_id', $userId);
-            })
-            ->update(['delete' => 1]);
     }
 
     public function countMessagesBetween(int $userId, int $contactId): int
