@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Johncms\Modules\Mail\Infrastructure\Persistence\Repository;
 
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\DB;
 use Johncms\Users\User;
 use Johncms\Modules\Mail\Domain\Models\MailMessage;
 use Johncms\Modules\Mail\Domain\Repository\MailMessageRepositoryInterface;
@@ -284,8 +284,8 @@ class EloquentMailMessageRepository implements MailMessageRepositoryInterface
 
     public function getIncomingConversations(int $userId, int $perPage, int $page): \Illuminate\Contracts\Pagination\LengthAwarePaginator
     {
-        $query = DB::table('cms_mail as m')
-            ->select(['u.*', DB::raw('MAX(m.time) as last_time')])
+        $query = Capsule::table('cms_mail as m')
+            ->select(['u.*', Capsule::raw('MAX(m.time) as last_time')])
             ->join('users as u', 'm.user_id', '=', 'u.id')
             ->leftJoin('cms_contact as c', function ($join) use ($userId) {
                 $join->on('c.from_id', '=', 'm.user_id')
@@ -328,8 +328,8 @@ class EloquentMailMessageRepository implements MailMessageRepositoryInterface
 
     public function getOutgoingConversations(int $userId, int $perPage, int $page): \Illuminate\Contracts\Pagination\LengthAwarePaginator
     {
-        $query = DB::table('cms_mail as m')
-            ->select(['u.*', DB::raw('MAX(m.time) as last_time')])
+        $query = Capsule::table('cms_mail as m')
+            ->select(['u.*', Capsule::raw('MAX(m.time) as last_time')])
             ->join('users as u', 'm.from_id', '=', 'u.id')
             ->leftJoin('cms_contact as c', function ($join) use ($userId) {
                 $join->on('c.from_id', '=', 'm.from_id')
