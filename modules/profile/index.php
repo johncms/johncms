@@ -145,7 +145,6 @@ $mods = [
     'password',
     'reset',
     'settings',
-    'stat',
     'index',
     'confirm_new_email',
 ];
