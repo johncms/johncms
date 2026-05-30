@@ -24,8 +24,8 @@ final readonly class GetDeleteContactContextUseCase
             throw new ContactNotFoundException();
         }
 
-        // Determine back URL: if HTTP_REFERER is set, use it; otherwise default to mail index
-        $backUrl = $_SERVER['HTTP_REFERER'] ?? '/mail/';
+        // Determine back URL: if HTTP_REFERER is set, use it; otherwise default to contacts list
+        $backUrl = $_SERVER['HTTP_REFERER'] ?? '/mail/contacts';
         // Sanitize back URL to prevent open redirect
         $backUrl = $this->sanitizeBackUrl($backUrl);
 
@@ -39,7 +39,7 @@ final readonly class GetDeleteContactContextUseCase
     {
         // Allow only relative URLs or same-origin absolute URLs
         if (parse_url($url, PHP_URL_HOST) !== null) {
-            return '/mail/';
+            return '/mail/contacts';
         }
         return $url;
     }

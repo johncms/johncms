@@ -88,7 +88,7 @@ final readonly class GetNotificationListUseCase
         if (! empty($counters['new_mail'])) {
             $notifications[] = [
                 'name'    => __('Mail'),
-                'url'     => '/mail/?act=input',
+                'url'     => '/mail/incoming',
                 'counter' => $counters['new_mail'],
                 'type'    => 'info',
             ];

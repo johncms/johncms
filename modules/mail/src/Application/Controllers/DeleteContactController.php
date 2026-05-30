@@ -31,7 +31,9 @@ final readonly class DeleteContactController
             return $this->renderError($e->getMessage());
         }
 
-        $this->navChain->add(__('Contacts'), '/mail/');
+        $this->navChain->add(__('My Account'), '/profile/?act=office');
+        $this->navChain->add(__('Mail'), '/mail/incoming');
+        $this->navChain->add(__('Contacts'), '/mail/contacts');
         $this->navChain->add(__('Delete contact'));
 
         $data = [
@@ -65,7 +67,7 @@ final readonly class DeleteContactController
                 'title'         => __('Delete'),
                 'type'          => 'alert-success',
                 'message'       => __('Contact deleted'),
-                'back_url'      => '/mail/',
+                'back_url'      => '/mail/contacts',
                 'back_url_name' => __('Back'),
             ]
         );
@@ -79,7 +81,7 @@ final readonly class DeleteContactController
                 'title'   => __('Delete'),
                 'type'    => 'alert-danger',
                 'message' => $message,
-                'back_url' => '/mail/',
+                'back_url' => '/mail/contacts',
             ]
         );
     }

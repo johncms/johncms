@@ -32,8 +32,8 @@ final readonly class FilesController
         $result = $this->getAttachedFilesUseCase->execute($this->currentUser->config->kmess);
 
         $this->navChain->add(__('My Account'), '/profile/?act=office');
-        $this->navChain->add(__('Mail'), '/mail/');
-        $this->navChain->add(__('Files'), '/mail/files/');
+        $this->navChain->add(__('Mail'), '/mail/incoming');
+        $this->navChain->add(__('Files'), '/mail/files');
 
         $pageTitle = __('Files');
         $meta = new PageMeta($pageTitle, $page);
@@ -51,6 +51,7 @@ final readonly class FilesController
                     'total'      => $result->total,
                     'pagination' => $result->pagination,
                     'back_url'   => $result->backUrl,
+                    'nav_active' => 'files',
                 ],
             ]
         );

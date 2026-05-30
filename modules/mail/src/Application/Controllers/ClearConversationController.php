@@ -31,7 +31,8 @@ final readonly class ClearConversationController
             return $this->renderError();
         }
 
-        $this->navChain->add(__('Mail'), '/mail/');
+        $this->navChain->add(__('My Account'), '/profile/?act=office');
+        $this->navChain->add(__('Mail'), '/mail/incoming');
         $this->navChain->add(__('Clear messages'));
 
         $data = [
@@ -79,7 +80,7 @@ final readonly class ClearConversationController
                 'title'    => __('Clear messages'),
                 'type'     => 'alert-danger',
                 'message'  => __('User does not exists'),
-                'back_url' => '/mail/',
+                'back_url' => '/mail/incoming',
             ]
         );
     }

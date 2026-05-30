@@ -32,7 +32,9 @@ final readonly class ContactController
 
         $result = $this->getContactListUseCase->execute($page, $perPage);
 
-        $this->navChain->add(__('Contacts'), '/mail/');
+        $this->navChain->add(__('My Account'), '/profile/?act=office');
+        $this->navChain->add(__('Mail'), '/mail/incoming');
+        $this->navChain->add(__('Contacts'), '/mail/contacts');
 
         $pageTitle = __('Contacts');
         $meta = new PageMeta($pageTitle, $page);
@@ -51,6 +53,7 @@ final readonly class ContactController
                     'pagination' => $result->pagination,
                     'filters' => $result->filters,
                     'back_url' => $result->backUrl,
+                    'nav_active' => 'contacts',
                 ],
             ]
         );

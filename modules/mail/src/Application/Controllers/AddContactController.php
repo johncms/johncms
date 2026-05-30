@@ -33,7 +33,9 @@ final readonly class AddContactController
             return $this->renderError($e->getMessage());
         }
 
-        $this->navChain->add(__('Contacts'), '/mail/');
+        $this->navChain->add(__('My Account'), '/profile/?act=office');
+        $this->navChain->add(__('Mail'), '/mail/incoming');
+        $this->navChain->add(__('Contacts'), '/mail/contacts');
         $this->navChain->add(__('Add Contact'));
 
         $data = [
@@ -67,7 +69,7 @@ final readonly class AddContactController
                 'title'         => __('Add Contact'),
                 'type'          => 'alert-success',
                 'message'       => __('User has been added to your contact list'),
-                'back_url'      => '/mail/',
+                'back_url'      => '/mail/contacts',
                 'back_url_name' => __('Continue'),
             ]
         );
@@ -81,7 +83,7 @@ final readonly class AddContactController
                 'title'   => __('Add Contact'),
                 'type'    => 'alert-danger',
                 'message' => $message,
-                'back_url' => '/mail/',
+                'back_url' => '/mail/contacts',
             ]
         );
     }

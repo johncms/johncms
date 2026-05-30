@@ -15,13 +15,8 @@
 $this->layout('system::layout/default');
 ?>
 
-<?php if (! empty($data['filters'])): ?>
-    <div class="btn-group mb-3" role="group">
-        <?php foreach ($data['filters'] as $filter): ?>
-            <a href="<?= $filter['url'] ?>" class="btn btn-outline-secondary <?= ($filter['active'] ? 'active' : '') ?>"><?= $filter['name'] ?></a>
-        <?php endforeach; ?>
-    </div>
-<?php endif; ?>
+<?= $this->fetch('mail::nav', ['active' => $data['nav_active'] ?? '']) ?>
+
 <?php if (empty($data['items'])): ?>
     <?= $this->fetch(
         'system::app/alert',

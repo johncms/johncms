@@ -32,7 +32,8 @@ final readonly class IncomingConversationsController
 
         $result = $this->getIncomingConversationsUseCase->execute($page, $perPage);
 
-        $this->navChain->add(__('Incoming messages'), '/mail/incoming/');
+        $this->navChain->add(__('My Account'), '/profile/?act=office');
+        $this->navChain->add(__('Mail'), '/mail/incoming');
 
         $pageTitle = __('Incoming messages');
         $meta = new PageMeta($pageTitle, $page);
@@ -50,6 +51,7 @@ final readonly class IncomingConversationsController
                     'total' => $result->total,
                     'pagination' => $result->pagination,
                     'back_url' => $result->backUrl,
+                    'nav_active' => 'incoming',
                 ],
             ]
         );

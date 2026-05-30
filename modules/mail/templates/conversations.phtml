@@ -23,6 +23,8 @@ $this->layout(
 );
 ?>
 
+<?= $this->fetch('mail::nav', ['active' => $data['nav_active'] ?? '']) ?>
+
 <?php if (empty($data['items'])): ?>
     <?= $this->fetch(
         'system::app/alert',

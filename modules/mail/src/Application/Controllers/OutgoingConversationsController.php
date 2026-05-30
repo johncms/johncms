@@ -32,7 +32,9 @@ final readonly class OutgoingConversationsController
 
         $result = $this->getOutgoingConversationsUseCase->execute($page, $perPage);
 
-        $this->navChain->add(__('Sent messages'), '/mail/outgoing/');
+        $this->navChain->add(__('My Account'), '/profile/?act=office');
+        $this->navChain->add(__('Mail'), '/mail/incoming');
+        $this->navChain->add(__('Sent messages'), '/mail/outgoing');
 
         $pageTitle = __('Sent messages');
         $meta = new PageMeta($pageTitle, $page);
@@ -50,6 +52,7 @@ final readonly class OutgoingConversationsController
                     'total' => $result->total,
                     'pagination' => $result->pagination,
                     'back_url' => $result->backUrl,
+                    'nav_active' => 'outgoing',
                 ],
             ]
         );

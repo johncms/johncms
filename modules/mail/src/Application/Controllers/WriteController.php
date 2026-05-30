@@ -78,19 +78,21 @@ final readonly class WriteController
                     'title'    => __('Mail'),
                     'type'     => 'alert-danger',
                     'message'  => __('User does not exists'),
-                    'back_url' => '/mail/',
+                    'back_url' => '/mail/incoming',
                 ]
             );
         }
 
-        $this->navChain->add(__('My Account'), '/profile/?act=office');
-        $this->navChain->add(__('Mail'), '/mail/');
+        $conversationTitle = $result->nick !== '' ? $result->nick : __('New message');
 
-        $pageTitle = __('Mail');
-        $meta = new PageMeta($pageTitle, $page);
+        $this->navChain->add(__('My Account'), '/profile/?act=office');
+        $this->navChain->add(__('Mail'), '/mail/incoming');
+        $this->navChain->add($conversationTitle, '/mail/write/' . $id);
+
+        $meta = new PageMeta($conversationTitle, $page);
         $this->render->addData([
             'title'       => $meta->title,
-            'page_title'  => $pageTitle,
+            'page_title'  => $conversationTitle,
             'description' => $meta->description,
         ]);
 

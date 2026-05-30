@@ -27,7 +27,7 @@ final readonly class BlocklistIndexController
         $result = $this->getBlocklistUseCase->execute();
 
         $this->navChain->add(__('My Account'), '/profile/?act=office');
-        $this->navChain->add(__('Mail'), '/mail/');
+        $this->navChain->add(__('Mail'), '/mail/incoming');
         $this->navChain->add(__('Blacklist'), '/mail/blocklist');
 
         $this->render->addData([
@@ -40,6 +40,7 @@ final readonly class BlocklistIndexController
             [
                 'blocklist' => $result['blocklist'],
                 'total' => $result['total'],
+                'nav_active' => 'blocklist',
             ]
         );
     }

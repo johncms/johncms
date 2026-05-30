@@ -31,7 +31,8 @@ final readonly class DeleteMessageController
             return $this->renderError($e->getMessage());
         }
 
-        $this->navChain->add(__('Messages'), '/mail/');
+        $this->navChain->add(__('My Account'), '/profile/?act=office');
+        $this->navChain->add(__('Mail'), '/mail/incoming');
         $this->navChain->add(__('Delete message'));
 
         $data = [
@@ -65,7 +66,7 @@ final readonly class DeleteMessageController
                 'title'         => __('Deleting messages'),
                 'type'          => 'alert-success',
                 'message'       => __('Message deleted'),
-                'back_url'      => '/mail/',
+                'back_url'      => '/mail/incoming',
                 'back_url_name' => __('Back'),
             ]
         );
@@ -79,7 +80,7 @@ final readonly class DeleteMessageController
                 'title'   => __('Deleting messages'),
                 'type'    => 'alert-danger',
                 'message' => $message,
-                'back_url' => '/mail/',
+                'back_url' => '/mail/incoming',
             ]
         );
     }

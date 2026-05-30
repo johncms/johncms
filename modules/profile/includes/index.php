@@ -122,12 +122,12 @@ $buttons = [];
 if (is_contact($user_data->id) !== 2) {
     if (! is_contact($user_data->id)) {
         $buttons[] = [
-            'url'  => '../mail/?id=' . $user_data->id,
+            'url'  => '/mail/add/' . $user_data->id,
             'name' => __('Add to Contacts'),
         ];
     } else {
         $buttons[] = [
-            'url'  => '../mail/?act=deluser&amp;id=' . $user_data->id,
+            'url'  => '/mail/delete-contact/' . $user_data->id,
             'name' => __('Remove from Contacts'),
         ];
     }

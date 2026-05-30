@@ -30,7 +30,7 @@ final readonly class DownloadFileController
                     'title'   => __('Mail'),
                     'type'    => 'alert-danger',
                     'message' => __('Such file does not exist'),
-                    'back_url' => '/mail/',
+                    'back_url' => '/mail/files',
                 ]
             );
         }

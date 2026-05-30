@@ -11,10 +11,13 @@
 /**
  * @var $blocklist
  * @var $total
+ * @var $nav_active
  */
 
 $this->layout('system::layout/default');
 ?>
+
+<?= $this->fetch('mail::nav', ['active' => $nav_active ?? '']) ?>
 
 <?php if ($total === 0): ?>
     <?= $this->fetch(
@@ -25,10 +28,6 @@ $this->layout('system::layout/default');
         ]
     ) ?>
 <?php else: ?>
-    <div class="mb-3">
-        <a href="/mail/" class="btn btn-outline-primary btn-sm"><?= __('Back') ?></a>
-    </div>
-
     <?php foreach ($blocklist as $contact): ?>
         <?php $user = $contact->contactUser; ?>
         <div class="user-row card shadow border-0 mb-2">

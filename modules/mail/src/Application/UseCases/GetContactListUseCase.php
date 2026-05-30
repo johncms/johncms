@@ -28,7 +28,7 @@ final readonly class GetContactListUseCase
         $filters = [
             'all' => [
                 'name' => __('My Contacts'),
-                'url' => '/mail/',
+                'url' => '/mail/contacts',
                 'active' => true,
             ],
             'positive' => [
