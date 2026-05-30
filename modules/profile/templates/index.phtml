@@ -92,7 +92,7 @@ $this->layout(
             <div>
                 <?php if ($user->id !== $data['user']['id']): ?>
                     <?php if ($data['can_write']): ?>
-                        <a href="../mail/?act=write&amp;id=<?= $data['user']['id'] ?>" class="btn btn-primary btn-sm mt-2"><?= __('Write') ?></a>
+                        <a href="/mail/write/<?= $data['user']['id'] ?>" class="btn btn-primary btn-sm mt-2"><?= __('Write') ?></a>
                     <?php endif; ?>
                     <?php if ($data['can_write']): ?>
                         <a href="../mail/?act=ignor&amp;id=<?= $data['user']['id'] ?>&amp;add" class="btn btn-secondary btn-sm mt-2"><?= __('Block') ?></a>

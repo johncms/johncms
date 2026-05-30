@@ -9,7 +9,7 @@ use Johncms\Modules\Mail\Application\DTO\ConversationItemDTO;
 use Johncms\Modules\Mail\Application\DTO\ConversationListResultDTO;
 use Johncms\Modules\Mail\Domain\Repository\MailMessageRepositoryInterface;
 use Johncms\System\Legacy\Bbcode;
-use Johncms\System\Utility\Tools;
+use Johncms\System\Legacy\Tools;
 use Johncms\UserProperties;
 use Johncms\Users\User;
 
@@ -19,6 +19,8 @@ final readonly class GetIncomingConversationsUseCase
         private MailMessageRepositoryInterface $mailMessageRepository,
         private User $currentUser,
         private UserProperties $userProperties,
+        private Tools $tools,
+        private Bbcode $bbcode,
     ) {
     }
 
@@ -42,8 +44,8 @@ final readonly class GetIncomingConversationsUseCase
     private function mapToDTO(LengthAwarePaginator $paginator): \Illuminate\Support\Collection
     {
         $items = collect();
-        $tools = di('tools');
-        $bbcode = di('bbcode');
+        $tools = $this->tools;
+        $bbcode = $this->bbcode;
 
         foreach ($paginator->items() as $user) {
             if (! $user instanceof User) {

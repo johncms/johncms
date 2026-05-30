@@ -30,4 +30,24 @@ final class MailFileService
 
         return file_exists(self::UPLOAD_MAIL_PATH . $fileName);
     }
+
+    /**
+     * Format a byte size into a human-readable string.
+     */
+    public function formatSize(int $size): string
+    {
+        if ($size >= 1073741824) {
+            return round($size / 1073741824 * 100) / 100 . ' Gb';
+        }
+
+        if ($size >= 1048576) {
+            return round($size / 1048576 * 100) / 100 . ' Mb';
+        }
+
+        if ($size >= 1024) {
+            return round($size / 1024 * 100) / 100 . ' Kb';
+        }
+
+        return $size . ' b';
+    }
 }

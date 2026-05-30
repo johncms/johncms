@@ -46,13 +46,13 @@ $this->layout(
                 <div class="overflow-auto flex-grow-1">
                     <div class="user-name">
                         <?php if (! empty($item['user_id'])): ?>
-                            <a href="/profile/?user=<?= $item['user_id'] ?>" class="user-login me-2"><?= $item['name'] ?></a>
+                            <a href="<?= $this->e($item['profile_url']) ?>" class="user-login me-2"><?= $this->e($item['name']) ?></a>
                         <?php else: ?>
-                            <a class="user-login me-2"><?= $item['name'] ?></a>
+                            <a class="user-login me-2"><?= $this->e($item['name']) ?></a>
                         <?php endif; ?>
                     </div>
                     <div class="small">
-                        <a href="/mail/load/<?= $item['id'] ?>"><?= $item['file_name'] ?></a> (<?= formatsize($item['size']) ?>) (<?= $item['count'] ?>)
+                        <a href="<?= $this->e($item['download_url']) ?>"><?= $this->e($item['file_name']) ?></a> (<?= $this->e($item['file_size']) ?>) (<?= $item['download_count'] ?>)
                     </div>
                 </div>
             </div>

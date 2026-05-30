@@ -21,15 +21,19 @@ class EloquentMailMessageRepository implements MailMessageRepositoryInterface
     public function getConversation(int $userId, int $contactId, int $perPage): LengthAwarePaginator
     {
         return MailMessage::query()
+            ->with('recipient')
             ->where(function (Builder $query) use ($userId, $contactId) {
-                $query->where('user_id', $userId)
-                    ->where('from_id', $contactId);
+                $query->where(function (Builder $sub) use ($userId, $contactId) {
+                    $sub->where('user_id', $userId)
+                        ->where('from_id', $contactId);
+                })->orWhere(function (Builder $sub) use ($userId, $contactId) {
+                    $sub->where('user_id', $contactId)
+                        ->where('from_id', $userId);
+                });
             })
-            ->orWhere(function (Builder $query) use ($userId, $contactId) {
-                $query->where('user_id', $contactId)
-                    ->where('from_id', $userId);
-            })
-            ->where('delete', 0)
+            ->where('delete', '!=', $userId)
+            ->where('sys', '!=', 1)
+            ->where('spam', 0)
             ->orderByDesc('time')
             ->paginate(max(1, $perPage));
     }
@@ -97,6 +101,7 @@ class EloquentMailMessageRepository implements MailMessageRepositoryInterface
     public function getAttachedFiles(int $userId, int $perPage): LengthAwarePaginator
     {
         return MailMessage::query()
+            ->with('recipient')
             ->where(function (Builder $query) use ($userId) {
                 $query->where('user_id', $userId)
                     ->orWhere('from_id', $userId);
@@ -120,6 +125,15 @@ class EloquentMailMessageRepository implements MailMessageRepositoryInterface
     public function markAsRead(int $id): void
     {
         MailMessage::query()->where('id', $id)->update(['read' => true]);
+    }
+
+    public function markAsReadByIds(array $ids): void
+    {
+        if (empty($ids)) {
+            return;
+        }
+
+        MailMessage::query()->whereIn('id', $ids)->update(['read' => true]);
     }
 
     public function incrementDownloadCount(int $id): void

@@ -9,9 +9,11 @@ use Johncms\Modules\Mail\Application\Controllers\ContactController;
 use Johncms\Modules\Mail\Application\Controllers\DeleteContactController;
 use Johncms\Modules\Mail\Application\Controllers\DeleteMessageController;
 use Johncms\Modules\Mail\Application\Controllers\DownloadFileController;
+use Johncms\Modules\Mail\Application\Controllers\FilesController;
 use Johncms\Modules\Mail\Application\Controllers\IncomingConversationsController;
 use Johncms\Modules\Mail\Application\Controllers\OutgoingConversationsController;
 use Johncms\Modules\Mail\Application\Controllers\UnblockUserController;
+use Johncms\Modules\Mail\Application\Controllers\WriteController;
 use Johncms\Modules\Mail\Application\Middlewares\AuthorizedUserMiddleware;
 use Johncms\Router\RouteCollection;
 
@@ -34,6 +36,8 @@ return static function (RouteCollection $router): void {
         $r->get('/mail/delete-contact/{id:number}', [DeleteContactController::class, 'confirm'])->name('mail.delete-contact.confirm');
         $r->post('/mail/delete-contact/{id:number}', [DeleteContactController::class, 'delete'])->name('mail.delete-contact');
         $r->get('/mail/load/{id:number}', DownloadFileController::class)->name('mail.load');
+        $r->get('/mail/files', FilesController::class)->name('mail.files');
+        $r->get('/mail/write/{id:number}', [WriteController::class, 'conversation'])->name('mail.write');
     });
     $mailGroup->addMiddleware(AuthorizedUserMiddleware::class);
 };

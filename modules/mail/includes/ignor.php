@@ -212,7 +212,7 @@ if (isset($_GET['del'])) {
 
             $row['buttons'] = [
                 [
-                    'url'  => '?act=write&amp;id=' . $row['id'],
+                    'url'  => '/mail/write/' . $row['id'],
                     'name' => __('Correspondence'),
                 ],
                 [

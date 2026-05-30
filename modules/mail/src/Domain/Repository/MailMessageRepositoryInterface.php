@@ -57,6 +57,13 @@ interface MailMessageRepositoryInterface
      */
     public function markAsRead(int $id): void;
 
+    /**
+     * Mark multiple messages as read by their IDs.
+     *
+     * @param int[] $ids
+     */
+    public function markAsReadByIds(array $ids): void;
+
     public function incrementDownloadCount(int $id): void;
 
     /**
