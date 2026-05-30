@@ -28,7 +28,7 @@ switch ($mod) {
                     'title'    => $title,
                     'type'     => 'alert-danger',
                     'message'  => __('You do not have enought rights to ban this user'),
-                    'back_url' => '?user=' . $user_data['id'],
+                    'back_url' => '/profile/' . $user_data['id'],
                 ]
             );
         } else {
@@ -156,7 +156,7 @@ switch ($mod) {
                             'title'    => $title,
                             'type'     => 'alert-success',
                             'message'  => __('User banned'),
-                            'back_url' => '?user=' . $user_data['id'],
+                            'back_url' => '/profile/' . $user_data['id'],
                         ]
                     );
                 } else {
@@ -166,14 +166,14 @@ switch ($mod) {
                             'title'    => $title,
                             'type'     => 'alert-danger',
                             'message'  => $error,
-                            'back_url' => '?user=' . $user_data['id'],
+                            'back_url' => '/profile/' . $user_data['id'],
                         ]
                     );
                 }
             } else {
                 $data['form_action'] = '?act=ban&amp;mod=do&amp;user=' . $user_data['id'];
                 $data['post_id'] = $request->getQuery('fid', 0, FILTER_VALIDATE_INT);
-                $data['back_url'] = '?user=' . $user_data['id'];
+                $data['back_url'] = '/profile/' . $user_data['id'];
                 $data['user_login'] = $user_data['name'];
                 echo $view->render(
                     'profile::ban',
@@ -198,7 +198,7 @@ switch ($mod) {
                     'title'    => $title,
                     'type'     => 'alert-danger',
                     'message'  => __('Wrong data'),
-                    'back_url' => '?user=' . $user_data['id'],
+                    'back_url' => '/profile/' . $user_data['id'],
                 ]
             );
         } else {
@@ -228,7 +228,7 @@ switch ($mod) {
                         $data['message'] = __('Ban time is going to the end. Infrigement will be saved in the bans history');
                         $data['submit_name'] = __('Terminate Ban');
                         $data['form_action'] = '?act=ban&amp;mod=cancel&amp;user=' . $user_data['id'] . '&amp;ban=' . $ban;
-                        $data['back_url'] = '?user=' . $user_data['id'];
+                        $data['back_url'] = '/profile/' . $user_data['id'];
                         echo $view->render(
                             'profile::ban_cancel',
                             [
@@ -245,7 +245,7 @@ switch ($mod) {
                             'title'    => $title,
                             'type'     => 'alert-danger',
                             'message'  => $error,
-                            'back_url' => '?user=' . $user_data['id'],
+                            'back_url' => '/profile/' . $user_data['id'],
                         ]
                     );
                 }
@@ -256,7 +256,7 @@ switch ($mod) {
                         'title'    => $title,
                         'type'     => 'alert-danger',
                         'message'  => __('Wrong data'),
-                        'back_url' => '?user=' . $user_data['id'],
+                        'back_url' => '/profile/' . $user_data['id'],
                     ]
                 );
             }
@@ -275,7 +275,7 @@ switch ($mod) {
                     'title'    => $title,
                     'type'     => 'alert-danger',
                     'message'  => __('Wrong data'),
-                    'back_url' => '?user=' . $user_data['id'],
+                    'back_url' => '/profile/' . $user_data['id'],
                 ]
             );
         } else {
@@ -322,7 +322,7 @@ switch ($mod) {
                         'title'    => $title,
                         'type'     => 'alert-danger',
                         'message'  => __('Wrong data'),
-                        'back_url' => '?user=' . $user_data['id'],
+                        'back_url' => '/profile/' . $user_data['id'],
                     ]
                 );
             }
@@ -366,7 +366,7 @@ switch ($mod) {
                     'title'    => $title,
                     'type'     => 'alert-danger',
                     'message'  => __('Violations history can be cleared by Supervisor only'),
-                    'back_url' => '?user=' . $user_data['id'],
+                    'back_url' => '/profile/' . $user_data['id'],
                 ]
             );
         }
@@ -428,7 +428,7 @@ switch ($mod) {
             }
         }
 
-        $data['back_url'] = '?user=' . $user_data['id'];
+        $data['back_url'] = '/profile/' . $user_data['id'];
         $data['total'] = $total;
         $data['pagination'] = $tools->displayPagination('?act=ban&amp;user=' . $user_data['id'] . '&amp;', $start, $total, $user->set_user->kmess);
         $data['items'] = $items ?? [];

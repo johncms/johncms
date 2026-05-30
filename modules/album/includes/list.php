@@ -39,7 +39,7 @@ if (($foundUser['id'] === $user->id && $total < $max_album && empty($user->ban))
 }
 
 $foundUser['nick'] = $foundUser['name'];
-$foundUser['album_url'] = '/profile/?user=' . $foundUser['id'];
+$foundUser['album_url'] = '/profile/' . $foundUser['id'];
 $foundUser['user_is_online'] = time() <= $foundUser['lastdate'] + 300;
 
 $data['user'] = $foundUser;

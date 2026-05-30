@@ -79,7 +79,7 @@ if ($mod === 'change') {
                 'title'         => $title,
                 'type'          => 'alert-success',
                 'message'       => __('Password successfully changed'),
-                'back_url'      => ($user->id === $user_data->id ? '/login' : '?user=' . $user_data->id),
+                'back_url'      => ($user->id === $user_data->id ? '/login' : '/profile/' . $user_data->id),
                 'back_url_name' => __('Continue'),
             ]
         );
@@ -98,7 +98,7 @@ if ($mod === 'change') {
 } else {
     $data['form_action'] = '?act=password&amp;mod=change&amp;user=' . $user_data->id;
     $data['show_old_password_field'] = $user_data->id === $user->id;
-    $data['back_url'] = '?user=' . $user_data->id;
+    $data['back_url'] = '/profile/' . $user_data->id;
 
     echo $view->render(
         'profile::password',

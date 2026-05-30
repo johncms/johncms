@@ -76,7 +76,7 @@ trait UserMutators
      */
     public function getProfileUrlAttribute(): string
     {
-        return '/profile/?user=' . $this->id;
+        return '/profile/' . $this->id;
     }
 
     /**

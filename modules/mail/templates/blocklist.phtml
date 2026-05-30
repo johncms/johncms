@@ -42,7 +42,7 @@ $this->layout('system::layout/default');
                     <div class="overflow-auto flex-grow-1">
                         <div class="d-flex flex-wrap align-items-center justify-content-between mb-2">
                             <div class="user-name">
-                                <a href="/profile/?user=<?= $user->id ?>" class="text-decoration-none fw-bold"><?= $this->e($user->name) ?></a>
+                                <a href="/profile/<?= $user->id ?>" class="text-decoration-none fw-bold"><?= $this->e($user->name) ?></a>
                             </div>
                             <div class="text-muted small">
                                 <?= $tools->displayDate($contact->time) ?>

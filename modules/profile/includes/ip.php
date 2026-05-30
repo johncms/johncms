@@ -39,7 +39,7 @@ if ($total) {
     }
 }
 
-$data['back_url'] = '?user=' . $user_data->id;
+$data['back_url'] = '/profile/' . $user_data->id;
 $data['total'] = $total;
 $data['filters'] = [];
 $data['pagination'] = $tools->displayPagination('?act=ip&amp;user=' . $user_data->id . '&amp;', $start, $total, $user->set_user->kmess);

@@ -49,10 +49,10 @@ if (! empty($user->ban)) {
     );
     exit;
 }
-$nav_chain->add(($user_data->id !== $user->id ? __('Profile') : __('My Profile')), '?user=' . $user_data->id);
+$nav_chain->add(($user_data->id !== $user->id ? __('Profile') : __('My Profile')), '/profile/' . $user_data->id);
 $nav_chain->add($title);
 
-$data['back_url'] = '?user=' . $user_data->id;
+$data['back_url'] = '/profile/' . $user_data->id;
 
 // Готовим массив с данными пользователя
 $form_data = [

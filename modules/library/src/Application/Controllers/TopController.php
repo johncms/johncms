@@ -68,7 +68,7 @@ final readonly class TopController
             $category = LibraryCategory::query()->find($text->cat_id);
 
             $uploader = $text->uploader_id
-                ? '<a href="' . config('johncms')['homeurl'] . '/profile/?user=' . $text->uploader_id . '">' . $this->tools->checkout($text->uploader) . '</a>'
+                ? '<a href="' . config('johncms')['homeurl'] . '/profile/' . $text->uploader_id . '">' . $this->tools->checkout($text->uploader) . '</a>'
                 : $this->tools->checkout($text->uploader);
 
             $items[] = [

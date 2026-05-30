@@ -87,51 +87,6 @@ if (empty($user_data->id) || (! $user_data->preg && $user->rights < 7)) {
     exit;
 }
 
-/**
- * Находится ли выбранный пользователь в контактах и игноре?
- *
- * @param int $id Идентификатор пользователя, которого проверяем
- * @return int Результат запроса:
- *                0 - не в контактах
- *                1 - в контактах
- *                2 - в игноре у меня
- */
-function is_contact($id = 0)
-{
-    global $db, $user;
-
-    static $user_id = null;
-    static $return = 0;
-
-    if (! $user || ! $user->is_valid) {
-        return 0;
-    }
-
-    if (null === $user_id || $id != $user_id) {
-        $user_id = $id;
-        $currentUserId = (int) ($user->id ?? 0);
-        if ($currentUserId <= 0) {
-            return 0;
-        }
-
-        $contactUserId = (int) $id;
-        $req = $db->query("SELECT * FROM `cms_contact` WHERE `user_id` = '$currentUserId' AND `from_id` = '$contactUserId'");
-
-        if ($req->rowCount()) {
-            $res = $req->fetch();
-            if ($res['ban'] == 1) {
-                $return = 2;
-            } else {
-                $return = 1;
-            }
-        } else {
-            $return = 0;
-        }
-    }
-
-    return $return;
-}
-
 // Переключаем режимы работы
 $mods = [
     'activity',
@@ -145,7 +100,6 @@ $mods = [
     'password',
     'reset',
     'settings',
-    'index',
     'confirm_new_email',
 ];
 

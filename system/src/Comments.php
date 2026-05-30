@@ -224,7 +224,7 @@ class Comments
                             }
                         } else {
                             $data = [];
-                            $text = '<a href="' . $homeurl . '/profile/?user=' . $res['user_id'] . '"><b>' . $attributes['author_name'] . '</b></a>' .
+                            $text = '<a href="' . $homeurl . '/profile/' . $res['user_id'] . '"><b>' . $attributes['author_name'] . '</b></a>' .
                                 ' (' . $this->tools->displayDate($res['time']) . ')<br />' .
                                 $this->purifier->purify($res['text']);
                             $reply = $res['reply'];
@@ -323,7 +323,7 @@ class Comments
                                 );
                             }
                         } else {
-                            $author = '<a href="' . $homeurl . '/profile/?user=' . $res['user_id'] . '"><b>' . $attributes['author_name'] . '</b></a>';
+                            $author = '<a href="' . $homeurl . '/profile/' . $res['user_id'] . '"><b>' . $attributes['author_name'] . '</b></a>';
                             $author .= ' (' . $this->tools->displayDate($res['time']) . ')<br />';
                             $author .= $this->purifier->purify($res['text']);
                             $text = $res['text'];
@@ -485,7 +485,7 @@ class Comments
                             $reply = $this->tools->smilies($reply, $attributes['reply_rights'] >= 1 ? 1 : 0);
                             $res['reply_text'] = $reply;
                             $res['reply_time'] = $this->tools->displayDate($attributes['reply_time']);
-                            $res['reply_author_url'] = '/profile/?user=' . $attributes['reply_id'];
+                            $res['reply_author_url'] = '/profile/' . $attributes['reply_id'];
                             $res['reply_author_name'] = $attributes['reply_name'];
                         }
                         $items[] = $res;

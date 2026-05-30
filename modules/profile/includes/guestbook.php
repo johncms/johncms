@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
-$nav_chain->add(__('Profile') . ': ' . $user_data->name, '?user=' . $user_data->id);
+$nav_chain->add(__('Profile') . ': ' . $user_data->name, '/profile/' . $user_data->id);
 $nav_chain->add(__('Guestbook'));
 
 // Параметры Гостевой
@@ -27,7 +27,7 @@ $arg = [
     'owner_reply'         => true,                  // Возможность владельцу отвечать на комментарий
     'title'               => __('Guestbook') . ': ' . $user_data->name,        // Название раздела
     'templates_namespace' => 'system',
-    'back_url'            => '?user=' . $user_data->id,
+    'back_url'            => '/profile/' . $user_data->id,
 ];
 
 // Показываем комментарии

@@ -48,7 +48,7 @@ $this->layout(
                     <?= ($item['type'] > 0 ? '+' : '-') ?><?= $item['points'] ?>
                 </div>
                 <?php if ($item['user_id'] > 0): ?>
-                    <a href="/profile/?user=<?= $item['user_id'] ?>" class="user-login me-2"><?= $item['name'] ?></a>
+                    <a href="/profile/<?= $item['user_id'] ?>" class="user-login me-2"><?= $item['name'] ?></a>
                 <?php else: ?>
                     <b class="user-login me-2"><?= $item['name'] ?></b>
                 <?php endif; ?>

@@ -66,7 +66,7 @@ final readonly class CommentsReviewController
                 $reply = $this->tools->checkout($comment->reply, 1, 1);
                 $replyText = $this->tools->smilies($reply, ($attrs['reply_rights'] ?? 0) >= 1 ? 1 : 0);
                 $replyTime = $this->tools->displayDate($attrs['reply_time']);
-                $replyAuthorUrl = '/profile/?user=' . $attrs['reply_id'];
+                $replyAuthorUrl = '/profile/' . $attrs['reply_id'];
                 $replyAuthorName = $attrs['reply_name'];
             }
 

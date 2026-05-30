@@ -29,7 +29,7 @@ $counters = $data['counters'] ?? [];
 
 <div class="list-group with_counters">
     <div class="list-group-item">
-        <a href="./" class="link"><?= __('Profile') ?></a>
+        <a href="/profile/<?= $user->id ?>" class="link"><?= __('Profile') ?></a>
     </div>
     <div class="list-group-item">
         <a href="/profile/<?= $user->id ?>/statistics/" class="link"><?= __('Statistics') ?></a>

@@ -24,7 +24,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 // История активности
 $title = __('Activity') . ' - ' . htmlspecialchars($user_data->name);
 
-$nav_chain->add(($user_data->id !== $user->id ? __('Profile') : __('My Profile')), '?user=' . $user_data->id);
+$nav_chain->add(($user_data->id !== $user->id ? __('Profile') : __('My Profile')), '/profile/' . $user_data->id);
 $nav_chain->add($title);
 
 $data = [];

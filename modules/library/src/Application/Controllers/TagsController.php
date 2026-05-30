@@ -84,7 +84,7 @@ final readonly class TagsController
                 continue;
             }
             $uploader = $article->uploader_id
-                ? '<a href="' . config('johncms')['homeurl'] . '/profile/?user=' . $article->uploader_id . '">' . $this->tools->checkout($article->uploader) . '</a>'
+                ? '<a href="' . config('johncms')['homeurl'] . '/profile/' . $article->uploader_id . '">' . $this->tools->checkout($article->uploader) . '</a>'
                 : $this->tools->checkout($article->uploader);
 
             $tags      = (new Hashtags($article->id))->getAllStatTags(1);

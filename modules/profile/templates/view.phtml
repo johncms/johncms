@@ -9,9 +9,11 @@
  */
 
 /**
- * @var $title
- * @var $page_title
- * @var $data
+ * @var string $title
+ * @var string $page_title
+ * @var array $data
+ * @var \Johncms\Users\User $user
+ * @var array $config
  */
 
 $this->layout(
@@ -110,7 +112,7 @@ $this->layout(
                         </div>
                     <?php endif; ?>
                 <?php else: ?>
-                    <a href="?act=edit&amp;user=<?= $data['user']['id'] ?>" class="btn btn-primary btn-sm mt-2"><?= __('Edit profile') ?></a>
+                    <a href="/profile/?act=edit&amp;user=<?= $data['user']['id'] ?>" class="btn btn-primary btn-sm mt-2"><?= __('Edit profile') ?></a>
                 <?php endif; ?>
             </div>
         </div>
@@ -198,7 +200,7 @@ $this->layout(
         </div>
 
         <div class="mt-4">
-            <h2 class="h3 fw-bold text-center mb-2">Контакты</h2>
+            <h2 class="h3 fw-bold text-center mb-2"><?= __('Contacts') ?></h2>
             <?php if (! empty($data['user']['mibile'])): ?>
                 <div class="d-flex">
                     <div class="text-muted pe-2"><?= __('Phone number') ?>:</div>
@@ -243,7 +245,7 @@ $this->layout(
 
 <div class="row mt-4 mb-3 ">
     <div class="col-12 col-sm-3 mb-2">
-        <a href="?act=activity&amp;user=<?= $data['user']['id'] ?>" class="card text-center">
+        <a href="/profile/?act=activity&amp;user=<?= $data['user']['id'] ?>" class="card text-center">
             <div class="card-body">
                 <div class="icon_with_badge d-inline-block">
                     <svg class="icon-40">
@@ -267,7 +269,7 @@ $this->layout(
         </a>
     </div>
     <div class="col-12 col-sm-3 mb-2">
-        <a href="../album/list?user=<?= $data['user']['id'] ?>" class="card text-center">
+        <a href="/album/list?user=<?= $data['user']['id'] ?>" class="card text-center">
             <div class="card-body">
                 <div class="icon_with_badge d-inline-block">
                     <svg class="icon-40">
@@ -279,7 +281,7 @@ $this->layout(
         </a>
     </div>
     <div class="col-12 col-sm-3 mb-2">
-        <a href="?act=guestbook&amp;user=<?= $data['user']['id'] ?>" class="card text-center">
+        <a href="/profile/?act=guestbook&amp;user=<?= $data['user']['id'] ?>" class="card text-center">
             <div class="card-body">
                 <div class="icon_with_badge d-inline-block">
                     <svg class="icon-40">
@@ -291,4 +293,3 @@ $this->layout(
         </a>
     </div>
 </div>
-

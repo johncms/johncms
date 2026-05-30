@@ -36,7 +36,7 @@ class UserProperties
 
         $data_array['user_profile_link'] = '';
         if (isset($user_data['user_id']) && $this->current_user->id !== $user_data['user_id'] && $this->current_user->isValid()) {
-            $data_array['user_profile_link'] = '/profile/?user=' . $user_data['user_id'];
+            $data_array['user_profile_link'] = '/profile/' . $user_data['user_id'];
         }
 
         $data_array['ip'] = long2ip((int) $user_data['ip']);

@@ -126,7 +126,7 @@ if (! $error) {
             ];
             $data['user'] = $foundUser;
             $data['form_action'] = '/admin/usr_del/?mod=del&amp;id=' . $foundUser['id'];
-            $data['back_url'] = '/profile/?user=' . $foundUser['id'];
+            $data['back_url'] = '/profile/' . $foundUser['id'];
             echo $view->render(
                 'admin::usr_del',
                 [

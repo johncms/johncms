@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
+use Johncms\Modules\Profile\Domain\Repository\KarmaRepositoryInterface;
 use Johncms\Modules\Profile\Domain\Repository\ProfileUserRepositoryInterface;
+use Johncms\Modules\Profile\Infrastructure\Persistence\Repository\EloquentKarmaRepository;
 use Johncms\Modules\Profile\Infrastructure\Persistence\Repository\ProfileUserRepository;
 
 return static function (ContainerConfigurator $container): void {
@@ -19,6 +21,7 @@ return static function (ContainerConfigurator $container): void {
     )
         ->exclude(
             [
+                MODULES_PATH . 'profile/src/Application/DTO',
                 MODULES_PATH . 'profile/src/Application/Exceptions',
             ]
         )
@@ -34,4 +37,5 @@ return static function (ContainerConfigurator $container): void {
         ->autoconfigure();
 
     $services->set(ProfileUserRepositoryInterface::class, ProfileUserRepository::class)->public();
+    $services->set(KarmaRepositoryInterface::class, EloquentKarmaRepository::class)->public();
 };

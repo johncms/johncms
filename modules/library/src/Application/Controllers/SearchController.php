@@ -108,7 +108,7 @@ final readonly class SearchController
                     }
 
                     $author = $text->uploader_id
-                        ? '<a href="' . config('johncms')['homeurl'] . '/profile/?user=' . $text->uploader_id . '">' . $this->tools->checkout($text->uploader) . '</a>'
+                        ? '<a href="' . config('johncms')['homeurl'] . '/profile/' . $text->uploader_id . '">' . $this->tools->checkout($text->uploader) . '</a>'
                         : $this->tools->checkout($text->uploader);
 
                     $items[] = [

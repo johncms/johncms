@@ -40,7 +40,7 @@ $this->layout('system::layout/default');
                 <div class="overflow-auto flex-grow-1">
                     <div class="user-name">
                         <?php if (! empty($item->id)): ?>
-                            <a href="/profile/?user=<?= $item->id ?>" class="user-login me-2"><?= $item->name ?></a>
+                            <a href="/profile/<?= $item->id ?>" class="user-login me-2"><?= $item->name ?></a>
                         <?php else: ?>
                             <a class="user-login me-2"><?= $item->name ?></a>
                         <?php endif; ?>

@@ -38,7 +38,7 @@ final readonly class StatisticsController
 
         $title = $profileUser->name . ': ' . __('Statistic');
 
-        $this->navChain->add($profileUser->name, '/profile/?user=' . $profileUser->id);
+        $this->navChain->add($profileUser->name, '/profile/' . $profileUser->id);
         $this->navChain->add(__('Statistic'));
 
         $this->render->addData([

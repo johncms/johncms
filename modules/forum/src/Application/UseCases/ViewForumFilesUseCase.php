@@ -266,7 +266,7 @@ final readonly class ViewForumFilesUseCase
             $row['user_profile_link'] = '';
 
             if ($this->currentUser->isValid() && (int) $this->currentUser->id !== (int) $row['user_id']) {
-                $row['user_profile_link'] = '/profile/?user=' . $row['user_id'];
+                $row['user_profile_link'] = '/profile/' . $row['user_id'];
             }
 
             $row['user_rights_name'] = $userRightsNames[(int) $row['rights']] ?? '';

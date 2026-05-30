@@ -55,7 +55,7 @@ final readonly class ForumVisitorRowMapper
         ];
 
         if ($this->currentUser->isValid() && $this->currentUser->id !== $row->id) {
-            $item['user_profile_link'] = '/profile/?user=' . $row->id;
+            $item['user_profile_link'] = '/profile/' . $row->id;
         }
 
         return $item;

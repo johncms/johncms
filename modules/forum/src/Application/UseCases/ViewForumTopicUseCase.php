@@ -203,7 +203,7 @@ final readonly class ViewForumTopicUseCase
         $curatorsArray = [];
         if (! empty($topic->curators)) {
             foreach ($topic->curators as $key => $value) {
-                $curatorsArray[] = '<a href="/profile/?user=' . $key . '">' . $value . '</a>';
+                $curatorsArray[] = '<a href="/profile/' . $key . '">' . $value . '</a>';
             }
         }
 

@@ -126,7 +126,7 @@ if (isset($_POST['deltopic'])) {
 
             $res['user_profile_link'] = '';
             if (! empty($res['id']) && $user->id !== $res['id']) {
-                $res['user_profile_link'] = '/profile/?user=' . $res['id'];
+                $res['user_profile_link'] = '/profile/' . $res['id'];
             }
             $res['user_is_online'] = time() <= $res['lastdate'] + 300;
             $res['search_ip_url'] = '/admin/search_ip/?ip=' . long2ip((int) $res['ip']);

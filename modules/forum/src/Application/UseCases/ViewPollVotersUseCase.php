@@ -60,7 +60,7 @@ final readonly class ViewPollVotersUseCase
         foreach ($rows as $row) {
             $row['user_profile_link'] = '';
             if (! empty($row['id']) && $this->currentUser->isValid() && $this->currentUser->id !== (int) $row['id']) {
-                $row['user_profile_link'] = '/profile/?user=' . $row['id'];
+                $row['user_profile_link'] = '/profile/' . $row['id'];
             }
 
             $row['user_rights_name'] = $userRightsNames[(int) ($row['rights'] ?? 0)] ?? '';

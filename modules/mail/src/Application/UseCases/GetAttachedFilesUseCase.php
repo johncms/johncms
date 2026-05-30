@@ -56,7 +56,7 @@ final readonly class GetAttachedFilesUseCase
                 fileSize: $this->mailFileService->formatSize($message->size),
                 downloadCount: $message->count,
                 downloadUrl: '/mail/load/' . $message->id,
-                profileUrl: '/profile/?user=' . $message->user_id,
+                profileUrl: '/profile/' . $message->user_id,
             ));
         }
 

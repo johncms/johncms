@@ -170,7 +170,7 @@ final readonly class ViewPostUseCase
             return '';
         }
 
-        return '/profile/?user=' . $message->user_id;
+        return '/profile/' . $message->user_id;
     }
 
     private function getMessagePage(ForumMessage $message, array $forumSettings): int

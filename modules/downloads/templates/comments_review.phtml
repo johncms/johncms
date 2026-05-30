@@ -25,7 +25,7 @@ $this->layout('system::layout/default');
         <div class="new_post-item mb-2">
             <div class="new_post-header d-flex justify-content-between">
                 <div class="post-user">
-                    <a href="/profile/?user=<?= $item['user_id'] ?>">
+                    <a href="/profile/<?= $item['user_id'] ?>">
                         <div class="avatar">
                             <img src="<?= $this->avatar($item['user_id']) ?>" class="img-fluid" alt=".">
                         </div>
@@ -33,7 +33,7 @@ $this->layout('system::layout/default');
                 </div>
                 <div class="flex-grow-1 post-user d-flex flex-wrap overflow-hidden d-flex align-items-center">
                     <div class="w-100">
-                        <a href="/profile/?user=<?= $item['user_id'] ?>"><span class="user-name d-inline me-2"><?= $item['name'] ?></span></a>
+                        <a href="/profile/<?= $item['user_id'] ?>"><span class="user-name d-inline me-2"><?= $item['name'] ?></span></a>
                         <span class="post-meta d-inline me-2"><?= $item['created'] ?></span>
                         <?php if (! empty($item['edit_count'])): ?>
                             <div class="post-meta d-inline me-2"

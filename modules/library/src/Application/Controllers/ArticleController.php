@@ -90,7 +90,7 @@ final readonly class ArticleController
             $ratingView = $rate->viewRate(1);
 
             $uploader = $article->uploader_id
-                ? '<a href="' . config('johncms')['homeurl'] . '/profile/?user=' . $article->uploader_id . '">' . $this->tools->checkout($article->uploader) . '</a>'
+                ? '<a href="' . config('johncms')['homeurl'] . '/profile/' . $article->uploader_id . '">' . $this->tools->checkout($article->uploader) . '</a>'
                 : $this->tools->checkout($article->uploader);
             $who = $uploader . ' (' . $this->tools->displayDate($article->time) . ')';
 

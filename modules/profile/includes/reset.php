@@ -17,7 +17,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 if ($user->rights >= 7 && $user->rights > $user_data->rights) {
     // Сброс настроек пользователя
     $title = __('Reset user settings');
-    $nav_chain->add(__('Profile'), '?user=' . $user_data->id);
+    $nav_chain->add(__('Profile'), '/profile/' . $user_data->id);
     $nav_chain->add($title);
 
     (new User())->find($user_data->id)
@@ -34,7 +34,7 @@ if ($user->rights >= 7 && $user->rights > $user_data->rights) {
             'title'    => $title,
             'type'     => 'alert-success',
             'message'  => sprintf(__('For user %s default settings were set.'), $user_data->name),
-            'back_url' => '?user=' . $user_data->id,
+            'back_url' => '/profile/' . $user_data->id,
         ]
     );
 }

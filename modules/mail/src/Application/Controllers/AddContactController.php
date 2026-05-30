@@ -41,7 +41,7 @@ final readonly class AddContactController
         $data = [
             'form_action'     => '/mail/add/' . $id,
             'message'         => __('You really want to add contact?'),
-            'back_url'        => '/profile/?user=' . $id,
+            'back_url'        => '/profile/' . $id,
             'submit_btn_name' => __('Add'),
         ];
 

@@ -17,7 +17,7 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 $title = __('Karma');
 $set_karma = $config['karma'];
 $data = [];
-$nav_chain->add(__('User Profile'), '?user=' . $user_data['id']);
+$nav_chain->add(__('User Profile'), '/profile/' . $user_data['id']);
 $nav_chain->add(__('Karma'));
 
 $post = $request->getParsedBody();
@@ -73,7 +73,7 @@ if ($set_karma['on']) {
                             'title'         => $title,
                             'type'          => 'alert-danger',
                             'message'       => $error,
-                            'back_url'      => '?user=' . $user_data['id'],
+                            'back_url'      => '/profile/' . $user_data['id'],
                             'back_url_name' => __('Back'),
                         ]
                     );
@@ -134,7 +134,7 @@ if ($set_karma['on']) {
                             'title'         => $title,
                             'type'          => 'alert-success',
                             'message'       => __('You have successfully voted'),
-                            'back_url'      => '?user=' . $user_data['id'],
+                            'back_url'      => '/profile/' . $user_data['id'],
                             'back_url_name' => __('Continue'),
                         ]
                     );
@@ -146,7 +146,7 @@ if ($set_karma['on']) {
                     $data['options'] = $options;
                     $data['vote_title'] = __('Vote for') . ': ' . $tools->checkout($user_data['name']);
                     $data['form_action'] = '?act=karma&amp;mod=vote&amp;user=' . $user_data['id'];
-                    $data['back_url'] = '?user=' . $user_data['id'];
+                    $data['back_url'] = '/profile/' . $user_data['id'];
                     echo $view->render(
                         'profile::karma_vote',
                         [
@@ -163,7 +163,7 @@ if ($set_karma['on']) {
                         'title'         => $title,
                         'type'          => 'alert-danger',
                         'message'       => __('You are not allowed to vote for users'),
-                        'back_url'      => '?user=' . $user_data['id'],
+                        'back_url'      => '/profile/' . $user_data['id'],
                         'back_url_name' => __('Back'),
                     ]
                 );
@@ -225,7 +225,7 @@ if ($set_karma['on']) {
                     $db->exec('DELETE FROM `karma_users` WHERE `karma_user` = ' . $user_data['id']);
                     $db->query('OPTIMIZE TABLE `karma_users`');
                     $db->exec("UPDATE `users` SET `karma_plus` = '0', `karma_minus` = '0' WHERE `id` = " . $user_data['id']);
-                    header('Location: ?user=' . $user_data['id']);
+                    header('Location: /profile/' . $user_data['id']);
                 } else {
                     $delete_token = uniqid('', true);
                     $_SESSION['delete_token'] = $delete_token;
@@ -262,7 +262,7 @@ if ($set_karma['on']) {
                 }
             }
 
-            $data['back_url'] = '?user=' . $user_data['id'];
+            $data['back_url'] = '/profile/' . $user_data['id'];
             $data['total'] = $total;
             $data['filters'] = [];
             $data['pagination'] = $tools->displayPagination('?act=karma&amp;mod=new&amp;', $start, $total, $user->config->kmess);
@@ -317,7 +317,7 @@ if ($set_karma['on']) {
             if ($user->rights === 9) {
                 $data['reset_url'] = '?act=karma&amp;user=' . $user_data['id'] . '&amp;mod=clean';
             }
-            $data['back_url'] = '?user=' . $user_data['id'];
+            $data['back_url'] = '/profile/' . $user_data['id'];
 
             $data['total'] = $total;
             $data['pagination'] = $tools->displayPagination('?act=karma&amp;user=' . $user_data['id'] . '&amp;type=' . $type . '&amp;', $start, $total, $user->config->kmess);
