@@ -55,7 +55,7 @@ final readonly class GetProfileViewUseCase
 
         // IP history
         $userData['ip_history_count'] = $profileUser->ipHistory()->count();
-        $userData['ip_history_url'] = '/profile/?act=ip&user=' . $profileUser->id;
+        $userData['ip_history_url'] = '/profile/' . $profileUser->id . '/ip-history';
 
         // Karma
         if ($config['karma']['on']) {

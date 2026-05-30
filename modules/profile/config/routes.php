@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Johncms\Modules\Profile\Application\Controllers\IpHistoryController;
 use Johncms\Modules\Profile\Application\Controllers\ProfileController;
 use Johncms\Modules\Profile\Application\Controllers\StatisticsController;
 use Johncms\Modules\Profile\Application\Middlewares\AuthorizedUserMiddleware;
@@ -12,6 +13,7 @@ return static function (RouteCollection $router, User $user): void {
     // Routes migrated to the new architecture (require an authenticated user)
     $profileGroup = $router->group('', function (RouteCollection $r): void {
         $r->get('/profile/{id:number}/statistics', StatisticsController::class)->name('profile.statistics');
+        $r->get('/profile/{id:number}/ip-history', IpHistoryController::class)->name('profile.ip-history');
         $r->get('/profile/{id:number}', ProfileController::class)->name('profile.view');
     });
     $profileGroup->addMiddleware(AuthorizedUserMiddleware::class);

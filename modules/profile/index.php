@@ -93,7 +93,6 @@ $mods = [
     'ban',
     'edit',
     'images',
-    'ip',
     'guestbook',
     'karma',
     'office',
