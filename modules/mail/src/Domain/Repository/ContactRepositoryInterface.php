@@ -36,6 +36,14 @@ interface ContactRepositoryInterface
     public function countContacts(int $userId): int;
 
     /**
+     * Count blocked users for a user.
+     *
+     * @param int $userId User ID
+     * @return int
+     */
+    public function countBlocked(int $userId): int;
+
+    /**
      * Find a specific contact.
      *
      * @param int $userId Owner ID

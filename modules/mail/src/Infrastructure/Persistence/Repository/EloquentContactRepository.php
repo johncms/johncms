@@ -122,4 +122,12 @@ class EloquentContactRepository implements ContactRepositoryInterface
             ->where('ban', '!=', 1)
             ->count();
     }
+
+    public function countBlocked(int $userId): int
+    {
+        return Contact::query()
+            ->where('user_id', $userId)
+            ->where('ban', 1)
+            ->count();
+    }
 }

@@ -200,6 +200,88 @@ class EloquentMailMessageRepository implements MailMessageRepositoryInterface
             ->get();
     }
 
+    public function countInbox(int $userId): int
+    {
+        return $this->notBannedContactScope(
+            MailMessage::query()->where('cms_mail.from_id', $userId),
+            $userId,
+            'cms_mail.user_id'
+        )
+            ->where('cms_mail.delete', '!=', $userId)
+            ->where('cms_mail.sys', 0)
+            ->where('cms_mail.spam', 0)
+            ->count();
+    }
+
+    public function countNewInbox(int $userId): int
+    {
+        return $this->notBannedContactScope(
+            MailMessage::query()->where('cms_mail.from_id', $userId),
+            $userId,
+            'cms_mail.user_id'
+        )
+            ->where('cms_mail.delete', '!=', $userId)
+            ->where('cms_mail.sys', 0)
+            ->where('cms_mail.spam', 0)
+            ->where('cms_mail.read', 0)
+            ->count();
+    }
+
+    public function countOutbox(int $userId): int
+    {
+        return $this->notBannedContactScope(
+            MailMessage::query()->where('cms_mail.user_id', $userId),
+            $userId,
+            'cms_mail.from_id'
+        )
+            ->where('cms_mail.delete', '!=', $userId)
+            ->where('cms_mail.sys', 0)
+            ->count();
+    }
+
+    public function countNewOutbox(int $userId): int
+    {
+        return $this->notBannedContactScope(
+            MailMessage::query()->where('cms_mail.user_id', $userId),
+            $userId,
+            'cms_mail.from_id'
+        )
+            ->where('cms_mail.delete', '!=', $userId)
+            ->where('cms_mail.sys', 0)
+            ->where('cms_mail.read', 0)
+            ->count();
+    }
+
+    public function countAttachedFiles(int $userId): int
+    {
+        return MailMessage::query()
+            ->where(function (Builder $query) use ($userId) {
+                $query->where('user_id', $userId)
+                    ->orWhere('from_id', $userId);
+            })
+            ->where('delete', 0)
+            ->where('file_name', '!=', '')
+            ->count();
+    }
+
+    /**
+     * Exclude messages whose counterpart is a banned contact of the current user.
+     *
+     * @param string $counterpartColumn Qualified column of the other party (sender or recipient).
+     */
+    private function notBannedContactScope(Builder $query, int $userId, string $counterpartColumn): Builder
+    {
+        return $query
+            ->leftJoin('cms_contact as c', function ($join) use ($userId, $counterpartColumn) {
+                $join->on('c.from_id', '=', $counterpartColumn)
+                    ->where('c.user_id', '=', $userId);
+            })
+            ->where(function (Builder $q) {
+                $q->where('c.ban', '!=', 1)
+                    ->orWhereNull('c.ban');
+            });
+    }
+
     public function getIncomingConversations(int $userId, int $perPage, int $page): \Illuminate\Contracts\Pagination\LengthAwarePaginator
     {
         $query = DB::table('cms_mail as m')

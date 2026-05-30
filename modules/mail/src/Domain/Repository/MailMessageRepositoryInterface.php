@@ -99,6 +99,31 @@ interface MailMessageRepositoryInterface
     public function getMessagesBetween(int $userId, int $contactId): \Illuminate\Database\Eloquent\Collection;
 
     /**
+     * Count incoming messages for a user (excluding system/spam/deleted and banned contacts).
+     */
+    public function countInbox(int $userId): int;
+
+    /**
+     * Count new (unread) incoming messages for a user.
+     */
+    public function countNewInbox(int $userId): int;
+
+    /**
+     * Count outgoing messages for a user (excluding system/deleted and banned contacts).
+     */
+    public function countOutbox(int $userId): int;
+
+    /**
+     * Count new (unread) outgoing messages for a user.
+     */
+    public function countNewOutbox(int $userId): int;
+
+    /**
+     * Count messages with attachments belonging to a user.
+     */
+    public function countAttachedFiles(int $userId): int;
+
+    /**
      * Get incoming conversations grouped by sender with last message preview.
      *
      * @param int $userId Recipient user ID
