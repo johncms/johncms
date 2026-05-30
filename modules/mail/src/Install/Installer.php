@@ -8,7 +8,9 @@
  * @link      https://johncms.com JohnCMS Project
  */
 
-namespace Mail\Install;
+declare(strict_types=1);
+
+namespace Johncms\Modules\Mail\Install;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Schema\Blueprint;
