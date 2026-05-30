@@ -48,14 +48,14 @@ $counters = $data['counters'] ?? [];
 
 <div class="list-group with_counters">
     <div class="list-group-item">
-        <a href="/mail/?act=input" class="link"><?= __('Received') ?></a>
+        <a href="/mail/incoming" class="link"><?= __('Received') ?></a>
         <span class="counter badge rounded-pill <?= ($counters['new_messages'] > 0 ? 'bg-danger' : 'text-bg-light') ?>">
                     <?= $counters['inbox'] ?>
                     <?= ($counters['new_messages'] > 0 ? ' / +' . $counters['new_messages'] : '') ?>
                 </span>
     </div>
     <div class="list-group-item">
-        <a href="/mail/?act=output" class="link"><?= __('Sent') ?></a>
+        <a href="/mail/outgoing" class="link"><?= __('Sent') ?></a>
         <span class="counter badge rounded-pill <?= ($counters['unread_sent'] > 0 ? 'bg-danger' : 'text-bg-light') ?>">
                     <?= $counters['outbox'] ?>
                     <?= ($counters['unread_sent'] > 0 ? ' / +' . $counters['unread_sent'] : '') ?>
@@ -71,7 +71,7 @@ $counters = $data['counters'] ?? [];
 
 <div class="list-group with_counters">
     <div class="list-group-item">
-        <a href="/mail/" class="link"><?= __('Contacts') ?></a>
+        <a href="/mail" class="link"><?= __('Contacts') ?></a>
         <span class="counter badge rounded-pill text-bg-light"><?= $counters['contacts'] ?></span>
     </div>
     <div class="list-group-item">
