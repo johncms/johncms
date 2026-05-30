@@ -51,13 +51,17 @@ Use parallel execution when operations are independent:
 
 ## Step 2: Create Structure
 
-Create directory structure:
+Target directory structure (full picture):
 ```
 modules/<module>/src/
 ├── Application/{Controllers,UseCases,DTO,Services,Middleware}
 ├── Domain/{Models,Repository,Entities,Enums}
 └── Infrastructure/Persistence/Repository
 ```
+
+**Create subdirectories on demand, not all upfront.** Only the three top-level folders
+(`Application`, `Domain`, `Infrastructure`) must exist immediately (see [Empty `src/` subdirectories](#empty-src-subdirectories)).
+Create each nested folder (`Controllers`, `UseCases`, `DTO`, `Repository`, …) only when its first class appears.
 
 Update `composer.json` with PSR-4 autoload:
 ```json
@@ -112,6 +116,13 @@ interface ContactRepositoryInterface
     public function getContacts(int $userId): Collection;
 }
 ```
+
+**Method naming: `find*` vs `get*`.** Follow the existing convention across modules:
+
+- `find*` — single-entity lookup that **may return `null`**: `findById(int $id): ?User`, `findContact(...): ?Contact`.
+- `get*` — returns a **guaranteed** value, a `Collection`, or a paginator (never a bare `null` for a missing single entity): `getContacts(): Collection`, `getBlocklist(): Collection`, `getConversation(): LengthAwarePaginator`.
+
+Rule of thumb: if the return type is `?Entity`, name it `find*`. The use case decides what a missing result means (e.g. throw a `*NotFoundException`).
 
 ## Step 4: Create Infrastructure
 
