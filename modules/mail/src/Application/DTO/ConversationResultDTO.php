@@ -18,7 +18,6 @@ final readonly class ConversationResultDTO
         public ?string $formAction,
         public bool $showNickInput,
         public string $nick,
-        public string $bbcode,
     ) {
     }
 }

@@ -50,9 +50,16 @@ $this->layout(
                 </div>
             <?php endif; ?>
             <div class="form-group">
-                <label for="text"><?= __('Message') ?></label>
-                <div><?= $data['bbcode'] ?></div>
-                <textarea rows="<?= $user->config->fieldHeight ?>" name="text" id="text" required class="form-control"></textarea>
+                <?= $this->fetch(
+                    'system::app/ckeditor',
+                    [
+                        'label'        => __('Message'),
+                        'errors'       => '',
+                        'value'        => $data['text'] ?? '',
+                        'name'         => 'text',
+                        'allow_upload' => false,
+                    ]
+                ) ?>
             </div>
             <div class="input-group mb-3">
                 <div class="custom-file">

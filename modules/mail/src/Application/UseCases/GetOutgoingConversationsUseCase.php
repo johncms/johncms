@@ -7,8 +7,8 @@ namespace Johncms\Modules\Mail\Application\UseCases;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Johncms\Modules\Mail\Application\DTO\ConversationItemDTO;
 use Johncms\Modules\Mail\Application\DTO\ConversationListResultDTO;
+use Johncms\Modules\Mail\Application\Services\MailMessagePreviewService;
 use Johncms\Modules\Mail\Domain\Repository\MailMessageRepositoryInterface;
-use Johncms\System\Legacy\Bbcode;
 use Johncms\System\Legacy\Tools;
 use Johncms\UserProperties;
 use Johncms\Users\User;
@@ -20,7 +20,7 @@ final readonly class GetOutgoingConversationsUseCase
         private User $currentUser,
         private UserProperties $userProperties,
         private Tools $tools,
-        private Bbcode $bbcode,
+        private MailMessagePreviewService $previewService,
     ) {
     }
 
@@ -45,7 +45,6 @@ final readonly class GetOutgoingConversationsUseCase
     {
         $items = collect();
         $tools = $this->tools;
-        $bbcode = $this->bbcode;
 
         foreach ($paginator->items() as $user) {
             if (! $user instanceof User) {
@@ -61,18 +60,7 @@ final readonly class GetOutgoingConversationsUseCase
             $unread = false;
 
             if ($lastMessage) {
-                $text = $lastMessage->text;
-                if (mb_strlen($text) > 500) {
-                    $text = mb_substr($text, 0, 500);
-                    $text = $tools->checkout($text, 1, 1);
-                    $text = $tools->smilies($text, $user->rights ? 1 : 0);
-                    $text = $bbcode->notags($text);
-                    $previewText = $text . '...<a href="/mail/write/' . $user->id . '">' . __('Continue') . ' &gt;&gt;</a>';
-                } else {
-                    $previewText = $tools->checkout($text, 1, 1);
-                    $previewText = $tools->smilies($previewText, $user->rights ? 1 : 0);
-                }
-
+                $previewText = $this->previewService->render($lastMessage->text, $user->id, (bool) $user->rights);
                 $displayDate = $tools->displayDate($lastMessage->time);
                 $unread = ! $lastMessage->read;
             }

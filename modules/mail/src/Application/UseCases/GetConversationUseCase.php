@@ -11,10 +11,10 @@ use Johncms\Modules\Mail\Application\Exceptions\UserNotFoundException;
 use Johncms\Modules\Mail\Application\Services\MailFileService;
 use Johncms\Modules\Mail\Domain\Models\MailMessage;
 use Johncms\Modules\Mail\Domain\Repository\MailMessageRepositoryInterface;
-use Johncms\System\Legacy\Bbcode;
 use Johncms\System\Legacy\Tools;
 use Johncms\UserProperties;
 use Johncms\Users\User;
+use Simba77\EmbedMedia\Embed;
 
 final readonly class GetConversationUseCase
 {
@@ -23,7 +23,8 @@ final readonly class GetConversationUseCase
         private MailFileService $mailFileService,
         private UserProperties $userProperties,
         private Tools $tools,
-        private Bbcode $bbcode,
+        private \HTMLPurifier $purifier,
+        private Embed $media,
         private User $currentUser,
     ) {
     }
@@ -53,7 +54,6 @@ final readonly class GetConversationUseCase
             formAction: $canWrite ? '/mail/write/' . $contactId : null,
             showNickInput: false,
             nick: '',
-            bbcode: $canWrite ? $this->bbcode->buttons('form', 'text') : '',
         );
     }
 
@@ -77,7 +77,8 @@ final readonly class GetConversationUseCase
                 ? $this->userProperties->getFromArray(array_merge($author->toArray(), ['user_id' => $message->user_id]))
                 : [];
 
-            $text = $this->tools->checkout($message->text, 1, 1);
+            $text = $this->purifier->purify($message->text);
+            $text = $this->media->embedMedia($text);
             $text = $this->tools->smilies($text, $authorRights >= 1 ? 1 : 0);
 
             $files = [];

@@ -13,6 +13,7 @@ use Johncms\Modules\Mail\Application\UseCases\GetConversationUseCase;
 use Johncms\Modules\Mail\Application\UseCases\SendMessageUseCase;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
+use Johncms\System\Utility\EditorContentNormalizer;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Psr\Http\Message\UploadedFileInterface;
@@ -25,6 +26,7 @@ final readonly class WriteController
         private Request $request,
         private NavChain $navChain,
         private User $currentUser,
+        private EditorContentNormalizer $editorContentNormalizer,
         private GetConversationUseCase $getConversationUseCase,
         private SendMessageUseCase $sendMessageUseCase,
     ) {
@@ -33,7 +35,7 @@ final readonly class WriteController
 
     public function send(int $id): string
     {
-        $text = trim((string) $this->request->getPost('text', ''));
+        $text = trim($this->editorContentNormalizer->trimEdgeEmptyBlocks((string) $this->request->getPost('text', '')));
 
         $files = $this->request->getUploadedFiles();
         $file = $files['fail'] ?? null;
@@ -100,7 +102,6 @@ final readonly class WriteController
                     'form_action'     => $result->formAction,
                     'show_nick_input' => $result->showNickInput,
                     'nick'            => $result->nick,
-                    'bbcode'          => $result->bbcode,
                     'items'           => $result->items->map(fn ($item) => $item->toArray())->all(),
                     'total'           => $result->total,
                     'pagination'      => $result->pagination,
