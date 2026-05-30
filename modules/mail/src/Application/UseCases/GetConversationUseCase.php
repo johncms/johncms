@@ -74,7 +74,7 @@ final readonly class GetConversationUseCase
             $authorRights = $author->rights ?? 0;
 
             $userData = $author !== null
-                ? $this->userProperties->getFromArray(array_merge($author->toArray(), ['user_id' => $message->user_id]))
+                ? $this->userProperties->getFromArray(array_merge($author->getRawOriginal(), ['user_id' => $message->user_id]))
                 : [];
 
             $text = $this->purifier->purify($message->text);

@@ -65,7 +65,7 @@ final readonly class GetIncomingConversationsUseCase
                 $unread = ! $lastMessage->read;
             }
 
-            $userData = $this->userProperties->getFromArray($user->toArray());
+            $userData = $this->userProperties->getFromArray($user->getRawOriginal());
             $userIsOnline = $user->lastdate >= (time() - 300);
 
             $buttons = [
