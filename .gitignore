@@ -26,6 +26,8 @@ docker-compose.override.yml
 # Upload folder ignores
 /upload/downloads/files/*
 !/upload/downloads/files/index.php
+/upload/downloads/screen/*
+!/upload/downloads/screen/index.php
 /upload/forum/attach/*
 !/upload/forum/attach/index.php
 /upload/forum/topics/*
