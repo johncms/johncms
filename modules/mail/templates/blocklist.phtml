@@ -38,7 +38,7 @@ $this->layout('system::layout/default');
                         <div class="avatar-image rounded-circle overflow-hidden">
                             <img src="<?= $this->avatar($user->id) ?>" class="img-fluid" alt=".">
                         </div>
-                        <div class="user-status <?= $user->isOnline() ? 'online' : 'offline' ?>"></div>
+                        <div class="user-status <?= $user->is_online ? 'online' : 'offline' ?>"></div>
                     </div>
                     <div class="overflow-auto flex-grow-1">
                         <div class="d-flex flex-wrap align-items-center justify-content-between mb-2">
@@ -46,15 +46,15 @@ $this->layout('system::layout/default');
                                 <a href="/profile/?user=<?= $user->id ?>" class="text-decoration-none fw-bold"><?= $this->e($user->name) ?></a>
                             </div>
                             <div class="text-muted small">
-                                <?= $this->displayDate($contact->time) ?>
+                                <?= $tools->displayDate($contact->time) ?>
                             </div>
                         </div>
                         <div class="user-info small text-muted">
-                            <?= __('User since:') ?> <?= $this->displayDate($user->datereg) ?>
+                            <?= __('User since:') ?> <?= $tools->displayDate($user->datereg) ?>
                         </div>
                         <div class="mt-3">
                             <a href="/mail/write/<?= $user->id ?>" class="btn btn-sm btn-outline-primary"><?= __('Correspondence') ?></a>
-                            <a href="/mail/delete-contact/<?= $user->id ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('<?= __('Are you sure you want to delete?') ?>')"><?= __('Delete') ?></a>
+                            <a href="/mail/delete-contact/<?= $user->id ?>" class="btn btn-sm btn-outline-danger"><?= __('Delete') ?></a>
                             <a href="/mail/unblock/<?= $user->id ?>" class="btn btn-sm btn-outline-warning"><?= __('Unblock') ?></a>
                         </div>
                     </div>

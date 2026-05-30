@@ -94,10 +94,10 @@ $this->layout(
                     <?php if ($data['can_write']): ?>
                         <a href="/mail/write/<?= $data['user']['id'] ?>" class="btn btn-primary btn-sm mt-2"><?= __('Write') ?></a>
                     <?php endif; ?>
-                    <?php if ($data['can_write']): ?>
-                        <a href="../mail/?act=ignor&amp;id=<?= $data['user']['id'] ?>&amp;add" class="btn btn-secondary btn-sm mt-2"><?= __('Block') ?></a>
+                    <?php if (empty($data['blocked'])): ?>
+                        <a href="/mail/block/<?= $data['user']['id'] ?>" class="btn btn-secondary btn-sm mt-2"><?= __('Block') ?></a>
                     <?php else: ?>
-                        <a href="../mail/?act=ignor&amp;id=<?= $data['user']['id'] ?>&amp;del" class="btn btn-secondary btn-sm mt-2"><?= __('Unblock') ?></a>
+                        <a href="/mail/unblock/<?= $data['user']['id'] ?>" class="btn btn-secondary btn-sm mt-2"><?= __('Unblock') ?></a>
                     <?php endif; ?>
                     <?php if (! empty($data['buttons'])): ?>
                         <button class="btn btn-danger dropdown-toggle btn-sm mt-2" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

@@ -154,12 +154,14 @@ class EloquentMailMessageRepository implements MailMessageRepositoryInterface
     {
         return MailMessage::query()
             ->where(function (Builder $query) use ($userId, $contactId) {
-                $query->where('user_id', $userId)
-                    ->where('from_id', $contactId);
-            })
-            ->orWhere(function (Builder $query) use ($userId, $contactId) {
-                $query->where('user_id', $contactId)
-                    ->where('from_id', $userId);
+                $query->where(function (Builder $sub) use ($userId, $contactId) {
+                    $sub->where('user_id', $userId)
+                        ->where('from_id', $contactId);
+                })
+                    ->orWhere(function (Builder $sub) use ($userId, $contactId) {
+                        $sub->where('user_id', $contactId)
+                            ->where('from_id', $userId);
+                    });
             })
             ->where('sys', '!=', 1)
             ->where('spam', '!=', 1)
@@ -182,13 +184,15 @@ class EloquentMailMessageRepository implements MailMessageRepositoryInterface
     public function getMessagesBetween(int $userId, int $contactId): \Illuminate\Database\Eloquent\Collection
     {
         return MailMessage::query()
-            ->where(function (\Illuminate\Database\Eloquent\Builder $query) use ($userId, $contactId) {
-                $query->where('user_id', $userId)
-                    ->where('from_id', $contactId);
-            })
-            ->orWhere(function (\Illuminate\Database\Eloquent\Builder $query) use ($userId, $contactId) {
-                $query->where('user_id', $contactId)
-                    ->where('from_id', $userId);
+            ->where(function (Builder $query) use ($userId, $contactId) {
+                $query->where(function (Builder $sub) use ($userId, $contactId) {
+                    $sub->where('user_id', $userId)
+                        ->where('from_id', $contactId);
+                })
+                    ->orWhere(function (Builder $sub) use ($userId, $contactId) {
+                        $sub->where('user_id', $contactId)
+                            ->where('from_id', $userId);
+                    });
             })
             ->where('sys', '!=', 1)
             ->where('spam', '!=', 1)
