@@ -16,7 +16,6 @@ use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
 use Johncms\System\View\Render;
 use Johncms\System\i18n\Translator;
-use Johncms\Modules\Mail\Application\Services\MailLegacyRedirectResolver;
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
@@ -52,15 +51,6 @@ $page = isset($_REQUEST['page']) ? max(1, (int) $_REQUEST['page']) : 1;
 $start = isset($_REQUEST['page'])
     ? ($page - 1) * (int) $user->config->kmess
     : (isset($_GET['start']) ? abs((int) $_GET['start']) : 0);
-
-// Redirect legacy URLs to new routes
-$legacyRedirectResolver = new \Johncms\Modules\Mail\Application\Services\MailLegacyRedirectResolver($user);
-$redirectUrl = $legacyRedirectResolver->resolve($request->getQueryParams());
-if ($redirectUrl !== null) {
-    http_response_code(301);
-    header('Location: ' . $redirectUrl);
-    exit;
-}
 
 if (isset($_SESSION['ref'])) {
     unset($_SESSION['ref']);

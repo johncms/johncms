@@ -43,7 +43,7 @@ final readonly class GetContactListUseCase
             total: $paginator->total(),
             pagination: $paginator->render(),
             filters: $filters,
-            backUrl: '../profile/?act=office',
+            backUrl: '/profile/?act=office',
         );
     }
 
@@ -80,7 +80,7 @@ final readonly class GetContactListUseCase
     {
         return [
             [
-                'url' => '?act=write&amp;id=' . $contactId,
+                'url' => '/mail/write/' . $contactId,
                 'name' => __('Correspondence'),
             ],
             [

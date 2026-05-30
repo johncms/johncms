@@ -52,7 +52,7 @@ $this->layout(
                         <?php endif; ?>
                     </div>
                     <div class="small">
-                        <a href="?act=load&amp;id=<?= $item['id'] ?>"><?= $item['file_name'] ?></a> (<?= formatsize($item['size']) ?>) (<?= $item['count'] ?>)
+                        <a href="/mail/load/<?= $item['id'] ?>"><?= $item['file_name'] ?></a> (<?= formatsize($item['size']) ?>) (<?= $item['count'] ?>)
                     </div>
                 </div>
             </div>

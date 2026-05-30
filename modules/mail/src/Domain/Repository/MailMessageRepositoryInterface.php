@@ -57,6 +57,8 @@ interface MailMessageRepositoryInterface
      */
     public function markAsRead(int $id): void;
 
+    public function incrementDownloadCount(int $id): void;
+
     /**
      * Delete all messages between two users (clear conversation).
      */

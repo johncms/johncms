@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use Johncms\Modules\Mail\Application\Services\MailLegacyRedirectResolver;
 use Johncms\Modules\Mail\Domain\Repository\ContactRepositoryInterface;
 use Johncms\Modules\Mail\Domain\Repository\MailMessageRepositoryInterface;
 use Johncms\Modules\Mail\Infrastructure\Persistence\Repository\EloquentContactRepository;
@@ -37,5 +36,4 @@ return static function (ContainerConfigurator $container): void {
     $services->set(MailMessageRepositoryInterface::class, EloquentMailMessageRepository::class)->public();
     $services->set(ContactRepositoryInterface::class, EloquentContactRepository::class)->public();
     $services->set(\Johncms\Modules\Mail\Application\Services\MailFileService::class)->public();
-    $services->set(\Johncms\Modules\Mail\Application\Services\MailLegacyRedirectResolver::class)->public();
 };

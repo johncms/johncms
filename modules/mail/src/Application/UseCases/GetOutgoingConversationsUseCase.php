@@ -29,7 +29,7 @@ final readonly class GetOutgoingConversationsUseCase
             items: $items,
             total: $paginator->total(),
             pagination: $paginator->render(),
-            backUrl: '../profile/?act=office',
+            backUrl: '/profile/?act=office',
         );
     }
 
@@ -63,7 +63,7 @@ final readonly class GetOutgoingConversationsUseCase
                     $text = $tools->checkout($text, 1, 1);
                     $text = $tools->smilies($text, $user->rights ? 1 : 0);
                     $text = $bbcode->notags($text);
-                    $previewText = $text . '...<a href="?act=write&amp;id=' . $user->id . '">' . __('Continue') . ' &gt;&gt;</a>';
+                    $previewText = $text . '...<a href="/mail/write/' . $user->id . '">' . __('Continue') . ' &gt;&gt;</a>';
                 } else {
                     $previewText = $tools->checkout($text, 1, 1);
                     $previewText = $tools->smilies($previewText, $user->rights ? 1 : 0);
@@ -78,7 +78,7 @@ final readonly class GetOutgoingConversationsUseCase
 
             $buttons = [
                 [
-                    'url'  => '?act=write&amp;id=' . $user->id,
+                    'url'  => '/mail/write/' . $user->id,
                     'name' => __('Correspondence'),
                 ],
                 [
@@ -98,7 +98,7 @@ final readonly class GetOutgoingConversationsUseCase
                 displayDate: $displayDate,
                 previewText: $previewText,
                 unread: $unread,
-                writeUrl: '?act=write&amp;id=' . $user->id,
+                writeUrl: '/mail/write/' . $user->id,
                 buttons: $buttons,
                 userIsOnline: $userIsOnline,
                 userRightsName: $userData['user_rights_name'] ?? null,

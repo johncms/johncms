@@ -122,6 +122,11 @@ class EloquentMailMessageRepository implements MailMessageRepositoryInterface
         MailMessage::query()->where('id', $id)->update(['read' => true]);
     }
 
+    public function incrementDownloadCount(int $id): void
+    {
+        MailMessage::query()->where('id', $id)->increment('count');
+    }
+
     public function clearConversation(int $userId, int $contactId): void
     {
         // Mark messages as deleted for both users
