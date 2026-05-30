@@ -285,8 +285,7 @@ class EloquentMailMessageRepository implements MailMessageRepositoryInterface
     public function getIncomingConversations(int $userId, int $perPage, int $page): \Illuminate\Contracts\Pagination\LengthAwarePaginator
     {
         $query = Capsule::table('cms_mail as m')
-            ->select(['u.*', Capsule::raw('MAX(m.time) as last_time')])
-            ->join('users as u', 'm.user_id', '=', 'u.id')
+            ->select(['m.user_id as id', Capsule::raw('MAX(m.time) as last_time')])
             ->leftJoin('cms_contact as c', function ($join) use ($userId) {
                 $join->on('c.from_id', '=', 'm.user_id')
                     ->where('c.user_id', '=', $userId);
@@ -299,7 +298,7 @@ class EloquentMailMessageRepository implements MailMessageRepositoryInterface
                 $q->where('c.ban', '!=', 1)
                     ->orWhereNull('c.ban');
             })
-            ->groupBy('m.user_id', 'u.id')
+            ->groupBy('m.user_id')
             ->orderByDesc('last_time');
 
         $paginator = $query->paginate($perPage, ['*'], 'page', $page);
@@ -329,8 +328,7 @@ class EloquentMailMessageRepository implements MailMessageRepositoryInterface
     public function getOutgoingConversations(int $userId, int $perPage, int $page): \Illuminate\Contracts\Pagination\LengthAwarePaginator
     {
         $query = Capsule::table('cms_mail as m')
-            ->select(['u.*', Capsule::raw('MAX(m.time) as last_time')])
-            ->join('users as u', 'm.from_id', '=', 'u.id')
+            ->select(['m.from_id as id', Capsule::raw('MAX(m.time) as last_time')])
             ->leftJoin('cms_contact as c', function ($join) use ($userId) {
                 $join->on('c.from_id', '=', 'm.from_id')
                     ->where('c.user_id', '=', $userId);
@@ -342,7 +340,7 @@ class EloquentMailMessageRepository implements MailMessageRepositoryInterface
                 $q->where('c.ban', '!=', 1)
                     ->orWhereNull('c.ban');
             })
-            ->groupBy('m.from_id', 'u.id')
+            ->groupBy('m.from_id')
             ->orderByDesc('last_time');
 
         $paginator = $query->paginate($perPage, ['*'], 'page', $page);
