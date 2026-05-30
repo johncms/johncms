@@ -43,7 +43,7 @@ final readonly class ContactController
         ]);
 
         return $this->render->render(
-            'mail::contact_list_new',
+            'mail::contact_list',
             [
                 'data' => [
                     'items' => $result->items,
