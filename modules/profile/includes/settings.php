@@ -19,7 +19,7 @@ $title = __('Settings');
 // Массив для основных данных, которые попадут в шаблон
 $data = [];
 
-$nav_chain->add(__('My Account'), '/profile/?act=office');
+$nav_chain->add(__('My Account'), '/profile/account');
 $nav_chain->add(__('Settings'), '?act=settings');
 // Проверяем права доступа
 if ($user_data->id !== $user->id) {

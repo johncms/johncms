@@ -40,7 +40,7 @@ final readonly class LogoutController
         $config = config('johncms');
         $referer = $this->request->getServer('HTTP_REFERER', $config['homeurl'], FILTER_SANITIZE_SPECIAL_CHARS);
 
-        $this->navChain->add(__('Personal'), '/profile/?act=office');
+        $this->navChain->add(__('Personal'), '/profile/account');
         $this->navChain->add(__('Logout'));
 
         return $this->render->render('login::logout', ['referer' => $referer]);

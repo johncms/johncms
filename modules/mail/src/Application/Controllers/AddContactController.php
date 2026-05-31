@@ -33,7 +33,7 @@ final readonly class AddContactController
             return $this->renderError($e->getMessage());
         }
 
-        $this->navChain->add(__('My Account'), '/profile/?act=office');
+        $this->navChain->add(__('My Account'), '/profile/account');
         $this->navChain->add(__('Mail'), '/mail/incoming');
         $this->navChain->add(__('Contacts'), '/mail/contacts');
         $this->navChain->add(__('Add Contact'));

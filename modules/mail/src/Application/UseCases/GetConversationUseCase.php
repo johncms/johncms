@@ -49,7 +49,7 @@ final readonly class GetConversationUseCase
             items: $items,
             total: $paginator->total(),
             pagination: $paginator->render(),
-            backUrl: '/profile/?act=office',
+            backUrl: '/profile/account',
             clearUrl: '/mail/clear/' . $contactId,
             formAction: $canWrite ? '/mail/write/' . $contactId : null,
             showNickInput: false,

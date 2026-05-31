@@ -33,7 +33,7 @@ final readonly class GetIncomingConversationsUseCase
             items: $items,
             total: $paginator->total(),
             pagination: $paginator->render(),
-            backUrl: '/profile/?act=office',
+            backUrl: '/profile/account',
         );
     }
 

@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
+use Johncms\Modules\Profile\Domain\Repository\AlbumPhotoRepositoryInterface;
 use Johncms\Modules\Profile\Domain\Repository\IpHistoryRepositoryInterface;
 use Johncms\Modules\Profile\Domain\Repository\KarmaRepositoryInterface;
 use Johncms\Modules\Profile\Domain\Repository\ProfileActivityRepositoryInterface;
 use Johncms\Modules\Profile\Domain\Repository\ProfileUserRepositoryInterface;
+use Johncms\Modules\Profile\Infrastructure\Persistence\Repository\EloquentAlbumPhotoRepository;
 use Johncms\Modules\Profile\Infrastructure\Persistence\Repository\EloquentIpHistoryRepository;
 use Johncms\Modules\Profile\Infrastructure\Persistence\Repository\EloquentKarmaRepository;
 use Johncms\Modules\Profile\Infrastructure\Persistence\Repository\EloquentProfileActivityRepository;
@@ -43,5 +45,6 @@ return static function (ContainerConfigurator $container): void {
     $services->set(ProfileUserRepositoryInterface::class, ProfileUserRepository::class)->public();
     $services->set(KarmaRepositoryInterface::class, EloquentKarmaRepository::class)->public();
     $services->set(IpHistoryRepositoryInterface::class, EloquentIpHistoryRepository::class)->public();
+    $services->set(AlbumPhotoRepositoryInterface::class, EloquentAlbumPhotoRepository::class)->public();
     $services->set(ProfileActivityRepositoryInterface::class, EloquentProfileActivityRepository::class)->public();
 };

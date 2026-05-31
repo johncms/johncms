@@ -32,7 +32,7 @@ final readonly class IncomingConversationsController
 
         $result = $this->getIncomingConversationsUseCase->execute($page, $perPage);
 
-        $this->navChain->add(__('My Account'), '/profile/?act=office');
+        $this->navChain->add(__('My Account'), '/profile/account');
         $this->navChain->add(__('Mail'), '/mail/incoming');
 
         $pageTitle = __('Incoming messages');

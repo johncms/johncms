@@ -43,7 +43,7 @@ final readonly class GetContactListUseCase
             total: $paginator->total(),
             pagination: $paginator->render(),
             filters: $filters,
-            backUrl: '/profile/?act=office',
+            backUrl: '/profile/account',
         );
     }
 

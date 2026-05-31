@@ -29,7 +29,7 @@ final readonly class GetAttachedFilesUseCase
             items: $this->mapToDTO($paginator),
             total: $paginator->total(),
             pagination: $paginator->render(),
-            backUrl: '/profile/?act=office',
+            backUrl: '/profile/account',
         );
     }
 

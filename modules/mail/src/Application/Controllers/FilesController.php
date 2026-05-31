@@ -31,7 +31,7 @@ final readonly class FilesController
 
         $result = $this->getAttachedFilesUseCase->execute($this->currentUser->config->kmess);
 
-        $this->navChain->add(__('My Account'), '/profile/?act=office');
+        $this->navChain->add(__('My Account'), '/profile/account');
         $this->navChain->add(__('Mail'), '/mail/incoming');
         $this->navChain->add(__('Files'), '/mail/files');
 

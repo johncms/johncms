@@ -94,7 +94,6 @@ $mods = [
     'images',
     'guestbook',
     'karma',
-    'office',
     'password',
     'reset',
     'settings',

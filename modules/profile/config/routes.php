@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Johncms\Modules\Profile\Application\Controllers\AccountController;
 use Johncms\Modules\Profile\Application\Controllers\ActivityController;
 use Johncms\Modules\Profile\Application\Controllers\IpHistoryController;
 use Johncms\Modules\Profile\Application\Controllers\ProfileController;
@@ -13,6 +14,7 @@ use Johncms\System\Users\User;
 return static function (RouteCollection $router, User $user): void {
     // Routes migrated to the new architecture (require an authenticated user)
     $profileGroup = $router->group('', function (RouteCollection $r): void {
+        $r->get('/profile/account', AccountController::class)->name('profile.account');
         $r->get('/profile/{id:number}/statistics', StatisticsController::class)->name('profile.statistics');
         $r->get('/profile/{id:number}/ip-history', IpHistoryController::class)->name('profile.ip-history');
         $r->get('/profile/{id:number}/activity', [ActivityController::class, 'messages'])->name('profile.activity');
