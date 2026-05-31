@@ -50,8 +50,8 @@ $this->layout(
 
 <h3><?= __('Activity') ?></h3>
 <ul>
-    <li><span class="gray"><?= __('Forum') ?>:</span> <a href="/profile/?act=activity&amp;user=<?= $profile_user['id'] ?>"><?= $profile_user['postforum'] ?></a></li>
-    <li><span class="gray"><?= __('Guestbook') ?>:</span> <a href="/profile/?act=activity&amp;mod=comments&amp;user=<?= $profile_user['id'] ?>"><?= $profile_user['postguest'] ?></a></li>
+    <li><span class="gray"><?= __('Forum') ?>:</span> <a href="/profile/<?= $profile_user['id'] ?>/activity"><?= $profile_user['postforum'] ?></a></li>
+    <li><span class="gray"><?= __('Guestbook') ?>:</span> <a href="/profile/<?= $profile_user['id'] ?>/activity/comments"><?= $profile_user['postguest'] ?></a></li>
     <li><span class="gray"><?= __('Comments') ?>:</span> <?= $profile_user['komm'] ?></li>
 </ul>
 
