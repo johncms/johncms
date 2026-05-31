@@ -18,4 +18,13 @@ final class ProfileUserRepository implements ProfileUserRepositoryInterface
     {
         User::query()->where('id', '=', $userId)->update(['comm_old' => $commCount]);
     }
+
+    public function confirmNewEmail(int $id, string $newEmail): void
+    {
+        User::query()->where('id', '=', $id)->update([
+            'mail'              => $newEmail,
+            'new_email'         => null,
+            'confirmation_code' => null,
+        ]);
+    }
 }

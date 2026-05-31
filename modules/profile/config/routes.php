@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Johncms\Modules\Profile\Application\Controllers\AccountController;
 use Johncms\Modules\Profile\Application\Controllers\ActivityController;
+use Johncms\Modules\Profile\Application\Controllers\ConfirmNewEmailController;
 use Johncms\Modules\Profile\Application\Controllers\GuestbookController;
 use Johncms\Modules\Profile\Application\Controllers\IpHistoryController;
 use Johncms\Modules\Profile\Application\Controllers\ProfileController;
@@ -25,6 +26,9 @@ return static function (RouteCollection $router, User $user): void {
         $r->get('/profile/{id:number}', ProfileController::class)->name('profile.view');
     });
     $profileGroup->addMiddleware(AuthorizedUserMiddleware::class);
+
+    // Public routes (no authentication required, access is granted by the code from the email link)
+    $router->get('/profile/confirm-email/{id:number}/{code}', ConfirmNewEmailController::class)->name('profile.confirm-email');
 
     // Legacy routes (gradually being migrated)
     $router->map(['GET', 'POST'], '/profile/skl.php', 'modules/profile/skl.php')->name('profile.skl');

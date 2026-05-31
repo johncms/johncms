@@ -157,7 +157,7 @@ if (isset($_GET['delavatar'])) {
             $form_data['confirmation_code'] = uniqid('email_', true);
 
             // Отправляем письмо на новый email
-            $link = $config['homeurl'] . '/profile/?act=confirm_new_email&id=' . $user_data->id . '&code=' . $form_data['confirmation_code'];
+            $link = $config['homeurl'] . '/profile/confirm-email/' . $user_data->id . '/' . $form_data['confirmation_code'];
             (new EmailMessage())->create(
                 [
                     'priority' => 1,
