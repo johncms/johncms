@@ -13,4 +13,9 @@ final class ProfileUserRepository implements ProfileUserRepositoryInterface
     {
         return User::query()->find($id);
     }
+
+    public function markGuestbookSeen(int $userId, int $commCount): void
+    {
+        User::query()->where('id', '=', $userId)->update(['comm_old' => $commCount]);
+    }
 }

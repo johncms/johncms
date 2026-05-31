@@ -37,7 +37,7 @@ $this->layout(
         <span class="counter badge text-bg-light rounded-pill"><?= $account->totalPhoto ?></span>
     </div>
     <div class="list-group-item">
-        <a href="/profile?act=guestbook" class="link"><?= __('Guestbook') ?></a>
+        <a href="/profile/<?= $account->userId ?>/guestbook" class="link"><?= __('Guestbook') ?></a>
         <span class="counter badge text-bg-light rounded-pill"><?= $account->guestbookCount ?></span>
     </div>
 </div>

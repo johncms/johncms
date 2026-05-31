@@ -97,7 +97,7 @@ final readonly class GetNotificationListUseCase
         if (! empty($counters['guestbook_comments'])) {
             $notifications[] = [
                 'name'    => __('Guestbook'),
-                'url'     => '/profile/?act=guestbook&user=' . $this->currentUser->id,
+                'url'     => '/profile/' . $this->currentUser->id . '/guestbook',
                 'counter' => $counters['guestbook_comments'],
                 'type'    => 'info',
             ];
