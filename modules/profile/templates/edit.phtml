@@ -275,7 +275,7 @@ $errors = $data['errors'];
                     <label class="custom-control-label" for="karma_off"><?= __('Prohibit Karma') ?></label>
                 </div>
                 <div class="mt-2 mb-3">
-                    <a href="?act=password&amp;user=<?= $data['user']['id'] ?>" class="btn btn-outline-primary btn-sm"><?= __('Change Password') ?></a>
+                    <a href="/profile/<?= $data['user']['id'] ?>/password" class="btn btn-outline-primary btn-sm"><?= __('Change Password') ?></a>
                     <?php if ($user->rights > $data['user']['rights']): ?>
                         <a href="?act=reset&amp;user=<?= $data['user']['id'] ?>" class="btn btn-outline-primary btn-sm"><?= __('Reset User options to default') ?></a>
                     <?php endif; ?>

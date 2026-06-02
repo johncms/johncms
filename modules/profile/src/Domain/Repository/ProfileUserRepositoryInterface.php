@@ -19,4 +19,9 @@ interface ProfileUserRepositoryInterface
      * Apply a previously requested email change: move new_email into mail and clear the pending state.
      */
     public function confirmNewEmail(int $id, string $newEmail): void;
+
+    /**
+     * Store the already hashed password for the user.
+     */
+    public function updatePassword(int $id, string $hashedPassword): void;
 }

@@ -93,7 +93,6 @@ $mods = [
     'edit',
     'images',
     'karma',
-    'password',
     'reset',
     'settings',
 ];

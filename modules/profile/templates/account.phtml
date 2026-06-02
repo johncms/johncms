@@ -82,6 +82,6 @@ $this->layout(
 
 <div class="list-group">
     <a href="/profile?act=edit" class="list-group-item"><?= __('Edit Profile') ?></a>
-    <a href="/profile?act=password" class="list-group-item"><?= __('Change Password') ?></a>
+    <a href="/profile/<?= $account->userId ?>/password" class="list-group-item"><?= __('Change Password') ?></a>
     <a href="/profile?act=settings" class="list-group-item"><?= __('System Settings') ?></a>
 </div>

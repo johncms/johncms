@@ -27,4 +27,9 @@ final class ProfileUserRepository implements ProfileUserRepositoryInterface
             'confirmation_code' => null,
         ]);
     }
+
+    public function updatePassword(int $id, string $hashedPassword): void
+    {
+        User::query()->where('id', '=', $id)->update(['password' => $hashedPassword]);
+    }
 }
