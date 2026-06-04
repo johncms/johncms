@@ -72,6 +72,6 @@ $this->layout(
     <div class="mt-3">
         <input type="submit" name="submit" value="<?= __('Save') ?>" class="btn btn-primary"/>
         <a href="/profile/account" class="btn btn-secondary"><?= __('Cancel') ?></a>
-        <a href="?act=settings&amp;mod=forum&amp;reset" class="btn btn-danger float-right"><?= __('Reset Settings') ?></a>
+        <button type="submit" formaction="/profile/settings/forum/reset" formmethod="post" formnovalidate class="btn btn-danger float-right"><?= __('Reset Settings') ?></button>
     </div>
 </form>

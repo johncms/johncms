@@ -36,4 +36,25 @@ interface ProfileUserRepositoryInterface
      * @param array<string, mixed> $attributes
      */
     public function updateProfile(int $id, array $attributes): void;
+
+    /**
+     * Store the user's personal settings (set_user). Persisted through a loaded model so the cast applies.
+     *
+     * @param array<string, mixed> $settings
+     */
+    public function saveUserSettings(int $id, array $settings): void;
+
+    /**
+     * Store the user's forum settings (set_forum). Persisted through a loaded model so the cast applies.
+     *
+     * @param array<string, mixed> $settings
+     */
+    public function saveForumSettings(int $id, array $settings): void;
+
+    /**
+     * Store the user's mail settings (set_mail). Persisted through a loaded model so the cast applies.
+     *
+     * @param array<string, mixed> $settings
+     */
+    public function saveMailSettings(int $id, array $settings): void;
 }

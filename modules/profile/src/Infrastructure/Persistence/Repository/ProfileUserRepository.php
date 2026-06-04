@@ -47,4 +47,22 @@ final class ProfileUserRepository implements ProfileUserRepositoryInterface
         // Update through a loaded model so the attribute casts (admin_notes, mailvis, etc.) are applied
         User::query()->find($id)?->update($attributes);
     }
+
+    public function saveUserSettings(int $id, array $settings): void
+    {
+        // Update through a loaded model so the set_user (UserSettings) cast serializes the value
+        User::query()->find($id)?->update(['set_user' => $settings]);
+    }
+
+    public function saveForumSettings(int $id, array $settings): void
+    {
+        // Update through a loaded model so the set_forum (Serialize) cast serializes the value
+        User::query()->find($id)?->update(['set_forum' => $settings]);
+    }
+
+    public function saveMailSettings(int $id, array $settings): void
+    {
+        // Update through a loaded model so the set_mail (Serialize) cast serializes the value
+        User::query()->find($id)?->update(['set_mail' => $settings]);
+    }
 }

@@ -92,7 +92,6 @@ $mods = [
     'ban',
     'images',
     'karma',
-    'settings',
 ];
 
 if ($act && ($key = array_search($act, $mods, true)) !== false && file_exists(__DIR__ . '/includes/' . $mods[$key] . '.php')) {

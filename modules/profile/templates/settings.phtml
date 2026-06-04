@@ -114,7 +114,7 @@ $userConfig = $user->config;
             <a href="/profile/account" class="btn btn-secondary"><?= __('Cancel') ?></a>
         </div>
         <div>
-            <a href="?act=settings&amp;reset" class="btn btn-danger"><?= __('Reset Settings') ?></a>
+            <button type="submit" formaction="/profile/settings/reset" formmethod="post" formnovalidate class="btn btn-danger"><?= __('Reset Settings') ?></button>
         </div>
     </div>
 </form>

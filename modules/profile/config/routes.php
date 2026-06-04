@@ -11,6 +11,7 @@ use Johncms\Modules\Profile\Application\Controllers\GuestbookController;
 use Johncms\Modules\Profile\Application\Controllers\IpHistoryController;
 use Johncms\Modules\Profile\Application\Controllers\ProfileController;
 use Johncms\Modules\Profile\Application\Controllers\ResetSettingsController;
+use Johncms\Modules\Profile\Application\Controllers\SettingsController;
 use Johncms\Modules\Profile\Application\Controllers\StatisticsController;
 use Johncms\Modules\Profile\Application\Middlewares\AuthorizedUserMiddleware;
 use Johncms\Router\RouteCollection;
@@ -20,6 +21,14 @@ return static function (RouteCollection $router, User $user): void {
     // Routes migrated to the new architecture (require an authenticated user)
     $profileGroup = $router->group('', function (RouteCollection $r): void {
         $r->get('/profile/account', AccountController::class)->name('profile.account');
+        $r->get('/profile/settings', [SettingsController::class, 'general'])->name('profile.settings');
+        $r->post('/profile/settings', [SettingsController::class, 'saveGeneral'])->name('profile.settings.save');
+        $r->post('/profile/settings/reset', [SettingsController::class, 'resetGeneral'])->name('profile.settings.reset');
+        $r->get('/profile/settings/forum', [SettingsController::class, 'forum'])->name('profile.settings.forum');
+        $r->post('/profile/settings/forum', [SettingsController::class, 'saveForum'])->name('profile.settings.forum.save');
+        $r->post('/profile/settings/forum/reset', [SettingsController::class, 'resetForum'])->name('profile.settings.forum.reset');
+        $r->get('/profile/settings/mail', [SettingsController::class, 'mail'])->name('profile.settings.mail');
+        $r->post('/profile/settings/mail', [SettingsController::class, 'saveMail'])->name('profile.settings.mail.save');
         $r->get('/profile/{id:number}/statistics', StatisticsController::class)->name('profile.statistics');
         $r->get('/profile/{id:number}/ip-history', IpHistoryController::class)->name('profile.ip-history');
         $r->get('/profile/{id:number}/password', [ChangePasswordController::class, 'form'])->name('profile.password');
