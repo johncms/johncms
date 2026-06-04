@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 use Johncms\Modules\Profile\Application\Controllers\AccountController;
 use Johncms\Modules\Profile\Application\Controllers\ActivityController;
+use Johncms\Modules\Profile\Application\Controllers\AvatarController;
 use Johncms\Modules\Profile\Application\Controllers\ChangePasswordController;
 use Johncms\Modules\Profile\Application\Controllers\ConfirmNewEmailController;
 use Johncms\Modules\Profile\Application\Controllers\EditProfileController;
 use Johncms\Modules\Profile\Application\Controllers\GuestbookController;
 use Johncms\Modules\Profile\Application\Controllers\IpHistoryController;
+use Johncms\Modules\Profile\Application\Controllers\PhotoController;
 use Johncms\Modules\Profile\Application\Controllers\ProfileController;
 use Johncms\Modules\Profile\Application\Controllers\ResetSettingsController;
 use Johncms\Modules\Profile\Application\Controllers\SettingsController;
@@ -39,6 +41,10 @@ return static function (RouteCollection $router, User $user): void {
         $r->post('/profile/{id:number}/edit', [EditProfileController::class, 'save'])->name('profile.edit.save');
         $r->post('/profile/{id:number}/edit/delete-avatar', [EditProfileController::class, 'deleteAvatar'])->name('profile.edit.delete-avatar');
         $r->post('/profile/{id:number}/edit/delete-photo', [EditProfileController::class, 'deletePhoto'])->name('profile.edit.delete-photo');
+        $r->get('/profile/{id:number}/edit/avatar', [AvatarController::class, 'form'])->name('profile.edit.avatar');
+        $r->post('/profile/{id:number}/edit/avatar', [AvatarController::class, 'upload'])->name('profile.edit.avatar.upload');
+        $r->get('/profile/{id:number}/edit/photo', [PhotoController::class, 'form'])->name('profile.edit.photo');
+        $r->post('/profile/{id:number}/edit/photo', [PhotoController::class, 'upload'])->name('profile.edit.photo.upload');
         $r->get('/profile/{id:number}/activity', [ActivityController::class, 'messages'])->name('profile.activity');
         $r->get('/profile/{id:number}/activity/topics', [ActivityController::class, 'topics'])->name('profile.activity.topics');
         $r->get('/profile/{id:number}/activity/comments', [ActivityController::class, 'comments'])->name('profile.activity.comments');

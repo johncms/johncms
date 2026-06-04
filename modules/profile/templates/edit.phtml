@@ -100,7 +100,7 @@ $errors = $data['errors'];
                     </div>
                 </div>
                 <div class="mt-2">
-                    <a href="/profile/?act=images&amp;mod=avatar&amp;user=<?= $data['user']['id'] ?>" class="btn btn-primary btn-sm"><?= __('Upload') ?></a>
+                    <a href="/profile/<?= $data['user']['id'] ?>/edit/avatar" class="btn btn-primary btn-sm"><?= __('Upload') ?></a>
                     <?php if ($data['user']['id'] === $user->id): ?>
                         <a href="/help/?act=avatars" class="btn btn-primary btn-sm"><?= __('Select in Catalog') ?></a>
                     <?php endif; ?>
@@ -123,7 +123,7 @@ $errors = $data['errors'];
                     </div>
                 <?php endif; ?>
                 <div class="mt-2">
-                    <a href="/profile/?act=images&amp;mod=up_photo&amp;user=<?= $data['user']['id'] ?>" class="btn btn-primary btn-sm"><?= __('Upload') ?></a>
+                    <a href="/profile/<?= $data['user']['id'] ?>/edit/photo" class="btn btn-primary btn-sm"><?= __('Upload') ?></a>
                     <?php if (! empty($data['user']['photo']['photo_preview'])): ?>
                         <button type="submit" formaction="/profile/<?= $data['user']['id'] ?>/edit/delete-photo" formmethod="post" formnovalidate class="btn btn-danger btn-sm"><?= __('Delete') ?></button>
                     <?php endif; ?>
