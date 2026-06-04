@@ -9,6 +9,7 @@ use Johncms\Modules\Profile\Application\Controllers\ConfirmNewEmailController;
 use Johncms\Modules\Profile\Application\Controllers\GuestbookController;
 use Johncms\Modules\Profile\Application\Controllers\IpHistoryController;
 use Johncms\Modules\Profile\Application\Controllers\ProfileController;
+use Johncms\Modules\Profile\Application\Controllers\ResetSettingsController;
 use Johncms\Modules\Profile\Application\Controllers\StatisticsController;
 use Johncms\Modules\Profile\Application\Middlewares\AuthorizedUserMiddleware;
 use Johncms\Router\RouteCollection;
@@ -23,6 +24,7 @@ return static function (RouteCollection $router, User $user): void {
         $r->get('/profile/{id:number}/password', [ChangePasswordController::class, 'form'])->name('profile.password');
         $r->post('/profile/{id:number}/password', [ChangePasswordController::class, 'change'])->name('profile.password.change');
         $r->map(['GET', 'POST'], '/profile/{id:number}/guestbook', GuestbookController::class)->name('profile.guestbook');
+        $r->post('/profile/{id:number}/reset-settings', ResetSettingsController::class)->name('profile.reset-settings');
         $r->get('/profile/{id:number}/activity', [ActivityController::class, 'messages'])->name('profile.activity');
         $r->get('/profile/{id:number}/activity/topics', [ActivityController::class, 'topics'])->name('profile.activity.topics');
         $r->get('/profile/{id:number}/activity/comments', [ActivityController::class, 'comments'])->name('profile.activity.comments');

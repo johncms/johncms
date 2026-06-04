@@ -32,4 +32,13 @@ final class ProfileUserRepository implements ProfileUserRepositoryInterface
     {
         User::query()->where('id', '=', $id)->update(['password' => $hashedPassword]);
     }
+
+    public function resetSettings(int $id): void
+    {
+        // Update through a loaded model so the set_user/set_forum casts serialize the empty values correctly
+        User::query()->find($id)?->update([
+            'set_user'  => [],
+            'set_forum' => [],
+        ]);
+    }
 }

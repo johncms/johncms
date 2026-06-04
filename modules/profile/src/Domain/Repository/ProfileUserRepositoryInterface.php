@@ -24,4 +24,9 @@ interface ProfileUserRepositoryInterface
      * Store the already hashed password for the user.
      */
     public function updatePassword(int $id, string $hashedPassword): void;
+
+    /**
+     * Reset the user's personal and forum settings back to defaults.
+     */
+    public function resetSettings(int $id): void;
 }

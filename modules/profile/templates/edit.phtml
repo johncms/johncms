@@ -277,7 +277,7 @@ $errors = $data['errors'];
                 <div class="mt-2 mb-3">
                     <a href="/profile/<?= $data['user']['id'] ?>/password" class="btn btn-outline-primary btn-sm"><?= __('Change Password') ?></a>
                     <?php if ($user->rights > $data['user']['rights']): ?>
-                        <a href="?act=reset&amp;user=<?= $data['user']['id'] ?>" class="btn btn-outline-primary btn-sm"><?= __('Reset User options to default') ?></a>
+                        <button type="submit" formaction="/profile/<?= $data['user']['id'] ?>/reset-settings" formmethod="post" formnovalidate class="btn btn-outline-primary btn-sm"><?= __('Reset User options to default') ?></button>
                     <?php endif; ?>
                 </div>
 
