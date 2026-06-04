@@ -62,7 +62,7 @@ if ($mod === 'avatar') {
                         'title'         => $title,
                         'type'          => 'alert-success',
                         'message'       => __('The avatar is successfully uploaded'),
-                        'back_url'      => '?act=edit&amp;user=' . $user_data['id'],
+                        'back_url'      => '/profile/' . $user_data['id'] . '/edit',
                         'back_url_name' => __('Continue'),
                     ]
                 );
@@ -131,7 +131,7 @@ if ($mod === 'avatar') {
                         'title'         => $title,
                         'type'          => 'alert-success',
                         'message'       => __('The photo is successfully uploaded'),
-                        'back_url'      => '?act=edit&amp;user=' . $user_data['id'],
+                        'back_url'      => '/profile/' . $user_data['id'] . '/edit',
                         'back_url_name' => __('Continue'),
                     ]
                 );

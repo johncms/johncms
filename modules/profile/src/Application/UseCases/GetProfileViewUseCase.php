@@ -176,7 +176,7 @@ final readonly class GetProfileViewUseCase
             || $this->currentUser->rights === 9
             || ($this->currentUser->rights === 7 && $this->currentUser->rights > $profileUser->rights)
         ) {
-            $buttons[] = ['url' => '/profile/?act=edit&user=' . $profileUser->id, 'name' => __('Edit')];
+            $buttons[] = ['url' => '/profile/' . $profileUser->id . '/edit', 'name' => __('Edit')];
         }
         if (! $isOwner && $this->currentUser->rights >= 7 && $this->currentUser->rights > $profileUser->rights) {
             $buttons[] = ['url' => '/admin/usr_del/?id=' . $profileUser->id, 'name' => __('Delete')];

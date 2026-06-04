@@ -74,7 +74,7 @@ final readonly class SetAvatarController
                     'title'         => $pageTitle,
                     'type'          => 'alert-success',
                     'message'       => __('Avatar has been successfully applied'),
-                    'back_url'      => '/profile/?act=edit',
+                    'back_url'      => '/profile/' . $this->currentUser->id . '/edit',
                     'back_url_name' => __('Continue'),
                 ]);
             }

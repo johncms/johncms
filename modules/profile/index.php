@@ -90,7 +90,6 @@ if (empty($user_data->id) || (! $user_data->preg && $user->rights < 7)) {
 // Переключаем режимы работы
 $mods = [
     'ban',
-    'edit',
     'images',
     'karma',
     'settings',

@@ -41,4 +41,10 @@ final class ProfileUserRepository implements ProfileUserRepositoryInterface
             'set_forum' => [],
         ]);
     }
+
+    public function updateProfile(int $id, array $attributes): void
+    {
+        // Update through a loaded model so the attribute casts (admin_notes, mailvis, etc.) are applied
+        User::query()->find($id)?->update($attributes);
+    }
 }

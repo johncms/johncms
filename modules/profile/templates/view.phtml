@@ -112,7 +112,7 @@ $this->layout(
                         </div>
                     <?php endif; ?>
                 <?php else: ?>
-                    <a href="/profile/?act=edit&amp;user=<?= $data['user']['id'] ?>" class="btn btn-primary btn-sm mt-2"><?= __('Edit profile') ?></a>
+                    <a href="/profile/<?= $data['user']['id'] ?>/edit" class="btn btn-primary btn-sm mt-2"><?= __('Edit profile') ?></a>
                 <?php endif; ?>
             </div>
         </div>

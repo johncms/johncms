@@ -100,12 +100,12 @@ $errors = $data['errors'];
                     </div>
                 </div>
                 <div class="mt-2">
-                    <a href="?act=images&amp;mod=avatar&amp;user=<?= $data['user']['id'] ?>" class="btn btn-primary btn-sm"><?= __('Upload') ?></a>
+                    <a href="/profile/?act=images&amp;mod=avatar&amp;user=<?= $data['user']['id'] ?>" class="btn btn-primary btn-sm"><?= __('Upload') ?></a>
                     <?php if ($data['user']['id'] === $user->id): ?>
                         <a href="/help/?act=avatars" class="btn btn-primary btn-sm"><?= __('Select in Catalog') ?></a>
                     <?php endif; ?>
-                    <?php if (! empty($data['delete_avatar_url'])): ?>
-                        <a href="<?= $data['delete_avatar_url'] ?>" class="btn btn-danger btn-sm"><?= __('Delete') ?></a>
+                    <?php if (! empty($data['has_avatar'])): ?>
+                        <button type="submit" formaction="/profile/<?= $data['user']['id'] ?>/edit/delete-avatar" formmethod="post" formnovalidate class="btn btn-danger btn-sm"><?= __('Delete') ?></button>
                     <?php endif; ?>
                 </div>
             </div>
@@ -123,9 +123,9 @@ $errors = $data['errors'];
                     </div>
                 <?php endif; ?>
                 <div class="mt-2">
-                    <a href="?act=images&amp;mod=up_photo&amp;user=<?= $data['user']['id'] ?>" class="btn btn-primary btn-sm"><?= __('Upload') ?></a>
+                    <a href="/profile/?act=images&amp;mod=up_photo&amp;user=<?= $data['user']['id'] ?>" class="btn btn-primary btn-sm"><?= __('Upload') ?></a>
                     <?php if (! empty($data['user']['photo']['photo_preview'])): ?>
-                        <a href="?act=edit&amp;user=<?= $data['user']['id'] ?>&amp;delphoto" class="btn btn-danger btn-sm"><?= __('Delete') ?></a>
+                        <button type="submit" formaction="/profile/<?= $data['user']['id'] ?>/edit/delete-photo" formmethod="post" formnovalidate class="btn btn-danger btn-sm"><?= __('Delete') ?></button>
                     <?php endif; ?>
                 </div>
             </div>

@@ -29,4 +29,11 @@ interface ProfileUserRepositoryInterface
      * Reset the user's personal and forum settings back to defaults.
      */
     public function resetSettings(int $id): void;
+
+    /**
+     * Update the user's profile fields. Persisted through a loaded model so the attribute casts apply.
+     *
+     * @param array<string, mixed> $attributes
+     */
+    public function updateProfile(int $id, array $attributes): void;
 }
