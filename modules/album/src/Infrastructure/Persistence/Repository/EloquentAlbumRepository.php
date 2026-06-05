@@ -6,6 +6,7 @@ namespace Johncms\Modules\Album\Infrastructure\Persistence\Repository;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use Johncms\Modules\Album\Domain\Enums\AlbumAccess;
 use Johncms\Modules\Album\Domain\Models\Album;
@@ -14,6 +15,22 @@ use Johncms\Users\User;
 
 final class EloquentAlbumRepository implements AlbumRepositoryInterface
 {
+    public function findUserById(int $userId): ?User
+    {
+        return User::query()->find($userId);
+    }
+
+    public function getUserAlbums(int $userId, ?int $restrictToVisibleForUser): Collection
+    {
+        $query = Album::query()
+            ->where('user_id', $userId)
+            ->withCount('photos')
+            ->orderBy('sort');
+        $this->applyVisibility($query->getQuery(), $restrictToVisibleForUser);
+
+        return $query->get();
+    }
+
     public function countOwnersBySex(string $sex, ?int $restrictToVisibleForUser): int
     {
         $query = Album::query()

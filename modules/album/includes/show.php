@@ -79,7 +79,7 @@ if (
             'title'         => $title,
             'type'          => 'alert-danger',
             'message'       => __('Access denied'),
-            'back_url'      => './list?user=' . $foundUser['id'],
+            'back_url'      => '/album/user/' . $foundUser['id'],
             'back_url_name' => __('Album List'),
         ]
     );
@@ -103,7 +103,7 @@ if (
 
     if (! isset($_SESSION['ap']) || $_SESSION['ap'] !== $album['password']) {
         $data['action_url'] = './show?al=' . $al . '&amp;user=' . $foundUser['id'];
-        $data['back_url'] = './list?user=' . $foundUser['id'];
+        $data['back_url'] = '/album/user/' . $foundUser['id'];
         echo $view->render(
             'album::enter_password',
             [

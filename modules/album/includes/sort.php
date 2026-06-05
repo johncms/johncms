@@ -59,4 +59,4 @@ switch ($mod) {
         break;
 }
 
-header('Location: ./list?user=' . $foundUser['id']);
+header('Location: /album/user/' . $foundUser['id']);

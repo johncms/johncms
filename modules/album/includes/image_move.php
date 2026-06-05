@@ -100,7 +100,7 @@ if (($img && $foundUser['id'] === $user->id) || $user->rights >= 6) {
                     'title'         => $title,
                     'type'          => 'alert-info',
                     'message'       => __('You must create at least one additional album in order to move the image'),
-                    'back_url'      => './list?user=' . $foundUser['id'],
+                    'back_url'      => '/album/user/' . $foundUser['id'],
                     'back_url_name' => __('Continue'),
                 ]
             );

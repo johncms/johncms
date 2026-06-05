@@ -33,7 +33,7 @@ $this->layout(
         <a href="/profile/<?= $account->userId ?>/statistics/" class="link"><?= __('Statistics') ?></a>
     </div>
     <div class="list-group-item">
-        <a href="/album/?act=list" class="link"><?= __('Photo Album') ?></a>
+        <a href="/album/user/<?= $account->userId ?>" class="link"><?= __('Photo Album') ?></a>
         <span class="counter badge text-bg-light rounded-pill"><?= $account->totalPhoto ?></span>
     </div>
     <div class="list-group-item">

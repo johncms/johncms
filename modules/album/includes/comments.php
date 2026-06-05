@@ -34,7 +34,7 @@ if ($req_obj->rowCount()) {
                 'title'    => $title,
                 'type'     => 'alert-danger',
                 'message'  => __('User does not exists'),
-                'back_url' => './list?user=' . $owner['id'],
+                'back_url' => '/album/user/' . $owner['id'],
             ]
         );
         exit;
@@ -54,7 +54,7 @@ if ($req_obj->rowCount()) {
                 'title'    => $title,
                 'type'     => 'alert-danger',
                 'message'  => __('Access forbidden'),
-                'back_url' => './list?user=' . $owner['id'],
+                'back_url' => '/album/user/' . $owner['id'],
             ]
         );
         exit;

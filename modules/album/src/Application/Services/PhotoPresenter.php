@@ -11,7 +11,7 @@ use Johncms\System\Legacy\Tools;
 /**
  * Builds presentation data for album photos (formerly the Albums\Photo accessors).
  *
- * URLs that target actions which are not migrated yet (show, list, comments, vote)
+ * URLs that target actions which are not migrated yet (show, comments, vote)
  * point to the legacy endpoints and will be updated as those actions are migrated.
  */
 final readonly class PhotoPresenter
@@ -32,7 +32,7 @@ final readonly class PhotoPresenter
             previewText: $this->previewText($photo->description),
             previewPicture: $this->picture($photo->user_id, $photo->tmb_name),
             detailUrl: '/album/show?al=' . $photo->album_id . '&img=' . $photo->id . '&user=' . $photo->user_id . '&view=1',
-            userAlbumsUrl: '/album/list?user=' . $photo->user_id,
+            userAlbumsUrl: '/album/user/' . $photo->user_id,
             userAlbumUrl: '/album/show?al=' . $photo->album_id . '&user=' . $photo->user_id,
             commentsUrl: '/album/comments?img=' . $photo->id,
             likeUrl: '/album/vote?mod=plus&img=' . $photo->id,

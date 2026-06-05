@@ -109,7 +109,6 @@ $actions = [
     'image_edit',
     'image_move',
     'image_upload',
-    'list',
     'new_comm',
     'show',
     'sort',

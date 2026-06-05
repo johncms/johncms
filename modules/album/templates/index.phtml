@@ -10,6 +10,7 @@
 
 /**
  * @var \Johncms\Modules\Album\Application\DTO\AlbumIndexDTO $data
+ * @var string $my_albums_url
  */
 
 // title / page_title are provided globally via Render::addData() in the controller.
@@ -38,7 +39,7 @@ $this->layout('system::layout/default');
         <span class="counter badge counter-badge rounded-pill"><?= $data->women ?></span>
     </div>
     <div class="list-group-item">
-        <a href="/album/list" class="link"><?= __('My Album') ?></a>
+        <a href="<?= $this->e($my_albums_url) ?>" class="link"><?= __('My Album') ?></a>
     </div>
 </div>
 

@@ -46,8 +46,7 @@ final readonly class UsersListController
                 'id'             => $userModel->id,
                 'nick'           => $userModel->name,
                 'user_is_online' => $userModel->is_online,
-                // The user albums list is still served by the legacy controller until it is migrated.
-                'album_url'      => '/album/list?user=' . $userModel->id,
+                'album_url'      => '/album/user/' . $userModel->id,
                 'count_albums'   => $userModel->count_albums ?? 0,
                 'count'          => $userModel->count ?? 0,
             ];

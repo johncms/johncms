@@ -5,9 +5,29 @@ declare(strict_types=1);
 namespace Johncms\Modules\Album\Domain\Repository;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
+use Johncms\Modules\Album\Domain\Models\Album;
+use Johncms\Users\User;
 
 interface AlbumRepositoryInterface
 {
+    /**
+     * Find a user by id, or null when it does not exist.
+     */
+    public function findUserById(int $userId): ?User;
+
+    /**
+     * Get the albums owned by a user, ordered by sort.
+     *
+     * Each album carries a dynamic `photos_count` attribute with the total
+     * number of its photos. When $restrictToVisibleForUser is provided, private
+     * albums are hidden unless owned by that user (pass null to bypass, e.g. for
+     * moderators).
+     *
+     * @return Collection<int, Album>
+     */
+    public function getUserAlbums(int $userId, ?int $restrictToVisibleForUser): Collection;
+
     /**
      * Count distinct owners of a given sex that have at least one album.
      *

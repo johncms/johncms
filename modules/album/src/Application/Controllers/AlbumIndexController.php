@@ -8,6 +8,7 @@ use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Album\Application\UseCases\GetAlbumIndexUseCase;
 use Johncms\NavChain;
 use Johncms\System\View\Render;
+use Johncms\Users\User;
 
 final readonly class AlbumIndexController
 {
@@ -15,6 +16,7 @@ final readonly class AlbumIndexController
         private ControllerContext $controllerContext,
         private Render $render,
         private NavChain $navChain,
+        private User $currentUser,
         private GetAlbumIndexUseCase $getAlbumIndexUseCase,
     ) {
         $this->controllerContext->initModule('album');
@@ -35,7 +37,8 @@ final readonly class AlbumIndexController
         return $this->render->render(
             'album::index',
             [
-                'data' => $data,
+                'data'           => $data,
+                'my_albums_url'  => '/album/user/' . $this->currentUser->id,
             ]
         );
     }

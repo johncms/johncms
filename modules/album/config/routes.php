@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Johncms\Modules\Album\Application\Controllers\AlbumIndexController;
 use Johncms\Modules\Album\Application\Controllers\TopController;
+use Johncms\Modules\Album\Application\Controllers\UserAlbumsController;
 use Johncms\Modules\Album\Application\Controllers\UsersListController;
 use Johncms\Modules\Album\Application\Middlewares\AuthorizedUserMiddleware;
 use Johncms\Router\RouteCollection;
@@ -33,6 +34,11 @@ return static function (RouteCollection $router): void {
     $router->get('/album/top/{filter}', TopController::class)
         ->name('album.top.filter')
         ->requirements(['filter' => 'recent-comments|views|downloads|comments|votes|worst|my-comments'])
+        ->middleware(AuthorizedUserMiddleware::class);
+
+    $router->get('/album/user/{id}', UserAlbumsController::class)
+        ->name('album.user')
+        ->requirements(['id' => '\d+'])
         ->middleware(AuthorizedUserMiddleware::class);
 
     // Legacy front controller (migrated action by action).
