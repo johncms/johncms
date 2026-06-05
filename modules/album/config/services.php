@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
+use Johncms\Modules\Album\Domain\Repository\AlbumPhotoRepositoryInterface;
+use Johncms\Modules\Album\Domain\Repository\AlbumRepositoryInterface;
+use Johncms\Modules\Album\Infrastructure\Persistence\Repository\EloquentAlbumPhotoRepository;
+use Johncms\Modules\Album\Infrastructure\Persistence\Repository\EloquentAlbumRepository;
+
 return static function (ContainerConfigurator $container): void {
     $services = $container->services();
 
@@ -30,4 +35,7 @@ return static function (ContainerConfigurator $container): void {
     )
         ->autowire()
         ->autoconfigure();
+
+    $services->set(AlbumRepositoryInterface::class, EloquentAlbumRepository::class)->public();
+    $services->set(AlbumPhotoRepositoryInterface::class, EloquentAlbumPhotoRepository::class)->public();
 };

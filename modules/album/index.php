@@ -116,7 +116,6 @@ $actions = [
     'top',
     'users',
     'vote',
-    'index',
 ];
 
 if (($key = array_search($act, $actions, true)) !== false) {
