@@ -20,9 +20,8 @@ use Johncms\Modules\Profile\Application\Controllers\SettingsController;
 use Johncms\Modules\Profile\Application\Controllers\StatisticsController;
 use Johncms\Modules\Profile\Application\Middlewares\AuthorizedUserMiddleware;
 use Johncms\Router\RouteCollection;
-use Johncms\System\Users\User;
 
-return static function (RouteCollection $router, User $user): void {
+return static function (RouteCollection $router): void {
     // Routes migrated to the new architecture (require an authenticated user)
     $profileGroup = $router->group('', function (RouteCollection $r): void {
         $r->get('/profile/account', AccountController::class)->name('profile.account');
@@ -78,7 +77,4 @@ return static function (RouteCollection $router, User $user): void {
     $router->post('/profile/password-recovery', [RestorePasswordController::class, 'send'])->name('profile.password-recovery.send');
     $router->get('/profile/password-recovery/set/{id:number}/{code}', [RestorePasswordController::class, 'setForm'])->name('profile.password-recovery.set');
     $router->post('/profile/password-recovery/set/{id:number}/{code}', [RestorePasswordController::class, 'set'])->name('profile.password-recovery.set.submit');
-
-    // Legacy routes (gradually being migrated)
-    $router->map(['GET', 'POST'], '/profile', 'modules/profile/index.php')->name('profile.index');
 };
