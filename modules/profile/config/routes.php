@@ -15,6 +15,7 @@ use Johncms\Modules\Profile\Application\Controllers\KarmaController;
 use Johncms\Modules\Profile\Application\Controllers\PhotoController;
 use Johncms\Modules\Profile\Application\Controllers\ProfileController;
 use Johncms\Modules\Profile\Application\Controllers\ResetSettingsController;
+use Johncms\Modules\Profile\Application\Controllers\RestorePasswordController;
 use Johncms\Modules\Profile\Application\Controllers\SettingsController;
 use Johncms\Modules\Profile\Application\Controllers\StatisticsController;
 use Johncms\Modules\Profile\Application\Middlewares\AuthorizedUserMiddleware;
@@ -73,8 +74,11 @@ return static function (RouteCollection $router, User $user): void {
 
     // Public routes (no authentication required, access is granted by the code from the email link)
     $router->get('/profile/confirm-email/{id:number}/{code}', ConfirmNewEmailController::class)->name('profile.confirm-email');
+    $router->get('/profile/password-recovery', [RestorePasswordController::class, 'form'])->name('profile.password-recovery');
+    $router->post('/profile/password-recovery', [RestorePasswordController::class, 'send'])->name('profile.password-recovery.send');
+    $router->get('/profile/password-recovery/set/{id:number}/{code}', [RestorePasswordController::class, 'setForm'])->name('profile.password-recovery.set');
+    $router->post('/profile/password-recovery/set/{id:number}/{code}', [RestorePasswordController::class, 'set'])->name('profile.password-recovery.set.submit');
 
     // Legacy routes (gradually being migrated)
-    $router->map(['GET', 'POST'], '/profile/skl.php', 'modules/profile/skl.php')->name('profile.skl');
     $router->map(['GET', 'POST'], '/profile', 'modules/profile/index.php')->name('profile.index');
 };

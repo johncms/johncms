@@ -11,6 +11,26 @@ interface ProfileUserRepositoryInterface
     public function findById(int $id): ?User;
 
     /**
+     * Find a user by the latinized login (name_lat).
+     */
+    public function findByNameLat(string $nameLat): ?User;
+
+    /**
+     * Store a password recovery request: the confirmation code and the request time.
+     */
+    public function startPasswordRecovery(int $id, string $code, int $time): void;
+
+    /**
+     * Clear a password recovery request (both the code and the time).
+     */
+    public function clearPasswordRecovery(int $id): void;
+
+    /**
+     * Apply a recovered password (already hashed) and clear the recovery code.
+     */
+    public function completePasswordRecovery(int $id, string $hashedPassword): void;
+
+    /**
      * Mark the user's guestbook as read by syncing the seen counter with the current count.
      */
     public function markGuestbookSeen(int $userId, int $commCount): void;
