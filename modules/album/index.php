@@ -113,7 +113,6 @@ $actions = [
     'new_comm',
     'show',
     'sort',
-    'top',
     'vote',
 ];
 

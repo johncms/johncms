@@ -106,7 +106,7 @@ final readonly class GetNotificationListUseCase
         if (! empty($counters['new_album_comm'])) {
             $notifications[] = [
                 'name'    => __('Comments'),
-                'url'     => '/album/?act=top&mod=my_new_comm',
+                'url'     => '/album/top/my-comments',
                 'counter' => $counters['new_album_comm'],
                 'type'    => 'info',
             ];
