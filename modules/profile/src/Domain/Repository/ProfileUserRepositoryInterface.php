@@ -57,4 +57,19 @@ interface ProfileUserRepositoryInterface
      * @param array<string, mixed> $settings
      */
     public function saveMailSettings(int $id, array $settings): void;
+
+    /**
+     * Increase the user's positive (karma_plus) or negative (karma_minus) karma counter.
+     */
+    public function addKarmaPoints(int $id, bool $positive, int $points): void;
+
+    /**
+     * Decrease the user's positive/negative karma counter, never going below zero.
+     */
+    public function subtractKarmaPoints(int $id, bool $positive, int $points): void;
+
+    /**
+     * Reset both karma counters (karma_plus/karma_minus) to zero.
+     */
+    public function resetKarmaTotals(int $id): void;
 }

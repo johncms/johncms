@@ -90,7 +90,6 @@ if (empty($user_data->id) || (! $user_data->preg && $user->rights < 7)) {
 // Переключаем режимы работы
 $mods = [
     'ban',
-    'karma',
 ];
 
 if ($act && ($key = array_search($act, $mods, true)) !== false && file_exists(__DIR__ . '/includes/' . $mods[$key] . '.php')) {

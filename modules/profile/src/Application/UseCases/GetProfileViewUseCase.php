@@ -105,8 +105,8 @@ final readonly class GetProfileViewUseCase
             $data['karma_percent'] = 0;
         }
 
-        $data['positive_url'] = '/profile/?act=karma&user=' . $profileUser->id . '&type=1';
-        $data['negative_url'] = '/profile/?act=karma&user=' . $profileUser->id;
+        $data['positive_url'] = '/profile/' . $profileUser->id . '/karma?type=1';
+        $data['negative_url'] = '/profile/' . $profileUser->id . '/karma';
 
         if ($profileUser->id !== $this->currentUser->id) {
             $canVote = ! $this->currentUser->karma_off
@@ -126,13 +126,13 @@ final readonly class GetProfileViewUseCase
                     && ($config['karma']['karma_points'] - $sum) > 0
                     && ! $count
                 ) {
-                    $data['vote_url'] = '/profile/?act=karma&mod=vote&user=' . $profileUser->id;
+                    $data['vote_url'] = '/profile/' . $profileUser->id . '/karma/vote';
                 }
             }
         } else {
             $totalKarma = $this->karmaRepository->countVotesReceivedAfter($this->currentUser->id, time() - 86400);
             if ($totalKarma > 0) {
-                $data['karma_new_url'] = '/profile/?act=karma&mod=new';
+                $data['karma_new_url'] = '/profile/' . $this->currentUser->id . '/karma/new';
                 $data['karma_new'] = $totalKarma;
             }
         }

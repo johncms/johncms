@@ -65,4 +65,30 @@ final class ProfileUserRepository implements ProfileUserRepositoryInterface
         // Update through a loaded model so the set_mail (Serialize) cast serializes the value
         User::query()->find($id)?->update(['set_mail' => $settings]);
     }
+
+    public function addKarmaPoints(int $id, bool $positive, int $points): void
+    {
+        $column = $positive ? 'karma_plus' : 'karma_minus';
+        User::query()->where('id', '=', $id)->increment($column, $points);
+    }
+
+    public function subtractKarmaPoints(int $id, bool $positive, int $points): void
+    {
+        $column = $positive ? 'karma_plus' : 'karma_minus';
+        $user = User::query()->find($id);
+        if ($user === null) {
+            return;
+        }
+        // Never let a counter go negative (matches the legacy floor behaviour)
+        $user->{$column} = $user->{$column} > $points ? $user->{$column} - $points : 0;
+        $user->save();
+    }
+
+    public function resetKarmaTotals(int $id): void
+    {
+        User::query()->where('id', '=', $id)->update([
+            'karma_plus'  => 0,
+            'karma_minus' => 0,
+        ]);
+    }
 }
