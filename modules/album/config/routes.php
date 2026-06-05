@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Johncms\Modules\Album\Application\Controllers\AlbumIndexController;
+use Johncms\Modules\Album\Application\Controllers\UsersListController;
 use Johncms\Modules\Album\Application\Middlewares\AuthorizedUserMiddleware;
 use Johncms\Router\RouteCollection;
 
@@ -15,6 +16,14 @@ return static function (RouteCollection $router): void {
     // auth group (see profile module).
     $router->get('/album', AlbumIndexController::class)
         ->name('album.index')
+        ->middleware(AuthorizedUserMiddleware::class);
+
+    $router->get('/album/users', UsersListController::class)
+        ->name('album.users')
+        ->middleware(AuthorizedUserMiddleware::class);
+    $router->get('/album/users/{filter}', UsersListController::class)
+        ->name('album.users.filter')
+        ->requirements(['filter' => 'boys|girls'])
         ->middleware(AuthorizedUserMiddleware::class);
 
     // Legacy front controller (migrated action by action).

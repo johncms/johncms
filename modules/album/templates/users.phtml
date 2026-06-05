@@ -9,27 +9,24 @@
  */
 
 /**
- * @var $title
- * @var $page_title
- * @var $data
+ * @var array $filters
+ * @var array $users
+ * @var int $total
+ * @var int $per_page
+ * @var string $pagination
  */
 
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $page_title,
-    ]
-);
+// title / page_title are provided globally via Render::addData() in the controller.
+$this->layout('system::layout/default');
 ?>
 
 <div class="btn-group mb-3" role="group">
-    <?php foreach ($data['filters'] as $filter): ?>
+    <?php foreach ($filters as $filter): ?>
         <a href="<?= $filter['url'] ?>" class="btn btn-outline-secondary <?= ($filter['active'] ? 'active' : '') ?>"><?= $filter['name'] ?></a>
     <?php endforeach; ?>
 </div>
 
-<?php if (empty($data['users'])): ?>
+<?php if (empty($users)): ?>
     <?= $this->fetch(
         'system::app/alert',
         [
@@ -39,15 +36,15 @@ $this->layout(
     ) ?>
 <?php endif; ?>
 
-<?php foreach ($data['users'] as $user_row): ?>
+<?php foreach ($users as $user_row): ?>
     <?= $this->fetch('album::user_row', ['item' => $user_row]) ?>
 <?php endforeach; ?>
 
 <div class="mt-3">
-    <?php if ($data['total'] > $user->config->kmess): ?>
-        <?= $data['pagination'] ?>
+    <?php if ($total > $per_page): ?>
+        <?= $pagination ?>
     <?php endif; ?>
-    <?php if ($data['total'] > 0): ?>
-        <div><?= __('Total:') ?> <?= $data['total'] ?></div>
+    <?php if ($total > 0): ?>
+        <div><?= __('Total:') ?> <?= $total ?></div>
     <?php endif; ?>
 </div>

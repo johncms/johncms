@@ -114,7 +114,6 @@ $actions = [
     'show',
     'sort',
     'top',
-    'users',
     'vote',
 ];
 
