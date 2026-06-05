@@ -55,7 +55,7 @@ $this->layout(
                     <div class="mt-2 mb-1">
                         <div>
                             <div class="fw-bold h3 mb-0">
-                                <a href="/profile/?act=ban&mod=ban&user=<?= $data['user']['id'] ?>" class="text-danger"><?= __('User is banned') ?></a>
+                                <a href="/profile/<?= $data['user']['id'] ?>/bans" class="text-danger"><?= __('User is banned') ?></a>
                             </div>
                             <div class="text-muted">
                                 <?= __('Reason:') ?> <?= $data['active_ban_reason'] ?>
@@ -64,7 +64,7 @@ $this->layout(
                     </div>
                 <?php elseif (! empty($data['counters']['ban'])): ?>
                     <div class="mt-2 mb-1">
-                        <a href="/profile/?act=ban&mod=ban&user=<?= $data['user']['id'] ?>"><?= __('Violations') ?> (<?= $data['counters']['ban'] ?>)</a>
+                        <a href="/profile/<?= $data['user']['id'] ?>/bans"><?= __('Violations') ?> (<?= $data['counters']['ban'] ?>)</a>
                     </div>
                 <?php endif ?>
                 <?php if (! empty($data['user']['last_visit'])): ?>

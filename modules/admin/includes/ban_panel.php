@@ -129,7 +129,7 @@ ORDER BY `' . $sort . '` DESC LIMIT ' . $start . ',' . $user->config->kmess);
             while ($res = $req->fetch()) {
                 $res['buttons'] = [
                     [
-                        'url'  => '/profile/?act=ban&amp;mod=ban&amp;user=' . $res['id'],
+                        'url'  => '/profile/' . $res['id'] . '/bans',
                         'name' => __('Violations history') . ' (' . $res['bancount'] . ')',
                     ],
                 ];

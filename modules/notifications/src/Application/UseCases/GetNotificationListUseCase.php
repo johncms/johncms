@@ -70,7 +70,7 @@ final readonly class GetNotificationListUseCase
         if (! empty($counters['ban'])) {
             $notifications[] = [
                 'name'    => __('Ban'),
-                'url'     => '/profile/?act=ban',
+                'url'     => '/profile/' . $this->currentUser->id . '/bans',
                 'counter' => 0,
                 'type'    => 'warning',
             ];

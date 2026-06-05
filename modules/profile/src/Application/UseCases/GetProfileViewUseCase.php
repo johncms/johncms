@@ -182,7 +182,7 @@ final readonly class GetProfileViewUseCase
             $buttons[] = ['url' => '/admin/usr_del/?id=' . $profileUser->id, 'name' => __('Delete')];
         }
         if (! $isOwner && $this->currentUser->rights > $profileUser->rights) {
-            $buttons[] = ['url' => '/profile/?act=ban&mod=do&user=' . $profileUser->id, 'name' => __('Ban')];
+            $buttons[] = ['url' => '/profile/' . $profileUser->id . '/bans/new', 'name' => __('Ban')];
         }
 
         return $buttons;

@@ -87,13 +87,5 @@ if (empty($user_data->id) || (! $user_data->preg && $user->rights < 7)) {
     exit;
 }
 
-// Переключаем режимы работы
-$mods = [
-    'ban',
-];
-
-if ($act && ($key = array_search($act, $mods, true)) !== false && file_exists(__DIR__ . '/includes/' . $mods[$key] . '.php')) {
-    require __DIR__ . '/includes/' . $mods[$key] . '.php';
-} else {
-    pageNotFound();
-}
+// All actions have been migrated to the new architecture (see config/routes.php)
+pageNotFound();
