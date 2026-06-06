@@ -22,12 +22,11 @@ use Johncms\Modules\Album\Application\Middlewares\AuthorizedUserMiddleware;
 use Johncms\Router\RouteCollection;
 
 return static function (RouteCollection $router): void {
-    // Routes migrated to the new architecture (require an authenticated user).
-    // Registered as top-level routes so they take precedence over the legacy
-    // catch-all below (the UrlMatcher matches in registration order, and grouped
-    // routes are compiled after all top-level routes). Once every action is
-    // migrated and the catch-all is removed, these can move into a single
-    // auth group (see profile module).
+    // The whole module requires an authenticated user. Routes are still
+    // registered top-level (the UrlMatcher matches in registration order, and
+    // grouped routes are compiled after all top-level routes); collapsing the
+    // per-route AuthorizedUserMiddleware into a single auth group (see the
+    // profile module) is the next refactoring step.
     $router->get('/album', AlbumIndexController::class)
         ->name('album.index')
         ->middleware(AuthorizedUserMiddleware::class);
@@ -162,9 +161,4 @@ return static function (RouteCollection $router): void {
         ->name('album.show')
         ->requirements(['al' => '\d+'])
         ->middleware(AuthorizedUserMiddleware::class);
-
-    // Legacy front controller (migrated action by action).
-    $router->map(['GET', 'POST'], '/album/{action}', 'modules/album/index.php')
-        ->name('album.legacy')
-        ->defaults(['action' => null]);
 };

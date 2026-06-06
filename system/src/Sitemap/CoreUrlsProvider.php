@@ -20,7 +20,7 @@ final class CoreUrlsProvider
             '/downloads/',
             '/library/',
             '/help/',
-            '/album/',
+            '/album',
             '/online/',
         ];
 
