@@ -7,7 +7,6 @@ namespace Johncms\Modules\Album\Infrastructure\Persistence\Repository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Database\Query\JoinClause;
 use Johncms\Modules\Album\Domain\Enums\AlbumAccess;
 use Johncms\Modules\Album\Domain\Enums\TopFilter;
@@ -186,7 +185,7 @@ final class EloquentAlbumPhotoRepository implements AlbumPhotoRepositoryInterfac
             ->whereIn('user_id', $userIds);
 
         if ($restrictToVisibleForUser !== null) {
-            $query->where(static function (QueryBuilder $builder) use ($restrictToVisibleForUser): void {
+            $query->where(static function (Builder $builder) use ($restrictToVisibleForUser): void {
                 $builder
                     ->whereIn('access', [AlbumAccess::Password->value, AlbumAccess::Public->value])
                     ->orWhere('user_id', $restrictToVisibleForUser);
