@@ -105,7 +105,6 @@ $actions = [
     'delete',
     'edit',
     'image_delete',
-    'image_download',
     'image_edit',
     'image_move',
     'image_upload',

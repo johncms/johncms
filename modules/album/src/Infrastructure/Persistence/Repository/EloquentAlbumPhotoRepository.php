@@ -87,6 +87,29 @@ final class EloquentAlbumPhotoRepository implements AlbumPhotoRepositoryInterfac
         AlbumPhoto::query()->where('id', $photoId)->update(['views' => $views]);
     }
 
+    public function hasUserDownload(int $userId, int $photoId): bool
+    {
+        return Capsule::table('cms_album_downloads')
+            ->where('user_id', $userId)
+            ->where('file_id', $photoId)
+            ->exists();
+    }
+
+    public function addDownload(int $userId, int $photoId, int $time): void
+    {
+        Capsule::table('cms_album_downloads')->insert([
+            'user_id' => $userId,
+            'file_id' => $photoId,
+            'time'    => $time,
+        ]);
+    }
+
+    public function refreshDownloadsCount(int $photoId): void
+    {
+        $downloads = Capsule::table('cms_album_downloads')->where('file_id', $photoId)->count();
+        AlbumPhoto::query()->where('id', $photoId)->update(['downloads' => $downloads]);
+    }
+
     public function paginateTop(
         TopFilter $filter,
         ?int $restrictToPublicForUser,

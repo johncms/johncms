@@ -77,7 +77,7 @@ final readonly class PhotoPresenter
             userAlbumsUrl: '/album/user/' . $photo->user_id,
             userAlbumUrl: '/album/' . $photo->album_id,
             commentsUrl: '/album/comments?img=' . $photo->id,
-            downloadUrl: '/album/image_download?img=' . $photo->id,
+            downloadUrl: '/album/photo/' . $photo->id . '/download',
             likeUrl: '/album/vote?mod=plus&img=' . $photo->id,
             dislikeUrl: '/album/vote?mod=minus&img=' . $photo->id,
             editUrl: '/album/image_edit?img=' . $photo->id . '&user=' . $photo->user_id,

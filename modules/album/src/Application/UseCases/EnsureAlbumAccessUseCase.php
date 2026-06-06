@@ -18,7 +18,8 @@ use Johncms\Users\User;
  */
 final readonly class EnsureAlbumAccessUseCase
 {
-    private const ADMIN_RIGHTS = 7;
+    public const ADMIN_RIGHTS = 7;
+    public const MODERATOR_RIGHTS = 6;
 
     public function __construct(
         private User $currentUser,
@@ -26,10 +27,13 @@ final readonly class EnsureAlbumAccessUseCase
     }
 
     /**
+     * @param int $bypassRights staff rights level that bypasses the access checks.
+     *                          show uses ADMIN_RIGHTS (legacy), download uses MODERATOR_RIGHTS.
+     *
      * @throws AlbumAccessDeniedException     when a private album is closed for the viewer
      * @throws AlbumPasswordRequiredException when a password-protected album is still locked
      */
-    public function execute(Album $album, ?string $submittedPassword = null): void
+    public function execute(Album $album, ?string $submittedPassword = null, int $bypassRights = self::ADMIN_RIGHTS): void
     {
         $access = AlbumAccess::fromStored($album->access);
 
@@ -38,7 +42,7 @@ final readonly class EnsureAlbumAccessUseCase
             unset($_SESSION['ap']);
         }
 
-        if ($album->user_id === $this->currentUser->id || $this->currentUser->rights >= self::ADMIN_RIGHTS) {
+        if ($album->user_id === $this->currentUser->id || $this->currentUser->rights >= $bypassRights) {
             return;
         }
 

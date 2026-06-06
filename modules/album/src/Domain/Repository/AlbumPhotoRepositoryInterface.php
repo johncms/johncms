@@ -57,6 +57,21 @@ interface AlbumPhotoRepositoryInterface
     public function refreshViewsCount(int $photoId): void;
 
     /**
+     * Whether the user has already been counted as a downloader of the photo.
+     */
+    public function hasUserDownload(int $userId, int $photoId): bool;
+
+    /**
+     * Record a unique download of the photo by the user.
+     */
+    public function addDownload(int $userId, int $photoId, int $time): void;
+
+    /**
+     * Recalculate and store the cached downloads counter of the photo.
+     */
+    public function refreshDownloadsCount(int $photoId): void;
+
+    /**
      * Paginate photos for one of the "top" feeds, eager-loading album and user.
      *
      * For non owner-scoped feeds, when $restrictToPublicForUser is provided only

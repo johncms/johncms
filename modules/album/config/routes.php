@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Johncms\Modules\Album\Application\Controllers\AlbumIndexController;
+use Johncms\Modules\Album\Application\Controllers\DownloadPhotoController;
 use Johncms\Modules\Album\Application\Controllers\ShowAlbumController;
 use Johncms\Modules\Album\Application\Controllers\ShowPhotoController;
 use Johncms\Modules\Album\Application\Controllers\TopController;
@@ -41,6 +42,12 @@ return static function (RouteCollection $router): void {
     $router->get('/album/user/{id}', UserAlbumsController::class)
         ->name('album.user')
         ->requirements(['id' => '\d+'])
+        ->middleware(AuthorizedUserMiddleware::class);
+
+    // Photo file download (counts a unique download and redirects to the file).
+    $router->get('/album/photo/{img}/download', DownloadPhotoController::class)
+        ->name('album.photo.download')
+        ->requirements(['img' => '\d+'])
         ->middleware(AuthorizedUserMiddleware::class);
 
     // Single photo viewer (POST handles the password form for protected albums).
