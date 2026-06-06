@@ -79,7 +79,7 @@ final readonly class PhotoPresenter
             downloadUrl: '/album/photo/' . $photo->id . '/download',
             likeUrl: '/album/vote?mod=plus&img=' . $photo->id,
             dislikeUrl: '/album/vote?mod=minus&img=' . $photo->id,
-            editUrl: '/album/image_edit?img=' . $photo->id . '&user=' . $photo->user_id,
+            editUrl: '/album/photo/' . $photo->id . '/edit',
             moveUrl: '/album/image_move?img=' . $photo->id . '&user=' . $photo->user_id,
             deleteUrl: '/album/image_delete?img=' . $photo->id . '&user=' . $photo->user_id,
             addToProfileUrl: '/album/photo/' . $photo->id . '?profile=1',

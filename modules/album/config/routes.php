@@ -6,6 +6,7 @@ use Johncms\Modules\Album\Application\Controllers\AlbumIndexController;
 use Johncms\Modules\Album\Application\Controllers\DeleteAlbumController;
 use Johncms\Modules\Album\Application\Controllers\DownloadPhotoController;
 use Johncms\Modules\Album\Application\Controllers\EditAlbumController;
+use Johncms\Modules\Album\Application\Controllers\EditPhotoController;
 use Johncms\Modules\Album\Application\Controllers\PhotoCommentsController;
 use Johncms\Modules\Album\Application\Controllers\ShowAlbumController;
 use Johncms\Modules\Album\Application\Controllers\ShowPhotoController;
@@ -97,6 +98,16 @@ return static function (RouteCollection $router): void {
     $router->post('/album/{al}/upload', [UploadPhotoController::class, 'upload'])
         ->name('album.album.upload.submit')
         ->requirements(['al' => '\d+'])
+        ->middleware(AuthorizedUserMiddleware::class);
+
+    // Edit a photo's description (GET form + POST save).
+    $router->get('/album/photo/{img}/edit', [EditPhotoController::class, 'form'])
+        ->name('album.photo.edit')
+        ->requirements(['img' => '\d+'])
+        ->middleware(AuthorizedUserMiddleware::class);
+    $router->post('/album/photo/{img}/edit', [EditPhotoController::class, 'save'])
+        ->name('album.photo.edit.save')
+        ->requirements(['img' => '\d+'])
         ->middleware(AuthorizedUserMiddleware::class);
 
     // Photo file download (counts a unique download and redirects to the file).

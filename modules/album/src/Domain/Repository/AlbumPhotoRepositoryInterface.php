@@ -98,6 +98,11 @@ interface AlbumPhotoRepositoryInterface
     public function refreshDownloadsCount(int $photoId): void;
 
     /**
+     * Update the description of the photo.
+     */
+    public function updateDescription(int $photoId, string $description): void;
+
+    /**
      * Set the "unread comments" flag of the photo.
      */
     public function setUnreadComments(int $photoId, bool $unread): void;
