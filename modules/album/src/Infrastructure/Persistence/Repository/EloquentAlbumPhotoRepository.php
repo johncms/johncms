@@ -110,6 +110,11 @@ final class EloquentAlbumPhotoRepository implements AlbumPhotoRepositoryInterfac
         AlbumPhoto::query()->where('id', $photoId)->update(['downloads' => $downloads]);
     }
 
+    public function setUnreadComments(int $photoId, bool $unread): void
+    {
+        AlbumPhoto::query()->where('id', $photoId)->update(['unread_comments' => $unread]);
+    }
+
     public function paginateTop(
         TopFilter $filter,
         ?int $restrictToPublicForUser,

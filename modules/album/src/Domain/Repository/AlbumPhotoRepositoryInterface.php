@@ -72,6 +72,11 @@ interface AlbumPhotoRepositoryInterface
     public function refreshDownloadsCount(int $photoId): void;
 
     /**
+     * Set the "unread comments" flag of the photo.
+     */
+    public function setUnreadComments(int $photoId, bool $unread): void;
+
+    /**
      * Paginate photos for one of the "top" feeds, eager-loading album and user.
      *
      * For non owner-scoped feeds, when $restrictToPublicForUser is provided only

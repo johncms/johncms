@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Johncms\Modules\Album\Application\Controllers\AlbumIndexController;
 use Johncms\Modules\Album\Application\Controllers\DownloadPhotoController;
+use Johncms\Modules\Album\Application\Controllers\PhotoCommentsController;
 use Johncms\Modules\Album\Application\Controllers\ShowAlbumController;
 use Johncms\Modules\Album\Application\Controllers\ShowPhotoController;
 use Johncms\Modules\Album\Application\Controllers\TopController;
@@ -47,6 +48,12 @@ return static function (RouteCollection $router): void {
     // Photo file download (counts a unique download and redirects to the file).
     $router->get('/album/photo/{img}/download', DownloadPhotoController::class)
         ->name('album.photo.download')
+        ->requirements(['img' => '\d+'])
+        ->middleware(AuthorizedUserMiddleware::class);
+
+    // Photo comments (POST handles adding/replying/deleting comments).
+    $router->map(['GET', 'POST'], '/album/photo/{img}/comments', PhotoCommentsController::class)
+        ->name('album.photo.comments')
         ->requirements(['img' => '\d+'])
         ->middleware(AuthorizedUserMiddleware::class);
 

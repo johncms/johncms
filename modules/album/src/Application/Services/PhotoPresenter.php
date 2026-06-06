@@ -12,9 +12,8 @@ use Johncms\System\Legacy\Tools;
 /**
  * Builds presentation data for album photos (formerly the Albums\Photo accessors).
  *
- * URLs that target actions which are not migrated yet (comments, vote, download,
- * image_*) point to the legacy endpoints and will be updated as those actions
- * are migrated.
+ * URLs that target actions which are not migrated yet (vote, image_*) point to
+ * the legacy endpoints and will be updated as those actions are migrated.
  */
 final readonly class PhotoPresenter
 {
@@ -36,7 +35,7 @@ final readonly class PhotoPresenter
             detailUrl: '/album/photo/' . $photo->id,
             userAlbumsUrl: '/album/user/' . $photo->user_id,
             userAlbumUrl: '/album/' . $photo->album_id,
-            commentsUrl: '/album/comments?img=' . $photo->id,
+            commentsUrl: '/album/photo/' . $photo->id . '/comments',
             likeUrl: '/album/vote?mod=plus&img=' . $photo->id,
             dislikeUrl: '/album/vote?mod=minus&img=' . $photo->id,
             votePlus: $photo->vote_plus,
@@ -76,7 +75,7 @@ final readonly class PhotoPresenter
             isOwner: $isOwner,
             userAlbumsUrl: '/album/user/' . $photo->user_id,
             userAlbumUrl: '/album/' . $photo->album_id,
-            commentsUrl: '/album/comments?img=' . $photo->id,
+            commentsUrl: '/album/photo/' . $photo->id . '/comments',
             downloadUrl: '/album/photo/' . $photo->id . '/download',
             likeUrl: '/album/vote?mod=plus&img=' . $photo->id,
             dislikeUrl: '/album/vote?mod=minus&img=' . $photo->id,
