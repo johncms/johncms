@@ -27,6 +27,67 @@ final class EloquentAlbumPhotoRepository implements AlbumPhotoRepositoryInterfac
             ->count();
     }
 
+    public function findById(int $photoId): ?AlbumPhoto
+    {
+        return AlbumPhoto::query()->with(['album', 'user'])->find($photoId);
+    }
+
+    public function countByAlbum(int $albumId): int
+    {
+        return AlbumPhoto::query()->where('album_id', $albumId)->count();
+    }
+
+    public function countPhotosAfter(int $albumId, int $photoId): int
+    {
+        return AlbumPhoto::query()
+            ->where('album_id', $albumId)
+            ->where('id', '>', $photoId)
+            ->count();
+    }
+
+    public function paginatePhotosByAlbum(int $albumId, int $page, int $perPage): LengthAwarePaginator
+    {
+        return AlbumPhoto::query()
+            ->with(['album', 'user'])
+            ->where('album_id', $albumId)
+            ->orderByDesc('id')
+            ->paginate(perPage: $perPage, page: $page);
+    }
+
+    public function getPhotoByAlbumOffset(int $albumId, int $offset): ?AlbumPhoto
+    {
+        return AlbumPhoto::query()
+            ->with(['album', 'user'])
+            ->where('album_id', $albumId)
+            ->orderByDesc('id')
+            ->offset(max(0, $offset))
+            ->limit(1)
+            ->first();
+    }
+
+    public function hasUserView(int $userId, int $photoId): bool
+    {
+        return Capsule::table('cms_album_views')
+            ->where('user_id', $userId)
+            ->where('file_id', $photoId)
+            ->exists();
+    }
+
+    public function addView(int $userId, int $photoId, int $time): void
+    {
+        Capsule::table('cms_album_views')->insert([
+            'user_id' => $userId,
+            'file_id' => $photoId,
+            'time'    => $time,
+        ]);
+    }
+
+    public function refreshViewsCount(int $photoId): void
+    {
+        $views = Capsule::table('cms_album_views')->where('file_id', $photoId)->count();
+        AlbumPhoto::query()->where('id', $photoId)->update(['views' => $views]);
+    }
+
     public function paginateTop(
         TopFilter $filter,
         ?int $restrictToPublicForUser,

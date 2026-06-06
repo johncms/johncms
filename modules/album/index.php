@@ -110,7 +110,6 @@ $actions = [
     'image_move',
     'image_upload',
     'new_comm',
-    'show',
     'sort',
     'vote',
 ];

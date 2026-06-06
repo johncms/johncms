@@ -20,6 +20,11 @@ final class EloquentAlbumRepository implements AlbumRepositoryInterface
         return User::query()->find($userId);
     }
 
+    public function findById(int $albumId): ?Album
+    {
+        return Album::query()->find($albumId);
+    }
+
     public function getUserAlbums(int $userId, ?int $restrictToVisibleForUser): Collection
     {
         $query = Album::query()

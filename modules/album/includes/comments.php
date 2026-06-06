@@ -74,7 +74,7 @@ if ($req_obj->rowCount()) {
         'title'          => __('Comments'),       // Название раздела
         'context_top'    => '',         // Выводится вверху списка
         'context_bottom' => '',                   // Выводится внизу списка
-        'back_url'       => './show?al=' . $res_obj['album_id'] . '&user=' . $owner['id'],                   // Выводится внизу списка
+        'back_url'       => '/album/' . $res_obj['album_id'],                   // Выводится внизу списка
     ];
 
     // Ставим метку прочтения

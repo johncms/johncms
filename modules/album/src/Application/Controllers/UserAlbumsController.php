@@ -54,7 +54,7 @@ final readonly class UserAlbumsController
                 'name'         => $album->name,
                 'description'  => $this->tools->checkout($album->description, 0, 0),
                 'count_photos' => $album->photos_count,
-                'album_url'    => '/album/show?al=' . $album->id . '&user=' . $owner->id,
+                'album_url'    => '/album/' . $album->id,
                 'has_edit'     => $result->canManage,
             ];
 

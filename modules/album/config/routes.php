@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 use Johncms\Modules\Album\Application\Controllers\AlbumIndexController;
+use Johncms\Modules\Album\Application\Controllers\ShowAlbumController;
+use Johncms\Modules\Album\Application\Controllers\ShowPhotoController;
 use Johncms\Modules\Album\Application\Controllers\TopController;
 use Johncms\Modules\Album\Application\Controllers\UserAlbumsController;
 use Johncms\Modules\Album\Application\Controllers\UsersListController;
@@ -39,6 +41,18 @@ return static function (RouteCollection $router): void {
     $router->get('/album/user/{id}', UserAlbumsController::class)
         ->name('album.user')
         ->requirements(['id' => '\d+'])
+        ->middleware(AuthorizedUserMiddleware::class);
+
+    // Single photo viewer (POST handles the password form for protected albums).
+    $router->map(['GET', 'POST'], '/album/photo/{img}', ShowPhotoController::class)
+        ->name('album.photo')
+        ->requirements(['img' => '\d+'])
+        ->middleware(AuthorizedUserMiddleware::class);
+
+    // Album viewer (POST handles the password form for protected albums).
+    $router->map(['GET', 'POST'], '/album/{al}', ShowAlbumController::class)
+        ->name('album.show')
+        ->requirements(['al' => '\d+'])
         ->middleware(AuthorizedUserMiddleware::class);
 
     // Legacy front controller (migrated action by action).

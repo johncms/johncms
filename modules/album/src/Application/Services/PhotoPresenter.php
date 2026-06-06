@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Album\Application\Services;
 
+use Johncms\Modules\Album\Application\DTO\PhotoDetailDTO;
 use Johncms\Modules\Album\Application\DTO\PhotoViewDTO;
 use Johncms\Modules\Album\Domain\Models\AlbumPhoto;
 use Johncms\System\Legacy\Tools;
@@ -11,8 +12,9 @@ use Johncms\System\Legacy\Tools;
 /**
  * Builds presentation data for album photos (formerly the Albums\Photo accessors).
  *
- * URLs that target actions which are not migrated yet (show, comments, vote)
- * point to the legacy endpoints and will be updated as those actions are migrated.
+ * URLs that target actions which are not migrated yet (comments, vote, download,
+ * image_*) point to the legacy endpoints and will be updated as those actions
+ * are migrated.
  */
 final readonly class PhotoPresenter
 {
@@ -31,9 +33,9 @@ final readonly class PhotoPresenter
             albumName: $photo->album->name ?? '',
             previewText: $this->previewText($photo->description),
             previewPicture: $this->picture($photo->user_id, $photo->tmb_name),
-            detailUrl: '/album/show?al=' . $photo->album_id . '&img=' . $photo->id . '&user=' . $photo->user_id . '&view=1',
+            detailUrl: '/album/photo/' . $photo->id,
             userAlbumsUrl: '/album/user/' . $photo->user_id,
-            userAlbumUrl: '/album/show?al=' . $photo->album_id . '&user=' . $photo->user_id,
+            userAlbumUrl: '/album/' . $photo->album_id,
             commentsUrl: '/album/comments?img=' . $photo->id,
             likeUrl: '/album/vote?mod=plus&img=' . $photo->id,
             dislikeUrl: '/album/vote?mod=minus&img=' . $photo->id,
@@ -42,6 +44,46 @@ final readonly class PhotoPresenter
             commCount: $photo->comm_count,
             views: $photo->views,
             canVote: $canVote,
+        );
+    }
+
+    public function presentDetail(
+        AlbumPhoto $photo,
+        bool $canVote,
+        bool $canComment,
+        bool $canManage,
+        bool $isOwner,
+    ): PhotoDetailDTO {
+        return new PhotoDetailDTO(
+            id: $photo->id,
+            userId: $photo->user_id,
+            albumId: $photo->album_id,
+            userName: $photo->user->name ?? '',
+            albumName: $this->tools->checkout($photo->album->name ?? ''),
+            picture: $this->picture($photo->user_id, $photo->img_name),
+            previewPicture: $this->picture($photo->user_id, $photo->tmb_name),
+            formattedDescription: $this->tools->smilies($this->tools->checkout($photo->description, 1, 0)),
+            displayDate: $this->tools->displayDate($photo->time),
+            views: $photo->views,
+            downloads: $photo->downloads,
+            rating: $photo->rating,
+            votePlus: $photo->vote_plus,
+            voteMinus: $photo->vote_minus,
+            commCount: $photo->comm_count,
+            canVote: $canVote,
+            canComment: $canComment,
+            canManage: $canManage,
+            isOwner: $isOwner,
+            userAlbumsUrl: '/album/user/' . $photo->user_id,
+            userAlbumUrl: '/album/' . $photo->album_id,
+            commentsUrl: '/album/comments?img=' . $photo->id,
+            downloadUrl: '/album/image_download?img=' . $photo->id,
+            likeUrl: '/album/vote?mod=plus&img=' . $photo->id,
+            dislikeUrl: '/album/vote?mod=minus&img=' . $photo->id,
+            editUrl: '/album/image_edit?img=' . $photo->id . '&user=' . $photo->user_id,
+            moveUrl: '/album/image_move?img=' . $photo->id . '&user=' . $photo->user_id,
+            deleteUrl: '/album/image_delete?img=' . $photo->id . '&user=' . $photo->user_id,
+            addToProfileUrl: '/album/photo/' . $photo->id . '?profile=1',
         );
     }
 

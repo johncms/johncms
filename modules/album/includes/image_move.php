@@ -58,7 +58,7 @@ if (($img && $foundUser['id'] === $user->id) || $user->rights >= 6) {
                     'title'         => $title,
                     'type'          => 'alert-success',
                     'message'       => __('Image successfully moved to the selected album'),
-                    'back_url'      => './show?al=' . $al . '&amp;user=' . $foundUser['id'],
+                    'back_url'      => '/album/' . $al,
                     'back_url_name' => __('Continue'),
                 ]
             );
@@ -83,7 +83,7 @@ if (($img && $foundUser['id'] === $user->id) || $user->rights >= 6) {
                 $albums[] = $res;
             }
             $data['action_url'] = './image_move?img=' . $img . '&amp;user=' . $foundUser['id'];
-            $data['back_url'] = './show?al=' . $image['album_id'] . '&amp;user=' . $foundUser['id'];
+            $data['back_url'] = '/album/' . $image['album_id'];
             $data['albums'] = $albums ?? [];
             echo $view->render(
                 'album::move_photo',

@@ -8,26 +8,20 @@
  * @link      https://johncms.com JohnCMS Project
  */
 
-use Albums\Photo;
-
 /**
- * @var $title
- * @var $page_title
- * @var $data
- * @var $photo Photo
+ * @var \Johncms\Modules\Album\Application\DTO\PhotoDetailDTO|null $photo
+ * @var int $total
+ * @var int $per_page
+ * @var string $success_message
+ * @var string $album_list_url
+ * @var string $album_url
+ * @var string $pagination
  */
 
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $page_title,
-    ]
-);
-
-$photo = $data['photos'][0] ?? [];
+// title / page_title are provided globally via Render::addData() in the controller.
+$this->layout('system::layout/default');
 ?>
-<?php if (empty($data['photos'])): ?>
+<?php if ($photo === null): ?>
     <?= $this->fetch(
         'system::app/alert',
         [
@@ -36,68 +30,68 @@ $photo = $data['photos'][0] ?? [];
         ]
     ) ?>
 <?php endif; ?>
-<?php if (! empty($data['success_message'])): ?>
+<?php if (! empty($success_message)): ?>
     <?= $this->fetch(
         'system::app/alert',
         [
             'alert_type' => 'alert-success border-0',
-            'alert'      => $data['success_message'],
+            'alert'      => $success_message,
         ]
     ) ?>
 <?php endif; ?>
-<?php if (! empty($photo)): ?>
+<?php if ($photo !== null): ?>
     <div class="row">
         <div class="col-md-5">
-            <a href="<?= $photo->picture ?>" title="<?= __('Photo') ?> "
-               data-source="<?= $photo->download_url ?>" class="image-preview">
-                <img src="<?= $photo->preview_picture ?>" alt="." class="img-fluid">
+            <a href="<?= $this->e($photo->picture) ?>" title="<?= __('Photo') ?> "
+               data-source="<?= $this->e($photo->downloadUrl) ?>" class="image-preview">
+                <img src="<?= $this->e($photo->previewPicture) ?>" alt="." class="img-fluid">
             </a>
         </div>
     </div>
-    <?php if (! empty($photo->formatted_description)): ?>
+    <?php if (! empty($photo->formattedDescription)): ?>
         <div class="description mt-3 border-top pt-3">
-            <?= $photo->formatted_description ?>
+            <?= $photo->formattedDescription ?>
         </div>
     <?php endif; ?>
     <div class="text-muted mt-3 mb-3 border-top border-bottom pt-2 pb-2">
         <div><?= __('Views') ?>: <?= $photo->views ?></div>
         <div><?= __('Downloads') ?>: <?= $photo->downloads ?></div>
-        <div><?= __('Date') ?>: <?= $photo->display_date ?></div>
+        <div><?= __('Date') ?>: <?= $this->e($photo->displayDate) ?></div>
         <div>
-            <?= __('User') ?>: <a href="<?= $photo->user_albums_url ?>"><?= $photo->user_name ?></a>
+            <?= __('User') ?>: <a href="<?= $this->e($photo->userAlbumsUrl) ?>"><?= $this->e($photo->userName) ?></a>
         </div>
         <div>
-            <?= __('Album') ?>: <a href="<?= $photo->user_album_url ?>"><?= $photo->album_name ?></a>
+            <?= __('Album') ?>: <a href="<?= $this->e($photo->userAlbumUrl) ?>"><?= $this->e($photo->albumName) ?></a>
         </div>
         <div>
             <span><?= __('Rating') ?>:</span>
             <span class="pe-2 fw-bold"><?= $photo->rating ?></span>
             <!-- Vote -->
-            <?php if ($photo->can_vote): ?>
-                <a href="<?= $photo->like_url ?>" class="text-decoration-none pe-2">
+            <?php if ($photo->canVote): ?>
+                <a href="<?= $this->e($photo->likeUrl) ?>" class="text-decoration-none pe-2">
                     <svg class="icon download-button-icon mt-n2">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#like"></use>
                     </svg>
-                    <span><?= $photo->vote_plus ?></span>
+                    <span><?= $photo->votePlus ?></span>
                 </a>
-                <a href="<?= $photo->dislike_url ?>" class="text-decoration-none pe-2">
+                <a href="<?= $this->e($photo->dislikeUrl) ?>" class="text-decoration-none pe-2">
                     <svg class="icon download-button-icon me-1">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#dislike"></use>
                     </svg>
-                    <span><?= $photo->vote_minus ?></span>
+                    <span><?= $photo->voteMinus ?></span>
                 </a>
             <?php else: ?>
                 <div class="d-inline pe-2 text-muted">
                     <svg class="icon download-button-icon mt-n2">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#like"></use>
                     </svg>
-                    <span><?= $photo->vote_plus ?></span>
+                    <span><?= $photo->votePlus ?></span>
                 </div>
                 <div class="d-inline pe-2 text-muted">
                     <svg class="icon download-button-icon me-1">
                         <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#dislike"></use>
                     </svg>
-                    <span><?= $photo->vote_minus ?></span>
+                    <span><?= $photo->voteMinus ?></span>
                 </div>
             <?php endif; ?>
             <!-- // Vote -->
@@ -108,34 +102,33 @@ $photo = $data['photos'][0] ?? [];
         <svg class="icon download-button-icon me-1 mt-n1">
             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#download"/>
         </svg>
-        <a href="<?= $photo->download_url ?>"><?= __('Download') ?></a>
+        <a href="<?= $this->e($photo->downloadUrl) ?>"><?= __('Download') ?></a>
     </div>
 
-    <?php if ($config['mod_down_comm'] || $systemUser->rights >= 7): ?>
+    <?php if ($photo->canComment): ?>
         <div class="mt-3 pb-3 border-bottom">
             <svg class="icon download-button-icon me-1">
                 <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#forum"/>
             </svg>
-            <a href="<?= $photo->comments_url ?>"><?= __('Comments') ?></a> (<?= $photo->comm_count ?>)
+            <a href="<?= $this->e($photo->commentsUrl) ?>"><?= __('Comments') ?></a> (<?= $photo->commCount ?>)
         </div>
     <?php endif; ?>
 
-    <?php if ($user->rights >= 6 || $user->id === $photo->user_id): ?>
+    <?php if ($photo->canManage): ?>
         <div class="btn-group mt-3">
             <div class="dropdown">
                 <button class="btn btn-danger dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <?= __('Actions') ?>
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <?php if ($user->id === $photo->user_id): ?>
-                        <a class="dropdown-item"
-                           href="./show?al=<?= $photo->album_id ?>&amp;user=<?= $photo->user_id ?>&amp;view&amp;img=<?= $photo->id ?>&amp;profile">
+                    <?php if ($photo->isOwner): ?>
+                        <a class="dropdown-item" href="<?= $this->e($photo->addToProfileUrl) ?>">
                             <?= __('Add to Profile') ?>
                         </a>
                     <?php endif; ?>
-                    <a class="dropdown-item" href="./image_edit?img=<?= $photo->id ?>&amp;user=<?= $photo->user_id ?>"><?= __('Edit') ?></a>
-                    <a class="dropdown-item" href="./image_move?img=<?= $photo->id ?>&amp;user=<?= $photo->user_id ?>"><?= __('Move') ?></a>
-                    <a class="dropdown-item" href="./image_delete?img=<?= $photo->id ?>&amp;user=<?= $photo->user_id ?>"><?= __('Delete') ?></a>
+                    <a class="dropdown-item" href="<?= $this->e($photo->editUrl) ?>"><?= __('Edit') ?></a>
+                    <a class="dropdown-item" href="<?= $this->e($photo->moveUrl) ?>"><?= __('Move') ?></a>
+                    <a class="dropdown-item" href="<?= $this->e($photo->deleteUrl) ?>"><?= __('Delete') ?></a>
                 </div>
             </div>
         </div>
@@ -143,17 +136,17 @@ $photo = $data['photos'][0] ?? [];
 
 <?php endif; ?>
 
-<?php if ($data['total'] > $data['per_page']): ?>
+<?php if ($total > $per_page): ?>
     <div class="mt-4">
-        <?= $data['pagination'] ?>
+        <?= $pagination ?>
     </div>
 <?php endif; ?>
 
-<?php if ($data['total'] > 0): ?>
-    <div><?= __('Total') ?>: <?= $data['total'] ?></div>
+<?php if ($total > 0): ?>
+    <div><?= __('Total') ?>: <?= $total ?></div>
 <?php endif; ?>
 
 <div class="mt-2">
-    <a href="<?= $photo->user_album_url ?>"><?= __('Back') ?></a><br>
-    <a href="./list?user=<?= $photo->user_id ?>"><?= __('Album List') ?></a>
+    <a href="<?= $this->e($album_url) ?>"><?= __('Back') ?></a><br>
+    <a href="<?= $this->e($album_list_url) ?>"><?= __('Album List') ?></a>
 </div>

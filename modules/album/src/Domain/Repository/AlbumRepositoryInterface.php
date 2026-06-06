@@ -17,6 +17,11 @@ interface AlbumRepositoryInterface
     public function findUserById(int $userId): ?User;
 
     /**
+     * Find an album by id, or null when it does not exist.
+     */
+    public function findById(int $albumId): ?Album;
+
+    /**
      * Get the albums owned by a user, ordered by sort.
      *
      * Each album carries a dynamic `photos_count` attribute with the total
