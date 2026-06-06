@@ -14,7 +14,6 @@ use Johncms\Modules\Album\Application\UseCases\GetPhotoCommentsContextUseCase;
 use Johncms\Modules\Album\Domain\Repository\AlbumPhotoRepositoryInterface;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 
@@ -25,7 +24,6 @@ final readonly class PhotoCommentsController
         private Render $render,
         private Request $request,
         private NavChain $navChain,
-        private Tools $tools,
         private User $currentUser,
         private GetPhotoCommentsContextUseCase $useCase,
         private AlbumPhotoRepositoryInterface $photoRepository,
@@ -49,7 +47,7 @@ final readonly class PhotoCommentsController
         }
 
         $this->navChain->add(__('Albums'), '/album');
-        $this->navChain->add($this->tools->checkout($context->albumName), '/album/' . $context->albumId);
+        $this->navChain->add($context->albumName, '/album/' . $context->albumId);
 
         // Globals consumed by the legacy Comments class.
         global $mod, $start;

@@ -24,9 +24,9 @@
         <div class="overflow-auto flex-grow-1">
             <div class="user-name">
                 <?php if (! empty($item['album_url'])): ?>
-                    <a href="<?= $item['album_url'] ?>" class="user-login me-2"><?= $item['nick'] ?></a>
+                    <a href="<?= $this->e($item['album_url']) ?>" class="user-login me-2"><?= $this->e($item['nick']) ?></a>
                 <?php else: ?>
-                    <a class="user-login me-2"><?= $item['nick'] ?></a>
+                    <a class="user-login me-2"><?= $this->e($item['nick']) ?></a>
                 <?php endif; ?>
             </div>
             <div>

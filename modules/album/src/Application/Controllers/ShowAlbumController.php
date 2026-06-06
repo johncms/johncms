@@ -51,7 +51,7 @@ final readonly class ShowAlbumController
 
         $title = __('Albums');
         $this->navChain->add($title, '/album');
-        $this->navChain->add($this->tools->checkout($result->albumName), '/album/' . $result->albumId);
+        $this->navChain->add($result->albumName, '/album/' . $result->albumId);
 
         $this->render->addData([
             'title'      => $title,

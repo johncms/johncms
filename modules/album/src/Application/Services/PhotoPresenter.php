@@ -55,7 +55,7 @@ final readonly class PhotoPresenter
             userId: $photo->user_id,
             albumId: $photo->album_id,
             userName: $photo->user->name ?? '',
-            albumName: $this->tools->checkout($photo->album->name ?? ''),
+            albumName: $photo->album->name ?? '',
             picture: $this->picture($photo->user_id, $photo->img_name),
             previewPicture: $this->picture($photo->user_id, $photo->tmb_name),
             formattedDescription: $this->tools->smilies($this->tools->checkout($photo->description, 1, 0)),
@@ -85,7 +85,8 @@ final readonly class PhotoPresenter
 
     private function previewText(string $description): string
     {
-        $text = $this->tools->checkout($description, 0, 0);
+        // Return the raw (unescaped) preview text — templates escape it on output.
+        $text = trim($description);
         if (mb_strlen($text) > self::PREVIEW_TEXT_LIMIT) {
             $text = mb_substr($text, 0, self::PREVIEW_TEXT_LIMIT - 3) . '...';
         }

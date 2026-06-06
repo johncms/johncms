@@ -8,7 +8,6 @@ use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Album\Application\Exceptions\AlbumOwnerNotFoundException;
 use Johncms\Modules\Album\Application\UseCases\GetUserAlbumsUseCase;
 use Johncms\NavChain;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 
@@ -18,7 +17,6 @@ final readonly class UserAlbumsController
         private ControllerContext $controllerContext,
         private Render $render,
         private NavChain $navChain,
-        private Tools $tools,
         private User $currentUser,
         private GetUserAlbumsUseCase $useCase,
     ) {
@@ -52,7 +50,7 @@ final readonly class UserAlbumsController
 
             $row = [
                 'name'         => $album->name,
-                'description'  => $this->tools->checkout($album->description, 0, 0),
+                'description'  => $album->description,
                 'count_photos' => $album->photos_count,
                 'album_url'    => '/album/' . $album->id,
                 'has_edit'     => $result->canManage,
