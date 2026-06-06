@@ -43,8 +43,14 @@ $this->layout('system::layout/default');
         <?php endif; ?>
         <?php if (! empty($album['has_edit'])): ?>
             <div class="pt-1 small">
-                <a href="<?= $this->e($album['up_url']) ?>" class="me-2"><?= __('Up') ?></a>
-                <a href="<?= $this->e($album['down_url']) ?>" class="me-2"><?= __('Down') ?></a>
+                <form action="<?= $this->e($album['up_url']) ?>" method="post" class="d-inline">
+                    <input type="hidden" name="csrf_token" value="<?= $this->e($csrf_token) ?>">
+                    <button type="submit" class="btn btn-link p-0 me-2 align-baseline"><?= __('Up') ?></button>
+                </form>
+                <form action="<?= $this->e($album['down_url']) ?>" method="post" class="d-inline">
+                    <input type="hidden" name="csrf_token" value="<?= $this->e($csrf_token) ?>">
+                    <button type="submit" class="btn btn-link p-0 me-2 align-baseline"><?= __('Down') ?></button>
+                </form>
                 <a href="<?= $this->e($album['edit_url']) ?>" class="me-2"><?= __('Edit') ?></a>
                 <a href="<?= $this->e($album['delete_url']) ?>" class="me-2"><?= __('Delete') ?></a>
             </div>

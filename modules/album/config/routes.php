@@ -9,6 +9,7 @@ use Johncms\Modules\Album\Application\Controllers\EditAlbumController;
 use Johncms\Modules\Album\Application\Controllers\PhotoCommentsController;
 use Johncms\Modules\Album\Application\Controllers\ShowAlbumController;
 use Johncms\Modules\Album\Application\Controllers\ShowPhotoController;
+use Johncms\Modules\Album\Application\Controllers\SortAlbumController;
 use Johncms\Modules\Album\Application\Controllers\TopController;
 use Johncms\Modules\Album\Application\Controllers\UserAlbumsController;
 use Johncms\Modules\Album\Application\Controllers\UsersListController;
@@ -74,6 +75,16 @@ return static function (RouteCollection $router): void {
         ->middleware(AuthorizedUserMiddleware::class);
     $router->post('/album/{al}/delete', [DeleteAlbumController::class, 'delete'])
         ->name('album.album.delete.submit')
+        ->requirements(['al' => '\d+'])
+        ->middleware(AuthorizedUserMiddleware::class);
+
+    // Reorder an album within the owner's sort order (POST only).
+    $router->post('/album/{al}/move-up', [SortAlbumController::class, 'moveUp'])
+        ->name('album.album.move-up')
+        ->requirements(['al' => '\d+'])
+        ->middleware(AuthorizedUserMiddleware::class);
+    $router->post('/album/{al}/move-down', [SortAlbumController::class, 'moveDown'])
+        ->name('album.album.move-down')
         ->requirements(['al' => '\d+'])
         ->middleware(AuthorizedUserMiddleware::class);
 

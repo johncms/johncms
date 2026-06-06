@@ -75,4 +75,21 @@ interface AlbumRepositoryInterface
      * Delete the album row.
      */
     public function delete(Album $album): void;
+
+    /**
+     * Find the user's album positioned directly above the given sort value
+     * (the greatest sort that is still lower), or null when none exists.
+     */
+    public function findPreviousBySort(int $userId, int $sort): ?Album;
+
+    /**
+     * Find the user's album positioned directly below the given sort value
+     * (the smallest sort that is still greater), or null when none exists.
+     */
+    public function findNextBySort(int $userId, int $sort): ?Album;
+
+    /**
+     * Store a new sort value for the album.
+     */
+    public function setSort(Album $album, int $sort): void;
 }

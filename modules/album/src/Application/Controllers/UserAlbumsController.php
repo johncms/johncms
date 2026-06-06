@@ -59,8 +59,8 @@ final readonly class UserAlbumsController
             ];
 
             if ($result->canManage) {
-                $row['up_url'] = '/album/sort?mod=up&al=' . $album->id . '&user=' . $owner->id;
-                $row['down_url'] = '/album/sort?mod=down&al=' . $album->id . '&user=' . $owner->id;
+                $row['up_url'] = '/album/' . $album->id . '/move-up';
+                $row['down_url'] = '/album/' . $album->id . '/move-down';
                 $row['edit_url'] = '/album/' . $album->id . '/edit';
                 $row['delete_url'] = '/album/' . $album->id . '/delete';
             }

@@ -141,6 +141,30 @@ final class EloquentAlbumRepository implements AlbumRepositoryInterface
         $album->delete();
     }
 
+    public function findPreviousBySort(int $userId, int $sort): ?Album
+    {
+        return Album::query()
+            ->where('user_id', $userId)
+            ->where('sort', '<', $sort)
+            ->orderByDesc('sort')
+            ->first();
+    }
+
+    public function findNextBySort(int $userId, int $sort): ?Album
+    {
+        return Album::query()
+            ->where('user_id', $userId)
+            ->where('sort', '>', $sort)
+            ->orderBy('sort')
+            ->first();
+    }
+
+    public function setSort(Album $album, int $sort): void
+    {
+        $album->sort = $sort;
+        $album->save();
+    }
+
     private function applyVisibility(QueryBuilder $query, ?int $restrictToVisibleForUser): void
     {
         if ($restrictToVisibleForUser === null) {
