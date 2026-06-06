@@ -9,22 +9,13 @@
  */
 
 /**
- * @var $title
- * @var $page_title
- * @var $data
+ * @var \Johncms\Modules\Admin\Application\DTO\StaffListDTO $data
  */
 
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $page_title,
-    ]
-);
-$this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['usr_menu' => ['adminlist' => true]]));
+$this->layout('system::layout/default');
 ?>
 
-<?php if (empty($data['items'])): ?>
+<?php if (empty($data->groups)): ?>
     <?= $this->fetch(
         'system::app/alert',
         [
@@ -34,18 +25,18 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
     ) ?>
 <?php endif; ?>
 
-<?php foreach ($data['items'] as $item): ?>
-    <h2><?= $item['name'] ?></h2>
-    <?php foreach ($item['items'] as $sub_item): ?>
-        <?= $this->fetch('admin::user_row', ['item' => $sub_item]) ?>
+<?php foreach ($data->groups as $group): ?>
+    <h2><?= $this->e($group->name) ?></h2>
+    <?php foreach ($group->items as $item): ?>
+        <?= $this->fetch('admin::user_row', ['item' => $item]) ?>
     <?php endforeach; ?>
 <?php endforeach; ?>
 
 <div class="mt-4">
-    <?php if ($data['total'] > 0): ?>
-        <div><?= __('Total:') ?> <?= $data['total'] ?></div>
+    <?php if ($data->total > 0): ?>
+        <div><?= __('Total:') ?> <?= $data->total ?></div>
     <?php endif; ?>
 </div>
 <div>
-    <a href="<?= $data['back_url'] ?>"><?= __('Back') ?></a>
+    <a href="/admin"><?= __('Back') ?></a>
 </div>
