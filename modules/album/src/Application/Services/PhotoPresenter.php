@@ -81,7 +81,7 @@ final readonly class PhotoPresenter
             dislikeUrl: '/album/vote?mod=minus&img=' . $photo->id,
             editUrl: '/album/photo/' . $photo->id . '/edit',
             moveUrl: '/album/photo/' . $photo->id . '/move',
-            deleteUrl: '/album/image_delete?img=' . $photo->id . '&user=' . $photo->user_id,
+            deleteUrl: '/album/photo/' . $photo->id . '/delete',
             addToProfileUrl: '/album/photo/' . $photo->id . '?profile=1',
         );
     }

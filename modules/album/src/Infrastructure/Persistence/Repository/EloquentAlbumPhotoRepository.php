@@ -69,6 +69,11 @@ final class EloquentAlbumPhotoRepository implements AlbumPhotoRepositoryInterfac
         AlbumPhoto::query()->where('album_id', $albumId)->delete();
     }
 
+    public function deleteById(int $photoId): void
+    {
+        AlbumPhoto::query()->where('id', $photoId)->delete();
+    }
+
     public function countPhotosAfter(int $albumId, int $photoId): int
     {
         return AlbumPhoto::query()

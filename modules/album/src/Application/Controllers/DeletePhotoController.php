@@ -1,0 +1,127 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Johncms\Modules\Album\Application\Controllers;
+
+use Johncms\Http\Controller\ControllerContext;
+use Johncms\Modules\Album\Application\Exceptions\AlbumEditForbiddenException;
+use Johncms\Modules\Album\Application\Exceptions\AlbumPhotoNotFoundException;
+use Johncms\Modules\Album\Application\UseCases\DeletePhotoUseCase;
+use Johncms\Modules\Album\Application\UseCases\GetDeletePhotoContextUseCase;
+use Johncms\Modules\Album\Domain\Models\AlbumPhoto;
+use Johncms\NavChain;
+use Johncms\System\Http\Request;
+use Johncms\System\View\Render;
+use Johncms\Validator\Validator;
+
+final readonly class DeletePhotoController
+{
+    public function __construct(
+        private ControllerContext $controllerContext,
+        private Render $render,
+        private Request $request,
+        private NavChain $navChain,
+        private GetDeletePhotoContextUseCase $getContextUseCase,
+        private DeletePhotoUseCase $deletePhotoUseCase,
+    ) {
+        $this->controllerContext->initModule('album');
+    }
+
+    public function confirm(int $img): string
+    {
+        $photo = $this->resolveContext($img);
+        if (is_string($photo)) {
+            return $photo;
+        }
+
+        $title = __('Delete image');
+
+        $this->navChain->add(__('Albums'), '/album');
+        $this->navChain->add($title);
+
+        $this->render->addData([
+            'title'      => $title,
+            'page_title' => $title,
+        ]);
+
+        return $this->render->render(
+            'album::confirm_delete',
+            [
+                'title'      => $title,
+                'page_title' => $title,
+                'data'       => [
+                    'message'     => __('Are you sure you want to delete this image?'),
+                    'form_action' => '/album/photo/' . $photo->id . '/delete',
+                    'back_url'    => '/album/' . $photo->album_id,
+                ],
+            ]
+        );
+    }
+
+    public function delete(int $img): string
+    {
+        $photo = $this->resolveContext($img);
+        if (is_string($photo)) {
+            return $photo;
+        }
+        if (! $this->isCsrfValid()) {
+            return $this->renderError(__('Wrong data'));
+        }
+
+        $albumId = $photo->album_id;
+
+        $this->deletePhotoUseCase->execute($photo);
+
+        return $this->render->render(
+            'system::pages/result',
+            [
+                'title'    => __('Delete image'),
+                'type'     => 'alert-success',
+                'message'  => __('Image successfully deleted'),
+                'back_url' => '/album/' . $albumId,
+            ]
+        );
+    }
+
+    /**
+     * Resolve the photo with the access guard, or a rendered error page (with the proper HTTP status set).
+     *
+     * @return AlbumPhoto|string
+     */
+    private function resolveContext(int $img): AlbumPhoto|string
+    {
+        try {
+            return $this->getContextUseCase->execute($img);
+        } catch (AlbumPhotoNotFoundException $e) {
+            http_response_code(403);
+            return $this->renderError($e->getMessage());
+        } catch (AlbumEditForbiddenException $e) {
+            http_response_code(403);
+            return $this->renderError($e->getMessage());
+        }
+    }
+
+    private function isCsrfValid(): bool
+    {
+        $validator = new Validator(
+            ['csrf_token' => (string) $this->request->getPost('csrf_token', '')],
+            ['csrf_token' => ['Csrf']]
+        );
+
+        return $validator->isValid();
+    }
+
+    private function renderError(string $message): string
+    {
+        return $this->render->render(
+            'system::pages/result',
+            [
+                'title'    => __('Delete image'),
+                'type'     => 'alert-danger',
+                'message'  => $message,
+                'back_url' => '/album',
+            ]
+        );
+    }
+}

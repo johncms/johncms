@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Johncms\Modules\Album\Application\Controllers\AlbumIndexController;
 use Johncms\Modules\Album\Application\Controllers\DeleteAlbumController;
+use Johncms\Modules\Album\Application\Controllers\DeletePhotoController;
 use Johncms\Modules\Album\Application\Controllers\DownloadPhotoController;
 use Johncms\Modules\Album\Application\Controllers\EditAlbumController;
 use Johncms\Modules\Album\Application\Controllers\EditPhotoController;
@@ -118,6 +119,16 @@ return static function (RouteCollection $router): void {
         ->middleware(AuthorizedUserMiddleware::class);
     $router->post('/album/photo/{img}/move', [MovePhotoController::class, 'move'])
         ->name('album.photo.move.submit')
+        ->requirements(['img' => '\d+'])
+        ->middleware(AuthorizedUserMiddleware::class);
+
+    // Delete a photo with its files, votes and comments (GET confirmation + POST submit).
+    $router->get('/album/photo/{img}/delete', [DeletePhotoController::class, 'confirm'])
+        ->name('album.photo.delete')
+        ->requirements(['img' => '\d+'])
+        ->middleware(AuthorizedUserMiddleware::class);
+    $router->post('/album/photo/{img}/delete', [DeletePhotoController::class, 'delete'])
+        ->name('album.photo.delete.submit')
         ->requirements(['img' => '\d+'])
         ->middleware(AuthorizedUserMiddleware::class);
 

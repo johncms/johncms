@@ -52,6 +52,11 @@ interface AlbumPhotoRepositoryInterface
     public function deleteByAlbum(int $albumId): void;
 
     /**
+     * Delete a single photo row by id.
+     */
+    public function deleteById(int $photoId): void;
+
+    /**
      * Count the photos of an album positioned before the given one
      * (i.e. with a greater id, since albums are ordered by id descending).
      */
