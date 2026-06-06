@@ -27,6 +27,19 @@ interface AlbumPhotoRepositoryInterface
     public function countByAlbum(int $albumId): int;
 
     /**
+     * Insert a new photo into an album and return the created model.
+     */
+    public function create(
+        int $albumId,
+        int $userId,
+        string $imgName,
+        string $tmbName,
+        string $description,
+        int $time,
+        int $access
+    ): AlbumPhoto;
+
+    /**
      * Get every photo of an album (used when cascading album deletion).
      *
      * @return Collection<int, AlbumPhoto>

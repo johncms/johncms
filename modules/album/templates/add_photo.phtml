@@ -14,17 +14,10 @@
  * @var $data
  */
 
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $page_title,
-    ]
-);
-$form_data = $data['form_data'] ?? [];
+$this->layout('system::layout/default');
 ?>
 
-<form name="file_edit_form" action="<?= $data['action_url'] ?>" method="post" enctype="multipart/form-data">
+<form name="file_edit_form" action="<?= $this->e($data['action_url']) ?>" method="post" enctype="multipart/form-data">
     <?php if (! empty($data['error_message'])): ?>
         <?= $this->fetch(
             'system::app/alert',
@@ -49,6 +42,6 @@ $form_data = $data['form_data'] ?? [];
     </div>
     <div class="mt-3">
         <button type="submit" name="submit" value="1" class="btn btn-primary"><?= __('Save') ?></button>
-        <a href="<?= $data['back_url'] ?>" class="btn btn-secondary"><?= __('Cancel') ?></a>
+        <a href="<?= $this->e($data['back_url']) ?>" class="btn btn-secondary"><?= __('Cancel') ?></a>
     </div>
 </form>

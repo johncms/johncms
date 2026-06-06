@@ -10,6 +10,7 @@ use Johncms\Modules\Album\Application\Controllers\PhotoCommentsController;
 use Johncms\Modules\Album\Application\Controllers\ShowAlbumController;
 use Johncms\Modules\Album\Application\Controllers\ShowPhotoController;
 use Johncms\Modules\Album\Application\Controllers\SortAlbumController;
+use Johncms\Modules\Album\Application\Controllers\UploadPhotoController;
 use Johncms\Modules\Album\Application\Controllers\TopController;
 use Johncms\Modules\Album\Application\Controllers\UserAlbumsController;
 use Johncms\Modules\Album\Application\Controllers\UsersListController;
@@ -85,6 +86,16 @@ return static function (RouteCollection $router): void {
         ->middleware(AuthorizedUserMiddleware::class);
     $router->post('/album/{al}/move-down', [SortAlbumController::class, 'moveDown'])
         ->name('album.album.move-down')
+        ->requirements(['al' => '\d+'])
+        ->middleware(AuthorizedUserMiddleware::class);
+
+    // Upload a photo into an album (GET form + POST submit).
+    $router->get('/album/{al}/upload', [UploadPhotoController::class, 'form'])
+        ->name('album.album.upload')
+        ->requirements(['al' => '\d+'])
+        ->middleware(AuthorizedUserMiddleware::class);
+    $router->post('/album/{al}/upload', [UploadPhotoController::class, 'upload'])
+        ->name('album.album.upload.submit')
         ->requirements(['al' => '\d+'])
         ->middleware(AuthorizedUserMiddleware::class);
 

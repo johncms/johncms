@@ -65,7 +65,7 @@ final readonly class ShowAlbumController
                 'total'        => $result->total,
                 'per_page'     => $perPage,
                 'has_add_photo' => $result->hasAddPhoto,
-                'upload_url'   => '/album/image_upload?al=' . $result->albumId . '&user=' . $result->ownerId,
+                'upload_url'   => '/album/' . $result->albumId . '/upload',
                 'pagination'   => $this->tools->displayPagination(
                     '/album/' . $result->albumId . '?',
                     ($page - 1) * $perPage,

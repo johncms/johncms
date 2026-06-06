@@ -104,7 +104,6 @@ $actions = [
     'image_delete',
     'image_edit',
     'image_move',
-    'image_upload',
     'new_comm',
     'vote',
 ];

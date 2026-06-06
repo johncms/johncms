@@ -37,6 +37,28 @@ final class EloquentAlbumPhotoRepository implements AlbumPhotoRepositoryInterfac
         return AlbumPhoto::query()->where('album_id', $albumId)->count();
     }
 
+    public function create(
+        int $albumId,
+        int $userId,
+        string $imgName,
+        string $tmbName,
+        string $description,
+        int $time,
+        int $access
+    ): AlbumPhoto {
+        $photo = new AlbumPhoto();
+        $photo->album_id = $albumId;
+        $photo->user_id = $userId;
+        $photo->img_name = $imgName;
+        $photo->tmb_name = $tmbName;
+        $photo->description = $description;
+        $photo->time = $time;
+        $photo->access = $access;
+        $photo->save();
+
+        return $photo;
+    }
+
     public function getByAlbum(int $albumId): Collection
     {
         return AlbumPhoto::query()->where('album_id', $albumId)->get();
