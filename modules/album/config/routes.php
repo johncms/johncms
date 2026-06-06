@@ -22,143 +22,72 @@ use Johncms\Modules\Album\Application\Middlewares\AuthorizedUserMiddleware;
 use Johncms\Router\RouteCollection;
 
 return static function (RouteCollection $router): void {
-    // The whole module requires an authenticated user. Routes are still
-    // registered top-level (the UrlMatcher matches in registration order, and
-    // grouped routes are compiled after all top-level routes); collapsing the
-    // per-route AuthorizedUserMiddleware into a single auth group (see the
-    // profile module) is the next refactoring step.
-    $router->get('/album', AlbumIndexController::class)
-        ->name('album.index')
-        ->middleware(AuthorizedUserMiddleware::class);
+    // The whole module requires an authenticated user. Routes are kept in
+    // registration order so the static segments (users, top, user/...) match
+    // before the catch-all numeric routes (/album/{al}, /album/photo/{img}).
+    $albumGroup = $router->group('', function (RouteCollection $r): void {
+        $r->get('/album', AlbumIndexController::class)->name('album.index');
 
-    $router->get('/album/users', UsersListController::class)
-        ->name('album.users')
-        ->middleware(AuthorizedUserMiddleware::class);
-    $router->get('/album/users/{filter}', UsersListController::class)
-        ->name('album.users.filter')
-        ->requirements(['filter' => 'boys|girls'])
-        ->middleware(AuthorizedUserMiddleware::class);
+        $r->get('/album/users', UsersListController::class)->name('album.users');
+        $r->get('/album/users/{filter}', UsersListController::class)
+            ->name('album.users.filter')
+            ->requirements(['filter' => 'boys|girls']);
 
-    $router->get('/album/top', TopController::class)
-        ->name('album.top')
-        ->middleware(AuthorizedUserMiddleware::class);
-    $router->get('/album/top/{filter}', TopController::class)
-        ->name('album.top.filter')
-        ->requirements(['filter' => 'recent-comments|views|downloads|comments|votes|worst|my-comments'])
-        ->middleware(AuthorizedUserMiddleware::class);
+        $r->get('/album/top', TopController::class)->name('album.top');
+        $r->get('/album/top/{filter}', TopController::class)
+            ->name('album.top.filter')
+            ->requirements(['filter' => 'recent-comments|views|downloads|comments|votes|worst|my-comments']);
 
-    // Create a new album for the given user (GET form + POST save).
-    $router->get('/album/user/{id}/create', [EditAlbumController::class, 'createForm'])
-        ->name('album.album.create')
-        ->requirements(['id' => '\d+'])
-        ->middleware(AuthorizedUserMiddleware::class);
-    $router->post('/album/user/{id}/create', [EditAlbumController::class, 'createSave'])
-        ->name('album.album.create.save')
-        ->requirements(['id' => '\d+'])
-        ->middleware(AuthorizedUserMiddleware::class);
+        // Create a new album for the given user (GET form + POST save).
+        $r->get('/album/user/{id:number}/create', [EditAlbumController::class, 'createForm'])->name('album.album.create');
+        $r->post('/album/user/{id:number}/create', [EditAlbumController::class, 'createSave'])->name('album.album.create.save');
 
-    $router->get('/album/user/{id}', UserAlbumsController::class)
-        ->name('album.user')
-        ->requirements(['id' => '\d+'])
-        ->middleware(AuthorizedUserMiddleware::class);
+        $r->get('/album/user/{id:number}', UserAlbumsController::class)->name('album.user');
 
-    // Edit an existing album (GET form + POST save).
-    $router->get('/album/{al}/edit', [EditAlbumController::class, 'editForm'])
-        ->name('album.album.edit')
-        ->requirements(['al' => '\d+'])
-        ->middleware(AuthorizedUserMiddleware::class);
-    $router->post('/album/{al}/edit', [EditAlbumController::class, 'editSave'])
-        ->name('album.album.edit.save')
-        ->requirements(['al' => '\d+'])
-        ->middleware(AuthorizedUserMiddleware::class);
+        // Edit an existing album (GET form + POST save).
+        $r->get('/album/{al:number}/edit', [EditAlbumController::class, 'editForm'])->name('album.album.edit');
+        $r->post('/album/{al:number}/edit', [EditAlbumController::class, 'editSave'])->name('album.album.edit.save');
 
-    // Delete an album with all its photos (GET confirmation + POST submit).
-    $router->get('/album/{al}/delete', [DeleteAlbumController::class, 'confirm'])
-        ->name('album.album.delete')
-        ->requirements(['al' => '\d+'])
-        ->middleware(AuthorizedUserMiddleware::class);
-    $router->post('/album/{al}/delete', [DeleteAlbumController::class, 'delete'])
-        ->name('album.album.delete.submit')
-        ->requirements(['al' => '\d+'])
-        ->middleware(AuthorizedUserMiddleware::class);
+        // Delete an album with all its photos (GET confirmation + POST submit).
+        $r->get('/album/{al:number}/delete', [DeleteAlbumController::class, 'confirm'])->name('album.album.delete');
+        $r->post('/album/{al:number}/delete', [DeleteAlbumController::class, 'delete'])->name('album.album.delete.submit');
 
-    // Reorder an album within the owner's sort order (POST only).
-    $router->post('/album/{al}/move-up', [SortAlbumController::class, 'moveUp'])
-        ->name('album.album.move-up')
-        ->requirements(['al' => '\d+'])
-        ->middleware(AuthorizedUserMiddleware::class);
-    $router->post('/album/{al}/move-down', [SortAlbumController::class, 'moveDown'])
-        ->name('album.album.move-down')
-        ->requirements(['al' => '\d+'])
-        ->middleware(AuthorizedUserMiddleware::class);
+        // Reorder an album within the owner's sort order (POST only).
+        $r->post('/album/{al:number}/move-up', [SortAlbumController::class, 'moveUp'])->name('album.album.move-up');
+        $r->post('/album/{al:number}/move-down', [SortAlbumController::class, 'moveDown'])->name('album.album.move-down');
 
-    // Upload a photo into an album (GET form + POST submit).
-    $router->get('/album/{al}/upload', [UploadPhotoController::class, 'form'])
-        ->name('album.album.upload')
-        ->requirements(['al' => '\d+'])
-        ->middleware(AuthorizedUserMiddleware::class);
-    $router->post('/album/{al}/upload', [UploadPhotoController::class, 'upload'])
-        ->name('album.album.upload.submit')
-        ->requirements(['al' => '\d+'])
-        ->middleware(AuthorizedUserMiddleware::class);
+        // Upload a photo into an album (GET form + POST submit).
+        $r->get('/album/{al:number}/upload', [UploadPhotoController::class, 'form'])->name('album.album.upload');
+        $r->post('/album/{al:number}/upload', [UploadPhotoController::class, 'upload'])->name('album.album.upload.submit');
 
-    // Edit a photo's description (GET form + POST save).
-    $router->get('/album/photo/{img}/edit', [EditPhotoController::class, 'form'])
-        ->name('album.photo.edit')
-        ->requirements(['img' => '\d+'])
-        ->middleware(AuthorizedUserMiddleware::class);
-    $router->post('/album/photo/{img}/edit', [EditPhotoController::class, 'save'])
-        ->name('album.photo.edit.save')
-        ->requirements(['img' => '\d+'])
-        ->middleware(AuthorizedUserMiddleware::class);
+        // Edit a photo's description (GET form + POST save).
+        $r->get('/album/photo/{img:number}/edit', [EditPhotoController::class, 'form'])->name('album.photo.edit');
+        $r->post('/album/photo/{img:number}/edit', [EditPhotoController::class, 'save'])->name('album.photo.edit.save');
 
-    // Move a photo to another album (GET form + POST submit).
-    $router->get('/album/photo/{img}/move', [MovePhotoController::class, 'form'])
-        ->name('album.photo.move')
-        ->requirements(['img' => '\d+'])
-        ->middleware(AuthorizedUserMiddleware::class);
-    $router->post('/album/photo/{img}/move', [MovePhotoController::class, 'move'])
-        ->name('album.photo.move.submit')
-        ->requirements(['img' => '\d+'])
-        ->middleware(AuthorizedUserMiddleware::class);
+        // Move a photo to another album (GET form + POST submit).
+        $r->get('/album/photo/{img:number}/move', [MovePhotoController::class, 'form'])->name('album.photo.move');
+        $r->post('/album/photo/{img:number}/move', [MovePhotoController::class, 'move'])->name('album.photo.move.submit');
 
-    // Delete a photo with its files, votes and comments (GET confirmation + POST submit).
-    $router->get('/album/photo/{img}/delete', [DeletePhotoController::class, 'confirm'])
-        ->name('album.photo.delete')
-        ->requirements(['img' => '\d+'])
-        ->middleware(AuthorizedUserMiddleware::class);
-    $router->post('/album/photo/{img}/delete', [DeletePhotoController::class, 'delete'])
-        ->name('album.photo.delete.submit')
-        ->requirements(['img' => '\d+'])
-        ->middleware(AuthorizedUserMiddleware::class);
+        // Delete a photo with its files, votes and comments (GET confirmation + POST submit).
+        $r->get('/album/photo/{img:number}/delete', [DeletePhotoController::class, 'confirm'])->name('album.photo.delete');
+        $r->post('/album/photo/{img:number}/delete', [DeletePhotoController::class, 'delete'])->name('album.photo.delete.submit');
 
-    // Vote for a photo (POST only); redirects back to the photo page.
-    $router->post('/album/photo/{img}/vote/{type}', VotePhotoController::class)
-        ->name('album.photo.vote')
-        ->requirements(['img' => '\d+', 'type' => 'plus|minus'])
-        ->middleware(AuthorizedUserMiddleware::class);
+        // Vote for a photo (POST only); redirects back to the photo page.
+        $r->post('/album/photo/{img:number}/vote/{type}', VotePhotoController::class)
+            ->name('album.photo.vote')
+            ->requirements(['type' => 'plus|minus']);
 
-    // Photo file download (counts a unique download and redirects to the file).
-    $router->get('/album/photo/{img}/download', DownloadPhotoController::class)
-        ->name('album.photo.download')
-        ->requirements(['img' => '\d+'])
-        ->middleware(AuthorizedUserMiddleware::class);
+        // Photo file download (counts a unique download and redirects to the file).
+        $r->get('/album/photo/{img:number}/download', DownloadPhotoController::class)->name('album.photo.download');
 
-    // Photo comments (POST handles adding/replying/deleting comments).
-    $router->map(['GET', 'POST'], '/album/photo/{img}/comments', PhotoCommentsController::class)
-        ->name('album.photo.comments')
-        ->requirements(['img' => '\d+'])
-        ->middleware(AuthorizedUserMiddleware::class);
+        // Photo comments (POST handles adding/replying/deleting comments).
+        $r->map(['GET', 'POST'], '/album/photo/{img:number}/comments', PhotoCommentsController::class)->name('album.photo.comments');
 
-    // Single photo viewer (POST handles the password form for protected albums).
-    $router->map(['GET', 'POST'], '/album/photo/{img}', ShowPhotoController::class)
-        ->name('album.photo')
-        ->requirements(['img' => '\d+'])
-        ->middleware(AuthorizedUserMiddleware::class);
+        // Single photo viewer (POST handles the password form for protected albums).
+        $r->map(['GET', 'POST'], '/album/photo/{img:number}', ShowPhotoController::class)->name('album.photo');
 
-    // Album viewer (POST handles the password form for protected albums).
-    $router->map(['GET', 'POST'], '/album/{al}', ShowAlbumController::class)
-        ->name('album.show')
-        ->requirements(['al' => '\d+'])
-        ->middleware(AuthorizedUserMiddleware::class);
+        // Album viewer (POST handles the password form for protected albums).
+        $r->map(['GET', 'POST'], '/album/{al:number}', ShowAlbumController::class)->name('album.show');
+    });
+    $albumGroup->addMiddleware(AuthorizedUserMiddleware::class);
 };
