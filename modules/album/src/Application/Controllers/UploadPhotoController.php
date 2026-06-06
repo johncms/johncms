@@ -14,6 +14,7 @@ use Johncms\Modules\Album\Domain\Models\Album;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
 use Johncms\System\View\Render;
+use Johncms\Users\User;
 
 final readonly class UploadPhotoController
 {
@@ -22,6 +23,7 @@ final readonly class UploadPhotoController
         private Render $render,
         private Request $request,
         private NavChain $navChain,
+        private User $currentUser,
         private GetUploadPhotoContextUseCase $getContextUseCase,
         private UploadPhotoUseCase $uploadPhotoUseCase,
     ) {
@@ -77,6 +79,9 @@ final readonly class UploadPhotoController
         $title = __('Upload image');
 
         $this->navChain->add(__('Albums'), '/album');
+        $userAlbumsLabel = $album->user_id === $this->currentUser->id ? __('Your albums') : __('User albums');
+        $this->navChain->add($userAlbumsLabel, '/album/user/' . $album->user_id);
+        $this->navChain->add($album->name, '/album/' . $album->id);
         $this->navChain->add($title);
 
         $this->render->addData([

@@ -52,6 +52,8 @@ final readonly class ShowPhotoController
 
         $title = __('View photo');
         $this->navChain->add(__('Albums'), '/album');
+        $userAlbumsLabel = $result->ownerId === $this->currentUser->id ? __('Your albums') : __('User albums');
+        $this->navChain->add($userAlbumsLabel, '/album/user/' . $result->ownerId);
         if ($result->photo !== null) {
             $this->navChain->add($result->photo->albumName, '/album/' . $result->albumId);
         }

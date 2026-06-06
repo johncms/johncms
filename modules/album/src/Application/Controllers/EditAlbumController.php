@@ -16,6 +16,7 @@ use Johncms\Modules\Album\Application\UseCases\SaveAlbumUseCase;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
 use Johncms\System\View\Render;
+use Johncms\Users\User;
 
 final readonly class EditAlbumController
 {
@@ -24,6 +25,7 @@ final readonly class EditAlbumController
         private Render $render,
         private Request $request,
         private NavChain $navChain,
+        private User $currentUser,
         private GetEditAlbumContextUseCase $getContextUseCase,
         private SaveAlbumUseCase $saveAlbumUseCase,
     ) {
@@ -171,6 +173,11 @@ final readonly class EditAlbumController
             : '/album/user/' . $context->ownerId . '/create';
 
         $this->navChain->add(__('Albums'), '/album');
+        $userAlbumsLabel = $context->ownerId === $this->currentUser->id ? __('Your albums') : __('User albums');
+        $this->navChain->add($userAlbumsLabel, '/album/user/' . $context->ownerId);
+        if ($context->isEdit()) {
+            $this->navChain->add($context->album->name, '/album/' . $context->album->id);
+        }
         $this->navChain->add($title);
 
         $this->render->addData([

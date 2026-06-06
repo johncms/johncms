@@ -13,6 +13,7 @@ use Johncms\Modules\Album\Domain\Models\AlbumPhoto;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
 use Johncms\System\View\Render;
+use Johncms\Users\User;
 use Johncms\Validator\Validator;
 
 final readonly class DeletePhotoController
@@ -22,6 +23,7 @@ final readonly class DeletePhotoController
         private Render $render,
         private Request $request,
         private NavChain $navChain,
+        private User $currentUser,
         private GetDeletePhotoContextUseCase $getContextUseCase,
         private DeletePhotoUseCase $deletePhotoUseCase,
     ) {
@@ -38,6 +40,10 @@ final readonly class DeletePhotoController
         $title = __('Delete image');
 
         $this->navChain->add(__('Albums'), '/album');
+        $userAlbumsLabel = $photo->user_id === $this->currentUser->id ? __('Your albums') : __('User albums');
+        $this->navChain->add($userAlbumsLabel, '/album/user/' . $photo->user_id);
+        $this->navChain->add($photo->album->name ?? '', '/album/' . $photo->album_id);
+        $this->navChain->add(__('Photo'), '/album/photo/' . $photo->id);
         $this->navChain->add($title);
 
         $this->render->addData([

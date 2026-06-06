@@ -47,7 +47,11 @@ final readonly class PhotoCommentsController
         }
 
         $this->navChain->add(__('Albums'), '/album');
+        $userAlbumsLabel = $context->ownerId === $this->currentUser->id ? __('Your albums') : __('User albums');
+        $this->navChain->add($userAlbumsLabel, '/album/user/' . $context->ownerId);
         $this->navChain->add($context->albumName, '/album/' . $context->albumId);
+        $this->navChain->add(__('Photo'), '/album/photo/' . $context->photoId);
+        $this->navChain->add(__('Comments'));
 
         // Globals consumed by the legacy Comments class.
         global $mod, $start;

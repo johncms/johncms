@@ -13,6 +13,7 @@ use Johncms\Modules\Album\Application\UseCases\GetDeleteAlbumContextUseCase;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
 use Johncms\System\View\Render;
+use Johncms\Users\User;
 use Johncms\Validator\Validator;
 
 final readonly class DeleteAlbumController
@@ -22,6 +23,7 @@ final readonly class DeleteAlbumController
         private Render $render,
         private Request $request,
         private NavChain $navChain,
+        private User $currentUser,
         private GetDeleteAlbumContextUseCase $getContextUseCase,
         private DeleteAlbumUseCase $deleteAlbumUseCase,
     ) {
@@ -39,6 +41,9 @@ final readonly class DeleteAlbumController
         $title = __('Delete album:') . ' ' . $album->name;
 
         $this->navChain->add(__('Albums'), '/album');
+        $userAlbumsLabel = $album->user_id === $this->currentUser->id ? __('Your albums') : __('User albums');
+        $this->navChain->add($userAlbumsLabel, '/album/user/' . $album->user_id);
+        $this->navChain->add($album->name, '/album/' . $album->id);
         $this->navChain->add($title);
 
         $this->render->addData([

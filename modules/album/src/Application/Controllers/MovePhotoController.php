@@ -15,6 +15,7 @@ use Johncms\Modules\Album\Domain\Repository\AlbumRepositoryInterface;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
 use Johncms\System\View\Render;
+use Johncms\Users\User;
 
 final readonly class MovePhotoController
 {
@@ -23,6 +24,7 @@ final readonly class MovePhotoController
         private Render $render,
         private Request $request,
         private NavChain $navChain,
+        private User $currentUser,
         private AlbumRepositoryInterface $albumRepository,
         private GetMovePhotoContextUseCase $getContextUseCase,
         private MovePhotoUseCase $movePhotoUseCase,
@@ -61,6 +63,10 @@ final readonly class MovePhotoController
 
         $title = __('Move image');
         $this->navChain->add(__('Albums'), '/album');
+        $userAlbumsLabel = $photo->user_id === $this->currentUser->id ? __('Your albums') : __('User albums');
+        $this->navChain->add($userAlbumsLabel, '/album/user/' . $photo->user_id);
+        $this->navChain->add($photo->album->name ?? '', '/album/' . $photo->album_id);
+        $this->navChain->add(__('Photo'), '/album/photo/' . $photo->id);
         $this->navChain->add($title);
 
         $this->render->addData([

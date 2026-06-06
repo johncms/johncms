@@ -51,7 +51,9 @@ final readonly class ShowAlbumController
 
         $title = __('Albums');
         $this->navChain->add($title, '/album');
-        $this->navChain->add($result->albumName, '/album/' . $result->albumId);
+        $userAlbumsLabel = $result->ownerId === $this->currentUser->id ? __('Your albums') : __('User albums');
+        $this->navChain->add($userAlbumsLabel, '/album/user/' . $result->ownerId);
+        $this->navChain->add($result->albumName);
 
         $this->render->addData([
             'title'      => $title,
