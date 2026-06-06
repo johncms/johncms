@@ -25,6 +25,15 @@ final class EloquentAlbumRepository implements AlbumRepositoryInterface
         return Album::query()->find($albumId);
     }
 
+    public function getUserAlbumsExcept(int $userId, int $excludeAlbumId): Collection
+    {
+        return Album::query()
+            ->where('user_id', $userId)
+            ->where('id', '<>', $excludeAlbumId)
+            ->orderBy('sort')
+            ->get();
+    }
+
     public function getUserAlbums(int $userId, ?int $restrictToVisibleForUser): Collection
     {
         $query = Album::query()

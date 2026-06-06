@@ -148,6 +148,14 @@ final class EloquentAlbumPhotoRepository implements AlbumPhotoRepositoryInterfac
         AlbumPhoto::query()->where('id', $photoId)->update(['description' => $description]);
     }
 
+    public function moveToAlbum(int $photoId, int $albumId, int $access): void
+    {
+        AlbumPhoto::query()->where('id', $photoId)->update([
+            'album_id' => $albumId,
+            'access'   => $access,
+        ]);
+    }
+
     public function setUnreadComments(int $photoId, bool $unread): void
     {
         AlbumPhoto::query()->where('id', $photoId)->update(['unread_comments' => $unread]);

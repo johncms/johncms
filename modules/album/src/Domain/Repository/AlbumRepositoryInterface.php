@@ -22,6 +22,14 @@ interface AlbumRepositoryInterface
     public function findById(int $albumId): ?Album;
 
     /**
+     * Get the albums owned by a user except the given one, ordered by sort
+     * (used as the target list when moving a photo to another album).
+     *
+     * @return Collection<int, Album>
+     */
+    public function getUserAlbumsExcept(int $userId, int $excludeAlbumId): Collection;
+
+    /**
      * Get the albums owned by a user, ordered by sort.
      *
      * Each album carries a dynamic `photos_count` attribute with the total

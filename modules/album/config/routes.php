@@ -7,6 +7,7 @@ use Johncms\Modules\Album\Application\Controllers\DeleteAlbumController;
 use Johncms\Modules\Album\Application\Controllers\DownloadPhotoController;
 use Johncms\Modules\Album\Application\Controllers\EditAlbumController;
 use Johncms\Modules\Album\Application\Controllers\EditPhotoController;
+use Johncms\Modules\Album\Application\Controllers\MovePhotoController;
 use Johncms\Modules\Album\Application\Controllers\PhotoCommentsController;
 use Johncms\Modules\Album\Application\Controllers\ShowAlbumController;
 use Johncms\Modules\Album\Application\Controllers\ShowPhotoController;
@@ -107,6 +108,16 @@ return static function (RouteCollection $router): void {
         ->middleware(AuthorizedUserMiddleware::class);
     $router->post('/album/photo/{img}/edit', [EditPhotoController::class, 'save'])
         ->name('album.photo.edit.save')
+        ->requirements(['img' => '\d+'])
+        ->middleware(AuthorizedUserMiddleware::class);
+
+    // Move a photo to another album (GET form + POST submit).
+    $router->get('/album/photo/{img}/move', [MovePhotoController::class, 'form'])
+        ->name('album.photo.move')
+        ->requirements(['img' => '\d+'])
+        ->middleware(AuthorizedUserMiddleware::class);
+    $router->post('/album/photo/{img}/move', [MovePhotoController::class, 'move'])
+        ->name('album.photo.move.submit')
         ->requirements(['img' => '\d+'])
         ->middleware(AuthorizedUserMiddleware::class);
 

@@ -103,6 +103,11 @@ interface AlbumPhotoRepositoryInterface
     public function updateDescription(int $photoId, string $description): void;
 
     /**
+     * Move the photo to another album, applying that album's access level.
+     */
+    public function moveToAlbum(int $photoId, int $albumId, int $access): void;
+
+    /**
      * Set the "unread comments" flag of the photo.
      */
     public function setUnreadComments(int $photoId, bool $unread): void;
