@@ -148,6 +148,16 @@ final class EloquentAlbumPhotoRepository implements AlbumPhotoRepositoryInterfac
         AlbumPhoto::query()->where('id', $photoId)->update(['downloads' => $downloads]);
     }
 
+    public function incrementVotePlus(int $photoId): void
+    {
+        AlbumPhoto::query()->where('id', $photoId)->increment('vote_plus');
+    }
+
+    public function incrementVoteMinus(int $photoId): void
+    {
+        AlbumPhoto::query()->where('id', $photoId)->increment('vote_minus');
+    }
+
     public function updateDescription(int $photoId, string $description): void
     {
         AlbumPhoto::query()->where('id', $photoId)->update(['description' => $description]);

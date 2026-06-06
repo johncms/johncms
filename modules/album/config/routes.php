@@ -17,6 +17,7 @@ use Johncms\Modules\Album\Application\Controllers\UploadPhotoController;
 use Johncms\Modules\Album\Application\Controllers\TopController;
 use Johncms\Modules\Album\Application\Controllers\UserAlbumsController;
 use Johncms\Modules\Album\Application\Controllers\UsersListController;
+use Johncms\Modules\Album\Application\Controllers\VotePhotoController;
 use Johncms\Modules\Album\Application\Middlewares\AuthorizedUserMiddleware;
 use Johncms\Router\RouteCollection;
 
@@ -130,6 +131,12 @@ return static function (RouteCollection $router): void {
     $router->post('/album/photo/{img}/delete', [DeletePhotoController::class, 'delete'])
         ->name('album.photo.delete.submit')
         ->requirements(['img' => '\d+'])
+        ->middleware(AuthorizedUserMiddleware::class);
+
+    // Vote for a photo (POST only); redirects back to the photo page.
+    $router->post('/album/photo/{img}/vote/{type}', VotePhotoController::class)
+        ->name('album.photo.vote')
+        ->requirements(['img' => '\d+', 'type' => 'plus|minus'])
         ->middleware(AuthorizedUserMiddleware::class);
 
     // Photo file download (counts a unique download and redirects to the file).

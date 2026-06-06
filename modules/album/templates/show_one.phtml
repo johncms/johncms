@@ -68,18 +68,24 @@ $this->layout('system::layout/default');
             <span class="pe-2 fw-bold"><?= $photo->rating ?></span>
             <!-- Vote -->
             <?php if ($photo->canVote): ?>
-                <a href="<?= $this->e($photo->likeUrl) ?>" class="text-decoration-none pe-2">
-                    <svg class="icon download-button-icon mt-n2">
-                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#like"></use>
-                    </svg>
-                    <span><?= $photo->votePlus ?></span>
-                </a>
-                <a href="<?= $this->e($photo->dislikeUrl) ?>" class="text-decoration-none pe-2">
-                    <svg class="icon download-button-icon me-1">
-                        <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#dislike"></use>
-                    </svg>
-                    <span><?= $photo->voteMinus ?></span>
-                </a>
+                <form action="<?= $this->e($photo->likeUrl) ?>" method="post" class="d-inline">
+                    <input type="hidden" name="csrf_token" value="<?= $this->e($csrf_token) ?>">
+                    <button type="submit" class="btn btn-link text-decoration-none p-0 pe-2 align-baseline">
+                        <svg class="icon download-button-icon mt-n2">
+                            <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#like"></use>
+                        </svg>
+                        <span><?= $photo->votePlus ?></span>
+                    </button>
+                </form>
+                <form action="<?= $this->e($photo->dislikeUrl) ?>" method="post" class="d-inline">
+                    <input type="hidden" name="csrf_token" value="<?= $this->e($csrf_token) ?>">
+                    <button type="submit" class="btn btn-link text-decoration-none p-0 pe-2 align-baseline">
+                        <svg class="icon download-button-icon me-1">
+                            <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#dislike"></use>
+                        </svg>
+                        <span><?= $photo->voteMinus ?></span>
+                    </button>
+                </form>
             <?php else: ?>
                 <div class="d-inline pe-2 text-muted">
                     <svg class="icon download-button-icon mt-n2">

@@ -15,6 +15,16 @@ interface AlbumVoteRepositoryInterface
     public function filterVotedPhotoIds(int $userId, array $photoIds): array;
 
     /**
+     * Whether the user has already voted for the given photo.
+     */
+    public function hasUserVote(int $userId, int $fileId): bool;
+
+    /**
+     * Store a user's vote for a photo.
+     */
+    public function addVote(int $userId, int $fileId, int $vote): void;
+
+    /**
      * Delete every vote attached to the given photos.
      *
      * @param list<int> $photoIds

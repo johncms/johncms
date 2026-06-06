@@ -103,6 +103,16 @@ interface AlbumPhotoRepositoryInterface
     public function refreshDownloadsCount(int $photoId): void;
 
     /**
+     * Increment the cached positive votes counter of the photo.
+     */
+    public function incrementVotePlus(int $photoId): void;
+
+    /**
+     * Increment the cached negative votes counter of the photo.
+     */
+    public function incrementVoteMinus(int $photoId): void;
+
+    /**
      * Update the description of the photo.
      */
     public function updateDescription(int $photoId, string $description): void;

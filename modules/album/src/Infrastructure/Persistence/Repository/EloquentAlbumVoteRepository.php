@@ -22,6 +22,23 @@ final class EloquentAlbumVoteRepository implements AlbumVoteRepositoryInterface
             ->all();
     }
 
+    public function hasUserVote(int $userId, int $fileId): bool
+    {
+        return AlbumVote::query()
+            ->where('user_id', $userId)
+            ->where('file_id', $fileId)
+            ->exists();
+    }
+
+    public function addVote(int $userId, int $fileId, int $vote): void
+    {
+        AlbumVote::query()->create([
+            'user_id' => $userId,
+            'file_id' => $fileId,
+            'vote'    => $vote,
+        ]);
+    }
+
     public function deleteByPhotoIds(array $photoIds): void
     {
         if ($photoIds === []) {

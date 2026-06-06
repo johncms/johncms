@@ -102,7 +102,6 @@ if (! $foundUser = $req->fetch()) {
 
 $actions = [
     'new_comm',
-    'vote',
 ];
 
 if (($key = array_search($act, $actions, true)) !== false) {
