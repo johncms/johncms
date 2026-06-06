@@ -55,4 +55,19 @@ interface AlbumRepositoryInterface
         int $page,
         int $perPage
     ): LengthAwarePaginator;
+
+    /**
+     * Whether the user already owns an album with the given name.
+     */
+    public function existsByNameForUser(int $userId, string $name): bool;
+
+    /**
+     * Create a new album for the user, appending it to the end of their sort order.
+     */
+    public function create(int $userId, string $name, string $description, ?string $password, int $access): Album;
+
+    /**
+     * Update the album's editable fields.
+     */
+    public function update(Album $album, string $name, string $description, ?string $password, int $access): void;
 }

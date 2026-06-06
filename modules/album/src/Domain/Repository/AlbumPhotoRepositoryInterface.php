@@ -77,6 +77,11 @@ interface AlbumPhotoRepositoryInterface
     public function setUnreadComments(int $photoId, bool $unread): void;
 
     /**
+     * Cascade an album's access level to all of its photos.
+     */
+    public function setAccessForAlbum(int $albumId, int $access): void;
+
+    /**
      * Paginate photos for one of the "top" feeds, eager-loading album and user.
      *
      * For non owner-scoped feeds, when $restrictToPublicForUser is provided only

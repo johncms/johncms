@@ -61,7 +61,7 @@ final readonly class UserAlbumsController
             if ($result->canManage) {
                 $row['up_url'] = '/album/sort?mod=up&al=' . $album->id . '&user=' . $owner->id;
                 $row['down_url'] = '/album/sort?mod=down&al=' . $album->id . '&user=' . $owner->id;
-                $row['edit_url'] = '/album/edit?al=' . $album->id . '&user=' . $owner->id;
+                $row['edit_url'] = '/album/' . $album->id . '/edit';
                 $row['delete_url'] = '/album/delete?al=' . $album->id . '&user=' . $owner->id;
             }
 
@@ -92,7 +92,7 @@ final readonly class UserAlbumsController
                 ],
                 'albums'       => $albums,
                 'total_photos' => $totalPhotos,
-                'create_url'   => $result->canCreate ? '/album/edit?user=' . $owner->id : '',
+                'create_url'   => $result->canCreate ? '/album/user/' . $owner->id . '/create' : '',
             ]
         );
     }

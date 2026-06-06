@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Johncms\Modules\Album\Application\Controllers\AlbumIndexController;
 use Johncms\Modules\Album\Application\Controllers\DownloadPhotoController;
+use Johncms\Modules\Album\Application\Controllers\EditAlbumController;
 use Johncms\Modules\Album\Application\Controllers\PhotoCommentsController;
 use Johncms\Modules\Album\Application\Controllers\ShowAlbumController;
 use Johncms\Modules\Album\Application\Controllers\ShowPhotoController;
@@ -40,9 +41,29 @@ return static function (RouteCollection $router): void {
         ->requirements(['filter' => 'recent-comments|views|downloads|comments|votes|worst|my-comments'])
         ->middleware(AuthorizedUserMiddleware::class);
 
+    // Create a new album for the given user (GET form + POST save).
+    $router->get('/album/user/{id}/create', [EditAlbumController::class, 'createForm'])
+        ->name('album.album.create')
+        ->requirements(['id' => '\d+'])
+        ->middleware(AuthorizedUserMiddleware::class);
+    $router->post('/album/user/{id}/create', [EditAlbumController::class, 'createSave'])
+        ->name('album.album.create.save')
+        ->requirements(['id' => '\d+'])
+        ->middleware(AuthorizedUserMiddleware::class);
+
     $router->get('/album/user/{id}', UserAlbumsController::class)
         ->name('album.user')
         ->requirements(['id' => '\d+'])
+        ->middleware(AuthorizedUserMiddleware::class);
+
+    // Edit an existing album (GET form + POST save).
+    $router->get('/album/{al}/edit', [EditAlbumController::class, 'editForm'])
+        ->name('album.album.edit')
+        ->requirements(['al' => '\d+'])
+        ->middleware(AuthorizedUserMiddleware::class);
+    $router->post('/album/{al}/edit', [EditAlbumController::class, 'editSave'])
+        ->name('album.album.edit.save')
+        ->requirements(['al' => '\d+'])
         ->middleware(AuthorizedUserMiddleware::class);
 
     // Photo file download (counts a unique download and redirects to the file).

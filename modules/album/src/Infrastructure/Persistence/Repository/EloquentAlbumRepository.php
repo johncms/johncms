@@ -102,6 +102,40 @@ final class EloquentAlbumRepository implements AlbumRepositoryInterface
         return $query->groupBy('user_id')->pluck('aggregate', 'user_id')->all();
     }
 
+    public function existsByNameForUser(int $userId, string $name): bool
+    {
+        return Album::query()
+            ->where('user_id', $userId)
+            ->where('name', $name)
+            ->exists();
+    }
+
+    public function create(int $userId, string $name, string $description, ?string $password, int $access): Album
+    {
+        $maxSort = Album::query()->where('user_id', $userId)->max('sort');
+        $sort = $maxSort !== null ? (int) $maxSort + 1 : 1;
+
+        $album = new Album();
+        $album->user_id = $userId;
+        $album->name = $name;
+        $album->description = $description;
+        $album->password = $password;
+        $album->access = $access;
+        $album->sort = $sort;
+        $album->save();
+
+        return $album;
+    }
+
+    public function update(Album $album, string $name, string $description, ?string $password, int $access): void
+    {
+        $album->name = $name;
+        $album->description = $description;
+        $album->password = $password;
+        $album->access = $access;
+        $album->save();
+    }
+
     private function applyVisibility(QueryBuilder $query, ?int $restrictToVisibleForUser): void
     {
         if ($restrictToVisibleForUser === null) {
