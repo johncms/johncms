@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Album\Domain\Repository;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 use Johncms\Modules\Album\Domain\Enums\TopFilter;
 use Johncms\Modules\Album\Domain\Models\AlbumPhoto;
 
@@ -24,6 +25,18 @@ interface AlbumPhotoRepositoryInterface
      * Count the photos belonging to an album.
      */
     public function countByAlbum(int $albumId): int;
+
+    /**
+     * Get every photo of an album (used when cascading album deletion).
+     *
+     * @return Collection<int, AlbumPhoto>
+     */
+    public function getByAlbum(int $albumId): Collection;
+
+    /**
+     * Delete every photo row belonging to an album.
+     */
+    public function deleteByAlbum(int $albumId): void;
 
     /**
      * Count the photos of an album positioned before the given one

@@ -21,4 +21,13 @@ final class EloquentAlbumVoteRepository implements AlbumVoteRepositoryInterface
             ->pluck('file_id')
             ->all();
     }
+
+    public function deleteByPhotoIds(array $photoIds): void
+    {
+        if ($photoIds === []) {
+            return;
+        }
+
+        AlbumVote::query()->whereIn('file_id', $photoIds)->delete();
+    }
 }

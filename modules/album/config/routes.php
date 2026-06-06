@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Johncms\Modules\Album\Application\Controllers\AlbumIndexController;
+use Johncms\Modules\Album\Application\Controllers\DeleteAlbumController;
 use Johncms\Modules\Album\Application\Controllers\DownloadPhotoController;
 use Johncms\Modules\Album\Application\Controllers\EditAlbumController;
 use Johncms\Modules\Album\Application\Controllers\PhotoCommentsController;
@@ -63,6 +64,16 @@ return static function (RouteCollection $router): void {
         ->middleware(AuthorizedUserMiddleware::class);
     $router->post('/album/{al}/edit', [EditAlbumController::class, 'editSave'])
         ->name('album.album.edit.save')
+        ->requirements(['al' => '\d+'])
+        ->middleware(AuthorizedUserMiddleware::class);
+
+    // Delete an album with all its photos (GET confirmation + POST submit).
+    $router->get('/album/{al}/delete', [DeleteAlbumController::class, 'confirm'])
+        ->name('album.album.delete')
+        ->requirements(['al' => '\d+'])
+        ->middleware(AuthorizedUserMiddleware::class);
+    $router->post('/album/{al}/delete', [DeleteAlbumController::class, 'delete'])
+        ->name('album.album.delete.submit')
         ->requirements(['al' => '\d+'])
         ->middleware(AuthorizedUserMiddleware::class);
 

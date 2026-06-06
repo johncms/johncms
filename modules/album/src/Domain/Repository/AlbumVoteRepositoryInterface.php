@@ -13,4 +13,11 @@ interface AlbumVoteRepositoryInterface
      * @return list<int>
      */
     public function filterVotedPhotoIds(int $userId, array $photoIds): array;
+
+    /**
+     * Delete every vote attached to the given photos.
+     *
+     * @param list<int> $photoIds
+     */
+    public function deleteByPhotoIds(array $photoIds): void;
 }

@@ -70,4 +70,9 @@ interface AlbumRepositoryInterface
      * Update the album's editable fields.
      */
     public function update(Album $album, string $name, string $description, ?string $password, int $access): void;
+
+    /**
+     * Delete the album row.
+     */
+    public function delete(Album $album): void;
 }

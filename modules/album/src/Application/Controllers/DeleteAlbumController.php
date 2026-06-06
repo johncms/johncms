@@ -1,0 +1,128 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Johncms\Modules\Album\Application\Controllers;
+
+use Johncms\Http\Controller\ControllerContext;
+use Johncms\Modules\Album\Application\DTO\DeleteAlbumContextDTO;
+use Johncms\Modules\Album\Application\Exceptions\AlbumEditForbiddenException;
+use Johncms\Modules\Album\Application\Exceptions\AlbumNotFoundException;
+use Johncms\Modules\Album\Application\UseCases\DeleteAlbumUseCase;
+use Johncms\Modules\Album\Application\UseCases\GetDeleteAlbumContextUseCase;
+use Johncms\NavChain;
+use Johncms\System\Http\Request;
+use Johncms\System\View\Render;
+use Johncms\Validator\Validator;
+
+final readonly class DeleteAlbumController
+{
+    public function __construct(
+        private ControllerContext $controllerContext,
+        private Render $render,
+        private Request $request,
+        private NavChain $navChain,
+        private GetDeleteAlbumContextUseCase $getContextUseCase,
+        private DeleteAlbumUseCase $deleteAlbumUseCase,
+    ) {
+        $this->controllerContext->initModule('album');
+    }
+
+    public function confirm(int $al): string
+    {
+        $context = $this->resolveContext($al);
+        if (is_string($context)) {
+            return $context;
+        }
+
+        $album = $context->album;
+        $title = __('Delete album:') . ' ' . $album->name;
+
+        $this->navChain->add(__('Albums'), '/album');
+        $this->navChain->add($title);
+
+        $this->render->addData([
+            'title'      => $title,
+            'page_title' => $title,
+        ]);
+
+        return $this->render->render(
+            'album::confirm_delete',
+            [
+                'title'      => $title,
+                'page_title' => $title,
+                'data'       => [
+                    'message'     => __('Are you sure you want to delete this album? If it contains photos, they also will be deleted.'),
+                    'form_action' => '/album/' . $album->id . '/delete',
+                    'back_url'    => '/album/user/' . $album->user_id,
+                ],
+            ]
+        );
+    }
+
+    public function delete(int $al): string
+    {
+        $context = $this->resolveContext($al);
+        if (is_string($context)) {
+            return $context;
+        }
+        if (! $this->isCsrfValid()) {
+            return $this->renderError(__('Wrong data'));
+        }
+
+        $album = $context->album;
+        $ownerId = $album->user_id;
+
+        $this->deleteAlbumUseCase->execute($album);
+
+        return $this->render->render(
+            'system::pages/result',
+            [
+                'title'    => __('Delete album'),
+                'type'     => 'alert-success',
+                'message'  => __('Album deleted'),
+                'back_url' => '/album/user/' . $ownerId,
+            ]
+        );
+    }
+
+    /**
+     * Resolve the delete context or, on failure, a rendered error page (with the proper HTTP status set).
+     *
+     * @return DeleteAlbumContextDTO|string
+     */
+    private function resolveContext(int $al): DeleteAlbumContextDTO|string
+    {
+        try {
+            return $this->getContextUseCase->execute($al);
+        } catch (AlbumNotFoundException $e) {
+            http_response_code(403);
+            return $this->renderError($e->getMessage());
+        } catch (AlbumEditForbiddenException $e) {
+            http_response_code(403);
+            return $this->renderError($e->getMessage());
+        }
+    }
+
+    private function isCsrfValid(): bool
+    {
+        $validator = new Validator(
+            ['csrf_token' => (string) $this->request->getPost('csrf_token', '')],
+            ['csrf_token' => ['Csrf']]
+        );
+
+        return $validator->isValid();
+    }
+
+    private function renderError(string $message): string
+    {
+        return $this->render->render(
+            'system::pages/result',
+            [
+                'title'   => __('Albums'),
+                'type'    => 'alert-danger',
+                'message' => $message,
+            ]
+        );
+    }
+}

@@ -101,7 +101,6 @@ if (! $foundUser = $req->fetch()) {
 }
 
 $actions = [
-    'delete',
     'image_delete',
     'image_edit',
     'image_move',

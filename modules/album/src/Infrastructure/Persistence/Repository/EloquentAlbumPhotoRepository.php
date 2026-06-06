@@ -7,6 +7,7 @@ namespace Johncms\Modules\Album\Infrastructure\Persistence\Repository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Query\JoinClause;
 use Johncms\Modules\Album\Domain\Enums\AlbumAccess;
 use Johncms\Modules\Album\Domain\Enums\TopFilter;
@@ -34,6 +35,16 @@ final class EloquentAlbumPhotoRepository implements AlbumPhotoRepositoryInterfac
     public function countByAlbum(int $albumId): int
     {
         return AlbumPhoto::query()->where('album_id', $albumId)->count();
+    }
+
+    public function getByAlbum(int $albumId): Collection
+    {
+        return AlbumPhoto::query()->where('album_id', $albumId)->get();
+    }
+
+    public function deleteByAlbum(int $albumId): void
+    {
+        AlbumPhoto::query()->where('album_id', $albumId)->delete();
     }
 
     public function countPhotosAfter(int $albumId, int $photoId): int

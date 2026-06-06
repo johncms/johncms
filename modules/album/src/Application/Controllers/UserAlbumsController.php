@@ -62,7 +62,7 @@ final readonly class UserAlbumsController
                 $row['up_url'] = '/album/sort?mod=up&al=' . $album->id . '&user=' . $owner->id;
                 $row['down_url'] = '/album/sort?mod=down&al=' . $album->id . '&user=' . $owner->id;
                 $row['edit_url'] = '/album/' . $album->id . '/edit';
-                $row['delete_url'] = '/album/delete?al=' . $album->id . '&user=' . $owner->id;
+                $row['delete_url'] = '/album/' . $album->id . '/delete';
             }
 
             $albums[] = $row;

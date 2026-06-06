@@ -136,6 +136,11 @@ final class EloquentAlbumRepository implements AlbumRepositoryInterface
         $album->save();
     }
 
+    public function delete(Album $album): void
+    {
+        $album->delete();
+    }
+
     private function applyVisibility(QueryBuilder $query, ?int $restrictToVisibleForUser): void
     {
         if ($restrictToVisibleForUser === null) {
