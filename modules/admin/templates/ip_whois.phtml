@@ -1,27 +1,69 @@
 <?php
 
+use Johncms\Modules\Admin\Application\DTO\IpWhoisResultDTO;
+
 /**
- * @var bool $confirmation
- * @var array $sysconf
- * @var array $themelist
+ * @var Mobicms\Render\Template\Template $this
+ * @var IpWhoisResultDTO $result
  */
-$this->layout('system::layout/default', ['title' => __('Admin Panel'), 'page_title' => 'IP WHOIS']);
-$this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['sec_menu' => ['ip_whois' => true]]));
+
+$this->layout('system::layout/default');
+
+// Подсветка меток WHOIS-ответа. Применяется к уже экранированному тексту,
+// поэтому ключи не содержат спецсимволов HTML и переживают экранирование.
+$highlight = [
+    'inetnum:'       => '<strong class="red">inetnum:</strong>',
+    'netname:'       => '<strong class="green">netname:</strong>',
+    'descr:'         => '<strong class="red">descr:</strong>',
+    'country:'       => '<strong class="red">country:</strong>',
+    'admin-c:'       => '<strong class="gray">admin-c:</strong>',
+    'tech-c:'        => '<strong class="gray">tech-c:</strong>',
+    'status:'        => '<strong class="gray">status:</strong>',
+    'mnt-by:'        => '<strong class="gray">mnt-by:</strong>',
+    'mnt-lower:'     => '<strong class="gray">mnt-lower:</strong>',
+    'mnt-routes:'    => '<strong class="gray">mnt-routes:</strong>',
+    'source:'        => '<strong class="gray">source:</strong>',
+    'role:'          => '<strong class="gray">role:</strong>',
+    'address:'       => '<strong class="green">address:</strong>',
+    'e-mail:'        => '<strong class="green">e-mail:</strong>',
+    'nic-hdl:'       => '<strong class="gray">nic-hdl:</strong>',
+    'org:'           => '<strong class="gray">org:</strong>',
+    'person:'        => '<strong class="green">person:</strong>',
+    'phone:'         => '<strong class="green">phone:</strong>',
+    'remarks:'       => '<strong class="gray">remarks:</strong>',
+    'route:'         => '<strong class="red"><b>route:</b></strong>',
+    'origin:'        => '<strong class="gray">origin:</strong>',
+    'organisation:'  => '<strong class="gray">organisation:</strong>',
+    'org-name:'      => '<strong class="red"><b>org-name:</b></strong>',
+    'org-type:'      => '<strong class="gray">org-type:</strong>',
+    'abuse-mailbox:' => '<strong class="red"><b>abuse-mailbox:</b></strong>',
+    'mnt-ref:'       => '<strong class="gray">mnt-ref:</strong>',
+    'fax-no:'        => '<strong class="green">fax-no:</strong>',
+    'NetType:'       => '<strong class="gray">NetType:</strong>',
+    'Comment:'       => '<strong class="gray">Comment:</strong>',
+];
 ?>
 
 <form method="get">
     <div class="input-group mb-3" style="max-width: 20rem">
         <div class="input-group-prepend">
-            <span class="input-group-text" id="inputGroup-sizing-default"><?= __('IP Address') ?></span>
+            <span class="input-group-text"><?= __('IP Address') ?></span>
         </div>
-        <input type="text" name="ip" class="form-control" value="<?= $this->e($ip) ?>">
+        <input type="text" name="ip" class="form-control" value="<?= $this->e($result->ip) ?>">
         <div class="input-group-append">
             <button class="btn btn-primary" type="submit"><?= __('Search') ?></button>
         </div>
     </div>
 </form>
 
-<?php if ($ipwhois): ?>
+<?php if ($result->ip !== ''): ?>
     <div class="h3"><?= __('Search results') ?></div>
-    <p><?= $ipwhois ?></p>
+    <p>RESULTS FOUND: <?= $result->count() ?></p>
+    <?php foreach ($result->results as $server => $text): ?>
+        <p>
+            ------------- <br>
+            Lookup results for <?= $this->e($result->ip) ?> from <?= $this->e($server) ?> server:
+        </p>
+        <p><?= strtr(nl2br($this->e($text)), $highlight) ?></p>
+    <?php endforeach ?>
 <?php endif ?>

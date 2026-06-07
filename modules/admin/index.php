@@ -72,7 +72,6 @@ $actions = [
     'emoticons',
     'forum',
     'index',
-    'ip_whois',
     'ipban',
     'karma',
     'languages',

@@ -96,7 +96,7 @@ trait UserMutators
      */
     public function getWhoisIpUrlAttribute(): string
     {
-        return '/admin/ip_whois/?ip=' . $this->ip;
+        return '/admin/ip-whois?ip=' . $this->ip;
     }
 
     /**
@@ -116,7 +116,7 @@ trait UserMutators
      */
     public function getWhoisIpViaProxyUrlAttribute(): string
     {
-        return ! empty($this->ip_via_proxy) ? '/admin/ip_whois/?ip=' . $this->ip_via_proxy : '';
+        return ! empty($this->ip_via_proxy) ? '/admin/ip-whois?ip=' . $this->ip_via_proxy : '';
     }
 
     /**

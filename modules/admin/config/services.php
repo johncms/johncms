@@ -7,9 +7,11 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 use Johncms\Modules\Admin\Domain\Repository\DashboardRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\StaffRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\UserListRepositoryInterface;
+use Johncms\Modules\Admin\Domain\Services\WhoisClientInterface;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentDashboardRepository;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentStaffRepository;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentUserListRepository;
+use Johncms\Modules\Admin\Infrastructure\Whois\SocketWhoisClient;
 
 return static function (ContainerConfigurator $container): void {
     $services = $container->services();
@@ -38,4 +40,5 @@ return static function (ContainerConfigurator $container): void {
     $services->set(DashboardRepositoryInterface::class, EloquentDashboardRepository::class)->public();
     $services->set(StaffRepositoryInterface::class, EloquentStaffRepository::class)->public();
     $services->set(UserListRepositoryInterface::class, EloquentUserListRepository::class)->public();
+    $services->set(WhoisClientInterface::class, SocketWhoisClient::class)->public();
 };
