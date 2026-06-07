@@ -74,7 +74,7 @@ trait GuestSessionMutators
      */
     public function getSearchIpUrlAttribute(): string
     {
-        return '/admin/search_ip/?ip=' . $this->ip;
+        return '/admin/ip-search?ip=' . $this->ip;
     }
 
     /**
@@ -84,6 +84,6 @@ trait GuestSessionMutators
      */
     public function getSearchIpViaProxyUrlAttribute(): string
     {
-        return ! empty($this->ip_via_proxy) ? '/admin/search_ip/?ip=' . $this->ip_via_proxy : '';
+        return ! empty($this->ip_via_proxy) ? '/admin/ip-search?ip=' . $this->ip_via_proxy : '';
     }
 }

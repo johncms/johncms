@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Johncms\Modules\Admin\Application\Controllers\DashboardController;
+use Johncms\Modules\Admin\Application\Controllers\Ip\IpSearchController;
 use Johncms\Modules\Admin\Application\Controllers\Ip\IpWhoisController;
 use Johncms\Modules\Admin\Application\Controllers\System\SystemCheckController;
 use Johncms\Modules\Admin\Application\Controllers\Users\StaffListController;
@@ -32,6 +33,10 @@ return static function (RouteCollection $router, User $user): void {
             ->name('admin.users.sort')
             ->requirements(['sort' => 'by-nick|by-ip']);
         $r->get('/admin/ip-whois', IpWhoisController::class)->name('admin.ip_whois');
+        $r->get('/admin/ip-search', IpSearchController::class)->name('admin.ip_search');
+        $r->get('/admin/ip-search/{mode}', IpSearchController::class)
+            ->name('admin.ip_search.mode')
+            ->requirements(['mode' => 'history']);
     });
     $adminGroup->addMiddleware(AdminAccessMiddleware::class);
 

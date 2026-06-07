@@ -83,7 +83,7 @@ final readonly class ListGuestbookEntriesUseCase
 
         return new GuestbookEntryMetaDTO(
             ip:          $entry->ip,
-            searchIpUrl: '/admin/search_ip/?ip=' . $entry->ip,
+            searchIpUrl: '/admin/ip-search?ip=' . $entry->ip,
             userAgent:   $entry->browser,
             canManage:   $canManage,
             editUrl:     $canManage ? '/guestbook/edit?id=' . $entry->id : null,

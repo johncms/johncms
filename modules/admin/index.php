@@ -77,7 +77,6 @@ $actions = [
     'languages',
     'mail',
     'reg',
-    'search_ip',
     'settings',
     'usr_clean',
     'usr_del',

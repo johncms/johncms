@@ -135,8 +135,8 @@ final readonly class ViewPostUseCase
         return new PostModerationDTO(
             ip: $ip,
             ipViaProxy: $ipViaProxy,
-            searchIpUrl: '/admin/search_ip/?ip=' . $ip,
-            searchIpViaProxyUrl: $ipViaProxy ? '/admin/search_ip/?ip=' . $ipViaProxy : null,
+            searchIpUrl: '/admin/ip-search?ip=' . $ip,
+            searchIpViaProxyUrl: $ipViaProxy ? '/admin/ip-search?ip=' . $ipViaProxy : null,
             userAgent: $message->user_agent
         );
     }

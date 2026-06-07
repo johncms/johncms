@@ -47,7 +47,7 @@ final readonly class GetIpHistoryUseCase
             $ip = long2ip($record->ip);
             $items[] = [
                 'ip'           => $ip,
-                'search_url'   => '/admin/search_ip/?mod=history&ip=' . $ip,
+                'search_url'   => '/admin/ip-search/history?ip=' . $ip,
                 'display_date' => $this->tools->displayDate($record->time),
             ];
         }

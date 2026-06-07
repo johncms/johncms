@@ -67,11 +67,11 @@ final readonly class ViewPollVotersUseCase
             $row['user_is_online'] = $currentTime <= (int) ($row['lastdate'] ?? 0) + 300;
 
             $ip = long2ip((int) ($row['ip'] ?? 0));
-            $row['search_ip_url'] = '/admin/search_ip/?ip=' . $ip;
+            $row['search_ip_url'] = '/admin/ip-search?ip=' . $ip;
             $row['ip'] = $ip;
 
             $proxyIp = (int) ($row['ip_via_proxy'] ?? 0);
-            $row['search_ip_via_proxy_url'] = '/admin/search_ip/?ip=' . long2ip($proxyIp);
+            $row['search_ip_via_proxy_url'] = '/admin/ip-search?ip=' . long2ip($proxyIp);
             $row['ip_via_proxy'] = $proxyIp > 0 ? long2ip($proxyIp) : 0;
 
             $row['place'] = '';

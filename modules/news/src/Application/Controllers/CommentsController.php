@@ -96,9 +96,9 @@ final readonly class CommentsController
                         $message['can_delete'] = true;
                         $message['user_agent'] = Arr::get($comment->user_data, 'user_agent', '');
                         $message['ip'] = Arr::get($comment->user_data, 'ip', '');
-                        $message['search_ip_url'] = '/admin/search_ip/?ip=' . $message['ip'];
+                        $message['search_ip_url'] = '/admin/ip-search?ip=' . $message['ip'];
                         $message['ip_via_proxy'] = Arr::get($comment->user_data, 'ip_via_proxy', '');
-                        $message['search_ip_via_proxy_url'] = '/admin/search_ip/?ip=' . $message['ip_via_proxy'];
+                        $message['search_ip_via_proxy_url'] = '/admin/ip-search?ip=' . $message['ip_via_proxy'];
                     }
 
                     return $message;

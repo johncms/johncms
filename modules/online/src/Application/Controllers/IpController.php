@@ -67,7 +67,7 @@ final readonly class IpController
                 $ip = long2ip((int) $ipLong);
                 $items[] = [
                     'ip'              => $ip,
-                    'search_ip'       => '/admin/search_ip/?ip=' . $ip,
+                    'search_ip'       => '/admin/ip-search?ip=' . $ip,
                     'whois_ip'        => '/admin/ip-whois?ip=' . $ip,
                     'current_user_ip' => ((string) $ipLong === (string) $currentIp),
                     'count'           => $count,

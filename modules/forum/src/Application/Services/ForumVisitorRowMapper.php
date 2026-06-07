@@ -48,9 +48,9 @@ final readonly class ForumVisitorRowMapper
             'user_profile_link'       => '',
             'user_rights_name'        => $this->getUserRightsNames()[$row->rights] ?? '',
             'user_is_online'          => $row->is_online,
-            'search_ip_url'           => '/admin/search_ip/?ip=' . $row->ip,
+            'search_ip_url'           => '/admin/ip-search?ip=' . $row->ip,
             'ip'                      => $row->ip,
-            'search_ip_via_proxy_url' => $row->ip_via_proxy !== '' ? '/admin/search_ip/?ip=' . $row->ip_via_proxy : '',
+            'search_ip_via_proxy_url' => $row->ip_via_proxy !== '' ? '/admin/ip-search?ip=' . $row->ip_via_proxy : '',
             'ip_via_proxy'            => $row->ip_via_proxy !== '' ? $row->ip_via_proxy : 0,
         ];
 
@@ -76,9 +76,9 @@ final readonly class ForumVisitorRowMapper
             'user_profile_link'       => '',
             'user_rights_name'        => '',
             'user_is_online'          => $row->is_online,
-            'search_ip_url'           => '/admin/search_ip/?ip=' . $row->ip,
+            'search_ip_url'           => '/admin/ip-search?ip=' . $row->ip,
             'ip'                      => $row->ip,
-            'search_ip_via_proxy_url' => $row->ip_via_proxy !== '' ? '/admin/search_ip/?ip=' . $row->ip_via_proxy : '',
+            'search_ip_via_proxy_url' => $row->ip_via_proxy !== '' ? '/admin/ip-search?ip=' . $row->ip_via_proxy : '',
             'ip_via_proxy'            => $row->ip_via_proxy !== '' ? $row->ip_via_proxy : 0,
         ];
     }

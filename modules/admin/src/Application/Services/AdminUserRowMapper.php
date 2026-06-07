@@ -39,9 +39,9 @@ final readonly class AdminUserRowMapper
             'user_is_online'          => $user->is_online,
             'user_profile_link'       => '',
             'ip'                      => $user->ip,
-            'search_ip_url'           => '/admin/search_ip/?ip=' . $user->ip,
+            'search_ip_url'           => '/admin/ip-search?ip=' . $user->ip,
             'ip_via_proxy'            => $user->ip_via_proxy !== '' ? $user->ip_via_proxy : 0,
-            'search_ip_via_proxy_url' => $user->ip_via_proxy !== '' ? '/admin/search_ip/?ip=' . $user->ip_via_proxy : '',
+            'search_ip_via_proxy_url' => $user->ip_via_proxy !== '' ? '/admin/ip-search?ip=' . $user->ip_via_proxy : '',
         ];
 
         if ($this->currentUser->isValid() && $this->currentUser->id !== $user->id) {

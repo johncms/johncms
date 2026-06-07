@@ -40,12 +40,12 @@ class UserProperties
         }
 
         $data_array['ip'] = long2ip((int) $user_data['ip']);
-        $data_array['search_ip_url'] = '/admin/search_ip/?ip=' . long2ip((int) $user_data['ip']);
+        $data_array['search_ip_url'] = '/admin/ip-search?ip=' . long2ip((int) $user_data['ip']);
 
 
         if (! empty($user_data['ip_via_proxy'])) {
             $data_array['ip_via_proxy'] = long2ip((int) $user_data['ip_via_proxy']);
-            $data_array['search_ip_via_proxy_url'] = '/admin/search_ip/?ip=' . long2ip((int) $user_data['ip_via_proxy']);
+            $data_array['search_ip_via_proxy_url'] = '/admin/ip-search?ip=' . long2ip((int) $user_data['ip_via_proxy']);
         } else {
             $data_array['ip_via_proxy'] = '';
             $data_array['search_ip_via_proxy_url'] = '';
