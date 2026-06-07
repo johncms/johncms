@@ -1,38 +1,26 @@
 <?php
 
 /**
- * This file is part of JohnCMS Content Management System.
- *
- * @copyright JohnCMS Community
- * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
- * @link      https://johncms.com JohnCMS Project
+ * @var Mobicms\Render\Template\Template $this
+ * @var array<string, mixed> $conf
+ * @var string $form_action
+ * @var string|null $error_message
+ * @var string|null $success_message
+ * @var string $csrf_token
  */
 
-/**
- * @var $title
- * @var $page_title
- * @var $data
- */
-
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $title,
-    ]
-);
-$this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['module_menu' => ['access' => true]]));
-$cls = ['', '', '', ''];
+$this->layout('system::layout/default');
 ?>
-<?php if ($errorMsg): ?>
-    <div class="alert alert-danger shadow border-0">ERROR: Can not write file `system.local.php`</div>
+<?php if (! empty($error_message)): ?>
+    <div class="alert alert-danger shadow border-0"><?= $this->e($error_message) ?></div>
 <?php endif ?>
-<?php if ($confirmation): ?>
-    <div class="alert alert-success shadow border-0"><?= __('Settings are saved successfully') ?></div>
+<?php if (! empty($success_message)): ?>
+    <div class="alert alert-success shadow border-0"><?= $this->e($success_message) ?></div>
 <?php endif ?>
-<form method="post" action="/admin/access/">
+<form method="post" action="<?= $this->e($form_action) ?>">
+    <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
     <!-- Управление доступом к Форуму -->
-    <div class="<?= $cls[$conf['mod_forum']] ?>">
+    <div>
         <h3><?= __('Forum') ?></h3>
         <div>
             <div class="custom-control custom-radio">
@@ -54,7 +42,7 @@ $cls = ['', '', '', ''];
         </div>
     </div>
     <!-- Управление доступом к Гостевой -->
-    <div class="mt-3 <?= $cls[$conf['mod_guest']] ?>">
+    <div class="mt-3">
         <h3><?= __('Guestbook') ?></h3>
         <div>
             <div class="custom-control custom-radio">
@@ -72,7 +60,7 @@ $cls = ['', '', '', ''];
         </div>
     </div>
     <!-- Управление доступом к Библиотеке -->
-    <div class="mt-3 <?= $cls[$conf['mod_lib']] ?>">
+    <div class="mt-3">
         <h3><?= __('Library') ?></h3>
         <div>
             <div class="custom-control custom-radio">
@@ -95,7 +83,7 @@ $cls = ['', '', '', ''];
         </div>
     </div>
     <!-- Управление доступом к Загрузкам -->
-    <div class="mt-3 <?= $cls[$conf['mod_down']] ?>">
+    <div class="mt-3">
         <h3><?= __('Downloads') ?></h3>
         <div>
             <div class="custom-control custom-radio">
@@ -118,7 +106,7 @@ $cls = ['', '', '', ''];
         </div>
     </div>
     <!-- Управление доступом к Активу сайта (списки юзеров и т.д.) -->
-    <div class="mt-3 <?= $cls[$conf['active'] + 1] ?>">
+    <div class="mt-3">
         <h3><?= __('Community') ?></h3>
         <div>
             <div class="custom-control custom-radio">
@@ -132,7 +120,7 @@ $cls = ['', '', '', ''];
         </div>
     </div>
     <!-- Управление доступом к Регистрации -->
-    <div class="mt-3 <?= $cls[$conf['mod_reg']] ?>">
+    <div class="mt-3">
         <h3><?= __('Registration') ?></h3>
         <div>
             <div class="custom-control custom-radio">

@@ -8,10 +8,12 @@ use Johncms\Modules\Admin\Domain\Repository\DashboardRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\StaffRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\BanListRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\IpSearchRepositoryInterface;
+use Johncms\Modules\Admin\Domain\Repository\SystemConfigRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\UserListRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Services\WhoisClientInterface;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentBanListRepository;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentDashboardRepository;
+use Johncms\Modules\Admin\Infrastructure\Config\FileSystemConfigRepository;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentIpSearchRepository;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentStaffRepository;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentUserListRepository;
@@ -47,4 +49,5 @@ return static function (ContainerConfigurator $container): void {
     $services->set(WhoisClientInterface::class, SocketWhoisClient::class)->public();
     $services->set(IpSearchRepositoryInterface::class, EloquentIpSearchRepository::class)->public();
     $services->set(BanListRepositoryInterface::class, EloquentBanListRepository::class)->public();
+    $services->set(SystemConfigRepositoryInterface::class, FileSystemConfigRepository::class)->public();
 };

@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Johncms\Modules\Admin\Application\Controllers\DashboardController;
 use Johncms\Modules\Admin\Application\Controllers\Ip\IpSearchController;
 use Johncms\Modules\Admin\Application\Controllers\Ip\IpWhoisController;
+use Johncms\Modules\Admin\Application\Controllers\Settings\ModulesAccessController;
 use Johncms\Modules\Admin\Application\Controllers\System\SystemCheckController;
 use Johncms\Modules\Admin\Application\Controllers\Users\BanListController;
 use Johncms\Modules\Admin\Application\Controllers\Users\StaffListController;
@@ -42,6 +43,8 @@ return static function (RouteCollection $router, User $user): void {
         $r->get('/admin/bans/{sort}', BanListController::class)
             ->name('admin.bans.sort')
             ->requirements(['sort' => 'by-violations']);
+        $r->get('/admin/modules-access', [ModulesAccessController::class, 'form'])->name('admin.modules_access');
+        $r->post('/admin/modules-access', [ModulesAccessController::class, 'save'])->name('admin.modules_access.save');
     });
     $adminGroup->addMiddleware(AdminAccessMiddleware::class);
 
