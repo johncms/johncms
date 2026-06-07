@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Johncms\Modules\Admin\Application\Controllers\DashboardController;
 use Johncms\Modules\Admin\Application\Controllers\System\SystemCheckController;
 use Johncms\Modules\Admin\Application\Controllers\Users\StaffListController;
+use Johncms\Modules\Admin\Application\Controllers\Users\UserListController;
 use Johncms\Modules\Admin\Application\Controllers\Users\UsersController;
 use Johncms\Modules\Admin\Application\Middlewares\AdminAccessMiddleware;
 use Johncms\Router\RouteCollection;
@@ -25,6 +26,10 @@ return static function (RouteCollection $router, User $user): void {
     $adminGroup = $router->group('', function (RouteCollection $r): void {
         $r->get('/admin', DashboardController::class)->name('admin.index');
         $r->get('/admin/staff', StaffListController::class)->name('admin.staff');
+        $r->get('/admin/users', UserListController::class)->name('admin.users');
+        $r->get('/admin/users/{sort}', UserListController::class)
+            ->name('admin.users.sort')
+            ->requirements(['sort' => 'by-nick|by-ip']);
     });
     $adminGroup->addMiddleware(AdminAccessMiddleware::class);
 

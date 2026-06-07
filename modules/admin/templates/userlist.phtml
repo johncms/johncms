@@ -1,7 +1,15 @@
 <?php
 
-$this->layout('system::layout/default', ['title' => __('Admin Panel'), 'page_title' => __('List of Users')]);
-$this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['usr_menu' => ['userlist' => true]]));
+/**
+ * @var Mobicms\Render\Template\Template $this
+ * @var array<int, array<string, mixed>> $users
+ * @var array<int, array{name: string, url: string, active: bool}> $sort_links
+ * @var int $total
+ * @var int $per_page
+ * @var string $pagination
+ */
+
+$this->layout('system::layout/default');
 ?>
 <!-- List of Users -->
 <?php if ($total): ?>
@@ -9,11 +17,11 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
         <div class="input-group-prepend">
             <div class="input-group-text"><?= __('Sort') ?></div>
         </div>
-        <a href="?sort=id" class="btn btn-outline-secondary ps-3 pe-3<?= ($sort == 'id' ? ' active' : '') ?>">ID</a>
-        <a href="?sort=nick" class="btn btn-outline-secondary<?= ($sort == 'nick' ? ' active' : '') ?>"><?= __('Nickname') ?></a>
-        <a href="?sort=ip" class="btn btn-outline-secondary ps-3 pe-3<?= ($sort == 'ip' ? ' active' : '') ?>">IP</a>
+        <?php foreach ($sort_links as $link): ?>
+            <a href="<?= $this->e($link['url']) ?>" class="btn btn-outline-secondary ps-3 pe-3<?= $link['active'] ? ' active' : '' ?>"><?= $this->e($link['name']) ?></a>
+        <?php endforeach ?>
     </div>
-    <?php foreach ($list() as $usr): ?>
+    <?php foreach ($users as $usr): ?>
         <?= $this->fetch('admin::user_row', ['item' => $usr]) ?>
     <?php endforeach ?>
 <?php else: ?>
@@ -27,7 +35,7 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
     <div>
         <div><?= __('Total') ?>: <?= $total ?></div>
         <!-- Page switching -->
-        <?php if ($total > $user->config->kmess): ?>
+        <?php if ($total > $per_page): ?>
             <div class="mt-1"><?= $pagination ?></div>
         <?php endif ?>
     </div>

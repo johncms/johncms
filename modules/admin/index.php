@@ -80,7 +80,6 @@ $actions = [
     'reg',
     'search_ip',
     'settings',
-    'userlist',
     'usr_clean',
     'usr_del',
 ];
