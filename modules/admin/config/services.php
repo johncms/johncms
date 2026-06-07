@@ -6,9 +6,11 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
 use Johncms\Modules\Admin\Domain\Repository\DashboardRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\StaffRepositoryInterface;
+use Johncms\Modules\Admin\Domain\Repository\BanListRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\IpSearchRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\UserListRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Services\WhoisClientInterface;
+use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentBanListRepository;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentDashboardRepository;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentIpSearchRepository;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentStaffRepository;
@@ -44,4 +46,5 @@ return static function (ContainerConfigurator $container): void {
     $services->set(UserListRepositoryInterface::class, EloquentUserListRepository::class)->public();
     $services->set(WhoisClientInterface::class, SocketWhoisClient::class)->public();
     $services->set(IpSearchRepositoryInterface::class, EloquentIpSearchRepository::class)->public();
+    $services->set(BanListRepositoryInterface::class, EloquentBanListRepository::class)->public();
 };

@@ -1,69 +1,48 @@
 <?php
 
 /**
- * This file is part of JohnCMS Content Management System.
- *
- * @copyright JohnCMS Community
- * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
- * @link      https://johncms.com JohnCMS Project
+ * @var Mobicms\Render\Template\Template $this
+ * @var array<int, array<string, mixed>> $items
+ * @var array<int, array{name: string, url: string, active: bool}> $filters
+ * @var int $total
+ * @var int $per_page
+ * @var bool $show_amnesty
+ * @var string $amnesty_url
+ * @var string $pagination
  */
 
-/**
- * @var $title
- * @var $page_title
- * @var $data
- */
-
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $page_title,
-    ]
-);
-$this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['usr_menu' => ['ban_panel' => true]]));
+$this->layout('system::layout/default');
 ?>
-
-<?php if (! empty($data['filters'])): ?>
-    <div class="btn-group btn-group-sm input-group-sm mb-3" role="group">
-        <div class="input-group-prepend">
-            <div class="input-group-text"><?= __('Sort') ?></div>
-        </div>
-        <?php foreach ($data['filters'] as $filter): ?>
-            <a href="<?= $filter['url'] ?>" class="btn btn-outline-secondary <?= ($filter['active'] ? 'active' : '') ?>"><?= $filter['name'] ?></a>
-        <?php endforeach; ?>
+<div class="btn-group btn-group-sm input-group-sm mb-3" role="group">
+    <div class="input-group-prepend">
+        <div class="input-group-text"><?= __('Sort') ?></div>
     </div>
-<?php endif; ?>
-<?php if (empty($data['items'])): ?>
-    <?= $this->fetch(
-        'system::app/alert',
-        [
-            'alert_type' => 'alert-info',
-            'alert'      => __('The list is empty'),
-        ]
-    ) ?>
-<?php endif; ?>
+    <?php foreach ($filters as $filter): ?>
+        <a href="<?= $this->e($filter['url']) ?>" class="btn btn-outline-secondary <?= $filter['active'] ? 'active' : '' ?>"><?= $this->e($filter['name']) ?></a>
+    <?php endforeach ?>
+</div>
 
-<?php foreach ($data['items'] as $item): ?>
+<?php if ($items === []): ?>
+    <?= $this->fetch('system::app/alert', ['alert_type' => 'alert-info', 'alert' => __('The list is empty')]) ?>
+<?php endif ?>
+
+<?php foreach ($items as $item): ?>
     <?= $this->fetch('admin::user_row', ['item' => $item]) ?>
-<?php endforeach; ?>
+<?php endforeach ?>
 
 <div class="mt-4">
-    <?php if ($data['total'] > $user->config->kmess): ?>
-        <div>
-            <?= $data['pagination'] ?>
-        </div>
-    <?php endif; ?>
-
-    <?php if ($data['total'] > 0): ?>
-        <div><?= __('Total:') ?> <?= $data['total'] ?></div>
-        <?php if ($user->rights === 9): ?>
+    <?php if ($total > $per_page): ?>
+        <div><?= $pagination ?></div>
+    <?php endif ?>
+    <?php if ($total > 0): ?>
+        <div><?= __('Total:') ?> <?= $total ?></div>
+        <?php if ($show_amnesty): ?>
             <div class="mt-2 mb-3">
-                <a href="?mod=amnesty" class="btn btn-primary"><?= __('Amnesty') ?></a>
+                <a href="<?= $this->e($amnesty_url) ?>" class="btn btn-primary"><?= __('Amnesty') ?></a>
             </div>
-        <?php endif; ?>
-    <?php endif; ?>
+        <?php endif ?>
+    <?php endif ?>
 </div>
 <div>
-    <a href="<?= $data['back_url'] ?>"><?= __('Back') ?></a>
+    <a href="/admin"><?= __('Back') ?></a>
 </div>

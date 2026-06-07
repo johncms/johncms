@@ -6,6 +6,7 @@ use Johncms\Modules\Admin\Application\Controllers\DashboardController;
 use Johncms\Modules\Admin\Application\Controllers\Ip\IpSearchController;
 use Johncms\Modules\Admin\Application\Controllers\Ip\IpWhoisController;
 use Johncms\Modules\Admin\Application\Controllers\System\SystemCheckController;
+use Johncms\Modules\Admin\Application\Controllers\Users\BanListController;
 use Johncms\Modules\Admin\Application\Controllers\Users\StaffListController;
 use Johncms\Modules\Admin\Application\Controllers\Users\UserListController;
 use Johncms\Modules\Admin\Application\Controllers\Users\UsersController;
@@ -37,6 +38,10 @@ return static function (RouteCollection $router, User $user): void {
         $r->get('/admin/ip-search/{mode}', IpSearchController::class)
             ->name('admin.ip_search.mode')
             ->requirements(['mode' => 'history']);
+        $r->get('/admin/bans', BanListController::class)->name('admin.bans');
+        $r->get('/admin/bans/{sort}', BanListController::class)
+            ->name('admin.bans.sort')
+            ->requirements(['sort' => 'by-violations']);
     });
     $adminGroup->addMiddleware(AdminAccessMiddleware::class);
 
