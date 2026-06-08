@@ -8,6 +8,7 @@ use Johncms\Modules\Admin\Application\Controllers\Ip\IpSearchController;
 use Johncms\Modules\Admin\Application\Controllers\Languages\LanguagesController;
 use Johncms\Modules\Admin\Application\Controllers\Ip\IpWhoisController;
 use Johncms\Modules\Admin\Application\Controllers\Settings\AntifloodSettingsController;
+use Johncms\Modules\Admin\Application\Controllers\Settings\CountersController;
 use Johncms\Modules\Admin\Application\Controllers\Settings\ModulesAccessController;
 use Johncms\Modules\Admin\Application\Controllers\Settings\SystemSettingsController;
 use Johncms\Modules\Admin\Application\Controllers\System\EmoticonsController;
@@ -86,6 +87,18 @@ return static function (RouteCollection $router, User $user): void {
             $sr->post('/admin/ip-bans/clear', [IpBanController::class, 'clear'])->name('admin.ip_bans.clear');
             $sr->get('/admin/ip-bans/{id:number}', [IpBanController::class, 'detail'])->name('admin.ip_bans.detail');
             $sr->post('/admin/ip-bans/{id:number}/delete', [IpBanController::class, 'delete'])->name('admin.ip_bans.delete');
+
+            $sr->get('/admin/counters', [CountersController::class, 'index'])->name('admin.counters');
+            $sr->get('/admin/counters/new', [CountersController::class, 'newForm'])->name('admin.counters.new');
+            $sr->post('/admin/counters/preview', [CountersController::class, 'preview'])->name('admin.counters.preview');
+            $sr->post('/admin/counters', [CountersController::class, 'store'])->name('admin.counters.store');
+            $sr->get('/admin/counters/{id:number}', [CountersController::class, 'view'])->name('admin.counters.view');
+            $sr->get('/admin/counters/{id:number}/edit', [CountersController::class, 'editForm'])->name('admin.counters.edit');
+            $sr->post('/admin/counters/{id:number}/toggle', [CountersController::class, 'toggle'])->name('admin.counters.toggle');
+            $sr->post('/admin/counters/{id:number}/up', [CountersController::class, 'up'])->name('admin.counters.up');
+            $sr->post('/admin/counters/{id:number}/down', [CountersController::class, 'down'])->name('admin.counters.down');
+            $sr->get('/admin/counters/{id:number}/delete', [CountersController::class, 'deleteConfirm'])->name('admin.counters.delete_confirm');
+            $sr->post('/admin/counters/{id:number}/delete', [CountersController::class, 'delete'])->name('admin.counters.delete');
 
             $sr->get('/admin/karma', [KarmaController::class, 'index'])->name('admin.karma');
             $sr->post('/admin/karma', [KarmaController::class, 'save'])->name('admin.karma.save');

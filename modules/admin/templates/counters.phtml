@@ -1,75 +1,51 @@
 <?php
 
 /**
- * This file is part of JohnCMS Content Management System.
- *
- * @copyright JohnCMS Community
- * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
- * @link      https://johncms.com JohnCMS Project
+ * @var Mobicms\Render\Template\Template $this
+ * @var \Illuminate\Support\Collection<int, \Johncms\Modules\Admin\Domain\Models\Counter> $items
+ * @var string $add_url
+ * @var string $csrf_token
  */
 
-/**
- * @var $title
- * @var $page_title
- * @var $data
- */
+$this->layout('system::layout/default');
 
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $page_title,
-    ]
-);
-$this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['module_menu' => ['counters' => true]]));
+$miniForm = function (string $action, string $label, string $class) use ($csrf_token): string {
+    return '<form method="post" action="' . $this->e($action) . '" class="d-inline me-2">'
+        . '<input type="hidden" name="csrf_token" value="' . $csrf_token . '">'
+        . '<button type="submit" class="' . $class . '">' . $label . '</button></form>';
+};
 ?>
 
-<?php if (! empty($data['message'])): ?>
-    <?= $this->fetch(
-        'system::app/alert',
-        [
-            'alert_type' => 'alert-info',
-            'alert'      => $data['message'],
-        ]
-    ) ?>
+<?php if ($items->isEmpty()): ?>
+    <?= $this->fetch('system::app/alert', ['alert_type' => 'alert-info', 'alert' => __('The list is empty')]) ?>
 <?php endif; ?>
-
-<?php if (empty($data['items'])): ?>
-    <?= $this->fetch(
-        'system::app/alert',
-        [
-            'alert_type' => 'alert-info',
-            'alert'      => __('The list is empty'),
-        ]
-    ) ?>
-<?php endif; ?>
-<?php foreach ($data['items'] as $item): ?>
+<?php foreach ($items as $item): ?>
     <div class="new_post-item without_avatar">
         <div class="d-flex justify-content-between align-items-center">
-            <a href="?mod=view&amp;id=<?= $item['id'] ?>" class="h3"><?= $item['name'] ?></a>
+            <a href="/admin/counters/<?= $item->id ?>" class="h3"><?= $this->e($item->name) ?></a>
             <div>
-                <?php if ($item['switch'] === 1): ?>
-                    <a href="?mod=view&amp;go=off&amp;id=<?= $item['id'] ?>" class="badge rounded-pill bg-success"><?= __('On') ?></a>
+                <?php if ($item->switch === 1): ?>
+                    <span class="badge rounded-pill bg-success"><?= __('On') ?></span>
                 <?php else: ?>
-                    <a href="?mod=view&amp;go=on&amp;id=<?= $item['id'] ?>" class="badge rounded-pill bg-danger"><?= __('Off') ?></a>
+                    <span class="badge rounded-pill bg-danger"><?= __('Off') ?></span>
                 <?php endif; ?>
             </div>
         </div>
-        <div class="mt-2">
-            <a href="?mod=up&amp;id=<?= $item['id'] ?>" class="me-2"><?= __('Up') ?></a>
-            <a href="?mod=down&amp;id=<?= $item['id'] ?>" class="me-2"><?= __('Down') ?></a>
-            <a href="?mod=edit&amp;id=<?= $item['id'] ?>" class="me-2"><?= __('Edit') ?></a>
-            <a href="?mod=del&amp;id=<?= $item['id'] ?>" class="me-2 text-danger"><?= __('Delete') ?></a>
+        <div class="mt-2 d-flex align-items-center">
+            <?= $miniForm('/admin/counters/' . $item->id . '/up', __('Up'), 'btn btn-link p-0') ?>
+            <?= $miniForm('/admin/counters/' . $item->id . '/down', __('Down'), 'btn btn-link p-0') ?>
+            <a href="/admin/counters/<?= $item->id ?>/edit" class="me-2"><?= __('Edit') ?></a>
+            <a href="/admin/counters/<?= $item->id ?>/delete" class="me-2 text-danger"><?= __('Delete') ?></a>
         </div>
     </div>
 <?php endforeach; ?>
 
 <div class="mt-2">
-    <?php if ($data['total'] > 0): ?>
-        <div class="mb-2"><?= __('Total:') ?> <?= $data['total'] ?></div>
+    <?php if ($items->isNotEmpty()): ?>
+        <div class="mb-2"><?= __('Total:') ?> <?= $items->count() ?></div>
     <?php endif; ?>
-    <a href="?mod=edit" class="btn btn-primary"><?= __('Add') ?></a>
+    <a href="<?= $this->e($add_url) ?>" class="btn btn-primary"><?= __('Add') ?></a>
 </div>
 <div class="mt-2">
-    <a href="<?= $data['back_url'] ?>"><?= __('Back') ?></a>
+    <a href="/admin/"><?= __('Back') ?></a>
 </div>

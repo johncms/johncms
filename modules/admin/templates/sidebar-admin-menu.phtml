@@ -177,7 +177,7 @@ $themeIconSprite = $this->asset('icons/sprite.svg', true);
             </li>
             <?php if ($user->rights == 9): ?>
                 <li class="<?= isset($module_menu['counters']) ? 'active' : '' ?>">
-                    <a href="<?= $config['homeurl'] ?>/admin/counters/">
+                    <a href="<?= $config['homeurl'] ?>/admin/counters">
                         <svg class="icon">
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#pie-chart"/>
                         </svg>

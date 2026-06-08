@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
+use Johncms\Modules\Admin\Domain\Repository\CounterRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\DashboardRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\StaffRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\BanAmnestyRepositoryInterface;
@@ -24,6 +25,7 @@ use Johncms\Modules\Admin\Domain\Services\ThemeListProviderInterface;
 use Johncms\Modules\Admin\Domain\Services\WhoisClientInterface;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentBanAmnestyRepository;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentBanListRepository;
+use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentCounterRepository;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentDashboardRepository;
 use Johncms\Modules\Admin\Infrastructure\Cache\FileSmiliesCacheRepository;
 use Johncms\Modules\Admin\Infrastructure\Config\FileSystemConfigRepository;
@@ -83,4 +85,5 @@ return static function (ContainerConfigurator $container): void {
     $services->set(BanAmnestyRepositoryInterface::class, EloquentBanAmnestyRepository::class)->public();
     $services->set(IpBanRepositoryInterface::class, EloquentIpBanRepository::class)->public();
     $services->set(KarmaRepositoryInterface::class, EloquentKarmaRepository::class)->public();
+    $services->set(CounterRepositoryInterface::class, EloquentCounterRepository::class)->public();
 };

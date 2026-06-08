@@ -1,62 +1,43 @@
 <?php
 
 /**
- * This file is part of JohnCMS Content Management System.
- *
- * @copyright JohnCMS Community
- * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
- * @link      https://johncms.com JohnCMS Project
+ * @var Mobicms\Render\Template\Template $this
+ * @var string $form_action
+ * @var int|null $id
+ * @var string $name
+ * @var string $counter_1
+ * @var string $counter_2
+ * @var int $mode
+ * @var int $field_height
+ * @var string $csrf_token
  */
 
-/**
- * @var $title
- * @var $page_title
- * @var $data
- */
-
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $title,
-    ]
-);
-$this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['module_menu' => ['counters' => true]]));
+$this->layout('system::layout/default');
 ?>
-
-
-<?php if (! empty($data['success_message'])): ?>
-    <?= $this->fetch(
-        'system::app/alert',
-        [
-            'alert_type' => 'alert-success',
-            'alert'      => $data['success_message'],
-        ]
-    ) ?>
-<?php endif; ?>
-<form action="<?= $data['form_action'] ?>" method="post">
-    <?php if (! empty($data['id'])): ?>
-        <input type="hidden" value="<?= $data['id'] ?>" name="id">
+<form action="<?= $this->e($form_action) ?>" method="post">
+    <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
+    <?php if (! empty($id)): ?>
+        <input type="hidden" value="<?= $id ?>" name="id">
     <?php endif; ?>
     <div class="form-group">
         <label for="name"><?= __('Name') ?></label>
-        <input type="text" name="name" class="form-control" id="name" value="<?= $data['name'] ?>" placeholder="<?= __('Name') ?>">
+        <input type="text" name="name" class="form-control" id="name" value="<?= $this->e($name) ?>" placeholder="<?= __('Name') ?>">
     </div>
     <div class="form-group">
         <label for="link1"><?= __('Option 1') ?></label>
-        <textarea class="form-control" rows="<?= $user->config->fieldHeight ?>" name="link1" id="link1"><?= $data['counter_1'] ?></textarea>
+        <textarea class="form-control" rows="<?= $field_height ?>" name="link1" id="link1"><?= $this->e($counter_1) ?></textarea>
         <div class="small text-muted"><?= __('Code for main page') ?></div>
     </div>
     <div class="form-group">
         <label for="link2"><?= __('Option 2') ?></label>
-        <textarea class="form-control" rows="<?= $user->config->fieldHeight ?>" name="link2" id="link2"><?= $data['counter_2'] ?></textarea>
+        <textarea class="form-control" rows="<?= $field_height ?>" name="link2" id="link2"><?= $this->e($counter_2) ?></textarea>
         <div class="small text-muted"><?= __('Code for other pages') ?></div>
     </div>
 
     <h3><?= __('Display mode') ?></h3>
     <div class="custom-control custom-radio">
         <input type="radio" id="mode1" name="mode" value="1" class="custom-control-input"
-            <?= ($data['mode'] === 0 || $data['mode'] === 1 ? 'checked="checked" ' : '') ?>>
+            <?= ($mode === 0 || $mode === 1 ? 'checked="checked" ' : '') ?>>
         <label class="custom-control-label" for="mode1"><?= __('Default') ?></label>
     </div>
     <div class="small text-muted">
@@ -64,11 +45,11 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
     </div>
 
     <div class="custom-control custom-radio">
-        <input type="radio" id="term3" name="mode" value="2" class="custom-control-input" <?= ($data['mode'] === 2 ? 'checked="checked" ' : '') ?>>
+        <input type="radio" id="term3" name="mode" value="2" class="custom-control-input" <?= ($mode === 2 ? 'checked="checked" ' : '') ?>>
         <label class="custom-control-label" for="term3"><?= __('Option 1') ?></label>
     </div>
     <div class="custom-control custom-radio">
-        <input type="radio" id="term2" name="mode" value="3" class="custom-control-input" <?= ($data['mode'] === 3 ? 'checked="checked" ' : '') ?>>
+        <input type="radio" id="term2" name="mode" value="3" class="custom-control-input" <?= ($mode === 3 ? 'checked="checked" ' : '') ?>>
         <label class="custom-control-label" for="term2"><?= __('Option 2') ?></label>
     </div>
 
@@ -79,7 +60,7 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
     </div>
 
     <div class="mt-3">
-        <input type="submit" name="submit" value="<?= __('Viewing') ?>" class="btn btn-primary"/>
-        <a href="/admin/counters/" class="btn btn-secondary"><?= __('Cancel') ?></a>
+        <input type="submit" value="<?= __('Viewing') ?>" class="btn btn-primary"/>
+        <a href="/admin/counters" class="btn btn-secondary"><?= __('Cancel') ?></a>
     </div>
 </form>
