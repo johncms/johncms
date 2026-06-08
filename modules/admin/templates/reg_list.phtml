@@ -1,65 +1,58 @@
 <?php
 
 /**
- * This file is part of JohnCMS Content Management System.
- *
- * @copyright JohnCMS Community
- * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
- * @link      https://johncms.com JohnCMS Project
+ * @var Mobicms\Render\Template\Template $this
+ * @var array<int, array<string, mixed>> $items
+ * @var int $total
+ * @var int $per_page
+ * @var string $form_action
+ * @var string|null $success_message
+ * @var string $pagination
+ * @var string $csrf_token
  */
 
-/**
- * @var $title
- * @var $page_title
- * @var $data
- */
+$this->layout('system::layout/default');
 
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $page_title,
-    ]
-);
-$this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['usr_menu' => ['reg' => true]]));
+$postButton = function (string $action, array $fields, string $label, string $class = 'btn btn-link p-0 me-3 align-baseline') use ($form_action, $csrf_token): string {
+    $html = '<form method="post" action="' . $this->e($form_action . $action) . '" class="d-inline">'
+        . '<input type="hidden" name="csrf_token" value="' . $csrf_token . '">';
+    foreach ($fields as $name => $value) {
+        $html .= '<input type="hidden" name="' . $this->e($name) . '" value="' . $this->e((string) $value) . '">';
+    }
+
+    return $html . '<button type="submit" class="' . $class . '">' . $label . '</button></form>';
+};
 ?>
-
-<?php if (! empty($data['filters'])): ?>
-    <div class="btn-group mb-3" role="group">
-        <?php foreach ($data['filters'] as $filter): ?>
-            <a href="<?= $filter['url'] ?>" class="btn btn-outline-secondary <?= ($filter['active'] ? 'active' : '') ?>"><?= $filter['name'] ?></a>
-        <?php endforeach; ?>
-    </div>
-<?php endif; ?>
-<?php if (empty($data['items'])): ?>
-    <?= $this->fetch(
-        'system::app/alert',
-        [
-            'alert_type' => 'alert-info',
-            'alert'      => __('The list is empty'),
-        ]
-    ) ?>
+<?php if (! empty($success_message)): ?>
+    <div class="alert alert-success shadow border-0"><?= $this->e($success_message) ?></div>
 <?php endif; ?>
 
-<?php foreach ($data['items'] as $item): ?>
+<?php if (empty($items)): ?>
+    <?= $this->fetch('system::app/alert', ['alert_type' => 'alert-info', 'alert' => __('The list is empty')]) ?>
+<?php endif; ?>
+
+<?php foreach ($items as $item): ?>
     <?= $this->fetch('admin::user_row', ['item' => $item]) ?>
+    <div class="mt-2 mb-4 d-flex flex-wrap">
+        <?= $postButton('/approve', ['id' => $item['id']], __('Approve')) ?>
+        <?= $postButton('/delete', ['id' => $item['id']], __('Delete')) ?>
+        <?= $postButton('/delete-by-ip', ['ip' => $item['ip_int']], __('Remove IP')) ?>
+    </div>
 <?php endforeach; ?>
 
 <div class="mt-4">
-    <?php if ($data['total'] > $user->config->kmess): ?>
-        <div>
-            <?= $data['pagination'] ?>
-        </div>
+    <?php if ($total > $per_page): ?>
+        <div><?= $pagination ?></div>
     <?php endif; ?>
 
-    <?php if ($data['total'] > 0): ?>
-        <div><?= __('Total:') ?> <?= $data['total'] ?></div>
-        <div class="mt-2 mb-3">
-            <a href="?mod=massapprove" class="btn btn-primary"><?= __('Confirm all') ?></a>
-            <a href="?mod=massdel" class="btn btn-primary"><?= __('Delete all') ?></a>
+    <?php if ($total > 0): ?>
+        <div><?= __('Total:') ?> <?= $total ?></div>
+        <div class="mt-2 mb-3 d-flex">
+            <?= $postButton('/approve-all', [], __('Confirm all'), 'btn btn-primary me-2') ?>
+            <?= $postButton('/delete-all', [], __('Delete all'), 'btn btn-danger') ?>
         </div>
     <?php endif; ?>
 </div>
 <div>
-    <a href="<?= $data['back_url'] ?>"><?= __('Back') ?></a>
+    <a href="/admin/"><?= __('Back') ?></a>
 </div>

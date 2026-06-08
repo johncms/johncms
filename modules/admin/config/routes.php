@@ -12,6 +12,7 @@ use Johncms\Modules\Admin\Application\Controllers\Settings\SystemSettingsControl
 use Johncms\Modules\Admin\Application\Controllers\System\EmoticonsController;
 use Johncms\Modules\Admin\Application\Controllers\System\SystemCheckController;
 use Johncms\Modules\Admin\Application\Controllers\Users\BanListController;
+use Johncms\Modules\Admin\Application\Controllers\Users\RegistrationModerationController;
 use Johncms\Modules\Admin\Application\Controllers\Users\StaffListController;
 use Johncms\Modules\Admin\Application\Controllers\Users\UserListController;
 use Johncms\Modules\Admin\Application\Controllers\Users\UsersController;
@@ -52,6 +53,12 @@ return static function (RouteCollection $router, User $user): void {
         $r->post('/admin/modules-access', [ModulesAccessController::class, 'save'])->name('admin.modules_access.save');
         $r->get('/admin/antiflood', [AntifloodSettingsController::class, 'form'])->name('admin.antiflood');
         $r->post('/admin/antiflood', [AntifloodSettingsController::class, 'save'])->name('admin.antiflood.save');
+        $r->get('/admin/registrations', [RegistrationModerationController::class, 'index'])->name('admin.registrations');
+        $r->post('/admin/registrations/approve', [RegistrationModerationController::class, 'approve'])->name('admin.registrations.approve');
+        $r->post('/admin/registrations/approve-all', [RegistrationModerationController::class, 'approveAll'])->name('admin.registrations.approve_all');
+        $r->post('/admin/registrations/delete', [RegistrationModerationController::class, 'delete'])->name('admin.registrations.delete');
+        $r->post('/admin/registrations/delete-all', [RegistrationModerationController::class, 'deleteAll'])->name('admin.registrations.delete_all');
+        $r->post('/admin/registrations/delete-by-ip', [RegistrationModerationController::class, 'deleteByIp'])->name('admin.registrations.delete_by_ip');
         $r->get('/admin/emoticons', [EmoticonsController::class, 'index'])->name('admin.emoticons');
         $r->post('/admin/emoticons', [EmoticonsController::class, 'rebuild'])->name('admin.emoticons.rebuild');
 

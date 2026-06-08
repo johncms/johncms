@@ -8,6 +8,7 @@ use Johncms\Modules\Admin\Domain\Repository\DashboardRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\StaffRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\BanListRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\IpSearchRepositoryInterface;
+use Johncms\Modules\Admin\Domain\Repository\RegistrationModerationRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\SmiliesCacheRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\SystemConfigRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\UserListRepositoryInterface;
@@ -24,6 +25,7 @@ use Johncms\Modules\Admin\Infrastructure\Language\FileSystemLanguageFilesManager
 use Johncms\Modules\Admin\Infrastructure\Language\HttpLanguageCatalog;
 use Johncms\Modules\Admin\Infrastructure\Smilies\FileSystemSmiliesScanner;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentIpSearchRepository;
+use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentRegistrationModerationRepository;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentStaffRepository;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentUserListRepository;
 use Johncms\Modules\Admin\Infrastructure\Theme\FileSystemThemeListProvider;
@@ -65,4 +67,5 @@ return static function (ContainerConfigurator $container): void {
     $services->set(SmiliesCacheRepositoryInterface::class, FileSmiliesCacheRepository::class)->public();
     $services->set(LanguageFilesManagerInterface::class, FileSystemLanguageFilesManager::class)->public();
     $services->set(LanguageCatalogInterface::class, HttpLanguageCatalog::class)->public();
+    $services->set(RegistrationModerationRepositoryInterface::class, EloquentRegistrationModerationRepository::class)->public();
 };

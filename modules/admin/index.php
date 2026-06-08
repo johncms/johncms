@@ -72,7 +72,6 @@ $actions = [
     'ipban',
     'karma',
     'mail',
-    'reg',
     'usr_clean',
     'usr_del',
 ];
