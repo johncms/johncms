@@ -9,6 +9,7 @@ use Johncms\Modules\Admin\Domain\Repository\StaffRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\BanAmnestyRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\BanListRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\InactiveUsersRepositoryInterface;
+use Johncms\Modules\Admin\Domain\Repository\IpBanRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\IpSearchRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\RegistrationModerationRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\SmiliesCacheRepositoryInterface;
@@ -29,6 +30,7 @@ use Johncms\Modules\Admin\Infrastructure\Language\FileSystemLanguageFilesManager
 use Johncms\Modules\Admin\Infrastructure\Language\HttpLanguageCatalog;
 use Johncms\Modules\Admin\Infrastructure\Smilies\FileSystemSmiliesScanner;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentInactiveUsersRepository;
+use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentIpBanRepository;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentIpSearchRepository;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentRegistrationModerationRepository;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentStaffRepository;
@@ -77,4 +79,5 @@ return static function (ContainerConfigurator $container): void {
     $services->set(InactiveUsersRepositoryInterface::class, EloquentInactiveUsersRepository::class)->public();
     $services->set(UserDeletionRepositoryInterface::class, EloquentUserDeletionRepository::class)->public();
     $services->set(BanAmnestyRepositoryInterface::class, EloquentBanAmnestyRepository::class)->public();
+    $services->set(IpBanRepositoryInterface::class, EloquentIpBanRepository::class)->public();
 };

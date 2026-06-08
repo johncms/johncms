@@ -1,37 +1,24 @@
 <?php
 
 /**
- * This file is part of JohnCMS Content Management System.
- *
- * @copyright JohnCMS Community
- * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
- * @link      https://johncms.com JohnCMS Project
+ * @var Mobicms\Render\Template\Template $this
+ * @var array<int, array<string, mixed>> $items
+ * @var int $total
+ * @var int $per_page
+ * @var bool $no_buttons
+ * @var string|null $message
+ * @var string $add_url
+ * @var string $search_url
+ * @var string $clear_url
+ * @var string $pagination
+ * @var string $csrf_token
  */
 
-/**
- * @var $title
- * @var $page_title
- * @var $data
- */
-
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $page_title,
-    ]
-);
-$this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['sec_menu' => ['ipban' => true]]));
+$this->layout('system::layout/default');
 ?>
 
-<?php if (! empty($data['message'])): ?>
-    <?= $this->fetch(
-        'system::app/alert',
-        [
-            'alert_type' => 'alert-info',
-            'alert'      => $data['message'],
-        ]
-    ) ?>
+<?php if (! empty($message)): ?>
+    <?= $this->fetch('system::app/alert', ['alert_type' => 'alert-info', 'alert' => $message]) ?>
 <?php endif; ?>
 <table class="table table-striped">
     <thead>
@@ -41,44 +28,40 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
     </tr>
     </thead>
     <tbody>
-    <?php if (empty($data['items'])): ?>
+    <?php if (empty($items)): ?>
         <tr>
-            <td colspan="2" class="text-center">
-                <?= __('The list is empty') ?>
-            </td>
+            <td colspan="2" class="text-center"><?= __('The list is empty') ?></td>
         </tr>
     <?php endif; ?>
-    <?php foreach ($data['items'] as $item): ?>
+    <?php foreach ($items as $item): ?>
         <tr>
-            <td><a href="<?= $item['detail_url'] ?>"><?= $item['ips'] ?></a></td>
-            <td><?= $item['reason'] ?></td>
+            <td><a href="<?= $this->e($item['detail_url']) ?>"><?= $this->e($item['ips']) ?></a></td>
+            <td><?= $this->e($item['reason_label']) ?></td>
         </tr>
     <?php endforeach; ?>
     </tbody>
 </table>
 
 <div class="mt-2">
-    <?php if ($data['total'] > $user->config->kmess): ?>
-        <div>
-            <?= $data['pagination'] ?>
-        </div>
+    <?php if ($total > $per_page): ?>
+        <div><?= $pagination ?></div>
     <?php endif; ?>
-
-    <?php if ($data['total'] > 0): ?>
-        <div><?= __('Total:') ?> <?= $data['total'] ?></div>
+    <?php if ($total > 0): ?>
+        <div><?= __('Total:') ?> <?= $total ?></div>
     <?php endif; ?>
 </div>
-<?php if (empty($data['no_buttons'])): ?>
-    <div class="mt-2 mb-3">
-        <form action="?act=ipban&amp;mod=new" method="post">
-            <input class="btn btn-danger" type="submit" name="" value="<?= __('Add') ?>">
-            <?php if ($data['total'] > 0): ?>
-                <a href="?act=ipban&amp;mod=search" class="btn btn-primary"><?= __('Search') ?></a>
-                <a href="?act=ipban&amp;mod=clear" class="btn btn-primary"><?= __('Unban all IP') ?></a>
-            <?php endif; ?>
+<?php if (empty($no_buttons)): ?>
+    <div class="mt-2 mb-3 d-flex">
+        <form action="<?= $this->e($add_url) ?>" method="post" class="me-2">
+            <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
+            <input class="btn btn-danger" type="submit" value="<?= __('Add') ?>">
         </form>
+        <?php if ($total > 0): ?>
+            <a href="<?= $this->e($search_url) ?>" class="btn btn-primary me-2"><?= __('Search') ?></a>
+            <a href="<?= $this->e($clear_url) ?>" class="btn btn-primary"><?= __('Unban all IP') ?></a>
+        <?php endif; ?>
     </div>
 <?php endif; ?>
 <div>
-    <a href="<?= $data['back_url'] ?>"><?= __('Back') ?></a>
+    <a href="/admin/"><?= __('Back') ?></a>
 </div>
