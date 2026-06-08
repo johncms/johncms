@@ -11,6 +11,8 @@ use Johncms\Modules\Admin\Domain\Repository\IpSearchRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\SmiliesCacheRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\SystemConfigRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\UserListRepositoryInterface;
+use Johncms\Modules\Admin\Domain\Services\LanguageCatalogInterface;
+use Johncms\Modules\Admin\Domain\Services\LanguageFilesManagerInterface;
 use Johncms\Modules\Admin\Domain\Services\SmiliesScannerInterface;
 use Johncms\Modules\Admin\Domain\Services\ThemeListProviderInterface;
 use Johncms\Modules\Admin\Domain\Services\WhoisClientInterface;
@@ -18,6 +20,8 @@ use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentBanListR
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentDashboardRepository;
 use Johncms\Modules\Admin\Infrastructure\Cache\FileSmiliesCacheRepository;
 use Johncms\Modules\Admin\Infrastructure\Config\FileSystemConfigRepository;
+use Johncms\Modules\Admin\Infrastructure\Language\FileSystemLanguageFilesManager;
+use Johncms\Modules\Admin\Infrastructure\Language\HttpLanguageCatalog;
 use Johncms\Modules\Admin\Infrastructure\Smilies\FileSystemSmiliesScanner;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentIpSearchRepository;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentStaffRepository;
@@ -59,4 +63,6 @@ return static function (ContainerConfigurator $container): void {
     $services->set(ThemeListProviderInterface::class, FileSystemThemeListProvider::class)->public();
     $services->set(SmiliesScannerInterface::class, FileSystemSmiliesScanner::class)->autowire()->public();
     $services->set(SmiliesCacheRepositoryInterface::class, FileSmiliesCacheRepository::class)->public();
+    $services->set(LanguageFilesManagerInterface::class, FileSystemLanguageFilesManager::class)->public();
+    $services->set(LanguageCatalogInterface::class, HttpLanguageCatalog::class)->public();
 };

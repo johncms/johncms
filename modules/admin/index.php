@@ -71,7 +71,6 @@ $actions = [
     'index',
     'ipban',
     'karma',
-    'languages',
     'mail',
     'reg',
     'usr_clean',

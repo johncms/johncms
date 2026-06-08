@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Johncms\Modules\Admin\Application\Controllers\DashboardController;
 use Johncms\Modules\Admin\Application\Controllers\Ip\IpSearchController;
+use Johncms\Modules\Admin\Application\Controllers\Languages\LanguagesController;
 use Johncms\Modules\Admin\Application\Controllers\Ip\IpWhoisController;
 use Johncms\Modules\Admin\Application\Controllers\Settings\AntifloodSettingsController;
 use Johncms\Modules\Admin\Application\Controllers\Settings\ModulesAccessController;
@@ -60,6 +61,13 @@ return static function (RouteCollection $router, User $user): void {
         $superGroup = $r->group('', function (RouteCollection $sr): void {
             $sr->get('/admin/settings', [SystemSettingsController::class, 'form'])->name('admin.settings');
             $sr->post('/admin/settings', [SystemSettingsController::class, 'save'])->name('admin.settings.save');
+
+            $sr->get('/admin/languages', [LanguagesController::class, 'index'])->name('admin.languages');
+            $sr->post('/admin/languages', [LanguagesController::class, 'save'])->name('admin.languages.save');
+            $sr->get('/admin/languages/manage', [LanguagesController::class, 'manage'])->name('admin.languages.manage');
+            $sr->post('/admin/languages/install', [LanguagesController::class, 'install'])->name('admin.languages.install');
+            $sr->post('/admin/languages/update', [LanguagesController::class, 'update'])->name('admin.languages.update');
+            $sr->post('/admin/languages/delete', [LanguagesController::class, 'delete'])->name('admin.languages.delete');
         });
         $superGroup->addMiddleware(SuperAdminAccessMiddleware::class);
     });
