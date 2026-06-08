@@ -67,7 +67,6 @@ $actions = [
     'antispy',
     'ban_panel',
     'counters',
-    'emoticons',
     'forum',
     'index',
     'ipban',

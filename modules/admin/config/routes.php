@@ -8,6 +8,7 @@ use Johncms\Modules\Admin\Application\Controllers\Ip\IpWhoisController;
 use Johncms\Modules\Admin\Application\Controllers\Settings\AntifloodSettingsController;
 use Johncms\Modules\Admin\Application\Controllers\Settings\ModulesAccessController;
 use Johncms\Modules\Admin\Application\Controllers\Settings\SystemSettingsController;
+use Johncms\Modules\Admin\Application\Controllers\System\EmoticonsController;
 use Johncms\Modules\Admin\Application\Controllers\System\SystemCheckController;
 use Johncms\Modules\Admin\Application\Controllers\Users\BanListController;
 use Johncms\Modules\Admin\Application\Controllers\Users\StaffListController;
@@ -50,6 +51,8 @@ return static function (RouteCollection $router, User $user): void {
         $r->post('/admin/modules-access', [ModulesAccessController::class, 'save'])->name('admin.modules_access.save');
         $r->get('/admin/antiflood', [AntifloodSettingsController::class, 'form'])->name('admin.antiflood');
         $r->post('/admin/antiflood', [AntifloodSettingsController::class, 'save'])->name('admin.antiflood.save');
+        $r->get('/admin/emoticons', [EmoticonsController::class, 'index'])->name('admin.emoticons');
+        $r->post('/admin/emoticons', [EmoticonsController::class, 'rebuild'])->name('admin.emoticons.rebuild');
 
         // Higher-privilege actions (rights >= 9). Group middleware does not propagate
         // into nested groups, so SuperAdminAccessMiddleware is self-contained and
