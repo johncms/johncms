@@ -15,6 +15,7 @@ use Johncms\Modules\Admin\Application\Controllers\System\SystemCheckController;
 use Johncms\Modules\Admin\Application\Controllers\Users\AmnestyController;
 use Johncms\Modules\Admin\Application\Controllers\Users\BanListController;
 use Johncms\Modules\Admin\Application\Controllers\Users\DeleteUserController;
+use Johncms\Modules\Admin\Application\Controllers\Users\KarmaController;
 use Johncms\Modules\Admin\Application\Controllers\Users\RegistrationModerationController;
 use Johncms\Modules\Admin\Application\Controllers\Users\StaffListController;
 use Johncms\Modules\Admin\Application\Controllers\Users\UserCleanupController;
@@ -85,6 +86,11 @@ return static function (RouteCollection $router, User $user): void {
             $sr->post('/admin/ip-bans/clear', [IpBanController::class, 'clear'])->name('admin.ip_bans.clear');
             $sr->get('/admin/ip-bans/{id:number}', [IpBanController::class, 'detail'])->name('admin.ip_bans.detail');
             $sr->post('/admin/ip-bans/{id:number}/delete', [IpBanController::class, 'delete'])->name('admin.ip_bans.delete');
+
+            $sr->get('/admin/karma', [KarmaController::class, 'index'])->name('admin.karma');
+            $sr->post('/admin/karma', [KarmaController::class, 'save'])->name('admin.karma.save');
+            $sr->get('/admin/karma/clear', [KarmaController::class, 'clearConfirm'])->name('admin.karma.clear');
+            $sr->post('/admin/karma/reset', [KarmaController::class, 'reset'])->name('admin.karma.reset');
 
             $sr->get('/admin/bans/amnesty', [AmnestyController::class, 'form'])->name('admin.bans.amnesty');
             $sr->post('/admin/bans/amnesty', [AmnestyController::class, 'apply'])->name('admin.bans.amnesty.apply');

@@ -68,7 +68,6 @@ $actions = [
     'counters',
     'forum',
     'index',
-    'karma',
     'mail',
 ];
 
