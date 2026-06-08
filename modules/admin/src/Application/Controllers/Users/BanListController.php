@@ -64,9 +64,8 @@ final readonly class BanListController
                     ['name' => __('Term'), 'url' => '/admin/bans', 'active' => $sortMode === BanListSort::TIME],
                     ['name' => __('Violations'), 'url' => '/admin/bans/by-violations', 'active' => $sortMode === BanListSort::VIOLATIONS],
                 ],
-                // Амнистия (write, rights >= 9) ещё не мигрирована — ведём на legacy-страницу (Фаза 4).
                 'show_amnesty' => $this->currentUser->rights === UserRights::SUPER_ADMIN->value,
-                'amnesty_url'  => '/admin/ban_panel/?mod=amnesty',
+                'amnesty_url'  => '/admin/bans/amnesty',
                 'pagination'   => $this->tools->displayPagination(
                     $baseUrl . '?',
                     ($page - 1) * $perPage,

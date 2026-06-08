@@ -11,6 +11,7 @@ use Johncms\Modules\Admin\Application\Controllers\Settings\ModulesAccessControll
 use Johncms\Modules\Admin\Application\Controllers\Settings\SystemSettingsController;
 use Johncms\Modules\Admin\Application\Controllers\System\EmoticonsController;
 use Johncms\Modules\Admin\Application\Controllers\System\SystemCheckController;
+use Johncms\Modules\Admin\Application\Controllers\Users\AmnestyController;
 use Johncms\Modules\Admin\Application\Controllers\Users\BanListController;
 use Johncms\Modules\Admin\Application\Controllers\Users\DeleteUserController;
 use Johncms\Modules\Admin\Application\Controllers\Users\RegistrationModerationController;
@@ -72,6 +73,9 @@ return static function (RouteCollection $router, User $user): void {
         $superGroup = $r->group('', function (RouteCollection $sr): void {
             $sr->get('/admin/settings', [SystemSettingsController::class, 'form'])->name('admin.settings');
             $sr->post('/admin/settings', [SystemSettingsController::class, 'save'])->name('admin.settings.save');
+
+            $sr->get('/admin/bans/amnesty', [AmnestyController::class, 'form'])->name('admin.bans.amnesty');
+            $sr->post('/admin/bans/amnesty', [AmnestyController::class, 'apply'])->name('admin.bans.amnesty.apply');
 
             $sr->get('/admin/users/{id:number}/delete', [DeleteUserController::class, 'index'])->name('admin.users.delete');
             $sr->post('/admin/users/{id:number}/delete', [DeleteUserController::class, 'delete'])->name('admin.users.delete.run');

@@ -6,6 +6,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
 use Johncms\Modules\Admin\Domain\Repository\DashboardRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\StaffRepositoryInterface;
+use Johncms\Modules\Admin\Domain\Repository\BanAmnestyRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\BanListRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\InactiveUsersRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\IpSearchRepositoryInterface;
@@ -19,6 +20,7 @@ use Johncms\Modules\Admin\Domain\Services\LanguageFilesManagerInterface;
 use Johncms\Modules\Admin\Domain\Services\SmiliesScannerInterface;
 use Johncms\Modules\Admin\Domain\Services\ThemeListProviderInterface;
 use Johncms\Modules\Admin\Domain\Services\WhoisClientInterface;
+use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentBanAmnestyRepository;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentBanListRepository;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentDashboardRepository;
 use Johncms\Modules\Admin\Infrastructure\Cache\FileSmiliesCacheRepository;
@@ -74,4 +76,5 @@ return static function (ContainerConfigurator $container): void {
     $services->set(RegistrationModerationRepositoryInterface::class, EloquentRegistrationModerationRepository::class)->public();
     $services->set(InactiveUsersRepositoryInterface::class, EloquentInactiveUsersRepository::class)->public();
     $services->set(UserDeletionRepositoryInterface::class, EloquentUserDeletionRepository::class)->public();
+    $services->set(BanAmnestyRepositoryInterface::class, EloquentBanAmnestyRepository::class)->public();
 };
