@@ -75,7 +75,6 @@ $actions = [
     'languages',
     'mail',
     'reg',
-    'settings',
     'usr_clean',
     'usr_del',
 ];

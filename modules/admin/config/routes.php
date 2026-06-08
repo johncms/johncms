@@ -7,12 +7,14 @@ use Johncms\Modules\Admin\Application\Controllers\Ip\IpSearchController;
 use Johncms\Modules\Admin\Application\Controllers\Ip\IpWhoisController;
 use Johncms\Modules\Admin\Application\Controllers\Settings\AntifloodSettingsController;
 use Johncms\Modules\Admin\Application\Controllers\Settings\ModulesAccessController;
+use Johncms\Modules\Admin\Application\Controllers\Settings\SystemSettingsController;
 use Johncms\Modules\Admin\Application\Controllers\System\SystemCheckController;
 use Johncms\Modules\Admin\Application\Controllers\Users\BanListController;
 use Johncms\Modules\Admin\Application\Controllers\Users\StaffListController;
 use Johncms\Modules\Admin\Application\Controllers\Users\UserListController;
 use Johncms\Modules\Admin\Application\Controllers\Users\UsersController;
 use Johncms\Modules\Admin\Application\Middlewares\AdminAccessMiddleware;
+use Johncms\Modules\Admin\Application\Middlewares\SuperAdminAccessMiddleware;
 use Johncms\Router\RouteCollection;
 use Johncms\System\Users\User;
 
@@ -48,6 +50,15 @@ return static function (RouteCollection $router, User $user): void {
         $r->post('/admin/modules-access', [ModulesAccessController::class, 'save'])->name('admin.modules_access.save');
         $r->get('/admin/antiflood', [AntifloodSettingsController::class, 'form'])->name('admin.antiflood');
         $r->post('/admin/antiflood', [AntifloodSettingsController::class, 'save'])->name('admin.antiflood.save');
+
+        // Higher-privilege actions (rights >= 9). Group middleware does not propagate
+        // into nested groups, so SuperAdminAccessMiddleware is self-contained and
+        // applies the stricter gate on its own (rights >= 9 implies rights >= 7).
+        $superGroup = $r->group('', function (RouteCollection $sr): void {
+            $sr->get('/admin/settings', [SystemSettingsController::class, 'form'])->name('admin.settings');
+            $sr->post('/admin/settings', [SystemSettingsController::class, 'save'])->name('admin.settings.save');
+        });
+        $superGroup->addMiddleware(SuperAdminAccessMiddleware::class);
     });
     $adminGroup->addMiddleware(AdminAccessMiddleware::class);
 
