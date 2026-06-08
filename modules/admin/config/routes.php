@@ -14,6 +14,7 @@ use Johncms\Modules\Admin\Application\Controllers\System\SystemCheckController;
 use Johncms\Modules\Admin\Application\Controllers\Users\BanListController;
 use Johncms\Modules\Admin\Application\Controllers\Users\RegistrationModerationController;
 use Johncms\Modules\Admin\Application\Controllers\Users\StaffListController;
+use Johncms\Modules\Admin\Application\Controllers\Users\UserCleanupController;
 use Johncms\Modules\Admin\Application\Controllers\Users\UserListController;
 use Johncms\Modules\Admin\Application\Controllers\Users\UsersController;
 use Johncms\Modules\Admin\Application\Middlewares\AdminAccessMiddleware;
@@ -37,6 +38,8 @@ return static function (RouteCollection $router, User $user): void {
         $r->get('/admin', DashboardController::class)->name('admin.index');
         $r->get('/admin/staff', StaffListController::class)->name('admin.staff');
         $r->get('/admin/users', UserListController::class)->name('admin.users');
+        $r->get('/admin/users/cleanup', [UserCleanupController::class, 'index'])->name('admin.users.cleanup');
+        $r->post('/admin/users/cleanup', [UserCleanupController::class, 'clean'])->name('admin.users.cleanup.run');
         $r->get('/admin/users/{sort}', UserListController::class)
             ->name('admin.users.sort')
             ->requirements(['sort' => 'by-nick|by-ip']);

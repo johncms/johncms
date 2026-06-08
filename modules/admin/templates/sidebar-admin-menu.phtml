@@ -97,7 +97,7 @@ $themeIconSprite = $this->asset('icons/sprite.svg', true);
             </li>
             <?php if ($user->rights === 9): ?>
                 <li class="<?= isset($usr_menu['usr_clean']) ? 'active' : '' ?>">
-                    <a href="<?= $config['homeurl'] ?>/admin/usr_clean/">
+                    <a href="<?= $config['homeurl'] ?>/admin/users/cleanup">
                         <svg class="icon">
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#database"/>
                         </svg>
