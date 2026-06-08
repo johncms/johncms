@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Johncms\Modules\Admin\Application\Controllers\DashboardController;
+use Johncms\Modules\Admin\Application\Controllers\Settings\AdsController;
 use Johncms\Modules\Admin\Application\Controllers\Ip\IpBanController;
 use Johncms\Modules\Admin\Application\Controllers\Ip\IpSearchController;
 use Johncms\Modules\Admin\Application\Controllers\Languages\LanguagesController;
@@ -67,6 +68,17 @@ return static function (RouteCollection $router, User $user): void {
         $r->post('/admin/registrations/delete', [RegistrationModerationController::class, 'delete'])->name('admin.registrations.delete');
         $r->post('/admin/registrations/delete-all', [RegistrationModerationController::class, 'deleteAll'])->name('admin.registrations.delete_all');
         $r->post('/admin/registrations/delete-by-ip', [RegistrationModerationController::class, 'deleteByIp'])->name('admin.registrations.delete_by_ip');
+        $r->get('/admin/ads', [AdsController::class, 'index'])->name('admin.ads');
+        $r->get('/admin/ads/new', [AdsController::class, 'newForm'])->name('admin.ads.new');
+        $r->post('/admin/ads', [AdsController::class, 'store'])->name('admin.ads.store');
+        $r->get('/admin/ads/clear', [AdsController::class, 'clearConfirm'])->name('admin.ads.clear_confirm');
+        $r->post('/admin/ads/clear', [AdsController::class, 'clear'])->name('admin.ads.clear');
+        $r->get('/admin/ads/{id:number}/edit', [AdsController::class, 'editForm'])->name('admin.ads.edit');
+        $r->post('/admin/ads/{id:number}/up', [AdsController::class, 'up'])->name('admin.ads.up');
+        $r->post('/admin/ads/{id:number}/down', [AdsController::class, 'down'])->name('admin.ads.down');
+        $r->post('/admin/ads/{id:number}/toggle', [AdsController::class, 'toggle'])->name('admin.ads.toggle');
+        $r->get('/admin/ads/{id:number}/delete', [AdsController::class, 'deleteConfirm'])->name('admin.ads.delete_confirm');
+        $r->post('/admin/ads/{id:number}/delete', [AdsController::class, 'delete'])->name('admin.ads.delete');
         $r->get('/admin/emoticons', [EmoticonsController::class, 'index'])->name('admin.emoticons');
         $r->post('/admin/emoticons', [EmoticonsController::class, 'rebuild'])->name('admin.emoticons.rebuild');
 

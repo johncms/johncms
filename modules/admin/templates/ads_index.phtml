@@ -1,91 +1,79 @@
 <?php
 
 /**
- * This file is part of JohnCMS Content Management System.
- *
- * @copyright JohnCMS Community
- * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
- * @link      https://johncms.com JohnCMS Project
+ * @var Mobicms\Render\Template\Template $this
+ * @var array<int, array<string, mixed>> $items
+ * @var int $total
+ * @var int $per_page
+ * @var int $type
+ * @var list<array{url: string, name: string, active: bool}> $filters
+ * @var string $add_url
+ * @var string $clear_url
+ * @var string $pagination
+ * @var string $csrf_token
  */
 
-/**
- * @var $title
- * @var $page_title
- * @var $data
- */
+$this->layout('system::layout/default');
 
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $page_title,
-    ]
-);
-$this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['module_menu' => ['ads' => true]]));
+$miniForm = function (string $action, string $label, string $class) use ($csrf_token): string {
+    return '<form method="post" action="' . $this->e($action) . '" class="d-inline me-2">'
+        . '<input type="hidden" name="csrf_token" value="' . $csrf_token . '">'
+        . '<button type="submit" class="' . $class . '">' . $label . '</button></form>';
+};
 ?>
-<?php if (! empty($data['filters'])): ?>
-    <div class="mb-3">
-        <?php foreach ($data['filters'] as $filter): ?>
-            <a href="<?= $filter['url'] ?>" class="btn btn-outline-secondary mt-1 <?= ($filter['active'] ? 'active' : '') ?>"><?= $filter['name'] ?></a>
-        <?php endforeach; ?>
-    </div>
-<?php endif; ?>
-<?php if (! empty($data['items'])): ?>
-    <?php foreach ($data['items'] as $item): ?>
+<div class="mb-3">
+    <?php foreach ($filters as $filter): ?>
+        <a href="<?= $this->e($filter['url']) ?>" class="btn btn-outline-secondary mt-1 <?= ($filter['active'] ? 'active' : '') ?>"><?= $this->e($filter['name']) ?></a>
+    <?php endforeach; ?>
+</div>
+<?php if (! empty($items)): ?>
+    <?php foreach ($items as $item): ?>
         <div class="new_post-item without_avatar">
             <div class="d-flex justify-content-between align-items-center">
-                <a href="<?= $item['link'] ?>" class="h3" target="_blank"><?= $item['name'] ?></a>
+                <a href="<?= $this->e($item['link']) ?>" class="h3" target="_blank" rel="noopener noreferrer"><?= $this->e($item['name']) ?></a>
                 <div>
-                    <?php if (! $item['to']): ?>
-                        <a href="?mod=show&amp;id=<?= $item['id'] ?>" class="badge rounded-pill bg-success"><?= __('On') ?></a>
+                    <?php if ($item['active']): ?>
+                        <span class="badge rounded-pill bg-success"><?= __('On') ?></span>
                     <?php else: ?>
-                        <a href="?mod=show&amp;id=<?= $item['id'] ?>" class="badge rounded-pill bg-danger"><?= __('Off') ?></a>
+                        <span class="badge rounded-pill bg-danger"><?= __('Off') ?></span>
                     <?php endif; ?>
                 </div>
             </div>
             <div class="post-body small">
-                <div><?= __('Start date') ?>: <?= $item['display_time'] ?></div>
-                <div><?= __('Disposition') ?>: <?= $item['place'] ?></div>
-                <div><?= __('Show') ?>: <?= $item['show_for'] ?></div>
-                <div><?= __('Agreement') ?>: <?= $item['agreement'] ?></div>
-                <div><?= __('Remains') ?>: <?= $item['remains'] ?></div>
-                <div><?= __('Link type') ?>: <?= $item['show'] ? __('Direct Link') : __('Redirect') ?></div>
-                <div><?= __('Style settings') ?>: <?= ! empty($item['styles']) ? $item['styles'] : __('Default') ?></div>
+                <div><?= __('Start date') ?>: <?= $this->e($item['display_time']) ?></div>
+                <div><?= __('Disposition') ?>: <?= $this->e($item['place']) ?></div>
+                <div><?= __('Show') ?>: <?= $this->e($item['show_for']) ?></div>
+                <div><?= __('Agreement') ?>: <?= $this->e($item['agreement']) ?></div>
+                <div><?= __('Remains') ?>: <?= $this->e($item['remains']) ?></div>
+                <div><?= __('Link type') ?>: <?= $item['direct_link'] ? __('Direct Link') : __('Redirect') ?></div>
+                <div><?= __('Style settings') ?>: <?= ! empty($item['styles']) ? $this->e($item['styles']) : __('Default') ?></div>
             </div>
-            <div>
-                <a href="?mod=up&amp;id=<?= $item['id'] ?>" class="me-2"><?= __('Up') ?></a>
-                <a href="?mod=down&amp;id=<?= $item['id'] ?>" class="me-2"><?= __('Down') ?></a>
-                <a href="?mod=edit&amp;id=<?= $item['id'] ?>" class="me-2"><?= __('Edit') ?></a>
-                <a href="?mod=del&amp;id=<?= $item['id'] ?>" class="text-danger me-2"><?= __('Delete') ?></a>
-                <a href="?mod=show&amp;id=<?= $item['id'] ?>" class="text-danger"><?= ($item['to'] ? __('Show') : __('Hide')) ?></a>
+            <div class="d-flex align-items-center mt-1">
+                <?= $miniForm('/admin/ads/' . $item['id'] . '/up', __('Up'), 'btn btn-link p-0') ?>
+                <?= $miniForm('/admin/ads/' . $item['id'] . '/down', __('Down'), 'btn btn-link p-0') ?>
+                <a href="/admin/ads/<?= $item['id'] ?>/edit" class="me-2"><?= __('Edit') ?></a>
+                <a href="/admin/ads/<?= $item['id'] ?>/delete" class="text-danger me-2"><?= __('Delete') ?></a>
+                <?= $miniForm('/admin/ads/' . $item['id'] . '/toggle', ($item['active'] ? __('Hide') : __('Show')), 'btn btn-link p-0 text-danger') ?>
             </div>
         </div>
     <?php endforeach; ?>
 <?php else: ?>
-    <?= $this->fetch(
-        'system::app/alert',
-        [
-            'alert_type' => 'alert-info',
-            'alert'      => __('The list is empty'),
-        ]
-    ) ?>
+    <?= $this->fetch('system::app/alert', ['alert_type' => 'alert-info', 'alert' => __('The list is empty')]) ?>
 <?php endif; ?>
 <div class="mt-4">
-    <?php if ($data['total'] > $user->config->kmess): ?>
-        <div>
-            <?= $data['pagination'] ?>
-        </div>
+    <?php if ($total > $per_page): ?>
+        <div><?= $pagination ?></div>
     <?php endif; ?>
-    <?php if ($data['total'] > 0): ?>
-        <div><?= __('Total:') ?> <?= $data['total'] ?></div>
+    <?php if ($total > 0): ?>
+        <div><?= __('Total:') ?> <?= $total ?></div>
     <?php endif; ?>
 </div>
 <div>
-    <div class="mb-3">
-        <a href="?mod=edit" class="btn btn-primary btn-sm"><?= __('Add link') ?></a>
-        <a href="?mod=clear" class="btn btn-danger btn-sm"><?= __('Delete inactive links') ?></a>
+    <div class="mb-3 mt-2">
+        <a href="<?= $this->e($add_url) ?>" class="btn btn-primary btn-sm"><?= __('Add link') ?></a>
+        <a href="<?= $this->e($clear_url) ?>" class="btn btn-danger btn-sm"><?= __('Delete inactive links') ?></a>
     </div>
     <div>
-        <a href="<?= $data['back_url'] ?>"><?= __('Back') ?></a>
+        <a href="/admin/"><?= __('Back') ?></a>
     </div>
 </div>
