@@ -1,0 +1,41 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Johncms\Modules\Admin\Application\Controllers\Forum;
+
+use Johncms\Http\Controller\AdminControllerContext;
+use Johncms\Modules\Admin\Application\UseCases\GetForumDashboardUseCase;
+use Johncms\NavChain;
+use Johncms\System\View\Render;
+use Johncms\Users\User;
+
+final readonly class ForumDashboardController
+{
+    public function __construct(
+        private AdminControllerContext $controllerContext,
+        private Render $render,
+        private NavChain $navChain,
+        private User $currentUser,
+        private GetForumDashboardUseCase $getDashboard,
+    ) {
+        $this->controllerContext->initModule('admin');
+    }
+
+    public function __invoke(): string
+    {
+        $title = __('Forum Management');
+        $this->navChain->add($title, '/admin/forum');
+
+        $this->render->addData([
+            'title'       => $title,
+            'page_title'  => $title,
+            'module_menu' => ['forum' => true],
+        ]);
+
+        return $this->render->render('admin::forum/index', [
+            'counters'      => $this->getDashboard->execute(),
+            'can_configure' => $this->currentUser->rights >= 9,
+        ]);
+    }
+}

@@ -1,37 +1,24 @@
 <?php
 
 /**
- * This file is part of JohnCMS Content Management System.
- *
- * @copyright JohnCMS Community
- * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
- * @link      https://johncms.com JohnCMS Project
+ * @var Mobicms\Render\Template\Template $this
+ * @var string $form_action
+ * @var string $back_url
+ * @var string $csrf_token
  */
 
-/**
- * @var $title
- * @var $page_title
- * @var $data
- */
-
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $page_title,
-    ]
-);
-$this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['module_menu' => ['forum' => true]]));
+$this->layout('system::layout/default');
 ?>
 
 <div class="alert alert-danger">
     <div class="pb-2">
-        <?= $data['message'] ?>
+        <?= __('Do you really want to delete?') ?>
     </div>
-    <div>
-        <form action="<?= $data['form_action'] ?>" method="post">
-            <button type="submit" name="submit" value="1" class="btn btn-danger"><?= __('Delete') ?></button>
-            <a href="<?= $data['back_url'] ?>" class="btn btn-outline-secondary"><?= __('Cancel') ?></a>
+    <div class="d-flex">
+        <form action="<?= $this->e($form_action) ?>" method="post" class="me-2">
+            <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
+            <button type="submit" class="btn btn-danger"><?= __('Delete') ?></button>
         </form>
+        <a href="<?= $this->e($back_url) ?>" class="btn btn-outline-secondary"><?= __('Cancel') ?></a>
     </div>
 </div>

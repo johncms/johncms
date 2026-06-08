@@ -1,108 +1,85 @@
 <?php
 
 /**
- * This file is part of JohnCMS Content Management System.
- *
- * @copyright JohnCMS Community
- * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
- * @link      https://johncms.com JohnCMS Project
- */
-
-/**
- * @var $title
- * @var $page_title
- * @var $data
+ * @var Mobicms\Render\Template\Template $this
+ * @var array<string, mixed> $item
+ * @var array<string, array<int, string>> $errors
+ * @var array<int, array{id: int, name: string, selected: bool}> $categories
+ * @var string $form_action
+ * @var string $back_url
+ * @var string $csrf_token
  */
 
 $this->layout('system::layout/default');
-$this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['module_menu' => ['forum' => true]]));
-$errors = $data['errors'];
 ?>
 
-<?php if (! empty($data['success_message'])): ?>
-    <?= $this->fetch(
-        'system::app/alert',
-        [
-            'alert_type' => 'alert-success',
-            'alert'      => $data['success_message'],
-        ]
-    ) ?>
-<?php endif; ?>
-<form action="<?= $data['form_action'] ?>" method="post">
+<form action="<?= $this->e($form_action) ?>" method="post">
     <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>"/>
     <?php if (! empty($errors['csrf_token'])): ?>
-        <div class="alert alert-danger"><?= implode(', ', $errors['csrf_token']) ?></div>
+        <div class="alert alert-danger"><?= $this->e(implode(', ', $errors['csrf_token'])) ?></div>
+    <?php endif ?>
+    <?php if (! empty($errors['parent'])): ?>
+        <div class="alert alert-danger"><?= $this->e(implode(', ', $errors['parent'])) ?></div>
     <?php endif ?>
     <div class="form-group">
         <label for="name"><?= __('Title') ?></label>
-        <input type="text" name="name" class="form-control <?= ! empty($errors['name']) ? 'is-invalid' : '' ?>" id="name" value="<?= $this->e($data['item']['name']) ?>" placeholder="<?= __('Title') ?>"
-               required>
+        <input type="text" name="name" class="form-control <?= ! empty($errors['name']) ? 'is-invalid' : '' ?>" id="name" value="<?= $this->e($item['name']) ?>" placeholder="<?= __('Title') ?>" required>
         <?php if (! empty($errors['name'])): ?>
-            <div class="invalid-feedback d-block"><?= implode(', ', $errors['name']) ?></div>
+            <div class="invalid-feedback d-block"><?= $this->e(implode(', ', $errors['name'])) ?></div>
         <?php endif ?>
         <div class="text-muted small"><?= __('Min. 2, Max. 150 characters') ?></div>
     </div>
 
     <div class="form-group">
         <label for="sort"><?= __('Order') ?></label>
-        <input type="text" name="sort" class="form-control" id="sort" value="<?= $data['item']['sort'] ?>" placeholder="<?= __('Order') ?>" required>
+        <input type="text" name="sort" class="form-control" id="sort" value="<?= (int) $item['sort'] ?>" placeholder="<?= __('Order') ?>" required>
         <div class="text-muted small"><?= __('Only numbers') ?></div>
     </div>
 
     <div class="form-group">
         <label for="description"><?= __('Description') ?></label>
-        <textarea class="form-control" rows="2" name="description" id="description"><?= $this->e($data['item']['description']) ?></textarea>
+        <textarea class="form-control" rows="2" name="description" id="description"><?= $this->e($item['description']) ?></textarea>
         <div class="small text-muted"><?= __('Optional field') ?><br><?= __('Min. 2, Max. 500 characters') ?></div>
     </div>
 
     <div class="form-group">
         <label for="meta_description"><?= __('Meta description') ?></label>
-        <textarea name="meta_description" class="form-control" id="meta_description" rows="2"><?= $this->e($data['item']['meta_description']) ?></textarea>
+        <textarea name="meta_description" class="form-control" id="meta_description" rows="2"><?= $this->e($item['meta_description']) ?></textarea>
     </div>
     <div class="form-group">
         <label for="meta_keywords"><?= __('Meta keywords') ?></label>
-        <textarea name="meta_keywords" class="form-control" id="meta_keywords" rows="2"><?= $this->e($data['item']['meta_keywords']) ?></textarea>
+        <textarea name="meta_keywords" class="form-control" id="meta_keywords" rows="2"><?= $this->e($item['meta_keywords']) ?></textarea>
     </div>
 
     <h3><?= __('Common access') ?></h3>
-    <div class="custom-control custom-radio">
-        <input type="radio" id="access0" name="access" value="0" class="custom-control-input" <?= $data['item']['access'] === 0 ? ' checked="checked"' : '' ?>>
-        <label class="custom-control-label" for="access0"><?= __('Common access') ?></label>
-    </div>
-    <div class="custom-control custom-radio">
-        <input type="radio" id="access1" name="access" value="1" class="custom-control-input" <?= $data['item']['access'] === 1 ? ' checked="checked"' : '' ?>>
-        <label class="custom-control-label" for="access1"><?= __('Assign the newly created authors as curators') ?></label>
-    </div>
-    <div class="custom-control custom-radio">
-        <input type="radio" id="access2" name="access" value="2" class="custom-control-input" <?= $data['item']['access'] === 2 ? ' checked="checked"' : '' ?>>
-        <label class="custom-control-label" for="access2"><?= __('Allow authors to edit the 1st post') ?></label>
-    </div>
-    <div class="custom-control custom-radio">
-        <input type="radio" id="access4" name="access" value="4" class="custom-control-input" <?= $data['item']['access'] === 4 ? ' checked="checked"' : '' ?>>
-        <label class="custom-control-label" for="access4"><?= __('Only for reading') ?></label>
-    </div>
+    <?php foreach ([0 => __('Common access'), 1 => __('Assign the newly created authors as curators'), 2 => __('Allow authors to edit the 1st post'), 4 => __('Only for reading')] as $value => $label): ?>
+        <div class="custom-control custom-radio">
+            <input type="radio" id="access<?= $value ?>" name="access" value="<?= $value ?>" class="custom-control-input" <?= (int) $item['access'] === $value ? ' checked="checked"' : '' ?>>
+            <label class="custom-control-label" for="access<?= $value ?>"><?= $label ?></label>
+        </div>
+    <?php endforeach; ?>
 
     <h3 class="mt-3"><?= __('Section type') ?></h3>
     <div class="custom-control custom-radio">
-        <input type="radio" id="section_type1" name="section_type" value="0" class="custom-control-input" <?= $data['item']['section_type'] === 0 ? ' checked="checked"' : '' ?>>
+        <input type="radio" id="section_type1" name="section_type" value="0" class="custom-control-input" <?= (int) $item['section_type'] === 0 ? ' checked="checked"' : '' ?>>
         <label class="custom-control-label" for="section_type1"><?= __('For subsections') ?></label>
     </div>
     <div class="custom-control custom-radio">
-        <input type="radio" id="section_type2" name="section_type" value="1" class="custom-control-input" <?= $data['item']['section_type'] === 1 ? ' checked="checked"' : '' ?>>
+        <input type="radio" id="section_type2" name="section_type" value="1" class="custom-control-input" <?= (int) $item['section_type'] === 1 ? ' checked="checked"' : '' ?>>
         <label class="custom-control-label" for="section_type2"><?= __('For topics') ?></label>
     </div>
 
     <div class="form-group">
         <label for="parent" class="h3 mt-3"><?= __('Category') ?></label>
         <select name="parent" id="parent" class="form-control">
-            <?php foreach ($data['categories'] as $category): ?>
+            <?php foreach ($categories as $category): ?>
                 <option value="<?= $category['id'] ?>" <?= ($category['selected'] ? ' selected="selected"' : '') ?>><?= $this->e($category['name']) ?></option>
             <?php endforeach; ?>
         </select>
     </div>
 
     <div class="mt-3">
-        <input type="submit" name="submit" value="<?= __('Save') ?>" class="btn btn-primary">
-        <a href="<?= $data['back_url'] ?>" class="btn btn-secondary"><?= __('Cancel') ?></a>
+        <input type="submit" value="<?= __('Save') ?>" class="btn btn-primary">
+        <a href="<?= $this->e($back_url) ?>" class="btn btn-secondary"><?= __('Cancel') ?></a>
     </div>
 </form>

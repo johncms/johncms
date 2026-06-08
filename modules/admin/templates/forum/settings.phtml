@@ -1,20 +1,26 @@
 <?php
 
 /**
- * @var bool $confirmation
- * @var array $forum_config
+ * @var Mobicms\Render\Template\Template $this
+ * @var array<string, mixed> $forum_config
+ * @var string $form_action
+ * @var string|null $error_message
+ * @var string|null $success_message
+ * @var string $csrf_token
  */
-$this->layout('system::layout/default', ['title' => __('Forum Settings'), 'page_title' => __('Forum Settings')]);
-$this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['sys_menu' => ['settings' => true]]));
+
+$this->layout('system::layout/default');
 ?>
 
 <div style="max-width: 640px">
-    <?php if ($confirmation): ?>
-        <div class="alert alert-success shadow" role="alert">
-            <?= __('Settings are saved successfully') ?>
-        </div>
+    <?php if (! empty($error_message)): ?>
+        <div class="alert alert-danger shadow border-0"><?= $this->e($error_message) ?></div>
     <?php endif ?>
-    <form method="post">
+    <?php if (! empty($success_message)): ?>
+        <div class="alert alert-success shadow border-0"><?= $this->e($success_message) ?></div>
+    <?php endif ?>
+    <form method="post" action="<?= $this->e($form_action) ?>">
+        <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
         <fieldset>
             <legend><?= __('Common settings') ?></legend>
             <div class="custom-control custom-checkbox">
@@ -55,6 +61,6 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
                 <div class="small text-muted"><?= __('Macros available: #name#') ?></div>
             </div>
         </fieldset>
-        <input type="submit" class="btn btn-primary mb-2" name="submit" value="<?= __('Save') ?>"/>
+        <input type="submit" class="btn btn-primary mb-2" value="<?= __('Save') ?>"/>
     </form>
 </div>

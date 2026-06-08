@@ -3,6 +3,11 @@
 declare(strict_types=1);
 
 use Johncms\Modules\Admin\Application\Controllers\DashboardController;
+use Johncms\Modules\Admin\Application\Controllers\Forum\ForumDashboardController;
+use Johncms\Modules\Admin\Application\Controllers\Forum\ForumSettingsController;
+use Johncms\Modules\Admin\Application\Controllers\Forum\ForumStructureController;
+use Johncms\Modules\Admin\Application\Controllers\Forum\HiddenPostsController;
+use Johncms\Modules\Admin\Application\Controllers\Forum\HiddenTopicsController;
 use Johncms\Modules\Admin\Application\Controllers\Settings\AdsController;
 use Johncms\Modules\Admin\Application\Controllers\Ip\IpBanController;
 use Johncms\Modules\Admin\Application\Controllers\Ip\IpSearchController;
@@ -79,6 +84,18 @@ return static function (RouteCollection $router, User $user): void {
         $r->post('/admin/ads/{id:number}/toggle', [AdsController::class, 'toggle'])->name('admin.ads.toggle');
         $r->get('/admin/ads/{id:number}/delete', [AdsController::class, 'deleteConfirm'])->name('admin.ads.delete_confirm');
         $r->post('/admin/ads/{id:number}/delete', [AdsController::class, 'delete'])->name('admin.ads.delete');
+        $r->get('/admin/forum', ForumDashboardController::class)->name('admin.forum');
+        $r->get('/admin/forum/structure', [ForumStructureController::class, 'structure'])->name('admin.forum.structure');
+        $r->get('/admin/forum/structure/new', [ForumStructureController::class, 'addForm'])->name('admin.forum.structure.new');
+        $r->post('/admin/forum/structure/new', [ForumStructureController::class, 'add'])->name('admin.forum.structure.add');
+        $r->get('/admin/forum/structure/{id:number}/edit', [ForumStructureController::class, 'editForm'])->name('admin.forum.structure.edit');
+        $r->post('/admin/forum/structure/{id:number}/edit', [ForumStructureController::class, 'edit'])->name('admin.forum.structure.update');
+        $r->get('/admin/forum/structure/{id:number}/delete', [ForumStructureController::class, 'deleteConfirm'])->name('admin.forum.structure.delete_confirm');
+        $r->post('/admin/forum/structure/{id:number}/delete', [ForumStructureController::class, 'delete'])->name('admin.forum.structure.delete');
+        $r->get('/admin/forum/hidden-topics', [HiddenTopicsController::class, 'index'])->name('admin.forum.hidden_topics');
+        $r->post('/admin/forum/hidden-topics/delete', [HiddenTopicsController::class, 'deleteAll'])->name('admin.forum.hidden_topics.delete');
+        $r->get('/admin/forum/hidden-posts', [HiddenPostsController::class, 'index'])->name('admin.forum.hidden_posts');
+        $r->post('/admin/forum/hidden-posts/delete', [HiddenPostsController::class, 'deleteAll'])->name('admin.forum.hidden_posts.delete');
         $r->get('/admin/emoticons', [EmoticonsController::class, 'index'])->name('admin.emoticons');
         $r->post('/admin/emoticons', [EmoticonsController::class, 'rebuild'])->name('admin.emoticons.rebuild');
 
@@ -111,6 +128,9 @@ return static function (RouteCollection $router, User $user): void {
             $sr->post('/admin/counters/{id:number}/down', [CountersController::class, 'down'])->name('admin.counters.down');
             $sr->get('/admin/counters/{id:number}/delete', [CountersController::class, 'deleteConfirm'])->name('admin.counters.delete_confirm');
             $sr->post('/admin/counters/{id:number}/delete', [CountersController::class, 'delete'])->name('admin.counters.delete');
+
+            $sr->get('/admin/forum/settings', [ForumSettingsController::class, 'form'])->name('admin.forum.settings');
+            $sr->post('/admin/forum/settings', [ForumSettingsController::class, 'save'])->name('admin.forum.settings.save');
 
             $sr->get('/admin/karma', [KarmaController::class, 'index'])->name('admin.karma');
             $sr->post('/admin/karma', [KarmaController::class, 'save'])->name('admin.karma.save');

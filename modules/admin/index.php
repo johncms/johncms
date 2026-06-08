@@ -64,7 +64,6 @@ if ($user->rights < 7) {
 
 $actions = [
     'antispy',
-    'forum',
     'index',
     'mail',
 ];

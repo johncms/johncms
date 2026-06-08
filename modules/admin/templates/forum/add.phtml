@@ -1,42 +1,26 @@
 <?php
 
 /**
- * This file is part of JohnCMS Content Management System.
- *
- * @copyright JohnCMS Community
- * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
- * @link      https://johncms.com JohnCMS Project
+ * @var Mobicms\Render\Template\Template $this
+ * @var int|null $parent_id
+ * @var string $parent_section_name
+ * @var string $form_action
+ * @var string $back_url
+ * @var int $field_height
+ * @var string|null $error_message
+ * @var string $csrf_token
  */
 
-/**
- * @var $title
- * @var $page_title
- * @var $data
- */
-
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $title,
-    ]
-);
-$this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['module_menu' => ['counters' => true]]));
+$this->layout('system::layout/default');
 ?>
 
-<?php if (! empty($data['success_message'])): ?>
-    <?= $this->fetch(
-        'system::app/alert',
-        [
-            'alert_type' => 'alert-success',
-            'alert'      => $data['success_message'],
-        ]
-    ) ?>
+<?php if (! empty($error_message)): ?>
+    <div class="alert alert-danger shadow border-0"><?= $error_message ?></div>
 <?php endif; ?>
-<form action="<?= $data['form_action'] ?>" method="post">
-    <?php if (! empty($data['id'])): ?>
-        <h3><?= __('Parent section:') ?> <?= $this->e($data['parent_section_name']) ?></h3>
-        <input type="hidden" value="<?= $data['id'] ?>" name="id">
+<form action="<?= $this->e($form_action) ?>" method="post">
+    <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
+    <?php if (! empty($parent_id)): ?>
+        <h3><?= __('Parent section:') ?> <?= $this->e($parent_section_name) ?></h3>
     <?php endif; ?>
     <div class="form-group">
         <label for="name"><?= __('Title') ?></label>
@@ -46,11 +30,11 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
 
     <div class="form-group">
         <label for="desc"><?= __('Description') ?></label>
-        <textarea class="form-control" rows="<?= $user->config->fieldHeight ?>" name="desc" id="desc"></textarea>
+        <textarea class="form-control" rows="<?= $field_height ?>" name="desc" id="desc"></textarea>
         <div class="small text-muted"><?= __('Optional field') ?><br><?= __('Min. 2, Max. 500 characters') ?></div>
     </div>
 
-    <?php if (! empty($data['id'])): ?>
+    <?php if (! empty($parent_id)): ?>
         <h3><?= __('Common access') ?></h3>
         <div class="custom-control custom-radio">
             <input type="radio" id="allow0" name="allow" value="0" class="custom-control-input" checked="checked">
@@ -81,7 +65,7 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
     </div>
 
     <div class="mt-3">
-        <input type="submit" name="submit" value="<?= __('Add') ?>" class="btn btn-primary">
-        <a href="<?= $this->e($data['back_url']) ?>" class="btn btn-secondary"><?= __('Cancel') ?></a>
+        <input type="submit" value="<?= __('Add') ?>" class="btn btn-primary">
+        <a href="<?= $this->e($back_url) ?>" class="btn btn-secondary"><?= __('Cancel') ?></a>
     </div>
 </form>
