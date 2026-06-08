@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Johncms\Modules\Admin\Application\Controllers\DashboardController;
 use Johncms\Modules\Admin\Application\Controllers\Ip\IpSearchController;
 use Johncms\Modules\Admin\Application\Controllers\Ip\IpWhoisController;
+use Johncms\Modules\Admin\Application\Controllers\Settings\AntifloodSettingsController;
 use Johncms\Modules\Admin\Application\Controllers\Settings\ModulesAccessController;
 use Johncms\Modules\Admin\Application\Controllers\System\SystemCheckController;
 use Johncms\Modules\Admin\Application\Controllers\Users\BanListController;
@@ -45,6 +46,8 @@ return static function (RouteCollection $router, User $user): void {
             ->requirements(['sort' => 'by-violations']);
         $r->get('/admin/modules-access', [ModulesAccessController::class, 'form'])->name('admin.modules_access');
         $r->post('/admin/modules-access', [ModulesAccessController::class, 'save'])->name('admin.modules_access.save');
+        $r->get('/admin/antiflood', [AntifloodSettingsController::class, 'form'])->name('admin.antiflood');
+        $r->post('/admin/antiflood', [AntifloodSettingsController::class, 'save'])->name('admin.antiflood.save');
     });
     $adminGroup->addMiddleware(AdminAccessMiddleware::class);
 

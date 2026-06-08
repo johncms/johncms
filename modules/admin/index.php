@@ -64,7 +64,6 @@ if ($user->rights < 7) {
 
 $actions = [
     'ads',
-    'antiflood',
     'antispy',
     'ban_panel',
     'counters',
