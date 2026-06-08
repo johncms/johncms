@@ -12,6 +12,7 @@ use Johncms\Modules\Admin\Application\Controllers\Settings\SystemSettingsControl
 use Johncms\Modules\Admin\Application\Controllers\System\EmoticonsController;
 use Johncms\Modules\Admin\Application\Controllers\System\SystemCheckController;
 use Johncms\Modules\Admin\Application\Controllers\Users\BanListController;
+use Johncms\Modules\Admin\Application\Controllers\Users\DeleteUserController;
 use Johncms\Modules\Admin\Application\Controllers\Users\RegistrationModerationController;
 use Johncms\Modules\Admin\Application\Controllers\Users\StaffListController;
 use Johncms\Modules\Admin\Application\Controllers\Users\UserCleanupController;
@@ -71,6 +72,9 @@ return static function (RouteCollection $router, User $user): void {
         $superGroup = $r->group('', function (RouteCollection $sr): void {
             $sr->get('/admin/settings', [SystemSettingsController::class, 'form'])->name('admin.settings');
             $sr->post('/admin/settings', [SystemSettingsController::class, 'save'])->name('admin.settings.save');
+
+            $sr->get('/admin/users/{id:number}/delete', [DeleteUserController::class, 'index'])->name('admin.users.delete');
+            $sr->post('/admin/users/{id:number}/delete', [DeleteUserController::class, 'delete'])->name('admin.users.delete.run');
 
             $sr->get('/admin/languages', [LanguagesController::class, 'index'])->name('admin.languages');
             $sr->post('/admin/languages', [LanguagesController::class, 'save'])->name('admin.languages.save');

@@ -12,6 +12,7 @@ use Johncms\Modules\Admin\Domain\Repository\IpSearchRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\RegistrationModerationRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\SmiliesCacheRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\SystemConfigRepositoryInterface;
+use Johncms\Modules\Admin\Domain\Repository\UserDeletionRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\UserListRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Services\LanguageCatalogInterface;
 use Johncms\Modules\Admin\Domain\Services\LanguageFilesManagerInterface;
@@ -29,6 +30,7 @@ use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentInactive
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentIpSearchRepository;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentRegistrationModerationRepository;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentStaffRepository;
+use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentUserDeletionRepository;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentUserListRepository;
 use Johncms\Modules\Admin\Infrastructure\Theme\FileSystemThemeListProvider;
 use Johncms\Modules\Admin\Infrastructure\Whois\SocketWhoisClient;
@@ -71,4 +73,5 @@ return static function (ContainerConfigurator $container): void {
     $services->set(LanguageCatalogInterface::class, HttpLanguageCatalog::class)->public();
     $services->set(RegistrationModerationRepositoryInterface::class, EloquentRegistrationModerationRepository::class)->public();
     $services->set(InactiveUsersRepositoryInterface::class, EloquentInactiveUsersRepository::class)->public();
+    $services->set(UserDeletionRepositoryInterface::class, EloquentUserDeletionRepository::class)->public();
 };
