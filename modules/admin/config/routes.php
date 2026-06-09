@@ -159,13 +159,4 @@ return static function (RouteCollection $router, User $user): void {
         $superGroup->addMiddleware(SuperAdminAccessMiddleware::class);
     });
     $adminGroup->addMiddleware(AdminAccessMiddleware::class);
-
-    // Legacy query-param dispatcher for actions not yet migrated. Negative priority
-    // keeps this catch-all last in the compiled collection, so every migrated route
-    // (now and in the future) is matched before it — group routes are compiled after
-    // top-level routes, so registration order alone is not enough.
-    $router->map(['GET', 'POST'], '/admin/{action}', 'modules/admin/index.php')
-        ->name('admin.legacy')
-        ->priority(-100)
-        ->defaults(['action' => null]);
 };
