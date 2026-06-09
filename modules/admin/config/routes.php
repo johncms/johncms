@@ -18,6 +18,7 @@ use Johncms\Modules\Admin\Application\Controllers\Settings\CountersController;
 use Johncms\Modules\Admin\Application\Controllers\Settings\ModulesAccessController;
 use Johncms\Modules\Admin\Application\Controllers\Settings\SystemSettingsController;
 use Johncms\Modules\Admin\Application\Controllers\System\EmoticonsController;
+use Johncms\Modules\Admin\Application\Controllers\System\FileIntegrityController;
 use Johncms\Modules\Admin\Application\Controllers\System\SystemCheckController;
 use Johncms\Modules\Admin\Application\Controllers\Users\AmnestyController;
 use Johncms\Modules\Admin\Application\Controllers\Users\BanListController;
@@ -128,6 +129,11 @@ return static function (RouteCollection $router, User $user): void {
             $sr->post('/admin/counters/{id:number}/down', [CountersController::class, 'down'])->name('admin.counters.down');
             $sr->get('/admin/counters/{id:number}/delete', [CountersController::class, 'deleteConfirm'])->name('admin.counters.delete_confirm');
             $sr->post('/admin/counters/{id:number}/delete', [CountersController::class, 'delete'])->name('admin.counters.delete');
+
+            $sr->get('/admin/file-integrity', [FileIntegrityController::class, 'index'])->name('admin.file_integrity');
+            $sr->get('/admin/file-integrity/scan', [FileIntegrityController::class, 'scan'])->name('admin.file_integrity.scan');
+            $sr->get('/admin/file-integrity/snapshot', [FileIntegrityController::class, 'snapshotConfirm'])->name('admin.file_integrity.snapshot');
+            $sr->post('/admin/file-integrity/snapshot', [FileIntegrityController::class, 'createSnapshot'])->name('admin.file_integrity.snapshot.create');
 
             $sr->get('/admin/forum/settings', [ForumSettingsController::class, 'form'])->name('admin.forum.settings');
             $sr->post('/admin/forum/settings', [ForumSettingsController::class, 'save'])->name('admin.forum.settings.save');

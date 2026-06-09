@@ -1,27 +1,12 @@
 <?php
 
 /**
- * This file is part of JohnCMS Content Management System.
- *
- * @copyright JohnCMS Community
- * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
- * @link      https://johncms.com JohnCMS Project
+ * @var Mobicms\Render\Template\Template $this
+ * @var list<string> $bad_files
+ * @var string $back_url
  */
 
-/**
- * @var $title
- * @var $page_title
- * @var $data
- */
-
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $page_title,
-    ]
-);
-$this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['sec_menu' => ['antispy' => true]]));
+$this->layout('system::layout/default');
 ?>
 
 <div class="alert alert-danger">
@@ -33,11 +18,11 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
 <div class="mb-3">
     <h3><?= __('List of files') ?></h3>
     <ul>
-        <?php foreach ($data['bad_files'] as $file): ?>
-            <li><?= $file['file_path'] ?></li>
+        <?php foreach ($bad_files as $file): ?>
+            <li><?= $this->e($file) ?></li>
         <?php endforeach; ?>
     </ul>
 </div>
 <div>
-    <a href="<?= $data['back_url'] ?>" class="btn btn-outline-secondary"><?= __('Back') ?></a>
+    <a href="<?= $this->e($back_url) ?>" class="btn btn-outline-secondary"><?= __('Back') ?></a>
 </div>

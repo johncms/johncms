@@ -1,37 +1,23 @@
 <?php
 
 /**
- * This file is part of JohnCMS Content Management System.
- *
- * @copyright JohnCMS Community
- * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
- * @link      https://johncms.com JohnCMS Project
+ * @var Mobicms\Render\Template\Template $this
+ * @var string $scan_url
+ * @var string $snapshot_url
  */
 
-/**
- * @var $title
- * @var $page_title
- */
-
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $page_title,
-    ]
-);
-$this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['sec_menu' => ['antispy' => true]]));
+$this->layout('system::layout/default');
 ?>
 
 <h3><?= __('Scan mode') ?></h3>
 <div class="list-group">
-    <a href="?mod=snapscan" class="list-group-item list-group-item-action">
+    <a href="<?= $this->e($scan_url) ?>" class="list-group-item list-group-item-action">
         <div class="d-flex w-100 justify-content-between">
             <h4 class="mb-1 fw-bold"><?= __('Snapshot scan') ?></h4>
         </div>
         <p class="mb-1"><?= __('Compare the list of files and checksums with pre-made way. Allows you to identify unknow files, and unauthorized changes.') ?></p>
     </a>
-    <a href="?mod=snap" class="list-group-item list-group-item-action">
+    <a href="<?= $this->e($snapshot_url) ?>" class="list-group-item list-group-item-action">
         <div class="d-flex w-100 justify-content-between">
             <h4 class="mb-1 fw-bold"><?= __('Create snapshot') ?></h4>
         </div>

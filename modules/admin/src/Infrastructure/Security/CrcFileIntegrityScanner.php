@@ -1,0 +1,116 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Johncms\Modules\Admin\Infrastructure\Security;
+
+use Johncms\Modules\Admin\Domain\Services\FileIntegrityScannerInterface;
+
+/**
+ * Сканер целостности файлов на основе CRC32-снимка скриптовых файлов сайта.
+ */
+final class CrcFileIntegrityScanner implements FileIntegrityScannerInterface
+{
+    private const SNAPSHOT_FILE = 'security-scanner-snapshot.cache';
+    private const SCAN_FOLDERS = ['', 'assets', 'config', 'data', 'modules', 'system', 'themes', 'upload'];
+    private const FILE_PATTERN = '#.*\.(php|cgi|pl|perl|php3|php4|php5|php6|phtml|py|htaccess|tpl)$#i';
+
+    public function snapshotExists(): bool
+    {
+        return file_exists(CACHE_PATH . self::SNAPSHOT_FILE);
+    }
+
+    public function createSnapshot(): void
+    {
+        $lines = [];
+        foreach ($this->collect() as $path => $crc) {
+            $lines[] = $path . '|' . $crc;
+        }
+
+        file_put_contents(CACHE_PATH . self::SNAPSHOT_FILE, implode("\r\n", $lines) . "\r\n");
+        @chmod(CACHE_PATH . self::SNAPSHOT_FILE, 0666);
+    }
+
+    public function scan(): array
+    {
+        $snapshot = $this->loadSnapshot();
+        if ($snapshot === []) {
+            return [];
+        }
+
+        $changed = [];
+        foreach ($this->collect() as $path => $crc) {
+            if (array_key_exists($path, $snapshot) && $snapshot[$path] !== $crc) {
+                $changed[] = $path;
+            }
+        }
+
+        return $changed;
+    }
+
+    /**
+     * @return array<string, string> Карта путь → CRC текущих файлов.
+     */
+    private function collect(): array
+    {
+        $files = [];
+        foreach (self::SCAN_FOLDERS as $folder) {
+            $this->scanDirectory(rtrim(ROOT_PATH . $folder, '/'), $files);
+        }
+
+        return $files;
+    }
+
+    /**
+     * @param array<string, string> $files
+     */
+    private function scanDirectory(string $dir, array &$files): void
+    {
+        $handle = @opendir($dir);
+        if ($handle === false) {
+            return;
+        }
+
+        while (($file = readdir($handle)) !== false) {
+            if ($file === '.' || $file === '..') {
+                continue;
+            }
+
+            $fullPath = $dir . '/' . $file;
+            if (is_dir($fullPath)) {
+                if (rtrim($dir, '/') !== rtrim(ROOT_PATH, '/')) {
+                    $this->scanDirectory($fullPath, $files);
+                }
+                continue;
+            }
+
+            if (preg_match(self::FILE_PATTERN, $file)) {
+                $relative = str_replace(rtrim(ROOT_PATH, '/'), '.', $dir) . '/' . $file;
+                $files[$relative] = strtoupper(dechex(crc32((string) file_get_contents($fullPath))));
+            }
+        }
+
+        closedir($handle);
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    private function loadSnapshot(): array
+    {
+        $path = CACHE_PATH . self::SNAPSHOT_FILE;
+        if (! file_exists($path)) {
+            return [];
+        }
+
+        $snapshot = [];
+        foreach (file($path) ?: [] as $line) {
+            $parts = explode('|', trim($line));
+            if (count($parts) === 2) {
+                $snapshot[$parts[0]] = $parts[1];
+            }
+        }
+
+        return $snapshot;
+    }
+}

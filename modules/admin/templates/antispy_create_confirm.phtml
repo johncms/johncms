@@ -1,27 +1,13 @@
 <?php
 
 /**
- * This file is part of JohnCMS Content Management System.
- *
- * @copyright JohnCMS Community
- * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
- * @link      https://johncms.com JohnCMS Project
+ * @var Mobicms\Render\Template\Template $this
+ * @var string $form_action
+ * @var string $back_url
+ * @var string $csrf_token
  */
 
-/**
- * @var $title
- * @var $page_title
- * @var $data
- */
-
-$this->layout(
-    'system::layout/default',
-    [
-        'title'      => $title,
-        'page_title' => $page_title,
-    ]
-);
-$this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', ['sec_menu' => ['antispy' => true]]));
+$this->layout('system::layout/default');
 ?>
 
 <div class="alert alert-danger">
@@ -33,8 +19,9 @@ $this->sectionReplace('sidebar-menu', $this->fetch('admin::sidebar-admin-menu', 
     <?= __('This procedure creates a list of all script files to your site, calculates the checksums and writes to the database, for later comparison.') ?>
 </div>
 <div>
-    <form action="<?= $data['form_action'] ?>" method="post">
-        <button type="submit" name="submit" value="1" class="btn btn-danger"><?= __('Create snapshot') ?></button>
-        <a href="<?= $data['back_url'] ?>" class="btn btn-outline-secondary"><?= __('Cancel') ?></a>
+    <form action="<?= $this->e($form_action) ?>" method="post">
+        <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
+        <button type="submit" class="btn btn-danger"><?= __('Create snapshot') ?></button>
+        <a href="<?= $this->e($back_url) ?>" class="btn btn-outline-secondary"><?= __('Cancel') ?></a>
     </form>
 </div>

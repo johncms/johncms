@@ -23,6 +23,7 @@ use Johncms\Modules\Admin\Domain\Repository\SmiliesCacheRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\SystemConfigRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\UserDeletionRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\UserListRepositoryInterface;
+use Johncms\Modules\Admin\Domain\Services\FileIntegrityScannerInterface;
 use Johncms\Modules\Admin\Domain\Services\LanguageCatalogInterface;
 use Johncms\Modules\Admin\Domain\Services\LanguageFilesManagerInterface;
 use Johncms\Modules\Admin\Domain\Services\SmiliesScannerInterface;
@@ -49,6 +50,7 @@ use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentIpSearch
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentRegistrationModerationRepository;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentStaffRepository;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentUserDeletionRepository;
+use Johncms\Modules\Admin\Infrastructure\Security\CrcFileIntegrityScanner;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentUserListRepository;
 use Johncms\Modules\Admin\Infrastructure\Theme\FileSystemThemeListProvider;
 use Johncms\Modules\Admin\Infrastructure\Whois\SocketWhoisClient;
@@ -101,4 +103,5 @@ return static function (ContainerConfigurator $container): void {
     $services->set(ForumConfigRepositoryInterface::class, FileSystemForumConfigRepository::class)->public();
     $services->set(ForumStructureRepositoryInterface::class, EloquentForumStructureRepository::class)->public();
     $services->set(HiddenForumRepositoryInterface::class, EloquentHiddenForumRepository::class)->public();
+    $services->set(FileIntegrityScannerInterface::class, CrcFileIntegrityScanner::class)->public();
 };
