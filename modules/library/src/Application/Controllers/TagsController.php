@@ -6,12 +6,13 @@ namespace Johncms\Modules\Library\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\PageMeta;
+use Johncms\Http\Pagination\PaginationFactory;
+use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
 use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
-use Johncms\Users\User;
 use Johncms\Modules\Library\Application\Services\Hashtags;
 
 final readonly class TagsController
@@ -22,7 +23,8 @@ final readonly class TagsController
         private NavChain $navChain,
         private Request $request,
         private Tools $tools,
-        private User $currentUser,
+        private PaginationFactory $paginationFactory,
+        private PaginationGuard $paginationGuard,
     ) {
         $this->controllerContext->initModule('library');
     }
@@ -56,20 +58,23 @@ final readonly class TagsController
         }
 
         $total = count($articleIds);
-        $kmess = $this->currentUser->config->kmess;
-        $page  = max(1, (int) $this->request->getQuery('page', 1));
-        $page  = min($page, (int) ceil($total / $kmess));
+
+        $pagination = $this->paginationFactory->create($total);
+        $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
+        if ($redirectUrl !== null) {
+            redirect($redirectUrl);
+        }
 
         $pageTitle     = __('Articles tagged: %s', htmlspecialchars($tag));
         $documentTitle = $pageTitle . ' — ' . __('Library');
-        $meta          = new PageMeta($documentTitle, $page);
+        $meta          = new PageMeta($documentTitle, $pagination->getCurrentPage());
         $this->render->addData([
             'title'       => $meta->title,
             'page_title'  => $pageTitle,
             'description' => $meta->description,
         ]);
 
-        $ids = array_slice($articleIds, ($page - 1) * $kmess, $kmess);
+        $ids = array_slice($articleIds, $pagination->getOffset(), $pagination->getPerPage());
 
         $articles = LibraryText::query()
             ->selectRaw('`id`, `cat_id`, `slug`, `name`, `time`, `uploader`, `uploader_id`, `count_views`, `comm_count`, `comments`, SUBSTRING(`text`, 1, 200) as `text_preview`')
@@ -106,7 +111,7 @@ final readonly class TagsController
             'total'      => $total,
             'list'       => $list,
             'tag'        => $tag,
-            'pagination' => $this->tools->displayPagination('/library/tags?tag=' . urlencode($tag) . '&', ($page - 1) * $kmess, $total, $kmess),
+            'pagination' => $pagination->render(),
         ]);
     }
 }

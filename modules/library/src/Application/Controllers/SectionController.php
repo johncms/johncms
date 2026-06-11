@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace Johncms\Modules\Library\Application\Controllers;
 
 use Johncms\Http\PageMeta;
+use Johncms\Http\Pagination\PaginationFactory;
+use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Library\Application\Services\LibraryCategoryPathService;
 use Johncms\Modules\Library\Domain\Models\LibraryCategory;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
 use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
@@ -24,10 +25,11 @@ final readonly class SectionController
     public function __construct(
         private Render $render,
         private NavChain $navChain,
-        private Request $request,
         private Tools $tools,
         private User $currentUser,
         private LibraryCategoryPathService $categoryPathService,
+        private PaginationFactory $paginationFactory,
+        private PaginationGuard $paginationGuard,
     ) {
     }
 
@@ -63,22 +65,26 @@ final readonly class SectionController
     private function renderSectionsList(LibraryCategory $category, bool $isAdmin): string
     {
         $id    = $category->id;
-        $page  = max(1, (int) $this->request->getQuery('page', 1));
-        $kmess = $this->currentUser->config->kmess;
         $total = LibraryCategory::query()->where('parent', $id)->count();
 
-        $meta = new PageMeta($category->name . ' — ' . __('Library'), $page);
+        $pagination = $this->paginationFactory->create($total);
+        $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
+        if ($redirectUrl !== null) {
+            redirect($redirectUrl);
+        }
+
+        $meta = new PageMeta($category->name . ' — ' . __('Library'), $pagination->getCurrentPage());
         $this->render->addData([
             'title'      => $meta->title,
             'page_title' => $category->name,
         ]);
 
-        $offset   = ($page - 1) * $kmess;
+        $offset   = $pagination->getOffset();
         $sections = LibraryCategory::query()
             ->where('parent', $id)
             ->orderBy('pos')
             ->offset($offset)
-            ->limit($kmess)
+            ->limit($pagination->getPerPage())
             ->get();
 
         $list = [];
@@ -101,25 +107,29 @@ final readonly class SectionController
             'id'           => $id,
             'category_url' => $category->url,
             'list'         => $list,
-            'pagination'   => $this->tools->displayPagination($category->url . '?', $offset, $total, $kmess),
+            'pagination'   => $pagination->render(),
         ]);
     }
 
     private function renderBookList(LibraryCategory $category, bool $isAdmin): string
     {
         $id    = $category->id;
-        $page  = max(1, (int) $this->request->getQuery('page', 1));
-        $kmess = $this->currentUser->config->kmess;
         $total = LibraryText::query()->where('cat_id', $id)->where('premod', 1)->count();
 
-        $meta = new PageMeta($category->name . ' — ' . __('Library'), $page);
+        $pagination = $this->paginationFactory->create($total);
+        $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
+        if ($redirectUrl !== null) {
+            redirect($redirectUrl);
+        }
+
+        $meta = new PageMeta($category->name . ' — ' . __('Library'), $pagination->getCurrentPage());
         $this->render->addData([
             'title'      => $meta->title,
             'page_title' => $category->name,
         ]);
 
         $moderMenu = $isAdmin || ($this->currentUser->isValid() && (int) $category->user_add > 0);
-        $offset    = ($page - 1) * $kmess;
+        $offset    = $pagination->getOffset();
 
         $articles = LibraryText::query()
             ->select(['id', 'cat_id', 'slug', 'name', 'time', 'uploader', 'uploader_id', 'count_views', 'comm_count', 'comments', 'announce'])
@@ -127,7 +137,7 @@ final readonly class SectionController
             ->where('premod', 1)
             ->orderByDesc('id')
             ->offset($offset)
-            ->limit($kmess)
+            ->limit($pagination->getPerPage())
             ->get();
 
         $list = [];
@@ -155,7 +165,7 @@ final readonly class SectionController
             'id'         => $id,
             'category_url' => $category->url,
             'list'       => $list,
-            'pagination' => $this->tools->displayPagination($category->url . '?', $offset, $total, $kmess),
+            'pagination' => $pagination->render(),
         ]);
     }
 }

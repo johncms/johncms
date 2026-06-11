@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Library\Application\Controllers;
 
 use Johncms\Http\PageMeta;
+use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Modules\Library\Application\Services\LibraryArticlePathService;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
@@ -26,6 +27,7 @@ final readonly class ArticleController
         private Tools $tools,
         private User $currentUser,
         private LibraryArticlePathService $articlePathService,
+        private PaginationFactory $paginationFactory,
     ) {
     }
 
@@ -99,6 +101,9 @@ final readonly class ArticleController
 
         $articleUrl = $article->url;
 
+        // One text page per pagination page: the current page is already clamped to the page count.
+        $pagination = $this->paginationFactory->create($countPages, 1, 'page', $page);
+
         return $this->render->render('library::book', [
             'res'         => [
                 'id'          => $article->id,
@@ -117,7 +122,7 @@ final readonly class ArticleController
             'ratingView'  => $ratingView,
             'cover'       => $cover,
             'moderMenu'   => $moderMenu,
-            'pagination'  => $this->tools->displayPagination($articleUrl . '?', $page - 1, $countPages, 1),
+            'pagination'  => $pagination->render(),
         ]);
     }
 }

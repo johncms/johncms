@@ -6,12 +6,13 @@ namespace Johncms\Modules\Library\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\PageMeta;
+use Johncms\Http\Pagination\PaginationFactory;
+use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Library\Domain\Repository\LibraryTextRepositoryInterface;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
 use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
-use Johncms\Users\User;
 use Johncms\Modules\Library\Application\Services\Utils;
 
 final readonly class SearchController
@@ -22,17 +23,15 @@ final readonly class SearchController
         private NavChain $navChain,
         private Request $request,
         private Tools $tools,
-        private User $currentUser,
         private LibraryTextRepositoryInterface $repository,
+        private PaginationFactory $paginationFactory,
+        private PaginationGuard $paginationGuard,
     ) {
         $this->controllerContext->initModule('library');
     }
 
     public function __invoke(): string
     {
-        $page = max(1, (int) $this->request->getQuery('page', 1));
-        $kmess = $this->currentUser->config->kmess;
-
         $this->navChain->add(__('Library'), '/library/');
         $this->navChain->add(__('Search'));
 
@@ -60,17 +59,20 @@ final readonly class SearchController
             ]);
         }
 
-        $total = 0;
         $items = [];
-        $error = false;
+        $error = mb_strlen($query) < 4 || mb_strlen($query) > 64;
 
-        if (mb_strlen($query) < 4 || mb_strlen($query) > 64) {
-            $error = true;
+        $total = $error ? 0 : $this->repository->searchCount($query, $inTitle);
+
+        $pagination = $this->paginationFactory->create($total);
+        $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
+        if ($redirectUrl !== null) {
+            redirect($redirectUrl);
         }
 
         $pageTitle = __('Search results for: %s', htmlspecialchars($query));
         $documentTitle = $pageTitle . ' — ' . __('Library');
-        $meta = new PageMeta($documentTitle, $page);
+        $meta = new PageMeta($documentTitle, $pagination->getCurrentPage());
 
         $this->render->addData([
             'title'       => $meta->title,
@@ -79,11 +81,9 @@ final readonly class SearchController
         ]);
 
         if (! $error) {
-            $total = $this->repository->searchCount($query, $inTitle);
-
             if ($total) {
                 $words = explode(' ', $query);
-                $texts = $this->repository->search($query, $inTitle, $page, $kmess);
+                $texts = $this->repository->search($query, $inTitle, $pagination->getCurrentPage(), $pagination->getPerPage());
 
                 foreach ($texts as $text) {
                     $plainText = trim((string) preg_replace('/\s+/u', ' ', strip_tags((string) $text->text)));
@@ -125,13 +125,12 @@ final readonly class SearchController
         }
 
         $search = htmlspecialchars($query);
-        $paginationUrl = '/library/search?' . ($inTitle ? 't=1&amp;' : '') . 'search=' . urlencode($query) . '&amp;';
 
         return $this->render->render('library::search', [
             'total'      => $total,
             'search'     => $search,
             'search_t'   => $inTitle,
-            'pagination' => $this->tools->displayPagination($paginationUrl, ($page - 1) * $kmess, $total, $kmess),
+            'pagination' => $pagination->render(),
             'items'      => $items,
         ]);
     }

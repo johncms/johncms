@@ -6,13 +6,13 @@ namespace Johncms\Modules\Library\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\PageMeta;
+use Johncms\Http\Pagination\PaginationFactory;
+use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Library\Domain\Models\LibraryCategory;
 use Johncms\Modules\Library\Domain\Repository\LibraryTextRepositoryInterface;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
 use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
-use Johncms\Users\User;
 use Johncms\Modules\Library\Application\Services\Hashtags;
 use Johncms\Modules\Library\Application\Services\Rating;
 
@@ -22,10 +22,10 @@ final readonly class NewArticlesController
         private ControllerContext $controllerContext,
         private Render $render,
         private NavChain $navChain,
-        private Request $request,
         private Tools $tools,
-        private User $currentUser,
         private LibraryTextRepositoryInterface $repository,
+        private PaginationFactory $paginationFactory,
+        private PaginationGuard $paginationGuard,
     ) {
         $this->controllerContext->initModule('library');
         $this->render->addFolder('libraryHelpers', MODULES_PATH . 'library/templates/helpers/');
@@ -33,11 +33,16 @@ final readonly class NewArticlesController
 
     public function __invoke(): string
     {
-        $page = max(1, (int) $this->request->getQuery('page', 1));
-        $kmess = $this->currentUser->config->kmess;
+        $total = $this->repository->countNew();
+
+        $pagination = $this->paginationFactory->create($total);
+        $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
+        if ($redirectUrl !== null) {
+            redirect($redirectUrl);
+        }
 
         $pageTitle = __('New Articles');
-        $meta = new PageMeta($pageTitle . ' — ' . __('Library'), $page);
+        $meta = new PageMeta($pageTitle . ' — ' . __('Library'), $pagination->getCurrentPage());
 
         $this->navChain->add(__('Library'), '/library/');
         $this->navChain->add($pageTitle);
@@ -48,8 +53,7 @@ final readonly class NewArticlesController
             'description' => $meta->description,
         ]);
 
-        $total = $this->repository->countNew();
-        $texts = $total ? $this->repository->getNew($page, $kmess) : collect();
+        $texts = $total ? $this->repository->getNew($pagination->getCurrentPage(), $pagination->getPerPage()) : collect();
 
         $items = [];
         foreach ($texts as $text) {
@@ -80,7 +84,7 @@ final readonly class NewArticlesController
 
         return $this->render->render('library::new', [
             'total'      => $total,
-            'pagination' => $this->tools->displayPagination('/library/new?', ($page - 1) * $kmess, $total, $kmess),
+            'pagination' => $pagination->render(),
             'items'      => $items,
         ]);
     }
