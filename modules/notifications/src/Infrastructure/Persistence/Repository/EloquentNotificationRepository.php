@@ -5,17 +5,27 @@ declare(strict_types=1);
 namespace Johncms\Modules\Notifications\Infrastructure\Persistence\Repository;
 
 use Carbon\Carbon;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 use Johncms\Modules\Notifications\Domain\Repository\NotificationRepositoryInterface;
 use Johncms\Notifications\Notification;
 
 final class EloquentNotificationRepository implements NotificationRepositoryInterface
 {
-    public function getPaginated(int $page, int $perPage): LengthAwarePaginator
+    public function countNotifications(): int
+    {
+        return Notification::query()->count();
+    }
+
+    /**
+     * @return Collection<int, Notification>
+     */
+    public function getNotifications(int $limit, int $offset): Collection
     {
         return Notification::query()
             ->orderBy('created_at', 'desc')
-            ->paginate($perPage, ['*'], 'page', $page);
+            ->offset($offset)
+            ->limit($limit)
+            ->get();
     }
 
     public function markAsRead(array $ids): void

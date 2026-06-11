@@ -18,21 +18,24 @@ final readonly class GetNotificationListUseCase
     ) {
     }
 
-    public function execute(int $page, int $perPage): NotificationListResultDTO
+    public function count(): int
+    {
+        return $this->notificationRepository->countNotifications();
+    }
+
+    public function getPage(int $limit, int $offset): NotificationListResultDTO
     {
         $allCounters = $this->counters->notifications();
         $systemNotifications = $this->buildSystemNotifications($allCounters);
 
-        $paginator = $this->notificationRepository->getPaginated($page, $perPage);
+        $items = $this->notificationRepository->getNotifications($limit, $offset);
 
-        $ids = array_column($paginator->items(), 'id');
+        $ids = $items->pluck('id')->all();
         $this->notificationRepository->markAsRead($ids);
 
         return new NotificationListResultDTO(
             systemNotifications: $systemNotifications,
-            items: $paginator->items(),
-            total: $paginator->total(),
-            pagination: (string) $paginator->render(),
+            items: $items->all(),
         );
     }
 

@@ -9,8 +9,6 @@ final readonly class NotificationListResultDTO
     public function __construct(
         public array $systemNotifications,
         public array $items,
-        public int $total,
-        public string $pagination,
     ) {
     }
 }
