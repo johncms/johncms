@@ -22,6 +22,13 @@ final class FileSystemConfigRepository implements SystemConfigRepositoryInterfac
             throw new ConfigWriteException('Can not write file `system.local.php`');
         }
 
+        // The compiled container embeds config values (e.g. GuestbookAccess $config),
+        // so the cache must be invalidated for the new settings to take effect.
+        $containerCache = CACHE_PATH . 'container.php';
+        if (is_file($containerCache)) {
+            unlink($containerCache);
+        }
+
         if (function_exists('opcache_reset')) {
             opcache_reset();
         }
