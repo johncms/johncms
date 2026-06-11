@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Community\Application\UseCases;
 
-use Johncms\Modules\Community\Application\DTO\CommunitySearchResultDTO;
 use Johncms\Modules\Community\Domain\Repository\CommunityUserRepositoryInterface;
 use Johncms\System\Legacy\Tools;
+use Johncms\Users\User;
 
 final readonly class ViewSearchUseCase
 {
@@ -16,35 +16,36 @@ final readonly class ViewSearchUseCase
     ) {
     }
 
-    public function execute(string $search, int $perPage): CommunitySearchResultDTO
+    /**
+     * @return array<int, string>
+     */
+    public function validate(string $search): array
     {
-        $search = trim($search);
-        $title = __('User Search');
         $errors = [];
-        $total = 0;
-        $list = [];
-        $pagination = '';
-
         if ($search !== '' && (mb_strlen($search) < 2 || mb_strlen($search) > 20)) {
             $errors[] = __('Nickname') . ': ' . __('Invalid length');
         }
 
-        if ($search !== '' && $errors === []) {
-            $searchDb = '%' . $this->tools->rusLat($search) . '%';
-            $users = $this->communityUserRepository->paginateUsersByLatinNameLike($perPage, $searchDb);
-            $total = $users->total();
-            $list = $users->items();
-            $pagination = $users->render();
-        }
+        return $errors;
+    }
 
-        return new CommunitySearchResultDTO(
-            $title,
-            $title,
-            $search,
-            $errors,
-            $total,
-            $list,
-            $pagination,
-        );
+    public function count(string $search): int
+    {
+        return $this->communityUserRepository->countUsersByLatinNameLike($this->buildSearchLike($search));
+    }
+
+    /**
+     * @return array<int, User>
+     */
+    public function getPage(string $search, int $limit, int $offset): array
+    {
+        return $this->communityUserRepository
+            ->getUsersByLatinNameLike($limit, $offset, $this->buildSearchLike($search))
+            ->all();
+    }
+
+    private function buildSearchLike(string $search): string
+    {
+        return '%' . $this->tools->rusLat($search) . '%';
     }
 }

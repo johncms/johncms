@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace Johncms\Modules\Community\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\PageMeta;
+use Johncms\Http\Pagination\PaginationFactory;
+use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Community\Application\UseCases\ViewSearchUseCase;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
@@ -20,6 +23,8 @@ final readonly class CommunitySearchController
         private User $currentUser,
         private Request $request,
         private ViewSearchUseCase $viewSearchUseCase,
+        private PaginationFactory $paginationFactory,
+        private PaginationGuard $paginationGuard,
     ) {
         $this->controllerContext->initModule('community');
     }
@@ -41,21 +46,39 @@ final readonly class CommunitySearchController
             );
         }
 
-        $search = rawurldecode((string) $this->request->getQuery('search', ''));
-        $result = $this->viewSearchUseCase->execute($search, $this->currentUser->config->kmess);
-        $this->navChain->add($result->pageTitle);
+        $pageTitle = __('User Search');
+        $this->navChain->add($pageTitle);
+
+        $search = trim(rawurldecode((string) $this->request->getQuery('search', '')));
+        $errors = $this->viewSearchUseCase->validate($search);
+        $hasSearch = $search !== '' && $errors === [];
+
+        $pagination = $this->paginationFactory->create($hasSearch ? $this->viewSearchUseCase->count($search) : 0);
+
+        $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
+        if ($redirectUrl !== null) {
+            redirect($redirectUrl);
+        }
+
+        $total = $pagination->getTotal();
+        $list = $hasSearch && $total > 0
+            ? $this->viewSearchUseCase->getPage($search, $pagination->getPerPage(), $pagination->getOffset())
+            : [];
+
+        $meta = new PageMeta($pageTitle, $pagination->getCurrentPage());
 
         return $this->render->render(
             'community::search',
             [
-                'title'      => $result->title,
-                'page_title' => $result->pageTitle,
-                'data'       => [
-                    'search_query' => $result->searchQuery,
-                    'errors'       => $result->errors,
-                    'total'        => $result->total,
-                    'list'         => $result->list,
-                    'pagination'   => $result->pagination,
+                'title'       => $meta->title,
+                'page_title'  => $pageTitle,
+                'description' => $meta->description,
+                'data'        => [
+                    'search_query' => $search,
+                    'errors'       => $errors,
+                    'total'        => $total,
+                    'list'         => $list,
+                    'pagination'   => $pagination->render(),
                 ],
             ]
         );

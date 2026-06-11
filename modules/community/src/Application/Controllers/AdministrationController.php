@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace Johncms\Modules\Community\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\PageMeta;
+use Johncms\Http\Pagination\PaginationFactory;
+use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Community\Application\UseCases\ViewAdministrationUseCase;
 use Johncms\NavChain;
 use Johncms\System\View\Render;
@@ -18,6 +21,8 @@ final readonly class AdministrationController
         private NavChain $navChain,
         private User $currentUser,
         private ViewAdministrationUseCase $viewAdministrationUseCase,
+        private PaginationFactory $paginationFactory,
+        private PaginationGuard $paginationGuard,
     ) {
         $this->controllerContext->initModule('community');
     }
@@ -39,17 +44,32 @@ final readonly class AdministrationController
             );
         }
 
-        $result = $this->viewAdministrationUseCase->execute($this->currentUser->config->kmess);
-        $this->navChain->add($result->pageTitle);
+        $pageTitle = __('Administration');
+        $this->navChain->add($pageTitle);
+
+        $pagination = $this->paginationFactory->create($this->viewAdministrationUseCase->count());
+
+        $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
+        if ($redirectUrl !== null) {
+            redirect($redirectUrl);
+        }
+
+        $total = $pagination->getTotal();
+        $list = $total > 0
+            ? $this->viewAdministrationUseCase->getPage($pagination->getPerPage(), $pagination->getOffset())
+            : [];
+
+        $meta = new PageMeta($pageTitle, $pagination->getCurrentPage());
 
         return $this->render->render(
             'community::administration',
             [
-                'pagination' => $result->pagination,
-                'title'      => $result->title,
-                'page_title' => $result->pageTitle,
-                'total'      => $result->total,
-                'list'       => $result->list,
+                'pagination'  => $pagination->render(),
+                'title'       => $meta->title,
+                'page_title'  => $pageTitle,
+                'description' => $meta->description,
+                'total'       => $total,
+                'list'        => $list,
             ]
         );
     }

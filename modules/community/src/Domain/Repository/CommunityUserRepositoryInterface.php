@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Community\Domain\Repository;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
+use Johncms\Users\User;
 
 interface CommunityUserRepositoryInterface
 {
@@ -13,13 +13,33 @@ interface CommunityUserRepositoryInterface
 
     public function countBirthdayUsers(int $day, int $month): int;
 
-    public function paginateAdministrationUsers(int $perPage): LengthAwarePaginator;
+    public function countApprovedAdministrationUsers(): int;
 
-    public function paginateApprovedUsers(int $perPage): LengthAwarePaginator;
+    /**
+     * @return Collection<int, User>
+     */
+    public function getApprovedAdministrationUsers(int $limit, int $offset): Collection;
 
-    public function paginateBirthdayUsers(int $perPage, int $day, int $month): LengthAwarePaginator;
+    public function countApprovedUsers(): int;
 
-    public function paginateUsersByLatinNameLike(int $perPage, string $searchLike): LengthAwarePaginator;
+    /**
+     * @return Collection<int, User>
+     */
+    public function getApprovedUsers(int $limit, int $offset): Collection;
+
+    public function countApprovedBirthdayUsers(int $day, int $month): int;
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getApprovedBirthdayUsers(int $limit, int $offset, int $day, int $month): Collection;
+
+    public function countUsersByLatinNameLike(string $searchLike): int;
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsersByLatinNameLike(int $limit, int $offset, string $searchLike): Collection;
 
     public function getTopForumUsers(int $limit): Collection;
 
