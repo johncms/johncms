@@ -6,24 +6,22 @@ namespace Johncms\Modules\Album\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\PageMeta;
+use Johncms\Http\Pagination\PaginationFactory;
+use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Album\Application\UseCases\GetTopUseCase;
 use Johncms\Modules\Album\Domain\Enums\TopFilter;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
-use Johncms\Users\User;
 
 final readonly class TopController
 {
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
-        private Tools $tools,
-        private User $currentUser,
         private GetTopUseCase $useCase,
+        private PaginationFactory $paginationFactory,
+        private PaginationGuard $paginationGuard,
     ) {
         $this->controllerContext->initModule('album');
     }
@@ -32,20 +30,23 @@ final readonly class TopController
     {
         $topFilter = TopFilter::fromSlug($filter);
 
-        $page = max(1, (int) $this->request->getQuery('page', 1));
-        $perPage = $this->currentUser->config->kmess;
-
-        $result = $this->useCase->execute($topFilter, $page, $perPage);
-
         $title = $topFilter->title();
         $this->navChain->add(__('Albums'), '/album');
         $this->navChain->add($title);
 
-        $slug = $topFilter->slug();
-        $baseUrl = '/album/top' . ($slug !== null ? '/' . $slug : '');
-        $total = $result->photos->total();
+        $pagination = $this->paginationFactory->create($this->useCase->count($topFilter));
 
-        $meta = new PageMeta($title, $page);
+        $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
+        if ($redirectUrl !== null) {
+            redirect($redirectUrl);
+        }
+
+        $total = $pagination->getTotal();
+        $photos = $total > 0
+            ? $this->useCase->getPage($topFilter, $pagination->getPerPage(), $pagination->getOffset())
+            : [];
+
+        $meta = new PageMeta($title, $pagination->getCurrentPage());
         $this->render->addData([
             'title'      => $meta->title,
             'page_title' => $title,
@@ -54,15 +55,10 @@ final readonly class TopController
         return $this->render->render(
             'album::top',
             [
-                'photos'     => $result->photos->items(),
+                'photos'     => $photos,
                 'total'      => $total,
-                'per_page'   => $perPage,
-                'pagination' => $this->tools->displayPagination(
-                    $baseUrl . '?',
-                    ($page - 1) * $perPage,
-                    $total,
-                    $perPage
-                ),
+                'per_page'   => $pagination->getPerPage(),
+                'pagination' => $pagination->render(),
             ]
         );
     }

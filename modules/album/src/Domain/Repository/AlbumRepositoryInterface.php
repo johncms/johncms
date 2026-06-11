@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Album\Domain\Repository;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Johncms\Modules\Album\Domain\Models\Album;
 use Johncms\Users\User;
@@ -51,18 +50,24 @@ interface AlbumRepositoryInterface
     public function countOwnersBySex(string $sex, ?int $restrictToVisibleForUser): int;
 
     /**
-     * Paginate album owners, optionally filtered by sex, ordered by user name.
+     * Count album owners, optionally filtered by sex.
+     *
+     * Mirrors the filters of {@see getOwners()}. Pass $sex = null to include
+     * every sex and $restrictToVisibleForUser = null to bypass the visibility
+     * restriction.
+     */
+    public function countOwners(?string $sex, ?int $restrictToVisibleForUser): int;
+
+    /**
+     * Get a page of album owners, optionally filtered by sex, ordered by user name.
      *
      * Each returned user model has a dynamic `count_albums` attribute holding the
      * number of their visible albums. Pass $sex = null to include every sex and
      * $restrictToVisibleForUser = null to bypass the visibility restriction.
+     *
+     * @return Collection<int, User>
      */
-    public function paginateOwnersBySex(
-        ?string $sex,
-        ?int $restrictToVisibleForUser,
-        int $page,
-        int $perPage
-    ): LengthAwarePaginator;
+    public function getOwners(?string $sex, ?int $restrictToVisibleForUser, int $limit, int $offset): Collection;
 
     /**
      * Whether the user already owns an album with the given name.

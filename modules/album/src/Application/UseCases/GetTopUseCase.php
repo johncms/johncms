@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Album\Application\UseCases;
 
-use Johncms\Modules\Album\Application\DTO\TopResultDTO;
+use Johncms\Modules\Album\Application\DTO\PhotoViewDTO;
 use Johncms\Modules\Album\Application\Services\PhotoPresenter;
 use Johncms\Modules\Album\Domain\Enums\TopFilter;
 use Johncms\Modules\Album\Domain\Models\AlbumPhoto;
@@ -26,37 +26,50 @@ final readonly class GetTopUseCase
     ) {
     }
 
-    public function execute(TopFilter $filter, int $page, int $perPage): TopResultDTO
+    public function count(TopFilter $filter): int
     {
-        // Moderators see every photo; regular users only see public photos and their own.
-        $restrictForUser = $this->currentUser->rights >= self::MODERATOR_RIGHTS
-            ? null
-            : $this->currentUser->id;
+        return $this->albumPhotoRepository->countTop($filter, $this->restrictForUser(), $this->currentUser->id);
+    }
 
-        $paginator = $this->albumPhotoRepository->paginateTop(
+    /**
+     * @return list<PhotoViewDTO>
+     */
+    public function getPage(TopFilter $filter, int $limit, int $offset): array
+    {
+        $photos = $this->albumPhotoRepository->getTop(
             $filter,
-            $restrictForUser,
+            $this->restrictForUser(),
             $this->currentUser->id,
-            $page,
-            $perPage
+            $limit,
+            $offset
         );
 
-        $photoIds = array_map(static fn (AlbumPhoto $photo): int => $photo->id, $paginator->items());
+        $photoIds = $photos->map(static fn (AlbumPhoto $photo): int => $photo->id)->all();
 
         $userEligibleToVote = $this->isUserEligibleToVote();
         $votedPhotoIds = $userEligibleToVote
             ? array_flip($this->albumVoteRepository->filterVotedPhotoIds($this->currentUser->id, $photoIds))
             : [];
 
-        $paginator->getCollection()->transform(function (AlbumPhoto $photo) use ($userEligibleToVote, $votedPhotoIds) {
+        $result = [];
+        foreach ($photos as $photo) {
             $canVote = $userEligibleToVote
                 && $photo->user_id !== $this->currentUser->id
                 && ! isset($votedPhotoIds[$photo->id]);
+            $result[] = $this->photoPresenter->present($photo, $canVote);
+        }
 
-            return $this->photoPresenter->present($photo, $canVote);
-        });
+        return $result;
+    }
 
-        return new TopResultDTO($paginator);
+    /**
+     * Moderators see every photo; regular users only see public photos and their own.
+     */
+    private function restrictForUser(): ?int
+    {
+        return $this->currentUser->rights >= self::MODERATOR_RIGHTS
+            ? null
+            : $this->currentUser->id;
     }
 
     private function isUserEligibleToVote(): bool

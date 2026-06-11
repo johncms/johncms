@@ -6,23 +6,21 @@ namespace Johncms\Modules\Album\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\PageMeta;
+use Johncms\Http\Pagination\PaginationFactory;
+use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Album\Application\UseCases\GetUsersListUseCase;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
-use Johncms\Users\User;
 
 final readonly class UsersListController
 {
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
-        private Tools $tools,
-        private User $currentUser,
         private GetUsersListUseCase $useCase,
+        private PaginationFactory $paginationFactory,
+        private PaginationGuard $paginationGuard,
     ) {
         $this->controllerContext->initModule('album');
     }
@@ -35,13 +33,24 @@ final readonly class UsersListController
             default => null,
         };
 
-        $page = max(1, (int) $this->request->getQuery('page', 1));
-        $perPage = $this->currentUser->config->kmess;
+        $title = __('List of users');
+        $this->navChain->add(__('Albums'), '/album');
+        $this->navChain->add($title);
 
-        $result = $this->useCase->execute($sex, $page, $perPage);
+        $pagination = $this->paginationFactory->create($this->useCase->count($sex));
+
+        $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
+        if ($redirectUrl !== null) {
+            redirect($redirectUrl);
+        }
+
+        $total = $pagination->getTotal();
+        $userModels = $total > 0
+            ? $this->useCase->getPage($sex, $pagination->getPerPage(), $pagination->getOffset())
+            : [];
 
         $users = [];
-        foreach ($result->users->items() as $userModel) {
+        foreach ($userModels as $userModel) {
             $users[] = [
                 'id'             => $userModel->id,
                 'nick'           => $userModel->name,
@@ -52,14 +61,7 @@ final readonly class UsersListController
             ];
         }
 
-        $title = __('List of users');
-        $this->navChain->add(__('Albums'), '/album');
-        $this->navChain->add($title);
-
-        $baseUrl = $filter === null ? '/album/users' : '/album/users/' . $filter;
-        $total = $result->users->total();
-
-        $meta = new PageMeta($title, $page);
+        $meta = new PageMeta($title, $pagination->getCurrentPage());
         $this->render->addData([
             'title'      => $meta->title,
             'page_title' => $title,
@@ -75,13 +77,8 @@ final readonly class UsersListController
                 ],
                 'users'      => $users,
                 'total'      => $total,
-                'per_page'   => $perPage,
-                'pagination' => $this->tools->displayPagination(
-                    $baseUrl . '?',
-                    ($page - 1) * $perPage,
-                    $total,
-                    $perPage
-                ),
+                'per_page'   => $pagination->getPerPage(),
+                'pagination' => $pagination->render(),
             ]
         );
     }

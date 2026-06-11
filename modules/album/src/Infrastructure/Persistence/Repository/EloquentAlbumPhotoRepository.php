@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Album\Infrastructure\Persistence\Repository;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -82,13 +81,18 @@ final class EloquentAlbumPhotoRepository implements AlbumPhotoRepositoryInterfac
             ->count();
     }
 
-    public function paginatePhotosByAlbum(int $albumId, int $page, int $perPage): LengthAwarePaginator
+    /**
+     * @return Collection<int, AlbumPhoto>
+     */
+    public function getPhotosByAlbum(int $albumId, int $limit, int $offset): Collection
     {
         return AlbumPhoto::query()
             ->with(['album', 'user'])
             ->where('album_id', $albumId)
             ->orderByDesc('id')
-            ->paginate(perPage: $perPage, page: $page);
+            ->offset($offset)
+            ->limit($limit)
+            ->get();
     }
 
     public function getPhotoByAlbumOffset(int $albumId, int $offset): ?AlbumPhoto
@@ -181,13 +185,38 @@ final class EloquentAlbumPhotoRepository implements AlbumPhotoRepositoryInterfac
         AlbumPhoto::query()->where('album_id', $albumId)->update(['access' => $access]);
     }
 
-    public function paginateTop(
+    public function countTop(
+        TopFilter $filter,
+        ?int $restrictToPublicForUser,
+        int $currentUserId
+    ): int {
+        return $this->topQuery($filter, $restrictToPublicForUser, $currentUserId)->reorder()->count();
+    }
+
+    /**
+     * @return Collection<int, AlbumPhoto>
+     */
+    public function getTop(
         TopFilter $filter,
         ?int $restrictToPublicForUser,
         int $currentUserId,
-        int $page,
-        int $perPage
-    ): LengthAwarePaginator {
+        int $limit,
+        int $offset
+    ): Collection {
+        return $this->topQuery($filter, $restrictToPublicForUser, $currentUserId)
+            ->offset($offset)
+            ->limit($limit)
+            ->get();
+    }
+
+    /**
+     * @return Builder<AlbumPhoto>
+     */
+    private function topQuery(
+        TopFilter $filter,
+        ?int $restrictToPublicForUser,
+        int $currentUserId
+    ): Builder {
         $query = AlbumPhoto::query()
             ->with(['album', 'user'])
             ->select('cms_album_files.*');
@@ -202,7 +231,7 @@ final class EloquentAlbumPhotoRepository implements AlbumPhotoRepositoryInterfac
             });
         }
 
-        return $query->paginate(perPage: $perPage, page: $page);
+        return $query;
     }
 
     private function applyTopFilter(Builder $query, TopFilter $filter, int $currentUserId): void

@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Johncms\Modules\Album\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\Pagination\PaginationFactory;
+use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Album\Application\Exceptions\AlbumAccessDeniedException;
 use Johncms\Modules\Album\Application\Exceptions\AlbumNotFoundException;
 use Johncms\Modules\Album\Application\Exceptions\AlbumPasswordRequiredException;
 use Johncms\Modules\Album\Application\UseCases\GetAlbumViewUseCase;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 
@@ -22,9 +23,10 @@ final readonly class ShowAlbumController
         private Render $render,
         private Request $request,
         private NavChain $navChain,
-        private Tools $tools,
         private User $currentUser,
         private GetAlbumViewUseCase $useCase,
+        private PaginationFactory $paginationFactory,
+        private PaginationGuard $paginationGuard,
     ) {
         $this->controllerContext->initModule('album');
     }
@@ -32,11 +34,23 @@ final readonly class ShowAlbumController
     public function __invoke(int $al): string
     {
         $submittedPassword = $this->request->getPost('password');
-        $page = max(1, (int) $this->request->getQuery('page', 1));
-        $perPage = $this->currentUser->config->kmess;
 
         try {
-            $result = $this->useCase->execute($al, $page, $perPage, $submittedPassword);
+            $pagination = $this->paginationFactory->create($this->useCase->count($al, $submittedPassword));
+
+            if ($this->request->getMethod() !== 'POST') {
+                $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
+                if ($redirectUrl !== null) {
+                    redirect($redirectUrl);
+                }
+            }
+
+            $result = $this->useCase->getPage(
+                $al,
+                $pagination->getPerPage(),
+                $pagination->getOffset(),
+                $submittedPassword
+            );
         } catch (AlbumNotFoundException) {
             return $this->renderResult(__('Wrong data'));
         } catch (AlbumAccessDeniedException $e) {
@@ -63,17 +77,12 @@ final readonly class ShowAlbumController
         return $this->render->render(
             'album::show',
             [
-                'photos'       => $result->photos,
-                'total'        => $result->total,
-                'per_page'     => $perPage,
+                'photos'        => $result->photos,
+                'total'         => $pagination->getTotal(),
+                'per_page'      => $pagination->getPerPage(),
                 'has_add_photo' => $result->hasAddPhoto,
-                'upload_url'   => '/album/' . $result->albumId . '/upload',
-                'pagination'   => $this->tools->displayPagination(
-                    '/album/' . $result->albumId . '?',
-                    ($page - 1) * $perPage,
-                    $result->total,
-                    $perPage
-                ),
+                'upload_url'    => '/album/' . $result->albumId . '/upload',
+                'pagination'    => $pagination->render(),
             ]
         );
     }

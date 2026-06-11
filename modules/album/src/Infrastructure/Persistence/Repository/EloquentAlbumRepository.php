@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Album\Infrastructure\Persistence\Repository;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Query\Builder as QueryBuilder;
@@ -62,13 +61,37 @@ final class EloquentAlbumRepository implements AlbumRepositoryInterface
         return $query->distinct()->count('cms_album_cat.user_id');
     }
 
-    public function paginateOwnersBySex(
-        ?string $sex,
-        ?int $restrictToVisibleForUser,
-        int $page,
-        int $perPage
-    ): LengthAwarePaginator {
-        $paginator = User::query()
+    public function countOwners(?string $sex, ?int $restrictToVisibleForUser): int
+    {
+        return $this->ownersQuery($sex, $restrictToVisibleForUser)->count();
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getOwners(?string $sex, ?int $restrictToVisibleForUser, int $limit, int $offset): Collection
+    {
+        $users = $this->ownersQuery($sex, $restrictToVisibleForUser)
+            ->orderBy('name')
+            ->offset($offset)
+            ->limit($limit)
+            ->get(['id', 'name', 'lastdate']);
+
+        $userIds = $users->map(static fn (User $user): int => $user->id)->all();
+        $albumCounts = $this->countAlbumsByUsers($userIds, $restrictToVisibleForUser);
+        foreach ($users as $user) {
+            $user->count_albums = $albumCounts[$user->id] ?? 0;
+        }
+
+        return $users;
+    }
+
+    /**
+     * @return Builder<User>
+     */
+    private function ownersQuery(?string $sex, ?int $restrictToVisibleForUser): Builder
+    {
+        return User::query()
             ->when(
                 $sex !== null,
                 static fn (Builder $query): Builder => $query->where('sex', $sex),
@@ -79,17 +102,7 @@ final class EloquentAlbumRepository implements AlbumRepositoryInterface
                     ->from('cms_album_cat')
                     ->whereColumn('cms_album_cat.user_id', 'users.id');
                 $this->applyVisibility($query, $restrictToVisibleForUser);
-            })
-            ->orderBy('name')
-            ->paginate($perPage, ['id', 'name', 'lastdate'], 'page', $page);
-
-        $userIds = array_map(static fn (User $user): int => $user->id, $paginator->items());
-        $albumCounts = $this->countAlbumsByUsers($userIds, $restrictToVisibleForUser);
-        foreach ($paginator->items() as $user) {
-            $user->count_albums = $albumCounts[$user->id] ?? 0;
-        }
-
-        return $paginator;
+            });
     }
 
     /**

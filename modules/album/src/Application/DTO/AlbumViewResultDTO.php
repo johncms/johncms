@@ -14,7 +14,6 @@ final readonly class AlbumViewResultDTO
         public int $ownerId,
         public string $albumName,
         public array $photos,
-        public int $total,
         public bool $hasAddPhoto,
     ) {
     }

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Album\Domain\Repository;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Johncms\Modules\Album\Domain\Enums\TopFilter;
 use Johncms\Modules\Album\Domain\Models\AlbumPhoto;
@@ -63,9 +62,11 @@ interface AlbumPhotoRepositoryInterface
     public function countPhotosAfter(int $albumId, int $photoId): int;
 
     /**
-     * Paginate the photos of an album (newest first), eager-loading album and user.
+     * Get a page of an album's photos (newest first), eager-loading album and user.
+     *
+     * @return Collection<int, AlbumPhoto>
      */
-    public function paginatePhotosByAlbum(int $albumId, int $page, int $perPage): LengthAwarePaginator;
+    public function getPhotosByAlbum(int $albumId, int $limit, int $offset): Collection;
 
     /**
      * Get the album photo at the given offset (newest first), or null when out of range.
@@ -133,19 +134,30 @@ interface AlbumPhotoRepositoryInterface
     public function setAccessForAlbum(int $albumId, int $access): void;
 
     /**
-     * Paginate photos for one of the "top" feeds, eager-loading album and user.
+     * Count photos for one of the "top" feeds (mirrors {@see getTop()} filters).
+     */
+    public function countTop(
+        TopFilter $filter,
+        ?int $restrictToPublicForUser,
+        int $currentUserId
+    ): int;
+
+    /**
+     * Get a page of photos for one of the "top" feeds, eager-loading album and user.
      *
      * For non owner-scoped feeds, when $restrictToPublicForUser is provided only
      * public photos or photos owned by that user are returned (pass null to
      * bypass, e.g. for moderators). Owner-scoped feeds use $currentUserId.
+     *
+     * @return Collection<int, AlbumPhoto>
      */
-    public function paginateTop(
+    public function getTop(
         TopFilter $filter,
         ?int $restrictToPublicForUser,
         int $currentUserId,
-        int $page,
-        int $perPage
-    ): LengthAwarePaginator;
+        int $limit,
+        int $offset
+    ): Collection;
 
     /**
      * Count visible photos grouped by owner for the given user ids.

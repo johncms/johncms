@@ -7,6 +7,7 @@ namespace Johncms\Modules\Album\Application\UseCases;
 use Johncms\Modules\Album\Application\DTO\AlbumViewResultDTO;
 use Johncms\Modules\Album\Application\Exceptions\AlbumNotFoundException;
 use Johncms\Modules\Album\Application\Services\PhotoPresenter;
+use Johncms\Modules\Album\Domain\Models\Album;
 use Johncms\Modules\Album\Domain\Models\AlbumPhoto;
 use Johncms\Modules\Album\Domain\Repository\AlbumPhotoRepositoryInterface;
 use Johncms\Modules\Album\Domain\Repository\AlbumRepositoryInterface;
@@ -29,19 +30,19 @@ final readonly class GetAlbumViewUseCase
     ) {
     }
 
-    public function execute(int $albumId, int $page, int $perPage, ?string $submittedPassword): AlbumViewResultDTO
+    public function count(int $albumId, ?string $submittedPassword): int
     {
-        $album = $this->albumRepository->findById($albumId);
-        if ($album === null) {
-            throw new AlbumNotFoundException();
-        }
+        $album = $this->loadAccessibleAlbum($albumId, $submittedPassword);
 
-        $this->ensureAccess->execute($album, $submittedPassword);
+        return $this->photoRepository->countByAlbum($album->id);
+    }
 
-        $paginator = $this->photoRepository->paginatePhotosByAlbum($albumId, $page, $perPage);
-        /** @var list<AlbumPhoto> $items */
-        $items = $paginator->items();
-        $photoIds = array_map(static fn (AlbumPhoto $photo): int => $photo->id, $items);
+    public function getPage(int $albumId, int $limit, int $offset, ?string $submittedPassword): AlbumViewResultDTO
+    {
+        $album = $this->loadAccessibleAlbum($albumId, $submittedPassword);
+
+        $items = $this->photoRepository->getPhotosByAlbum($albumId, $limit, $offset);
+        $photoIds = $items->map(static fn (AlbumPhoto $photo): int => $photo->id)->all();
 
         $eligible = $this->isViewerEligibleToVote();
         $votedPhotoIds = $eligible
@@ -64,9 +65,20 @@ final readonly class GetAlbumViewUseCase
             ownerId: $album->user_id,
             albumName: $album->name,
             photos: $photos,
-            total: $paginator->total(),
             hasAddPhoto: $hasAddPhoto,
         );
+    }
+
+    private function loadAccessibleAlbum(int $albumId, ?string $submittedPassword): Album
+    {
+        $album = $this->albumRepository->findById($albumId);
+        if ($album === null) {
+            throw new AlbumNotFoundException();
+        }
+
+        $this->ensureAccess->execute($album, $submittedPassword);
+
+        return $album;
     }
 
     private function isViewerEligibleToVote(): bool

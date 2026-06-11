@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Album\Application\UseCases;
 
-use Johncms\Modules\Album\Application\DTO\UsersListResultDTO;
 use Johncms\Modules\Album\Domain\Repository\AlbumPhotoRepositoryInterface;
 use Johncms\Modules\Album\Domain\Repository\AlbumRepositoryInterface;
 use Johncms\Users\User;
@@ -20,21 +19,36 @@ final readonly class GetUsersListUseCase
     ) {
     }
 
-    public function execute(?string $sex, int $page, int $perPage): UsersListResultDTO
+    public function count(?string $sex): int
     {
-        // Moderators see all albums; regular users only see non-private albums and their own.
-        $restrictForUser = $this->currentUser->rights >= self::MODERATOR_RIGHTS
-            ? null
-            : $this->currentUser->id;
+        return $this->albumRepository->countOwners($sex, $this->restrictForUser());
+    }
 
-        $paginator = $this->albumRepository->paginateOwnersBySex($sex, $restrictForUser, $page, $perPage);
+    /**
+     * @return array<int, User>
+     */
+    public function getPage(?string $sex, int $limit, int $offset): array
+    {
+        $restrictForUser = $this->restrictForUser();
 
-        $userIds = array_map(static fn (User $user): int => $user->id, $paginator->items());
+        $users = $this->albumRepository->getOwners($sex, $restrictForUser, $limit, $offset);
+
+        $userIds = $users->map(static fn (User $user): int => $user->id)->all();
         $photoCounts = $this->albumPhotoRepository->countByUsers($userIds, $restrictForUser);
-        foreach ($paginator->items() as $user) {
+        foreach ($users as $user) {
             $user->count = $photoCounts[$user->id] ?? 0;
         }
 
-        return new UsersListResultDTO($paginator);
+        return $users->all();
+    }
+
+    /**
+     * Moderators see all albums; regular users only see non-private albums and their own.
+     */
+    private function restrictForUser(): ?int
+    {
+        return $this->currentUser->rights >= self::MODERATOR_RIGHTS
+            ? null
+            : $this->currentUser->id;
     }
 }

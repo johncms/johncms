@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Johncms\Modules\Album\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Modules\Album\Application\Exceptions\AlbumAccessDeniedException;
 use Johncms\Modules\Album\Application\Exceptions\AlbumPasswordRequiredException;
 use Johncms\Modules\Album\Application\Exceptions\AlbumPhotoNotFoundException;
 use Johncms\Modules\Album\Application\UseCases\GetPhotoViewUseCase;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 
@@ -22,9 +22,9 @@ final readonly class ShowPhotoController
         private Render $render,
         private Request $request,
         private NavChain $navChain,
-        private Tools $tools,
         private User $currentUser,
         private GetPhotoViewUseCase $useCase,
+        private PaginationFactory $paginationFactory,
     ) {
         $this->controllerContext->initModule('album');
     }
@@ -64,6 +64,9 @@ final readonly class ShowPhotoController
             'page_title' => $title,
         ]);
 
+        // One photo per page: the current page is the photo's 1-based position in the album.
+        $pagination = $this->paginationFactory->create($result->total, 1, 'page', $result->offset + 1);
+
         return $this->render->render(
             'album::show_one',
             [
@@ -73,12 +76,7 @@ final readonly class ShowPhotoController
                 'success_message' => $result->successMessage,
                 'album_list_url'  => '/album/user/' . $result->ownerId,
                 'album_url'       => '/album/' . $result->albumId,
-                'pagination'      => $this->tools->displayPagination(
-                    '/album/photo/' . $img . '?',
-                    $result->offset,
-                    $result->total,
-                    1
-                ),
+                'pagination'      => $pagination->render(),
             ]
         );
     }
