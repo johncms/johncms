@@ -4,14 +4,17 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Guestbook\Application\Controllers;
 
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Johncms\Http\Controller\ControllerContext;
-use Johncms\Modules\Guestbook\Domain\Models\GuestbookEntry;
+use Johncms\Modules\Guestbook\Application\Exceptions\GuestbookAccessDeniedException;
+use Johncms\Modules\Guestbook\Application\Exceptions\GuestbookEntryNotFoundException;
+use Johncms\Modules\Guestbook\Application\Services\GuestbookEntryTextFormatter;
+use Johncms\Modules\Guestbook\Application\UseCases\EnsureGuestbookEntryManageAccessUseCase;
+use Johncms\Modules\Guestbook\Application\UseCases\GetGuestbookEntryContextUseCase;
+use Johncms\Modules\Guestbook\Application\UseCases\ReplyToGuestbookEntryUseCase;
 use Johncms\System\Http\Request;
 use Johncms\System\Http\Session;
 use Johncms\System\Utility\EditorContentNormalizer;
 use Johncms\System\View\Render;
-use Johncms\Users\User;
 use Johncms\Validator\Validator;
 
 final readonly class ReplyController
@@ -21,8 +24,11 @@ final readonly class ReplyController
         private Request $request,
         private Render $render,
         private Session $session,
-        private User $user,
         private EditorContentNormalizer $editorContentNormalizer,
+        private GuestbookEntryTextFormatter $textFormatter,
+        private GetGuestbookEntryContextUseCase $contextUseCase,
+        private EnsureGuestbookEntryManageAccessUseCase $manageAccessUseCase,
+        private ReplyToGuestbookEntryUseCase $replyUseCase,
     ) {
         $this->context->initModule('guestbook');
     }
@@ -31,23 +37,32 @@ final readonly class ReplyController
     {
         $baseUrl = '/guestbook/';
 
-        $id = $this->request->getQuery('id', 0, FILTER_VALIDATE_INT);
+        $id = (int) $this->request->getQuery('id', 0, FILTER_VALIDATE_INT);
         $errors = [];
         $this->render->addData(['title' => __('Reply'), 'page_title' => __('Reply')]);
 
         try {
-            $message = (new GuestbookEntry())->findOrFail($id);
-        } catch (ModelNotFoundException) {
+            $entry = $this->contextUseCase->execute($id);
+            $this->manageAccessUseCase->execute($entry);
+        } catch (GuestbookEntryNotFoundException) {
             pageNotFound();
+        } catch (GuestbookAccessDeniedException) {
+            http_response_code(403);
+            return $this->render->render(
+                'system::pages/result',
+                [
+                    'title'    => __('Reply'),
+                    'message'  => __('Wrong data'),
+                    'type'     => 'alert-danger',
+                    'back_url' => $baseUrl,
+                ]
+            );
         }
 
-        $form_data = [
-            'message'        => $this->editorContentNormalizer->trimEdgeEmptyBlocks(
-                (string) $this->request->getPost('message', $message->otvet)
-            ),
-            'csrf_token'     => $this->request->getPost('csrf_token', ''),
-            'attached_files' => (array) $this->request->getPost('attached_files', [], FILTER_VALIDATE_INT),
-        ];
+        $text = $this->editorContentNormalizer->trimEdgeEmptyBlocks(
+            (string) $this->request->getPost('message', $entry->otvet)
+        );
+        $attachedFiles = (array) $this->request->getPost('attached_files', [], FILTER_VALIDATE_INT);
 
         if ($this->request->getMethod() === 'POST') {
             $rules = [
@@ -60,16 +75,15 @@ final readonly class ReplyController
                 ],
             ];
 
-            $validator = new Validator($form_data, $rules);
+            $validator = new Validator(
+                [
+                    'message'    => $text,
+                    'csrf_token' => $this->request->getPost('csrf_token', ''),
+                ],
+                $rules
+            );
             if ($validator->isValid()) {
-                $message->update(
-                    [
-                        'otvet'          => $form_data['message'],
-                        'admin'          => $this->user->name,
-                        'otime'          => time(),
-                        'attached_files' => array_merge((array) $message->attached_files, $form_data['attached_files']),
-                    ]
-                );
+                $this->replyUseCase->execute($entry, $text, $attachedFiles);
                 $this->session->flash('message', __('Your reply to the message was saved'));
                 redirect($baseUrl);
             }
@@ -80,10 +94,11 @@ final readonly class ReplyController
         return $this->render->render(
             'guestbook::reply',
             [
-                'id'         => $id,
-                'message'    => $message,
-                'errors'     => $errors,
-                'reply_text' => htmlspecialchars($message->reply_text),
+                'id'       => $id,
+                'message'  => $entry,
+                'postText' => $this->textFormatter->formatPost($entry),
+                'text'     => $text,
+                'errors'   => $errors,
             ]
         );
     }

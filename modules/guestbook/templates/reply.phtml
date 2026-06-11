@@ -3,6 +3,8 @@
 /**
  * @var $csrf_token
  * @var \Johncms\Modules\Guestbook\Domain\Models\GuestbookEntry $message
+ * @var string $postText
+ * @var string $text
  * @var $errors
  */
 
@@ -16,14 +18,14 @@ $this->layout('system::layout/default'); ?>
     <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>"/>
     <p>
         <b><?= __('Author') ?>:</b> <?= $message->name ?> <br>
-        <?= $message->post_text ?>
+        <?= $postText ?>
     <p>
         <?= $this->fetch(
             'guestbook::ckeditor',
             [
                 'label'  => __('Reply'),
                 'errors' => implode(', ', $errors['message'] ?? []),
-                'value'  => $this->e($message->otvet),
+                'value'  => $this->e($text),
             ]
         ) ?>
     <div>

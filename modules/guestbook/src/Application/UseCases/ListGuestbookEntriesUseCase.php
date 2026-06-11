@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Guestbook\Application\UseCases;
 
+use Johncms\Modules\Guestbook\Application\Access\GuestbookMode;
 use Johncms\Modules\Guestbook\Application\DTO\GuestbookEntryDTO;
 use Johncms\Modules\Guestbook\Application\DTO\GuestbookEntryMetaDTO;
 use Johncms\Modules\Guestbook\Application\DTO\GuestbookEntryUserDTO;
-use Johncms\Modules\Guestbook\Application\Services\GuestbookService;
+use Johncms\Modules\Guestbook\Application\Services\GuestbookEntryTextFormatter;
 use Johncms\Modules\Guestbook\Domain\Models\GuestbookEntry;
 use Johncms\Modules\Guestbook\Domain\Repository\GuestbookEntryRepositoryInterface;
 use Johncms\Users\User;
@@ -17,7 +18,8 @@ final readonly class ListGuestbookEntriesUseCase
     public function __construct(
         private GuestbookEntryRepositoryInterface $repository,
         private User $currentUser,
-        private GuestbookService $guestbookService,
+        private GuestbookMode $mode,
+        private GuestbookEntryTextFormatter $textFormatter,
     ) {
     }
 
@@ -26,7 +28,7 @@ final readonly class ListGuestbookEntriesUseCase
      */
     public function execute(): array
     {
-        if ($this->guestbookService->isAdminClub()) {
+        if ($this->mode->isAdminClub()) {
             $entries = $this->repository->getAdminClubEntries($this->currentUser->config->kmess);
         } else {
             $entries = $this->repository->getGuestbookEntries($this->currentUser->config->kmess);
@@ -41,8 +43,8 @@ final readonly class ListGuestbookEntriesUseCase
                 updateAt:  (string) $entry->edit_time,
                 editCount: $entry->edit_count,
                 updatedBy: $entry->edit_who,
-                text:      $entry->post_text,
-                replyText: $entry->reply_text,
+                text:      $this->textFormatter->formatPost($entry),
+                replyText: $this->textFormatter->formatReply($entry),
                 repliedBy: $entry->admin,
                 repliedAt: (string) $entry->otime,
                 userId:    $entry->user_id,

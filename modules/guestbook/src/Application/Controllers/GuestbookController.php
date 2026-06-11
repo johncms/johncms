@@ -4,16 +4,22 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Guestbook\Application\Controllers;
 
-use Johncms\Exceptions\ValidationException;
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\PageMeta;
 use Johncms\Modules\Guestbook\Application\Access\GuestbookAccess;
+use Johncms\Modules\Guestbook\Application\Access\GuestbookMode;
+use Johncms\Modules\Guestbook\Application\DTO\CreateGuestbookEntryDTO;
 use Johncms\Modules\Guestbook\Application\Forms\GuestbookForm;
-use Johncms\Modules\Guestbook\Application\Services\GuestbookService;
+use Johncms\Modules\Guestbook\Application\Services\GuestbookCaptchaService;
+use Johncms\Modules\Guestbook\Application\UseCases\CreateGuestbookEntryUseCase;
 use Johncms\Modules\Guestbook\Application\UseCases\ListGuestbookEntriesUseCase;
 use Johncms\NavChain;
+use Johncms\System\Http\Environment;
 use Johncms\System\Http\Request;
 use Johncms\System\Http\Session;
 use Johncms\System\View\Render;
+use Johncms\Users\User;
+use Johncms\Validator\Validator;
 
 final readonly class GuestbookController
 {
@@ -23,9 +29,13 @@ final readonly class GuestbookController
         private NavChain $navChain,
         private Request $request,
         private Session $session,
-        private GuestbookService $guestbook,
+        private Environment $environment,
+        private User $user,
         private GuestbookAccess $access,
+        private GuestbookMode $mode,
         private ListGuestbookEntriesUseCase $guestbookEntries,
+        private CreateGuestbookEntryUseCase $createEntry,
+        private GuestbookCaptchaService $captchaService,
         private GuestbookForm $form,
     ) {
         $this->controllerContext->initModule('guestbook');
@@ -33,17 +43,14 @@ final readonly class GuestbookController
 
     public function __invoke(): string
     {
-        $pageTitle = $this->guestbook->isGuestbook() ? __('Guestbook') : __('Admin Club');
+        $pageTitle = $this->mode->isGuestbook() ? __('Guestbook') : __('Admin Club');
         $page = max(1, (int) $this->request->getQuery('page', 1));
-        $title = $pageTitle;
-        if ($page > 1) {
-            $title .= ' - ' . d__('system', 'Page') . ' ' . $page;
-        }
+        $meta = new PageMeta($pageTitle, $page);
         $baseUrl = '/guestbook/';
         $this->navChain->add($pageTitle, $baseUrl);
 
         if ($this->access->isClosed() && ! $this->access->canClear()) {
-            echo $this->render->render(
+            return $this->render->render(
                 'system::pages/result',
                 [
                     'title'    => $pageTitle,
@@ -52,30 +59,39 @@ final readonly class GuestbookController
                     'back_url' => '/',
                 ]
             );
-            exit;
         }
 
         $this->render->addData([
-            'title'       => $title,
+            'title'       => $meta->title,
             'page_title'  => $pageTitle,
-            'description' => $title,
+            'description' => $meta->description,
         ]);
 
-        $flash_errors = $this->session->getFlash('errors');
-        $errors = $flash_errors ?? [];
+        $errors = $this->session->getFlash('errors') ?? [];
 
-        // If the form was sent using POST method, then try to create the new post.
         if ($this->request->getMethod() === 'POST' && $this->access->canWrite()) {
-            try {
-                $this->guestbook->create();
+            $formData = $this->form->getFormData();
+            $validator = new Validator($formData, $this->form->getValidationRules());
+            if ($validator->isValid()) {
+                $this->createEntry->execute(
+                    new CreateGuestbookEntryDTO(
+                        adminClub:     $this->mode->isAdminClub(),
+                        name:          $this->user->isValid() ? $this->user->name : $formData['name'],
+                        text:          $formData['message'],
+                        ip:            $this->environment->getIp(false),
+                        userAgent:     $this->environment->getUserAgent(),
+                        attachedFiles: $formData['attached_files'],
+                    )
+                );
+                $this->captchaService->forget();
                 $this->session->flash('message', __('Your message was added successfully'));
                 redirect($baseUrl);
-            } catch (ValidationException $exception) {
-                $errors = $exception->getErrors();
             }
+            $errors = $validator->getErrors();
         }
 
         $posts = $this->guestbookEntries->execute();
+        $showCaptcha = $this->access->canWrite() && ! $this->user->isValid();
 
         return $this->render->render(
             'guestbook::index',
@@ -87,7 +103,7 @@ final readonly class GuestbookController
                 'canClear'   => $this->access->canClear(),
                 'errors'     => $errors,
                 'formData'   => $this->form->getFormData(),
-                'captcha'    => $this->guestbook->getCaptcha(),
+                'captcha'    => $showCaptcha ? $this->captchaService->generate() : '',
                 'message'    => $this->session->getFlash('message'),
             ]
         );

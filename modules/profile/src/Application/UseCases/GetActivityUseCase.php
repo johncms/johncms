@@ -8,6 +8,7 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Domain\Models\ForumMessage;
 use Johncms\Modules\Forum\Domain\Models\ForumTopic;
+use Johncms\Modules\Guestbook\Application\Services\GuestbookEntryTextFormatter;
 use Johncms\Modules\Guestbook\Domain\Models\GuestbookEntry;
 use Johncms\Modules\Profile\Application\DTO\ActivityDTO;
 use Johncms\Modules\Profile\Application\Exceptions\ProfileNotFoundException;
@@ -25,6 +26,7 @@ final readonly class GetActivityUseCase
         private ProfileActivityRepositoryInterface $activityRepository,
         private ForumActivityPreviewService $forumPreview,
         private ForumTopicPathService $topicPathService,
+        private GuestbookEntryTextFormatter $guestbookTextFormatter,
         private Tools $tools,
         private User $currentUser,
     ) {
@@ -143,7 +145,7 @@ final readonly class GetActivityUseCase
             }
             $rows[] = [
                 'display_date' => $this->tools->displayDate((int) $entry->getRawOriginal('time')),
-                'text'         => $entry->post_text,
+                'text'         => $this->guestbookTextFormatter->formatPost($entry),
             ];
         }
 

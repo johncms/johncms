@@ -14,7 +14,7 @@
             [
                 'label'  => __('Message'),
                 'errors' => implode(', ', $errors['message'] ?? []),
-                'value'  => $text,
+                'value'  => $this->e($text),
             ]
         ) ?>
     <div>

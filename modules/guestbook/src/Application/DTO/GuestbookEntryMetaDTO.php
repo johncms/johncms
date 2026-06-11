@@ -11,9 +11,9 @@ final readonly class GuestbookEntryMetaDTO
         public string $searchIpUrl,
         public string $userAgent,
         public bool $canManage,
-        public string $editUrl,
-        public string $deleteUrl,
-        public string $replyUrl,
+        public ?string $editUrl,
+        public ?string $deleteUrl,
+        public ?string $replyUrl,
     ) {
     }
 }

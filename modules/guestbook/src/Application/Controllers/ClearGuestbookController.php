@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Johncms\Modules\Guestbook\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
-use Johncms\Modules\Guestbook\Application\Services\GuestbookService;
+use Johncms\Modules\Guestbook\Application\Access\GuestbookMode;
+use Johncms\Modules\Guestbook\Application\UseCases\ClearGuestbookUseCase;
+use Johncms\Modules\Guestbook\Domain\Enums\ClearGuestbookPeriod;
 use Johncms\System\Http\Request;
 use Johncms\System\Http\Session;
 use Johncms\System\View\Render;
@@ -16,9 +18,10 @@ final readonly class ClearGuestbookController
     public function __construct(
         private ControllerContext $context,
         private Request $request,
-        private GuestbookService $guestbook,
         private Render $render,
-        private Session $session
+        private Session $session,
+        private GuestbookMode $mode,
+        private ClearGuestbookUseCase $clearUseCase,
     ) {
         $this->context->initModule('guestbook');
     }
@@ -33,11 +36,17 @@ final readonly class ClearGuestbookController
                 $this->session->flash('errors', $validator->getErrors());
                 redirect($baseUrl);
             }
-            // We clean the Guest, according to the specified parameters
-            $period = $this->request->getPost('cl', 0, FILTER_VALIDATE_INT);
-            $message = $this->guestbook->clear($period);
-            // Set result message
-            $this->session->flash('message', $message);
+
+            $period = ClearGuestbookPeriod::tryFrom((int) $this->request->getPost('cl', 0, FILTER_VALIDATE_INT))
+                ?? ClearGuestbookPeriod::OlderThanWeek;
+
+            $this->clearUseCase->execute($this->mode->isAdminClub(), $period);
+
+            $this->session->flash('message', match ($period) {
+                ClearGuestbookPeriod::OlderThanWeek => __('All messages older than 1 week were deleted'),
+                ClearGuestbookPeriod::OlderThanDay  => __('All messages older than 1 day were deleted'),
+                ClearGuestbookPeriod::All           => __('Full clearing is finished'),
+            });
             redirect($baseUrl);
         }
 

@@ -4,14 +4,16 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Guestbook\Application\Controllers;
 
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Johncms\Http\Controller\ControllerContext;
-use Johncms\Modules\Guestbook\Domain\Models\GuestbookEntry;
+use Johncms\Modules\Guestbook\Application\Exceptions\GuestbookAccessDeniedException;
+use Johncms\Modules\Guestbook\Application\Exceptions\GuestbookEntryNotFoundException;
+use Johncms\Modules\Guestbook\Application\UseCases\EditGuestbookEntryUseCase;
+use Johncms\Modules\Guestbook\Application\UseCases\EnsureGuestbookEntryManageAccessUseCase;
+use Johncms\Modules\Guestbook\Application\UseCases\GetGuestbookEntryContextUseCase;
 use Johncms\System\Http\Request;
 use Johncms\System\Http\Session;
 use Johncms\System\Utility\EditorContentNormalizer;
 use Johncms\System\View\Render;
-use Johncms\Users\User;
 use Johncms\Validator\Validator;
 
 final readonly class EditEntryController
@@ -21,8 +23,10 @@ final readonly class EditEntryController
         private Request $request,
         private Render $render,
         private Session $session,
-        private User $user,
         private EditorContentNormalizer $editorContentNormalizer,
+        private GetGuestbookEntryContextUseCase $contextUseCase,
+        private EnsureGuestbookEntryManageAccessUseCase $manageAccessUseCase,
+        private EditGuestbookEntryUseCase $editUseCase,
     ) {
         $this->context->initModule('guestbook');
     }
@@ -31,23 +35,33 @@ final readonly class EditEntryController
     {
         $baseUrl = '/guestbook/';
 
-        $id = $this->request->getQuery('id', 0, FILTER_VALIDATE_INT);
+        $id = (int) $this->request->getQuery('id', 0, FILTER_VALIDATE_INT);
         $errors = [];
         $this->render->addData(['title' => __('Edit message'), 'page_title' => __('Edit message')]);
 
         try {
-            $message = (new GuestbookEntry())->findOrFail($id);
-        } catch (ModelNotFoundException) {
+            $entry = $this->contextUseCase->execute($id);
+            $this->manageAccessUseCase->execute($entry);
+        } catch (GuestbookEntryNotFoundException) {
             pageNotFound();
+        } catch (GuestbookAccessDeniedException) {
+            http_response_code(403);
+            return $this->render->render(
+                'system::pages/result',
+                [
+                    'title'    => __('Edit message'),
+                    'message'  => __('Wrong data'),
+                    'type'     => 'alert-danger',
+                    'back_url' => $baseUrl,
+                ]
+            );
         }
 
-        $form_data = [
-            'message'        => $this->editorContentNormalizer->trimEdgeEmptyBlocks(
-                (string) $this->request->getPost('message', $message->text)
-            ),
-            'csrf_token'     => $this->request->getPost('csrf_token', ''),
-            'attached_files' => (array) $this->request->getPost('attached_files', [], FILTER_VALIDATE_INT),
-        ];
+        $text = $this->editorContentNormalizer->trimEdgeEmptyBlocks(
+            (string) $this->request->getPost('message', $entry->text)
+        );
+        $attachedFiles = (array) $this->request->getPost('attached_files', [], FILTER_VALIDATE_INT);
+
         if ($this->request->getMethod() === 'POST') {
             $rules = [
                 'message'    => [
@@ -59,17 +73,15 @@ final readonly class EditEntryController
                 ],
             ];
 
-            $validator = new Validator($form_data, $rules);
+            $validator = new Validator(
+                [
+                    'message'    => $text,
+                    'csrf_token' => $this->request->getPost('csrf_token', ''),
+                ],
+                $rules
+            );
             if ($validator->isValid()) {
-                $message->update(
-                    [
-                        'text'           => $form_data['message'],
-                        'edit_who'       => $this->user->name,
-                        'edit_time'      => time(),
-                        'edit_count'     => ($message->edit_count + 1),
-                        'attached_files' => array_merge((array) $message->attached_files, $form_data['attached_files']),
-                    ]
-                );
+                $this->editUseCase->execute($entry, $text, $attachedFiles);
                 $this->session->flash('message', __('The message was saved'));
                 redirect($baseUrl);
             }
@@ -81,8 +93,8 @@ final readonly class EditEntryController
             'guestbook::edit',
             [
                 'id'      => $id,
-                'message' => $message,
-                'text'    => htmlspecialchars($form_data['message']),
+                'message' => $entry,
+                'text'    => $text,
                 'errors'  => $errors,
             ]
         );

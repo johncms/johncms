@@ -18,9 +18,6 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Johncms\Casts\Ip;
 use Johncms\Casts\SpecialChars;
 use Johncms\Casts\TimeToDate;
-use Johncms\Media\MediaEmbed;
-use Johncms\Security\HTMLPurifier;
-use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
 
 /**
@@ -46,8 +43,6 @@ use Johncms\Users\User;
  * @property array $attached_files
  *
  * @property User|null $user
- * @property string $post_text
- * @property string $reply_text
  * @property bool $is_online
  */
 class GuestbookEntry extends Model
@@ -85,40 +80,9 @@ class GuestbookEntry extends Model
         'attached_files',
     ];
 
-    /** @var Tools */
-    protected $tools;
-
-    /** @var HTMLPurifier|mixed */
-    protected $purifier;
-
-    /** @var \Johncms\Media\MediaEmbed|mixed */
-    protected $media;
-
-    public function __construct(array $attributes = [])
-    {
-        parent::__construct($attributes);
-        $this->tools = di(Tools::class);
-        $this->purifier = di(HTMLPurifier::class);
-        $this->media = di(MediaEmbed::class);
-    }
-
     public function user(): HasOne
     {
         return $this->hasOne(User::class, 'id', 'user_id');
-    }
-
-    public function getPostTextAttribute(): string
-    {
-        $post = $this->purifier->purify($this->text);
-        $post = $this->media->embedMedia($post);
-        return $this->tools->smilies($post, ($this->user !== null && $this->user->rights >= 1));
-    }
-
-    public function getReplyTextAttribute(): string
-    {
-        $post = $this->purifier->purify($this->otvet);
-        $post = $this->media->embedMedia($post);
-        return $this->tools->smilies($post, true);
     }
 
     public function getIsOnlineAttribute(): bool

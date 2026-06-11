@@ -5,20 +5,23 @@ declare(strict_types=1);
 namespace Johncms\Modules\Guestbook\Application\Access;
 
 use Johncms\System\Http\Request;
+use Johncms\System\Http\Session;
 use Johncms\Users\User;
 
 final readonly class GuestbookMode
 {
+    private const SESSION_KEY = 'ga';
+
     public function __construct(
         private User $user,
+        private Session $session,
         private array $guestAccess = [],
     ) {
     }
 
     public function isAdminClub(): bool
     {
-        return isset($_SESSION['ga'])
-            && ($this->user->rights >= 1 || in_array($this->user->id, $this->guestAccess, true));
+        return $this->session->has(self::SESSION_KEY) && $this->hasAdminClubAccess();
     }
 
     public function isGuestbook(): bool
@@ -28,14 +31,19 @@ final readonly class GuestbookMode
 
     public function switch(Request $request): void
     {
-        if ($this->user->rights < 1 && ! in_array($this->user->id, $this->guestAccess, true)) {
+        if (! $this->hasAdminClubAccess()) {
             return;
         }
 
         if ($request->getQuery('do') === 'set') {
-            $_SESSION['ga'] = 1;
+            $this->session->set(self::SESSION_KEY, 1);
         } else {
-            unset($_SESSION['ga']);
+            $this->session->remove(self::SESSION_KEY);
         }
+    }
+
+    private function hasAdminClubAccess(): bool
+    {
+        return $this->user->rights >= 1 || in_array($this->user->id, $this->guestAccess, true);
     }
 }

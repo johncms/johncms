@@ -1,13 +1,5 @@
 <?php
 
-/**
- * This file is part of JohnCMS Content Management System.
- *
- * @copyright JohnCMS Community
- * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
- * @link      https://johncms.com JohnCMS Project
- */
-
 declare(strict_types=1);
 
 namespace Johncms\Modules\Guestbook\Application\Forms;
@@ -19,26 +11,13 @@ use Johncms\Users\User;
 
 class GuestbookForm
 {
-    /** @var Request */
-    protected $request;
-
-    /** @var User */
-    protected $user;
-
-    /** @var EditorContentNormalizer */
-    protected $editorContentNormalizer;
-
-    public function __construct()
-    {
-        $this->request = di(Request::class);
-        $this->user = di(User::class);
-        $this->editorContentNormalizer = di(EditorContentNormalizer::class);
+    public function __construct(
+        private readonly Request $request,
+        private readonly User $user,
+        private readonly EditorContentNormalizer $editorContentNormalizer,
+    ) {
     }
 
-    /**
-     * @return array
-     * @psalm-suppress PossiblyNullArgument
-     */
     public function getFormData(): array
     {
         $form_data = [
