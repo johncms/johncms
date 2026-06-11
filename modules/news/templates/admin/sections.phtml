@@ -19,7 +19,7 @@ $this->layout(
 /** @var \Johncms\Modules\News\Domain\Models\NewsSection $sections */
 $sections = $data['sections'];
 
-/** @var \Illuminate\Pagination\LengthAwarePaginator $articles */
+/** @var \Illuminate\Database\Eloquent\Collection<int, \Johncms\Modules\News\Domain\Models\NewsArticle> $articles */
 $articles = $data['articles'];
 
 ?>
@@ -113,4 +113,4 @@ $articles = $data['articles'];
     <?php endif; ?>
     </tbody>
 </table>
-<?= $articles->render() ?>
+<?= $data['pagination'] ?>

@@ -12,6 +12,7 @@ use Illuminate\Support\Arr;
 use Johncms\FileInfo;
 use Johncms\Files\FileStorage;
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Media\MediaEmbed;
 use Johncms\Modules\News\Application\Utils\Helpers;
 use Johncms\Modules\News\Domain\Models\NewsArticle;
@@ -28,6 +29,7 @@ final readonly class CommentsController
 {
     public function __construct(
         private ControllerContext $controllerContext,
+        private PaginationFactory $paginationFactory,
     ) {
         $this->controllerContext->initModule('news');
     }
@@ -47,14 +49,27 @@ final readonly class CommentsController
             Helpers::returnJson(['error' => __('Bad Request')]);
         }
 
-        $comments = (new NewsComments())->with('user')->where('article_id', $article_id)->paginate();
+        $pagination = $this->paginationFactory->create(
+            (new NewsComments())->where('article_id', $article_id)->count()
+        );
+
+        $comments = (new NewsComments())
+            ->with('user')
+            ->where('article_id', $article_id)
+            ->offset($pagination->getOffset())
+            ->limit($pagination->getPerPage())
+            ->get();
 
         $purifier = di(HTMLPurifier::class);
         $embed = di(MediaEmbed::class);
 
+        $total = $pagination->getTotal();
+        $currentPage = $pagination->getCurrentPage();
+        $lastPage = $pagination->getTotalPages();
+
         $array = [
-            'current_page'   => $comments->currentPage(),
-            'data'           => $comments->getItems()->map(
+            'current_page'   => $currentPage,
+            'data'           => $comments->map(
                 static function (NewsComments $comment) use ($avatar, $tools, $current_user, $purifier, $embed) {
                     $user = $comment->user;
                     $user_data = [];
@@ -104,16 +119,13 @@ final readonly class CommentsController
                     return $message;
                 }
             ),
-            'first_page_url' => $comments->url(1),
-            'from'           => $comments->firstItem(),
-            'last_page'      => $comments->lastPage(),
-            'last_page_url'  => $comments->url($comments->lastPage()),
-            'next_page_url'  => $comments->nextPageUrl(),
-            'path'           => $comments->path(),
-            'per_page'       => $comments->perPage(),
-            'prev_page_url'  => $comments->previousPageUrl(),
-            'to'             => $comments->lastItem(),
-            'total'          => $comments->total(),
+            'from'           => $total > 0 ? $pagination->getOffset() + 1 : null,
+            'last_page'      => $lastPage,
+            'next_page_url'  => $currentPage < $lastPage ? $pagination->getUrl($currentPage + 1) : null,
+            'per_page'       => $pagination->getPerPage(),
+            'prev_page_url'  => $currentPage > 1 ? $pagination->getUrl($currentPage - 1) : null,
+            'to'             => $total > 0 ? $pagination->getOffset() + $comments->count() : null,
+            'total'          => $total,
         ];
 
         Helpers::returnJson($array);
@@ -156,7 +168,10 @@ final readonly class CommentsController
                     ]
                 );
 
-                $last_page = (new NewsComments())->where('article_id', $article->id)->paginate($user->config->kmess)->lastPage();
+                $last_page = $this->paginationFactory->create(
+                    (new NewsComments())->where('article_id', $article->id)->count(),
+                    $user->config->kmess
+                )->getTotalPages();
                 Helpers::returnJson(['message' => __('The comment was added successfully'), 'last_page' => $last_page]);
             } else {
                 http_response_code(422);

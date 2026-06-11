@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\News\Application;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 use Johncms\Exceptions\PageNotFoundException;
 use Johncms\Modules\News\Domain\Models\NewsArticle;
 use Johncms\NavChain;
@@ -27,7 +27,21 @@ class Article
         $this->nav_chain = di(NavChain::class);
     }
 
-    public function getArticles(array $sections = []): LengthAwarePaginator
+    public function countArticles(array $sections = []): int
+    {
+        $articles = (new NewsArticle())->active();
+
+        if (! empty($sections)) {
+            $articles->whereIn('section_id', $sections);
+        }
+
+        return $articles->count();
+    }
+
+    /**
+     * @return Collection<int, NewsArticle>
+     */
+    public function getArticles(array $sections, int $limit, int $offset): Collection
     {
         $articles = (new NewsArticle())
             ->active()
@@ -39,7 +53,7 @@ class Article
             $articles->whereIn('section_id', $sections);
         }
 
-        return $articles->paginate();
+        return $articles->offset($offset)->limit($limit)->get();
     }
 
     public function getArticle(string $article_code): NewsArticle

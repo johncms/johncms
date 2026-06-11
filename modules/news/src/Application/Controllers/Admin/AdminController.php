@@ -6,6 +6,8 @@ namespace Johncms\Modules\News\Application\Controllers\Admin;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Johncms\Http\Controller\AdminControllerContext;
+use Johncms\Http\Pagination\PaginationFactory;
+use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\News\Application\Utils\Helpers;
 use Johncms\Modules\News\Domain\Models\NewsArticle;
 use Johncms\Modules\News\Domain\Models\NewsSection;
@@ -19,6 +21,8 @@ final readonly class AdminController
         private AdminControllerContext $controllerContext,
         private Render $render,
         private NavChain $navChain,
+        private PaginationFactory $paginationFactory,
+        private PaginationGuard $paginationGuard,
     ) {
         $this->controllerContext->initModule('news');
 
@@ -66,14 +70,24 @@ final readonly class AdminController
             unset($_SESSION['success_message']);
         }
 
-        if (empty($section_id)) {
-            $data['sections'] = (new NewsSection())->where('parent', $section_id)->get();
-            $data['articles'] = (new NewsArticle())->where('section_id', $section_id)->orderByDesc('id')->paginate();
-        } else {
-            $data['sections'] = (new NewsSection())->where('parent', $section_id)->get();
-            $data['articles'] = (new NewsArticle())->where('section_id', $section_id)->orderByDesc('id')->paginate();
+        $data['sections'] = (new NewsSection())->where('parent', $section_id)->get();
+
+        $pagination = $this->paginationFactory->create(
+            (new NewsArticle())->where('section_id', $section_id)->count()
+        );
+
+        $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
+        if ($redirectUrl !== null) {
+            redirect($redirectUrl);
         }
 
+        $data['articles'] = (new NewsArticle())
+            ->where('section_id', $section_id)
+            ->orderByDesc('id')
+            ->offset($pagination->getOffset())
+            ->limit($pagination->getPerPage())
+            ->get();
+        $data['pagination'] = $pagination->render();
         $data['current_section'] = $section_id;
 
         $this->render->addData(

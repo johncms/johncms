@@ -76,7 +76,7 @@ $this->layout('system::layout/default');
             </div>
         <?php endforeach; ?>
         <div class="mt-3">
-            <?= $articles->render() ?>
+            <?= $pagination ?>
         </div>
     <?php else: ?>
         <div class="alert alert-info"><?= __('The list is empty') ?></div>
