@@ -23,24 +23,21 @@ final readonly class GetIpHistoryUseCase
     ) {
     }
 
-    public function execute(int $userId, int $perPage): IpHistoryDTO
+    public function count(int $userId): int
     {
-        $profileUser = $this->profileUserRepository->findById($userId);
+        $profileUser = $this->loadAccessibleProfile($userId);
 
-        // Hide non-confirmed profiles from regular users (only admins with rights >= 7 may see them)
-        if ($profileUser === null || (! $profileUser->preg && $this->currentUser->rights < 7)) {
-            throw new ProfileNotFoundException();
-        }
+        return $this->ipHistoryRepository->countByUser($profileUser->id);
+    }
 
-        // IP history is visible to admins and to the profile owner only
-        if (! $this->currentUser->rights && $this->currentUser->id !== $profileUser->id) {
-            throw new ProfileAccessForbiddenException();
-        }
+    public function getPage(int $userId, int $limit, int $offset): IpHistoryDTO
+    {
+        $profileUser = $this->loadAccessibleProfile($userId);
 
-        $paginator = $this->ipHistoryRepository->paginateByUser($profileUser->id, $perPage);
+        $records = $this->ipHistoryRepository->getByUser($profileUser->id, $limit, $offset);
 
         $items = [];
-        foreach ($paginator->items() as $record) {
+        foreach ($records as $record) {
             if (! $record instanceof IpHistory) {
                 continue;
             }
@@ -54,10 +51,25 @@ final readonly class GetIpHistoryUseCase
 
         return new IpHistoryDTO(
             items: $items,
-            total: $paginator->total(),
-            pagination: $paginator->render(),
             backUrl: '/profile/' . $profileUser->id,
             profileName: $profileUser->name,
         );
+    }
+
+    private function loadAccessibleProfile(int $userId): User
+    {
+        $profileUser = $this->profileUserRepository->findById($userId);
+
+        // Hide non-confirmed profiles from regular users (only admins with rights >= 7 may see them)
+        if ($profileUser === null || (! $profileUser->preg && $this->currentUser->rights < 7)) {
+            throw new ProfileNotFoundException();
+        }
+
+        // IP history is visible to admins and to the profile owner only
+        if (! $this->currentUser->rights && $this->currentUser->id !== $profileUser->id) {
+            throw new ProfileAccessForbiddenException();
+        }
+
+        return $profileUser;
     }
 }

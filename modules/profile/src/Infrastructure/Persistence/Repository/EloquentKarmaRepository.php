@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Profile\Infrastructure\Persistence\Repository;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 use Johncms\Modules\Profile\Domain\Repository\KarmaRepositoryInterface;
 use Johncms\Users\Karma;
 
@@ -36,22 +36,40 @@ final class EloquentKarmaRepository implements KarmaRepositoryInterface
             ->count();
     }
 
-    public function paginateReceived(int $targetId, ?int $type, int $perPage): LengthAwarePaginator
+    public function countReceived(int $targetId, ?int $type): int
+    {
+        return Karma::query()
+            ->where('karma_user', '=', $targetId)
+            ->when($type !== null, static fn ($query) => $query->where('type', '=', $type))
+            ->count();
+    }
+
+    /**
+     * @return Collection<int, Karma>
+     */
+    public function getReceived(int $targetId, ?int $type, int $limit, int $offset): Collection
     {
         return Karma::query()
             ->where('karma_user', '=', $targetId)
             ->when($type !== null, static fn ($query) => $query->where('type', '=', $type))
             ->orderByDesc('time')
-            ->paginate($perPage);
+            ->offset($offset)
+            ->limit($limit)
+            ->get();
     }
 
-    public function paginateReceivedAfter(int $targetId, int $afterTime, int $perPage): LengthAwarePaginator
+    /**
+     * @return Collection<int, Karma>
+     */
+    public function getReceivedAfter(int $targetId, int $afterTime, int $limit, int $offset): Collection
     {
         return Karma::query()
             ->where('karma_user', '=', $targetId)
             ->where('time', '>', $afterTime)
             ->orderByDesc('time')
-            ->paginate($perPage);
+            ->offset($offset)
+            ->limit($limit)
+            ->get();
     }
 
     public function addVote(int $voterId, string $voterName, int $targetId, int $points, int $type, int $time, string $text): void

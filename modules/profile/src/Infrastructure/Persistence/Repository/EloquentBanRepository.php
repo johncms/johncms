@@ -4,18 +4,28 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Profile\Infrastructure\Persistence\Repository;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 use Johncms\Modules\Profile\Domain\Repository\BanRepositoryInterface;
 use Johncms\Users\Ban;
 
 final class EloquentBanRepository implements BanRepositoryInterface
 {
-    public function paginateForUser(int $userId, int $perPage): LengthAwarePaginator
+    public function countForUser(int $userId): int
+    {
+        return Ban::query()->where('user_id', '=', $userId)->count();
+    }
+
+    /**
+     * @return Collection<int, Ban>
+     */
+    public function getForUser(int $userId, int $limit, int $offset): Collection
     {
         return Ban::query()
             ->where('user_id', '=', $userId)
             ->orderByDesc('ban_time')
-            ->paginate($perPage);
+            ->offset($offset)
+            ->limit($limit)
+            ->get();
     }
 
     public function countActiveByType(int $userId, int $type): int

@@ -12,8 +12,6 @@ final readonly class ActivityDTO
     public function __construct(
         public string $itemType,
         public array $items,
-        public int $total,
-        public string $pagination,
         public string $profileName,
         public int $profileId,
     ) {

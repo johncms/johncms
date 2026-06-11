@@ -12,8 +12,6 @@ final readonly class KarmaListDTO
      */
     public function __construct(
         public array $items,
-        public int $total,
-        public string $pagination,
         public array $filters,
         public ?string $resetUrl,
         public string $backUrl,

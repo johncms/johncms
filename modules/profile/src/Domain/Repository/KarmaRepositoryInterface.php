@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Profile\Domain\Repository;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 use Johncms\Users\Karma;
 
 interface KarmaRepositoryInterface
@@ -25,18 +25,23 @@ interface KarmaRepositoryInterface
     public function countVotesReceivedAfter(int $targetId, int $afterTime): int;
 
     /**
-     * Paginate votes received by the target user, optionally filtered by type (null = all types).
-     *
-     * @return LengthAwarePaginator<Karma>
+     * Count votes received by the target user, optionally filtered by type (null = all types).
      */
-    public function paginateReceived(int $targetId, ?int $type, int $perPage): LengthAwarePaginator;
+    public function countReceived(int $targetId, ?int $type): int;
 
     /**
-     * Paginate votes received by the target user after the specified time.
+     * A page of votes received by the target user, optionally filtered by type (null = all types), newest first.
      *
-     * @return LengthAwarePaginator<Karma>
+     * @return Collection<int, Karma>
      */
-    public function paginateReceivedAfter(int $targetId, int $afterTime, int $perPage): LengthAwarePaginator;
+    public function getReceived(int $targetId, ?int $type, int $limit, int $offset): Collection;
+
+    /**
+     * A page of votes received by the target user after the specified time, newest first.
+     *
+     * @return Collection<int, Karma>
+     */
+    public function getReceivedAfter(int $targetId, int $afterTime, int $limit, int $offset): Collection;
 
     /**
      * Insert a new vote record.

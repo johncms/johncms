@@ -19,13 +19,18 @@ final readonly class GetNewKarmaUseCase
     ) {
     }
 
-    public function execute(int $perPage): KarmaListDTO
+    public function count(): int
+    {
+        return $this->karmaRepository->countVotesReceivedAfter($this->currentUser->id, time() - 86400);
+    }
+
+    public function getPage(int $limit, int $offset): KarmaListDTO
     {
         $userId = $this->currentUser->id;
-        $paginator = $this->karmaRepository->paginateReceivedAfter($userId, time() - 86400, $perPage);
+        $votes = $this->karmaRepository->getReceivedAfter($userId, time() - 86400, $limit, $offset);
 
         $items = [];
-        foreach ($paginator->items() as $vote) {
+        foreach ($votes as $vote) {
             if (! $vote instanceof Karma) {
                 continue;
             }
@@ -41,8 +46,6 @@ final readonly class GetNewKarmaUseCase
 
         return new KarmaListDTO(
             items: $items,
-            total: $paginator->total(),
-            pagination: $paginator->render(),
             filters: [],
             resetUrl: null,
             backUrl: '/profile/' . $userId,

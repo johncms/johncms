@@ -4,17 +4,22 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Profile\Domain\Repository;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 use Johncms\Users\Ban;
 
 interface BanRepositoryInterface
 {
     /**
-     * Paginate the user's violation history (most recent first).
-     *
-     * @return LengthAwarePaginator<Ban>
+     * Count the records in the user's violation history.
      */
-    public function paginateForUser(int $userId, int $perPage): LengthAwarePaginator;
+    public function countForUser(int $userId): int;
+
+    /**
+     * A page of the user's violation history (most recent first).
+     *
+     * @return Collection<int, Ban>
+     */
+    public function getForUser(int $userId, int $limit, int $offset): Collection;
 
     /**
      * Count the user's currently active bans of the given type.

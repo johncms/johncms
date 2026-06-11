@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace Johncms\Modules\Profile\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\Pagination\Pagination;
+use Johncms\Http\Pagination\PaginationFactory;
+use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Profile\Application\DTO\KarmaListDTO;
 use Johncms\Modules\Profile\Application\DTO\VoteContextDTO;
 use Johncms\Modules\Profile\Application\DTO\VoteKarmaCommand;
@@ -36,6 +39,8 @@ final readonly class KarmaController
         private VoteKarmaUseCase $voteKarmaUseCase,
         private DeleteKarmaVoteUseCase $deleteKarmaVoteUseCase,
         private CleanKarmaUseCase $cleanKarmaUseCase,
+        private PaginationFactory $paginationFactory,
+        private PaginationGuard $paginationGuard,
     ) {
         $this->controllerContext->initModule('profile');
     }
@@ -44,22 +49,38 @@ final readonly class KarmaController
     {
         $this->ensureKarmaEnabled();
 
+        $type = $this->resolveType();
+
         try {
-            $dto = $this->getKarmaListUseCase->execute($id, $this->resolveType(), (int) $this->currentUser->config->kmess);
+            $pagination = $this->paginationFactory->create($this->getKarmaListUseCase->count($id, $type));
+
+            $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
+            if ($redirectUrl !== null) {
+                redirect($redirectUrl);
+            }
+
+            $dto = $this->getKarmaListUseCase->getPage($id, $type, $pagination->getPerPage(), $pagination->getOffset());
         } catch (ProfileNotFoundException $e) {
             return $this->renderError($e->getMessage());
         }
 
-        return $this->renderList(__('Karma'), $id, $dto);
+        return $this->renderList(__('Karma'), $id, $dto, $pagination);
     }
 
     public function newResponses(int $id): string
     {
         $this->ensureKarmaEnabled();
 
-        $dto = $this->getNewKarmaUseCase->execute((int) $this->currentUser->config->kmess);
+        $pagination = $this->paginationFactory->create($this->getNewKarmaUseCase->count());
 
-        return $this->renderList(__('New responses'), $id, $dto);
+        $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
+        if ($redirectUrl !== null) {
+            redirect($redirectUrl);
+        }
+
+        $dto = $this->getNewKarmaUseCase->getPage($pagination->getPerPage(), $pagination->getOffset());
+
+        return $this->renderList(__('New responses'), $id, $dto, $pagination);
     }
 
     public function voteForm(int $id): string
@@ -180,7 +201,7 @@ final readonly class KarmaController
         redirect('/profile/' . $id);
     }
 
-    private function renderList(string $title, int $profileId, KarmaListDTO $dto): string
+    private function renderList(string $title, int $profileId, KarmaListDTO $dto, Pagination $pagination): string
     {
         $this->navChain->add(__('User Profile'), '/profile/' . $profileId);
         $this->navChain->add(__('Karma'));
@@ -198,8 +219,8 @@ final readonly class KarmaController
                 'data'       => [
                     'filters'    => $dto->filters,
                     'items'      => $dto->items,
-                    'total'      => $dto->total,
-                    'pagination' => $dto->pagination,
+                    'total'      => $pagination->getTotal(),
+                    'pagination' => $pagination->render(),
                     'reset_url'  => $dto->resetUrl,
                     'back_url'   => $dto->backUrl,
                 ],

@@ -4,14 +4,20 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Profile\Domain\Repository;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
+use Johncms\Users\IpHistory;
 
 interface IpHistoryRepositoryInterface
 {
     /**
-     * Paginated IP history of the given user, newest first.
-     *
-     * @return LengthAwarePaginator<int, \Johncms\Users\IpHistory>
+     * Count IP history records of the given user.
      */
-    public function paginateByUser(int $userId, int $perPage): LengthAwarePaginator;
+    public function countByUser(int $userId): int;
+
+    /**
+     * A page of the IP history of the given user, newest first.
+     *
+     * @return Collection<int, IpHistory>
+     */
+    public function getByUser(int $userId, int $limit, int $offset): Collection;
 }

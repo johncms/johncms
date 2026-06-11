@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace Johncms\Modules\Profile\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\Pagination\Pagination;
+use Johncms\Http\Pagination\PaginationFactory;
+use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Profile\Application\DTO\BanHistoryDTO;
 use Johncms\Modules\Profile\Application\DTO\BanUserCommand;
 use Johncms\Modules\Profile\Application\Exceptions\BanException;
@@ -36,6 +39,8 @@ final readonly class BanController
         private CancelBanUseCase $cancelBanUseCase,
         private DeleteBanUseCase $deleteBanUseCase,
         private ClearBanHistoryUseCase $clearBanHistoryUseCase,
+        private PaginationFactory $paginationFactory,
+        private PaginationGuard $paginationGuard,
     ) {
         $this->controllerContext->initModule('profile');
     }
@@ -43,12 +48,19 @@ final readonly class BanController
     public function history(int $id): string
     {
         try {
-            $dto = $this->getBanHistoryUseCase->execute($id, (int) $this->currentUser->config->kmess);
+            $pagination = $this->paginationFactory->create($this->getBanHistoryUseCase->count($id));
+
+            $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
+            if ($redirectUrl !== null) {
+                redirect($redirectUrl);
+            }
+
+            $dto = $this->getBanHistoryUseCase->getPage($id, $pagination->getPerPage(), $pagination->getOffset());
         } catch (ProfileNotFoundException $e) {
             return $this->renderError($e->getMessage());
         }
 
-        return $this->renderHistory($id, $dto);
+        return $this->renderHistory($id, $dto, $pagination);
     }
 
     public function createForm(int $id): string
@@ -210,7 +222,7 @@ final readonly class BanController
         return $this->renderResult(__('Violations history cleared'), 'alert-success', '/profile/' . $id . '/bans', __('Violations history'));
     }
 
-    private function renderHistory(int $profileId, BanHistoryDTO $dto): string
+    private function renderHistory(int $profileId, BanHistoryDTO $dto, Pagination $pagination): string
     {
         $title = __('Violations History');
 
@@ -222,17 +234,19 @@ final readonly class BanController
             'page_title' => $title,
         ]);
 
+        $paginationHtml = $pagination->render();
+
         return $this->render->render(
             'profile::ban_history',
             [
                 'title'      => $title,
                 'page_title' => $title,
-                'pagination' => $dto->pagination,
+                'pagination' => $paginationHtml,
                 'data'       => [
                     'user_name'         => $dto->userName,
                     'items'             => $dto->items,
-                    'total'             => $dto->total,
-                    'pagination'        => $dto->pagination,
+                    'total'             => $pagination->getTotal(),
+                    'pagination'        => $paginationHtml,
                     'clear_history_url' => $dto->clearHistoryUrl,
                     'back_url'          => $dto->backUrl,
                 ],

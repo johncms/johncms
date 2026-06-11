@@ -22,25 +22,24 @@ final readonly class GetKarmaListUseCase
     ) {
     }
 
-    public function execute(int $targetId, int $type, int $perPage): KarmaListDTO
+    public function count(int $targetId, int $type): int
     {
-        $target = $this->profileUserRepository->findById($targetId);
+        $target = $this->loadTarget($targetId);
 
-        // Hide non-confirmed profiles from regular users (only admins with rights >= 7 may see them)
-        if ($target === null || (! $target->preg && $this->currentUser->rights < 7)) {
-            throw new ProfileNotFoundException();
-        }
+        return $this->karmaRepository->countReceived($target->id, $this->typeFilter($type));
+    }
 
-        // type 2 means "all", any other value filters by the exact vote type
-        $typeFilter = $type === 2 ? null : $type;
-        $paginator = $this->karmaRepository->paginateReceived($target->id, $typeFilter, $perPage);
-        $paginator->appends(['type' => $type]);
+    public function getPage(int $targetId, int $type, int $limit, int $offset): KarmaListDTO
+    {
+        $target = $this->loadTarget($targetId);
+
+        $votes = $this->karmaRepository->getReceived($target->id, $this->typeFilter($type), $limit, $offset);
 
         $isSupervisor = $this->currentUser->rights === 9;
         $base = '/profile/' . $target->id . '/karma';
 
         $items = [];
-        foreach ($paginator->items() as $vote) {
+        foreach ($votes as $vote) {
             if (! $vote instanceof Karma) {
                 continue;
             }
@@ -66,11 +65,29 @@ final readonly class GetKarmaListUseCase
 
         return new KarmaListDTO(
             items: $items,
-            total: $paginator->total(),
-            pagination: $paginator->render(),
             filters: $filters,
             resetUrl: $isSupervisor ? $base . '/clean' : null,
             backUrl: '/profile/' . $target->id,
         );
+    }
+
+    private function loadTarget(int $targetId): User
+    {
+        $target = $this->profileUserRepository->findById($targetId);
+
+        // Hide non-confirmed profiles from regular users (only admins with rights >= 7 may see them)
+        if ($target === null || (! $target->preg && $this->currentUser->rights < 7)) {
+            throw new ProfileNotFoundException();
+        }
+
+        return $target;
+    }
+
+    /**
+     * type 2 means "all", any other value filters by the exact vote type.
+     */
+    private function typeFilter(int $type): ?int
+    {
+        return $type === 2 ? null : $type;
     }
 }

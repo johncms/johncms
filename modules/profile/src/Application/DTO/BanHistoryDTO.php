@@ -12,8 +12,6 @@ final readonly class BanHistoryDTO
     public function __construct(
         public string $userName,
         public array $items,
-        public int $total,
-        public string $pagination,
         public ?string $clearHistoryUrl,
         public string $backUrl,
     ) {

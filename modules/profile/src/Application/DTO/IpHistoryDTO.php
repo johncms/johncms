@@ -11,8 +11,6 @@ final readonly class IpHistoryDTO
      */
     public function __construct(
         public array $items,
-        public int $total,
-        public string $pagination,
         public string $backUrl,
         public string $profileName,
     ) {

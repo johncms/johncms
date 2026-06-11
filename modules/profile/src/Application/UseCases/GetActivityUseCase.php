@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Profile\Application\UseCases;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Domain\Models\ForumMessage;
 use Johncms\Modules\Forum\Domain\Models\ForumTopic;
@@ -32,7 +32,52 @@ final readonly class GetActivityUseCase
     ) {
     }
 
-    public function execute(int $userId, ActivityType $type, int $perPage): ActivityDTO
+    public function count(int $userId, ActivityType $type): int
+    {
+        $profileUser = $this->loadProfile($userId);
+
+        return match ($type) {
+            ActivityType::Comments => $this->activityRepository->countGuestbookEntries(
+                $profileUser->id,
+                $this->currentUser->rights >= 1
+            ),
+            ActivityType::Topics   => $this->activityRepository->countForumTopics($profileUser->id, $this->includeDeleted()),
+            ActivityType::Messages => $this->activityRepository->countForumMessages($profileUser->id, $this->includeDeleted()),
+        };
+    }
+
+    public function getPage(int $userId, ActivityType $type, int $limit, int $offset): ActivityDTO
+    {
+        $profileUser = $this->loadProfile($userId);
+
+        $includeDeleted = $this->includeDeleted();
+
+        $records = match ($type) {
+            ActivityType::Comments => $this->activityRepository->getGuestbookEntries(
+                $profileUser->id,
+                $this->currentUser->rights >= 1,
+                $limit,
+                $offset
+            ),
+            ActivityType::Topics   => $this->activityRepository->getForumTopics($profileUser->id, $includeDeleted, $limit, $offset),
+            ActivityType::Messages => $this->activityRepository->getForumMessages($profileUser->id, $includeDeleted, $limit, $offset),
+        };
+
+        $items = match ($type) {
+            ActivityType::Comments => $this->mapComments($records),
+            ActivityType::Topics   => $this->mapTopics($records, $includeDeleted),
+            ActivityType::Messages => $this->mapMessages($records),
+        };
+
+        return new ActivityDTO(
+            itemType: $type->itemType(),
+            items: $items,
+            profileName: $profileUser->name,
+            profileId: $profileUser->id,
+        );
+    }
+
+    private function loadProfile(int $userId): User
     {
         $profileUser = $this->profileUserRepository->findById($userId);
 
@@ -41,41 +86,22 @@ final readonly class GetActivityUseCase
             throw new ProfileNotFoundException();
         }
 
-        $includeDeleted = $this->currentUser->rights >= 7;
+        return $profileUser;
+    }
 
-        $paginator = match ($type) {
-            ActivityType::Comments => $this->activityRepository->paginateGuestbookEntries(
-                $profileUser->id,
-                $this->currentUser->rights >= 1,
-                $perPage
-            ),
-            ActivityType::Topics => $this->activityRepository->paginateForumTopics($profileUser->id, $includeDeleted, $perPage),
-            ActivityType::Messages => $this->activityRepository->paginateForumMessages($profileUser->id, $includeDeleted, $perPage),
-        };
-
-        $items = match ($type) {
-            ActivityType::Comments => $this->mapComments($paginator),
-            ActivityType::Topics   => $this->mapTopics($paginator, $includeDeleted),
-            ActivityType::Messages => $this->mapMessages($paginator),
-        };
-
-        return new ActivityDTO(
-            itemType: $type->itemType(),
-            items: $items,
-            total: $paginator->total(),
-            pagination: $paginator->render(),
-            profileName: $profileUser->name,
-            profileId: $profileUser->id,
-        );
+    private function includeDeleted(): bool
+    {
+        return $this->currentUser->rights >= 7;
     }
 
     /**
+     * @param Collection<int, ForumMessage> $records
      * @return array<int, array<string, mixed>>
      */
-    private function mapMessages(LengthAwarePaginator $paginator): array
+    private function mapMessages(Collection $records): array
     {
         $rows = [];
-        foreach ($paginator->items() as $message) {
+        foreach ($records as $message) {
             if (! $message instanceof ForumMessage) {
                 continue;
             }
@@ -101,12 +127,13 @@ final readonly class GetActivityUseCase
     }
 
     /**
+     * @param Collection<int, ForumTopic> $records
      * @return array<int, array<string, mixed>>
      */
-    private function mapTopics(LengthAwarePaginator $paginator, bool $includeDeleted): array
+    private function mapTopics(Collection $records, bool $includeDeleted): array
     {
         $rows = [];
-        foreach ($paginator->items() as $topic) {
+        foreach ($records as $topic) {
             if (! $topic instanceof ForumTopic) {
                 continue;
             }
@@ -134,12 +161,13 @@ final readonly class GetActivityUseCase
     }
 
     /**
+     * @param Collection<int, GuestbookEntry> $records
      * @return array<int, array<string, mixed>>
      */
-    private function mapComments(LengthAwarePaginator $paginator): array
+    private function mapComments(Collection $records): array
     {
         $rows = [];
-        foreach ($paginator->items() as $entry) {
+        foreach ($records as $entry) {
             if (! $entry instanceof GuestbookEntry) {
                 continue;
             }

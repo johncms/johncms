@@ -6,23 +6,23 @@ namespace Johncms\Modules\Profile\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\PageMeta;
+use Johncms\Http\Pagination\PaginationFactory;
+use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Profile\Application\Exceptions\ProfileAccessForbiddenException;
 use Johncms\Modules\Profile\Application\Exceptions\ProfileNotFoundException;
 use Johncms\Modules\Profile\Application\UseCases\GetIpHistoryUseCase;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
 use Johncms\System\View\Render;
-use Johncms\Users\User;
 
 final readonly class IpHistoryController
 {
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
-        private User $currentUser,
         private GetIpHistoryUseCase $getIpHistoryUseCase,
+        private PaginationFactory $paginationFactory,
+        private PaginationGuard $paginationGuard,
     ) {
         $this->controllerContext->initModule('profile');
     }
@@ -30,10 +30,16 @@ final readonly class IpHistoryController
     public function __invoke(int $id): string
     {
         $title = __('IP History');
-        $page = max(1, (int) $this->request->getQuery('page', 1));
 
         try {
-            $result = $this->getIpHistoryUseCase->execute($id, $this->currentUser->config->kmess);
+            $pagination = $this->paginationFactory->create($this->getIpHistoryUseCase->count($id));
+
+            $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
+            if ($redirectUrl !== null) {
+                redirect($redirectUrl);
+            }
+
+            $result = $this->getIpHistoryUseCase->getPage($id, $pagination->getPerPage(), $pagination->getOffset());
         } catch (ProfileNotFoundException $e) {
             return $this->renderError($title, $e->getMessage());
         } catch (ProfileAccessForbiddenException $e) {
@@ -44,7 +50,7 @@ final readonly class IpHistoryController
         $this->navChain->add($result->profileName, $result->backUrl);
         $this->navChain->add($title);
 
-        $meta = new PageMeta($title, $page);
+        $meta = new PageMeta($title, $pagination->getCurrentPage());
         $this->render->addData([
             'title'       => $meta->title,
             'page_title'  => $title,
@@ -56,8 +62,8 @@ final readonly class IpHistoryController
             [
                 'data' => [
                     'items'      => $result->items,
-                    'total'      => $result->total,
-                    'pagination' => $result->pagination,
+                    'total'      => $pagination->getTotal(),
+                    'pagination' => $pagination->render(),
                     'back_url'   => $result->backUrl,
                 ],
             ]

@@ -22,16 +22,18 @@ final readonly class GetBanHistoryUseCase
     ) {
     }
 
-    public function execute(int $targetId, int $perPage): BanHistoryDTO
+    public function count(int $targetId): int
     {
-        $target = $this->profileUserRepository->findById($targetId);
+        $target = $this->loadTarget($targetId);
 
-        // Hide non-confirmed profiles from regular users (only admins with rights >= 7 may see them)
-        if ($target === null || (! $target->preg && $this->currentUser->rights < 7)) {
-            throw new ProfileNotFoundException();
-        }
+        return $this->banRepository->countForUser($target->id);
+    }
 
-        $paginator = $this->banRepository->paginateForUser($target->id, $perPage);
+    public function getPage(int $targetId, int $limit, int $offset): BanHistoryDTO
+    {
+        $target = $this->loadTarget($targetId);
+
+        $bans = $this->banRepository->getForUser($target->id, $limit, $offset);
 
         $types = [
             1  => __('Full block'),
@@ -47,7 +49,7 @@ final readonly class GetBanHistoryUseCase
         $isSupervisor = $this->currentUser->rights === 9;
 
         $items = [];
-        foreach ($paginator->items() as $ban) {
+        foreach ($bans as $ban) {
             if (! $ban instanceof Ban) {
                 continue;
             }
@@ -76,10 +78,20 @@ final readonly class GetBanHistoryUseCase
         return new BanHistoryDTO(
             userName: $target->name,
             items: $items,
-            total: $paginator->total(),
-            pagination: $paginator->render(),
             clearHistoryUrl: $isSupervisor ? $base . '/clear' : null,
             backUrl: '/profile/' . $target->id,
         );
+    }
+
+    private function loadTarget(int $targetId): User
+    {
+        $target = $this->profileUserRepository->findById($targetId);
+
+        // Hide non-confirmed profiles from regular users (only admins with rights >= 7 may see them)
+        if ($target === null || (! $target->preg && $this->currentUser->rights < 7)) {
+            throw new ProfileNotFoundException();
+        }
+
+        return $target;
     }
 }
