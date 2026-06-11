@@ -14,9 +14,10 @@ namespace Johncms\Modules\Help\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\PageMeta;
+use Johncms\Http\Pagination\PaginationFactory;
+use Johncms\Http\Pagination\PaginationGuard;
+use Johncms\Modules\Help\Application\UseCases\GetMySmiliesUseCase;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 
@@ -26,9 +27,10 @@ final readonly class MySmiliesController
         private ControllerContext $controllerContext,
         private Render $render,
         private NavChain $navChain,
-        private Request $request,
-        private Tools $tools,
         private User $currentUser,
+        private GetMySmiliesUseCase $mySmilies,
+        private PaginationFactory $paginationFactory,
+        private PaginationGuard $paginationGuard,
     ) {
         $this->controllerContext->initModule('help');
     }
@@ -52,43 +54,26 @@ final readonly class MySmiliesController
         $this->navChain->add(__('Smiles'), '/help/smilies/');
         $this->navChain->add($title);
 
-        $page = max(1, (int) $this->request->getQuery('page', 1));
-        $meta = new PageMeta($title . ' — ' . __('Smiles'), $page);
+        $pagination = $this->paginationFactory->create($this->mySmilies->count());
+
+        $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
+        if ($redirectUrl !== null) {
+            redirect($redirectUrl);
+        }
+
+        $meta = new PageMeta($title . ' — ' . __('Smiles'), $pagination->getCurrentPage());
         $this->render->addData([
             'title'       => $meta->title,
             'page_title'  => $title,
             'description' => $meta->description,
         ]);
-        $kmess = $this->currentUser->config->kmess;
-        $start = ($page - 1) * $kmess;
-
-        $allSmileys = is_array($this->currentUser->smileys) ? $this->currentUser->smileys : [];
-        $total = count($allSmileys);
-
-        $smileysPage = $allSmileys;
-        if ($total > $kmess) {
-            $chunks = array_chunk($allSmileys, $kmess, true);
-            $chunkIndex = (int) floor($start / $kmess);
-            $smileysPage = $chunks[$chunkIndex] ?? $chunks[0];
-        }
-
-        $items = [];
-        foreach ($smileysPage as $value) {
-            $smile = ':' . $value . ':';
-            $items[] = [
-                'can_del'   => true,
-                'lat_smile' => $value,
-                'smile'     => $this->tools->trans($smile),
-                'picture'   => $this->tools->smilies($smile, $this->currentUser->rights >= 1 ? 1 : 0),
-            ];
-        }
 
         return $this->render->render('help::my_smiles_list', [
             'data' => [
-                'items'       => $items,
-                'total'       => $total,
-                'pagination'  => $this->tools->displayPagination('/help/smilies/my/?', $start, $total, $kmess),
-                'form_action' => '/help/smilies/set/?page=' . $page,
+                'items'       => $this->mySmilies->getPage($pagination->getPerPage(), $pagination->getOffset()),
+                'total'       => $pagination->getTotal(),
+                'pagination'  => $pagination->render(),
+                'form_action' => '/help/smilies/set/?page=' . $pagination->getCurrentPage(),
                 'back_url'    => '/help/smilies/',
             ],
         ]);

@@ -13,32 +13,28 @@ declare(strict_types=1);
 namespace Johncms\Modules\Help\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\Pagination\PaginationFactory;
+use Johncms\Http\Pagination\PaginationGuard;
+use Johncms\Modules\Help\Application\UseCases\GetAvatarsUseCase;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
-use Johncms\Users\User;
 
 final readonly class AvatarListController
 {
-    private const PER_PAGE = 50;
-
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
         private NavChain $navChain,
-        private Request $request,
-        private Tools $tools,
-        private User $currentUser,
+        private GetAvatarsUseCase $avatars,
+        private PaginationFactory $paginationFactory,
+        private PaginationGuard $paginationGuard,
     ) {
         $this->controllerContext->initModule('help');
     }
 
     public function __invoke(string $id): string
     {
-        $avatarDir = ASSETS_PATH . 'avatars/' . $id;
-
-        if (! is_dir($avatarDir)) {
+        if (! $this->avatars->directoryExists($id)) {
             http_response_code(404);
             return $this->render->render('system::pages/result', [
                 'title'         => __('Wrong data'),
@@ -49,8 +45,7 @@ final readonly class AvatarListController
             ]);
         }
 
-        $nameFile = $avatarDir . '/name.txt';
-        $title = is_file($nameFile) ? htmlentities((string) file_get_contents($nameFile), ENT_QUOTES, 'utf-8') : $id;
+        $title = $this->avatars->directoryTitle($id);
 
         $this->navChain->add(__('Information, FAQ'), '/help/');
         $this->navChain->add(__('Avatars'), '/help/avatars/');
@@ -61,30 +56,19 @@ final readonly class AvatarListController
             'page_title' => $title,
         ]);
 
-        $page = max(1, (int) $this->request->getQuery('page', 1));
-        $start = ($page - 1) * self::PER_PAGE;
+        $pagination = $this->paginationFactory->create($this->avatars->count($id), GetAvatarsUseCase::PER_PAGE);
 
-        $files = glob($avatarDir . '/*.png') ?: [];
-        $total = count($files);
-        $end = min($start + self::PER_PAGE, $total);
-
-        $items = [];
-        for ($i = $start; $i < $end; $i++) {
-            $baseName = pathinfo($files[$i], PATHINFO_FILENAME);
-            $items[] = [
-                'picture' => '/assets/avatars/' . $id . '/' . basename($files[$i]),
-                'set_url' => ($this->currentUser->isValid() && is_numeric($baseName))
-                    ? '/help/avatars/' . $id . '/set/' . $baseName . '/'
-                    : '',
-            ];
+        $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
+        if ($redirectUrl !== null) {
+            redirect($redirectUrl);
         }
 
         return $this->render->render('help::avatar_list', [
             'data' => [
-                'items'      => $items,
-                'total'      => $total,
-                'per_page'   => self::PER_PAGE,
-                'pagination' => $this->tools->displayPagination('/help/avatars/' . $id . '/?', $start, $total, self::PER_PAGE),
+                'items'      => $this->avatars->getPage($id, $pagination->getPerPage(), $pagination->getOffset()),
+                'total'      => $pagination->getTotal(),
+                'per_page'   => GetAvatarsUseCase::PER_PAGE,
+                'pagination' => $pagination->render(),
                 'back_url'   => '/help/avatars/',
             ],
         ]);

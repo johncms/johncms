@@ -19,7 +19,7 @@ use Johncms\Users\User;
 
 final readonly class SetMySmiliesController
 {
-    private const USER_SMILEYS_MAX = 20;
+    private const USER_SMILIES_MAX = 20;
 
     public function __construct(
         private ControllerContext $controllerContext,
@@ -61,21 +61,21 @@ final readonly class SetMySmiliesController
             exit;
         }
 
-        $smileys = is_array($this->currentUser->smileys) ? $this->currentUser->smileys : [];
+        $smilies = is_array($this->currentUser->smileys) ? $this->currentUser->smileys : [];
 
         if ($isDelete) {
-            $smileys = array_values(array_diff($smileys, (array) $post['delete_sm']));
+            $smilies = array_values(array_diff($smilies, (array) $post['delete_sm']));
         }
 
         if ($isAdd) {
-            $smileys = array_values(array_unique(array_merge($smileys, (array) $post['add_sm'])));
+            $smilies = array_values(array_unique(array_merge($smilies, (array) $post['add_sm'])));
         }
 
-        if (count($smileys) > self::USER_SMILEYS_MAX) {
-            $smileys = array_slice($smileys, 0, self::USER_SMILEYS_MAX);
+        if (count($smilies) > self::USER_SMILIES_MAX) {
+            $smilies = array_slice($smilies, 0, self::USER_SMILIES_MAX);
         }
 
-        User::query()->where('id', $this->currentUser->id)->update(['smileys' => serialize($smileys)]);
+        User::query()->where('id', $this->currentUser->id)->update(['smileys' => serialize($smilies)]);
 
         $pageSuffix = $page > 1 ? '?page=' . $page : '';
 

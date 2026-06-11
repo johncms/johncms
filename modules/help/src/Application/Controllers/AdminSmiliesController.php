@@ -14,23 +14,23 @@ namespace Johncms\Modules\Help\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\PageMeta;
+use Johncms\Http\Pagination\PaginationFactory;
+use Johncms\Http\Pagination\PaginationGuard;
+use Johncms\Modules\Help\Application\UseCases\GetAdminSmiliesUseCase;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 
 final readonly class AdminSmiliesController
 {
-    private const USER_SMILEYS_MAX = 20;
-
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
         private NavChain $navChain,
-        private Request $request,
-        private Tools $tools,
         private User $currentUser,
+        private GetAdminSmiliesUseCase $adminSmilies,
+        private PaginationFactory $paginationFactory,
+        private PaginationGuard $paginationGuard,
     ) {
         $this->controllerContext->initModule('help');
     }
@@ -52,50 +52,29 @@ final readonly class AdminSmiliesController
         $this->navChain->add(__('Smiles'), '/help/smilies/');
         $this->navChain->add($title);
 
-        $page = max(1, (int) $this->request->getQuery('page', 1));
-        $meta = new PageMeta($title . ' — ' . __('Smiles'), $page);
+        $pagination = $this->paginationFactory->create($this->adminSmilies->count());
+
+        $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
+        if ($redirectUrl !== null) {
+            redirect($redirectUrl);
+        }
+
+        $meta = new PageMeta($title . ' — ' . __('Smiles'), $pagination->getCurrentPage());
         $this->render->addData([
             'title'       => $meta->title,
             'page_title'  => $title,
             'description' => $meta->description,
         ]);
-        $kmess = $this->currentUser->config->kmess;
-        $start = ($page - 1) * $kmess;
-
-        $userSmileys = is_array($this->currentUser->smileys) ? $this->currentUser->smileys : [];
-
-        $files = [];
-        $dir = opendir(ASSETS_PATH . 'emoticons/admin');
-        while (($file = readdir($dir)) !== false) {
-            if ($file !== '.' && $file !== '..' && $file !== 'name.dat' && $file !== '.svn' && $file !== 'index.php') {
-                $files[] = $file;
-            }
-        }
-        closedir($dir);
-
-        $total = count($files);
-        $end = min($start + $kmess, $total);
-
-        $items = [];
-        for ($i = $start; $i < $end; $i++) {
-            $smile = preg_replace('#^(.*?)\.(gif|jpg|png)$#isU', '$1', $files[$i], 1);
-            $items[] = [
-                'can_add'   => $this->currentUser->isValid() && ! in_array($smile, $userSmileys),
-                'lat_smile' => $smile,
-                'smile'     => $this->tools->trans($smile),
-                'picture'   => '/assets/emoticons/admin/' . $files[$i],
-            ];
-        }
 
         return $this->render->render('help::smiles_list', [
             'data' => [
-                'items'              => $items,
-                'total'              => $total,
-                'user_smiles_current' => count($userSmileys),
-                'user_smiles_max'    => self::USER_SMILEYS_MAX,
-                'pagination'         => $this->tools->displayPagination('/help/smilies/admin/?', $start, $total, $kmess),
-                'form_action'        => '/help/smilies/set/?adm=1&page=' . $page,
-                'back_url'           => '/help/smilies/',
+                'items'               => $this->adminSmilies->getPage($pagination->getPerPage(), $pagination->getOffset()),
+                'total'               => $pagination->getTotal(),
+                'user_smiles_current' => $this->adminSmilies->userSmiliesCount(),
+                'user_smiles_max'     => GetAdminSmiliesUseCase::USER_SMILIES_MAX,
+                'pagination'          => $pagination->render(),
+                'form_action'         => '/help/smilies/set/?adm=1&page=' . $pagination->getCurrentPage(),
+                'back_url'            => '/help/smilies/',
             ],
         ]);
     }

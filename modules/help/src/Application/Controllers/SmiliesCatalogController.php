@@ -19,7 +19,7 @@ use Johncms\Users\User;
 
 final readonly class SmiliesCatalogController
 {
-    private const USER_SMILEYS_MAX = 20;
+    private const USER_SMILIES_MAX = 20;
 
     public function __construct(
         private ControllerContext $controllerContext,
@@ -45,12 +45,12 @@ final readonly class SmiliesCatalogController
         $items = [];
 
         if ($this->currentUser->isValid()) {
-            $smileys = $this->currentUser->smileys ?? [];
-            $myCount = is_array($smileys) ? count($smileys) : 0;
+            $smilies = $this->currentUser->smileys ?? [];
+            $myCount = is_array($smilies) ? count($smilies) : 0;
             $items[] = [
                 'url'   => '/help/smilies/my/',
                 'name'  => __('My smilies'),
-                'count' => $myCount . ' / ' . self::USER_SMILEYS_MAX,
+                'count' => $myCount . ' / ' . self::USER_SMILIES_MAX,
             ];
         }
 
