@@ -6,13 +6,12 @@ namespace Johncms\Modules\Online\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\PageMeta;
+use Johncms\Http\Pagination\PaginationFactory;
+use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Online\Application\FiltersBuilder;
+use Johncms\Modules\Online\Application\UseCases\GetIpActivityUseCase;
 use Johncms\NavChain;
-use Johncms\System\Http\Environment;
-use Johncms\System\Http\Request;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
-use Johncms\Users\User;
 
 final readonly class IpController
 {
@@ -20,65 +19,45 @@ final readonly class IpController
         private ControllerContext $controllerContext,
         private Render $render,
         private NavChain $navChain,
-        private Tools $tools,
-        private User $currentUser,
-        private Environment $env,
-        private Request $request,
         private FiltersBuilder $filtersBuilder,
+        private GetIpActivityUseCase $ipActivity,
+        private PaginationFactory $paginationFactory,
+        private PaginationGuard $paginationGuard,
     ) {
         $this->controllerContext->initModule('online');
     }
 
     public function __invoke(): string
     {
-        $page = max(1, (int) $this->request->getQuery('page', 1));
         $pageTitle = __('IP Activity');
-        $meta = new PageMeta($pageTitle . ' — ' . __('Online'), $page);
 
         $this->navChain->add(__('Online'), '/online/');
 
+        $filters = $this->filtersBuilder->build('ip');
+
+        $pagination = $this->paginationFactory->create($this->ipActivity->count());
+
+        $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
+        if ($redirectUrl !== null) {
+            redirect($redirectUrl);
+        }
+
+        $meta = new PageMeta($pageTitle . ' — ' . __('Online'), $pagination->getCurrentPage());
         $this->render->addData([
             'title'       => $meta->title,
             'page_title'  => $pageTitle,
             'description' => $meta->description,
         ]);
 
-        $filters = $this->filtersBuilder->build('ip');
-
-        $ipArray = array_count_values($this->env->getIpLog());
-        $total = count($ipArray);
-        $kmess = $this->currentUser->config->kmess;
-        $start = $page * $kmess - $kmess;
-
-        if ($start >= $total && $total > 0) {
-            $start = max(0, $total - (($total % $kmess) === 0 ? $kmess : ($total % $kmess)));
-        }
-
-        $end = min($start + $kmess, $total);
-
-        arsort($ipArray);
-        $items = [];
-
-        if ($total) {
-            $currentIp = $this->env->getIp();
-            $ipList = array_slice($ipArray, $start, $end - $start, true);
-
-            foreach ($ipList as $ipLong => $count) {
-                $ip = long2ip((int) $ipLong);
-                $items[] = [
-                    'ip'              => $ip,
-                    'search_ip'       => '/admin/ip-search?ip=' . $ip,
-                    'whois_ip'        => '/admin/ip-whois?ip=' . $ip,
-                    'current_user_ip' => ((string) $ipLong === (string) $currentIp),
-                    'count'           => $count,
-                ];
-            }
-        }
+        $total = $pagination->getTotal();
+        $items = $total > 0
+            ? $this->ipActivity->getPage($pagination->getPerPage(), $pagination->getOffset())
+            : [];
 
         return $this->render->render('online::ip', [
             'data' => [
                 'filters'    => $filters,
-                'pagination' => $total > $kmess ? $this->tools->displayPagination('?', $start, $total, $kmess) : '',
+                'pagination' => $pagination->render(),
                 'total'      => $total,
                 'items'      => $items,
             ],

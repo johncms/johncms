@@ -6,14 +6,14 @@ namespace Johncms\Modules\Online\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\PageMeta;
+use Johncms\Http\Pagination\PaginationFactory;
+use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Forum\Application\Services\ForumVisitorPlaceFormatter;
 use Johncms\Modules\Online\Application\FiltersBuilder;
+use Johncms\Modules\Online\Application\UseCases\GetUsersHistoryUseCase;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
 use Johncms\System\i18n\Translator;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
-use Johncms\Users\User;
 use Throwable;
 
 final readonly class HistoryController
@@ -22,28 +22,20 @@ final readonly class HistoryController
         private ControllerContext $controllerContext,
         private Render $render,
         private NavChain $navChain,
-        private Tools $tools,
-        private User $currentUser,
         private Translator $translator,
-        private Request $request,
         private FiltersBuilder $filtersBuilder,
+        private GetUsersHistoryUseCase $usersHistory,
+        private PaginationFactory $paginationFactory,
+        private PaginationGuard $paginationGuard,
     ) {
         $this->controllerContext->initModule('online');
     }
 
     public function __invoke(): string
     {
-        $page = max(1, (int) $this->request->getQuery('page', 1));
         $pageTitle = __('History');
-        $meta = new PageMeta($pageTitle . ' — ' . __('Online'), $page);
 
         $this->navChain->add(__('Online'), '/online/');
-
-        $this->render->addData([
-            'title'       => $meta->title,
-            'page_title'  => $pageTitle,
-            'description' => $meta->description,
-        ]);
 
         $forumPlaceFormatter = null;
         try {
@@ -54,32 +46,29 @@ final readonly class HistoryController
 
         $filters = $this->filtersBuilder->build('history');
 
-        $users = User::query()
-            ->whereBetween('lastdate', [(time() - 172800), (time() - 310)])
-            ->orderBy('lastdate', 'desc')
-            ->paginate($this->currentUser->config->kmess);
+        $pagination = $this->paginationFactory->create($this->usersHistory->count());
 
-        $total = $users->total();
-        $items = [];
-
-        if ($total) {
-            $items = $users->getItems()->map(
-                function ($item) use ($forumPlaceFormatter) {
-                    /** @var User $item */
-                    $place = (string) $item->place;
-                    $item->place_name = $forumPlaceFormatter !== null && str_starts_with($place, '/forum')
-                        ? $forumPlaceFormatter->format($place)
-                        : $this->tools->displayPlace($place);
-                    $item->display_date = $this->tools->displayDate($item->sestime);
-                    return $item;
-                }
-            );
+        $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
+        if ($redirectUrl !== null) {
+            redirect($redirectUrl);
         }
+
+        $meta = new PageMeta($pageTitle . ' — ' . __('Online'), $pagination->getCurrentPage());
+        $this->render->addData([
+            'title'       => $meta->title,
+            'page_title'  => $pageTitle,
+            'description' => $meta->description,
+        ]);
+
+        $total = $pagination->getTotal();
+        $items = $total > 0
+            ? $this->usersHistory->getPage($pagination->getPerPage(), $pagination->getOffset(), $forumPlaceFormatter)
+            : [];
 
         return $this->render->render('online::users', [
             'data' => [
                 'filters'    => $filters,
-                'pagination' => $users->render(),
+                'pagination' => $pagination->render(),
                 'total'      => $total,
                 'items'      => $items,
             ],
