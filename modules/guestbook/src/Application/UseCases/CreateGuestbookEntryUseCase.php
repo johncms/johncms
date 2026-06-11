@@ -7,12 +7,14 @@ namespace Johncms\Modules\Guestbook\Application\UseCases;
 use Johncms\Modules\Guestbook\Application\DTO\CreateGuestbookEntryDTO;
 use Johncms\Modules\Guestbook\Domain\Models\GuestbookEntry;
 use Johncms\Modules\Guestbook\Domain\Repository\GuestbookEntryRepositoryInterface;
+use Johncms\Users\Repository\UserRepositoryInterface;
 use Johncms\Users\User;
 
 final readonly class CreateGuestbookEntryUseCase
 {
     public function __construct(
         private GuestbookEntryRepositoryInterface $repository,
+        private UserRepositoryInterface $userRepository,
         private User $currentUser,
     ) {
     }
@@ -34,14 +36,7 @@ final readonly class CreateGuestbookEntryUseCase
         );
 
         if ($this->currentUser->isValid()) {
-            User::query()
-                ->where('id', $this->currentUser->id)
-                ->update(
-                    [
-                        'postguest' => $this->currentUser->postguest + 1,
-                        'lastpost'  => time(),
-                    ]
-                );
+            $this->userRepository->registerGuestbookPost($this->currentUser);
         }
 
         return $entry;

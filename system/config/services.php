@@ -92,6 +92,7 @@ return static function (ContainerConfigurator $container): void {
     $services->set(Request::class)->factory(service(RequestFactory::class));
     $services->set(\PDO::class, PdoFactory::class)->factory(service(PdoFactory::class));
     $services->set(\Johncms\Users\User::class)->factory(service(\Johncms\Users\UserFactory::class));
+    $services->set(\Johncms\Users\Repository\UserRepositoryInterface::class, \Johncms\Users\Repository\EloquentUserRepository::class);
     $services->set(\Johncms\System\Users\User::class)->factory(service(UserFactory::class));
 
     $services->set(Bbcode::class)->factory([Bbcode::class, 'create']);
