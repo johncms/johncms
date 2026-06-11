@@ -11,8 +11,6 @@ final readonly class FileListResultDTO
      */
     public function __construct(
         public \Illuminate\Support\Collection $items,
-        public int $total,
-        public string $pagination,
         public string $backUrl,
     ) {
     }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Mail\Application\UseCases;
 
-use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 use Johncms\Modules\Mail\Application\DTO\FileItemDTO;
 use Johncms\Modules\Mail\Application\DTO\FileListResultDTO;
 use Johncms\Modules\Mail\Application\Services\MailFileService;
@@ -21,26 +21,30 @@ final readonly class GetAttachedFilesUseCase
     ) {
     }
 
-    public function execute(int $perPage): FileListResultDTO
+    public function count(): int
     {
-        $paginator = $this->mailMessageRepository->getAttachedFiles($this->currentUser->id, $perPage);
+        return $this->mailMessageRepository->countAttachedFiles($this->currentUser->id);
+    }
+
+    public function getPage(int $limit, int $offset): FileListResultDTO
+    {
+        $messages = $this->mailMessageRepository->getAttachedFiles($this->currentUser->id, $limit, $offset);
 
         return new FileListResultDTO(
-            items: $this->mapToDTO($paginator),
-            total: $paginator->total(),
-            pagination: $paginator->render(),
+            items: $this->mapToDTO($messages),
             backUrl: '/profile/account',
         );
     }
 
     /**
-     * @return \Illuminate\Support\Collection<int, FileItemDTO>
+     * @param Collection<int, MailMessage> $messages
+     * @return Collection<int, FileItemDTO>
      */
-    private function mapToDTO(LengthAwarePaginator $paginator): \Illuminate\Support\Collection
+    private function mapToDTO(Collection $messages): Collection
     {
         $items = collect();
 
-        foreach ($paginator->items() as $message) {
+        foreach ($messages as $message) {
             if (! $message instanceof MailMessage) {
                 continue;
             }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Mail\Application\UseCases;
 
-use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 use Johncms\Modules\Mail\Application\DTO\ConversationItemDTO;
 use Johncms\Modules\Mail\Application\DTO\ConversationListResultDTO;
 use Johncms\Modules\Mail\Application\Services\MailMessagePreviewService;
@@ -24,29 +24,31 @@ final readonly class GetOutgoingConversationsUseCase
     ) {
     }
 
-    public function execute(int $page = 1, int $perPage = 20): ConversationListResultDTO
+    public function count(): int
     {
-        $paginator = $this->mailMessageRepository->getOutgoingConversations($this->currentUser->id, $perPage, $page);
-        $items = $this->mapToDTO($paginator);
+        return $this->mailMessageRepository->countOutgoingConversations($this->currentUser->id);
+    }
+
+    public function getPage(int $limit, int $offset): ConversationListResultDTO
+    {
+        $users = $this->mailMessageRepository->getOutgoingConversations($this->currentUser->id, $limit, $offset);
 
         return new ConversationListResultDTO(
-            items: $items,
-            total: $paginator->total(),
-            pagination: $paginator->render(),
+            items: $this->mapToDTO($users),
             backUrl: '/profile/account',
         );
     }
 
     /**
-     * @param LengthAwarePaginator $paginator
-     * @return \Illuminate\Support\Collection<int, ConversationItemDTO>
+     * @param Collection<int, User> $users
+     * @return Collection<int, ConversationItemDTO>
      */
-    private function mapToDTO(LengthAwarePaginator $paginator): \Illuminate\Support\Collection
+    private function mapToDTO(Collection $users): Collection
     {
         $items = collect();
         $tools = $this->tools;
 
-        foreach ($paginator->items() as $user) {
+        foreach ($users as $user) {
             if (! $user instanceof User) {
                 continue;
             }

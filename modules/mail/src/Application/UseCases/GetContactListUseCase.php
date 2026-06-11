@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Mail\Application\UseCases;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 use Johncms\Modules\Mail\Application\DTO\ContactItemDTO;
 use Johncms\Modules\Mail\Application\DTO\ContactListResultDTO;
+use Johncms\Modules\Mail\Domain\Models\Contact;
 use Johncms\Modules\Mail\Domain\Repository\ContactRepositoryInterface;
 use Johncms\Modules\Mail\Domain\Repository\MailMessageRepositoryInterface;
 use Johncms\Users\User;
@@ -20,10 +21,14 @@ final readonly class GetContactListUseCase
     ) {
     }
 
-    public function execute(int $page = 1, int $perPage = 20): ContactListResultDTO
+    public function count(): int
     {
-        $paginator = $this->contactRepository->paginateContacts($this->currentUser->id, $perPage);
-        $items = $this->mapContactsToDTO($paginator);
+        return $this->contactRepository->countContactList($this->currentUser->id);
+    }
+
+    public function getPage(int $limit, int $offset): ContactListResultDTO
+    {
+        $contacts = $this->contactRepository->getContactList($this->currentUser->id, $limit, $offset);
 
         $filters = [
             'all' => [
@@ -39,22 +44,20 @@ final readonly class GetContactListUseCase
         ];
 
         return new ContactListResultDTO(
-            items: $items,
-            total: $paginator->total(),
-            pagination: $paginator->render(),
+            items: $this->mapContactsToDTO($contacts),
             filters: $filters,
             backUrl: '/profile/account',
         );
     }
 
     /**
-     * @param LengthAwarePaginator $paginator
-     * @return \Illuminate\Support\Collection<int, ContactItemDTO>
+     * @param Collection<int, Contact> $contacts
+     * @return Collection<int, ContactItemDTO>
      */
-    private function mapContactsToDTO(LengthAwarePaginator $paginator): \Illuminate\Support\Collection
+    private function mapContactsToDTO(Collection $contacts): Collection
     {
         $items = collect();
-        foreach ($paginator->items() as $contact) {
+        foreach ($contacts as $contact) {
             $contactUser = $contact->contactUser;
             if ($contactUser === null) {
                 continue;

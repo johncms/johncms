@@ -6,6 +6,8 @@ namespace Johncms\Modules\Mail\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\PageMeta;
+use Johncms\Http\Pagination\PaginationFactory;
+use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Mail\Application\DTO\SendMessageCommand;
 use Johncms\Modules\Mail\Application\Exceptions\SendMessageException;
 use Johncms\Modules\Mail\Application\Exceptions\UserNotFoundException;
@@ -29,6 +31,8 @@ final readonly class WriteController
         private EditorContentNormalizer $editorContentNormalizer,
         private GetConversationUseCase $getConversationUseCase,
         private SendMessageUseCase $sendMessageUseCase,
+        private PaginationFactory $paginationFactory,
+        private PaginationGuard $paginationGuard,
     ) {
         $this->controllerContext->initModule('mail');
     }
@@ -67,10 +71,15 @@ final readonly class WriteController
 
     public function conversation(int $id): string
     {
-        $page = max(1, (int) $this->request->getQuery('page', 1));
-
         try {
-            $result = $this->getConversationUseCase->execute($id, $page, $this->currentUser->config->kmess);
+            $pagination = $this->paginationFactory->create($this->getConversationUseCase->count($id));
+
+            $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
+            if ($redirectUrl !== null) {
+                redirect($redirectUrl);
+            }
+
+            $result = $this->getConversationUseCase->getPage($id, $pagination->getPerPage(), $pagination->getOffset());
         } catch (UserNotFoundException) {
             return $this->render->render(
                 'system::pages/result',
@@ -89,7 +98,7 @@ final readonly class WriteController
         $this->navChain->add(__('Mail'), '/mail/incoming');
         $this->navChain->add($conversationTitle, '/mail/write/' . $id);
 
-        $meta = new PageMeta($conversationTitle, $page);
+        $meta = new PageMeta($conversationTitle, $pagination->getCurrentPage());
         $this->render->addData([
             'title'       => $meta->title,
             'page_title'  => $conversationTitle,
@@ -105,8 +114,8 @@ final readonly class WriteController
                     'show_nick_input' => $result->showNickInput,
                     'nick'            => $result->nick,
                     'items'           => $result->items->map(fn ($item) => $item->toArray())->all(),
-                    'total'           => $result->total,
-                    'pagination'      => $result->pagination,
+                    'total'           => $pagination->getTotal(),
+                    'pagination'      => $pagination->render(),
                     'clear_url'       => $result->clearUrl,
                     'back_url'        => $result->backUrl,
                 ],

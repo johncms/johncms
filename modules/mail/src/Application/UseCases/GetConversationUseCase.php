@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Mail\Application\UseCases;
 
-use Illuminate\Pagination\LengthAwarePaginator;
 use Johncms\Modules\Mail\Application\DTO\ConversationResultDTO;
 use Johncms\Modules\Mail\Application\DTO\MessageItemDTO;
 use Johncms\Modules\Mail\Application\Exceptions\UserNotFoundException;
@@ -29,17 +28,21 @@ final readonly class GetConversationUseCase
     ) {
     }
 
-    public function execute(int $contactId, int $page, int $perPage): ConversationResultDTO
+    public function count(int $contactId): int
     {
-        $contact = User::query()->find($contactId);
-        if ($contact === null) {
-            throw new UserNotFoundException();
-        }
+        $this->ensureContactExists($contactId);
 
-        $paginator = $this->mailMessageRepository->getConversation($this->currentUser->id, $contactId, $perPage);
+        return $this->mailMessageRepository->countConversation($this->currentUser->id, $contactId);
+    }
 
-        $items = $this->mapToDTO($paginator);
-        $this->markIncomingAsRead($paginator);
+    public function getPage(int $contactId, int $limit, int $offset): ConversationResultDTO
+    {
+        $this->ensureContactExists($contactId);
+
+        $messages = $this->mailMessageRepository->getConversation($this->currentUser->id, $contactId, $limit, $offset);
+
+        $items = $this->mapToDTO($messages);
+        $this->markIncomingAsRead($messages);
 
         $canWrite = empty($this->currentUser->ban['1'])
             && empty($this->currentUser->ban['3'])
@@ -47,8 +50,6 @@ final readonly class GetConversationUseCase
 
         return new ConversationResultDTO(
             items: $items,
-            total: $paginator->total(),
-            pagination: $paginator->render(),
             backUrl: '/profile/account',
             clearUrl: '/mail/clear/' . $contactId,
             formAction: $canWrite ? '/mail/write/' . $contactId : null,
@@ -57,14 +58,22 @@ final readonly class GetConversationUseCase
         );
     }
 
+    private function ensureContactExists(int $contactId): void
+    {
+        if (User::query()->find($contactId) === null) {
+            throw new UserNotFoundException();
+        }
+    }
+
     /**
+     * @param \Illuminate\Support\Collection<int, MailMessage> $messages
      * @return \Illuminate\Support\Collection<int, MessageItemDTO>
      */
-    private function mapToDTO(LengthAwarePaginator $paginator): \Illuminate\Support\Collection
+    private function mapToDTO(\Illuminate\Support\Collection $messages): \Illuminate\Support\Collection
     {
         $items = collect();
 
-        foreach ($paginator->items() as $message) {
+        foreach ($messages as $message) {
             if (! $message instanceof MailMessage) {
                 continue;
             }
@@ -116,11 +125,13 @@ final readonly class GetConversationUseCase
 
     /**
      * Mark messages received by the current user (within this conversation page) as read.
+     *
+     * @param \Illuminate\Support\Collection<int, MailMessage> $messages
      */
-    private function markIncomingAsRead(LengthAwarePaginator $paginator): void
+    private function markIncomingAsRead(\Illuminate\Support\Collection $messages): void
     {
         $ids = [];
-        foreach ($paginator->items() as $message) {
+        foreach ($messages as $message) {
             if ($message instanceof MailMessage && ! $message->read && $message->from_id === $this->currentUser->id) {
                 $ids[] = $message->id;
             }

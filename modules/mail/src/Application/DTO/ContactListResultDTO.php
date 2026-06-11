@@ -14,8 +14,6 @@ final readonly class ContactListResultDTO
      */
     public function __construct(
         public Collection $items,
-        public int $total,
-        public string $pagination,
         public array $filters,
         public string $backUrl,
     ) {

@@ -6,37 +6,42 @@ namespace Johncms\Modules\Mail\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\PageMeta;
+use Johncms\Http\Pagination\PaginationFactory;
+use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Mail\Application\UseCases\GetAttachedFilesUseCase;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
 use Johncms\System\View\Render;
-use Johncms\Users\User;
 
 final readonly class FilesController
 {
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
-        private User $currentUser,
         private GetAttachedFilesUseCase $getAttachedFilesUseCase,
+        private PaginationFactory $paginationFactory,
+        private PaginationGuard $paginationGuard,
     ) {
         $this->controllerContext->initModule('mail');
     }
 
     public function __invoke(): string
     {
-        $page = max(1, (int) $this->request->getQuery('page', 1));
+        $pagination = $this->paginationFactory->create($this->getAttachedFilesUseCase->count());
 
-        $result = $this->getAttachedFilesUseCase->execute($this->currentUser->config->kmess);
+        $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
+        if ($redirectUrl !== null) {
+            redirect($redirectUrl);
+        }
+
+        $result = $this->getAttachedFilesUseCase->getPage($pagination->getPerPage(), $pagination->getOffset());
 
         $this->navChain->add(__('My Account'), '/profile/account');
         $this->navChain->add(__('Mail'), '/mail/incoming');
         $this->navChain->add(__('Files'), '/mail/files');
 
         $pageTitle = __('Files');
-        $meta = new PageMeta($pageTitle, $page);
+        $meta = new PageMeta($pageTitle, $pagination->getCurrentPage());
         $this->render->addData([
             'title'       => $meta->title,
             'page_title'  => $pageTitle,
@@ -48,8 +53,8 @@ final readonly class FilesController
             [
                 'data' => [
                     'items'      => $result->items->map(fn ($item) => $item->toArray())->all(),
-                    'total'      => $result->total,
-                    'pagination' => $result->pagination,
+                    'total'      => $pagination->getTotal(),
+                    'pagination' => $pagination->render(),
                     'back_url'   => $result->backUrl,
                     'nav_active' => 'files',
                 ],

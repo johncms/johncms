@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Mail\Domain\Repository;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Johncms\Modules\Mail\Domain\Models\Contact;
 
@@ -19,13 +18,16 @@ interface ContactRepositoryInterface
     public function getContacts(int $userId): Collection;
 
     /**
-     * Get paginated contacts list for a user (excluding blocked).
-     *
-     * @param int $userId User ID
-     * @param int $perPage Items per page
-     * @return LengthAwarePaginator
+     * Count the user's contacts (excluding blocked) that still have an existing user account.
      */
-    public function paginateContacts(int $userId, int $perPage): LengthAwarePaginator;
+    public function countContactList(int $userId): int;
+
+    /**
+     * Get a page of the user's contacts (excluding blocked), ordered by user name.
+     *
+     * @return Collection<int, Contact>
+     */
+    public function getContactList(int $userId, int $limit, int $offset): Collection;
 
     /**
      * Count total contacts for a user (excluding blocked).

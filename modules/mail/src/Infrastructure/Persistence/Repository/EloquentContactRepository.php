@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Mail\Infrastructure\Persistence\Repository;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Johncms\Modules\Mail\Domain\Models\Contact;
 use Johncms\Modules\Mail\Domain\Repository\ContactRepositoryInterface;
@@ -103,7 +102,19 @@ class EloquentContactRepository implements ContactRepositoryInterface
             ->exists();
     }
 
-    public function paginateContacts(int $userId, int $perPage): LengthAwarePaginator
+    public function countContactList(int $userId): int
+    {
+        return Contact::query()
+            ->join('users', 'cms_contact.from_id', '=', 'users.id')
+            ->where('cms_contact.user_id', $userId)
+            ->where('cms_contact.ban', '!=', 1)
+            ->count();
+    }
+
+    /**
+     * @return Collection<int, Contact>
+     */
+    public function getContactList(int $userId, int $limit, int $offset): Collection
     {
         return Contact::query()
             ->select('cms_contact.*')
@@ -112,7 +123,9 @@ class EloquentContactRepository implements ContactRepositoryInterface
             ->where('cms_contact.ban', '!=', 1)
             ->orderBy('users.name')
             ->with('contactUser')
-            ->paginate($perPage);
+            ->offset($offset)
+            ->limit($limit)
+            ->get();
     }
 
     public function countContacts(int $userId): int

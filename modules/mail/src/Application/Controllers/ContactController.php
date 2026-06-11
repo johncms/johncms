@@ -6,38 +6,42 @@ namespace Johncms\Modules\Mail\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\PageMeta;
+use Johncms\Http\Pagination\PaginationFactory;
+use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Mail\Application\UseCases\GetContactListUseCase;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
 use Johncms\System\View\Render;
-use Johncms\Users\User;
 
 final readonly class ContactController
 {
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
-        private User $currentUser,
         private GetContactListUseCase $getContactListUseCase,
+        private PaginationFactory $paginationFactory,
+        private PaginationGuard $paginationGuard,
     ) {
         $this->controllerContext->initModule('mail');
     }
 
     public function __invoke(): string
     {
-        $page = max(1, (int) $this->request->getQuery('page', 1));
-        $perPage = $this->currentUser->config->kmess;
+        $pagination = $this->paginationFactory->create($this->getContactListUseCase->count());
 
-        $result = $this->getContactListUseCase->execute($page, $perPage);
+        $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
+        if ($redirectUrl !== null) {
+            redirect($redirectUrl);
+        }
+
+        $result = $this->getContactListUseCase->getPage($pagination->getPerPage(), $pagination->getOffset());
 
         $this->navChain->add(__('My Account'), '/profile/account');
         $this->navChain->add(__('Mail'), '/mail/incoming');
         $this->navChain->add(__('Contacts'), '/mail/contacts');
 
         $pageTitle = __('Contacts');
-        $meta = new PageMeta($pageTitle, $page);
+        $meta = new PageMeta($pageTitle, $pagination->getCurrentPage());
         $this->render->addData([
             'title'       => $meta->title,
             'page_title'  => $pageTitle,
@@ -49,8 +53,8 @@ final readonly class ContactController
             [
                 'data' => [
                     'items' => $result->items,
-                    'total' => $result->total,
-                    'pagination' => $result->pagination,
+                    'total' => $pagination->getTotal(),
+                    'pagination' => $pagination->render(),
                     'filters' => $result->filters,
                     'back_url' => $result->backUrl,
                     'nav_active' => 'contacts',

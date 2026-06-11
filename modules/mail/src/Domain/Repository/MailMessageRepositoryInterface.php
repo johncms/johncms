@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Mail\Domain\Repository;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use Illuminate\Support\Collection;
 use Johncms\Modules\Mail\Domain\Models\MailMessage;
+use Johncms\Users\User;
 
 interface MailMessageRepositoryInterface
 {
@@ -17,41 +19,23 @@ interface MailMessageRepositoryInterface
     public function getLastMessageBetween(int $authorId, int $recipientId): ?MailMessage;
 
     /**
-     * Get conversation between two users.
-     *
-     * @param int $userId Current user ID
-     * @param int $contactId Other user ID
-     * @param int $perPage Items per page
-     * @return LengthAwarePaginator
+     * Count the messages in the conversation between two users.
      */
-    public function getConversation(int $userId, int $contactId, int $perPage): LengthAwarePaginator;
+    public function countConversation(int $userId, int $contactId): int;
 
     /**
-     * Get incoming messages grouped by sender.
+     * Get a page of the conversation between two users, newest first.
      *
-     * @param int $userId Recipient user ID
-     * @param int $perPage Items per page
-     * @return array Array of senders with their last messages
+     * @return EloquentCollection<int, MailMessage>
      */
-    public function getIncomingGrouped(int $userId, int $perPage): array;
+    public function getConversation(int $userId, int $contactId, int $limit, int $offset): EloquentCollection;
 
     /**
-     * Get outgoing messages grouped by recipient.
+     * Get a page of the user's attached files, newest first.
      *
-     * @param int $userId Sender user ID
-     * @param int $perPage Items per page
-     * @return array Array of recipients with their last messages
+     * @return EloquentCollection<int, MailMessage>
      */
-    public function getOutgoingGrouped(int $userId, int $perPage): array;
-
-    /**
-     * Get all attached files for a user.
-     *
-     * @param int $userId User ID
-     * @param int $perPage Items per page
-     * @return LengthAwarePaginator
-     */
-    public function getAttachedFiles(int $userId, int $perPage): LengthAwarePaginator;
+    public function getAttachedFiles(int $userId, int $limit, int $offset): EloquentCollection;
 
     public function save(MailMessage $message): void;
 
@@ -124,22 +108,28 @@ interface MailMessageRepositoryInterface
     public function countAttachedFiles(int $userId): int;
 
     /**
-     * Get incoming conversations grouped by sender with last message preview.
-     *
-     * @param int $userId Recipient user ID
-     * @param int $perPage Items per page
-     * @param int $page Page number
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator Paginator with conversation items
+     * Count the distinct senders the user has incoming conversations with.
      */
-    public function getIncomingConversations(int $userId, int $perPage, int $page): \Illuminate\Contracts\Pagination\LengthAwarePaginator;
+    public function countIncomingConversations(int $userId): int;
 
     /**
-     * Get outgoing conversations grouped by recipient with last message preview.
+     * Get a page of incoming conversation partners (User models carrying a last_time attribute),
+     * ordered by the last message time descending.
      *
-     * @param int $userId Sender user ID
-     * @param int $perPage Items per page
-     * @param int $page Page number
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator Paginator with conversation items
+     * @return Collection<int, User>
      */
-    public function getOutgoingConversations(int $userId, int $perPage, int $page): \Illuminate\Contracts\Pagination\LengthAwarePaginator;
+    public function getIncomingConversations(int $userId, int $limit, int $offset): Collection;
+
+    /**
+     * Count the distinct recipients the user has outgoing conversations with.
+     */
+    public function countOutgoingConversations(int $userId): int;
+
+    /**
+     * Get a page of outgoing conversation partners (User models carrying a last_time attribute),
+     * ordered by the last message time descending.
+     *
+     * @return Collection<int, User>
+     */
+    public function getOutgoingConversations(int $userId, int $limit, int $offset): Collection;
 }
