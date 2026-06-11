@@ -1,21 +1,59 @@
 <?php
+
 /**
- * @var $items
+ * Шаблон постраничной навигации.
+ *
+ * Новый формат элементов (Johncms\Http\Pagination\Pagination):
+ *   ['type' => prev|page|ellipsis|next, 'page' => int|null, 'url' => string|null, 'active' => bool]
+ * Легаси-формат (Tools::displayPagination, удалить вместе с system/src-legacy):
+ *   ['url' => string, 'name' => string|int, 'active' => bool]
+ *
+ * @var array[] $items
  */
+
+use Johncms\Http\Pagination\Pagination;
+
 ?>
 <?php if (! empty($items)): ?>
-    <nav aria-label="Page navigation example">
+    <nav>
         <ul class="pagination">
             <?php foreach ($items as $item): ?>
-            <li class="page-item <?= ! empty($item['active']) ? 'active' : '' ?>">
-                <?php if (!empty($item['url'])): ?>
-                    <a class="page-link" href="<?= $item['url'] ?>"><?= $item['name'] ?></a>
+                <?php if (! isset($item['type'])): ?>
+                    <li class="page-item <?= ! empty($item['active']) ? 'active' : '' ?>">
+                        <?php if (! empty($item['url'])): ?>
+                            <a class="page-link" href="<?= $item['url'] ?>"><?= $item['name'] ?></a>
+                        <?php else: ?>
+                            <span class="page-link"><?= $item['name'] ?></span>
+                        <?php endif ?>
+                    </li>
+                <?php elseif ($item['type'] === Pagination::TYPE_PREV): ?>
+                    <?php if ($item['url'] !== null): ?>
+                        <li class="page-item">
+                            <a class="page-link" href="<?= $this->e($item['url']) ?>" rel="prev" aria-label="Previous page">&laquo;</a>
+                        </li>
+                    <?php else: ?>
+                        <li class="page-item disabled" aria-disabled="true" aria-label="Previous">
+                            <span class="page-link" aria-hidden="true">&laquo;</span>
+                        </li>
+                    <?php endif ?>
+                <?php elseif ($item['type'] === Pagination::TYPE_NEXT): ?>
+                    <?php if ($item['url'] !== null): ?>
+                        <li class="page-item">
+                            <a class="page-link" href="<?= $this->e($item['url']) ?>" rel="next" aria-label="Next page">&raquo;</a>
+                        </li>
+                    <?php else: ?>
+                        <li class="page-item disabled" aria-disabled="true" aria-label="Next">
+                            <span class="page-link" aria-hidden="true">&raquo;</span>
+                        </li>
+                    <?php endif ?>
+                <?php elseif ($item['type'] === Pagination::TYPE_ELLIPSIS): ?>
+                    <li class="page-item disabled" aria-disabled="true"><span class="page-link">...</span></li>
+                <?php elseif ($item['active']): ?>
+                    <li class="page-item active" aria-current="page"><span class="page-link"><?= $item['page'] ?></span></li>
                 <?php else: ?>
-                    <span class="page-link"><?= $item['name'] ?></span>
+                    <li class="page-item"><a class="page-link" href="<?= $this->e($item['url']) ?>"><?= $item['page'] ?></a></li>
                 <?php endif ?>
-            </li>
-            <?php endforeach; ?>
+            <?php endforeach ?>
         </ul>
     </nav>
-<?php endif; ?>
-
+<?php endif ?>

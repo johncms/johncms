@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2b11e32bd4df5c93e07a3d9b33c153bf",
+    "content-hash": "c6fcba68f9b3eb548e065e9a25de2334",
     "packages": [
         {
             "name": "aura/autoload",
@@ -187,6 +187,56 @@
                 }
             ],
             "time": "2024-02-09T16:56:22+00:00"
+        },
+        {
+            "name": "compolomus/pagination",
+            "version": "v1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Compolomus/Pagination.git",
+                "reference": "3da7aed2a903e229b942ce422a26a29588878a87"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Compolomus/Pagination/zipball/3da7aed2a903e229b942ce422a26a29588878a87",
+                "reference": "3da7aed2a903e229b942ce422a26a29588878a87",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "laminas/laminas-coding-standard": "^1.0",
+                "phpunit/phpunit": "^9.5"
+            },
+            "suggest": {
+                "ext-xdebug": "^3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Compolomus\\Pagination\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Koenig",
+                    "email": "compolom@gmail.com"
+                }
+            ],
+            "description": "Pagination",
+            "keywords": [
+                "pagination"
+            ],
+            "support": {
+                "issues": "https://github.com/Compolomus/Pagination/issues",
+                "source": "https://github.com/Compolomus/Pagination/tree/v1.2"
+            },
+            "time": "2022-03-31T16:38:49+00:00"
         },
         {
             "name": "doctrine/inflector",

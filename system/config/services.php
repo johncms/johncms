@@ -78,6 +78,7 @@ return static function (ContainerConfigurator $container): void {
                 ROOT_PATH . 'system/src/Scheduler/AsScheduledTask.php',
                 ROOT_PATH . 'system/src/Scheduler/ScheduledTaskDefinition.php',
                 ROOT_PATH . 'system/src/Http/PageMeta.php',
+                ROOT_PATH . 'system/src/Http/Pagination/Pagination.php',
             ]
         )
         ->autowire()

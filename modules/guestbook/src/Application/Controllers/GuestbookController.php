@@ -6,6 +6,8 @@ namespace Johncms\Modules\Guestbook\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\PageMeta;
+use Johncms\Http\Pagination\PaginationFactory;
+use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Guestbook\Application\Access\GuestbookAccess;
 use Johncms\Modules\Guestbook\Application\Access\GuestbookMode;
 use Johncms\Modules\Guestbook\Application\DTO\CreateGuestbookEntryDTO;
@@ -37,6 +39,8 @@ final readonly class GuestbookController
         private CreateGuestbookEntryUseCase $createEntry,
         private GuestbookCaptchaService $captchaService,
         private GuestbookForm $form,
+        private PaginationFactory $paginationFactory,
+        private PaginationGuard $paginationGuard,
     ) {
         $this->controllerContext->initModule('guestbook');
     }
@@ -44,8 +48,6 @@ final readonly class GuestbookController
     public function __invoke(): string
     {
         $pageTitle = $this->mode->isGuestbook() ? __('Guestbook') : __('Admin Club');
-        $page = max(1, (int) $this->request->getQuery('page', 1));
-        $meta = new PageMeta($pageTitle, $page);
         $baseUrl = '/guestbook/';
         $this->navChain->add($pageTitle, $baseUrl);
 
@@ -60,12 +62,6 @@ final readonly class GuestbookController
                 ]
             );
         }
-
-        $this->render->addData([
-            'title'       => $meta->title,
-            'page_title'  => $pageTitle,
-            'description' => $meta->description,
-        ]);
 
         $errors = $this->session->getFlash('errors') ?? [];
 
@@ -90,14 +86,30 @@ final readonly class GuestbookController
             $errors = $validator->getErrors();
         }
 
-        $posts = $this->guestbookEntries->execute();
+        $pagination = $this->paginationFactory->create($this->guestbookEntries->count());
+
+        if ($this->request->getMethod() !== 'POST') {
+            $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
+            if ($redirectUrl !== null) {
+                redirect($redirectUrl);
+            }
+        }
+
+        $meta = new PageMeta($pageTitle, $pagination->getCurrentPage());
+        $this->render->addData([
+            'title'       => $meta->title,
+            'page_title'  => $pageTitle,
+            'description' => $meta->description,
+        ]);
+
+        $posts = $this->guestbookEntries->getPage($pagination->getPerPage(), $pagination->getOffset());
         $showCaptcha = $this->access->canWrite() && ! $this->user->isValid();
 
         return $this->render->render(
             'guestbook::index',
             [
-                'posts'      => $posts['posts'],
-                'pagination' => $posts['pagination'],
+                'posts'      => $posts,
+                'pagination' => $pagination->render(),
                 'isClosed'   => $this->access->isClosed(),
                 'canWrite'   => $this->access->canWrite(),
                 'canClear'   => $this->access->canClear(),

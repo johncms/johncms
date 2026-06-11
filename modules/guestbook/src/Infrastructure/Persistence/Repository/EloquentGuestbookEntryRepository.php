@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Guestbook\Infrastructure\Persistence\Repository;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Johncms\Modules\Guestbook\Domain\Models\GuestbookEntry;
@@ -12,22 +11,22 @@ use Johncms\Modules\Guestbook\Domain\Repository\GuestbookEntryRepositoryInterfac
 
 class EloquentGuestbookEntryRepository implements GuestbookEntryRepositoryInterface
 {
-    public function getGuestbookEntries(int $perPage = 20): LengthAwarePaginator
+    public function getEntries(bool $adminClub, int $limit, int $offset): Collection
     {
         return GuestbookEntry::query()
             ->with('user')
-            ->where('adm', 0)
+            ->where('adm', $adminClub ? 1 : 0)
             ->orderByDesc('time')
-            ->paginate($perPage);
+            ->offset($offset)
+            ->limit($limit)
+            ->get();
     }
 
-    public function getAdminClubEntries(int $perPage = 20): LengthAwarePaginator
+    public function countEntries(bool $adminClub): int
     {
         return GuestbookEntry::query()
-            ->with('user')
-            ->where('adm', 1)
-            ->orderByDesc('time')
-            ->paginate($perPage);
+            ->where('adm', $adminClub ? 1 : 0)
+            ->count();
     }
 
     public function find(int $id): ?GuestbookEntry

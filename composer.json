@@ -40,6 +40,7 @@
         "ext-simplexml": "*",
         "ext-zip": "*",
         "aura/autoload": "^2.0",
+        "compolomus/pagination": "^1.2",
         "dragonmantank/cron-expression": "^3.4",
         "ezyang/htmlpurifier": "^4.13",
         "gettext/translator": "^1.0",

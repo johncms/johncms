@@ -23,18 +23,19 @@ final readonly class ListGuestbookEntriesUseCase
     ) {
     }
 
-    /**
-     * @return array{posts: GuestbookEntryDTO[], pagination: string}
-     */
-    public function execute(): array
+    public function count(): int
     {
-        if ($this->mode->isAdminClub()) {
-            $entries = $this->repository->getAdminClubEntries($this->currentUser->config->kmess);
-        } else {
-            $entries = $this->repository->getGuestbookEntries($this->currentUser->config->kmess);
-        }
+        return $this->repository->countEntries($this->mode->isAdminClub());
+    }
 
-        $posts = $entries->getCollection()->map(function (GuestbookEntry $entry) {
+    /**
+     * @return GuestbookEntryDTO[]
+     */
+    public function getPage(int $limit, int $offset): array
+    {
+        $entries = $this->repository->getEntries($this->mode->isAdminClub(), $limit, $offset);
+
+        return $entries->map(function (GuestbookEntry $entry) {
             return new GuestbookEntryDTO(
                 id:        $entry->id,
                 name:      $entry->name,
@@ -51,12 +52,7 @@ final readonly class ListGuestbookEntriesUseCase
                 user:      $this->getUser($entry),
                 meta:      $this->getMeta($entry),
             );
-        });
-
-        return [
-            'posts'      => $posts->toArray(),
-            'pagination' => $entries->render(),
-        ];
+        })->all();
     }
 
     private function getUser(GuestbookEntry $entry): ?GuestbookEntryUserDTO
