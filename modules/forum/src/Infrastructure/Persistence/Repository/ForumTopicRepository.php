@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Infrastructure\Persistence\Repository;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 use Johncms\Modules\Forum\Domain\Models\ForumTopic;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
 
@@ -187,14 +187,27 @@ final class ForumTopicRepository implements ForumTopicRepositoryInterface
             ->all();
     }
 
-    public function paginateReadBySectionId(int $sectionId, int $perPage): LengthAwarePaginator
+    public function countReadBySectionId(int $sectionId): int
+    {
+        return ForumTopic::query()
+            ->read()
+            ->where('section_id', $sectionId)
+            ->count();
+    }
+
+    /**
+     * @return Collection<int, ForumTopic>
+     */
+    public function getReadBySectionId(int $sectionId, int $limit, int $offset): Collection
     {
         return ForumTopic::query()
             ->read()
             ->where('section_id', $sectionId)
             ->orderByDesc('pinned')
             ->orderByDesc('last_post_date')
-            ->paginate(max(1, $perPage));
+            ->offset($offset)
+            ->limit($limit)
+            ->get();
     }
 
     public function markHasPoll(int $topicId): void

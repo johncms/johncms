@@ -176,7 +176,6 @@ final readonly class ViewForumFilesUseCase
                 'page_title'    => $seoMeta['page_title'],
                 'description'   => $seoMeta['description'],
                 'canonical'     => $seoMeta['canonical'],
-                'pagination'    => $this->tools->displayPagination('/forum/files/?' . ($query->isNew ? 'new' : 'do=' . $query->fileType) . $lnk . '&amp;', $query->start, $total, $this->currentUser->config->kmess),
                 'back_url'      => '/forum/files/' . ($lnk !== '' ? '?' . str_replace('&amp;', '', $lnk) : ''),
                 'back_url_name' => __('List of sections'),
                 'files'         => $files,

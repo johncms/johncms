@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Infrastructure\Persistence\Repository;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 use Johncms\Modules\Forum\Domain\Models\ForumMessage;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
 
@@ -80,12 +80,27 @@ class ForumMessageRepository implements ForumMessageRepositoryInterface
             ->first();
     }
 
-    public function paginateByTopicIdWithUsersAndFiles(
+    public function countAllByTopicId(int $topicId, array $filterUserIds = []): int
+    {
+        $query = ForumMessage::query()->where('topic_id', $topicId);
+
+        if ($filterUserIds !== []) {
+            $query->whereIn('user_id', $filterUserIds);
+        }
+
+        return $query->count();
+    }
+
+    /**
+     * @return Collection<int, ForumMessage>
+     */
+    public function getByTopicIdWithUsersAndFiles(
         int $topicId,
         bool $upfp,
-        int $perPage,
+        int $limit,
+        int $offset,
         array $filterUserIds = [],
-    ): LengthAwarePaginator {
+    ): Collection {
         $query = ForumMessage::query()
             ->users()
             ->with('files')
@@ -97,7 +112,9 @@ class ForumMessageRepository implements ForumMessageRepositoryInterface
 
         return $query
             ->orderBy('id', $upfp ? 'DESC' : 'ASC')
-            ->paginate(max(1, $perPage));
+            ->offset($offset)
+            ->limit($limit)
+            ->get();
     }
 
     public function findFirstByTopicIdWithUsers(int $topicId): ?ForumMessage

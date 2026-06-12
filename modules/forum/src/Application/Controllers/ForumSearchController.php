@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Modules\Forum\Application\DTO\ForumSearchQueryDTO;
 use Johncms\Modules\Forum\Application\Exceptions\ForumValidationException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
@@ -26,6 +27,7 @@ final readonly class ForumSearchController
         private User $currentUser,
         private ForumErrorRenderer $forumErrorRenderer,
         private ViewForumSearchUseCase $viewForumSearchUseCase,
+        private PaginationFactory $paginationFactory,
     ) {
         $this->controllerContext->initModule('forum');
     }
@@ -73,15 +75,12 @@ final readonly class ForumSearchController
             ]
         );
 
+        $pagination = $this->paginationFactory->create($result->total, null, 'page', $page);
+
         return $this->render->render(
             'forum::forum_search',
             [
-                'pagination'        => $this->tools->displayPagination(
-                    '/forum/search/?' . ($result->searchInTopicNames ? 't=1&amp;' : '') . 'search=' . urlencode($result->query) . '&amp;',
-                    $offset,
-                    $result->total,
-                    $this->currentUser->config->kmess
-                ),
+                'pagination'        => $pagination->render(),
                 'query'             => $this->tools->checkout($result->query, 0, 0),
                 'search_t'          => $result->searchInTopicNames,
                 'results'           => $result->results,

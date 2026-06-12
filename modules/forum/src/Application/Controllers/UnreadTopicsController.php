@@ -9,11 +9,11 @@ use Johncms\Modules\Forum\Application\DTO\UnreadTopicsQueryDTO;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumUserAccessUseCase;
+use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Modules\Forum\Application\UseCases\ViewUnreadTopicsUseCase;
 use Johncms\NavChain;
 use Johncms\Security\Csrf;
 use Johncms\System\Http\Request;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 
@@ -25,11 +25,11 @@ final readonly class UnreadTopicsController
         private Request $request,
         private NavChain $navChain,
         private Csrf $csrf,
-        private Tools $tools,
         private User $currentUser,
         private EnsureForumUserAccessUseCase $forumUserAccessUseCase,
         private ForumErrorRenderer $forumErrorRenderer,
         private ViewUnreadTopicsUseCase $viewUnreadTopicsUseCase,
+        private PaginationFactory $paginationFactory,
     ) {
         $this->controllerContext->initModule('forum');
     }
@@ -41,7 +41,8 @@ final readonly class UnreadTopicsController
         } catch (ForumAccessDeniedException $exception) {
             return $this->forumErrorRenderer->render($this->render, $exception);
         }
-        $start = (max(1, (int) $this->request->getQuery('page', 1)) - 1) * (int) $this->currentUser->config->kmess;
+        $page = max(1, (int) $this->request->getQuery('page', 1));
+        $start = ($page - 1) * (int) $this->currentUser->config->kmess;
 
         $result = $this->viewUnreadTopicsUseCase->execute(
             new UnreadTopicsQueryDTO(
@@ -53,10 +54,12 @@ final readonly class UnreadTopicsController
         $this->navChain->add(__('Forum'), '/forum/');
         $this->navChain->add($caption);
 
+        $pagination = $this->paginationFactory->create($result->total, null, 'page', $page);
+
         return $this->render->render(
             'forum::new_topics',
             [
-                'pagination'           => $this->buildPagination($start, $result->total),
+                'pagination'           => $pagination->render(),
                 'title'                => $caption,
                 'page_title'           => $caption,
                 'empty_message'        => __('The list is empty'),
@@ -68,10 +71,5 @@ final readonly class UnreadTopicsController
                 'csrf_token'           => $this->csrf->getToken(),
             ]
         );
-    }
-
-    private function buildPagination(int $start, int $total): string
-    {
-        return $this->tools->displayPagination('/forum/unread/?', max(0, $start), $total, $this->currentUser->config->kmess);
     }
 }

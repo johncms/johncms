@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\Controllers;
 
+use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\ForumUtils;
 use Johncms\Modules\Forum\Application\UseCases\ViewForumSectionUseCase;
@@ -20,6 +21,7 @@ final readonly class ForumSectionController
         private Tools $tools,
         private NavChain $navChain,
         private ViewForumSectionUseCase $viewForumSectionUseCase,
+        private PaginationFactory $paginationFactory,
     ) {
     }
 
@@ -54,22 +56,26 @@ final readonly class ForumSectionController
         /** @var \Johncms\Counters $counters */
         $counters = di('counters');
 
+        $extra = [
+            'id'           => $result->section->id,
+            'online'       => [
+                'online_u' => $result->onlineUsers,
+                'online_g' => $result->onlineGuests,
+            ],
+            'files_count'  => config('forum')['settings']['file_counters']
+                ? $this->tools->formatNumber($result->filesCount)
+                : 0,
+            'unread_count' => $this->tools->formatNumber($counters->forumUnreadCount()),
+        ];
+
+        if ($result->template === 'forum::topics') {
+            $pagination = $this->paginationFactory->create((int) $result->viewData['total'], null, 'page', $page);
+            $extra['pagination'] = $pagination->render();
+        }
+
         return $this->render->render(
             $result->template,
-            array_merge(
-                $result->viewData,
-                [
-                    'id'           => $result->section->id,
-                    'online'       => [
-                        'online_u' => $result->onlineUsers,
-                        'online_g' => $result->onlineGuests,
-                    ],
-                    'files_count'  => config('forum')['settings']['file_counters']
-                        ? $this->tools->formatNumber($result->filesCount)
-                        : 0,
-                    'unread_count' => $this->tools->formatNumber($counters->forumUnreadCount()),
-                ]
-            )
+            array_merge($result->viewData, $extra)
         );
     }
 }

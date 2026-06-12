@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Domain\Repository;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 use Johncms\Modules\Forum\Domain\Models\ForumMessage;
 
 interface ForumMessageRepositoryInterface
@@ -24,14 +24,23 @@ interface ForumMessageRepositoryInterface
     public function findFirstByTopicId(int $topicId): ?ForumMessage;
 
     /**
+     * Count all messages of a topic (including deleted), optionally filtered by author.
+     *
      * @param int[] $filterUserIds
      */
-    public function paginateByTopicIdWithUsersAndFiles(
+    public function countAllByTopicId(int $topicId, array $filterUserIds = []): int;
+
+    /**
+     * @param int[] $filterUserIds
+     * @return Collection<int, ForumMessage>
+     */
+    public function getByTopicIdWithUsersAndFiles(
         int $topicId,
         bool $upfp,
-        int $perPage,
+        int $limit,
+        int $offset,
         array $filterUserIds = [],
-    ): LengthAwarePaginator;
+    ): Collection;
 
     public function findFirstByTopicIdWithUsers(int $topicId): ?ForumMessage;
 

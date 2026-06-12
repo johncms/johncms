@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\Controllers;
 
+use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\ForumUtils;
 use Johncms\Modules\Forum\Application\UseCases\ViewForumTopicUseCase;
@@ -26,6 +27,7 @@ final readonly class ForumTopicController
         private ViewForumTopicUseCase $viewForumTopicUseCase,
         private Csrf $csrf,
         private Bbcode $bbcode,
+        private PaginationFactory $paginationFactory,
     ) {
     }
 
@@ -86,11 +88,19 @@ final readonly class ForumTopicController
         /** @var \Johncms\Counters $counters */
         $counters = di('counters');
 
+        $pagination = $this->paginationFactory->create(
+            (int) $result->viewData['total'],
+            $perPage,
+            'page',
+            $page
+        );
+
         return $this->render->render(
             'forum::topic',
             array_merge(
                 $result->viewData,
                 [
+                    'pagination'   => $pagination->render(),
                     'bbcode'       => $this->bbcode->buttons('new_message', 'msg'),
                     'unread_count' => $this->tools->formatNumber($counters->forumUnreadCount()),
                     'csrf_token'   => $this->csrf->getToken(),

@@ -43,7 +43,13 @@ final readonly class ViewForumSectionUseCase
                 throw new ForumNotFoundException('Section not found.');
             }
 
-            $topics = $this->topicRepository->paginateReadBySectionId($currentSection->id, (int) $this->currentUser->config->kmess);
+            $perPage = (int) $this->currentUser->config->kmess;
+            $total = $this->topicRepository->countReadBySectionId($currentSection->id);
+            $topics = $this->topicRepository->getReadBySectionId(
+                $currentSection->id,
+                $perPage,
+                ($page - 1) * $perPage
+            );
             $canonical = config('johncms')['homeurl'] . $currentSection->url;
             if ($page > 1) {
                 $canonical .= '?page=' . $page;
@@ -53,11 +59,10 @@ final readonly class ViewForumSectionUseCase
                 section: $currentSection,
                 template: 'forum::topics',
                 viewData: [
-                    'pagination'    => $topics->render(),
                     'id'            => $currentSection->id,
                     'create_access' => $this->canCreateTopic(),
-                    'topics'        => $topics->getItems(),
-                    'total'         => $topics->total(),
+                    'topics'        => $topics,
+                    'total'         => $total,
                 ],
                 filesCount: (int) ($currentSection->section_files_count ?? 0),
                 onlineUsers: $this->whoRepository->countForumUsers(),

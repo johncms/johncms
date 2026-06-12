@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Modules\Forum\Application\DTO\ForumFilesQueryDTO;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
@@ -24,13 +25,15 @@ final readonly class ForumFilesController
         private User $currentUser,
         private ForumErrorRenderer $forumErrorRenderer,
         private ViewForumFilesUseCase $viewForumFilesUseCase,
+        private PaginationFactory $paginationFactory,
     ) {
         $this->controllerContext->initModule('forum');
     }
 
     public function __invoke(): string
     {
-        $start = (max(1, (int) $this->request->getQuery('page', 1)) - 1) * (int) $this->currentUser->config->kmess;
+        $page = max(1, (int) $this->request->getQuery('page', 1));
+        $start = ($page - 1) * (int) $this->currentUser->config->kmess;
 
         $query = new ForumFilesQueryDTO(
             start: $start,
@@ -63,7 +66,13 @@ final readonly class ForumFilesController
         }
         $this->navChain->add($result->caption);
 
-        return $this->render->render($result->template, $result->viewData);
+        $viewData = $result->viewData;
+        if ($result->template === 'forum::files_list') {
+            $pagination = $this->paginationFactory->create((int) ($viewData['total'] ?? 0), null, 'page', $page);
+            $viewData['pagination'] = $pagination->render();
+        }
+
+        return $this->render->render($result->template, $viewData);
     }
 
     private function normalizeFileType(int $fileType): int

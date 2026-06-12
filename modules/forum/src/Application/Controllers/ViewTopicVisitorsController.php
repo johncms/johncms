@@ -11,11 +11,11 @@ use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumUserAccessUseCase;
+use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Modules\Forum\Application\UseCases\ViewTopicVisitorsUseCase;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 
@@ -26,13 +26,13 @@ final readonly class ViewTopicVisitorsController
         private Render $render,
         private Request $request,
         private NavChain $navChain,
-        private Tools $tools,
         private User $currentUser,
         private EnsureForumUserAccessUseCase $forumUserAccessUseCase,
         private ForumErrorRenderer $forumErrorRenderer,
         private ViewTopicVisitorsUseCase $viewTopicVisitorsUseCase,
         private ForumTopicRepositoryInterface $topicRepository,
         private ForumTopicPathService $topicPathService,
+        private PaginationFactory $paginationFactory,
     ) {
         $this->controllerContext->initModule('forum');
     }
@@ -56,7 +56,8 @@ final readonly class ViewTopicVisitorsController
         }
 
         $showGuests = $this->request->getQuery('mode') === 'guests';
-        $start = (max(1, (int) $this->request->getQuery('page', 1)) - 1) * (int) $this->currentUser->config->kmess;
+        $page = max(1, (int) $this->request->getQuery('page', 1));
+        $start = ($page - 1) * (int) $this->currentUser->config->kmess;
 
         try {
             $result = $this->viewTopicVisitorsUseCase->execute(
@@ -85,6 +86,8 @@ final readonly class ViewTopicVisitorsController
         $this->navChain->add(__('Forum'), '/forum/');
         $this->navChain->add($caption);
 
+        $pagination = $this->paginationFactory->create($result->total, null, 'page', $page);
+
         return $this->render->render(
             'forum::who',
             [
@@ -92,12 +95,7 @@ final readonly class ViewTopicVisitorsController
                 'page_title'      => $caption,
                 'empty_message'   => __('The list is empty'),
                 'items'           => $result->items,
-                'pagination'      => $this->tools->displayPagination(
-                    '/forum/topic-visitors/' . $id . '/?' . ($showGuests ? 'mode=guests&amp;' : ''),
-                    $start,
-                    $result->total,
-                    $this->currentUser->config->kmess
-                ),
+                'pagination'      => $pagination->render(),
                 'total'           => $result->total,
                 'topic'           => $topic !== null ? htmlentities((string) $topic->name, ENT_QUOTES, 'UTF-8') : '',
                 'is_users'        => ! $showGuests,

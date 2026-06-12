@@ -97,13 +97,15 @@ final readonly class ViewForumTopicUseCase
         $perPage = (int) $this->currentUser->config->kmess;
         $start = ($page - 1) * $perPage;
 
-        $messagesPaginator = $this->messageRepository->paginateByTopicIdWithUsersAndFiles(
+        $filterUserIds = $isFilterEnabled ? $filterByUsers : [];
+        $total = $this->messageRepository->countAllByTopicId($topic->id, $filterUserIds);
+        $messagesCollection = $this->messageRepository->getByTopicIdWithUsersAndFiles(
             topicId: $topic->id,
             upfp: ! empty($setForum['upfp']),
-            perPage: $perPage,
-            filterUserIds: $isFilterEnabled ? $filterByUsers : [],
+            limit: $perPage,
+            offset: $start,
+            filterUserIds: $filterUserIds,
         );
-        $total = $messagesPaginator->total();
 
         $curator = $this->currentUser->rights < 6
             && $this->currentUser->rights !== 3
@@ -126,7 +128,7 @@ final readonly class ViewForumTopicUseCase
 
         $i = 1;
         $canReplyInClosedTopic = $this->currentUser->rights === 3 || $this->currentUser->rights >= 6;
-        $messages = $messagesPaginator->getCollection()->map(
+        $messages = $messagesCollection->map(
             function (ForumMessage $message) use ($curator, $setForum, $access, &$i, $start, $total, $topic, $canReplyInClosedTopic, $page): ForumMessage {
                 if (
                     (
@@ -216,7 +218,6 @@ final readonly class ViewForumTopicUseCase
                 'topic_vote'       => $topicVote,
                 'curators_array'   => $curatorsArray,
                 'view_count'       => $topic->view_count,
-                'pagination'       => $messagesPaginator->render(),
                 'page'             => $page,
                 'id'               => $topic->id,
                 'token'            => $token,

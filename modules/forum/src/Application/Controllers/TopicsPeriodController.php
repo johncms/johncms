@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Modules\Forum\Application\DTO\TopicsPeriodQueryDTO;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
@@ -12,7 +13,6 @@ use Johncms\Modules\Forum\Application\UseCases\EnsureForumUserAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\ViewTopicsByPeriodUseCase;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 
@@ -23,11 +23,11 @@ final readonly class TopicsPeriodController
         private Render $render,
         private Request $request,
         private NavChain $navChain,
-        private Tools $tools,
         private User $currentUser,
         private EnsureForumUserAccessUseCase $forumUserAccessUseCase,
         private ForumErrorRenderer $forumErrorRenderer,
         private ViewTopicsByPeriodUseCase $viewTopicsByPeriodUseCase,
+        private PaginationFactory $paginationFactory,
     ) {
         $this->controllerContext->initModule('forum');
     }
@@ -44,7 +44,8 @@ final readonly class TopicsPeriodController
         if ($hours <= 0) {
             $hours = 24;
         }
-        $start = (max(1, (int) $this->request->getQuery('page', 1)) - 1) * (int) $this->currentUser->config->kmess;
+        $page = max(1, (int) $this->request->getQuery('page', 1));
+        $start = ($page - 1) * (int) $this->currentUser->config->kmess;
 
         $result = $this->viewTopicsByPeriodUseCase->execute(
             new TopicsPeriodQueryDTO(
@@ -57,15 +58,12 @@ final readonly class TopicsPeriodController
         $this->navChain->add(__('Forum'), '/forum/');
         $this->navChain->add($caption);
 
+        $pagination = $this->paginationFactory->create($result->total, null, 'page', $page);
+
         return $this->render->render(
             'forum::new_topics',
             [
-                'pagination'    => $this->tools->displayPagination(
-                    '/forum/topics-period/?vr=' . $result->hours . '&amp;',
-                    $start,
-                    $result->total,
-                    $this->currentUser->config->kmess
-                ),
+                'pagination'    => $pagination->render(),
                 'title'         => $caption,
                 'page_title'    => $caption,
                 'empty_message' => __('There is nothing new in this forum for selected period'),

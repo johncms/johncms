@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Modules\Forum\Application\DTO\PollVotersQueryDTO;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumValidationException;
@@ -14,9 +15,7 @@ use Johncms\Modules\Forum\Application\UseCases\EnsurePollVotersAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\ViewPollVotersUseCase;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
-use Johncms\Users\User;
 
 final readonly class PollVotersController
 {
@@ -25,12 +24,11 @@ final readonly class PollVotersController
         private Render $render,
         private Request $request,
         private NavChain $navChain,
-        private Tools $tools,
-        private User $currentUser,
         private ForumErrorRenderer $forumErrorRenderer,
         private EnsurePollVotersAccessUseCase $accessUseCase,
         private ViewPollVotersUseCase $viewPollVotersUseCase,
         private ForumTopicPathService $topicPathService,
+        private PaginationFactory $paginationFactory,
     ) {
         $this->controllerContext->initModule('forum');
     }
@@ -72,6 +70,8 @@ final readonly class PollVotersController
         $this->navChain->add(__('Forum'), '/forum/');
         $this->navChain->add($caption);
 
+        $pagination = $this->paginationFactory->create($result->total, null, 'page', $page);
+
         return $this->render->render(
             'forum::voted_users',
             [
@@ -80,12 +80,7 @@ final readonly class PollVotersController
                 'empty_message' => __('No one has voted in this poll yet'),
                 'poll_name'     => htmlentities($result->pollName, ENT_QUOTES, 'UTF-8'),
                 'items'         => $result->items,
-                'pagination'    => $this->tools->displayPagination(
-                    '/forum/poll-voters/' . $id . '/?',
-                    ($page - 1) * (int) $this->currentUser->config->kmess,
-                    $result->total,
-                    $this->currentUser->config->kmess
-                ),
+                'pagination'    => $pagination->render(),
                 'total'         => $result->total,
                 'id'            => $id,
                 'topic_url'     => $this->topicPathService->getTopicUrlById($id) ?? '/forum/',
