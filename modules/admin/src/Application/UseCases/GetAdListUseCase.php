@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Application\UseCases;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
+use Johncms\Modules\Admin\Domain\Models\Ad;
 use Johncms\Modules\Admin\Domain\Repository\AdRepositoryInterface;
 
 final readonly class GetAdListUseCase
@@ -14,8 +15,16 @@ final readonly class GetAdListUseCase
     ) {
     }
 
-    public function execute(int $type, int $page, int $perPage): LengthAwarePaginator
+    public function count(int $type): int
     {
-        return $this->repository->paginateByType($type, $page, $perPage);
+        return $this->repository->countByType($type);
+    }
+
+    /**
+     * @return Collection<int, Ad>
+     */
+    public function getPage(int $type, int $limit, int $offset): Collection
+    {
+        return $this->repository->getByType($type, $limit, $offset);
     }
 }

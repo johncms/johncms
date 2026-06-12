@@ -6,26 +6,24 @@ namespace Johncms\Modules\Admin\Application\Controllers\Users;
 
 use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Http\PageMeta;
+use Johncms\Http\Pagination\PaginationFactory;
+use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Admin\Application\Services\AdminUserRowMapper;
 use Johncms\Modules\Admin\Application\UseCases\GetUserListUseCase;
 use Johncms\Modules\Admin\Domain\Enums\UserListSort;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
-use Johncms\Users\User;
 
 final readonly class UserListController
 {
     public function __construct(
         private AdminControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
-        private Tools $tools,
-        private User $currentUser,
         private GetUserListUseCase $getUserListUseCase,
         private AdminUserRowMapper $rowMapper,
+        private PaginationFactory $paginationFactory,
+        private PaginationGuard $paginationGuard,
     ) {
         $this->controllerContext->initModule('admin');
     }
@@ -38,22 +36,19 @@ final readonly class UserListController
             default   => UserListSort::ID,
         };
 
-        $baseUrl = match ($sortMode) {
-            UserListSort::NICK => '/admin/users/by-nick',
-            UserListSort::IP   => '/admin/users/by-ip',
-            UserListSort::ID   => '/admin/users',
-        };
+        $pagination = $this->paginationFactory->create($this->getUserListUseCase->count());
 
-        $page = max(1, (int) $this->request->getQuery('page', 1));
-        $perPage = $this->currentUser->config->kmess;
+        $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
+        if ($redirectUrl !== null) {
+            redirect($redirectUrl);
+        }
 
-        $result = $this->getUserListUseCase->execute($sortMode, $page, $perPage);
-        $total = $result->users->total();
+        $result = $this->getUserListUseCase->getPage($sortMode, $pagination->getPerPage(), $pagination->getOffset());
 
         $title = __('List of Users');
         $this->navChain->add($title);
 
-        $meta = new PageMeta($title, $page);
+        $meta = new PageMeta($title, $pagination->getCurrentPage());
         $this->render->addData(
             [
                 'title'      => $meta->title,
@@ -65,21 +60,16 @@ final readonly class UserListController
         return $this->render->render(
             'admin::userlist',
             [
-                'users'      => $this->rowMapper->mapMany($result->users->getCollection()),
-                'total'      => $total,
-                'per_page'   => $perPage,
+                'users'      => $this->rowMapper->mapMany($result->users),
+                'total'      => $pagination->getTotal(),
+                'per_page'   => $pagination->getPerPage(),
                 'sort'       => $sortMode->value,
                 'sort_links' => [
                     ['name' => 'ID', 'url' => '/admin/users', 'active' => $sortMode === UserListSort::ID],
                     ['name' => __('Nickname'), 'url' => '/admin/users/by-nick', 'active' => $sortMode === UserListSort::NICK],
                     ['name' => 'IP', 'url' => '/admin/users/by-ip', 'active' => $sortMode === UserListSort::IP],
                 ],
-                'pagination' => $this->tools->displayPagination(
-                    $baseUrl . '?',
-                    ($page - 1) * $perPage,
-                    $total,
-                    $perPage
-                ),
+                'pagination' => $pagination->render(),
             ]
         );
     }

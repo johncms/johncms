@@ -4,14 +4,22 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Domain\Repository;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
+use Johncms\Users\User;
 
 interface RegistrationModerationRepositoryInterface
 {
     /**
-     * @return LengthAwarePaginator Пользователи, ожидающие подтверждения (preg = 0).
+     * Количество пользователей, ожидающих подтверждения (preg = 0).
      */
-    public function paginatePending(int $page, int $perPage): LengthAwarePaginator;
+    public function countPending(): int;
+
+    /**
+     * Страница пользователей, ожидающих подтверждения (preg = 0).
+     *
+     * @return Collection<int, User>
+     */
+    public function getPending(int $limit, int $offset): Collection;
 
     public function approve(int $id, string $adminName): void;
 

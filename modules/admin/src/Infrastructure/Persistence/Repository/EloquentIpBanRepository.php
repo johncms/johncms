@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Infrastructure\Persistence\Repository;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Collection;
 use Johncms\Modules\Admin\Domain\Models\BanIp;
 use Johncms\Modules\Admin\Domain\Repository\IpBanRepositoryInterface;
@@ -16,11 +16,16 @@ final class EloquentIpBanRepository implements IpBanRepositoryInterface
         return BanIp::query()->count();
     }
 
-    public function paginate(int $page, int $perPage): LengthAwarePaginator
+    /**
+     * @return EloquentCollection<int, BanIp>
+     */
+    public function get(int $limit, int $offset): EloquentCollection
     {
         return BanIp::query()
             ->orderBy('id')
-            ->paginate($perPage, ['*'], 'page', $page);
+            ->offset($offset)
+            ->limit($limit)
+            ->get();
     }
 
     public function findById(int $id): ?BanIp

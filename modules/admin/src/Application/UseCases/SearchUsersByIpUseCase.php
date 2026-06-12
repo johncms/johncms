@@ -17,7 +17,23 @@ final readonly class SearchUsersByIpUseCase
     ) {
     }
 
-    public function execute(string $search, IpSearchMode $mode, int $page, int $perPage): IpSearchResultDTO
+    public function count(string $search, IpSearchMode $mode): int
+    {
+        if ($search === '') {
+            return 0;
+        }
+
+        $range = $this->parser->parse($search);
+        if (! $range->isValid()) {
+            return 0;
+        }
+
+        return $mode === IpSearchMode::HISTORY
+            ? $this->repository->countHistory($range->from, $range->to)
+            : $this->repository->countUsers($range->from, $range->to);
+    }
+
+    public function getPage(string $search, IpSearchMode $mode, int $limit, int $offset): IpSearchResultDTO
     {
         if ($search === '') {
             return new IpSearchResultDTO(null);
@@ -29,8 +45,8 @@ final readonly class SearchUsersByIpUseCase
         }
 
         $users = $mode === IpSearchMode::HISTORY
-            ? $this->repository->paginateHistory($range->from, $range->to, $page, $perPage)
-            : $this->repository->paginateUsers($range->from, $range->to, $page, $perPage);
+            ? $this->repository->getHistory($range->from, $range->to, $limit, $offset)
+            : $this->repository->getUsers($range->from, $range->to, $limit, $offset);
 
         return new IpSearchResultDTO($users);
     }

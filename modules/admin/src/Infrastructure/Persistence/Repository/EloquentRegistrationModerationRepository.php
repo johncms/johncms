@@ -4,19 +4,29 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Infrastructure\Persistence\Repository;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 use Johncms\Modules\Admin\Domain\Repository\RegistrationModerationRepositoryInterface;
 use Johncms\Users\IpHistory;
 use Johncms\Users\User;
 
 final class EloquentRegistrationModerationRepository implements RegistrationModerationRepositoryInterface
 {
-    public function paginatePending(int $page, int $perPage): LengthAwarePaginator
+    public function countPending(): int
+    {
+        return User::query()->where('preg', 0)->count();
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getPending(int $limit, int $offset): Collection
     {
         return User::query()
             ->where('preg', 0)
             ->orderByDesc('id')
-            ->paginate($perPage, ['*'], 'page', $page);
+            ->offset($offset)
+            ->limit($limit)
+            ->get();
     }
 
     public function approve(int $id, string $adminName): void

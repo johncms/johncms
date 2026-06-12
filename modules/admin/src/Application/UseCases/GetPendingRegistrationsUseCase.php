@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Application\UseCases;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 use Johncms\Modules\Admin\Domain\Repository\RegistrationModerationRepositoryInterface;
 
 final readonly class GetPendingRegistrationsUseCase
@@ -14,8 +14,16 @@ final readonly class GetPendingRegistrationsUseCase
     ) {
     }
 
-    public function execute(int $page, int $perPage): LengthAwarePaginator
+    public function count(): int
     {
-        return $this->repository->paginatePending($page, $perPage);
+        return $this->repository->countPending();
+    }
+
+    /**
+     * @return Collection<int, \Johncms\Users\User>
+     */
+    public function getPage(int $limit, int $offset): Collection
+    {
+        return $this->repository->getPending($limit, $offset);
     }
 }

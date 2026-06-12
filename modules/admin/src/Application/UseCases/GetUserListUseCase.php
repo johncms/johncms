@@ -15,9 +15,14 @@ final readonly class GetUserListUseCase
     ) {
     }
 
-    public function execute(UserListSort $sort, int $page, int $perPage): UserListResultDTO
+    public function count(): int
     {
-        $users = $this->userListRepository->paginateApproved($sort, $page, $perPage);
+        return $this->userListRepository->countApproved();
+    }
+
+    public function getPage(UserListSort $sort, int $limit, int $offset): UserListResultDTO
+    {
+        $users = $this->userListRepository->getApproved($sort, $limit, $offset);
 
         return new UserListResultDTO($users, $sort);
     }

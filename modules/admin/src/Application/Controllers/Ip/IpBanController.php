@@ -6,6 +6,8 @@ namespace Johncms\Modules\Admin\Application\Controllers\Ip;
 
 use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Http\PageMeta;
+use Johncms\Http\Pagination\PaginationFactory;
+use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Admin\Application\UseCases\GetIpBanListUseCase;
 use Johncms\Modules\Admin\Application\UseCases\ManageIpBanUseCase;
 use Johncms\Modules\Admin\Application\UseCases\PrepareIpBanUseCase;
@@ -14,7 +16,6 @@ use Johncms\Modules\Admin\Domain\Enums\IpBanType;
 use Johncms\Modules\Admin\Domain\Models\BanIp;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
@@ -34,34 +35,39 @@ final readonly class IpBanController
         private PrepareIpBanUseCase $prepareIpBan,
         private StoreIpBanUseCase $storeIpBan,
         private ManageIpBanUseCase $manageIpBan,
+        private PaginationFactory $paginationFactory,
+        private PaginationGuard $paginationGuard,
     ) {
         $this->controllerContext->initModule('admin');
     }
 
     public function index(): string
     {
-        $page = max(1, (int) $this->request->getQuery('page', 1));
-        $perPage = $this->currentUser->config->kmess;
+        $pagination = $this->paginationFactory->create($this->getList->count());
 
-        $bans = $this->getList->execute($page, $perPage);
-        $total = $bans->total();
+        $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
+        if ($redirectUrl !== null) {
+            redirect($redirectUrl);
+        }
+
+        $bans = $this->getList->getPage($pagination->getPerPage(), $pagination->getOffset());
 
         $title = __('Ban by IP');
         $this->navChain->add($title, self::URL);
 
-        $meta = new PageMeta($title, $page);
+        $meta = new PageMeta($title, $pagination->getCurrentPage());
         $this->render->addData($this->menuData($meta->title, $title));
 
         return $this->render->render('admin::ipban', [
-            'items'      => array_map(fn (BanIp $ban): array => $this->listRow($ban), $bans->items()),
-            'total'      => $total,
-            'per_page'   => $perPage,
+            'items'      => array_map(fn (BanIp $ban): array => $this->listRow($ban), $bans->all()),
+            'total'      => $pagination->getTotal(),
+            'per_page'   => $pagination->getPerPage(),
             'no_buttons' => false,
             'message'    => null,
             'add_url'    => self::URL . '/new',
             'search_url' => self::URL . '/search',
             'clear_url'  => self::URL . '/clear',
-            'pagination' => $this->tools->displayPagination(self::URL . '?', ($page - 1) * $perPage, $total, $perPage),
+            'pagination' => $pagination->render(),
         ]);
     }
 

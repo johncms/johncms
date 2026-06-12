@@ -6,6 +6,8 @@ namespace Johncms\Modules\Admin\Application\Controllers\Settings;
 
 use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Http\PageMeta;
+use Johncms\Http\Pagination\PaginationFactory;
+use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Admin\Application\DTO\AdFormDTO;
 use Johncms\Modules\Admin\Application\Services\AdRowMapper;
 use Johncms\Modules\Admin\Application\UseCases\GetAdListUseCase;
@@ -14,9 +16,7 @@ use Johncms\Modules\Admin\Application\UseCases\SaveAdUseCase;
 use Johncms\Modules\Admin\Domain\Models\Ad;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
-use Johncms\Users\User;
 use Johncms\Validator\Validator;
 
 final readonly class AdsController
@@ -28,12 +28,12 @@ final readonly class AdsController
         private Render $render,
         private Request $request,
         private NavChain $navChain,
-        private Tools $tools,
-        private User $currentUser,
         private GetAdListUseCase $getList,
         private SaveAdUseCase $saveAd,
         private ManageAdUseCase $manageAd,
         private AdRowMapper $rowMapper,
+        private PaginationFactory $paginationFactory,
+        private PaginationGuard $paginationGuard,
     ) {
         $this->controllerContext->initModule('admin');
     }
@@ -41,27 +41,31 @@ final readonly class AdsController
     public function index(): string
     {
         $type = $this->clampType((int) $this->request->getQuery('type', 0, FILTER_VALIDATE_INT));
-        $page = max(1, (int) $this->request->getQuery('page', 1));
-        $perPage = $this->currentUser->config->kmess;
 
-        $ads = $this->getList->execute($type, $page, $perPage);
-        $total = $ads->total();
+        $pagination = $this->paginationFactory->create($this->getList->count($type));
+
+        $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
+        if ($redirectUrl !== null) {
+            redirect($redirectUrl);
+        }
+
+        $ads = $this->getList->getPage($type, $pagination->getPerPage(), $pagination->getOffset());
 
         $title = __('Advertisement');
         $this->navChain->add($title, self::URL);
 
-        $meta = new PageMeta($title, $page);
+        $meta = new PageMeta($title, $pagination->getCurrentPage());
         $this->render->addData($this->menu($meta->title, $title));
 
         return $this->render->render('admin::ads_index', [
-            'items'      => $this->rowMapper->mapMany($ads->getCollection()),
-            'total'      => $total,
-            'per_page'   => $perPage,
+            'items'      => $this->rowMapper->mapMany($ads),
+            'total'      => $pagination->getTotal(),
+            'per_page'   => $pagination->getPerPage(),
             'type'       => $type,
             'filters'    => $this->filters($type),
             'add_url'    => self::URL . '/new',
             'clear_url'  => self::URL . '/clear',
-            'pagination' => $this->tools->displayPagination(self::URL . '?type=' . $type . '&', ($page - 1) * $perPage, $total, $perPage),
+            'pagination' => $pagination->render(),
         ]);
     }
 

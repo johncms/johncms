@@ -6,11 +6,12 @@ namespace Johncms\Modules\Admin\Application\Controllers\Forum;
 
 use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Http\PageMeta;
+use Johncms\Http\Pagination\PaginationFactory;
+use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Admin\Application\Services\HiddenTopicRowMapper;
 use Johncms\Modules\Admin\Application\UseCases\ManageHiddenForumUseCase;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
@@ -28,6 +29,8 @@ final readonly class HiddenTopicsController
         private User $currentUser,
         private ManageHiddenForumUseCase $manageHidden,
         private HiddenTopicRowMapper $rowMapper,
+        private PaginationFactory $paginationFactory,
+        private PaginationGuard $paginationGuard,
     ) {
         $this->controllerContext->initModule('admin');
     }
@@ -35,17 +38,22 @@ final readonly class HiddenTopicsController
     public function index(): string
     {
         [$userId, $sectionId, $filterLink, $filteredBy] = $this->filters();
-        $page = max(1, (int) $this->request->getQuery('page', 1));
-        $perPage = $this->currentUser->config->kmess;
 
-        $topics = $this->manageHidden->topics($userId, $sectionId, $page, $perPage);
-        $total = $topics->total();
+        $pagination = $this->paginationFactory->create($this->manageHidden->countTopics($userId, $sectionId));
+
+        $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
+        if ($redirectUrl !== null) {
+            redirect($redirectUrl);
+        }
+
+        $topics = $this->manageHidden->topicsPage($userId, $sectionId, $pagination->getPerPage(), $pagination->getOffset());
+        $total = $pagination->getTotal();
 
         $title = __('Hidden topics');
         $this->navChain->add(__('Forum Management'), '/admin/forum');
         $this->navChain->add($title);
 
-        $meta = new PageMeta($title, $page);
+        $meta = new PageMeta($title, $pagination->getCurrentPage());
         $this->render->addData([
             'title'       => $meta->title,
             'page_title'  => $title,
@@ -53,13 +61,13 @@ final readonly class HiddenTopicsController
         ]);
 
         return $this->render->render('admin::forum/hidden_topics', [
-            'items'        => $this->rowMapper->mapMany($topics->getCollection()),
+            'items'        => $this->rowMapper->mapMany($topics),
             'total'        => $total,
-            'per_page'     => $perPage,
+            'per_page'     => $pagination->getPerPage(),
             'filtered_by'  => $filteredBy,
             'reset_filter' => self::URL,
             'del_all_url'  => $this->currentUser->rights === 9 && $total > 0 ? self::URL . '/delete' . $filterLink : null,
-            'pagination'   => $this->tools->displayPagination(self::URL . '?', ($page - 1) * $perPage, $total, $perPage),
+            'pagination'   => $pagination->render(),
         ]);
     }
 

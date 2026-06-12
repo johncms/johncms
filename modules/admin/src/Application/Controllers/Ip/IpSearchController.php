@@ -6,14 +6,14 @@ namespace Johncms\Modules\Admin\Application\Controllers\Ip;
 
 use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Http\PageMeta;
+use Johncms\Http\Pagination\PaginationFactory;
+use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Admin\Application\Services\AdminUserRowMapper;
 use Johncms\Modules\Admin\Application\UseCases\SearchUsersByIpUseCase;
 use Johncms\Modules\Admin\Domain\Enums\IpSearchMode;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
-use Johncms\Users\User;
 
 final readonly class IpSearchController
 {
@@ -22,10 +22,10 @@ final readonly class IpSearchController
         private Render $render,
         private Request $request,
         private NavChain $navChain,
-        private Tools $tools,
-        private User $currentUser,
         private SearchUsersByIpUseCase $searchUsersByIpUseCase,
         private AdminUserRowMapper $rowMapper,
+        private PaginationFactory $paginationFactory,
+        private PaginationGuard $paginationGuard,
     ) {
         $this->controllerContext->initModule('admin');
     }
@@ -33,23 +33,30 @@ final readonly class IpSearchController
     public function __invoke(?string $mode = null): string
     {
         $searchMode = $mode === 'history' ? IpSearchMode::HISTORY : IpSearchMode::ACTUAL;
-        $baseUrl = $searchMode === IpSearchMode::HISTORY ? '/admin/ip-search/history' : '/admin/ip-search';
 
         $search = (string) $this->request->getQuery('ip', '', FILTER_VALIDATE_IP);
         if ($search === '') {
             $search = trim((string) $this->request->getQuery('search', ''));
         }
 
-        $page = max(1, (int) $this->request->getQuery('page', 1));
-        $perPage = $this->currentUser->config->kmess;
+        $pagination = $this->paginationFactory->create($this->searchUsersByIpUseCase->count($search, $searchMode));
 
-        $result = $this->searchUsersByIpUseCase->execute($search, $searchMode, $page, $perPage);
-        $total = $result->total();
+        $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
+        if ($redirectUrl !== null) {
+            redirect($redirectUrl);
+        }
+
+        $result = $this->searchUsersByIpUseCase->getPage(
+            $search,
+            $searchMode,
+            $pagination->getPerPage(),
+            $pagination->getOffset()
+        );
 
         $title = __('Search IP');
         $this->navChain->add($title);
 
-        $meta = new PageMeta($title, $page);
+        $meta = new PageMeta($title, $pagination->getCurrentPage());
         $this->render->addData(
             [
                 'title'      => $meta->title,
@@ -64,10 +71,10 @@ final readonly class IpSearchController
             'admin::search_ip',
             [
                 'search'   => $search,
-                'items'    => $result->users !== null ? $this->rowMapper->mapMany($result->users->getCollection()) : [],
+                'items'    => $result->users !== null ? $this->rowMapper->mapMany($result->users) : [],
                 'errors'   => $result->errors,
-                'total'    => $total,
-                'per_page' => $perPage,
+                'total'    => $pagination->getTotal(),
+                'per_page' => $pagination->getPerPage(),
                 'filters'  => [
                     [
                         'url'    => '/admin/ip-search?search=' . $encodedSearch,
@@ -80,12 +87,7 @@ final readonly class IpSearchController
                         'active' => $searchMode === IpSearchMode::HISTORY,
                     ],
                 ],
-                'pagination' => $this->tools->displayPagination(
-                    $baseUrl . '?search=' . $encodedSearch . '&',
-                    ($page - 1) * $perPage,
-                    $total,
-                    $perPage
-                ),
+                'pagination' => $pagination->render(),
             ]
         );
     }

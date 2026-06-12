@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Infrastructure\Persistence\Repository;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 use Johncms\Modules\Admin\Domain\Models\Ad;
 use Johncms\Modules\Admin\Domain\Repository\AdRepositoryInterface;
 
@@ -15,12 +15,17 @@ final class EloquentAdRepository implements AdRepositoryInterface
         return Ad::query()->where('type', $type)->count();
     }
 
-    public function paginateByType(int $type, int $page, int $perPage): LengthAwarePaginator
+    /**
+     * @return Collection<int, Ad>
+     */
+    public function getByType(int $type, int $limit, int $offset): Collection
     {
         return Ad::query()
             ->where('type', $type)
             ->orderBy('mesto')
-            ->paginate($perPage, ['*'], 'page', $page);
+            ->offset($offset)
+            ->limit($limit)
+            ->get();
     }
 
     public function findById(int $id): ?Ad

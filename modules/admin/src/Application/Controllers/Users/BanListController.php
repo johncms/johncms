@@ -6,13 +6,13 @@ namespace Johncms\Modules\Admin\Application\Controllers\Users;
 
 use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Http\PageMeta;
+use Johncms\Http\Pagination\PaginationFactory;
+use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Admin\Application\Services\BanListRowMapper;
 use Johncms\Modules\Admin\Application\UseCases\GetBanListUseCase;
 use Johncms\Modules\Admin\Domain\Enums\BanListSort;
 use Johncms\Modules\Admin\Domain\Enums\UserRights;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 
@@ -21,12 +21,12 @@ final readonly class BanListController
     public function __construct(
         private AdminControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
-        private Tools $tools,
         private User $currentUser,
         private GetBanListUseCase $getBanListUseCase,
         private BanListRowMapper $rowMapper,
+        private PaginationFactory $paginationFactory,
+        private PaginationGuard $paginationGuard,
     ) {
         $this->controllerContext->initModule('admin');
     }
@@ -34,18 +34,20 @@ final readonly class BanListController
     public function __invoke(?string $sort = null): string
     {
         $sortMode = $sort === 'by-violations' ? BanListSort::VIOLATIONS : BanListSort::TIME;
-        $baseUrl = $sortMode === BanListSort::VIOLATIONS ? '/admin/bans/by-violations' : '/admin/bans';
 
-        $page = max(1, (int) $this->request->getQuery('page', 1));
-        $perPage = $this->currentUser->config->kmess;
+        $pagination = $this->paginationFactory->create($this->getBanListUseCase->count());
 
-        $bans = $this->getBanListUseCase->execute($sortMode, $page, $perPage);
-        $total = $bans->total();
+        $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
+        if ($redirectUrl !== null) {
+            redirect($redirectUrl);
+        }
+
+        $bans = $this->getBanListUseCase->getPage($sortMode, $pagination->getPerPage(), $pagination->getOffset());
 
         $title = __('Ban Panel');
         $this->navChain->add($title);
 
-        $meta = new PageMeta($title, $page);
+        $meta = new PageMeta($title, $pagination->getCurrentPage());
         $this->render->addData(
             [
                 'title'      => $meta->title,
@@ -57,21 +59,16 @@ final readonly class BanListController
         return $this->render->render(
             'admin::ban_panel',
             [
-                'items'        => $this->rowMapper->mapMany($bans->getCollection()),
-                'total'        => $total,
-                'per_page'     => $perPage,
+                'items'        => $this->rowMapper->mapMany($bans),
+                'total'        => $pagination->getTotal(),
+                'per_page'     => $pagination->getPerPage(),
                 'filters'      => [
                     ['name' => __('Term'), 'url' => '/admin/bans', 'active' => $sortMode === BanListSort::TIME],
                     ['name' => __('Violations'), 'url' => '/admin/bans/by-violations', 'active' => $sortMode === BanListSort::VIOLATIONS],
                 ],
                 'show_amnesty' => $this->currentUser->rights === UserRights::SUPER_ADMIN->value,
                 'amnesty_url'  => '/admin/bans/amnesty',
-                'pagination'   => $this->tools->displayPagination(
-                    $baseUrl . '?',
-                    ($page - 1) * $perPage,
-                    $total,
-                    $perPage
-                ),
+                'pagination'   => $pagination->render(),
             ]
         );
     }

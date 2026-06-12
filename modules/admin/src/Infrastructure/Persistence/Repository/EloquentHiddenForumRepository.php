@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Infrastructure\Persistence\Repository;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Johncms\Modules\Admin\Domain\Repository\HiddenForumRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Models\ForumFile;
 use Johncms\Modules\Forum\Domain\Models\ForumMessage;
@@ -13,11 +13,21 @@ use Johncms\Modules\Forum\Domain\Models\ForumTopic;
 
 final class EloquentHiddenForumRepository implements HiddenForumRepositoryInterface
 {
-    public function paginateTopics(?int $userId, ?int $sectionId, int $page, int $perPage): LengthAwarePaginator
+    public function countTopics(?int $userId, ?int $sectionId): int
+    {
+        return $this->topicsQuery($userId, $sectionId)->count();
+    }
+
+    /**
+     * @return Collection<int, ForumTopic>
+     */
+    public function getTopics(?int $userId, ?int $sectionId, int $limit, int $offset): Collection
     {
         return $this->topicsQuery($userId, $sectionId)
             ->orderByDesc('id')
-            ->paginate($perPage, ['*'], 'page', $page);
+            ->offset($offset)
+            ->limit($limit)
+            ->get();
     }
 
     public function topicAttachmentFilenames(?int $userId, ?int $sectionId): array
@@ -41,11 +51,21 @@ final class EloquentHiddenForumRepository implements HiddenForumRepositoryInterf
         ForumTopic::query()->whereIn('id', $topicIds)->delete();
     }
 
-    public function paginatePosts(?int $topicId, ?int $userId, int $page, int $perPage): LengthAwarePaginator
+    public function countPosts(?int $topicId, ?int $userId): int
+    {
+        return $this->postsQuery($topicId, $userId)->count();
+    }
+
+    /**
+     * @return Collection<int, ForumMessage>
+     */
+    public function getPosts(?int $topicId, ?int $userId, int $limit, int $offset): Collection
     {
         return $this->postsQuery($topicId, $userId)
             ->orderByDesc('id')
-            ->paginate($perPage, ['*'], 'page', $page);
+            ->offset($offset)
+            ->limit($limit)
+            ->get();
     }
 
     public function postAttachmentFilenames(?int $topicId, ?int $userId): array

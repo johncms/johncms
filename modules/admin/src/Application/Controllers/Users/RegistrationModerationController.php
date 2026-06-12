@@ -6,13 +6,14 @@ namespace Johncms\Modules\Admin\Application\Controllers\Users;
 
 use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Http\PageMeta;
+use Johncms\Http\Pagination\PaginationFactory;
+use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Admin\Application\Services\RegistrationRowMapper;
 use Johncms\Modules\Admin\Application\UseCases\ApproveRegistrationUseCase;
 use Johncms\Modules\Admin\Application\UseCases\DeleteRegistrationUseCase;
 use Johncms\Modules\Admin\Application\UseCases\GetPendingRegistrationsUseCase;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
@@ -32,17 +33,22 @@ final readonly class RegistrationModerationController
         private ApproveRegistrationUseCase $approveRegistration,
         private DeleteRegistrationUseCase $deleteRegistration,
         private RegistrationRowMapper $rowMapper,
+        private PaginationFactory $paginationFactory,
+        private PaginationGuard $paginationGuard,
     ) {
         $this->controllerContext->initModule('admin');
     }
 
     public function index(): string
     {
-        $page = max(1, (int) $this->request->getQuery('page', 1));
-        $perPage = $this->currentUser->config->kmess;
+        $pagination = $this->paginationFactory->create($this->getPendingRegistrations->count());
 
-        $registrations = $this->getPendingRegistrations->execute($page, $perPage);
-        $total = $registrations->total();
+        $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
+        if ($redirectUrl !== null) {
+            redirect($redirectUrl);
+        }
+
+        $registrations = $this->getPendingRegistrations->getPage($pagination->getPerPage(), $pagination->getOffset());
 
         $title = __('Registration confirmation');
         $this->navChain->add($title);
@@ -53,7 +59,7 @@ final readonly class RegistrationModerationController
             unset($_SESSION['success_message']);
         }
 
-        $meta = new PageMeta($title, $page);
+        $meta = new PageMeta($title, $pagination->getCurrentPage());
         $this->render->addData(
             [
                 'title'      => $meta->title,
@@ -65,17 +71,12 @@ final readonly class RegistrationModerationController
         return $this->render->render(
             'admin::reg_list',
             [
-                'items'           => $this->rowMapper->mapMany($registrations->getCollection()),
-                'total'           => $total,
-                'per_page'        => $perPage,
+                'items'           => $this->rowMapper->mapMany($registrations),
+                'total'           => $pagination->getTotal(),
+                'per_page'        => $pagination->getPerPage(),
                 'form_action'     => self::URL,
                 'success_message' => $successMessage,
-                'pagination'      => $this->tools->displayPagination(
-                    self::URL . '?',
-                    ($page - 1) * $perPage,
-                    $total,
-                    $perPage
-                ),
+                'pagination'      => $pagination->render(),
             ]
         );
     }

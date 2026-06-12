@@ -4,15 +4,21 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Domain\Repository;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 use Johncms\Modules\Admin\Domain\Enums\UserListSort;
+use Johncms\Users\User;
 
 interface UserListRepositoryInterface
 {
     /**
-     * Постраничный список подтверждённых пользователей (preg = 1) с заданной сортировкой.
-     *
-     * @return LengthAwarePaginator<\Johncms\Users\User>
+     * Количество подтверждённых пользователей (preg = 1).
      */
-    public function paginateApproved(UserListSort $sort, int $page, int $perPage): LengthAwarePaginator;
+    public function countApproved(): int;
+
+    /**
+     * Страница подтверждённых пользователей (preg = 1) с заданной сортировкой.
+     *
+     * @return Collection<int, User>
+     */
+    public function getApproved(UserListSort $sort, int $limit, int $offset): Collection;
 }

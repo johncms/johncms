@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Application\UseCases;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 use Johncms\Modules\Admin\Domain\Repository\HiddenForumRepositoryInterface;
 
 final readonly class ManageHiddenForumUseCase
@@ -14,14 +14,30 @@ final readonly class ManageHiddenForumUseCase
     ) {
     }
 
-    public function topics(?int $userId, ?int $sectionId, int $page, int $perPage): LengthAwarePaginator
+    public function countTopics(?int $userId, ?int $sectionId): int
     {
-        return $this->repository->paginateTopics($userId, $sectionId, $page, $perPage);
+        return $this->repository->countTopics($userId, $sectionId);
     }
 
-    public function posts(?int $topicId, ?int $userId, int $page, int $perPage): LengthAwarePaginator
+    /**
+     * @return Collection<int, \Johncms\Modules\Forum\Domain\Models\ForumTopic>
+     */
+    public function topicsPage(?int $userId, ?int $sectionId, int $limit, int $offset): Collection
     {
-        return $this->repository->paginatePosts($topicId, $userId, $page, $perPage);
+        return $this->repository->getTopics($userId, $sectionId, $limit, $offset);
+    }
+
+    public function countPosts(?int $topicId, ?int $userId): int
+    {
+        return $this->repository->countPosts($topicId, $userId);
+    }
+
+    /**
+     * @return Collection<int, \Johncms\Modules\Forum\Domain\Models\ForumMessage>
+     */
+    public function postsPage(?int $topicId, ?int $userId, int $limit, int $offset): Collection
+    {
+        return $this->repository->getPosts($topicId, $userId, $limit, $offset);
     }
 
     public function purgeTopics(?int $userId, ?int $sectionId): void

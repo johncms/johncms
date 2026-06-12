@@ -4,14 +4,17 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Domain\Repository;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 use Johncms\Modules\Admin\Domain\Models\Ad;
 
 interface AdRepositoryInterface
 {
     public function countByType(int $type): int;
 
-    public function paginateByType(int $type, int $page, int $perPage): LengthAwarePaginator;
+    /**
+     * @return Collection<int, Ad>
+     */
+    public function getByType(int $type, int $limit, int $offset): Collection;
 
     public function findById(int $id): ?Ad;
 
