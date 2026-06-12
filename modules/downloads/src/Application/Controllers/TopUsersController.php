@@ -6,10 +6,10 @@ namespace Johncms\Modules\Downloads\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\PageMeta;
+use Johncms\Http\Pagination\PaginationFactory;
+use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Downloads\Application\UseCases\ViewTopUsersUseCase;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 
@@ -18,20 +18,25 @@ final readonly class TopUsersController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
-        private Tools $tools,
         private User $currentUser,
         private ViewTopUsersUseCase $useCase,
+        private PaginationFactory $paginationFactory,
+        private PaginationGuard $paginationGuard,
     ) {
         $this->controllerContext->initModule('downloads');
     }
 
     public function __invoke(): string
     {
-        $page = max(1, (int) $this->request->getQuery('page', 1));
+        $pagination = $this->paginationFactory->create($this->useCase->count());
 
-        $result = $this->useCase->execute($page, $this->currentUser->config->kmess);
+        $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
+        if ($redirectUrl !== null) {
+            redirect($redirectUrl);
+        }
+
+        $result = $this->useCase->getPage($pagination->getPerPage(), $pagination->getOffset());
 
         $users = [];
         foreach ($result->users as $userModel) {
@@ -55,7 +60,7 @@ final readonly class TopUsersController
         $this->navChain->add(__('Downloads'), '/downloads/');
         $this->navChain->add($pageTitle);
 
-        $meta = new PageMeta($documentTitle, $page);
+        $meta = new PageMeta($documentTitle, $pagination->getCurrentPage());
         $this->render->addData([
             'title'       => $meta->title,
             'page_title'  => $pageTitle,
@@ -66,13 +71,8 @@ final readonly class TopUsersController
             'downloads::top_users',
             [
                 'users'      => $users,
-                'total'      => $result->users->total(),
-                'pagination' => $this->tools->displayPagination(
-                    '/downloads/top-users/?',
-                    ($page - 1) * $this->currentUser->config->kmess,
-                    $result->users->total(),
-                    $this->currentUser->config->kmess
-                ),
+                'total'      => $pagination->getTotal(),
+                'pagination' => $pagination->render(),
                 'urls'       => ['downloads' => '/downloads/'],
             ]
         );

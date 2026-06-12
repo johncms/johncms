@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Downloads\Application\DTO;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 final readonly class CommentsReviewResultDTO
 {
     public function __construct(
-        public LengthAwarePaginator $comments,
+        public Collection $comments,
     ) {
     }
 }

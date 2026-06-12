@@ -7,12 +7,12 @@ namespace Johncms\Modules\Downloads\Application\Controllers;
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Downloads\Application\FilePresenter;
 use Johncms\Http\PageMeta;
+use Johncms\Http\Pagination\PaginationFactory;
+use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Downloads\Application\UseCases\SearchFilesUseCase;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
-use Johncms\Users\User;
 
 final readonly class SearchController
 {
@@ -21,10 +21,10 @@ final readonly class SearchController
         private Render $render,
         private Request $request,
         private NavChain $navChain,
-        private Tools $tools,
-        private User $currentUser,
         private SearchFilesUseCase $useCase,
         private FilePresenter $filePresenter,
+        private PaginationFactory $paginationFactory,
+        private PaginationGuard $paginationGuard,
     ) {
         $this->controllerContext->initModule('downloads');
     }
@@ -33,8 +33,6 @@ final readonly class SearchController
     {
         $rawQuery = trim((string) $this->request->getQuery('search', ''));
         $searchInDescription = (bool) $this->request->getQuery('id', 0);
-
-        $page = max(1, (int) $this->request->getQuery('page', 1));
 
         $this->navChain->add(__('Downloads'), '/downloads/');
         $this->navChain->add(__('Search'), '/downloads/search/');
@@ -77,12 +75,19 @@ final readonly class SearchController
             );
         }
 
-        $result = $this->useCase->execute($rawQuery, $searchInDescription, $page, $this->currentUser->config->kmess);
+        $pagination = $this->paginationFactory->create($this->useCase->count($rawQuery, $searchInDescription));
+
+        $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
+        if ($redirectUrl !== null) {
+            redirect($redirectUrl);
+        }
+
+        $result = $this->useCase->getPage($rawQuery, $searchInDescription, $pagination->getPerPage(), $pagination->getOffset());
 
         $pageTitle = __('Search results for: %s', $result->searchQuery);
         $documentTitle = $pageTitle . ' — ' . __('Downloads');
 
-        $meta = new PageMeta($documentTitle, $page);
+        $meta = new PageMeta($documentTitle, $pagination->getCurrentPage());
         $this->render->addData(
             [
                 'title'       => $meta->title,
@@ -96,19 +101,12 @@ final readonly class SearchController
             $files[] = $this->filePresenter->present($file);
         }
 
-        $paginationParams = http_build_query(['search' => $result->searchQuery, 'id' => $searchInDescription ? 1 : 0]);
-
         return $this->render->render(
             'downloads::search',
             [
                 'files'                 => $files,
-                'total'                 => $result->files->total(),
-                'pagination'            => $this->tools->displayPagination(
-                    '/downloads/search/?' . $paginationParams . '&amp;',
-                    ($page - 1) * $this->currentUser->config->kmess,
-                    $result->files->total(),
-                    $this->currentUser->config->kmess
-                ),
+                'total'                 => $pagination->getTotal(),
+                'pagination'            => $pagination->render(),
                 'search_query'          => htmlspecialchars($result->searchQuery),
                 'search_in_description' => $result->searchInDescription,
                 'show_empty_info'       => true,

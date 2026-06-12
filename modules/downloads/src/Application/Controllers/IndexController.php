@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\Pagination\PaginationFactory;
+use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Downloads\Application\FilePresenter;
 use Johncms\Modules\Downloads\Application\Services\DownloadCategoryPathService;
 use Johncms\Modules\Downloads\Application\Services\DownloadLegacyRedirectResolver;
@@ -12,7 +14,6 @@ use Johncms\Modules\Downloads\Domain\Models\DownloadCategory;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 
@@ -23,11 +24,12 @@ final readonly class IndexController
         private Render $render,
         private Request $request,
         private NavChain $navChain,
-        private Tools $tools,
         private User $currentUser,
         private FilePresenter $filePresenter,
         private DownloadLegacyRedirectResolver $legacyRedirectResolver,
         private DownloadCategoryPathService $categoryPathService,
+        private PaginationFactory $paginationFactory,
+        private PaginationGuard $paginationGuard,
     ) {
         $this->controllerContext->initModule('downloads');
     }
@@ -40,9 +42,6 @@ final readonly class IndexController
             header('Location: ' . $redirect);
             exit;
         }
-
-        $page = max(1, (int) $this->request->getQuery('page', 1));
-        $kmess = $this->currentUser->config->kmess;
 
         $this->navChain->add(__('Downloads'), '/downloads/');
 
@@ -91,6 +90,15 @@ final readonly class IndexController
         }
 
         $totalFiles = DownloadFile::query()->where('refid', 0)->where('type', '<', 3)->count();
+
+        $pagination = $this->paginationFactory->create($totalFiles);
+        if ($this->request->getMethod() !== 'POST') {
+            $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
+            if ($redirectUrl !== null) {
+                redirect($redirectUrl);
+            }
+        }
+
         $files = [];
 
         if ($totalFiles > 0) {
@@ -121,8 +129,8 @@ final readonly class IndexController
                 ->where('type', '<', 3)
                 ->orderBy('type')
                 ->orderBy($sortColumn, $sortDir)
-                ->offset(($page - 1) * $kmess)
-                ->limit($kmess)
+                ->offset($pagination->getOffset())
+                ->limit($pagination->getPerPage())
                 ->get();
 
             foreach ($rows as $file) {
@@ -133,12 +141,7 @@ final readonly class IndexController
         return $this->render->render('downloads::index', [
             'id'          => 0,
             'urls'        => $urls,
-            'pagination'  => $this->tools->displayPagination(
-                '/downloads/?',
-                ($page - 1) * $kmess,
-                $totalFiles,
-                $kmess
-            ),
+            'pagination'  => $pagination->render(),
             'files'       => $files,
             'total_files' => $totalFiles,
             'total_new'   => $totalNew,

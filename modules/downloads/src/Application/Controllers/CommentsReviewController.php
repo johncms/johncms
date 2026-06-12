@@ -6,10 +6,11 @@ namespace Johncms\Modules\Downloads\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\PageMeta;
+use Johncms\Http\Pagination\PaginationFactory;
+use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Downloads\Application\Services\DownloadFilePathService;
 use Johncms\Modules\Downloads\Application\UseCases\ViewCommentsReviewUseCase;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
 use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
@@ -19,12 +20,13 @@ final readonly class CommentsReviewController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private Tools $tools,
         private User $currentUser,
         private ViewCommentsReviewUseCase $useCase,
         private DownloadFilePathService $filePathService,
+        private PaginationFactory $paginationFactory,
+        private PaginationGuard $paginationGuard,
     ) {
         $this->controllerContext->initModule('downloads');
     }
@@ -47,9 +49,14 @@ final readonly class CommentsReviewController
             );
         }
 
-        $page = max(1, (int) $this->request->getQuery('page', 1));
+        $pagination = $this->paginationFactory->create($this->useCase->count());
 
-        $result = $this->useCase->execute($page, $this->currentUser->config->kmess);
+        $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
+        if ($redirectUrl !== null) {
+            redirect($redirectUrl);
+        }
+
+        $result = $this->useCase->getPage($pagination->getPerPage(), $pagination->getOffset());
 
         $items = [];
         foreach ($result->comments as $comment) {
@@ -101,28 +108,19 @@ final readonly class CommentsReviewController
         $this->navChain->add(__('Downloads'), '/downloads/');
         $this->navChain->add($pageTitle);
 
-        $meta = new PageMeta($documentTitle, $page);
+        $meta = new PageMeta($documentTitle, $pagination->getCurrentPage());
         $this->render->addData([
             'title'       => $meta->title,
             'page_title'  => $pageTitle,
             'description' => $meta->description,
         ]);
 
-        $total = $result->comments->total();
-
         return $this->render->render(
             'downloads::comments_review',
             [
                 'data' => [
                     'items'      => $items,
-                    'pagination' => $total > $this->currentUser->config->kmess
-                        ? $this->tools->displayPagination(
-                            '/downloads/comments-review/?',
-                            ($page - 1) * $this->currentUser->config->kmess,
-                            $total,
-                            $this->currentUser->config->kmess
-                        )
-                        : '',
+                    'pagination' => $pagination->hasPages() ? $pagination->render() : '',
                 ],
                 'urls' => ['downloads' => '/downloads/'],
             ]

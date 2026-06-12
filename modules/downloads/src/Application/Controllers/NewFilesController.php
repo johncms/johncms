@@ -7,13 +7,13 @@ namespace Johncms\Modules\Downloads\Application\Controllers;
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Downloads\Application\FilePresenter;
 use Johncms\Http\PageMeta;
+use Johncms\Http\Pagination\PaginationFactory;
+use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Downloads\Application\Exceptions\DownloadNotFoundException;
 use Johncms\Modules\Downloads\Application\UseCases\ViewNewFilesUseCase;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
-use Johncms\Users\User;
 
 final readonly class NewFilesController
 {
@@ -22,10 +22,10 @@ final readonly class NewFilesController
         private Render $render,
         private Request $request,
         private NavChain $navChain,
-        private Tools $tools,
-        private User $currentUser,
         private ViewNewFilesUseCase $useCase,
         private FilePresenter $filePresenter,
+        private PaginationFactory $paginationFactory,
+        private PaginationGuard $paginationGuard,
     ) {
         $this->controllerContext->initModule('downloads');
     }
@@ -33,10 +33,16 @@ final readonly class NewFilesController
     public function __invoke(): string
     {
         $categoryId = max(0, (int) $this->request->getQuery('id', 0));
-        $page = max(1, (int) $this->request->getQuery('page', 1));
 
         try {
-            $result = $this->useCase->execute($page, $this->currentUser->config->kmess, $categoryId);
+            $pagination = $this->paginationFactory->create($this->useCase->count($categoryId));
+
+            $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
+            if ($redirectUrl !== null) {
+                redirect($redirectUrl);
+            }
+
+            $result = $this->useCase->getPage($pagination->getPerPage(), $pagination->getOffset(), $categoryId);
         } catch (DownloadNotFoundException) {
             return $this->render->render(
                 'system::pages/result',
@@ -60,9 +66,8 @@ final readonly class NewFilesController
 
         $pageTitle = __('New Files');
         $documentTitle = $pageTitle . ' — ' . __('Downloads');
-        $paginationBase = '/downloads/new/?' . ($categoryId ? 'id=' . $categoryId . '&amp;' : '');
 
-        $meta = new PageMeta($documentTitle, $page);
+        $meta = new PageMeta($documentTitle, $pagination->getCurrentPage());
         $this->render->addData(
             [
                 'title'       => $meta->title,
@@ -74,14 +79,9 @@ final readonly class NewFilesController
         return $this->render->render(
             'downloads::new_files',
             [
-                'pagination' => $this->tools->displayPagination(
-                    $paginationBase,
-                    ($page - 1) * $this->currentUser->config->kmess,
-                    $result->files->total(),
-                    $this->currentUser->config->kmess
-                ),
+                'pagination' => $pagination->render(),
                 'files'      => $files,
-                'total'      => $result->files->total(),
+                'total'      => $pagination->getTotal(),
                 'urls'       => ['downloads' => '/downloads/'],
             ]
         );

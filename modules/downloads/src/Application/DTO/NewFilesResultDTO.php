@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Downloads\Application\DTO;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 final readonly class NewFilesResultDTO
 {
     public function __construct(
-        public LengthAwarePaginator $files,
+        public Collection $files,
         public int $categoryId,
     ) {
     }

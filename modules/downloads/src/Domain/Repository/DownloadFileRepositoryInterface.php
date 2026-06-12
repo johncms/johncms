@@ -4,26 +4,58 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Downloads\Domain\Repository;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection as SupportCollection;
 use Johncms\Modules\Downloads\Domain\Enums\DownloadTopSort;
+use Johncms\Modules\Downloads\Domain\Models\DownloadComment;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
+use Johncms\Users\User as UserModel;
 
 interface DownloadFileRepositoryInterface
 {
-    public function paginateNewFiles(int $page, int $perPage, ?string $directoryPrefix = null): LengthAwarePaginator;
+    public function countNewFiles(?string $directoryPrefix = null): int;
+
+    /**
+     * @return Collection<int, DownloadFile>
+     */
+    public function getNewFiles(int $limit, int $offset, ?string $directoryPrefix = null): Collection;
 
     public function getTopFiles(DownloadTopSort $sort, int $limit): Collection;
 
-    public function searchFiles(string $query, bool $searchInDescription, int $page, int $perPage): LengthAwarePaginator;
+    public function countSearchFiles(string $query, bool $searchInDescription): int;
 
-    public function paginateTopUsers(int $page, int $perPage): LengthAwarePaginator;
+    /**
+     * @return Collection<int, DownloadFile>
+     */
+    public function getSearchFiles(string $query, bool $searchInDescription, int $limit, int $offset): Collection;
 
-    public function paginateUserFiles(int $userId, int $page, int $perPage): LengthAwarePaginator;
+    public function countTopUsers(): int;
 
-    public function paginateFavorites(int $userId, int $page, int $perPage): LengthAwarePaginator;
+    /**
+     * @return SupportCollection<int, UserModel>
+     */
+    public function getTopUsers(int $limit, int $offset): SupportCollection;
 
-    public function paginateCommentsReview(int $page, int $perPage): LengthAwarePaginator;
+    public function countUserFiles(int $userId): int;
+
+    /**
+     * @return Collection<int, DownloadFile>
+     */
+    public function getUserFiles(int $userId, int $limit, int $offset): Collection;
+
+    public function countFavorites(int $userId): int;
+
+    /**
+     * @return Collection<int, DownloadFile>
+     */
+    public function getFavorites(int $userId, int $limit, int $offset): Collection;
+
+    public function countCommentsReview(): int;
+
+    /**
+     * @return Collection<int, DownloadComment>
+     */
+    public function getCommentsReview(int $limit, int $offset): Collection;
 
     public function findFile(int $id): ?DownloadFile;
 

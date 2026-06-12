@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\Pagination\PaginationFactory;
+use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Downloads\Application\FilePresenter;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
-use Johncms\Users\User;
 
 final readonly class FilesModerationController
 {
@@ -20,9 +20,9 @@ final readonly class FilesModerationController
         private Render $render,
         private Request $request,
         private NavChain $navChain,
-        private Tools $tools,
-        private User $currentUser,
         private FilePresenter $filePresenter,
+        private PaginationFactory $paginationFactory,
+        private PaginationGuard $paginationGuard,
     ) {
         $this->controllerContext->initModule('downloads');
     }
@@ -80,19 +80,22 @@ final readonly class FilesModerationController
 
     private function showList(): string
     {
-        $page = max(1, (int) $this->request->getQuery('page', 1));
-        $perPage = $this->currentUser->config->kmess;
-        $start = ($page - 1) * $perPage;
-
         $total = DownloadFile::query()->where('type', 3)->count();
+
+        $pagination = $this->paginationFactory->create($total);
+        $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
+        if ($redirectUrl !== null) {
+            redirect($redirectUrl);
+        }
+
         $files = [];
 
         if ($total > 0) {
             $rows = DownloadFile::query()
                 ->where('type', 3)
                 ->orderByDesc('time')
-                ->skip($start)
-                ->take($perPage)
+                ->skip($pagination->getOffset())
+                ->take($pagination->getPerPage())
                 ->get();
 
             foreach ($rows as $file) {
@@ -106,12 +109,7 @@ final readonly class FilesModerationController
         return $this->render->render('downloads::files_moderation', [
             'files'      => $files,
             'total'      => $total,
-            'pagination' => $this->tools->displayPagination(
-                '/downloads/moderation?',
-                $start,
-                $total,
-                $perPage
-            ),
+            'pagination' => $pagination->render(),
             'urls'       => ['downloads' => '/downloads/'],
         ]);
     }

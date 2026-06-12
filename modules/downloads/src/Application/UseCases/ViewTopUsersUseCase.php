@@ -14,10 +14,13 @@ final readonly class ViewTopUsersUseCase
     ) {
     }
 
-    public function execute(int $page, int $perPage): TopUsersResultDTO
+    public function count(): int
     {
-        $users = $this->fileRepository->paginateTopUsers($page, $perPage);
+        return $this->fileRepository->countTopUsers();
+    }
 
-        return new TopUsersResultDTO($users);
+    public function getPage(int $limit, int $offset): TopUsersResultDTO
+    {
+        return new TopUsersResultDTO($this->fileRepository->getTopUsers($limit, $offset));
     }
 }

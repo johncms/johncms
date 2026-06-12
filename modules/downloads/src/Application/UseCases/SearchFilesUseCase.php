@@ -14,11 +14,21 @@ final readonly class SearchFilesUseCase
     ) {
     }
 
-    public function execute(string $rawQuery, bool $searchInDescription, int $page, int $perPage): SearchFilesResultDTO
+    public function count(string $rawQuery, bool $searchInDescription): int
     {
-        $sanitizedQuery = (string) preg_replace("/[^\w\x7F-\xFF\s]/", ' ', $rawQuery);
-        $files = $this->fileRepository->searchFiles($sanitizedQuery, $searchInDescription, $page, $perPage);
+        return $this->fileRepository->countSearchFiles($this->sanitize($rawQuery), $searchInDescription);
+    }
+
+    public function getPage(string $rawQuery, bool $searchInDescription, int $limit, int $offset): SearchFilesResultDTO
+    {
+        $sanitizedQuery = $this->sanitize($rawQuery);
+        $files = $this->fileRepository->getSearchFiles($sanitizedQuery, $searchInDescription, $limit, $offset);
 
         return new SearchFilesResultDTO($files, $sanitizedQuery, $searchInDescription);
+    }
+
+    private function sanitize(string $rawQuery): string
+    {
+        return (string) preg_replace("/[^\w\x7F-\xFF\s]/", ' ', $rawQuery);
     }
 }

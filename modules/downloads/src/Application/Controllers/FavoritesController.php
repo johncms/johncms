@@ -7,10 +7,10 @@ namespace Johncms\Modules\Downloads\Application\Controllers;
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Downloads\Application\FilePresenter;
 use Johncms\Http\PageMeta;
+use Johncms\Http\Pagination\PaginationFactory;
+use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Downloads\Application\UseCases\ViewFavoritesUseCase;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 
@@ -19,12 +19,12 @@ final readonly class FavoritesController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
-        private Tools $tools,
         private User $currentUser,
         private ViewFavoritesUseCase $useCase,
         private FilePresenter $filePresenter,
+        private PaginationFactory $paginationFactory,
+        private PaginationGuard $paginationGuard,
     ) {
         $this->controllerContext->initModule('downloads');
     }
@@ -43,9 +43,14 @@ final readonly class FavoritesController
             );
         }
 
-        $page = max(1, (int) $this->request->getQuery('page', 1));
+        $pagination = $this->paginationFactory->create($this->useCase->count($this->currentUser->id));
 
-        $result = $this->useCase->execute($this->currentUser->id, $page, $this->currentUser->config->kmess);
+        $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
+        if ($redirectUrl !== null) {
+            redirect($redirectUrl);
+        }
+
+        $result = $this->useCase->getPage($this->currentUser->id, $pagination->getPerPage(), $pagination->getOffset());
 
         $files = [];
         foreach ($result->files as $file) {
@@ -58,7 +63,7 @@ final readonly class FavoritesController
         $this->navChain->add(__('Downloads'), '/downloads/');
         $this->navChain->add($pageTitle);
 
-        $meta = new PageMeta($documentTitle, $page);
+        $meta = new PageMeta($documentTitle, $pagination->getCurrentPage());
         $this->render->addData([
             'title'       => $meta->title,
             'page_title'  => $pageTitle,
@@ -69,13 +74,8 @@ final readonly class FavoritesController
             'downloads::bookmarks',
             [
                 'files'       => $files,
-                'total_files' => $result->files->total(),
-                'pagination'  => $this->tools->displayPagination(
-                    '/downloads/favorites/?',
-                    ($page - 1) * $this->currentUser->config->kmess,
-                    $result->files->total(),
-                    $this->currentUser->config->kmess
-                ),
+                'total_files' => $pagination->getTotal(),
+                'pagination'  => $pagination->render(),
                 'urls'        => ['downloads' => '/downloads/'],
             ]
         );

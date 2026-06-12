@@ -14,10 +14,13 @@ final readonly class ViewCommentsReviewUseCase
     ) {
     }
 
-    public function execute(int $page, int $perPage): CommentsReviewResultDTO
+    public function count(): int
     {
-        $comments = $this->fileRepository->paginateCommentsReview($page, $perPage);
+        return $this->fileRepository->countCommentsReview();
+    }
 
-        return new CommentsReviewResultDTO($comments);
+    public function getPage(int $limit, int $offset): CommentsReviewResultDTO
+    {
+        return new CommentsReviewResultDTO($this->fileRepository->getCommentsReview($limit, $offset));
     }
 }

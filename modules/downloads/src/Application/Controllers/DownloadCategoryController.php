@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
 use Johncms\Http\PageMeta;
+use Johncms\Http\Pagination\PaginationFactory;
+use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Downloads\Application\FilePresenter;
 use Johncms\Modules\Downloads\Application\Services\DownloadCategoryPathService;
 use Johncms\Modules\Downloads\Domain\Models\DownloadCategory;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 
@@ -21,10 +22,11 @@ final readonly class DownloadCategoryController
         private Render $render,
         private Request $request,
         private NavChain $navChain,
-        private Tools $tools,
         private User $currentUser,
         private FilePresenter $filePresenter,
         private DownloadCategoryPathService $categoryPathService,
+        private PaginationFactory $paginationFactory,
+        private PaginationGuard $paginationGuard,
     ) {
     }
 
@@ -35,19 +37,10 @@ final readonly class DownloadCategoryController
             pageNotFound();
         }
 
-        $page = max(1, (int) $this->request->getQuery('page', 1));
-        $kmess = $this->currentUser->config->kmess;
-
         $this->navChain->add(__('Downloads'), '/downloads/');
         $this->buildNavChain($category);
 
         $title = $category->rus_name;
-        $meta = new PageMeta($title, $page);
-        $this->render->addData([
-            'title'       => $meta->title,
-            'page_title'  => $title,
-            'description' => $meta->description,
-        ]);
 
         $canUpload = (bool) $category->field && $this->currentUser->isValid();
 
@@ -93,6 +86,22 @@ final readonly class DownloadCategoryController
         }
 
         $totalFiles = DownloadFile::query()->where('refid', $category->id)->where('type', '<', 3)->count();
+
+        $pagination = $this->paginationFactory->create($totalFiles);
+        if ($this->request->getMethod() !== 'POST') {
+            $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
+            if ($redirectUrl !== null) {
+                redirect($redirectUrl);
+            }
+        }
+
+        $meta = new PageMeta($title, $pagination->getCurrentPage());
+        $this->render->addData([
+            'title'       => $meta->title,
+            'page_title'  => $title,
+            'description' => $meta->description,
+        ]);
+
         $files = [];
 
         if ($totalFiles > 0) {
@@ -123,8 +132,8 @@ final readonly class DownloadCategoryController
                 ->where('type', '<', 3)
                 ->orderBy('type')
                 ->orderBy($sortColumn, $sortDir)
-                ->offset(($page - 1) * $kmess)
-                ->limit($kmess)
+                ->offset($pagination->getOffset())
+                ->limit($pagination->getPerPage())
                 ->get();
 
             foreach ($rows as $file) {
@@ -135,12 +144,7 @@ final readonly class DownloadCategoryController
         return $this->render->render('downloads::index', [
             'id'          => $category->id,
             'urls'        => $urls,
-            'pagination'  => $this->tools->displayPagination(
-                $categoryUrl . '?',
-                ($page - 1) * $kmess,
-                $totalFiles,
-                $kmess
-            ),
+            'pagination'  => $pagination->render(),
             'files'       => $files,
             'total_files' => $totalFiles,
             'total_new'   => $totalNew,

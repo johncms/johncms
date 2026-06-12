@@ -16,7 +16,23 @@ final readonly class ViewUserFilesUseCase
     ) {
     }
 
-    public function execute(int $userId, int $page, int $perPage): UserFilesResultDTO
+    public function count(int $userId): int
+    {
+        $this->ensureUserExists($userId);
+
+        return $this->fileRepository->countUserFiles($userId);
+    }
+
+    public function getPage(int $userId, int $limit, int $offset): UserFilesResultDTO
+    {
+        $user = $this->ensureUserExists($userId);
+
+        $files = $this->fileRepository->getUserFiles($userId, $limit, $offset);
+
+        return new UserFilesResultDTO($user, $files);
+    }
+
+    private function ensureUserExists(int $userId): UserModel
     {
         $user = UserModel::query()->find($userId);
 
@@ -24,8 +40,6 @@ final readonly class ViewUserFilesUseCase
             throw new UserNotFoundException();
         }
 
-        $files = $this->fileRepository->paginateUserFiles($userId, $page, $perPage);
-
-        return new UserFilesResultDTO($user, $files);
+        return $user;
     }
 }

@@ -17,20 +17,29 @@ final readonly class ViewNewFilesUseCase
     ) {
     }
 
-    public function execute(int $page, int $perPage, int $categoryId = 0): NewFilesResultDTO
+    public function count(int $categoryId = 0): int
     {
-        $directoryPrefix = null;
+        return $this->fileRepository->countNewFiles($this->resolveDirectoryPrefix($categoryId));
+    }
 
-        if ($categoryId > 0) {
-            $category = $this->categoryRepository->findById($categoryId);
-            if ($category === null || ! is_dir($category->dir)) {
-                throw new DownloadNotFoundException();
-            }
-            $directoryPrefix = $category->dir;
-        }
-
-        $files = $this->fileRepository->paginateNewFiles($page, $perPage, $directoryPrefix);
+    public function getPage(int $limit, int $offset, int $categoryId = 0): NewFilesResultDTO
+    {
+        $files = $this->fileRepository->getNewFiles($limit, $offset, $this->resolveDirectoryPrefix($categoryId));
 
         return new NewFilesResultDTO($files, $categoryId);
+    }
+
+    private function resolveDirectoryPrefix(int $categoryId): ?string
+    {
+        if ($categoryId <= 0) {
+            return null;
+        }
+
+        $category = $this->categoryRepository->findById($categoryId);
+        if ($category === null || ! is_dir($category->dir)) {
+            throw new DownloadNotFoundException();
+        }
+
+        return $category->dir;
     }
 }

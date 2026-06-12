@@ -14,10 +14,13 @@ final readonly class ViewFavoritesUseCase
     ) {
     }
 
-    public function execute(int $userId, int $page, int $perPage): FavoritesResultDTO
+    public function count(int $userId): int
     {
-        $files = $this->fileRepository->paginateFavorites($userId, $page, $perPage);
+        return $this->fileRepository->countFavorites($userId);
+    }
 
-        return new FavoritesResultDTO($files);
+    public function getPage(int $userId, int $limit, int $offset): FavoritesResultDTO
+    {
+        return new FavoritesResultDTO($this->fileRepository->getFavorites($userId, $limit, $offset));
     }
 }
