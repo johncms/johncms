@@ -25,7 +25,6 @@ final readonly class HiddenTopicsController
         private Render $render,
         private Request $request,
         private NavChain $navChain,
-        private Tools $tools,
         private User $currentUser,
         private ManageHiddenForumUseCase $manageHidden,
         private HiddenTopicRowMapper $rowMapper,

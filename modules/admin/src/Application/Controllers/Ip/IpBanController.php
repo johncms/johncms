@@ -29,7 +29,6 @@ final readonly class IpBanController
         private Render $render,
         private Request $request,
         private NavChain $navChain,
-        private Tools $tools,
         private User $currentUser,
         private GetIpBanListUseCase $getList,
         private PrepareIpBanUseCase $prepareIpBan,
