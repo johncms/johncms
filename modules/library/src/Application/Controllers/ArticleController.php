@@ -6,10 +6,10 @@ namespace Johncms\Modules\Library\Application\Controllers;
 
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
+use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Library\Application\Services\LibraryArticlePathService;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
 use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
@@ -23,11 +23,11 @@ final readonly class ArticleController
     public function __construct(
         private Render $render,
         private NavChain $navChain,
-        private Request $request,
         private Tools $tools,
         private User $currentUser,
         private LibraryArticlePathService $articlePathService,
         private PaginationFactory $paginationFactory,
+        private PaginationGuard $paginationGuard,
     ) {
     }
 
@@ -58,7 +58,15 @@ final readonly class ArticleController
         $textRenderer = new ArticleTextRenderer();
         $pages        = $textRenderer->splitIntoPages((string) $article->text);
         $countPages   = count($pages);
-        $page         = max(1, min((int) $this->request->getQuery('page', 1), $countPages));
+
+        // One text page per pagination page. Canonicalize the ?page parameter
+        // (strip page=1/junk, redirect out-of-range to the last page).
+        $pagination = $this->paginationFactory->create($countPages, 1);
+        $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
+        if ($redirectUrl !== null) {
+            redirect($redirectUrl);
+        }
+        $page = $pagination->getCurrentPage();
 
         $text = $textRenderer->renderPage($pages[$page - 1], $this->currentUser->rights > 0);
 
@@ -100,9 +108,6 @@ final readonly class ArticleController
         }
 
         $articleUrl = $article->url;
-
-        // One text page per pagination page: the current page is already clamped to the page count.
-        $pagination = $this->paginationFactory->create($countPages, 1, 'page', $page);
 
         return $this->render->render('library::book', [
             'res'         => [
