@@ -501,7 +501,14 @@ class Comments
                 }
 
                 if ($this->total > $this->systemUser->config->kmess) {
-                    $data['pagination'] = $this->tools->displayPagination($this->queryBase(), $start, $this->total, $this->systemUser->config->kmess);
+                    $perPage = (int) $this->systemUser->config->kmess;
+                    $pagination = di(\Johncms\Http\Pagination\PaginationFactory::class)->create(
+                        $this->total,
+                        $perPage,
+                        'page',
+                        (int) floor($start / max(1, $perPage)) + 1,
+                    );
+                    $data['pagination'] = $pagination->render();
                 }
 
                 echo $this->view->render(
@@ -655,11 +662,5 @@ class Comments
         }
         $sep = str_contains($this->url, '?') ? '&amp;' : '?';
         return $this->url . $sep . preg_replace('/^&amp;/', '', $extra);
-    }
-
-    /** Returns the base URL ready for appending 'key=val' pairs (ends with '?' or '&amp;'). */
-    private function queryBase(): string
-    {
-        return $this->url . (str_contains($this->url, '?') ? '&amp;' : '?');
     }
 }
