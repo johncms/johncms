@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c6fcba68f9b3eb548e065e9a25de2334",
+    "content-hash": "599e4271d72ac42cb005c20e4e66e2a5",
     "packages": [
         {
             "name": "aura/autoload",
@@ -1583,39 +1583,6 @@
                 "source": "https://github.com/JamesHeinrich/getID3/tree/v1.9.24"
             },
             "time": "2025-10-09T17:48:17+00:00"
-        },
-        {
-            "name": "johncms/johncms-pagination",
-            "version": "2.0.1",
-            "dist": {
-                "type": "path",
-                "url": "system/third-party/johncms-pagination",
-                "reference": "b48e9b536183fc3ae03e3afa1fa6b2d484fe587c"
-            },
-            "require": {
-                "ext-json": "*",
-                "php": "^7.2 || ^8.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Illuminate\\Pagination\\": "src"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Taylor Otwell",
-                    "email": "taylor@laravel.com"
-                }
-            ],
-            "description": "The JohnCMS Pagination package.",
-            "homepage": "https://johncms.com",
-            "transport-options": {
-                "relative": true
-            }
         },
         {
             "name": "laminas/laminas-escaper",

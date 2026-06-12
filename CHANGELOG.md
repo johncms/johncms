@@ -13,7 +13,7 @@ Detailed change can see in the [repository log](https://github.com/johncms/johnc
 - Комментарии (загрузки, библиотека): Заменен редактор BB-кодов на CKEditor. Добавлены конвертеры `install/downloads_comments_converter.php` и `install/library_comments_converter.php` для миграции существующих комментариев из BB-кодов в HTML.
 - Личные сообщения: Заменен редактор BB-кодов на полноценный CKEditor в форме отправки сообщений. Для миграции существующих сообщений из BB-кодов в HTML добавлена консольная команда `mail:convert-bbcode`.
 - Добавлен value-object `Johncms\Http\PageMeta` для формирования `title` и meta `description` с автоматической подстановкой суффикса страницы при пагинации (начиная со 2-й страницы).
-- Добавлен новый компонент пагинации `Johncms\Http\Pagination` (`Pagination`, `PaginationFactory`, `PaginationGuard`) с канонизацией URL страниц (редиректы с `?page=1`, некорректных и превышающих диапазон номеров страниц). Заменяет устаревший форк `johncms/johncms-pagination`, который будет удалён по мере миграции модулей.
+- Добавлен новый компонент пагинации `Johncms\Http\Pagination` (`Pagination`, `PaginationFactory`, `PaginationGuard`) с канонизацией URL страниц (редиректы с `?page=1`, некорректных и превышающих диапазон номеров страниц).
 - Гостевая: Модуль покрыт юнит-тестами (use cases, проверки доступа, формы, middleware).
 
 #### Fixed
@@ -31,6 +31,7 @@ Detailed change can see in the [repository log](https://github.com/johncms/johnc
 - Помощь: Страницы (правила форума, смайлы, аватары) вынесены в отдельные контроллеры.
 - Гостевая: Модуль переведён на слоистую архитектуру с use cases и репозиториями, список записей переведён на новый компонент пагинации.
 - Роутер: Файл `config/routes.local.php` помечен устаревшим (deprecated).
+- Пагинация: Все постраничные списки (online, help, notifications, community, news, album, profile, mail, library, downloads, forum, admin, легаси-компонент комментариев) переведены на новый компонент `Johncms\Http\Pagination`. Удалён устаревший форк `johncms/johncms-pagination`, метод `Tools::displayPagination()` и легаси-ветка в шаблонах `system/app/pagination`. Добавлена канонизация URL страниц через `PaginationGuard`.
 - Удалён неиспользуемый модуль RSS.
 
 ## 9.8 - 2026-05-19

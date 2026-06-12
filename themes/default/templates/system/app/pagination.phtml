@@ -3,10 +3,8 @@
 /**
  * Шаблон постраничной навигации.
  *
- * Новый формат элементов (Johncms\Http\Pagination\Pagination):
+ * Формат элементов (Johncms\Http\Pagination\Pagination):
  *   ['type' => prev|page|ellipsis|next, 'page' => int|null, 'url' => string|null, 'active' => bool]
- * Легаси-формат (Tools::displayPagination, удалить вместе с system/src-legacy):
- *   ['url' => string, 'name' => string|int, 'active' => bool]
  *
  * @var array[] $items
  */
@@ -18,15 +16,7 @@ use Johncms\Http\Pagination\Pagination;
     <nav>
         <ul class="pagination">
             <?php foreach ($items as $item): ?>
-                <?php if (! isset($item['type'])): ?>
-                    <li class="page-item <?= ! empty($item['active']) ? 'active' : '' ?>">
-                        <?php if (! empty($item['url'])): ?>
-                            <a class="page-link" href="<?= $item['url'] ?>"><?= $item['name'] ?></a>
-                        <?php else: ?>
-                            <span class="page-link"><?= $item['name'] ?></span>
-                        <?php endif ?>
-                    </li>
-                <?php elseif ($item['type'] === Pagination::TYPE_PREV): ?>
+                <?php if ($item['type'] === Pagination::TYPE_PREV): ?>
                     <?php if ($item['url'] !== null): ?>
                         <li class="page-item">
                             <a class="page-link" href="<?= $this->e($item['url']) ?>" rel="prev" aria-label="Previous page">&laquo;</a>

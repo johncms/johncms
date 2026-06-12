@@ -51,7 +51,6 @@
         "imangazaliev/didom": "^2.0.1",
         "intervention/image": "^2.5",
         "james-heinrich/getid3": "^1.9",
-        "johncms/johncms-pagination": "^2.0.1",
         "laminas/laminas-servicemanager": "^3.6",
         "laminas/laminas-uri": "^2.8",
         "laminas/laminas-validator": "^2.14",
@@ -122,16 +121,5 @@
         "test:unit": "phpunit --testsuite unit --colors=always",
         "translate": "php system/bin/console i18n:translate",
         "translate-scan": "php system/bin/console i18n:scan"
-    },
-  "repositories": [
-    {
-      "type": "path",
-      "url": "system/third-party/johncms-pagination",
-      "options": {
-        "versions": {
-          "johncms/johncms-pagination": "2.0.1"
-        }
-      }
     }
-  ]
 }

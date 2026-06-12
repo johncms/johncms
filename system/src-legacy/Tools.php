@@ -17,7 +17,6 @@ use Johncms\System\i18n\Translator;
 use Johncms\System\Users\User;
 use Johncms\System\Users\UserConfig;
 use Johncms\System\View\Extension\Assets;
-use Johncms\System\View\Render;
 use Psr\Container\ContainerInterface;
 
 class Tools
@@ -175,107 +174,6 @@ class Tools
         return '<div class="rmenu"><p><b>' . d__('system', 'ERROR') . '!</b><br>'
             . (is_array($error) ? implode('<br>', $error) : $error) . '</p>'
             . (! empty($link) ? '<p>' . $link . '</p>' : '') . '</div>';
-    }
-
-    /**
-     * Постраничная навигация
-     * За основу взята доработанная функция от форума SMF 2.x.x
-     *
-     * @param string $url
-     * @param int $start
-     * @param int $total
-     * @param int $kmess
-     * @return string
-     */
-    public function displayPagination($url, $start, $total, $kmess): string
-    {
-        $render = di(Render::class);
-        $items = [];
-        $neighbors = 2;
-        if ($start >= $total) {
-            $start = max(0, $total - (($total % $kmess) === 0 ? $kmess : ($total % $kmess)));
-        } else {
-            $start = max(0, (int) $start - ((int) $start % (int) $kmess));
-        }
-
-        $url = filter_var($url, FILTER_SANITIZE_URL);
-
-        if ($start !== 0) {
-            $items[] = [
-                'url'  => $url . 'page=' . $start / $kmess,
-                'name' => '&lt;&lt;',
-            ];
-        }
-
-        if ($start > $kmess * $neighbors) {
-            $items[] = [
-                'url'  => $url . 'page=' . 1,
-                'name' => '1',
-            ];
-        }
-
-        if ($start > $kmess * ($neighbors + 1)) {
-            $items[] = [
-                'url'  => '',
-                'name' => '...',
-            ];
-        }
-
-        for ($nCont = $neighbors; $nCont >= 1; $nCont--) {
-            if ($start >= $kmess * $nCont) {
-                $tmpStart = $start - $kmess * $nCont;
-                $items[] = [
-                    'url'  => $url . 'page=' . ($tmpStart / $kmess + 1),
-                    'name' => $tmpStart / $kmess + 1,
-                ];
-            }
-        }
-
-        $items[] = [
-            'url'    => '',
-            'active' => true,
-            'name'   => ($start / $kmess + 1),
-        ];
-        $tmpMaxPages = (int) (($total - 1) / $kmess) * $kmess;
-
-        for ($nCont = 1; $nCont <= $neighbors; $nCont++) {
-            if ($start + $kmess * $nCont <= $tmpMaxPages) {
-                $tmpStart = $start + $kmess * $nCont;
-                $items[] = [
-                    'url'  => $url . 'page=' . ($tmpStart / $kmess + 1),
-                    'name' => $tmpStart / $kmess + 1,
-                ];
-            }
-        }
-
-        if ($start + $kmess * ($neighbors + 1) < $tmpMaxPages) {
-            $items[] = [
-                'url'  => '',
-                'name' => '...',
-            ];
-        }
-
-        if ($start + $kmess * $neighbors < $tmpMaxPages) {
-            $items[] = [
-                'url'  => $url . 'page=' . ($tmpMaxPages / $kmess + 1),
-                'name' => $tmpMaxPages / $kmess + 1,
-            ];
-        }
-
-        if ($start + $kmess < $total) {
-            $display_page = ($start + $kmess) > $total ? $total : ($start / $kmess + 2);
-            $items[] = [
-                'url'  => $url . 'page=' . $display_page,
-                'name' => '&gt;&gt;',
-            ];
-        }
-
-        return $render->render(
-            'system::app/pagination',
-            [
-                'items' => $items,
-            ]
-        );
     }
 
     /**
