@@ -12,6 +12,9 @@ use Johncms\Modules\Downloads\Infrastructure\Persistence\Repository\DownloadFile
 return static function (ContainerConfigurator $container): void {
     $services = $container->services();
 
+    // Any Symfony Console Command service is auto-registered in the CLI application.
+    $services->instanceof(\Symfony\Component\Console\Command\Command::class)->tag('johncms.console_command');
+
     $services->load(
         'Johncms\\Modules\\Downloads\\Application\\',
         MODULES_PATH . 'downloads/src/Application'
