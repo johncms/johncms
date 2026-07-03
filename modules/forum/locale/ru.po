@@ -1236,3 +1236,43 @@ msgstr "Пользователи"
 msgid "Guests"
 msgstr "Гости"
 
+
+#: modules/forum/src/Install/Installer.php:43
+msgid "Communication"
+msgstr "Общение"
+
+#: modules/forum/src/Install/Installer.php:43
+msgid "Free discussion on any topic"
+msgstr "Свободное общение на любую тему"
+
+#: modules/forum/src/Install/Installer.php:44
+msgid "Off-topic"
+msgstr "О разном"
+
+#: modules/forum/src/Install/Installer.php:45
+msgid "Dating"
+msgstr "Знакомства"
+
+#: modules/forum/src/Install/Installer.php:46
+msgid "Site life"
+msgstr "Жизнь ресурса"
+
+#: modules/forum/src/Install/Installer.php:47
+msgid "News"
+msgstr "Новости"
+
+#: modules/forum/src/Install/Installer.php:48
+msgid "Suggestions and wishes"
+msgstr "Предложения и пожелания"
+
+#: modules/forum/src/Install/Installer.php:49
+msgid "Miscellaneous"
+msgstr "Разное"
+
+#: modules/forum/src/Install/Installer.php:70
+msgid "Hello everyone!"
+msgstr "Привет всем!"
+
+#: modules/forum/src/Install/Installer.php:106
+msgid "<p>We are glad to welcome you to our website :)</p><p>Let's get acquainted!</p>"
+msgstr "<p>Мы рады приветствовать Вас на нашем сайте :)</p><p>Давайте знакомиться!</p>"
