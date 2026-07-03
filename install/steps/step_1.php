@@ -10,13 +10,14 @@
 
 declare(strict_types=1);
 
-use Johncms\Modules\Admin\Application\Languages;
+use Johncms\Modules\Admin\Domain\Services\LanguageFilesManagerInterface;
 use Johncms\System\Http\Request;
-
-module_lib_loader('admin');
 
 /** @var Request $request */
 $request = di(Request::class);
+
+/** @var LanguageFilesManagerInterface $languageFilesManager */
+$languageFilesManager = di(LanguageFilesManagerInterface::class);
 
 $view->addData(
     [
@@ -27,7 +28,7 @@ $view->addData(
 
 $request_locale = $request->getQuery('set_locale');
 
-$lng_list = Languages::getLngList();
+$lng_list = $languageFilesManager->getInstalled();
 
 // If the user is changing language
 if (! empty($request_locale) && array_key_exists($request_locale, $lng_list)) {

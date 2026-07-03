@@ -11,12 +11,10 @@
 declare(strict_types=1);
 
 use Install\Database;
-use Johncms\Modules\Admin\Application\Languages;
+use Johncms\Modules\Admin\Domain\Services\LanguageFilesManagerInterface;
 use Johncms\System\Http\Request;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
-
-module_lib_loader('admin');
 
 /** @var Request $request */
 $request = di(Request::class);
@@ -70,7 +68,7 @@ if ($request->getMethod() === 'POST') {
         $config['homeurl'] = $fields['homeurl'];
         $config['email'] = $fields['email'];
         $config['lng'] = $translator->getLocale();
-        $config['lng_list'] = Languages::getLngList();
+        $config['lng_list'] = di(LanguageFilesManagerInterface::class)->getInstalled();
 
         $system_settings = [
             'johncms' => $config,
