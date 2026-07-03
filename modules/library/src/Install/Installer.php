@@ -10,9 +10,11 @@
 
 namespace Johncms\Modules\Library\Install;
 
+use Gettext\TranslatorFunctions;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Str;
+use Johncms\System\i18n\Translator;
 
 class Installer extends \Johncms\Modules\Installer
 {
@@ -29,19 +31,23 @@ class Installer extends \Johncms\Modules\Installer
     {
         $now = time();
 
+        // Load the module's own translation domain so demo strings are rendered in the language
+        // selected by the user running the installer (falls back to the English source strings).
+        $this->loadTranslations();
+
         // Sections. `dir` = 1 marks a directory that holds subsections, `dir` = 0 a section with articles.
         // `user_add` = 1 allows visitors to publish their own articles in the section.
         $sections = [
-            ['id' => 1, 'parent' => 0, 'name' => 'Программирование', 'dir' => 1, 'user_add' => 0,
-                'description' => 'Статьи и руководства по разработке'],
+            ['id' => 1, 'parent' => 0, 'name' => d__('library', 'Programming'), 'dir' => 1, 'user_add' => 0,
+                'description' => d__('library', 'Articles and guides on development')],
             ['id' => 2, 'parent' => 1, 'name' => 'PHP', 'dir' => 0, 'user_add' => 0,
-                'description' => 'Материалы по языку PHP'],
+                'description' => d__('library', 'Materials on the PHP language')],
             ['id' => 3, 'parent' => 1, 'name' => 'JavaScript', 'dir' => 0, 'user_add' => 0,
-                'description' => 'Материалы по JavaScript'],
-            ['id' => 4, 'parent' => 0, 'name' => 'Проза', 'dir' => 0, 'user_add' => 0,
-                'description' => 'Рассказы и очерки'],
-            ['id' => 5, 'parent' => 0, 'name' => 'Пользовательские статьи', 'dir' => 0, 'user_add' => 1,
-                'description' => 'Раздел, в который посетители могут добавлять свои статьи'],
+                'description' => d__('library', 'Materials on JavaScript')],
+            ['id' => 4, 'parent' => 0, 'name' => d__('library', 'Prose'), 'dir' => 0, 'user_add' => 0,
+                'description' => d__('library', 'Short stories and essays')],
+            ['id' => 5, 'parent' => 0, 'name' => d__('library', 'User articles'), 'dir' => 0, 'user_add' => 1,
+                'description' => d__('library', 'A section where visitors can publish their own articles')],
         ];
 
         $pos = 0;
@@ -69,26 +75,26 @@ class Installer extends \Johncms\Modules\Installer
         $reader  = $demoUsers[1] ?? $demoUsers[0] ?? null;
 
         $articles = [
-            ['id' => 1, 'cat_id' => 2, 'name' => 'Быстрый старт с PHP',
-                'announce'    => 'Установка PHP и первый скрипт',
-                'text'        => '<p>PHP — популярный язык для веб-разработки. В этой статье мы рассмотрим установку интерпретатора и запуск первого скрипта.</p>',
+            ['id' => 1, 'cat_id' => 2, 'name' => d__('library', 'Getting started with PHP'),
+                'announce'    => d__('library', 'Installing PHP and your first script'),
+                'text'        => d__('library', '<p>PHP is a popular language for web development. In this article we cover installing the interpreter and running your first script.</p>'),
                 'uploader_id' => 1, 'uploader' => 'admin'],
-            ['id' => 2, 'cat_id' => 2, 'name' => 'Массивы в PHP',
-                'announce'    => 'Индексные и ассоциативные массивы',
-                'text'        => '<p>Массивы в PHP бывают индексными и ассоциативными. Разберём основные функции для работы с ними.</p>',
+            ['id' => 2, 'cat_id' => 2, 'name' => d__('library', 'Arrays in PHP'),
+                'announce'    => d__('library', 'Indexed and associative arrays'),
+                'text'        => d__('library', '<p>Arrays in PHP can be indexed or associative. Let us look at the main functions for working with them.</p>'),
                 'uploader_id' => 1, 'uploader' => 'admin'],
-            ['id' => 3, 'cat_id' => 3, 'name' => 'Основы JavaScript',
-                'announce'    => 'Переменные и функции',
-                'text'        => '<p>JavaScript выполняется в браузере и делает страницы интерактивными. Начнём с переменных и функций.</p>',
+            ['id' => 3, 'cat_id' => 3, 'name' => d__('library', 'JavaScript basics'),
+                'announce'    => d__('library', 'Variables and functions'),
+                'text'        => d__('library', '<p>JavaScript runs in the browser and makes pages interactive. Let us start with variables and functions.</p>'),
                 'uploader_id' => 1, 'uploader' => 'admin'],
-            ['id' => 4, 'cat_id' => 4, 'name' => 'Осенний вечер',
-                'announce'    => 'Небольшой рассказ',
-                'text'        => '<p>За окном шёл тёплый осенний дождь, и город неспешно погружался в вечерние сумерки.</p>',
+            ['id' => 4, 'cat_id' => 4, 'name' => d__('library', 'An autumn evening'),
+                'announce'    => d__('library', 'A short story'),
+                'text'        => d__('library', '<p>A warm autumn rain fell outside the window, and the city slowly sank into the evening twilight.</p>'),
                 'uploader_id' => 1, 'uploader' => 'admin'],
             // Article in the user-writable section is attributed to a demo user.
-            ['id' => 5, 'cat_id' => 5, 'name' => 'Моя первая статья',
-                'announce'    => 'Пример пользовательской публикации',
-                'text'        => '<p>Это пример статьи, добавленной пользователем. В этом разделе каждый желающий может опубликовать свой материал.</p>',
+            ['id' => 5, 'cat_id' => 5, 'name' => d__('library', 'My first article'),
+                'announce'    => d__('library', 'An example of a user publication'),
+                'text'        => d__('library', '<p>This is an example of an article added by a user. In this section anyone can publish their own material.</p>'),
                 'uploader_id' => $author->id ?? 1, 'uploader' => $author->name ?? 'admin'],
         ];
 
@@ -113,9 +119,9 @@ class Installer extends \Johncms\Modules\Installer
         // Demo comments from different users on a couple of articles.
         $ua = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36';
         $comments = [
-            ['sub_id' => 1, 'user' => $author, 'text' => '<p>Отличное введение, всё по делу!</p>'],
-            ['sub_id' => 1, 'user' => $reader, 'text' => '<p>Спасибо, добавил статью в закладки.</p>'],
-            ['sub_id' => 5, 'user' => $reader, 'text' => '<p>Здорово, что можно публиковать свои материалы.</p>'],
+            ['sub_id' => 1, 'user' => $author, 'text' => d__('library', '<p>Great introduction, straight to the point!</p>')],
+            ['sub_id' => 1, 'user' => $reader, 'text' => d__('library', '<p>Thanks, I bookmarked the article.</p>')],
+            ['sub_id' => 5, 'user' => $reader, 'text' => d__('library', '<p>It is great that you can publish your own materials.</p>')],
         ];
 
         $commentCounts = [];
@@ -159,6 +165,19 @@ class Installer extends \Johncms\Modules\Installer
                 'st_id'   => $rating['st_id'],
                 'point'   => $rating['point'],
             ]);
+        }
+    }
+
+    /**
+     * Register the module's translation domain on the active (installer) translator so that
+     * demo strings wrapped in d__('library', ...) are translated into the installer's language.
+     */
+    private function loadTranslations(): void
+    {
+        $translator = TranslatorFunctions::getTranslator();
+        if ($translator instanceof Translator) {
+            // Keep the current default domain (e.g. 'install'); only add the library catalog.
+            $translator->addTranslationDomain('library', MODULES_PATH . 'library/locale', false);
         }
     }
 
