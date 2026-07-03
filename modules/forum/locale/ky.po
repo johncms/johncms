@@ -11,86 +11,83 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Kyrgyz\n"
 "Language: ky_KG\n"
-"PO-Revision-Date: 2026-03-27 20:03\n"
+"PO-Revision-Date: 2026-07-03 20:23\n"
 
-#: modules/forum/src/Application/Controllers/AddFileController.php:55
-#: modules/forum/src/Application/Controllers/AddFileController.php:66
-#: modules/forum/src/Application/Controllers/AddFileController.php:89
-#: modules/forum/src/Application/Controllers/AddVoteController.php:49
-#: modules/forum/src/Application/Controllers/AddVoteController.php:61
-#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:52
-#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:75
-#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:89
-#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:104
-#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:118
-#: modules/forum/src/Application/Controllers/ChangeTopicController.php:46
-#: modules/forum/src/Application/Controllers/ChangeTopicController.php:62
-#: modules/forum/src/Application/Controllers/ClearFilterByAuthorController.php:56
-#: modules/forum/src/Application/Controllers/ClearFilterByAuthorController.php:72
-#: modules/forum/src/Application/Controllers/CloseTopicController.php:49
-#: modules/forum/src/Application/Controllers/CuratorsController.php:47
-#: modules/forum/src/Application/Controllers/CuratorsController.php:59
-#: modules/forum/src/Application/Controllers/DeletePostController.php:68
-#: modules/forum/src/Application/Controllers/DeletePostController.php:87
-#: modules/forum/src/Application/Controllers/DeletePostFileController.php:71
-#: modules/forum/src/Application/Controllers/DeletePostFileController.php:90
-#: modules/forum/src/Application/Controllers/DeleteTopicController.php:56
-#: modules/forum/src/Application/Controllers/DeleteTopicController.php:68
-#: modules/forum/src/Application/Controllers/DeleteVoteController.php:49
-#: modules/forum/src/Application/Controllers/DeleteVoteController.php:60
-#: modules/forum/src/Application/Controllers/DeleteVoteController.php:74
-#: modules/forum/src/Application/Controllers/EditPostController.php:72
-#: modules/forum/src/Application/Controllers/EditPostController.php:105
-#: modules/forum/src/Application/Controllers/EditVoteController.php:51
-#: modules/forum/src/Application/Controllers/EditVoteController.php:63
-#: modules/forum/src/Application/Controllers/FilterByAuthorController.php:56
-#: modules/forum/src/Application/Controllers/ForumFilesController.php:62
-#: modules/forum/src/Application/Controllers/MarkAllTopicsReadController.php:54
-#: modules/forum/src/Application/Controllers/MoveTopicController.php:55
-#: modules/forum/src/Application/Controllers/MoveTopicController.php:76
-#: modules/forum/src/Application/Controllers/MoveTopicController.php:92
-#: modules/forum/src/Application/Controllers/NewMessageController.php:58
-#: modules/forum/src/Application/Controllers/NewMessageController.php:73
-#: modules/forum/src/Application/Controllers/NewMessageController.php:88
-#: modules/forum/src/Application/Controllers/NewMessageController.php:102
-#: modules/forum/src/Application/Controllers/NewMessageController.php:124
-#: modules/forum/src/Application/Controllers/NewMessageController.php:138
-#: modules/forum/src/Application/Controllers/NewTopicController.php:89
-#: modules/forum/src/Application/Controllers/PinTopicController.php:47
-#: modules/forum/src/Application/Controllers/PollVotersController.php:63
-#: modules/forum/src/Application/Controllers/ReplyMessageController.php:58
-#: modules/forum/src/Application/Controllers/ReplyMessageController.php:73
+#: modules/forum/src/Application/Controllers/AddFileController.php:47
+#: modules/forum/src/Application/Controllers/AddFileController.php:58
+#: modules/forum/src/Application/Controllers/AddFileController.php:81
+#: modules/forum/src/Application/Controllers/AddVoteController.php:41
+#: modules/forum/src/Application/Controllers/AddVoteController.php:53
+#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:44
+#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:67
+#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:81
+#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:96
+#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:110
+#: modules/forum/src/Application/Controllers/ChangeTopicController.php:44
+#: modules/forum/src/Application/Controllers/ClearFilterByAuthorController.php:47
+#: modules/forum/src/Application/Controllers/ClearFilterByAuthorController.php:63
+#: modules/forum/src/Application/Controllers/CloseTopicController.php:41
+#: modules/forum/src/Application/Controllers/CuratorsController.php:39
+#: modules/forum/src/Application/Controllers/CuratorsController.php:51
+#: modules/forum/src/Application/Controllers/DeletePostController.php:60
+#: modules/forum/src/Application/Controllers/DeletePostController.php:79
+#: modules/forum/src/Application/Controllers/DeletePostFileController.php:63
+#: modules/forum/src/Application/Controllers/DeletePostFileController.php:82
+#: modules/forum/src/Application/Controllers/DeleteTopicController.php:48
+#: modules/forum/src/Application/Controllers/DeleteTopicController.php:60
+#: modules/forum/src/Application/Controllers/DeleteVoteController.php:41
+#: modules/forum/src/Application/Controllers/DeleteVoteController.php:52
+#: modules/forum/src/Application/Controllers/DeleteVoteController.php:66
+#: modules/forum/src/Application/Controllers/EditPostController.php:68
+#: modules/forum/src/Application/Controllers/EditPostController.php:102
+#: modules/forum/src/Application/Controllers/EditVoteController.php:43
+#: modules/forum/src/Application/Controllers/EditVoteController.php:55
+#: modules/forum/src/Application/Controllers/FilterByAuthorController.php:47
+#: modules/forum/src/Application/Controllers/ForumFilesController.php:58
+#: modules/forum/src/Application/Controllers/MarkAllTopicsReadController.php:51
+#: modules/forum/src/Application/Controllers/MoveTopicController.php:47
+#: modules/forum/src/Application/Controllers/MoveTopicController.php:68
+#: modules/forum/src/Application/Controllers/MoveTopicController.php:84
+#: modules/forum/src/Application/Controllers/NewMessageController.php:60
+#: modules/forum/src/Application/Controllers/NewMessageController.php:75
+#: modules/forum/src/Application/Controllers/NewMessageController.php:89
+#: modules/forum/src/Application/Controllers/NewMessageController.php:112
+#: modules/forum/src/Application/Controllers/NewMessageController.php:126
+#: modules/forum/src/Application/Controllers/NewTopicController.php:76
+#: modules/forum/src/Application/Controllers/PinTopicController.php:39
+#: modules/forum/src/Application/Controllers/PollVotersController.php:53
+#: modules/forum/src/Application/Controllers/ReplyMessageController.php:60
+#: modules/forum/src/Application/Controllers/ReplyMessageController.php:78
 #: modules/forum/src/Application/Controllers/ReplyMessageController.php:91
-#: modules/forum/src/Application/Controllers/ReplyMessageController.php:104
-#: modules/forum/src/Application/Controllers/ReplyMessageController.php:118
-#: modules/forum/src/Application/Controllers/ReplyMessageController.php:152
-#: modules/forum/src/Application/Controllers/ReplyMessageController.php:166
-#: modules/forum/src/Application/Controllers/RestorePostController.php:68
-#: modules/forum/src/Application/Controllers/RestorePostController.php:87
-#: modules/forum/src/Application/Controllers/RestoreTopicController.php:47
-#: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:56
-#: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:72
-#: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:87
-#: modules/forum/src/Application/Controllers/SubmitVoteController.php:50
-#: modules/forum/src/Application/Controllers/SubmitVoteController.php:66
-#: modules/forum/templates/edit_post.phtml:48
+#: modules/forum/src/Application/Controllers/ReplyMessageController.php:105
+#: modules/forum/src/Application/Controllers/ReplyMessageController.php:140
+#: modules/forum/src/Application/Controllers/ReplyMessageController.php:154
+#: modules/forum/src/Application/Controllers/RestorePostController.php:60
+#: modules/forum/src/Application/Controllers/RestorePostController.php:79
+#: modules/forum/src/Application/Controllers/RestoreTopicController.php:39
+#: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:47
+#: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:63
+#: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:78
+#: modules/forum/src/Application/Controllers/SubmitVoteController.php:42
+#: modules/forum/src/Application/Controllers/SubmitVoteController.php:58
+#: modules/forum/templates/edit_post.phtml:49
 #: modules/forum/templates/new_topic.phtml:111
 #: modules/forum/templates/reply_message.phtml:58
 msgid "Back"
 msgstr "Артка"
 
-#: modules/forum/src/Application/Controllers/AddFileController.php:63
-#: modules/forum/src/Application/Controllers/AddFileController.php:97
+#: modules/forum/src/Application/Controllers/AddFileController.php:55
+#: modules/forum/src/Application/Controllers/AddFileController.php:89
 msgid "Add file"
 msgstr "Файл кошуу"
 
-#: modules/forum/src/Application/Controllers/AddFileController.php:64
+#: modules/forum/src/Application/Controllers/AddFileController.php:56
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:56
 msgid "The time allotted for the file upload has expired"
 msgstr "Файл жүктөө убакыты аяктады"
 
-#: modules/forum/src/Application/Controllers/AddFileController.php:98
-#: modules/forum/src/Application/Controllers/AddFileController.php:99
+#: modules/forum/src/Application/Controllers/AddFileController.php:90
+#: modules/forum/src/Application/Controllers/AddFileController.php:91
 #: modules/forum/src/Application/Controllers/UploadFileController.php:57
 #: modules/forum/src/Application/Controllers/UploadFileController.php:88
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:55
@@ -99,437 +96,431 @@ msgstr "Файл жүктөө убакыты аяктады"
 msgid "Error uploading file"
 msgstr "Жүктөөдө катачылык"
 
-#: modules/forum/src/Application/Controllers/AddFileController.php:101
-#: modules/forum/src/Application/Controllers/AddVoteController.php:113
-#: modules/forum/src/Application/Controllers/EditPostController.php:88
-#: modules/forum/src/Application/Controllers/ForumSearchController.php:67
-#: modules/forum/src/Application/Controllers/ReplyMessageController.php:139
+#: modules/forum/src/Application/Controllers/AddFileController.php:93
+#: modules/forum/src/Application/Controllers/AddVoteController.php:105
+#: modules/forum/src/Application/Controllers/EditPostController.php:85
+#: modules/forum/src/Application/Controllers/ForumSearchController.php:58
+#: modules/forum/src/Application/Controllers/ReplyMessageController.php:127
 msgid "Repeat"
 msgstr "Кайталоо"
 
-#: modules/forum/src/Application/Controllers/AddFileController.php:114
-#: modules/forum/src/Application/Controllers/AddFileController.php:115
-#: modules/forum/src/Application/Controllers/AddVoteController.php:130
-#: modules/forum/src/Application/Controllers/AddVoteController.php:131
+#: modules/forum/src/Application/Controllers/AddFileController.php:106
+#: modules/forum/src/Application/Controllers/AddFileController.php:107
+#: modules/forum/src/Application/Controllers/AddVoteController.php:122
+#: modules/forum/src/Application/Controllers/AddVoteController.php:123
 #: modules/forum/templates/new_topic.phtml:102
 #: modules/forum/templates/reply_message.phtml:52
-#: modules/forum/templates/topic.phtml:136
-#: modules/forum/templates/topic.phtml:448
+#: modules/forum/templates/topic.phtml:137
+#: modules/forum/templates/topic.phtml:449
 msgid "Add File"
 msgstr "Файл кошуу"
 
-#: modules/forum/src/Application/Controllers/AddVoteController.php:57
-#: modules/forum/src/Application/Controllers/AddVoteController.php:58
-#: modules/forum/src/Application/Controllers/AddVoteController.php:95
-#: modules/forum/src/Application/Controllers/AddVoteController.php:96
-#: modules/forum/src/Application/Controllers/AddVoteController.php:108
-#: modules/forum/src/Application/Controllers/AddVoteController.php:109
-#: modules/forum/templates/topic.phtml:395
+#: modules/forum/src/Application/Controllers/AddVoteController.php:49
+#: modules/forum/src/Application/Controllers/AddVoteController.php:50
+#: modules/forum/src/Application/Controllers/AddVoteController.php:87
+#: modules/forum/src/Application/Controllers/AddVoteController.php:88
+#: modules/forum/src/Application/Controllers/AddVoteController.php:100
+#: modules/forum/src/Application/Controllers/AddVoteController.php:101
+#: modules/forum/templates/topic.phtml:396
 msgid "Add Poll"
 msgstr "Сурамжылоо  кошуу"
 
-#: modules/forum/src/Application/Controllers/AddVoteController.php:59
-#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:73
-#: modules/forum/src/Application/Controllers/ChangeTopicController.php:60
-#: modules/forum/src/Application/Controllers/ClearFilterByAuthorController.php:54
-#: modules/forum/src/Application/Controllers/ClearFilterByAuthorController.php:70
-#: modules/forum/src/Application/Controllers/DeletePostController.php:85
-#: modules/forum/src/Application/Controllers/DeletePostFileController.php:88
-#: modules/forum/src/Application/Controllers/DeleteVoteController.php:58
-#: modules/forum/src/Application/Controllers/EditPostController.php:103
-#: modules/forum/src/Application/Controllers/EditVoteController.php:61
-#: modules/forum/src/Application/Controllers/FilterByAuthorController.php:54
-#: modules/forum/src/Application/Controllers/ForumFilesController.php:60
-#: modules/forum/src/Application/Controllers/MarkAllTopicsReadController.php:52
-#: modules/forum/src/Application/Controllers/MoveTopicController.php:72
-#: modules/forum/src/Application/Controllers/MoveTopicController.php:74
-#: modules/forum/src/Application/Controllers/MoveTopicController.php:88
-#: modules/forum/src/Application/Controllers/MoveTopicController.php:90
-#: modules/forum/src/Application/Controllers/PollVotersController.php:72
-#: modules/forum/src/Application/Controllers/RestorePostController.php:85
-#: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:54
-#: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:70
+#: modules/forum/src/Application/Controllers/AddVoteController.php:51
+#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:65
+#: modules/forum/src/Application/Controllers/ChangeTopicController.php:42
+#: modules/forum/src/Application/Controllers/ClearFilterByAuthorController.php:45
+#: modules/forum/src/Application/Controllers/ClearFilterByAuthorController.php:61
+#: modules/forum/src/Application/Controllers/DeletePostController.php:77
+#: modules/forum/src/Application/Controllers/DeletePostFileController.php:80
+#: modules/forum/src/Application/Controllers/DeleteVoteController.php:50
+#: modules/forum/src/Application/Controllers/EditPostController.php:100
+#: modules/forum/src/Application/Controllers/EditVoteController.php:53
+#: modules/forum/src/Application/Controllers/FilterByAuthorController.php:45
+#: modules/forum/src/Application/Controllers/ForumFilesController.php:56
+#: modules/forum/src/Application/Controllers/MarkAllTopicsReadController.php:49
+#: modules/forum/src/Application/Controllers/MoveTopicController.php:64
+#: modules/forum/src/Application/Controllers/MoveTopicController.php:66
+#: modules/forum/src/Application/Controllers/MoveTopicController.php:80
+#: modules/forum/src/Application/Controllers/MoveTopicController.php:82
+#: modules/forum/src/Application/Controllers/PollVotersController.php:62
+#: modules/forum/src/Application/Controllers/RestorePostController.php:77
+#: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:45
+#: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:61
 #: modules/forum/src/Application/Controllers/ShowPostController.php:45
-#: modules/forum/src/Application/Controllers/ShowPostController.php:68
-#: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:54
-#: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:78
+#: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:51
+#: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:77
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:42
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:52
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:53
 msgid "Wrong data"
 msgstr "Туура эмес маалымат"
 
-#: modules/forum/src/Application/Controllers/AddVoteController.php:98
+#: modules/forum/src/Application/Controllers/AddVoteController.php:90
 msgid "Poll added"
 msgstr "Сурамжылоо кошулду"
 
-#: modules/forum/src/Application/Controllers/AddVoteController.php:100
-#: modules/forum/src/Application/Controllers/EditVoteController.php:116
+#: modules/forum/src/Application/Controllers/AddVoteController.php:92
+#: modules/forum/src/Application/Controllers/EditVoteController.php:108
 msgid "Continue"
 msgstr "Улантуу"
 
-#: modules/forum/src/Application/Controllers/AddVoteController.php:111
+#: modules/forum/src/Application/Controllers/AddVoteController.php:103
 msgid "The required fields are not filled"
 msgstr "Милдеттүү талаалар толтурулган эмес"
 
-#: modules/forum/src/Application/Controllers/AddVoteController.php:122
-#: modules/forum/src/Application/Controllers/EditVoteController.php:145
-#: modules/forum/src/Application/Controllers/EditVoteController.php:157
+#: modules/forum/src/Application/Controllers/AddVoteController.php:114
+#: modules/forum/src/Application/Controllers/EditVoteController.php:137
+#: modules/forum/src/Application/Controllers/EditVoteController.php:149
 msgid "Answer"
 msgstr "Жооп берүү"
 
-#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:70
-#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:71
-#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:84
-#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:85
-#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:99
-#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:100
-#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:113
-#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:114
-#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:126
-#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:127
+#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:62
+#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:63
+#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:76
+#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:77
+#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:91
+#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:92
+#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:105
+#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:106
+#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:118
+#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:119
 msgid "Delete posts"
 msgstr "Билдирүүлөрдү өчүрүү"
 
-#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:87
-#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:116
+#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:79
+#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:108
 msgid "You did not choose something to delete"
 msgstr "Сиз өчүрүлө турган эч нерсени тандаган жоксуз"
 
-#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:102
+#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:94
 msgid "Marked posts are deleted"
 msgstr "Белгиленген билдирүүлөр өчүрүлдү"
 
-#: modules/forum/src/Application/Controllers/ChangeTopicController.php:42
-#: modules/forum/src/Application/Controllers/ChangeTopicController.php:44
+#: modules/forum/src/Application/Controllers/ChangeTopicController.php:40
+#: modules/forum/src/Application/Controllers/ChangeTopicController.php:41
+#: modules/forum/src/Application/Controllers/ChangeTopicController.php:98
+#: modules/forum/src/Application/Controllers/ChangeTopicController.php:99
+#: modules/forum/templates/topic.phtml:403
+msgid "Change the topic"
+msgstr "Теманы өзгөртүү"
+
+#: modules/forum/src/Application/Controllers/ClearFilterByAuthorController.php:42
+#: modules/forum/src/Application/Controllers/ClearFilterByAuthorController.php:43
+#: modules/forum/src/Application/Controllers/ClearFilterByAuthorController.php:59
+#: modules/forum/src/Application/Controllers/ClearFilterByAuthorController.php:60
+#: modules/forum/src/Application/Controllers/FilterByAuthorController.php:43
+#: modules/forum/src/Application/Controllers/FilterByAuthorController.php:44
+#: modules/forum/src/Application/Controllers/FilterByAuthorController.php:64
+#: modules/forum/src/Application/Controllers/FilterByAuthorController.php:69
+#: modules/forum/src/Application/Controllers/FilterByAuthorController.php:70
+#: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:42
+#: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:43
+#: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:59
+#: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:60
+#: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:73
+#: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:74
+#: modules/forum/templates/topic.phtml:479
+msgid "Filter by author"
+msgstr "Автору боюнча иреттөө"
+
+#: modules/forum/src/Application/Controllers/ClearForumSearchHistoryController.php:44
+#: modules/forum/src/Application/Controllers/ClearForumSearchHistoryController.php:45
+#: modules/forum/src/Application/Controllers/ForumSearchController.php:55
+#: modules/forum/src/Application/Controllers/ForumSearchController.php:64
+#: modules/forum/src/Application/Controllers/ForumSearchController.php:68
+#: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:91
+msgid "Forum search"
+msgstr "Форум боюнча издөө"
+
+#: modules/forum/src/Application/Controllers/CuratorsController.php:47
+#: modules/forum/src/Application/Controllers/CuratorsController.php:48
+#: modules/forum/src/Application/Controllers/CuratorsController.php:93
+#: modules/forum/src/Application/Controllers/CuratorsController.php:94
+#: modules/forum/src/Application/Controllers/DeleteTopicController.php:56
+#: modules/forum/src/Application/Controllers/DeleteTopicController.php:57
+#: modules/forum/templates/topic.phtml:468
+msgid "Curators"
+msgstr "Кураторлор"
+
+#: modules/forum/src/Application/Controllers/CuratorsController.php:49
+#: modules/forum/src/Application/Controllers/DeleteTopicController.php:58
+#: modules/forum/src/Application/ForumUtils.php:71
+msgid "Topic has been deleted or does not exists"
+msgstr "Тема өчрүлгөн же болгон эмес"
+
+#: modules/forum/src/Application/Controllers/DeletePostController.php:46
+#: modules/forum/src/Application/Controllers/DeletePostController.php:57
+#: modules/forum/src/Application/Controllers/DeletePostFileController.php:49
+#: modules/forum/src/Application/Controllers/DeletePostFileController.php:60
+#: modules/forum/src/Application/Controllers/EditPostController.php:54
+#: modules/forum/src/Application/Controllers/EditPostController.php:65
+#: modules/forum/src/Application/Controllers/RestorePostController.php:46
+#: modules/forum/src/Application/Controllers/RestorePostController.php:57
+msgid "Error"
+msgstr "Ката"
+
+#: modules/forum/src/Application/Controllers/DeletePostController.php:47
+#: modules/forum/src/Application/Controllers/DeletePostFileController.php:50
+#: modules/forum/src/Application/Controllers/EditPostController.php:55
+#: modules/forum/src/Application/Controllers/RestorePostController.php:47
+msgid "Message does not exists or has been deleted"
+msgstr "Билдирүү жок же үчүрүлгөн"
+
+#: modules/forum/src/Application/Controllers/DeletePostController.php:49
+#: modules/forum/src/Application/Controllers/DeletePostFileController.php:52
+#: modules/forum/src/Application/Controllers/DownloadFileController.php:50
+#: modules/forum/src/Application/Controllers/EditPostController.php:57
+#: modules/forum/src/Application/Controllers/FilterByAuthorController.php:62
+#: modules/forum/src/Application/Controllers/ForumFilesController.php:63
+#: modules/forum/src/Application/Controllers/ForumIndexController.php:42
+#: modules/forum/src/Application/Controllers/ForumIndexController.php:55
+#: modules/forum/src/Application/Controllers/ForumIndexController.php:56
+#: modules/forum/src/Application/Controllers/ForumSearchController.php:63
+#: modules/forum/src/Application/Controllers/ForumSectionController.php:43
+#: modules/forum/src/Application/Controllers/ForumTopicController.php:72
+#: modules/forum/src/Application/Controllers/LatestTopicsController.php:28
+#: modules/forum/src/Application/Controllers/MarkAllTopicsReadController.php:66
+#: modules/forum/src/Application/Controllers/PollVotersController.php:64
+#: modules/forum/src/Application/Controllers/PollVotersController.php:70
+#: modules/forum/src/Application/Controllers/RestorePostController.php:49
+#: modules/forum/src/Application/Controllers/ShowPostController.php:47
+#: modules/forum/src/Application/Controllers/ShowPostController.php:64
+#: modules/forum/src/Application/Controllers/SubmitVoteController.php:53
+#: modules/forum/src/Application/Controllers/SubmitVoteController.php:54
+#: modules/forum/src/Application/Controllers/TopicsPeriodController.php:58
+#: modules/forum/src/Application/Controllers/UnreadTopicsController.php:54
+#: modules/forum/src/Application/Controllers/ViewForumVisitorsController.php:54
+#: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:53
+#: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:79
+#: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:86
+#: modules/forum/src/Application/Exceptions/ForumErrorCode.php:36
+#: modules/forum/src/Application/ForumUtils.php:69
+#: modules/forum/templates/files_list.phtml:158
+#: modules/forum/templates/forum_search.phtml:93
+#: modules/forum/templates/new_topics.phtml:124
+#: modules/forum/templates/show_post.phtml:152
+msgid "Forum"
+msgstr "Форум"
+
+#: modules/forum/src/Application/Controllers/DeletePostController.php:75
+#: modules/forum/src/Application/Controllers/DeletePostController.php:93
+#: modules/forum/src/Application/Controllers/DeletePostController.php:94
+msgid "Delete Message"
+msgstr "Билдирүүнү өчүрүү"
+
+#: modules/forum/src/Application/Controllers/DeletePostFileController.php:78
+#: modules/forum/src/Application/Controllers/DeletePostFileController.php:94
+#: modules/forum/src/Application/Controllers/DeletePostFileController.php:95
+msgid "Delete file"
+msgstr "Файлды өчүрүү"
+
+#: modules/forum/src/Application/Controllers/DeleteTopicController.php:80
+#: modules/forum/src/Application/Controllers/DeleteTopicController.php:81
+#: modules/forum/templates/topic.phtml:415
+msgid "Delete Topic"
+msgstr "Теманы жок кылуу"
+
+#: modules/forum/src/Application/Controllers/DeleteVoteController.php:49
+#: modules/forum/src/Application/Controllers/DeleteVoteController.php:62
+#: modules/forum/src/Application/Controllers/DeleteVoteController.php:74
+#: modules/forum/src/Application/Controllers/DeleteVoteController.php:75
+#: modules/forum/templates/topic.phtml:394
+msgid "Delete Poll"
+msgstr "Сурамжылоону өчүрүү"
+
+#: modules/forum/src/Application/Controllers/DeleteVoteController.php:64
+msgid "Poll deleted"
+msgstr "Сурамжылоо өчүрүлдү"
+
+#: modules/forum/src/Application/Controllers/DownloadFileController.php:46
+msgid "Download file"
+msgstr "Файлды жүктөө"
+
+#: modules/forum/src/Application/Controllers/DownloadFileController.php:48
+msgid "File does not exist"
+msgstr "Мындай файл жок"
+
+#: modules/forum/src/Application/Controllers/EditPostController.php:81
+#: modules/forum/src/Application/Controllers/EditPostController.php:98
+#: modules/forum/src/Application/Controllers/EditPostController.php:122
+#: modules/forum/src/Application/Controllers/EditPostController.php:123
+msgid "Edit Message"
+msgstr "Билдирүү оңдоо"
+
+#: modules/forum/src/Application/Controllers/EditPostController.php:83
+#: modules/forum/src/Application/Controllers/ReplyMessageController.php:125
+msgid "You have not entered the message"
+msgstr "Сиз билдирүү жазган жоксуз"
+
+#: modules/forum/src/Application/Controllers/EditVoteController.php:51
+#: modules/forum/src/Application/Controllers/EditVoteController.php:52
+#: modules/forum/src/Application/Controllers/EditVoteController.php:103
+#: modules/forum/src/Application/Controllers/EditVoteController.php:104
+#: modules/forum/src/Application/Controllers/EditVoteController.php:157
+#: modules/forum/src/Application/Controllers/EditVoteController.php:158
+#: modules/forum/templates/topic.phtml:393
+msgid "Edit Poll"
+msgstr "Сурамжылоону оңдоо"
+
+#: modules/forum/src/Application/Controllers/EditVoteController.php:71
+#: modules/forum/src/Application/Controllers/EditVoteController.php:72
+msgid "Delete Answer"
+msgstr "Жоопту өчүрүү"
+
+#: modules/forum/src/Application/Controllers/EditVoteController.php:106
+msgid "Poll changed"
+msgstr "Сурамжылоо өзгөртүлдү"
+
+#: modules/forum/src/Application/Controllers/ForumFilesController.php:54
+#: modules/forum/src/Application/Controllers/ForumFilesController.php:55
+#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:117
+msgid "Forum Files"
+msgstr "Форумдун файлдары"
+
+#: modules/forum/src/Application/Controllers/ForumSearchController.php:56
+msgid "Invalid length"
+msgstr "Жараксыз узундук"
+
+#: modules/forum/src/Application/Controllers/ForumSearchController.php:67
+#, php-format
+msgid "Search results for: %s"
+msgstr ""
+
+#: modules/forum/src/Application/Controllers/LatestTopicsController.php:27
+msgid "Last 10"
+msgstr "Акыркы 10 темалар"
+
+#: modules/forum/src/Application/Controllers/LatestTopicsController.php:37
+#: modules/forum/src/Application/Controllers/UnreadTopicsController.php:65
+#: modules/forum/src/Application/Controllers/ViewForumVisitorsController.php:64
+#: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:96
+#: modules/forum/templates/curators.phtml:36
+#: modules/forum/templates/files_list.phtml:40
+#: modules/forum/templates/files_sections.phtml:53
+#: modules/forum/templates/filter_by_author.phtml:40
+msgid "The list is empty"
+msgstr "Тизмеси бош"
+
+#: modules/forum/src/Application/Controllers/MarkAllTopicsReadController.php:46
+#: modules/forum/src/Application/Controllers/MarkAllTopicsReadController.php:47
+#: modules/forum/src/Application/Controllers/MarkAllTopicsReadController.php:61
+#: modules/forum/src/Application/Controllers/MarkAllTopicsReadController.php:62
+#: modules/forum/src/Application/Controllers/UnreadTopicsController.php:53
+#: modules/forum/templates/header.phtml:31
+msgid "Unread"
+msgstr "Окула элек"
+
+#: modules/forum/src/Application/Controllers/MarkAllTopicsReadController.php:64
+msgid "All topics marked as read"
+msgstr "Бардык темалар окулган деп белгиленди"
+
+#: modules/forum/src/Application/Controllers/MoveTopicController.php:95
+#: modules/forum/src/Application/Controllers/MoveTopicController.php:96
+msgid "Move topic"
+msgstr "Теманы жылдыруу"
+
+#: modules/forum/src/Application/Controllers/NewMessageController.php:57
 #: modules/forum/src/Application/Controllers/NewMessageController.php:71
-#: modules/forum/src/Application/Controllers/ReplyMessageController.php:71
+#: modules/forum/src/Application/Controllers/NewMessageController.php:85
+#: modules/forum/src/Application/Controllers/NewMessageController.php:108
+#: modules/forum/src/Application/Controllers/NewMessageController.php:122
+#: modules/forum/src/Application/Controllers/NewMessageController.php:164
+#: modules/forum/src/Application/Controllers/NewMessageController.php:165
+#: modules/forum/src/Application/Controllers/ReplyMessageController.php:57
+#: modules/forum/src/Application/Controllers/ReplyMessageController.php:74
+#: modules/forum/src/Application/Controllers/ReplyMessageController.php:87
+#: modules/forum/src/Application/Controllers/ReplyMessageController.php:101
+#: modules/forum/src/Application/Controllers/ReplyMessageController.php:123
+#: modules/forum/src/Application/Controllers/ReplyMessageController.php:136
+#: modules/forum/src/Application/Controllers/ReplyMessageController.php:150
+msgid "New message"
+msgstr "Жаңы билдирүү кошуу"
+
+#: modules/forum/src/Application/Controllers/NewMessageController.php:58
+#: modules/forum/src/Application/Controllers/ReplyMessageController.php:58
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:37
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:51
 msgid "Access forbidden"
 msgstr "Кирүүгө тыюу салынган"
 
-#: modules/forum/src/Application/Controllers/ChangeTopicController.php:58
-#: modules/forum/src/Application/Controllers/ChangeTopicController.php:59
-#: modules/forum/src/Application/Controllers/ChangeTopicController.php:116
-#: modules/forum/src/Application/Controllers/ChangeTopicController.php:117
-#: modules/forum/templates/topic.phtml:402
-msgid "Change the topic"
-msgstr "Теманы өзгөртүү"
-
-#: modules/forum/src/Application/Controllers/ClearFilterByAuthorController.php:51
-#: modules/forum/src/Application/Controllers/ClearFilterByAuthorController.php:52
-#: modules/forum/src/Application/Controllers/ClearFilterByAuthorController.php:68
-#: modules/forum/src/Application/Controllers/ClearFilterByAuthorController.php:69
-#: modules/forum/src/Application/Controllers/FilterByAuthorController.php:52
-#: modules/forum/src/Application/Controllers/FilterByAuthorController.php:53
-#: modules/forum/src/Application/Controllers/FilterByAuthorController.php:73
-#: modules/forum/src/Application/Controllers/FilterByAuthorController.php:78
-#: modules/forum/src/Application/Controllers/FilterByAuthorController.php:79
-#: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:51
-#: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:52
-#: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:68
-#: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:69
-#: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:82
-#: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:83
-#: modules/forum/templates/topic.phtml:478
-msgid "Filter by author"
-msgstr "Автору боюнча иреттөө"
-
-#: modules/forum/src/Application/Controllers/ClearForumSearchHistoryController.php:47
-#: modules/forum/src/Application/Controllers/ClearForumSearchHistoryController.php:48
-#: modules/forum/src/Application/Controllers/ForumSearchController.php:64
-#: modules/forum/src/Application/Controllers/ForumSearchController.php:73
-#: modules/forum/src/Application/Controllers/ForumSearchController.php:78
-#: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:91
-msgid "Forum search"
-msgstr "Форум боюнча издөө"
-
-#: modules/forum/src/Application/Controllers/CuratorsController.php:55
-#: modules/forum/src/Application/Controllers/CuratorsController.php:56
-#: modules/forum/src/Application/Controllers/CuratorsController.php:101
-#: modules/forum/src/Application/Controllers/CuratorsController.php:102
-#: modules/forum/src/Application/Controllers/DeleteTopicController.php:64
-#: modules/forum/src/Application/Controllers/DeleteTopicController.php:65
-#: modules/forum/templates/topic.phtml:467
-msgid "Curators"
-msgstr "Кураторлор"
-
-#: modules/forum/src/Application/Controllers/CuratorsController.php:57
-#: modules/forum/src/Application/Controllers/DeleteTopicController.php:66
-#: modules/forum/src/Application/ForumUtils.php:71
-msgid "Topic has been deleted or does not exists"
-msgstr "Тема өчрүлгөн же болгон эмес"
-
-#: modules/forum/src/Application/Controllers/DeletePostController.php:54
-#: modules/forum/src/Application/Controllers/DeletePostController.php:65
-#: modules/forum/src/Application/Controllers/DeletePostFileController.php:57
-#: modules/forum/src/Application/Controllers/DeletePostFileController.php:68
-#: modules/forum/src/Application/Controllers/EditPostController.php:58
-#: modules/forum/src/Application/Controllers/EditPostController.php:69
-#: modules/forum/src/Application/Controllers/RestorePostController.php:54
-#: modules/forum/src/Application/Controllers/RestorePostController.php:65
-msgid "Error"
-msgstr "Ката"
-
-#: modules/forum/src/Application/Controllers/DeletePostController.php:55
-#: modules/forum/src/Application/Controllers/DeletePostFileController.php:58
-#: modules/forum/src/Application/Controllers/EditPostController.php:59
-#: modules/forum/src/Application/Controllers/RestorePostController.php:55
-msgid "Message does not exists or has been deleted"
-msgstr "Билдирүү жок же үчүрүлгөн"
-
-#: modules/forum/src/Application/Controllers/DeletePostController.php:57
-#: modules/forum/src/Application/Controllers/DeletePostFileController.php:60
-#: modules/forum/src/Application/Controllers/DownloadFileController.php:61
-#: modules/forum/src/Application/Controllers/EditPostController.php:61
-#: modules/forum/src/Application/Controllers/FilterByAuthorController.php:71
-#: modules/forum/src/Application/Controllers/ForumFilesController.php:67
-#: modules/forum/src/Application/Controllers/ForumIndexController.php:53
-#: modules/forum/src/Application/Controllers/ForumIndexController.php:65
-#: modules/forum/src/Application/Controllers/ForumIndexController.php:66
-#: modules/forum/src/Application/Controllers/ForumSearchController.php:72
-#: modules/forum/src/Application/Controllers/ForumSectionController.php:52
-#: modules/forum/src/Application/Controllers/ForumTopicController.php:80
-#: modules/forum/src/Application/Controllers/LatestTopicsController.php:39
-#: modules/forum/src/Application/Controllers/MarkAllTopicsReadController.php:69
-#: modules/forum/src/Application/Controllers/PollVotersController.php:74
-#: modules/forum/src/Application/Controllers/PollVotersController.php:80
-#: modules/forum/src/Application/Controllers/RestorePostController.php:57
-#: modules/forum/src/Application/Controllers/ShowPostController.php:47
-#: modules/forum/src/Application/Controllers/ShowPostController.php:70
-#: modules/forum/src/Application/Controllers/ShowPostController.php:82
-#: modules/forum/src/Application/Controllers/SubmitVoteController.php:61
-#: modules/forum/src/Application/Controllers/SubmitVoteController.php:62
-#: modules/forum/src/Application/Controllers/TopicsPeriodController.php:59
-#: modules/forum/src/Application/Controllers/UnreadTopicsController.php:55
-#: modules/forum/src/Application/Controllers/ViewForumVisitorsController.php:55
-#: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:56
-#: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:80
-#: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:87
-#: modules/forum/src/Application/Exceptions/ForumErrorCode.php:36
-#: modules/forum/src/Application/ForumUtils.php:69
-#: modules/forum/templates/files_list.phtml:154
-#: modules/forum/templates/forum_search.phtml:93
-#: modules/forum/templates/new_topics.phtml:124
-#: modules/forum/templates/show_post.phtml:149
-msgid "Forum"
-msgstr "Форум"
-
-#: modules/forum/src/Application/Controllers/DeletePostController.php:83
-#: modules/forum/src/Application/Controllers/DeletePostController.php:101
-#: modules/forum/src/Application/Controllers/DeletePostController.php:102
-msgid "Delete Message"
-msgstr "Билдирүүнү өчүрүү"
-
-#: modules/forum/src/Application/Controllers/DeletePostFileController.php:86
-#: modules/forum/src/Application/Controllers/DeletePostFileController.php:102
-#: modules/forum/src/Application/Controllers/DeletePostFileController.php:103
-msgid "Delete file"
-msgstr "Файлды өчүрүү"
-
-#: modules/forum/src/Application/Controllers/DeleteTopicController.php:88
-#: modules/forum/src/Application/Controllers/DeleteTopicController.php:89
-#: modules/forum/templates/topic.phtml:414
-msgid "Delete Topic"
-msgstr "Теманы жок кылуу"
-
-#: modules/forum/src/Application/Controllers/DeleteVoteController.php:57
-#: modules/forum/src/Application/Controllers/DeleteVoteController.php:70
-#: modules/forum/src/Application/Controllers/DeleteVoteController.php:82
-#: modules/forum/src/Application/Controllers/DeleteVoteController.php:83
-#: modules/forum/templates/topic.phtml:393
-msgid "Delete Poll"
-msgstr "Сурамжылоону өчүрүү"
-
-#: modules/forum/src/Application/Controllers/DeleteVoteController.php:72
-msgid "Poll deleted"
-msgstr "Сурамжылоо өчүрүлдү"
-
-#: modules/forum/src/Application/Controllers/DownloadFileController.php:57
-msgid "Download file"
-msgstr "Файлды жүктөө"
-
-#: modules/forum/src/Application/Controllers/DownloadFileController.php:59
-msgid "File does not exist"
-msgstr "Мындай файл жок"
-
-#: modules/forum/src/Application/Controllers/EditPostController.php:84
-#: modules/forum/src/Application/Controllers/EditPostController.php:101
-#: modules/forum/src/Application/Controllers/EditPostController.php:125
-#: modules/forum/src/Application/Controllers/EditPostController.php:126
-msgid "Edit Message"
-msgstr "Билдирүү оңдоо"
-
-#: modules/forum/src/Application/Controllers/EditPostController.php:86
-#: modules/forum/src/Application/Controllers/ReplyMessageController.php:137
-msgid "You have not entered the message"
-msgstr "Сиз билдирүү жазган жоксуз"
-
-#: modules/forum/src/Application/Controllers/EditVoteController.php:59
-#: modules/forum/src/Application/Controllers/EditVoteController.php:60
-#: modules/forum/src/Application/Controllers/EditVoteController.php:111
-#: modules/forum/src/Application/Controllers/EditVoteController.php:112
-#: modules/forum/src/Application/Controllers/EditVoteController.php:165
-#: modules/forum/src/Application/Controllers/EditVoteController.php:166
-#: modules/forum/templates/topic.phtml:392
-msgid "Edit Poll"
-msgstr "Сурамжылоону оңдоо"
-
-#: modules/forum/src/Application/Controllers/EditVoteController.php:79
-#: modules/forum/src/Application/Controllers/EditVoteController.php:80
-msgid "Delete Answer"
-msgstr "Жоопту өчүрүү"
-
-#: modules/forum/src/Application/Controllers/EditVoteController.php:114
-msgid "Poll changed"
-msgstr "Сурамжылоо өзгөртүлдү"
-
-#: modules/forum/src/Application/Controllers/ForumFilesController.php:58
-#: modules/forum/src/Application/Controllers/ForumFilesController.php:59
-#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:113
-msgid "Forum Files"
-msgstr "Форумдун файлдары"
-
-#: modules/forum/src/Application/Controllers/ForumSearchController.php:65
-msgid "Invalid length"
-msgstr "Жараксыз узундук"
-
-#: modules/forum/src/Application/Controllers/ForumSearchController.php:77
-#, php-format
-msgid "Search results for: %s"
-msgstr ""
-
-#: modules/forum/src/Application/Controllers/LatestTopicsController.php:38
-msgid "Last 10"
-msgstr "Акыркы 10 темалар"
-
-#: modules/forum/src/Application/Controllers/LatestTopicsController.php:48
-#: modules/forum/src/Application/Controllers/UnreadTopicsController.php:64
-#: modules/forum/src/Application/Controllers/ViewForumVisitorsController.php:63
-#: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:95
-#: modules/forum/templates/curators.phtml:36
-#: modules/forum/templates/files_list.phtml:36
-#: modules/forum/templates/files_sections.phtml:49
-#: modules/forum/templates/filter_by_author.phtml:41
-msgid "The list is empty"
-msgstr "Тизмеси бош"
-
-#: modules/forum/src/Application/Controllers/MarkAllTopicsReadController.php:49
-#: modules/forum/src/Application/Controllers/MarkAllTopicsReadController.php:50
-#: modules/forum/src/Application/Controllers/MarkAllTopicsReadController.php:64
-#: modules/forum/src/Application/Controllers/MarkAllTopicsReadController.php:65
-#: modules/forum/src/Application/Controllers/UnreadTopicsController.php:54
-#: modules/forum/templates/header.phtml:31
-msgid "Unread"
-msgstr "Окула элек"
-
-#: modules/forum/src/Application/Controllers/MarkAllTopicsReadController.php:67
-msgid "All topics marked as read"
-msgstr "Бардык темалар окулган деп белгиленди"
-
-#: modules/forum/src/Application/Controllers/MoveTopicController.php:103
-#: modules/forum/src/Application/Controllers/MoveTopicController.php:104
-msgid "Move topic"
-msgstr "Теманы жылдыруу"
-
-#: modules/forum/src/Application/Controllers/NewMessageController.php:70
-#: modules/forum/src/Application/Controllers/NewMessageController.php:84
-#: modules/forum/src/Application/Controllers/NewMessageController.php:98
-#: modules/forum/src/Application/Controllers/NewMessageController.php:120
-#: modules/forum/src/Application/Controllers/NewMessageController.php:134
-#: modules/forum/src/Application/Controllers/NewMessageController.php:176
-#: modules/forum/src/Application/Controllers/NewMessageController.php:177
-#: modules/forum/src/Application/Controllers/ReplyMessageController.php:70
-#: modules/forum/src/Application/Controllers/ReplyMessageController.php:87
-#: modules/forum/src/Application/Controllers/ReplyMessageController.php:100
-#: modules/forum/src/Application/Controllers/ReplyMessageController.php:114
-#: modules/forum/src/Application/Controllers/ReplyMessageController.php:135
-#: modules/forum/src/Application/Controllers/ReplyMessageController.php:148
-#: modules/forum/src/Application/Controllers/ReplyMessageController.php:162
-msgid "New message"
-msgstr "Жаңы билдирүү кошуу"
-
-#: modules/forum/src/Application/Controllers/NewMessageController.php:86
-#: modules/forum/src/Application/Controllers/ReplyMessageController.php:89
+#: modules/forum/src/Application/Controllers/NewMessageController.php:73
+#: modules/forum/src/Application/Controllers/ReplyMessageController.php:76
 msgid "You cannot write in a closed topic"
 msgstr "Сиз жабык темага жаза албайсыз"
 
-#: modules/forum/src/Application/Controllers/NewMessageController.php:100
-#: modules/forum/src/Application/Controllers/NewTopicController.php:87
-#: modules/forum/src/Application/Controllers/ReplyMessageController.php:116
+#: modules/forum/src/Application/Controllers/NewMessageController.php:87
+#: modules/forum/src/Application/Controllers/NewTopicController.php:74
+#: modules/forum/src/Application/Controllers/ReplyMessageController.php:103
 #, php-format
 msgid "You cannot add the message so often<br>Please, wait %d sec."
 msgstr "Сиз билдирүүлөрдү мынчалык көп кошууга мүмкүн эмес<br>PКичипейилдикке, күтө туруңуз %d секунд."
 
-#: modules/forum/src/Application/Controllers/NewMessageController.php:122
-#: modules/forum/src/Application/Controllers/ReplyMessageController.php:150
+#: modules/forum/src/Application/Controllers/NewMessageController.php:110
+#: modules/forum/src/Application/Controllers/ReplyMessageController.php:138
 msgid "Text is too short"
 msgstr "Тексти өтө эле кыска"
 
-#: modules/forum/src/Application/Controllers/NewMessageController.php:136
-#: modules/forum/src/Application/Controllers/ReplyMessageController.php:164
+#: modules/forum/src/Application/Controllers/NewMessageController.php:124
+#: modules/forum/src/Application/Controllers/ReplyMessageController.php:152
 msgid "Message already exists"
 msgstr "Мындай билдирүү мурда болгон"
 
 #: modules/forum/src/Application/Controllers/NewTopicController.php:60
-#: modules/forum/src/Application/Controllers/NewTopicController.php:73
 msgid "Go to Section"
 msgstr "Бөлүмгө жылдыруу"
 
-#: modules/forum/src/Application/Controllers/NewTopicController.php:85
-#: modules/forum/src/Application/Controllers/NewTopicController.php:164
-#: modules/forum/src/Application/Controllers/NewTopicController.php:168
-#: modules/forum/src/Application/Controllers/NewTopicController.php:169
+#: modules/forum/src/Application/Controllers/NewTopicController.php:72
+#: modules/forum/src/Application/Controllers/NewTopicController.php:153
+#: modules/forum/src/Application/Controllers/NewTopicController.php:157
+#: modules/forum/src/Application/Controllers/NewTopicController.php:158
 #: modules/forum/templates/topics.phtml:47
 msgid "New Topic"
 msgstr "Жаңы тема"
 
-#: modules/forum/src/Application/Controllers/PollVotersController.php:71
-#: modules/forum/src/Application/Controllers/PollVotersController.php:79
+#: modules/forum/src/Application/Controllers/PollVotersController.php:61
+#: modules/forum/src/Application/Controllers/PollVotersController.php:69
 msgid "Who voted in the poll"
 msgstr "Сурамжылоого катышкан колдонуучулар"
 
-#: modules/forum/src/Application/Controllers/PollVotersController.php:88
+#: modules/forum/src/Application/Controllers/PollVotersController.php:80
 msgid "No one has voted in this poll yet"
 msgstr "Бул сурамжылоого эч ким катышкан жок"
 
-#: modules/forum/src/Application/Controllers/ReplyMessageController.php:102
+#: modules/forum/src/Application/Controllers/ReplyMessageController.php:89
 msgid "You can not reply to your own message"
 msgstr "Сиз өзүңүздүн билдирүүңүзгө жооп бере албайсыз."
 
-#: modules/forum/src/Application/Controllers/ReplyMessageController.php:214
-#: modules/forum/src/Application/Controllers/ReplyMessageController.php:215
+#: modules/forum/src/Application/Controllers/ReplyMessageController.php:202
+#: modules/forum/src/Application/Controllers/ReplyMessageController.php:203
 msgid "Reply to message"
 msgstr "Билдирүүгө жооп берүү"
 
-#: modules/forum/src/Application/Controllers/RestorePostController.php:83
-#: modules/forum/src/Application/Controllers/RestorePostController.php:99
-#: modules/forum/src/Application/Controllers/RestorePostController.php:100
+#: modules/forum/src/Application/Controllers/RestorePostController.php:75
+#: modules/forum/src/Application/Controllers/RestorePostController.php:91
+#: modules/forum/src/Application/Controllers/RestorePostController.php:92
 msgid "Restore Message"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:85
+#: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:76
 msgid "You have not selected any author"
 msgstr "Бир дагы авторду тандаган жоксуз"
 
 #: modules/forum/src/Application/Controllers/ShowPostController.php:43
-#: modules/forum/src/Application/Controllers/ShowPostController.php:66
-#: modules/forum/src/Application/Controllers/ShowPostController.php:78
-#: modules/forum/src/Application/Controllers/ShowPostController.php:79
+#: modules/forum/src/Application/Controllers/ShowPostController.php:100
+#: modules/forum/src/Application/Controllers/ShowPostController.php:105
 msgid "Show post"
 msgstr "Билдирүүнү кароо"
 
-#: modules/forum/src/Application/Controllers/SubmitVoteController.php:64
+#: modules/forum/src/Application/Controllers/SubmitVoteController.php:56
 msgid "Vote accepted"
 msgstr "Сиздин добушуңуз кабыл алынды"
 
-#: modules/forum/src/Application/Controllers/TopicsPeriodController.php:58
+#: modules/forum/src/Application/Controllers/TopicsPeriodController.php:57
 #, php-format
 msgid "All for period %d hours"
 msgstr "Бардык мезгилде %d саат"
 
-#: modules/forum/src/Application/Controllers/TopicsPeriodController.php:73
+#: modules/forum/src/Application/Controllers/TopicsPeriodController.php:69
 msgid "There is nothing new in this forum for selected period"
 msgstr "Тандалган мезгил үчүн жаңы форум жок"
 
@@ -542,16 +533,16 @@ msgstr ""
 msgid "Only images are allowed"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/ViewForumVisitorsController.php:54
+#: modules/forum/src/Application/Controllers/ViewForumVisitorsController.php:53
 #: modules/forum/templates/index.phtml:77
 #: modules/forum/templates/section.phtml:68
 #: modules/forum/templates/topics.phtml:123
 msgid "Who in Forum"
 msgstr "Ким форумда"
 
-#: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:52
-#: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:76
-#: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:86
+#: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:49
+#: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:75
+#: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:85
 #: modules/forum/templates/who.phtml:32
 msgid "Who in Topic"
 msgstr "Ким темада"
@@ -617,38 +608,38 @@ msgid "Guest"
 msgstr "Конок"
 
 #: modules/forum/src/Application/Services/ForumVisitorRowMapper.php:92
-#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:282
-#: modules/forum/src/Application/UseCases/ViewPollVotersUseCase.php:88
+#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:298
+#: modules/forum/src/Application/UseCases/ViewPollVotersUseCase.php:90
 msgid "Forum moderator"
 msgstr "Форумдун Модератору"
 
 #: modules/forum/src/Application/Services/ForumVisitorRowMapper.php:93
-#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:283
-#: modules/forum/src/Application/UseCases/ViewPollVotersUseCase.php:89
+#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:299
+#: modules/forum/src/Application/UseCases/ViewPollVotersUseCase.php:91
 msgid "Download moderator"
 msgstr "Жүктөө Модератору"
 
 #: modules/forum/src/Application/Services/ForumVisitorRowMapper.php:94
-#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:284
-#: modules/forum/src/Application/UseCases/ViewPollVotersUseCase.php:90
+#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:300
+#: modules/forum/src/Application/UseCases/ViewPollVotersUseCase.php:92
 msgid "Library moderator"
 msgstr "Китепкана модератору"
 
 #: modules/forum/src/Application/Services/ForumVisitorRowMapper.php:95
-#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:285
-#: modules/forum/src/Application/UseCases/ViewPollVotersUseCase.php:91
+#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:301
+#: modules/forum/src/Application/UseCases/ViewPollVotersUseCase.php:93
 msgid "Super moderator"
 msgstr "Ага модератор"
 
 #: modules/forum/src/Application/Services/ForumVisitorRowMapper.php:96
-#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:286
-#: modules/forum/src/Application/UseCases/ViewPollVotersUseCase.php:92
+#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:302
+#: modules/forum/src/Application/UseCases/ViewPollVotersUseCase.php:94
 msgid "Administrator"
 msgstr "Администратор"
 
 #: modules/forum/src/Application/Services/ForumVisitorRowMapper.php:97
-#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:287
-#: modules/forum/src/Application/UseCases/ViewPollVotersUseCase.php:93
+#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:303
+#: modules/forum/src/Application/UseCases/ViewPollVotersUseCase.php:95
 msgid "Supervisor"
 msgstr "Супервайзер"
 
@@ -676,65 +667,105 @@ msgstr "Сиздин билдирүүңүз акыркы эмес жана ан�
 msgid "You cannot edit your posts after 5 minutes"
 msgstr "Билдирүү жазылгандан бери 5 мүнөттөн ашык убакыт өттү, сиз аны оңдой албайсыз."
 
-#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:68
+#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:69
 #: modules/forum/templates/topics.phtml:31
 msgid "Category Files"
 msgstr "Файлдар бөлүмдөрү"
 
-#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:85
+#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:87
 msgid "Section files"
 msgstr "Бөлүмдүн файлдары"
 
-#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:102
-#: modules/forum/templates/topic.phtml:37
+#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:105
+#: modules/forum/templates/topic.phtml:38
 msgid "Topic Files"
 msgstr "Теманын файлдары"
 
-#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:142
-#: modules/forum/templates/files_list.phtml:28
-#: modules/forum/templates/files_sections.phtml:28
+#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:148
+#: modules/forum/templates/files_list.phtml:32
+#: modules/forum/templates/files_sections.phtml:32
 msgid "New Files"
 msgstr "Жаңы файлдар"
 
-#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:172
+#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:180
 msgid "List of sections"
 msgstr "Бөлүмдөрдүн тизмеси"
 
-#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:297
+#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:313
 msgid "Windows applications"
 msgstr "Windows тиркемелери"
 
-#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:298
+#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:314
 msgid "Java applications"
 msgstr "Java тиркемелери"
 
-#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:299
+#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:315
 msgid "SIS"
 msgstr "SIS тиркемелери"
 
-#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:300
+#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:316
 msgid "txt"
 msgstr "тхт"
 
-#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:301
+#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:317
 msgid "Pictures"
 msgstr "Сүрөт"
 
-#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:302
+#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:318
 msgid "Archive"
 msgstr "Архив"
 
-#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:303
+#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:319
 msgid "Videos"
 msgstr "Тасма"
 
-#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:304
+#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:320
 msgid "MP3"
 msgstr "МР3"
 
-#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:305
+#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:321
 msgid "Other"
 msgstr "Башка"
+
+#: modules/forum/src/Install/Installer.php:43
+msgid "Communication"
+msgstr ""
+
+#: modules/forum/src/Install/Installer.php:43
+msgid "Free discussion on any topic"
+msgstr ""
+
+#: modules/forum/src/Install/Installer.php:44
+msgid "Off-topic"
+msgstr ""
+
+#: modules/forum/src/Install/Installer.php:45
+msgid "Dating"
+msgstr ""
+
+#: modules/forum/src/Install/Installer.php:46
+msgid "Site life"
+msgstr ""
+
+#: modules/forum/src/Install/Installer.php:47
+msgid "News"
+msgstr ""
+
+#: modules/forum/src/Install/Installer.php:48
+msgid "Suggestions and wishes"
+msgstr ""
+
+#: modules/forum/src/Install/Installer.php:49
+msgid "Miscellaneous"
+msgstr ""
+
+#: modules/forum/src/Install/Installer.php:70
+msgid "Hello everyone!"
+msgstr ""
+
+#: modules/forum/src/Install/Installer.php:106
+msgid "<p>We are glad to welcome you to our website :)</p><p>Let's get acquainted!</p>"
+msgstr ""
 
 #: modules/forum/templates/add_file.phtml:29
 msgid "File attached"
@@ -750,9 +781,9 @@ msgstr "Дагы кошуу"
 #: modules/forum/templates/change_topic.phtml:52
 #: modules/forum/templates/curators.phtml:53
 #: modules/forum/templates/edit_poll.phtml:67
-#: modules/forum/templates/filter_by_author.phtml:69
+#: modules/forum/templates/filter_by_author.phtml:68
 #: modules/forum/templates/move_topic.phtml:52
-#: modules/forum/templates/show_post.phtml:148
+#: modules/forum/templates/show_post.phtml:151
 msgid "Back to topic"
 msgstr "Темага кайра кайтуу"
 
@@ -803,7 +834,7 @@ msgstr "Акыркысын өчүрүү"
 #: modules/forum/templates/add_poll.phtml:56
 #: modules/forum/templates/change_topic.phtml:51
 #: modules/forum/templates/edit_poll.phtml:66
-#: modules/forum/templates/edit_post.phtml:45
+#: modules/forum/templates/edit_post.phtml:46
 msgid "Save"
 msgstr "Сактоо"
 
@@ -842,7 +873,7 @@ msgid "Cancel"
 msgstr "Токтотуу"
 
 #: modules/forum/templates/curators.phtml:31
-#: modules/forum/templates/filter_by_author.phtml:35
+#: modules/forum/templates/filter_by_author.phtml:34
 msgid "Changes saved"
 msgstr "Өзгөртүүлөр сакталды"
 
@@ -860,8 +891,8 @@ msgstr "Сиз чын эле жооптун вариантын жок кылгы
 #: modules/forum/templates/delete_post.phtml:42
 #: modules/forum/templates/delete_topic.phtml:41
 #: modules/forum/templates/mass_delete.phtml:40
-#: modules/forum/templates/topic.phtml:325
-#: modules/forum/templates/topic.phtml:370
+#: modules/forum/templates/topic.phtml:326
+#: modules/forum/templates/topic.phtml:371
 msgid "Delete"
 msgstr "Өчүрүү"
 
@@ -894,54 +925,54 @@ msgstr "Жаап-жашыруу"
 msgid "Perform"
 msgstr "Аткаруу"
 
-#: modules/forum/templates/edit_post.phtml:36
+#: modules/forum/templates/edit_post.phtml:37
 #: modules/forum/templates/new_topic.phtml:81
 #: modules/forum/templates/reply_message.phtml:42
-#: modules/forum/templates/topic.phtml:125
-#: modules/forum/templates/topic.phtml:437
+#: modules/forum/templates/topic.phtml:126
+#: modules/forum/templates/topic.phtml:438
 msgid "Message"
 msgstr "Билдирүү"
 
-#: modules/forum/templates/edit_post.phtml:48
+#: modules/forum/templates/edit_post.phtml:49
 #: modules/forum/templates/new_topic.phtml:116
 #: modules/forum/templates/reply_message.phtml:58
 msgid "Smilies"
 msgstr "Смайлдар"
 
-#: modules/forum/templates/files_list.phtml:80
-#: modules/forum/templates/topic.phtml:243
+#: modules/forum/templates/files_list.phtml:84
+#: modules/forum/templates/topic.phtml:244
 msgid "Link to post"
 msgstr "Билдирүүгө шилтеме"
 
-#: modules/forum/templates/files_list.phtml:131
+#: modules/forum/templates/files_list.phtml:135
 msgid "To message"
 msgstr "Билдирүүгө"
 
-#: modules/forum/templates/files_list.phtml:134
+#: modules/forum/templates/files_list.phtml:138
 msgid "To topic"
 msgstr "Ушул темага"
 
-#: modules/forum/templates/files_list.phtml:144
+#: modules/forum/templates/files_list.phtml:148
 #: modules/forum/templates/forum_search.phtml:72
 #: modules/forum/templates/new_topics.phtml:107
-#: modules/forum/templates/topic.phtml:459
+#: modules/forum/templates/topic.phtml:460
 #: modules/forum/templates/topics.phtml:111
 #: modules/forum/templates/voted_users.phtml:44
 #: modules/forum/templates/who.phtml:52
 msgid "Total"
 msgstr "Баары"
 
-#: modules/forum/templates/filter_by_author.phtml:44
+#: modules/forum/templates/filter_by_author.phtml:43
 msgid "Filter will be display posts from selected authors only"
 msgstr "Чыпкалоо тандалган авторлордун билдирүүлөрүн гана көрүүгө мүмкүндүк берет"
 
-#: modules/forum/templates/filter_by_author.phtml:64
+#: modules/forum/templates/filter_by_author.phtml:63
 msgid "Filter"
 msgstr "Чыпкалоо"
 
-#: modules/forum/templates/filter_by_author.phtml:66
-#: modules/forum/templates/topic.phtml:47
-#: modules/forum/templates/topic.phtml:475
+#: modules/forum/templates/filter_by_author.phtml:65
+#: modules/forum/templates/topic.phtml:48
+#: modules/forum/templates/topic.phtml:476
 msgid "Cancel Filter"
 msgstr "Иреттөөнү жокко чыгаруу"
 
@@ -1031,10 +1062,10 @@ msgstr "Аталышы"
 
 #: modules/forum/templates/new_topic.phtml:105
 #: modules/forum/templates/reply_message.phtml:55
-#: modules/forum/templates/topic.phtml:139
-#: modules/forum/templates/topic.phtml:142
-#: modules/forum/templates/topic.phtml:451
-#: modules/forum/templates/topic.phtml:454
+#: modules/forum/templates/topic.phtml:140
+#: modules/forum/templates/topic.phtml:143
+#: modules/forum/templates/topic.phtml:452
+#: modules/forum/templates/topic.phtml:455
 msgid "Write"
 msgstr "Жазуу"
 
@@ -1089,7 +1120,7 @@ msgid "Do you really want to restore this post?"
 msgstr ""
 
 #: modules/forum/templates/restore_post.phtml:35
-#: modules/forum/templates/topic.phtml:372
+#: modules/forum/templates/topic.phtml:373
 msgid "Restore"
 msgstr "Калыбына келтирүү"
 
@@ -1101,117 +1132,117 @@ msgstr "Бөлүмдүн файлдары"
 msgid "There are no sections in this category"
 msgstr "Бул  категорияда бөлүмдөр жок"
 
-#: modules/forum/templates/show_post.phtml:62
-#: modules/forum/templates/topic.phtml:251
+#: modules/forum/templates/show_post.phtml:65
+#: modules/forum/templates/topic.phtml:252
 msgid "Edited:"
 msgstr "Өзгөртүлдү:"
 
-#: modules/forum/templates/show_post.phtml:63
-#: modules/forum/templates/topic.phtml:252
+#: modules/forum/templates/show_post.phtml:66
+#: modules/forum/templates/topic.phtml:253
 msgid "Edited"
 msgstr "Өзгөртүүлөр"
 
-#: modules/forum/templates/show_post.phtml:80
-#: modules/forum/templates/topic.phtml:293
+#: modules/forum/templates/show_post.phtml:83
+#: modules/forum/templates/topic.phtml:294
 msgid "Attached files"
 msgstr "Тиркелген файлдар"
 
-#: modules/forum/templates/show_post.phtml:135
-#: modules/forum/templates/topic.phtml:353
+#: modules/forum/templates/show_post.phtml:138
+#: modules/forum/templates/topic.phtml:354
 msgid "Reply"
 msgstr "Жооп берүү"
 
-#: modules/forum/templates/show_post.phtml:140
-#: modules/forum/templates/topic.phtml:358
+#: modules/forum/templates/show_post.phtml:143
+#: modules/forum/templates/topic.phtml:359
 msgid "Quote"
 msgstr "Цитата"
 
-#: modules/forum/templates/topic.phtml:43
+#: modules/forum/templates/topic.phtml:44
 msgid "Filter by author is activated"
 msgstr "Автор боюнча иреттөө күйгүзүлдү"
 
-#: modules/forum/templates/topic.phtml:54
+#: modules/forum/templates/topic.phtml:55
 msgid "Topic closed"
 msgstr "Тема жабык"
 
-#: modules/forum/templates/topic.phtml:60
+#: modules/forum/templates/topic.phtml:61
 msgid "Topic deleted by"
 msgstr "Тема өчүрүлдү"
 
-#: modules/forum/templates/topic.phtml:64
+#: modules/forum/templates/topic.phtml:65
 msgid "Undelete topic"
 msgstr "Теманы өчүрүү токтотулду"
 
-#: modules/forum/templates/topic.phtml:80
-#: modules/forum/templates/topic.phtml:110
+#: modules/forum/templates/topic.phtml:81
+#: modules/forum/templates/topic.phtml:111
 msgid "Vote"
 msgstr "Добуш берүү"
 
-#: modules/forum/templates/topic.phtml:81
+#: modules/forum/templates/topic.phtml:82
 msgid "Results"
 msgstr "Натыйжалары"
 
-#: modules/forum/templates/topic.phtml:101
+#: modules/forum/templates/topic.phtml:102
 msgid "Total votes"
 msgstr "Жалпы добуштар"
 
-#: modules/forum/templates/topic.phtml:260
+#: modules/forum/templates/topic.phtml:261
 msgid "Post deleted:"
 msgstr "Билдирүү жок кылынды:"
 
-#: modules/forum/templates/topic.phtml:261
+#: modules/forum/templates/topic.phtml:262
 msgid "Deleted"
 msgstr "Өчүрүлдү"
 
-#: modules/forum/templates/topic.phtml:267
+#: modules/forum/templates/topic.phtml:268
 msgid "Post restored by:"
 msgstr "Билдирүү калыбына келтирилди:"
 
-#: modules/forum/templates/topic.phtml:268
+#: modules/forum/templates/topic.phtml:269
 msgid "Restored"
 msgstr "Калыбына келтирилди"
 
-#: modules/forum/templates/topic.phtml:369
+#: modules/forum/templates/topic.phtml:370
 msgid "Edit"
 msgstr "Оңдоо"
 
-#: modules/forum/templates/topic.phtml:384
+#: modules/forum/templates/topic.phtml:385
 msgid "Delete selected"
 msgstr "Тандалганды өчүрүү"
 
-#: modules/forum/templates/topic.phtml:388
+#: modules/forum/templates/topic.phtml:389
 msgid "Actions with topic"
 msgstr "Тема менен иш-аракеттер"
 
-#: modules/forum/templates/topic.phtml:399
+#: modules/forum/templates/topic.phtml:400
 msgid "Curators of the Topic"
 msgstr "Теманын кураторлору"
 
-#: modules/forum/templates/topic.phtml:405
+#: modules/forum/templates/topic.phtml:406
 msgid "Open Topic"
 msgstr "Теманы ачуу"
 
-#: modules/forum/templates/topic.phtml:407
+#: modules/forum/templates/topic.phtml:408
 msgid "Close Topic"
 msgstr "Теманы жабуу"
 
-#: modules/forum/templates/topic.phtml:411
+#: modules/forum/templates/topic.phtml:412
 msgid "Restore Topic"
 msgstr "Теманы калыбына келтирүү"
 
-#: modules/forum/templates/topic.phtml:417
+#: modules/forum/templates/topic.phtml:418
 msgid "Unfix Topic"
 msgstr "Теманы бошотуу"
 
-#: modules/forum/templates/topic.phtml:419
+#: modules/forum/templates/topic.phtml:420
 msgid "Pin Topic"
 msgstr "Теманы бекитүү"
 
-#: modules/forum/templates/topic.phtml:422
+#: modules/forum/templates/topic.phtml:423
 msgid "Move Topic"
 msgstr "Теманы жылдыруу"
 
-#: modules/forum/templates/topic.phtml:499
+#: modules/forum/templates/topic.phtml:500
 msgid "Who is here"
 msgstr "Ким бул жерде"
 
