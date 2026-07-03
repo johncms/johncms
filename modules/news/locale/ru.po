@@ -457,3 +457,93 @@ msgstr "Поиск не дал результатов."
 msgid "Enter a tag"
 msgstr "Введите тег"
 
+
+#: modules/news/src/Install/Installer.php:42
+msgid "Site news"
+msgstr "Новости сайта"
+
+#: modules/news/src/Install/Installer.php:43
+msgid "Announcements"
+msgstr "Объявления"
+
+#: modules/news/src/Install/Installer.php:67
+msgid "Welcome to the site!"
+msgstr "Добро пожаловать на сайт!"
+
+#: modules/news/src/Install/Installer.php:68
+msgid "<p>We are glad to welcome you to our site.</p>"
+msgstr "<p>Рады приветствовать вас на нашем сайте.</p>"
+
+#: modules/news/src/Install/Installer.php:69
+msgid ""
+"<p>We are glad to welcome you to our site. Here you will find the latest "
+"news, useful materials and lively discussion.</p>"
+msgstr ""
+"<p>Рады приветствовать вас на нашем сайте. Здесь вы найдёте актуальные "
+"новости, полезные материалы и живое общение.</p>"
+
+#: modules/news/src/Install/Installer.php:74
+msgid "The site is launched"
+msgstr "Сайт запущен"
+
+#: modules/news/src/Install/Installer.php:75
+msgid "<p>Our site is officially open to visitors.</p>"
+msgstr "<p>Наш сайт официально открыт для посетителей.</p>"
+
+#: modules/news/src/Install/Installer.php:76
+msgid ""
+"<p>Our site is officially open to visitors. Stay tuned for updates — a lot "
+"of interesting things are coming!</p>"
+msgstr ""
+"<p>Наш сайт официально открыт для посетителей. Следите за обновлениями — "
+"впереди много интересного!</p>"
+
+#: modules/news/src/Install/Installer.php:81
+msgid "Site rules"
+msgstr "Правила сайта"
+
+#: modules/news/src/Install/Installer.php:82
+msgid "<p>We ask all members to read the rules.</p>"
+msgstr "<p>Просим всех участников ознакомиться с правилами.</p>"
+
+#: modules/news/src/Install/Installer.php:83
+msgid ""
+"<p>We ask all members to read the site rules. Respect each other, avoid "
+"rudeness and spam. The administration reserves the right to remove materials "
+"that violate the rules.</p>"
+msgstr ""
+"<p>Просим всех участников ознакомиться с правилами сайта. Уважайте друг "
+"друга, не допускайте грубости и спама. Администрация оставляет за собой право "
+"удалять материалы, нарушающие правила.</p>"
+
+#: modules/news/src/Install/Installer.php:88
+msgid "Maintenance"
+msgstr "Технические работы"
+
+#: modules/news/src/Install/Installer.php:89
+msgid "<p>The scheduled maintenance is complete.</p>"
+msgstr "<p>Плановые технические работы завершены.</p>"
+
+#: modules/news/src/Install/Installer.php:90
+msgid ""
+"<p>The scheduled maintenance has been completed successfully. All site "
+"features are working normally. Thank you for your patience!</p>"
+msgstr ""
+"<p>Плановые технические работы успешно завершены. Все функции сайта работают "
+"в штатном режиме. Спасибо за терпение!</p>"
+
+#: modules/news/src/Install/Installer.php:130
+msgid "<p>Great news! Glad to see the site up and running.</p>"
+msgstr "<p>Отличная новость! Рад видеть сайт в работе.</p>"
+
+#: modules/news/src/Install/Installer.php:131
+msgid "<p>Congratulations on the launch! A lot of interesting things are ahead.</p>"
+msgstr "<p>Поздравляем с запуском! Впереди много всего интересного.</p>"
+
+#: modules/news/src/Install/Installer.php:132
+msgid "<p>The rules are reasonable, all to the point.</p>"
+msgstr "<p>Правила разумные, всё по делу.</p>"
+
+#: modules/news/src/Install/Installer.php:133
+msgid "<p>Thanks for completing the work so quickly!</p>"
+msgstr "<p>Спасибо за оперативное завершение работ!</p>"
