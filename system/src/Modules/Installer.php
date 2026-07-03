@@ -26,4 +26,13 @@ abstract class Installer
     abstract public function install(): void;
 
     abstract public function uninstall(): void;
+
+    /**
+     * Installs the module's demo data.
+     *
+     * Does nothing by default. Modules that ship demo data override this method.
+     */
+    public function installDemoData(): void
+    {
+    }
 }

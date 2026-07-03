@@ -10,8 +10,9 @@
 
 declare(strict_types=1);
 
-use Install\Database;
 use Johncms\Modules\Admin\Domain\Services\LanguageFilesManagerInterface;
+use Johncms\Modules\ModuleInstaller;
+use Johncms\Modules\Modules;
 use Johncms\System\Http\Request;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
@@ -106,7 +107,11 @@ if ($request->getMethod() === 'POST') {
             setcookie('cups', md5($fields['admin_password']), time() + 3600 * 24 * 365, '/');
 
             if (! empty($fields['install_demo'])) {
-                Database::installDemo();
+                $modules = new Modules();
+                $modules->registerAutoloader();
+                foreach ($modules->getInstalled() as $module) {
+                    (new ModuleInstaller($module))->installDemoData();
+                }
             }
 
             header('Location: /install/?step=5');

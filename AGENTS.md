@@ -156,6 +156,7 @@ Exclude `Application/Exceptions` from service autoload.
 * Use typed properties, arguments, and return types.
 * Avoid redundant scalar casts (`(int)`, `(string)`, `(bool)`) when the type is already guaranteed by signatures or framework/API contracts.
 * Use PHPDoc only when types cannot be expressed with native PHP types.
+* Write all code comments, PHPDoc, and inline notes in English. This is a multilingual project reviewed by contributors from different countries, so English keeps comments accessible to everyone.
 * Use constructor injection with property promotion.
 * Prefer immutable design.
 * Prefer `final` classes for new code.

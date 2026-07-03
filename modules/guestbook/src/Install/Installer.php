@@ -24,6 +24,34 @@ class Installer extends \Johncms\Modules\Installer
     {
     }
 
+    public function installDemoData(): void
+    {
+        $connection = Capsule::connection();
+
+        $now = time();
+        $ua = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36';
+
+        $adminClubText = "Добро пожаловать в Админ Клуб!\r\n"
+            . "Сюда имеют доступ ТОЛЬКО Модераторы и Администраторы.\r\n"
+            . 'Простым пользователям доступ сюда закрыт.';
+
+        $formattingText = 'Гостевая поддерживает полноценное форматирование текста в визуальном редакторе:<br>' . "\n"
+            . '<span style="font-weight: bold">жирный</span><br>' . "\n"
+            . '<span style="font-style:italic">курсив</span><br>' . "\n"
+            . '<span style="text-decoration:underline">подчеркнутый</span><br>' . "\n"
+            . '<span style="color:red">красный</span><br>' . "\n"
+            . '<span style="color:green">зеленый</span><br>' . "\n"
+            . '<span style="color:blue">синий</span><br>' . "\n"
+            . 'Вставку ссылок: <a href="https://johncms.com">https://johncms.com</a>, картинок, таблиц, видео и многого другого';
+
+        $connection->statement(
+            'INSERT INTO `guest` (`adm`, `time`, `user_id`, `name`, `text`, `ip`, `browser`, `admin`, `otvet`, `otime`) VALUES '
+            . "(1, $now, 1, 'admin', '$adminClubText', 2130706433, '$ua', '', '', 0),"
+            . "(0, $now, 1, 'admin', 'Добро пожаловать в Гостевую!', 2130706433, '$ua', 'admin', 'Проверка ответа Администратора', $now),"
+            . "(0, $now, 1, 'admin', '$formattingText', 2130706433, '$ua', '', '', 0);"
+        );
+    }
+
     private function createTables(): void
     {
         $schema = Capsule::schema();

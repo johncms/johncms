@@ -40,6 +40,11 @@ class ModuleInstaller
         $this->installer->uninstall();
     }
 
+    public function installDemoData(): void
+    {
+        $this->installer->installDemoData();
+    }
+
     protected function getInstallerClassName(): string
     {
         // Check old namespace format
