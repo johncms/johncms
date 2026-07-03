@@ -44,6 +44,10 @@
       'Edited:' => 'Изменено:',
       'Edited' => 'Изменено',
       'Edit' => 'Изменить',
+      "Welcome to the Admin Club!\r\nOnly Moderators and Administrators have access here.\r\nRegular users are not allowed in." => "Добро пожаловать в Админ Клуб!\r\nСюда имеют доступ ТОЛЬКО Модераторы и Администраторы.\r\nПростым пользователям доступ сюда закрыт.",
+      'Welcome to the Guestbook!' => 'Добро пожаловать в Гостевую!',
+      'A sample reply from the Administrator' => 'Проверка ответа Администратора',
+      "The guestbook supports full text formatting in the visual editor:<br>\n<span style=\"font-weight: bold\">bold</span><br>\n<span style=\"font-style:italic\">italic</span><br>\n<span style=\"text-decoration:underline\">underlined</span><br>\n<span style=\"color:red\">red</span><br>\n<span style=\"color:green\">green</span><br>\n<span style=\"color:blue\">blue</span><br>\nInserting links: <a href=\"https://johncms.com\">https://johncms.com</a>, images, tables, videos and much more" => "Гостевая поддерживает полноценное форматирование текста в визуальном редакторе:<br>\n<span style=\"font-weight: bold\">жирный</span><br>\n<span style=\"font-style:italic\">курсив</span><br>\n<span style=\"text-decoration:underline\">подчеркнутый</span><br>\n<span style=\"color:red\">красный</span><br>\n<span style=\"color:green\">зеленый</span><br>\n<span style=\"color:blue\">синий</span><br>\nВставку ссылок: <a href=\"https://johncms.com\">https://johncms.com</a>, картинок, таблиц, видео и многого другого",
     ),
   ),
 );

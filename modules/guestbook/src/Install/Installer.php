@@ -10,8 +10,10 @@
 
 namespace Johncms\Modules\Guestbook\Install;
 
+use Gettext\TranslatorFunctions;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Schema\Blueprint;
+use Johncms\System\i18n\Translator;
 
 class Installer extends \Johncms\Modules\Installer
 {
@@ -26,30 +28,77 @@ class Installer extends \Johncms\Modules\Installer
 
     public function installDemoData(): void
     {
-        $connection = Capsule::connection();
+        // Load the module's own translation domain so demo strings are rendered in the language
+        // selected by the user running the installer (falls back to the English source strings).
+        $this->loadTranslations();
 
         $now = time();
         $ua = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36';
 
-        $adminClubText = "Добро пожаловать в Админ Клуб!\r\n"
-            . "Сюда имеют доступ ТОЛЬКО Модераторы и Администраторы.\r\n"
-            . 'Простым пользователям доступ сюда закрыт.';
+        $adminClubText = d__('guestbook', "Welcome to the Admin Club!\r\n"
+            . "Only Moderators and Administrators have access here.\r\n"
+            . 'Regular users are not allowed in.');
 
-        $formattingText = 'Гостевая поддерживает полноценное форматирование текста в визуальном редакторе:<br>' . "\n"
-            . '<span style="font-weight: bold">жирный</span><br>' . "\n"
-            . '<span style="font-style:italic">курсив</span><br>' . "\n"
-            . '<span style="text-decoration:underline">подчеркнутый</span><br>' . "\n"
-            . '<span style="color:red">красный</span><br>' . "\n"
-            . '<span style="color:green">зеленый</span><br>' . "\n"
-            . '<span style="color:blue">синий</span><br>' . "\n"
-            . 'Вставку ссылок: <a href="https://johncms.com">https://johncms.com</a>, картинок, таблиц, видео и многого другого';
+        $formattingText = d__('guestbook', 'The guestbook supports full text formatting in the visual editor:<br>' . "\n"
+            . '<span style="font-weight: bold">bold</span><br>' . "\n"
+            . '<span style="font-style:italic">italic</span><br>' . "\n"
+            . '<span style="text-decoration:underline">underlined</span><br>' . "\n"
+            . '<span style="color:red">red</span><br>' . "\n"
+            . '<span style="color:green">green</span><br>' . "\n"
+            . '<span style="color:blue">blue</span><br>' . "\n"
+            . 'Inserting links: <a href="https://johncms.com">https://johncms.com</a>, images, tables, videos and much more');
 
-        $connection->statement(
-            'INSERT INTO `guest` (`adm`, `time`, `user_id`, `name`, `text`, `ip`, `browser`, `admin`, `otvet`, `otime`) VALUES '
-            . "(1, $now, 1, 'admin', '$adminClubText', 2130706433, '$ua', '', '', 0),"
-            . "(0, $now, 1, 'admin', 'Добро пожаловать в Гостевую!', 2130706433, '$ua', 'admin', 'Проверка ответа Администратора', $now),"
-            . "(0, $now, 1, 'admin', '$formattingText', 2130706433, '$ua', '', '', 0);"
-        );
+        Capsule::table('guest')->insert([
+            [
+                'adm'     => 1,
+                'time'    => $now,
+                'user_id' => 1,
+                'name'    => 'admin',
+                'text'    => $adminClubText,
+                'ip'      => 2130706433,
+                'browser' => $ua,
+                'admin'   => '',
+                'otvet'   => '',
+                'otime'   => 0,
+            ],
+            [
+                'adm'     => 0,
+                'time'    => $now,
+                'user_id' => 1,
+                'name'    => 'admin',
+                'text'    => d__('guestbook', 'Welcome to the Guestbook!'),
+                'ip'      => 2130706433,
+                'browser' => $ua,
+                'admin'   => 'admin',
+                'otvet'   => d__('guestbook', 'A sample reply from the Administrator'),
+                'otime'   => $now,
+            ],
+            [
+                'adm'     => 0,
+                'time'    => $now,
+                'user_id' => 1,
+                'name'    => 'admin',
+                'text'    => $formattingText,
+                'ip'      => 2130706433,
+                'browser' => $ua,
+                'admin'   => '',
+                'otvet'   => '',
+                'otime'   => 0,
+            ],
+        ]);
+    }
+
+    /**
+     * Register the module's translation domain on the active (installer) translator so that
+     * demo strings wrapped in d__('guestbook', ...) are translated into the installer's language.
+     */
+    private function loadTranslations(): void
+    {
+        $translator = TranslatorFunctions::getTranslator();
+        if ($translator instanceof Translator) {
+            // Keep the current default domain (e.g. 'install'); only add the guestbook catalog.
+            $translator->addTranslationDomain('guestbook', MODULES_PATH . 'guestbook/locale', false);
+        }
     }
 
     private function createTables(): void
