@@ -10,12 +10,16 @@
 
 declare(strict_types=1);
 
+use Johncms\Console\Commands\CacheClearCommand;
+use Johncms\Modules\Admin\Application\UseCases\RebuildSmiliesCacheUseCase;
 use Johncms\Modules\Admin\Domain\Services\LanguageFilesManagerInterface;
 use Johncms\Modules\ModuleInstaller;
 use Johncms\Modules\Modules;
 use Johncms\System\Http\Request;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\NullOutput;
 
 /** @var Request $request */
 $request = di(Request::class);
@@ -88,7 +92,8 @@ if ($request->getMethod() === 'POST') {
                     'datereg'         => time(),
                     'lastdate'        => time(),
                     'rights'          => 9,
-                    'ip'              => ip2long($_SERVER['REMOTE_ADDR']),
+                    // The `ip` attribute is cast via Johncms\Casts\Ip, which expects a string IP and converts it itself.
+                    'ip'              => $_SERVER['REMOTE_ADDR'],
                     'browser'         => htmlentities($_SERVER['HTTP_USER_AGENT']),
                     'preg'            => 1,
                     'email_confirmed' => 1,
@@ -109,8 +114,8 @@ if ($request->getMethod() === 'POST') {
             if (! empty($fields['install_demo'])) {
                 // Seed a couple of regular users referenced by module demo data (authors, commenters).
                 $demoUsers = [
-                    ['name' => 'Alex', 'sex' => 'm', 'mail' => 'alex@example.com'],
-                    ['name' => 'Maria', 'sex' => 'f', 'mail' => 'maria@example.com'],
+                    ['name' => 'Alex', 'sex' => 'm', 'mail' => 'alex@example.com', 'ip' => '192.0.2.10'],
+                    ['name' => 'Maria', 'sex' => 'f', 'mail' => 'maria@example.com', 'ip' => '192.0.2.20'],
                 ];
                 foreach ($demoUsers as $demoUser) {
                     (new User())->create(
@@ -123,7 +128,8 @@ if ($request->getMethod() === 'POST') {
                             'datereg'         => time(),
                             'lastdate'        => time(),
                             'rights'          => 0,
-                            'ip'              => ip2long($_SERVER['REMOTE_ADDR']),
+                            // The `ip` attribute is cast via Johncms\Casts\Ip, which expects a string IP and converts it itself.
+                            'ip'              => $demoUser['ip'],
                             'browser'         => htmlentities($_SERVER['HTTP_USER_AGENT']),
                             'preg'            => 1,
                             'email_confirmed' => 1,
@@ -142,6 +148,16 @@ if ($request->getMethod() === 'POST') {
                 foreach ($modules->getInstalled() as $module) {
                     (new ModuleInstaller($module))->installDemoData();
                 }
+            }
+
+            // Drop cached counters so freshly seeded data is reflected right away.
+            (new CacheClearCommand())->run(new ArrayInput([]), new NullOutput());
+
+            // Build the smilies cache so text formatters have a valid list from the first request.
+            try {
+                di(RebuildSmiliesCacheUseCase::class)->execute();
+            } catch (Throwable) {
+                // Smilies cache is non-critical for install; it can be rebuilt later from the admin panel.
             }
 
             header('Location: /install/?step=5');

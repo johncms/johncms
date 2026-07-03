@@ -371,6 +371,12 @@ class Tools
 
             if (file_exists($file) && ($smileys = file_get_contents($file)) !== false) {
                 $smiliesCache = unserialize($smileys, ['allowed_classes' => false]);
+                // Guard against an empty or corrupt cache file (missing usr/adm keys).
+                if (! is_array($smiliesCache) || ! isset($smiliesCache['usr'], $smiliesCache['adm'])) {
+                    $smiliesCache = [];
+
+                    return $str;
+                }
 
                 return strtr(
                     $str,
