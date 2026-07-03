@@ -898,3 +898,135 @@ msgstr "Удалить из избранного"
 msgid "Add to Favorites"
 msgstr "В избранное"
 
+
+#: modules/downloads/src/Install/Installer.php:60
+msgid "Music"
+msgstr "Музыка"
+
+#: modules/downloads/src/Install/Installer.php:61
+msgid "Demo royalty-free audio tracks"
+msgstr "Демонстрационные аудиотреки без лицензионных отчислений"
+
+#: modules/downloads/src/Install/Installer.php:68
+msgid "Atmospheric instrumental track for videos and podcasts."
+msgstr "Атмосферный инструментальный трек для видео и подкастов."
+
+#: modules/downloads/src/Install/Installer.php:76
+msgid "Energetic chiptune track, a great fit for game projects."
+msgstr "Энергичный чиптюн-трек, отлично подходит для игровых проектов."
+
+#: modules/downloads/src/Install/Installer.php:84
+msgid "Calm background music for streams and videos."
+msgstr "Спокойная фоновая музыка для стримов и видео."
+
+#: modules/downloads/src/Install/Installer.php:93
+msgid "Video"
+msgstr "Видео"
+
+#: modules/downloads/src/Install/Installer.php:94
+msgid "Demo video clips"
+msgstr "Демонстрационные видеоклипы"
+
+#: modules/downloads/src/Install/Installer.php:99
+msgid "Hornbill in the jungle"
+msgstr "Птица-носорог в джунглях"
+
+#: modules/downloads/src/Install/Installer.php:100
+msgid "A short clip of a great hornbill against a tropical forest."
+msgstr "Короткий ролик с птицей-носорогом на фоне тропического леса."
+
+#: modules/downloads/src/Install/Installer.php:107
+msgid "Mountain under storm clouds"
+msgstr "Гора под грозовыми облаками"
+
+#: modules/downloads/src/Install/Installer.php:108
+msgid "A lone mountain on a green plain under heavy storm clouds."
+msgstr "Одинокая гора на зелёной равнине под тяжёлыми грозовыми облаками."
+
+#: modules/downloads/src/Install/Installer.php:115
+msgid "Snowstorm in the mountains"
+msgstr "Метель в горах"
+
+#: modules/downloads/src/Install/Installer.php:116
+msgid "Snow-covered mountain slopes swept by a strong wind."
+msgstr "Заснеженные горные склоны, овеваемые сильным ветром."
+
+#: modules/downloads/src/Install/Installer.php:127
+msgid "Images"
+msgstr "Изображения"
+
+#: modules/downloads/src/Install/Installer.php:128
+msgid "Demo photos"
+msgstr "Демонстрационные фотографии"
+
+#: modules/downloads/src/Install/Installer.php:133
+msgid "Mountain lake"
+msgstr "Горное озеро"
+
+#: modules/downloads/src/Install/Installer.php:134
+msgid "A calm lake surrounded by mountains."
+msgstr "Спокойное озеро в окружении гор."
+
+#: modules/downloads/src/Install/Installer.php:141
+msgid "Grasshopper"
+msgstr "Кузнечик"
+
+#: modules/downloads/src/Install/Installer.php:142
+msgid "A macro photo of a grasshopper on a plant."
+msgstr "Макроснимок кузнечика на растении."
+
+#: modules/downloads/src/Install/Installer.php:149
+msgid "Rooster"
+msgstr "Петух"
+
+#: modules/downloads/src/Install/Installer.php:150
+msgid "A bright rooster in close-up."
+msgstr "Яркий петух крупным планом."
+
+#: modules/downloads/src/Install/Installer.php:157
+msgid "Green-veined white butterfly"
+msgstr "Бабочка брюквенница"
+
+#: modules/downloads/src/Install/Installer.php:158
+msgid "A green-veined white butterfly on a flower."
+msgstr "Бабочка брюквенница на цветке."
+
+#: modules/downloads/src/Install/Installer.php:165
+msgid "Bird chick"
+msgstr "Птенец"
+
+#: modules/downloads/src/Install/Installer.php:166
+msgid "A tiny bird chick in the grass."
+msgstr "Крошечный птенец в траве."
+
+#: modules/downloads/src/Install/Installer.php:173
+msgid "Squirrel"
+msgstr "Белка"
+
+#: modules/downloads/src/Install/Installer.php:174
+msgid "A red squirrel on a tree branch."
+msgstr "Рыжая белка на ветке дерева."
+
+#: modules/downloads/src/Install/Installer.php:185
+msgid "Documents"
+msgstr "Документы"
+
+#: modules/downloads/src/Install/Installer.php:186
+msgid "Demo documents and archives"
+msgstr "Демонстрационные документы и архивы"
+
+#: modules/downloads/src/Install/Installer.php:191
+msgid "Text document"
+msgstr "Текстовый документ"
+
+#: modules/downloads/src/Install/Installer.php:192
+msgid "An example of a plain text file."
+msgstr "Пример обычного текстового файла."
+
+#: modules/downloads/src/Install/Installer.php:199
+msgid "File archive"
+msgstr "Архив файлов"
+
+#: modules/downloads/src/Install/Installer.php:200
+msgid "An example ZIP archive with nested files."
+msgstr "Пример ZIP-архива с вложенными файлами."
