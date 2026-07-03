@@ -107,6 +107,36 @@ if ($request->getMethod() === 'POST') {
             setcookie('cups', md5($fields['admin_password']), time() + 3600 * 24 * 365, '/');
 
             if (! empty($fields['install_demo'])) {
+                // Seed a couple of regular users referenced by module demo data (authors, commenters).
+                $demoUsers = [
+                    ['name' => 'Alex', 'sex' => 'm', 'mail' => 'alex@example.com'],
+                    ['name' => 'Maria', 'sex' => 'f', 'mail' => 'maria@example.com'],
+                ];
+                foreach ($demoUsers as $demoUser) {
+                    (new User())->create(
+                        [
+                            'name'            => $demoUser['name'],
+                            'name_lat'        => mb_strtolower($demoUser['name']),
+                            'password'        => md5(md5('demo')),
+                            'mail'            => $demoUser['mail'],
+                            'www'             => '',
+                            'datereg'         => time(),
+                            'lastdate'        => time(),
+                            'rights'          => 0,
+                            'ip'              => ip2long($_SERVER['REMOTE_ADDR']),
+                            'browser'         => htmlentities($_SERVER['HTTP_USER_AGENT']),
+                            'preg'            => 1,
+                            'email_confirmed' => 1,
+                            'sex'             => $demoUser['sex'],
+                            'about'           => '',
+                            'set_user'        => [],
+                            'set_forum'       => [],
+                            'set_mail'        => [],
+                            'smileys'         => [],
+                        ]
+                    );
+                }
+
                 $modules = new Modules();
                 $modules->registerAutoloader();
                 foreach ($modules->getInstalled() as $module) {
