@@ -85,6 +85,12 @@ final readonly class UpdateProfileUseCase
             unset($formData['name'], $formData['karma_off'], $formData['sex'], $formData['rights'], $formData['admin_notes']);
         }
 
+        // Admins cannot change their own rights: the form does not render this field for self-edit,
+        // so keeping it would silently reset the editor's own rights to the default value.
+        if ($profileUser->id === $this->currentUser->id) {
+            unset($formData['rights']);
+        }
+
         unset($formData['csrf_token']);
 
         // For regular users changing their email, defer the change until it is confirmed by email
