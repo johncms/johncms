@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
-"PO-Revision-Date: 2026-07-03 20:22\n"
+"PO-Revision-Date: 2026-07-04 08:51\n"
 
 #: modules/forum/src/Application/Controllers/AddFileController.php:47
 #: modules/forum/src/Application/Controllers/AddFileController.php:58
@@ -729,43 +729,43 @@ msgstr "Другое"
 
 #: modules/forum/src/Install/Installer.php:43
 msgid "Communication"
-msgstr ""
+msgstr "Общение"
 
 #: modules/forum/src/Install/Installer.php:43
 msgid "Free discussion on any topic"
-msgstr ""
+msgstr "Свободное общение на любую тему"
 
 #: modules/forum/src/Install/Installer.php:44
 msgid "Off-topic"
-msgstr ""
+msgstr "О разном"
 
 #: modules/forum/src/Install/Installer.php:45
 msgid "Dating"
-msgstr ""
+msgstr "Знакомства"
 
 #: modules/forum/src/Install/Installer.php:46
 msgid "Site life"
-msgstr ""
+msgstr "Жизнь ресурса"
 
 #: modules/forum/src/Install/Installer.php:47
 msgid "News"
-msgstr ""
+msgstr "Новости"
 
 #: modules/forum/src/Install/Installer.php:48
 msgid "Suggestions and wishes"
-msgstr ""
+msgstr "Предложения и пожелания"
 
 #: modules/forum/src/Install/Installer.php:49
 msgid "Miscellaneous"
-msgstr ""
+msgstr "Разное"
 
 #: modules/forum/src/Install/Installer.php:70
 msgid "Hello everyone!"
-msgstr ""
+msgstr "Привет всем!"
 
 #: modules/forum/src/Install/Installer.php:106
 msgid "<p>We are glad to welcome you to our website :)</p><p>Let's get acquainted!</p>"
-msgstr ""
+msgstr "<p>Мы рады приветствовать Вас на нашем сайте :)</p><p>Давайте знакомиться!</p>"
 
 #: modules/forum/templates/add_file.phtml:29
 msgid "File attached"
