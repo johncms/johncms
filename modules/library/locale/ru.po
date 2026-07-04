@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
-"PO-Revision-Date: 2026-07-04 08:51\n"
+"PO-Revision-Date: 2026-07-04 11:14\n"
 
 #: modules/library/src/Application/Controllers/ArticleCommentsController.php:38
 #: modules/library/src/Application/Controllers/ArticleCommentsController.php:51
@@ -89,7 +89,7 @@ msgstr "Написать статью"
 #: modules/library/src/Application/Controllers/CreateArticleController.php:58
 #: modules/library/src/Application/Controllers/CreateSectionController.php:37
 msgid "Access denied"
-msgstr ""
+msgstr "Доступ запрещён"
 
 #: modules/library/src/Application/Controllers/CreateArticleController.php:85
 #, php-format
@@ -147,14 +147,14 @@ msgstr "Удалить"
 #: modules/library/src/Application/Controllers/DeleteArticleController.php:59
 #: modules/library/src/Application/Controllers/DeleteArticleController.php:60
 msgid "Delete Article"
-msgstr ""
+msgstr "Удалить статью"
 
 #: modules/library/src/Application/Controllers/DeleteArticleImageController.php:50
 #: modules/library/src/Application/Controllers/DeleteArticleImageController.php:53
 #: modules/library/src/Application/Controllers/DeleteArticleImageController.php:54
 #: modules/library/templates/edit_article.phtml:24
 msgid "Delete Cover Image"
-msgstr ""
+msgstr "Удалить изображение обложки"
 
 #: modules/library/src/Application/Controllers/DeleteSectionController.php:45
 #: modules/library/src/Application/Controllers/EditSectionController.php:51
@@ -166,7 +166,7 @@ msgstr "Раздел не существует"
 #: modules/library/src/Application/Controllers/DeleteSectionController.php:56
 #: modules/library/src/Application/Controllers/DeleteSectionController.php:57
 msgid "Delete Section"
-msgstr ""
+msgstr "Удалить раздел"
 
 #: modules/library/src/Application/Controllers/DeleteSectionController.php:130
 #, php-format
@@ -232,7 +232,7 @@ msgstr "Поиск"
 #: modules/library/src/Application/Controllers/SearchController.php:73
 #, php-format
 msgid "Search results for: %s"
-msgstr ""
+msgstr "Результаты поиска по запросу: %s"
 
 #: modules/library/src/Application/Controllers/TagsController.php:35
 #: modules/library/src/Application/Controllers/TagsController.php:42
@@ -257,7 +257,7 @@ msgstr "Список пуст"
 #: modules/library/src/Application/Controllers/TagsController.php:68
 #, php-format
 msgid "Articles tagged: %s"
-msgstr ""
+msgstr "Метка статей: %s"
 
 #: modules/library/src/Application/Controllers/TopController.php:37
 #: modules/library/templates/main.phtml:33
@@ -521,73 +521,73 @@ msgstr "Всего"
 #: modules/library/templates/delete_article.phtml:13
 #, php-format
 msgid "Article \"%s\" has been deleted."
-msgstr ""
+msgstr "Статья \"%s\" успешно удалена."
 
 #: modules/library/templates/delete_article.phtml:15
 #: modules/library/templates/delete_section.phtml:23
 #: modules/library/templates/delete_section.phtml:73
 #: modules/library/templates/delete_section.phtml:80
 msgid "Back to Library"
-msgstr ""
+msgstr "Назад в библиотеку"
 
 #: modules/library/templates/delete_article.phtml:19
 #, php-format
 msgid "Are you sure you want to delete the article \"%s\"? This action cannot be undone."
-msgstr ""
+msgstr "Вы уверены, что хотите удалить статью \"%s\"? Это действие не может быть отменено."
 
 #: modules/library/templates/delete_article.phtml:21
 #: modules/library/templates/delete_article_image.phtml:21
 #: modules/library/templates/delete_section.phtml:29
 msgid "Yes, Delete"
-msgstr ""
+msgstr "Да, удалить"
 
 #: modules/library/templates/delete_article_image.phtml:13
 #, php-format
 msgid "Cover image for article \"%s\" has been deleted."
-msgstr ""
+msgstr "Изображение обложки для статьи \"%s\" удалено."
 
 #: modules/library/templates/delete_article_image.phtml:15
 #: modules/library/templates/edit_article.phtml:18
 msgid "Back to Article"
-msgstr ""
+msgstr "Назад к статье"
 
 #: modules/library/templates/delete_article_image.phtml:19
 #, php-format
 msgid "Are you sure you want to delete the cover image for article \"%s\"?"
-msgstr ""
+msgstr "Вы уверены, что хотите удалить обложку для статьи \"%s\"?"
 
 #: modules/library/templates/delete_section.phtml:21
 #, php-format
 msgid "Section \"%s\" has been deleted."
-msgstr ""
+msgstr "Раздел \"%s\" успешно удален."
 
 #: modules/library/templates/delete_section.phtml:27
 #, php-format
 msgid "Are you sure you want to delete the section \"%s\"? This action cannot be undone."
-msgstr ""
+msgstr "Вы уверены, что хотите удалить раздел \"%s\"? Это действие не может быть отменено."
 
 #: modules/library/templates/delete_section.phtml:37
 #, php-format
 msgid "Contents of section \"%s\" have been moved successfully."
-msgstr ""
+msgstr "Содержимое раздела \"%s\" было успешно перемещено."
 
 #: modules/library/templates/delete_section.phtml:39
 msgid "Go to Target Section"
-msgstr ""
+msgstr "Перейти в целевой раздел"
 
 #: modules/library/templates/delete_section.phtml:43
 #, php-format
 msgid "Move all contents of section \"%s\" to the selected section and delete it?"
-msgstr ""
+msgstr "Переместить все содержимое раздела \"%s\" в выбранный раздел и удалить его?"
 
 #: modules/library/templates/delete_section.phtml:45
 msgid "Yes, Move and Delete"
-msgstr ""
+msgstr "Да, переместить и удалить"
 
 #: modules/library/templates/delete_section.phtml:55
 #, php-format
 msgid "Move contents of \"%s\" to:"
-msgstr ""
+msgstr "Переместить содержимое \"%s\" в:"
 
 #: modules/library/templates/delete_section.phtml:66
 #: modules/library/templates/premod.phtml:34
@@ -597,38 +597,38 @@ msgstr "Подтвердить"
 #: modules/library/templates/delete_section.phtml:71
 #, php-format
 msgid "No sections available to move the contents of \"%s\" to."
-msgstr ""
+msgstr "Нет разделов для перемещения содержимого \"%s\"."
 
 #: modules/library/templates/delete_section.phtml:84
 #, php-format
 msgid "Are you sure you want to delete section \"%s\" along with ALL its contents? This action cannot be undone."
-msgstr ""
+msgstr "Вы уверены, что хотите удалить раздел \"%s\" вместе со всем его содержимым? Это действие не может быть отменено."
 
 #: modules/library/templates/delete_section.phtml:86
 msgid "Yes, Delete Everything"
-msgstr ""
+msgstr "Да, удалить всё"
 
 #: modules/library/templates/delete_section.phtml:94
 #, php-format
 msgid "Section \"%s\" contains subsections or articles. Choose how to delete it:"
-msgstr ""
+msgstr "Раздел \"%s\" содержит подразделы или статьи. Выберите, как удалить его:"
 
 #: modules/library/templates/delete_section.phtml:98
 msgid "Move contents to another section, then delete"
-msgstr ""
+msgstr "Переместить содержимое в другой раздел, затем удалить"
 
 #: modules/library/templates/delete_section.phtml:102
 msgid "Delete section and all its contents"
-msgstr ""
+msgstr "Удалить раздел и всё его содержимое"
 
 #: modules/library/templates/delete_section.phtml:105
 msgid "Continue"
-msgstr ""
+msgstr "Продолжить"
 
 #: modules/library/templates/edit_article.phtml:17
 #: modules/library/templates/edit_section.phtml:16
 msgid "Changes saved successfully."
-msgstr ""
+msgstr "Изменения успешно сохранены"
 
 #: modules/library/templates/edit_article.phtml:59
 msgid "The text of the Article can not be edited, a large amount of data !!!"
@@ -649,7 +649,7 @@ msgstr "Число прочтений"
 
 #: modules/library/templates/edit_section.phtml:17
 msgid "Back to Section"
-msgstr ""
+msgstr "Назад в раздел"
 
 #: modules/library/templates/edit_section.phtml:28
 #: modules/library/templates/section_create.phtml:26
@@ -739,7 +739,7 @@ msgstr "Одобрить все"
 
 #: modules/library/templates/premod.phtml:46
 msgid "No articles pending moderation."
-msgstr ""
+msgstr "Нет статей, ожидающих модерации."
 
 #: modules/library/templates/search.phtml:15
 #: modules/library/templates/search.phtml:16
