@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
-"PO-Revision-Date: 2026-07-03 20:22\n"
+"PO-Revision-Date: 2026-07-04 08:51\n"
 
 #: modules/library/src/Application/Controllers/ArticleCommentsController.php:38
 #: modules/library/src/Application/Controllers/ArticleCommentsController.php:51
@@ -283,107 +283,107 @@ msgstr "Библиотека закрыта"
 
 #: modules/library/src/Install/Installer.php:41
 msgid "Programming"
-msgstr ""
+msgstr "Программирование"
 
 #: modules/library/src/Install/Installer.php:42
 msgid "Articles and guides on development"
-msgstr ""
+msgstr "Статьи и руководства по разработке"
 
 #: modules/library/src/Install/Installer.php:44
 msgid "Materials on the PHP language"
-msgstr ""
+msgstr "Материалы по языку PHP"
 
 #: modules/library/src/Install/Installer.php:46
 msgid "Materials on JavaScript"
-msgstr ""
+msgstr "Материалы по JavaScript"
 
 #: modules/library/src/Install/Installer.php:47
 msgid "Prose"
-msgstr ""
+msgstr "Проза"
 
 #: modules/library/src/Install/Installer.php:48
 msgid "Short stories and essays"
-msgstr ""
+msgstr "Рассказы и очерки"
 
 #: modules/library/src/Install/Installer.php:49
 msgid "User articles"
-msgstr ""
+msgstr "Пользовательские статьи"
 
 #: modules/library/src/Install/Installer.php:50
 msgid "A section where visitors can publish their own articles"
-msgstr ""
+msgstr "Раздел, в который посетители могут добавлять свои статьи"
 
 #: modules/library/src/Install/Installer.php:78
 msgid "Getting started with PHP"
-msgstr ""
+msgstr "Быстрый старт с PHP"
 
 #: modules/library/src/Install/Installer.php:79
 msgid "Installing PHP and your first script"
-msgstr ""
+msgstr "Установка PHP и первый скрипт"
 
 #: modules/library/src/Install/Installer.php:80
 msgid "<p>PHP is a popular language for web development. In this article we cover installing the interpreter and running your first script.</p>"
-msgstr ""
+msgstr "<p>PHP — популярный язык для веб-разработки. В этой статье мы рассмотрим установку интерпретатора и запуск первого скрипта.</p>"
 
 #: modules/library/src/Install/Installer.php:82
 msgid "Arrays in PHP"
-msgstr ""
+msgstr "Массивы в PHP"
 
 #: modules/library/src/Install/Installer.php:83
 msgid "Indexed and associative arrays"
-msgstr ""
+msgstr "Индексные и ассоциативные массивы"
 
 #: modules/library/src/Install/Installer.php:84
 msgid "<p>Arrays in PHP can be indexed or associative. Let us look at the main functions for working with them.</p>"
-msgstr ""
+msgstr "<p>Массивы в PHP бывают индексными и ассоциативными. Разберём основные функции для работы с ними.</p>"
 
 #: modules/library/src/Install/Installer.php:86
 msgid "JavaScript basics"
-msgstr ""
+msgstr "Основы JavaScript"
 
 #: modules/library/src/Install/Installer.php:87
 msgid "Variables and functions"
-msgstr ""
+msgstr "Переменные и функции"
 
 #: modules/library/src/Install/Installer.php:88
 msgid "<p>JavaScript runs in the browser and makes pages interactive. Let us start with variables and functions.</p>"
-msgstr ""
+msgstr "<p>JavaScript выполняется в браузере и делает страницы интерактивными. Начнём с переменных и функций.</p>"
 
 #: modules/library/src/Install/Installer.php:90
 msgid "An autumn evening"
-msgstr ""
+msgstr "Осенний вечер"
 
 #: modules/library/src/Install/Installer.php:91
 msgid "A short story"
-msgstr ""
+msgstr "Небольшой рассказ"
 
 #: modules/library/src/Install/Installer.php:92
 msgid "<p>A warm autumn rain fell outside the window, and the city slowly sank into the evening twilight.</p>"
-msgstr ""
+msgstr "<p>За окном шёл тёплый осенний дождь, и город неспешно погружался в вечерние сумерки.</p>"
 
 #: modules/library/src/Install/Installer.php:95
 msgid "My first article"
-msgstr ""
+msgstr "Моя первая статья"
 
 #: modules/library/src/Install/Installer.php:96
 msgid "An example of a user publication"
-msgstr ""
+msgstr "Пример пользовательской публикации"
 
 #: modules/library/src/Install/Installer.php:97
 msgid "<p>This is an example of an article added by a user. In this section anyone can publish their own material.</p>"
-msgstr ""
+msgstr "<p>Это пример статьи, добавленной пользователем. В этом разделе каждый желающий может опубликовать свой материал.</p>"
 
 #: modules/library/src/Install/Installer.php:122
 msgid "<p>Great introduction, straight to the point!</p>"
-msgstr ""
+msgstr "<p>Отличное введение, всё по делу!</p>"
 
 #: modules/library/src/Install/Installer.php:123
 msgid "<p>Thanks, I bookmarked the article.</p>"
-msgstr ""
+msgstr "<p>Спасибо, добавил статью в закладки.</p>"
 
 #: modules/library/src/Install/Installer.php:124
 msgid "<p>It is great that you can publish your own materials.</p>"
-msgstr ""
+msgstr "<p>Здорово, что можно публиковать свои материалы.</p>"
 
 #: modules/library/templates/article_create.phtml:14
 msgid "Article added"
