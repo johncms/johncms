@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
-"PO-Revision-Date: 2026-07-03 20:22\n"
+"PO-Revision-Date: 2026-07-04 08:50\n"
 
 #: modules/album/src/Application/Controllers/AlbumIndexController.php:29
 #: modules/album/src/Application/Controllers/DeleteAlbumController.php:43
@@ -316,91 +316,91 @@ msgstr "Непрочитанные комментарии"
 
 #: modules/album/src/Install/Installer.php:65
 msgid "Nature"
-msgstr ""
+msgstr "Природа"
 
 #: modules/album/src/Install/Installer.php:66
 msgid "Landscapes and nature views"
-msgstr ""
+msgstr "Пейзажи и природные виды"
 
 #: modules/album/src/Install/Installer.php:70
 msgid "A mountain lake surrounded by peaks"
-msgstr ""
+msgstr "Горное озеро в окружении вершин"
 
 #: modules/album/src/Install/Installer.php:71
 msgid "A tiny bird chick in the grass"
-msgstr ""
+msgstr "Крошечный птенец в траве"
 
 #: modules/album/src/Install/Installer.php:77
 msgid "Animals"
-msgstr ""
+msgstr "Животные"
 
 #: modules/album/src/Install/Installer.php:78
 msgid "Photos of animals and insects"
-msgstr ""
+msgstr "Фотографии животных и насекомых"
 
 #: modules/album/src/Install/Installer.php:82
 msgid "A bright rooster in close-up"
-msgstr ""
+msgstr "Яркий петух крупным планом"
 
 #: modules/album/src/Install/Installer.php:83
 msgid "A red squirrel on a tree branch"
-msgstr ""
+msgstr "Рыжая белка на ветке дерева"
 
 #: modules/album/src/Install/Installer.php:89
 msgid "My photos"
-msgstr ""
+msgstr "Мои фотографии"
 
 #: modules/album/src/Install/Installer.php:90
 msgid "A personal collection of favorite shots"
-msgstr ""
+msgstr "Личная подборка любимых снимков"
 
 #: modules/album/src/Install/Installer.php:94
 msgid "A butterfly on a flower"
-msgstr ""
+msgstr "Бабочка на цветке"
 
 #: modules/album/src/Install/Installer.php:95
 msgid "A grasshopper on a plant"
-msgstr ""
+msgstr "Кузнечик на растении"
 
 #: modules/album/src/Install/Installer.php:101
 msgid "Private album"
-msgstr ""
+msgstr "Личный альбом"
 
 #: modules/album/src/Install/Installer.php:102
 msgid "A private album visible to its owner only"
-msgstr ""
+msgstr "Приватный альбом, видимый только владельцу"
 
 #: modules/album/src/Install/Installer.php:106
 msgid "A shot from a private album"
-msgstr ""
+msgstr "Снимок из личного альбома"
 
 #: modules/album/src/Install/Installer.php:112
 msgid "Password-protected album"
-msgstr ""
+msgstr "Альбом под паролем"
 
 #: modules/album/src/Install/Installer.php:113
 msgid "An album protected by a password (password: demo)"
-msgstr ""
+msgstr "Альбом, защищённый паролем (пароль: demo)"
 
 #: modules/album/src/Install/Installer.php:117
 msgid "A password-protected photo"
-msgstr ""
+msgstr "Фото под паролем"
 
 #: modules/album/src/Install/Installer.php:237
 msgid "A beautiful lake, such an atmospheric shot!"
-msgstr ""
+msgstr "Прекрасное озеро, очень атмосферный кадр!"
 
 #: modules/album/src/Install/Installer.php:238
 msgid "I would love to visit this place."
-msgstr ""
+msgstr "Хочется здесь побывать."
 
 #: modules/album/src/Install/Installer.php:239
 msgid "Great shot of the squirrel!"
-msgstr ""
+msgstr "Отличный снимок белки!"
 
 #: modules/album/src/Install/Installer.php:240
 msgid "A lovely butterfly."
-msgstr ""
+msgstr "Красивая бабочка."
 
 #: modules/album/templates/add_photo.phtml:33
 msgid "Choose file"
