@@ -11,100 +11,122 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
-"PO-Revision-Date: 2026-03-24 21:38\n"
+"PO-Revision-Date: 2026-07-04 08:50\n"
 
-#: modules/community/includes/administration.php:33
-#: modules/community/includes/administration.php:39
-#: modules/community/includes/administration.php:40
+#: modules/community/src/Application/Controllers/AdministrationController.php:27
+#: modules/community/src/Application/Controllers/CommunityBirthdaysController.php:27
+#: modules/community/src/Application/Controllers/CommunityIndexController.php:27
+#: modules/community/src/Application/Controllers/CommunitySearchController.php:29
+#: modules/community/src/Application/Controllers/CommunityTopController.php:29
+#: modules/community/src/Application/Controllers/CommunityUsersController.php:27
+#: modules/community/src/Application/UseCases/ViewIndexUseCase.php:21
+msgid "Community"
+msgstr "Comunitate"
+
+#: modules/community/src/Application/Controllers/AdministrationController.php:37
+#: modules/community/src/Application/Controllers/CommunityBirthdaysController.php:37
+#: modules/community/src/Application/Controllers/CommunityIndexController.php:37
+#: modules/community/src/Application/Controllers/CommunitySearchController.php:39
+#: modules/community/src/Application/Controllers/CommunityTopController.php:39
+#: modules/community/src/Application/Controllers/CommunityUsersController.php:37
+msgid "For registered users only"
+msgstr "Doar pentru utilizatori inregistrati"
+
+#: modules/community/src/Application/UseCases/ViewAdministrationUseCase.php:20
 #: modules/community/templates/index.phtml:45
 msgid "Administration"
 msgstr "Administratie"
 
-#: modules/community/includes/birthdays.php:25
-#: modules/community/includes/birthdays.php:31
-#: modules/community/includes/birthdays.php:32
+#: modules/community/src/Application/UseCases/ViewBirthdaysUseCase.php:20
 #: modules/community/templates/index.phtml:50
 msgid "Birthdays"
 msgstr "Aniversari"
 
-#: modules/community/includes/search.php:23
-#: modules/community/templates/search.phtml:81
+#: modules/community/src/Application/UseCases/ViewSearchUseCase.php:22
+#: modules/community/templates/administration.phtml:50
+#: modules/community/templates/search.phtml:84
 #: modules/community/templates/users.phtml:50
 msgid "User Search"
 msgstr "Cauta utilizatori"
 
-#: modules/community/includes/search.php:32
-#: modules/community/includes/search.php:36
+#: modules/community/src/Application/UseCases/ViewSearchUseCase.php:29
 #: modules/community/templates/index.phtml:32
 msgid "Nickname"
 msgstr "Porecla"
 
-#: modules/community/includes/search.php:32
+#: modules/community/src/Application/UseCases/ViewSearchUseCase.php:29
 msgid "Invalid length"
 msgstr "Lungime invalida"
 
-#: modules/community/includes/search.php:36
-msgid "Invalid characters"
-msgstr "Caractere invalide"
-
-#: modules/community/includes/top.php:21
+#: modules/community/src/Application/UseCases/ViewTopUseCase.php:22
 msgid "Forum"
 msgstr ""
 
-#: modules/community/includes/top.php:26
+#: modules/community/src/Application/UseCases/ViewTopUseCase.php:27
 msgid "Guestbook"
 msgstr ""
 
-#: modules/community/includes/top.php:31
+#: modules/community/src/Application/UseCases/ViewTopUseCase.php:32
 msgid "Comments"
 msgstr "Comentarii"
 
-#: modules/community/includes/top.php:39
+#: modules/community/src/Application/UseCases/ViewTopUseCase.php:41
 msgid "Karma"
 msgstr ""
 
-#: modules/community/includes/top.php:50
+#: modules/community/src/Application/UseCases/ViewTopUseCase.php:50
 msgid "Most active in Guestbook"
 msgstr "Cei mai activi in Guestbook"
 
-#: modules/community/includes/top.php:57
+#: modules/community/src/Application/UseCases/ViewTopUseCase.php:56
 msgid "Most commentators"
 msgstr "Cei mai multi comentatori"
 
-#: modules/community/includes/top.php:65
+#: modules/community/src/Application/UseCases/ViewTopUseCase.php:63
 msgid "Best Karma"
 msgstr "Cea mai buna Karma"
 
-#: modules/community/includes/top.php:73
+#: modules/community/src/Application/UseCases/ViewTopUseCase.php:68
+#: modules/community/src/Application/UseCases/ViewTopUseCase.php:74
 msgid "Most active in Forum"
 msgstr "Cei mai activi in Forum"
 
-#: modules/community/includes/users.php:28
-#: modules/community/includes/users.php:34
-#: modules/community/includes/users.php:35
+#: modules/community/src/Application/UseCases/ViewUsersUseCase.php:20
 msgid "List of users"
 msgstr "Lista de utilizatori"
 
-#: modules/community/index.php:55
-msgid "Community"
-msgstr "Comunitate"
+#: modules/community/templates/administration.phtml:33
+#: modules/community/templates/search.phtml:67
+#: modules/community/templates/top.phtml:40
+#: modules/community/templates/users.phtml:33
+msgid "List is empty"
+msgstr "Lista este goală"
 
-#: modules/community/index.php:66
-msgid "For registered users only"
-msgstr "Doar pentru utilizatori inregistrati"
+#: modules/community/templates/administration.phtml:40
+#: modules/community/templates/search.phtml:74
+#: modules/community/templates/users.phtml:40
+msgid "Total"
+msgstr "Toatal"
+
+#: modules/community/templates/administration.phtml:53
+#: modules/community/templates/search.phtml:87
+#: modules/community/templates/top.phtml:47
+#: modules/community/templates/users.phtml:53
+msgid "Back"
+msgstr "Inapoi"
 
 #: modules/community/templates/index.phtml:30
-#: modules/community/templates/search.phtml:43
+#: modules/community/templates/search.phtml:46
 msgid "Look for the User"
 msgstr "Cauta utilizatorul"
 
 #: modules/community/templates/index.phtml:34
-#: modules/community/templates/search.phtml:47
+#: modules/community/templates/search.phtml:50
 msgid "Search"
 msgstr "Cauta"
 
 #: modules/community/templates/index.phtml:37
-#: modules/community/templates/search.phtml:50
+#: modules/community/templates/search.phtml:53
 msgid "The search is performed by Nickname and are case-insensitive."
 msgstr "Cautarea se face dupa Nickname.Ai grija la majuscule."
 
@@ -116,26 +138,9 @@ msgstr "Utilizatori"
 msgid "Top Activity"
 msgstr "Activitati de top"
 
-#: modules/community/templates/search.phtml:45
+#: modules/community/templates/search.phtml:48
 msgid "Username"
 msgstr "Nume"
-
-#: modules/community/templates/search.phtml:64
-#: modules/community/templates/top.phtml:40
-#: modules/community/templates/users.phtml:33
-msgid "List is empty"
-msgstr "Lista este goală"
-
-#: modules/community/templates/search.phtml:71
-#: modules/community/templates/users.phtml:40
-msgid "Total"
-msgstr "Toatal"
-
-#: modules/community/templates/search.phtml:84
-#: modules/community/templates/top.phtml:47
-#: modules/community/templates/users.phtml:53
-msgid "Back"
-msgstr "Inapoi"
 
 #: modules/community/templates/user_row.phtml:61
 #: modules/community/templates/user_row.phtml:67
