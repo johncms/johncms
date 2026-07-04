@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
-"PO-Revision-Date: 2026-07-04 08:50\n"
+"PO-Revision-Date: 2026-07-04 11:14\n"
 
 #: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:53
 #: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:300
@@ -332,7 +332,7 @@ msgstr "Комментарии"
 #: modules/downloads/src/Application/Controllers/ViewFileController.php:108
 #: modules/downloads/src/Application/Controllers/ViewFileController.php:110
 msgid "The file is awaiting moderation"
-msgstr ""
+msgstr "Файл ожидает модерации"
 
 #: modules/downloads/src/Application/Controllers/FilesModerationController.php:33
 #: modules/downloads/src/Application/Controllers/FilesModerationController.php:36
@@ -341,7 +341,7 @@ msgstr ""
 #: modules/downloads/src/Application/Controllers/FilesModerationController.php:64
 #: modules/downloads/src/Application/Controllers/FilesModerationController.php:73
 msgid "Files awaiting moderation"
-msgstr ""
+msgstr "Файлы на модерации"
 
 #: modules/downloads/src/Application/Controllers/FilesModerationController.php:62
 msgid "File accepted"
@@ -448,7 +448,7 @@ msgstr "Недопустимая длина имени файла. Допуск�
 #: modules/downloads/src/Application/Controllers/SearchController.php:87
 #, php-format
 msgid "Search results for: %s"
-msgstr ""
+msgstr "Результаты поиска по запросу: %s"
 
 #: modules/downloads/src/Application/Controllers/TopFilesController.php:42
 #: modules/downloads/src/Application/UseCases/ViewTopFilesUseCase.php:39
@@ -488,7 +488,7 @@ msgstr "Загрузки закрыты"
 
 #: modules/downloads/src/Application/Middlewares/DownloadsAdminMiddleware.php:27
 msgid "Not found"
-msgstr ""
+msgstr "Не найдено"
 
 #: modules/downloads/src/Application/Services/FileMediaInfoService.php:38
 msgid "Channels"
@@ -899,7 +899,7 @@ msgstr "Скачать дополнительный файл"
 
 #: modules/downloads/templates/folder_delete.phtml:23
 msgid "Folder"
-msgstr ""
+msgstr "Директория"
 
 #: modules/downloads/templates/folder_form.phtml:26
 #: modules/downloads/templates/folder_form.phtml:27
