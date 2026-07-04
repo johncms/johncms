@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
-"PO-Revision-Date: 2026-07-03 20:22\n"
+"PO-Revision-Date: 2026-07-04 08:51\n"
 
 #: modules/guestbook/src/Application/Controllers/ClearGuestbookController.php:46
 msgid "All messages older than 1 week were deleted"
@@ -90,7 +90,9 @@ msgstr "Разрешены только изображения"
 msgid "Welcome to the Admin Club!\r\n"
 "Only Moderators and Administrators have access here.\r\n"
 "Regular users are not allowed in."
-msgstr ""
+msgstr "Добро пожаловать в Админ Клуб!\r\n"
+"Сюда имеют доступ ТОЛЬКО Модераторы и Администраторы.\r\n"
+"Простым пользователям доступ сюда закрыт."
 
 #: modules/guestbook/src/Install/Installer.php:42
 msgid "The guestbook supports full text formatting in the visual editor:<br>\n"
@@ -101,15 +103,22 @@ msgid "The guestbook supports full text formatting in the visual editor:<br>\n"
 "<span style=\"color:green\">green</span><br>\n"
 "<span style=\"color:blue\">blue</span><br>\n"
 "Inserting links: <a href=\"https://johncms.com\">https://johncms.com</a>, images, tables, videos and much more"
-msgstr ""
+msgstr "Гостевая поддерживает полноценное форматирование текста в визуальном редакторе:<br>\n"
+"<span style=\"font-weight: bold\">жирный</span><br>\n"
+"<span style=\"font-style:italic\">курсив</span><br>\n"
+"<span style=\"text-decoration:underline\">подчеркнутый</span><br>\n"
+"<span style=\"color:red\">красный</span><br>\n"
+"<span style=\"color:green\">зеленый</span><br>\n"
+"<span style=\"color:blue\">синий</span><br>\n"
+"Вставку ссылок: <a href=\"https://johncms.com\">https://johncms.com</a>, картинок, таблиц, видео и многого другого"
 
 #: modules/guestbook/src/Install/Installer.php:69
 msgid "Welcome to the Guestbook!"
-msgstr ""
+msgstr "Добро пожаловать в Гостевую!"
 
 #: modules/guestbook/src/Install/Installer.php:73
 msgid "A sample reply from the Administrator"
-msgstr ""
+msgstr "Проверка ответа Администратора"
 
 #: modules/guestbook/templates/clear.phtml:5
 msgid "Clear guestbook"
