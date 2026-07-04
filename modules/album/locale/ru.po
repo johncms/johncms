@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
-"PO-Revision-Date: 2026-07-04 08:50\n"
+"PO-Revision-Date: 2026-07-04 11:14\n"
 
 #: modules/album/src/Application/Controllers/AlbumIndexController.php:29
 #: modules/album/src/Application/Controllers/DeleteAlbumController.php:43
@@ -92,7 +92,7 @@ msgstr "Неверные данные"
 
 #: modules/album/src/Application/Controllers/DeleteAlbumController.php:86
 msgid "Delete album"
-msgstr ""
+msgstr "Удалить альбом"
 
 #: modules/album/src/Application/Controllers/DeleteAlbumController.php:88
 msgid "Album deleted"
@@ -118,7 +118,7 @@ msgstr "Вы действительно хотите удалить изобра
 
 #: modules/album/src/Application/Controllers/DeletePhotoController.php:87
 msgid "Image successfully deleted"
-msgstr ""
+msgstr "Изображение успешно удалено"
 
 #: modules/album/src/Application/Controllers/DownloadPhotoController.php:32
 #: modules/album/src/Application/Controllers/PhotoCommentsController.php:41
@@ -211,7 +211,7 @@ msgstr "Просмотр фото"
 #: modules/album/src/Application/Controllers/UploadPhotoController.php:55
 #: modules/album/src/Application/UseCases/UploadPhotoUseCase.php:37
 msgid "An error occurred"
-msgstr ""
+msgstr "Произошла ошибка"
 
 #: modules/album/src/Application/Controllers/UploadPhotoController.php:65
 #: modules/album/src/Application/Controllers/UploadPhotoController.php:79
