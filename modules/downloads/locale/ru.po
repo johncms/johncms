@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
-"PO-Revision-Date: 2026-07-03 20:22\n"
+"PO-Revision-Date: 2026-07-04 08:50\n"
 
 #: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:53
 #: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:300
@@ -552,135 +552,135 @@ msgstr "Разрешение"
 
 #: modules/downloads/src/Install/Installer.php:64
 msgid "Music"
-msgstr ""
+msgstr "Музыка"
 
 #: modules/downloads/src/Install/Installer.php:65
 msgid "Demo royalty-free audio tracks"
-msgstr ""
+msgstr "Демонстрационные аудиотреки без лицензионных отчислений"
 
 #: modules/downloads/src/Install/Installer.php:71
 msgid "Atmospheric instrumental track for videos and podcasts."
-msgstr ""
+msgstr "Атмосферный инструментальный трек для видео и подкастов."
 
 #: modules/downloads/src/Install/Installer.php:79
 msgid "Energetic chiptune track, a great fit for game projects."
-msgstr ""
+msgstr "Энергичный чиптюн-трек, отлично подходит для игровых проектов."
 
 #: modules/downloads/src/Install/Installer.php:87
 msgid "Calm background music for streams and videos."
-msgstr ""
+msgstr "Спокойная фоновая музыка для стримов и видео."
 
 #: modules/downloads/src/Install/Installer.php:97
 msgid "Video"
-msgstr ""
+msgstr "Видео"
 
 #: modules/downloads/src/Install/Installer.php:98
 msgid "Demo video clips"
-msgstr ""
+msgstr "Демонстрационные видеоклипы"
 
 #: modules/downloads/src/Install/Installer.php:103
 msgid "Hornbill in the jungle"
-msgstr ""
+msgstr "Птица-носорог в джунглях"
 
 #: modules/downloads/src/Install/Installer.php:104
 msgid "A short clip of a great hornbill against a tropical forest."
-msgstr ""
+msgstr "Короткий ролик с птицей-носорогом на фоне тропического леса."
 
 #: modules/downloads/src/Install/Installer.php:111
 msgid "Mountain under storm clouds"
-msgstr ""
+msgstr "Гора под грозовыми облаками"
 
 #: modules/downloads/src/Install/Installer.php:112
 msgid "A lone mountain on a green plain under heavy storm clouds."
-msgstr ""
+msgstr "Одинокая гора на зелёной равнине под тяжёлыми грозовыми облаками."
 
 #: modules/downloads/src/Install/Installer.php:119
 msgid "Snowstorm in the mountains"
-msgstr ""
+msgstr "Метель в горах"
 
 #: modules/downloads/src/Install/Installer.php:120
 msgid "Snow-covered mountain slopes swept by a strong wind."
-msgstr ""
+msgstr "Заснеженные горные склоны, овеваемые сильным ветром."
 
 #: modules/downloads/src/Install/Installer.php:130
 msgid "Images"
-msgstr ""
+msgstr "Изображения"
 
 #: modules/downloads/src/Install/Installer.php:131
 msgid "Demo photos"
-msgstr ""
+msgstr "Демонстрационные фотографии"
 
 #: modules/downloads/src/Install/Installer.php:136
 msgid "Mountain lake"
-msgstr ""
+msgstr "Горное озеро"
 
 #: modules/downloads/src/Install/Installer.php:137
 msgid "A calm lake surrounded by mountains."
-msgstr ""
+msgstr "Спокойное озеро в окружении гор."
 
 #: modules/downloads/src/Install/Installer.php:144
 msgid "Grasshopper"
-msgstr ""
+msgstr "Кузнечик"
 
 #: modules/downloads/src/Install/Installer.php:145
 msgid "A macro photo of a grasshopper on a plant."
-msgstr ""
+msgstr "Макроснимок кузнечика на растении."
 
 #: modules/downloads/src/Install/Installer.php:152
 msgid "Rooster"
-msgstr ""
+msgstr "Петух"
 
 #: modules/downloads/src/Install/Installer.php:153
 msgid "A bright rooster in close-up."
-msgstr ""
+msgstr "Яркий петух крупным планом."
 
 #: modules/downloads/src/Install/Installer.php:160
 msgid "Green-veined white butterfly"
-msgstr ""
+msgstr "Бабочка брюквенница"
 
 #: modules/downloads/src/Install/Installer.php:161
 msgid "A green-veined white butterfly on a flower."
-msgstr ""
+msgstr "Бабочка брюквенница на цветке."
 
 #: modules/downloads/src/Install/Installer.php:168
 msgid "Bird chick"
-msgstr ""
+msgstr "Птенец"
 
 #: modules/downloads/src/Install/Installer.php:169
 msgid "A tiny bird chick in the grass."
-msgstr ""
+msgstr "Крошечный птенец в траве."
 
 #: modules/downloads/src/Install/Installer.php:176
 msgid "Squirrel"
-msgstr ""
+msgstr "Белка"
 
 #: modules/downloads/src/Install/Installer.php:177
 msgid "A red squirrel on a tree branch."
-msgstr ""
+msgstr "Рыжая белка на ветке дерева."
 
 #: modules/downloads/src/Install/Installer.php:187
 msgid "Documents"
-msgstr ""
+msgstr "Документы"
 
 #: modules/downloads/src/Install/Installer.php:188
 msgid "Demo documents and archives"
-msgstr ""
+msgstr "Демонстрационные документы и архивы"
 
 #: modules/downloads/src/Install/Installer.php:193
 msgid "Text document"
-msgstr ""
+msgstr "Текстовый документ"
 
 #: modules/downloads/src/Install/Installer.php:194
 msgid "An example of a plain text file."
-msgstr ""
+msgstr "Пример обычного текстового файла."
 
 #: modules/downloads/src/Install/Installer.php:201
 msgid "File archive"
-msgstr ""
+msgstr "Архив файлов"
 
 #: modules/downloads/src/Install/Installer.php:202
 msgid "An example ZIP archive with nested files."
-msgstr ""
+msgstr "Пример ZIP-архива с вложенными файлами."
 
 #: modules/downloads/templates/bookmarks.phtml:23
 #: modules/downloads/templates/index.phtml:117
