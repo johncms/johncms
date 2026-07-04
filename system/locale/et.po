@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Estonian\n"
 "Language: et_EE\n"
-"PO-Revision-Date: 2026-03-25 18:37\n"
+"PO-Revision-Date: 2026-07-04 08:53\n"
 
 #: config/notifications.global.php:20
 #: config/places.global.php:17
@@ -870,8 +870,11 @@ msgstr "Muudetud:"
 msgid "Edited"
 msgstr "Muudetud"
 
+#: modules/forum/src/Application/Controllers/ForumSearchController.php:120
+#: modules/forum/src/Application/Controllers/ForumSearchController.php:129
 #: modules/forum/src/Application/Controllers/ForumTopicController.php:150
 #: modules/forum/src/Application/Controllers/ForumTopicController.php:159
+#: modules/guestbook/src/Application/Controllers/GuestbookController.php:40
 msgid "Page"
 msgstr ""
 
