@@ -53,7 +53,10 @@ class RenderEngineFactory
 
     private function isAdmin(): bool
     {
-        $path = parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH) ?? '';
+        $path = parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH);
+        if (! is_string($path)) {
+            return false;
+        }
         return $path === '/admin' || str_starts_with($path, '/admin/');
     }
 }
