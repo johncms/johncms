@@ -10,6 +10,8 @@ class Ads extends Model
 {
     protected $table = 'cms_ads';
 
+    public $timestamps = false;
+
     protected $fillable = [
         'link',
         'count',
