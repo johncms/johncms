@@ -35,6 +35,13 @@ interface ContentCollectionItemRepositoryInterface
     public function findVisibleByCode(int $collectionId, ?int $sectionId, string $code): ?ContentCollectionItem;
 
     /**
+     * Lazily iterate published items of a collection for the sitemap.
+     *
+     * @return iterable<ContentCollectionItem>
+     */
+    public function getVisibleForSitemap(int $collectionId): iterable;
+
+    /**
      * @param array<string, mixed> $attributes
      */
     public function create(array $attributes): ContentCollectionItem;

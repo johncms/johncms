@@ -81,6 +81,20 @@ final class ContentCollectionItemRepository implements ContentCollectionItemRepo
         return $builder->first();
     }
 
+    public function getVisibleForSitemap(int $collectionId): iterable
+    {
+        $now = Carbon::now();
+
+        return ContentCollectionItem::query()
+            ->select(['id', 'code', 'section_id', 'updated_at'])
+            ->where('collection_id', $collectionId)
+            ->where('active', true)
+            ->where(static fn (Builder $q) => $q->whereNull('active_from')->orWhere('active_from', '<=', $now))
+            ->where(static fn (Builder $q) => $q->whereNull('active_to')->orWhere('active_to', '>=', $now))
+            ->orderBy('id')
+            ->cursor();
+    }
+
     public function findVisibleByCode(int $collectionId, ?int $sectionId, string $code): ?ContentCollectionItem
     {
         $now = Carbon::now();
