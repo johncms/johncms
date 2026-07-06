@@ -1,0 +1,70 @@
+<?php
+
+/**
+ * @var Mobicms\Render\Template\Template $this
+ * @var string $form_action
+ * @var string $back_url
+ * @var int|null $id
+ * @var array<string, mixed> $fields
+ * @var array<string, string> $type_options
+ * @var list<string> $errors
+ * @var string $csrf_token
+ */
+
+$this->layout('system::layout/default');
+?>
+
+<?php if (! empty($errors)): ?>
+    <div class="alert alert-danger shadow border-0">
+        <?php foreach ($errors as $error): ?>
+            <div><?= $this->e($error) ?></div>
+        <?php endforeach; ?>
+    </div>
+<?php endif; ?>
+
+<form action="<?= $this->e($form_action) ?>" method="post">
+    <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
+    <?php if ($id !== null): ?>
+        <input type="hidden" name="id" value="<?= (int) $id ?>">
+    <?php endif; ?>
+
+    <div class="form-group">
+        <label for="name"><?= __('Name') ?></label>
+        <input type="text" name="name" class="form-control" id="name" value="<?= $this->e((string) $fields['name']) ?>">
+    </div>
+
+    <div class="form-group mt-2">
+        <label for="code"><?= __('Code') ?></label>
+        <input type="text" name="code" class="form-control" id="code" value="<?= $this->e((string) $fields['code']) ?>">
+        <div class="text-muted small"><?= __('Machine code: lowercase latin letters, digits, hyphen and underscore') ?></div>
+    </div>
+
+    <div class="form-group mt-2">
+        <label for="type"><?= __('Type') ?></label>
+        <select name="type" class="form-control" id="type">
+            <?php foreach ($type_options as $value => $label): ?>
+                <option value="<?= $this->e((string) $value) ?>"<?= (string) $fields['type'] === (string) $value ? ' selected' : '' ?>><?= $this->e($label) ?></option>
+            <?php endforeach; ?>
+        </select>
+    </div>
+
+    <div class="form-group mt-2">
+        <label for="sort"><?= __('Sorting') ?></label>
+        <input type="number" name="sort" class="form-control" id="sort" value="<?= (int) $fields['sort'] ?>">
+    </div>
+
+    <div class="form-check mt-3">
+        <input type="checkbox" class="form-check-input" name="required" value="1" id="required" <?= ! empty($fields['required']) ? 'checked' : '' ?>>
+        <label class="form-check-label" for="required"><?= __('Required') ?></label>
+    </div>
+
+    <div class="form-check mt-2">
+        <input type="checkbox" class="form-check-input" name="multiple" value="1" id="multiple" <?= ! empty($fields['multiple']) ? 'checked' : '' ?>>
+        <label class="form-check-label" for="multiple"><?= __('Allow multiple values') ?></label>
+    </div>
+
+    <div class="mt-3">
+        <button type="submit" class="btn btn-primary"><?= __('Save') ?></button>
+        <a href="<?= $this->e($back_url) ?>" class="btn btn-secondary"><?= __('Cancel') ?></a>
+    </div>
+</form>

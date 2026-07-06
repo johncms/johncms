@@ -142,6 +142,7 @@ final readonly class CollectionsAdminController
             'name'       => $item->name,
             'active'     => $item->active,
             'sort'       => $item->sort,
+            'fields_url' => self::URL . '/' . $item->id . '/fields',
             'edit_url'   => self::URL . '/' . $item->id . '/edit',
             'delete_url' => self::URL . '/' . $item->id . '/delete',
         ];

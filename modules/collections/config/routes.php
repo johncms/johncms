@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Johncms\Modules\Collections\Application\Controllers\Admin\CollectionFieldsAdminController;
 use Johncms\Modules\Collections\Application\Controllers\Admin\CollectionsAdminController;
 use Johncms\Router\RouteCollection;
 use Johncms\System\Users\User;
@@ -15,5 +16,13 @@ return static function (RouteCollection $router, User $user): void {
         $router->get('/admin/collections/{id:number}/edit', [CollectionsAdminController::class, 'editForm'])->name('collections.admin.edit');
         $router->get('/admin/collections/{id:number}/delete', [CollectionsAdminController::class, 'deleteConfirm'])->name('collections.admin.delete_confirm');
         $router->post('/admin/collections/{id:number}/delete', [CollectionsAdminController::class, 'delete'])->name('collections.admin.delete');
+
+        // Fields of a collection.
+        $router->get('/admin/collections/{collection_id:number}/fields', [CollectionFieldsAdminController::class, 'index'])->name('collections.admin.fields');
+        $router->get('/admin/collections/{collection_id:number}/fields/new', [CollectionFieldsAdminController::class, 'newForm'])->name('collections.admin.fields.new');
+        $router->post('/admin/collections/{collection_id:number}/fields', [CollectionFieldsAdminController::class, 'store'])->name('collections.admin.fields.store');
+        $router->get('/admin/collections/{collection_id:number}/fields/{id:number}/edit', [CollectionFieldsAdminController::class, 'editForm'])->name('collections.admin.fields.edit');
+        $router->get('/admin/collections/{collection_id:number}/fields/{id:number}/delete', [CollectionFieldsAdminController::class, 'deleteConfirm'])->name('collections.admin.fields.delete_confirm');
+        $router->post('/admin/collections/{collection_id:number}/fields/{id:number}/delete', [CollectionFieldsAdminController::class, 'delete'])->name('collections.admin.fields.delete');
     }
 };
