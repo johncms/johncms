@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Johncms\Modules\Collections\Application\Controllers\Admin\CollectionFieldsAdminController;
+use Johncms\Modules\Collections\Application\Controllers\Admin\CollectionItemsAdminController;
 use Johncms\Modules\Collections\Application\Controllers\Admin\CollectionSectionsAdminController;
 use Johncms\Modules\Collections\Application\Controllers\Admin\CollectionsAdminController;
 use Johncms\Router\RouteCollection;
@@ -33,5 +34,13 @@ return static function (RouteCollection $router, User $user): void {
         $router->get('/admin/collections/{collection_id:number}/sections/{id:number}/edit', [CollectionSectionsAdminController::class, 'editForm'])->name('collections.admin.sections.edit');
         $router->get('/admin/collections/{collection_id:number}/sections/{id:number}/delete', [CollectionSectionsAdminController::class, 'deleteConfirm'])->name('collections.admin.sections.delete_confirm');
         $router->post('/admin/collections/{collection_id:number}/sections/{id:number}/delete', [CollectionSectionsAdminController::class, 'delete'])->name('collections.admin.sections.delete');
+
+        // Items of a collection (with custom EAV fields).
+        $router->get('/admin/collections/{collection_id:number}/items', [CollectionItemsAdminController::class, 'index'])->name('collections.admin.items');
+        $router->get('/admin/collections/{collection_id:number}/items/new', [CollectionItemsAdminController::class, 'newForm'])->name('collections.admin.items.new');
+        $router->post('/admin/collections/{collection_id:number}/items', [CollectionItemsAdminController::class, 'store'])->name('collections.admin.items.store');
+        $router->get('/admin/collections/{collection_id:number}/items/{id:number}/edit', [CollectionItemsAdminController::class, 'editForm'])->name('collections.admin.items.edit');
+        $router->get('/admin/collections/{collection_id:number}/items/{id:number}/delete', [CollectionItemsAdminController::class, 'deleteConfirm'])->name('collections.admin.items.delete_confirm');
+        $router->post('/admin/collections/{collection_id:number}/items/{id:number}/delete', [CollectionItemsAdminController::class, 'delete'])->name('collections.admin.items.delete');
     }
 };

@@ -1,0 +1,125 @@
+<?php
+
+/**
+ * @var Mobicms\Render\Template\Template $this
+ * @var string $form_action
+ * @var string $back_url
+ * @var int|null $id
+ * @var array<string, mixed> $fields
+ * @var bool $has_sections
+ * @var array<int, string> $section_options
+ * @var list<array<string, mixed>> $field_defs
+ * @var list<string> $errors
+ * @var string $csrf_token
+ */
+
+$this->layout('system::layout/default');
+?>
+
+<?php if (! empty($errors)): ?>
+    <div class="alert alert-danger shadow border-0">
+        <?php foreach ($errors as $error): ?>
+            <div><?= $this->e($error) ?></div>
+        <?php endforeach; ?>
+    </div>
+<?php endif; ?>
+
+<form action="<?= $this->e($form_action) ?>" method="post">
+    <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
+    <?php if ($id !== null): ?>
+        <input type="hidden" name="id" value="<?= (int) $id ?>">
+    <?php endif; ?>
+
+    <div class="form-group">
+        <label for="name"><?= __('Name') ?></label>
+        <input type="text" name="name" class="form-control" id="name" value="<?= $this->e((string) $fields['name']) ?>">
+    </div>
+
+    <div class="form-group mt-2">
+        <label for="code"><?= __('Code') ?></label>
+        <input type="text" name="code" class="form-control" id="code" value="<?= $this->e((string) $fields['code']) ?>">
+        <div class="text-muted small"><?= __('Machine code: lowercase latin letters, digits, hyphen and underscore') ?></div>
+    </div>
+
+    <?php if ($has_sections): ?>
+        <div class="form-group mt-2">
+            <label for="section_id"><?= __('Section') ?></label>
+            <select name="section_id" class="form-control" id="section_id">
+                <option value="0"><?= __('— none —') ?></option>
+                <?php foreach ($section_options as $sid => $sname): ?>
+                    <option value="<?= (int) $sid ?>"<?= (int) $fields['section_id'] === (int) $sid ? ' selected' : '' ?>><?= $this->e($sname) ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+    <?php endif; ?>
+
+    <div class="form-group mt-2">
+        <label for="sort"><?= __('Sorting') ?></label>
+        <input type="number" name="sort" class="form-control" id="sort" value="<?= (int) $fields['sort'] ?>">
+    </div>
+
+    <div class="form-group mt-2">
+        <label for="active_from"><?= __('Active from') ?></label>
+        <input type="text" name="active_from" class="form-control" id="active_from" placeholder="YYYY-MM-DD HH:MM:SS" value="<?= $this->e((string) $fields['active_from']) ?>">
+    </div>
+
+    <div class="form-group mt-2">
+        <label for="active_to"><?= __('Active to') ?></label>
+        <input type="text" name="active_to" class="form-control" id="active_to" placeholder="YYYY-MM-DD HH:MM:SS" value="<?= $this->e((string) $fields['active_to']) ?>">
+    </div>
+
+    <div class="form-group mt-2">
+        <label for="preview_text"><?= __('Preview text') ?></label>
+        <textarea name="preview_text" class="form-control" id="preview_text" rows="3"><?= $this->e((string) $fields['preview_text']) ?></textarea>
+    </div>
+
+    <div class="form-group mt-2">
+        <label for="detail_text"><?= __('Detail text') ?></label>
+        <textarea name="detail_text" class="form-control" id="detail_text" rows="5"><?= $this->e((string) $fields['detail_text']) ?></textarea>
+    </div>
+
+    <div class="form-check mt-3">
+        <input type="checkbox" class="form-check-input" name="active" value="1" id="active" <?= ! empty($fields['active']) ? 'checked' : '' ?>>
+        <label class="form-check-label" for="active"><?= __('Active') ?></label>
+    </div>
+
+    <?php if (! empty($field_defs)): ?>
+        <hr>
+        <h3 class="h5"><?= __('Fields') ?></h3>
+        <?php foreach ($field_defs as $def): ?>
+            <?php $inputId = 'f_' . $this->e((string) $def['input_name']); ?>
+            <?php if ($def['multiple']): ?>
+                <div class="form-group mt-2">
+                    <label for="<?= $inputId ?>"><?= $this->e((string) $def['name']) ?></label>
+                    <textarea name="<?= $this->e((string) $def['input_name']) ?>" class="form-control" id="<?= $inputId ?>" rows="3"><?= $this->e((string) $def['value']) ?></textarea>
+                    <div class="text-muted small"><?= __('One value per line') ?></div>
+                </div>
+            <?php elseif ($def['type'] === 'boolean'): ?>
+                <div class="form-check mt-2">
+                    <input type="checkbox" class="form-check-input" name="<?= $this->e((string) $def['input_name']) ?>" value="1" id="<?= $inputId ?>" <?= (string) $def['value'] === '1' ? 'checked' : '' ?>>
+                    <label class="form-check-label" for="<?= $inputId ?>"><?= $this->e((string) $def['name']) ?></label>
+                </div>
+            <?php elseif ($def['type'] === 'text' || $def['type'] === 'html'): ?>
+                <div class="form-group mt-2">
+                    <label for="<?= $inputId ?>"><?= $this->e((string) $def['name']) ?></label>
+                    <textarea name="<?= $this->e((string) $def['input_name']) ?>" class="form-control" id="<?= $inputId ?>" rows="4"><?= $this->e((string) $def['value']) ?></textarea>
+                </div>
+            <?php elseif ($def['type'] === 'integer' || $def['type'] === 'double'): ?>
+                <div class="form-group mt-2">
+                    <label for="<?= $inputId ?>"><?= $this->e((string) $def['name']) ?></label>
+                    <input type="number"<?= $def['type'] === 'double' ? ' step="any"' : '' ?> name="<?= $this->e((string) $def['input_name']) ?>" class="form-control" id="<?= $inputId ?>" value="<?= $this->e((string) $def['value']) ?>">
+                </div>
+            <?php else: ?>
+                <div class="form-group mt-2">
+                    <label for="<?= $inputId ?>"><?= $this->e((string) $def['name']) ?></label>
+                    <input type="text" name="<?= $this->e((string) $def['input_name']) ?>" class="form-control" id="<?= $inputId ?>" value="<?= $this->e((string) $def['value']) ?>">
+                </div>
+            <?php endif; ?>
+        <?php endforeach; ?>
+    <?php endif; ?>
+
+    <div class="mt-3">
+        <button type="submit" class="btn btn-primary"><?= __('Save') ?></button>
+        <a href="<?= $this->e($back_url) ?>" class="btn btn-secondary"><?= __('Cancel') ?></a>
+    </div>
+</form>

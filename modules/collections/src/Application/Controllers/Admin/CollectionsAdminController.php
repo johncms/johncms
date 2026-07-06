@@ -145,6 +145,7 @@ final readonly class CollectionsAdminController
             'has_sections' => $item->hasSections,
             'fields_url'   => self::URL . '/' . $item->id . '/fields',
             'sections_url' => self::URL . '/' . $item->id . '/sections',
+            'items_url'    => self::URL . '/' . $item->id . '/items',
             'edit_url'     => self::URL . '/' . $item->id . '/edit',
             'delete_url'   => self::URL . '/' . $item->id . '/delete',
         ];

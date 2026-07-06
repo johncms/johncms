@@ -45,6 +45,32 @@ final class ContentCollectionItemRepository implements ContentCollectionItemRepo
         return ContentCollectionItem::query()->find($id);
     }
 
+    public function findWithValues(int $id): ?ContentCollectionItem
+    {
+        return ContentCollectionItem::query()->with('values.field')->find($id);
+    }
+
+    public function create(array $attributes): ContentCollectionItem
+    {
+        return ContentCollectionItem::query()->create($attributes);
+    }
+
+    public function update(int $id, array $attributes): void
+    {
+        $item = ContentCollectionItem::query()->find($id);
+        if ($item === null) {
+            return;
+        }
+
+        $item->fill($attributes)->save();
+    }
+
+    public function delete(int $id): void
+    {
+        // Values are removed by the FK cascade on collection_item_values.
+        ContentCollectionItem::query()->where('id', $id)->delete();
+    }
+
     public function findByCode(int $collectionId, ?int $sectionId, string $code): ?ContentCollectionItem
     {
         $builder = ContentCollectionItem::query()

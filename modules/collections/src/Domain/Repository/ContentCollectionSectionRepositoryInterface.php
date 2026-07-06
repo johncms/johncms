@@ -16,6 +16,13 @@ interface ContentCollectionSectionRepositoryInterface
      */
     public function getByCollection(int $collectionId, ?int $parent, int $limit, int $offset): Collection;
 
+    /**
+     * All sections of a collection (flat), ordered by sort. Used for section pickers.
+     *
+     * @return Collection<int, ContentCollectionSection>
+     */
+    public function getAllByCollection(int $collectionId): Collection;
+
     public function countByCollection(int $collectionId, ?int $parent): int;
 
     public function findByCode(int $collectionId, ?int $parent, string $code): ?ContentCollectionSection;

@@ -6,10 +6,12 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionFieldRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemRepositoryInterface;
+use Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemValueRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionSectionRepositoryInterface;
 use Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionFieldRepository;
 use Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionItemRepository;
+use Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionItemValueRepository;
 use Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionRepository;
 use Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionSectionRepository;
 
@@ -41,4 +43,5 @@ return static function (ContainerConfigurator $container): void {
     $services->set(ContentCollectionFieldRepositoryInterface::class, ContentCollectionFieldRepository::class)->public();
     $services->set(ContentCollectionSectionRepositoryInterface::class, ContentCollectionSectionRepository::class)->public();
     $services->set(ContentCollectionItemRepositoryInterface::class, ContentCollectionItemRepository::class)->autowire()->public();
+    $services->set(ContentCollectionItemValueRepositoryInterface::class, ContentCollectionItemValueRepository::class)->public();
 };

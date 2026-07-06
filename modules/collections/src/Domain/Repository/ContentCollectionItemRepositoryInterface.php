@@ -21,5 +21,22 @@ interface ContentCollectionItemRepositoryInterface
 
     public function findById(int $id): ?ContentCollectionItem;
 
+    /**
+     * Load an item together with its custom field values (values.field eager loaded).
+     */
+    public function findWithValues(int $id): ?ContentCollectionItem;
+
     public function findByCode(int $collectionId, ?int $sectionId, string $code): ?ContentCollectionItem;
+
+    /**
+     * @param array<string, mixed> $attributes
+     */
+    public function create(array $attributes): ContentCollectionItem;
+
+    /**
+     * @param array<string, mixed> $attributes
+     */
+    public function update(int $id, array $attributes): void;
+
+    public function delete(int $id): void;
 }
