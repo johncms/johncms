@@ -1,0 +1,26 @@
+<?php
+
+/**
+ * @var Mobicms\Render\Template\Template $this
+ * @var \Johncms\Modules\Collections\Application\DTO\PublicItemDetailDTO $item
+ */
+
+$this->layout('system::layout/default');
+?>
+
+<?php if (! empty($item->previewText)): ?>
+    <div class="lead mb-3"><?= nl2br($this->e($item->previewText)) ?></div>
+<?php endif; ?>
+
+<?php if (! empty($item->detailText)): ?>
+    <div class="mb-3"><?= nl2br($this->e($item->detailText)) ?></div>
+<?php endif; ?>
+
+<?php if (! empty($item->values)): ?>
+    <dl class="row">
+        <?php foreach ($item->values as $value): ?>
+            <dt class="col-sm-3"><?= $this->e($value['label']) ?></dt>
+            <dd class="col-sm-9"><?= $this->e(implode(', ', $value['values'])) ?></dd>
+        <?php endforeach; ?>
+    </dl>
+<?php endif; ?>

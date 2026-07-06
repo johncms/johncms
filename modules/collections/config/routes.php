@@ -6,6 +6,7 @@ use Johncms\Modules\Collections\Application\Controllers\Admin\CollectionFieldsAd
 use Johncms\Modules\Collections\Application\Controllers\Admin\CollectionItemsAdminController;
 use Johncms\Modules\Collections\Application\Controllers\Admin\CollectionSectionsAdminController;
 use Johncms\Modules\Collections\Application\Controllers\Admin\CollectionsAdminController;
+use Johncms\Modules\Collections\Application\Controllers\CollectionRouterController;
 use Johncms\Router\RouteCollection;
 use Johncms\System\Users\User;
 
@@ -43,4 +44,12 @@ return static function (RouteCollection $router, User $user): void {
         $router->get('/admin/collections/{collection_id:number}/items/{id:number}/delete', [CollectionItemsAdminController::class, 'deleteConfirm'])->name('collections.admin.items.delete_confirm');
         $router->post('/admin/collections/{collection_id:number}/items/{id:number}/delete', [CollectionItemsAdminController::class, 'delete'])->name('collections.admin.items.delete');
     }
+
+    // Public output. Low-priority catch-all that maps root URLs to collections;
+    // real module routes have higher priority and win first. The custom
+    // requirement allows nested paths and the ".html" detail suffix.
+    $router->get('/{route}', CollectionRouterController::class)
+        ->requirements(['route' => '[\w/.+-]+'])
+        ->priority(-1000)
+        ->name('collections.public');
 };

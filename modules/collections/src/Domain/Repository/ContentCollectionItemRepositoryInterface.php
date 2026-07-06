@@ -29,6 +29,12 @@ interface ContentCollectionItemRepositoryInterface
     public function findByCode(int $collectionId, ?int $sectionId, string $code): ?ContentCollectionItem;
 
     /**
+     * Find an item by code that is currently published (active + within the
+     * active_from/active_to window), with its values eager loaded. For the public site.
+     */
+    public function findVisibleByCode(int $collectionId, ?int $sectionId, string $code): ?ContentCollectionItem;
+
+    /**
      * @param array<string, mixed> $attributes
      */
     public function create(array $attributes): ContentCollectionItem;

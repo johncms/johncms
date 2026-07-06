@@ -81,6 +81,21 @@ final class ContentCollectionItemRepository implements ContentCollectionItemRepo
         return $builder->first();
     }
 
+    public function findVisibleByCode(int $collectionId, ?int $sectionId, string $code): ?ContentCollectionItem
+    {
+        $now = Carbon::now();
+        $builder = ContentCollectionItem::query()
+            ->with('values.field')
+            ->where('collection_id', $collectionId)
+            ->where('code', $code)
+            ->where('active', true)
+            ->where(static fn (Builder $q) => $q->whereNull('active_from')->orWhere('active_from', '<=', $now))
+            ->where(static fn (Builder $q) => $q->whereNull('active_to')->orWhere('active_to', '>=', $now));
+        $sectionId === null ? $builder->whereNull('section_id') : $builder->where('section_id', $sectionId);
+
+        return $builder->first();
+    }
+
     /**
      * Builds the base query: collection, section and the active/publish window,
      * plus the query's filter clauses (base columns and custom EAV fields).

@@ -1,0 +1,51 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Tests\Unit\Modules\Collections\Application\UseCases;
+
+use Illuminate\Database\Eloquent\Collection;
+use Johncms\Modules\Collections\Application\DTO\PublicItemDTO;
+use Johncms\Modules\Collections\Application\UseCases\ListPublicItemsUseCase;
+use Johncms\Modules\Collections\Domain\Models\ContentCollectionItem;
+use Johncms\Modules\Collections\Domain\Query\ContentCollectionItemQuery;
+use Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemRepositoryInterface;
+use PHPUnit\Framework\TestCase;
+
+final class ListPublicItemsUseCaseTest extends TestCase
+{
+    public function testCountUsesOnlyActiveQuery(): void
+    {
+        $repository = $this->createMock(ContentCollectionItemRepositoryInterface::class);
+        $repository->expects(self::once())
+            ->method('countItems')
+            ->with(self::callback(static function (ContentCollectionItemQuery $query): bool {
+                return $query->collectionId === 1 && $query->sectionId === 2 && $query->onlyActive === true;
+            }))
+            ->willReturn(4);
+
+        self::assertSame(4, (new ListPublicItemsUseCase($repository))->count(1, 2));
+    }
+
+    public function testGetPageMapsToPublicDto(): void
+    {
+        $item = new ContentCollectionItem(['code' => 'hello', 'name' => 'Hello', 'preview_text' => 'Intro']);
+        $item->id = 3;
+
+        $repository = $this->createMock(ContentCollectionItemRepositoryInterface::class);
+        $repository->expects(self::once())
+            ->method('findItems')
+            ->with(self::callback(static function (ContentCollectionItemQuery $query): bool {
+                return $query->onlyActive === true && $query->limit === 10 && $query->offset === 0;
+            }))
+            ->willReturn(new Collection([$item]));
+
+        $rows = (new ListPublicItemsUseCase($repository))->getPage(1, null, 10, 0);
+
+        self::assertCount(1, $rows);
+        self::assertInstanceOf(PublicItemDTO::class, $rows[0]);
+        self::assertSame('hello', $rows[0]->code);
+        self::assertSame('Hello', $rows[0]->name);
+        self::assertSame('Intro', $rows[0]->previewText);
+    }
+}

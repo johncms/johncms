@@ -6,13 +6,23 @@ namespace Tests\Unit\Modules\Collections\Application\UseCases;
 
 use Johncms\Modules\Collections\Application\DTO\CollectionFormDTO;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionCodeAlreadyExistsException;
+use Johncms\Modules\Collections\Application\Services\CollectionCodeCacheInterface;
 use Johncms\Modules\Collections\Application\UseCases\SaveCollectionUseCase;
 use Johncms\Modules\Collections\Domain\Models\ContentCollection;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 final class SaveCollectionUseCaseTest extends TestCase
 {
+    private function cache(bool $expectInvalidate): CollectionCodeCacheInterface&MockObject
+    {
+        $cache = $this->createMock(CollectionCodeCacheInterface::class);
+        $cache->expects($expectInvalidate ? self::once() : self::never())->method('invalidate');
+
+        return $cache;
+    }
+
     private function dto(string $code = 'blog'): CollectionFormDTO
     {
         return new CollectionFormDTO(
@@ -39,7 +49,7 @@ final class SaveCollectionUseCaseTest extends TestCase
             ->willReturn(new ContentCollection());
         $repository->expects(self::never())->method('update');
 
-        $isUpdate = (new SaveCollectionUseCase($repository))->execute(null, $this->dto());
+        $isUpdate = (new SaveCollectionUseCase($repository, $this->cache(true)))->execute(null, $this->dto());
 
         self::assertFalse($isUpdate);
     }
@@ -55,7 +65,7 @@ final class SaveCollectionUseCaseTest extends TestCase
         $repository->expects(self::once())->method('update')->with(7, self::anything());
         $repository->expects(self::never())->method('create');
 
-        $isUpdate = (new SaveCollectionUseCase($repository))->execute(7, $this->dto());
+        $isUpdate = (new SaveCollectionUseCase($repository, $this->cache(true)))->execute(7, $this->dto());
 
         self::assertTrue($isUpdate);
     }
@@ -72,6 +82,6 @@ final class SaveCollectionUseCaseTest extends TestCase
 
         $this->expectException(CollectionCodeAlreadyExistsException::class);
 
-        (new SaveCollectionUseCase($repository))->execute(null, $this->dto());
+        (new SaveCollectionUseCase($repository, $this->cache(false)))->execute(null, $this->dto());
     }
 }

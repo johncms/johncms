@@ -6,12 +6,14 @@ namespace Johncms\Modules\Collections\Application\UseCases;
 
 use Johncms\Modules\Collections\Application\DTO\CollectionFormDTO;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionCodeAlreadyExistsException;
+use Johncms\Modules\Collections\Application\Services\CollectionCodeCacheInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
 
 final readonly class SaveCollectionUseCase
 {
     public function __construct(
         private ContentCollectionRepositoryInterface $repository,
+        private CollectionCodeCacheInterface $codeCache,
     ) {
     }
 
@@ -42,11 +44,13 @@ final readonly class SaveCollectionUseCase
 
         if ($id !== null && $this->repository->findById($id) !== null) {
             $this->repository->update($id, $attributes);
+            $this->codeCache->invalidate();
 
             return true;
         }
 
         $this->repository->create($attributes);
+        $this->codeCache->invalidate();
 
         return false;
     }

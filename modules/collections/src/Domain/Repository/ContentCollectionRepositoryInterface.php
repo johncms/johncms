@@ -25,6 +25,13 @@ interface ContentCollectionRepositoryInterface
     public function countAll(): int;
 
     /**
+     * Map of active collection code => id, used by the public URL resolver.
+     *
+     * @return array<string, int>
+     */
+    public function getActiveCodeMap(): array;
+
+    /**
      * @param array<string, mixed> $attributes
      */
     public function create(array $attributes): ContentCollection;

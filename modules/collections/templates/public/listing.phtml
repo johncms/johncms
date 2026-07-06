@@ -1,0 +1,25 @@
+<?php
+
+/**
+ * @var Mobicms\Render\Template\Template $this
+ * @var list<array{name: string, preview: ?string, url: string}> $items
+ * @var string $pagination
+ */
+
+$this->layout('system::layout/default');
+?>
+
+<?php if (empty($items)): ?>
+    <div class="alert alert-info"><?= __('The list is empty') ?></div>
+<?php else: ?>
+    <?php foreach ($items as $item): ?>
+        <div class="mb-3 pb-2 border-bottom">
+            <h3 class="h5 mb-1"><a href="<?= $this->e($item['url']) ?>"><?= $this->e($item['name']) ?></a></h3>
+            <?php if (! empty($item['preview'])): ?>
+                <div class="text-muted"><?= nl2br($this->e($item['preview'])) ?></div>
+            <?php endif; ?>
+        </div>
+    <?php endforeach; ?>
+<?php endif; ?>
+
+<div class="mt-3"><?= $pagination ?></div>
