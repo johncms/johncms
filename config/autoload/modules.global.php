@@ -12,6 +12,7 @@ return [
     'modules' => [
         'installed_modules' => [
             'album',
+            'collections',
             'community',
             'downloads',
             'forum',
