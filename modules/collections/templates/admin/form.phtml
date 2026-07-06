@@ -1,0 +1,69 @@
+<?php
+
+/**
+ * @var Mobicms\Render\Template\Template $this
+ * @var string $form_action
+ * @var int|null $id
+ * @var array<string, mixed> $fields
+ * @var list<string> $errors
+ * @var string $csrf_token
+ */
+
+$this->layout('system::layout/default');
+?>
+
+<?php if (! empty($errors)): ?>
+    <div class="alert alert-danger shadow border-0">
+        <?php foreach ($errors as $error): ?>
+            <div><?= $this->e($error) ?></div>
+        <?php endforeach; ?>
+    </div>
+<?php endif; ?>
+
+<form action="<?= $this->e($form_action) ?>" method="post">
+    <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
+    <?php if ($id !== null): ?>
+        <input type="hidden" name="id" value="<?= (int) $id ?>">
+    <?php endif; ?>
+
+    <div class="form-group">
+        <label for="name"><?= __('Name') ?></label>
+        <input type="text" name="name" class="form-control" id="name" value="<?= $this->e((string) $fields['name']) ?>">
+    </div>
+
+    <div class="form-group mt-2">
+        <label for="code"><?= __('Code') ?></label>
+        <input type="text" name="code" class="form-control" id="code" value="<?= $this->e((string) $fields['code']) ?>">
+        <div class="text-muted small"><?= __('Machine code for the URL and API: lowercase latin letters, digits, hyphen and underscore') ?></div>
+    </div>
+
+    <div class="form-group mt-2">
+        <label for="description"><?= __('Description') ?></label>
+        <textarea name="description" class="form-control" id="description" rows="3"><?= $this->e((string) $fields['description']) ?></textarea>
+    </div>
+
+    <div class="form-group mt-2">
+        <label for="sort"><?= __('Sorting') ?></label>
+        <input type="number" name="sort" class="form-control" id="sort" value="<?= (int) $fields['sort'] ?>">
+    </div>
+
+    <div class="form-group mt-2">
+        <label for="per_page"><?= __('Items per page') ?></label>
+        <input type="number" name="per_page" class="form-control" id="per_page" min="1" value="<?= (int) $fields['per_page'] ?>">
+    </div>
+
+    <div class="form-check mt-3">
+        <input type="checkbox" class="form-check-input" name="has_sections" value="1" id="has_sections" <?= ! empty($fields['has_sections']) ? 'checked' : '' ?>>
+        <label class="form-check-label" for="has_sections"><?= __('Use sections') ?></label>
+    </div>
+
+    <div class="form-check mt-2">
+        <input type="checkbox" class="form-check-input" name="active" value="1" id="active" <?= ! empty($fields['active']) ? 'checked' : '' ?>>
+        <label class="form-check-label" for="active"><?= __('Active') ?></label>
+    </div>
+
+    <div class="mt-3">
+        <button type="submit" class="btn btn-primary"><?= __('Save') ?></button>
+        <a href="/admin/collections" class="btn btn-secondary"><?= __('Cancel') ?></a>
+    </div>
+</form>

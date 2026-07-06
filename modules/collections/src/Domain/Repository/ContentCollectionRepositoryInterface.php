@@ -23,4 +23,16 @@ interface ContentCollectionRepositoryInterface
     public function getAll(int $limit, int $offset): Collection;
 
     public function countAll(): int;
+
+    /**
+     * @param array<string, mixed> $attributes
+     */
+    public function create(array $attributes): ContentCollection;
+
+    /**
+     * @param array<string, mixed> $attributes
+     */
+    public function update(int $id, array $attributes): void;
+
+    public function delete(int $id): void;
 }
