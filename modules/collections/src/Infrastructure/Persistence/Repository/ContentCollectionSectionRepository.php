@@ -36,6 +36,15 @@ final class ContentCollectionSectionRepository implements ContentCollectionSecti
             ->get();
     }
 
+    public function getActiveChildren(int $collectionId, ?int $parent): Collection
+    {
+        return $this->parentScopedQuery($collectionId, $parent)
+            ->where('active', true)
+            ->orderBy('sort')
+            ->orderBy('id')
+            ->get();
+    }
+
     public function findByCode(int $collectionId, ?int $parent, string $code): ?ContentCollectionSection
     {
         return $this->parentScopedQuery($collectionId, $parent)

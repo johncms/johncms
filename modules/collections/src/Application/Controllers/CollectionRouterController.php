@@ -78,6 +78,21 @@ final readonly class CollectionRouterController
     }
 
     /**
+     * Active child sections of the current level as navigation links.
+     *
+     * @return list<array{name: string, url: string}>
+     */
+    private function childSectionRows(int $collectionId, ?int $sectionId, string $basePath): array
+    {
+        $rows = [];
+        foreach ($this->sectionRepository->getActiveChildren($collectionId, $sectionId) as $section) {
+            $rows[] = ['name' => $section->name, 'url' => $basePath . '/' . $section->code];
+        }
+
+        return $rows;
+    }
+
+    /**
      * Walks the section path by code. Returns the resolved section id, null for
      * the collection root, or false when a segment does not resolve.
      *
@@ -118,6 +133,7 @@ final readonly class CollectionRouterController
         ]);
 
         return $this->render->render('collections::public/listing', [
+            'sections'   => $this->childSectionRows($collection->id, $sectionId, $basePath),
             'items'      => array_map(static fn (PublicItemDTO $item): array => [
                 'name'    => $item->name,
                 'preview' => $item->previewText,

@@ -23,6 +23,13 @@ interface ContentCollectionSectionRepositoryInterface
      */
     public function getAllByCollection(int $collectionId): Collection;
 
+    /**
+     * Active child sections under the given parent (NULL = root), for public navigation.
+     *
+     * @return Collection<int, ContentCollectionSection>
+     */
+    public function getActiveChildren(int $collectionId, ?int $parent): Collection;
+
     public function countByCollection(int $collectionId, ?int $parent): int;
 
     public function findByCode(int $collectionId, ?int $parent, string $code): ?ContentCollectionSection;
