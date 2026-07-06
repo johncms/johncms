@@ -6,7 +6,9 @@ namespace Johncms\Modules\Collections\Application\UseCases;
 
 use Johncms\Modules\Collections\Application\DTO\CollectionFormDTO;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionCodeAlreadyExistsException;
+use Johncms\Modules\Collections\Application\Exceptions\CollectionCodeReservedException;
 use Johncms\Modules\Collections\Application\Services\CollectionCodeCacheInterface;
+use Johncms\Modules\Collections\Application\Services\ReservedCodeCheckerInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
 
 final readonly class SaveCollectionUseCase
@@ -14,6 +16,7 @@ final readonly class SaveCollectionUseCase
     public function __construct(
         private ContentCollectionRepositoryInterface $repository,
         private CollectionCodeCacheInterface $codeCache,
+        private ReservedCodeCheckerInterface $reservedCodeChecker,
     ) {
     }
 
@@ -22,9 +25,14 @@ final readonly class SaveCollectionUseCase
      * was updated, false when a new one was created.
      *
      * @throws CollectionCodeAlreadyExistsException when the code belongs to another collection
+     * @throws CollectionCodeReservedException when the code collides with a reserved top-level segment
      */
     public function execute(?int $id, CollectionFormDTO $dto): bool
     {
+        if ($this->reservedCodeChecker->isReserved($dto->code)) {
+            throw new CollectionCodeReservedException();
+        }
+
         $existing = $this->repository->findByCode($dto->code);
         if ($existing !== null && $existing->id !== $id) {
             throw new CollectionCodeAlreadyExistsException();

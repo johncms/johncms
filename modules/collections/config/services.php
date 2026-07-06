@@ -6,6 +6,8 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
 use Johncms\Modules\Collections\Application\Services\CollectionCodeCache;
 use Johncms\Modules\Collections\Application\Services\CollectionCodeCacheInterface;
+use Johncms\Modules\Collections\Application\Services\ReservedCodeChecker;
+use Johncms\Modules\Collections\Application\Services\ReservedCodeCheckerInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionFieldRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemValueRepositoryInterface;
@@ -47,4 +49,5 @@ return static function (ContainerConfigurator $container): void {
     $services->set(ContentCollectionItemRepositoryInterface::class, ContentCollectionItemRepository::class)->autowire()->public();
     $services->set(ContentCollectionItemValueRepositoryInterface::class, ContentCollectionItemValueRepository::class)->public();
     $services->set(CollectionCodeCacheInterface::class, CollectionCodeCache::class)->autowire()->public();
+    $services->set(ReservedCodeCheckerInterface::class, ReservedCodeChecker::class)->autowire()->public();
 };

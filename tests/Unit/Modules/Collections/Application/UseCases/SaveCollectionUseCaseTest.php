@@ -6,7 +6,9 @@ namespace Tests\Unit\Modules\Collections\Application\UseCases;
 
 use Johncms\Modules\Collections\Application\DTO\CollectionFormDTO;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionCodeAlreadyExistsException;
+use Johncms\Modules\Collections\Application\Exceptions\CollectionCodeReservedException;
 use Johncms\Modules\Collections\Application\Services\CollectionCodeCacheInterface;
+use Johncms\Modules\Collections\Application\Services\ReservedCodeCheckerInterface;
 use Johncms\Modules\Collections\Application\UseCases\SaveCollectionUseCase;
 use Johncms\Modules\Collections\Domain\Models\ContentCollection;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
@@ -21,6 +23,14 @@ final class SaveCollectionUseCaseTest extends TestCase
         $cache->expects($expectInvalidate ? self::once() : self::never())->method('invalidate');
 
         return $cache;
+    }
+
+    private function checker(bool $reserved): ReservedCodeCheckerInterface&MockObject
+    {
+        $checker = $this->createMock(ReservedCodeCheckerInterface::class);
+        $checker->method('isReserved')->willReturn($reserved);
+
+        return $checker;
     }
 
     private function dto(string $code = 'blog'): CollectionFormDTO
@@ -49,7 +59,7 @@ final class SaveCollectionUseCaseTest extends TestCase
             ->willReturn(new ContentCollection());
         $repository->expects(self::never())->method('update');
 
-        $isUpdate = (new SaveCollectionUseCase($repository, $this->cache(true)))->execute(null, $this->dto());
+        $isUpdate = (new SaveCollectionUseCase($repository, $this->cache(true), $this->checker(false)))->execute(null, $this->dto());
 
         self::assertFalse($isUpdate);
     }
@@ -65,7 +75,7 @@ final class SaveCollectionUseCaseTest extends TestCase
         $repository->expects(self::once())->method('update')->with(7, self::anything());
         $repository->expects(self::never())->method('create');
 
-        $isUpdate = (new SaveCollectionUseCase($repository, $this->cache(true)))->execute(7, $this->dto());
+        $isUpdate = (new SaveCollectionUseCase($repository, $this->cache(true), $this->checker(false)))->execute(7, $this->dto());
 
         self::assertTrue($isUpdate);
     }
@@ -82,6 +92,18 @@ final class SaveCollectionUseCaseTest extends TestCase
 
         $this->expectException(CollectionCodeAlreadyExistsException::class);
 
-        (new SaveCollectionUseCase($repository, $this->cache(false)))->execute(null, $this->dto());
+        (new SaveCollectionUseCase($repository, $this->cache(false), $this->checker(false)))->execute(null, $this->dto());
+    }
+
+    public function testThrowsWhenCodeIsReserved(): void
+    {
+        $repository = $this->createMock(ContentCollectionRepositoryInterface::class);
+        $repository->expects(self::never())->method('findByCode');
+        $repository->expects(self::never())->method('create');
+        $repository->expects(self::never())->method('update');
+
+        $this->expectException(CollectionCodeReservedException::class);
+
+        (new SaveCollectionUseCase($repository, $this->cache(false), $this->checker(true)))->execute(null, $this->dto('admin'));
     }
 }

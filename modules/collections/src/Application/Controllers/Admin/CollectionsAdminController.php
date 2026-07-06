@@ -11,6 +11,7 @@ use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Collections\Application\DTO\CollectionFormDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionListItemDTO;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionCodeAlreadyExistsException;
+use Johncms\Modules\Collections\Application\Exceptions\CollectionCodeReservedException;
 use Johncms\Modules\Collections\Application\UseCases\DeleteCollectionUseCase;
 use Johncms\Modules\Collections\Application\UseCases\ListCollectionsUseCase;
 use Johncms\Modules\Collections\Application\UseCases\SaveCollectionUseCase;
@@ -99,6 +100,8 @@ final readonly class CollectionsAdminController
             $isUpdate = $this->saveCollection->execute($id, $this->dtoFromFields($fields));
         } catch (CollectionCodeAlreadyExistsException) {
             return $this->renderForm($id, $fields, [__('A collection with this code already exists')]);
+        } catch (CollectionCodeReservedException) {
+            return $this->renderForm($id, $fields, [__('This code is reserved and cannot be used')]);
         }
 
         $_SESSION['success_message'] = $isUpdate ? __('Changes saved') : __('Created successfully');
