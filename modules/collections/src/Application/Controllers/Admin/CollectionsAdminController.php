@@ -138,13 +138,15 @@ final readonly class CollectionsAdminController
     private function mapRow(CollectionListItemDTO $item): array
     {
         return [
-            'code'       => $item->code,
-            'name'       => $item->name,
-            'active'     => $item->active,
-            'sort'       => $item->sort,
-            'fields_url' => self::URL . '/' . $item->id . '/fields',
-            'edit_url'   => self::URL . '/' . $item->id . '/edit',
-            'delete_url' => self::URL . '/' . $item->id . '/delete',
+            'code'         => $item->code,
+            'name'         => $item->name,
+            'active'       => $item->active,
+            'sort'         => $item->sort,
+            'has_sections' => $item->hasSections,
+            'fields_url'   => self::URL . '/' . $item->id . '/fields',
+            'sections_url' => self::URL . '/' . $item->id . '/sections',
+            'edit_url'     => self::URL . '/' . $item->id . '/edit',
+            'delete_url'   => self::URL . '/' . $item->id . '/delete',
         ];
     }
 

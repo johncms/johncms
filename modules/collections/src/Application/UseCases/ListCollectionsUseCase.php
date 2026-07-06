@@ -32,6 +32,7 @@ final readonly class ListCollectionsUseCase
                 name: $collection->name,
                 active: $collection->active,
                 sort: $collection->sort,
+                hasSections: ! empty($collection->settings['has_sections']),
             ))
             ->all();
     }

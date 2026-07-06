@@ -14,6 +14,7 @@ final class ContentCollectionSectionRepository implements ContentCollectionSecti
     public function getByCollection(int $collectionId, ?int $parent, int $limit, int $offset): Collection
     {
         return $this->parentScopedQuery($collectionId, $parent)
+            ->withCount('childSections')
             ->orderBy('sort')
             ->orderBy('id')
             ->offset($offset)
@@ -31,6 +32,33 @@ final class ContentCollectionSectionRepository implements ContentCollectionSecti
         return $this->parentScopedQuery($collectionId, $parent)
             ->where('code', $code)
             ->first();
+    }
+
+    public function findById(int $id): ?ContentCollectionSection
+    {
+        return ContentCollectionSection::query()->find($id);
+    }
+
+    public function create(array $attributes): ContentCollectionSection
+    {
+        return ContentCollectionSection::query()->create($attributes);
+    }
+
+    public function update(int $id, array $attributes): void
+    {
+        $section = ContentCollectionSection::query()->find($id);
+        if ($section === null) {
+            return;
+        }
+
+        $section->fill($attributes)->save();
+    }
+
+    public function delete(int $id): void
+    {
+        // Child sections cascade via the self-referencing FK; items keep their
+        // section_id set to null (onDelete set null).
+        ContentCollectionSection::query()->where('id', $id)->delete();
     }
 
     public function getPathTo(int $sectionId): Collection

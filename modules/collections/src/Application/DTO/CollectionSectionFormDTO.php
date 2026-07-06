@@ -5,18 +5,18 @@ declare(strict_types=1);
 namespace Johncms\Modules\Collections\Application\DTO;
 
 /**
- * A single row of the admin collections list. Presentation URLs are built in
- * the controller.
+ * Validated input for creating or updating a collection section.
  */
-final readonly class CollectionListItemDTO
+final readonly class CollectionSectionFormDTO
 {
     public function __construct(
-        public int $id,
+        public int $collectionId,
+        public ?int $parent,
         public string $code,
         public string $name,
+        public ?string $description,
         public bool $active,
         public int $sort,
-        public bool $hasSections,
     ) {
     }
 }

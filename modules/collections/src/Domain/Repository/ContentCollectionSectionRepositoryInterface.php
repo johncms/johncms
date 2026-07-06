@@ -20,6 +20,20 @@ interface ContentCollectionSectionRepositoryInterface
 
     public function findByCode(int $collectionId, ?int $parent, string $code): ?ContentCollectionSection;
 
+    public function findById(int $id): ?ContentCollectionSection;
+
+    /**
+     * @param array<string, mixed> $attributes
+     */
+    public function create(array $attributes): ContentCollectionSection;
+
+    /**
+     * @param array<string, mixed> $attributes
+     */
+    public function update(int $id, array $attributes): void;
+
+    public function delete(int $id): void;
+
     /**
      * The section path from the root down to the given section (breadcrumbs/URL).
      *
