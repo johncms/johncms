@@ -40,6 +40,7 @@ final class SaveCollectionUseCaseTest extends TestCase
             name: 'Blog',
             description: null,
             active: true,
+            public: true,
             sort: 100,
             hasSections: true,
             perPage: 10,

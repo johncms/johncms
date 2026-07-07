@@ -21,6 +21,7 @@ use Johncms\Casts\FormattedDate;
  * @property array|null $settings
  * @property int $sort
  * @property bool $active
+ * @property bool $public
  * @property string $created_at
  * @property string $updated_at
  *
@@ -39,12 +40,14 @@ final class ContentCollection extends Model
         'settings',
         'sort',
         'active',
+        'public',
     ];
 
     protected $casts = [
         'settings'   => 'array',
         'sort'       => 'integer',
         'active'     => 'boolean',
+        'public'     => 'boolean',
         'created_at' => FormattedDate::class,
         'updated_at' => FormattedDate::class,
     ];

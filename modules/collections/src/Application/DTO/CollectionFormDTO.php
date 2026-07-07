@@ -14,6 +14,7 @@ final readonly class CollectionFormDTO
         public string $name,
         public ?string $description,
         public bool $active,
+        public bool $public,
         public int $sort,
         public bool $hasSections,
         public int $perPage,

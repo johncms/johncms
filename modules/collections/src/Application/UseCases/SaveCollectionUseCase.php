@@ -43,6 +43,7 @@ final readonly class SaveCollectionUseCase
             'name'        => $dto->name,
             'description' => $dto->description,
             'active'      => $dto->active,
+            'public'      => $dto->public,
             'sort'        => $dto->sort,
             'settings'    => [
                 'has_sections' => $dto->hasSections,

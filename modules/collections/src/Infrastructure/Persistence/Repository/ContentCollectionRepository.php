@@ -35,10 +35,11 @@ final class ContentCollectionRepository implements ContentCollectionRepositoryIn
         return ContentCollection::query()->count();
     }
 
-    public function getActiveCodeMap(): array
+    public function getPublicCodeMap(): array
     {
         return ContentCollection::query()
             ->where('active', true)
+            ->where('public', true)
             ->pluck('id', 'code')
             ->map(static fn (int $id): int => $id)
             ->all();

@@ -42,6 +42,7 @@ class Installer extends \Johncms\Modules\Installer
             'settings'    => json_encode(['has_sections' => true, 'per_page' => 10], JSON_UNESCAPED_UNICODE),
             'sort'        => 100,
             'active'      => 1,
+            'public'      => 1,
             'created_at'  => $nowDt,
             'updated_at'  => $nowDt,
         ]);
@@ -154,6 +155,9 @@ class Installer extends \Johncms\Modules\Installer
                 $table->json('settings')->nullable();
                 $table->integer('sort')->default(100);
                 $table->boolean('active')->default(true);
+                // Whether the collection is reachable by a public URL / sitemap.
+                // A private collection stays fully manageable and API-readable, it just mints no front URL.
+                $table->boolean('public')->default(true);
                 $table->timestamps();
             }
         );

@@ -25,11 +25,13 @@ interface ContentCollectionRepositoryInterface
     public function countAll(): int;
 
     /**
-     * Map of active collection code => id, used by the public URL resolver.
+     * Map of publicly reachable collection code => id (active AND public), used by
+     * the public URL resolver and the sitemap. Private collections are excluded so
+     * they mint no front URL.
      *
      * @return array<string, int>
      */
-    public function getActiveCodeMap(): array;
+    public function getPublicCodeMap(): array;
 
     /**
      * @param array<string, mixed> $attributes

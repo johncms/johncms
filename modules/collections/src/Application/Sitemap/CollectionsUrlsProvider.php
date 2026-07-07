@@ -12,8 +12,8 @@ use Johncms\Sitemap\SitemapUrlEntry;
 use Johncms\Sitemap\SitemapUrlProviderInterface;
 
 /**
- * Emits sitemap URLs for the public collection pages: each active collection
- * root, each reachable active section, and every published item.
+ * Emits sitemap URLs for the public collection pages: each active & public
+ * collection root, each reachable active section, and every published item.
  */
 final class CollectionsUrlsProvider implements SitemapUrlProviderInterface
 {
@@ -34,7 +34,7 @@ final class CollectionsUrlsProvider implements SitemapUrlProviderInterface
      */
     public function getEntries(string $homeUrl): iterable
     {
-        foreach ($this->collectionRepository->getActiveCodeMap() as $code => $collectionId) {
+        foreach ($this->collectionRepository->getPublicCodeMap() as $code => $collectionId) {
             $base = $homeUrl . '/' . $code;
             yield new SitemapUrlEntry($base);
 

@@ -41,6 +41,10 @@ final class CollectionsUrlsProviderTest extends TestCase
         $blog = $this->insertCollection('blog', true);
         $this->insertCollection('draft', false); // inactive collection -> excluded
 
+        // Active but private collection (no public URL) -> excluded, together with its items.
+        $private = $this->insertCollection('storage', true, false);
+        $this->insertItem($private, null, 'private-item', true);
+
         $tech = $this->insertSection($blog, null, 'tech', true);
         $archive = $this->insertSection($blog, null, 'archive', false); // inactive -> excluded
         $this->insertSection($blog, $tech, 'sub', true);
@@ -89,12 +93,12 @@ final class CollectionsUrlsProviderTest extends TestCase
         }
     }
 
-    private function insertCollection(string $code, bool $active): int
+    private function insertCollection(string $code, bool $active, bool $public = true): int
     {
         $now = Carbon::now();
 
         return Capsule::table('collections')->insertGetId([
-            'code' => $code, 'name' => $code, 'sort' => 100, 'active' => $active ? 1 : 0,
+            'code' => $code, 'name' => $code, 'sort' => 100, 'active' => $active ? 1 : 0, 'public' => $public ? 1 : 0,
             'created_at' => $now, 'updated_at' => $now,
         ]);
     }

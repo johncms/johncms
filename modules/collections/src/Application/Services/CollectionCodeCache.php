@@ -8,7 +8,7 @@ use Johncms\Cache;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
 
 /**
- * Caches the map of active collection code => id for the public URL resolver.
+ * Caches the map of publicly reachable collection code => id for the public URL resolver.
  *
  * The resolver runs as the low-priority catch-all, so it is also the 404 path
  * for every unmatched URL; caching the map keeps those misses off the database.
@@ -28,7 +28,7 @@ final readonly class CollectionCodeCache implements CollectionCodeCacheInterface
      */
     public function map(): array
     {
-        return $this->cache->rememberForever(self::CACHE_KEY, fn (): array => $this->repository->getActiveCodeMap());
+        return $this->cache->rememberForever(self::CACHE_KEY, fn (): array => $this->repository->getPublicCodeMap());
     }
 
     public function invalidate(): void
