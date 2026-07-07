@@ -40,7 +40,7 @@ final class ListPublicItemsUseCaseTest extends TestCase
 
     public function testGetPageMapsToPublicDto(): void
     {
-        $item = new ContentCollectionItem(['code' => 'hello', 'name' => 'Hello', 'preview_text' => 'Intro']);
+        $item = new ContentCollectionItem(['code' => 'hello', 'name' => 'Hello', 'preview_text' => 'Intro', 'section_id' => 7]);
         $item->id = 3;
 
         $repository = $this->createMock(ContentCollectionItemRepositoryInterface::class);
@@ -58,5 +58,6 @@ final class ListPublicItemsUseCaseTest extends TestCase
         self::assertSame('hello', $rows[0]->code);
         self::assertSame('Hello', $rows[0]->name);
         self::assertSame('Intro', $rows[0]->previewText);
+        self::assertSame(7, $rows[0]->sectionId);
     }
 }

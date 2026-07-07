@@ -33,6 +33,7 @@ final readonly class ListPublicItemsUseCase
                 code: $item->code,
                 name: $item->name,
                 previewText: $this->contentFormatter->format($item->preview_text),
+                sectionId: $item->section_id,
             ))
             ->all();
     }

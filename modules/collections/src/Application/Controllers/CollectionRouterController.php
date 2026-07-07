@@ -132,15 +132,46 @@ final readonly class CollectionRouterController
             'description' => $meta->description,
         ]);
 
+        // The root listing shows items from every section, so each URL must use the
+        // item's own section path rather than the current listing path.
+        $sectionPaths = $this->resolveSectionPaths($items);
+
         return $this->render->render('collections::public/listing', [
             'sections'   => $this->childSectionRows($collection->id, $sectionId, $basePath),
-            'items'      => array_map(static fn (PublicItemDTO $item): array => [
+            'items'      => array_map(fn (PublicItemDTO $item): array => [
                 'name'    => $item->name,
                 'preview' => $item->previewText,
-                'url'     => $basePath . '/' . $item->code . '.html',
+                'url'     => '/' . $collection->code
+                    . ($item->sectionId !== null ? $sectionPaths[$item->sectionId] : '')
+                    . '/' . $item->code . '.html',
             ], $items),
             'pagination' => $pagination->render(),
         ]);
+    }
+
+    /**
+     * Builds a map of section id => "/code/subcode" path for the sections
+     * referenced by the given items, resolving each distinct section only once.
+     *
+     * @param list<PublicItemDTO> $items
+     * @return array<int, string>
+     */
+    private function resolveSectionPaths(array $items): array
+    {
+        $paths = [];
+        foreach ($items as $item) {
+            if ($item->sectionId === null || isset($paths[$item->sectionId])) {
+                continue;
+            }
+
+            $path = '';
+            foreach ($this->sectionRepository->getPathTo($item->sectionId) as $section) {
+                $path .= '/' . $section->code;
+            }
+            $paths[$item->sectionId] = $path;
+        }
+
+        return $paths;
     }
 
     private function renderDetail(ContentCollection $collection, ?int $sectionId, string $code): string
