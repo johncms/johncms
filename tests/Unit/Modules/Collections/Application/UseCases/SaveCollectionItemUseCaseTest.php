@@ -128,4 +128,22 @@ final class SaveCollectionItemUseCaseTest extends TestCase
 
         $this->useCase->execute(null, $this->dto('hello', ['author' => 'Bob']));
     }
+
+    public function testGeneratesCodeFromNameWhenEmpty(): void
+    {
+        // dto() names every item "Hello" -> slug "hello".
+        $id = $this->useCase->execute(null, $this->dto('', ['author' => 'Alice']));
+
+        self::assertSame('hello', $this->itemRepository->findById($id)->code);
+    }
+
+    public function testAppendsNumericSuffixWhenGeneratedCodeIsTaken(): void
+    {
+        $this->useCase->execute(null, $this->dto('hello', ['author' => 'Alice'])); // occupies "hello"
+        $this->useCase->execute(null, $this->dto('', ['author' => 'Bob']));        // -> "hello-2"
+
+        $id = $this->useCase->execute(null, $this->dto('', ['author' => 'Eve']));  // -> "hello-3"
+
+        self::assertSame('hello-3', $this->itemRepository->findById($id)->code);
+    }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\UseCases;
 
+use Illuminate\Support\Str;
 use Johncms\Modules\Collections\Application\DTO\CollectionItemFormDTO;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionItemCodeAlreadyExistsException;
 use Johncms\Modules\Collections\Domain\Enums\FieldType;
@@ -25,19 +26,16 @@ final readonly class SaveCollectionItemUseCase
      * Creates or updates an item and rebuilds its custom field values. Returns
      * the item id (the newly created one when $id was null or missing).
      *
-     * @throws CollectionItemCodeAlreadyExistsException when the code belongs to another item in the same section
+     * @throws CollectionItemCodeAlreadyExistsException when an explicit code belongs to another item in the same section
      */
     public function execute(?int $id, CollectionItemFormDTO $dto): int
     {
-        $existing = $this->itemRepository->findByCode($dto->collectionId, $dto->sectionId, $dto->code);
-        if ($existing !== null && $existing->id !== $id) {
-            throw new CollectionItemCodeAlreadyExistsException();
-        }
+        $code = $this->resolveCode($id, $dto);
 
         $attributes = [
             'collection_id' => $dto->collectionId,
             'section_id'    => $dto->sectionId,
-            'code'          => $dto->code,
+            'code'          => $code,
             'name'          => $dto->name,
             'active'        => $dto->active,
             'active_from'   => $dto->activeFrom,
@@ -57,6 +55,41 @@ final readonly class SaveCollectionItemUseCase
         $this->rebuildValues($itemId, $dto);
 
         return $itemId;
+    }
+
+    /**
+     * Resolves the code to persist. An explicit code must be unique within the
+     * collection/section (a duplicate is rejected). An empty code is generated as
+     * a slug of the name and made unique by appending a numeric suffix on collision.
+     *
+     * @throws CollectionItemCodeAlreadyExistsException
+     */
+    private function resolveCode(?int $id, CollectionItemFormDTO $dto): string
+    {
+        if ($dto->code !== '') {
+            $existing = $this->itemRepository->findByCode($dto->collectionId, $dto->sectionId, $dto->code);
+            if ($existing !== null && $existing->id !== $id) {
+                throw new CollectionItemCodeAlreadyExistsException();
+            }
+
+            return $dto->code;
+        }
+
+        $base = Str::slug($dto->name);
+        if ($base === '') {
+            $base = 'item';
+        }
+
+        $candidate = $base;
+        $suffix = 1;
+        while (true) {
+            $existing = $this->itemRepository->findByCode($dto->collectionId, $dto->sectionId, $candidate);
+            if ($existing === null || $existing->id === $id) {
+                return $candidate;
+            }
+
+            $candidate = $base . '-' . ++$suffix;
+        }
     }
 
     private function rebuildValues(int $itemId, CollectionItemFormDTO $dto): void

@@ -49,9 +49,10 @@ interface CollectionsApiInterface
 
     /**
      * Create an item and its custom field values. Returns the new item id
-     * (the `CIBlockElement::Add` analog).
+     * (the `CIBlockElement::Add` analog). An empty code is generated from the name
+     * as a slug, made unique with a numeric suffix on collision.
      *
-     * @throws CollectionItemCodeAlreadyExistsException when the code is taken in the same collection/section
+     * @throws CollectionItemCodeAlreadyExistsException when an explicit code is taken in the same collection/section
      */
     public function addItem(CollectionItemFormDTO $item): int;
 

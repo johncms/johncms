@@ -369,7 +369,8 @@ final readonly class CollectionItemsAdminController
     private function validate(ContentCollection $collection, array $fields): array
     {
         $errors = [];
-        if ($fields['code'] === '' || $fields['name'] === '') {
+        // Code is optional: when left empty it is generated from the name as a unique slug.
+        if ($fields['name'] === '') {
             $errors[] = __('The required fields are not filled');
         }
 

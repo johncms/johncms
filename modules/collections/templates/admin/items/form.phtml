@@ -38,7 +38,7 @@ $this->layout('system::layout/default');
     <div class="form-group mt-2">
         <label for="code"><?= __('Code') ?></label>
         <input type="text" name="code" class="form-control" id="code" value="<?= $this->e((string) $fields['code']) ?>">
-        <div class="text-muted small"><?= __('Machine code: lowercase latin letters, digits, hyphen and underscore') ?></div>
+        <div class="text-muted small"><?= __('Machine code: lowercase latin letters, digits, hyphen and underscore. Leave empty to generate it from the name automatically') ?></div>
     </div>
 
     <?php if ($has_sections): ?>
