@@ -23,11 +23,11 @@ final readonly class SaveCollectionItemUseCase
 
     /**
      * Creates or updates an item and rebuilds its custom field values. Returns
-     * true when an existing item was updated.
+     * the item id (the newly created one when $id was null or missing).
      *
      * @throws CollectionItemCodeAlreadyExistsException when the code belongs to another item in the same section
      */
-    public function execute(?int $id, CollectionItemFormDTO $dto): bool
+    public function execute(?int $id, CollectionItemFormDTO $dto): int
     {
         $existing = $this->itemRepository->findByCode($dto->collectionId, $dto->sectionId, $dto->code);
         if ($existing !== null && $existing->id !== $id) {
@@ -50,15 +50,13 @@ final readonly class SaveCollectionItemUseCase
         if ($id !== null && $this->itemRepository->findById($id) !== null) {
             $this->itemRepository->update($id, $attributes);
             $itemId = $id;
-            $isUpdate = true;
         } else {
             $itemId = $this->itemRepository->create($attributes)->id;
-            $isUpdate = false;
         }
 
         $this->rebuildValues($itemId, $dto);
 
-        return $isUpdate;
+        return $itemId;
     }
 
     private function rebuildValues(int $itemId, CollectionItemFormDTO $dto): void

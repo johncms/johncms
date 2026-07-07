@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
+use Johncms\Modules\Collections\Application\Api\CollectionsApi;
+use Johncms\Modules\Collections\Application\Api\CollectionsApiInterface;
 use Johncms\Modules\Collections\Application\Services\CollectionCodeCache;
 use Johncms\Modules\Collections\Application\Services\CollectionCodeCacheInterface;
 use Johncms\Modules\Collections\Application\Services\ReservedCodeChecker;
@@ -52,4 +54,5 @@ return static function (ContainerConfigurator $container): void {
     $services->set(CollectionCodeCacheInterface::class, CollectionCodeCache::class)->autowire()->public();
     $services->set(ReservedCodeCheckerInterface::class, ReservedCodeChecker::class)->autowire()->public();
     $services->set(CollectionsUrlsProvider::class, CollectionsUrlsProvider::class)->autowire()->tag('johncms.sitemap_provider')->public();
+    $services->set(CollectionsApiInterface::class, CollectionsApi::class)->autowire()->public();
 };

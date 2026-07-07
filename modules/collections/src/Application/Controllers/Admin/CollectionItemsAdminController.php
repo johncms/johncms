@@ -129,12 +129,13 @@ final readonly class CollectionItemsAdminController
         }
 
         try {
-            $isUpdate = $this->saveItem->execute($id, $this->dtoFromFields($collection_id, $fields));
+            $this->saveItem->execute($id, $this->dtoFromFields($collection_id, $fields));
         } catch (CollectionItemCodeAlreadyExistsException) {
             return $this->renderFormWithFields($collection, $id, $fields, [__('An item with this code already exists')]);
         }
 
-        $_SESSION['success_message'] = $isUpdate ? __('Changes saved') : __('Created successfully');
+        // $id is non-null only for an existing, owned item (guarded above), so it reliably marks an update.
+        $_SESSION['success_message'] = $id !== null ? __('Changes saved') : __('Created successfully');
         redirect($this->baseUrl($collection_id));
     }
 

@@ -70,16 +70,15 @@ final class SaveCollectionItemUseCaseTest extends TestCase
 
     public function testCreateWritesValuesIntoTypedColumns(): void
     {
-        $isUpdate = $this->useCase->execute(null, $this->dto('hello', [
+        $newId = $this->useCase->execute(null, $this->dto('hello', [
             'author' => 'Alice',
             'rating' => '5',
             'tag'    => ['php', 'sql'],
         ]));
 
-        self::assertFalse($isUpdate);
-
         $item = $this->itemRepository->findByCode($this->collectionId, null, 'hello');
         self::assertNotNull($item);
+        self::assertSame($item->id, $newId);
 
         $map = $this->itemRepository->findWithValues($item->id)->getValuesMap();
         self::assertSame('Alice', $map['author']);
@@ -100,9 +99,9 @@ final class SaveCollectionItemUseCaseTest extends TestCase
         $this->useCase->execute(null, $this->dto('hello', ['author' => 'Alice', 'rating' => '5', 'tag' => ['php', 'sql']]));
         $itemId = $this->itemRepository->findByCode($this->collectionId, null, 'hello')->id;
 
-        $isUpdate = $this->useCase->execute($itemId, $this->dto('hello', ['author' => 'Bob', 'rating' => '9', 'tag' => ['go']]));
+        $returnedId = $this->useCase->execute($itemId, $this->dto('hello', ['author' => 'Bob', 'rating' => '9', 'tag' => ['go']]));
 
-        self::assertTrue($isUpdate);
+        self::assertSame($itemId, $returnedId);
 
         $map = $this->itemRepository->findWithValues($itemId)->getValuesMap();
         self::assertSame('Bob', $map['author']);
