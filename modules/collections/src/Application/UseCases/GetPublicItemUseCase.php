@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Collections\Application\UseCases;
 
 use Johncms\Modules\Collections\Application\DTO\PublicItemDetailDTO;
+use Johncms\Modules\Collections\Application\Services\ItemContentFormatter;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionFieldRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemRepositoryInterface;
 
@@ -13,6 +14,7 @@ final readonly class GetPublicItemUseCase
     public function __construct(
         private ContentCollectionItemRepositoryInterface $itemRepository,
         private ContentCollectionFieldRepositoryInterface $fieldRepository,
+        private ItemContentFormatter $contentFormatter,
     ) {
     }
 
@@ -41,7 +43,7 @@ final readonly class GetPublicItemUseCase
         return new PublicItemDetailDTO(
             name: $item->name,
             previewText: $item->preview_text,
-            detailText: $item->detail_text,
+            detailText: $this->contentFormatter->format($item->detail_text),
             values: $values,
         );
     }

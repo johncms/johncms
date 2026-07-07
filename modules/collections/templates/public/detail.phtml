@@ -13,7 +13,8 @@ $this->layout('system::layout/default');
 <?php endif; ?>
 
 <?php if (! empty($item->detailText)): ?>
-    <div class="mb-3"><?= nl2br($this->e($item->detailText)) ?></div>
+    <?php // detailText is sanitized HTML (HTMLPurifier), rendered as-is. ?>
+    <div class="mb-3"><?= $item->detailText ?></div>
 <?php endif; ?>
 
 <?php if (! empty($item->values)): ?>

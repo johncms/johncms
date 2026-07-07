@@ -74,8 +74,14 @@ $this->layout('system::layout/default');
     </div>
 
     <div class="form-group mt-2">
-        <label for="detail_text"><?= __('Detail text') ?></label>
-        <textarea name="detail_text" class="form-control" id="detail_text" rows="5"><?= $this->e((string) $fields['detail_text']) ?></textarea>
+        <?= $this->fetch('collections::admin/ckeditor', [
+            'label'        => __('Detail text'),
+            'errors'       => '',
+            'value'        => (string) $fields['detail_text'],
+            'name'         => 'detail_text',
+            'id'           => 'detail_text',
+            'load_scripts' => true,
+        ]) ?>
     </div>
 
     <div class="form-check mt-3">

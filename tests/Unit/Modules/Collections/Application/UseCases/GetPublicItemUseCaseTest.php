@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Tests\Unit\Modules\Collections\Application\UseCases;
 
 use Carbon\Carbon;
+use HTMLPurifier;
 use Illuminate\Database\Capsule\Manager as Capsule;
+use Johncms\Modules\Collections\Application\Services\ItemContentFormatter;
 use Johncms\Modules\Collections\Application\UseCases\GetPublicItemUseCase;
 use Johncms\Modules\Collections\Infrastructure\Persistence\Query\ContentCollectionItemQueryCompiler;
 use Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionFieldRepository;
@@ -28,7 +30,13 @@ final class GetPublicItemUseCaseTest extends TestCase
 
         $fieldRepository = new ContentCollectionFieldRepository();
         $itemRepository = new ContentCollectionItemRepository($fieldRepository, new ContentCollectionItemQueryCompiler());
-        $this->useCase = new GetPublicItemUseCase($itemRepository, $fieldRepository);
+
+        // Passthrough purifier: this test asserts value mapping, not sanitization.
+        $purifier = $this->createMock(HTMLPurifier::class);
+        $purifier->method('purify')->willReturnArgument(0);
+        $formatter = new ItemContentFormatter($purifier);
+
+        $this->useCase = new GetPublicItemUseCase($itemRepository, $fieldRepository, $formatter);
 
         $now = Carbon::now();
         $this->collectionId = Capsule::table('collections')->insertGetId([
