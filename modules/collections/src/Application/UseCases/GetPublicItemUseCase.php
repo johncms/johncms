@@ -42,7 +42,7 @@ final readonly class GetPublicItemUseCase
 
         return new PublicItemDetailDTO(
             name: $item->name,
-            previewText: $item->preview_text,
+            previewText: $this->contentFormatter->format($item->preview_text),
             detailText: $this->contentFormatter->format($item->detail_text),
             values: $values,
         );

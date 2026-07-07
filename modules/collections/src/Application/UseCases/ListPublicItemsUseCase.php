@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Collections\Application\UseCases;
 
 use Johncms\Modules\Collections\Application\DTO\PublicItemDTO;
+use Johncms\Modules\Collections\Application\Services\ItemContentFormatter;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionItem;
 use Johncms\Modules\Collections\Domain\Query\ContentCollectionItemQuery;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemRepositoryInterface;
@@ -13,6 +14,7 @@ final readonly class ListPublicItemsUseCase
 {
     public function __construct(
         private ContentCollectionItemRepositoryInterface $repository,
+        private ItemContentFormatter $contentFormatter,
     ) {
     }
 
@@ -27,10 +29,10 @@ final readonly class ListPublicItemsUseCase
     public function getPage(int $collectionId, ?int $sectionId, int $limit, int $offset): array
     {
         return $this->repository->findItems($this->query($collectionId, $sectionId, $limit, $offset))
-            ->map(static fn (ContentCollectionItem $item): PublicItemDTO => new PublicItemDTO(
+            ->map(fn (ContentCollectionItem $item): PublicItemDTO => new PublicItemDTO(
                 code: $item->code,
                 name: $item->name,
-                previewText: $item->preview_text,
+                previewText: $this->contentFormatter->format($item->preview_text),
             ))
             ->all();
     }

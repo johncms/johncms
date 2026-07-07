@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Modules\Collections\Application\UseCases;
 
+use HTMLPurifier;
 use Illuminate\Database\Eloquent\Collection;
 use Johncms\Modules\Collections\Application\DTO\PublicItemDTO;
+use Johncms\Modules\Collections\Application\Services\ItemContentFormatter;
 use Johncms\Modules\Collections\Application\UseCases\ListPublicItemsUseCase;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionItem;
 use Johncms\Modules\Collections\Domain\Query\ContentCollectionItemQuery;
@@ -14,6 +16,15 @@ use PHPUnit\Framework\TestCase;
 
 final class ListPublicItemsUseCaseTest extends TestCase
 {
+    private function useCase(ContentCollectionItemRepositoryInterface $repository): ListPublicItemsUseCase
+    {
+        // Passthrough purifier: these tests assert mapping, not sanitization.
+        $purifier = $this->createMock(HTMLPurifier::class);
+        $purifier->method('purify')->willReturnArgument(0);
+
+        return new ListPublicItemsUseCase($repository, new ItemContentFormatter($purifier));
+    }
+
     public function testCountUsesOnlyActiveQuery(): void
     {
         $repository = $this->createMock(ContentCollectionItemRepositoryInterface::class);
@@ -24,7 +35,7 @@ final class ListPublicItemsUseCaseTest extends TestCase
             }))
             ->willReturn(4);
 
-        self::assertSame(4, (new ListPublicItemsUseCase($repository))->count(1, 2));
+        self::assertSame(4, $this->useCase($repository)->count(1, 2));
     }
 
     public function testGetPageMapsToPublicDto(): void
@@ -40,7 +51,7 @@ final class ListPublicItemsUseCaseTest extends TestCase
             }))
             ->willReturn(new Collection([$item]));
 
-        $rows = (new ListPublicItemsUseCase($repository))->getPage(1, null, 10, 0);
+        $rows = $this->useCase($repository)->getPage(1, null, 10, 0);
 
         self::assertCount(1, $rows);
         self::assertInstanceOf(PublicItemDTO::class, $rows[0]);

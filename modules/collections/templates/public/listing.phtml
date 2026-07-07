@@ -25,7 +25,8 @@ $this->layout('system::layout/default');
         <div class="mb-3 pb-2 border-bottom">
             <h3 class="h5 mb-1"><a href="<?= $this->e($item['url']) ?>"><?= $this->e($item['name']) ?></a></h3>
             <?php if (! empty($item['preview'])): ?>
-                <div class="text-muted"><?= nl2br($this->e($item['preview'])) ?></div>
+                <?php // preview is sanitized HTML (HTMLPurifier), rendered as-is. ?>
+                <div class="text-muted"><?= $item['preview'] ?></div>
             <?php endif; ?>
         </div>
     <?php endforeach; ?>

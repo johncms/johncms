@@ -69,8 +69,14 @@ $this->layout('system::layout/default');
     </div>
 
     <div class="form-group mt-2">
-        <label for="preview_text"><?= __('Preview text') ?></label>
-        <textarea name="preview_text" class="form-control" id="preview_text" rows="3"><?= $this->e((string) $fields['preview_text']) ?></textarea>
+        <?= $this->fetch('collections::admin/ckeditor', [
+            'label'        => __('Preview text'),
+            'errors'       => '',
+            'value'        => (string) $fields['preview_text'],
+            'name'         => 'preview_text',
+            'id'           => 'preview_text',
+            'load_scripts' => true,
+        ]) ?>
     </div>
 
     <div class="form-group mt-2">
@@ -80,7 +86,7 @@ $this->layout('system::layout/default');
             'value'        => (string) $fields['detail_text'],
             'name'         => 'detail_text',
             'id'           => 'detail_text',
-            'load_scripts' => true,
+            'load_scripts' => false,
         ]) ?>
     </div>
 
