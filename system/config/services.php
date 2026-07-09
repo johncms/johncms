@@ -104,8 +104,7 @@ return static function (ContainerConfigurator $container): void {
     $services->set('counters', Counters::class)->factory(service(CountersFactory::class));
     $services->set(MailFactory::class)->factory([MailFactory::class, 'create']);
     $services->set(HTMLPurifier::class)->factory([HTMLPurifier::class, 'create']);
-    $services->set(\HTMLPurifier::class)->factory([HTMLPurifier::class, 'create']);
-    $services->set(\HTMLPurifier::class, \HTMLPurifier::class);
+    $services->set(\HTMLPurifier::class, \HTMLPurifier::class)->factory([HTMLPurifier::class, 'create']);
 
     $services->set(Assets::class)->factory([Assets::class, 'create']);
     $services->set(Avatar::class)->factory([Avatar::class, 'create']);
