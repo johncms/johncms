@@ -12,7 +12,6 @@ declare(strict_types=1);
 
 namespace Johncms;
 
-use Johncms\System\Legacy\Tools;
 use Johncms\System\Users\User;
 use PDO;
 use Psr\Container\ContainerInterface;
@@ -23,9 +22,9 @@ class CountersFactory
     {
         return new Counters(
             $container->get(PDO::class),
-            $container->get(Tools::class),
             $container->get(User::class),
-            config('johncms.homeurl', '')
+            config('johncms.homeurl', ''),
+            $container->get(Cache::class)
         );
     }
 }

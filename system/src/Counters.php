@@ -13,13 +13,20 @@ declare(strict_types=1);
 namespace Johncms;
 
 use Johncms\Notifications\Notification;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\Users\User;
 use PDO;
-use Psr\Container\ContainerInterface;
 
 class Counters
 {
+    /** Default counters cache lifetime, in seconds */
+    private const CACHE_TTL = 600;
+
+    /** Library counters cache lifetime, in seconds */
+    private const LIBRARY_CACHE_TTL = 3200;
+
+    /** Online counters cache lifetime, in seconds */
+    private const ONLINE_CACHE_TTL = 10;
+
     /** @var PDO */
     private $db;
 
@@ -29,11 +36,15 @@ class Counters
     /** @var User */
     private $user;
 
-    public function __construct(PDO $pdo, Tools $tools, User $user, string $homeUrl)
+    /** @var Cache */
+    private $cache;
+
+    public function __construct(PDO $pdo, User $user, string $homeUrl, Cache $cache)
     {
         $this->db = $pdo;
         $this->user = $user;
         $this->homeurl = $homeUrl;
+        $this->cache = $cache;
     }
 
     /**
@@ -45,31 +56,36 @@ class Counters
      */
     public function album()
     {
-        $file = CACHE_PATH . 'count-albums.cache';
-
-        if (file_exists($file) && filemtime($file) > (time() - 600)) {
-            $res = json_decode(file_get_contents($file), true);
-            $album = $res['album'];
-            $photo = $res['photo'];
-            $new = $res['new'];
-            $new_adm = $res['new_adm'];
-        } else {
-            $album = $this->db->query('SELECT COUNT(DISTINCT `user_id`) FROM `cms_album_files`')->fetchColumn();
-            $photo = $this->db->query('SELECT COUNT(*) FROM `cms_album_files`')->fetchColumn();
-            $new = $this->db->query('SELECT COUNT(*) FROM `cms_album_files` WHERE `time` > ' . (time() - 259200) . ' AND `access` = 4')->fetchColumn();
-            $new_adm = $this->db->query('SELECT COUNT(*) FROM `cms_album_files` WHERE `time` > ' . (time() - 259200) . ' AND `access` > 1')->fetchColumn();
-            file_put_contents($file, json_encode(['album' => $album, 'photo' => $photo, 'new' => $new, 'new_adm' => $new_adm]), LOCK_EX);
-        }
+        $counters = $this->albumRawCounters();
 
         $newcount = 0;
-        if ($this->user->rights >= 6 && $new_adm) {
-            $newcount = $new_adm;
-        } elseif ($new) {
-            $newcount = $new;
+        if ($this->user->rights >= 6 && $counters['new_adm']) {
+            $newcount = $counters['new_adm'];
+        } elseif ($counters['new']) {
+            $newcount = $counters['new'];
         }
 
-        return $album . '&#160;/&#160;' . $photo .
+        return $counters['album'] . '&#160;/&#160;' . $counters['photo'] .
             ($newcount ? '&#160;/&#160;<span class="red"><a href="' . $this->homeurl . '/album/top">+' . $newcount . '</a></span>' : '');
+    }
+
+    /**
+     * Cached raw album counters
+     *
+     * @return array{album: int, photo: int, new: int, new_adm: int}
+     */
+    private function albumRawCounters(): array
+    {
+        return $this->cache->remember('counters_albums', self::CACHE_TTL, function (): array {
+            $recent = time() - 259200;
+
+            return [
+                'album'   => (int) $this->db->query('SELECT COUNT(DISTINCT `user_id`) FROM `cms_album_files`')->fetchColumn(),
+                'photo'   => (int) $this->db->query('SELECT COUNT(*) FROM `cms_album_files`')->fetchColumn(),
+                'new'     => (int) $this->db->query('SELECT COUNT(*) FROM `cms_album_files` WHERE `time` > ' . $recent . ' AND `access` = 4')->fetchColumn(),
+                'new_adm' => (int) $this->db->query('SELECT COUNT(*) FROM `cms_album_files` WHERE `time` > ' . $recent . ' AND `access` > 1')->fetchColumn(),
+            ];
+        });
     }
 
     /**
@@ -81,21 +97,11 @@ class Counters
      */
     public function downloads()
     {
-        $file = CACHE_PATH . 'count-downloads.cache';
+        $counters = $this->downloadsRawCounters();
 
-        if (file_exists($file) && filemtime($file) > (time() - 600)) {
-            $res = json_decode(file_get_contents($file), true);
-            $total = $res['total'] ?? 0;
-            $new = $res['new'] ?? 0;
-            $mod = $res['mod'] ?? 0;
-        } else {
-            $old = time() - (3 * 24 * 3600);
-            $total = $this->db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'")->fetchColumn();
-            $new = $this->db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2' AND `time` > '$old'")->fetchColumn();
-            $mod = $this->db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '3'")->fetchColumn();
-
-            file_put_contents($file, json_encode(['total' => $total, 'new' => $new, 'mod' => $mod]), LOCK_EX);
-        }
+        $total = $counters['total'];
+        $new = $counters['new'];
+        $mod = $counters['mod'];
 
         if ($new > 0) {
             $total .= '&nbsp;/&nbsp;<span class="red"><a href="downloads/?act=new_files">+' . $new . '</a></span>';
@@ -119,24 +125,14 @@ class Counters
      */
     public function forum()
     {
-        $file = CACHE_PATH . 'count-forum.cache';
         $new = '';
-
-        if (file_exists($file) && filemtime($file) > (time() - 600)) {
-            $res = json_decode(file_get_contents($file), true);
-            $top = $res['top'];
-            $msg = $res['msg'];
-        } else {
-            $top = $this->db->query("SELECT COUNT(*) FROM `forum_topic` WHERE `deleted` != '1' OR deleted IS NULL")->fetchColumn();
-            $msg = $this->db->query("SELECT COUNT(*) FROM `forum_messages` WHERE `deleted` != '1' OR deleted IS NULL")->fetchColumn();
-            file_put_contents($file, json_encode(['top' => $top, 'msg' => $msg]), LOCK_EX);
-        }
+        $counters = $this->forumRawCounters();
 
         if ($this->user->isValid() && ($new_msg = $this->forumNew()) > 0) {
             $new = '&#160;/&#160;<span class="red"><a href="' . $this->homeurl . '/forum/unread/">+' . $new_msg . '</a></span>';
         }
 
-        return $top . '&#160;/&#160;' . $msg . $new;
+        return $counters['topics'] . '&#160;/&#160;' . $counters['messages'] . $new;
     }
 
     /**
@@ -201,20 +197,11 @@ class Counters
      */
     public function library()
     {
-        $file = CACHE_PATH . 'count-library.cache';
+        $counters = $this->libraryRawCounters();
 
-        if (file_exists($file) && filemtime($file) > (time() - 3200)) {
-            $res = json_decode(file_get_contents($file), true);
-            $total = $res['total'];
-            $new = $res['new'];
-            $mod = $res['mod'];
-        } else {
-            $total = $this->db->query('SELECT COUNT(*) FROM `library_texts` WHERE `premod` = 1')->fetchColumn();
-            $new = $this->db->query('SELECT COUNT(*) FROM `library_texts` WHERE `time` > ' . (time() - 259200) . ' AND `premod` = 1')->fetchColumn();
-            $mod = $this->db->query('SELECT COUNT(*) FROM `library_texts` WHERE `premod` = 0')->fetchColumn();
-
-            file_put_contents($file, json_encode(['total' => $total, 'new' => $new, 'mod' => $mod]), LOCK_EX);
-        }
+        $total = $counters['total'];
+        $new = $counters['new'];
+        $mod = $counters['mod'];
 
         if ($new) {
             $total .= '&#160;/&#160;<span class="red"><a href="' . $this->homeurl . '/library/?act=new">+' . $new . '</a></span>';
@@ -234,28 +221,16 @@ class Counters
      */
     public function online()
     {
-        $file = CACHE_PATH . 'count-online.cache';
-        $users = 0;
-        $guests = 0;
-        $hasValidCache = false;
+        $counters = $this->cache->remember('counters_online', self::ONLINE_CACHE_TTL, function (): array {
+            $online = time() - 300;
 
-        if (file_exists($file) && filemtime($file) > (time() - 10)) {
-            $res = json_decode(file_get_contents($file), true);
-            if (is_array($res) && isset($res['users'], $res['guests'])) {
-                $users = (int) $res['users'];
-                $guests = (int) $res['guests'];
-                $hasValidCache = true;
-            }
-        }
+            return [
+                'users'  => (int) $this->db->query('SELECT COUNT(*) FROM `users` WHERE `lastdate` > ' . $online)->fetchColumn(),
+                'guests' => (int) $this->db->query('SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > ' . $online)->fetchColumn(),
+            ];
+        });
 
-        if (! $hasValidCache) {
-            $users = (int) $this->db->query('SELECT COUNT(*) FROM `users` WHERE `lastdate` > ' . (time() - 300))->fetchColumn();
-            $guests = (int) $this->db->query('SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > ' . (time() - 300))->fetchColumn();
-
-            file_put_contents($file, json_encode(['users' => $users, 'guests' => $guests]), LOCK_EX);
-        }
-
-        return $users . ' / ' . $guests;
+        return $counters['users'] . ' / ' . $counters['guests'];
     }
 
     /**
@@ -301,40 +276,43 @@ class Counters
      */
     public function forumCounters(): array
     {
-        $file = CACHE_PATH . 'counters-forum.cache';
         $new_messages = 0;
-
-        $res = file_exists($file) && filemtime($file) > (time() - 600)
-            ? json_decode(file_get_contents($file), true)
-            : null;
-        if (is_array($res)) {
-            $topics = $res['topics'];
-            $message = $res['messages'];
-        } else {
-            $topics = $this->db->query(
-                "SELECT COUNT(*)
-                FROM `forum_topic`
-                WHERE `deleted` != '1'
-                OR deleted IS NULL"
-            )->fetchColumn();
-            $message = $this->db->query(
-                "SELECT COUNT(*)
-                FROM `forum_messages`
-                WHERE `deleted` != '1'
-                OR deleted IS NULL"
-            )->fetchColumn();
-            file_put_contents($file, json_encode(['topics' => $topics, 'messages' => $message]), LOCK_EX);
-        }
+        $counters = $this->forumRawCounters();
 
         if ($this->user->isValid() && ($new_msg = $this->forumNew()) > 0) {
             $new_messages = $new_msg;
         }
 
         return [
-            'topics'       => $topics,
-            'messages'     => $message,
+            'topics'       => $counters['topics'],
+            'messages'     => $counters['messages'],
             'new_messages' => $new_messages,
         ];
+    }
+
+    /**
+     * Cached raw forum counters
+     *
+     * @return array{topics: int, messages: int}
+     */
+    private function forumRawCounters(): array
+    {
+        return $this->cache->remember('counters_forum', self::CACHE_TTL, function (): array {
+            return [
+                'topics'   => (int) $this->db->query(
+                    "SELECT COUNT(*)
+                    FROM `forum_topic`
+                    WHERE `deleted` != '1'
+                    OR deleted IS NULL"
+                )->fetchColumn(),
+                'messages' => (int) $this->db->query(
+                    "SELECT COUNT(*)
+                    FROM `forum_messages`
+                    WHERE `deleted` != '1'
+                    OR deleted IS NULL"
+                )->fetchColumn(),
+            ];
+        });
     }
 
     /**
@@ -364,24 +342,30 @@ class Counters
      */
     public function downloadsCounters(): array
     {
-        $file = CACHE_PATH . 'counters-downloads.cache';
-
-        if (file_exists($file) && filemtime($file) > (time() - 600)) {
-            $res = json_decode(file_get_contents($file), true);
-            $total = $res['total'] ?? 0;
-            $new = $res['new'] ?? 0;
-        } else {
-            $old = time() - (3 * 24 * 3600);
-            $total = $this->db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'")->fetchColumn();
-            $new = $this->db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2' AND `time` > '$old'")->fetchColumn();
-
-            file_put_contents($file, json_encode(['total' => $total, 'new' => $new]), LOCK_EX);
-        }
+        $counters = $this->downloadsRawCounters();
 
         return [
-            'total' => $total,
-            'new'   => $new,
+            'total' => $counters['total'],
+            'new'   => $counters['new'],
         ];
+    }
+
+    /**
+     * Cached raw downloads counters
+     *
+     * @return array{total: int, new: int, mod: int}
+     */
+    private function downloadsRawCounters(): array
+    {
+        return $this->cache->remember('counters_downloads', self::CACHE_TTL, function (): array {
+            $old = time() - (3 * 24 * 3600);
+
+            return [
+                'total' => (int) $this->db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2'")->fetchColumn(),
+                'new'   => (int) $this->db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2' AND `time` > '$old'")->fetchColumn(),
+                'mod'   => (int) $this->db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '3'")->fetchColumn(),
+            ];
+        });
     }
 
     /**
@@ -391,23 +375,28 @@ class Counters
      */
     public function libraryCounters(): array
     {
-        $file = CACHE_PATH . 'counters-library.cache';
-
-        if (file_exists($file) && filemtime($file) > (time() - 3200)) {
-            $res = json_decode(file_get_contents($file), true);
-            $total = $res['total'];
-            $new = $res['new'];
-        } else {
-            $total = $this->db->query('SELECT COUNT(*) FROM `library_texts` WHERE `premod` = 1')->fetchColumn();
-            $new = $this->db->query('SELECT COUNT(*) FROM `library_texts` WHERE `time` > ' . (time() - 259200) . ' AND `premod` = 1')->fetchColumn();
-
-            file_put_contents($file, json_encode(['total' => $total, 'new' => $new]), LOCK_EX);
-        }
+        $counters = $this->libraryRawCounters();
 
         return [
-            'total' => $total,
-            'new'   => $new,
+            'total' => $counters['total'],
+            'new'   => $counters['new'],
         ];
+    }
+
+    /**
+     * Cached raw library counters
+     *
+     * @return array{total: int, new: int, mod: int}
+     */
+    private function libraryRawCounters(): array
+    {
+        return $this->cache->remember('counters_library', self::LIBRARY_CACHE_TTL, function (): array {
+            return [
+                'total' => (int) $this->db->query('SELECT COUNT(*) FROM `library_texts` WHERE `premod` = 1')->fetchColumn(),
+                'new'   => (int) $this->db->query('SELECT COUNT(*) FROM `library_texts` WHERE `time` > ' . (time() - 259200) . ' AND `premod` = 1')->fetchColumn(),
+                'mod'   => (int) $this->db->query('SELECT COUNT(*) FROM `library_texts` WHERE `premod` = 0')->fetchColumn(),
+            ];
+        });
     }
 
     /**
@@ -417,23 +406,12 @@ class Counters
      */
     public function usersCounters(): array
     {
-        $file = CACHE_PATH . 'counters-users.dat';
-
-        if (file_exists($file) && filemtime($file) > (time() - 600)) {
-            $cache = json_decode(file_get_contents($file), true);
-            $total = $cache['total'];
-            $new = $cache['new'];
-        } else {
-            $total = (new Users\User())->approved()->count();
-            $new = (new Users\User())->approved()->where('datereg', '>', (time() - 86400))->count();
-
-            file_put_contents($file, json_encode(['total' => $total, 'new' => $new]), LOCK_EX);
-        }
-
-        return [
-            'total' => $total,
-            'new'   => $new,
-        ];
+        return $this->cache->remember('counters_users', self::CACHE_TTL, function (): array {
+            return [
+                'total' => (new Users\User())->approved()->count(),
+                'new'   => (new Users\User())->approved()->where('datereg', '>', (time() - 86400))->count(),
+            ];
+        });
     }
 
     /**
@@ -443,32 +421,19 @@ class Counters
      */
     public function albumCounters(): array
     {
-        $file = CACHE_PATH . 'counters-albums.cache';
+        $counters = $this->albumRawCounters();
 
-        if (file_exists($file) && filemtime($file) > (time() - 600)) {
-            $res = json_decode(file_get_contents($file), true);
-            $album = $res['album'];
-            $photo = $res['photo'];
-            $new = $res['new'];
-            $new_adm = $res['new_adm'];
-        } else {
-            $album = $this->db->query('SELECT COUNT(DISTINCT `user_id`) FROM `cms_album_files`')->fetchColumn();
-            $photo = $this->db->query('SELECT COUNT(*) FROM `cms_album_files`')->fetchColumn();
-            $new = $this->db->query('SELECT COUNT(*) FROM `cms_album_files` WHERE `time` > ' . (time() - 259200) . ' AND `access` = 4')->fetchColumn();
-            $new_adm = $this->db->query('SELECT COUNT(*) FROM `cms_album_files` WHERE `time` > ' . (time() - 259200) . ' AND `access` > 1')->fetchColumn();
-            file_put_contents($file, json_encode(['album' => $album, 'photo' => $photo, 'new' => $new, 'new_adm' => $new_adm]), LOCK_EX);
-        }
-
-        if ($this->user->rights >= 6 && $new_adm) {
-            $newcount = $new_adm;
-        } elseif ($new) {
-            $newcount = $new;
+        $newcount = 0;
+        if ($this->user->rights >= 6 && $counters['new_adm']) {
+            $newcount = $counters['new_adm'];
+        } elseif ($counters['new']) {
+            $newcount = $counters['new'];
         }
 
         return [
-            'album' => $album,
-            'photo' => $photo,
-            'new'   => $newcount ?? 0,
+            'album' => $counters['album'],
+            'photo' => $counters['photo'],
+            'new'   => $newcount,
         ];
     }
 
