@@ -168,8 +168,10 @@ class UserStat
 
     private function determinePlace(): string
     {
-        $uri = rawurldecode($_SERVER['REQUEST_URI']);
-        $path = trim(str_ireplace('index.php', '', parse_url($uri, PHP_URL_PATH)), '/');
+        $uri = rawurldecode($_SERVER['REQUEST_URI'] ?? '');
+        // Protocol-relative URIs like "//x.php" are parsed as host without path, so PHP_URL_PATH is null
+        $uriPath = parse_url($uri, PHP_URL_PATH) ?: '';
+        $path = trim(str_ireplace('index.php', '', $uriPath), '/');
         $act = $_GET['act'] ?? '';
         $type = $_GET['type'] ?? '';
         $id = $_GET['id'] ?? '';
