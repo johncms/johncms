@@ -29,6 +29,8 @@ use Johncms\Modules\Forum\Infrastructure\Persistence\Repository\ForumWhoReposito
 return static function (ContainerConfigurator $container): void {
     $services = $container->services();
 
+    $services->instanceof(\Symfony\Component\Console\Command\Command::class)->tag('johncms.console_command');
+
     $services->load(
         'Johncms\\Modules\\Forum\\Application\\',
         MODULES_PATH . 'forum/src/Application'
