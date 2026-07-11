@@ -57,6 +57,11 @@ final class GlobalErrorHandler
             return true;
         }
 
+        // Respect the error suppression operator (@) and error_reporting()
+        if (! (error_reporting() & $level)) {
+            return true;
+        }
+
         $logContext = [
             'level'  => $level,
             'file'   => $file,
@@ -71,11 +76,7 @@ final class GlobalErrorHandler
             return true;
         }
 
-        if (error_reporting() & $level) {
-            throw new ErrorException($message, 0, $level, $file, $line);
-        }
-
-        return false;
+        throw new ErrorException($message, 0, $level, $file, $line);
     }
 
     /**

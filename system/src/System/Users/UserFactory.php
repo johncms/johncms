@@ -20,7 +20,13 @@ use Psr\Container\ContainerInterface;
  * Class UserFactory
  *
  * @package Johncms\System\Users
- * @deprecated use Johncms\Users\UserFactory
+ *
+ * Keep the @deprecated tag without an inline description: Symfony's
+ * ContainerBuilder logs a deprecation on every non-cached container build
+ * for services whose class docblock contains "@deprecated <text>".
+ *
+ * @deprecated
+ * @see \Johncms\Users\UserFactory
  */
 #[\AllowDynamicProperties]
 class UserFactory

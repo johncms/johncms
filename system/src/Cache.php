@@ -12,7 +12,7 @@ namespace Johncms;
 
 use Illuminate\Cache\FileStore;
 use Illuminate\Cache\Repository;
-use Illuminate\Filesystem\Filesystem;
+use Johncms\Cache\RaceSafeFilesystem;
 
 /**
  * Class Cache
@@ -27,7 +27,7 @@ class Cache extends Repository
 {
     public function __construct()
     {
-        parent::__construct(new FileStore(new Filesystem(), DATA_PATH . 'cache/johncms'));
+        parent::__construct(new FileStore(new RaceSafeFilesystem(), DATA_PATH . 'cache/johncms'));
     }
 
     public function __invoke(): Cache
