@@ -14,6 +14,7 @@ return [
             'album',
             'collections',
             'community',
+            'consent',
             'downloads',
             'forum',
             'guestbook',

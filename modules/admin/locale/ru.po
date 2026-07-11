@@ -1980,3 +1980,6 @@ msgstr "Политика обработки персональных данны�
 #: modules/admin/templates/settings.phtml:100
 msgid "Cookie Policy"
 msgstr "Политика использования cookie"
+
+msgid "Consents"
+msgstr "Согласия"

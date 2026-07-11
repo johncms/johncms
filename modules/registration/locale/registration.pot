@@ -2,16 +2,20 @@ msgid ""
 msgstr ""
 "X-Domain: registration\n"
 
-#: modules/registration/src/Application/Controllers/RegistrationController.php:41
+#: modules/registration/src/Application/Controllers/RegistrationController.php:46
 #: modules/registration/templates/index.phtml:4
 #: modules/registration/templates/index.phtml:5
 #: modules/registration/templates/index.phtml:10
-#: modules/registration/templates/index.phtml:128
+#: modules/registration/templates/index.phtml:151
 #: modules/registration/templates/registration_closed.phtml:4
 #: modules/registration/templates/registration_closed.phtml:5
 #: modules/registration/templates/registration_result.phtml:4
 #: modules/registration/templates/registration_result.phtml:5
 msgid "Registration"
+msgstr ""
+
+#: modules/registration/src/Application/Controllers/RegistrationController.php:104
+msgid "You must accept the consent to continue"
 msgstr ""
 
 #: modules/registration/src/Application/UseCases/RegisterUserUseCase.php:62

@@ -186,7 +186,7 @@ msgstr ""
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:230
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:250
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:298
-#: modules/admin/templates/sidebar-admin-menu.phtml:277
+#: modules/admin/templates/sidebar-admin-menu.phtml:285
 msgid "Ban by IP"
 msgstr ""
 
@@ -402,7 +402,7 @@ msgstr ""
 #: modules/admin/src/Application/Controllers/Settings/CountersController.php:172
 #: modules/admin/src/Application/Controllers/Settings/CountersController.php:194
 #: modules/admin/src/Application/Controllers/Settings/CountersController.php:220
-#: modules/admin/templates/sidebar-admin-menu.phtml:184
+#: modules/admin/templates/sidebar-admin-menu.phtml:192
 msgid "Counters"
 msgstr ""
 
@@ -438,7 +438,7 @@ msgid "Permissions"
 msgstr ""
 
 #: modules/admin/src/Application/Controllers/Settings/SystemSettingsController.php:89
-#: modules/admin/templates/sidebar-admin-menu.phtml:215
+#: modules/admin/templates/sidebar-admin-menu.phtml:223
 #: modules/admin/templates/smilies.phtml:8
 msgid "System Settings"
 msgstr ""
@@ -458,7 +458,7 @@ msgstr ""
 #: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:32
 #: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:46
 #: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:78
-#: modules/admin/templates/sidebar-admin-menu.phtml:269
+#: modules/admin/templates/sidebar-admin-menu.phtml:277
 msgid "Anti-Spyware"
 msgstr ""
 
@@ -509,7 +509,7 @@ msgstr ""
 #: modules/admin/src/Application/Controllers/System/SystemCheckController.php:26
 #: modules/admin/src/Application/Controllers/System/SystemCheckController.php:27
 #: modules/admin/src/Application/Controllers/System/SystemCheckController.php:31
-#: modules/admin/templates/sidebar-admin-menu.phtml:239
+#: modules/admin/templates/sidebar-admin-menu.phtml:247
 msgid "System check"
 msgstr ""
 
@@ -1814,19 +1814,23 @@ msgstr ""
 msgid "News"
 msgstr ""
 
-#: modules/admin/templates/sidebar-admin-menu.phtml:198
+#: modules/admin/templates/sidebar-admin-menu.phtml:183
+msgid "Consents"
+msgstr ""
+
+#: modules/admin/templates/sidebar-admin-menu.phtml:206
 msgid "System"
 msgstr ""
 
-#: modules/admin/templates/sidebar-admin-menu.phtml:223
+#: modules/admin/templates/sidebar-admin-menu.phtml:231
 msgid "Update Smilies"
 msgstr ""
 
-#: modules/admin/templates/sidebar-admin-menu.phtml:231
+#: modules/admin/templates/sidebar-admin-menu.phtml:239
 msgid "Language Settings"
 msgstr ""
 
-#: modules/admin/templates/sidebar-admin-menu.phtml:252
+#: modules/admin/templates/sidebar-admin-menu.phtml:260
 msgid "Security"
 msgstr ""
 

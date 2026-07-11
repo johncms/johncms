@@ -42,6 +42,12 @@
 
     <!-- Downloads module -->
     <domain>
+        <name>consent</name>
+        <target>modules/consent/locale</target>
+        <sourceDir>modules/consent</sourceDir>
+    </domain>
+
+    <domain>
         <name>downloads</name>
         <target>modules/downloads/locale</target>
         <sourceDir>modules/downloads</sourceDir>

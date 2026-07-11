@@ -6,14 +6,17 @@ namespace Johncms\Modules\Registration\Application\Controllers;
 
 use Illuminate\Support\Str;
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Modules\Consent\Application\Services\ConsentService;
 use Johncms\Modules\Registration\Application\DTO\RegistrationFormDTO;
 use Johncms\Modules\Registration\Application\UseCases\RegisterUserUseCase;
 use Johncms\NavChain;
+use Johncms\System\Http\Environment;
 use Johncms\System\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
 use Laminas\Validator\Hostname;
+use Laminas\Validator\Identical;
 use Mobicms\Captcha\Code;
 use Mobicms\Captcha\Image;
 
@@ -26,6 +29,8 @@ final readonly class RegistrationController
         private NavChain $navChain,
         private User $currentUser,
         private RegisterUserUseCase $registerUser,
+        private ConsentService $consentService,
+        private Environment $env,
     ) {
         $this->controllerContext->initModule('registration');
     }
@@ -40,6 +45,8 @@ final readonly class RegistrationController
 
         $this->navChain->add(__('Registration'));
 
+        $consents = $this->consentService->getActiveConsents('register');
+
         $fields = [
             'name'     => (string) $this->request->getPost('name', ''),
             'name_lat' => Str::slug((string) $this->request->getPost('name', ''), '_'),
@@ -50,6 +57,10 @@ final readonly class RegistrationController
             'captcha'  => $this->request->getPost('captcha'),
             'email'    => (string) $this->request->getPost('email', ''),
         ];
+
+        foreach ($consents as $consent) {
+            $fields['consent_' . $consent->id] = $this->request->getPost('consent_' . $consent->id);
+        }
 
         $errors = [];
 
@@ -84,7 +95,21 @@ final readonly class RegistrationController
                 ];
             }
 
-            $validator = new Validator($fields, $rules);
+            foreach ($consents as $consent) {
+                if ($consent->is_required) {
+                    $rules['consent_' . $consent->id] = ['Identical' => ['token' => '1']];
+                }
+            }
+
+            $consentMessage = __('You must accept the consent to continue');
+            $messages = [
+                'Identical' => [
+                    Identical::NOT_SAME      => $consentMessage,
+                    Identical::MISSING_TOKEN => $consentMessage,
+                ],
+            ];
+
+            $validator = new Validator($fields, $rules, $messages);
             if ($validator->isValid()) {
                 $dto = new RegistrationFormDTO(
                     name: $fields['name'],
@@ -97,6 +122,13 @@ final readonly class RegistrationController
                 );
 
                 $newUser = $this->registerUser->execute($dto);
+
+                $ip = (string) $this->env->getIp(false);
+                foreach ($consents as $consent) {
+                    if ($fields['consent_' . $consent->id] === '1') {
+                        $this->consentService->logAcceptance($consent->id, $newUser->id, $ip, $consent->version);
+                    }
+                }
 
                 if ($config['mod_reg'] !== 1 && empty($config['user_email_confirmation'])) {
                     setcookie('cuid', (string) $newUser->id, time() + 3600 * 24 * 365, '/');
@@ -123,9 +155,10 @@ final readonly class RegistrationController
         return $this->render->render(
             'registration::index',
             [
-                'errors'  => $errors,
-                'fields'  => $fields,
-                'captcha' => new Image($code),
+                'errors'   => $errors,
+                'fields'   => $fields,
+                'captcha'  => new Image($code),
+                'consents' => $consents,
             ]
         );
     }

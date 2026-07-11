@@ -1,0 +1,17 @@
+<?php
+
+/**
+ * @var Mobicms\Render\Template\Template $this
+ * @var string $title
+ * @var string $text
+ */
+
+$this->layout('system::layout/default', [
+    'title'      => $title,
+    'page_title' => $title,
+]);
+?>
+
+<div class="content">
+    <?= $text ?>
+</div>

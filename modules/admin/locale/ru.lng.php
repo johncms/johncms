@@ -408,6 +408,7 @@
       'Terms of Use' => 'Пользовательское соглашение',
       'Personal Data Processing Policy' => 'Политика обработки персональных данных',
       'Cookie Policy' => 'Политика использования cookie',
+      'Consents' => 'Согласия',
     ),
   ),
 );

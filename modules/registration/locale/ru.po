@@ -146,3 +146,6 @@ msgstr "Пожалуйста подождите, пока модератор о�
 msgid "Enter"
 msgstr "Вход"
 
+
+msgid "You must accept the consent to continue"
+msgstr "Необходимо дать согласие, чтобы продолжить"

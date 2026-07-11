@@ -92,6 +92,7 @@
             "Johncms\\Modules\\Downloads\\": "modules/downloads/src/",
             "Downloads\\": "modules/downloads/classes/",
             "Johncms\\Modules\\Community\\": "modules/community/src/",
+        "Johncms\\Modules\\Consent\\": "modules/consent/src/",
             "Johncms\\Modules\\Online\\": "modules/online/src/",
             "Johncms\\Modules\\Help\\": "modules/help/src/",
             "Johncms\\Modules\\Library\\": "modules/library/src/",
