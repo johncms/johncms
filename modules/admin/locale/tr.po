@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
-"PO-Revision-Date: 2026-03-25 18:42\n"
+"PO-Revision-Date: 2026-07-11 09:39\n"
 
 #: system/src/Http/Controller/AdminControllerContext.php:50
 #: modules/admin/index.php:50
@@ -1890,5 +1890,69 @@ msgstr ""
 
 #: modules/admin/templates/usr_del.phtml:54
 msgid "All threads and posts created by the user go in the hidden state"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:89
+msgid "Maintenance"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:58
+msgid "The task has been queued and will start within a minute"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:62
+msgid "The task has been completed"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:63
+msgid "The task has failed"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:69
+msgid "The task is already running"
+msgstr ""
+
+#: modules/admin/templates/maintenance_tasks.phtml:15
+msgid "Queued"
+msgstr ""
+
+#: modules/admin/templates/maintenance_tasks.phtml:16
+msgid "Running"
+msgstr ""
+
+#: modules/admin/templates/maintenance_tasks.phtml:17
+msgid "Completed"
+msgstr ""
+
+#: modules/admin/templates/maintenance_tasks.phtml:18
+msgid "Failed"
+msgstr ""
+
+#: modules/admin/templates/maintenance_tasks.phtml:34
+msgid "Background tasks are started by the scheduler within a minute (a configured cron for \"schedule:run\" is required). Refresh the page to update the status."
+msgstr ""
+
+#: modules/admin/templates/maintenance_tasks.phtml:43
+msgid "Background"
+msgstr ""
+
+#: modules/admin/templates/maintenance_tasks.phtml:57
+msgid "Last run"
+msgstr ""
+
+#: modules/admin/templates/maintenance_tasks.phtml:63
+msgid "Last output"
+msgstr ""
+
+#: modules/admin/templates/maintenance_tasks.phtml:71
+msgid "Run"
+msgstr ""
+
+#: modules/admin/templates/maintenance_tasks.phtml:71
+msgid "Queue the task"
+msgstr ""
+
+#: modules/admin/templates/maintenance_tasks.phtml:79
+msgid "There are no available tasks"
 msgstr ""
 
