@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
+use Johncms\Modules\Downloads\Application\Sitemap\DownloadsUrlsProvider;
 use Johncms\Modules\Downloads\Domain\Repository\DownloadCategoryRepositoryInterface;
 use Johncms\Modules\Downloads\Domain\Repository\DownloadFileRepositoryInterface;
 use Johncms\Modules\Downloads\Infrastructure\Persistence\Repository\DownloadCategoryRepository;
@@ -38,4 +39,6 @@ return static function (ContainerConfigurator $container): void {
 
     $services->set(DownloadFileRepositoryInterface::class, DownloadFileRepository::class)->public();
     $services->set(DownloadCategoryRepositoryInterface::class, DownloadCategoryRepository::class)->public();
+
+    $services->set(DownloadsUrlsProvider::class, DownloadsUrlsProvider::class)->tag('johncms.sitemap_provider')->public();
 };
