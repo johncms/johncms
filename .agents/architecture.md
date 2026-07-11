@@ -58,3 +58,12 @@ Guidelines:
 * Prefer model query builder `get()` in repositories and return typed collections when downstream code needs model fields, mutators, and IDE autocompletion.
 * Use `toBase()` only when raw DB rows are explicitly required; do not mix model and raw-row contracts in the same repository API.
 * Always start queries with `Model::query()->...` instead of `Model::where(...)` directly — `::query()` returns a typed `Builder<Model>` that gives correct IDE autocompletion.
+
+### Method naming: `find*` vs `get*`
+
+Follow the existing convention across modules:
+
+* `find*` — single-entity lookup that **may return `null`**: `findById(int $id): ?User`, `findContact(...): ?Contact`.
+* `get*` — returns a **guaranteed** value or a `Collection` (never a bare `null` for a missing single entity): `getContacts(): Collection`, `getBlocklist(): Collection`.
+
+Rule of thumb: if the return type is `?Entity`, name it `find*`. The use case decides what a missing result means (e.g. throw a `*NotFoundException`).
