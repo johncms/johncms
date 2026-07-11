@@ -2,11 +2,13 @@
 
 ## Pipeline
 
-Source strings are **English msgids in code** (gettext-style). The flow is one-directional:
+Source strings are **English msgids in code** (gettext-style):
 
 ```
-PHP/phtml sources → composer translate-scan → <domain>.pot → Crowdin → <lang>.po → composer translate → <lang>.lng.php
+PHP/phtml sources → composer translate-scan → <domain>.pot ⇄ Crowdin ⇄ <lang>.po → composer translate → <lang>.lng.php
 ```
+
+`.po` files are synced with Crowdin **in both directions**: translations made in the Crowdin UI land in the repo, and `.po` edits committed to the repo are uploaded to Crowdin. Editing a `.po` in the repo is therefore a fully valid way to translate — the change will not be overwritten by the next sync.
 
 * `composer translate-scan` (`i18n:scan`) — scans sources per domain from `translate.xml` / `translate.xml.dist` and regenerates `<domain>.pot` templates.
 * `composer translate` (`i18n:translate`) — converts every `.po` file (`system/locale/*.po`, `modules/*/locale/*.po`, `install/locale/*.po`) into `.lng.php` dictionaries used at runtime.
@@ -22,7 +24,7 @@ docker exec $(docker ps -q -f name=johncms9.php-fpm) composer translate
 
 * **Never edit `.lng.php` files by hand** — they are generated from `.po` by `composer translate`. Any manual change will be lost.
 * **Never edit `.pot` files by hand** — they are generated from sources by `composer translate-scan`.
-* `.po` files are the only localization files that may be edited manually, and they are also synced with Crowdin. When asked to translate, edit only the requested language's `.po`; do not machine-translate other languages — those come from Crowdin.
+* `.po` files are the only localization files that may be edited manually (changes sync to Crowdin). Still, translate only the languages you were explicitly asked to; do not machine-translate the remaining languages on your own initiative.
 * After changing a `.po` file, always run `composer translate` to regenerate the matching `.lng.php` and commit both together.
 
 ## Translation Functions
