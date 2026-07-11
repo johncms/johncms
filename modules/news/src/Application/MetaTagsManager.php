@@ -17,10 +17,10 @@ use Johncms\Modules\News\Domain\Models\NewsSection;
 
 class MetaTagsManager
 {
-    /** @var string */
+    /** @var string|null */
     protected $title;
 
-    /** @var string */
+    /** @var string|null */
     protected $page_title;
 
     /** @var string */
@@ -35,8 +35,11 @@ class MetaTagsManager
     public function __construct()
     {
         $this->config = config('news') ?? [];
-        $this->title = $this->config['title'] ? $this->config['title'] : __('News');
-        $this->page_title = $this->config['title'] ? $this->config['title'] : __('News');
+        // Do not resolve __('News') here: this service is built via DI before the
+        // controller loads the "news" translation domain, so the fallback title is
+        // resolved lazily in toArray() once translations are available.
+        $this->title = $this->config['title'] ?: null;
+        $this->page_title = $this->config['title'] ?: null;
         $this->keywords = $this->config['meta_keywords'] ?? '';
         $this->description = $this->config['meta_description'] ?? '';
     }
@@ -99,8 +102,8 @@ class MetaTagsManager
     public function toArray(): array
     {
         return [
-            'title'       => $this->title,
-            'page_title'  => $this->page_title,
+            'title'       => $this->title ?? __('News'),
+            'page_title'  => $this->page_title ?? __('News'),
             'keywords'    => $this->keywords,
             'description' => $this->description,
         ];
