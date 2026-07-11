@@ -11,13 +11,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
-"PO-Revision-Date: 2026-03-24 21:40\n"
+"PO-Revision-Date: 2026-07-11 21:52\n"
 
-#: modules/registration/index.php:50
+#: modules/registration/src/Application/Controllers/RegistrationController.php:46
 #: modules/registration/templates/index.phtml:4
 #: modules/registration/templates/index.phtml:5
 #: modules/registration/templates/index.phtml:10
-#: modules/registration/templates/index.phtml:128
+#: modules/registration/templates/index.phtml:151
 #: modules/registration/templates/registration_closed.phtml:4
 #: modules/registration/templates/registration_closed.phtml:5
 #: modules/registration/templates/registration_result.phtml:4
@@ -25,7 +25,11 @@ msgstr ""
 msgid "Registration"
 msgstr "Реєстрація"
 
-#: modules/registration/index.php:169
+#: modules/registration/src/Application/Controllers/RegistrationController.php:104
+msgid "You must accept the consent to continue"
+msgstr ""
+
+#: modules/registration/src/Application/UseCases/RegisterUserUseCase.php:62
 msgid "Registration on the website"
 msgstr "Реєстрація на сайті"
 
