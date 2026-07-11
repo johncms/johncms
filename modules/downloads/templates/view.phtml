@@ -35,7 +35,7 @@ $this->layout('system::layout/default');
 <?php endif; ?>
 
 <?php if (! empty($file['screenshots'])): ?>
-    <div class="<?= count($file['screenshots']) > 1 ? 'screenshots' : '' ?> border-bottom mb-2 pb-3 swiper-container">
+    <div class="<?= count($file['screenshots']) > 1 ? 'screenshots' : '' ?> border-bottom mb-2 pb-3 swiper">
         <div class="swiper-wrapper image-gallery">
             <?php foreach ($file['screenshots'] as $number => $screenshot): ?>
                 <div class="swiper-slide <?= count($file['screenshots']) < 2 ? 'text-start' : '' ?>">
