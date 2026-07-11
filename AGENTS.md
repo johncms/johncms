@@ -12,6 +12,7 @@ Detailed rules live in `.agents/`. Before touching the listed area, READ the mat
 * Actions with access checks (guard → context → action), exception mapping → read `.agents/access-guard.md`
 * Paginated lists, page titles / meta description → read `.agents/pagination.md`
 * User input handling, output escaping in templates → read `.agents/escaping.md`
+* Translations, `.po`/`.pot`/`.lng.php` files, `__()` strings → read `.agents/localization.md`
 * Creating a new module (structure, autoload, DI, routes, templates) → read `.agents/new-module.md`
 
 ## Project Context
