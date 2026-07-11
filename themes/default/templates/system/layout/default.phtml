@@ -160,7 +160,7 @@ if (! $isHomePage && ! empty($baseTitle) && $baseTitle !== (string) $config['cop
         <div class="content-container-padding footer-padding">
             <div class="row justify-content-between align-items-center border-top py-3 page-footer">
                 <?php if (! empty($legalLinks)): ?>
-                    <div class="col-4">
+                    <div class="col-12 col-md-4 mb-2 mb-md-0">
                         <div class="legal-footer-links">
                             <?php foreach ($legalLinks as $label => $url): ?>
                                 <a href="<?= $this->e($url) ?>" class="me-3 small text-muted"><?= $this->e($label) ?></a> <br>
@@ -168,7 +168,7 @@ if (! $isHomePage && ! empty($baseTitle) && $baseTitle !== (string) $config['cop
                         </div>
                     </div>
                 <?php endif; ?>
-                <div class="col-4 <?php if (! empty($legalLinks)): ?>text-center<?php endif; ?>">
+                <div class="col-4 <?php if (! empty($legalLinks)): ?>text-md-center<?php endif; ?>">
                     <a href="https://twitter.com/johncms" title="Twitter" target="_blank" rel="nofollow" class="me-3 text-muted text-decoration-none">
                         <svg class="icon">
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#twitter"/>
