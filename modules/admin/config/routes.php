@@ -19,6 +19,7 @@ use Johncms\Modules\Admin\Application\Controllers\Settings\ModulesAccessControll
 use Johncms\Modules\Admin\Application\Controllers\Settings\SystemSettingsController;
 use Johncms\Modules\Admin\Application\Controllers\System\EmoticonsController;
 use Johncms\Modules\Admin\Application\Controllers\System\FileIntegrityController;
+use Johncms\Modules\Admin\Application\Controllers\System\MaintenanceTasksController;
 use Johncms\Modules\Admin\Application\Controllers\System\SystemCheckController;
 use Johncms\Modules\Admin\Application\Controllers\Users\AmnestyController;
 use Johncms\Modules\Admin\Application\Controllers\Users\BanListController;
@@ -129,6 +130,9 @@ return static function (RouteCollection $router, User $user): void {
             $sr->post('/admin/counters/{id:number}/down', [CountersController::class, 'down'])->name('admin.counters.down');
             $sr->get('/admin/counters/{id:number}/delete', [CountersController::class, 'deleteConfirm'])->name('admin.counters.delete_confirm');
             $sr->post('/admin/counters/{id:number}/delete', [CountersController::class, 'delete'])->name('admin.counters.delete');
+
+            $sr->get('/admin/maintenance', [MaintenanceTasksController::class, 'index'])->name('admin.maintenance');
+            $sr->post('/admin/maintenance/run', [MaintenanceTasksController::class, 'run'])->name('admin.maintenance.run');
 
             $sr->get('/admin/file-integrity', [FileIntegrityController::class, 'index'])->name('admin.file_integrity');
             $sr->get('/admin/file-integrity/scan', [FileIntegrityController::class, 'scan'])->name('admin.file_integrity.scan');

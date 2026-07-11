@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Console\Commands;
 
+use Johncms\AdminTasks\AsAdminTask;
 use Johncms\Scheduler\AsScheduledTask;
 use Johncms\Sitemap\SitemapGenerator;
 use Psr\Log\LoggerInterface;
@@ -19,6 +20,7 @@ use Throwable;
     description: 'Generate sitemap and update robots.txt',
 )]
 #[AsScheduledTask(expression: '0 3 * * *', withoutOverlapping: true)]
+#[AsAdminTask(title: 'Generate sitemap', description: 'Generate sitemap and update robots.txt', background: true)]
 final class CronGenerateSitemapCommand extends Command
 {
     public function __construct(

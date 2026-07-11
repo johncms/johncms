@@ -75,6 +75,11 @@ return static function (ContainerConfigurator $container): void {
                 ROOT_PATH . 'system/src/Validator',
                 ROOT_PATH . 'system/src/Ads.php',
                 ROOT_PATH . 'system/src/Sitemap/SitemapUrlEntry.php',
+                ROOT_PATH . 'system/src/AdminTasks/AsAdminTask.php',
+                ROOT_PATH . 'system/src/AdminTasks/AdminTaskDefinition.php',
+                ROOT_PATH . 'system/src/AdminTasks/AdminTaskState.php',
+                ROOT_PATH . 'system/src/AdminTasks/AdminTaskStatus.php',
+                ROOT_PATH . 'system/src/AdminTasks/AdminTaskBusyException.php',
                 ROOT_PATH . 'system/src/Scheduler/AsScheduledTask.php',
                 ROOT_PATH . 'system/src/Scheduler/ScheduledTaskDefinition.php',
                 ROOT_PATH . 'system/src/Http/PageMeta.php',
@@ -126,6 +131,10 @@ return static function (ContainerConfigurator $container): void {
     $services->set(\Johncms\Scheduler\ScheduleMutexInterface::class, \Johncms\Scheduler\FileScheduleMutex::class);
     $services->set(\Johncms\Scheduler\ScheduledTaskRegistry::class)
         ->arg('$commands', tagged_iterator('johncms.console_command'));
+    $services->set(\Johncms\AdminTasks\AdminTaskRegistry::class)
+        ->arg('$commands', tagged_iterator('johncms.console_command'));
+    $services->set(\Johncms\AdminTasks\AdminTaskRunner::class)
+        ->arg('$mutex', service(\Johncms\AdminTasks\FileAdminTaskMutex::class));
     $services->set(Application::class)
         ->factory(service(\Johncms\Console\ConsoleApplicationFactory::class))
         ->arg('$commands', tagged_iterator('johncms.console_command'));

@@ -18,6 +18,7 @@ docker-compose.override.yml
 !/data/cache/.gitkeep
 /data/logs/*
 !/data/logs/.gitkeep
+/data/admin_tasks/
 
 # Themes folder ignores
 /themes/default/assets/css/app.css.map

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Console\Commands;
 
+use Johncms\AdminTasks\AsAdminTask;
 use RuntimeException;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -15,6 +16,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
     name: 'cache:clear',
     description: 'Clear application cache files',
 )]
+#[AsAdminTask(title: 'Clear cache', description: 'Remove all application cache files')]
 final class CacheClearCommand extends Command
 {
     private const PRESERVED_FILES = [

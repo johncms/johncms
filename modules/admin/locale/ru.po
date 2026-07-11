@@ -1892,3 +1892,67 @@ msgstr "Вы действительно хотите удалить данног
 msgid "All threads and posts created by the user go in the hidden state"
 msgstr "Все темы и сообщения созданные пользователем, перейдут в скрытое состояние"
 
+
+#: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:89
+msgid "Maintenance"
+msgstr "Обслуживание"
+
+#: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:58
+msgid "The task has been queued and will start within a minute"
+msgstr "Задача поставлена в очередь и запустится в течение минуты"
+
+#: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:62
+msgid "The task has been completed"
+msgstr "Задача выполнена"
+
+#: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:63
+msgid "The task has failed"
+msgstr "Задача завершилась с ошибкой"
+
+#: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:69
+msgid "The task is already running"
+msgstr "Задача уже выполняется"
+
+#: modules/admin/templates/maintenance_tasks.phtml:15
+msgid "Queued"
+msgstr "В очереди"
+
+#: modules/admin/templates/maintenance_tasks.phtml:16
+msgid "Running"
+msgstr "Выполняется"
+
+#: modules/admin/templates/maintenance_tasks.phtml:17
+msgid "Completed"
+msgstr "Выполнена"
+
+#: modules/admin/templates/maintenance_tasks.phtml:18
+msgid "Failed"
+msgstr "Ошибка"
+
+#: modules/admin/templates/maintenance_tasks.phtml:34
+msgid "Background tasks are started by the scheduler within a minute (a configured cron for \"schedule:run\" is required). Refresh the page to update the status."
+msgstr "Фоновые задачи запускаются планировщиком в течение минуты (требуется настроенный cron для «schedule:run»). Обновите страницу, чтобы увидеть актуальный статус."
+
+#: modules/admin/templates/maintenance_tasks.phtml:43
+msgid "Background"
+msgstr "Фоновая"
+
+#: modules/admin/templates/maintenance_tasks.phtml:57
+msgid "Last run"
+msgstr "Последний запуск"
+
+#: modules/admin/templates/maintenance_tasks.phtml:63
+msgid "Last output"
+msgstr "Последний вывод"
+
+#: modules/admin/templates/maintenance_tasks.phtml:71
+msgid "Run"
+msgstr "Запустить"
+
+#: modules/admin/templates/maintenance_tasks.phtml:71
+msgid "Queue the task"
+msgstr "Поставить в очередь"
+
+#: modules/admin/templates/maintenance_tasks.phtml:79
+msgid "There are no available tasks"
+msgstr "Нет доступных задач"
