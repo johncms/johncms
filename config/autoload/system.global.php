@@ -17,6 +17,10 @@ return [
         'flsz'                    => 1000,
         'gzip'                    => 1,
         'homeurl'                 => 'http://localhost',
+        'privacy_policy_url'      => '',
+        'terms_of_use_url'        => '',
+        'personal_data_policy_url' => '',
+        'cookie_policy_url'       => '',
         'karma'                   => [
             'karma_points' => 5,
             'karma_time'   => 86400,

@@ -878,3 +878,19 @@ msgstr "Изменен"
 msgid "Page"
 msgstr "Страница"
 
+
+#: themes/default/templates/system/layout/default.phtml:154
+msgid "Privacy Policy"
+msgstr "Политика конфиденциальности"
+
+#: themes/default/templates/system/layout/default.phtml:155
+msgid "Terms of Use"
+msgstr "Пользовательское соглашение"
+
+#: themes/default/templates/system/layout/default.phtml:156
+msgid "Personal Data Processing Policy"
+msgstr "Политика обработки персональных данных"
+
+#: themes/default/templates/system/layout/default.phtml:157
+msgid "Cookie Policy"
+msgstr "Политика использования cookie"

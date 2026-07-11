@@ -1956,3 +1956,27 @@ msgstr "Поставить в очередь"
 #: modules/admin/templates/maintenance_tasks.phtml:79
 msgid "There are no available tasks"
 msgstr "Нет доступных задач"
+
+#: modules/admin/templates/settings.phtml:85
+msgid "Legal documents"
+msgstr "Юридические документы"
+
+#: modules/admin/templates/settings.phtml:86
+msgid "If the link is filled in, it will be displayed in the site footer."
+msgstr "Если ссылка заполнена, она будет отображаться в футере сайта."
+
+#: modules/admin/templates/settings.phtml:88
+msgid "Privacy Policy"
+msgstr "Политика конфиденциальности"
+
+#: modules/admin/templates/settings.phtml:92
+msgid "Terms of Use"
+msgstr "Пользовательское соглашение"
+
+#: modules/admin/templates/settings.phtml:96
+msgid "Personal Data Processing Policy"
+msgstr "Политика обработки персональных данных"
+
+#: modules/admin/templates/settings.phtml:100
+msgid "Cookie Policy"
+msgstr "Политика использования cookie"

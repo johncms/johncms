@@ -732,6 +732,22 @@ msgstr ""
 msgid "Exit"
 msgstr ""
 
+#: themes/default/templates/system/layout/default.phtml:154
+msgid "Privacy Policy"
+msgstr ""
+
+#: themes/default/templates/system/layout/default.phtml:155
+msgid "Terms of Use"
+msgstr ""
+
+#: themes/default/templates/system/layout/default.phtml:156
+msgid "Personal Data Processing Policy"
+msgstr ""
+
+#: themes/default/templates/system/layout/default.phtml:157
+msgid "Cookie Policy"
+msgstr ""
+
 #: themes/default/templates/system/mail/layouts/default.phtml:115
 msgid "The email is generated automatically. Please don't answer it. <br> To contact us, use the contact information on our website."
 msgstr ""

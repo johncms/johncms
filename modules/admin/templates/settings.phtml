@@ -82,6 +82,26 @@ $this->layout('system::layout/default');
             </div>
         </fieldset>
         <fieldset class="mt-3">
+            <legend><?= __('Legal documents') ?></legend>
+            <div class="small text-muted mb-2"><?= __('If the link is filled in, it will be displayed in the site footer.') ?></div>
+            <div class="form-group">
+                <label for="privacy_policy_url"><?= __('Privacy Policy') ?></label>
+                <input type="text" id="privacy_policy_url" name="privacy_policy_url" class="form-control" value="<?= $this->e($sysconf['privacy_policy_url'] ?? '') ?>"/>
+            </div>
+            <div class="form-group">
+                <label for="terms_of_use_url"><?= __('Terms of Use') ?></label>
+                <input type="text" id="terms_of_use_url" name="terms_of_use_url" class="form-control" value="<?= $this->e($sysconf['terms_of_use_url'] ?? '') ?>"/>
+            </div>
+            <div class="form-group">
+                <label for="personal_data_policy_url"><?= __('Personal Data Processing Policy') ?></label>
+                <input type="text" id="personal_data_policy_url" name="personal_data_policy_url" class="form-control" value="<?= $this->e($sysconf['personal_data_policy_url'] ?? '') ?>"/>
+            </div>
+            <div class="form-group">
+                <label for="cookie_policy_url"><?= __('Cookie Policy') ?></label>
+                <input type="text" id="cookie_policy_url" name="cookie_policy_url" class="form-control" value="<?= $this->e($sysconf['cookie_policy_url'] ?? '') ?>"/>
+            </div>
+        </fieldset>
+        <fieldset class="mt-3">
             <legend><?= __('Themes') ?></legend>
             <select id="skindef" name="skindef" class="form-control">
                 <?php foreach ($themelist as $theme): ?>

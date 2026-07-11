@@ -19,6 +19,10 @@ final readonly class SystemSettingsDTO
         public string $metaDescription,
         public int $userEmailRequired,
         public int $userEmailConfirmation,
+        public string $privacyPolicyUrl,
+        public string $termsOfUseUrl,
+        public string $personalDataPolicyUrl,
+        public string $cookiePolicyUrl,
     ) {
     }
 }

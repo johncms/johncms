@@ -402,6 +402,12 @@
       'Run' => 'Запустить',
       'Queue the task' => 'Поставить в очередь',
       'There are no available tasks' => 'Нет доступных задач',
+      'Legal documents' => 'Юридические документы',
+      'If the link is filled in, it will be displayed in the site footer.' => 'Если ссылка заполнена, она будет отображаться в футере сайта.',
+      'Privacy Policy' => 'Политика конфиденциальности',
+      'Terms of Use' => 'Пользовательское соглашение',
+      'Personal Data Processing Policy' => 'Политика обработки персональных данных',
+      'Cookie Policy' => 'Политика использования cookie',
     ),
   ),
 );

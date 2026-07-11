@@ -67,6 +67,10 @@ final readonly class SystemSettingsController
             metaDescription: (string) $this->request->getPost('meta_desc', 'johncms'),
             userEmailRequired: (int) $this->request->getPost('user_email_required', 0, FILTER_VALIDATE_INT),
             userEmailConfirmation: (int) $this->request->getPost('user_email_confirmation', 0, FILTER_VALIDATE_INT),
+            privacyPolicyUrl: trim((string) $this->request->getPost('privacy_policy_url', '')),
+            termsOfUseUrl: trim((string) $this->request->getPost('terms_of_use_url', '')),
+            personalDataPolicyUrl: trim((string) $this->request->getPost('personal_data_policy_url', '')),
+            cookiePolicyUrl: trim((string) $this->request->getPost('cookie_policy_url', '')),
         );
     }
 

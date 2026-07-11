@@ -147,9 +147,28 @@ if (! $isHomePage && ! empty($baseTitle) && $baseTitle !== (string) $config['cop
     </div>
     <div class="overlay"></div>
     <div class="page_layout w-100">
+        <?php
+        $legalLinks = array_filter(
+            [
+                d__('system', 'Privacy Policy')                  => $config['privacy_policy_url'] ?? '',
+                d__('system', 'Terms of Use')                    => $config['terms_of_use_url'] ?? '',
+                d__('system', 'Personal Data Processing Policy') => $config['personal_data_policy_url'] ?? '',
+                d__('system', 'Cookie Policy')                   => $config['cookie_policy_url'] ?? '',
+            ]
+        );
+        ?>
         <div class="content-container-padding footer-padding">
-            <div class="d-flex justify-content-between align-items-center border-top p-4 page-footer">
-                <div class="ps-1">
+            <div class="row justify-content-between align-items-center border-top py-3 page-footer">
+                <?php if (! empty($legalLinks)): ?>
+                    <div class="col-4">
+                        <div class="legal-footer-links">
+                            <?php foreach ($legalLinks as $label => $url): ?>
+                                <a href="<?= $this->e($url) ?>" class="me-3 small text-muted"><?= $this->e($label) ?></a> <br>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                <?php endif; ?>
+                <div class="col-4 <?php if (! empty($legalLinks)): ?>text-center<?php endif; ?>">
                     <a href="https://twitter.com/johncms" title="Twitter" target="_blank" rel="nofollow" class="me-3 text-muted text-decoration-none">
                         <svg class="icon">
                             <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#twitter"/>
@@ -166,7 +185,7 @@ if (! $isHomePage && ! empty($baseTitle) && $baseTitle !== (string) $config['cop
                         </svg>
                     </a>
                 </div>
-                <div class="flex-shrink-1 d-flex position-relative">
+                <div class="col-4 justify-content-end text-end d-flex flex-wrap position-relative">
                     <?php if (! empty($analytics)): ?>
                         <!-- Counters -->
                         <div class="me-2 d-flex">
@@ -175,7 +194,7 @@ if (! $isHomePage && ! empty($baseTitle) && $baseTitle !== (string) $config['cop
                             <?php endforeach; ?>
                         </div>
                     <?php endif; ?>
-                    <div>
+                    <div class="flex-grow-1 w-100">
                         &copy; <?= date('Y') ?>, <a href="https://johncms.com" target="_blank" rel="nofollow" class="text-info">JohnCMS</a>
                     </div>
                     <?= $this->fetch('system::app/debug') ?>

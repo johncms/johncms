@@ -34,6 +34,10 @@ final readonly class UpdateSystemSettingsUseCase
         $config['meta_desc'] = $dto->metaDescription;
         $config['user_email_required'] = $dto->userEmailRequired;
         $config['user_email_confirmation'] = $dto->userEmailConfirmation;
+        $config['privacy_policy_url'] = $dto->privacyPolicyUrl;
+        $config['terms_of_use_url'] = $dto->termsOfUseUrl;
+        $config['personal_data_policy_url'] = $dto->personalDataPolicyUrl;
+        $config['cookie_policy_url'] = $dto->cookiePolicyUrl;
 
         $this->configRepository->saveJohncms($config);
     }
