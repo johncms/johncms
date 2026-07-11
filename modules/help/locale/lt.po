@@ -11,46 +11,68 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Lithuanian\n"
 "Language: lt_LT\n"
-"PO-Revision-Date: 2026-03-24 21:39\n"
+"PO-Revision-Date: 2026-07-11 14:55\n"
 
-#: modules/help/includes/admsmilies.php:20
-#: modules/help/includes/smilies.php:35
+#: modules/help/src/Application/Controllers/AdminSmiliesController.php:43
+#: modules/help/src/Application/Controllers/AdminSmiliesController.php:49
+#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:60
 msgid "For administration"
 msgstr "Administracijai"
 
-#: modules/help/includes/admsmilies.php:21
-#: modules/help/includes/my_smilies.php:22
-#: modules/help/includes/usersmilies.php:39
-#: modules/help/templates/index.phtml:31
-msgid "Smilies"
-msgstr "Šypsenėlės"
-
-#: modules/help/includes/admsmilies.php:32
+#: modules/help/src/Application/Controllers/AdminSmiliesController.php:45
 msgid "Access forbidden"
 msgstr "Prieiga uždrausta"
 
-#: modules/help/includes/avatars.php:20
+#: modules/help/src/Application/Controllers/AdminSmiliesController.php:51
+#: modules/help/src/Application/Controllers/AvatarCatalogController.php:33
+#: modules/help/src/Application/Controllers/AvatarListController.php:50
+#: modules/help/src/Application/Controllers/ForumRulesController.php:33
+#: modules/help/src/Application/Controllers/HelpIndexController.php:35
+#: modules/help/src/Application/Controllers/MySmiliesController.php:53
+#: modules/help/src/Application/Controllers/SetAvatarController.php:61
+#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:37
+#: modules/help/src/Application/Controllers/UserSmiliesController.php:53
+msgid "Information, FAQ"
+msgstr "Informacija, klausimai ir atsakymai"
+
+#: modules/help/src/Application/Controllers/AdminSmiliesController.php:52
+#: modules/help/src/Application/Controllers/AdminSmiliesController.php:62
+#: modules/help/src/Application/Controllers/MySmiliesController.php:54
+#: modules/help/src/Application/Controllers/MySmiliesController.php:64
+#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:35
+#: modules/help/src/Application/Controllers/UserSmiliesController.php:54
+#: modules/help/src/Application/Controllers/UserSmiliesController.php:64
+msgid "Smiles"
+msgstr "Šypsenėlės"
+
+#: modules/help/src/Application/Controllers/AvatarCatalogController.php:31
+#: modules/help/src/Application/Controllers/AvatarListController.php:51
+#: modules/help/src/Application/Controllers/SetAvatarController.php:62
 #: modules/help/templates/index.phtml:30
 msgid "Avatars"
 msgstr "Avatarai"
 
-#: modules/help/includes/avatars.php:37
-msgid "Avatar has been successfully applied"
-msgstr "Avataras sėkmingai nustatytas"
+#: modules/help/src/Application/Controllers/AvatarListController.php:40
+#: modules/help/src/Application/Controllers/SetAvatarController.php:51
+#: modules/help/src/Application/Controllers/UserSmiliesController.php:43
+msgid "Wrong data"
+msgstr ""
 
-#: modules/help/includes/avatars.php:39
-msgid "Continue"
-msgstr "Tęsti"
+#: modules/help/src/Application/Controllers/AvatarListController.php:42
+#: modules/help/src/Application/Controllers/UserSmiliesController.php:45
+msgid "The directory does not exist"
+msgstr ""
 
-#: modules/help/includes/avatars.php:48
-msgid "An error occurred"
-msgstr "Įvyko klaida"
-
-#: modules/help/includes/avatars.php:50
+#: modules/help/src/Application/Controllers/AvatarListController.php:44
+#: modules/help/src/Application/Controllers/MySmiliesController.php:47
+#: modules/help/src/Application/Controllers/SetAvatarController.php:42
+#: modules/help/src/Application/Controllers/SetAvatarController.php:55
+#: modules/help/src/Application/Controllers/SetAvatarController.php:87
+#: modules/help/src/Application/Controllers/SetMySmiliesController.php:42
+#: modules/help/src/Application/Controllers/UserSmiliesController.php:47
 #: modules/help/templates/avatar_list.phtml:65
 #: modules/help/templates/avatars.phtml:48
-#: modules/help/templates/bbcode.phtml:89
-#: modules/help/templates/forum_rules.phtml:59
+#: modules/help/templates/forum_rules.phtml:60
 #: modules/help/templates/index.phtml:34
 #: modules/help/templates/my_smiles_list.phtml:81
 #: modules/help/templates/smiles.phtml:48
@@ -58,87 +80,114 @@ msgstr "Įvyko klaida"
 msgid "Back"
 msgstr "Atgal"
 
-#: modules/help/includes/avatars.php:55
-msgid "Set to Profile"
-msgstr "Nustatyti į anketą"
-
-#: modules/help/includes/avatars.php:58
-msgid "Are you sure you want to set yourself this avatar?"
-msgstr "Ar jūs tikrai norite nustatyti šį avatarą į jūsų anketą?"
-
-#: modules/help/includes/avatars.php:61
-msgid "Save"
-msgstr "Išsaugoti"
-
-#: modules/help/includes/forum.php:15
-#: modules/help/templates/index.phtml:28
+#: modules/help/src/Application/Controllers/ForumRulesController.php:31
+#: modules/help/templates/index.phtml:29
 msgid "Forum rules"
 msgstr "Forumo taisyklės"
 
-#: modules/help/includes/my_smilies.php:21
-#: modules/help/includes/smilies.php:27
+#: modules/help/src/Application/Controllers/MySmiliesController.php:43
+#: modules/help/src/Application/Controllers/SetAvatarController.php:38
+#: modules/help/src/Application/Controllers/SetMySmiliesController.php:38
+msgid "Access denied"
+msgstr ""
+
+#: modules/help/src/Application/Controllers/MySmiliesController.php:45
+#: modules/help/src/Application/Controllers/SetAvatarController.php:40
+#: modules/help/src/Application/Controllers/SetMySmiliesController.php:40
+msgid "You are not logged in"
+msgstr ""
+
+#: modules/help/src/Application/Controllers/MySmiliesController.php:51
+#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:52
 #: modules/help/templates/smiles_list.phtml:45
 msgid "My smilies"
 msgstr "Mano šypsenėlės"
 
-#: modules/help/includes/smilies.php:19
-msgid "Smiles"
-msgstr "Šypsenėlės"
+#: modules/help/src/Application/Controllers/SetAvatarController.php:53
+msgid "File does not exist"
+msgstr ""
 
-#: modules/help/includes/tags.php:15
-#: modules/help/templates/index.phtml:29
-msgid "bbCode Tags"
-msgstr "bbCode Žymės"
+#: modules/help/src/Application/Controllers/SetAvatarController.php:59
+msgid "Set to Profile"
+msgstr "Nustatyti į anketą"
 
-#: modules/help/index.php:54
-msgid "Information, FAQ"
-msgstr "Informacija, klausimai ir atsakymai"
+#: modules/help/src/Application/Controllers/SetAvatarController.php:76
+msgid "Avatar has been successfully applied"
+msgstr "Avataras sėkmingai nustatytas"
 
-#: modules/help/index.php:64
+#: modules/help/src/Application/Controllers/SetAvatarController.php:78
+msgid "Continue"
+msgstr "Tęsti"
+
+#: modules/help/src/Application/Controllers/SetAvatarController.php:85
+msgid "An error occurred"
+msgstr "Įvyko klaida"
+
+#: modules/help/src/Application/Controllers/SetAvatarController.php:94
+msgid "Are you sure you want to set yourself this avatar?"
+msgstr "Ar jūs tikrai norite nustatyti šį avatarą į jūsų anketą?"
+
+#: modules/help/src/Application/Controllers/SetAvatarController.php:97
+msgid "Save"
+msgstr "Išsaugoti"
+
+#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:92
+#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:85
 msgid "Animals"
 msgstr "Gyvūnai"
 
-#: modules/help/index.php:65
+#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:93
+#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:86
 msgid "Brawl, Weapons"
 msgstr "Kova, ginklai"
 
-#: modules/help/index.php:66
+#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:94
+#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:87
 msgid "Emotions"
 msgstr "Emocijos"
 
-#: modules/help/index.php:67
+#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:95
+#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:88
 msgid "Flowers"
 msgstr "Gėlės"
 
-#: modules/help/index.php:68
+#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:96
+#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:89
 msgid "Food, Alcohol"
 msgstr "Maistas, Alkoholis"
 
-#: modules/help/index.php:69
+#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:97
+#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:90
 msgid "Gestures"
 msgstr "Gestai"
 
-#: modules/help/index.php:70
+#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:98
+#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:91
 msgid "Holidays"
 msgstr "Atostogos"
 
-#: modules/help/index.php:71
+#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:99
+#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:92
 msgid "Love"
 msgstr "Meilė"
 
-#: modules/help/index.php:72
+#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:100
+#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:93
 msgid "Miscellaneous"
 msgstr "Kiti"
 
-#: modules/help/index.php:73
+#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:101
+#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:94
 msgid "Music, Dancing"
 msgstr "Muzika, Šokiai"
 
-#: modules/help/index.php:74
+#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:102
+#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:95
 msgid "Sports"
 msgstr "Sportas"
 
-#: modules/help/index.php:75
+#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:103
+#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:96
 msgid "Technology"
 msgstr "Technologijos"
 
@@ -156,153 +205,89 @@ msgstr "Sąrašas tuščias"
 msgid "Total:"
 msgstr "Viso:"
 
-#: modules/help/templates/bbcode.phtml:30
-msgid "PHP code"
-msgstr "PHP kodas"
-
-#: modules/help/templates/bbcode.phtml:33
-msgid "Link name"
-msgstr "Nuorodos pavadinimas"
-
-#: modules/help/templates/bbcode.phtml:34
-msgid "URL Link"
-msgstr "URL Nuoroda"
-
-#: modules/help/templates/bbcode.phtml:38
-msgid "Bold"
-msgstr "Paryškintas"
-
-#: modules/help/templates/bbcode.phtml:42
-msgid "Italic"
-msgstr "Kursyvinis"
-
-#: modules/help/templates/bbcode.phtml:46
-msgid "Underline"
-msgstr "Pabrauktas"
-
-#: modules/help/templates/bbcode.phtml:50
-msgid "Strike"
-msgstr "Perbrauktas"
-
-#: modules/help/templates/bbcode.phtml:54
-msgid "Red"
-msgstr "Raudonas"
-
-#: modules/help/templates/bbcode.phtml:58
-msgid "Green"
-msgstr "Žalias"
-
-#: modules/help/templates/bbcode.phtml:62
-msgid "Blue"
-msgstr "Mėlynas"
-
-#: modules/help/templates/bbcode.phtml:66
-msgid "Text Color"
-msgstr "Teksto spalva"
-
-#: modules/help/templates/bbcode.phtml:70
-msgid "Background Color"
-msgstr "Fono spalva"
-
-#: modules/help/templates/bbcode.phtml:74
-msgid "Quote"
-msgstr "Cituoti"
-
-#: modules/help/templates/bbcode.phtml:78
-msgid "Bulleted list"
-msgstr "Suženklintasis sąrašas"
-
-#: modules/help/templates/bbcode.phtml:81
-msgid "Title"
-msgstr "Pavadinimas"
-
-#: modules/help/templates/bbcode.phtml:81
-msgid "Text"
-msgstr "Tekstas"
-
-#: modules/help/templates/bbcode.phtml:82
-msgid "Spoiler"
-msgstr "Paslėptukas"
-
 #: modules/help/templates/confirm.phtml:40
 msgid "Cancel"
 msgstr "Atšaukti"
 
-#: modules/help/templates/forum_rules.phtml:26
+#: modules/help/templates/forum_rules.phtml:27
 msgid "FORBIDDEN"
 msgstr "DRAUDŽIAMA"
 
-#: modules/help/templates/forum_rules.phtml:28
+#: modules/help/templates/forum_rules.phtml:29
 msgid "Advertising messages"
 msgstr "Reklaminiai pranešimai"
 
-#: modules/help/templates/forum_rules.phtml:29
+#: modules/help/templates/forum_rules.phtml:30
 msgid "The messages containing direct propagation of racial, national and religious animosity"
 msgstr "Pranešimai, kurių sudėtyje yra rasinių, nacionalinų ir religinų propagandų"
 
-#: modules/help/templates/forum_rules.phtml:30
+#: modules/help/templates/forum_rules.phtml:31
 msgid "Any abusive, obscene, vulgar, slanderous, hateful, threatening and sexually-oriented messages or any other material that may violate any applicable laws"
 msgstr "Įžeidžiančių, nepadorių, vulgarinių, šmeižikiškų, bjaurių, grasinančių, seksualiai orientuotų pranešimų arba bet kurių kitų medžiagų, kurie galį pažeisti galiojančius įstatymus"
 
-#: modules/help/templates/forum_rules.phtml:31
+#: modules/help/templates/forum_rules.phtml:32
 msgid "The messages obviously offending someone, espcially forum users"
 msgstr "Pranešimai, kurios įžeidžia ka nors"
 
-#: modules/help/templates/forum_rules.phtml:32
+#: modules/help/templates/forum_rules.phtml:33
 msgid "Purposely to deform a writing of nicknames of other users for the purpose of giving to the message an offensive shade"
 msgstr "Sąmoningai defarmuoti slapyvardžių kitų vartotojų kad kaip nors įžeisti juos"
 
-#: modules/help/templates/forum_rules.phtml:33
+#: modules/help/templates/forum_rules.phtml:34
 msgid "Publishing deleted by moderator messages repeatedly"
 msgstr "Pakartotinai publikuoti pranešimus, kurios jau trinė administracija"
 
-#: modules/help/templates/forum_rules.phtml:34
+#: modules/help/templates/forum_rules.phtml:35
 msgid "Post messages not related to the topic"
 msgstr "Publikuoti pranešimus, nesusijusęs su tema"
 
-#: modules/help/templates/forum_rules.phtml:35
+#: modules/help/templates/forum_rules.phtml:36
 msgid "Continuing topics that have been closed by moderator"
 msgstr "Testi tėmas, kurios buvo uždarytos administracija"
 
-#: modules/help/templates/forum_rules.phtml:38
+#: modules/help/templates/forum_rules.phtml:39
 msgid "ABSOLUTELY FORBIDDEN"
 msgstr "Visiškai draudžiama"
 
-#: modules/help/templates/forum_rules.phtml:40
+#: modules/help/templates/forum_rules.phtml:41
 msgid "Writing in the public topics a discontent with inappropriate actions of other users and discussing about moderators working. Use private messages for this purpose"
 msgstr "Rašyti viėšai dėl blogio neadekvato elgesio kitu vartotojų ir administracijos darba. Naudokite pašto dežute svetainėje"
 
-#: modules/help/templates/forum_rules.phtml:41
+#: modules/help/templates/forum_rules.phtml:42
 msgid "Register the nicknames having offensive tone for other users"
 msgstr "Slapyvaržių registravimas, kurie turi įžeidžiantį tona kitiems vartotojams"
 
-#: modules/help/templates/forum_rules.phtml:44
+#: modules/help/templates/forum_rules.phtml:45
 msgid "UNACCEPTABLE"
 msgstr "Nereiketų"
 
-#: modules/help/templates/forum_rules.phtml:46
+#: modules/help/templates/forum_rules.phtml:47
 msgid "Quote full messages of the previous user and quote the messages already containing other quotes"
 msgstr "Cituoti visą pranešimo buvusio vartotojo ir cituoti žinutes, jau turinčias kitų žinučių citavimą"
 
-#: modules/help/templates/forum_rules.phtml:47
+#: modules/help/templates/forum_rules.phtml:48
 msgid "Post messages only contains external link"
 msgstr "Rašyti žinutes, kurie turi išorine nuoroda"
 
-#: modules/help/templates/forum_rules.phtml:48
+#: modules/help/templates/forum_rules.phtml:49
 msgid "Post messages written in translite"
 msgstr "Rašyti žinutės parašytus translitų"
 
-#: modules/help/templates/forum_rules.phtml:49
+#: modules/help/templates/forum_rules.phtml:50
 msgid "Posting of purposeless messages: consisting of smileys only or posts like \"Ok\", \"What?\", \"Who is there?\", etc."
 msgstr "Rašyti žinutes beprasmius pranešimus turinčias tik šypsenėles arba pav.: \"ok\", \"kas?\", \"Kas čia\" ir t. t."
 
-#: modules/help/templates/forum_rules.phtml:54
+#: modules/help/templates/forum_rules.phtml:55
 msgid "Message posted despite the above warnings will be changed or deleted."
 msgstr "Pranešimai paskelbti nepaisant minėtų įspėjimų bus pakeisti arba ištrinti."
 
-#: modules/help/templates/forum_rules.phtml:55
+#: modules/help/templates/forum_rules.phtml:56
 msgid "This rule applies to all members and moderators, repeated actions will make you get ban or even lose your account."
 msgstr "Ši taisyklė taikoma visiems vartotojams ir moderatoriams, pakartotinį veiksmai gali privesti prie bano, arba visiškam blokavimui jūsų profiliui."
+
+#: modules/help/templates/index.phtml:31
+msgid "Smilies"
+msgstr "Šypsenėlės"
 
 #: modules/help/templates/my_smiles_list.phtml:36
 msgid "Add Smilies"
