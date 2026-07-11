@@ -11,544 +11,615 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Uzbek\n"
 "Language: uz_UZ\n"
-"PO-Revision-Date: 2026-03-24 21:42\n"
+"PO-Revision-Date: 2026-07-11 14:57\n"
 
-#: modules/profile/includes/activity.php:25
-#: modules/profile/templates/index.phtml:253
-#: modules/profile/templates/stat.phtml:50
+#: modules/profile/src/Application/Controllers/AccountController.php:27
+#: modules/profile/src/Application/Controllers/SettingsController.php:159
+msgid "My Account"
+msgstr "Mening sahifam"
+
+#: modules/profile/src/Application/Controllers/ActivityController.php:65
+#: modules/profile/src/Application/Controllers/ActivityController.php:72
+#: modules/profile/src/Application/Controllers/ActivityController.php:75
+#: modules/profile/templates/statistics.phtml:51
+#: modules/profile/templates/view.phtml:255
 msgid "Activity"
 msgstr "Faollik"
 
-#: modules/profile/includes/activity.php:27
-#: modules/profile/includes/edit.php:52
-#: modules/profile/includes/guestbook.php:15
-#: modules/profile/includes/images.php:159
-#: modules/profile/includes/reset.php:20
-#: modules/profile/templates/office.phtml:32
-msgid "Profile"
-msgstr "Profil"
-
-#: modules/profile/includes/activity.php:27
-#: modules/profile/includes/edit.php:52
-#: modules/profile/includes/images.php:159
-#: modules/profile/includes/index.php:24
-msgid "My Profile"
-msgstr "Mening profilim"
-
-#: modules/profile/includes/activity.php:33
+#: modules/profile/src/Application/Controllers/ActivityController.php:107
 msgid "Messages"
 msgstr "Xatlar"
 
-#: modules/profile/includes/activity.php:38
+#: modules/profile/src/Application/Controllers/ActivityController.php:112
 msgid "Themes"
 msgstr "Mavzular"
 
-#: modules/profile/includes/activity.php:43
-#: modules/profile/includes/ban.php:392
-#: modules/profile/templates/ban.phtml:45
-#: modules/profile/templates/stat.phtml:54
+#: modules/profile/src/Application/Controllers/ActivityController.php:117
+#: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:42
+#: modules/profile/templates/ban.phtml:46
+#: modules/profile/templates/statistics.phtml:55
 msgid "Comments"
 msgstr "Sharxlar"
 
-#: modules/profile/includes/ban.php:16
-msgid "Ban the User"
-msgstr "Foydalanuvchi to'silgan"
+#: modules/profile/src/Application/Controllers/AvatarController.php:52
+#: modules/profile/src/Application/Controllers/PhotoController.php:52
+msgid "An error occurred"
+msgstr ""
 
-#: modules/profile/includes/ban.php:30
-msgid "You do not have enought rights to ban this user"
-msgstr "Sizda ushbu foydalanuvchini to'sish uchun etarli huquqlaringiz yo'q"
+#: modules/profile/src/Application/Controllers/AvatarController.php:59
+#: modules/profile/src/Application/Controllers/AvatarController.php:71
+#: modules/profile/src/Application/Controllers/AvatarController.php:82
+#: modules/profile/src/Application/Controllers/AvatarController.php:125
+msgid "Upload Avatar"
+msgstr "Avatarni yuklash"
 
-#: modules/profile/includes/ban.php:44
-msgid "Reason not specified"
-msgstr "Sabab ko'rsatilmagan"
+#: modules/profile/src/Application/Controllers/AvatarController.php:63
+#: modules/profile/src/Application/Controllers/ChangePasswordController.php:97
+#: modules/profile/src/Application/Controllers/PhotoController.php:63
+msgid "Repeat"
+msgstr "Takrorlash"
 
-#: modules/profile/includes/ban.php:48
-msgid "There is no required data"
-msgstr "Kerakli ma'lumotlar yo'q"
+#: modules/profile/src/Application/Controllers/AvatarController.php:73
+msgid "The avatar is successfully uploaded"
+msgstr "Avatar muvaffaqiyatli yuklandi"
 
-#: modules/profile/includes/ban.php:58
-msgid "You have no rights to ban in this section"
-msgstr "Ushbu bo'limda taqiqlash huquqingiz yo'q"
+#: modules/profile/src/Application/Controllers/AvatarController.php:75
+#: modules/profile/src/Application/Controllers/ChangePasswordController.php:114
+#: modules/profile/src/Application/Controllers/KarmaController.php:127
+#: modules/profile/src/Application/Controllers/PhotoController.php:75
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:121
+#: modules/profile/templates/restore_password.phtml:43
+#: modules/profile/templates/restore_password_set.phtml:19
+msgid "Continue"
+msgstr "Davom etish"
 
-#: modules/profile/includes/ban.php:62
-msgid "Ban already active"
-msgstr "To'siq allaqachon faol"
+#: modules/profile/src/Application/Controllers/AvatarController.php:84
+#: modules/profile/src/Application/Controllers/EditProfileController.php:190
+#: modules/profile/src/Application/Controllers/PhotoController.php:84
+#: modules/profile/src/Application/UseCases/GetProfileViewUseCase.php:76
+msgid "My Profile"
+msgstr "Mening profilim"
 
-#: modules/profile/includes/ban.php:143
-msgid "System"
-msgstr "Tizim"
+#: modules/profile/src/Application/Controllers/AvatarController.php:84
+#: modules/profile/src/Application/Controllers/EditProfileController.php:190
+#: modules/profile/src/Application/Controllers/GuestbookController.php:47
+#: modules/profile/src/Application/Controllers/PhotoController.php:84
+#: modules/profile/templates/account.phtml:30
+msgid "Profile"
+msgstr "Profil"
 
-#: modules/profile/includes/ban.php:147
-#: modules/profile/includes/index.php:151
-msgid "Ban"
-msgstr "To'sib qo'yish"
-
-#: modules/profile/includes/ban.php:158
-msgid "User banned"
-msgstr "Foydalanuvchi to'sib qo'yildi"
-
-#: modules/profile/includes/ban.php:192
-msgid "Ban termination"
-msgstr "To'siqni bekor qilish"
-
-#: modules/profile/includes/ban.php:200
-#: modules/profile/includes/ban.php:258
-#: modules/profile/includes/ban.php:277
-#: modules/profile/includes/ban.php:324
-#: modules/profile/skl.php:141
+#: modules/profile/src/Application/Controllers/BanController.php:90
+#: modules/profile/src/Application/Controllers/BanController.php:119
+#: modules/profile/src/Application/Controllers/BanController.php:139
+#: modules/profile/src/Application/Controllers/BanController.php:145
+#: modules/profile/src/Application/Controllers/BanController.php:164
+#: modules/profile/src/Application/Controllers/BanController.php:182
+#: modules/profile/src/Application/Controllers/BanController.php:188
+#: modules/profile/src/Application/Controllers/BanController.php:217
+#: modules/profile/src/Application/Controllers/BanController.php:340
+#: modules/profile/src/Application/Controllers/BanController.php:349
+#: modules/profile/src/Application/Controllers/EditProfileController.php:80
+#: modules/profile/src/Application/Controllers/EditProfileController.php:95
+#: modules/profile/src/Application/Controllers/KarmaController.php:142
+#: modules/profile/src/Application/Controllers/KarmaController.php:161
+#: modules/profile/src/Application/Controllers/KarmaController.php:167
+#: modules/profile/src/Application/Controllers/KarmaController.php:196
+#: modules/profile/src/Application/UseCases/GetRecoveryContextUseCase.php:23
 msgid "Wrong data"
 msgstr "Noto'g'ri ma'lumotlar"
 
-#: modules/profile/includes/ban.php:212
-msgid "Ban not active"
-msgstr "To'siq faol emas"
+#: modules/profile/src/Application/Controllers/BanController.php:107
+msgid "User banned"
+msgstr "Foydalanuvchi to'sib qo'yildi"
 
-#: modules/profile/includes/ban.php:223
-msgid "Ban terminated"
+#: modules/profile/src/Application/Controllers/BanController.php:125
+#: modules/profile/src/Application/Controllers/BanController.php:152
+msgid "Ban termination"
 msgstr "To'siqni bekor qilish"
 
-#: modules/profile/includes/ban.php:228
+#: modules/profile/src/Application/Controllers/BanController.php:126
 msgid "Ban time is going to the end. Infrigement will be saved in the bans history"
 msgstr "To'siq vaqti tugaydi. Qoidabuzarliklar To'siqlar bo'limida saqlanadi"
 
-#: modules/profile/includes/ban.php:229
+#: modules/profile/src/Application/Controllers/BanController.php:127
 msgid "Terminate Ban"
 msgstr "To'siqni olib tashlash"
 
-#: modules/profile/includes/ban.php:268
+#: modules/profile/src/Application/Controllers/BanController.php:152
+msgid "Ban terminated"
+msgstr "To'siqni bekor qilish"
+
+#: modules/profile/src/Application/Controllers/BanController.php:168
+#: modules/profile/src/Application/Controllers/BanController.php:193
 msgid "Delete ban"
 msgstr "To'siqni o'chirish"
 
-#: modules/profile/includes/ban.php:300
-msgid "Ban deleted"
-msgstr "To'siq o'chirildi"
-
-#: modules/profile/includes/ban.php:305
+#: modules/profile/src/Application/Controllers/BanController.php:169
 msgid "Removing ban along with a record in the bans history"
 msgstr "Taqiqlarni olib tashlash va taqiqlar tarixi"
 
-#: modules/profile/includes/ban.php:306
-#: modules/profile/includes/index.php:145
+#: modules/profile/src/Application/Controllers/BanController.php:170
+#: modules/profile/src/Application/UseCases/GetProfileViewUseCase.php:182
 #: modules/profile/templates/edit.phtml:108
 #: modules/profile/templates/edit.phtml:128
 #: modules/profile/templates/karma_delete.phtml:33
 msgid "Delete"
 msgstr "O‘chirish"
 
-#: modules/profile/includes/ban.php:334
-msgid "Violations history"
-msgstr "Qoidabuzarliklar tarixi"
+#: modules/profile/src/Application/Controllers/BanController.php:193
+msgid "Ban deleted"
+msgstr "To'siq o'chirildi"
 
-#: modules/profile/includes/ban.php:344
-msgid "Violations history cleared"
-msgstr "Qoidabuzilishlar tarixi tozalandi"
-
-#: modules/profile/includes/ban.php:349
-msgid "Are you sure want to clean entire history of user violations?"
-msgstr "Haqiqatan ham foydalanuvchi qoidalarini buzish tarixini tozalamoqchimisiz?"
-
-#: modules/profile/includes/ban.php:350
-msgid "Clear"
-msgstr "Tozalash"
-
-#: modules/profile/includes/ban.php:368
+#: modules/profile/src/Application/Controllers/BanController.php:198
+#: modules/profile/src/Application/Controllers/BanController.php:213
 msgid "Violations history can be cleared by Supervisor only"
 msgstr "Qoidabuzilishlar tarixini faqat Supervisor o'chirishi mumkin"
 
-#: modules/profile/includes/ban.php:377
+#: modules/profile/src/Application/Controllers/BanController.php:203
+#: modules/profile/src/Application/Controllers/BanController.php:222
+msgid "Violations history"
+msgstr "Qoidabuzarliklar tarixi"
+
+#: modules/profile/src/Application/Controllers/BanController.php:204
+msgid "Are you sure want to clean entire history of user violations?"
+msgstr "Haqiqatan ham foydalanuvchi qoidalarini buzish tarixini tozalamoqchimisiz?"
+
+#: modules/profile/src/Application/Controllers/BanController.php:205
+msgid "Clear"
+msgstr "Tozalash"
+
+#: modules/profile/src/Application/Controllers/BanController.php:222
+msgid "Violations history cleared"
+msgstr "Qoidabuzilishlar tarixi tozalandi"
+
+#: modules/profile/src/Application/Controllers/BanController.php:227
 msgid "Violations History"
 msgstr "Qoidabuzarliklar tarixi"
 
-#: modules/profile/includes/ban.php:389
-#: modules/profile/templates/ban.phtml:37
-msgid "Full block"
-msgstr "To'liq blokirovka"
-
-#: modules/profile/includes/ban.php:390
-#: modules/profile/includes/ban.php:391
-#: modules/profile/templates/ban.phtml:41
-msgid "Private messages"
-msgstr "Shaxsiy habarlar"
-
-#: modules/profile/includes/ban.php:393
-#: modules/profile/includes/settings.php:45
-#: modules/profile/includes/settings.php:99
-#: modules/profile/templates/ban.phtml:55
-#: modules/profile/templates/stat.phtml:52
-msgid "Forum"
-msgstr ""
-
-#: modules/profile/includes/ban.php:394
-#: modules/profile/includes/guestbook.php:16
-#: modules/profile/includes/guestbook.php:28
-#: modules/profile/templates/ban.phtml:49
-#: modules/profile/templates/index.phtml:289
-#: modules/profile/templates/office.phtml:42
-#: modules/profile/templates/stat.phtml:53
-msgid "Guestbook"
-msgstr "Mehmonxona"
-
-#: modules/profile/includes/ban.php:395
-#: modules/profile/templates/ban.phtml:61
-msgid "Library"
-msgstr "Kutubxona"
-
-#: modules/profile/includes/ban.php:405
-#: modules/profile/templates/ban.phtml:87
-msgid "Till cancel"
-msgstr "Bekor qilishgacha"
-
-#: modules/profile/includes/ban.php:416
-msgid "Cancel Ban"
-msgstr "To'siqni bekor qilish"
-
-#: modules/profile/includes/ban.php:422
-msgid "Delete Ban"
-msgstr "To'siqni o'chirish"
-
-#: modules/profile/includes/confirm_new_email.php:19
-#: modules/profile/includes/confirm_new_email.php:20
-msgid "Email confirmation"
-msgstr ""
-
-#: modules/profile/includes/edit.php:20
-#: modules/profile/templates/office.phtml:86
-msgid "Edit Profile"
-msgstr "Profilni tahrirlash"
-
-#: modules/profile/includes/edit.php:35
-#: modules/profile/includes/images.php:23
-msgid "You cannot edit profile of higher administration"
-msgstr "Siz o'zingizdan yuqori lavozimdagi foydalanuvchi xabarini tahrirlay olmaysiz"
-
-#: modules/profile/includes/edit.php:47
-#: modules/profile/includes/ip.php:24
-#: modules/profile/includes/office.php:24
-#: modules/profile/includes/password.php:25
-#: modules/profile/includes/settings.php:31
-msgid "Access forbidden"
-msgstr "Ruxsat yo'q"
-
-#: modules/profile/includes/edit.php:86
-msgid "Avatar is successfully removed"
-msgstr "Avatar muvaffaqiyatli olib tashlandi"
-
-#: modules/profile/includes/edit.php:93
-msgid "Photo is successfully removed"
-msgstr "Foto muvaffaqiyatli olib tashlandi"
-
-#: modules/profile/includes/edit.php:169
-msgid "Confirm email change"
-msgstr ""
-
-#: modules/profile/includes/edit.php:186
-msgid "The procedure for changing the email address was started"
-msgstr ""
-
-#: modules/profile/includes/edit.php:196
-msgid "Data saved"
-msgstr "Ma'lumotlar saqlandi"
-
-#: modules/profile/includes/images.php:36
-msgid "Upload Avatar"
-msgstr "Avatarni yuklash"
-
-#: modules/profile/includes/images.php:42
-#: modules/profile/includes/images.php:94
-msgid "The weight of the file exceeds"
-msgstr "Faylning hajmi juda katta"
-
-#: modules/profile/includes/images.php:64
-msgid "The avatar is successfully uploaded"
-msgstr "Avatar muvaffaqiyatli yuklandi"
-
-#: modules/profile/includes/images.php:66
-#: modules/profile/includes/images.php:135
-#: modules/profile/includes/karma.php:138
-#: modules/profile/includes/password.php:83
-#: modules/profile/templates/restore_password.phtml:43
-msgid "Continue"
-msgstr "Davom etish"
-
-#: modules/profile/includes/images.php:81
-#: modules/profile/includes/images.php:150
-#: modules/profile/includes/password.php:94
-msgid "Repeat"
-msgstr "Takrorlash"
-
-#: modules/profile/includes/images.php:88
-msgid "Upload Photo"
-msgstr "Rasmni Yuklash"
-
-#: modules/profile/includes/images.php:133
-msgid "The photo is successfully uploaded"
-msgstr "Foto muvaffaqiyatli yuklandi"
-
-#: modules/profile/includes/index.php:24
-#: modules/profile/includes/karma.php:20
-#: modules/profile/index.php:58
-#: modules/profile/index.php:78
+#: modules/profile/src/Application/Controllers/BanController.php:229
+#: modules/profile/src/Application/Controllers/BanController.php:261
+#: modules/profile/src/Application/Controllers/KarmaController.php:206
+#: modules/profile/src/Application/Controllers/KarmaController.php:235
+#: modules/profile/src/Application/Controllers/KarmaController.php:262
+#: modules/profile/src/Application/Controllers/ProfileController.php:32
+#: modules/profile/src/Application/UseCases/GetProfileViewUseCase.php:76
 msgid "User Profile"
 msgstr "Foydalanuvchi profili"
 
-#: modules/profile/includes/index.php:94
-#: modules/profile/templates/stat.phtml:32
-msgid "Pending confirmation"
-msgstr "Tasdiqlanish uchun navbatda"
+#: modules/profile/src/Application/Controllers/BanController.php:259
+#: modules/profile/src/Application/Controllers/BanController.php:313
+#: modules/profile/src/Application/Controllers/BanController.php:330
+msgid "Ban the User"
+msgstr "Foydalanuvchi to'silgan"
 
-#: modules/profile/includes/index.php:99
-msgid "E-mail address is not confirmed"
-msgstr ""
-
-#: modules/profile/includes/index.php:126
-msgid "Add to Contacts"
-msgstr "Aloqalarga qo‘shish"
-
-#: modules/profile/includes/index.php:131
-msgid "Remove from Contacts"
-msgstr "Aloqalardan o'chirish"
-
-#: modules/profile/includes/index.php:139
-msgid "Edit"
-msgstr "Tahrirlash"
-
-#: modules/profile/includes/ip.php:15
-#: modules/profile/templates/index.phtml:86
-msgid "IP History"
-msgstr "IP tarixi"
-
-#: modules/profile/includes/karma.php:17
-#: modules/profile/includes/karma.php:21
-#: modules/profile/templates/index.phtml:119
-msgid "Karma"
-msgstr "Ovozlar"
-
-#: modules/profile/includes/karma.php:42
-msgid "It is forbidden to vote for administration"
-msgstr "Sayt ma'muryatiga ovoz berish ta'qiqlangan"
-
-#: modules/profile/includes/karma.php:46
-msgid "Cheating karma is forbidden"
-msgstr "Ovozlarni soxtalashtirish taqiqlanadi"
-
-#: modules/profile/includes/karma.php:51
-#, php-format
-msgid "Users can take part in voting if they have stayed on a site not less %s and their score on the forum %d posts."
-msgstr "Foydalanuvchilar ovoz berishda ishtirok etishlari mumkin, agar ular kamida% s saytda bo'lishgan bo'lsa va forumdagi habarlari %d bo'lsa"
-
-#: modules/profile/includes/karma.php:52
-msgid "days"
-msgstr "Kunlar"
-
-#: modules/profile/includes/karma.php:60
-msgid "You can vote for single user just one time for 24 hours"
-msgstr "24 soat davomida bitta foydalanuvchi uchun faqat bir marta ovoz berish mumkin"
-
-#: modules/profile/includes/karma.php:66
-#, php-format
-msgid "You have exceeded the limit of votes. New voices will be added %s"
-msgstr "Sizning ovoz berish imkoniyatingiz tugadi, yangi ovozni %s da qo'shish mumkin"
-
-#: modules/profile/includes/karma.php:77
-#: modules/profile/includes/karma.php:167
-#: modules/profile/templates/ban_history.phtml:96
-#: modules/profile/templates/ip_history.phtml:70
-#: modules/profile/templates/karma.phtml:86
-#: modules/profile/templates/restore_password_result.phtml:19
-#: modules/profile/templates/stat.phtml:58
-msgid "Back"
-msgstr "Ortga"
-
-#: modules/profile/includes/karma.php:136
-msgid "You have successfully voted"
-msgstr "Siz muvaffaqtiyatli ovoz berdingiz"
-
-#: modules/profile/includes/karma.php:147
-msgid "Vote for"
-msgstr "Ovoz bering"
-
-#: modules/profile/includes/karma.php:165
-msgid "You are not allowed to vote for users"
-msgstr "Sizga ovoz berish mumkin emas"
-
-#: modules/profile/includes/karma.php:201
-msgid "Do you really want to delete comment?"
-msgstr "Rostdan sharxni o'chirmoqchimisiz?"
-
-#: modules/profile/includes/karma.php:234
-msgid "Do you really want to delete all reviews about user?"
-msgstr "Haqiqatan ham foydalanuvchi haqidagi barcha sharhlarni yo'q qilmoqchimisiz?"
-
-#: modules/profile/includes/karma.php:252
-msgid "New responses"
-msgstr "Yangi ovozlar"
-
-#: modules/profile/includes/karma.php:287
-msgid "All"
-msgstr "Barcha"
-
-#: modules/profile/includes/karma.php:292
-#: modules/profile/templates/index.phtml:134
-#: modules/profile/templates/karma_vote.phtml:41
-msgid "Positive"
-msgstr "Ijobiy"
-
-#: modules/profile/includes/karma.php:297
-#: modules/profile/templates/index.phtml:140
-#: modules/profile/templates/karma_vote.phtml:45
-msgid "Negative"
-msgstr "Salbiy"
-
-#: modules/profile/includes/office.php:15
-#: modules/profile/includes/settings.php:22
-msgid "My Account"
-msgstr "Mening sahifam"
-
-#: modules/profile/includes/password.php:15
-#: modules/profile/includes/password.php:16
+#: modules/profile/src/Application/Controllers/ChangePasswordController.php:39
+#: modules/profile/src/Application/Controllers/ChangePasswordController.php:42
+#: modules/profile/src/Application/Controllers/ChangePasswordController.php:47
+#: modules/profile/src/Application/Controllers/ChangePasswordController.php:73
+#: modules/profile/src/Application/Controllers/ChangePasswordController.php:76
+#: modules/profile/src/Application/Controllers/ChangePasswordController.php:121
+#: modules/profile/templates/account.phtml:85
 #: modules/profile/templates/edit.phtml:278
-#: modules/profile/templates/office.phtml:87
 msgid "Change Password"
 msgstr "Parolni o‘zgartirish"
 
-#: modules/profile/includes/password.php:43
-#: modules/profile/includes/password.php:46
-msgid "It is necessary to fill in all fields"
-msgstr "Barcha maydonlarni to'ldirish kerak"
-
-#: modules/profile/includes/password.php:51
-msgid "Old password entered incorrectly"
-msgstr "Eski parol noto'g'ri kiritilgan"
-
-#: modules/profile/includes/password.php:55
-msgid "The password confirmation you entered is wrong"
-msgstr "Siz kiritgan parol noto‘g‘ri"
-
-#: modules/profile/includes/password.php:59
-msgid "The password must contain at least 3 characters"
-msgstr "Parol kamida 3 ta belgidan iborat bo'lishi kerak"
-
-#: modules/profile/includes/password.php:81
+#: modules/profile/src/Application/Controllers/ChangePasswordController.php:112
 msgid "Password successfully changed"
 msgstr "Parol muvaffaqiyatli o'zgardi"
 
-#: modules/profile/includes/reset.php:19
+#: modules/profile/src/Application/Controllers/ConfirmNewEmailController.php:27
+msgid "Email confirmation"
+msgstr ""
+
+#: modules/profile/src/Application/Controllers/EditProfileController.php:69
+msgid "Data saved"
+msgstr "Ma'lumotlar saqlandi"
+
+#: modules/profile/src/Application/Controllers/EditProfileController.php:84
+msgid "Avatar is successfully removed"
+msgstr "Avatar muvaffaqiyatli olib tashlandi"
+
+#: modules/profile/src/Application/Controllers/EditProfileController.php:99
+msgid "Photo is successfully removed"
+msgstr "Foto muvaffaqiyatli olib tashlandi"
+
+#: modules/profile/src/Application/Controllers/EditProfileController.php:188
+#: modules/profile/src/Application/Controllers/EditProfileController.php:230
+#: modules/profile/templates/account.phtml:84
+msgid "Edit Profile"
+msgstr "Profilni tahrirlash"
+
+#: modules/profile/src/Application/Controllers/GuestbookController.php:40
+#: modules/profile/src/Application/Controllers/GuestbookController.php:48
+#: modules/profile/src/Application/Controllers/GuestbookController.php:63
+#: modules/profile/src/Application/Controllers/GuestbookController.php:76
+#: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:44
+#: modules/profile/templates/account.phtml:40
+#: modules/profile/templates/ban.phtml:50
+#: modules/profile/templates/statistics.phtml:54
+#: modules/profile/templates/view.phtml:291
+msgid "Guestbook"
+msgstr "Mehmonxona"
+
+#: modules/profile/src/Application/Controllers/IpHistoryController.php:32
+#: modules/profile/templates/view.phtml:88
+msgid "IP History"
+msgstr "IP tarixi"
+
+#: modules/profile/src/Application/Controllers/KarmaController.php:67
+#: modules/profile/src/Application/Controllers/KarmaController.php:123
+#: modules/profile/src/Application/Controllers/KarmaController.php:207
+#: modules/profile/src/Application/Controllers/KarmaController.php:233
+#: modules/profile/src/Application/Controllers/KarmaController.php:236
+#: modules/profile/src/Application/Controllers/KarmaController.php:260
+#: modules/profile/src/Application/Controllers/KarmaController.php:263
+#: modules/profile/src/Application/Controllers/KarmaController.php:289
+#: modules/profile/src/Application/Controllers/KarmaController.php:303
+#: modules/profile/templates/view.phtml:121
+msgid "Karma"
+msgstr "Ovozlar"
+
+#: modules/profile/src/Application/Controllers/KarmaController.php:83
+msgid "New responses"
+msgstr "Yangi ovozlar"
+
+#: modules/profile/src/Application/Controllers/KarmaController.php:125
+msgid "You have successfully voted"
+msgstr "Siz muvaffaqtiyatli ovoz berdingiz"
+
+#: modules/profile/src/Application/Controllers/KarmaController.php:148
+msgid "Do you really want to delete comment?"
+msgstr "Rostdan sharxni o'chirmoqchimisiz?"
+
+#: modules/profile/src/Application/Controllers/KarmaController.php:183
+msgid "Do you really want to delete all reviews about user?"
+msgstr "Haqiqatan ham foydalanuvchi haqidagi barcha sharhlarni yo'q qilmoqchimisiz?"
+
+#: modules/profile/src/Application/Controllers/KarmaController.php:250
+msgid "Vote for"
+msgstr "Ovoz bering"
+
+#: modules/profile/src/Application/Controllers/KarmaController.php:293
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:135
+#: modules/profile/templates/ban_history.phtml:96
+#: modules/profile/templates/ip_history.phtml:70
+#: modules/profile/templates/karma.phtml:86
+#: modules/profile/templates/statistics.phtml:59
+msgid "Back"
+msgstr "Ortga"
+
+#: modules/profile/src/Application/Controllers/KarmaController.php:314
+msgid "Access forbidden"
+msgstr "Ruxsat yo'q"
+
+#: modules/profile/src/Application/Controllers/PhotoController.php:59
+#: modules/profile/src/Application/Controllers/PhotoController.php:71
+#: modules/profile/src/Application/Controllers/PhotoController.php:82
+#: modules/profile/src/Application/Controllers/PhotoController.php:125
+msgid "Upload Photo"
+msgstr "Rasmni Yuklash"
+
+#: modules/profile/src/Application/Controllers/PhotoController.php:73
+msgid "The photo is successfully uploaded"
+msgstr "Foto muvaffaqiyatli yuklandi"
+
+#: modules/profile/src/Application/Controllers/ResetSettingsController.php:29
 msgid "Reset user settings"
 msgstr "Sozlamalarni tiklash"
 
-#: modules/profile/includes/reset.php:36
+#: modules/profile/src/Application/Controllers/ResetSettingsController.php:50
 #, php-format
 msgid "For user %s default settings were set."
 msgstr "%s foydalanuvchi uchun standart sozlamalar o'rnatildi."
 
-#: modules/profile/includes/settings.php:17
-#: modules/profile/includes/settings.php:23
-#: modules/profile/templates/office.phtml:83
-msgid "Settings"
-msgstr "Sozlovlar"
-
-#: modules/profile/includes/settings.php:40
-#: modules/profile/includes/settings.php:152
-msgid "General setting"
-msgstr "Umumiy sozlamalar"
-
-#: modules/profile/includes/settings.php:50
-#: modules/profile/includes/settings.php:70
-msgid "Mail"
-msgstr "Xatlar"
-
-#: modules/profile/includes/settings.php:57
-msgid "Auto"
-msgstr ""
-
-#: modules/profile/includes/settings.php:60
-msgid "Light"
-msgstr ""
-
-#: modules/profile/includes/settings.php:63
-msgid "Dark"
-msgstr ""
-
-#: modules/profile/includes/settings.php:82
-#: modules/profile/includes/settings.php:125
-#: modules/profile/includes/settings.php:208
-msgid "Settings saved successfully"
-msgstr "Sozlamalar muvaffaqiyatli saqlandi"
-
-#: modules/profile/includes/settings.php:135
-#: modules/profile/includes/settings.php:213
-msgid "Default settings are set"
-msgstr "Standart sozlamalar o'rnatildi"
-
-#: modules/profile/includes/stat.php:16
-#: modules/profile/includes/stat.php:19
-#: modules/profile/templates/index.phtml:265
-#: modules/profile/templates/stat.phtml:26
-msgid "Statistic"
-msgstr "Statistika"
-
-#: modules/profile/index.php:60
-msgid "For registered users only"
-msgstr "Faqat ro‘yxatdan o‘tgan foydalanuvchilar uchun"
-
-#: modules/profile/index.php:80
-msgid "This User does not exists"
-msgstr "Bunday foydalanuvchi mavjud emas."
-
-#: modules/profile/skl.php:42
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:36
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:51
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:78
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:87
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:105
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:117
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:131
 #: modules/profile/templates/restore_password.phtml:4
 #: modules/profile/templates/restore_password.phtml:5
 #: modules/profile/templates/restore_password.phtml:10
-#: modules/profile/templates/restore_password_result.phtml:4
-#: modules/profile/templates/restore_password_result.phtml:5
-#: modules/profile/templates/restore_password_result.phtml:10
+#: modules/profile/templates/restore_password_set.phtml:10
+#: modules/profile/templates/restore_password_set.phtml:11
 msgid "Restore password"
 msgstr "Parolni tiklash"
 
-#: modules/profile/skl.php:70
-msgid "The required fields are not filled"
-msgstr "Zaruriy maydonlar to‘ldirilmadi"
-
-#: modules/profile/skl.php:72
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:60
 msgid "Incorrect code"
 msgstr "Tekshiruv kodi xato"
 
-#: modules/profile/skl.php:86
-msgid "Invalid Email address"
-msgstr "Noto‘g‘ri elektron pochta manzili"
-
-#: modules/profile/skl.php:90
-msgid "Password can be recovered 1 time per day"
-msgstr "Parol 1sutkada 1marta qayta tiklanishi mumkin"
-
-#: modules/profile/skl.php:93
-#: modules/profile/skl.php:160
-msgid "User does not exists"
-msgstr "Foydalanuvchi mavjud emas"
-
-#: modules/profile/skl.php:109
-msgid "Password recovery"
-msgstr "Parolni tiklash"
-
-#: modules/profile/skl.php:119
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:80
 msgid "Check your e-mail for further information"
 msgstr "Parolni tiklash yo'riqnomasi emailingizga yuborildi"
 
-#: modules/profile/skl.php:151
-msgid "Password recovery is impossible"
-msgstr "Parolni qayta tiklab bo'lmadi"
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:119
+msgid "Password successfully changed.<br>New password sent to your E-mail address."
+msgstr "Parol muvaffaqtiyatli o'zgartirildi<br>Yangi parol emailingizga yuborildi"
 
-#: modules/profile/skl.php:155
-msgid "Time allotted for the password recovery has been exceeded"
-msgstr "Parolni tiklash uchun ajratilgan vaqtdan oshib ketdi"
+#: modules/profile/src/Application/Controllers/SettingsController.php:50
+#: modules/profile/src/Application/Controllers/SettingsController.php:186
+msgid "General setting"
+msgstr "Umumiy sozlamalar"
 
-#: modules/profile/skl.php:176
+#: modules/profile/src/Application/Controllers/SettingsController.php:96
+#: modules/profile/src/Application/Controllers/SettingsController.php:117
+#: modules/profile/src/Application/Controllers/SettingsController.php:206
+msgid "Settings saved successfully"
+msgstr "Sozlamalar muvaffaqiyatli saqlandi"
+
+#: modules/profile/src/Application/Controllers/SettingsController.php:101
+#: modules/profile/src/Application/Controllers/SettingsController.php:211
+msgid "Default settings are set"
+msgstr "Standart sozlamalar o'rnatildi"
+
+#: modules/profile/src/Application/Controllers/SettingsController.php:127
+#: modules/profile/src/Application/Controllers/SettingsController.php:191
+#: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:43
+#: modules/profile/templates/ban.phtml:56
+#: modules/profile/templates/statistics.phtml:53
+msgid "Forum"
+msgstr ""
+
+#: modules/profile/src/Application/Controllers/SettingsController.php:144
+#: modules/profile/src/Application/Controllers/SettingsController.php:196
+msgid "Mail"
+msgstr "Xatlar"
+
+#: modules/profile/src/Application/Controllers/SettingsController.php:160
+#: modules/profile/templates/account.phtml:81
+msgid "Settings"
+msgstr "Sozlovlar"
+
+#: modules/profile/src/Application/Controllers/StatisticsController.php:32
+#: modules/profile/src/Application/Controllers/StatisticsController.php:39
+#: modules/profile/src/Application/Controllers/StatisticsController.php:42
+#: modules/profile/templates/statistics.phtml:27
+#: modules/profile/templates/view.phtml:267
+msgid "Statistic"
+msgstr "Statistika"
+
+#: modules/profile/src/Application/UseCases/BanUserUseCase.php:28
+msgid "Reason not specified"
+msgstr "Sabab ko'rsatilmagan"
+
+#: modules/profile/src/Application/UseCases/BanUserUseCase.php:35
+msgid "There is no required data"
+msgstr "Kerakli ma'lumotlar yo'q"
+
+#: modules/profile/src/Application/UseCases/BanUserUseCase.php:45
+msgid "You have no rights to ban in this section"
+msgstr "Ushbu bo'limda taqiqlash huquqingiz yo'q"
+
+#: modules/profile/src/Application/UseCases/BanUserUseCase.php:49
+msgid "Ban already active"
+msgstr "To'siq allaqachon faol"
+
+#: modules/profile/src/Application/UseCases/BanUserUseCase.php:64
+msgid "System"
+msgstr "Tizim"
+
+#: modules/profile/src/Application/UseCases/BanUserUseCase.php:64
+#: modules/profile/src/Application/UseCases/GetProfileViewUseCase.php:185
+msgid "Ban"
+msgstr "To'sib qo'yish"
+
+#: modules/profile/src/Application/UseCases/CancelBanUseCase.php:34
+msgid "Ban not active"
+msgstr "To'siq faol emas"
+
+#: modules/profile/src/Application/UseCases/ChangePasswordUseCase.php:33
+#: modules/profile/src/Application/UseCases/ChangePasswordUseCase.php:36
+msgid "It is necessary to fill in all fields"
+msgstr "Barcha maydonlarni to'ldirish kerak"
+
+#: modules/profile/src/Application/UseCases/ChangePasswordUseCase.php:40
+msgid "Old password entered incorrectly"
+msgstr "Eski parol noto'g'ri kiritilgan"
+
+#: modules/profile/src/Application/UseCases/ChangePasswordUseCase.php:44
+msgid "The password confirmation you entered is wrong"
+msgstr "Siz kiritgan parol noto‘g‘ri"
+
+#: modules/profile/src/Application/UseCases/ChangePasswordUseCase.php:48
+msgid "The password must contain at least 3 characters"
+msgstr "Parol kamida 3 ta belgidan iborat bo'lishi kerak"
+
+#: modules/profile/src/Application/UseCases/CompletePasswordRecoveryUseCase.php:35
 msgid "Your new password"
 msgstr "Siz yangi parol"
 
-#: modules/profile/skl.php:187
-msgid "Password successfully changed.<br>New password sent to your E-mail address."
-msgstr "Parol muvaffaqtiyatli o'zgartirildi<br>Yangi parol emailingizga yuborildi"
+#: modules/profile/src/Application/UseCases/GetBanFormContextUseCase.php:34
+msgid "You do not have enought rights to ban this user"
+msgstr "Sizda ushbu foydalanuvchini to'sish uchun etarli huquqlaringiz yo'q"
+
+#: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:39
+#: modules/profile/templates/ban.phtml:38
+msgid "Full block"
+msgstr "To'liq blokirovka"
+
+#: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:40
+#: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:41
+#: modules/profile/templates/ban.phtml:42
+msgid "Private messages"
+msgstr "Shaxsiy habarlar"
+
+#: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:45
+#: modules/profile/templates/ban.phtml:62
+msgid "Library"
+msgstr "Kutubxona"
+
+#: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:61
+msgid "Cancel Ban"
+msgstr "To'siqni bekor qilish"
+
+#: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:64
+msgid "Delete Ban"
+msgstr "To'siqni o'chirish"
+
+#: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:71
+#: modules/profile/templates/ban.phtml:88
+msgid "Till cancel"
+msgstr "Bekor qilishgacha"
+
+#: modules/profile/src/Application/UseCases/GetEditContextUseCase.php:34
+msgid "You cannot edit profile of higher administration"
+msgstr "Siz o'zingizdan yuqori lavozimdagi foydalanuvchi xabarini tahrirlay olmaysiz"
+
+#: modules/profile/src/Application/UseCases/GetKarmaListUseCase.php:61
+msgid "All"
+msgstr "Barcha"
+
+#: modules/profile/src/Application/UseCases/GetKarmaListUseCase.php:62
+#: modules/profile/templates/karma_vote.phtml:41
+#: modules/profile/templates/view.phtml:136
+msgid "Positive"
+msgstr "Ijobiy"
+
+#: modules/profile/src/Application/UseCases/GetKarmaListUseCase.php:63
+#: modules/profile/templates/karma_vote.phtml:45
+#: modules/profile/templates/view.phtml:142
+msgid "Negative"
+msgstr "Salbiy"
+
+#: modules/profile/src/Application/UseCases/GetProfileViewUseCase.php:151
+#: modules/profile/templates/statistics.phtml:33
+msgid "Pending confirmation"
+msgstr "Tasdiqlanish uchun navbatda"
+
+#: modules/profile/src/Application/UseCases/GetProfileViewUseCase.php:154
+msgid "E-mail address is not confirmed"
+msgstr ""
+
+#: modules/profile/src/Application/UseCases/GetProfileViewUseCase.php:170
+msgid "Add to Contacts"
+msgstr "Aloqalarga qo‘shish"
+
+#: modules/profile/src/Application/UseCases/GetProfileViewUseCase.php:171
+msgid "Remove from Contacts"
+msgstr "Aloqalardan o'chirish"
+
+#: modules/profile/src/Application/UseCases/GetProfileViewUseCase.php:179
+msgid "Edit"
+msgstr "Tahrirlash"
+
+#: modules/profile/src/Application/UseCases/GetRecoveryContextUseCase.php:28
+#: modules/profile/src/Application/UseCases/SendPasswordRecoveryUseCase.php:36
+msgid "User does not exists"
+msgstr "Foydalanuvchi mavjud emas"
+
+#: modules/profile/src/Application/UseCases/GetRecoveryContextUseCase.php:32
+msgid "Password recovery is impossible"
+msgstr "Parolni qayta tiklab bo'lmadi"
+
+#: modules/profile/src/Application/UseCases/GetRecoveryContextUseCase.php:38
+msgid "Time allotted for the password recovery has been exceeded"
+msgstr "Parolni tiklash uchun ajratilgan vaqtdan oshib ketdi"
+
+#: modules/profile/src/Application/UseCases/GetVoteContextUseCase.php:35
+msgid "You are not allowed to vote for users"
+msgstr "Sizga ovoz berish mumkin emas"
+
+#: modules/profile/src/Application/UseCases/GetVoteContextUseCase.php:42
+msgid "It is forbidden to vote for administration"
+msgstr "Sayt ma'muryatiga ovoz berish ta'qiqlangan"
+
+#: modules/profile/src/Application/UseCases/GetVoteContextUseCase.php:46
+msgid "Cheating karma is forbidden"
+msgstr "Ovozlarni soxtalashtirish taqiqlanadi"
+
+#: modules/profile/src/Application/UseCases/GetVoteContextUseCase.php:51
+#, php-format
+msgid "Users can take part in voting if they have stayed on a site not less %s and their score on the forum %d posts."
+msgstr "Foydalanuvchilar ovoz berishda ishtirok etishlari mumkin, agar ular kamida% s saytda bo'lishgan bo'lsa va forumdagi habarlari %d bo'lsa"
+
+#: modules/profile/src/Application/UseCases/GetVoteContextUseCase.php:52
+msgid "days"
+msgstr "Kunlar"
+
+#: modules/profile/src/Application/UseCases/GetVoteContextUseCase.php:59
+msgid "You can vote for single user just one time for 24 hours"
+msgstr "24 soat davomida bitta foydalanuvchi uchun faqat bir marta ovoz berish mumkin"
+
+#: modules/profile/src/Application/UseCases/GetVoteContextUseCase.php:65
+#, php-format
+msgid "You have exceeded the limit of votes. New voices will be added %s"
+msgstr "Sizning ovoz berish imkoniyatingiz tugadi, yangi ovozni %s da qo'shish mumkin"
+
+#: modules/profile/src/Application/UseCases/SendPasswordRecoveryUseCase.php:31
+msgid "The required fields are not filled"
+msgstr "Zaruriy maydonlar to‘ldirilmadi"
+
+#: modules/profile/src/Application/UseCases/SendPasswordRecoveryUseCase.php:40
+msgid "Invalid Email address"
+msgstr "Noto‘g‘ri elektron pochta manzili"
+
+#: modules/profile/src/Application/UseCases/SendPasswordRecoveryUseCase.php:44
+msgid "Password can be recovered 1 time per day"
+msgstr "Parol 1sutkada 1marta qayta tiklanishi mumkin"
+
+#: modules/profile/src/Application/UseCases/SendPasswordRecoveryUseCase.php:59
+msgid "Password recovery"
+msgstr "Parolni tiklash"
+
+#: modules/profile/src/Application/UseCases/UpdateProfileUseCase.php:123
+msgid "Confirm email change"
+msgstr ""
+
+#: modules/profile/src/Application/UseCases/UpdateProfileUseCase.php:140
+msgid "The procedure for changing the email address was started"
+msgstr ""
+
+#: modules/profile/src/Application/UseCases/UploadAvatarUseCase.php:23
+#: modules/profile/src/Application/UseCases/UploadPhotoUseCase.php:23
+msgid "The weight of the file exceeds"
+msgstr "Faylning hajmi juda katta"
+
+#: modules/profile/templates/account.phtml:26
+msgid "My Pages"
+msgstr "Mening Sahifalarim"
+
+#: modules/profile/templates/account.phtml:33
+msgid "Statistics"
+msgstr "Statistika"
+
+#: modules/profile/templates/account.phtml:36
+#: modules/profile/templates/view.phtml:279
+msgid "Photo Album"
+msgstr "Foto Albom"
+
+#: modules/profile/templates/account.phtml:45
+msgid "My Mailbox"
+msgstr "Mening Xatlarim"
+
+#: modules/profile/templates/account.phtml:49
+msgid "Received"
+msgstr "Kiruvchi"
+
+#: modules/profile/templates/account.phtml:56
+msgid "Sent"
+msgstr "Yuborilgan"
+
+#: modules/profile/templates/account.phtml:63
+msgid "Files"
+msgstr "Fayllar"
+
+#: modules/profile/templates/account.phtml:68
+#: modules/profile/templates/account.phtml:72
+#: modules/profile/templates/edit.phtml:196
+#: modules/profile/templates/view.phtml:203
+msgid "Contacts"
+msgstr "Aloqalar"
+
+#: modules/profile/templates/account.phtml:76
+msgid "Blocked"
+msgstr "To'silgan"
+
+#: modules/profile/templates/account.phtml:86
+msgid "System Settings"
+msgstr "Tizim sozlamalari"
 
 #: modules/profile/templates/activity.phtml:37
 #: modules/profile/templates/ip_history.phtml:46
@@ -562,44 +633,44 @@ msgstr "Ro‘yxat bo‘sh"
 msgid "Total:"
 msgstr "Jami"
 
-#: modules/profile/templates/ban.phtml:31
+#: modules/profile/templates/ban.phtml:32
 msgid "Ban:"
 msgstr "To'sib qo'yish"
 
-#: modules/profile/templates/ban.phtml:33
+#: modules/profile/templates/ban.phtml:34
 msgid "Ban type"
 msgstr "To'sib qo'yish turi"
 
-#: modules/profile/templates/ban.phtml:65
+#: modules/profile/templates/ban.phtml:66
 msgid "Ban time"
 msgstr "To'sib qo'yish vaqti"
 
-#: modules/profile/templates/ban.phtml:67
+#: modules/profile/templates/ban.phtml:68
 msgid "Time"
 msgstr "Vaqt"
 
-#: modules/profile/templates/ban.phtml:72
+#: modules/profile/templates/ban.phtml:73
 msgid "Minutes (60 max.)"
 msgstr "Daqiqa (60 max.)"
 
-#: modules/profile/templates/ban.phtml:76
+#: modules/profile/templates/ban.phtml:77
 msgid "Hours (24 max.)"
 msgstr "Soat (24 max.)"
 
-#: modules/profile/templates/ban.phtml:81
+#: modules/profile/templates/ban.phtml:82
 msgid "Days (30 max.)"
 msgstr "Kun (30 max.)"
 
-#: modules/profile/templates/ban.phtml:92
+#: modules/profile/templates/ban.phtml:93
 msgid "Reason"
 msgstr "Sababi"
 
-#: modules/profile/templates/ban.phtml:98
+#: modules/profile/templates/ban.phtml:99
 msgid "Apply Ban"
 msgstr "Amal qilishi"
 
-#: modules/profile/templates/ban.phtml:99
-#: modules/profile/templates/ban_cancel.phtml:32
+#: modules/profile/templates/ban.phtml:100
+#: modules/profile/templates/ban_cancel.phtml:33
 #: modules/profile/templates/edit.phtml:333
 #: modules/profile/templates/forum_settings.phtml:74
 #: modules/profile/templates/images.phtml:60
@@ -607,7 +678,7 @@ msgstr "Amal qilishi"
 #: modules/profile/templates/karma_vote.phtml:66
 #: modules/profile/templates/mail_settings.phtml:57
 #: modules/profile/templates/password.phtml:63
-#: modules/profile/templates/settings.phtml:125
+#: modules/profile/templates/settings.phtml:114
 msgid "Cancel"
 msgstr "Bekor qilish"
 
@@ -643,15 +714,11 @@ msgstr "Jami"
 msgid "Clear history"
 msgstr "Tarixni tozalash"
 
-#: modules/profile/templates/confirm_new_email.phtml:12
-msgid "User is not found"
-msgstr ""
-
-#: modules/profile/templates/confirm_new_email.phtml:14
+#: modules/profile/templates/confirm_new_email.phtml:13
 msgid "Thanks! Your e-mail has been successfully confirmed."
 msgstr ""
 
-#: modules/profile/templates/confirm_new_email.phtml:16
+#: modules/profile/templates/confirm_new_email.phtml:15
 msgid "Error when confirming e-mail. Invalid confirmation code."
 msgstr ""
 
@@ -673,7 +740,7 @@ msgstr ""
 
 #: modules/profile/templates/edit.phtml:79
 #: modules/profile/templates/edit.phtml:85
-#: modules/profile/templates/index.phtml:165
+#: modules/profile/templates/view.phtml:167
 msgid "Status"
 msgstr "Holati"
 
@@ -696,7 +763,7 @@ msgstr "Bo'limni tanlang"
 
 #: modules/profile/templates/edit.phtml:115
 #: modules/profile/templates/edit.phtml:119
-#: modules/profile/templates/index.phtml:157
+#: modules/profile/templates/view.phtml:159
 msgid "Photo"
 msgstr "Foto"
 
@@ -727,7 +794,7 @@ msgstr "Yil"
 
 #: modules/profile/templates/edit.phtml:179
 #: modules/profile/templates/edit.phtml:185
-#: modules/profile/templates/index.phtml:189
+#: modules/profile/templates/view.phtml:191
 msgid "City, Country"
 msgstr "Shahar, Mamlakat"
 
@@ -735,21 +802,15 @@ msgstr "Shahar, Mamlakat"
 msgid "About myself"
 msgstr "O'zi haqida"
 
-#: modules/profile/templates/edit.phtml:196
-#: modules/profile/templates/office.phtml:70
-#: modules/profile/templates/office.phtml:74
-msgid "Contacts"
-msgstr "Aloqalar"
-
 #: modules/profile/templates/edit.phtml:198
 #: modules/profile/templates/edit.phtml:204
-#: modules/profile/templates/index.phtml:204
+#: modules/profile/templates/view.phtml:206
 msgid "Phone number"
 msgstr "Telefon raqami"
 
 #: modules/profile/templates/edit.phtml:211
 #: modules/profile/templates/edit.phtml:217
-#: modules/profile/templates/index.phtml:210
+#: modules/profile/templates/view.phtml:212
 msgid "E-mail"
 msgstr "Elektron manzili"
 
@@ -771,13 +832,13 @@ msgstr "Ogohlantirish! Elektron pochtangizni to'g'ri kiriting. Parolingiz esingi
 
 #: modules/profile/templates/edit.phtml:237
 #: modules/profile/templates/edit.phtml:243
-#: modules/profile/templates/index.phtml:219
+#: modules/profile/templates/view.phtml:221
 msgid "Skype"
 msgstr ""
 
 #: modules/profile/templates/edit.phtml:251
 #: modules/profile/templates/edit.phtml:257
-#: modules/profile/templates/index.phtml:225
+#: modules/profile/templates/view.phtml:227
 msgid "Site"
 msgstr "Web Sayt"
 
@@ -802,12 +863,12 @@ msgid "Select gender"
 msgstr "Jinsni tanlang"
 
 #: modules/profile/templates/edit.phtml:287
-#: modules/profile/templates/index.phtml:179
+#: modules/profile/templates/view.phtml:181
 msgid "Man"
 msgstr "Erkak"
 
 #: modules/profile/templates/edit.phtml:291
-#: modules/profile/templates/index.phtml:181
+#: modules/profile/templates/view.phtml:183
 msgid "Woman"
 msgstr "Ayol"
 
@@ -848,7 +909,7 @@ msgstr "Sayt yaratuvchisi"
 #: modules/profile/templates/images.phtml:59
 #: modules/profile/templates/mail_settings.phtml:56
 #: modules/profile/templates/password.phtml:62
-#: modules/profile/templates/settings.phtml:124
+#: modules/profile/templates/settings.phtml:113
 msgid "Save"
 msgstr "Saqlash"
 
@@ -885,7 +946,7 @@ msgid "Never"
 msgstr "Hech qachon"
 
 #: modules/profile/templates/forum_settings.phtml:75
-#: modules/profile/templates/settings.phtml:128
+#: modules/profile/templates/settings.phtml:117
 msgid "Reset Settings"
 msgstr "Sozlamalarni tiklash"
 
@@ -897,101 +958,6 @@ msgstr "Faylni tanlang"
 #, php-format
 msgid "Allowed image formats: JPG, PNG, GIF. File size should not exceed %d kb.<br>The new image will replace old (if was)."
 msgstr "Ruxsat etilgan rasm formatlari: JPG, GIF, PNG. Fayl hajmi %d dan oshmasligi kerak. Yangi qo'shilgan rasm eskisini o'rniga yuklanadi."
-
-#: modules/profile/templates/index.phtml:44
-#: modules/profile/templates/index.phtml:69
-#: modules/profile/templates/stat.phtml:45
-msgid "Last visit"
-msgstr "So'nggi tashrif"
-
-#: modules/profile/templates/index.phtml:44
-msgid "Online"
-msgstr "Hozir saytda"
-
-#: modules/profile/templates/index.phtml:56
-msgid "User is banned"
-msgstr "Foydalanuvchi to'silgan"
-
-#: modules/profile/templates/index.phtml:59
-msgid "Reason:"
-msgstr "Sababi"
-
-#: modules/profile/templates/index.phtml:65
-msgid "Violations"
-msgstr "Qoidabuzarliklar"
-
-#: modules/profile/templates/index.phtml:74
-msgid "User Agent"
-msgstr "Foydalanuvchi agenti"
-
-#: modules/profile/templates/index.phtml:76
-msgid "Ip"
-msgstr "IP"
-
-#: modules/profile/templates/index.phtml:77
-#: modules/profile/templates/index.phtml:80
-msgid "Whois"
-msgstr "Tekshirish"
-
-#: modules/profile/templates/index.phtml:95
-msgid "Write"
-msgstr "Yozish"
-
-#: modules/profile/templates/index.phtml:98
-msgid "Block"
-msgstr "To'sish"
-
-#: modules/profile/templates/index.phtml:100
-msgid "Unblock"
-msgstr "To'siqni olish"
-
-#: modules/profile/templates/index.phtml:104
-msgid "Actions"
-msgstr "Harakatlar"
-
-#: modules/profile/templates/index.phtml:113
-msgid "Edit profile"
-msgstr "Profilni tahrirlash"
-
-#: modules/profile/templates/index.phtml:126
-msgid "vote"
-msgid_plural "votes"
-msgstr[0] "Ovoz"
-msgstr[1] "Ovozlar"
-
-#: modules/profile/templates/index.phtml:146
-#: modules/profile/templates/karma_vote.phtml:65
-msgid "Vote"
-msgstr "Ovoz"
-
-#: modules/profile/templates/index.phtml:154
-msgid "Information"
-msgstr "Ma’lumot"
-
-#: modules/profile/templates/index.phtml:171
-msgid "Birthday"
-msgstr "Tug‘ilgan kun:"
-
-#: modules/profile/templates/index.phtml:176
-msgid "Gender"
-msgstr "Jins"
-
-#: modules/profile/templates/index.phtml:183
-msgid "Not specified"
-msgstr "Ko'rsatilmagan"
-
-#: modules/profile/templates/index.phtml:213
-msgid "hidden"
-msgstr "berkitilgan"
-
-#: modules/profile/templates/index.phtml:236
-msgid "Admin Notes"
-msgstr ""
-
-#: modules/profile/templates/index.phtml:277
-#: modules/profile/templates/office.phtml:38
-msgid "Photo Album"
-msgstr "Foto Albom"
 
 #: modules/profile/templates/ip_history.phtml:38
 msgid "IP address"
@@ -1021,6 +987,11 @@ msgstr "Sharx"
 msgid "Min. 2, Max. 500 characters"
 msgstr "Min. 2, Max. 500 belgilar"
 
+#: modules/profile/templates/karma_vote.phtml:65
+#: modules/profile/templates/view.phtml:148
+msgid "Vote"
+msgstr "Ovoz"
+
 #: modules/profile/templates/mail_settings.phtml:44
 msgid "Who can write you?"
 msgstr "Sizga kimlar yozishi mumkin"
@@ -1036,38 +1007,6 @@ msgstr "Faqat mening aloqadoshlarim"
 #: modules/profile/templates/message_row.phtml:29
 msgid "To message"
 msgstr "Xabarga o‘tish"
-
-#: modules/profile/templates/office.phtml:28
-msgid "My Pages"
-msgstr "Mening Sahifalarim"
-
-#: modules/profile/templates/office.phtml:35
-msgid "Statistics"
-msgstr "Statistika"
-
-#: modules/profile/templates/office.phtml:47
-msgid "My Mailbox"
-msgstr "Mening Xatlarim"
-
-#: modules/profile/templates/office.phtml:51
-msgid "Received"
-msgstr "Kiruvchi"
-
-#: modules/profile/templates/office.phtml:58
-msgid "Sent"
-msgstr "Yuborilgan"
-
-#: modules/profile/templates/office.phtml:65
-msgid "Files"
-msgstr "Fayllar"
-
-#: modules/profile/templates/office.phtml:78
-msgid "Blocked"
-msgstr "To'silgan"
-
-#: modules/profile/templates/office.phtml:88
-msgid "System Settings"
-msgstr "Tizim sozlamalari"
 
 #: modules/profile/templates/password.phtml:30
 #: modules/profile/templates/password.phtml:36
@@ -1101,6 +1040,10 @@ msgstr "Tekshiruv ko'dini kiriting"
 #: modules/profile/templates/restore_password.phtml:46
 msgid "Password will be send to E-mail address specified in your profile.<br />WARNING !! If E-mail address has not been specified in your profile, you will not be able to recover your password."
 msgstr "Parol profilingizda ko'rsatilgan elektron pochta manzilingizga yuboriladi. <br /> Diqqat! Agar elektron pochta manzilingiz profilingizda ko'rsatilmagan bo'lsa, siz parolingizni tiklay olmaysiz."
+
+#: modules/profile/templates/restore_password_set.phtml:17
+msgid "A new password will be generated and sent to the E-mail address specified in your profile."
+msgstr ""
 
 #: modules/profile/templates/settings.phtml:45
 msgid "Time settings"
@@ -1146,27 +1089,108 @@ msgid "Size of Lists"
 msgstr "Ro'yhatlar hajmi"
 
 #: modules/profile/templates/settings.phtml:99
-msgid "Theme"
-msgstr ""
-
-#: modules/profile/templates/settings.phtml:110
-#: modules/profile/templates/settings.phtml:112
+#: modules/profile/templates/settings.phtml:101
 msgid "Select Language"
 msgstr "Tilni tanlang"
 
-#: modules/profile/templates/settings.phtml:117
+#: modules/profile/templates/settings.phtml:106
 msgid "Site Default"
 msgstr "Standart holat"
 
-#: modules/profile/templates/stat.phtml:34
+#: modules/profile/templates/statistics.phtml:35
 msgid "Registration confirmed"
 msgstr "A'zolik tasdiqlandi"
 
-#: modules/profile/templates/stat.phtml:36
+#: modules/profile/templates/statistics.phtml:37
 msgid "Free registration"
 msgstr "Bepul ro'yxatga olish"
 
-#: modules/profile/templates/stat.phtml:41
+#: modules/profile/templates/statistics.phtml:42
 msgid "Registered"
 msgstr "Azo bo'lgan"
+
+#: modules/profile/templates/statistics.phtml:46
+#: modules/profile/templates/view.phtml:46
+#: modules/profile/templates/view.phtml:71
+msgid "Last visit"
+msgstr "So'nggi tashrif"
+
+#: modules/profile/templates/view.phtml:46
+msgid "Online"
+msgstr "Hozir saytda"
+
+#: modules/profile/templates/view.phtml:58
+msgid "User is banned"
+msgstr "Foydalanuvchi to'silgan"
+
+#: modules/profile/templates/view.phtml:61
+msgid "Reason:"
+msgstr "Sababi"
+
+#: modules/profile/templates/view.phtml:67
+msgid "Violations"
+msgstr "Qoidabuzarliklar"
+
+#: modules/profile/templates/view.phtml:76
+msgid "User Agent"
+msgstr "Foydalanuvchi agenti"
+
+#: modules/profile/templates/view.phtml:78
+msgid "Ip"
+msgstr "IP"
+
+#: modules/profile/templates/view.phtml:79
+#: modules/profile/templates/view.phtml:82
+msgid "Whois"
+msgstr "Tekshirish"
+
+#: modules/profile/templates/view.phtml:97
+msgid "Write"
+msgstr "Yozish"
+
+#: modules/profile/templates/view.phtml:100
+msgid "Block"
+msgstr "To'sish"
+
+#: modules/profile/templates/view.phtml:102
+msgid "Unblock"
+msgstr "To'siqni olish"
+
+#: modules/profile/templates/view.phtml:106
+msgid "Actions"
+msgstr "Harakatlar"
+
+#: modules/profile/templates/view.phtml:115
+msgid "Edit profile"
+msgstr "Profilni tahrirlash"
+
+#: modules/profile/templates/view.phtml:128
+msgid "vote"
+msgid_plural "votes"
+msgstr[0] "Ovoz"
+msgstr[1] "Ovozlar"
+
+#: modules/profile/templates/view.phtml:156
+msgid "Information"
+msgstr "Ma’lumot"
+
+#: modules/profile/templates/view.phtml:173
+msgid "Birthday"
+msgstr "Tug‘ilgan kun:"
+
+#: modules/profile/templates/view.phtml:178
+msgid "Gender"
+msgstr "Jins"
+
+#: modules/profile/templates/view.phtml:185
+msgid "Not specified"
+msgstr "Ko'rsatilmagan"
+
+#: modules/profile/templates/view.phtml:215
+msgid "hidden"
+msgstr "berkitilgan"
+
+#: modules/profile/templates/view.phtml:238
+msgid "Admin Notes"
+msgstr ""
 
