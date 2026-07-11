@@ -13,10 +13,8 @@ class Helpers
 {
     /**
      * Метод для построения навигационной цепочки
-     *
-     * @param NewsSection|null $parent_section
      */
-    public static function buildAdminBreadcrumbs(NewsSection $parent_section = null): void
+    public static function buildAdminBreadcrumbs(?NewsSection $parent_section = null): void
     {
         if ($parent_section) {
             /** @var NavChain $nav_chain */

@@ -228,7 +228,7 @@ final readonly class FilesUploadController
         }
     }
 
-    private function error(string $message, string $backUrl, string $backLabel = null): string
+    private function error(string $message, string $backUrl, ?string $backLabel = null): string
     {
         return $this->render->render('system::pages/result', [
             'title'         => __('Upload file'),
