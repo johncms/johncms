@@ -11,81 +11,81 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
-"PO-Revision-Date: 2026-03-24 21:39\n"
+"PO-Revision-Date: 2026-07-11 21:51\n"
 
-#: modules/notifications/includes/clear.php:23
+#: modules/notifications/src/Application/Controllers/ClearController.php:22
 msgid "Notifications are cleared!"
 msgstr "Уведомления очищены!"
 
-#: modules/notifications/includes/index.php:29
-msgid "Users on registration"
-msgstr "Пользователи на регистрации"
-
-#: modules/notifications/includes/index.php:39
-msgid "Articles on moderation"
-msgstr "Статьи на модерации"
-
-#: modules/notifications/includes/index.php:49
-msgid "Downloads on moderation"
-msgstr "Загрузки на модерации"
-
-#: modules/notifications/includes/index.php:60
-msgid "Ban"
-msgstr "Бан"
-
-#: modules/notifications/includes/index.php:70
-msgid "New forum posts"
-msgstr "Новые сообщения на форуме"
-
-#: modules/notifications/includes/index.php:80
-msgid "Mail"
-msgstr "Почта"
-
-#: modules/notifications/includes/index.php:90
-#: modules/notifications/includes/index.php:109
-msgid "Guestbook"
-msgstr "Гостевая книга"
-
-#: modules/notifications/includes/index.php:100
-msgid "Comments"
-msgstr "Комментарии"
-
-#: modules/notifications/includes/settings.php:18
-#: modules/notifications/templates/index.phtml:80
-msgid "Settings"
-msgstr "Настройки"
-
-#: modules/notifications/includes/settings.php:44
-msgid "Settings saved!"
-msgstr "Настройки сохранены!"
-
-#: modules/notifications/index.php:47
-#: modules/notifications/templates/index.phtml:11
-#: modules/notifications/templates/index.phtml:12
+#: modules/notifications/src/Application/Controllers/IndexController.php:30
+#: modules/notifications/src/Application/Controllers/IndexController.php:41
+#: modules/notifications/src/Application/Controllers/IndexController.php:44
+#: modules/notifications/src/Application/Controllers/SettingsController.php:31
 msgid "Notifications"
 msgstr "Уведомления"
 
-#: modules/notifications/templates/index.phtml:27
+#: modules/notifications/src/Application/Controllers/SettingsController.php:29
+#: modules/notifications/templates/index.phtml:72
+msgid "Settings"
+msgstr "Настройки"
+
+#: modules/notifications/src/Application/Controllers/SettingsController.php:37
+msgid "Settings saved!"
+msgstr "Настройки сохранены!"
+
+#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:49
+msgid "Users on registration"
+msgstr "Пользователи на регистрации"
+
+#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:57
+msgid "Articles on moderation"
+msgstr "Статьи на модерации"
+
+#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:65
+msgid "Downloads on moderation"
+msgstr "Загрузки на модерации"
+
+#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:75
+msgid "Ban"
+msgstr "Бан"
+
+#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:84
+msgid "New forum posts"
+msgstr "Новые сообщения на форуме"
+
+#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:93
+msgid "Mail"
+msgstr "Почта"
+
+#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:102
+msgid "Guestbook"
+msgstr "Гостевая книга"
+
+#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:111
+msgid "Comments"
+msgstr "Комментарии"
+
+#: modules/notifications/templates/index.phtml:20
 msgid "All notifications have already been read"
 msgstr "Все уведомления уже прочитаны"
 
-#: modules/notifications/templates/index.phtml:67
+#: modules/notifications/templates/index.phtml:60
 msgid "Total"
 msgstr "Всего"
 
-#: modules/notifications/templates/index.phtml:75
+#: modules/notifications/templates/index.phtml:67
 msgid "Clear notifications"
 msgstr "Очистить уведомления"
 
-#: modules/notifications/templates/settings.phtml:45
+#: modules/notifications/templates/settings.phtml:31
 msgid "Display the number of unread messages in the forum"
 msgstr "Показывать количество непрочитанных сообщений на форуме"
 
-#: modules/notifications/templates/settings.phtml:49
+#: modules/notifications/templates/settings.phtml:35
 msgid "Save"
 msgstr "Сохранить"
 
-#: modules/notifications/templates/settings.phtml:50
+#: modules/notifications/templates/settings.phtml:36
 msgid "Cancel"
 msgstr "Отмена"
 
