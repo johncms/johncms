@@ -18,8 +18,8 @@ msgstr ""
 #: modules/news/src/Application/Controllers/ArticleController.php:23
 #: modules/news/src/Application/Controllers/SearchController.php:29
 #: modules/news/src/Application/Controllers/SectionController.php:28
-#: modules/news/src/Application/MetaTagsManager.php:38
-#: modules/news/src/Application/MetaTagsManager.php:39
+#: modules/news/src/Application/MetaTagsManager.php:105
+#: modules/news/src/Application/MetaTagsManager.php:106
 msgid "News"
 msgstr ""
 

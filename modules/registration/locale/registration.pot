@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "X-Domain: registration\n"
 
-#: modules/registration/index.php:50
+#: modules/registration/src/Application/Controllers/RegistrationController.php:41
 #: modules/registration/templates/index.phtml:4
 #: modules/registration/templates/index.phtml:5
 #: modules/registration/templates/index.phtml:10
@@ -14,7 +14,7 @@ msgstr ""
 msgid "Registration"
 msgstr ""
 
-#: modules/registration/index.php:169
+#: modules/registration/src/Application/UseCases/RegisterUserUseCase.php:62
 msgid "Registration on the website"
 msgstr ""
 
