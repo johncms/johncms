@@ -9,7 +9,17 @@ mix.js('themes/default/src/js/app.js', 'themes/default/assets/js').vue()
             ]
         })
         .options({
-            processCssUrls: false
+            processCssUrls: false,
+            terser: {
+                parallel: true,
+                extractComments: false,
+                terserOptions: {
+                    compress: true,
+                    output: {
+                        comments: false
+                    }
+                }
+            }
         });
 
 mix.sourceMaps(false, 'source-map');

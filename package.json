@@ -36,8 +36,11 @@
         "sass-loader": "^11.1.1",
         "vue-loader": "^15.11.1",
         "vue-template-compiler": "^2.7.16",
-        "webpack": "^5.99.9",
+        "webpack": "5.99.9",
         "webpack-rtl-plugin": "^2.0.0"
+    },
+    "overrides": {
+        "webpack": "5.99.9"
     },
     "dependencies": {
         "axios": "^1.10.0",
