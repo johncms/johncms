@@ -11,9 +11,9 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
-"PO-Revision-Date: 2026-03-25 18:37\n"
+"PO-Revision-Date: 2026-07-11 14:55\n"
 
-#: modules/registration/index.php:50
+#: modules/registration/src/Application/Controllers/RegistrationController.php:41
 #: modules/registration/templates/index.phtml:4
 #: modules/registration/templates/index.phtml:5
 #: modules/registration/templates/index.phtml:10
@@ -25,7 +25,7 @@ msgstr ""
 msgid "Registration"
 msgstr "Регистрация"
 
-#: modules/registration/index.php:169
+#: modules/registration/src/Application/UseCases/RegisterUserUseCase.php:62
 msgid "Registration on the website"
 msgstr "Регистрация на сайте"
 
