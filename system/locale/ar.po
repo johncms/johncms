@@ -563,8 +563,9 @@ msgid "Supervisor"
 msgstr "مشرف"
 
 #: system/src/Validator/messages.php:13
+#, fuzzy
 msgid "You have a ban"
-msgstr "انت معك %s"
+msgstr "لديك حظر"
 
 #: system/src/Validator/messages.php:21
 msgid "The form submitted did not originate from the expected site"
@@ -573,7 +574,7 @@ msgstr "شكل المقدمة لم تنشأ من المتوقع الموقع"
 #: system/src/Validator/messages.php:25
 #, php-format
 msgid "You cannot add the message so often. Please, wait %value% seconds."
-msgstr "لا يمكنك إضافة الرسالة حتى غالباً. الرجاء الانتظار %d ثانية."
+msgstr "لا يمكنك إضافة الرسالة حتى غالباً. الرجاء الانتظار %value% ثانية."
 
 #: system/src/Validator/messages.php:29
 msgid "A record matching the input was found"

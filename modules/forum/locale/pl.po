@@ -453,7 +453,7 @@ msgstr "Nie możesz pisać w zamkniętym temacie"
 #: modules/forum/src/Application/Controllers/ReplyMessageController.php:103
 #, php-format
 msgid "You cannot add the message so often<br>Please, wait %d sec."
-msgstr "Nie wolno pisać wiadomość tak szybko!<br>Proszę, odczekać."
+msgstr "Nie wolno pisać wiadomość tak szybko!<br>Proszę, odczekać %d sek."
 
 #: modules/forum/src/Application/Controllers/NewMessageController.php:110
 #: modules/forum/src/Application/Controllers/ReplyMessageController.php:138

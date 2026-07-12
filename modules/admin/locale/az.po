@@ -1483,7 +1483,7 @@ msgstr "Bölmə sorğular"
 #: modules/admin/templates/forum/settings.phtml:45
 #: modules/admin/templates/forum/settings.phtml:50
 msgid "Macros available: #name#, #description#"
-msgstr "Makro: #adını#, #təsviri#"
+msgstr "Makro: #name#, #description#"
 
 #: modules/admin/templates/forum/settings.phtml:48
 msgid "Section description"
@@ -1496,7 +1496,7 @@ msgstr "Mövzu sorğular"
 #: modules/admin/templates/forum/settings.phtml:56
 #: modules/admin/templates/forum/settings.phtml:61
 msgid "Macros available: #name#"
-msgstr "Makro: #adını#"
+msgstr "Makro: #name#"
 
 #: modules/admin/templates/forum/settings.phtml:59
 msgid "Topic description"
@@ -1633,7 +1633,7 @@ msgstr "Məhdudiyyət səsvermə"
 
 #: modules/admin/templates/karma.phtml:33
 msgid "Forum posts"
-msgstr "%s Forum Mesajları"
+msgstr "Forum Mesajları"
 
 #: modules/admin/templates/karma.phtml:37
 msgid "General Settings"

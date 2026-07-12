@@ -572,7 +572,7 @@ msgstr "Форма, представлена не походить з очіку
 #: system/src/Validator/messages.php:25
 #, php-format
 msgid "You cannot add the message so often. Please, wait %value% seconds."
-msgstr "Ви не можете додавати повідомлення так часто. Будь ласка, зачекайте %d секунд."
+msgstr "Ви не можете додавати повідомлення так часто. Будь ласка, зачекайте %value% секунд."
 
 #: system/src/Validator/messages.php:29
 msgid "A record matching the input was found"

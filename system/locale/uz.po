@@ -27,7 +27,7 @@ msgstr "Forumda yangi javob"
 #: config/notifications.global.php:32
 #, php-format
 msgid "<a href=\"%s\">User <b>%s</b> responded to your message in the topic %s</a>"
-msgstr "<a href=\"%s\"> Foydalanuvchi <b>% s </b>% s mavzusidagi xabaringizga javob berdi </a>"
+msgstr "<a href=\"%s\">Foydalanuvchi <b>%s</b> %s mavzusidagi xabaringizga javob berdi</a>"
 
 #: config/notifications.global.php:39
 msgid "Karma"
@@ -316,7 +316,7 @@ msgstr "Sayt ma’muriyati tashqi manzildagi ma’lumotlar uchun javob bermaydi"
 #: modules/redirect/templates/index.phtml:36
 #, php-format
 msgid "It is recommended not to specify your data, relating to %s (Login, Password), on third party sites"
-msgstr "Uchinchi tomon saytlarida% s (Login, Password) ga tegishli ma'lumotlaringizni ko'rsatmaslik tavsiya etiladi."
+msgstr "Uchinchi tomon saytlarida %s (Login, Password) ga tegishli ma'lumotlaringizni ko'rsatmaslik tavsiya etiladi."
 
 #: modules/redirect/templates/index.phtml:40
 msgid "Go to Link"
@@ -570,7 +570,7 @@ msgstr "Taqdim etilgan shakl kutilgan saytdan kelib chiqmagan"
 #: system/src/Validator/messages.php:25
 #, php-format
 msgid "You cannot add the message so often. Please, wait %value% seconds."
-msgstr "Xabarni juda tez-tez qo'shish mumkin emas. Iltimos, %d soniya kuting."
+msgstr "Xabarni juda tez-tez qo'shish mumkin emas. Iltimos, %value% soniya kuting."
 
 #: system/src/Validator/messages.php:29
 msgid "A record matching the input was found"
@@ -861,7 +861,7 @@ msgstr ""
 #: themes/default/templates/system/mail/templates/restore_password.phtml:14
 #, php-format
 msgid "You start process of password recovery on the <a href=\"%s\">%s</a> website"
-msgstr "Siz parolni tiklash jarayonini <a href=\"%s\">% s </a> veb-saytidan boshlaysiz"
+msgstr "Siz parolni tiklash jarayonini <a href=\"%s\">%s</a> veb-saytidan boshlaysiz"
 
 #: themes/default/templates/system/mail/templates/restore_password.phtml:17
 msgid "In order to recover your password, you must click on the link:"
@@ -882,7 +882,7 @@ msgstr "Kalit: Agar siz ushbu xatni noto'g'ri olsangiz, ushbu xatga e'tibor berm
 #: themes/default/templates/system/mail/templates/restore_password_complete.phtml:15
 #, php-format
 msgid "You have changed your password on the <a href=\"%s\">%s</a> website"
-msgstr "Siz parolingizni <a href=\"%s\">% s </a> veb-saytida o'zgartirdingiz"
+msgstr "Siz parolingizni <a href=\"%s\">%s</a> veb-saytida o'zgartirdingiz"
 
 #: themes/default/templates/system/mail/templates/restore_password_complete.phtml:22
 msgid "After logging in, you can change your password to new one."

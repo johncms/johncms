@@ -409,7 +409,7 @@ msgstr "Wybierz plik"
 #: modules/album/templates/add_photo.phtml:36
 #, php-format
 msgid "Allowed format image JPG, JPEG, PNG, GIF<br>File size should not exceed %d kb."
-msgstr "Dozwolony format obrazu JPG, JPEG, PNG, GIF<br>Rozmiar pliku nie powinien przekraczać."
+msgstr "Dozwolony format obrazu JPG, JPEG, PNG, GIF<br>Rozmiar pliku nie powinien przekraczać %d kb."
 
 #: modules/album/templates/add_photo.phtml:40
 #: modules/album/templates/album_form.phtml:36

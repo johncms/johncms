@@ -533,7 +533,7 @@ msgstr "Ovozlarni soxtalashtirish taqiqlanadi"
 #: modules/profile/src/Application/UseCases/GetVoteContextUseCase.php:51
 #, php-format
 msgid "Users can take part in voting if they have stayed on a site not less %s and their score on the forum %d posts."
-msgstr "Foydalanuvchilar ovoz berishda ishtirok etishlari mumkin, agar ular kamida% s saytda bo'lishgan bo'lsa va forumdagi habarlari %d bo'lsa"
+msgstr "Foydalanuvchilar ovoz berishda ishtirok etishlari mumkin, agar ular kamida %s saytda bo'lishgan bo'lsa va forumdagi habarlari %d bo'lsa"
 
 #: modules/profile/src/Application/UseCases/GetVoteContextUseCase.php:52
 msgid "days"

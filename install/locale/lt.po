@@ -47,7 +47,7 @@ msgstr "PHP versija"
 #: install/steps/step_2.php:30
 #, php-format
 msgid "The PHP version must be at least %s"
-msgstr "PHP versija turi buti ne mazesnia nei "
+msgstr "PHP versija turi buti ne mazesnia nei %s"
 
 #: install/steps/step_2.php:34
 #: install/steps/step_2.php:40

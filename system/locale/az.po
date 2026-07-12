@@ -39,7 +39,7 @@ msgstr "Yeni səsvermə karma"
 
 #: config/notifications.global.php:43
 msgid "User <b>#user_name#</b> voted in <a href=\"#karma_url#\">your karma</a>."
-msgstr "İstifadəçi <b>#istifadəçi adı#</b> səs <a href=\"#karma_url#\">sizin karma</a>."
+msgstr "İstifadəçi <b>#user_name#</b> səs <a href=\"#karma_url#\">sizin karma</a>."
 
 #: config/places.global.php:12
 msgid "On the Homepage"
@@ -495,8 +495,9 @@ msgid "Text is too short"
 msgstr "Mətn çox qısadır."
 
 #: system/src/Comments.php:619
+#, fuzzy
 msgid "You cannot add the message so often<br>Please, wait"
-msgstr "Yeni mesaj yazmaq üçün %d dəq gözləyin"
+msgstr "Yeni mesaj yazmaq üçün gözləyin"
 
 #: system/src/Comments.php:619
 msgid "seconds"
@@ -559,8 +560,9 @@ msgid "Supervisor"
 msgstr "SV"
 
 #: system/src/Validator/messages.php:13
+#, fuzzy
 msgid "You have a ban"
-msgstr "%s adlı cihazınız var"
+msgstr "Sizin banınız var"
 
 #: system/src/Validator/messages.php:21
 msgid "The form submitted did not originate from the expected site"
@@ -787,7 +789,7 @@ msgstr "E-poçt ünvanını dəyişdir"
 #: themes/default/templates/system/mail/templates/restore_password_complete.phtml:13
 #, php-format
 msgid "Hello, %s!"
-msgstr "Salam, "
+msgstr "Salam, %s!"
 
 #: themes/default/templates/system/mail/templates/changed_email_notification.phtml:15
 #: themes/default/templates/system/mail/templates/confirm_email_change.phtml:15

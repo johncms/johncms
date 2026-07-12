@@ -39,7 +39,7 @@ msgstr "Suara baru di karma"
 
 #: config/notifications.global.php:43
 msgid "User <b>#user_name#</b> voted in <a href=\"#karma_url#\">your karma</a>."
-msgstr "Pengguna <b>#username#</b> memilih <a href=\"#karma_url#\">karma anda</a>."
+msgstr "Pengguna <b>#user_name#</b> memilih <a href=\"#karma_url#\">karma anda</a>."
 
 #: config/places.global.php:12
 msgid "On the Homepage"

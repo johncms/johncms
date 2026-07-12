@@ -94,7 +94,7 @@ msgstr ""
 #: modules/library/src/Application/Controllers/CreateArticleController.php:85
 #, php-format
 msgid "You cannot add the Article so often<br>Please, wait %d sec."
-msgstr "Nie wolno pisać wiadomość tak szybko!<br>Proszę, odczekać."
+msgstr "Nie wolno pisać wiadomość tak szybko!<br>Proszę, odczekać %d sek."
 
 #: modules/library/src/Application/Controllers/CreateArticleController.php:90
 #: modules/library/src/Application/Controllers/CreateSectionController.php:70

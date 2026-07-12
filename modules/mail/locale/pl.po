@@ -270,7 +270,7 @@ msgstr "Nie możesz wysyłać wiadomości do siebie"
 #: modules/mail/src/Application/UseCases/SendMessageUseCase.php:54
 #, php-format
 msgid "You cannot add the message so often. Please, wait %d sec."
-msgstr "Nie wolno pisać wiadomość tak szybko!<br>Proszę, odczekać."
+msgstr "Nie wolno pisać wiadomość tak szybko!<br>Proszę, odczekać %d sek."
 
 #: modules/mail/src/Application/UseCases/SendMessageUseCase.php:61
 msgid "The user at your ignore list. Sending the message is impossible."

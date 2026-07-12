@@ -498,7 +498,7 @@ msgstr "Textul este prea scurt"
 
 #: system/src/Comments.php:619
 msgid "You cannot add the message so often<br>Please, wait"
-msgstr "Nu poti adauga in mesaj asa de des. Te rog asteapta, %d secunde"
+msgstr "Nu poti adauga in mesaj asa de des. Te rog asteapta"
 
 #: system/src/Comments.php:619
 msgid "seconds"
@@ -571,7 +571,7 @@ msgstr "Formularul trimis nu a fost originar de la site-ul aşteptat"
 #: system/src/Validator/messages.php:25
 #, php-format
 msgid "You cannot add the message so often. Please, wait %value% seconds."
-msgstr "Nu poti adauga in mesaj asa de des. Te rog asteapta, %d secunde"
+msgstr "Nu poti adauga in mesaj asa de des. Te rog asteapta, %value% secunde"
 
 #: system/src/Validator/messages.php:29
 msgid "A record matching the input was found"
