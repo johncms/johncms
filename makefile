@@ -51,4 +51,10 @@ crowdin-download:
 
 crowdin-upload:
 	@echo "Uploading sources to Crowdin (branch ${CROWDIN_BRANCH})"
-	@crowdin upload --branch ${CROWDIN_BRANCH}
+	@crowdin upload sources --branch ${CROWDIN_BRANCH}
+
+crowdin-upload-translations:
+	@echo "Uploading translations to Crowdin (branch ${CROWDIN_BRANCH})"
+	@crowdin upload translations --branch ${CROWDIN_BRANCH}
+
+crowdin-upload-all: crowdin-upload crowdin-upload-translations
