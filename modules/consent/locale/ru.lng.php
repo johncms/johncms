@@ -36,6 +36,13 @@
       'Guest' => 'Гость',
       'Back' => 'Назад',
       'Language' => 'Язык',
+      'Wrong data' => 'Неверные данные',
+      'ERROR: Can not write file `system.local.php`' => 'ОШИБКА: Не удаётся записать файл `system.local.php`',
+      'Cookie banner' => 'Cookie-баннер',
+      'Enable banner' => 'Включить баннер',
+      'Banner text' => 'Текст баннера',
+      'Leave empty to use the default text with a link to the Privacy Policy.' => 'Оставьте пустым, чтобы использовать текст по умолчанию со ссылкой на Политику конфиденциальности.',
+      'Increase the version to show the banner again to everyone.' => 'Увеличьте версию, чтобы снова показать баннер всем.',
     ),
   ),
 );

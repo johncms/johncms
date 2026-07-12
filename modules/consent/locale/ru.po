@@ -99,3 +99,24 @@ msgstr "Назад"
 
 msgid "Language"
 msgstr "Язык"
+
+msgid "Wrong data"
+msgstr "Неверные данные"
+
+msgid "ERROR: Can not write file `system.local.php`"
+msgstr "ОШИБКА: Не удаётся записать файл `system.local.php`"
+
+msgid "Cookie banner"
+msgstr "Cookie-баннер"
+
+msgid "Enable banner"
+msgstr "Включить баннер"
+
+msgid "Banner text"
+msgstr "Текст баннера"
+
+msgid "Leave empty to use the default text with a link to the Privacy Policy."
+msgstr "Оставьте пустым, чтобы использовать текст по умолчанию со ссылкой на Политику конфиденциальности."
+
+msgid "Increase the version to show the banner again to everyone."
+msgstr "Увеличьте версию, чтобы снова показать баннер всем."

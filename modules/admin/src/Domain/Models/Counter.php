@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $link2
  * @property int $mode
  * @property int $switch
+ * @property int $require_cookie_consent
  */
 final class Counter extends Model
 {
@@ -32,11 +33,13 @@ final class Counter extends Model
         'link2',
         'mode',
         'switch',
+        'require_cookie_consent',
     ];
 
     protected $casts = [
-        'sort'   => 'integer',
-        'mode'   => 'integer',
-        'switch' => 'integer',
+        'sort'                   => 'integer',
+        'mode'                   => 'integer',
+        'switch'                 => 'integer',
+        'require_cookie_consent' => 'integer',
     ];
 }

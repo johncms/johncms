@@ -20,26 +20,30 @@ final class EloquentCounterRepository implements CounterRepositoryInterface
         return Counter::query()->find($id);
     }
 
-    public function create(string $name, string $link1, string $link2, int $mode): void
+    public function create(string $name, string $link1, string $link2, int $mode, bool $requireCookieConsent, bool $enabled): void
     {
         $nextSort = (int) Counter::query()->max('sort') + 1;
 
         Counter::query()->create([
-            'name'  => $name,
-            'sort'  => $nextSort,
-            'link1' => $link1,
-            'link2' => $link2,
-            'mode'  => $mode,
+            'name'                   => $name,
+            'sort'                   => $nextSort,
+            'link1'                  => $link1,
+            'link2'                  => $link2,
+            'mode'                   => $mode,
+            'require_cookie_consent' => $requireCookieConsent ? 1 : 0,
+            'switch'                 => $enabled ? 1 : 0,
         ]);
     }
 
-    public function update(int $id, string $name, string $link1, string $link2, int $mode): void
+    public function update(int $id, string $name, string $link1, string $link2, int $mode, bool $requireCookieConsent, bool $enabled): void
     {
         Counter::query()->where('id', $id)->update([
-            'name'  => $name,
-            'link1' => $link1,
-            'link2' => $link2,
-            'mode'  => $mode,
+            'name'                   => $name,
+            'link1'                  => $link1,
+            'link2'                  => $link2,
+            'mode'                   => $mode,
+            'require_cookie_consent' => $requireCookieConsent ? 1 : 0,
+            'switch'                 => $enabled ? 1 : 0,
         ]);
     }
 

@@ -1983,3 +1983,15 @@ msgstr "Политика использования cookie"
 
 msgid "Consents"
 msgstr "Согласия"
+
+msgid "Collections"
+msgstr "Коллекции"
+
+msgid "Cookie banner"
+msgstr "Cookie-баннер"
+
+msgid "Load only after cookie consent"
+msgstr "Загружать только после согласия на cookie"
+
+msgid "If enabled, the counter code runs only after the visitor accepts the cookie banner. Requires the cookie banner to be enabled."
+msgstr "Если включено, код счётчика выполняется только после того, как посетитель примет cookie-баннер. Требует включённого cookie-баннера."

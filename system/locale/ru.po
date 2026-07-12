@@ -894,3 +894,9 @@ msgstr "Политика обработки персональных данны�
 #: themes/default/templates/system/layout/default.phtml:157
 msgid "Cookie Policy"
 msgstr "Политика использования cookie"
+
+msgid "Accept"
+msgstr "Принять"
+
+msgid "We use cookies to improve the site. By continuing to use the site, you agree to our %sPrivacy Policy%s."
+msgstr "Мы используем файлы cookie для улучшения работы сайта. Продолжая использовать сайт, вы соглашаетесь с нашей %sПолитикой конфиденциальности%s."

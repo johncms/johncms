@@ -435,3 +435,11 @@ blockquote {
   --bs-tooltip-bg: #343434;
   --bs-tooltip-color: #fff;
 }
+
+.nav-tabs {
+  --bs-nav-tabs-border-color: var(--bs-border-color);
+  --bs-nav-tabs-link-hover-border-color: var(--bs-border-color) var(--bs-border-color) var(--bs-border-color);
+  --bs-nav-tabs-link-active-color: #fff;
+  --bs-nav-tabs-link-active-bg: rgba(255, 255, 255, 0.06);
+  --bs-nav-tabs-link-active-border-color: var(--bs-border-color) var(--bs-border-color) transparent;
+}

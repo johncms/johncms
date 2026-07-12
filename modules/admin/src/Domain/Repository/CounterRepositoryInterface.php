@@ -16,9 +16,9 @@ interface CounterRepositoryInterface
 
     public function findById(int $id): ?Counter;
 
-    public function create(string $name, string $link1, string $link2, int $mode): void;
+    public function create(string $name, string $link1, string $link2, int $mode, bool $requireCookieConsent, bool $enabled): void;
 
-    public function update(int $id, string $name, string $link1, string $link2, int $mode): void;
+    public function update(int $id, string $name, string $link1, string $link2, int $mode, bool $requireCookieConsent, bool $enabled): void;
 
     public function delete(int $id): void;
 

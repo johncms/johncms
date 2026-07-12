@@ -409,6 +409,10 @@
       'Personal Data Processing Policy' => 'Политика обработки персональных данных',
       'Cookie Policy' => 'Политика использования cookie',
       'Consents' => 'Согласия',
+      'Collections' => 'Коллекции',
+      'Cookie banner' => 'Cookie-баннер',
+      'Load only after cookie consent' => 'Загружать только после согласия на cookie',
+      'If enabled, the counter code runs only after the visitor accepts the cookie banner. Requires the cookie banner to be enabled.' => 'Если включено, код счётчика выполняется только после того, как посетитель примет cookie-баннер. Требует включённого cookie-баннера.',
     ),
   ),
 );

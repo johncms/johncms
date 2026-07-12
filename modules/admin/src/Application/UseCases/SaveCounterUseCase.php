@@ -16,15 +16,15 @@ final readonly class SaveCounterUseCase
     /**
      * Создаёт или обновляет счётчик. Возвращает true, если это было обновление.
      */
-    public function execute(?int $id, string $name, string $link1, string $link2, int $mode): bool
+    public function execute(?int $id, string $name, string $link1, string $link2, int $mode, bool $requireCookieConsent, bool $enabled): bool
     {
         if ($id !== null && $this->repository->findById($id) !== null) {
-            $this->repository->update($id, $name, $link1, $link2, $mode);
+            $this->repository->update($id, $name, $link1, $link2, $mode, $requireCookieConsent, $enabled);
 
             return true;
         }
 
-        $this->repository->create($name, $link1, $link2, $mode);
+        $this->repository->create($name, $link1, $link2, $mode, $requireCookieConsent, $enabled);
 
         return false;
     }

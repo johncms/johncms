@@ -57,13 +57,14 @@ final readonly class CountersController
         $this->render->addData($this->menu($title));
 
         return $this->render->render('admin::counters_view', [
-            'id'        => $counter->id,
-            'name'      => $counter->name,
-            'counter_1' => $counter->link1,
-            'counter_2' => $counter->link2,
-            'mode_name' => $this->modeName($counter->mode),
-            'enabled'   => $counter->switch === 1,
-            'base_url'  => self::URL,
+            'id'                     => $counter->id,
+            'name'                   => $counter->name,
+            'counter_1'              => $counter->link1,
+            'counter_2'              => $counter->link2,
+            'mode_name'              => $this->modeName($counter->mode),
+            'enabled'                => $counter->switch === 1,
+            'require_cookie_consent' => $counter->require_cookie_consent === 1,
+            'base_url'               => self::URL,
         ]);
     }
 
@@ -93,6 +94,8 @@ final readonly class CountersController
         $link1 = trim((string) $this->request->getPost('link1', ''));
         $link2 = trim((string) $this->request->getPost('link2', ''));
         $mode = (int) $this->request->getPost('mode', 1, FILTER_VALIDATE_INT);
+        $requireCookieConsent = $this->request->getPost('require_cookie_consent') !== null;
+        $enabled = $this->request->getPost('switch') !== null;
 
         if ($name === '' || $link1 === '') {
             return $this->error(__('The required fields are not filled'));
@@ -103,12 +106,14 @@ final readonly class CountersController
         $this->render->addData($this->menu($title));
 
         return $this->render->render('admin::counters_add_confirm', [
-            'form_action' => self::URL,
-            'name'        => $name,
-            'counter_1'   => $link1,
-            'counter_2'   => $link2,
-            'mode'        => $mode,
-            'id'          => $id ?: null,
+            'form_action'            => self::URL,
+            'name'                   => $name,
+            'counter_1'              => $link1,
+            'counter_2'              => $link2,
+            'mode'                   => $mode,
+            'require_cookie_consent' => $requireCookieConsent,
+            'enabled'                => $enabled,
+            'id'                     => $id ?: null,
         ]);
     }
 
@@ -123,12 +128,14 @@ final readonly class CountersController
         $link1 = trim((string) $this->request->getPost('link1', ''));
         $link2 = trim((string) $this->request->getPost('link2', ''));
         $mode = (int) $this->request->getPost('mode', 1, FILTER_VALIDATE_INT);
+        $requireCookieConsent = $this->request->getPost('require_cookie_consent') !== null;
+        $enabled = $this->request->getPost('switch') !== null;
 
         if ($name === '' || $link1 === '') {
             return $this->error(__('The required fields are not filled'));
         }
 
-        $this->saveCounter->execute($id ?: null, $name, $link1, $link2, $mode);
+        $this->saveCounter->execute($id ?: null, $name, $link1, $link2, $mode, $requireCookieConsent, $enabled);
 
         redirect(self::URL);
     }
@@ -196,13 +203,15 @@ final readonly class CountersController
         $this->render->addData($this->menu($title));
 
         return $this->render->render('admin::counters_form', [
-            'form_action'  => self::URL . '/preview',
-            'id'           => $counter?->id,
-            'name'         => $counter?->name ?? '',
-            'counter_1'    => $counter?->link1 ?? '',
-            'counter_2'    => $counter?->link2 ?? '',
-            'mode'         => $counter?->mode ?? 0,
-            'field_height' => $this->currentUser->config->fieldHeight,
+            'form_action'            => self::URL . '/preview',
+            'id'                     => $counter?->id,
+            'name'                   => $counter?->name ?? '',
+            'counter_1'              => $counter?->link1 ?? '',
+            'counter_2'              => $counter?->link2 ?? '',
+            'mode'                   => $counter?->mode ?? 0,
+            'require_cookie_consent' => (bool) ($counter?->require_cookie_consent ?? false),
+            'enabled'                => $counter === null ? true : $counter->switch === 1,
+            'field_height'           => $this->currentUser->config->fieldHeight,
         ]);
     }
 

@@ -513,6 +513,7 @@ class Counters
     public function counters(): array
     {
         $counters = [];
+        $hasConsentGated = false;
         $req = $this->db->query('SELECT * FROM `cms_counters` WHERE `switch` = 1 ORDER BY `sort`');
 
         if ($req->rowCount()) {
@@ -520,12 +521,79 @@ class Counters
                 $link1 = ($res['mode'] === 1 || $res['mode'] === 2) ? $res['link1'] : $res['link2'];
                 $link2 = $res['mode'] === 2 ? $res['link1'] : $res['link2'];
                 $count = defined('_IS_HOMEPAGE') ? $link1 : $link2;
-                if (! empty($count)) {
+                if (empty($count)) {
+                    continue;
+                }
+
+                if (! empty($res['require_cookie_consent'] ?? 0)) {
+                    // Defer execution until the visitor accepts the cookie banner.
+                    $hasConsentGated = true;
+                    $counters[] = '<template data-cookie-consent-counter>' . $count . '</template>';
+                } else {
                     $counters[] = $count;
                 }
             }
         }
 
+        if ($hasConsentGated) {
+            $counters[] = $this->cookieConsentActivationScript();
+        }
+
         return $counters;
+    }
+
+    /**
+     * Script that reveals consent-gated counters once the cookie banner is accepted.
+     */
+    private function cookieConsentActivationScript(): string
+    {
+        $version = (int) (config('johncms')['cookie_banner_version'] ?? 1);
+
+        return <<<HTML
+            <script>
+                (function () {
+                    var version = '{$version}';
+
+                    function activate() {
+                        var templates = document.querySelectorAll('template[data-cookie-consent-counter]');
+                        for (var i = 0; i < templates.length; i++) {
+                            var tpl = templates[i];
+                            var container = document.createElement('div');
+                            if (tpl.content) {
+                                container.appendChild(tpl.content.cloneNode(true));
+                            } else {
+                                container.innerHTML = tpl.innerHTML;
+                            }
+                            var scripts = container.querySelectorAll('script');
+                            for (var j = 0; j < scripts.length; j++) {
+                                var old = scripts[j];
+                                var fresh = document.createElement('script');
+                                for (var k = 0; k < old.attributes.length; k++) {
+                                    fresh.setAttribute(old.attributes[k].name, old.attributes[k].value);
+                                }
+                                if (!old.src) {
+                                    fresh.textContent = old.textContent;
+                                }
+                                old.parentNode.replaceChild(fresh, old);
+                            }
+                            tpl.parentNode.insertBefore(container, tpl);
+                            tpl.parentNode.removeChild(tpl);
+                        }
+                    }
+
+                    var accepted = null;
+                    try {
+                        accepted = localStorage.getItem('cookie_consent_accepted');
+                    } catch (e) {
+                    }
+
+                    if (accepted === version) {
+                        activate();
+                    } else {
+                        document.addEventListener('cookie-consent-accepted', activate);
+                    }
+                })();
+            </script>
+            HTML;
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Johncms\Modules\Admin\Application\Middlewares\AdminAccessMiddleware;
 use Johncms\Modules\Consent\Application\Controllers\Admin\ConsentDeleteController;
+use Johncms\Modules\Consent\Application\Controllers\Admin\CookieBannerController;
 use Johncms\Modules\Consent\Application\Controllers\Admin\ConsentEditController;
 use Johncms\Modules\Consent\Application\Controllers\Admin\ConsentListController;
 use Johncms\Modules\Consent\Application\Controllers\Admin\ConsentLogController;
@@ -21,5 +22,9 @@ return static function (RouteCollection $router): void {
         $r->map(['GET', 'POST'], '/admin/consents/create', ConsentEditController::class)->name('admin.consents.create');
         $r->map(['GET', 'POST'], '/admin/consents/{id:number}/edit', ConsentEditController::class)->name('admin.consents.edit');
         $r->map(['GET', 'POST'], '/admin/consents/{id:number}/delete', ConsentDeleteController::class)->name('admin.consents.delete');
+
+        // Admin: cookie banner settings.
+        $r->get('/admin/cookie-banner', [CookieBannerController::class, 'form'])->name('admin.cookie_banner');
+        $r->post('/admin/cookie-banner', [CookieBannerController::class, 'save'])->name('admin.cookie_banner.save');
     })->addMiddleware(AdminAccessMiddleware::class);
 };

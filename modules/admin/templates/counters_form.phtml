@@ -8,6 +8,8 @@
  * @var string $counter_1
  * @var string $counter_2
  * @var int $mode
+ * @var bool $require_cookie_consent
+ * @var bool $enabled
  * @var int $field_height
  * @var string $csrf_token
  */
@@ -51,6 +53,19 @@ $this->layout('system::layout/default');
     <div class="custom-control custom-radio">
         <input type="radio" id="term2" name="mode" value="3" class="custom-control-input" <?= ($mode === 3 ? 'checked="checked" ' : '') ?>>
         <label class="custom-control-label" for="term2"><?= __('Option 2') ?></label>
+    </div>
+
+    <div class="custom-control custom-checkbox mt-3">
+        <input type="checkbox" class="custom-control-input" name="switch" value="1" id="switch" <?= $enabled ? 'checked="checked"' : '' ?>>
+        <label class="custom-control-label" for="switch"><?= __('Enabled') ?></label>
+    </div>
+
+    <div class="custom-control custom-checkbox mt-3">
+        <input type="checkbox" class="custom-control-input" name="require_cookie_consent" value="1" id="require_cookie_consent" <?= $require_cookie_consent ? 'checked="checked"' : '' ?>>
+        <label class="custom-control-label" for="require_cookie_consent"><?= __('Load only after cookie consent') ?></label>
+    </div>
+    <div class="small text-muted">
+        <?= __('If enabled, the counter code runs only after the visitor accepts the cookie banner. Requires the cookie banner to be enabled.') ?>
     </div>
 
     <div class="alert alert-info mb-3 mt-3">

@@ -202,6 +202,8 @@ PHP должен работать с драйвером по умолчанию:
       'Terms of Use' => 'Пользовательское соглашение',
       'Personal Data Processing Policy' => 'Политика обработки персональных данных',
       'Cookie Policy' => 'Политика использования cookie',
+      'Accept' => 'Принять',
+      'We use cookies to improve the site. By continuing to use the site, you agree to our %sPrivacy Policy%s.' => 'Мы используем файлы cookie для улучшения работы сайта. Продолжая использовать сайт, вы соглашаетесь с нашей %sПолитикой конфиденциальности%s.',
     ),
   ),
 );

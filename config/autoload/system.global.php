@@ -21,6 +21,9 @@ return [
         'terms_of_use_url'        => '',
         'personal_data_policy_url' => '',
         'cookie_policy_url'       => '',
+        'cookie_banner_enabled'   => 0,
+        'cookie_banner_version'   => 1,
+        'cookie_banner_text'      => [],
         'karma'                   => [
             'karma_points' => 5,
             'karma_time'   => 86400,

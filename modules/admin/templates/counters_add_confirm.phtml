@@ -7,6 +7,8 @@
  * @var string $counter_1
  * @var string $counter_2
  * @var int $mode
+ * @var bool $require_cookie_consent
+ * @var bool $enabled
  * @var int|null $id
  * @var string $csrf_token
  */
@@ -33,6 +35,12 @@ $this->layout('system::layout/default');
                     <input type="hidden" value="<?= $this->e($counter_1) ?>" name="link1">
                     <input type="hidden" value="<?= $this->e($counter_2) ?>" name="link2">
                     <input type="hidden" value="<?= $mode ?>" name="mode">
+                    <?php if ($enabled): ?>
+                        <input type="hidden" value="1" name="switch">
+                    <?php endif; ?>
+                    <?php if ($require_cookie_consent): ?>
+                        <input type="hidden" value="1" name="require_cookie_consent">
+                    <?php endif; ?>
                     <?php if (! empty($id)): ?>
                         <input type="hidden" value="<?= $id ?>" name="id">
                     <?php endif; ?>

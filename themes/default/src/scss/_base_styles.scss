@@ -253,3 +253,55 @@ figure {
 .legal-footer-links {
   line-height: 1.2;
 }
+
+.cookie-consent-banner {
+  background: #fff;
+  color: #212529;
+  border-radius: 10px;
+  bottom: 15px;
+  left: 15px;
+  right: 15px;
+  max-width: 380px;
+  padding: 20px;
+  position: fixed;
+  z-index: 1000;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
+
+  &__text {
+    font-size: 0.8rem;
+    line-height: 1.45;
+    margin-bottom: 1rem;
+
+    a {
+      text-decoration: underline;
+    }
+  }
+
+  &__accept {
+    width: 100%;
+  }
+}
+
+@mixin cookie-consent-banner-dark {
+  .cookie-consent-banner {
+    background: #2b3035;
+    color: #e9ecef;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.45);
+
+    &__text a {
+      color: #8ecbff;
+    }
+  }
+}
+
+body {
+  &.dark {
+    @include cookie-consent-banner-dark;
+  }
+
+  &.auto {
+    @media (prefers-color-scheme: dark) {
+      @include cookie-consent-banner-dark;
+    }
+  }
+}

@@ -208,6 +208,57 @@ if (! $isHomePage && ! empty($baseTitle) && $baseTitle !== (string) $config['cop
         <div class="modal-content"></div>
     </div>
 </div>
+<?php if (! empty($config['cookie_banner_enabled'])): ?>
+    <?php
+    $cookieTexts = $config['cookie_banner_text'] ?? [];
+    // Current locale, then English fallback, then the default placeholder text below.
+    $cookieText = $cookieTexts[$locale] ?? $cookieTexts['en'] ?? '';
+    $cookieVersion = (int) ($config['cookie_banner_version'] ?? 1);
+    ?>
+    <div id="cookie-consent-banner" class="cookie-consent-banner" style="display: none; position: fixed; left: 15px; right: 15px; bottom: 15px; max-width: 380px; z-index: 1000;">
+        <div class="cookie-consent-banner__text">
+            <?php if ($cookieText !== ''): ?>
+                <?= $this->e($cookieText) ?>
+            <?php else: ?>
+                <?php
+                // The link label lives inside the translatable string so each language can decline it.
+                $privacyUrl = (string) ($config['privacy_policy_url'] ?? '');
+                $openTag = $privacyUrl !== '' ? '<a href="' . $this->e($privacyUrl) . '">' : '';
+                $closeTag = $privacyUrl !== '' ? '</a>' : '';
+                ?>
+                <?= sprintf(d__('system', 'We use cookies to improve the site. By continuing to use the site, you agree to our %sPrivacy Policy%s.'), $openTag, $closeTag) ?>
+            <?php endif ?>
+        </div>
+        <button type="button" id="cookie-consent-accept" class="btn btn-primary btn-sm cookie-consent-banner__accept"><?= d__('system', 'Accept') ?></button>
+    </div>
+    <script>
+        (function () {
+            var version = '<?= $cookieVersion ?>';
+            var banner = document.getElementById('cookie-consent-banner');
+            var button = document.getElementById('cookie-consent-accept');
+            if (!banner || !button) {
+                return;
+            }
+            var accepted = null;
+            try {
+                accepted = localStorage.getItem('cookie_consent_accepted');
+            } catch (e) {
+                accepted = null;
+            }
+            if (accepted !== version) {
+                banner.style.display = 'block';
+            }
+            button.addEventListener('click', function () {
+                try {
+                    localStorage.setItem('cookie_consent_accepted', version);
+                } catch (e) {
+                }
+                banner.style.display = 'none';
+                document.dispatchEvent(new CustomEvent('cookie-consent-accepted'));
+            });
+        })();
+    </script>
+<?php endif ?>
 <script src="<?= $this->asset('js/manifest.js', true) ?>"></script>
 <script src="<?= $this->asset('js/vendor.js', true) ?>"></script>
 <script src="<?= $this->asset('js/app.js', true) ?>"></script>

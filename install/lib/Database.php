@@ -91,6 +91,7 @@ class Database
                 $table->text('link2');
                 $table->tinyInteger('mode')->default(1);
                 $table->boolean('switch')->default(0);
+                $table->boolean('require_cookie_consent')->default(0);
             }
         );
 

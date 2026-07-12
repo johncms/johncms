@@ -1,0 +1,73 @@
+<?php
+
+/**
+ * @var Mobicms\Render\Template\Template $this
+ * @var string $form_action
+ * @var list<array{code: string, name: string}> $languages
+ * @var bool $enabled
+ * @var int $version
+ * @var array<string, string> $texts
+ * @var string|null $error_message
+ * @var string|null $success_message
+ * @var string $csrf_token
+ */
+
+$this->layout('system::layout/default');
+?>
+
+<div style="max-width: 720px">
+    <?php if (! empty($error_message)): ?>
+        <div class="alert alert-danger shadow border-0"><?= $this->e($error_message) ?></div>
+    <?php endif ?>
+    <?php if (! empty($success_message)): ?>
+        <div class="alert alert-success shadow border-0"><?= $this->e($success_message) ?></div>
+    <?php endif ?>
+
+    <form method="post" action="<?= $this->e($form_action) ?>">
+        <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
+
+        <div class="custom-control custom-checkbox mb-3">
+            <input type="checkbox" class="custom-control-input" name="cookie_banner_enabled" value="1" id="cookie_banner_enabled" <?= $enabled ? 'checked="checked"' : '' ?>>
+            <label class="custom-control-label" for="cookie_banner_enabled"><?= __('Enable banner') ?></label>
+        </div>
+
+        <div class="form-group">
+            <label><?= __('Banner text') ?></label>
+            <div class="text-muted small mb-2"><?= __('Leave empty to use the default text with a link to the Privacy Policy.') ?></div>
+            <ul class="nav nav-tabs" role="tablist">
+                <?php foreach ($languages as $index => $language): ?>
+                    <li class="nav-item">
+                        <a class="nav-link <?= $index === 0 ? 'active' : '' ?>"
+                           data-bs-toggle="tab"
+                           href="#cookie_text_<?= $this->e($language['code']) ?>"
+                           role="tab"><?= $this->e($language['name']) ?> (<?= $this->e($language['code']) ?>)</a>
+                    </li>
+                <?php endforeach ?>
+            </ul>
+            <div class="tab-content border border-top-0 p-3">
+                <?php foreach ($languages as $index => $language): ?>
+                    <div class="tab-pane fade <?= $index === 0 ? 'show active' : '' ?>"
+                         id="cookie_text_<?= $this->e($language['code']) ?>"
+                         role="tabpanel">
+                        <textarea rows="4"
+                                  class="form-control"
+                                  name="cookie_banner_text[<?= $this->e($language['code']) ?>]"><?= $this->e($texts[$language['code']] ?? '') ?></textarea>
+                    </div>
+                <?php endforeach ?>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="cookie_banner_version"><?= __('Version') ?></label>
+            <div class="text-muted small mb-2"><?= __('Increase the version to show the banner again to everyone.') ?></div>
+            <input type="number"
+                   min="1"
+                   id="cookie_banner_version"
+                   name="cookie_banner_version"
+                   class="form-control col-sm-3"
+                   value="<?= $version ?>">
+        </div>
+
+        <input type="submit" class="btn btn-primary btn-lg mt-2 mb-2" name="submit" value="<?= __('Save') ?>">
+    </form>
+</div>
