@@ -11,10 +11,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Kyrgyz\n"
 "Language: ky_KG\n"
-"PO-Revision-Date: 2026-03-24 21:41\n"
+"PO-Revision-Date: 2026-07-12 12:42\n"
 
 #: install/index.php:66
-#: install/steps/step_1.php:23
+#: install/steps/step_1.php:24
 msgid "Preparing for installation"
 msgstr "Орнотууга даярдануу"
 
@@ -31,8 +31,8 @@ msgid "Database"
 msgstr "Маалымат базасы"
 
 #: install/index.php:81
-#: install/steps/step_4.php:28
-#: install/steps/step_4.php:29
+#: install/steps/step_4.php:31
+#: install/steps/step_4.php:32
 msgid "Setting"
 msgstr "Орнотуу"
 
@@ -101,40 +101,40 @@ msgstr "fileinfo кеңейтүүсү"
 msgid "PHP extension fileinfo must be installed"
 msgstr "PHP fileinfo кеңейтүүсү орнотулушу керек"
 
-#: install/steps/step_3.php:99
+#: install/steps/step_3.php:124
 msgid "Correct work of JohnCMS is not guaranteed on your version of mysql server.<br>You can ignore this warning at your own risk."
 msgstr "JohnCMS'тин туура иштеши сиз орноткон MySQL серверинин нускасы менен кепилдикке алынбайт.<br>Сиз бул эскертүүгө көңүл бурбай койсоңуз болот."
 
-#: install/steps/step_3.php:100
+#: install/steps/step_3.php:125
 #, php-format
 msgid "Server name: <b>%s</b>. <br>Your mysql server version is <b>%s</b>. But <b>%s</b> is required."
 msgstr "Сервердин аты: <b>%s</b>. <br>Сиздин MySQL сервер нускаңыз <b>%s</b>. Төмөнкүлөрдү талап кылат: <b>%s</b>"
 
-#: install/steps/step_3.php:104
+#: install/steps/step_3.php:129
 msgid "The system requires a properly configured <a href='https://www.php.net/manual/en/intro.mysqlnd.php' target='_blank'>MySQL Native Driver (mysqlnd)</a>."
 msgstr "Системанын иштеши үчүн <a href='https://www.php.net/manual/en/intro.mysqlnd.php' target='_blank'>MySQL Native Driver (mysqlnd)</a> талап кылат."
 
-#: install/steps/step_3.php:105
+#: install/steps/step_3.php:130
 msgid "Please contact your hosting provider's technical support to resolve this issue."
 msgstr "Сураныч, бул маселени чечүү үчүн хостинг провайдериңиздин техникалык колдоосу менен байланышыңыз."
 
-#: install/steps/step_3.php:109
+#: install/steps/step_3.php:134
 msgid "ERROR: Can't write database.local.php"
 msgstr "КАТА: Жазууга мүмкүн эмес database.local.php"
 
-#: install/steps/step_3.php:115
+#: install/steps/step_3.php:140
 msgid "Invalid database host name"
 msgstr "Хосттун маалыматтар базасынын аты туура эмес"
 
-#: install/steps/step_3.php:117
+#: install/steps/step_3.php:142
 msgid "Invalid database user or password"
 msgstr "Маалымат базасынын колдонуучусу же сырсөзү туура эмес"
 
-#: install/steps/step_3.php:119
+#: install/steps/step_3.php:144
 msgid "Database does not exist"
 msgstr "Мындай маалыматтар базасы жок"
 
-#: install/steps/step_4.php:118
+#: install/steps/step_4.php:167
 msgid "ERROR: Can't write system.local.php"
 msgstr "КАТА: Жазууга мүмкүн эмес system.local.php"
 
