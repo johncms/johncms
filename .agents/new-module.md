@@ -89,6 +89,36 @@ final readonly class AuthorizedUserMiddleware implements MiddlewareInterface
 
 **Trailing slash convention:** define routes *without* a trailing slash (`/downloads/search`), but use a trailing slash in template and controller links (`/downloads/search/`). `index.php` normalises URIs with `rtrim` before matching, so both variants work at runtime.
 
+## Localization
+
+A new module gets its own gettext domain, named after the module. Register it in **both** places, or its strings silently stay untranslated:
+
+1. `translate.xml.dist` — a `<domain>` entry, otherwise `translate-scan` never produces a `.pot`:
+
+   ```xml
+   <domain>
+       <name><module></name>
+       <target>modules/<module>/locale</target>
+       <sourceDir>modules/<module></sourceDir>
+   </domain>
+   ```
+
+2. `crowdin.yml` — a `files` entry, otherwise the domain never reaches Crowdin:
+
+   ```yaml
+   - source: /modules/<module>/locale/<module>.pot
+     translation: /modules/<module>/locale/%two_letters_code%.po
+   ```
+
+Then generate the template and the runtime dictionaries:
+
+```bash
+docker exec $(docker ps -q -f name=johncms9.php-fpm) composer translate-scan
+docker exec $(docker ps -q -f name=johncms9.php-fpm) composer translate
+```
+
+Add a `<lang>.po` in `modules/<module>/locale/` for each language you were asked to translate. For the full pipeline and Crowdin commands, read `.agents/localization.md`.
+
 ## Template Notes
 
 * Templates call `$this->layout('system::layout/default')` without arguments.
