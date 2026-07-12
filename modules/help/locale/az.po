@@ -11,46 +11,68 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Azerbaijani\n"
 "Language: az_AZ\n"
-"PO-Revision-Date: 2026-03-24 21:41\n"
+"PO-Revision-Date: 2026-07-12 12:38\n"
 
-#: modules/help/includes/admsmilies.php:20
-#: modules/help/includes/smilies.php:35
+#: modules/help/src/Application/Controllers/AdminSmiliesController.php:43
+#: modules/help/src/Application/Controllers/AdminSmiliesController.php:49
+#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:60
 msgid "For administration"
 msgstr "Adminstrasiya üçün"
 
-#: modules/help/includes/admsmilies.php:21
-#: modules/help/includes/my_smilies.php:22
-#: modules/help/includes/usersmilies.php:39
-#: modules/help/templates/index.phtml:31
-msgid "Smilies"
-msgstr "Smayllar"
-
-#: modules/help/includes/admsmilies.php:32
+#: modules/help/src/Application/Controllers/AdminSmiliesController.php:45
 msgid "Access forbidden"
 msgstr "Giriş qadağandır"
 
-#: modules/help/includes/avatars.php:20
+#: modules/help/src/Application/Controllers/AdminSmiliesController.php:51
+#: modules/help/src/Application/Controllers/AvatarCatalogController.php:33
+#: modules/help/src/Application/Controllers/AvatarListController.php:50
+#: modules/help/src/Application/Controllers/ForumRulesController.php:33
+#: modules/help/src/Application/Controllers/HelpIndexController.php:35
+#: modules/help/src/Application/Controllers/MySmiliesController.php:53
+#: modules/help/src/Application/Controllers/SetAvatarController.php:61
+#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:37
+#: modules/help/src/Application/Controllers/UserSmiliesController.php:53
+msgid "Information, FAQ"
+msgstr "Məlumat, suallar və cavablar"
+
+#: modules/help/src/Application/Controllers/AdminSmiliesController.php:52
+#: modules/help/src/Application/Controllers/AdminSmiliesController.php:62
+#: modules/help/src/Application/Controllers/MySmiliesController.php:54
+#: modules/help/src/Application/Controllers/MySmiliesController.php:64
+#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:35
+#: modules/help/src/Application/Controllers/UserSmiliesController.php:54
+#: modules/help/src/Application/Controllers/UserSmiliesController.php:64
+msgid "Smiles"
+msgstr "Smayllar"
+
+#: modules/help/src/Application/Controllers/AvatarCatalogController.php:31
+#: modules/help/src/Application/Controllers/AvatarListController.php:51
+#: modules/help/src/Application/Controllers/SetAvatarController.php:62
 #: modules/help/templates/index.phtml:30
 msgid "Avatars"
 msgstr "Avatar"
 
-#: modules/help/includes/avatars.php:37
-msgid "Avatar has been successfully applied"
-msgstr "Avatar uğurla tətbiq olundu"
+#: modules/help/src/Application/Controllers/AvatarListController.php:40
+#: modules/help/src/Application/Controllers/SetAvatarController.php:51
+#: modules/help/src/Application/Controllers/UserSmiliesController.php:43
+msgid "Wrong data"
+msgstr ""
 
-#: modules/help/includes/avatars.php:39
-msgid "Continue"
-msgstr "Davam"
+#: modules/help/src/Application/Controllers/AvatarListController.php:42
+#: modules/help/src/Application/Controllers/UserSmiliesController.php:45
+msgid "The directory does not exist"
+msgstr ""
 
-#: modules/help/includes/avatars.php:48
-msgid "An error occurred"
-msgstr "Xəta baş verdi"
-
-#: modules/help/includes/avatars.php:50
+#: modules/help/src/Application/Controllers/AvatarListController.php:44
+#: modules/help/src/Application/Controllers/MySmiliesController.php:47
+#: modules/help/src/Application/Controllers/SetAvatarController.php:42
+#: modules/help/src/Application/Controllers/SetAvatarController.php:55
+#: modules/help/src/Application/Controllers/SetAvatarController.php:87
+#: modules/help/src/Application/Controllers/SetMySmiliesController.php:42
+#: modules/help/src/Application/Controllers/UserSmiliesController.php:47
 #: modules/help/templates/avatar_list.phtml:65
 #: modules/help/templates/avatars.phtml:48
-#: modules/help/templates/bbcode.phtml:89
-#: modules/help/templates/forum_rules.phtml:59
+#: modules/help/templates/forum_rules.phtml:60
 #: modules/help/templates/index.phtml:34
 #: modules/help/templates/my_smiles_list.phtml:81
 #: modules/help/templates/smiles.phtml:48
@@ -58,87 +80,114 @@ msgstr "Xəta baş verdi"
 msgid "Back"
 msgstr "Geri"
 
-#: modules/help/includes/avatars.php:55
-msgid "Set to Profile"
-msgstr "Profilə tətbiq et"
-
-#: modules/help/includes/avatars.php:58
-msgid "Are you sure you want to set yourself this avatar?"
-msgstr "Bu avatarı profilə yükləmək istəyirsiz?"
-
-#: modules/help/includes/avatars.php:61
-msgid "Save"
-msgstr "Saxla"
-
-#: modules/help/includes/forum.php:15
-#: modules/help/templates/index.phtml:28
+#: modules/help/src/Application/Controllers/ForumRulesController.php:31
+#: modules/help/templates/index.phtml:29
 msgid "Forum rules"
 msgstr "Forumun qaydaları"
 
-#: modules/help/includes/my_smilies.php:21
-#: modules/help/includes/smilies.php:27
+#: modules/help/src/Application/Controllers/MySmiliesController.php:43
+#: modules/help/src/Application/Controllers/SetAvatarController.php:38
+#: modules/help/src/Application/Controllers/SetMySmiliesController.php:38
+msgid "Access denied"
+msgstr ""
+
+#: modules/help/src/Application/Controllers/MySmiliesController.php:45
+#: modules/help/src/Application/Controllers/SetAvatarController.php:40
+#: modules/help/src/Application/Controllers/SetMySmiliesController.php:40
+msgid "You are not logged in"
+msgstr ""
+
+#: modules/help/src/Application/Controllers/MySmiliesController.php:51
+#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:52
 #: modules/help/templates/smiles_list.phtml:45
 msgid "My smilies"
 msgstr "Smayllarım"
 
-#: modules/help/includes/smilies.php:19
-msgid "Smiles"
-msgstr "Smayllar"
+#: modules/help/src/Application/Controllers/SetAvatarController.php:53
+msgid "File does not exist"
+msgstr ""
 
-#: modules/help/includes/tags.php:15
-#: modules/help/templates/index.phtml:29
-msgid "bbCode Tags"
-msgstr "BBkodlar"
+#: modules/help/src/Application/Controllers/SetAvatarController.php:59
+msgid "Set to Profile"
+msgstr "Profilə tətbiq et"
 
-#: modules/help/index.php:54
-msgid "Information, FAQ"
-msgstr "Məlumat, suallar və cavablar"
+#: modules/help/src/Application/Controllers/SetAvatarController.php:76
+msgid "Avatar has been successfully applied"
+msgstr "Avatar uğurla tətbiq olundu"
 
-#: modules/help/index.php:64
+#: modules/help/src/Application/Controllers/SetAvatarController.php:78
+msgid "Continue"
+msgstr "Davam"
+
+#: modules/help/src/Application/Controllers/SetAvatarController.php:85
+msgid "An error occurred"
+msgstr "Xəta baş verdi"
+
+#: modules/help/src/Application/Controllers/SetAvatarController.php:94
+msgid "Are you sure you want to set yourself this avatar?"
+msgstr "Bu avatarı profilə yükləmək istəyirsiz?"
+
+#: modules/help/src/Application/Controllers/SetAvatarController.php:97
+msgid "Save"
+msgstr "Saxla"
+
+#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:92
+#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:85
 msgid "Animals"
 msgstr "Heyvanlar"
 
-#: modules/help/index.php:65
+#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:93
+#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:86
 msgid "Brawl, Weapons"
 msgstr "Döyüş, Silah,"
 
-#: modules/help/index.php:66
+#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:94
+#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:87
 msgid "Emotions"
 msgstr "Emosiyalar"
 
-#: modules/help/index.php:67
+#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:95
+#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:88
 msgid "Flowers"
 msgstr "Güllər"
 
-#: modules/help/index.php:68
+#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:96
+#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:89
 msgid "Food, Alcohol"
 msgstr "Qida, Alkoqol"
 
-#: modules/help/index.php:69
+#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:97
+#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:90
 msgid "Gestures"
 msgstr "Hərəkətlər"
 
-#: modules/help/index.php:70
+#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:98
+#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:91
 msgid "Holidays"
 msgstr "Bayramlar"
 
-#: modules/help/index.php:71
+#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:99
+#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:92
 msgid "Love"
 msgstr "Sevgi"
 
-#: modules/help/index.php:72
+#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:100
+#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:93
 msgid "Miscellaneous"
 msgstr "Müxtəlif"
 
-#: modules/help/index.php:73
+#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:101
+#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:94
 msgid "Music, Dancing"
 msgstr "Musiqi, Rəqslər"
 
-#: modules/help/index.php:74
+#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:102
+#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:95
 msgid "Sports"
 msgstr "İdman"
 
-#: modules/help/index.php:75
+#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:103
+#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:96
 msgid "Technology"
 msgstr "\"Texnologiya\""
 
@@ -156,153 +205,89 @@ msgstr "Siyahı boşdur"
 msgid "Total:"
 msgstr "Ümumi"
 
-#: modules/help/templates/bbcode.phtml:30
-msgid "PHP code"
-msgstr "PHP kodu"
-
-#: modules/help/templates/bbcode.phtml:33
-msgid "Link name"
-msgstr "Link adı"
-
-#: modules/help/templates/bbcode.phtml:34
-msgid "URL Link"
-msgstr "Linki"
-
-#: modules/help/templates/bbcode.phtml:38
-msgid "Bold"
-msgstr "Qalın"
-
-#: modules/help/templates/bbcode.phtml:42
-msgid "Italic"
-msgstr "Əyri"
-
-#: modules/help/templates/bbcode.phtml:46
-msgid "Underline"
-msgstr "Altı xəttli"
-
-#: modules/help/templates/bbcode.phtml:50
-msgid "Strike"
-msgstr "Zərbə"
-
-#: modules/help/templates/bbcode.phtml:54
-msgid "Red"
-msgstr "Qırmızı"
-
-#: modules/help/templates/bbcode.phtml:58
-msgid "Green"
-msgstr "Yaşıl"
-
-#: modules/help/templates/bbcode.phtml:62
-msgid "Blue"
-msgstr "Mavi"
-
-#: modules/help/templates/bbcode.phtml:66
-msgid "Text Color"
-msgstr "Mətnin rəngi"
-
-#: modules/help/templates/bbcode.phtml:70
-msgid "Background Color"
-msgstr "Arxa plan rəngi"
-
-#: modules/help/templates/bbcode.phtml:74
-msgid "Quote"
-msgstr "Sitat gətirmək"
-
-#: modules/help/templates/bbcode.phtml:78
-msgid "Bulleted list"
-msgstr "Bullet siyahısı"
-
-#: modules/help/templates/bbcode.phtml:81
-msgid "Title"
-msgstr "Başlıq"
-
-#: modules/help/templates/bbcode.phtml:81
-msgid "Text"
-msgstr "Mətn"
-
-#: modules/help/templates/bbcode.phtml:82
-msgid "Spoiler"
-msgstr "Spoyler"
-
 #: modules/help/templates/confirm.phtml:40
 msgid "Cancel"
 msgstr "Ləğv et"
 
-#: modules/help/templates/forum_rules.phtml:26
+#: modules/help/templates/forum_rules.phtml:27
 msgid "FORBIDDEN"
 msgstr "Qadağandır"
 
-#: modules/help/templates/forum_rules.phtml:28
+#: modules/help/templates/forum_rules.phtml:29
 msgid "Advertising messages"
 msgstr "Reklam mesajları"
 
-#: modules/help/templates/forum_rules.phtml:29
+#: modules/help/templates/forum_rules.phtml:30
 msgid "The messages containing direct propagation of racial, national and religious animosity"
 msgstr "Şəkilli mesajlar birbaşa təbliğat irqi, milli və dini düşmənçiliyə"
 
-#: modules/help/templates/forum_rules.phtml:30
+#: modules/help/templates/forum_rules.phtml:31
 msgid "Any abusive, obscene, vulgar, slanderous, hateful, threatening and sexually-oriented messages or any other material that may violate any applicable laws"
 msgstr "Təhqiramiz, ki ədəbsiz, вульгарный, böhtan, nifrət, təhlükəli və cinsi yönümlü bir mesaj və ya hər hansı digər material poza bilər, hər hansı qanun"
 
-#: modules/help/templates/forum_rules.phtml:31
+#: modules/help/templates/forum_rules.phtml:32
 msgid "The messages obviously offending someone, espcially forum users"
 msgstr "Mesaj aydın оскорбляющие kimsə, xüsusilə форумчанам"
 
-#: modules/help/templates/forum_rules.phtml:32
+#: modules/help/templates/forum_rules.phtml:33
 msgid "Purposely to deform a writing of nicknames of other users for the purpose of giving to the message an offensive shade"
 msgstr "Qəsdən təhrif yazı iştirakçılarının digər istifadəçilər vermək məqsədilə post təhqiramiz toxumalıdır"
 
-#: modules/help/templates/forum_rules.phtml:33
+#: modules/help/templates/forum_rules.phtml:34
 msgid "Publishing deleted by moderator messages repeatedly"
 msgstr "Nəşr uzaq mesajları dəfələrlə moderator"
 
-#: modules/help/templates/forum_rules.phtml:34
+#: modules/help/templates/forum_rules.phtml:35
 msgid "Post messages not related to the topic"
 msgstr "Heç постить mesajlar aid olmayan mövzu"
 
-#: modules/help/templates/forum_rules.phtml:35
+#: modules/help/templates/forum_rules.phtml:36
 msgid "Continuing topics that have been closed by moderator"
 msgstr "Davam edən mövzular bağlanıb moderator"
 
-#: modules/help/templates/forum_rules.phtml:38
+#: modules/help/templates/forum_rules.phtml:39
 msgid "ABSOLUTELY FORBIDDEN"
 msgstr "QƏTİ ŞƏKİLDƏ QADAĞAN"
 
-#: modules/help/templates/forum_rules.phtml:40
+#: modules/help/templates/forum_rules.phtml:41
 msgid "Writing in the public topics a discontent with inappropriate actions of other users and discussing about moderators working. Use private messages for this purpose"
 msgstr "Yazmaq ictimai bölmələrdə narazılıq неадекватными hərəkətləri ilə digər istifadəçilərin müzakirə moderatörleriyle işləyir. İstifadə şəxsi mesaj bunun üçün"
 
-#: modules/help/templates/forum_rules.phtml:41
+#: modules/help/templates/forum_rules.phtml:42
 msgid "Register the nicknames having offensive tone for other users"
 msgstr "Qeydiyyat iştirakçılarının olan təhqiramiz tonu üçün digər istifadəçilər"
 
-#: modules/help/templates/forum_rules.phtml:44
+#: modules/help/templates/forum_rules.phtml:45
 msgid "UNACCEPTABLE"
 msgstr "Yolverilməzdir"
 
-#: modules/help/templates/forum_rules.phtml:46
+#: modules/help/templates/forum_rules.phtml:47
 msgid "Quote full messages of the previous user and quote the messages already containing other quotes"
 msgstr "Sitat mesajlar əvvəlki istifadəçi sitat gətirmək mesajları, artıq olan digər quote"
 
-#: modules/help/templates/forum_rules.phtml:47
+#: modules/help/templates/forum_rules.phtml:48
 msgid "Post messages only contains external link"
 msgstr "Yerləşdirmək mesajlar ehtiva yalnız link xarici resurs"
 
-#: modules/help/templates/forum_rules.phtml:48
+#: modules/help/templates/forum_rules.phtml:49
 msgid "Post messages written in translite"
 msgstr "Göndərmək üçün mesaj yazdığı транслите"
 
-#: modules/help/templates/forum_rules.phtml:49
+#: modules/help/templates/forum_rules.phtml:50
 msgid "Posting of purposeless messages: consisting of smileys only or posts like \"Ok\", \"What?\", \"Who is there?\", etc."
 msgstr "Yerləşdirilməsi axmaq mesaj ibarət yalnız mimikalar daxil olmaqla və ya mesaj növü \"Ok\", \"nə?\" \"Kim var?\", və s."
 
-#: modules/help/templates/forum_rules.phtml:54
+#: modules/help/templates/forum_rules.phtml:55
 msgid "Message posted despite the above warnings will be changed or deleted."
 msgstr "Mesaj baxmayaraq, yuxarıda xəbərdarlıq dəyişdirilir və ya silinir."
 
-#: modules/help/templates/forum_rules.phtml:55
+#: modules/help/templates/forum_rules.phtml:56
 msgid "This rule applies to all members and moderators, repeated actions will make you get ban or even lose your account."
 msgstr "Bu qayda isə, bütün iştirakçıların və moderatörleriyle, təkrar fəaliyyət imkan verir almaq qadağan və ya hətta itirmək hesabı."
+
+#: modules/help/templates/index.phtml:31
+msgid "Smilies"
+msgstr "Smayllar"
 
 #: modules/help/templates/my_smiles_list.phtml:36
 msgid "Add Smilies"

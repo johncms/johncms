@@ -11,50 +11,54 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
-"PO-Revision-Date: 2026-03-27 20:02\n"
+"PO-Revision-Date: 2026-07-12 12:36\n"
 
-#: modules/community/src/Application/Controllers/AdministrationController.php:27
-#: modules/community/src/Application/Controllers/CommunityBirthdaysController.php:27
+#: modules/community/src/Application/Controllers/AdministrationController.php:32
+#: modules/community/src/Application/Controllers/CommunityBirthdaysController.php:32
 #: modules/community/src/Application/Controllers/CommunityIndexController.php:27
-#: modules/community/src/Application/Controllers/CommunitySearchController.php:29
+#: modules/community/src/Application/Controllers/CommunitySearchController.php:34
 #: modules/community/src/Application/Controllers/CommunityTopController.php:29
-#: modules/community/src/Application/Controllers/CommunityUsersController.php:27
+#: modules/community/src/Application/Controllers/CommunityUsersController.php:32
 #: modules/community/src/Application/UseCases/ViewIndexUseCase.php:21
 msgid "Community"
 msgstr "المجتمع"
 
-#: modules/community/src/Application/Controllers/AdministrationController.php:37
-#: modules/community/src/Application/Controllers/CommunityBirthdaysController.php:37
+#: modules/community/src/Application/Controllers/AdministrationController.php:42
+#: modules/community/src/Application/Controllers/CommunityBirthdaysController.php:42
 #: modules/community/src/Application/Controllers/CommunityIndexController.php:37
-#: modules/community/src/Application/Controllers/CommunitySearchController.php:39
+#: modules/community/src/Application/Controllers/CommunitySearchController.php:44
 #: modules/community/src/Application/Controllers/CommunityTopController.php:39
-#: modules/community/src/Application/Controllers/CommunityUsersController.php:37
+#: modules/community/src/Application/Controllers/CommunityUsersController.php:42
 msgid "For registered users only"
 msgstr "للمستخدمين المسجلين فقط"
 
-#: modules/community/src/Application/UseCases/ViewAdministrationUseCase.php:20
+#: modules/community/src/Application/Controllers/AdministrationController.php:47
 #: modules/community/templates/index.phtml:45
 msgid "Administration"
 msgstr "الإدارة العليا"
 
-#: modules/community/src/Application/UseCases/ViewBirthdaysUseCase.php:20
+#: modules/community/src/Application/Controllers/CommunityBirthdaysController.php:47
 #: modules/community/templates/index.phtml:50
 msgid "Birthdays"
 msgstr "أعياد الميلاد"
 
-#: modules/community/src/Application/UseCases/ViewSearchUseCase.php:22
+#: modules/community/src/Application/Controllers/CommunitySearchController.php:49
 #: modules/community/templates/administration.phtml:50
 #: modules/community/templates/search.phtml:84
 #: modules/community/templates/users.phtml:50
 msgid "User Search"
 msgstr "بحث عن مستخدم"
 
-#: modules/community/src/Application/UseCases/ViewSearchUseCase.php:29
+#: modules/community/src/Application/Controllers/CommunityUsersController.php:47
+msgid "List of users"
+msgstr "قائمة المستخدمين"
+
+#: modules/community/src/Application/UseCases/ViewSearchUseCase.php:26
 #: modules/community/templates/index.phtml:32
 msgid "Nickname"
 msgstr "اسم الشهرة"
 
-#: modules/community/src/Application/UseCases/ViewSearchUseCase.php:29
+#: modules/community/src/Application/UseCases/ViewSearchUseCase.php:26
 msgid "Invalid length"
 msgstr "طويل جدا"
 
@@ -90,10 +94,6 @@ msgstr "افضل المعجبين"
 #: modules/community/src/Application/UseCases/ViewTopUseCase.php:74
 msgid "Most active in Forum"
 msgstr "الأكثر نشاطا في المنتدى"
-
-#: modules/community/src/Application/UseCases/ViewUsersUseCase.php:20
-msgid "List of users"
-msgstr "قائمة المستخدمين"
 
 #: modules/community/templates/administration.phtml:33
 #: modules/community/templates/search.phtml:67
