@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
-"PO-Revision-Date: 2026-07-12 12:34\n"
+"PO-Revision-Date: 2026-07-12 12:35\n"
 
 #: system/src/Http/Controller/AdminControllerContext.php:50
 #: modules/admin/src/Application/Controllers/DashboardController.php:27
@@ -1208,11 +1208,11 @@ msgstr "Режим отображения:"
 
 #: modules/admin/templates/counters_view.phtml:44
 msgid "Yes"
-msgstr ""
+msgstr "Да"
 
 #: modules/admin/templates/counters_view.phtml:44
 msgid "No"
-msgstr ""
+msgstr "Нет"
 
 #: modules/admin/templates/counters_view.phtml:50
 msgid "Disable"
