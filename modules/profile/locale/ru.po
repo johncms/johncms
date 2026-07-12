@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
-"PO-Revision-Date: 2026-07-11 21:51\n"
+"PO-Revision-Date: 2026-07-12 12:34\n"
 
 #: modules/profile/src/Application/Controllers/AccountController.php:27
 #: modules/profile/src/Application/Controllers/SettingsController.php:159
@@ -44,7 +44,7 @@ msgstr "Комментарии"
 #: modules/profile/src/Application/Controllers/AvatarController.php:52
 #: modules/profile/src/Application/Controllers/PhotoController.php:52
 msgid "An error occurred"
-msgstr ""
+msgstr "Произошла ошибка"
 
 #: modules/profile/src/Application/Controllers/AvatarController.php:59
 #: modules/profile/src/Application/Controllers/AvatarController.php:71
@@ -1043,7 +1043,7 @@ msgstr "Пароль будет выслан на E-mail Адрес, указа�
 
 #: modules/profile/templates/restore_password_set.phtml:17
 msgid "A new password will be generated and sent to the E-mail address specified in your profile."
-msgstr ""
+msgstr "Новый пароль будет сгенерирован и отправлен на адрес электронной почты, указанный в вашем профиле."
 
 #: modules/profile/templates/settings.phtml:45
 msgid "Time settings"
