@@ -11,544 +11,615 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Ukrainian\n"
 "Language: uk_UA\n"
-"PO-Revision-Date: 2026-03-24 21:40\n"
+"PO-Revision-Date: 2026-07-12 12:40\n"
 
-#: modules/profile/includes/activity.php:25
-#: modules/profile/templates/index.phtml:253
-#: modules/profile/templates/stat.phtml:50
+#: modules/profile/src/Application/Controllers/AccountController.php:27
+#: modules/profile/src/Application/Controllers/SettingsController.php:159
+msgid "My Account"
+msgstr "Мій аккаунт"
+
+#: modules/profile/src/Application/Controllers/ActivityController.php:65
+#: modules/profile/src/Application/Controllers/ActivityController.php:72
+#: modules/profile/src/Application/Controllers/ActivityController.php:75
+#: modules/profile/templates/statistics.phtml:51
+#: modules/profile/templates/view.phtml:255
 msgid "Activity"
 msgstr "Активність"
 
-#: modules/profile/includes/activity.php:27
-#: modules/profile/includes/edit.php:52
-#: modules/profile/includes/guestbook.php:15
-#: modules/profile/includes/images.php:159
-#: modules/profile/includes/reset.php:20
-#: modules/profile/templates/office.phtml:32
-msgid "Profile"
-msgstr "Профіль"
-
-#: modules/profile/includes/activity.php:27
-#: modules/profile/includes/edit.php:52
-#: modules/profile/includes/images.php:159
-#: modules/profile/includes/index.php:24
-msgid "My Profile"
-msgstr "Мій профіль"
-
-#: modules/profile/includes/activity.php:33
+#: modules/profile/src/Application/Controllers/ActivityController.php:107
 msgid "Messages"
 msgstr "Повідомлення"
 
-#: modules/profile/includes/activity.php:38
+#: modules/profile/src/Application/Controllers/ActivityController.php:112
 msgid "Themes"
 msgstr "Теми"
 
-#: modules/profile/includes/activity.php:43
-#: modules/profile/includes/ban.php:392
-#: modules/profile/templates/ban.phtml:45
-#: modules/profile/templates/stat.phtml:54
+#: modules/profile/src/Application/Controllers/ActivityController.php:117
+#: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:42
+#: modules/profile/templates/ban.phtml:46
+#: modules/profile/templates/statistics.phtml:55
 msgid "Comments"
 msgstr "Коментарі"
 
-#: modules/profile/includes/ban.php:16
-msgid "Ban the User"
-msgstr "Забанити користувача"
+#: modules/profile/src/Application/Controllers/AvatarController.php:52
+#: modules/profile/src/Application/Controllers/PhotoController.php:52
+msgid "An error occurred"
+msgstr ""
 
-#: modules/profile/includes/ban.php:30
-msgid "You do not have enought rights to ban this user"
-msgstr "Ви не маєте достатньо прав, щоб забанити цього користувача"
+#: modules/profile/src/Application/Controllers/AvatarController.php:59
+#: modules/profile/src/Application/Controllers/AvatarController.php:71
+#: modules/profile/src/Application/Controllers/AvatarController.php:82
+#: modules/profile/src/Application/Controllers/AvatarController.php:125
+msgid "Upload Avatar"
+msgstr "Завантажити аватар"
 
-#: modules/profile/includes/ban.php:44
-msgid "Reason not specified"
-msgstr "Причина не вказана"
+#: modules/profile/src/Application/Controllers/AvatarController.php:63
+#: modules/profile/src/Application/Controllers/ChangePasswordController.php:97
+#: modules/profile/src/Application/Controllers/PhotoController.php:63
+msgid "Repeat"
+msgstr "Повторіть"
 
-#: modules/profile/includes/ban.php:48
-msgid "There is no required data"
-msgstr "Немає необхідних даних"
+#: modules/profile/src/Application/Controllers/AvatarController.php:73
+msgid "The avatar is successfully uploaded"
+msgstr "Аватар успішно завантажений"
 
-#: modules/profile/includes/ban.php:58
-msgid "You have no rights to ban in this section"
-msgstr "Ви не маєте права банити у цьому розділі"
+#: modules/profile/src/Application/Controllers/AvatarController.php:75
+#: modules/profile/src/Application/Controllers/ChangePasswordController.php:114
+#: modules/profile/src/Application/Controllers/KarmaController.php:127
+#: modules/profile/src/Application/Controllers/PhotoController.php:75
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:121
+#: modules/profile/templates/restore_password.phtml:43
+#: modules/profile/templates/restore_password_set.phtml:19
+msgid "Continue"
+msgstr "Продовжити"
 
-#: modules/profile/includes/ban.php:62
-msgid "Ban already active"
-msgstr "Бан вже діє"
+#: modules/profile/src/Application/Controllers/AvatarController.php:84
+#: modules/profile/src/Application/Controllers/EditProfileController.php:190
+#: modules/profile/src/Application/Controllers/PhotoController.php:84
+#: modules/profile/src/Application/UseCases/GetProfileViewUseCase.php:76
+msgid "My Profile"
+msgstr "Мій профіль"
 
-#: modules/profile/includes/ban.php:143
-msgid "System"
-msgstr "Система"
+#: modules/profile/src/Application/Controllers/AvatarController.php:84
+#: modules/profile/src/Application/Controllers/EditProfileController.php:190
+#: modules/profile/src/Application/Controllers/GuestbookController.php:47
+#: modules/profile/src/Application/Controllers/PhotoController.php:84
+#: modules/profile/templates/account.phtml:30
+msgid "Profile"
+msgstr "Профіль"
 
-#: modules/profile/includes/ban.php:147
-#: modules/profile/includes/index.php:151
-msgid "Ban"
-msgstr "Бан"
-
-#: modules/profile/includes/ban.php:158
-msgid "User banned"
-msgstr "Користувач забанений"
-
-#: modules/profile/includes/ban.php:192
-msgid "Ban termination"
-msgstr "Скасування бану"
-
-#: modules/profile/includes/ban.php:200
-#: modules/profile/includes/ban.php:258
-#: modules/profile/includes/ban.php:277
-#: modules/profile/includes/ban.php:324
-#: modules/profile/skl.php:141
+#: modules/profile/src/Application/Controllers/BanController.php:90
+#: modules/profile/src/Application/Controllers/BanController.php:119
+#: modules/profile/src/Application/Controllers/BanController.php:139
+#: modules/profile/src/Application/Controllers/BanController.php:145
+#: modules/profile/src/Application/Controllers/BanController.php:164
+#: modules/profile/src/Application/Controllers/BanController.php:182
+#: modules/profile/src/Application/Controllers/BanController.php:188
+#: modules/profile/src/Application/Controllers/BanController.php:217
+#: modules/profile/src/Application/Controllers/BanController.php:340
+#: modules/profile/src/Application/Controllers/BanController.php:349
+#: modules/profile/src/Application/Controllers/EditProfileController.php:80
+#: modules/profile/src/Application/Controllers/EditProfileController.php:95
+#: modules/profile/src/Application/Controllers/KarmaController.php:142
+#: modules/profile/src/Application/Controllers/KarmaController.php:161
+#: modules/profile/src/Application/Controllers/KarmaController.php:167
+#: modules/profile/src/Application/Controllers/KarmaController.php:196
+#: modules/profile/src/Application/UseCases/GetRecoveryContextUseCase.php:23
 msgid "Wrong data"
 msgstr "Невірні дані"
 
-#: modules/profile/includes/ban.php:212
-msgid "Ban not active"
-msgstr "Бан не активний"
+#: modules/profile/src/Application/Controllers/BanController.php:107
+msgid "User banned"
+msgstr "Користувач забанений"
 
-#: modules/profile/includes/ban.php:223
-msgid "Ban terminated"
-msgstr "Бан скасовано"
+#: modules/profile/src/Application/Controllers/BanController.php:125
+#: modules/profile/src/Application/Controllers/BanController.php:152
+msgid "Ban termination"
+msgstr "Скасування бану"
 
-#: modules/profile/includes/ban.php:228
+#: modules/profile/src/Application/Controllers/BanController.php:126
 msgid "Ban time is going to the end. Infrigement will be saved in the bans history"
 msgstr "Припиняється дія бану. Порушення буде збережено в історії банів"
 
-#: modules/profile/includes/ban.php:229
+#: modules/profile/src/Application/Controllers/BanController.php:127
 msgid "Terminate Ban"
 msgstr "Скасувати бан"
 
-#: modules/profile/includes/ban.php:268
+#: modules/profile/src/Application/Controllers/BanController.php:152
+msgid "Ban terminated"
+msgstr "Бан скасовано"
+
+#: modules/profile/src/Application/Controllers/BanController.php:168
+#: modules/profile/src/Application/Controllers/BanController.php:193
 msgid "Delete ban"
 msgstr "Видалити бан"
 
-#: modules/profile/includes/ban.php:300
-msgid "Ban deleted"
-msgstr "Бан видалений"
-
-#: modules/profile/includes/ban.php:305
+#: modules/profile/src/Application/Controllers/BanController.php:169
 msgid "Removing ban along with a record in the bans history"
 msgstr "Видалення бану разом із записом в історії порушень"
 
-#: modules/profile/includes/ban.php:306
-#: modules/profile/includes/index.php:145
+#: modules/profile/src/Application/Controllers/BanController.php:170
+#: modules/profile/src/Application/UseCases/GetProfileViewUseCase.php:182
 #: modules/profile/templates/edit.phtml:108
 #: modules/profile/templates/edit.phtml:128
 #: modules/profile/templates/karma_delete.phtml:33
 msgid "Delete"
 msgstr "Видалити"
 
-#: modules/profile/includes/ban.php:334
-msgid "Violations history"
-msgstr "Історія порушень"
+#: modules/profile/src/Application/Controllers/BanController.php:193
+msgid "Ban deleted"
+msgstr "Бан видалений"
 
-#: modules/profile/includes/ban.php:344
-msgid "Violations history cleared"
-msgstr "Історію порушень очищено"
-
-#: modules/profile/includes/ban.php:349
-msgid "Are you sure want to clean entire history of user violations?"
-msgstr "Ви дійсно хочете очистити всю історію порушень даного користувача?"
-
-#: modules/profile/includes/ban.php:350
-msgid "Clear"
-msgstr "Очистити"
-
-#: modules/profile/includes/ban.php:368
+#: modules/profile/src/Application/Controllers/BanController.php:198
+#: modules/profile/src/Application/Controllers/BanController.php:213
 msgid "Violations history can be cleared by Supervisor only"
 msgstr "Очищати історію порушень можуть тільки Супервайзори"
 
-#: modules/profile/includes/ban.php:377
+#: modules/profile/src/Application/Controllers/BanController.php:203
+#: modules/profile/src/Application/Controllers/BanController.php:222
+msgid "Violations history"
+msgstr "Історія порушень"
+
+#: modules/profile/src/Application/Controllers/BanController.php:204
+msgid "Are you sure want to clean entire history of user violations?"
+msgstr "Ви дійсно хочете очистити всю історію порушень даного користувача?"
+
+#: modules/profile/src/Application/Controllers/BanController.php:205
+msgid "Clear"
+msgstr "Очистити"
+
+#: modules/profile/src/Application/Controllers/BanController.php:222
+msgid "Violations history cleared"
+msgstr "Історію порушень очищено"
+
+#: modules/profile/src/Application/Controllers/BanController.php:227
 msgid "Violations History"
 msgstr "Історія порушень"
 
-#: modules/profile/includes/ban.php:389
-#: modules/profile/templates/ban.phtml:37
-msgid "Full block"
-msgstr "Повний блок"
-
-#: modules/profile/includes/ban.php:390
-#: modules/profile/includes/ban.php:391
-#: modules/profile/templates/ban.phtml:41
-msgid "Private messages"
-msgstr "Приватні повідомлення"
-
-#: modules/profile/includes/ban.php:393
-#: modules/profile/includes/settings.php:45
-#: modules/profile/includes/settings.php:99
-#: modules/profile/templates/ban.phtml:55
-#: modules/profile/templates/stat.phtml:52
-msgid "Forum"
-msgstr "Форум"
-
-#: modules/profile/includes/ban.php:394
-#: modules/profile/includes/guestbook.php:16
-#: modules/profile/includes/guestbook.php:28
-#: modules/profile/templates/ban.phtml:49
-#: modules/profile/templates/index.phtml:289
-#: modules/profile/templates/office.phtml:42
-#: modules/profile/templates/stat.phtml:53
-msgid "Guestbook"
-msgstr "Гостьова"
-
-#: modules/profile/includes/ban.php:395
-#: modules/profile/templates/ban.phtml:61
-msgid "Library"
-msgstr "Бібліотека"
-
-#: modules/profile/includes/ban.php:405
-#: modules/profile/templates/ban.phtml:87
-msgid "Till cancel"
-msgstr "До відміни"
-
-#: modules/profile/includes/ban.php:416
-msgid "Cancel Ban"
-msgstr "Скасувати бан"
-
-#: modules/profile/includes/ban.php:422
-msgid "Delete Ban"
-msgstr "Видалити бан"
-
-#: modules/profile/includes/confirm_new_email.php:19
-#: modules/profile/includes/confirm_new_email.php:20
-msgid "Email confirmation"
-msgstr "Підтвердження електронною поштою"
-
-#: modules/profile/includes/edit.php:20
-#: modules/profile/templates/office.phtml:86
-msgid "Edit Profile"
-msgstr "Редагувати профіль"
-
-#: modules/profile/includes/edit.php:35
-#: modules/profile/includes/images.php:23
-msgid "You cannot edit profile of higher administration"
-msgstr "Ви не можете редагувати профіль вищої адміністрації"
-
-#: modules/profile/includes/edit.php:47
-#: modules/profile/includes/ip.php:24
-#: modules/profile/includes/office.php:24
-#: modules/profile/includes/password.php:25
-#: modules/profile/includes/settings.php:31
-msgid "Access forbidden"
-msgstr "Доступ заборонено"
-
-#: modules/profile/includes/edit.php:86
-msgid "Avatar is successfully removed"
-msgstr "Аватар був успішно видалений"
-
-#: modules/profile/includes/edit.php:93
-msgid "Photo is successfully removed"
-msgstr "Фото було успішно видалено"
-
-#: modules/profile/includes/edit.php:169
-msgid "Confirm email change"
-msgstr "Підтвердьте зміну електронної пошти"
-
-#: modules/profile/includes/edit.php:186
-msgid "The procedure for changing the email address was started"
-msgstr "Почато процедуру зміни електронної адреси"
-
-#: modules/profile/includes/edit.php:196
-msgid "Data saved"
-msgstr "Дані збережені"
-
-#: modules/profile/includes/images.php:36
-msgid "Upload Avatar"
-msgstr "Завантажити аватар"
-
-#: modules/profile/includes/images.php:42
-#: modules/profile/includes/images.php:94
-msgid "The weight of the file exceeds"
-msgstr "Занадто великий розмір файлу"
-
-#: modules/profile/includes/images.php:64
-msgid "The avatar is successfully uploaded"
-msgstr "Аватар успішно завантажений"
-
-#: modules/profile/includes/images.php:66
-#: modules/profile/includes/images.php:135
-#: modules/profile/includes/karma.php:138
-#: modules/profile/includes/password.php:83
-#: modules/profile/templates/restore_password.phtml:43
-msgid "Continue"
-msgstr "Продовжити"
-
-#: modules/profile/includes/images.php:81
-#: modules/profile/includes/images.php:150
-#: modules/profile/includes/password.php:94
-msgid "Repeat"
-msgstr "Повторіть"
-
-#: modules/profile/includes/images.php:88
-msgid "Upload Photo"
-msgstr "Завантажити фото"
-
-#: modules/profile/includes/images.php:133
-msgid "The photo is successfully uploaded"
-msgstr "Фото успішно завантажено"
-
-#: modules/profile/includes/index.php:24
-#: modules/profile/includes/karma.php:20
-#: modules/profile/index.php:58
-#: modules/profile/index.php:78
+#: modules/profile/src/Application/Controllers/BanController.php:229
+#: modules/profile/src/Application/Controllers/BanController.php:261
+#: modules/profile/src/Application/Controllers/KarmaController.php:206
+#: modules/profile/src/Application/Controllers/KarmaController.php:235
+#: modules/profile/src/Application/Controllers/KarmaController.php:262
+#: modules/profile/src/Application/Controllers/ProfileController.php:32
+#: modules/profile/src/Application/UseCases/GetProfileViewUseCase.php:76
 msgid "User Profile"
 msgstr "Профіль користувача"
 
-#: modules/profile/includes/index.php:94
-#: modules/profile/templates/stat.phtml:32
-msgid "Pending confirmation"
-msgstr "Чекає підтвердження"
+#: modules/profile/src/Application/Controllers/BanController.php:259
+#: modules/profile/src/Application/Controllers/BanController.php:313
+#: modules/profile/src/Application/Controllers/BanController.php:330
+msgid "Ban the User"
+msgstr "Забанити користувача"
 
-#: modules/profile/includes/index.php:99
-msgid "E-mail address is not confirmed"
-msgstr "Адреса електронної пошти не підтверджена"
-
-#: modules/profile/includes/index.php:126
-msgid "Add to Contacts"
-msgstr "Додати в контакти"
-
-#: modules/profile/includes/index.php:131
-msgid "Remove from Contacts"
-msgstr "Видалити з контактів"
-
-#: modules/profile/includes/index.php:139
-msgid "Edit"
-msgstr "Редагувати"
-
-#: modules/profile/includes/ip.php:15
-#: modules/profile/templates/index.phtml:86
-msgid "IP History"
-msgstr "Історія IP"
-
-#: modules/profile/includes/karma.php:17
-#: modules/profile/includes/karma.php:21
-#: modules/profile/templates/index.phtml:119
-msgid "Karma"
-msgstr "Карма"
-
-#: modules/profile/includes/karma.php:42
-msgid "It is forbidden to vote for administration"
-msgstr "Забороняється голосувати за адміністрацію"
-
-#: modules/profile/includes/karma.php:46
-msgid "Cheating karma is forbidden"
-msgstr "Накрутка карми заборонена"
-
-#: modules/profile/includes/karma.php:51
-#, php-format
-msgid "Users can take part in voting if they have stayed on a site not less %s and their score on the forum %d posts."
-msgstr "Користувачі можуть взяти участь в голосуванні, якщо вони присутні на сайті не менше %s та вони набрали на форумі %d постів."
-
-#: modules/profile/includes/karma.php:52
-msgid "days"
-msgstr "днів"
-
-#: modules/profile/includes/karma.php:60
-msgid "You can vote for single user just one time for 24 hours"
-msgstr "Ви можете голосувати за одного користувача тільки один раз протягом 24 годин\""
-
-#: modules/profile/includes/karma.php:66
-#, php-format
-msgid "You have exceeded the limit of votes. New voices will be added %s"
-msgstr "Ви перевищили ліміт голосів. Нові голоси будуть додані %s"
-
-#: modules/profile/includes/karma.php:77
-#: modules/profile/includes/karma.php:167
-#: modules/profile/templates/ban_history.phtml:96
-#: modules/profile/templates/ip_history.phtml:70
-#: modules/profile/templates/karma.phtml:86
-#: modules/profile/templates/restore_password_result.phtml:19
-#: modules/profile/templates/stat.phtml:58
-msgid "Back"
-msgstr "Назад"
-
-#: modules/profile/includes/karma.php:136
-msgid "You have successfully voted"
-msgstr "Ви успішно проголосували"
-
-#: modules/profile/includes/karma.php:147
-msgid "Vote for"
-msgstr "Голосувати за"
-
-#: modules/profile/includes/karma.php:165
-msgid "You are not allowed to vote for users"
-msgstr "Ви не можете голосувати за користувачів"
-
-#: modules/profile/includes/karma.php:201
-msgid "Do you really want to delete comment?"
-msgstr "Ви дійсно бажаєте видалити коментар?"
-
-#: modules/profile/includes/karma.php:234
-msgid "Do you really want to delete all reviews about user?"
-msgstr "Ви дійсно хочете видалити всі відгуки про користувача?"
-
-#: modules/profile/includes/karma.php:252
-msgid "New responses"
-msgstr "Нові відповіді"
-
-#: modules/profile/includes/karma.php:287
-msgid "All"
-msgstr "Всі"
-
-#: modules/profile/includes/karma.php:292
-#: modules/profile/templates/index.phtml:134
-#: modules/profile/templates/karma_vote.phtml:41
-msgid "Positive"
-msgstr "Позитивний"
-
-#: modules/profile/includes/karma.php:297
-#: modules/profile/templates/index.phtml:140
-#: modules/profile/templates/karma_vote.phtml:45
-msgid "Negative"
-msgstr "Негативний"
-
-#: modules/profile/includes/office.php:15
-#: modules/profile/includes/settings.php:22
-msgid "My Account"
-msgstr "Мій аккаунт"
-
-#: modules/profile/includes/password.php:15
-#: modules/profile/includes/password.php:16
+#: modules/profile/src/Application/Controllers/ChangePasswordController.php:39
+#: modules/profile/src/Application/Controllers/ChangePasswordController.php:42
+#: modules/profile/src/Application/Controllers/ChangePasswordController.php:47
+#: modules/profile/src/Application/Controllers/ChangePasswordController.php:73
+#: modules/profile/src/Application/Controllers/ChangePasswordController.php:76
+#: modules/profile/src/Application/Controllers/ChangePasswordController.php:121
+#: modules/profile/templates/account.phtml:85
 #: modules/profile/templates/edit.phtml:278
-#: modules/profile/templates/office.phtml:87
 msgid "Change Password"
 msgstr "Змінити пароль"
 
-#: modules/profile/includes/password.php:43
-#: modules/profile/includes/password.php:46
-msgid "It is necessary to fill in all fields"
-msgstr "Необхідно заповнити всі поля"
-
-#: modules/profile/includes/password.php:51
-msgid "Old password entered incorrectly"
-msgstr "Старий пароль введено невірно"
-
-#: modules/profile/includes/password.php:55
-msgid "The password confirmation you entered is wrong"
-msgstr "Підтвердження паролю введено невірно"
-
-#: modules/profile/includes/password.php:59
-msgid "The password must contain at least 3 characters"
-msgstr "Пароль повинен містити щонайменше 3 символи"
-
-#: modules/profile/includes/password.php:81
+#: modules/profile/src/Application/Controllers/ChangePasswordController.php:112
 msgid "Password successfully changed"
 msgstr "Пароль успішно змінено"
 
-#: modules/profile/includes/reset.php:19
+#: modules/profile/src/Application/Controllers/ConfirmNewEmailController.php:27
+msgid "Email confirmation"
+msgstr "Підтвердження електронною поштою"
+
+#: modules/profile/src/Application/Controllers/EditProfileController.php:69
+msgid "Data saved"
+msgstr "Дані збережені"
+
+#: modules/profile/src/Application/Controllers/EditProfileController.php:84
+msgid "Avatar is successfully removed"
+msgstr "Аватар був успішно видалений"
+
+#: modules/profile/src/Application/Controllers/EditProfileController.php:99
+msgid "Photo is successfully removed"
+msgstr "Фото було успішно видалено"
+
+#: modules/profile/src/Application/Controllers/EditProfileController.php:188
+#: modules/profile/src/Application/Controllers/EditProfileController.php:230
+#: modules/profile/templates/account.phtml:84
+msgid "Edit Profile"
+msgstr "Редагувати профіль"
+
+#: modules/profile/src/Application/Controllers/GuestbookController.php:40
+#: modules/profile/src/Application/Controllers/GuestbookController.php:48
+#: modules/profile/src/Application/Controllers/GuestbookController.php:63
+#: modules/profile/src/Application/Controllers/GuestbookController.php:76
+#: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:44
+#: modules/profile/templates/account.phtml:40
+#: modules/profile/templates/ban.phtml:50
+#: modules/profile/templates/statistics.phtml:54
+#: modules/profile/templates/view.phtml:291
+msgid "Guestbook"
+msgstr "Гостьова"
+
+#: modules/profile/src/Application/Controllers/IpHistoryController.php:32
+#: modules/profile/templates/view.phtml:88
+msgid "IP History"
+msgstr "Історія IP"
+
+#: modules/profile/src/Application/Controllers/KarmaController.php:67
+#: modules/profile/src/Application/Controllers/KarmaController.php:123
+#: modules/profile/src/Application/Controllers/KarmaController.php:207
+#: modules/profile/src/Application/Controllers/KarmaController.php:233
+#: modules/profile/src/Application/Controllers/KarmaController.php:236
+#: modules/profile/src/Application/Controllers/KarmaController.php:260
+#: modules/profile/src/Application/Controllers/KarmaController.php:263
+#: modules/profile/src/Application/Controllers/KarmaController.php:289
+#: modules/profile/src/Application/Controllers/KarmaController.php:303
+#: modules/profile/templates/view.phtml:121
+msgid "Karma"
+msgstr "Карма"
+
+#: modules/profile/src/Application/Controllers/KarmaController.php:83
+msgid "New responses"
+msgstr "Нові відповіді"
+
+#: modules/profile/src/Application/Controllers/KarmaController.php:125
+msgid "You have successfully voted"
+msgstr "Ви успішно проголосували"
+
+#: modules/profile/src/Application/Controllers/KarmaController.php:148
+msgid "Do you really want to delete comment?"
+msgstr "Ви дійсно бажаєте видалити коментар?"
+
+#: modules/profile/src/Application/Controllers/KarmaController.php:183
+msgid "Do you really want to delete all reviews about user?"
+msgstr "Ви дійсно хочете видалити всі відгуки про користувача?"
+
+#: modules/profile/src/Application/Controllers/KarmaController.php:250
+msgid "Vote for"
+msgstr "Голосувати за"
+
+#: modules/profile/src/Application/Controllers/KarmaController.php:293
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:135
+#: modules/profile/templates/ban_history.phtml:96
+#: modules/profile/templates/ip_history.phtml:70
+#: modules/profile/templates/karma.phtml:86
+#: modules/profile/templates/statistics.phtml:59
+msgid "Back"
+msgstr "Назад"
+
+#: modules/profile/src/Application/Controllers/KarmaController.php:314
+msgid "Access forbidden"
+msgstr "Доступ заборонено"
+
+#: modules/profile/src/Application/Controllers/PhotoController.php:59
+#: modules/profile/src/Application/Controllers/PhotoController.php:71
+#: modules/profile/src/Application/Controllers/PhotoController.php:82
+#: modules/profile/src/Application/Controllers/PhotoController.php:125
+msgid "Upload Photo"
+msgstr "Завантажити фото"
+
+#: modules/profile/src/Application/Controllers/PhotoController.php:73
+msgid "The photo is successfully uploaded"
+msgstr "Фото успішно завантажено"
+
+#: modules/profile/src/Application/Controllers/ResetSettingsController.php:29
 msgid "Reset user settings"
 msgstr "Скинути налаштування користувача"
 
-#: modules/profile/includes/reset.php:36
+#: modules/profile/src/Application/Controllers/ResetSettingsController.php:50
 #, php-format
 msgid "For user %s default settings were set."
 msgstr "Для користувача %s були встановлені налаштування за замовчуванням."
 
-#: modules/profile/includes/settings.php:17
-#: modules/profile/includes/settings.php:23
-#: modules/profile/templates/office.phtml:83
-msgid "Settings"
-msgstr "Налаштування"
-
-#: modules/profile/includes/settings.php:40
-#: modules/profile/includes/settings.php:152
-msgid "General setting"
-msgstr "Загальні налаштування"
-
-#: modules/profile/includes/settings.php:50
-#: modules/profile/includes/settings.php:70
-msgid "Mail"
-msgstr "Пошта"
-
-#: modules/profile/includes/settings.php:57
-msgid "Auto"
-msgstr ""
-
-#: modules/profile/includes/settings.php:60
-msgid "Light"
-msgstr ""
-
-#: modules/profile/includes/settings.php:63
-msgid "Dark"
-msgstr ""
-
-#: modules/profile/includes/settings.php:82
-#: modules/profile/includes/settings.php:125
-#: modules/profile/includes/settings.php:208
-msgid "Settings saved successfully"
-msgstr "Налаштування успішно збережено"
-
-#: modules/profile/includes/settings.php:135
-#: modules/profile/includes/settings.php:213
-msgid "Default settings are set"
-msgstr "Встановлено стандартні налаштування"
-
-#: modules/profile/includes/stat.php:16
-#: modules/profile/includes/stat.php:19
-#: modules/profile/templates/index.phtml:265
-#: modules/profile/templates/stat.phtml:26
-msgid "Statistic"
-msgstr "Статистика"
-
-#: modules/profile/index.php:60
-msgid "For registered users only"
-msgstr "Тільки для зареєстрованих користувачів"
-
-#: modules/profile/index.php:80
-msgid "This User does not exists"
-msgstr "Такого користувача не існує"
-
-#: modules/profile/skl.php:42
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:36
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:51
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:78
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:87
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:105
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:117
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:131
 #: modules/profile/templates/restore_password.phtml:4
 #: modules/profile/templates/restore_password.phtml:5
 #: modules/profile/templates/restore_password.phtml:10
-#: modules/profile/templates/restore_password_result.phtml:4
-#: modules/profile/templates/restore_password_result.phtml:5
-#: modules/profile/templates/restore_password_result.phtml:10
+#: modules/profile/templates/restore_password_set.phtml:10
+#: modules/profile/templates/restore_password_set.phtml:11
 msgid "Restore password"
 msgstr "Відновити пароль"
 
-#: modules/profile/skl.php:70
-msgid "The required fields are not filled"
-msgstr "Обов'язкові поля не заповнені"
-
-#: modules/profile/skl.php:72
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:60
 msgid "Incorrect code"
 msgstr "Невірний код"
 
-#: modules/profile/skl.php:86
-msgid "Invalid Email address"
-msgstr "Невірна E-mail адреса"
-
-#: modules/profile/skl.php:90
-msgid "Password can be recovered 1 time per day"
-msgstr "Пароль можна відновлювати не частіше 1 разу на добу"
-
-#: modules/profile/skl.php:93
-#: modules/profile/skl.php:160
-msgid "User does not exists"
-msgstr "Користувача не існує"
-
-#: modules/profile/skl.php:109
-msgid "Password recovery"
-msgstr "Відновлення пароля"
-
-#: modules/profile/skl.php:119
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:80
 msgid "Check your e-mail for further information"
 msgstr "Перевірте ваш e-mail для отримання додаткової інформації"
 
-#: modules/profile/skl.php:151
-msgid "Password recovery is impossible"
-msgstr "Відновлення пароля неможливе"
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:119
+msgid "Password successfully changed.<br>New password sent to your E-mail address."
+msgstr "Пароль успішно змінено.<br>Новий пароль висланий на вашу адресу E-mail."
 
-#: modules/profile/skl.php:155
-msgid "Time allotted for the password recovery has been exceeded"
-msgstr "Час, відведений на відновлення пароля, вийшов"
+#: modules/profile/src/Application/Controllers/SettingsController.php:50
+#: modules/profile/src/Application/Controllers/SettingsController.php:186
+msgid "General setting"
+msgstr "Загальні налаштування"
 
-#: modules/profile/skl.php:176
+#: modules/profile/src/Application/Controllers/SettingsController.php:96
+#: modules/profile/src/Application/Controllers/SettingsController.php:117
+#: modules/profile/src/Application/Controllers/SettingsController.php:206
+msgid "Settings saved successfully"
+msgstr "Налаштування успішно збережено"
+
+#: modules/profile/src/Application/Controllers/SettingsController.php:101
+#: modules/profile/src/Application/Controllers/SettingsController.php:211
+msgid "Default settings are set"
+msgstr "Встановлено стандартні налаштування"
+
+#: modules/profile/src/Application/Controllers/SettingsController.php:127
+#: modules/profile/src/Application/Controllers/SettingsController.php:191
+#: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:43
+#: modules/profile/templates/ban.phtml:56
+#: modules/profile/templates/statistics.phtml:53
+msgid "Forum"
+msgstr "Форум"
+
+#: modules/profile/src/Application/Controllers/SettingsController.php:144
+#: modules/profile/src/Application/Controllers/SettingsController.php:196
+msgid "Mail"
+msgstr "Пошта"
+
+#: modules/profile/src/Application/Controllers/SettingsController.php:160
+#: modules/profile/templates/account.phtml:81
+msgid "Settings"
+msgstr "Налаштування"
+
+#: modules/profile/src/Application/Controllers/StatisticsController.php:32
+#: modules/profile/src/Application/Controllers/StatisticsController.php:39
+#: modules/profile/src/Application/Controllers/StatisticsController.php:42
+#: modules/profile/templates/statistics.phtml:27
+#: modules/profile/templates/view.phtml:267
+msgid "Statistic"
+msgstr "Статистика"
+
+#: modules/profile/src/Application/UseCases/BanUserUseCase.php:28
+msgid "Reason not specified"
+msgstr "Причина не вказана"
+
+#: modules/profile/src/Application/UseCases/BanUserUseCase.php:35
+msgid "There is no required data"
+msgstr "Немає необхідних даних"
+
+#: modules/profile/src/Application/UseCases/BanUserUseCase.php:45
+msgid "You have no rights to ban in this section"
+msgstr "Ви не маєте права банити у цьому розділі"
+
+#: modules/profile/src/Application/UseCases/BanUserUseCase.php:49
+msgid "Ban already active"
+msgstr "Бан вже діє"
+
+#: modules/profile/src/Application/UseCases/BanUserUseCase.php:64
+msgid "System"
+msgstr "Система"
+
+#: modules/profile/src/Application/UseCases/BanUserUseCase.php:64
+#: modules/profile/src/Application/UseCases/GetProfileViewUseCase.php:185
+msgid "Ban"
+msgstr "Бан"
+
+#: modules/profile/src/Application/UseCases/CancelBanUseCase.php:34
+msgid "Ban not active"
+msgstr "Бан не активний"
+
+#: modules/profile/src/Application/UseCases/ChangePasswordUseCase.php:33
+#: modules/profile/src/Application/UseCases/ChangePasswordUseCase.php:36
+msgid "It is necessary to fill in all fields"
+msgstr "Необхідно заповнити всі поля"
+
+#: modules/profile/src/Application/UseCases/ChangePasswordUseCase.php:40
+msgid "Old password entered incorrectly"
+msgstr "Старий пароль введено невірно"
+
+#: modules/profile/src/Application/UseCases/ChangePasswordUseCase.php:44
+msgid "The password confirmation you entered is wrong"
+msgstr "Підтвердження паролю введено невірно"
+
+#: modules/profile/src/Application/UseCases/ChangePasswordUseCase.php:48
+msgid "The password must contain at least 3 characters"
+msgstr "Пароль повинен містити щонайменше 3 символи"
+
+#: modules/profile/src/Application/UseCases/CompletePasswordRecoveryUseCase.php:35
 msgid "Your new password"
 msgstr "Ваш новий пароль"
 
-#: modules/profile/skl.php:187
-msgid "Password successfully changed.<br>New password sent to your E-mail address."
-msgstr "Пароль успішно змінено.<br>Новий пароль висланий на вашу адресу E-mail."
+#: modules/profile/src/Application/UseCases/GetBanFormContextUseCase.php:34
+msgid "You do not have enought rights to ban this user"
+msgstr "Ви не маєте достатньо прав, щоб забанити цього користувача"
+
+#: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:39
+#: modules/profile/templates/ban.phtml:38
+msgid "Full block"
+msgstr "Повний блок"
+
+#: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:40
+#: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:41
+#: modules/profile/templates/ban.phtml:42
+msgid "Private messages"
+msgstr "Приватні повідомлення"
+
+#: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:45
+#: modules/profile/templates/ban.phtml:62
+msgid "Library"
+msgstr "Бібліотека"
+
+#: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:61
+msgid "Cancel Ban"
+msgstr "Скасувати бан"
+
+#: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:64
+msgid "Delete Ban"
+msgstr "Видалити бан"
+
+#: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:71
+#: modules/profile/templates/ban.phtml:88
+msgid "Till cancel"
+msgstr "До відміни"
+
+#: modules/profile/src/Application/UseCases/GetEditContextUseCase.php:34
+msgid "You cannot edit profile of higher administration"
+msgstr "Ви не можете редагувати профіль вищої адміністрації"
+
+#: modules/profile/src/Application/UseCases/GetKarmaListUseCase.php:61
+msgid "All"
+msgstr "Всі"
+
+#: modules/profile/src/Application/UseCases/GetKarmaListUseCase.php:62
+#: modules/profile/templates/karma_vote.phtml:41
+#: modules/profile/templates/view.phtml:136
+msgid "Positive"
+msgstr "Позитивний"
+
+#: modules/profile/src/Application/UseCases/GetKarmaListUseCase.php:63
+#: modules/profile/templates/karma_vote.phtml:45
+#: modules/profile/templates/view.phtml:142
+msgid "Negative"
+msgstr "Негативний"
+
+#: modules/profile/src/Application/UseCases/GetProfileViewUseCase.php:151
+#: modules/profile/templates/statistics.phtml:33
+msgid "Pending confirmation"
+msgstr "Чекає підтвердження"
+
+#: modules/profile/src/Application/UseCases/GetProfileViewUseCase.php:154
+msgid "E-mail address is not confirmed"
+msgstr "Адреса електронної пошти не підтверджена"
+
+#: modules/profile/src/Application/UseCases/GetProfileViewUseCase.php:170
+msgid "Add to Contacts"
+msgstr "Додати в контакти"
+
+#: modules/profile/src/Application/UseCases/GetProfileViewUseCase.php:171
+msgid "Remove from Contacts"
+msgstr "Видалити з контактів"
+
+#: modules/profile/src/Application/UseCases/GetProfileViewUseCase.php:179
+msgid "Edit"
+msgstr "Редагувати"
+
+#: modules/profile/src/Application/UseCases/GetRecoveryContextUseCase.php:28
+#: modules/profile/src/Application/UseCases/SendPasswordRecoveryUseCase.php:36
+msgid "User does not exists"
+msgstr "Користувача не існує"
+
+#: modules/profile/src/Application/UseCases/GetRecoveryContextUseCase.php:32
+msgid "Password recovery is impossible"
+msgstr "Відновлення пароля неможливе"
+
+#: modules/profile/src/Application/UseCases/GetRecoveryContextUseCase.php:38
+msgid "Time allotted for the password recovery has been exceeded"
+msgstr "Час, відведений на відновлення пароля, вийшов"
+
+#: modules/profile/src/Application/UseCases/GetVoteContextUseCase.php:35
+msgid "You are not allowed to vote for users"
+msgstr "Ви не можете голосувати за користувачів"
+
+#: modules/profile/src/Application/UseCases/GetVoteContextUseCase.php:42
+msgid "It is forbidden to vote for administration"
+msgstr "Забороняється голосувати за адміністрацію"
+
+#: modules/profile/src/Application/UseCases/GetVoteContextUseCase.php:46
+msgid "Cheating karma is forbidden"
+msgstr "Накрутка карми заборонена"
+
+#: modules/profile/src/Application/UseCases/GetVoteContextUseCase.php:51
+#, php-format
+msgid "Users can take part in voting if they have stayed on a site not less %s and their score on the forum %d posts."
+msgstr "Користувачі можуть взяти участь в голосуванні, якщо вони присутні на сайті не менше %s та вони набрали на форумі %d постів."
+
+#: modules/profile/src/Application/UseCases/GetVoteContextUseCase.php:52
+msgid "days"
+msgstr "днів"
+
+#: modules/profile/src/Application/UseCases/GetVoteContextUseCase.php:59
+msgid "You can vote for single user just one time for 24 hours"
+msgstr "Ви можете голосувати за одного користувача тільки один раз протягом 24 годин\""
+
+#: modules/profile/src/Application/UseCases/GetVoteContextUseCase.php:65
+#, php-format
+msgid "You have exceeded the limit of votes. New voices will be added %s"
+msgstr "Ви перевищили ліміт голосів. Нові голоси будуть додані %s"
+
+#: modules/profile/src/Application/UseCases/SendPasswordRecoveryUseCase.php:31
+msgid "The required fields are not filled"
+msgstr "Обов'язкові поля не заповнені"
+
+#: modules/profile/src/Application/UseCases/SendPasswordRecoveryUseCase.php:40
+msgid "Invalid Email address"
+msgstr "Невірна E-mail адреса"
+
+#: modules/profile/src/Application/UseCases/SendPasswordRecoveryUseCase.php:44
+msgid "Password can be recovered 1 time per day"
+msgstr "Пароль можна відновлювати не частіше 1 разу на добу"
+
+#: modules/profile/src/Application/UseCases/SendPasswordRecoveryUseCase.php:59
+msgid "Password recovery"
+msgstr "Відновлення пароля"
+
+#: modules/profile/src/Application/UseCases/UpdateProfileUseCase.php:123
+msgid "Confirm email change"
+msgstr "Підтвердьте зміну електронної пошти"
+
+#: modules/profile/src/Application/UseCases/UpdateProfileUseCase.php:140
+msgid "The procedure for changing the email address was started"
+msgstr "Почато процедуру зміни електронної адреси"
+
+#: modules/profile/src/Application/UseCases/UploadAvatarUseCase.php:23
+#: modules/profile/src/Application/UseCases/UploadPhotoUseCase.php:23
+msgid "The weight of the file exceeds"
+msgstr "Занадто великий розмір файлу"
+
+#: modules/profile/templates/account.phtml:26
+msgid "My Pages"
+msgstr "Мої сторінки"
+
+#: modules/profile/templates/account.phtml:33
+msgid "Statistics"
+msgstr "Статистика"
+
+#: modules/profile/templates/account.phtml:36
+#: modules/profile/templates/view.phtml:279
+msgid "Photo Album"
+msgstr "Фотоальбом"
+
+#: modules/profile/templates/account.phtml:45
+msgid "My Mailbox"
+msgstr "Моя пошта"
+
+#: modules/profile/templates/account.phtml:49
+msgid "Received"
+msgstr "Отримано"
+
+#: modules/profile/templates/account.phtml:56
+msgid "Sent"
+msgstr "Відправлені"
+
+#: modules/profile/templates/account.phtml:63
+msgid "Files"
+msgstr "Файли"
+
+#: modules/profile/templates/account.phtml:68
+#: modules/profile/templates/account.phtml:72
+#: modules/profile/templates/edit.phtml:196
+#: modules/profile/templates/view.phtml:203
+msgid "Contacts"
+msgstr "Контакти"
+
+#: modules/profile/templates/account.phtml:76
+msgid "Blocked"
+msgstr "Заблокований"
+
+#: modules/profile/templates/account.phtml:86
+msgid "System Settings"
+msgstr "Системні налаштування"
 
 #: modules/profile/templates/activity.phtml:37
 #: modules/profile/templates/ip_history.phtml:46
@@ -562,44 +633,44 @@ msgstr "Список порожній"
 msgid "Total:"
 msgstr "Всього:"
 
-#: modules/profile/templates/ban.phtml:31
+#: modules/profile/templates/ban.phtml:32
 msgid "Ban:"
 msgstr "Бан:"
 
-#: modules/profile/templates/ban.phtml:33
+#: modules/profile/templates/ban.phtml:34
 msgid "Ban type"
 msgstr "Тип бану"
 
-#: modules/profile/templates/ban.phtml:65
+#: modules/profile/templates/ban.phtml:66
 msgid "Ban time"
 msgstr "Термін бану"
 
-#: modules/profile/templates/ban.phtml:67
+#: modules/profile/templates/ban.phtml:68
 msgid "Time"
 msgstr "Час"
 
-#: modules/profile/templates/ban.phtml:72
+#: modules/profile/templates/ban.phtml:73
 msgid "Minutes (60 max.)"
 msgstr "Хвилин (макс. 60)"
 
-#: modules/profile/templates/ban.phtml:76
+#: modules/profile/templates/ban.phtml:77
 msgid "Hours (24 max.)"
 msgstr "Годин (макс. 24)"
 
-#: modules/profile/templates/ban.phtml:81
+#: modules/profile/templates/ban.phtml:82
 msgid "Days (30 max.)"
 msgstr "Днів (макс. 30)"
 
-#: modules/profile/templates/ban.phtml:92
+#: modules/profile/templates/ban.phtml:93
 msgid "Reason"
 msgstr "Причина"
 
-#: modules/profile/templates/ban.phtml:98
+#: modules/profile/templates/ban.phtml:99
 msgid "Apply Ban"
 msgstr "Застосувати бан"
 
-#: modules/profile/templates/ban.phtml:99
-#: modules/profile/templates/ban_cancel.phtml:32
+#: modules/profile/templates/ban.phtml:100
+#: modules/profile/templates/ban_cancel.phtml:33
 #: modules/profile/templates/edit.phtml:333
 #: modules/profile/templates/forum_settings.phtml:74
 #: modules/profile/templates/images.phtml:60
@@ -607,7 +678,7 @@ msgstr "Застосувати бан"
 #: modules/profile/templates/karma_vote.phtml:66
 #: modules/profile/templates/mail_settings.phtml:57
 #: modules/profile/templates/password.phtml:63
-#: modules/profile/templates/settings.phtml:125
+#: modules/profile/templates/settings.phtml:114
 msgid "Cancel"
 msgstr "Скасувати"
 
@@ -643,15 +714,11 @@ msgstr "Разом"
 msgid "Clear history"
 msgstr "Очистити історію"
 
-#: modules/profile/templates/confirm_new_email.phtml:12
-msgid "User is not found"
-msgstr "Користувача не знайдено"
-
-#: modules/profile/templates/confirm_new_email.phtml:14
+#: modules/profile/templates/confirm_new_email.phtml:13
 msgid "Thanks! Your e-mail has been successfully confirmed."
 msgstr "Дякую! Ваш електронний лист підтверджено."
 
-#: modules/profile/templates/confirm_new_email.phtml:16
+#: modules/profile/templates/confirm_new_email.phtml:15
 msgid "Error when confirming e-mail. Invalid confirmation code."
 msgstr "Помилка під час підтвердження електронної пошти. Невірний код підтвердження."
 
@@ -673,7 +740,7 @@ msgstr "Мін.2, макс. 20"
 
 #: modules/profile/templates/edit.phtml:79
 #: modules/profile/templates/edit.phtml:85
-#: modules/profile/templates/index.phtml:165
+#: modules/profile/templates/view.phtml:167
 msgid "Status"
 msgstr "Статус"
 
@@ -696,7 +763,7 @@ msgstr "Виберіть в каталозі"
 
 #: modules/profile/templates/edit.phtml:115
 #: modules/profile/templates/edit.phtml:119
-#: modules/profile/templates/index.phtml:157
+#: modules/profile/templates/view.phtml:159
 msgid "Photo"
 msgstr "Фото"
 
@@ -727,7 +794,7 @@ msgstr "Рік"
 
 #: modules/profile/templates/edit.phtml:179
 #: modules/profile/templates/edit.phtml:185
-#: modules/profile/templates/index.phtml:189
+#: modules/profile/templates/view.phtml:191
 msgid "City, Country"
 msgstr "Місто, Країна"
 
@@ -735,21 +802,15 @@ msgstr "Місто, Країна"
 msgid "About myself"
 msgstr "Про себе"
 
-#: modules/profile/templates/edit.phtml:196
-#: modules/profile/templates/office.phtml:70
-#: modules/profile/templates/office.phtml:74
-msgid "Contacts"
-msgstr "Контакти"
-
 #: modules/profile/templates/edit.phtml:198
 #: modules/profile/templates/edit.phtml:204
-#: modules/profile/templates/index.phtml:204
+#: modules/profile/templates/view.phtml:206
 msgid "Phone number"
 msgstr "Номер телефону"
 
 #: modules/profile/templates/edit.phtml:211
 #: modules/profile/templates/edit.phtml:217
-#: modules/profile/templates/index.phtml:210
+#: modules/profile/templates/view.phtml:212
 msgid "E-mail"
 msgstr ""
 
@@ -771,13 +832,13 @@ msgstr "Увага! Правильно вказуйте свою адресу е
 
 #: modules/profile/templates/edit.phtml:237
 #: modules/profile/templates/edit.phtml:243
-#: modules/profile/templates/index.phtml:219
+#: modules/profile/templates/view.phtml:221
 msgid "Skype"
 msgstr ""
 
 #: modules/profile/templates/edit.phtml:251
 #: modules/profile/templates/edit.phtml:257
-#: modules/profile/templates/index.phtml:225
+#: modules/profile/templates/view.phtml:227
 msgid "Site"
 msgstr "Сайт"
 
@@ -802,12 +863,12 @@ msgid "Select gender"
 msgstr "Виберіть стать"
 
 #: modules/profile/templates/edit.phtml:287
-#: modules/profile/templates/index.phtml:179
+#: modules/profile/templates/view.phtml:181
 msgid "Man"
 msgstr "Чоловік"
 
 #: modules/profile/templates/edit.phtml:291
-#: modules/profile/templates/index.phtml:181
+#: modules/profile/templates/view.phtml:183
 msgid "Woman"
 msgstr "Жінка"
 
@@ -848,7 +909,7 @@ msgstr "Супервайзор"
 #: modules/profile/templates/images.phtml:59
 #: modules/profile/templates/mail_settings.phtml:56
 #: modules/profile/templates/password.phtml:62
-#: modules/profile/templates/settings.phtml:124
+#: modules/profile/templates/settings.phtml:113
 msgid "Save"
 msgstr "Зберегти"
 
@@ -885,7 +946,7 @@ msgid "Never"
 msgstr "Ніколи"
 
 #: modules/profile/templates/forum_settings.phtml:75
-#: modules/profile/templates/settings.phtml:128
+#: modules/profile/templates/settings.phtml:117
 msgid "Reset Settings"
 msgstr "Скинути налаштування"
 
@@ -897,103 +958,6 @@ msgstr "Виберіть файл"
 #, php-format
 msgid "Allowed image formats: JPG, PNG, GIF. File size should not exceed %d kb.<br>The new image will replace old (if was)."
 msgstr "Дозволені формати зображень: JPG, GIF або PNG. Розмір файлу не повинен перевищувати %d Кб.<br>Нове зображення замінить старе (якщо було)."
-
-#: modules/profile/templates/index.phtml:44
-#: modules/profile/templates/index.phtml:69
-#: modules/profile/templates/stat.phtml:45
-msgid "Last visit"
-msgstr "Останній візит"
-
-#: modules/profile/templates/index.phtml:44
-msgid "Online"
-msgstr "В мережі"
-
-#: modules/profile/templates/index.phtml:56
-msgid "User is banned"
-msgstr "Користувач заблокований"
-
-#: modules/profile/templates/index.phtml:59
-msgid "Reason:"
-msgstr "Причина:"
-
-#: modules/profile/templates/index.phtml:65
-msgid "Violations"
-msgstr "Порушення"
-
-#: modules/profile/templates/index.phtml:74
-msgid "User Agent"
-msgstr "Браузер"
-
-#: modules/profile/templates/index.phtml:76
-msgid "Ip"
-msgstr "IP"
-
-#: modules/profile/templates/index.phtml:77
-#: modules/profile/templates/index.phtml:80
-msgid "Whois"
-msgstr ""
-
-#: modules/profile/templates/index.phtml:95
-msgid "Write"
-msgstr "Написати"
-
-#: modules/profile/templates/index.phtml:98
-msgid "Block"
-msgstr "Блокувати"
-
-#: modules/profile/templates/index.phtml:100
-msgid "Unblock"
-msgstr "Розблокувати"
-
-#: modules/profile/templates/index.phtml:104
-msgid "Actions"
-msgstr "Дії"
-
-#: modules/profile/templates/index.phtml:113
-msgid "Edit profile"
-msgstr "Редагувати профіль"
-
-#: modules/profile/templates/index.phtml:126
-msgid "vote"
-msgid_plural "votes"
-msgstr[0] "голосувати"
-msgstr[1] "голоси"
-msgstr[2] "голосів"
-msgstr[3] "голоси"
-
-#: modules/profile/templates/index.phtml:146
-#: modules/profile/templates/karma_vote.phtml:65
-msgid "Vote"
-msgstr "Голосувати"
-
-#: modules/profile/templates/index.phtml:154
-msgid "Information"
-msgstr "Інформація"
-
-#: modules/profile/templates/index.phtml:171
-msgid "Birthday"
-msgstr "День народження"
-
-#: modules/profile/templates/index.phtml:176
-msgid "Gender"
-msgstr "Пол"
-
-#: modules/profile/templates/index.phtml:183
-msgid "Not specified"
-msgstr "Не вказано"
-
-#: modules/profile/templates/index.phtml:213
-msgid "hidden"
-msgstr "прихований"
-
-#: modules/profile/templates/index.phtml:236
-msgid "Admin Notes"
-msgstr "Примітки адміністратора"
-
-#: modules/profile/templates/index.phtml:277
-#: modules/profile/templates/office.phtml:38
-msgid "Photo Album"
-msgstr "Фотоальбом"
 
 #: modules/profile/templates/ip_history.phtml:38
 msgid "IP address"
@@ -1023,6 +987,11 @@ msgstr "Коментар"
 msgid "Min. 2, Max. 500 characters"
 msgstr "Мін. 2, макс. 500 символів"
 
+#: modules/profile/templates/karma_vote.phtml:65
+#: modules/profile/templates/view.phtml:148
+msgid "Vote"
+msgstr "Голосувати"
+
 #: modules/profile/templates/mail_settings.phtml:44
 msgid "Who can write you?"
 msgstr "Хто може писати Вам?"
@@ -1038,38 +1007,6 @@ msgstr "Тільки мої контакти"
 #: modules/profile/templates/message_row.phtml:29
 msgid "To message"
 msgstr "До повідомлення"
-
-#: modules/profile/templates/office.phtml:28
-msgid "My Pages"
-msgstr "Мої сторінки"
-
-#: modules/profile/templates/office.phtml:35
-msgid "Statistics"
-msgstr "Статистика"
-
-#: modules/profile/templates/office.phtml:47
-msgid "My Mailbox"
-msgstr "Моя пошта"
-
-#: modules/profile/templates/office.phtml:51
-msgid "Received"
-msgstr "Отримано"
-
-#: modules/profile/templates/office.phtml:58
-msgid "Sent"
-msgstr "Відправлені"
-
-#: modules/profile/templates/office.phtml:65
-msgid "Files"
-msgstr "Файли"
-
-#: modules/profile/templates/office.phtml:78
-msgid "Blocked"
-msgstr "Заблокований"
-
-#: modules/profile/templates/office.phtml:88
-msgid "System Settings"
-msgstr "Системні налаштування"
 
 #: modules/profile/templates/password.phtml:30
 #: modules/profile/templates/password.phtml:36
@@ -1103,6 +1040,10 @@ msgstr "Введіть перевірочний код"
 #: modules/profile/templates/restore_password.phtml:46
 msgid "Password will be send to E-mail address specified in your profile.<br />WARNING !! If E-mail address has not been specified in your profile, you will not be able to recover your password."
 msgstr "Пароль буде висланий на E-mail адресу, вказану у Вашій анкеті.<br />УВАГА !! Якщо в анкеті не була вказана E-mail адреса, Ви не зможете відновити пароль."
+
+#: modules/profile/templates/restore_password_set.phtml:17
+msgid "A new password will be generated and sent to the E-mail address specified in your profile."
+msgstr ""
 
 #: modules/profile/templates/settings.phtml:45
 msgid "Time settings"
@@ -1148,27 +1089,110 @@ msgid "Size of Lists"
 msgstr "Розмір списків"
 
 #: modules/profile/templates/settings.phtml:99
-msgid "Theme"
-msgstr ""
-
-#: modules/profile/templates/settings.phtml:110
-#: modules/profile/templates/settings.phtml:112
+#: modules/profile/templates/settings.phtml:101
 msgid "Select Language"
 msgstr "Виберіть мову"
 
-#: modules/profile/templates/settings.phtml:117
+#: modules/profile/templates/settings.phtml:106
 msgid "Site Default"
 msgstr "Сайт за замовчуванням"
 
-#: modules/profile/templates/stat.phtml:34
+#: modules/profile/templates/statistics.phtml:35
 msgid "Registration confirmed"
 msgstr "Реєстрація підтверджена"
 
-#: modules/profile/templates/stat.phtml:36
+#: modules/profile/templates/statistics.phtml:37
 msgid "Free registration"
 msgstr "Вільна реєстрація"
 
-#: modules/profile/templates/stat.phtml:41
+#: modules/profile/templates/statistics.phtml:42
 msgid "Registered"
 msgstr "Зареєстрований"
+
+#: modules/profile/templates/statistics.phtml:46
+#: modules/profile/templates/view.phtml:46
+#: modules/profile/templates/view.phtml:71
+msgid "Last visit"
+msgstr "Останній візит"
+
+#: modules/profile/templates/view.phtml:46
+msgid "Online"
+msgstr "В мережі"
+
+#: modules/profile/templates/view.phtml:58
+msgid "User is banned"
+msgstr "Користувач заблокований"
+
+#: modules/profile/templates/view.phtml:61
+msgid "Reason:"
+msgstr "Причина:"
+
+#: modules/profile/templates/view.phtml:67
+msgid "Violations"
+msgstr "Порушення"
+
+#: modules/profile/templates/view.phtml:76
+msgid "User Agent"
+msgstr "Браузер"
+
+#: modules/profile/templates/view.phtml:78
+msgid "Ip"
+msgstr "IP"
+
+#: modules/profile/templates/view.phtml:79
+#: modules/profile/templates/view.phtml:82
+msgid "Whois"
+msgstr ""
+
+#: modules/profile/templates/view.phtml:97
+msgid "Write"
+msgstr "Написати"
+
+#: modules/profile/templates/view.phtml:100
+msgid "Block"
+msgstr "Блокувати"
+
+#: modules/profile/templates/view.phtml:102
+msgid "Unblock"
+msgstr "Розблокувати"
+
+#: modules/profile/templates/view.phtml:106
+msgid "Actions"
+msgstr "Дії"
+
+#: modules/profile/templates/view.phtml:115
+msgid "Edit profile"
+msgstr "Редагувати профіль"
+
+#: modules/profile/templates/view.phtml:128
+msgid "vote"
+msgid_plural "votes"
+msgstr[0] "голосувати"
+msgstr[1] "голоси"
+msgstr[2] "голосів"
+msgstr[3] "голоси"
+
+#: modules/profile/templates/view.phtml:156
+msgid "Information"
+msgstr "Інформація"
+
+#: modules/profile/templates/view.phtml:173
+msgid "Birthday"
+msgstr "День народження"
+
+#: modules/profile/templates/view.phtml:178
+msgid "Gender"
+msgstr "Пол"
+
+#: modules/profile/templates/view.phtml:185
+msgid "Not specified"
+msgstr "Не вказано"
+
+#: modules/profile/templates/view.phtml:215
+msgid "hidden"
+msgstr "прихований"
+
+#: modules/profile/templates/view.phtml:238
+msgid "Admin Notes"
+msgstr "Примітки адміністратора"
 
