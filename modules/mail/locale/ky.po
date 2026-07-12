@@ -59,8 +59,9 @@ msgstr "Байланыштар"
 #: modules/mail/src/Application/Controllers/AddContactController.php:52
 #: modules/mail/src/Application/Controllers/AddContactController.php:69
 #: modules/mail/src/Application/Controllers/AddContactController.php:83
+#, fuzzy
 msgid "Add Contact"
-msgstr ""
+msgstr "Байланыш кошуу"
 
 #: modules/mail/src/Application/Controllers/AddContactController.php:43
 msgid "You really want to add contact?"
@@ -80,8 +81,9 @@ msgid "Continue"
 msgstr "Улантуу"
 
 #: modules/mail/src/Application/Controllers/BlockUserController.php:30
+#, fuzzy
 msgid "User blocked successfully"
-msgstr ""
+msgstr "Колдонуучу ийгиликтүү бөгөттөлдү"
 
 #: modules/mail/src/Application/Controllers/BlockUserController.php:44
 #: modules/mail/src/Application/Controllers/BlocklistIndexController.php:31
@@ -95,8 +97,9 @@ msgstr "Кара тизме"
 #: modules/mail/src/Application/Controllers/BlockUserController.php:45
 #: modules/mail/src/Application/Controllers/BlockUserController.php:48
 #: modules/mail/src/Application/Controllers/BlockUserController.php:49
+#, fuzzy
 msgid "Block user"
-msgstr ""
+msgstr "Колдонуучуну бөгөттөө"
 
 #: modules/mail/src/Application/Controllers/BlockUserController.php:54
 msgid "You really want to block contact?"
@@ -156,8 +159,9 @@ msgid "User does not exists"
 msgstr "Мындай колдонуучу жок"
 
 #: modules/mail/src/Application/Controllers/DeleteContactController.php:37
+#, fuzzy
 msgid "Delete contact"
-msgstr ""
+msgstr "Байланышты өчүрүү"
 
 #: modules/mail/src/Application/Controllers/DeleteContactController.php:41
 msgid "When you delete a contact is deleted and all correspondence with him.<br>Are you sure you want to delete?"
@@ -169,7 +173,7 @@ msgstr "Байланыш жок кылынды"
 
 #: modules/mail/src/Application/Controllers/DeleteMessageController.php:36
 msgid "Delete message"
-msgstr ""
+msgstr "Билдирүүнү өчүрүү"
 
 #: modules/mail/src/Application/Controllers/DeleteMessageController.php:40
 msgid "You really want to remove the message?"
@@ -208,14 +212,16 @@ msgid "Sent messages"
 msgstr "Жөнөтүлгөн билдирүү"
 
 #: modules/mail/src/Application/Controllers/UnblockUserController.php:29
+#, fuzzy
 msgid "User unblocked successfully"
-msgstr ""
+msgstr "Колдонуучунун бөгөтү ийгиликтүү алынды"
 
 #: modules/mail/src/Application/Controllers/UnblockUserController.php:40
 #: modules/mail/src/Application/Controllers/UnblockUserController.php:43
 #: modules/mail/src/Application/Controllers/UnblockUserController.php:44
+#, fuzzy
 msgid "Unblock user"
-msgstr ""
+msgstr "Колдонуучунун бөгөтүн алуу"
 
 #: modules/mail/src/Application/Controllers/UnblockUserController.php:49
 msgid "You really want to unblock contact?"
@@ -228,11 +234,12 @@ msgstr "Тосмалоону ачуу"
 
 #: modules/mail/src/Application/Controllers/WriteController.php:95
 msgid "New message"
-msgstr ""
+msgstr "Жаңы билдирүү кошуу"
 
 #: modules/mail/src/Application/UseCases/BlockUserUseCase.php:27
+#, fuzzy
 msgid "You cannot block yourself"
-msgstr ""
+msgstr "Өзүңүздү бөгөттөй албайсыз"
 
 #: modules/mail/src/Application/UseCases/GetContactListUseCase.php:35
 msgid "My Contacts"
@@ -257,7 +264,7 @@ msgstr "Колдонуучуну тосмолоо"
 
 #: modules/mail/src/Application/UseCases/SendMessageUseCase.php:34
 msgid "Access forbidden"
-msgstr ""
+msgstr "Кирүүгө тыюу салынган"
 
 #: modules/mail/src/Application/UseCases/SendMessageUseCase.php:44
 msgid "Message cannot be empty"
@@ -326,8 +333,9 @@ msgid "The list is empty"
 msgstr "Тизмеси бош"
 
 #: modules/mail/templates/blocklist.phtml:52
+#, fuzzy
 msgid "User since:"
-msgstr ""
+msgstr "Катталган күнү:"
 
 #: modules/mail/templates/confirm.phtml:32
 msgid "Cancel"

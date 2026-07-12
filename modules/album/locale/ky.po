@@ -91,8 +91,9 @@ msgid "Wrong data"
 msgstr "Туура эмес маалымат"
 
 #: modules/album/src/Application/Controllers/DeleteAlbumController.php:86
+#, fuzzy
 msgid "Delete album"
-msgstr ""
+msgstr "Альбомду өчүрүү"
 
 #: modules/album/src/Application/Controllers/DeleteAlbumController.php:88
 msgid "Album deleted"
@@ -117,8 +118,9 @@ msgid "Are you sure you want to delete this image?"
 msgstr "Сүрөттү чын эле жок кылгыңыз келеби?"
 
 #: modules/album/src/Application/Controllers/DeletePhotoController.php:87
+#, fuzzy
 msgid "Image successfully deleted"
-msgstr ""
+msgstr "Сүрөт ийгиликтүү өчүрүлдү"
 
 #: modules/album/src/Application/Controllers/DownloadPhotoController.php:32
 #: modules/album/src/Application/Controllers/PhotoCommentsController.php:41
@@ -211,7 +213,7 @@ msgstr "Сүрөттү көрүү"
 #: modules/album/src/Application/Controllers/UploadPhotoController.php:55
 #: modules/album/src/Application/UseCases/UploadPhotoUseCase.php:37
 msgid "An error occurred"
-msgstr ""
+msgstr "Ката кетти"
 
 #: modules/album/src/Application/Controllers/UploadPhotoController.php:65
 #: modules/album/src/Application/Controllers/UploadPhotoController.php:79
@@ -315,92 +317,113 @@ msgid "Unread Comments"
 msgstr "Окулбаган комментарийлер"
 
 #: modules/album/src/Install/Installer.php:65
+#, fuzzy
 msgid "Nature"
-msgstr ""
+msgstr "Жаратылыш"
 
 #: modules/album/src/Install/Installer.php:66
+#, fuzzy
 msgid "Landscapes and nature views"
-msgstr ""
+msgstr "Пейзаждар жана жаратылыш көрүнүштөрү"
 
 #: modules/album/src/Install/Installer.php:70
+#, fuzzy
 msgid "A mountain lake surrounded by peaks"
-msgstr ""
+msgstr "Чокулар менен курчалган тоо көлү"
 
 #: modules/album/src/Install/Installer.php:71
+#, fuzzy
 msgid "A tiny bird chick in the grass"
-msgstr ""
+msgstr "Чөптүн арасындагы кичинекей балапан"
 
 #: modules/album/src/Install/Installer.php:77
 msgid "Animals"
-msgstr ""
+msgstr "Жаныбарлар"
 
 #: modules/album/src/Install/Installer.php:78
+#, fuzzy
 msgid "Photos of animals and insects"
-msgstr ""
+msgstr "Жаныбарлардын жана курт-кумурскалардын сүрөттөрү"
 
 #: modules/album/src/Install/Installer.php:82
+#, fuzzy
 msgid "A bright rooster in close-up"
-msgstr ""
+msgstr "Жакындан тартылган ажайып короз"
 
 #: modules/album/src/Install/Installer.php:83
+#, fuzzy
 msgid "A red squirrel on a tree branch"
-msgstr ""
+msgstr "Дарактын бутагындагы кызыл тыйын чычкан"
 
 #: modules/album/src/Install/Installer.php:89
+#, fuzzy
 msgid "My photos"
-msgstr ""
+msgstr "Менин сүрөттөрүм"
 
 #: modules/album/src/Install/Installer.php:90
+#, fuzzy
 msgid "A personal collection of favorite shots"
-msgstr ""
+msgstr "Сүйүктүү сүрөттөрдүн жеке жыйнагы"
 
 #: modules/album/src/Install/Installer.php:94
+#, fuzzy
 msgid "A butterfly on a flower"
-msgstr ""
+msgstr "Гүлдүн үстүндөгү көпөлөк"
 
 #: modules/album/src/Install/Installer.php:95
+#, fuzzy
 msgid "A grasshopper on a plant"
-msgstr ""
+msgstr "Өсүмдүктүн үстүндөгү чегиртке"
 
 #: modules/album/src/Install/Installer.php:101
+#, fuzzy
 msgid "Private album"
-msgstr ""
+msgstr "Жеке альбом"
 
 #: modules/album/src/Install/Installer.php:102
+#, fuzzy
 msgid "A private album visible to its owner only"
-msgstr ""
+msgstr "Ээсине гана көрүнүүчү жеке альбом"
 
 #: modules/album/src/Install/Installer.php:106
+#, fuzzy
 msgid "A shot from a private album"
-msgstr ""
+msgstr "Жеке альбомдон алынган сүрөт"
 
 #: modules/album/src/Install/Installer.php:112
+#, fuzzy
 msgid "Password-protected album"
-msgstr ""
+msgstr "Сыр сөз менен корголгон альбом"
 
 #: modules/album/src/Install/Installer.php:113
+#, fuzzy
 msgid "An album protected by a password (password: demo)"
-msgstr ""
+msgstr "Сыр сөз менен корголгон альбом (сыр сөз: demo)"
 
 #: modules/album/src/Install/Installer.php:117
+#, fuzzy
 msgid "A password-protected photo"
-msgstr ""
+msgstr "Сыр сөз менен корголгон сүрөт"
 
 #: modules/album/src/Install/Installer.php:237
+#, fuzzy
 msgid "A beautiful lake, such an atmospheric shot!"
-msgstr ""
+msgstr "Сонун көл, абдан таасирдүү сүрөт!"
 
 #: modules/album/src/Install/Installer.php:238
+#, fuzzy
 msgid "I would love to visit this place."
-msgstr ""
+msgstr "Мен бул жерге барууну абдан каалайт элем."
 
 #: modules/album/src/Install/Installer.php:239
+#, fuzzy
 msgid "Great shot of the squirrel!"
-msgstr ""
+msgstr "Тыйын чычкандын сүрөтү укмуш!"
 
 #: modules/album/src/Install/Installer.php:240
+#, fuzzy
 msgid "A lovely butterfly."
-msgstr ""
+msgstr "Сулуу көпөлөк."
 
 #: modules/album/templates/add_photo.phtml:33
 msgid "Choose file"

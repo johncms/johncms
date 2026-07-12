@@ -1,0 +1,502 @@
+msgid ""
+msgstr ""
+"X-Domain: collections\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Project-ID: 383801\n"
+"X-Crowdin-Language: ky\n"
+"X-Crowdin-File: /9.x/modules/collections/locale/collections.pot\n"
+"X-Crowdin-File-ID: 511\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Kyrgyz\n"
+"Language: ky_KG\n"
+"PO-Revision-Date: 2026-07-12 15:08\n"
+
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:48
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:360
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:363
+#: modules/collections/templates/admin/index.phtml:44
+#: modules/collections/templates/admin/items/form.phtml:100
+#, fuzzy
+msgid "Fields"
+msgstr "Талаалар"
+
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:111
+#, fuzzy
+msgid "A field with this code already exists"
+msgstr "Мындай коду бар талаа мурунтан эле бар"
+
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:114
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:138
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:153
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:107
+msgid "Changes saved"
+msgstr "Өзгөртүүлөр сакталды"
+
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:114
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:138
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:153
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:107
+#, fuzzy
+msgid "Created successfully"
+msgstr "Ийгиликтүү түзүлдү"
+
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:131
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:155
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:170
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:118
+#: modules/collections/templates/admin/delete_confirm.phtml:21
+#: modules/collections/templates/admin/fields/index.phtml:44
+#: modules/collections/templates/admin/index.phtml:49
+#: modules/collections/templates/admin/items/index.phtml:47
+#: modules/collections/templates/admin/sections/index.phtml:60
+msgid "Delete"
+msgstr "Өчүрүү"
+
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:136
+#, fuzzy
+msgid "Are you sure you want to delete the field?"
+msgstr "Талааны өчүрүүнү чын эле каалайсызбы?"
+
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:151
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:175
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:194
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:135
+#, fuzzy
+msgid "Deleted successfully"
+msgstr "Ийгиликтүү өчүрүлдү"
+
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:196
+#, fuzzy
+msgid "Edit field"
+msgstr "Талааны оңдоо"
+
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:196
+#: modules/collections/templates/admin/fields/index.phtml:22
+#, fuzzy
+msgid "New field"
+msgstr "Жаңы талаа"
+
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:279
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:374
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:348
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:254
+msgid "The required fields are not filled"
+msgstr "Милдеттүү талаалар толтурулган эмес"
+
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:283
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:378
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:352
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:258
+#, fuzzy
+msgid "The code may contain only lowercase latin letters, digits, hyphen and underscore"
+msgstr "Код кичине латын тамгаларынан, сандардан, дефистен жана астын сызуудан гана турушу мүмкүн"
+
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:287
+#, fuzzy
+msgid "Unknown field type"
+msgstr "Талаанын түрү белгисиз"
+
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:309
+#, fuzzy
+msgid "String"
+msgstr "Сап"
+
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:310
+msgid "Text"
+msgstr "Текст"
+
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:311
+#, fuzzy
+msgid "HTML"
+msgstr "HTML"
+
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:312
+#, fuzzy
+msgid "Integer"
+msgstr "Бүтүн сан"
+
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:313
+#, fuzzy
+msgid "Number (fractional)"
+msgstr "Сан (бөлчөк)"
+
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:314
+#, fuzzy
+msgid "Boolean"
+msgstr "Логикалык маани"
+
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:315
+msgid "Date"
+msgstr "Датасы"
+
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:316
+#, fuzzy
+msgid "Date and time"
+msgstr "Дата жана убакыт"
+
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:317
+#, fuzzy
+msgid "File"
+msgstr "Файл"
+
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:318
+#, fuzzy
+msgid "Select"
+msgstr "Тандоо"
+
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:319
+#, fuzzy
+msgid "Relation"
+msgstr "Байланыш"
+
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:330
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:348
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:351
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:461
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:479
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:482
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:394
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:412
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:415
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:55
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:119
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:164
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:278
+#, fuzzy
+msgid "Collections"
+msgstr "Жыйнактар"
+
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:353
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:365
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:385
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:484
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:496
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:417
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:429
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:79
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:88
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:115
+msgid "Wrong data"
+msgstr "Туура эмес маалымат"
+
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:69
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:472
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:491
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:494
+#: modules/collections/templates/admin/index.phtml:43
+#, fuzzy
+msgid "Items"
+msgstr "Элементтер"
+
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:134
+#, fuzzy
+msgid "An item with this code already exists"
+msgstr "Мындай коду бар элемент мурунтан эле бар"
+
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:160
+#, fuzzy
+msgid "Are you sure you want to delete the item?"
+msgstr "Элементти өчүрүүнү чын эле каалайсызбы?"
+
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:218
+#, fuzzy
+msgid "Edit item"
+msgstr "Элементти оңдоо"
+
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:218
+#: modules/collections/templates/admin/items/index.phtml:23
+#, fuzzy
+msgid "New item"
+msgstr "Жаңы элемент"
+
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:67
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:405
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:424
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:427
+#: modules/collections/templates/admin/index.phtml:46
+msgid "Sections"
+msgstr "Бөлүмдөр"
+
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:150
+msgid "A section with this code already exists"
+msgstr "Бул кодду камтыган бөлүк эчак эле бар"
+
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:175
+#, fuzzy
+msgid "Are you sure you want to delete the section?"
+msgstr "Бөлүктү өчүрүүнү чын эле каалайсызбы?"
+
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:176
+#, fuzzy
+msgid "Nested sections will be deleted too."
+msgstr "Ички бөлүктөр да өчүрүлөт."
+
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:264
+msgid "Edit section"
+msgstr "Бөлүктү түзөтүү"
+
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:264
+#: modules/collections/templates/admin/sections/index.phtml:32
+msgid "New section"
+msgstr "Жаңы бөлүм"
+
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:102
+#, fuzzy
+msgid "A collection with this code already exists"
+msgstr "Мындай коду бар жыйнак мурунтан эле бар"
+
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:104
+#, fuzzy
+msgid "This code is reserved and cannot be used"
+msgstr "Бул код брондолгон жана аны колдонууга болбойт"
+
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:124
+#, fuzzy
+msgid "Are you sure you want to delete the collection?"
+msgstr "Жыйнакты өчүрүүнү чын эле каалайсызбы?"
+
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:163
+#, fuzzy
+msgid "Edit collection"
+msgstr "Жыйнакты оңдоо"
+
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:163
+#: modules/collections/templates/admin/index.phtml:20
+#, fuzzy
+msgid "New collection"
+msgstr "Жаңы жыйнак"
+
+#: modules/collections/src/Install/Installer.php:40
+#, fuzzy
+msgid "Blog"
+msgstr "Блог"
+
+#: modules/collections/src/Install/Installer.php:41
+#, fuzzy
+msgid "Demo blog collection."
+msgstr "Демо блог жыйнагы."
+
+#: modules/collections/src/Install/Installer.php:53
+msgid "Author"
+msgstr "Автору"
+
+#: modules/collections/src/Install/Installer.php:66
+msgid "Rating"
+msgstr "Рейтинги"
+
+#: modules/collections/src/Install/Installer.php:76
+msgid "Technology"
+msgstr "Техника"
+
+#: modules/collections/src/Install/Installer.php:89
+#, fuzzy
+msgid "Hello, world!"
+msgstr "Салам, дүйнө!"
+
+#: modules/collections/src/Install/Installer.php:99
+#, fuzzy
+msgid "<p>The first item of the demo collection.</p>"
+msgstr "<p>Демо жыйнактын биринчи элементи.</p>"
+
+#: modules/collections/src/Install/Installer.php:100
+#, fuzzy
+msgid "<p>The first item of the demo collection. Edit it in the admin panel.</p>"
+msgstr "<p>Демо жыйнактын биринчи элементи. Аны админ панелинен оңдой аласыз.</p>"
+
+#: modules/collections/src/Install/Installer.php:112
+#, fuzzy
+msgid "John"
+msgstr "John"
+
+#: modules/collections/templates/admin/delete_confirm.phtml:22
+#: modules/collections/templates/admin/fields/form.phtml:68
+#: modules/collections/templates/admin/form.phtml:73
+#: modules/collections/templates/admin/items/form.phtml:135
+#: modules/collections/templates/admin/sections/form.phtml:61
+msgid "Cancel"
+msgstr "Токтотуу"
+
+#: modules/collections/templates/admin/fields/form.phtml:32
+#: modules/collections/templates/admin/form.phtml:30
+#: modules/collections/templates/admin/items/form.phtml:34
+#: modules/collections/templates/admin/sections/form.phtml:34
+msgid "Name"
+msgstr "Аталышы"
+
+#: modules/collections/templates/admin/fields/form.phtml:37
+#: modules/collections/templates/admin/form.phtml:35
+#: modules/collections/templates/admin/items/form.phtml:39
+#: modules/collections/templates/admin/sections/form.phtml:39
+msgid "Code"
+msgstr "Код"
+
+#: modules/collections/templates/admin/fields/form.phtml:39
+#: modules/collections/templates/admin/sections/form.phtml:41
+#, fuzzy
+msgid "Machine code: lowercase latin letters, digits, hyphen and underscore"
+msgstr "Машина коду: кичине латын тамгалары, сандар, дефис жана астын сызуу"
+
+#: modules/collections/templates/admin/fields/form.phtml:43
+msgid "Type"
+msgstr "Түрү"
+
+#: modules/collections/templates/admin/fields/form.phtml:52
+#: modules/collections/templates/admin/form.phtml:46
+#: modules/collections/templates/admin/items/form.phtml:57
+#: modules/collections/templates/admin/sections/form.phtml:50
+msgid "Sorting"
+msgstr "Иреттөө"
+
+#: modules/collections/templates/admin/fields/form.phtml:58
+#: modules/collections/templates/admin/fields/index.phtml:39
+#, fuzzy
+msgid "Required"
+msgstr "Милдеттүү"
+
+#: modules/collections/templates/admin/fields/form.phtml:63
+#, fuzzy
+msgid "Allow multiple values"
+msgstr "Бир нече мааниге уруксат берүү"
+
+#: modules/collections/templates/admin/fields/form.phtml:67
+#: modules/collections/templates/admin/form.phtml:72
+#: modules/collections/templates/admin/items/form.phtml:134
+#: modules/collections/templates/admin/sections/form.phtml:60
+msgid "Save"
+msgstr "Сактоо"
+
+#: modules/collections/templates/admin/fields/index.phtml:19
+#: modules/collections/templates/admin/items/index.phtml:20
+#: modules/collections/templates/admin/sections/index.phtml:22
+#, fuzzy
+msgid "Collection"
+msgstr "Жыйнак"
+
+#: modules/collections/templates/admin/fields/index.phtml:26
+#: modules/collections/templates/admin/index.phtml:24
+#: modules/collections/templates/admin/items/index.phtml:27
+#: modules/collections/templates/admin/sections/index.phtml:36
+#: modules/collections/templates/public/listing.phtml:22
+msgid "The list is empty"
+msgstr "Тизмеси бош"
+
+#: modules/collections/templates/admin/fields/index.phtml:40
+#, fuzzy
+msgid "Multiple"
+msgstr "Бир нече маани"
+
+#: modules/collections/templates/admin/fields/index.phtml:43
+#: modules/collections/templates/admin/index.phtml:48
+#: modules/collections/templates/admin/items/index.phtml:46
+#: modules/collections/templates/admin/sections/index.phtml:59
+msgid "Edit"
+msgstr "Оңдоо"
+
+#: modules/collections/templates/admin/fields/index.phtml:51
+#: modules/collections/templates/admin/index.phtml:63
+#: modules/collections/templates/admin/items/index.phtml:56
+#: modules/collections/templates/admin/sections/index.phtml:69
+msgid "Back"
+msgstr "Артка"
+
+#: modules/collections/templates/admin/form.phtml:37
+#, fuzzy
+msgid "Machine code for the URL and API: lowercase latin letters, digits, hyphen and underscore"
+msgstr "URL жана API үчүн машина коду: кичине латын тамгалары, сандар, дефис жана астын сызуу"
+
+#: modules/collections/templates/admin/form.phtml:41
+#: modules/collections/templates/admin/sections/form.phtml:45
+msgid "Description"
+msgstr "Сүрөттөмө"
+
+#: modules/collections/templates/admin/form.phtml:51
+#, fuzzy
+msgid "Items per page"
+msgstr "Бир беттеги элементтердин саны"
+
+#: modules/collections/templates/admin/form.phtml:57
+#, fuzzy
+msgid "Use sections"
+msgstr "Бөлүктөрдү колдонуу"
+
+#: modules/collections/templates/admin/form.phtml:62
+#: modules/collections/templates/admin/items/form.phtml:95
+#: modules/collections/templates/admin/sections/form.phtml:56
+msgid "Active"
+msgstr "Аракеттүү"
+
+#: modules/collections/templates/admin/form.phtml:67
+#, fuzzy
+msgid "Public (accessible by URL)"
+msgstr "Ачык (URL аркылуу жеткиликтүү)"
+
+#: modules/collections/templates/admin/form.phtml:68
+#, fuzzy
+msgid "A private collection has no public page and is available only through the API"
+msgstr "Жабык жыйнактын ачык барагы болбойт жана ал API аркылуу гана жеткиликтүү"
+
+#: modules/collections/templates/admin/index.phtml:36
+#: modules/collections/templates/admin/items/index.phtml:39
+#: modules/collections/templates/admin/sections/index.phtml:51
+msgid "On"
+msgstr "Жандыруу"
+
+#: modules/collections/templates/admin/index.phtml:38
+#: modules/collections/templates/admin/items/index.phtml:41
+#: modules/collections/templates/admin/sections/index.phtml:53
+msgid "Off"
+msgstr "Өчүрүү"
+
+#: modules/collections/templates/admin/index.phtml:58
+msgid "Total:"
+msgstr "Баары:"
+
+#: modules/collections/templates/admin/items/form.phtml:41
+#, fuzzy
+msgid "Machine code: lowercase latin letters, digits, hyphen and underscore. Leave empty to generate it from the name automatically"
+msgstr "Машина коду: кичине латын тамгалары, сандар, дефис жана астын сызуу. Аталышынан автоматтык түрдө түзүү үчүн бош калтырыңыз"
+
+#: modules/collections/templates/admin/items/form.phtml:46
+msgid "Section"
+msgstr "Бөлүк"
+
+#: modules/collections/templates/admin/items/form.phtml:48
+#, fuzzy
+msgid "— none —"
+msgstr "— жок —"
+
+#: modules/collections/templates/admin/items/form.phtml:62
+msgid "Active from"
+msgstr "Активдүүлүк башталышы"
+
+#: modules/collections/templates/admin/items/form.phtml:67
+msgid "Active to"
+msgstr "Активдүүлүктүн бүтүшү"
+
+#: modules/collections/templates/admin/items/form.phtml:73
+#, fuzzy
+msgid "Preview text"
+msgstr "Кыскача текст"
+
+#: modules/collections/templates/admin/items/form.phtml:84
+#, fuzzy
+msgid "Detail text"
+msgstr "Толук текст"
+
+#: modules/collections/templates/admin/items/form.phtml:107
+#, fuzzy
+msgid "One value per line"
+msgstr "Ар бир сапта бир маани"
+
+#: modules/collections/templates/admin/sections/index.phtml:25
+#, fuzzy
+msgid "Root"
+msgstr "Түпкү бөлүк"
+
+#: modules/collections/templates/admin/sections/index.phtml:58
+#, fuzzy
+msgid "Open"
+msgstr "Ачуу"
+

@@ -89,7 +89,7 @@ msgstr "Макала жазуу"
 #: modules/library/src/Application/Controllers/CreateArticleController.php:58
 #: modules/library/src/Application/Controllers/CreateSectionController.php:37
 msgid "Access denied"
-msgstr ""
+msgstr "Кирүүгө тыюу салынган"
 
 #: modules/library/src/Application/Controllers/CreateArticleController.php:85
 #, php-format
@@ -146,15 +146,17 @@ msgstr "Өчүрүү"
 #: modules/library/src/Application/Controllers/DeleteArticleController.php:56
 #: modules/library/src/Application/Controllers/DeleteArticleController.php:59
 #: modules/library/src/Application/Controllers/DeleteArticleController.php:60
+#, fuzzy
 msgid "Delete Article"
-msgstr ""
+msgstr "Макаланы өчүрүү"
 
 #: modules/library/src/Application/Controllers/DeleteArticleImageController.php:50
 #: modules/library/src/Application/Controllers/DeleteArticleImageController.php:53
 #: modules/library/src/Application/Controllers/DeleteArticleImageController.php:54
 #: modules/library/templates/edit_article.phtml:24
+#, fuzzy
 msgid "Delete Cover Image"
-msgstr ""
+msgstr "Мукабанын сүрөтүн өчүрүү"
 
 #: modules/library/src/Application/Controllers/DeleteSectionController.php:45
 #: modules/library/src/Application/Controllers/EditSectionController.php:51
@@ -165,8 +167,9 @@ msgstr "Бөлүм жок"
 #: modules/library/src/Application/Controllers/DeleteSectionController.php:53
 #: modules/library/src/Application/Controllers/DeleteSectionController.php:56
 #: modules/library/src/Application/Controllers/DeleteSectionController.php:57
+#, fuzzy
 msgid "Delete Section"
-msgstr ""
+msgstr "Бөлүктү өчүрүү"
 
 #: modules/library/src/Application/Controllers/DeleteSectionController.php:130
 #, php-format
@@ -230,9 +233,9 @@ msgid "Search"
 msgstr "Издөө"
 
 #: modules/library/src/Application/Controllers/SearchController.php:73
-#, php-format
+#, fuzzy, php-format
 msgid "Search results for: %s"
-msgstr ""
+msgstr "%s боюнча издөөнүн жыйынтыктары"
 
 #: modules/library/src/Application/Controllers/TagsController.php:35
 #: modules/library/src/Application/Controllers/TagsController.php:42
@@ -255,9 +258,9 @@ msgid "The list is empty"
 msgstr "Тизмеси бош"
 
 #: modules/library/src/Application/Controllers/TagsController.php:68
-#, php-format
+#, fuzzy, php-format
 msgid "Articles tagged: %s"
-msgstr ""
+msgstr "%s белгиси менен белгиленген макалалар"
 
 #: modules/library/src/Application/Controllers/TopController.php:37
 #: modules/library/templates/main.phtml:33
@@ -282,108 +285,134 @@ msgid "Library is closed"
 msgstr "Китепкана жабык"
 
 #: modules/library/src/Install/Installer.php:41
+#, fuzzy
 msgid "Programming"
-msgstr ""
+msgstr "Программалоо"
 
 #: modules/library/src/Install/Installer.php:42
+#, fuzzy
 msgid "Articles and guides on development"
-msgstr ""
+msgstr "Иштеп чыгуу боюнча макалалар жана колдонмолор"
 
 #: modules/library/src/Install/Installer.php:44
+#, fuzzy
 msgid "Materials on the PHP language"
-msgstr ""
+msgstr "PHP тили боюнча материалдар"
 
 #: modules/library/src/Install/Installer.php:46
+#, fuzzy
 msgid "Materials on JavaScript"
-msgstr ""
+msgstr "JavaScript боюнча материалдар"
 
 #: modules/library/src/Install/Installer.php:47
+#, fuzzy
 msgid "Prose"
-msgstr ""
+msgstr "Проза"
 
 #: modules/library/src/Install/Installer.php:48
+#, fuzzy
 msgid "Short stories and essays"
-msgstr ""
+msgstr "Аңгемелер жана эсселер"
 
 #: modules/library/src/Install/Installer.php:49
+#, fuzzy
 msgid "User articles"
-msgstr ""
+msgstr "Колдонуучулардын макалалары"
 
 #: modules/library/src/Install/Installer.php:50
+#, fuzzy
 msgid "A section where visitors can publish their own articles"
-msgstr ""
+msgstr "Конокторго өз макалаларын жарыялоого мүмкүндүк берген бөлүк"
 
 #: modules/library/src/Install/Installer.php:78
+#, fuzzy
 msgid "Getting started with PHP"
-msgstr ""
+msgstr "PHP менен иштин башталышы"
 
 #: modules/library/src/Install/Installer.php:79
+#, fuzzy
 msgid "Installing PHP and your first script"
-msgstr ""
+msgstr "PHPди орнотуу жана биринчи скриптиңиз"
 
 #: modules/library/src/Install/Installer.php:80
+#, fuzzy
 msgid "<p>PHP is a popular language for web development. In this article we cover installing the interpreter and running your first script.</p>"
-msgstr ""
+msgstr "<p>PHP — веб-иштеп чыгуу үчүн популярдуу тил. Бул макалада интерпретаторду орнотууну жана биринчи скриптти иштетүүнү карайбыз.</p>"
 
 #: modules/library/src/Install/Installer.php:82
+#, fuzzy
 msgid "Arrays in PHP"
-msgstr ""
+msgstr "PHPдеги массивдер"
 
 #: modules/library/src/Install/Installer.php:83
+#, fuzzy
 msgid "Indexed and associative arrays"
-msgstr ""
+msgstr "Индекстелген жана ассоциативдик массивдер"
 
 #: modules/library/src/Install/Installer.php:84
+#, fuzzy
 msgid "<p>Arrays in PHP can be indexed or associative. Let us look at the main functions for working with them.</p>"
-msgstr ""
+msgstr "<p>PHPдеги массивдер индекстелген же ассоциативдик болушу мүмкүн. Алар менен иштөө үчүн негизги функцияларды карап көрөлү.</p>"
 
 #: modules/library/src/Install/Installer.php:86
+#, fuzzy
 msgid "JavaScript basics"
-msgstr ""
+msgstr "JavaScript негиздери"
 
 #: modules/library/src/Install/Installer.php:87
+#, fuzzy
 msgid "Variables and functions"
-msgstr ""
+msgstr "Өзгөрмөлөр жана функциялар"
 
 #: modules/library/src/Install/Installer.php:88
+#, fuzzy
 msgid "<p>JavaScript runs in the browser and makes pages interactive. Let us start with variables and functions.</p>"
-msgstr ""
+msgstr "<p>JavaScript браузерде иштейт жана барактарды интерактивдүү кылат. Өзгөрмөлөрдөн жана функциялардан баштайлы.</p>"
 
 #: modules/library/src/Install/Installer.php:90
+#, fuzzy
 msgid "An autumn evening"
-msgstr ""
+msgstr "Күзгү кеч"
 
 #: modules/library/src/Install/Installer.php:91
+#, fuzzy
 msgid "A short story"
-msgstr ""
+msgstr "Кыска аңгеме"
 
 #: modules/library/src/Install/Installer.php:92
+#, fuzzy
 msgid "<p>A warm autumn rain fell outside the window, and the city slowly sank into the evening twilight.</p>"
-msgstr ""
+msgstr "<p>Терезенин сыртында жылуу күзгү жамгыр жаап, шаар акырындык менен кечки иңирге чөгүп бара жатты.</p>"
 
 #: modules/library/src/Install/Installer.php:95
+#, fuzzy
 msgid "My first article"
-msgstr ""
+msgstr "Менин биринчи макалам"
 
 #: modules/library/src/Install/Installer.php:96
+#, fuzzy
 msgid "An example of a user publication"
-msgstr ""
+msgstr "Колдонуучунун жарыясынын мисалы"
 
 #: modules/library/src/Install/Installer.php:97
+#, fuzzy
 msgid "<p>This is an example of an article added by a user. In this section anyone can publish their own material.</p>"
-msgstr ""
+msgstr "<p>Бул колдонуучу кошкон макаланын мисалы. Бул бөлүктө ар бир адам өз материалын жарыялай алат.</p>"
 
 #: modules/library/src/Install/Installer.php:122
+#, fuzzy
 msgid "<p>Great introduction, straight to the point!</p>"
-msgstr ""
+msgstr "<p>Сонун киришүү, түз эле маңызына өттү!</p>"
 
 #: modules/library/src/Install/Installer.php:123
+#, fuzzy
 msgid "<p>Thanks, I bookmarked the article.</p>"
-msgstr ""
+msgstr "<p>Рахмат, макаланы кыстармага коштум.</p>"
 
 #: modules/library/src/Install/Installer.php:124
+#, fuzzy
 msgid "<p>It is great that you can publish your own materials.</p>"
-msgstr ""
+msgstr "<p>Өз материалдарыңды жарыялай алганың абдан сонун.</p>"
 
 #: modules/library/templates/article_create.phtml:14
 msgid "Article added"
@@ -519,75 +548,80 @@ msgid "Total"
 msgstr "Баары"
 
 #: modules/library/templates/delete_article.phtml:13
-#, php-format
+#, fuzzy, php-format
 msgid "Article \"%s\" has been deleted."
-msgstr ""
+msgstr "\"%s\" макаласы өчүрүлдү."
 
 #: modules/library/templates/delete_article.phtml:15
 #: modules/library/templates/delete_section.phtml:23
 #: modules/library/templates/delete_section.phtml:73
 #: modules/library/templates/delete_section.phtml:80
+#, fuzzy
 msgid "Back to Library"
-msgstr ""
+msgstr "Китепканага кайтуу"
 
 #: modules/library/templates/delete_article.phtml:19
-#, php-format
+#, fuzzy, php-format
 msgid "Are you sure you want to delete the article \"%s\"? This action cannot be undone."
-msgstr ""
+msgstr "\"%s\" макаласын өчүрүүнү чын эле каалайсызбы? Бул аракетти артка кайтарууга болбойт."
 
 #: modules/library/templates/delete_article.phtml:21
 #: modules/library/templates/delete_article_image.phtml:21
 #: modules/library/templates/delete_section.phtml:29
+#, fuzzy
 msgid "Yes, Delete"
-msgstr ""
+msgstr "Ооба, өчүрүү"
 
 #: modules/library/templates/delete_article_image.phtml:13
-#, php-format
+#, fuzzy, php-format
 msgid "Cover image for article \"%s\" has been deleted."
-msgstr ""
+msgstr "\"%s\" макаласынын мукаба сүрөтү өчүрүлдү."
 
 #: modules/library/templates/delete_article_image.phtml:15
 #: modules/library/templates/edit_article.phtml:18
+#, fuzzy
 msgid "Back to Article"
-msgstr ""
+msgstr "Макалага кайтуу"
 
 #: modules/library/templates/delete_article_image.phtml:19
-#, php-format
+#, fuzzy, php-format
 msgid "Are you sure you want to delete the cover image for article \"%s\"?"
-msgstr ""
+msgstr "\"%s\" макаласынын мукаба сүрөтүн өчүрүүнү чын эле каалайсызбы?"
 
 #: modules/library/templates/delete_section.phtml:21
-#, php-format
+#, fuzzy, php-format
 msgid "Section \"%s\" has been deleted."
-msgstr ""
+msgstr "\"%s\" бөлүгү өчүрүлдү."
 
 #: modules/library/templates/delete_section.phtml:27
-#, php-format
+#, fuzzy, php-format
 msgid "Are you sure you want to delete the section \"%s\"? This action cannot be undone."
-msgstr ""
+msgstr "\"%s\" бөлүгүн өчүрүүнү чын эле каалайсызбы? Бул аракетти артка кайтарууга болбойт."
 
 #: modules/library/templates/delete_section.phtml:37
-#, php-format
+#, fuzzy, php-format
 msgid "Contents of section \"%s\" have been moved successfully."
-msgstr ""
+msgstr "\"%s\" бөлүгүнүн мазмуну ийгиликтүү жылдырылды."
 
 #: modules/library/templates/delete_section.phtml:39
+#, fuzzy
 msgid "Go to Target Section"
-msgstr ""
+msgstr "Максаттуу бөлүккө өтүү"
 
 #: modules/library/templates/delete_section.phtml:43
-#, php-format
+#, fuzzy, php-format
 msgid "Move all contents of section \"%s\" to the selected section and delete it?"
-msgstr ""
+msgstr "\"%s\" бөлүгүнүн бардык мазмунун тандалган бөлүккө жылдырып, аны өчүрөлүбү?"
 
 #: modules/library/templates/delete_section.phtml:45
+#, fuzzy
 msgid "Yes, Move and Delete"
-msgstr ""
+msgstr "Ооба, жылдырып өчүрүү"
 
 #: modules/library/templates/delete_section.phtml:55
-#, php-format
+#, fuzzy, php-format
 msgid "Move contents of \"%s\" to:"
-msgstr ""
+msgstr "\"%s\" мазмунун кайда жылдыруу:"
 
 #: modules/library/templates/delete_section.phtml:66
 #: modules/library/templates/premod.phtml:34
@@ -595,40 +629,44 @@ msgid "Approve"
 msgstr "Ырастоо"
 
 #: modules/library/templates/delete_section.phtml:71
-#, php-format
+#, fuzzy, php-format
 msgid "No sections available to move the contents of \"%s\" to."
-msgstr ""
+msgstr "\"%s\" мазмунун жылдыруу үчүн жеткиликтүү бөлүктөр жок."
 
 #: modules/library/templates/delete_section.phtml:84
-#, php-format
+#, fuzzy, php-format
 msgid "Are you sure you want to delete section \"%s\" along with ALL its contents? This action cannot be undone."
-msgstr ""
+msgstr "\"%s\" бөлүгүн БАРДЫК мазмуну менен кошо өчүрүүнү чын эле каалайсызбы? Бул аракетти артка кайтарууга болбойт."
 
 #: modules/library/templates/delete_section.phtml:86
+#, fuzzy
 msgid "Yes, Delete Everything"
-msgstr ""
+msgstr "Ооба, баарын өчүрүү"
 
 #: modules/library/templates/delete_section.phtml:94
-#, php-format
+#, fuzzy, php-format
 msgid "Section \"%s\" contains subsections or articles. Choose how to delete it:"
-msgstr ""
+msgstr "\"%s\" бөлүгүндө ички бөлүктөр же макалалар бар. Аны кантип өчүрүүнү тандаңыз:"
 
 #: modules/library/templates/delete_section.phtml:98
+#, fuzzy
 msgid "Move contents to another section, then delete"
-msgstr ""
+msgstr "Мазмунду башка бөлүккө жылдырып, анан өчүрүү"
 
 #: modules/library/templates/delete_section.phtml:102
+#, fuzzy
 msgid "Delete section and all its contents"
-msgstr ""
+msgstr "Бөлүктү бардык мазмуну менен кошо өчүрүү"
 
 #: modules/library/templates/delete_section.phtml:105
 msgid "Continue"
-msgstr ""
+msgstr "Улантуу"
 
 #: modules/library/templates/edit_article.phtml:17
 #: modules/library/templates/edit_section.phtml:16
+#, fuzzy
 msgid "Changes saved successfully."
-msgstr ""
+msgstr "Өзгөрүүлөр ийгиликтүү сакталды."
 
 #: modules/library/templates/edit_article.phtml:59
 msgid "The text of the Article can not be edited, a large amount of data !!!"
@@ -648,8 +686,9 @@ msgid "Number of readings"
 msgstr "Окулган"
 
 #: modules/library/templates/edit_section.phtml:17
+#, fuzzy
 msgid "Back to Section"
-msgstr ""
+msgstr "Бөлүккө кайтуу"
 
 #: modules/library/templates/edit_section.phtml:28
 #: modules/library/templates/section_create.phtml:26
@@ -738,8 +777,9 @@ msgid "Approve all"
 msgstr "Баарын бекитүү"
 
 #: modules/library/templates/premod.phtml:46
+#, fuzzy
 msgid "No articles pending moderation."
-msgstr ""
+msgstr "Модерацияны күтүп жаткан макалалар жок."
 
 #: modules/library/templates/search.phtml:15
 #: modules/library/templates/search.phtml:16

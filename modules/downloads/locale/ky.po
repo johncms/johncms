@@ -331,8 +331,9 @@ msgstr "Пикирлер"
 #: modules/downloads/src/Application/Controllers/FileCommentsController.php:92
 #: modules/downloads/src/Application/Controllers/ViewFileController.php:108
 #: modules/downloads/src/Application/Controllers/ViewFileController.php:110
+#, fuzzy
 msgid "The file is awaiting moderation"
-msgstr ""
+msgstr "Файл модерацияны күтүүдө"
 
 #: modules/downloads/src/Application/Controllers/FilesModerationController.php:33
 #: modules/downloads/src/Application/Controllers/FilesModerationController.php:36
@@ -340,8 +341,9 @@ msgstr ""
 #: modules/downloads/src/Application/Controllers/FilesModerationController.php:60
 #: modules/downloads/src/Application/Controllers/FilesModerationController.php:64
 #: modules/downloads/src/Application/Controllers/FilesModerationController.php:73
+#, fuzzy
 msgid "Files awaiting moderation"
-msgstr ""
+msgstr "Модерацияны күтүп жаткан файлдар"
 
 #: modules/downloads/src/Application/Controllers/FilesModerationController.php:62
 msgid "File accepted"
@@ -446,9 +448,9 @@ msgid "Invalid file name length. Allowed a minimum of 3 and a maximum of 64 char
 msgstr "Файлдын аталышынын узундугу жараксыз. 3төн кем эмес жана 64 белгиден ашпоого уруксат берилет."
 
 #: modules/downloads/src/Application/Controllers/SearchController.php:87
-#, php-format
+#, fuzzy, php-format
 msgid "Search results for: %s"
-msgstr ""
+msgstr "%s боюнча издөөнүн жыйынтыктары"
 
 #: modules/downloads/src/Application/Controllers/TopFilesController.php:42
 #: modules/downloads/src/Application/UseCases/ViewTopFilesUseCase.php:39
@@ -487,8 +489,9 @@ msgid "Downloads are closed"
 msgstr "Жүктөөлөр жабык"
 
 #: modules/downloads/src/Application/Middlewares/DownloadsAdminMiddleware.php:27
+#, fuzzy
 msgid "Not found"
-msgstr ""
+msgstr "Табылган жок"
 
 #: modules/downloads/src/Application/Services/FileMediaInfoService.php:38
 msgid "Channels"
@@ -551,136 +554,169 @@ msgid "Resolution"
 msgstr "Уруксат"
 
 #: modules/downloads/src/Install/Installer.php:64
+#, fuzzy
 msgid "Music"
-msgstr ""
+msgstr "Музыка"
 
 #: modules/downloads/src/Install/Installer.php:65
+#, fuzzy
 msgid "Demo royalty-free audio tracks"
-msgstr ""
+msgstr "Автордук акысы жок демо аудио тректер"
 
 #: modules/downloads/src/Install/Installer.php:71
+#, fuzzy
 msgid "Atmospheric instrumental track for videos and podcasts."
-msgstr ""
+msgstr "Видеолор жана подкасттар үчүн атмосфералык инструменталдык трек."
 
 #: modules/downloads/src/Install/Installer.php:79
+#, fuzzy
 msgid "Energetic chiptune track, a great fit for game projects."
-msgstr ""
+msgstr "Оюн долбоорлоруна абдан ылайыктуу, энергиялуу chiptune трек."
 
 #: modules/downloads/src/Install/Installer.php:87
+#, fuzzy
 msgid "Calm background music for streams and videos."
-msgstr ""
+msgstr "Стримдер жана видеолор үчүн тынч фондук музыка."
 
 #: modules/downloads/src/Install/Installer.php:97
+#, fuzzy
 msgid "Video"
-msgstr ""
+msgstr "Видео"
 
 #: modules/downloads/src/Install/Installer.php:98
+#, fuzzy
 msgid "Demo video clips"
-msgstr ""
+msgstr "Демо видео клиптер"
 
 #: modules/downloads/src/Install/Installer.php:103
+#, fuzzy
 msgid "Hornbill in the jungle"
-msgstr ""
+msgstr "Жунглидеги мүйүзтумшук"
 
 #: modules/downloads/src/Install/Installer.php:104
+#, fuzzy
 msgid "A short clip of a great hornbill against a tropical forest."
-msgstr ""
+msgstr "Тропикалык токойдун фонундагы чоң мүйүзтумшуктун кыска клиби."
 
 #: modules/downloads/src/Install/Installer.php:111
+#, fuzzy
 msgid "Mountain under storm clouds"
-msgstr ""
+msgstr "Бороон булуттарынын астындагы тоо"
 
 #: modules/downloads/src/Install/Installer.php:112
+#, fuzzy
 msgid "A lone mountain on a green plain under heavy storm clouds."
-msgstr ""
+msgstr "Оор бороон булуттарынын астында, жашыл түздүктөгү жалгыз тоо."
 
 #: modules/downloads/src/Install/Installer.php:119
+#, fuzzy
 msgid "Snowstorm in the mountains"
-msgstr ""
+msgstr "Тоолордогу кар бороону"
 
 #: modules/downloads/src/Install/Installer.php:120
+#, fuzzy
 msgid "Snow-covered mountain slopes swept by a strong wind."
-msgstr ""
+msgstr "Катуу шамал каптаган, кар баскан тоо беттери."
 
 #: modules/downloads/src/Install/Installer.php:130
+#, fuzzy
 msgid "Images"
-msgstr ""
+msgstr "Сүрөттөр"
 
 #: modules/downloads/src/Install/Installer.php:131
+#, fuzzy
 msgid "Demo photos"
-msgstr ""
+msgstr "Демо сүрөттөр"
 
 #: modules/downloads/src/Install/Installer.php:136
+#, fuzzy
 msgid "Mountain lake"
-msgstr ""
+msgstr "Тоо көлү"
 
 #: modules/downloads/src/Install/Installer.php:137
+#, fuzzy
 msgid "A calm lake surrounded by mountains."
-msgstr ""
+msgstr "Тоолор менен курчалган тынч көл."
 
 #: modules/downloads/src/Install/Installer.php:144
+#, fuzzy
 msgid "Grasshopper"
-msgstr ""
+msgstr "Чегиртке"
 
 #: modules/downloads/src/Install/Installer.php:145
+#, fuzzy
 msgid "A macro photo of a grasshopper on a plant."
-msgstr ""
+msgstr "Өсүмдүктүн үстүндөгү чегирткенин макро сүрөтү."
 
 #: modules/downloads/src/Install/Installer.php:152
+#, fuzzy
 msgid "Rooster"
-msgstr ""
+msgstr "Короз"
 
 #: modules/downloads/src/Install/Installer.php:153
+#, fuzzy
 msgid "A bright rooster in close-up."
-msgstr ""
+msgstr "Жакындан тартылган ажайып короз."
 
 #: modules/downloads/src/Install/Installer.php:160
+#, fuzzy
 msgid "Green-veined white butterfly"
-msgstr ""
+msgstr "Жашыл тамырлуу ак көпөлөк"
 
 #: modules/downloads/src/Install/Installer.php:161
+#, fuzzy
 msgid "A green-veined white butterfly on a flower."
-msgstr ""
+msgstr "Гүлдүн үстүндөгү жашыл тамырлуу ак көпөлөк."
 
 #: modules/downloads/src/Install/Installer.php:168
+#, fuzzy
 msgid "Bird chick"
-msgstr ""
+msgstr "Балапан"
 
 #: modules/downloads/src/Install/Installer.php:169
+#, fuzzy
 msgid "A tiny bird chick in the grass."
-msgstr ""
+msgstr "Чөптүн арасындагы кичинекей балапан."
 
 #: modules/downloads/src/Install/Installer.php:176
+#, fuzzy
 msgid "Squirrel"
-msgstr ""
+msgstr "Тыйын чычкан"
 
 #: modules/downloads/src/Install/Installer.php:177
+#, fuzzy
 msgid "A red squirrel on a tree branch."
-msgstr ""
+msgstr "Дарактын бутагындагы кызыл тыйын чычкан."
 
 #: modules/downloads/src/Install/Installer.php:187
+#, fuzzy
 msgid "Documents"
-msgstr ""
+msgstr "Документтер"
 
 #: modules/downloads/src/Install/Installer.php:188
+#, fuzzy
 msgid "Demo documents and archives"
-msgstr ""
+msgstr "Демо документтер жана архивдер"
 
 #: modules/downloads/src/Install/Installer.php:193
+#, fuzzy
 msgid "Text document"
-msgstr ""
+msgstr "Текст документи"
 
 #: modules/downloads/src/Install/Installer.php:194
+#, fuzzy
 msgid "An example of a plain text file."
-msgstr ""
+msgstr "Жөнөкөй текст файлынын мисалы."
 
 #: modules/downloads/src/Install/Installer.php:201
+#, fuzzy
 msgid "File archive"
-msgstr ""
+msgstr "Файл архиви"
 
 #: modules/downloads/src/Install/Installer.php:202
+#, fuzzy
 msgid "An example ZIP archive with nested files."
-msgstr ""
+msgstr "Ичинде файлдары бар ZIP архивинин мисалы."
 
 #: modules/downloads/templates/bookmarks.phtml:23
 #: modules/downloads/templates/index.phtml:117
@@ -898,8 +934,9 @@ msgid "Download the additional file"
 msgstr "Кошумча файлды жүктөп алыңыз"
 
 #: modules/downloads/templates/folder_delete.phtml:23
+#, fuzzy
 msgid "Folder"
-msgstr ""
+msgstr "Папка"
 
 #: modules/downloads/templates/folder_form.phtml:26
 #: modules/downloads/templates/folder_form.phtml:27

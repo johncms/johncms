@@ -50,7 +50,7 @@ msgstr "Колдонуучулар"
 
 #: modules/online/src/Application/Middlewares/OnlineAdminMiddleware.php:27
 msgid "Access denied"
-msgstr ""
+msgstr "Кирүүгө тыюу салынган"
 
 #: modules/online/src/Application/UseCases/GetOnlineGuestsUseCase.php:34
 msgid "Guest"

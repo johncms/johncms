@@ -274,8 +274,9 @@ msgid "If you need help, you can visit <a href=\"https://johncms.com/forum/\" cl
 msgstr "Эгер сизге жардам керек болсо, анда <a href=\"https://forum.kg/\" class=\"text-underline\">кыргыз форумга</a> же <a href=\"https://johncms.com/forum/\" class=\"text-underline\">биздин форумга</a> кириңиз."
 
 #: install/templates/step_5.phtml:12
+#, fuzzy
 msgid "Also, if necessary, you can familiarize yourself with <a href=\"https://docs.johncms.com/\" class=\"text-underline\">the documentation</a>"
-msgstr ""
+msgstr "Ошондой эле, зарыл болсо, <a href=\"https://docs.johncms.com/\" class=\"text-underline\">документация</a> менен таанышып чыга аласыз"
 
 #: install/templates/step_5.phtml:15
 msgid "Go to website"

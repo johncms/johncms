@@ -382,9 +382,9 @@ msgid "Invalid length"
 msgstr "Жараксыз узундук"
 
 #: modules/forum/src/Application/Controllers/ForumSearchController.php:67
-#, php-format
+#, fuzzy, php-format
 msgid "Search results for: %s"
-msgstr ""
+msgstr "%s боюнча издөөнүн жыйынтыктары"
 
 #: modules/forum/src/Application/Controllers/LatestTopicsController.php:27
 msgid "Last 10"
@@ -498,8 +498,9 @@ msgstr "Билдирүүгө жооп берүү"
 #: modules/forum/src/Application/Controllers/RestorePostController.php:75
 #: modules/forum/src/Application/Controllers/RestorePostController.php:91
 #: modules/forum/src/Application/Controllers/RestorePostController.php:92
+#, fuzzy
 msgid "Restore Message"
-msgstr ""
+msgstr "Билдирүүнү калыбына келтирүү"
 
 #: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:76
 msgid "You have not selected any author"
@@ -527,11 +528,11 @@ msgstr "Тандалган мезгил үчүн жаңы форум жок"
 #: modules/forum/src/Application/Controllers/UploadFileController.php:39
 #: modules/forum/src/Application/Controllers/UploadFileController.php:50
 msgid "Access denied"
-msgstr ""
+msgstr "Кирүүгө тыюу салынган"
 
 #: modules/forum/src/Application/Controllers/UploadFileController.php:62
 msgid "Only images are allowed"
-msgstr ""
+msgstr "Сүрөттөргө гана уруксат берилет"
 
 #: modules/forum/src/Application/Controllers/ViewForumVisitorsController.php:53
 #: modules/forum/templates/index.phtml:77
@@ -557,8 +558,9 @@ msgid "Forum is closed"
 msgstr "Форум жабык"
 
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:54
+#, fuzzy
 msgid "Search query must be between 2 and 64 characters"
-msgstr ""
+msgstr "Издөө сурамы 2ден 64 белгиге чейин болушу керек"
 
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:87
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:96
@@ -728,44 +730,52 @@ msgid "Other"
 msgstr "Башка"
 
 #: modules/forum/src/Install/Installer.php:43
+#, fuzzy
 msgid "Communication"
-msgstr ""
+msgstr "Баарлашуу"
 
 #: modules/forum/src/Install/Installer.php:43
+#, fuzzy
 msgid "Free discussion on any topic"
-msgstr ""
+msgstr "Каалаган тема боюнча эркин талкуу"
 
 #: modules/forum/src/Install/Installer.php:44
+#, fuzzy
 msgid "Off-topic"
-msgstr ""
+msgstr "Тема сырткары"
 
 #: modules/forum/src/Install/Installer.php:45
+#, fuzzy
 msgid "Dating"
-msgstr ""
+msgstr "Таанышуу"
 
 #: modules/forum/src/Install/Installer.php:46
+#, fuzzy
 msgid "Site life"
-msgstr ""
+msgstr "Сайттын жашоосу"
 
 #: modules/forum/src/Install/Installer.php:47
 msgid "News"
-msgstr ""
+msgstr "Жаңылыктар"
 
 #: modules/forum/src/Install/Installer.php:48
+#, fuzzy
 msgid "Suggestions and wishes"
-msgstr ""
+msgstr "Сунуштар жана каалоолор"
 
 #: modules/forum/src/Install/Installer.php:49
 msgid "Miscellaneous"
-msgstr ""
+msgstr "Ар түрдүү"
 
 #: modules/forum/src/Install/Installer.php:70
+#, fuzzy
 msgid "Hello everyone!"
-msgstr ""
+msgstr "Баарыңарга салам!"
 
 #: modules/forum/src/Install/Installer.php:106
+#, fuzzy
 msgid "<p>We are glad to welcome you to our website :)</p><p>Let's get acquainted!</p>"
-msgstr ""
+msgstr "<p>Сизди сайтыбызда көргөнүбүзгө кубанычтабыз :)</p><p>Таанышып алалы!</p>"
 
 #: modules/forum/templates/add_file.phtml:29
 msgid "File attached"
@@ -808,8 +818,9 @@ msgstr "Сурамжылоо"
 
 #: modules/forum/templates/add_poll.phtml:34
 #: modules/forum/templates/edit_poll.phtml:37
+#, fuzzy
 msgid "Maximum length: 200 characters"
-msgstr ""
+msgstr "Максималдуу узундугу: 200 белги"
 
 #: modules/forum/templates/add_poll.phtml:37
 #: modules/forum/templates/edit_poll.phtml:40
@@ -1116,8 +1127,9 @@ msgid "Topic"
 msgstr "Тема"
 
 #: modules/forum/templates/restore_post.phtml:30
+#, fuzzy
 msgid "Do you really want to restore this post?"
-msgstr ""
+msgstr "Бул билдирүүнү калыбына келтирүүнү чын эле каалайсызбы?"
 
 #: modules/forum/templates/restore_post.phtml:35
 #: modules/forum/templates/topic.phtml:373

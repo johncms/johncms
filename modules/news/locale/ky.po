@@ -14,8 +14,9 @@ msgstr ""
 "PO-Revision-Date: 2026-07-12 12:40\n"
 
 #: modules/news/src/Application/Article.php:66
+#, fuzzy
 msgid "The requested article was not found."
-msgstr ""
+msgstr "Суралган макала табылган жок."
 
 #: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:35
 #: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:38
@@ -124,8 +125,9 @@ msgid "The section was successfully deleted"
 msgstr "Бөлүк ийгиликтүү өчүрүлдү"
 
 #: modules/news/src/Application/Controllers/CommentsController.php:49
+#, fuzzy
 msgid "Bad Request"
-msgstr ""
+msgstr "Туура эмес сурам"
 
 #: modules/news/src/Application/Controllers/CommentsController.php:143
 msgid "You have a ban!"
@@ -172,76 +174,94 @@ msgid "The requested section was not found."
 msgstr "Изделген бөлүк табылган жок"
 
 #: modules/news/src/Install/Installer.php:42
+#, fuzzy
 msgid "Site news"
-msgstr ""
+msgstr "Сайттын жаңылыктары"
 
 #: modules/news/src/Install/Installer.php:43
+#, fuzzy
 msgid "Announcements"
-msgstr ""
+msgstr "Жарыялар"
 
 #: modules/news/src/Install/Installer.php:67
+#, fuzzy
 msgid "Welcome to the site!"
-msgstr ""
+msgstr "Сайтка кош келиңиз!"
 
 #: modules/news/src/Install/Installer.php:68
+#, fuzzy
 msgid "<p>We are glad to welcome you to our site.</p>"
-msgstr ""
+msgstr "<p>Сизди сайтыбызда көргөнүбүзгө кубанычтабыз.</p>"
 
 #: modules/news/src/Install/Installer.php:69
+#, fuzzy
 msgid "<p>We are glad to welcome you to our site. Here you will find the latest news, useful materials and lively discussion.</p>"
-msgstr ""
+msgstr "<p>Сизди сайтыбызда көргөнүбүзгө кубанычтабыз. Бул жерден акыркы жаңылыктарды, пайдалуу материалдарды жана кызуу талкууларды таба аласыз.</p>"
 
 #: modules/news/src/Install/Installer.php:74
+#, fuzzy
 msgid "The site is launched"
-msgstr ""
+msgstr "Сайт иштей баштады"
 
 #: modules/news/src/Install/Installer.php:75
+#, fuzzy
 msgid "<p>Our site is officially open to visitors.</p>"
-msgstr ""
+msgstr "<p>Сайтыбыз конокторго расмий түрдө ачылды.</p>"
 
 #: modules/news/src/Install/Installer.php:76
+#, fuzzy
 msgid "<p>Our site is officially open to visitors. Stay tuned for updates — a lot of interesting things are coming!</p>"
-msgstr ""
+msgstr "<p>Сайтыбыз конокторго расмий түрдө ачылды. Жаңылыктарды күтүңүз — алдыда көптөгөн кызыктуу нерселер бар!</p>"
 
 #: modules/news/src/Install/Installer.php:81
+#, fuzzy
 msgid "Site rules"
-msgstr ""
+msgstr "Сайттын эрежелери"
 
 #: modules/news/src/Install/Installer.php:82
+#, fuzzy
 msgid "<p>We ask all members to read the rules.</p>"
-msgstr ""
+msgstr "<p>Бардык катышуучулардан эрежелер менен таанышып чыгууну өтүнөбүз.</p>"
 
 #: modules/news/src/Install/Installer.php:83
+#, fuzzy
 msgid "<p>We ask all members to read the site rules. Respect each other, avoid rudeness and spam. The administration reserves the right to remove materials that violate the rules.</p>"
-msgstr ""
+msgstr "<p>Бардык катышуучулардан сайттын эрежелери менен таанышып чыгууну өтүнөбүз. Бири-бириңизди урматтаңыз, орой сөздөрдөн жана спамдан алыс болуңуз. Администрация эрежелерди бузган материалдарды өчүрүү укугун сактап калат.</p>"
 
 #: modules/news/src/Install/Installer.php:88
+#, fuzzy
 msgid "Maintenance"
-msgstr ""
+msgstr "Техникалык тейлөө"
 
 #: modules/news/src/Install/Installer.php:89
+#, fuzzy
 msgid "<p>The scheduled maintenance is complete.</p>"
-msgstr ""
+msgstr "<p>Пландаштырылган техникалык иштер аякталды.</p>"
 
 #: modules/news/src/Install/Installer.php:90
+#, fuzzy
 msgid "<p>The scheduled maintenance has been completed successfully. All site features are working normally. Thank you for your patience!</p>"
-msgstr ""
+msgstr "<p>Пландаштырылган техникалык иштер ийгиликтүү аякталды. Сайттын бардык мүмкүнчүлүктөрү кадимкидей иштеп жатат. Сабырдуулугуңуз үчүн рахмат!</p>"
 
 #: modules/news/src/Install/Installer.php:130
+#, fuzzy
 msgid "<p>Great news! Glad to see the site up and running.</p>"
-msgstr ""
+msgstr "<p>Сонун жаңылык! Сайттын иштеп жатканын көргөнүмө кубанычтамын.</p>"
 
 #: modules/news/src/Install/Installer.php:131
+#, fuzzy
 msgid "<p>Congratulations on the launch! A lot of interesting things are ahead.</p>"
-msgstr ""
+msgstr "<p>Ишке киргизилиши менен куттуктайм! Алдыда көптөгөн кызыктуу нерселер бар.</p>"
 
 #: modules/news/src/Install/Installer.php:132
+#, fuzzy
 msgid "<p>The rules are reasonable, all to the point.</p>"
-msgstr ""
+msgstr "<p>Эрежелер акылга сыярлык, баары ордунда.</p>"
 
 #: modules/news/src/Install/Installer.php:133
+#, fuzzy
 msgid "<p>Thanks for completing the work so quickly!</p>"
-msgstr ""
+msgstr "<p>Иштерди ушунчалык тез бүтүргөнүңүздөр үчүн рахмат!</p>"
 
 #: modules/news/templates/admin/add_article.phtml:21
 msgid "Active"
@@ -310,8 +330,9 @@ msgid "Enter words or phrases separated by commas"
 msgstr "Сөздөрдү же сөз айкаштарын үтүр менен ажыратып жазыңыз"
 
 #: modules/news/templates/admin/add_article.phtml:119
+#, fuzzy
 msgid "Preview text"
-msgstr ""
+msgstr "Кыскача текст"
 
 #: modules/news/templates/admin/add_article.phtml:131
 msgid "Text"

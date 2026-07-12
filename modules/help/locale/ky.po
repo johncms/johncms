@@ -56,12 +56,12 @@ msgstr "Аватарлар"
 #: modules/help/src/Application/Controllers/SetAvatarController.php:51
 #: modules/help/src/Application/Controllers/UserSmiliesController.php:43
 msgid "Wrong data"
-msgstr ""
+msgstr "Туура эмес маалымат"
 
 #: modules/help/src/Application/Controllers/AvatarListController.php:42
 #: modules/help/src/Application/Controllers/UserSmiliesController.php:45
 msgid "The directory does not exist"
-msgstr ""
+msgstr "Каталогу жок"
 
 #: modules/help/src/Application/Controllers/AvatarListController.php:44
 #: modules/help/src/Application/Controllers/MySmiliesController.php:47
@@ -89,13 +89,13 @@ msgstr "Форумдун эрежелери"
 #: modules/help/src/Application/Controllers/SetAvatarController.php:38
 #: modules/help/src/Application/Controllers/SetMySmiliesController.php:38
 msgid "Access denied"
-msgstr ""
+msgstr "Кирүүгө тыюу салынган"
 
 #: modules/help/src/Application/Controllers/MySmiliesController.php:45
 #: modules/help/src/Application/Controllers/SetAvatarController.php:40
 #: modules/help/src/Application/Controllers/SetMySmiliesController.php:40
 msgid "You are not logged in"
-msgstr ""
+msgstr "Сиз авторизацияланган эмессиз"
 
 #: modules/help/src/Application/Controllers/MySmiliesController.php:51
 #: modules/help/src/Application/Controllers/SmiliesCatalogController.php:52
@@ -105,7 +105,7 @@ msgstr "Менин смайлдарым"
 
 #: modules/help/src/Application/Controllers/SetAvatarController.php:53
 msgid "File does not exist"
-msgstr ""
+msgstr "Мындай файл жок"
 
 #: modules/help/src/Application/Controllers/SetAvatarController.php:59
 msgid "Set to Profile"

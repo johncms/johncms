@@ -26,8 +26,9 @@ msgid "Registration"
 msgstr "Катталуу"
 
 #: modules/registration/src/Application/Controllers/RegistrationController.php:104
+#, fuzzy
 msgid "You must accept the consent to continue"
-msgstr ""
+msgstr "Улантуу үчүн макулдукту кабыл алышыңыз керек"
 
 #: modules/registration/src/Application/UseCases/RegisterUserUseCase.php:62
 msgid "Registration on the website"

@@ -1,0 +1,210 @@
+msgid ""
+msgstr ""
+"X-Domain: consent\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Project-ID: 383801\n"
+"X-Crowdin-Language: ky\n"
+"X-Crowdin-File: /9.x/modules/consent/locale/consent.pot\n"
+"X-Crowdin-File-ID: 517\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Kyrgyz\n"
+"Language: ky_KG\n"
+"PO-Revision-Date: 2026-07-12 15:08\n"
+
+#: modules/consent/src/Application/Controllers/Admin/ConsentDeleteController.php:45
+#, fuzzy
+msgid "Record deleted"
+msgstr "Жазуу өчүрүлдү"
+
+#: modules/consent/src/Application/Controllers/Admin/ConsentDeleteController.php:50
+#, fuzzy
+msgid "Delete consent"
+msgstr "Макулдукту өчүрүү"
+
+#: modules/consent/src/Application/Controllers/Admin/ConsentDeleteController.php:51
+#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:107
+#: modules/consent/src/Application/Controllers/Admin/ConsentListController.php:32
+#: modules/consent/src/Application/Controllers/Admin/ConsentLogController.php:33
+#, fuzzy
+msgid "Consents"
+msgstr "Макулдуктар"
+
+#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:97
+#: modules/consent/src/Application/Controllers/Admin/CookieBannerController.php:47
+#, fuzzy
+msgid "Changes saved successfully"
+msgstr "Өзгөрүүлөр ийгиликтүү сакталды"
+
+#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:105
+#, fuzzy
+msgid "Edit consent"
+msgstr "Макулдукту оңдоо"
+
+#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:105
+#: modules/consent/templates/admin/list.phtml:20
+#, fuzzy
+msgid "Add consent"
+msgstr "Макулдук кошуу"
+
+#: modules/consent/src/Application/Controllers/Admin/ConsentLogController.php:32
+#: modules/consent/templates/admin/list.phtml:21
+#, fuzzy
+msgid "Consent log"
+msgstr "Макулдуктардын журналы"
+
+#: modules/consent/src/Application/Controllers/Admin/CookieBannerController.php:38
+msgid "Wrong data"
+msgstr "Туура эмес маалымат"
+
+#: modules/consent/src/Application/Controllers/Admin/CookieBannerController.php:44
+#, fuzzy
+msgid "ERROR: Can not write file `system.local.php`"
+msgstr "КАТА: `system.local.php` файлын жазуу мүмкүн эмес"
+
+#: modules/consent/src/Application/Controllers/Admin/CookieBannerController.php:82
+#, fuzzy
+msgid "Cookie banner"
+msgstr "Куки-баннер"
+
+#: modules/consent/src/Application/Controllers/ConsentViewController.php:32
+#: modules/consent/templates/admin/log.phtml:22
+#, fuzzy
+msgid "Consent"
+msgstr "Макулдук"
+
+#: modules/consent/src/Application/Controllers/ConsentViewController.php:34
+#, fuzzy
+msgid "The requested page was not found"
+msgstr "Суралган бет табылган жок"
+
+#: modules/consent/templates/admin/cookie-banner.phtml:31
+#, fuzzy
+msgid "Enable banner"
+msgstr "Баннерди күйгүзүү"
+
+#: modules/consent/templates/admin/cookie-banner.phtml:35
+#, fuzzy
+msgid "Banner text"
+msgstr "Баннердин тексти"
+
+#: modules/consent/templates/admin/cookie-banner.phtml:36
+#, fuzzy
+msgid "Leave empty to use the default text with a link to the Privacy Policy."
+msgstr "Купуялык саясатына шилтемеси бар демейки текстти колдонуу үчүн бош калтырыңыз."
+
+#: modules/consent/templates/admin/cookie-banner.phtml:61
+#: modules/consent/templates/admin/delete.phtml:17
+#: modules/consent/templates/admin/form.phtml:80
+#: modules/consent/templates/admin/list.phtml:34
+#: modules/consent/templates/admin/log.phtml:23
+#, fuzzy
+msgid "Version"
+msgstr "Версия"
+
+#: modules/consent/templates/admin/cookie-banner.phtml:62
+#, fuzzy
+msgid "Increase the version to show the banner again to everyone."
+msgstr "Баннерди баарына кайра көрсөтүү үчүн версияны жогорулатыңыз."
+
+#: modules/consent/templates/admin/cookie-banner.phtml:71
+#: modules/consent/templates/admin/form.phtml:101
+msgid "Save"
+msgstr "Сактоо"
+
+#: modules/consent/templates/admin/delete.phtml:15
+#, fuzzy
+msgid "Are you sure you want to delete this consent?"
+msgstr "Бул макулдукту өчүрүүнү чын эле каалайсызбы?"
+
+#: modules/consent/templates/admin/delete.phtml:23
+#: modules/consent/templates/admin/list.phtml:63
+msgid "Delete"
+msgstr "Өчүрүү"
+
+#: modules/consent/templates/admin/delete.phtml:24
+#: modules/consent/templates/admin/form.phtml:102
+msgid "Cancel"
+msgstr "Токтотуу"
+
+#: modules/consent/templates/admin/form.phtml:24
+#: modules/consent/templates/admin/list.phtml:31
+#, fuzzy
+msgid "Context"
+msgstr "Контекст"
+
+#: modules/consent/templates/admin/form.phtml:39
+#, fuzzy
+msgid "Where the consent is shown, e.g. register, feedback, newsletter."
+msgstr "Макулдук кайда көрсөтүлөт, мисалы: register, feedback, newsletter."
+
+#: modules/consent/templates/admin/form.phtml:43
+#: modules/consent/templates/admin/list.phtml:32
+#, fuzzy
+msgid "Language"
+msgstr "Тил"
+
+#: modules/consent/templates/admin/form.phtml:59
+#: modules/consent/templates/admin/list.phtml:33
+msgid "Title"
+msgstr "Аталышы"
+
+#: modules/consent/templates/admin/form.phtml:71
+msgid "Text"
+msgstr "Текст"
+
+#: modules/consent/templates/admin/form.phtml:93
+#, fuzzy
+msgid "Required (blocks the form without the checkbox)"
+msgstr "Милдеттүү (белги коюлмайынча форманы бөгөттөйт)"
+
+#: modules/consent/templates/admin/form.phtml:98
+#: modules/consent/templates/admin/list.phtml:36
+msgid "Active"
+msgstr "Аракеттүү"
+
+#: modules/consent/templates/admin/list.phtml:25
+#: modules/consent/templates/admin/log.phtml:14
+msgid "The list is empty"
+msgstr "Тизмеси бош"
+
+#: modules/consent/templates/admin/list.phtml:35
+#, fuzzy
+msgid "Required"
+msgstr "Милдеттүү"
+
+#: modules/consent/templates/admin/list.phtml:49
+#: modules/consent/templates/admin/list.phtml:56
+msgid "Yes"
+msgstr "Ооба"
+
+#: modules/consent/templates/admin/list.phtml:51
+#: modules/consent/templates/admin/list.phtml:58
+msgid "No"
+msgstr "Жок"
+
+#: modules/consent/templates/admin/list.phtml:62
+msgid "Edit"
+msgstr "Оңдоо"
+
+#: modules/consent/templates/admin/log.phtml:21
+msgid "User"
+msgstr "Колдонуучу"
+
+#: modules/consent/templates/admin/log.phtml:24
+msgid "IP address"
+msgstr "IP - дарек"
+
+#: modules/consent/templates/admin/log.phtml:25
+msgid "Date"
+msgstr "Датасы"
+
+#: modules/consent/templates/admin/log.phtml:36
+msgid "Guest"
+msgstr "Коноктор"
+
+#: modules/consent/templates/admin/log.phtml:54
+msgid "Back"
+msgstr "Артка"
+

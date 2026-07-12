@@ -522,8 +522,9 @@ msgstr "Акыркы аракет"
 #: modules/forum/src/Application/Controllers/ForumTopicController.php:150
 #: modules/forum/src/Application/Controllers/ForumTopicController.php:159
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:414
+#, fuzzy
 msgid "Page"
-msgstr ""
+msgstr "Барак"
 
 #: system/src/NavChain.php:63
 #: themes/default/templates/system/error/403.phtml:36
@@ -571,7 +572,7 @@ msgstr "Формасы күтүлгөн сайттан берилген жок."
 #: system/src/Validator/messages.php:25
 #, php-format
 msgid "You cannot add the message so often. Please, wait %value% seconds."
-msgstr "Сиз билдирүүлөрдү мынчалык көп кошууга мүмкүн эмес. Кичипейилдикке, күтө туруңуз %d секунд."
+msgstr "Сиз билдирүүлөрдү мынчалык көп кошууга мүмкүн эмес. Кичипейилдикке, күтө туруңуз %value% секунд."
 
 #: system/src/Validator/messages.php:29
 msgid "A record matching the input was found"
@@ -708,8 +709,9 @@ msgstr "Убакыты"
 #: modules/admin/templates/sidebar-admin-menu.phtml:321
 #: themes/admin/templates/system/app/sidebar-admin-menu.phtml:24
 #: themes/admin/templates/system/app/sidebar-admin-menu.phtml:352
+#, fuzzy
 msgid "Set Light Theme"
-msgstr ""
+msgstr "Жарык теманы коюу"
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:23
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:193
@@ -717,8 +719,9 @@ msgstr ""
 #: modules/admin/templates/sidebar-admin-menu.phtml:320
 #: themes/admin/templates/system/app/sidebar-admin-menu.phtml:24
 #: themes/admin/templates/system/app/sidebar-admin-menu.phtml:351
+#, fuzzy
 msgid "Set Dark Theme"
-msgstr ""
+msgstr "Караңгы теманы коюу"
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:43
 msgid "News archive"
@@ -750,29 +753,33 @@ msgid "Exit"
 msgstr "Чыгуу"
 
 #: themes/default/templates/system/layout/default.phtml:153
+#, fuzzy
 msgid "Privacy Policy"
-msgstr ""
+msgstr "Купуялык саясаты"
 
 #: themes/default/templates/system/layout/default.phtml:154
+#, fuzzy
 msgid "Terms of Use"
-msgstr ""
+msgstr "Колдонуу шарттары"
 
 #: themes/default/templates/system/layout/default.phtml:155
+#, fuzzy
 msgid "Personal Data Processing Policy"
-msgstr ""
+msgstr "Жеке маалыматтарды иштетүү саясаты"
 
 #: themes/default/templates/system/layout/default.phtml:156
+#, fuzzy
 msgid "Cookie Policy"
-msgstr ""
+msgstr "Куки-файлдар саясаты"
 
 #: themes/default/templates/system/layout/default.phtml:229
-#, php-format
+#, fuzzy, php-format
 msgid "We use cookies to improve the site. By continuing to use the site, you agree to our %sPrivacy Policy%s."
-msgstr ""
+msgstr "Биз сайтты жакшыртуу үчүн куки-файлдарды колдонобуз. Сайтты колдонууну улантуу менен, сиз %sКупуялык саясатыбызга%s макул болосуз."
 
 #: themes/default/templates/system/layout/default.phtml:232
 msgid "Accept"
-msgstr ""
+msgstr "Кабыл алуу"
 
 #: themes/default/templates/system/mail/layouts/default.phtml:115
 msgid "The email is generated automatically. Please don't answer it. <br> To contact us, use the contact information on our website."
@@ -795,7 +802,7 @@ msgstr "Саламатсызбы, %s!"
 #: themes/default/templates/system/mail/templates/confirm_email_change.phtml:15
 #, php-format
 msgid "You have started the process of changing the email address on the <a href=\"%s\">%s</a> website"
-msgstr "Сиз сайтта электрондук почта дарегиңизди <a href=\"%s\">% s </a> дарегинен өзгөртө баштадыңыз"
+msgstr "Сиз сайтта электрондук почта дарегиңизди <a href=\"%s\">%s</a> дарегинен өзгөртө баштадыңыз"
 
 #: themes/default/templates/system/mail/templates/changed_email_notification.phtml:18
 msgid "The new email address is:"

@@ -37,7 +37,7 @@ msgstr "Билдирүүнү өчүрүү"
 #: modules/guestbook/src/Application/Controllers/ReplyController.php:55
 #: modules/guestbook/src/Application/Controllers/UploadFileController.php:36
 msgid "Wrong data"
-msgstr ""
+msgstr "Туура эмес маалымат"
 
 #: modules/guestbook/src/Application/Controllers/DeleteEntryController.php:76
 msgid "The message was deleted"
@@ -87,12 +87,14 @@ msgid "Only images are allowed"
 msgstr "Сүрөттөргө гана уруксат берилет"
 
 #: modules/guestbook/src/Install/Installer.php:38
+#, fuzzy
 msgid "Welcome to the Admin Club!\r\n"
 "Only Moderators and Administrators have access here.\r\n"
 "Regular users are not allowed in."
-msgstr ""
+msgstr "Админ клубуна кош келиңиз!\r\nБул жерге модераторлор жана администраторлор гана кире алат.\r\nКадимки колдонуучуларга уруксат жок."
 
 #: modules/guestbook/src/Install/Installer.php:42
+#, fuzzy
 msgid "The guestbook supports full text formatting in the visual editor:<br>\n"
 "<span style=\"font-weight: bold\">bold</span><br>\n"
 "<span style=\"font-style:italic\">italic</span><br>\n"
@@ -101,15 +103,17 @@ msgid "The guestbook supports full text formatting in the visual editor:<br>\n"
 "<span style=\"color:green\">green</span><br>\n"
 "<span style=\"color:blue\">blue</span><br>\n"
 "Inserting links: <a href=\"https://johncms.com\">https://johncms.com</a>, images, tables, videos and much more"
-msgstr ""
+msgstr "Конок китеби визуалдык редактордо тексттин толук форматталышын колдойт:<br>\n<span style=\"font-weight: bold\">калың</span><br>\n<span style=\"font-style:italic\">кыйгач</span><br>\n<span style=\"text-decoration:underline\">асты сызылган</span><br>\n<span style=\"color:red\">кызыл</span><br>\n<span style=\"color:green\">жашыл</span><br>\n<span style=\"color:blue\">көк</span><br>\nШилтемелерди коюу: <a href=\"https://johncms.com\">https://johncms.com</a>, сүрөттөр, таблицалар, видеолор жана дагы көптөгөн нерселер"
 
 #: modules/guestbook/src/Install/Installer.php:69
+#, fuzzy
 msgid "Welcome to the Guestbook!"
-msgstr ""
+msgstr "Конок китебине кош келиңиз!"
 
 #: modules/guestbook/src/Install/Installer.php:73
+#, fuzzy
 msgid "A sample reply from the Administrator"
-msgstr ""
+msgstr "Администратордун жообунун мисалы"
 
 #: modules/guestbook/templates/clear.phtml:5
 msgid "Clear guestbook"
