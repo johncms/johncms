@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
-"PO-Revision-Date: 2026-07-11 21:51\n"
+"PO-Revision-Date: 2026-07-12 12:34\n"
 
 #: modules/help/src/Application/Controllers/AdminSmiliesController.php:43
 #: modules/help/src/Application/Controllers/AdminSmiliesController.php:49
@@ -56,12 +56,12 @@ msgstr "Аватары"
 #: modules/help/src/Application/Controllers/SetAvatarController.php:51
 #: modules/help/src/Application/Controllers/UserSmiliesController.php:43
 msgid "Wrong data"
-msgstr ""
+msgstr "Неверные данные"
 
 #: modules/help/src/Application/Controllers/AvatarListController.php:42
 #: modules/help/src/Application/Controllers/UserSmiliesController.php:45
 msgid "The directory does not exist"
-msgstr ""
+msgstr "Такой папки не существует"
 
 #: modules/help/src/Application/Controllers/AvatarListController.php:44
 #: modules/help/src/Application/Controllers/MySmiliesController.php:47
@@ -89,13 +89,13 @@ msgstr "Правила форума"
 #: modules/help/src/Application/Controllers/SetAvatarController.php:38
 #: modules/help/src/Application/Controllers/SetMySmiliesController.php:38
 msgid "Access denied"
-msgstr ""
+msgstr "Доступ закрыт"
 
 #: modules/help/src/Application/Controllers/MySmiliesController.php:45
 #: modules/help/src/Application/Controllers/SetAvatarController.php:40
 #: modules/help/src/Application/Controllers/SetMySmiliesController.php:40
 msgid "You are not logged in"
-msgstr ""
+msgstr "Вы не авторизованы"
 
 #: modules/help/src/Application/Controllers/MySmiliesController.php:51
 #: modules/help/src/Application/Controllers/SmiliesCatalogController.php:52
@@ -105,7 +105,7 @@ msgstr "Мои смайлы"
 
 #: modules/help/src/Application/Controllers/SetAvatarController.php:53
 msgid "File does not exist"
-msgstr ""
+msgstr "Файл не существует"
 
 #: modules/help/src/Application/Controllers/SetAvatarController.php:59
 msgid "Set to Profile"
