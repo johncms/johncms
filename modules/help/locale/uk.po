@@ -56,12 +56,12 @@ msgstr "Аватари"
 #: modules/help/src/Application/Controllers/SetAvatarController.php:51
 #: modules/help/src/Application/Controllers/UserSmiliesController.php:43
 msgid "Wrong data"
-msgstr ""
+msgstr "Неправильні дані"
 
 #: modules/help/src/Application/Controllers/AvatarListController.php:42
 #: modules/help/src/Application/Controllers/UserSmiliesController.php:45
 msgid "The directory does not exist"
-msgstr ""
+msgstr "Каталог не існує"
 
 #: modules/help/src/Application/Controllers/AvatarListController.php:44
 #: modules/help/src/Application/Controllers/MySmiliesController.php:47
@@ -89,13 +89,13 @@ msgstr "Правила форуму"
 #: modules/help/src/Application/Controllers/SetAvatarController.php:38
 #: modules/help/src/Application/Controllers/SetMySmiliesController.php:38
 msgid "Access denied"
-msgstr ""
+msgstr "Доступ заборонено"
 
 #: modules/help/src/Application/Controllers/MySmiliesController.php:45
 #: modules/help/src/Application/Controllers/SetAvatarController.php:40
 #: modules/help/src/Application/Controllers/SetMySmiliesController.php:40
 msgid "You are not logged in"
-msgstr ""
+msgstr "Ви не авторизовані"
 
 #: modules/help/src/Application/Controllers/MySmiliesController.php:51
 #: modules/help/src/Application/Controllers/SmiliesCatalogController.php:52
@@ -105,7 +105,7 @@ msgstr "Мої смайли"
 
 #: modules/help/src/Application/Controllers/SetAvatarController.php:53
 msgid "File does not exist"
-msgstr ""
+msgstr "Файл не існує"
 
 #: modules/help/src/Application/Controllers/SetAvatarController.php:59
 msgid "Set to Profile"

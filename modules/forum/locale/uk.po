@@ -384,7 +384,7 @@ msgstr "Невірна довжина"
 #: modules/forum/src/Application/Controllers/ForumSearchController.php:67
 #, php-format
 msgid "Search results for: %s"
-msgstr ""
+msgstr "Результати пошуку: %s"
 
 #: modules/forum/src/Application/Controllers/LatestTopicsController.php:27
 msgid "Last 10"
@@ -499,7 +499,7 @@ msgstr "Відповідь на повідомлення"
 #: modules/forum/src/Application/Controllers/RestorePostController.php:91
 #: modules/forum/src/Application/Controllers/RestorePostController.php:92
 msgid "Restore Message"
-msgstr ""
+msgstr "Відновити повідомлення"
 
 #: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:76
 msgid "You have not selected any author"
@@ -527,11 +527,11 @@ msgstr "За вибраний період нового на форумі нем
 #: modules/forum/src/Application/Controllers/UploadFileController.php:39
 #: modules/forum/src/Application/Controllers/UploadFileController.php:50
 msgid "Access denied"
-msgstr ""
+msgstr "Доступ заборонено"
 
 #: modules/forum/src/Application/Controllers/UploadFileController.php:62
 msgid "Only images are allowed"
-msgstr ""
+msgstr "Дозволені лише зображення"
 
 #: modules/forum/src/Application/Controllers/ViewForumVisitorsController.php:53
 #: modules/forum/templates/index.phtml:77
@@ -558,7 +558,7 @@ msgstr "Форум закритий"
 
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:54
 msgid "Search query must be between 2 and 64 characters"
-msgstr ""
+msgstr "Пошуковий запит має містити від 2 до 64 символів"
 
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:87
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:96
@@ -701,11 +701,11 @@ msgstr "Java-додатки"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:315
 msgid "SIS"
-msgstr ""
+msgstr "SIS"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:316
 msgid "txt"
-msgstr ""
+msgstr "txt"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:317
 msgid "Pictures"
@@ -721,7 +721,7 @@ msgstr "Відео"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:320
 msgid "MP3"
-msgstr ""
+msgstr "MP3"
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:321
 msgid "Other"
@@ -729,43 +729,43 @@ msgstr "Інше"
 
 #: modules/forum/src/Install/Installer.php:43
 msgid "Communication"
-msgstr ""
+msgstr "Спілкування"
 
 #: modules/forum/src/Install/Installer.php:43
 msgid "Free discussion on any topic"
-msgstr ""
+msgstr "Вільне обговорення на будь-яку тему"
 
 #: modules/forum/src/Install/Installer.php:44
 msgid "Off-topic"
-msgstr ""
+msgstr "Офтоп"
 
 #: modules/forum/src/Install/Installer.php:45
 msgid "Dating"
-msgstr ""
+msgstr "Знайомства"
 
 #: modules/forum/src/Install/Installer.php:46
 msgid "Site life"
-msgstr ""
+msgstr "Життя сайту"
 
 #: modules/forum/src/Install/Installer.php:47
 msgid "News"
-msgstr ""
+msgstr "Новини"
 
 #: modules/forum/src/Install/Installer.php:48
 msgid "Suggestions and wishes"
-msgstr ""
+msgstr "Пропозиції та побажання"
 
 #: modules/forum/src/Install/Installer.php:49
 msgid "Miscellaneous"
-msgstr ""
+msgstr "Різне"
 
 #: modules/forum/src/Install/Installer.php:70
 msgid "Hello everyone!"
-msgstr ""
+msgstr "Привіт усім!"
 
 #: modules/forum/src/Install/Installer.php:106
 msgid "<p>We are glad to welcome you to our website :)</p><p>Let's get acquainted!</p>"
-msgstr ""
+msgstr "<p>Раді вітати вас на нашому сайті :)</p><p>Давайте знайомитися!</p>"
 
 #: modules/forum/templates/add_file.phtml:29
 msgid "File attached"
@@ -809,7 +809,7 @@ msgstr "Опитування"
 #: modules/forum/templates/add_poll.phtml:34
 #: modules/forum/templates/edit_poll.phtml:37
 msgid "Maximum length: 200 characters"
-msgstr ""
+msgstr "Максимальна довжина: 200 символів"
 
 #: modules/forum/templates/add_poll.phtml:37
 #: modules/forum/templates/edit_poll.phtml:40
@@ -1117,7 +1117,7 @@ msgstr "Тема"
 
 #: modules/forum/templates/restore_post.phtml:30
 msgid "Do you really want to restore this post?"
-msgstr ""
+msgstr "Ви дійсно хочете відновити це повідомлення?"
 
 #: modules/forum/templates/restore_post.phtml:35
 #: modules/forum/templates/topic.phtml:373

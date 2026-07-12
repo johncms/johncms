@@ -5,6 +5,11 @@
   array (
     '' => 
     array (
+      'All messages older than 1 week were deleted' => 'Всі повідомлення старіші за 1 тиждень було видалено',
+      'All messages older than 1 day were deleted' => 'Всі повідомлення старіші за 1 день було видалено',
+      'Full clearing is finished' => 'Повне очищення завершено',
+      'Delete message' => 'Видалити повідомлення',
+      'Wrong data' => 'Неправильні дані',
       'The message was deleted' => 'Повідомлення видалено',
       'Edit message' => 'Редагувати повідомлення',
       'The message was saved' => 'Повідомлення збережено',
@@ -15,9 +20,28 @@
       'Reply' => 'Відповісти',
       'Your reply to the message was saved' => 'Ваша відповідь на повідомлення була збережена',
       'Only images are allowed' => 'Дозволено лише зображення!',
-      'All messages older than 1 day were deleted' => 'Всі повідомлення старіші за 1 день було видалено',
-      'Full clearing is finished' => 'Повне очищення завершено',
-      'All messages older than 1 week were deleted' => 'Всі повідомлення старіші за 1 тиждень було видалено',
+      'Welcome to the Admin Club!
+Only Moderators and Administrators have access here.
+Regular users are not allowed in.' => 'Ласкаво просимо до Клубу адміністраторів!
+Сюди мають доступ лише модератори та адміністратори.
+Звичайним користувачам вхід заборонено.',
+      'The guestbook supports full text formatting in the visual editor:<br>
+<span style="font-weight: bold">bold</span><br>
+<span style="font-style:italic">italic</span><br>
+<span style="text-decoration:underline">underlined</span><br>
+<span style="color:red">red</span><br>
+<span style="color:green">green</span><br>
+<span style="color:blue">blue</span><br>
+Inserting links: <a href="https://johncms.com">https://johncms.com</a>, images, tables, videos and much more' => 'Гостьова книга підтримує повне форматування тексту у візуальному редакторі:<br>
+<span style="font-weight: bold">жирний</span><br>
+<span style="font-style:italic">курсив</span><br>
+<span style="text-decoration:underline">підкреслений</span><br>
+<span style="color:red">червоний</span><br>
+<span style="color:green">зелений</span><br>
+<span style="color:blue">синій</span><br>
+Вставлення посилань: <a href="https://johncms.com">https://johncms.com</a>, зображень, таблиць, відео та багато іншого',
+      'Welcome to the Guestbook!' => 'Ласкаво просимо до гостьової книги!',
+      'A sample reply from the Administrator' => 'Приклад відповіді від адміністратора',
       'Clear guestbook' => 'Очистити гостьову книгу',
       'Clearing parameters' => 'Параметри видалення',
       'Older than 1 week' => 'Старіше 1 тижня',
@@ -25,7 +49,6 @@
       'Clear all' => 'Очистити все',
       'Clear' => 'Очистити',
       'Cancel' => 'Скасувати',
-      'Delete message' => 'Видалити повідомлення',
       'Do you really want to delete?' => 'Ви дійсно бажаєте видалити?',
       'Delete' => 'Видалити',
       'Author' => 'Автор',

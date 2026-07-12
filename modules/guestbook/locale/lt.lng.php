@@ -5,14 +5,15 @@
   array (
     '' => 
     array (
+      'All messages older than 1 week were deleted' => 'Ištrinti visi pranešimai, vyresni 1 savaitės',
+      'All messages older than 1 day were deleted' => 'Ištrinti visi pranešimai, vyresnieji už 1 dieną',
+      'Full clearing is finished' => 'Viskas išvalytą sėkmingai',
+      'Delete message' => 'Pašalinti pranešimą',
       'Edit message' => 'Redaguoti pranešimą',
       'Guestbook' => 'Svečių Knyga',
       'Admin Club' => 'Admin-Klubas',
       'Guestbook is closed' => 'Svečių knygą uždarytą',
       'Reply' => 'Atsakyti',
-      'All messages older than 1 day were deleted' => 'Ištrinti visi pranešimai, vyresnieji už 1 dieną',
-      'Full clearing is finished' => 'Viskas išvalytą sėkmingai',
-      'All messages older than 1 week were deleted' => 'Ištrinti visi pranešimai, vyresni 1 savaitės',
       'Clear guestbook' => 'Aišku svečių',
       'Clearing parameters' => 'Valymo nustatymai',
       'Older than 1 week' => 'Vyresni nei 1 savaite',
@@ -20,7 +21,6 @@
       'Clear all' => 'Išvalyti viską',
       'Clear' => 'Išvalyti',
       'Cancel' => 'Atšaukti',
-      'Delete message' => 'Pašalinti pranešimą',
       'Do you really want to delete?' => 'Ar tikrai norite ištrinti?',
       'Delete' => 'Ištrinti',
       'Author' => 'Autorius',

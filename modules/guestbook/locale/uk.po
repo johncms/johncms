@@ -37,7 +37,7 @@ msgstr "Видалити повідомлення"
 #: modules/guestbook/src/Application/Controllers/ReplyController.php:55
 #: modules/guestbook/src/Application/Controllers/UploadFileController.php:36
 msgid "Wrong data"
-msgstr ""
+msgstr "Неправильні дані"
 
 #: modules/guestbook/src/Application/Controllers/DeleteEntryController.php:76
 msgid "The message was deleted"
@@ -90,7 +90,7 @@ msgstr "Дозволено лише зображення!"
 msgid "Welcome to the Admin Club!\r\n"
 "Only Moderators and Administrators have access here.\r\n"
 "Regular users are not allowed in."
-msgstr ""
+msgstr "Ласкаво просимо до Клубу адміністраторів!\r\nСюди мають доступ лише модератори та адміністратори.\r\nЗвичайним користувачам вхід заборонено."
 
 #: modules/guestbook/src/Install/Installer.php:42
 msgid "The guestbook supports full text formatting in the visual editor:<br>\n"
@@ -101,15 +101,15 @@ msgid "The guestbook supports full text formatting in the visual editor:<br>\n"
 "<span style=\"color:green\">green</span><br>\n"
 "<span style=\"color:blue\">blue</span><br>\n"
 "Inserting links: <a href=\"https://johncms.com\">https://johncms.com</a>, images, tables, videos and much more"
-msgstr ""
+msgstr "Гостьова книга підтримує повне форматування тексту у візуальному редакторі:<br>\n<span style=\"font-weight: bold\">жирний</span><br>\n<span style=\"font-style:italic\">курсив</span><br>\n<span style=\"text-decoration:underline\">підкреслений</span><br>\n<span style=\"color:red\">червоний</span><br>\n<span style=\"color:green\">зелений</span><br>\n<span style=\"color:blue\">синій</span><br>\nВставлення посилань: <a href=\"https://johncms.com\">https://johncms.com</a>, зображень, таблиць, відео та багато іншого"
 
 #: modules/guestbook/src/Install/Installer.php:69
 msgid "Welcome to the Guestbook!"
-msgstr ""
+msgstr "Ласкаво просимо до гостьової книги!"
 
 #: modules/guestbook/src/Install/Installer.php:73
 msgid "A sample reply from the Administrator"
-msgstr ""
+msgstr "Приклад відповіді від адміністратора"
 
 #: modules/guestbook/templates/clear.phtml:5
 msgid "Clear guestbook"

@@ -5,12 +5,14 @@
   array (
     '' => 
     array (
+      'Community' => 'المجتمع',
+      'For registered users only' => 'للمستخدمين المسجلين فقط',
       'Administration' => 'الإدارة العليا',
       'Birthdays' => 'أعياد الميلاد',
       'User Search' => 'بحث عن مستخدم',
+      'List of users' => 'قائمة المستخدمين',
       'Nickname' => 'اسم الشهرة',
       'Invalid length' => 'طويل جدا',
-      'Invalid characters' => 'احرف غير صالحه',
       'Forum' => 'منتديات',
       'Guestbook' => 'سجل الزوار',
       'Comments' => 'التعليقات',
@@ -19,18 +21,15 @@
       'Most commentators' => 'الأكثر تعليقًا عليها',
       'Best Karma' => 'افضل المعجبين',
       'Most active in Forum' => 'الأكثر نشاطا في المنتدى',
-      'List of users' => 'قائمة المستخدمين',
-      'Community' => 'المجتمع',
-      'For registered users only' => 'للمستخدمين المسجلين فقط',
+      'List is empty' => 'القائمة فارغة',
+      'Total' => 'مجموع',
+      'Back' => 'رجوع',
       'Look for the User' => 'ابحث عن المستخدم',
       'Search' => 'ابـحث',
       'The search is performed by Nickname and are case-insensitive.' => 'البحث بالاسم المستعار وهي حساسة لحالة الأحرف.',
       'Users' => 'الاعضاء',
       'Top Activity' => 'الاكثر نشاطآ',
       'Username' => 'اسم المستخدم',
-      'List is empty' => 'القائمة فارغة',
-      'Total' => 'مجموع',
-      'Back' => 'رجوع',
       'post' => 
       array (
         0 => 'المشاركات',

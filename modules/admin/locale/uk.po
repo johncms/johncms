@@ -65,7 +65,7 @@ msgstr "Неправильні дані"
 
 #: modules/admin/src/Application/Controllers/Forum/ForumSettingsController.php:54
 msgid "ERROR: Can not write file `forum.local.php`"
-msgstr ""
+msgstr "ПОМИЛКА: Не вдалося записати файл `forum.local.php`"
 
 #: modules/admin/src/Application/Controllers/Forum/ForumSettingsController.php:57
 #: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:61
@@ -293,7 +293,7 @@ msgstr "Історія IP"
 #: modules/admin/src/Application/Controllers/Settings/SystemSettingsController.php:46
 #: modules/admin/src/Application/Controllers/Users/KarmaController.php:53
 msgid "ERROR: Can not write file `system.local.php`"
-msgstr ""
+msgstr "ПОМИЛКА: Не вдалося записати файл `system.local.php`"
 
 #: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:60
 msgid "Descriptions have been updated successfully"
@@ -506,24 +506,24 @@ msgstr "Знімок успішно створений"
 
 #: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:57
 msgid "The task has been queued and will start within a minute"
-msgstr ""
+msgstr "Завдання додано до черги та розпочнеться протягом хвилини"
 
 #: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:61
 msgid "The task has been completed"
-msgstr ""
+msgstr "Завдання виконано"
 
 #: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:62
 msgid "The task has failed"
-msgstr ""
+msgstr "Завдання завершилося помилкою"
 
 #: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:67
 msgid "The task is already running"
-msgstr ""
+msgstr "Завдання вже виконується"
 
 #: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:85
 #: themes/admin/templates/system/app/sidebar-admin-menu.phtml:271
 msgid "Maintenance"
-msgstr ""
+msgstr "Технічні роботи"
 
 #: modules/admin/src/Application/Controllers/System/SystemCheckController.php:26
 #: modules/admin/src/Application/Controllers/System/SystemCheckController.php:27
@@ -1176,11 +1176,11 @@ msgstr "Увімкнено"
 #: modules/admin/templates/counters_form.phtml:65
 #: modules/admin/templates/counters_view.phtml:43
 msgid "Load only after cookie consent"
-msgstr ""
+msgstr "Завантажувати лише після згоди на cookie"
 
 #: modules/admin/templates/counters_form.phtml:68
 msgid "If enabled, the counter code runs only after the visitor accepts the cookie banner. Requires the cookie banner to be enabled."
-msgstr ""
+msgstr "Якщо ввімкнено, код лічильника виконується лише після того, як відвідувач прийме банер cookie. Потребує ввімкненого банера cookie."
 
 #: modules/admin/templates/counters_form.phtml:72
 msgid "WARNING!"
@@ -1208,11 +1208,11 @@ msgstr "Режим показу:"
 
 #: modules/admin/templates/counters_view.phtml:44
 msgid "Yes"
-msgstr ""
+msgstr "Так"
 
 #: modules/admin/templates/counters_view.phtml:44
 msgid "No"
-msgstr ""
+msgstr "Ні"
 
 #: modules/admin/templates/counters_view.phtml:50
 msgid "Disable"
@@ -1224,11 +1224,11 @@ msgstr "Увімкнути"
 
 #: modules/admin/templates/emoticons.phtml:21
 msgid "Rebuild the smilies cache after adding or removing smilies in the assets/emoticons directory"
-msgstr ""
+msgstr "Перебудувати кеш смайлів після додавання або видалення смайлів у каталозі assets/emoticons"
 
 #: modules/admin/templates/emoticons.phtml:26
 msgid "Update cache"
-msgstr ""
+msgstr "Оновити кеш"
 
 #: modules/admin/templates/forum/add.phtml:23
 msgid "Parent section:"
@@ -1693,47 +1693,47 @@ msgstr "Оновити"
 
 #: modules/admin/templates/maintenance_tasks.phtml:15
 msgid "Queued"
-msgstr ""
+msgstr "У черзі"
 
 #: modules/admin/templates/maintenance_tasks.phtml:16
 msgid "Running"
-msgstr ""
+msgstr "Виконується"
 
 #: modules/admin/templates/maintenance_tasks.phtml:17
 msgid "Completed"
-msgstr ""
+msgstr "Виконано"
 
 #: modules/admin/templates/maintenance_tasks.phtml:18
 msgid "Failed"
-msgstr ""
+msgstr "Помилка"
 
 #: modules/admin/templates/maintenance_tasks.phtml:35
 msgid "Background tasks are started by the scheduler within a minute (a configured cron for \"schedule:run\" is required). Refresh the page to update the status."
-msgstr ""
+msgstr "Фонові завдання запускаються планувальником протягом хвилини (потрібен налаштований cron для \"schedule:run\"). Оновіть сторінку, щоб побачити статус."
 
 #: modules/admin/templates/maintenance_tasks.phtml:44
 msgid "Background"
-msgstr ""
+msgstr "У фоні"
 
 #: modules/admin/templates/maintenance_tasks.phtml:58
 msgid "Last run"
-msgstr ""
+msgstr "Останній запуск"
 
 #: modules/admin/templates/maintenance_tasks.phtml:63
 msgid "Last output"
-msgstr ""
+msgstr "Останній вивід"
 
 #: modules/admin/templates/maintenance_tasks.phtml:71
 msgid "Queue the task"
-msgstr ""
+msgstr "Додати завдання в чергу"
 
 #: modules/admin/templates/maintenance_tasks.phtml:71
 msgid "Run"
-msgstr ""
+msgstr "Запустити"
 
 #: modules/admin/templates/maintenance_tasks.phtml:79
 msgid "There are no available tasks"
-msgstr ""
+msgstr "Немає доступних завдань"
 
 #: modules/admin/templates/reg_list.phtml:37
 msgid "Approve"
@@ -1817,27 +1817,27 @@ msgstr "Ключові слова"
 
 #: modules/admin/templates/settings.phtml:85
 msgid "Legal documents"
-msgstr ""
+msgstr "Правові документи"
 
 #: modules/admin/templates/settings.phtml:86
 msgid "If the link is filled in, it will be displayed in the site footer."
-msgstr ""
+msgstr "Якщо посилання заповнено, воно відображатиметься в нижньому колонтитулі сайту."
 
 #: modules/admin/templates/settings.phtml:88
 msgid "Privacy Policy"
-msgstr ""
+msgstr "Політика конфіденційності"
 
 #: modules/admin/templates/settings.phtml:92
 msgid "Terms of Use"
-msgstr ""
+msgstr "Умови використання"
 
 #: modules/admin/templates/settings.phtml:96
 msgid "Personal Data Processing Policy"
-msgstr ""
+msgstr "Політика обробки персональних даних"
 
 #: modules/admin/templates/settings.phtml:100
 msgid "Cookie Policy"
-msgstr ""
+msgstr "Політика щодо файлів cookie"
 
 #: modules/admin/templates/settings.phtml:105
 msgid "Themes"
@@ -1959,13 +1959,13 @@ msgstr "Всі теми і пости, створені користувачем
 
 #: themes/admin/templates/system/app/sidebar-admin-menu.phtml:175
 msgid "Collections"
-msgstr ""
+msgstr "Колекції"
 
 #: themes/admin/templates/system/app/sidebar-admin-menu.phtml:191
 msgid "Consents"
-msgstr ""
+msgstr "Згоди"
 
 #: themes/admin/templates/system/app/sidebar-admin-menu.phtml:199
 msgid "Cookie banner"
-msgstr ""
+msgstr "Банер cookie"
 

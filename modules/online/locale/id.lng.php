@@ -5,14 +5,13 @@
   array (
     '' => 
     array (
-      'Users' => 'Pengguna',
-      'History' => 'Riwayat',
       'Guests' => 'Pengunjung',
-      'IP Activity' => 'Aktivitas IP',
-      'Guest' => 'Pengunjung',
-      'Who is online?' => 'Siapa yang Aktif?',
       'Online' => 'Aktif',
-      'For registered users only' => 'Hanya untuk pengguna',
+      'History' => 'Riwayat',
+      'Who is online?' => 'Siapa yang Aktif?',
+      'IP Activity' => 'Aktivitas IP',
+      'Users' => 'Pengguna',
+      'Guest' => 'Pengunjung',
       'List is empty' => 'Daftar kosong',
     ),
   ),

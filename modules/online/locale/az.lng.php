@@ -5,14 +5,13 @@
   array (
     '' => 
     array (
-      'Users' => 'İstifadəçilər',
-      'History' => 'Tarix',
       'Guests' => 'Qonaqlar',
-      'IP Activity' => 'Top fəaliyyət',
-      'Guest' => 'Qonaq',
-      'Who is online?' => 'online kim var?',
       'Online' => 'Onlayn',
-      'For registered users only' => 'Ancaq qeydiyyatdan keçənlər üçün',
+      'History' => 'Tarix',
+      'Who is online?' => 'online kim var?',
+      'IP Activity' => 'Top fəaliyyət',
+      'Users' => 'İstifadəçilər',
+      'Guest' => 'Qonaq',
       'List is empty' => 'Siyahı boşdur',
       'Total' => 'Ümumi',
     ),

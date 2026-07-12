@@ -34,6 +34,13 @@
         <sourceDir>modules/album</sourceDir>
     </domain>
 
+    <!-- Collections module -->
+    <domain>
+        <name>collections</name>
+        <target>modules/collections/locale</target>
+        <sourceDir>modules/collections</sourceDir>
+    </domain>
+
     <!-- Community module -->
     <domain>
         <name>community</name>

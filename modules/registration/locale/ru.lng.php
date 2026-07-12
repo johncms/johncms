@@ -6,6 +6,7 @@
     '' => 
     array (
       'Registration' => 'Регистрация',
+      'You must accept the consent to continue' => 'Необходимо дать согласие, чтобы продолжить',
       'Registration on the website' => 'Регистрация на сайте',
       'Email confirmation' => 'Подтверждение email',
       'User is not found' => 'Пользователь не найден',
@@ -35,7 +36,6 @@
       'Now you just need to confirm your email address.<br> Please check your email and follow the instructions in it.' => 'Теперь вам нужно подтвердить свой e-mail адрес.<br> Пожалуйста, проверьте свою электронную почту и следуйте инструкциям в полученном письме.',
       'Please, wait until a moderator approves your registration' => 'Пожалуйста подождите, пока модератор одобрит вашу регистрацию',
       'Enter' => 'Вход',
-      'You must accept the consent to continue' => 'Необходимо дать согласие, чтобы продолжить',
     ),
   ),
 );

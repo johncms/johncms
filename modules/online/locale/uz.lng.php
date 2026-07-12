@@ -5,14 +5,13 @@
   array (
     '' => 
     array (
-      'Users' => 'Foydalanuvchilar',
-      'History' => 'Tarix',
       'Guests' => 'Mehmonlar',
-      'IP Activity' => 'IP Faollik',
-      'Guest' => 'Mehmon',
-      'Who is online?' => 'Kim online?',
       'Online' => 'Onlayn',
-      'For registered users only' => 'Faqat ro\'yxatdan o\'tgan foydalanuvchilar uchun',
+      'History' => 'Tarix',
+      'Who is online?' => 'Kim online?',
+      'IP Activity' => 'IP Faollik',
+      'Users' => 'Foydalanuvchilar',
+      'Guest' => 'Mehmon',
       'List is empty' => 'Ro\'yhat bo\'sh',
       'Total' => 'Jami',
     ),

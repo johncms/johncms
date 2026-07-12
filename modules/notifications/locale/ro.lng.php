@@ -6,14 +6,14 @@
     '' => 
     array (
       'Notifications are cleared!' => 'Notificările sunt șterse!',
+      'Notifications' => 'Notificări',
+      'Settings' => 'Setari',
+      'Settings saved!' => 'Setări salvate!',
       'Users on registration' => 'Utilizatori la înregistrare',
       'Articles on moderation' => 'Fisiere cu moderare',
       'Downloads on moderation' => 'Descărcări la moderare',
       'New forum posts' => 'Postări noi pe forum',
       'Comments' => 'Comentarii',
-      'Settings' => 'Setari',
-      'Settings saved!' => 'Setări salvate!',
-      'Notifications' => 'Notificări',
       'All notifications have already been read' => 'Toate notificările au fost deja citite',
       'Total' => 'Toatal',
       'Clear notifications' => 'Ștergeți notificările',

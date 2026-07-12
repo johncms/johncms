@@ -5,14 +5,15 @@
   array (
     '' => 
     array (
+      'All messages older than 1 week were deleted' => '1 аптадан асқан барлық хабарлар жойылады',
+      'All messages older than 1 day were deleted' => '1 күннен асқан барлық хабарлар жойылады',
+      'Full clearing is finished' => 'Толық тазалау аяқталды',
+      'Delete message' => 'Хабарламаны жою',
       'Edit message' => 'Хабарларды өзгерту',
       'Guestbook' => 'Қонақ кітәпшасы',
       'Admin Club' => 'Админ Чат',
       'Guestbook is closed' => 'Қонақ бөлмесі жабық',
       'Reply' => 'Жауап беру',
-      'All messages older than 1 day were deleted' => '1 күннен асқан барлық хабарлар жойылады',
-      'Full clearing is finished' => 'Толық тазалау аяқталды',
-      'All messages older than 1 week were deleted' => '1 аптадан асқан барлық хабарлар жойылады',
       'Clear guestbook' => 'Қонақ бөлмесін тазалау',
       'Clearing parameters' => 'Тазалау параметрлері',
       'Older than 1 week' => '1 аптадан бұрын',
@@ -20,7 +21,6 @@
       'Clear all' => 'Бәрін тазалау',
       'Clear' => 'Тазарту',
       'Cancel' => 'Бас тарту',
-      'Delete message' => 'Хабарламаны жою',
       'Do you really want to delete?' => 'Сіз шынымен жойғыңыз келеді ме?',
       'Delete' => 'Өшіру',
       'Author' => 'Автор',

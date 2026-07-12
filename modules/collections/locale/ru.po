@@ -1,0 +1,260 @@
+msgid ""
+msgstr ""
+"X-Domain: collections\n"
+"Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Russian\n"
+"Language: ru_RU\n"
+
+msgid "Fields"
+msgstr "Поля"
+
+msgid "A field with this code already exists"
+msgstr "Поле с таким кодом уже существует"
+
+msgid "Changes saved"
+msgstr "Изменения сохранены"
+
+msgid "Created successfully"
+msgstr "Успешно создано"
+
+msgid "Delete"
+msgstr "Удалить"
+
+msgid "Are you sure you want to delete the field?"
+msgstr "Вы уверены, что хотите удалить поле?"
+
+msgid "Deleted successfully"
+msgstr "Успешно удалено"
+
+msgid "Edit field"
+msgstr "Редактирование поля"
+
+msgid "New field"
+msgstr "Новое поле"
+
+msgid "The required fields are not filled"
+msgstr "Не заполнены обязательные поля"
+
+msgid "The code may contain only lowercase latin letters, digits, hyphen and underscore"
+msgstr "Код может содержать только строчные латинские буквы, цифры, дефис и подчёркивание"
+
+msgid "Unknown field type"
+msgstr "Неизвестный тип поля"
+
+msgid "String"
+msgstr "Строка"
+
+msgid "Text"
+msgstr "Текст"
+
+msgid "HTML"
+msgstr "HTML"
+
+msgid "Integer"
+msgstr "Целое число"
+
+msgid "Number (fractional)"
+msgstr "Число (дробное)"
+
+msgid "Boolean"
+msgstr "Логическое значение"
+
+msgid "Date"
+msgstr "Дата"
+
+msgid "Date and time"
+msgstr "Дата и время"
+
+msgid "File"
+msgstr "Файл"
+
+msgid "Select"
+msgstr "Выбор из списка"
+
+msgid "Relation"
+msgstr "Связь"
+
+msgid "Collections"
+msgstr "Коллекции"
+
+msgid "Wrong data"
+msgstr "Неверные данные"
+
+msgid "Items"
+msgstr "Элементы"
+
+msgid "An item with this code already exists"
+msgstr "Элемент с таким кодом уже существует"
+
+msgid "Are you sure you want to delete the item?"
+msgstr "Вы уверены, что хотите удалить элемент?"
+
+msgid "Edit item"
+msgstr "Редактирование элемента"
+
+msgid "New item"
+msgstr "Новый элемент"
+
+msgid "Sections"
+msgstr "Разделы"
+
+msgid "A section with this code already exists"
+msgstr "Раздел с таким кодом уже существует"
+
+msgid "Are you sure you want to delete the section?"
+msgstr "Вы уверены, что хотите удалить раздел?"
+
+msgid "Nested sections will be deleted too."
+msgstr "Вложенные разделы также будут удалены."
+
+msgid "Edit section"
+msgstr "Редактирование раздела"
+
+msgid "New section"
+msgstr "Новый раздел"
+
+msgid "A collection with this code already exists"
+msgstr "Коллекция с таким кодом уже существует"
+
+msgid "This code is reserved and cannot be used"
+msgstr "Этот код зарезервирован и не может быть использован"
+
+msgid "Are you sure you want to delete the collection?"
+msgstr "Вы уверены, что хотите удалить коллекцию?"
+
+msgid "Edit collection"
+msgstr "Редактирование коллекции"
+
+msgid "New collection"
+msgstr "Новая коллекция"
+
+msgid "Blog"
+msgstr "Блог"
+
+msgid "Demo blog collection."
+msgstr "Демонстрационная коллекция блога."
+
+msgid "Author"
+msgstr "Автор"
+
+msgid "Rating"
+msgstr "Рейтинг"
+
+msgid "Technology"
+msgstr "Технологии"
+
+msgid "Hello, world!"
+msgstr "Привет, мир!"
+
+msgid "<p>The first item of the demo collection.</p>"
+msgstr "<p>Первый элемент демонстрационной коллекции.</p>"
+
+msgid "<p>The first item of the demo collection. Edit it in the admin panel.</p>"
+msgstr "<p>Первый элемент демонстрационной коллекции. Отредактируйте его в панели администратора.</p>"
+
+msgid "John"
+msgstr "John"
+
+msgid "Cancel"
+msgstr "Отмена"
+
+msgid "Name"
+msgstr "Название"
+
+msgid "Code"
+msgstr "Код"
+
+msgid "Machine code: lowercase latin letters, digits, hyphen and underscore"
+msgstr "Машинный код: строчные латинские буквы, цифры, дефис и подчёркивание"
+
+msgid "Type"
+msgstr "Тип"
+
+msgid "Sorting"
+msgstr "Сортировка"
+
+msgid "Required"
+msgstr "Обязательное"
+
+msgid "Allow multiple values"
+msgstr "Разрешить несколько значений"
+
+msgid "Save"
+msgstr "Сохранить"
+
+msgid "Collection"
+msgstr "Коллекция"
+
+msgid "The list is empty"
+msgstr "Список пуст"
+
+msgid "Multiple"
+msgstr "Множественное"
+
+msgid "Edit"
+msgstr "Редактировать"
+
+msgid "Back"
+msgstr "Назад"
+
+msgid "Machine code for the URL and API: lowercase latin letters, digits, hyphen and underscore"
+msgstr "Машинный код для URL и API: строчные латинские буквы, цифры, дефис и подчёркивание"
+
+msgid "Description"
+msgstr "Описание"
+
+msgid "Items per page"
+msgstr "Элементов на странице"
+
+msgid "Use sections"
+msgstr "Использовать разделы"
+
+msgid "Active"
+msgstr "Активно"
+
+msgid "Public (accessible by URL)"
+msgstr "Публичная (доступна по URL)"
+
+msgid "A private collection has no public page and is available only through the API"
+msgstr "Приватная коллекция не имеет публичной страницы и доступна только через API"
+
+msgid "On"
+msgstr "Включено"
+
+msgid "Off"
+msgstr "Выключено"
+
+msgid "Total:"
+msgstr "Всего:"
+
+msgid "Machine code: lowercase latin letters, digits, hyphen and underscore. Leave empty to generate it from the name automatically"
+msgstr "Машинный код: строчные латинские буквы, цифры, дефис и подчёркивание. Оставьте пустым, чтобы сгенерировать его из названия автоматически"
+
+msgid "Section"
+msgstr "Раздел"
+
+msgid "— none —"
+msgstr "— нет —"
+
+msgid "Active from"
+msgstr "Активно с"
+
+msgid "Active to"
+msgstr "Активно до"
+
+msgid "Preview text"
+msgstr "Текст анонса"
+
+msgid "Detail text"
+msgstr "Подробный текст"
+
+msgid "One value per line"
+msgstr "Одно значение на строку"
+
+msgid "Root"
+msgstr "Корень"
+
+msgid "Open"
+msgstr "Открыть"

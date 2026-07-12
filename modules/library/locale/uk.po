@@ -89,7 +89,7 @@ msgstr "Написати статтю"
 #: modules/library/src/Application/Controllers/CreateArticleController.php:58
 #: modules/library/src/Application/Controllers/CreateSectionController.php:37
 msgid "Access denied"
-msgstr ""
+msgstr "Доступ заборонено"
 
 #: modules/library/src/Application/Controllers/CreateArticleController.php:85
 #, php-format
@@ -147,14 +147,14 @@ msgstr "Видалити"
 #: modules/library/src/Application/Controllers/DeleteArticleController.php:59
 #: modules/library/src/Application/Controllers/DeleteArticleController.php:60
 msgid "Delete Article"
-msgstr ""
+msgstr "Видалити статтю"
 
 #: modules/library/src/Application/Controllers/DeleteArticleImageController.php:50
 #: modules/library/src/Application/Controllers/DeleteArticleImageController.php:53
 #: modules/library/src/Application/Controllers/DeleteArticleImageController.php:54
 #: modules/library/templates/edit_article.phtml:24
 msgid "Delete Cover Image"
-msgstr ""
+msgstr "Видалити обкладинку"
 
 #: modules/library/src/Application/Controllers/DeleteSectionController.php:45
 #: modules/library/src/Application/Controllers/EditSectionController.php:51
@@ -166,7 +166,7 @@ msgstr "Розділу не існує"
 #: modules/library/src/Application/Controllers/DeleteSectionController.php:56
 #: modules/library/src/Application/Controllers/DeleteSectionController.php:57
 msgid "Delete Section"
-msgstr ""
+msgstr "Видалити розділ"
 
 #: modules/library/src/Application/Controllers/DeleteSectionController.php:130
 #, php-format
@@ -232,7 +232,7 @@ msgstr "Пошук"
 #: modules/library/src/Application/Controllers/SearchController.php:73
 #, php-format
 msgid "Search results for: %s"
-msgstr ""
+msgstr "Результати пошуку: %s"
 
 #: modules/library/src/Application/Controllers/TagsController.php:35
 #: modules/library/src/Application/Controllers/TagsController.php:42
@@ -257,7 +257,7 @@ msgstr "Список порожній"
 #: modules/library/src/Application/Controllers/TagsController.php:68
 #, php-format
 msgid "Articles tagged: %s"
-msgstr ""
+msgstr "Статті з тегом: %s"
 
 #: modules/library/src/Application/Controllers/TopController.php:37
 #: modules/library/templates/main.phtml:33
@@ -283,107 +283,107 @@ msgstr "Бібліотека закрита"
 
 #: modules/library/src/Install/Installer.php:41
 msgid "Programming"
-msgstr ""
+msgstr "Програмування"
 
 #: modules/library/src/Install/Installer.php:42
 msgid "Articles and guides on development"
-msgstr ""
+msgstr "Статті та посібники з розробки"
 
 #: modules/library/src/Install/Installer.php:44
 msgid "Materials on the PHP language"
-msgstr ""
+msgstr "Матеріали з мови PHP"
 
 #: modules/library/src/Install/Installer.php:46
 msgid "Materials on JavaScript"
-msgstr ""
+msgstr "Матеріали з JavaScript"
 
 #: modules/library/src/Install/Installer.php:47
 msgid "Prose"
-msgstr ""
+msgstr "Проза"
 
 #: modules/library/src/Install/Installer.php:48
 msgid "Short stories and essays"
-msgstr ""
+msgstr "Короткі оповідання та есеї"
 
 #: modules/library/src/Install/Installer.php:49
 msgid "User articles"
-msgstr ""
+msgstr "Статті користувачів"
 
 #: modules/library/src/Install/Installer.php:50
 msgid "A section where visitors can publish their own articles"
-msgstr ""
+msgstr "Розділ, де відвідувачі можуть публікувати власні статті"
 
 #: modules/library/src/Install/Installer.php:78
 msgid "Getting started with PHP"
-msgstr ""
+msgstr "Перші кроки з PHP"
 
 #: modules/library/src/Install/Installer.php:79
 msgid "Installing PHP and your first script"
-msgstr ""
+msgstr "Встановлення PHP та ваш перший скрипт"
 
 #: modules/library/src/Install/Installer.php:80
 msgid "<p>PHP is a popular language for web development. In this article we cover installing the interpreter and running your first script.</p>"
-msgstr ""
+msgstr "<p>PHP — популярна мова для веброзробки. У цій статті ми розглянемо встановлення інтерпретатора та запуск вашого першого скрипту.</p>"
 
 #: modules/library/src/Install/Installer.php:82
 msgid "Arrays in PHP"
-msgstr ""
+msgstr "Масиви в PHP"
 
 #: modules/library/src/Install/Installer.php:83
 msgid "Indexed and associative arrays"
-msgstr ""
+msgstr "Індексовані та асоціативні масиви"
 
 #: modules/library/src/Install/Installer.php:84
 msgid "<p>Arrays in PHP can be indexed or associative. Let us look at the main functions for working with them.</p>"
-msgstr ""
+msgstr "<p>Масиви в PHP можуть бути індексованими або асоціативними. Розгляньмо основні функції для роботи з ними.</p>"
 
 #: modules/library/src/Install/Installer.php:86
 msgid "JavaScript basics"
-msgstr ""
+msgstr "Основи JavaScript"
 
 #: modules/library/src/Install/Installer.php:87
 msgid "Variables and functions"
-msgstr ""
+msgstr "Змінні та функції"
 
 #: modules/library/src/Install/Installer.php:88
 msgid "<p>JavaScript runs in the browser and makes pages interactive. Let us start with variables and functions.</p>"
-msgstr ""
+msgstr "<p>JavaScript виконується в браузері та робить сторінки інтерактивними. Почнімо зі змінних і функцій.</p>"
 
 #: modules/library/src/Install/Installer.php:90
 msgid "An autumn evening"
-msgstr ""
+msgstr "Осінній вечір"
 
 #: modules/library/src/Install/Installer.php:91
 msgid "A short story"
-msgstr ""
+msgstr "Коротке оповідання"
 
 #: modules/library/src/Install/Installer.php:92
 msgid "<p>A warm autumn rain fell outside the window, and the city slowly sank into the evening twilight.</p>"
-msgstr ""
+msgstr "<p>За вікном ішов теплий осінній дощ, і місто повільно занурювалося у вечірні сутінки.</p>"
 
 #: modules/library/src/Install/Installer.php:95
 msgid "My first article"
-msgstr ""
+msgstr "Моя перша стаття"
 
 #: modules/library/src/Install/Installer.php:96
 msgid "An example of a user publication"
-msgstr ""
+msgstr "Приклад публікації користувача"
 
 #: modules/library/src/Install/Installer.php:97
 msgid "<p>This is an example of an article added by a user. In this section anyone can publish their own material.</p>"
-msgstr ""
+msgstr "<p>Це приклад статті, доданої користувачем. У цьому розділі кожен може опублікувати власний матеріал.</p>"
 
 #: modules/library/src/Install/Installer.php:122
 msgid "<p>Great introduction, straight to the point!</p>"
-msgstr ""
+msgstr "<p>Чудовий вступ, одразу до суті!</p>"
 
 #: modules/library/src/Install/Installer.php:123
 msgid "<p>Thanks, I bookmarked the article.</p>"
-msgstr ""
+msgstr "<p>Дякую, додав статтю в закладки.</p>"
 
 #: modules/library/src/Install/Installer.php:124
 msgid "<p>It is great that you can publish your own materials.</p>"
-msgstr ""
+msgstr "<p>Чудово, що можна публікувати власні матеріали.</p>"
 
 #: modules/library/templates/article_create.phtml:14
 msgid "Article added"
@@ -521,73 +521,73 @@ msgstr "Всього"
 #: modules/library/templates/delete_article.phtml:13
 #, php-format
 msgid "Article \"%s\" has been deleted."
-msgstr ""
+msgstr "Статтю «%s» видалено."
 
 #: modules/library/templates/delete_article.phtml:15
 #: modules/library/templates/delete_section.phtml:23
 #: modules/library/templates/delete_section.phtml:73
 #: modules/library/templates/delete_section.phtml:80
 msgid "Back to Library"
-msgstr ""
+msgstr "Повернутися до бібліотеки"
 
 #: modules/library/templates/delete_article.phtml:19
 #, php-format
 msgid "Are you sure you want to delete the article \"%s\"? This action cannot be undone."
-msgstr ""
+msgstr "Ви впевнені, що хочете видалити статтю «%s»? Цю дію не можна скасувати."
 
 #: modules/library/templates/delete_article.phtml:21
 #: modules/library/templates/delete_article_image.phtml:21
 #: modules/library/templates/delete_section.phtml:29
 msgid "Yes, Delete"
-msgstr ""
+msgstr "Так, видалити"
 
 #: modules/library/templates/delete_article_image.phtml:13
 #, php-format
 msgid "Cover image for article \"%s\" has been deleted."
-msgstr ""
+msgstr "Обкладинку статті «%s» видалено."
 
 #: modules/library/templates/delete_article_image.phtml:15
 #: modules/library/templates/edit_article.phtml:18
 msgid "Back to Article"
-msgstr ""
+msgstr "Повернутися до статті"
 
 #: modules/library/templates/delete_article_image.phtml:19
 #, php-format
 msgid "Are you sure you want to delete the cover image for article \"%s\"?"
-msgstr ""
+msgstr "Ви впевнені, що хочете видалити обкладинку статті «%s»?"
 
 #: modules/library/templates/delete_section.phtml:21
 #, php-format
 msgid "Section \"%s\" has been deleted."
-msgstr ""
+msgstr "Розділ «%s» видалено."
 
 #: modules/library/templates/delete_section.phtml:27
 #, php-format
 msgid "Are you sure you want to delete the section \"%s\"? This action cannot be undone."
-msgstr ""
+msgstr "Ви впевнені, що хочете видалити розділ «%s»? Цю дію не можна скасувати."
 
 #: modules/library/templates/delete_section.phtml:37
 #, php-format
 msgid "Contents of section \"%s\" have been moved successfully."
-msgstr ""
+msgstr "Вміст розділу «%s» успішно переміщено."
 
 #: modules/library/templates/delete_section.phtml:39
 msgid "Go to Target Section"
-msgstr ""
+msgstr "Перейти до цільового розділу"
 
 #: modules/library/templates/delete_section.phtml:43
 #, php-format
 msgid "Move all contents of section \"%s\" to the selected section and delete it?"
-msgstr ""
+msgstr "Перемістити весь вміст розділу «%s» до вибраного розділу та видалити його?"
 
 #: modules/library/templates/delete_section.phtml:45
 msgid "Yes, Move and Delete"
-msgstr ""
+msgstr "Так, перемістити та видалити"
 
 #: modules/library/templates/delete_section.phtml:55
 #, php-format
 msgid "Move contents of \"%s\" to:"
-msgstr ""
+msgstr "Перемістити вміст «%s» до:"
 
 #: modules/library/templates/delete_section.phtml:66
 #: modules/library/templates/premod.phtml:34
@@ -597,38 +597,38 @@ msgstr "Підтвердити"
 #: modules/library/templates/delete_section.phtml:71
 #, php-format
 msgid "No sections available to move the contents of \"%s\" to."
-msgstr ""
+msgstr "Немає розділів, куди можна перемістити вміст «%s»."
 
 #: modules/library/templates/delete_section.phtml:84
 #, php-format
 msgid "Are you sure you want to delete section \"%s\" along with ALL its contents? This action cannot be undone."
-msgstr ""
+msgstr "Ви впевнені, що хочете видалити розділ «%s» разом з УСІМ його вмістом? Цю дію не можна скасувати."
 
 #: modules/library/templates/delete_section.phtml:86
 msgid "Yes, Delete Everything"
-msgstr ""
+msgstr "Так, видалити все"
 
 #: modules/library/templates/delete_section.phtml:94
 #, php-format
 msgid "Section \"%s\" contains subsections or articles. Choose how to delete it:"
-msgstr ""
+msgstr "Розділ «%s» містить підрозділи або статті. Виберіть спосіб видалення:"
 
 #: modules/library/templates/delete_section.phtml:98
 msgid "Move contents to another section, then delete"
-msgstr ""
+msgstr "Перемістити вміст до іншого розділу, потім видалити"
 
 #: modules/library/templates/delete_section.phtml:102
 msgid "Delete section and all its contents"
-msgstr ""
+msgstr "Видалити розділ і весь його вміст"
 
 #: modules/library/templates/delete_section.phtml:105
 msgid "Continue"
-msgstr ""
+msgstr "Продовжити"
 
 #: modules/library/templates/edit_article.phtml:17
 #: modules/library/templates/edit_section.phtml:16
 msgid "Changes saved successfully."
-msgstr ""
+msgstr "Зміни успішно збережено."
 
 #: modules/library/templates/edit_article.phtml:59
 msgid "The text of the Article can not be edited, a large amount of data !!!"
@@ -649,7 +649,7 @@ msgstr "Кількість читань"
 
 #: modules/library/templates/edit_section.phtml:17
 msgid "Back to Section"
-msgstr ""
+msgstr "Повернутися до розділу"
 
 #: modules/library/templates/edit_section.phtml:28
 #: modules/library/templates/section_create.phtml:26
@@ -739,7 +739,7 @@ msgstr "Затвердити всі"
 
 #: modules/library/templates/premod.phtml:46
 msgid "No articles pending moderation."
-msgstr ""
+msgstr "Немає статей, що очікують на модерацію."
 
 #: modules/library/templates/search.phtml:15
 #: modules/library/templates/search.phtml:16

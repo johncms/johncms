@@ -6,6 +6,9 @@
     '' => 
     array (
       'Notifications are cleared!' => 'Pemberitahuan dihapus!',
+      'Notifications' => 'Pemberitahuan',
+      'Settings' => 'Pengaturan',
+      'Settings saved!' => 'Pengaturan disimpan!',
       'Users on registration' => 'Pengguna pada saat pendaftaran',
       'Articles on moderation' => 'Artikel tentang moderasi',
       'Downloads on moderation' => 'Popularitas di moderasi',
@@ -14,9 +17,6 @@
       'Mail' => 'Pesan',
       'Guestbook' => 'Buku Tamu',
       'Comments' => 'Komentar',
-      'Settings' => 'Pengaturan',
-      'Settings saved!' => 'Pengaturan disimpan!',
-      'Notifications' => 'Pemberitahuan',
       'All notifications have already been read' => 'Semua pemberitahuan telah membaca',
       'Clear notifications' => 'Menghapus pemberitahuan',
       'Display the number of unread messages in the forum' => 'Menampilkan jumlah pesan yang belum dibaca di forum',

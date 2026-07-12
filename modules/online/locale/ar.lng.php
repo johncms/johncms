@@ -5,14 +5,13 @@
   array (
     '' => 
     array (
-      'Users' => 'الاعضاء',
-      'History' => 'السّجل',
       'Guests' => 'الزوار',
-      'IP Activity' => 'نشاط IP',
-      'Guest' => 'ضيف',
-      'Who is online?' => 'المتواجدون الآن؟',
       'Online' => 'متصل',
-      'For registered users only' => 'للمستخدمين المسجلين فقط',
+      'History' => 'السّجل',
+      'Who is online?' => 'المتواجدون الآن؟',
+      'IP Activity' => 'نشاط IP',
+      'Users' => 'الاعضاء',
+      'Guest' => 'ضيف',
       'List is empty' => 'القائمة فارغة',
       'Total' => 'مجموع',
     ),

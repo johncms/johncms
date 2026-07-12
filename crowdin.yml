@@ -26,6 +26,8 @@ files:
     translation: /modules/admin/locale/%two_letters_code%.po
   - source: /modules/album/locale/album.pot
     translation: /modules/album/locale/%two_letters_code%.po
+  - source: /modules/collections/locale/collections.pot
+    translation: /modules/collections/locale/%two_letters_code%.po
   - source: /modules/community/locale/community.pot
     translation: /modules/community/locale/%two_letters_code%.po
   - source: /modules/consent/locale/consent.pot

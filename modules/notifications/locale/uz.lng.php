@@ -6,6 +6,9 @@
     '' => 
     array (
       'Notifications are cleared!' => 'Ogohlantirishlar tozalandi!',
+      'Notifications' => 'Bildirishnoma',
+      'Settings' => 'Sozlovlar',
+      'Settings saved!' => 'Sozlamalar saqlandi!',
       'Users on registration' => 'Ro\'yxatga olish bo\'yicha foydalanuvchilar',
       'Articles on moderation' => 'Tekshiruvdagi maqolalar',
       'Downloads on moderation' => 'Tekshiruvdagi yuklamalar',
@@ -14,9 +17,6 @@
       'Mail' => 'Xabar',
       'Guestbook' => 'Mehmonxona',
       'Comments' => 'Sharxlar',
-      'Settings' => 'Sozlovlar',
-      'Settings saved!' => 'Sozlamalar saqlandi!',
-      'Notifications' => 'Bildirishnoma',
       'All notifications have already been read' => 'Yangi bildirishnomalar yo‘q',
       'Total' => 'Jami',
       'Clear notifications' => 'Bildirishnomani tozalash.',

@@ -60,7 +60,7 @@ msgstr "Контакти"
 #: modules/mail/src/Application/Controllers/AddContactController.php:69
 #: modules/mail/src/Application/Controllers/AddContactController.php:83
 msgid "Add Contact"
-msgstr ""
+msgstr "Додати контакт"
 
 #: modules/mail/src/Application/Controllers/AddContactController.php:43
 msgid "You really want to add contact?"
@@ -81,7 +81,7 @@ msgstr "Продовжити"
 
 #: modules/mail/src/Application/Controllers/BlockUserController.php:30
 msgid "User blocked successfully"
-msgstr ""
+msgstr "Користувача успішно заблоковано"
 
 #: modules/mail/src/Application/Controllers/BlockUserController.php:44
 #: modules/mail/src/Application/Controllers/BlocklistIndexController.php:31
@@ -96,7 +96,7 @@ msgstr "Чорний список"
 #: modules/mail/src/Application/Controllers/BlockUserController.php:48
 #: modules/mail/src/Application/Controllers/BlockUserController.php:49
 msgid "Block user"
-msgstr ""
+msgstr "Заблокувати користувача"
 
 #: modules/mail/src/Application/Controllers/BlockUserController.php:54
 msgid "You really want to block contact?"
@@ -157,7 +157,7 @@ msgstr "Користувача не існує"
 
 #: modules/mail/src/Application/Controllers/DeleteContactController.php:37
 msgid "Delete contact"
-msgstr ""
+msgstr "Видалити контакт"
 
 #: modules/mail/src/Application/Controllers/DeleteContactController.php:41
 msgid "When you delete a contact is deleted and all correspondence with him.<br>Are you sure you want to delete?"
@@ -169,7 +169,7 @@ msgstr "Контакт видалено"
 
 #: modules/mail/src/Application/Controllers/DeleteMessageController.php:36
 msgid "Delete message"
-msgstr ""
+msgstr "Видалити повідомлення"
 
 #: modules/mail/src/Application/Controllers/DeleteMessageController.php:40
 msgid "You really want to remove the message?"
@@ -209,13 +209,13 @@ msgstr "Відправлені повідомлення"
 
 #: modules/mail/src/Application/Controllers/UnblockUserController.php:29
 msgid "User unblocked successfully"
-msgstr ""
+msgstr "Користувача успішно розблоковано"
 
 #: modules/mail/src/Application/Controllers/UnblockUserController.php:40
 #: modules/mail/src/Application/Controllers/UnblockUserController.php:43
 #: modules/mail/src/Application/Controllers/UnblockUserController.php:44
 msgid "Unblock user"
-msgstr ""
+msgstr "Розблокувати користувача"
 
 #: modules/mail/src/Application/Controllers/UnblockUserController.php:49
 msgid "You really want to unblock contact?"
@@ -228,11 +228,11 @@ msgstr "Розблокувати"
 
 #: modules/mail/src/Application/Controllers/WriteController.php:95
 msgid "New message"
-msgstr ""
+msgstr "Нове повідомлення"
 
 #: modules/mail/src/Application/UseCases/BlockUserUseCase.php:27
 msgid "You cannot block yourself"
-msgstr ""
+msgstr "Ви не можете заблокувати самого себе"
 
 #: modules/mail/src/Application/UseCases/GetContactListUseCase.php:35
 msgid "My Contacts"
@@ -257,7 +257,7 @@ msgstr "Заблокувати користувача"
 
 #: modules/mail/src/Application/UseCases/SendMessageUseCase.php:34
 msgid "Access forbidden"
-msgstr ""
+msgstr "Доступ заборонено"
 
 #: modules/mail/src/Application/UseCases/SendMessageUseCase.php:44
 msgid "Message cannot be empty"
@@ -327,7 +327,7 @@ msgstr "Список порожній"
 
 #: modules/mail/templates/blocklist.phtml:52
 msgid "User since:"
-msgstr ""
+msgstr "Користувач із:"
 
 #: modules/mail/templates/confirm.phtml:32
 msgid "Cancel"

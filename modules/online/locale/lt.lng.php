@@ -5,14 +5,13 @@
   array (
     '' => 
     array (
-      'Users' => 'Vartotojai',
-      'History' => 'Istorija',
       'Guests' => 'Svečiai',
-      'IP Activity' => 'IP Aktyvumas',
-      'Guest' => 'Svečias',
-      'Who is online?' => 'Kas Prisijungę?',
       'Online' => 'Prisijungę',
-      'For registered users only' => 'Tik registruotiems Vartotojams',
+      'History' => 'Istorija',
+      'Who is online?' => 'Kas Prisijungę?',
+      'IP Activity' => 'IP Aktyvumas',
+      'Users' => 'Vartotojai',
+      'Guest' => 'Svečias',
       'List is empty' => 'Sąrašas tuščias',
       'Total' => 'Viso',
     ),

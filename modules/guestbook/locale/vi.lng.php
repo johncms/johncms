@@ -5,14 +5,15 @@
   array (
     '' => 
     array (
+      'All messages older than 1 week were deleted' => 'Tất cả các tin nhắn cũ hơn 1 tuần đã bị xóa',
+      'All messages older than 1 day were deleted' => 'Tất cả các tin nhắn cũ hơn 1 ngày đã bị xóa',
+      'Full clearing is finished' => 'Toàn thanh toán bù trừ xong',
+      'Delete message' => 'Xóa bài viết',
       'Edit message' => 'Chỉnh sửa tin nhắn',
       'Guestbook' => 'Lưu bút Của Bạn',
       'Admin Club' => 'Dành cho BQT',
       'Guestbook is closed' => 'Lưu bị đóng cửa',
       'Reply' => 'Trả lời',
-      'All messages older than 1 day were deleted' => 'Tất cả các tin nhắn cũ hơn 1 ngày đã bị xóa',
-      'Full clearing is finished' => 'Toàn thanh toán bù trừ xong',
-      'All messages older than 1 week were deleted' => 'Tất cả các tin nhắn cũ hơn 1 tuần đã bị xóa',
       'Clear guestbook' => 'Dọn dẹp lưu bút',
       'Clearing parameters' => 'Xóa cài đặt',
       'Older than 1 week' => 'Cách đây hơn 1 tuần',
@@ -20,7 +21,6 @@
       'Clear all' => 'Xoá tất cả các bài viết',
       'Clear' => 'Xoá',
       'Cancel' => 'Hủy bỏ',
-      'Delete message' => 'Xóa bài viết',
       'Do you really want to delete?' => 'Bạn có thực sự muốn xóa?',
       'Delete' => 'Xóa',
       'Author' => 'Tác giả',

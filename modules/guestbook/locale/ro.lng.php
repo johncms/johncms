@@ -5,13 +5,14 @@
   array (
     '' => 
     array (
+      'All messages older than 1 week were deleted' => 'Toate mesajele mai vechi de o saptamana au fost sterse',
+      'All messages older than 1 day were deleted' => 'Toate mesajele mai vechi de o zi au fost sterse',
+      'Full clearing is finished' => 'Stergere totala finalizata',
+      'Delete message' => 'Şterge mesajul',
       'Edit message' => 'Editeaza mesaj',
       'Admin Club' => 'Club-Admin',
       'Guestbook is closed' => 'Guestbook este închis',
       'Reply' => 'Raspunde',
-      'All messages older than 1 day were deleted' => 'Toate mesajele mai vechi de o zi au fost sterse',
-      'Full clearing is finished' => 'Stergere totala finalizata',
-      'All messages older than 1 week were deleted' => 'Toate mesajele mai vechi de o saptamana au fost sterse',
       'Clear guestbook' => 'Goliţi cartea de oaspeţi',
       'Clearing parameters' => 'Sterge parametri',
       'Older than 1 week' => 'Mai vechi de o saptamana',
@@ -19,7 +20,6 @@
       'Clear all' => 'Sterge tot',
       'Clear' => 'Sterge',
       'Cancel' => 'Anuleaza',
-      'Delete message' => 'Şterge mesajul',
       'Do you really want to delete?' => 'Doriţi într-adevăr să ştergeţi?',
       'Delete' => 'Șterge',
       'Author' => 'Autor',

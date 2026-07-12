@@ -5,6 +5,11 @@
   array (
     '' => 
     array (
+      'All messages older than 1 week were deleted' => 'Удалены все сообщения, старше 1 недели',
+      'All messages older than 1 day were deleted' => 'Удалены все сообщения, старше 1 дня',
+      'Full clearing is finished' => 'Проведена полная очистка',
+      'Delete message' => 'Удалить сообщение',
+      'Wrong data' => 'Неверные данные',
       'The message was deleted' => 'Сообщение удалено',
       'Edit message' => 'Изменить сообщение',
       'The message was saved' => 'Сообщение сохранено',
@@ -15,9 +20,28 @@
       'Reply' => 'Ответить',
       'Your reply to the message was saved' => 'Ваш ответ на сообщение сохранён',
       'Only images are allowed' => 'Разрешены только изображения',
-      'All messages older than 1 day were deleted' => 'Удалены все сообщения, старше 1 дня',
-      'Full clearing is finished' => 'Проведена полная очистка',
-      'All messages older than 1 week were deleted' => 'Удалены все сообщения, старше 1 недели',
+      'Welcome to the Admin Club!
+Only Moderators and Administrators have access here.
+Regular users are not allowed in.' => 'Добро пожаловать в Админ Клуб!
+Сюда имеют доступ ТОЛЬКО Модераторы и Администраторы.
+Простым пользователям доступ сюда закрыт.',
+      'The guestbook supports full text formatting in the visual editor:<br>
+<span style="font-weight: bold">bold</span><br>
+<span style="font-style:italic">italic</span><br>
+<span style="text-decoration:underline">underlined</span><br>
+<span style="color:red">red</span><br>
+<span style="color:green">green</span><br>
+<span style="color:blue">blue</span><br>
+Inserting links: <a href="https://johncms.com">https://johncms.com</a>, images, tables, videos and much more' => 'Гостевая поддерживает полноценное форматирование текста в визуальном редакторе:<br>
+<span style="font-weight: bold">жирный</span><br>
+<span style="font-style:italic">курсив</span><br>
+<span style="text-decoration:underline">подчеркнутый</span><br>
+<span style="color:red">красный</span><br>
+<span style="color:green">зеленый</span><br>
+<span style="color:blue">синий</span><br>
+Вставку ссылок: <a href="https://johncms.com">https://johncms.com</a>, картинок, таблиц, видео и многого другого',
+      'Welcome to the Guestbook!' => 'Добро пожаловать в Гостевую!',
+      'A sample reply from the Administrator' => 'Проверка ответа Администратора',
       'Clear guestbook' => 'Очистить гостевую',
       'Clearing parameters' => 'Параметры очистки',
       'Older than 1 week' => 'Старше 1 недели',
@@ -25,7 +49,6 @@
       'Clear all' => 'Очищаем все',
       'Clear' => 'Очистить',
       'Cancel' => 'Отмена',
-      'Delete message' => 'Удалить сообщение',
       'Do you really want to delete?' => 'Действительно хотите удалить?',
       'Delete' => 'Удалить',
       'Author' => 'Автор',
@@ -44,10 +67,6 @@
       'Edited:' => 'Изменено:',
       'Edited' => 'Изменено',
       'Edit' => 'Изменить',
-      "Welcome to the Admin Club!\r\nOnly Moderators and Administrators have access here.\r\nRegular users are not allowed in." => "Добро пожаловать в Админ Клуб!\r\nСюда имеют доступ ТОЛЬКО Модераторы и Администраторы.\r\nПростым пользователям доступ сюда закрыт.",
-      'Welcome to the Guestbook!' => 'Добро пожаловать в Гостевую!',
-      'A sample reply from the Administrator' => 'Проверка ответа Администратора',
-      "The guestbook supports full text formatting in the visual editor:<br>\n<span style=\"font-weight: bold\">bold</span><br>\n<span style=\"font-style:italic\">italic</span><br>\n<span style=\"text-decoration:underline\">underlined</span><br>\n<span style=\"color:red\">red</span><br>\n<span style=\"color:green\">green</span><br>\n<span style=\"color:blue\">blue</span><br>\nInserting links: <a href=\"https://johncms.com\">https://johncms.com</a>, images, tables, videos and much more" => "Гостевая поддерживает полноценное форматирование текста в визуальном редакторе:<br>\n<span style=\"font-weight: bold\">жирный</span><br>\n<span style=\"font-style:italic\">курсив</span><br>\n<span style=\"text-decoration:underline\">подчеркнутый</span><br>\n<span style=\"color:red\">красный</span><br>\n<span style=\"color:green\">зеленый</span><br>\n<span style=\"color:blue\">синий</span><br>\nВставку ссылок: <a href=\"https://johncms.com\">https://johncms.com</a>, картинок, таблиц, видео и многого другого",
     ),
   ),
 );

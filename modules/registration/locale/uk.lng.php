@@ -6,6 +6,7 @@
     '' => 
     array (
       'Registration' => 'Реєстрація',
+      'You must accept the consent to continue' => 'Щоб продовжити, ви повинні прийняти згоду',
       'Registration on the website' => 'Реєстрація на сайті',
       'Email confirmation' => 'Підтвердження електронної пошти',
       'User is not found' => 'Користувача не знайдено',

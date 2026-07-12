@@ -6,6 +6,9 @@
     '' => 
     array (
       'Notifications are cleared!' => 'Bildiriş silinəcək!',
+      'Notifications' => 'Bildirişlər',
+      'Settings' => 'Düzəlişlər',
+      'Settings saved!' => 'Düzəlişlər yadda saxlanıldı',
       'Users on registration' => 'Qeydiyyatlı istifadəçilər',
       'Articles on moderation' => 'Məqalələr moderatsiya',
       'Downloads on moderation' => 'Yuklmeme moderatsiya',
@@ -13,9 +16,6 @@
       'Mail' => 'Mesaj',
       'Guestbook' => 'Qonaq Otaqı',
       'Comments' => 'Şərhlər',
-      'Settings' => 'Düzəlişlər',
-      'Settings saved!' => 'Düzəlişlər yadda saxlanıldı',
-      'Notifications' => 'Bildirişlər',
       'All notifications have already been read' => 'Bildirişlər artıq oxunub arxive daxil olun tekrar üçün',
       'Total' => 'Ümumi',
       'Clear notifications' => 'Bildirişləri təmizlə',

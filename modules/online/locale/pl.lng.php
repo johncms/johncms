@@ -5,13 +5,12 @@
   array (
     '' => 
     array (
-      'Users' => 'Użytkownicy',
-      'History' => 'Historia',
       'Guests' => 'Goście',
-      'IP Activity' => 'Aktywność IP',
-      'Guest' => 'Gość',
+      'History' => 'Historia',
       'Who is online?' => 'Kto jest online?',
-      'For registered users only' => 'Tylko dla zarejestrowanych',
+      'IP Activity' => 'Aktywność IP',
+      'Users' => 'Użytkownicy',
+      'Guest' => 'Gość',
       'List is empty' => 'Lista jest pusta',
       'Total' => 'Wszystkich',
     ),

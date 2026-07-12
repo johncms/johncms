@@ -6,6 +6,9 @@
     '' => 
     array (
       'Notifications are cleared!' => 'Thông báo đã được xóa!',
+      'Notifications' => 'Thông báo',
+      'Settings' => 'Cài đặt',
+      'Settings saved!' => 'Cài đặt đã được lưu!',
       'Users on registration' => 'Người dùng đăng ký',
       'Articles on moderation' => 'Bài viết cần kiểm duyệt',
       'Downloads on moderation' => 'Tệp tin cần kiểm duyệt',
@@ -14,9 +17,6 @@
       'Mail' => 'Thư',
       'Guestbook' => 'Phòng trò truyện',
       'Comments' => 'Bình luận',
-      'Settings' => 'Cài đặt',
-      'Settings saved!' => 'Cài đặt đã được lưu!',
-      'Notifications' => 'Thông báo',
       'All notifications have already been read' => 'Tất cả các thông báo đã được đọc',
       'Total' => 'Tổng cộng',
       'Clear notifications' => 'Xóa thông báo',

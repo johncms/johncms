@@ -6,6 +6,9 @@
     '' => 
     array (
       'Notifications are cleared!' => 'Хабарландырулар жойылды!',
+      'Notifications' => 'Хабарландырулар',
+      'Settings' => 'Баптаулар',
+      'Settings saved!' => 'Баптаулар сақталады!',
       'Users on registration' => 'Пайдаланушыларды тіркеу',
       'Articles on moderation' => 'Модерация туралы мақалалар',
       'Downloads on moderation' => 'Модерацияны жүктеу',
@@ -14,9 +17,6 @@
       'Mail' => 'Пошта',
       'Guestbook' => 'Қонақ кітәпшасы',
       'Comments' => 'Пікірлер',
-      'Settings' => 'Баптаулар',
-      'Settings saved!' => 'Баптаулар сақталады!',
-      'Notifications' => 'Хабарландырулар',
       'All notifications have already been read' => 'Барлық хабарландырулар оқылған.',
       'Total' => 'Барлығы',
       'Clear notifications' => 'Барлық ескертулерді тазалау.',

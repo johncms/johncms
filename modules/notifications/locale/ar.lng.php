@@ -6,6 +6,9 @@
     '' => 
     array (
       'Notifications are cleared!' => 'تم مسح الإخطارات!',
+      'Notifications' => 'تنبيهات',
+      'Settings' => 'الإعدادات',
+      'Settings saved!' => 'تم حفظ الإعدادات!',
       'Users on registration' => 'المستخدمون عند التسجيل',
       'Articles on moderation' => 'مقالات عن الاعتدال',
       'Downloads on moderation' => 'التنزيلات على الاعتدال',
@@ -14,9 +17,6 @@
       'Mail' => 'البريـــد',
       'Guestbook' => 'سجل الزوار',
       'Comments' => 'التعليقات',
-      'Settings' => 'الإعدادات',
-      'Settings saved!' => 'تم حفظ الإعدادات!',
-      'Notifications' => 'تنبيهات',
       'All notifications have already been read' => 'تمت قراءة جميع الإخطارات بالفعل',
       'Total' => 'مجموع',
       'Clear notifications' => 'مسح الإشعارات',

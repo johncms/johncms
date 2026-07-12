@@ -5,14 +5,15 @@
   array (
     '' => 
     array (
+      'All messages older than 1 week were deleted' => 'Bütün mesajlar 1 həftədən sonra silinir',
+      'All messages older than 1 day were deleted' => 'Bütün mesajlar 1 gündən sonra silinir',
+      'Full clearing is finished' => 'Tam təmizlənməsi başa çatıb',
+      'Delete message' => 'Məlumatların silinməsi',
       'Edit message' => 'Mesaji Dəyiş',
       'Guestbook' => 'Qonaq otağı',
       'Admin Club' => 'Admin klubu',
       'Guestbook is closed' => 'Qonaq kitabı bağlanıb',
       'Reply' => 'Cavab',
-      'All messages older than 1 day were deleted' => 'Bütün mesajlar 1 gündən sonra silinir',
-      'Full clearing is finished' => 'Tam təmizlənməsi başa çatıb',
-      'All messages older than 1 week were deleted' => 'Bütün mesajlar 1 həftədən sonra silinir',
       'Clear guestbook' => 'Qonaq otağını təmizlə',
       'Clearing parameters' => 'Ayarları təmizləmək',
       'Older than 1 week' => '1 həftədən çox',
@@ -20,7 +21,6 @@
       'Clear all' => 'Hamısın sil',
       'Clear' => 'Təmizlə',
       'Cancel' => 'Ləğv et',
-      'Delete message' => 'Məlumatların silinməsi',
       'Do you really want to delete?' => 'Həqiqətən silmək istəyirsiniz?',
       'Delete' => 'Sil',
       'Author' => 'Müəllif',

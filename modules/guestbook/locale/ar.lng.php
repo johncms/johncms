@@ -5,14 +5,15 @@
   array (
     '' => 
     array (
+      'All messages older than 1 week were deleted' => 'جميع رسائل أقدم من 1 أسبوع تم حذفها',
+      'All messages older than 1 day were deleted' => 'تم حذف جميع الرسائل الأقدم من يوم 1',
+      'Full clearing is finished' => 'الانتهاء من تطهير كامل',
+      'Delete message' => 'حذف الرسالة',
       'Edit message' => 'تحرير الرسالة',
       'Guestbook' => 'سجل الزوار',
       'Admin Club' => 'نادي المشرفين',
       'Guestbook is closed' => 'سجل الزوار مغلق',
       'Reply' => 'رد ',
-      'All messages older than 1 day were deleted' => 'تم حذف جميع الرسائل الأقدم من يوم 1',
-      'Full clearing is finished' => 'الانتهاء من تطهير كامل',
-      'All messages older than 1 week were deleted' => 'جميع رسائل أقدم من 1 أسبوع تم حذفها',
       'Clear guestbook' => 'پاک کردن کتاب مهمان',
       'Clearing parameters' => 'مسح المعلمات',
       'Older than 1 week' => 'اقدم من اسبوع',
@@ -20,7 +21,6 @@
       'Clear all' => 'تنظيف الكل',
       'Clear' => 'مسح',
       'Cancel' => 'إلغاء الأمر',
-      'Delete message' => 'حذف الرسالة',
       'Do you really want to delete?' => 'هل ترغب بالحذف ؟',
       'Delete' => 'حذف',
       'Author' => 'الكاتب',

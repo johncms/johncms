@@ -5,14 +5,13 @@
   array (
     '' => 
     array (
-      'Users' => 'Қолданушылар',
-      'History' => 'Тарих',
       'Guests' => 'Қонақтар',
-      'IP Activity' => 'Белсенді IP',
-      'Guest' => 'Қонақ',
-      'Who is online?' => 'Кім желіде?',
       'Online' => 'Онлайн',
-      'For registered users only' => 'Тек қана тіркелген қолданушылар үшін',
+      'History' => 'Тарих',
+      'Who is online?' => 'Кім желіде?',
+      'IP Activity' => 'Белсенді IP',
+      'Users' => 'Қолданушылар',
+      'Guest' => 'Қонақ',
       'List is empty' => 'Тізім бос',
       'Total' => 'Барлығы',
     ),

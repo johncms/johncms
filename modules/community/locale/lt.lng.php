@@ -5,12 +5,14 @@
   array (
     '' => 
     array (
+      'Community' => 'Bendruomenė',
+      'For registered users only' => 'Tik registruotiems Vartotojams',
       'Administration' => 'Administravimas',
       'Birthdays' => 'Gimtadienis',
       'User Search' => 'Vartotojo Paieška',
+      'List of users' => 'Vartotojų sąrašas',
       'Nickname' => 'Slapyvardis',
       'Invalid length' => 'Neleistinas ilgis',
-      'Invalid characters' => 'Klaidingi simboliai',
       'Forum' => 'Forumas',
       'Guestbook' => 'Svečių Knyga',
       'Comments' => 'Komentarai',
@@ -18,18 +20,15 @@
       'Most commentators' => 'Dažniausi komentatoriai',
       'Best Karma' => 'Geriausia Karma',
       'Most active in Forum' => 'Aktyviausi Forume',
-      'List of users' => 'Vartotojų sąrašas',
-      'Community' => 'Bendruomenė',
-      'For registered users only' => 'Tik registruotiems Vartotojams',
+      'List is empty' => 'Sąrašas tuščias',
+      'Total' => 'Viso',
+      'Back' => 'Atgal',
       'Look for the User' => 'Ieškoti vartotoja',
       'Search' => 'Paieška',
       'The search is performed by Nickname and are case-insensitive.' => 'Paieška atliekama pagal vartotojo slapyvardį, nejautrus didžiosioms arba mažosioms raidėms.',
       'Users' => 'Vartotojai',
       'Top Activity' => 'Top Aktyvumas',
       'Username' => 'Vartotojo vardas',
-      'List is empty' => 'Sąrašas tuščias',
-      'Total' => 'Viso',
-      'Back' => 'Atgal',
       'post' => 
       array (
         0 => 'pranešimas',

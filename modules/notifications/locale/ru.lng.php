@@ -6,6 +6,9 @@
     '' => 
     array (
       'Notifications are cleared!' => 'Уведомления очищены!',
+      'Notifications' => 'Уведомления',
+      'Settings' => 'Настройки',
+      'Settings saved!' => 'Настройки сохранены!',
       'Users on registration' => 'Пользователи на регистрации',
       'Articles on moderation' => 'Статьи на модерации',
       'Downloads on moderation' => 'Загрузки на модерации',
@@ -14,9 +17,6 @@
       'Mail' => 'Почта',
       'Guestbook' => 'Гостевая книга',
       'Comments' => 'Комментарии',
-      'Settings' => 'Настройки',
-      'Settings saved!' => 'Настройки сохранены!',
-      'Notifications' => 'Уведомления',
       'All notifications have already been read' => 'Все уведомления уже прочитаны',
       'Total' => 'Всего',
       'Clear notifications' => 'Очистить уведомления',

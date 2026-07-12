@@ -5,12 +5,14 @@
   array (
     '' => 
     array (
+      'Community' => 'Бірлестіктер',
+      'For registered users only' => 'Тек қана тіркелген қолданушылар үшін',
       'Administration' => 'Әкімшілік',
       'Birthdays' => 'Туған күндер',
       'User Search' => 'Пайдаланушыны іздеу',
+      'List of users' => 'Қолданушылар тізімі',
       'Nickname' => 'Лақап ат',
       'Invalid length' => 'Ұзындығы дұрыс емес',
-      'Invalid characters' => 'Жазуға болмайтын таңбалар',
       'Forum' => 'Форум',
       'Guestbook' => 'Қонақ кітәпшасы',
       'Comments' => 'Пікірлер',
@@ -19,18 +21,15 @@
       'Most commentators' => 'Ең көптеген пікірлер берді',
       'Best Karma' => 'Ең жақсы карма',
       'Most active in Forum' => 'Форумдағы ең белсенділер',
-      'List of users' => 'Қолданушылар тізімі',
-      'Community' => 'Бірлестіктер',
-      'For registered users only' => 'Тек қана тіркелген қолданушылар үшін',
+      'List is empty' => 'Тізім бос',
+      'Total' => 'Барлығы',
+      'Back' => 'Артқа',
       'Look for the User' => 'Пайдаланушыны іздеу',
       'Search' => 'Іздеу',
       'The search is performed by Nickname and are case-insensitive.' => 'Іздеу лақап атпен орындалады және регистрге байланысты емес.',
       'Users' => 'Қолданушылар',
       'Top Activity' => 'Ең жоғары белсенділік',
       'Username' => 'Қолданушы аты',
-      'List is empty' => 'Тізім бос',
-      'Total' => 'Барлығы',
-      'Back' => 'Артқа',
       'post' => 
       array (
         0 => 'пост',

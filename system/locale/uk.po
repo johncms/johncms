@@ -524,7 +524,7 @@ msgstr "Крайня активність"
 #: modules/forum/src/Application/Controllers/ForumTopicController.php:159
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:414
 msgid "Page"
-msgstr ""
+msgstr "Сторінка"
 
 #: system/src/NavChain.php:63
 #: themes/default/templates/system/error/403.phtml:36
@@ -710,7 +710,7 @@ msgstr "Час"
 #: themes/admin/templates/system/app/sidebar-admin-menu.phtml:24
 #: themes/admin/templates/system/app/sidebar-admin-menu.phtml:352
 msgid "Set Light Theme"
-msgstr ""
+msgstr "Увімкнути світлу тему"
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:23
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:193
@@ -719,7 +719,7 @@ msgstr ""
 #: themes/admin/templates/system/app/sidebar-admin-menu.phtml:24
 #: themes/admin/templates/system/app/sidebar-admin-menu.phtml:351
 msgid "Set Dark Theme"
-msgstr ""
+msgstr "Увімкнути темну тему"
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:43
 msgid "News archive"
@@ -752,28 +752,28 @@ msgstr "Вихід"
 
 #: themes/default/templates/system/layout/default.phtml:153
 msgid "Privacy Policy"
-msgstr ""
+msgstr "Політика конфіденційності"
 
 #: themes/default/templates/system/layout/default.phtml:154
 msgid "Terms of Use"
-msgstr ""
+msgstr "Умови використання"
 
 #: themes/default/templates/system/layout/default.phtml:155
 msgid "Personal Data Processing Policy"
-msgstr ""
+msgstr "Політика обробки персональних даних"
 
 #: themes/default/templates/system/layout/default.phtml:156
 msgid "Cookie Policy"
-msgstr ""
+msgstr "Політика щодо файлів cookie"
 
 #: themes/default/templates/system/layout/default.phtml:229
 #, php-format
 msgid "We use cookies to improve the site. By continuing to use the site, you agree to our %sPrivacy Policy%s."
-msgstr ""
+msgstr "Ми використовуємо файли cookie, щоб покращити сайт. Продовжуючи користуватися сайтом, ви погоджуєтеся з нашою %sПолітикою конфіденційності%s."
 
 #: themes/default/templates/system/layout/default.phtml:232
 msgid "Accept"
-msgstr ""
+msgstr "Прийняти"
 
 #: themes/default/templates/system/mail/layouts/default.phtml:115
 msgid "The email is generated automatically. Please don't answer it. <br> To contact us, use the contact information on our website."

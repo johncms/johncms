@@ -5,13 +5,14 @@
   array (
     '' => 
     array (
+      'All messages older than 1 week were deleted' => '1 haftadan katta bo\'lgan barcha xabarlar o\'chirildi',
+      'All messages older than 1 day were deleted' => '1 kundan oldingi barcha xabarlar o\'chirildi',
+      'Full clearing is finished' => 'To\'liq tozalash yakunlandi',
+      'Delete message' => 'Xabarlarni o‘chirish',
       'Edit message' => 'Habarni tahrirlash',
       'Guestbook' => 'Mehmonlar kitobi',
       'Guestbook is closed' => 'Mehmonlar kitobi yopiq',
       'Reply' => 'Javob qaytarish',
-      'All messages older than 1 day were deleted' => '1 kundan oldingi barcha xabarlar o\'chirildi',
-      'Full clearing is finished' => 'To\'liq tozalash yakunlandi',
-      'All messages older than 1 week were deleted' => '1 haftadan katta bo\'lgan barcha xabarlar o\'chirildi',
       'Clear guestbook' => 'Mehmonlar kitobini tozalash',
       'Clearing parameters' => 'Parametrlarni tozalash',
       'Older than 1 week' => '1 haftadan oldingilar',
@@ -19,7 +20,6 @@
       'Clear all' => 'Barchasini Tozalash',
       'Clear' => 'Tozalash',
       'Cancel' => 'Bekor qilish',
-      'Delete message' => 'Xabarlarni o‘chirish',
       'Do you really want to delete?' => 'Chindan ham o‘chirmoqchimisiz?',
       'Delete' => 'O\'chirish',
       'Author' => 'Muallif',

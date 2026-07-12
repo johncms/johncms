@@ -5,6 +5,10 @@
   array (
     '' => 
     array (
+      'All messages older than 1 week were deleted' => 'Бардык билдирүүлөр, 1 жумадан ашканы өчүрүлдү',
+      'All messages older than 1 day were deleted' => 'Бардык билдирүүлөр, 1 күндөн ашканы өчүрүлдү',
+      'Full clearing is finished' => 'Толук тазалоо бүттү',
+      'Delete message' => 'Билдирүүнү өчүрүү',
       'The message was deleted' => 'Билдирүү өчүрүлдү',
       'Edit message' => 'Билдирүү оңдоо',
       'The message was saved' => 'Билдирүү сакталды',
@@ -15,9 +19,6 @@
       'Reply' => 'Жооп берүү',
       'Your reply to the message was saved' => 'Билдирүүгө берген жообуңуз сакталды',
       'Only images are allowed' => 'Сүрөттөргө гана уруксат берилет',
-      'All messages older than 1 day were deleted' => 'Бардык билдирүүлөр, 1 күндөн ашканы өчүрүлдү',
-      'Full clearing is finished' => 'Толук тазалоо бүттү',
-      'All messages older than 1 week were deleted' => 'Бардык билдирүүлөр, 1 жумадан ашканы өчүрүлдү',
       'Clear guestbook' => 'Конок китебин тазалоо',
       'Clearing parameters' => 'Тазалоо жолдору',
       'Older than 1 week' => '1 жумадан жогору',
@@ -25,7 +26,6 @@
       'Clear all' => 'Баарын тазалоо',
       'Clear' => 'Тазалоо',
       'Cancel' => 'Токтотуу',
-      'Delete message' => 'Билдирүүнү өчүрүү',
       'Do you really want to delete?' => 'Сиз чын эле өчүрүп таштайсызбы?',
       'Delete' => 'Өчүрүү',
       'Author' => 'Автору',

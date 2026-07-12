@@ -27,7 +27,7 @@ msgstr "Реєстрація"
 
 #: modules/registration/src/Application/Controllers/RegistrationController.php:104
 msgid "You must accept the consent to continue"
-msgstr ""
+msgstr "Щоб продовжити, ви повинні прийняти згоду"
 
 #: modules/registration/src/Application/UseCases/RegisterUserUseCase.php:62
 msgid "Registration on the website"

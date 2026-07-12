@@ -5,14 +5,13 @@
   array (
     '' => 
     array (
-      'Users' => 'Thành viên',
-      'History' => 'Lịch sử',
       'Guests' => 'Khách',
-      'IP Activity' => 'Hoạt động IP',
-      'Guest' => 'Khách',
-      'Who is online?' => 'Ai đang trực tuyến?',
       'Online' => 'Trực tuyến',
-      'For registered users only' => 'Chỉ dành cho thành viên đã đăng ký',
+      'History' => 'Lịch sử',
+      'Who is online?' => 'Ai đang trực tuyến?',
+      'IP Activity' => 'Hoạt động IP',
+      'Users' => 'Thành viên',
+      'Guest' => 'Khách',
       'List is empty' => 'Danh sách trống',
       'Total' => 'Tổng số',
     ),

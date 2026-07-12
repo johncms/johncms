@@ -50,7 +50,7 @@ msgstr "Користувачі"
 
 #: modules/online/src/Application/Middlewares/OnlineAdminMiddleware.php:27
 msgid "Access denied"
-msgstr ""
+msgstr "Доступ заборонено"
 
 #: modules/online/src/Application/UseCases/GetOnlineGuestsUseCase.php:34
 msgid "Guest"

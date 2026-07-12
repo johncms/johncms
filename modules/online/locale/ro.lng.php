@@ -5,13 +5,12 @@
   array (
     '' => 
     array (
-      'Users' => 'Utilizatori',
-      'History' => 'Istoric',
       'Guests' => 'Oaspeti',
-      'IP Activity' => 'Activitate IP',
-      'Guest' => 'Oaspete',
+      'History' => 'Istoric',
       'Who is online?' => 'Cine este online?',
-      'For registered users only' => 'Doar pentru utilizatori inregistrati',
+      'IP Activity' => 'Activitate IP',
+      'Users' => 'Utilizatori',
+      'Guest' => 'Oaspete',
       'List is empty' => 'Lista este goală',
       'Total' => 'Toatal',
     ),

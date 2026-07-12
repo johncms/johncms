@@ -5,14 +5,15 @@
   array (
     '' => 
     array (
+      'All messages older than 1 week were deleted' => 'Semua pesan lebih dari 1 minggu berhasil dihapus',
+      'All messages older than 1 day were deleted' => 'Semua pesan lebih dari 1 hari berhasil dihapus',
+      'Full clearing is finished' => 'Semua pesan berhasil dihapus',
+      'Delete message' => 'Hapus pesan',
       'Edit message' => 'Mengedit pesan',
       'Guestbook' => 'Buku tamu',
       'Admin Club' => 'Klub Admin',
       'Guestbook is closed' => 'Buku tamu ditutup',
       'Reply' => 'Balas',
-      'All messages older than 1 day were deleted' => 'Semua pesan lebih dari 1 hari berhasil dihapus',
-      'Full clearing is finished' => 'Semua pesan berhasil dihapus',
-      'All messages older than 1 week were deleted' => 'Semua pesan lebih dari 1 minggu berhasil dihapus',
       'Clear guestbook' => 'Yang jelas buku tamu',
       'Clearing parameters' => 'Pilih metode penghapusan',
       'Older than 1 week' => 'Lebih dari 1 minggu',
@@ -20,7 +21,6 @@
       'Clear all' => 'Hapus semua',
       'Clear' => 'Hapus',
       'Cancel' => 'Batal',
-      'Delete message' => 'Hapus pesan',
       'Do you really want to delete?' => 'Apakah Anda yakin menghapus ini?',
       'Delete' => 'Hapus',
       'Author' => 'Oleh',

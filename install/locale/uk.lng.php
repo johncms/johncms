@@ -62,6 +62,7 @@
       'ATTENTION!' => 'УВАГА!',
       'Now you need to delete the folder <b>/install/</b>' => 'Тепер потрібно видалити папку <b>/install/</b>',
       'If you need help, you can visit <a href="https://johncms.com/forum/" class="text-underline">our forum</a>.' => 'Якщо вам потрібна допомога, ви можете відвідати <a href="https://johncms.com/forum/" class="text-underline">наш форум</a>.',
+      'Also, if necessary, you can familiarize yourself with <a href="https://docs.johncms.com/" class="text-underline">the documentation</a>' => 'Також за потреби ви можете ознайомитися з <a href="https://docs.johncms.com/" class="text-underline">документацією</a>',
       'Go to website' => 'Перейти на веб-сайт',
     ),
   ),

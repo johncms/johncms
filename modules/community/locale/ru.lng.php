@@ -5,12 +5,14 @@
   array (
     '' => 
     array (
+      'Community' => 'Сообщество',
+      'For registered users only' => 'Только для зарегистрированных посетителей',
       'Administration' => 'Администрация',
       'Birthdays' => 'Именинники',
       'User Search' => 'Поиск пользователя',
+      'List of users' => 'Список пользователей',
       'Nickname' => 'Ник',
       'Invalid length' => 'Недопустимая длина',
-      'Invalid characters' => 'Недопустимые символы',
       'Forum' => 'Форум',
       'Guestbook' => 'Гостевая',
       'Comments' => 'Комментарии',
@@ -19,18 +21,15 @@
       'Most commentators' => 'Больше всего комментировали',
       'Best Karma' => 'Лучшая Карма',
       'Most active in Forum' => 'Самые активные на Форуме',
-      'List of users' => 'Список пользователей',
-      'Community' => 'Сообщество',
-      'For registered users only' => 'Только для зарегистрированных посетителей',
+      'List is empty' => 'Список пуст',
+      'Total' => 'Всего',
+      'Back' => 'Назад',
       'Look for the User' => 'Искать пользователя',
       'Search' => 'Поиск',
       'The search is performed by Nickname and are case-insensitive.' => 'Поиск осуществляется по нику и не зависят от регистра.',
       'Users' => 'Пользователи',
       'Top Activity' => 'Топ активности',
       'Username' => 'Имя пользователя',
-      'List is empty' => 'Список пуст',
-      'Total' => 'Всего',
-      'Back' => 'Назад',
       'post' => 
       array (
         0 => 'пост',

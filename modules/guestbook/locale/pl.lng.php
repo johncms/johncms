@@ -5,14 +5,15 @@
   array (
     '' => 
     array (
+      'All messages older than 1 week were deleted' => 'Wszystkie wiadomości starsze niż 1 tydzień zostały usunięte',
+      'All messages older than 1 day were deleted' => 'Wszystkie wiadomości starsze niż 1 dzień zostały usunięte',
+      'Full clearing is finished' => 'Pełne czyszczenie zostało zakończone',
+      'Delete message' => 'Usuń wiadomość',
       'Edit message' => 'Edytuj wiadomość',
       'Guestbook' => 'Księga gości',
       'Admin Club' => 'Klub Admina',
       'Guestbook is closed' => 'Księga gości jest zamknięta',
       'Reply' => 'Odpowiedź',
-      'All messages older than 1 day were deleted' => 'Wszystkie wiadomości starsze niż 1 dzień zostały usunięte',
-      'Full clearing is finished' => 'Pełne czyszczenie zostało zakończone',
-      'All messages older than 1 week were deleted' => 'Wszystkie wiadomości starsze niż 1 tydzień zostały usunięte',
       'Clear guestbook' => 'Wyczyść książkę gości',
       'Clearing parameters' => 'Usuwanie parametrów',
       'Older than 1 week' => 'Starsze niż 1 tydzień',
@@ -20,7 +21,6 @@
       'Clear all' => 'Wyczyść wszystko',
       'Clear' => 'Wyczyść',
       'Cancel' => 'Anuluj',
-      'Delete message' => 'Usuń wiadomość',
       'Do you really want to delete?' => 'Czy na pewno chcesz usunąć?',
       'Delete' => 'Usuń',
       'Author' => 'Autor',

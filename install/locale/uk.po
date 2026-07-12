@@ -275,7 +275,7 @@ msgstr "Якщо вам потрібна допомога, ви можете в�
 
 #: install/templates/step_5.phtml:12
 msgid "Also, if necessary, you can familiarize yourself with <a href=\"https://docs.johncms.com/\" class=\"text-underline\">the documentation</a>"
-msgstr ""
+msgstr "Також за потреби ви можете ознайомитися з <a href=\"https://docs.johncms.com/\" class=\"text-underline\">документацією</a>"
 
 #: install/templates/step_5.phtml:15
 msgid "Go to website"

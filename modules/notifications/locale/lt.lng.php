@@ -6,6 +6,9 @@
     '' => 
     array (
       'Notifications are cleared!' => 'Pranešimai išvalytas!',
+      'Notifications' => 'Pranešimai',
+      'Settings' => 'Nustatymai',
+      'Settings saved!' => 'Nustatymai išsaugoti!',
       'Users on registration' => 'Vartotojų registracija',
       'Articles on moderation' => 'Failas ant moderacijos',
       'Downloads on moderation' => 'Siuntiniai laukia moderacijos',
@@ -14,9 +17,6 @@
       'Mail' => 'Paštas',
       'Guestbook' => 'Svečių Knyga',
       'Comments' => 'Komentarai',
-      'Settings' => 'Nustatymai',
-      'Settings saved!' => 'Nustatymai išsaugoti!',
-      'Notifications' => 'Pranešimai',
       'All notifications have already been read' => 'Visi pranešimai perskaityti',
       'Total' => 'Viso',
       'Clear notifications' => 'Aišku pranešimų',

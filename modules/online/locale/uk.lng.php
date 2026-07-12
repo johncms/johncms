@@ -5,14 +5,14 @@
   array (
     '' => 
     array (
-      'Users' => 'Користувачі',
-      'History' => 'Історія',
       'Guests' => 'Гості',
-      'IP Activity' => 'IP Активність',
-      'Guest' => 'Гість',
-      'Who is online?' => 'Хто в мережі?',
       'Online' => 'В мережі',
-      'For registered users only' => 'Тільки для зареєстрованих користувачів',
+      'History' => 'Історія',
+      'Who is online?' => 'Хто в мережі?',
+      'IP Activity' => 'IP Активність',
+      'Users' => 'Користувачі',
+      'Access denied' => 'Доступ заборонено',
+      'Guest' => 'Гість',
       'List is empty' => 'Список порожній',
       'Total' => 'Разом',
     ),

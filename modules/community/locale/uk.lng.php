@@ -5,12 +5,14 @@
   array (
     '' => 
     array (
+      'Community' => 'Спільнота',
+      'For registered users only' => 'Тільки для зареєстрованих користувачів',
       'Administration' => 'Адміністрація',
       'Birthdays' => 'Іменинники',
       'User Search' => 'Пошук користувача',
+      'List of users' => 'Список користувачів',
       'Nickname' => 'Нікнейм',
       'Invalid length' => 'Неправильна довжина',
-      'Invalid characters' => 'Неприпустимі символи',
       'Forum' => 'Форум',
       'Guestbook' => 'Гостьова книга',
       'Comments' => 'Коментарі',
@@ -19,18 +21,15 @@
       'Most commentators' => 'Більшість коментаторів',
       'Best Karma' => 'Краща карма',
       'Most active in Forum' => 'Найактивніші на форумі',
-      'List of users' => 'Список користувачів',
-      'Community' => 'Спільнота',
-      'For registered users only' => 'Тільки для зареєстрованих користувачів',
+      'List is empty' => 'Список порожній',
+      'Total' => 'Разом',
+      'Back' => 'Повернутися',
       'Look for the User' => 'Подивіться для користувача',
       'Search' => 'Пошук',
       'The search is performed by Nickname and are case-insensitive.' => 'Пошук здійснюється по ніку і не залежить від регістру.',
       'Users' => 'Користувачі',
       'Top Activity' => 'Топ активності',
       'Username' => 'Ім\'я користувача',
-      'List is empty' => 'Список порожній',
-      'Total' => 'Разом',
-      'Back' => 'Повернутися',
       'post' => 
       array (
         0 => 'пост',
