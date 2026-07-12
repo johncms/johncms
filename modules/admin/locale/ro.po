@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Romanian\n"
 "Language: ro_RO\n"
-"PO-Revision-Date: 2026-07-11 21:51\n"
+"PO-Revision-Date: 2026-07-12 12:34\n"
 
 #: system/src/Http/Controller/AdminControllerContext.php:50
 #: modules/admin/src/Application/Controllers/DashboardController.php:27
@@ -45,10 +45,10 @@ msgstr "Administrare Forum"
 #: modules/admin/src/Application/Controllers/Settings/AdsController.php:131
 #: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:38
 #: modules/admin/src/Application/Controllers/Settings/CountersController.php:51
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:79
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:88
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:118
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:168
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:80
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:89
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:123
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:175
 #: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:38
 #: modules/admin/src/Application/Controllers/Settings/SystemSettingsController.php:40
 #: modules/admin/src/Application/Controllers/System/EmoticonsController.php:37
@@ -117,8 +117,8 @@ msgstr "Nu ai introdus nici un titlu"
 #: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:119
 #: modules/admin/templates/ads_add.phtml:38
 #: modules/admin/templates/ads_add.phtml:39
-#: modules/admin/templates/counters_add_confirm.phtml:23
-#: modules/admin/templates/counters_view.phtml:22
+#: modules/admin/templates/counters_add_confirm.phtml:25
+#: modules/admin/templates/counters_view.phtml:23
 #: modules/admin/templates/forum/add.phtml:26
 #: modules/admin/templates/forum/add.phtml:27
 #: modules/admin/templates/forum/edit.phtml:25
@@ -197,7 +197,8 @@ msgstr "in functie de sectiune"
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:230
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:250
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:298
-#: modules/admin/templates/sidebar-admin-menu.phtml:285
+#: modules/admin/templates/sidebar-admin-menu.phtml:277
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:309
 msgid "Ban by IP"
 msgstr "Baneaza pe IP"
 
@@ -222,6 +223,7 @@ msgstr "IP invalid"
 #: modules/admin/templates/ipban_search.phtml:26
 #: modules/admin/templates/search_ip.phtml:29
 #: modules/admin/templates/sidebar-admin-menu.phtml:57
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:57
 msgid "Search"
 msgstr "Cauta"
 
@@ -265,7 +267,7 @@ msgstr "Baneaza adresa IP"
 
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:267
 #: modules/admin/templates/ads_index.phtml:49
-#: modules/admin/templates/counters_form.phtml:41
+#: modules/admin/templates/counters_form.phtml:43
 msgid "Default"
 msgstr "Implicit"
 
@@ -325,6 +327,7 @@ msgstr "Imagine stearsa cu success"
 #: modules/admin/src/Application/Controllers/Settings/AdsController.php:303
 #: modules/admin/src/Application/Controllers/Settings/AdsController.php:335
 #: modules/admin/templates/sidebar-admin-menu.phtml:175
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:183
 msgid "Advertisement"
 msgstr "Reclama"
 
@@ -341,7 +344,7 @@ msgstr "Link adaugat cu sucess"
 #: modules/admin/templates/ads_index.phtml:55
 #: modules/admin/templates/counters.phtml:38
 #: modules/admin/templates/counters_confirm.phtml:23
-#: modules/admin/templates/counters_view.phtml:49
+#: modules/admin/templates/counters_view.phtml:53
 #: modules/admin/templates/forum/del_confirm.phtml:20
 #: modules/admin/templates/forum/del_confirm_move_topics.phtml:49
 #: modules/admin/templates/forum/structure.phtml:35
@@ -361,8 +364,8 @@ msgid "Are you sure you want to delete all inactive links?"
 msgstr "Esti sigur ca vrei sa stergi toate link-urile inactive?"
 
 #: modules/admin/src/Application/Controllers/Settings/AdsController.php:196
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:98
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:128
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:101
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:135
 msgid "The required fields are not filled"
 msgstr "Campurile necesare nu au fost completate"
 
@@ -409,48 +412,51 @@ msgstr "Setari Antiflood"
 
 #: modules/admin/src/Application/Controllers/Settings/CountersController.php:37
 #: modules/admin/src/Application/Controllers/Settings/CountersController.php:55
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:101
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:172
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:194
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:220
-#: modules/admin/templates/sidebar-admin-menu.phtml:192
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:104
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:179
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:201
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:229
+#: modules/admin/templates/sidebar-admin-menu.phtml:184
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:208
 msgid "Counters"
 msgstr "Contoare"
 
 #: modules/admin/src/Application/Controllers/Settings/CountersController.php:54
-#: modules/admin/templates/counters_form.phtml:63
+#: modules/admin/templates/counters_form.phtml:78
 msgid "Viewing"
 msgstr "Se afișează"
 
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:171
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:178
 msgid "Delete:"
 msgstr "Sters"
 
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:177
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:184
 #: modules/admin/templates/forum/del_confirm.phtml:15
 msgid "Do you really want to delete?"
 msgstr "Esti sigur ca vrei sa stergi?"
 
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:212
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:221
 msgid "On all pages showing option 1"
 msgstr "Pe toate paginile arata optiunea 1"
 
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:213
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:222
 msgid "On all pages showing option 2"
 msgstr "Pe toate paginile arata optiunea 2"
 
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:214
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:223
 msgid "On the main showing option 1, on the other pages option 2"
 msgstr "Pe pagina princilapa arata optiunea 1, si pe alte pagini optiunea 2"
 
 #: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:77
 #: modules/admin/templates/sidebar-admin-menu.phtml:151
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:151
 msgid "Permissions"
 msgstr "Permisiuni"
 
 #: modules/admin/src/Application/Controllers/Settings/SystemSettingsController.php:89
-#: modules/admin/templates/sidebar-admin-menu.phtml:223
+#: modules/admin/templates/sidebar-admin-menu.phtml:215
 #: modules/admin/templates/smilies.phtml:8
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:239
 msgid "System Settings"
 msgstr "Setari Sistem"
 
@@ -469,7 +475,8 @@ msgstr "Emoticoane"
 #: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:32
 #: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:46
 #: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:78
-#: modules/admin/templates/sidebar-admin-menu.phtml:277
+#: modules/admin/templates/sidebar-admin-menu.phtml:269
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:301
 msgid "Anti-Spyware"
 msgstr "\n"
 "Anti-Spyware"
@@ -515,13 +522,15 @@ msgid "The task is already running"
 msgstr ""
 
 #: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:85
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:271
 msgid "Maintenance"
 msgstr ""
 
 #: modules/admin/src/Application/Controllers/System/SystemCheckController.php:26
 #: modules/admin/src/Application/Controllers/System/SystemCheckController.php:27
 #: modules/admin/src/Application/Controllers/System/SystemCheckController.php:31
-#: modules/admin/templates/sidebar-admin-menu.phtml:247
+#: modules/admin/templates/sidebar-admin-menu.phtml:239
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:263
 msgid "System check"
 msgstr "Verificare sistem"
 
@@ -542,6 +551,7 @@ msgstr "Amnistitie"
 #: modules/admin/src/Application/Controllers/Users/AmnestyController.php:61
 #: modules/admin/src/Application/Controllers/Users/BanListController.php:47
 #: modules/admin/templates/sidebar-admin-menu.phtml:94
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:94
 msgid "Ban Panel"
 msgstr "Panou Banari"
 
@@ -574,6 +584,7 @@ msgstr "Nu poti sterge in membru al echipei"
 #: modules/admin/src/Application/Controllers/Users/KarmaController.php:62
 #: modules/admin/src/Application/Controllers/Users/KarmaController.php:102
 #: modules/admin/templates/sidebar-admin-menu.phtml:120
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:120
 msgid "Karma"
 msgstr ""
 
@@ -604,6 +615,7 @@ msgstr "Toate inregistrarile neconfirmate cu IP-ul selectat au fost sterse"
 
 #: modules/admin/src/Application/Controllers/Users/StaffListController.php:27
 #: modules/admin/templates/sidebar-admin-menu.phtml:85
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:85
 msgid "Administration"
 msgstr "Administrare"
 
@@ -613,6 +625,7 @@ msgstr "Profile inactive sterse"
 
 #: modules/admin/src/Application/Controllers/Users/UserCleanupController.php:58
 #: modules/admin/templates/sidebar-admin-menu.phtml:104
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:104
 msgid "Database cleanup"
 msgstr "Curata baza de date"
 
@@ -704,6 +717,8 @@ msgstr "Oaspeti"
 #: modules/admin/templates/ads_add.phtml:68
 #: modules/admin/templates/sidebar-admin-menu.phtml:37
 #: modules/admin/templates/sidebar-admin-menu.phtml:76
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:37
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:76
 msgid "Users"
 msgstr "Utilizatori"
 
@@ -759,6 +774,7 @@ msgstr "Blocheaza"
 #: modules/admin/templates/access.phtml:24
 #: modules/admin/templates/sidebar-admin-menu.phtml:159
 #: modules/admin/templates/usr_del.phtml:36
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:159
 msgid "Forum"
 msgstr ""
 
@@ -817,7 +833,7 @@ msgstr "Administratorii vor avea intotdeauna permisiunea la comentarii si module
 #: modules/admin/templates/ads_add.phtml:98
 #: modules/admin/templates/amnesty.phtml:36
 #: modules/admin/templates/antiflood.phtml:62
-#: modules/admin/templates/counters_add_confirm.phtml:45
+#: modules/admin/templates/counters_add_confirm.phtml:53
 #: modules/admin/templates/forum/edit.phtml:82
 #: modules/admin/templates/forum/settings.phtml:64
 #: modules/admin/templates/ipban_add.phtml:57
@@ -854,7 +870,7 @@ msgstr "Total"
 #: modules/admin/templates/antispy_scan_result.phtml:27
 #: modules/admin/templates/ban_panel.phtml:47
 #: modules/admin/templates/counters.phtml:50
-#: modules/admin/templates/counters_view.phtml:50
+#: modules/admin/templates/counters_view.phtml:54
 #: modules/admin/templates/forum/hidden_posts.phtml:118
 #: modules/admin/templates/forum/hidden_topics.phtml:114
 #: modules/admin/templates/forum/index.phtml:31
@@ -935,9 +951,9 @@ msgstr "Stilul de link"
 #: modules/admin/templates/amnesty.phtml:37
 #: modules/admin/templates/antiflood.phtml:63
 #: modules/admin/templates/antispy_create_confirm.phtml:25
-#: modules/admin/templates/counters_add_confirm.phtml:46
+#: modules/admin/templates/counters_add_confirm.phtml:54
 #: modules/admin/templates/counters_confirm.phtml:25
-#: modules/admin/templates/counters_form.phtml:64
+#: modules/admin/templates/counters_form.phtml:79
 #: modules/admin/templates/emoticons.phtml:27
 #: modules/admin/templates/forum/add.phtml:69
 #: modules/admin/templates/forum/del_confirm.phtml:22
@@ -1003,7 +1019,7 @@ msgstr "Jos"
 
 #: modules/admin/templates/ads_index.phtml:54
 #: modules/admin/templates/counters.phtml:37
-#: modules/admin/templates/counters_view.phtml:48
+#: modules/admin/templates/counters_view.phtml:52
 #: modules/admin/templates/forum/structure.phtml:34
 msgid "Edit"
 msgstr "Editeaza"
@@ -1114,78 +1130,96 @@ msgstr "Sorteaza"
 msgid "Add"
 msgstr "Adauga"
 
-#: modules/admin/templates/counters_add_confirm.phtml:26
-#: modules/admin/templates/counters_form.phtml:27
-#: modules/admin/templates/counters_form.phtml:49
-#: modules/admin/templates/counters_view.phtml:33
+#: modules/admin/templates/counters_add_confirm.phtml:28
+#: modules/admin/templates/counters_form.phtml:29
+#: modules/admin/templates/counters_form.phtml:51
+#: modules/admin/templates/counters_view.phtml:34
 msgid "Option 1"
 msgstr "Optiunea 1"
 
-#: modules/admin/templates/counters_add_confirm.phtml:29
-#: modules/admin/templates/counters_form.phtml:32
-#: modules/admin/templates/counters_form.phtml:53
-#: modules/admin/templates/counters_view.phtml:36
+#: modules/admin/templates/counters_add_confirm.phtml:31
+#: modules/admin/templates/counters_form.phtml:34
+#: modules/admin/templates/counters_form.phtml:55
+#: modules/admin/templates/counters_view.phtml:37
 msgid "Option 2"
 msgstr "Optiunea 2"
 
-#: modules/admin/templates/counters_add_confirm.phtml:41
+#: modules/admin/templates/counters_add_confirm.phtml:49
 msgid "If the counter are displayed correctly and without errors, click &quot;Save&quot;.<br>Otherwise, click back button and correct errors."
 msgstr "Daca contoarele sunt afisate corect si fara erori, clik pe &quot;Salveaza&quot;.<br>Altfel,click pe butonul Inapoi si corecteaza erorile."
 
-#: modules/admin/templates/counters_form.phtml:23
-#: modules/admin/templates/counters_form.phtml:24
+#: modules/admin/templates/counters_form.phtml:25
+#: modules/admin/templates/counters_form.phtml:26
 msgid "Name"
 msgstr "Nume"
 
-#: modules/admin/templates/counters_form.phtml:29
+#: modules/admin/templates/counters_form.phtml:31
 msgid "Code for main page"
 msgstr "Cod pentru pagina principala"
 
-#: modules/admin/templates/counters_form.phtml:34
+#: modules/admin/templates/counters_form.phtml:36
 msgid "Code for other pages"
 msgstr "Cod pentru alte pagini"
 
-#: modules/admin/templates/counters_form.phtml:37
+#: modules/admin/templates/counters_form.phtml:39
 msgid "Display mode"
 msgstr "Modul de afișare"
 
-#: modules/admin/templates/counters_form.phtml:44
+#: modules/admin/templates/counters_form.phtml:46
 msgid "On the main showing option 1, on the other pages option 2.<br>If &quot;option 2&quot; not filled, counter would only appear on the main page."
 msgstr "Pe pagina principal arata optiunea 1, pe alte pagini optiunea 2.<br>Daca &quot;optiunea 2&quot; nu este completata, contoarele vor aparea doar pe prima pagina."
 
-#: modules/admin/templates/counters_form.phtml:57
-msgid "WARNING!"
-msgstr "ATENŢIE!"
-
-#: modules/admin/templates/counters_form.phtml:58
-msgid "Make sure you have correctly entered the code. It must meet the standard of XML"
-msgstr "Asigurați-vă că ați introdus corect codul. Trebuie să îndeplinească standardul XML"
-
-#: modules/admin/templates/counters_form.phtml:59
-msgid "If you click &quot;View&quot; and XHTML errors occured, then click &quot;Back&quot; button in your browser, return to this form and correct the errors."
-msgstr "Dacă faceţi clic pe &quot;Vezi&quot; şi au apărut erori XHTML, apoi faceţi clic pe butonul &quot;Înapoi&quot; din browser, reveniţi la acest formular şi corectaţi erorile."
-
-#: modules/admin/templates/counters_view.phtml:25
-msgid "Status:"
-msgstr "Stare:"
-
-#: modules/admin/templates/counters_view.phtml:27
+#: modules/admin/templates/counters_form.phtml:60
+#: modules/admin/templates/counters_view.phtml:28
 msgid "Enabled"
 msgstr "Activat"
 
-#: modules/admin/templates/counters_view.phtml:29
+#: modules/admin/templates/counters_form.phtml:65
+#: modules/admin/templates/counters_view.phtml:43
+msgid "Load only after cookie consent"
+msgstr ""
+
+#: modules/admin/templates/counters_form.phtml:68
+msgid "If enabled, the counter code runs only after the visitor accepts the cookie banner. Requires the cookie banner to be enabled."
+msgstr ""
+
+#: modules/admin/templates/counters_form.phtml:72
+msgid "WARNING!"
+msgstr "ATENŢIE!"
+
+#: modules/admin/templates/counters_form.phtml:73
+msgid "Make sure you have correctly entered the code. It must meet the standard of XML"
+msgstr "Asigurați-vă că ați introdus corect codul. Trebuie să îndeplinească standardul XML"
+
+#: modules/admin/templates/counters_form.phtml:74
+msgid "If you click &quot;View&quot; and XHTML errors occured, then click &quot;Back&quot; button in your browser, return to this form and correct the errors."
+msgstr "Dacă faceţi clic pe &quot;Vezi&quot; şi au apărut erori XHTML, apoi faceţi clic pe butonul &quot;Înapoi&quot; din browser, reveniţi la acest formular şi corectaţi erorile."
+
+#: modules/admin/templates/counters_view.phtml:26
+msgid "Status:"
+msgstr "Stare:"
+
+#: modules/admin/templates/counters_view.phtml:30
 msgid "Disabled"
 msgstr "Dezactivat"
 
-#: modules/admin/templates/counters_view.phtml:39
+#: modules/admin/templates/counters_view.phtml:40
 msgid "Display mode:"
 msgstr "Modul de afișare"
 
-#: modules/admin/templates/counters_view.phtml:46
+#: modules/admin/templates/counters_view.phtml:44
+msgid "Yes"
+msgstr ""
+
+#: modules/admin/templates/counters_view.phtml:44
+msgid "No"
+msgstr ""
+
+#: modules/admin/templates/counters_view.phtml:50
 msgid "Disable"
 msgstr "Dezactiveaza"
 
-#: modules/admin/templates/counters_view.phtml:46
+#: modules/admin/templates/counters_view.phtml:50
 msgid "Enable"
 msgstr "Activeaza"
 
@@ -1811,38 +1845,42 @@ msgid "Themes"
 msgstr "Teme"
 
 #: modules/admin/templates/sidebar-admin-menu.phtml:66
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:66
 msgid "On registration"
 msgstr "La inregistrare"
 
 #: modules/admin/templates/sidebar-admin-menu.phtml:112
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:112
 msgid "Antiflood"
 msgstr "Antiinundație"
 
 #: modules/admin/templates/sidebar-admin-menu.phtml:134
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:134
 msgid "Modules"
 msgstr "Module"
 
 #: modules/admin/templates/sidebar-admin-menu.phtml:167
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:167
 msgid "News"
 msgstr "Stiri"
 
-#: modules/admin/templates/sidebar-admin-menu.phtml:183
-msgid "Consents"
-msgstr ""
-
-#: modules/admin/templates/sidebar-admin-menu.phtml:206
+#: modules/admin/templates/sidebar-admin-menu.phtml:198
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:222
 msgid "System"
 msgstr "Sistem"
 
-#: modules/admin/templates/sidebar-admin-menu.phtml:231
+#: modules/admin/templates/sidebar-admin-menu.phtml:223
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:247
 msgid "Update Smilies"
 msgstr "Actualizeaza emoticon"
 
-#: modules/admin/templates/sidebar-admin-menu.phtml:239
+#: modules/admin/templates/sidebar-admin-menu.phtml:231
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:255
 msgid "Language Settings"
 msgstr "Setari Limba"
 
-#: modules/admin/templates/sidebar-admin-menu.phtml:260
+#: modules/admin/templates/sidebar-admin-menu.phtml:252
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:284
 msgid "Security"
 msgstr "Securitate"
 
@@ -1919,4 +1957,16 @@ msgstr "Esti sigur ca vrei sa stergi acest utilizator?"
 #: modules/admin/templates/usr_del.phtml:39
 msgid "All threads and posts created by the user go in the hidden state"
 msgstr "Toate subiectele si postarile create de utilizator vor fi puse in modul ascuns"
+
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:175
+msgid "Collections"
+msgstr ""
+
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:191
+msgid "Consents"
+msgstr ""
+
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:199
+msgid "Cookie banner"
+msgstr ""
 
