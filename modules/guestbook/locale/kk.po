@@ -11,58 +11,74 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Kazakh\n"
 "Language: kk_KZ\n"
-"PO-Revision-Date: 2026-03-27 20:03\n"
+"PO-Revision-Date: 2026-07-12 12:37\n"
 
-#: modules/guestbook/src/Application/Controllers/DeleteEntryController.php:46
-#: modules/guestbook/src/Application/Controllers/DeleteEntryController.php:59
+#: modules/guestbook/src/Application/Controllers/ClearGuestbookController.php:46
+msgid "All messages older than 1 week were deleted"
+msgstr "1 аптадан асқан барлық хабарлар жойылады"
+
+#: modules/guestbook/src/Application/Controllers/ClearGuestbookController.php:47
+msgid "All messages older than 1 day were deleted"
+msgstr "1 күннен асқан барлық хабарлар жойылады"
+
+#: modules/guestbook/src/Application/Controllers/ClearGuestbookController.php:48
+msgid "Full clearing is finished"
+msgstr "Толық тазалау аяқталды"
+
+#: modules/guestbook/src/Application/Controllers/DeleteEntryController.php:56
+#: modules/guestbook/src/Application/Controllers/DeleteEntryController.php:67
 #: modules/guestbook/templates/confirm_delete.phtml:6
 msgid "Delete message"
 msgstr "Хабарламаны жою"
 
-#: modules/guestbook/src/Application/Controllers/DeleteEntryController.php:47
-#: modules/guestbook/src/Application/Controllers/DeleteEntryController.php:60
+#: modules/guestbook/src/Application/Controllers/DeleteEntryController.php:57
+#: modules/guestbook/src/Application/Controllers/DeleteEntryController.php:68
+#: modules/guestbook/src/Application/Controllers/EditEntryController.php:53
+#: modules/guestbook/src/Application/Controllers/ReplyController.php:55
 #: modules/guestbook/src/Application/Controllers/UploadFileController.php:36
 msgid "Wrong data"
 msgstr ""
 
-#: modules/guestbook/src/Application/Controllers/DeleteEntryController.php:87
+#: modules/guestbook/src/Application/Controllers/DeleteEntryController.php:76
 msgid "The message was deleted"
 msgstr ""
 
-#: modules/guestbook/src/Application/Controllers/EditEntryController.php:34
+#: modules/guestbook/src/Application/Controllers/EditEntryController.php:40
+#: modules/guestbook/src/Application/Controllers/EditEntryController.php:52
 #: modules/guestbook/templates/edit.phtml:3
 msgid "Edit message"
 msgstr "Хабарларды өзгерту"
 
-#: modules/guestbook/src/Application/Controllers/EditEntryController.php:69
+#: modules/guestbook/src/Application/Controllers/EditEntryController.php:85
 msgid "The message was saved"
 msgstr ""
 
-#: modules/guestbook/src/Application/Controllers/GuestbookController.php:36
+#: modules/guestbook/src/Application/Controllers/GuestbookController.php:50
 msgid "Guestbook"
 msgstr "Қонақ кітәпшасы"
 
-#: modules/guestbook/src/Application/Controllers/GuestbookController.php:36
+#: modules/guestbook/src/Application/Controllers/GuestbookController.php:50
 msgid "Admin Club"
 msgstr "Админ Чат"
 
-#: modules/guestbook/src/Application/Controllers/GuestbookController.php:50
+#: modules/guestbook/src/Application/Controllers/GuestbookController.php:59
 msgid "Guestbook is closed"
 msgstr "Қонақ бөлмесі жабық"
 
-#: modules/guestbook/src/Application/Controllers/GuestbookController.php:71
+#: modules/guestbook/src/Application/Controllers/GuestbookController.php:83
 msgid "Your message was added successfully"
 msgstr ""
 
-#: modules/guestbook/src/Application/Controllers/ReplyController.php:34
+#: modules/guestbook/src/Application/Controllers/ReplyController.php:42
+#: modules/guestbook/src/Application/Controllers/ReplyController.php:54
 #: modules/guestbook/templates/index.phtml:191
 #: modules/guestbook/templates/index.phtml:203
-#: modules/guestbook/templates/reply.phtml:11
-#: modules/guestbook/templates/reply.phtml:24
+#: modules/guestbook/templates/reply.phtml:13
+#: modules/guestbook/templates/reply.phtml:26
 msgid "Reply"
 msgstr "Жауап беру"
 
-#: modules/guestbook/src/Application/Controllers/ReplyController.php:69
+#: modules/guestbook/src/Application/Controllers/ReplyController.php:87
 msgid "Your reply to the message was saved"
 msgstr ""
 
@@ -70,17 +86,30 @@ msgstr ""
 msgid "Only images are allowed"
 msgstr ""
 
-#: modules/guestbook/src/Application/Services/GuestbookService.php:188
-msgid "All messages older than 1 day were deleted"
-msgstr "1 күннен асқан барлық хабарлар жойылады"
+#: modules/guestbook/src/Install/Installer.php:38
+msgid "Welcome to the Admin Club!\r\n"
+"Only Moderators and Administrators have access here.\r\n"
+"Regular users are not allowed in."
+msgstr ""
 
-#: modules/guestbook/src/Application/Services/GuestbookService.php:199
-msgid "Full clearing is finished"
-msgstr "Толық тазалау аяқталды"
+#: modules/guestbook/src/Install/Installer.php:42
+msgid "The guestbook supports full text formatting in the visual editor:<br>\n"
+"<span style=\"font-weight: bold\">bold</span><br>\n"
+"<span style=\"font-style:italic\">italic</span><br>\n"
+"<span style=\"text-decoration:underline\">underlined</span><br>\n"
+"<span style=\"color:red\">red</span><br>\n"
+"<span style=\"color:green\">green</span><br>\n"
+"<span style=\"color:blue\">blue</span><br>\n"
+"Inserting links: <a href=\"https://johncms.com\">https://johncms.com</a>, images, tables, videos and much more"
+msgstr ""
 
-#: modules/guestbook/src/Application/Services/GuestbookService.php:210
-msgid "All messages older than 1 week were deleted"
-msgstr "1 аптадан асқан барлық хабарлар жойылады"
+#: modules/guestbook/src/Install/Installer.php:69
+msgid "Welcome to the Guestbook!"
+msgstr ""
+
+#: modules/guestbook/src/Install/Installer.php:73
+msgid "A sample reply from the Administrator"
+msgstr ""
 
 #: modules/guestbook/templates/clear.phtml:5
 msgid "Clear guestbook"
@@ -122,7 +151,7 @@ msgid "Delete"
 msgstr "Өшіру"
 
 #: modules/guestbook/templates/edit.phtml:10
-#: modules/guestbook/templates/reply.phtml:18
+#: modules/guestbook/templates/reply.phtml:20
 msgid "Author"
 msgstr "Автор"
 
@@ -132,12 +161,12 @@ msgid "Message"
 msgstr "Хабарлама"
 
 #: modules/guestbook/templates/edit.phtml:21
-#: modules/guestbook/templates/reply.phtml:30
+#: modules/guestbook/templates/reply.phtml:32
 msgid "Save"
 msgstr "Сақтау"
 
 #: modules/guestbook/templates/edit.phtml:22
-#: modules/guestbook/templates/reply.phtml:31
+#: modules/guestbook/templates/reply.phtml:33
 msgid "Back"
 msgstr "Артқа"
 
