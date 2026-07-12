@@ -11,60 +11,58 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Estonian\n"
 "Language: et_EE\n"
-"PO-Revision-Date: 2026-03-24 11:10\n"
+"PO-Revision-Date: 2026-07-12 12:40\n"
 
-#: modules/online/includes/guest.php:24
-#: modules/online/includes/history.php:24
-#: modules/online/includes/index.php:25
-#: modules/online/includes/ip.php:21
-msgid "Users"
-msgstr ""
-
-#: modules/online/includes/guest.php:29
-#: modules/online/includes/history.php:29
-#: modules/online/includes/index.php:30
-#: modules/online/includes/ip.php:26
-msgid "History"
-msgstr ""
-
-#: modules/online/includes/guest.php:37
-#: modules/online/includes/history.php:37
-#: modules/online/includes/index.php:38
-#: modules/online/includes/ip.php:34
+#: modules/online/src/Application/Controllers/GuestController.php:36
+#: modules/online/src/Application/FiltersBuilder.php:23
 msgid "Guests"
 msgstr ""
 
-#: modules/online/includes/guest.php:42
-#: modules/online/includes/history.php:42
-#: modules/online/includes/index.php:43
-#: modules/online/includes/ip.php:39
-msgid "IP Activity"
-msgstr ""
-
-#: modules/online/includes/guest.php:61
-msgid "Guest"
-msgstr ""
-
-#: modules/online/includes/index.php:48
-msgid "Who is online?"
-msgstr ""
-
-#: modules/online/index.php:55
-#: modules/online/index.php:63
+#: modules/online/src/Application/Controllers/GuestController.php:38
+#: modules/online/src/Application/Controllers/GuestController.php:56
+#: modules/online/src/Application/Controllers/HistoryController.php:38
+#: modules/online/src/Application/Controllers/HistoryController.php:56
+#: modules/online/src/Application/Controllers/IndexController.php:38
+#: modules/online/src/Application/Controllers/IndexController.php:56
+#: modules/online/src/Application/Controllers/IpController.php:34
+#: modules/online/src/Application/Controllers/IpController.php:45
+#: modules/online/src/Application/Middlewares/OnlineAdminMiddleware.php:25
 msgid "Online"
 msgstr ""
 
-#: modules/online/index.php:57
-msgid "For registered users only"
+#: modules/online/src/Application/Controllers/HistoryController.php:36
+#: modules/online/src/Application/FiltersBuilder.php:19
+msgid "History"
 msgstr ""
 
-#: modules/online/templates/ip.phtml:51
-#: modules/online/templates/users.phtml:38
+#: modules/online/src/Application/Controllers/IndexController.php:36
+msgid "Who is online?"
+msgstr ""
+
+#: modules/online/src/Application/Controllers/IpController.php:32
+#: modules/online/src/Application/FiltersBuilder.php:24
+msgid "IP Activity"
+msgstr ""
+
+#: modules/online/src/Application/FiltersBuilder.php:18
+msgid "Users"
+msgstr ""
+
+#: modules/online/src/Application/Middlewares/OnlineAdminMiddleware.php:27
+msgid "Access denied"
+msgstr ""
+
+#: modules/online/src/Application/UseCases/GetOnlineGuestsUseCase.php:34
+msgid "Guest"
+msgstr ""
+
+#: modules/online/templates/ip.phtml:43
+#: modules/online/templates/users.phtml:30
 msgid "List is empty"
 msgstr ""
 
-#: modules/online/templates/ip.phtml:58
-#: modules/online/templates/users.phtml:45
+#: modules/online/templates/ip.phtml:50
+#: modules/online/templates/users.phtml:37
 msgid "Total"
 msgstr ""
 
