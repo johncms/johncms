@@ -11,81 +11,81 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
-"PO-Revision-Date: 2026-03-24 21:38\n"
+"PO-Revision-Date: 2026-07-12 12:41\n"
 
-#: modules/notifications/includes/clear.php:23
+#: modules/notifications/src/Application/Controllers/ClearController.php:22
 msgid "Notifications are cleared!"
 msgstr "تم مسح الإخطارات!"
 
-#: modules/notifications/includes/index.php:29
-msgid "Users on registration"
-msgstr "المستخدمون عند التسجيل"
-
-#: modules/notifications/includes/index.php:39
-msgid "Articles on moderation"
-msgstr "مقالات عن الاعتدال"
-
-#: modules/notifications/includes/index.php:49
-msgid "Downloads on moderation"
-msgstr "التنزيلات على الاعتدال"
-
-#: modules/notifications/includes/index.php:60
-msgid "Ban"
-msgstr "الحظر"
-
-#: modules/notifications/includes/index.php:70
-msgid "New forum posts"
-msgstr "مشاركات منتدى جديدة"
-
-#: modules/notifications/includes/index.php:80
-msgid "Mail"
-msgstr "البريـــد"
-
-#: modules/notifications/includes/index.php:90
-#: modules/notifications/includes/index.php:109
-msgid "Guestbook"
-msgstr "سجل الزوار"
-
-#: modules/notifications/includes/index.php:100
-msgid "Comments"
-msgstr "التعليقات"
-
-#: modules/notifications/includes/settings.php:18
-#: modules/notifications/templates/index.phtml:80
-msgid "Settings"
-msgstr "الإعدادات"
-
-#: modules/notifications/includes/settings.php:44
-msgid "Settings saved!"
-msgstr "تم حفظ الإعدادات!"
-
-#: modules/notifications/index.php:47
-#: modules/notifications/templates/index.phtml:11
-#: modules/notifications/templates/index.phtml:12
+#: modules/notifications/src/Application/Controllers/IndexController.php:30
+#: modules/notifications/src/Application/Controllers/IndexController.php:41
+#: modules/notifications/src/Application/Controllers/IndexController.php:44
+#: modules/notifications/src/Application/Controllers/SettingsController.php:31
 msgid "Notifications"
 msgstr "تنبيهات"
 
-#: modules/notifications/templates/index.phtml:27
+#: modules/notifications/src/Application/Controllers/SettingsController.php:29
+#: modules/notifications/templates/index.phtml:72
+msgid "Settings"
+msgstr "الإعدادات"
+
+#: modules/notifications/src/Application/Controllers/SettingsController.php:37
+msgid "Settings saved!"
+msgstr "تم حفظ الإعدادات!"
+
+#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:49
+msgid "Users on registration"
+msgstr "المستخدمون عند التسجيل"
+
+#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:57
+msgid "Articles on moderation"
+msgstr "مقالات عن الاعتدال"
+
+#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:65
+msgid "Downloads on moderation"
+msgstr "التنزيلات على الاعتدال"
+
+#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:75
+msgid "Ban"
+msgstr "الحظر"
+
+#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:84
+msgid "New forum posts"
+msgstr "مشاركات منتدى جديدة"
+
+#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:93
+msgid "Mail"
+msgstr "البريـــد"
+
+#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:102
+msgid "Guestbook"
+msgstr "سجل الزوار"
+
+#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:111
+msgid "Comments"
+msgstr "التعليقات"
+
+#: modules/notifications/templates/index.phtml:20
 msgid "All notifications have already been read"
 msgstr "تمت قراءة جميع الإخطارات بالفعل"
 
-#: modules/notifications/templates/index.phtml:67
+#: modules/notifications/templates/index.phtml:60
 msgid "Total"
 msgstr "مجموع"
 
-#: modules/notifications/templates/index.phtml:75
+#: modules/notifications/templates/index.phtml:67
 msgid "Clear notifications"
 msgstr "مسح الإشعارات"
 
-#: modules/notifications/templates/settings.phtml:45
+#: modules/notifications/templates/settings.phtml:31
 msgid "Display the number of unread messages in the forum"
 msgstr "عرض عدد الرسائل غير المقروءة في المنتدى"
 
-#: modules/notifications/templates/settings.phtml:49
+#: modules/notifications/templates/settings.phtml:35
 msgid "Save"
 msgstr "حفظ"
 
-#: modules/notifications/templates/settings.phtml:50
+#: modules/notifications/templates/settings.phtml:36
 msgid "Cancel"
 msgstr "إلغاء الأمر"
 
