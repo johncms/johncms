@@ -1,0 +1,166 @@
+<?php
+
+/**
+ * @var Mobicms\Render\Template\Template $this
+ * @var Johncms\Modules\Contacts\Application\DTO\ContactPageDTO $contacts
+ * @var string $form_action
+ * @var array<string, string> $form_data
+ * @var array<string, array<int, string>> $errors
+ * @var Illuminate\Support\Collection $consents
+ * @var bool $show_captcha
+ * @var string $captcha
+ * @var string $honeypot_field
+ * @var string|null $message
+ * @var string $csrf_token
+ */
+
+$this->layout('system::layout/default');
+?>
+
+<?php if (! empty($message)): ?>
+    <div class="alert alert-success"><?= $this->e($message) ?></div>
+<?php endif ?>
+
+<?php if ($contacts->text !== ''): ?>
+    <div class="mb-3"><?= nl2br($this->e($contacts->text)) ?></div>
+<?php endif ?>
+
+<?php if ($contacts->hasContactInfo()): ?>
+    <div class="card mb-3" itemscope itemtype="https://schema.org/Organization">
+        <div class="card-body">
+            <dl class="row mb-0">
+                <?php if ($contacts->email !== ''): ?>
+                    <dt class="col-sm-3"><?= __('E-mail') ?></dt>
+                    <dd class="col-sm-9">
+                        <a href="mailto:<?= $this->e($contacts->email) ?>" itemprop="email"><?= $this->e($contacts->email) ?></a>
+                    </dd>
+                <?php endif ?>
+
+                <?php if ($contacts->phone !== ''): ?>
+                    <dt class="col-sm-3"><?= __('Phone') ?></dt>
+                    <dd class="col-sm-9">
+                        <a href="tel:<?= $this->e(preg_replace('/[^\d+]/', '', $contacts->phone)) ?>" itemprop="telephone"><?= $this->e($contacts->phone) ?></a>
+                    </dd>
+                <?php endif ?>
+
+                <?php if ($contacts->address !== ''): ?>
+                    <dt class="col-sm-3"><?= __('Address') ?></dt>
+                    <dd class="col-sm-9" itemprop="address"><?= nl2br($this->e($contacts->address)) ?></dd>
+                <?php endif ?>
+
+                <?php if ($contacts->workingHours !== ''): ?>
+                    <dt class="col-sm-3"><?= __('Working hours') ?></dt>
+                    <dd class="col-sm-9"><?= nl2br($this->e($contacts->workingHours)) ?></dd>
+                <?php endif ?>
+
+                <?php if (! empty($contacts->socials)): ?>
+                    <dt class="col-sm-3"><?= __('We are on the web') ?></dt>
+                    <dd class="col-sm-9 mb-0">
+                        <?php foreach ($contacts->socials as $social): ?>
+                            <a href="<?= $this->e($social->url) ?>" class="me-2" rel="noopener noreferrer nofollow" target="_blank" itemprop="sameAs"><?= $this->e($social->title) ?></a>
+                        <?php endforeach ?>
+                    </dd>
+                <?php endif ?>
+            </dl>
+        </div>
+    </div>
+<?php endif ?>
+
+<?php if ($contacts->formEnabled): ?>
+    <h4><?= __('Feedback form') ?></h4>
+
+    <form method="post" action="<?= $this->e($form_action) ?>">
+        <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
+
+        <div class="form-group">
+            <label for="name"><?= __('Your name') ?></label>
+            <input type="text"
+                   class="form-control <?= isset($errors['name']) ? 'is-invalid' : '' ?>"
+                   name="name"
+                   id="name"
+                   maxlength="50"
+                   required
+                   value="<?= $this->e($form_data['name'] ?? '') ?>">
+            <?php if (isset($errors['name'])): ?>
+                <div class="invalid-feedback"><?= implode('<br>', $errors['name']) ?></div>
+            <?php endif ?>
+        </div>
+
+        <div class="form-group">
+            <label for="email"><?= __('E-mail for reply') ?></label>
+            <input type="email"
+                   class="form-control <?= isset($errors['email']) ? 'is-invalid' : '' ?>"
+                   name="email"
+                   id="email"
+                   required
+                   value="<?= $this->e($form_data['email'] ?? '') ?>">
+            <?php if (isset($errors['email'])): ?>
+                <div class="invalid-feedback"><?= implode('<br>', $errors['email']) ?></div>
+            <?php endif ?>
+        </div>
+
+        <div class="form-group">
+            <label for="message"><?= __('Message') ?></label>
+            <textarea class="form-control <?= isset($errors['message']) ? 'is-invalid' : '' ?>"
+                      name="message"
+                      id="message"
+                      rows="6"
+                      required><?= $this->e($form_data['message'] ?? '') ?></textarea>
+            <?php if (isset($errors['message'])): ?>
+                <div class="invalid-feedback"><?= implode('<br>', $errors['message']) ?></div>
+            <?php endif ?>
+        </div>
+
+        <div style="position: absolute; left: -9999px;" aria-hidden="true">
+            <label for="<?= $this->e($honeypot_field) ?>"><?= __('Leave this field empty') ?></label>
+            <input type="text" name="<?= $this->e($honeypot_field) ?>" id="<?= $this->e($honeypot_field) ?>" tabindex="-1" autocomplete="off" value="">
+        </div>
+
+        <?php if ($show_captcha && $captcha !== ''): ?>
+            <img alt="<?= __('Verification code') ?>" src="<?= $captcha ?>">
+            <div class="form-group">
+                <label for="code"><?= __('Enter verification code') ?></label>
+                <input type="text"
+                       class="form-control <?= isset($errors['code']) ? 'is-invalid' : '' ?>"
+                       maxlength="6"
+                       name="code"
+                       id="code"
+                       autocomplete="off"
+                       required>
+                <?php if (isset($errors['code'])): ?>
+                    <div class="invalid-feedback"><?= implode('<br>', $errors['code']) ?></div>
+                <?php endif ?>
+            </div>
+        <?php endif ?>
+
+        <?php foreach ($consents as $consent): ?>
+            <?php $consentField = 'consent_' . $consent->id ?>
+            <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox"
+                           class="custom-control-input <?= isset($errors[$consentField]) ? 'is-invalid' : '' ?>"
+                           name="<?= $consentField ?>"
+                           value="1"
+                           id="<?= $consentField ?>"
+                           <?= (($form_data[$consentField] ?? null) === '1' ? 'checked' : '') ?>>
+                    <label class="custom-control-label" for="<?= $consentField ?>">
+                        <a href="/consent/<?= $consent->id ?>" target="_blank"><?= $this->e($consent->title) ?></a>
+                        <?php if ($consent->is_required): ?><span class="text-danger">*</span><?php endif ?>
+                    </label>
+                    <?php if (isset($errors[$consentField])): ?>
+                        <div class="invalid-feedback"><?= implode('<br>', $errors[$consentField]) ?></div>
+                    <?php endif ?>
+                </div>
+            </div>
+        <?php endforeach ?>
+
+        <?php if (isset($errors['csrf_token'])): ?>
+            <div class="alert alert-danger"><?= implode('<br>', $errors['csrf_token']) ?></div>
+        <?php endif ?>
+        <?php if (isset($errors[$honeypot_field])): ?>
+            <div class="alert alert-danger"><?= __('Wrong data') ?></div>
+        <?php endif ?>
+
+        <input type="submit" name="submit" class="btn btn-primary" value="<?= __('Send') ?>">
+    </form>
+<?php endif ?>

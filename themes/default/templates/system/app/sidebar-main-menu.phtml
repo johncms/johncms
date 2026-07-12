@@ -128,6 +128,14 @@ $themeIconSprite = $this->asset('icons/sprite.svg', true);
                 <span class="flex-grow-1"><?= d__('system', 'Information, FAQ') ?></span>
             </a>
         </li>
+        <li>
+            <a href="/contacts/">
+                <svg class="icon">
+                    <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>#messages"/>
+                </svg>
+                <span class="flex-grow-1"><?= d__('system', 'Contacts') ?></span>
+            </a>
+        </li>
         <?php if ($user->rights >= 1): ?>
             <?php if ($user->rights >= 7): ?>
                 <li>

@@ -1,0 +1,127 @@
+<?php
+
+/**
+ * @var Mobicms\Render\Template\Template $this
+ * @var string $form_action
+ * @var string $messages_url
+ * @var list<array{code: string, name: string}> $languages
+ * @var Johncms\Modules\Contacts\Application\DTO\ContactSettingsDTO $settings
+ * @var string $socials
+ * @var string|null $error_message
+ * @var string|null $success_message
+ * @var string $csrf_token
+ */
+
+$this->layout('system::layout/default');
+
+$multilingualFields = [
+    [
+        'name'  => 'contacts_address',
+        'label' => __('Address'),
+        'values' => $settings->addresses,
+    ],
+    [
+        'name'  => 'contacts_working_hours',
+        'label' => __('Working hours'),
+        'values' => $settings->workingHours,
+    ],
+    [
+        'name'  => 'contacts_text',
+        'label' => __('Text above the contact information'),
+        'values' => $settings->texts,
+    ],
+];
+?>
+
+<div style="max-width: 720px">
+    <?php if (! empty($error_message)): ?>
+        <div class="alert alert-danger shadow border-0"><?= $this->e($error_message) ?></div>
+    <?php endif ?>
+    <?php if (! empty($success_message)): ?>
+        <div class="alert alert-success shadow border-0"><?= $this->e($success_message) ?></div>
+    <?php endif ?>
+
+    <div class="mb-3">
+        <a href="<?= $this->e($messages_url) ?>" class="btn btn-secondary"><?= __('Contact messages') ?></a>
+    </div>
+
+    <form method="post" action="<?= $this->e($form_action) ?>">
+        <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
+
+        <div class="custom-control custom-checkbox mb-3">
+            <input type="checkbox"
+                   class="custom-control-input"
+                   name="contacts_form_enabled"
+                   value="1"
+                   id="contacts_form_enabled"
+                   <?= $settings->formEnabled ? 'checked="checked"' : '' ?>>
+            <label class="custom-control-label" for="contacts_form_enabled"><?= __('Enable feedback form') ?></label>
+        </div>
+
+        <div class="form-group">
+            <label for="contacts_notify_email"><?= __('E-mail for notifications') ?></label>
+            <div class="text-muted small mb-2"><?= __('Leave empty to use the site e-mail from the system settings.') ?></div>
+            <input type="email"
+                   class="form-control"
+                   name="contacts_notify_email"
+                   id="contacts_notify_email"
+                   value="<?= $this->e($settings->notifyEmail) ?>">
+        </div>
+
+        <div class="form-group">
+            <label for="contacts_email"><?= __('Public e-mail') ?></label>
+            <input type="email"
+                   class="form-control"
+                   name="contacts_email"
+                   id="contacts_email"
+                   value="<?= $this->e($settings->email) ?>">
+        </div>
+
+        <div class="form-group">
+            <label for="contacts_phone"><?= __('Phone') ?></label>
+            <input type="text"
+                   class="form-control"
+                   name="contacts_phone"
+                   id="contacts_phone"
+                   value="<?= $this->e($settings->phone) ?>">
+        </div>
+
+        <div class="form-group">
+            <label for="contacts_socials"><?= __('Social networks and messengers') ?></label>
+            <div class="text-muted small mb-2"><?= __('One link per line in the format: Title|https://example.com') ?></div>
+            <textarea rows="4"
+                      class="form-control"
+                      name="contacts_socials"
+                      id="contacts_socials"><?= $this->e($socials) ?></textarea>
+        </div>
+
+        <?php foreach ($multilingualFields as $field): ?>
+            <div class="form-group">
+                <label><?= $this->e($field['label']) ?></label>
+                <ul class="nav nav-tabs" role="tablist">
+                    <?php foreach ($languages as $index => $language): ?>
+                        <li class="nav-item">
+                            <a class="nav-link <?= $index === 0 ? 'active' : '' ?>"
+                               data-bs-toggle="tab"
+                               href="#<?= $this->e($field['name']) ?>_<?= $this->e($language['code']) ?>"
+                               role="tab"><?= $this->e($language['name']) ?> (<?= $this->e($language['code']) ?>)</a>
+                        </li>
+                    <?php endforeach ?>
+                </ul>
+                <div class="tab-content border border-top-0 p-3">
+                    <?php foreach ($languages as $index => $language): ?>
+                        <div class="tab-pane fade <?= $index === 0 ? 'show active' : '' ?>"
+                             id="<?= $this->e($field['name']) ?>_<?= $this->e($language['code']) ?>"
+                             role="tabpanel">
+                            <textarea rows="3"
+                                      class="form-control"
+                                      name="<?= $this->e($field['name']) ?>[<?= $this->e($language['code']) ?>]"><?= $this->e($field['values'][$language['code']] ?? '') ?></textarea>
+                        </div>
+                    <?php endforeach ?>
+                </div>
+            </div>
+        <?php endforeach ?>
+
+        <input type="submit" class="btn btn-primary btn-lg mt-2 mb-2" name="submit" value="<?= __('Save') ?>">
+    </form>
+</div>

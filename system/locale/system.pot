@@ -690,20 +690,20 @@ msgid "Time"
 msgstr ""
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:23
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:194
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:202
 #: modules/admin/templates/sidebar-admin-menu.phtml:24
 #: modules/admin/templates/sidebar-admin-menu.phtml:321
 #: themes/admin/templates/system/app/sidebar-admin-menu.phtml:24
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:352
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:360
 msgid "Set Light Theme"
 msgstr ""
 
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:23
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:193
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:201
 #: modules/admin/templates/sidebar-admin-menu.phtml:24
 #: modules/admin/templates/sidebar-admin-menu.phtml:320
 #: themes/admin/templates/system/app/sidebar-admin-menu.phtml:24
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:351
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:359
 msgid "Set Dark Theme"
 msgstr ""
 
@@ -719,11 +719,15 @@ msgstr ""
 msgid "Information, FAQ"
 msgstr ""
 
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:139
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:136
+msgid "Contacts"
+msgstr ""
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:147
 msgid "Admin Panel"
 msgstr ""
 
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:148
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:156
 msgid "Admin Chat"
 msgstr ""
 
@@ -807,6 +811,27 @@ msgstr ""
 
 #: themes/default/templates/system/mail/templates/confirm_email_change.phtml:27
 msgid "If you have not registered on our site, please ignore this email."
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/contact_message.phtml:11
+msgid "New message from the contact form"
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/contact_message.phtml:15
+#, php-format
+msgid "A new message has been sent through the contact form on the <a href=\"%s\">%s</a> website"
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/contact_message.phtml:18
+msgid "Sender:"
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/contact_message.phtml:19
+msgid "E-mail:"
+msgstr ""
+
+#: themes/default/templates/system/mail/templates/contact_message.phtml:25
+msgid "Open in admin panel"
 msgstr ""
 
 #: themes/default/templates/system/mail/templates/registration.phtml:10

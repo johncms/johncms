@@ -15,6 +15,7 @@ return [
             'collections',
             'community',
             'consent',
+            'contacts',
             'downloads',
             'forum',
             'guestbook',

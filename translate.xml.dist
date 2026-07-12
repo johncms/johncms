@@ -55,6 +55,13 @@
         <sourceDir>modules/consent</sourceDir>
     </domain>
 
+    <!-- Contacts module -->
+    <domain>
+        <name>contacts</name>
+        <target>modules/contacts/locale</target>
+        <sourceDir>modules/contacts</sourceDir>
+    </domain>
+
     <domain>
         <name>downloads</name>
         <target>modules/downloads/locale</target>

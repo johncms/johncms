@@ -403,6 +403,7 @@
       'Collections' => 'Коллекции',
       'Consents' => 'Согласия',
       'Cookie banner' => 'Cookie-баннер',
+      'Contacts' => 'Контакты',
     ),
   ),
 );

@@ -918,3 +918,21 @@ msgstr "Изменено:"
 msgid "Edited"
 msgstr "Изменен"
 
+
+msgid "Contacts"
+msgstr "Контакты"
+
+msgid "New message from the contact form"
+msgstr "Новое сообщение из формы обратной связи"
+
+msgid "A new message has been sent through the contact form on the <a href=\"%s\">%s</a> website"
+msgstr "На сайте <a href=\"%s\">%s</a> отправлено новое сообщение через форму обратной связи"
+
+msgid "Sender:"
+msgstr "Отправитель:"
+
+msgid "E-mail:"
+msgstr "E-mail:"
+
+msgid "Open in admin panel"
+msgstr "Открыть в админ-панели"

@@ -1,0 +1,144 @@
+msgid ""
+msgstr ""
+"X-Domain: contacts\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+
+msgid "Record deleted"
+msgstr "Запись удалена"
+
+msgid "Delete message"
+msgstr "Удаление сообщения"
+
+msgid "Contacts"
+msgstr "Контакты"
+
+msgid "Contact messages"
+msgstr "Обращения"
+
+msgid "The message is marked as processed"
+msgstr "Сообщение отмечено как обработанное"
+
+msgid "Message"
+msgstr "Сообщение"
+
+msgid "Wrong data"
+msgstr "Неверные данные"
+
+msgid "ERROR: Can not write file `system.local.php`"
+msgstr "ОШИБКА: Не удалось записать файл `system.local.php`"
+
+msgid "Changes saved successfully"
+msgstr "Изменения успешно сохранены"
+
+msgid "You must accept the consent to continue"
+msgstr "Необходимо принять согласие для продолжения"
+
+msgid "Your message has been sent. We will reply as soon as possible."
+msgstr "Ваше сообщение отправлено. Мы ответим вам в ближайшее время."
+
+msgid "New message from the contact form"
+msgstr "Новое сообщение из формы обратной связи"
+
+msgid "Are you sure you want to delete this message?"
+msgstr "Вы действительно хотите удалить это сообщение?"
+
+msgid "Delete"
+msgstr "Удалить"
+
+msgid "Cancel"
+msgstr "Отмена"
+
+msgid "All"
+msgstr "Все"
+
+msgid "New"
+msgstr "Новые"
+
+msgid "Processed"
+msgstr "Обработанные"
+
+msgid "The list is empty"
+msgstr "Список пуст"
+
+msgid "Date"
+msgstr "Дата"
+
+msgid "Sender"
+msgstr "Отправитель"
+
+msgid "Message from %s"
+msgstr "Сообщение от %s"
+
+msgid "Status"
+msgstr "Статус"
+
+msgid "E-mail"
+msgstr "E-mail"
+
+msgid "IP address"
+msgstr "IP-адрес"
+
+msgid "Back"
+msgstr "Назад"
+
+msgid "Mark as processed"
+msgstr "Отметить как обработанное"
+
+msgid "Address"
+msgstr "Адрес"
+
+msgid "Working hours"
+msgstr "Часы работы"
+
+msgid "Text above the contact information"
+msgstr "Текст над контактной информацией"
+
+msgid "Enable feedback form"
+msgstr "Включить форму обратной связи"
+
+msgid "E-mail for notifications"
+msgstr "E-mail для уведомлений"
+
+msgid "Leave empty to use the site e-mail from the system settings."
+msgstr "Оставьте пустым, чтобы использовать e-mail сайта из системных настроек."
+
+msgid "Public e-mail"
+msgstr "Публичный e-mail"
+
+msgid "Phone"
+msgstr "Телефон"
+
+msgid "Social networks and messengers"
+msgstr "Социальные сети и мессенджеры"
+
+msgid "One link per line in the format: Title|https://example.com"
+msgstr "По одной ссылке в строке в формате: Название|https://example.com"
+
+msgid "Save"
+msgstr "Сохранить"
+
+msgid "We are on the web"
+msgstr "Мы в сети"
+
+msgid "Feedback form"
+msgstr "Форма обратной связи"
+
+msgid "Your name"
+msgstr "Ваше имя"
+
+msgid "E-mail for reply"
+msgstr "E-mail для ответа"
+
+msgid "Leave this field empty"
+msgstr "Оставьте это поле пустым"
+
+msgid "Verification code"
+msgstr "Код проверки"
+
+msgid "Enter verification code"
+msgstr "Введите код проверки"
+
+msgid "Send"
+msgstr "Отправить"

@@ -1969,3 +1969,6 @@ msgstr "Согласия"
 msgid "Cookie banner"
 msgstr "Cookie-баннер"
 
+
+msgid "Contacts"
+msgstr "Контакты"

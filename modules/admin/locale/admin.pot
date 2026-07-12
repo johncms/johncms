@@ -187,7 +187,7 @@ msgstr ""
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:250
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:298
 #: modules/admin/templates/sidebar-admin-menu.phtml:277
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:309
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:317
 msgid "Ban by IP"
 msgstr ""
 
@@ -406,7 +406,7 @@ msgstr ""
 #: modules/admin/src/Application/Controllers/Settings/CountersController.php:201
 #: modules/admin/src/Application/Controllers/Settings/CountersController.php:229
 #: modules/admin/templates/sidebar-admin-menu.phtml:184
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:208
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:216
 msgid "Counters"
 msgstr ""
 
@@ -445,7 +445,7 @@ msgstr ""
 #: modules/admin/src/Application/Controllers/Settings/SystemSettingsController.php:89
 #: modules/admin/templates/sidebar-admin-menu.phtml:215
 #: modules/admin/templates/smilies.phtml:8
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:239
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:247
 msgid "System Settings"
 msgstr ""
 
@@ -465,7 +465,7 @@ msgstr ""
 #: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:46
 #: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:78
 #: modules/admin/templates/sidebar-admin-menu.phtml:269
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:301
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:309
 msgid "Anti-Spyware"
 msgstr ""
 
@@ -510,7 +510,7 @@ msgid "The task is already running"
 msgstr ""
 
 #: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:85
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:271
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:279
 msgid "Maintenance"
 msgstr ""
 
@@ -518,7 +518,7 @@ msgstr ""
 #: modules/admin/src/Application/Controllers/System/SystemCheckController.php:27
 #: modules/admin/src/Application/Controllers/System/SystemCheckController.php:31
 #: modules/admin/templates/sidebar-admin-menu.phtml:239
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:263
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:271
 msgid "System check"
 msgstr ""
 
@@ -1853,22 +1853,22 @@ msgid "News"
 msgstr ""
 
 #: modules/admin/templates/sidebar-admin-menu.phtml:198
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:222
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:230
 msgid "System"
 msgstr ""
 
 #: modules/admin/templates/sidebar-admin-menu.phtml:223
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:247
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:255
 msgid "Update Smilies"
 msgstr ""
 
 #: modules/admin/templates/sidebar-admin-menu.phtml:231
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:255
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:263
 msgid "Language Settings"
 msgstr ""
 
 #: modules/admin/templates/sidebar-admin-menu.phtml:252
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:284
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:292
 msgid "Security"
 msgstr ""
 
@@ -1955,5 +1955,9 @@ msgid "Consents"
 msgstr ""
 
 #: themes/admin/templates/system/app/sidebar-admin-menu.phtml:199
+msgid "Contacts"
+msgstr ""
+
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:207
 msgid "Cookie banner"
 msgstr ""

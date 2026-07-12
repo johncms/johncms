@@ -32,6 +32,8 @@ files:
     translation: /modules/community/locale/%two_letters_code%.po
   - source: /modules/consent/locale/consent.pot
     translation: /modules/consent/locale/%two_letters_code%.po
+  - source: /modules/contacts/locale/contacts.pot
+    translation: /modules/contacts/locale/%two_letters_code%.po
   - source: /modules/downloads/locale/downloads.pot
     translation: /modules/downloads/locale/%two_letters_code%.po
   - source: /modules/forum/locale/forum.pot
