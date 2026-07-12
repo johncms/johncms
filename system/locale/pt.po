@@ -11,11 +11,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
-"PO-Revision-Date: 2026-03-25 18:37\n"
+"PO-Revision-Date: 2026-07-12 12:34\n"
 
 #: config/notifications.global.php:20
 #: config/places.global.php:17
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:51
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:55
 #: modules/homepage/templates/index.phtml:68
 msgid "Forum"
 msgstr ""
@@ -50,7 +50,7 @@ msgid "Watching the photo album"
 msgstr ""
 
 #: config/places.global.php:14
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:102
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:106
 #: modules/homepage/templates/index.phtml:128
 msgid "Users"
 msgstr ""
@@ -60,21 +60,20 @@ msgid "Users List"
 msgstr ""
 
 #: config/places.global.php:16
-#: system/src/Comments.php:168
-#: system/src/Comments.php:204
-#: system/src/Comments.php:237
-#: system/src/Comments.php:263
-#: system/src/Comments.php:304
-#: system/src/Comments.php:336
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:77
+#: system/src/Comments.php:181
+#: system/src/Comments.php:217
+#: system/src/Comments.php:250
+#: system/src/Comments.php:276
+#: system/src/Comments.php:317
+#: system/src/Comments.php:349
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:81
 #: modules/homepage/templates/index.phtml:98
 msgid "Downloads"
 msgstr ""
 
 #: config/places.global.php:18
-#: modules/notifications/includes/index.php:90
-#: modules/notifications/includes/index.php:109
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:64
+#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:102
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:68
 #: modules/homepage/templates/index.phtml:83
 msgid "Guestbook"
 msgstr ""
@@ -84,13 +83,13 @@ msgid "Reading the FAQ"
 msgstr ""
 
 #: config/places.global.php:20
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:90
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:94
 #: modules/homepage/templates/index.phtml:113
 msgid "Library"
 msgstr ""
 
 #: config/places.global.php:21
-#: modules/login/index.php:68
+#: modules/login/src/Application/Controllers/LoginController.php:28
 #: modules/login/templates/captcha.phtml:4
 #: modules/login/templates/captcha.phtml:5
 #: modules/login/templates/confirm.phtml:10
@@ -141,34 +140,34 @@ msgstr ""
 msgid "Apply"
 msgstr ""
 
-#: modules/login/index.php:53
+#: modules/login/src/Application/Controllers/LoginController.php:36
+msgid "You have not entered login"
+msgstr ""
+
+#: modules/login/src/Application/Controllers/LoginController.php:40
+msgid "You have not entered password"
+msgstr ""
+
+#: modules/login/src/Application/Controllers/LogoutController.php:43
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:53
 msgid "Personal"
 msgstr ""
 
-#: modules/login/index.php:54
+#: modules/login/src/Application/Controllers/LogoutController.php:44
 #: modules/login/templates/logout.phtml:4
 #: modules/login/templates/logout.phtml:5
 #: modules/login/templates/logout.phtml:11
 msgid "Logout"
 msgstr ""
 
-#: modules/login/index.php:78
-msgid "You have not entered login"
+#: modules/login/src/Application/UseCases/PerformLoginUseCase.php:21
+#: modules/login/src/Application/UseCases/PerformLoginUseCase.php:48
+msgid "Authorization failed"
 msgstr ""
 
-#: modules/login/index.php:82
-msgid "You have not entered password"
-msgstr ""
-
-#: modules/login/index.php:100
+#: modules/login/src/Application/UseCases/PerformLoginUseCase.php:37
 #: system/src/Validator/messages.php:17
 msgid "The security code is not correct"
-msgstr ""
-
-#: modules/login/index.php:150
-#: modules/login/index.php:154
-msgid "Authorization failed"
 msgstr ""
 
 #: modules/login/templates/captcha.phtml:10
@@ -180,7 +179,7 @@ msgstr ""
 msgid "Enter verification code"
 msgstr ""
 
-#: modules/login/templates/captcha.phtml:28
+#: modules/login/templates/captcha.phtml:24
 msgid "Continue"
 msgstr ""
 
@@ -220,80 +219,81 @@ msgid "Are you sure you want to leave the site?"
 msgstr ""
 
 #: modules/login/templates/logout.phtml:12
-#: modules/notifications/templates/settings.phtml:50
+#: modules/notifications/templates/settings.phtml:36
 #: themes/default/templates/system/pages/comments_delete.phtml:26
 msgid "Cancel"
 msgstr ""
 
-#: modules/notifications/includes/clear.php:23
+#: modules/notifications/src/Application/Controllers/ClearController.php:22
 msgid "Notifications are cleared!"
 msgstr ""
 
-#: modules/notifications/includes/index.php:29
-msgid "Users on registration"
-msgstr ""
-
-#: modules/notifications/includes/index.php:39
-msgid "Articles on moderation"
-msgstr ""
-
-#: modules/notifications/includes/index.php:49
-msgid "Downloads on moderation"
-msgstr ""
-
-#: modules/notifications/includes/index.php:60
-msgid "Ban"
-msgstr ""
-
-#: modules/notifications/includes/index.php:70
-msgid "New forum posts"
-msgstr ""
-
-#: modules/notifications/includes/index.php:80
-msgid "Mail"
-msgstr ""
-
-#: modules/notifications/includes/index.php:100
-msgid "Comments"
-msgstr ""
-
-#: modules/notifications/includes/settings.php:18
-#: modules/notifications/templates/index.phtml:80
-msgid "Settings"
-msgstr ""
-
-#: modules/notifications/includes/settings.php:44
-msgid "Settings saved!"
-msgstr ""
-
-#: modules/notifications/index.php:47
-#: modules/notifications/templates/index.phtml:11
-#: modules/notifications/templates/index.phtml:12
+#: modules/notifications/src/Application/Controllers/IndexController.php:30
+#: modules/notifications/src/Application/Controllers/IndexController.php:41
+#: modules/notifications/src/Application/Controllers/IndexController.php:44
+#: modules/notifications/src/Application/Controllers/SettingsController.php:31
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:41
 msgid "Notifications"
 msgstr ""
 
-#: modules/notifications/templates/index.phtml:27
+#: modules/notifications/src/Application/Controllers/SettingsController.php:29
+#: modules/notifications/templates/index.phtml:72
+msgid "Settings"
+msgstr ""
+
+#: modules/notifications/src/Application/Controllers/SettingsController.php:37
+msgid "Settings saved!"
+msgstr ""
+
+#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:49
+msgid "Users on registration"
+msgstr ""
+
+#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:57
+msgid "Articles on moderation"
+msgstr ""
+
+#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:65
+msgid "Downloads on moderation"
+msgstr ""
+
+#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:75
+msgid "Ban"
+msgstr ""
+
+#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:84
+msgid "New forum posts"
+msgstr ""
+
+#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:93
+msgid "Mail"
+msgstr ""
+
+#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:111
+msgid "Comments"
+msgstr ""
+
+#: modules/notifications/templates/index.phtml:20
 msgid "All notifications have already been read"
 msgstr ""
 
-#: modules/notifications/templates/index.phtml:67
+#: modules/notifications/templates/index.phtml:60
 msgid "Total"
 msgstr ""
 
-#: modules/notifications/templates/index.phtml:75
+#: modules/notifications/templates/index.phtml:67
 msgid "Clear notifications"
 msgstr ""
 
-#: modules/notifications/templates/settings.phtml:45
+#: modules/notifications/templates/settings.phtml:31
 msgid "Display the number of unread messages in the forum"
 msgstr ""
 
-#: modules/notifications/templates/settings.phtml:49
+#: modules/notifications/templates/settings.phtml:35
 msgid "Save"
 msgstr ""
 
-#: modules/redirect/index.php:30
+#: modules/redirect/src/Application/Controllers/RedirectController.php:67
 msgid "Redirect to an external link"
 msgstr ""
 
@@ -323,14 +323,14 @@ msgid "Go to Link"
 msgstr ""
 
 #: modules/redirect/templates/index.phtml:44
-#: system/src/Comments.php:172
-#: system/src/Comments.php:208
+#: system/src/Comments.php:185
 #: system/src/Comments.php:221
-#: system/src/Comments.php:241
-#: system/src/Comments.php:267
-#: system/src/Comments.php:308
-#: system/src/Comments.php:320
-#: system/src/Comments.php:340
+#: system/src/Comments.php:234
+#: system/src/Comments.php:254
+#: system/src/Comments.php:280
+#: system/src/Comments.php:321
+#: system/src/Comments.php:333
+#: system/src/Comments.php:353
 #: themes/default/templates/system/pages/comments_list.phtml:156
 #: themes/default/templates/system/pages/result.phtml:33
 msgid "Back"
@@ -344,15 +344,15 @@ msgstr ""
 msgid "Added"
 msgstr ""
 
-#: system/src-legacy/Tools.php:175
+#: system/src-legacy/Tools.php:174
 msgid "ERROR"
 msgstr ""
 
-#: system/src-legacy/Tools.php:315
+#: system/src-legacy/Tools.php:213
 msgid "Somewhere on the site"
 msgstr ""
 
-#: system/src-legacy/Tools.php:506
+#: system/src-legacy/Tools.php:410
 msgid "Day"
 msgid_plural "Days"
 msgstr[0] ""
@@ -455,66 +455,76 @@ msgid "We use strict data type checks when developing the system. The CMS will n
 "PHP should work with the default driver: <a href=\"https://www.php.net/manual/en/intro.mysqlnd.php\" target=\"_blank\">MySQL Native Driver (mysqlnd)</a>."
 msgstr ""
 
-#: system/src/Comments.php:157
-#: system/src/Comments.php:226
-#: system/src/Comments.php:227
+#: system/src/Comments.php:170
+#: system/src/Comments.php:239
+#: system/src/Comments.php:240
 #: themes/default/templates/system/pages/comments_list.phtml:124
 msgid "Reply"
 msgstr ""
 
-#: system/src/Comments.php:170
+#: system/src/Comments.php:183
 msgid "Administrator already replied to this message"
 msgstr ""
 
-#: system/src/Comments.php:239
-#: system/src/Comments.php:338
+#: system/src/Comments.php:252
+#: system/src/Comments.php:351
 msgid "Wrong data"
 msgstr ""
 
-#: system/src/Comments.php:251
-#: system/src/Comments.php:325
-#: system/src/Comments.php:326
+#: system/src/Comments.php:264
+#: system/src/Comments.php:338
+#: system/src/Comments.php:339
 #: themes/default/templates/system/pages/comments_list.phtml:136
 msgid "Edit"
 msgstr ""
 
-#: system/src/Comments.php:265
+#: system/src/Comments.php:278
 msgid "You cannot edit posts of higher administration"
 msgstr ""
 
-#: system/src/Comments.php:350
-#: system/src/Comments.php:390
-#: system/src/Comments.php:391
+#: system/src/Comments.php:363
+#: system/src/Comments.php:403
+#: system/src/Comments.php:404
 #: themes/default/templates/system/pages/comments_delete.phtml:24
 #: themes/default/templates/system/pages/comments_list.phtml:139
 msgid "Delete"
 msgstr ""
 
-#: system/src/Comments.php:592
+#: system/src/Comments.php:613
 msgid "Text is too short"
 msgstr ""
 
-#: system/src/Comments.php:598
+#: system/src/Comments.php:619
 msgid "You cannot add the message so often<br>Please, wait"
 msgstr ""
 
-#: system/src/Comments.php:598
+#: system/src/Comments.php:619
 msgid "seconds"
 msgstr ""
 
-#: system/src/Comments.php:606
+#: system/src/Comments.php:627
 msgid "Message already exists"
 msgstr ""
 
-#: system/src/Counters.php:164
+#: system/src/Counters.php:160
 msgid "Unread"
 msgstr ""
 
-#: system/src/Counters.php:170
+#: system/src/Counters.php:166
 msgid "Last activity"
 msgstr ""
 
+#: system/src/Http/PageMeta.php:18
+#: modules/forum/src/Application/Controllers/ForumSearchController.php:100
+#: modules/forum/src/Application/Controllers/ForumSearchController.php:109
+#: modules/forum/src/Application/Controllers/ForumTopicController.php:150
+#: modules/forum/src/Application/Controllers/ForumTopicController.php:159
+#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:414
+msgid "Page"
+msgstr ""
+
 #: system/src/NavChain.php:63
+#: themes/default/templates/system/error/403.phtml:36
 msgid "Home"
 msgstr ""
 
@@ -690,32 +700,42 @@ msgstr ""
 msgid "Time"
 msgstr ""
 
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:39
-msgid "News archive"
-msgstr ""
-
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:113
-msgid "Photo Albums"
-msgstr ""
-
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:124
-msgid "Information, FAQ"
-msgstr ""
-
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:135
-msgid "Admin Panel"
-msgstr ""
-
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:144
-msgid "Admin Chat"
-msgstr ""
-
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:183
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:23
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:194
+#: modules/admin/templates/sidebar-admin-menu.phtml:24
+#: modules/admin/templates/sidebar-admin-menu.phtml:321
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:24
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:352
 msgid "Set Light Theme"
 msgstr ""
 
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:183
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:23
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:193
+#: modules/admin/templates/sidebar-admin-menu.phtml:24
+#: modules/admin/templates/sidebar-admin-menu.phtml:320
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:24
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:351
 msgid "Set Dark Theme"
+msgstr ""
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:43
+msgid "News archive"
+msgstr ""
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:117
+msgid "Photo Albums"
+msgstr ""
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:128
+msgid "Information, FAQ"
+msgstr ""
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:139
+msgid "Admin Panel"
+msgstr ""
+
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:148
+msgid "Admin Chat"
 msgstr ""
 
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:23
@@ -725,6 +745,31 @@ msgstr ""
 
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:61
 msgid "Exit"
+msgstr ""
+
+#: themes/default/templates/system/layout/default.phtml:153
+msgid "Privacy Policy"
+msgstr ""
+
+#: themes/default/templates/system/layout/default.phtml:154
+msgid "Terms of Use"
+msgstr ""
+
+#: themes/default/templates/system/layout/default.phtml:155
+msgid "Personal Data Processing Policy"
+msgstr ""
+
+#: themes/default/templates/system/layout/default.phtml:156
+msgid "Cookie Policy"
+msgstr ""
+
+#: themes/default/templates/system/layout/default.phtml:229
+#, php-format
+msgid "We use cookies to improve the site. By continuing to use the site, you agree to our %sPrivacy Policy%s."
+msgstr ""
+
+#: themes/default/templates/system/layout/default.phtml:232
+msgid "Accept"
 msgstr ""
 
 #: themes/default/templates/system/mail/layouts/default.phtml:115
@@ -850,11 +895,11 @@ msgstr ""
 msgid "Clear"
 msgstr ""
 
-#: themes/default/templates/system/pages/comments_form.phtml:22
+#: themes/default/templates/system/pages/comments_form.phtml:23
 msgid "Message"
 msgstr ""
 
-#: themes/default/templates/system/pages/comments_form.phtml:29
+#: themes/default/templates/system/pages/comments_form.phtml:31
 msgid "Send"
 msgstr ""
 
@@ -868,10 +913,5 @@ msgstr ""
 
 #: themes/default/templates/system/pages/comments_list.phtml:85
 msgid "Edited"
-msgstr ""
-
-#: modules/forum/src/Application/Controllers/ForumTopicController.php:150
-#: modules/forum/src/Application/Controllers/ForumTopicController.php:159
-msgid "Page"
 msgstr ""
 
