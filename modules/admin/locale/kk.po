@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Kazakh\n"
 "Language: kk_KZ\n"
-"PO-Revision-Date: 2026-07-11 21:52\n"
+"PO-Revision-Date: 2026-07-12 12:35\n"
 
 #: system/src/Http/Controller/AdminControllerContext.php:50
 #: modules/admin/src/Application/Controllers/DashboardController.php:27
@@ -45,10 +45,10 @@ msgstr "Форумды Басқару"
 #: modules/admin/src/Application/Controllers/Settings/AdsController.php:131
 #: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:38
 #: modules/admin/src/Application/Controllers/Settings/CountersController.php:51
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:79
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:88
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:118
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:168
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:80
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:89
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:123
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:175
 #: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:38
 #: modules/admin/src/Application/Controllers/Settings/SystemSettingsController.php:40
 #: modules/admin/src/Application/Controllers/System/EmoticonsController.php:37
@@ -117,8 +117,8 @@ msgstr "Сіз ат енгізген жоқсыз"
 #: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:119
 #: modules/admin/templates/ads_add.phtml:38
 #: modules/admin/templates/ads_add.phtml:39
-#: modules/admin/templates/counters_add_confirm.phtml:23
-#: modules/admin/templates/counters_view.phtml:22
+#: modules/admin/templates/counters_add_confirm.phtml:25
+#: modules/admin/templates/counters_view.phtml:23
 #: modules/admin/templates/forum/add.phtml:26
 #: modules/admin/templates/forum/add.phtml:27
 #: modules/admin/templates/forum/edit.phtml:25
@@ -197,7 +197,8 @@ msgstr "бөлім бойынша"
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:230
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:250
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:298
-#: modules/admin/templates/sidebar-admin-menu.phtml:285
+#: modules/admin/templates/sidebar-admin-menu.phtml:277
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:309
 msgid "Ban by IP"
 msgstr "IP-ге тыйым салу"
 
@@ -222,6 +223,7 @@ msgstr "Жарамсыз IP"
 #: modules/admin/templates/ipban_search.phtml:26
 #: modules/admin/templates/search_ip.phtml:29
 #: modules/admin/templates/sidebar-admin-menu.phtml:57
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:57
 msgid "Search"
 msgstr "Іздеу"
 
@@ -265,7 +267,7 @@ msgstr "IP-мекен-жайға тыйым салу"
 
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:267
 #: modules/admin/templates/ads_index.phtml:49
-#: modules/admin/templates/counters_form.phtml:41
+#: modules/admin/templates/counters_form.phtml:43
 msgid "Default"
 msgstr "Әдепкі"
 
@@ -325,6 +327,7 @@ msgstr "Тіл жойылды"
 #: modules/admin/src/Application/Controllers/Settings/AdsController.php:303
 #: modules/admin/src/Application/Controllers/Settings/AdsController.php:335
 #: modules/admin/templates/sidebar-admin-menu.phtml:175
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:183
 msgid "Advertisement"
 msgstr "Жарнама"
 
@@ -341,7 +344,7 @@ msgstr "Сілтеме сәтті қосылды"
 #: modules/admin/templates/ads_index.phtml:55
 #: modules/admin/templates/counters.phtml:38
 #: modules/admin/templates/counters_confirm.phtml:23
-#: modules/admin/templates/counters_view.phtml:49
+#: modules/admin/templates/counters_view.phtml:53
 #: modules/admin/templates/forum/del_confirm.phtml:20
 #: modules/admin/templates/forum/del_confirm_move_topics.phtml:49
 #: modules/admin/templates/forum/structure.phtml:35
@@ -361,8 +364,8 @@ msgid "Are you sure you want to delete all inactive links?"
 msgstr "Сіз барлық активті емес сілтемелерді жойғыңыз келетініне сенімдіміз бе?"
 
 #: modules/admin/src/Application/Controllers/Settings/AdsController.php:196
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:98
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:128
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:101
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:135
 msgid "The required fields are not filled"
 msgstr "Міндетті жолдар толтырылмаған"
 
@@ -409,48 +412,51 @@ msgstr "Антифлуд параметрлері"
 
 #: modules/admin/src/Application/Controllers/Settings/CountersController.php:37
 #: modules/admin/src/Application/Controllers/Settings/CountersController.php:55
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:101
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:172
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:194
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:220
-#: modules/admin/templates/sidebar-admin-menu.phtml:192
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:104
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:179
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:201
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:229
+#: modules/admin/templates/sidebar-admin-menu.phtml:184
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:208
 msgid "Counters"
 msgstr "Санауыштар"
 
 #: modules/admin/src/Application/Controllers/Settings/CountersController.php:54
-#: modules/admin/templates/counters_form.phtml:63
+#: modules/admin/templates/counters_form.phtml:78
 msgid "Viewing"
 msgstr "Қарау"
 
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:171
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:178
 msgid "Delete:"
 msgstr "Өшіру:"
 
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:177
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:184
 #: modules/admin/templates/forum/del_confirm.phtml:15
 msgid "Do you really want to delete?"
 msgstr "Сіз шынымен жойғыңыз келеді ме?"
 
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:212
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:221
 msgid "On all pages showing option 1"
 msgstr "Барлық беттерде 1-нұсқа көрсетіледі"
 
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:213
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:222
 msgid "On all pages showing option 2"
 msgstr "Барлық беттерде 2-нұсқа көрсетіледі"
 
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:214
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:223
 msgid "On the main showing option 1, on the other pages option 2"
 msgstr "Басты бетте 1 нұсқасы, басқа беттерде 2 нұсқасы көрсетіледі"
 
 #: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:77
 #: modules/admin/templates/sidebar-admin-menu.phtml:151
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:151
 msgid "Permissions"
 msgstr "Рұқсаттар"
 
 #: modules/admin/src/Application/Controllers/Settings/SystemSettingsController.php:89
-#: modules/admin/templates/sidebar-admin-menu.phtml:223
+#: modules/admin/templates/sidebar-admin-menu.phtml:215
 #: modules/admin/templates/smilies.phtml:8
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:239
 msgid "System Settings"
 msgstr "Жүйелік баптаулар"
 
@@ -469,7 +475,8 @@ msgstr "Смайлдар"
 #: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:32
 #: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:46
 #: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:78
-#: modules/admin/templates/sidebar-admin-menu.phtml:277
+#: modules/admin/templates/sidebar-admin-menu.phtml:269
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:301
 msgid "Anti-Spyware"
 msgstr "Антишпион"
 
@@ -514,13 +521,15 @@ msgid "The task is already running"
 msgstr ""
 
 #: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:85
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:271
 msgid "Maintenance"
 msgstr ""
 
 #: modules/admin/src/Application/Controllers/System/SystemCheckController.php:26
 #: modules/admin/src/Application/Controllers/System/SystemCheckController.php:27
 #: modules/admin/src/Application/Controllers/System/SystemCheckController.php:31
-#: modules/admin/templates/sidebar-admin-menu.phtml:247
+#: modules/admin/templates/sidebar-admin-menu.phtml:239
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:263
 msgid "System check"
 msgstr ""
 
@@ -541,6 +550,7 @@ msgstr "Рақымшылық жасау"
 #: modules/admin/src/Application/Controllers/Users/AmnestyController.php:61
 #: modules/admin/src/Application/Controllers/Users/BanListController.php:47
 #: modules/admin/templates/sidebar-admin-menu.phtml:94
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:94
 msgid "Ban Panel"
 msgstr "Бан панелі"
 
@@ -573,6 +583,7 @@ msgstr "Сіз өзіңіздің жоғары пайдаланушы үлкен
 #: modules/admin/src/Application/Controllers/Users/KarmaController.php:62
 #: modules/admin/src/Application/Controllers/Users/KarmaController.php:102
 #: modules/admin/templates/sidebar-admin-menu.phtml:120
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:120
 msgid "Karma"
 msgstr "Карма"
 
@@ -603,6 +614,7 @@ msgstr "Барлық таңдалған IP бойынша расталмаған
 
 #: modules/admin/src/Application/Controllers/Users/StaffListController.php:27
 #: modules/admin/templates/sidebar-admin-menu.phtml:85
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:85
 msgid "Administration"
 msgstr "Әкімшілік"
 
@@ -612,6 +624,7 @@ msgstr "Белсенді емес профильдер жойылды"
 
 #: modules/admin/src/Application/Controllers/Users/UserCleanupController.php:58
 #: modules/admin/templates/sidebar-admin-menu.phtml:104
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:104
 msgid "Database cleanup"
 msgstr "Базаны тазалау"
 
@@ -703,6 +716,8 @@ msgstr "Қонақтар"
 #: modules/admin/templates/ads_add.phtml:68
 #: modules/admin/templates/sidebar-admin-menu.phtml:37
 #: modules/admin/templates/sidebar-admin-menu.phtml:76
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:37
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:76
 msgid "Users"
 msgstr "Қолданушылар"
 
@@ -758,6 +773,7 @@ msgstr "Бұғаттау"
 #: modules/admin/templates/access.phtml:24
 #: modules/admin/templates/sidebar-admin-menu.phtml:159
 #: modules/admin/templates/usr_del.phtml:36
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:159
 msgid "Forum"
 msgstr "Форум"
 
@@ -816,7 +832,7 @@ msgstr "Әкімші барлық жеке модульдер мен түсін�
 #: modules/admin/templates/ads_add.phtml:98
 #: modules/admin/templates/amnesty.phtml:36
 #: modules/admin/templates/antiflood.phtml:62
-#: modules/admin/templates/counters_add_confirm.phtml:45
+#: modules/admin/templates/counters_add_confirm.phtml:53
 #: modules/admin/templates/forum/edit.phtml:82
 #: modules/admin/templates/forum/settings.phtml:64
 #: modules/admin/templates/ipban_add.phtml:57
@@ -853,7 +869,7 @@ msgstr "Барлығы:"
 #: modules/admin/templates/antispy_scan_result.phtml:27
 #: modules/admin/templates/ban_panel.phtml:47
 #: modules/admin/templates/counters.phtml:50
-#: modules/admin/templates/counters_view.phtml:50
+#: modules/admin/templates/counters_view.phtml:54
 #: modules/admin/templates/forum/hidden_posts.phtml:118
 #: modules/admin/templates/forum/hidden_topics.phtml:114
 #: modules/admin/templates/forum/index.phtml:31
@@ -934,9 +950,9 @@ msgstr "Таңдау (белгілеу)"
 #: modules/admin/templates/amnesty.phtml:37
 #: modules/admin/templates/antiflood.phtml:63
 #: modules/admin/templates/antispy_create_confirm.phtml:25
-#: modules/admin/templates/counters_add_confirm.phtml:46
+#: modules/admin/templates/counters_add_confirm.phtml:54
 #: modules/admin/templates/counters_confirm.phtml:25
-#: modules/admin/templates/counters_form.phtml:64
+#: modules/admin/templates/counters_form.phtml:79
 #: modules/admin/templates/emoticons.phtml:27
 #: modules/admin/templates/forum/add.phtml:69
 #: modules/admin/templates/forum/del_confirm.phtml:22
@@ -1002,7 +1018,7 @@ msgstr "Төмен"
 
 #: modules/admin/templates/ads_index.phtml:54
 #: modules/admin/templates/counters.phtml:37
-#: modules/admin/templates/counters_view.phtml:48
+#: modules/admin/templates/counters_view.phtml:52
 #: modules/admin/templates/forum/structure.phtml:34
 msgid "Edit"
 msgstr "Өзгерту"
@@ -1113,78 +1129,96 @@ msgstr "Сұрыптау"
 msgid "Add"
 msgstr "Қосу"
 
-#: modules/admin/templates/counters_add_confirm.phtml:26
-#: modules/admin/templates/counters_form.phtml:27
-#: modules/admin/templates/counters_form.phtml:49
-#: modules/admin/templates/counters_view.phtml:33
+#: modules/admin/templates/counters_add_confirm.phtml:28
+#: modules/admin/templates/counters_form.phtml:29
+#: modules/admin/templates/counters_form.phtml:51
+#: modules/admin/templates/counters_view.phtml:34
 msgid "Option 1"
 msgstr "1-нұсқа"
 
-#: modules/admin/templates/counters_add_confirm.phtml:29
-#: modules/admin/templates/counters_form.phtml:32
-#: modules/admin/templates/counters_form.phtml:53
-#: modules/admin/templates/counters_view.phtml:36
+#: modules/admin/templates/counters_add_confirm.phtml:31
+#: modules/admin/templates/counters_form.phtml:34
+#: modules/admin/templates/counters_form.phtml:55
+#: modules/admin/templates/counters_view.phtml:37
 msgid "Option 2"
 msgstr "2-нұсқа"
 
-#: modules/admin/templates/counters_add_confirm.phtml:41
+#: modules/admin/templates/counters_add_confirm.phtml:49
 msgid "If the counter are displayed correctly and without errors, click &quot;Save&quot;.<br>Otherwise, click back button and correct errors."
 msgstr "Егер есептегіштер дұрыс және қатесіз көрсетілсе, &quot;есте сақтау&quot; батырмасын басыңыз.<br>әйтпесе, &quot;артқа&quot; батырмасын басыңыз және қателерді түзетіңіз"
 
-#: modules/admin/templates/counters_form.phtml:23
-#: modules/admin/templates/counters_form.phtml:24
+#: modules/admin/templates/counters_form.phtml:25
+#: modules/admin/templates/counters_form.phtml:26
 msgid "Name"
 msgstr "Аты"
 
-#: modules/admin/templates/counters_form.phtml:29
+#: modules/admin/templates/counters_form.phtml:31
 msgid "Code for main page"
 msgstr "Басты бетке арналған код"
 
-#: modules/admin/templates/counters_form.phtml:34
+#: modules/admin/templates/counters_form.phtml:36
 msgid "Code for other pages"
 msgstr "Басқа беттерге арналған код"
 
-#: modules/admin/templates/counters_form.phtml:37
+#: modules/admin/templates/counters_form.phtml:39
 msgid "Display mode"
 msgstr "Бейнелеу режимі"
 
-#: modules/admin/templates/counters_form.phtml:44
+#: modules/admin/templates/counters_form.phtml:46
 msgid "On the main showing option 1, on the other pages option 2.<br>If &quot;option 2&quot; not filled, counter would only appear on the main page."
 msgstr "Опция-1 Негізгі парақта, Опция-2 басқа парақтарда көрсетілген<br>Егер &quot;Опция-2&quot; өрісі толтырылмаса, онда есептегіш тек Басты бетте көрсетіледі"
 
-#: modules/admin/templates/counters_form.phtml:57
-msgid "WARNING!"
-msgstr "Ескерту!"
-
-#: modules/admin/templates/counters_form.phtml:58
-msgid "Make sure you have correctly entered the code. It must meet the standard of XML"
-msgstr "Кодты дұрыс енгізгеніңізге көз жеткізіңіз. Ол XML стандартына сәйкес болуы керек."
-
-#: modules/admin/templates/counters_form.phtml:59
-msgid "If you click &quot;View&quot; and XHTML errors occured, then click &quot;Back&quot; button in your browser, return to this form and correct the errors."
-msgstr "Егер сіз &quot;көріністі&quot; бассаңыз және бет дұрыс көрсетілмесе, пішінге оралу үшін браузерде &quot;артқа&quot; түймесін басыңыз және қателерді түзетіңіз."
-
-#: modules/admin/templates/counters_view.phtml:25
-msgid "Status:"
-msgstr "Мәртебе:"
-
-#: modules/admin/templates/counters_view.phtml:27
+#: modules/admin/templates/counters_form.phtml:60
+#: modules/admin/templates/counters_view.phtml:28
 msgid "Enabled"
 msgstr "Енгізілген"
 
-#: modules/admin/templates/counters_view.phtml:29
+#: modules/admin/templates/counters_form.phtml:65
+#: modules/admin/templates/counters_view.phtml:43
+msgid "Load only after cookie consent"
+msgstr ""
+
+#: modules/admin/templates/counters_form.phtml:68
+msgid "If enabled, the counter code runs only after the visitor accepts the cookie banner. Requires the cookie banner to be enabled."
+msgstr ""
+
+#: modules/admin/templates/counters_form.phtml:72
+msgid "WARNING!"
+msgstr "Ескерту!"
+
+#: modules/admin/templates/counters_form.phtml:73
+msgid "Make sure you have correctly entered the code. It must meet the standard of XML"
+msgstr "Кодты дұрыс енгізгеніңізге көз жеткізіңіз. Ол XML стандартына сәйкес болуы керек."
+
+#: modules/admin/templates/counters_form.phtml:74
+msgid "If you click &quot;View&quot; and XHTML errors occured, then click &quot;Back&quot; button in your browser, return to this form and correct the errors."
+msgstr "Егер сіз &quot;көріністі&quot; бассаңыз және бет дұрыс көрсетілмесе, пішінге оралу үшін браузерде &quot;артқа&quot; түймесін басыңыз және қателерді түзетіңіз."
+
+#: modules/admin/templates/counters_view.phtml:26
+msgid "Status:"
+msgstr "Мәртебе:"
+
+#: modules/admin/templates/counters_view.phtml:30
 msgid "Disabled"
 msgstr "Өшірілген"
 
-#: modules/admin/templates/counters_view.phtml:39
+#: modules/admin/templates/counters_view.phtml:40
 msgid "Display mode:"
 msgstr "Бейнелеу режимі:"
 
-#: modules/admin/templates/counters_view.phtml:46
+#: modules/admin/templates/counters_view.phtml:44
+msgid "Yes"
+msgstr ""
+
+#: modules/admin/templates/counters_view.phtml:44
+msgid "No"
+msgstr ""
+
+#: modules/admin/templates/counters_view.phtml:50
 msgid "Disable"
 msgstr "Өшірілген"
 
-#: modules/admin/templates/counters_view.phtml:46
+#: modules/admin/templates/counters_view.phtml:50
 msgid "Enable"
 msgstr "Енгізілген"
 
@@ -1810,38 +1844,42 @@ msgid "Themes"
 msgstr "Тақырыптар"
 
 #: modules/admin/templates/sidebar-admin-menu.phtml:66
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:66
 msgid "On registration"
 msgstr "Тіркелу"
 
 #: modules/admin/templates/sidebar-admin-menu.phtml:112
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:112
 msgid "Antiflood"
 msgstr "Антифлуд"
 
 #: modules/admin/templates/sidebar-admin-menu.phtml:134
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:134
 msgid "Modules"
 msgstr "Модульдер"
 
 #: modules/admin/templates/sidebar-admin-menu.phtml:167
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:167
 msgid "News"
 msgstr "Жаңалықтар"
 
-#: modules/admin/templates/sidebar-admin-menu.phtml:183
-msgid "Consents"
-msgstr ""
-
-#: modules/admin/templates/sidebar-admin-menu.phtml:206
+#: modules/admin/templates/sidebar-admin-menu.phtml:198
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:222
 msgid "System"
 msgstr "Жүйе"
 
-#: modules/admin/templates/sidebar-admin-menu.phtml:231
+#: modules/admin/templates/sidebar-admin-menu.phtml:223
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:247
 msgid "Update Smilies"
 msgstr "Смайлдарды жаңарту"
 
-#: modules/admin/templates/sidebar-admin-menu.phtml:239
+#: modules/admin/templates/sidebar-admin-menu.phtml:231
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:255
 msgid "Language Settings"
 msgstr "Тіл баптаулары"
 
-#: modules/admin/templates/sidebar-admin-menu.phtml:260
+#: modules/admin/templates/sidebar-admin-menu.phtml:252
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:284
 msgid "Security"
 msgstr "Қауіпсіздік"
 
@@ -1918,4 +1956,16 @@ msgstr "Сіз осы пайдаланушыны шынымен жойғыңыз
 #: modules/admin/templates/usr_del.phtml:39
 msgid "All threads and posts created by the user go in the hidden state"
 msgstr "Пайдаланушы жасаған барлық тақырыптар мен жазбалар жасырын күйге өтеді"
+
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:175
+msgid "Collections"
+msgstr ""
+
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:191
+msgid "Consents"
+msgstr ""
+
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:199
+msgid "Cookie banner"
+msgstr ""
 
