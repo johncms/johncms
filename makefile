@@ -42,3 +42,13 @@ backup-db:
 prepare-dev:
 	@cp -R .docker/certbot/conf/live/test-app.loc .docker/certbot/conf/live/${APP_HOST}
 	@cp .docker/docker-compose.dev.yml ./docker-compose.override.yml
+
+CROWDIN_BRANCH ?= 9.x
+
+crowdin-download:
+	@echo "Downloading translations from Crowdin (branch ${CROWDIN_BRANCH})"
+	@crowdin download --branch ${CROWDIN_BRANCH}
+
+crowdin-upload:
+	@echo "Uploading sources to Crowdin (branch ${CROWDIN_BRANCH})"
+	@crowdin upload --branch ${CROWDIN_BRANCH}
