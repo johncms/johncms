@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
-"PO-Revision-Date: 2026-07-11 21:51\n"
+"PO-Revision-Date: 2026-07-12 12:34\n"
 
 #: modules/online/src/Application/Controllers/GuestController.php:36
 #: modules/online/src/Application/FiltersBuilder.php:23
@@ -50,7 +50,7 @@ msgstr "Пользователи"
 
 #: modules/online/src/Application/Middlewares/OnlineAdminMiddleware.php:27
 msgid "Access denied"
-msgstr ""
+msgstr "Доступ закрыт"
 
 #: modules/online/src/Application/UseCases/GetOnlineGuestsUseCase.php:34
 msgid "Guest"
