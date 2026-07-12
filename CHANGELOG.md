@@ -38,6 +38,7 @@ Detailed change can see in the [repository log](https://github.com/johncms/johnc
 - Роутер: Файл `config/routes.local.php` помечен устаревшим (deprecated).
 - Пагинация: Все постраничные списки (online, help, notifications, community, news, album, profile, mail, library, downloads, forum, admin, легаси-компонент комментариев) переведены на новый компонент `Johncms\Http\Pagination`. Удалён устаревший форк `johncms/johncms-pagination`, метод `Tools::displayPagination()` и легаси-ветка в шаблонах `system/app/pagination`. Добавлена канонизация URL страниц через `PaginationGuard`.
 - Удалён неиспользуемый модуль RSS.
+- Локализация: Названия языков в `system/locale/*.ini` приведены к единому виду — самоназвание языка в краткой форме (`العربية`, `Azərbaycanca`, `Bahasa Indonesia`, `Қазақша`, `Кыргызча`, `Lietuvių`, `Română`, `Oʻzbekcha`, `Tiếng Việt`). Чтобы новые названия появились в переключателе языка, нужно обновить список языков в админке.
 
 ## 9.8 - 2026-05-19
 
