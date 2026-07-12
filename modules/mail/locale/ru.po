@@ -5,13 +5,13 @@ msgstr ""
 "X-Crowdin-Project: johncms\n"
 "X-Crowdin-Project-ID: 383801\n"
 "X-Crowdin-Language: ru\n"
-"X-Crowdin-File: /[johncms.johncms] 9.x/modules/mail/locale/mail.pot\n"
+"X-Crowdin-File: /9.x/modules/mail/locale/mail.pot\n"
 "X-Crowdin-File-ID: 492\n"
 "Project-Id-Version: johncms\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
-"PO-Revision-Date: 2026-07-12 12:34\n"
+"PO-Revision-Date: 2026-07-12 15:08\n"
 
 #: modules/mail/src/Application/Controllers/AddContactController.php:36
 #: modules/mail/src/Application/Controllers/BlockUserController.php:42

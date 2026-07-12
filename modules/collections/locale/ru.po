@@ -2,259 +2,447 @@ msgid ""
 msgstr ""
 "X-Domain: collections\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Project-ID: 383801\n"
+"X-Crowdin-Language: ru\n"
+"X-Crowdin-File: /9.x/modules/collections/locale/collections.pot\n"
+"X-Crowdin-File-ID: 511\n"
 "Project-Id-Version: johncms\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
+"PO-Revision-Date: 2026-07-12 15:08\n"
 
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:48
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:360
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:363
+#: modules/collections/templates/admin/index.phtml:44
+#: modules/collections/templates/admin/items/form.phtml:100
 msgid "Fields"
 msgstr "Поля"
 
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:111
 msgid "A field with this code already exists"
 msgstr "Поле с таким кодом уже существует"
 
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:114
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:138
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:153
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:107
 msgid "Changes saved"
 msgstr "Изменения сохранены"
 
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:114
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:138
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:153
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:107
 msgid "Created successfully"
 msgstr "Успешно создано"
 
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:131
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:155
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:170
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:118
+#: modules/collections/templates/admin/delete_confirm.phtml:21
+#: modules/collections/templates/admin/fields/index.phtml:44
+#: modules/collections/templates/admin/index.phtml:49
+#: modules/collections/templates/admin/items/index.phtml:47
+#: modules/collections/templates/admin/sections/index.phtml:60
 msgid "Delete"
 msgstr "Удалить"
 
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:136
 msgid "Are you sure you want to delete the field?"
 msgstr "Вы уверены, что хотите удалить поле?"
 
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:151
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:175
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:194
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:135
 msgid "Deleted successfully"
 msgstr "Успешно удалено"
 
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:196
 msgid "Edit field"
 msgstr "Редактирование поля"
 
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:196
+#: modules/collections/templates/admin/fields/index.phtml:22
 msgid "New field"
 msgstr "Новое поле"
 
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:279
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:374
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:348
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:254
 msgid "The required fields are not filled"
 msgstr "Не заполнены обязательные поля"
 
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:283
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:378
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:352
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:258
 msgid "The code may contain only lowercase latin letters, digits, hyphen and underscore"
 msgstr "Код может содержать только строчные латинские буквы, цифры, дефис и подчёркивание"
 
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:287
 msgid "Unknown field type"
 msgstr "Неизвестный тип поля"
 
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:309
 msgid "String"
 msgstr "Строка"
 
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:310
 msgid "Text"
 msgstr "Текст"
 
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:311
 msgid "HTML"
 msgstr "HTML"
 
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:312
 msgid "Integer"
 msgstr "Целое число"
 
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:313
 msgid "Number (fractional)"
 msgstr "Число (дробное)"
 
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:314
 msgid "Boolean"
 msgstr "Логическое значение"
 
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:315
 msgid "Date"
 msgstr "Дата"
 
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:316
 msgid "Date and time"
 msgstr "Дата и время"
 
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:317
 msgid "File"
 msgstr "Файл"
 
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:318
 msgid "Select"
 msgstr "Выбор из списка"
 
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:319
 msgid "Relation"
 msgstr "Связь"
 
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:330
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:348
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:351
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:461
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:479
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:482
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:394
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:412
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:415
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:55
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:119
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:164
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:278
 msgid "Collections"
 msgstr "Коллекции"
 
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:353
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:365
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:385
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:484
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:496
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:417
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:429
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:79
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:88
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:115
 msgid "Wrong data"
 msgstr "Неверные данные"
 
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:69
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:472
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:491
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:494
+#: modules/collections/templates/admin/index.phtml:43
 msgid "Items"
 msgstr "Элементы"
 
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:134
 msgid "An item with this code already exists"
 msgstr "Элемент с таким кодом уже существует"
 
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:160
 msgid "Are you sure you want to delete the item?"
 msgstr "Вы уверены, что хотите удалить элемент?"
 
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:218
 msgid "Edit item"
 msgstr "Редактирование элемента"
 
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:218
+#: modules/collections/templates/admin/items/index.phtml:23
 msgid "New item"
 msgstr "Новый элемент"
 
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:67
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:405
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:424
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:427
+#: modules/collections/templates/admin/index.phtml:46
 msgid "Sections"
 msgstr "Разделы"
 
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:150
 msgid "A section with this code already exists"
 msgstr "Раздел с таким кодом уже существует"
 
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:175
 msgid "Are you sure you want to delete the section?"
 msgstr "Вы уверены, что хотите удалить раздел?"
 
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:176
 msgid "Nested sections will be deleted too."
 msgstr "Вложенные разделы также будут удалены."
 
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:264
 msgid "Edit section"
 msgstr "Редактирование раздела"
 
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:264
+#: modules/collections/templates/admin/sections/index.phtml:32
 msgid "New section"
 msgstr "Новый раздел"
 
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:102
 msgid "A collection with this code already exists"
 msgstr "Коллекция с таким кодом уже существует"
 
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:104
 msgid "This code is reserved and cannot be used"
 msgstr "Этот код зарезервирован и не может быть использован"
 
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:124
 msgid "Are you sure you want to delete the collection?"
 msgstr "Вы уверены, что хотите удалить коллекцию?"
 
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:163
 msgid "Edit collection"
 msgstr "Редактирование коллекции"
 
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:163
+#: modules/collections/templates/admin/index.phtml:20
 msgid "New collection"
 msgstr "Новая коллекция"
 
+#: modules/collections/src/Install/Installer.php:40
 msgid "Blog"
 msgstr "Блог"
 
+#: modules/collections/src/Install/Installer.php:41
 msgid "Demo blog collection."
 msgstr "Демонстрационная коллекция блога."
 
+#: modules/collections/src/Install/Installer.php:53
 msgid "Author"
 msgstr "Автор"
 
+#: modules/collections/src/Install/Installer.php:66
 msgid "Rating"
 msgstr "Рейтинг"
 
+#: modules/collections/src/Install/Installer.php:76
 msgid "Technology"
 msgstr "Технологии"
 
+#: modules/collections/src/Install/Installer.php:89
 msgid "Hello, world!"
 msgstr "Привет, мир!"
 
+#: modules/collections/src/Install/Installer.php:99
 msgid "<p>The first item of the demo collection.</p>"
 msgstr "<p>Первый элемент демонстрационной коллекции.</p>"
 
+#: modules/collections/src/Install/Installer.php:100
 msgid "<p>The first item of the demo collection. Edit it in the admin panel.</p>"
 msgstr "<p>Первый элемент демонстрационной коллекции. Отредактируйте его в панели администратора.</p>"
 
+#: modules/collections/src/Install/Installer.php:112
 msgid "John"
 msgstr "John"
 
+#: modules/collections/templates/admin/delete_confirm.phtml:22
+#: modules/collections/templates/admin/fields/form.phtml:68
+#: modules/collections/templates/admin/form.phtml:73
+#: modules/collections/templates/admin/items/form.phtml:135
+#: modules/collections/templates/admin/sections/form.phtml:61
 msgid "Cancel"
 msgstr "Отмена"
 
+#: modules/collections/templates/admin/fields/form.phtml:32
+#: modules/collections/templates/admin/form.phtml:30
+#: modules/collections/templates/admin/items/form.phtml:34
+#: modules/collections/templates/admin/sections/form.phtml:34
 msgid "Name"
 msgstr "Название"
 
+#: modules/collections/templates/admin/fields/form.phtml:37
+#: modules/collections/templates/admin/form.phtml:35
+#: modules/collections/templates/admin/items/form.phtml:39
+#: modules/collections/templates/admin/sections/form.phtml:39
 msgid "Code"
 msgstr "Код"
 
+#: modules/collections/templates/admin/fields/form.phtml:39
+#: modules/collections/templates/admin/sections/form.phtml:41
 msgid "Machine code: lowercase latin letters, digits, hyphen and underscore"
 msgstr "Машинный код: строчные латинские буквы, цифры, дефис и подчёркивание"
 
+#: modules/collections/templates/admin/fields/form.phtml:43
 msgid "Type"
 msgstr "Тип"
 
+#: modules/collections/templates/admin/fields/form.phtml:52
+#: modules/collections/templates/admin/form.phtml:46
+#: modules/collections/templates/admin/items/form.phtml:57
+#: modules/collections/templates/admin/sections/form.phtml:50
 msgid "Sorting"
 msgstr "Сортировка"
 
+#: modules/collections/templates/admin/fields/form.phtml:58
+#: modules/collections/templates/admin/fields/index.phtml:39
 msgid "Required"
 msgstr "Обязательное"
 
+#: modules/collections/templates/admin/fields/form.phtml:63
 msgid "Allow multiple values"
 msgstr "Разрешить несколько значений"
 
+#: modules/collections/templates/admin/fields/form.phtml:67
+#: modules/collections/templates/admin/form.phtml:72
+#: modules/collections/templates/admin/items/form.phtml:134
+#: modules/collections/templates/admin/sections/form.phtml:60
 msgid "Save"
 msgstr "Сохранить"
 
+#: modules/collections/templates/admin/fields/index.phtml:19
+#: modules/collections/templates/admin/items/index.phtml:20
+#: modules/collections/templates/admin/sections/index.phtml:22
 msgid "Collection"
 msgstr "Коллекция"
 
+#: modules/collections/templates/admin/fields/index.phtml:26
+#: modules/collections/templates/admin/index.phtml:24
+#: modules/collections/templates/admin/items/index.phtml:27
+#: modules/collections/templates/admin/sections/index.phtml:36
+#: modules/collections/templates/public/listing.phtml:22
 msgid "The list is empty"
 msgstr "Список пуст"
 
+#: modules/collections/templates/admin/fields/index.phtml:40
 msgid "Multiple"
 msgstr "Множественное"
 
+#: modules/collections/templates/admin/fields/index.phtml:43
+#: modules/collections/templates/admin/index.phtml:48
+#: modules/collections/templates/admin/items/index.phtml:46
+#: modules/collections/templates/admin/sections/index.phtml:59
 msgid "Edit"
 msgstr "Редактировать"
 
+#: modules/collections/templates/admin/fields/index.phtml:51
+#: modules/collections/templates/admin/index.phtml:63
+#: modules/collections/templates/admin/items/index.phtml:56
+#: modules/collections/templates/admin/sections/index.phtml:69
 msgid "Back"
 msgstr "Назад"
 
+#: modules/collections/templates/admin/form.phtml:37
 msgid "Machine code for the URL and API: lowercase latin letters, digits, hyphen and underscore"
 msgstr "Машинный код для URL и API: строчные латинские буквы, цифры, дефис и подчёркивание"
 
+#: modules/collections/templates/admin/form.phtml:41
+#: modules/collections/templates/admin/sections/form.phtml:45
 msgid "Description"
 msgstr "Описание"
 
+#: modules/collections/templates/admin/form.phtml:51
 msgid "Items per page"
 msgstr "Элементов на странице"
 
+#: modules/collections/templates/admin/form.phtml:57
 msgid "Use sections"
 msgstr "Использовать разделы"
 
+#: modules/collections/templates/admin/form.phtml:62
+#: modules/collections/templates/admin/items/form.phtml:95
+#: modules/collections/templates/admin/sections/form.phtml:56
 msgid "Active"
 msgstr "Активно"
 
+#: modules/collections/templates/admin/form.phtml:67
 msgid "Public (accessible by URL)"
 msgstr "Публичная (доступна по URL)"
 
+#: modules/collections/templates/admin/form.phtml:68
 msgid "A private collection has no public page and is available only through the API"
 msgstr "Приватная коллекция не имеет публичной страницы и доступна только через API"
 
+#: modules/collections/templates/admin/index.phtml:36
+#: modules/collections/templates/admin/items/index.phtml:39
+#: modules/collections/templates/admin/sections/index.phtml:51
 msgid "On"
 msgstr "Включено"
 
+#: modules/collections/templates/admin/index.phtml:38
+#: modules/collections/templates/admin/items/index.phtml:41
+#: modules/collections/templates/admin/sections/index.phtml:53
 msgid "Off"
 msgstr "Выключено"
 
+#: modules/collections/templates/admin/index.phtml:58
 msgid "Total:"
 msgstr "Всего:"
 
+#: modules/collections/templates/admin/items/form.phtml:41
 msgid "Machine code: lowercase latin letters, digits, hyphen and underscore. Leave empty to generate it from the name automatically"
 msgstr "Машинный код: строчные латинские буквы, цифры, дефис и подчёркивание. Оставьте пустым, чтобы сгенерировать его из названия автоматически"
 
+#: modules/collections/templates/admin/items/form.phtml:46
 msgid "Section"
 msgstr "Раздел"
 
+#: modules/collections/templates/admin/items/form.phtml:48
 msgid "— none —"
 msgstr "— нет —"
 
+#: modules/collections/templates/admin/items/form.phtml:62
 msgid "Active from"
 msgstr "Активно с"
 
+#: modules/collections/templates/admin/items/form.phtml:67
 msgid "Active to"
 msgstr "Активно до"
 
+#: modules/collections/templates/admin/items/form.phtml:73
 msgid "Preview text"
 msgstr "Текст анонса"
 
+#: modules/collections/templates/admin/items/form.phtml:84
 msgid "Detail text"
 msgstr "Подробный текст"
 
+#: modules/collections/templates/admin/items/form.phtml:107
 msgid "One value per line"
 msgstr "Одно значение на строку"
 
+#: modules/collections/templates/admin/sections/index.phtml:25
 msgid "Root"
 msgstr "Корень"
 
+#: modules/collections/templates/admin/sections/index.phtml:58
 msgid "Open"
 msgstr "Открыть"
+
