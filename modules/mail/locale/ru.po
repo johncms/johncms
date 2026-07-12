@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
-"PO-Revision-Date: 2026-07-11 21:51\n"
+"PO-Revision-Date: 2026-07-12 12:34\n"
 
 #: modules/mail/src/Application/Controllers/AddContactController.php:36
 #: modules/mail/src/Application/Controllers/BlockUserController.php:42
@@ -60,7 +60,7 @@ msgstr "Контакты"
 #: modules/mail/src/Application/Controllers/AddContactController.php:69
 #: modules/mail/src/Application/Controllers/AddContactController.php:83
 msgid "Add Contact"
-msgstr ""
+msgstr "Добавить контакт"
 
 #: modules/mail/src/Application/Controllers/AddContactController.php:43
 msgid "You really want to add contact?"
@@ -81,7 +81,7 @@ msgstr "Продолжить"
 
 #: modules/mail/src/Application/Controllers/BlockUserController.php:30
 msgid "User blocked successfully"
-msgstr ""
+msgstr "Пользователь успешно заблокирован"
 
 #: modules/mail/src/Application/Controllers/BlockUserController.php:44
 #: modules/mail/src/Application/Controllers/BlocklistIndexController.php:31
@@ -96,7 +96,7 @@ msgstr "Чёрный список"
 #: modules/mail/src/Application/Controllers/BlockUserController.php:48
 #: modules/mail/src/Application/Controllers/BlockUserController.php:49
 msgid "Block user"
-msgstr ""
+msgstr "Заблокировать пользователя"
 
 #: modules/mail/src/Application/Controllers/BlockUserController.php:54
 msgid "You really want to block contact?"
@@ -157,7 +157,7 @@ msgstr "Такого пользователя не существует"
 
 #: modules/mail/src/Application/Controllers/DeleteContactController.php:37
 msgid "Delete contact"
-msgstr ""
+msgstr "Удалить контакт"
 
 #: modules/mail/src/Application/Controllers/DeleteContactController.php:41
 msgid "When you delete a contact is deleted and all correspondence with him.<br>Are you sure you want to delete?"
@@ -169,7 +169,7 @@ msgstr "Контакт удален"
 
 #: modules/mail/src/Application/Controllers/DeleteMessageController.php:36
 msgid "Delete message"
-msgstr ""
+msgstr "Удалить сообщение"
 
 #: modules/mail/src/Application/Controllers/DeleteMessageController.php:40
 msgid "You really want to remove the message?"
@@ -209,13 +209,13 @@ msgstr "Отправленные сообщения"
 
 #: modules/mail/src/Application/Controllers/UnblockUserController.php:29
 msgid "User unblocked successfully"
-msgstr ""
+msgstr "Пользователь успешно разблокирован."
 
 #: modules/mail/src/Application/Controllers/UnblockUserController.php:40
 #: modules/mail/src/Application/Controllers/UnblockUserController.php:43
 #: modules/mail/src/Application/Controllers/UnblockUserController.php:44
 msgid "Unblock user"
-msgstr ""
+msgstr "Разблокировать пользователя"
 
 #: modules/mail/src/Application/Controllers/UnblockUserController.php:49
 msgid "You really want to unblock contact?"
@@ -228,11 +228,11 @@ msgstr "Разблокировать"
 
 #: modules/mail/src/Application/Controllers/WriteController.php:95
 msgid "New message"
-msgstr ""
+msgstr "Новое сообщение"
 
 #: modules/mail/src/Application/UseCases/BlockUserUseCase.php:27
 msgid "You cannot block yourself"
-msgstr ""
+msgstr "Вы не можете заблокировать себя."
 
 #: modules/mail/src/Application/UseCases/GetContactListUseCase.php:35
 msgid "My Contacts"
@@ -257,7 +257,7 @@ msgstr "Заблокировать пользователя"
 
 #: modules/mail/src/Application/UseCases/SendMessageUseCase.php:34
 msgid "Access forbidden"
-msgstr ""
+msgstr "Доступ запрещен"
 
 #: modules/mail/src/Application/UseCases/SendMessageUseCase.php:44
 msgid "Message cannot be empty"
@@ -327,7 +327,7 @@ msgstr "Список пуст"
 
 #: modules/mail/templates/blocklist.phtml:52
 msgid "User since:"
-msgstr ""
+msgstr "Пользователь с:"
 
 #: modules/mail/templates/confirm.phtml:32
 msgid "Cancel"
