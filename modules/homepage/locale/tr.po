@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
-"PO-Revision-Date: 2026-03-24 11:08\n"
+"PO-Revision-Date: 2026-07-12 12:38\n"
 
 #: modules/homepage/templates/index.phtml:13
 msgid "Free, Open Source content management system"
