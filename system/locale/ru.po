@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
-"PO-Revision-Date: 2026-07-11 21:51\n"
+"PO-Revision-Date: 2026-07-12 12:34\n"
 
 #: config/notifications.global.php:20
 #: config/places.global.php:17
@@ -707,6 +707,8 @@ msgstr "Время"
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:194
 #: modules/admin/templates/sidebar-admin-menu.phtml:24
 #: modules/admin/templates/sidebar-admin-menu.phtml:321
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:24
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:352
 msgid "Set Light Theme"
 msgstr "Установить светлую тему"
 
@@ -714,6 +716,8 @@ msgstr "Установить светлую тему"
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:193
 #: modules/admin/templates/sidebar-admin-menu.phtml:24
 #: modules/admin/templates/sidebar-admin-menu.phtml:320
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:24
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:351
 msgid "Set Dark Theme"
 msgstr "Установить темную тему"
 
@@ -746,21 +750,30 @@ msgstr "Авторизоваться"
 msgid "Exit"
 msgstr "Выход"
 
-#: themes/default/templates/system/layout/default.phtml:154
+#: themes/default/templates/system/layout/default.phtml:153
 msgid "Privacy Policy"
 msgstr "Политика конфиденциальности"
 
-#: themes/default/templates/system/layout/default.phtml:155
+#: themes/default/templates/system/layout/default.phtml:154
 msgid "Terms of Use"
 msgstr "Пользовательское соглашение"
 
-#: themes/default/templates/system/layout/default.phtml:156
+#: themes/default/templates/system/layout/default.phtml:155
 msgid "Personal Data Processing Policy"
 msgstr "Политика обработки персональных данных"
 
-#: themes/default/templates/system/layout/default.phtml:157
+#: themes/default/templates/system/layout/default.phtml:156
 msgid "Cookie Policy"
 msgstr "Политика использования cookie"
+
+#: themes/default/templates/system/layout/default.phtml:229
+#, php-format
+msgid "We use cookies to improve the site. By continuing to use the site, you agree to our %sPrivacy Policy%s."
+msgstr "Мы используем файлы cookie для улучшения работы сайта. Продолжая использовать сайт, вы соглашаетесь с нашей %sПолитикой конфиденциальности%s."
+
+#: themes/default/templates/system/layout/default.phtml:232
+msgid "Accept"
+msgstr "Принять"
 
 #: themes/default/templates/system/mail/layouts/default.phtml:115
 msgid "The email is generated automatically. Please don't answer it. <br> To contact us, use the contact information on our website."
