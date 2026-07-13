@@ -27,11 +27,11 @@ if (isset($load_scripts) && $load_scripts !== false) {
     <ckeditor-input-component
         :class="'p-no-margin'"
         upload_url=""
-        name="<?= $name ?>"
-        language="<?= $locale ?>"
-        errors="<?= $errors ?>"
-        id="<?= $id ?>"
-        label="<?= $label ?>"
-        value="<?= $value ?>"
+        name="<?= $this->e($name) ?>"
+        language="<?= $this->e($locale) ?>"
+        errors="<?= $this->e($errors) ?>"
+        id="<?= $this->e($id) ?>"
+        label="<?= $this->e($label) ?>"
+        value="<?= $this->e($value) ?>"
     ></ckeditor-input-component>
 </div>
