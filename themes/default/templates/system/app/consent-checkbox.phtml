@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * Consent checkbox for a public form.
+ *
+ * @var Mobicms\Render\Template\Template $this
+ * @var Johncms\Modules\Consent\Application\DTO\FormConsentDTO $consent
+ * @var string $field
+ * @var bool $checked
+ * @var list<string> $errors
+ */
+?>
+
+<div class="form-group">
+    <div class="custom-control custom-checkbox">
+        <input type="checkbox"
+               class="custom-control-input <?= ! empty($errors) ? 'is-invalid' : '' ?>"
+               name="<?= $this->e($field) ?>"
+               value="1"
+               id="<?= $this->e($field) ?>"
+               <?= $checked ? 'checked' : '' ?>>
+        <label class="custom-control-label" for="<?= $this->e($field) ?>">
+            <?php // titleHtml is sanitized HTML (HTMLPurifier), rendered as-is. ?>
+            <?php if ($consent->url !== null): ?>
+                <a href="<?= $this->e($consent->url) ?>" target="_blank"><?= $consent->titleHtml ?></a>
+            <?php else: ?>
+                <?= $consent->titleHtml ?>
+            <?php endif ?>
+            <?php if ($consent->isRequired): ?><span class="text-danger">*</span><?php endif ?>
+        </label>
+        <?php if (! empty($errors)): ?>
+            <div class="invalid-feedback"><?= implode('<br>', $errors) ?></div>
+        <?php endif ?>
+    </div>
+</div>

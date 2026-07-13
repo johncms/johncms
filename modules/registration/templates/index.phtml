@@ -125,28 +125,15 @@
         </div>
     </div>
 
-    <?php if (! empty($consents)): ?>
-        <?php foreach ($consents as $consent): ?>
-            <?php $consentField = 'consent_' . $consent->id ?>
-            <div class="form-group">
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox"
-                           class="custom-control-input <?= isset($errors[$consentField]) ? 'is-invalid' : '' ?>"
-                           name="<?= $consentField ?>"
-                           value="1"
-                           id="<?= $consentField ?>"
-                           <?= (($fields[$consentField] ?? null) === '1' ? 'checked' : '') ?>>
-                    <label class="custom-control-label" for="<?= $consentField ?>">
-                        <a href="/consent/<?= $consent->id ?>" target="_blank"><?= $this->e($consent->title) ?></a>
-                        <?php if ($consent->is_required): ?><span class="text-danger">*</span><?php endif ?>
-                    </label>
-                    <?php if (isset($errors[$consentField])): ?>
-                        <div class="invalid-feedback"><?= implode('<br>', $errors[$consentField]) ?></div>
-                    <?php endif ?>
-                </div>
-            </div>
-        <?php endforeach ?>
-    <?php endif ?>
+    <?php foreach ($consents as $consent): ?>
+        <?php $consentField = 'consent_' . $consent->id ?>
+        <?= $this->fetch('system::app/consent-checkbox', [
+            'consent' => $consent,
+            'field'   => $consentField,
+            'checked' => ($fields[$consentField] ?? null) === '1',
+            'errors'  => $errors[$consentField] ?? [],
+        ]) ?>
+    <?php endforeach ?>
 
     <input type="submit" name="submit" class="btn btn-primary" value="<?= __('Registration') ?>">
 </form>

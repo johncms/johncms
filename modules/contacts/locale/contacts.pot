@@ -14,7 +14,7 @@ msgstr ""
 #: modules/contacts/src/Application/Controllers/Admin/ContactMessageListController.php:45
 #: modules/contacts/src/Application/Controllers/Admin/ContactMessageViewController.php:45
 #: modules/contacts/src/Application/Controllers/Admin/ContactSettingsController.php:137
-#: modules/contacts/src/Application/Controllers/ContactsController.php:48
+#: modules/contacts/src/Application/Controllers/ContactsController.php:47
 msgid "Contacts"
 msgstr ""
 
@@ -35,7 +35,7 @@ msgid "Message from %s"
 msgstr ""
 
 #: modules/contacts/src/Application/Controllers/Admin/ContactSettingsController.php:43
-#: modules/contacts/templates/index.phtml:161
+#: modules/contacts/templates/index.phtml:150
 msgid "Wrong data"
 msgstr ""
 
@@ -47,11 +47,11 @@ msgstr ""
 msgid "Changes saved successfully"
 msgstr ""
 
-#: modules/contacts/src/Application/Controllers/ContactsController.php:69
+#: modules/contacts/src/Application/Controllers/ContactsController.php:68
 msgid "You must accept the consent to continue"
 msgstr ""
 
-#: modules/contacts/src/Application/Controllers/ContactsController.php:106
+#: modules/contacts/src/Application/Controllers/ContactsController.php:105
 msgid "Your message has been sent. We will reply as soon as possible."
 msgstr ""
 
@@ -206,6 +206,6 @@ msgstr ""
 msgid "Enter verification code"
 msgstr ""
 
-#: modules/contacts/templates/index.phtml:164
+#: modules/contacts/templates/index.phtml:153
 msgid "Send"
 msgstr ""

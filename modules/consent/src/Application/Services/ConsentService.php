@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Consent\Application\Services;
 
 use Illuminate\Support\Collection;
+use Johncms\Modules\Consent\Application\DTO\FormConsentDTO;
 use Johncms\Modules\Consent\Domain\Models\Consent;
 use Johncms\Modules\Consent\Domain\Models\ConsentLog;
 use Johncms\Modules\Consent\Domain\Repository\ConsentLogRepositoryInterface;
@@ -23,7 +24,36 @@ final readonly class ConsentService
         private ConsentRepositoryInterface $consents,
         private ConsentLogRepositoryInterface $log,
         private Translator $translator,
+        private ConsentTitleFormatter $titleFormatter,
     ) {
+    }
+
+    /**
+     * Active consents of the given context, prepared for rendering on a form.
+     *
+     * The title is sanitized here, so templates print it as-is. A consent is linked to its
+     * text page only when it has a text and the title carries no links of its own: titles
+     * with links point to their own pages, and wrapping them again would nest the anchors.
+     *
+     * @return list<FormConsentDTO>
+     */
+    public function getFormConsents(string $context): array
+    {
+        return $this->getActiveConsents($context)
+            ->map(function (Consent $consent): FormConsentDTO {
+                $titleHtml = $this->titleFormatter->toHtml($consent->title);
+                $hasOwnLinks = str_contains($titleHtml, '<a ');
+
+                return new FormConsentDTO(
+                    id: $consent->id,
+                    titleHtml: $titleHtml,
+                    url: $consent->hasTextPage() && ! $hasOwnLinks ? '/consent/' . $consent->id : null,
+                    isRequired: $consent->is_required,
+                    version: $consent->version,
+                );
+            })
+            ->values()
+            ->all();
     }
 
     /**

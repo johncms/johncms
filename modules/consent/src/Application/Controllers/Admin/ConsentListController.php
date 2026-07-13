@@ -7,6 +7,7 @@ namespace Johncms\Modules\Consent\Application\Controllers\Admin;
 use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
+use Johncms\Modules\Consent\Application\Services\ConsentTitleFormatter;
 use Johncms\Modules\Consent\Domain\Models\Consent;
 use Johncms\Modules\Consent\Domain\Repository\ConsentRepositoryInterface;
 use Johncms\NavChain;
@@ -21,6 +22,7 @@ final readonly class ConsentListController
         private Render $render,
         private NavChain $navChain,
         private ConsentRepositoryInterface $repository,
+        private ConsentTitleFormatter $titleFormatter,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
     ) {
@@ -55,7 +57,7 @@ final readonly class ConsentListController
 
         $lngList = config('johncms')['lng_list'] ?? [];
 
-        $items = $consents->map(static function (Consent $consent) use ($lngList): array {
+        $items = $consents->map(function (Consent $consent) use ($lngList): array {
             $languageName = $lngList[$consent->language]['name'] ?? $consent->language;
 
             return [
@@ -63,11 +65,11 @@ final readonly class ConsentListController
                 'context'       => $consent->context,
                 'language'      => $consent->language,
                 'language_name' => $languageName,
-                'title'         => $consent->title,
+                'title'         => $this->titleFormatter->toPlainText($consent->title),
                 'version'       => $consent->version,
                 'is_required'   => $consent->is_required,
                 'is_active'     => $consent->is_active,
-                'view_url'      => '/consent/' . $consent->id,
+                'view_url'      => $consent->hasTextPage() ? '/consent/' . $consent->id : null,
                 'edit_url'      => self::URL . '/' . $consent->id . '/edit',
                 'delete_url'    => self::URL . '/' . $consent->id . '/delete',
             ];

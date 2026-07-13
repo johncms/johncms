@@ -7,6 +7,7 @@ namespace Johncms\Modules\Consent\Application\Controllers;
 use HTMLPurifier;
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Consent\Application\Services\ConsentService;
+use Johncms\Modules\Consent\Application\Services\ConsentTitleFormatter;
 use Johncms\NavChain;
 use Johncms\System\View\Render;
 
@@ -17,6 +18,7 @@ final readonly class ConsentViewController
         private Render $render,
         private NavChain $navChain,
         private ConsentService $consentService,
+        private ConsentTitleFormatter $titleFormatter,
         private HTMLPurifier $purifier,
     ) {
         $this->controllerContext->initModule('consent');
@@ -26,7 +28,7 @@ final readonly class ConsentViewController
     {
         $consent = $this->consentService->getConsent($id);
 
-        if ($consent === null || ! $consent->is_active) {
+        if ($consent === null || ! $consent->is_active || ! $consent->hasTextPage()) {
             http_response_code(404);
             return $this->render->render('system::pages/result', [
                 'title'    => __('Consent'),
@@ -36,11 +38,12 @@ final readonly class ConsentViewController
             ]);
         }
 
-        $this->navChain->add($consent->title);
+        $title = $this->titleFormatter->toPlainText($consent->title);
+        $this->navChain->add($title);
 
         return $this->render->render('consent::view', [
-            'title'      => $consent->title,
-            'page_title' => $consent->title,
+            'title'      => $title,
+            'page_title' => $title,
             'text'       => $this->purifier->purify($consent->text),
         ]);
     }

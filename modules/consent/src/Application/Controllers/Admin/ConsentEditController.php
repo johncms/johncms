@@ -23,6 +23,14 @@ final readonly class ConsentEditController
     /** Known form contexts, offered as suggestions in the admin form. */
     private const KNOWN_CONTEXTS = ['register', 'feedback', 'newsletter'];
 
+    /**
+     * The title may carry inline HTML with links, so the column is TEXT.
+     *
+     * TEXT holds 65535 bytes, while the rule counts characters: a utf8mb4 character takes up
+     * to 4 bytes, so this is the largest limit that can never overflow the column.
+     */
+    private const TITLE_MAX_LENGTH = 16383;
+
     public function __construct(
         private AdminControllerContext $controllerContext,
         private Render $render,
@@ -63,15 +71,13 @@ final readonly class ConsentEditController
                     'context'    => $fields['context'],
                     'language'   => $fields['language'],
                     'title'      => $fields['title'],
-                    'text'       => $fields['text'],
                     'version'    => $fields['version'],
                     'csrf_token' => (string) $this->request->getPost('csrf_token', ''),
                 ],
                 [
                     'context'    => ['NotEmpty', 'StringLength' => ['max' => 100]],
                     'language'   => ['InArray' => ['haystack' => $languageCodes]],
-                    'title'      => ['NotEmpty', 'StringLength' => ['max' => 255]],
-                    'text'       => ['NotEmpty'],
+                    'title'      => ['NotEmpty', 'StringLength' => ['max' => self::TITLE_MAX_LENGTH]],
                     'version'    => ['NotEmpty', 'StringLength' => ['max' => 50]],
                     'csrf_token' => ['Csrf'],
                 ]

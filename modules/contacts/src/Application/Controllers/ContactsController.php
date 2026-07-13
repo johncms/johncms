@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Contacts\Application\Controllers;
 
-use Illuminate\Support\Collection;
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Consent\Application\Services\ConsentService;
 use Johncms\Modules\Contacts\Application\DTO\CreateContactMessageDTO;
@@ -50,8 +49,8 @@ final readonly class ContactsController
 
         $pageData = $this->settingsProvider->getPageData();
         $consents = $pageData->formEnabled
-            ? $this->consentService->getActiveConsents(self::CONSENT_CONTEXT)
-            : new Collection();
+            ? $this->consentService->getFormConsents(self::CONSENT_CONTEXT)
+            : [];
 
         $formData = $this->form->getFormData();
         $errors = [];
@@ -61,7 +60,7 @@ final readonly class ContactsController
             foreach ($consents as $consent) {
                 $field = 'consent_' . $consent->id;
                 $formData[$field] = (string) $this->request->getPost($field, '');
-                if ($consent->is_required) {
+                if ($consent->isRequired) {
                     $consentFields[$field] = ['Identical' => ['token' => '1']];
                 }
             }

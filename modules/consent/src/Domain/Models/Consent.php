@@ -34,4 +34,14 @@ final class Consent extends Model
         'is_required' => 'boolean',
         'is_active'   => 'boolean',
     ];
+
+    /**
+     * A consent has a page of its own only when a full text is stored for it.
+     *
+     * Consents without text are just holders for a title that carries its own links.
+     */
+    public function hasTextPage(): bool
+    {
+        return trim($this->text) !== '';
+    }
 }

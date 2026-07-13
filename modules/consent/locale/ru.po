@@ -186,3 +186,21 @@ msgstr "Гость"
 msgid "Back"
 msgstr "Назад"
 
+#: modules/consent/templates/admin/form.phtml:66
+msgid ""
+"Shown next to the checkbox in the form. HTML is allowed, for example links to "
+"other pages:"
+msgstr ""
+"Отображается рядом с чекбоксом в форме. Допускается HTML, например ссылки на "
+"другие страницы:"
+
+#: modules/consent/templates/admin/form.phtml:79
+msgid ""
+"Full text of the consent, shown on a separate page. Leave it empty if the "
+"consent has no page of its own: then the checkbox shows only the title, "
+"without a link to the text."
+msgstr ""
+"Полный текст согласия, отображается на отдельной странице. Оставьте поле "
+"пустым, если у согласия нет собственной страницы: тогда рядом с чекбоксом "
+"будет показан только заголовок, без ссылки на текст."
+

@@ -45,7 +45,7 @@ final readonly class RegistrationController
 
         $this->navChain->add(__('Registration'));
 
-        $consents = $this->consentService->getActiveConsents('register');
+        $consents = $this->consentService->getFormConsents('register');
 
         $fields = [
             'name'     => (string) $this->request->getPost('name', ''),
@@ -96,7 +96,7 @@ final readonly class RegistrationController
             }
 
             foreach ($consents as $consent) {
-                if ($consent->is_required) {
+                if ($consent->isRequired) {
                     $rules['consent_' . $consent->id] = ['Identical' => ['token' => '1']];
                 }
             }

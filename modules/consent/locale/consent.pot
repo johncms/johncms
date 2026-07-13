@@ -11,27 +11,27 @@ msgid "Delete consent"
 msgstr ""
 
 #: modules/consent/src/Application/Controllers/Admin/ConsentDeleteController.php:51
-#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:107
-#: modules/consent/src/Application/Controllers/Admin/ConsentListController.php:32
-#: modules/consent/src/Application/Controllers/Admin/ConsentLogController.php:33
+#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:108
+#: modules/consent/src/Application/Controllers/Admin/ConsentListController.php:34
+#: modules/consent/src/Application/Controllers/Admin/ConsentLogController.php:35
 msgid "Consents"
 msgstr ""
 
-#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:97
+#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:98
 #: modules/consent/src/Application/Controllers/Admin/CookieBannerController.php:47
 msgid "Changes saved successfully"
 msgstr ""
 
-#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:105
+#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:106
 msgid "Edit consent"
 msgstr ""
 
-#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:105
+#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:106
 #: modules/consent/templates/admin/list.phtml:20
 msgid "Add consent"
 msgstr ""
 
-#: modules/consent/src/Application/Controllers/Admin/ConsentLogController.php:32
+#: modules/consent/src/Application/Controllers/Admin/ConsentLogController.php:34
 #: modules/consent/templates/admin/list.phtml:21
 msgid "Consent log"
 msgstr ""
@@ -48,12 +48,12 @@ msgstr ""
 msgid "Cookie banner"
 msgstr ""
 
-#: modules/consent/src/Application/Controllers/ConsentViewController.php:32
+#: modules/consent/src/Application/Controllers/ConsentViewController.php:34
 #: modules/consent/templates/admin/log.phtml:22
 msgid "Consent"
 msgstr ""
 
-#: modules/consent/src/Application/Controllers/ConsentViewController.php:34
+#: modules/consent/src/Application/Controllers/ConsentViewController.php:36
 msgid "The requested page was not found"
 msgstr ""
 
@@ -71,7 +71,7 @@ msgstr ""
 
 #: modules/consent/templates/admin/cookie-banner.phtml:61
 #: modules/consent/templates/admin/delete.phtml:17
-#: modules/consent/templates/admin/form.phtml:80
+#: modules/consent/templates/admin/form.phtml:88
 #: modules/consent/templates/admin/list.phtml:34
 #: modules/consent/templates/admin/log.phtml:23
 msgid "Version"
@@ -82,7 +82,7 @@ msgid "Increase the version to show the banner again to everyone."
 msgstr ""
 
 #: modules/consent/templates/admin/cookie-banner.phtml:71
-#: modules/consent/templates/admin/form.phtml:101
+#: modules/consent/templates/admin/form.phtml:109
 msgid "Save"
 msgstr ""
 
@@ -91,12 +91,12 @@ msgid "Are you sure you want to delete this consent?"
 msgstr ""
 
 #: modules/consent/templates/admin/delete.phtml:23
-#: modules/consent/templates/admin/list.phtml:63
+#: modules/consent/templates/admin/list.phtml:69
 msgid "Delete"
 msgstr ""
 
 #: modules/consent/templates/admin/delete.phtml:24
-#: modules/consent/templates/admin/form.phtml:102
+#: modules/consent/templates/admin/form.phtml:110
 msgid "Cancel"
 msgstr ""
 
@@ -119,15 +119,23 @@ msgstr ""
 msgid "Title"
 msgstr ""
 
-#: modules/consent/templates/admin/form.phtml:71
+#: modules/consent/templates/admin/form.phtml:69
+msgid "Shown next to the checkbox in the form. HTML is allowed, for example links to other pages:"
+msgstr ""
+
+#: modules/consent/templates/admin/form.phtml:75
 msgid "Text"
 msgstr ""
 
-#: modules/consent/templates/admin/form.phtml:93
+#: modules/consent/templates/admin/form.phtml:84
+msgid "Full text of the consent, shown on a separate page. Leave it empty if the consent has no page of its own: then the checkbox shows only the title, without a link to the text."
+msgstr ""
+
+#: modules/consent/templates/admin/form.phtml:101
 msgid "Required (blocks the form without the checkbox)"
 msgstr ""
 
-#: modules/consent/templates/admin/form.phtml:98
+#: modules/consent/templates/admin/form.phtml:106
 #: modules/consent/templates/admin/list.phtml:36
 msgid "Active"
 msgstr ""
@@ -141,17 +149,17 @@ msgstr ""
 msgid "Required"
 msgstr ""
 
-#: modules/consent/templates/admin/list.phtml:49
-#: modules/consent/templates/admin/list.phtml:56
+#: modules/consent/templates/admin/list.phtml:55
+#: modules/consent/templates/admin/list.phtml:62
 msgid "Yes"
 msgstr ""
 
-#: modules/consent/templates/admin/list.phtml:51
-#: modules/consent/templates/admin/list.phtml:58
+#: modules/consent/templates/admin/list.phtml:57
+#: modules/consent/templates/admin/list.phtml:64
 msgid "No"
 msgstr ""
 
-#: modules/consent/templates/admin/list.phtml:62
+#: modules/consent/templates/admin/list.phtml:68
 msgid "Edit"
 msgstr ""
 

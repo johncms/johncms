@@ -7,6 +7,7 @@ namespace Johncms\Modules\Consent\Application\Controllers\Admin;
 use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
+use Johncms\Modules\Consent\Application\Services\ConsentTitleFormatter;
 use Johncms\Modules\Consent\Domain\Models\ConsentLog;
 use Johncms\Modules\Consent\Domain\Repository\ConsentLogRepositoryInterface;
 use Johncms\NavChain;
@@ -21,6 +22,7 @@ final readonly class ConsentLogController
         private Render $render,
         private NavChain $navChain,
         private ConsentLogRepositoryInterface $repository,
+        private ConsentTitleFormatter $titleFormatter,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
     ) {
@@ -48,11 +50,11 @@ final readonly class ConsentLogController
 
         $entries = $this->repository->getPage($pagination->getPerPage(), $pagination->getOffset());
 
-        $items = $entries->map(static fn (ConsentLog $entry): array => [
+        $items = $entries->map(fn (ConsentLog $entry): array => [
             'id'            => $entry->id,
             'user_id'       => $entry->user_id,
             'consent_id'    => $entry->consent_id,
-            'consent_title' => $entry->consent?->title,
+            'consent_title' => $entry->consent !== null ? $this->titleFormatter->toPlainText($entry->consent->title) : null,
             'version'       => $entry->version,
             'ip_address'    => $entry->ip_address,
             'accepted_at'   => $entry->accepted_at?->format('Y-m-d H:i:s'),

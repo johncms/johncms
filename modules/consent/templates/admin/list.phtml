@@ -42,7 +42,13 @@ $this->layout('system::layout/default');
                 <tr>
                     <td><code><?= $this->e($item['context']) ?></code></td>
                     <td><?= $this->e($item['language_name']) ?> (<?= $this->e($item['language']) ?>)</td>
-                    <td><a href="<?= $this->e($item['view_url']) ?>" target="_blank"><?= $this->e($item['title']) ?></a></td>
+                    <td>
+                        <?php if ($item['view_url'] !== null): ?>
+                            <a href="<?= $this->e($item['view_url']) ?>" target="_blank"><?= $this->e($item['title']) ?></a>
+                        <?php else: ?>
+                            <?= $this->e($item['title']) ?>
+                        <?php endif ?>
+                    </td>
                     <td><?= $this->e($item['version']) ?></td>
                     <td>
                         <?php if ($item['is_required']): ?>

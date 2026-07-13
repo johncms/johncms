@@ -6,7 +6,7 @@
  * @var string $form_action
  * @var array<string, string> $form_data
  * @var array<string, array<int, string>> $errors
- * @var Illuminate\Support\Collection $consents
+ * @var list<Johncms\Modules\Consent\Application\DTO\FormConsentDTO> $consents
  * @var bool $show_captcha
  * @var string $captcha
  * @var string $honeypot_field
@@ -135,23 +135,12 @@ $this->layout('system::layout/default');
 
         <?php foreach ($consents as $consent): ?>
             <?php $consentField = 'consent_' . $consent->id ?>
-            <div class="form-group">
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox"
-                           class="custom-control-input <?= isset($errors[$consentField]) ? 'is-invalid' : '' ?>"
-                           name="<?= $consentField ?>"
-                           value="1"
-                           id="<?= $consentField ?>"
-                           <?= (($form_data[$consentField] ?? null) === '1' ? 'checked' : '') ?>>
-                    <label class="custom-control-label" for="<?= $consentField ?>">
-                        <a href="/consent/<?= $consent->id ?>" target="_blank"><?= $this->e($consent->title) ?></a>
-                        <?php if ($consent->is_required): ?><span class="text-danger">*</span><?php endif ?>
-                    </label>
-                    <?php if (isset($errors[$consentField])): ?>
-                        <div class="invalid-feedback"><?= implode('<br>', $errors[$consentField]) ?></div>
-                    <?php endif ?>
-                </div>
-            </div>
+            <?= $this->fetch('system::app/consent-checkbox', [
+                'consent' => $consent,
+                'field'   => $consentField,
+                'checked' => ($form_data[$consentField] ?? null) === '1',
+                'errors'  => $errors[$consentField] ?? [],
+            ]) ?>
         <?php endforeach ?>
 
         <?php if (isset($errors['csrf_token'])): ?>

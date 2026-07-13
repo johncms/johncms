@@ -31,7 +31,8 @@ class Installer extends \Johncms\Modules\Installer
                 $table->increments('id');
                 $table->string('context')->index();
                 $table->string('language', 5)->index();
-                $table->string('title');
+                // The title is shown next to the checkbox and may contain inline HTML with links.
+                $table->text('title');
                 $table->longText('text');
                 $table->string('version');
                 $table->boolean('is_required')->default(true);
