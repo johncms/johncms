@@ -18,6 +18,7 @@
                name="<?= $this->e($field) ?>"
                value="1"
                id="<?= $this->e($field) ?>"
+               <?= $consent->isRequired ? 'required' : '' ?>
                <?= $checked ? 'checked' : '' ?>>
         <label class="custom-control-label" for="<?= $this->e($field) ?>">
             <?php // titleHtml is sanitized HTML (HTMLPurifier), rendered as-is. ?>
