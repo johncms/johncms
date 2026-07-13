@@ -336,6 +336,10 @@ msgstr "Перейти по ссылке"
 msgid "Back"
 msgstr "Назад"
 
+#: system/helpers.php:101
+msgid "ERROR: 404 Not Found"
+msgstr "Ошибка 404: страница не найдена"
+
 #: system/helpers.php:100
 msgid "You are looking for something that doesn't exist or may have moved"
 msgstr "Страница, которую Вы ищете, не существует или была перемещена"

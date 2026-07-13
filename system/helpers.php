@@ -80,7 +80,7 @@ function pathToUrl(string $path): string
  */
 function pageNotFound(
     string $template = 'system::error/404',
-    string $title = 'ERROR: 404 Not Found',
+    string $title = '',
     string $message = ''
 ): void {
     checkRedirect();
@@ -91,13 +91,17 @@ function pageNotFound(
         header('HTTP/1.0 404 Not Found');
     }
 
+    // The default translation domain is the one of the module that is handling the request,
+    // so the system domain has to be named explicitly here.
     echo $engine->render(
         $template,
         [
-            'title'   => $title,
+            'title'   => ! empty($title)
+                ? $title
+                : d__('system', 'ERROR: 404 Not Found'),
             'message' => ! empty($message)
                 ? $message
-                : __('You are looking for something that doesn\'t exist or may have moved'),
+                : d__('system', 'You are looking for something that doesn\'t exist or may have moved'),
         ]
     );
     exit;

@@ -71,6 +71,7 @@
       'It is recommended not to specify your data, relating to %s (Login, Password), on third party sites' => 'Рекомендуется не указывать ваши данные, относящиеся к %s (логин, пароль), на сторонних сайтах',
       'Go to Link' => 'Перейти по ссылке',
       'Back' => 'Назад',
+      'ERROR: 404 Not Found' => 'Ошибка 404: страница не найдена',
       'You are looking for something that doesn\'t exist or may have moved' => 'Страница, которую Вы ищете, не существует или была перемещена',
       'Added' => 'Добавлено',
       'ERROR' => 'ОШИБКА',

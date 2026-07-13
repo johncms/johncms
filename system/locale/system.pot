@@ -325,7 +325,11 @@ msgstr ""
 msgid "Back"
 msgstr ""
 
-#: system/helpers.php:100
+#: system/helpers.php:101
+msgid "ERROR: 404 Not Found"
+msgstr ""
+
+#: system/helpers.php:104
 msgid "You are looking for something that doesn't exist or may have moved"
 msgstr ""
 
@@ -830,7 +834,7 @@ msgstr ""
 msgid "E-mail:"
 msgstr ""
 
-#: themes/default/templates/system/mail/templates/contact_message.phtml:25
+#: themes/default/templates/system/mail/templates/contact_message.phtml:32
 msgid "Open in admin panel"
 msgstr ""
 
