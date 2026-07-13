@@ -21,7 +21,7 @@ final readonly class ConsentEditController
     private const URL = '/admin/consents';
 
     /** Known form contexts, offered as suggestions in the admin form. */
-    private const KNOWN_CONTEXTS = ['register', 'feedback', 'newsletter'];
+    private const KNOWN_CONTEXTS = ['register', 'contacts'];
 
     /**
      * The title may carry inline HTML with links, so the column is TEXT.
