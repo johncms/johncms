@@ -80,6 +80,10 @@ msgstr "Текст баннера"
 msgid "Leave empty to use the default text with a link to the Privacy Policy."
 msgstr "Оставьте пустым, чтобы использовать текст по умолчанию со ссылкой на Политику конфиденциальности."
 
+#: modules/consent/templates/admin/cookie-banner.phtml:38
+msgid "You can use simple HTML tags in the text, for example links:"
+msgstr "В тексте можно использовать простые HTML-теги, например ссылки:"
+
 #: modules/consent/templates/admin/cookie-banner.phtml:61
 #: modules/consent/templates/admin/delete.phtml:17
 #: modules/consent/templates/admin/form.phtml:80

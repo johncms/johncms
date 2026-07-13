@@ -20,6 +20,7 @@
       'Enable banner' => 'Включить баннер',
       'Banner text' => 'Текст баннера',
       'Leave empty to use the default text with a link to the Privacy Policy.' => 'Оставьте пустым, чтобы использовать текст по умолчанию со ссылкой на Политику конфиденциальности.',
+      'You can use simple HTML tags in the text, for example links:' => 'В тексте можно использовать простые HTML-теги, например ссылки:',
       'Version' => 'Версия',
       'Increase the version to show the banner again to everyone.' => 'Увеличьте версию, чтобы снова показать баннер всем.',
       'Save' => 'Сохранить',

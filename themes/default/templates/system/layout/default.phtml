@@ -218,7 +218,7 @@ if (! $isHomePage && ! empty($baseTitle) && $baseTitle !== (string) $config['cop
     <div id="cookie-consent-banner" class="cookie-consent-banner" style="display: none; position: fixed; left: 15px; right: 15px; bottom: 15px; max-width: 380px; z-index: 1000;">
         <div class="cookie-consent-banner__text">
             <?php if ($cookieText !== ''): ?>
-                <?= $this->e($cookieText) ?>
+                <?= di(\Johncms\Modules\Consent\Application\Services\CookieBannerTextFormatter::class)->toHtml($cookieText) ?>
             <?php else: ?>
                 <?php
                 // The link label lives inside the translatable string so each language can decline it.

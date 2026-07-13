@@ -60,7 +60,11 @@ msgstr ""
 msgid "Leave empty to use the default text with a link to the Privacy Policy."
 msgstr ""
 
-#: modules/consent/templates/admin/cookie-banner.phtml:61
+#: modules/consent/templates/admin/cookie-banner.phtml:38
+msgid "You can use simple HTML tags in the text, for example links:"
+msgstr ""
+
+#: modules/consent/templates/admin/cookie-banner.phtml:65
 #: modules/consent/templates/admin/delete.phtml:17
 #: modules/consent/templates/admin/form.phtml:88
 #: modules/consent/templates/admin/list.phtml:34
@@ -68,11 +72,11 @@ msgstr ""
 msgid "Version"
 msgstr ""
 
-#: modules/consent/templates/admin/cookie-banner.phtml:62
+#: modules/consent/templates/admin/cookie-banner.phtml:66
 msgid "Increase the version to show the banner again to everyone."
 msgstr ""
 
-#: modules/consent/templates/admin/cookie-banner.phtml:71
+#: modules/consent/templates/admin/cookie-banner.phtml:75
 #: modules/consent/templates/admin/form.phtml:109
 msgid "Save"
 msgstr ""

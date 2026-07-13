@@ -34,6 +34,10 @@ $this->layout('system::layout/default');
         <div class="form-group">
             <label><?= __('Banner text') ?></label>
             <div class="text-muted small mb-2"><?= __('Leave empty to use the default text with a link to the Privacy Policy.') ?></div>
+            <div class="text-muted small mb-2">
+                <?= __('You can use simple HTML tags in the text, for example links:') ?>
+                <code><?= $this->e('<a href="/consent/cookie-policy/">Cookie Policy</a>') ?></code>
+            </div>
             <ul class="nav nav-tabs" role="tablist">
                 <?php foreach ($languages as $index => $language): ?>
                     <li class="nav-item">
