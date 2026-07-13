@@ -11,22 +11,22 @@ msgid "Delete consent"
 msgstr ""
 
 #: modules/consent/src/Application/Controllers/Admin/ConsentDeleteController.php:51
-#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:108
+#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:113
 #: modules/consent/src/Application/Controllers/Admin/ConsentListController.php:34
 #: modules/consent/src/Application/Controllers/Admin/ConsentLogController.php:35
 msgid "Consents"
 msgstr ""
 
-#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:98
+#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:103
 #: modules/consent/src/Application/Controllers/Admin/CookieBannerController.php:47
 msgid "Changes saved successfully"
 msgstr ""
 
-#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:106
+#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:111
 msgid "Edit consent"
 msgstr ""
 
-#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:106
+#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:111
 #: modules/consent/templates/admin/list.phtml:20
 msgid "Add consent"
 msgstr ""
@@ -46,15 +46,6 @@ msgstr ""
 
 #: modules/consent/src/Application/Controllers/Admin/CookieBannerController.php:82
 msgid "Cookie banner"
-msgstr ""
-
-#: modules/consent/src/Application/Controllers/ConsentViewController.php:34
-#: modules/consent/templates/admin/log.phtml:22
-msgid "Consent"
-msgstr ""
-
-#: modules/consent/src/Application/Controllers/ConsentViewController.php:36
-msgid "The requested page was not found"
 msgstr ""
 
 #: modules/consent/templates/admin/cookie-banner.phtml:31
@@ -165,6 +156,10 @@ msgstr ""
 
 #: modules/consent/templates/admin/log.phtml:21
 msgid "User"
+msgstr ""
+
+#: modules/consent/templates/admin/log.phtml:22
+msgid "Consent"
 msgstr ""
 
 #: modules/consent/templates/admin/log.phtml:24

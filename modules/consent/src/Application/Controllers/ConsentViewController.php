@@ -29,13 +29,7 @@ final readonly class ConsentViewController
         $consent = $this->consentService->getConsent($id);
 
         if ($consent === null || ! $consent->is_active || ! $consent->hasTextPage()) {
-            http_response_code(404);
-            return $this->render->render('system::pages/result', [
-                'title'    => __('Consent'),
-                'type'     => 'alert-danger',
-                'message'  => __('The requested page was not found'),
-                'back_url' => '/',
-            ]);
+            pageNotFound();
         }
 
         $title = $this->titleFormatter->toPlainText($consent->title);
