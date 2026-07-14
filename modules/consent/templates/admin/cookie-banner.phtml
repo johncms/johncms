@@ -26,9 +26,9 @@ $this->layout('system::layout/default');
     <form method="post" action="<?= $this->e($form_action) ?>">
         <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
 
-        <div class="custom-control custom-checkbox mb-3">
-            <input type="checkbox" class="custom-control-input" name="cookie_banner_enabled" value="1" id="cookie_banner_enabled" <?= $enabled ? 'checked="checked"' : '' ?>>
-            <label class="custom-control-label" for="cookie_banner_enabled"><?= __('Enable banner') ?></label>
+        <div class="form-check mb-3">
+            <input type="checkbox" class="form-check-input" name="cookie_banner_enabled" value="1" id="cookie_banner_enabled" <?= $enabled ? 'checked="checked"' : '' ?>>
+            <label class="form-check-label" for="cookie_banner_enabled"><?= __('Enable banner') ?></label>
         </div>
 
         <div class="form-group">
