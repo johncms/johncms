@@ -24,9 +24,9 @@ $this->layout('system::layout/default');
         <fieldset>
             <legend><?= __('Default language') ?></legend>
             <?php foreach ($config['lng_list'] as $key => $val): ?>
-                <div class="custom-control custom-radio mb-2">
-                    <input type="radio" id="lng-<?= $this->e($key) ?>" name="lng" class="custom-control-input" value="<?= $this->e($key) ?>" <?= ($key === $config['lng'] ? ' checked="checked"' : '') ?>>
-                    <label class="custom-control-label" for="lng-<?= $this->e($key) ?>">
+                <div class="form-check mb-2">
+                    <input type="radio" id="lng-<?= $this->e($key) ?>" name="lng" class="form-check-input" value="<?= $this->e($key) ?>" <?= ($key === $config['lng'] ? ' checked="checked"' : '') ?>>
+                    <label class="form-check-label" for="lng-<?= $this->e($key) ?>">
                         <img class="icon icon-flag" src="<?= $this->asset('images/flags/' . strtolower($key) . '.svg') ?>" alt=".">
                         <?= $this->e($val['name']) ?>
                     </label>

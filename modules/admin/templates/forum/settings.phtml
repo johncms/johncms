@@ -23,9 +23,9 @@ $this->layout('system::layout/default');
         <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
         <fieldset>
             <legend><?= __('Common settings') ?></legend>
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" name="file_counters" value="1" id="file_counters" <?= ($forum_config['file_counters'] ? 'checked="checked"' : '') ?>>
-                <label class="custom-control-label" for="file_counters"><?= __('Show file counters') ?></label>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" name="file_counters" value="1" id="file_counters" <?= ($forum_config['file_counters'] ? 'checked="checked"' : '') ?>>
+                <label class="form-check-label" for="file_counters"><?= __('Show file counters') ?></label>
             </div>
         </fieldset>
         <fieldset class="mt-3">

@@ -48,14 +48,14 @@ $multilingualFields = [
     <form method="post" action="<?= $this->e($form_action) ?>">
         <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
 
-        <div class="custom-control custom-checkbox mb-3">
+        <div class="form-check mb-3">
             <input type="checkbox"
-                   class="custom-control-input"
+                   class="form-check-input"
                    name="contacts_form_enabled"
                    value="1"
                    id="contacts_form_enabled"
                    <?= $settings->formEnabled ? 'checked="checked"' : '' ?>>
-            <label class="custom-control-label" for="contacts_form_enabled"><?= __('Enable feedback form') ?></label>
+            <label class="form-check-label" for="contacts_form_enabled"><?= __('Enable feedback form') ?></label>
         </div>
 
         <div class="form-group">

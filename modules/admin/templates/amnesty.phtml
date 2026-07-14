@@ -19,13 +19,13 @@ $this->layout('system::layout/default');
             <form action="<?= $this->e($form_action) ?>" method="post">
                 <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
                 <div class="card-body">
-                    <div class="custom-control custom-radio">
-                        <input type="radio" id="term1" name="term" value="0" class="custom-control-input" checked>
-                        <label class="custom-control-label" for="term1"><?= __('Unban all') ?></label>
+                    <div class="form-check">
+                        <input type="radio" id="term1" name="term" value="0" class="form-check-input" checked>
+                        <label class="form-check-label" for="term1"><?= __('Unban all') ?></label>
                     </div>
-                    <div class="custom-control custom-radio">
-                        <input type="radio" id="term2" name="term" value="1" class="custom-control-input">
-                        <label class="custom-control-label" for="term2"><?= __('Clear Ban database') ?></label>
+                    <div class="form-check">
+                        <input type="radio" id="term2" name="term" value="1" class="form-check-input">
+                        <label class="form-check-label" for="term2"><?= __('Clear Ban database') ?></label>
                     </div>
 
                     <div class="alert alert-info mt-3">

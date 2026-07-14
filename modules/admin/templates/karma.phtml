@@ -36,14 +36,14 @@ $this->layout('system::layout/default');
 
     <h3><?= __('General Settings') ?></h3>
 
-    <div class="custom-control custom-checkbox">
-        <input type="checkbox" class="custom-control-input" name="on" value="1" id="on" <?= $settings['on'] ? 'checked' : '' ?>>
-        <label class="custom-control-label" for="on"><?= __('Switch module ON') ?></label>
+    <div class="form-check">
+        <input type="checkbox" class="form-check-input" name="on" value="1" id="on" <?= $settings['on'] ? 'checked' : '' ?>>
+        <label class="form-check-label" for="on"><?= __('Switch module ON') ?></label>
     </div>
 
-    <div class="custom-control custom-checkbox">
-        <input type="checkbox" class="custom-control-input" name="adm" value="1" id="adm" <?= $settings['adm'] ? 'checked' : '' ?>>
-        <label class="custom-control-label" for="adm"><?= __('Forbid to vote for the administration') ?></label>
+    <div class="form-check">
+        <input type="checkbox" class="form-check-input" name="adm" value="1" id="adm" <?= $settings['adm'] ? 'checked' : '' ?>>
+        <label class="form-check-label" for="adm"><?= __('Forbid to vote for the administration') ?></label>
     </div>
 
     <div class="mt-3">

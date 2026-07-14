@@ -37,32 +37,32 @@ $this->layout('system::layout/default');
     </div>
 
     <h3><?= __('Display mode') ?></h3>
-    <div class="custom-control custom-radio">
-        <input type="radio" id="mode1" name="mode" value="1" class="custom-control-input"
+    <div class="form-check">
+        <input type="radio" id="mode1" name="mode" value="1" class="form-check-input"
             <?= ($mode === 0 || $mode === 1 ? 'checked="checked" ' : '') ?>>
-        <label class="custom-control-label" for="mode1"><?= __('Default') ?></label>
+        <label class="form-check-label" for="mode1"><?= __('Default') ?></label>
     </div>
     <div class="small text-muted">
         <?= __('On the main showing option 1, on the other pages option 2.<br>If &quot;option 2&quot; not filled, counter would only appear on the main page.') ?>
     </div>
 
-    <div class="custom-control custom-radio">
-        <input type="radio" id="term3" name="mode" value="2" class="custom-control-input" <?= ($mode === 2 ? 'checked="checked" ' : '') ?>>
-        <label class="custom-control-label" for="term3"><?= __('Option 1') ?></label>
+    <div class="form-check">
+        <input type="radio" id="term3" name="mode" value="2" class="form-check-input" <?= ($mode === 2 ? 'checked="checked" ' : '') ?>>
+        <label class="form-check-label" for="term3"><?= __('Option 1') ?></label>
     </div>
-    <div class="custom-control custom-radio">
-        <input type="radio" id="term2" name="mode" value="3" class="custom-control-input" <?= ($mode === 3 ? 'checked="checked" ' : '') ?>>
-        <label class="custom-control-label" for="term2"><?= __('Option 2') ?></label>
-    </div>
-
-    <div class="custom-control custom-checkbox mt-3">
-        <input type="checkbox" class="custom-control-input" name="switch" value="1" id="switch" <?= $enabled ? 'checked="checked"' : '' ?>>
-        <label class="custom-control-label" for="switch"><?= __('Enabled') ?></label>
+    <div class="form-check">
+        <input type="radio" id="term2" name="mode" value="3" class="form-check-input" <?= ($mode === 3 ? 'checked="checked" ' : '') ?>>
+        <label class="form-check-label" for="term2"><?= __('Option 2') ?></label>
     </div>
 
-    <div class="custom-control custom-checkbox mt-3">
-        <input type="checkbox" class="custom-control-input" name="require_cookie_consent" value="1" id="require_cookie_consent" <?= $require_cookie_consent ? 'checked="checked"' : '' ?>>
-        <label class="custom-control-label" for="require_cookie_consent"><?= __('Load only after cookie consent') ?></label>
+    <div class="form-check mt-3">
+        <input type="checkbox" class="form-check-input" name="switch" value="1" id="switch" <?= $enabled ? 'checked="checked"' : '' ?>>
+        <label class="form-check-label" for="switch"><?= __('Enabled') ?></label>
+    </div>
+
+    <div class="form-check mt-3">
+        <input type="checkbox" class="form-check-input" name="require_cookie_consent" value="1" id="require_cookie_consent" <?= $require_cookie_consent ? 'checked="checked"' : '' ?>>
+        <label class="form-check-label" for="require_cookie_consent"><?= __('Load only after cookie consent') ?></label>
     </div>
     <div class="small text-muted">
         <?= __('If enabled, the counter code runs only after the visitor accepts the cookie banner. Requires the cookie banner to be enabled.') ?>

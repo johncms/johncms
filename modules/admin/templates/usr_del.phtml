@@ -26,13 +26,13 @@ $this->layout('system::layout/default');
                 <form action="<?= $this->e($form_action) ?>" method="post">
                     <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
                     <?php if ($comments_count > 0): ?>
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" name="comments" value="1" id="comments" checked>
-                            <label class="custom-control-label" for="comments"><?= __('Comments') ?> (<?= $comments_count ?>)</label>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" name="comments" value="1" id="comments" checked>
+                            <label class="form-check-label" for="comments"><?= __('Comments') ?> (<?= $comments_count ?>)</label>
                         </div>
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" name="forum" value="1" id="forum" checked>
-                            <label class="custom-control-label" for="forum">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" name="forum" value="1" id="forum" checked>
+                            <label class="form-check-label" for="forum">
                                 <?= __('Forum') ?> (<?= $forum_topics ?>&nbsp;/&nbsp;<?= $forum_posts ?>)
                             </label>
                         </div>
