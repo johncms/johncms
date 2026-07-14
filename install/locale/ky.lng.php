@@ -62,6 +62,7 @@
       'ATTENTION!' => 'Көңүл бургула!',
       'Now you need to delete the folder <b>/install/</b>' => 'Эми сиз <b>/install/</b> папкасын жок кылышыңыз керек',
       'If you need help, you can visit <a href="https://johncms.com/forum/" class="text-underline">our forum</a>.' => 'Эгер сизге жардам керек болсо, анда <a href="https://forum.kg/" class="text-underline">кыргыз форумга</a> же <a href="https://johncms.com/forum/" class="text-underline">биздин форумга</a> кириңиз.',
+      'Also, if necessary, you can familiarize yourself with <a href="https://docs.johncms.com/" class="text-underline">the documentation</a>' => 'Ошондой эле, зарыл болсо, <a href="https://docs.johncms.com/" class="text-underline">документация</a> менен таанышып чыга аласыз',
       'Go to website' => 'Сайтка өтүңүз',
     ),
   ),

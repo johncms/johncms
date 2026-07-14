@@ -9,6 +9,7 @@
       'All messages older than 1 day were deleted' => 'Бардык билдирүүлөр, 1 күндөн ашканы өчүрүлдү',
       'Full clearing is finished' => 'Толук тазалоо бүттү',
       'Delete message' => 'Билдирүүнү өчүрүү',
+      'Wrong data' => 'Туура эмес маалымат',
       'The message was deleted' => 'Билдирүү өчүрүлдү',
       'Edit message' => 'Билдирүү оңдоо',
       'The message was saved' => 'Билдирүү сакталды',
@@ -19,6 +20,28 @@
       'Reply' => 'Жооп берүү',
       'Your reply to the message was saved' => 'Билдирүүгө берген жообуңуз сакталды',
       'Only images are allowed' => 'Сүрөттөргө гана уруксат берилет',
+      'Welcome to the Admin Club!
+Only Moderators and Administrators have access here.
+Regular users are not allowed in.' => 'Админ клубуна кош келиңиз!
+Бул жерге модераторлор жана администраторлор гана кире алат.
+Кадимки колдонуучуларга уруксат жок.',
+      'The guestbook supports full text formatting in the visual editor:<br>
+<span style="font-weight: bold">bold</span><br>
+<span style="font-style:italic">italic</span><br>
+<span style="text-decoration:underline">underlined</span><br>
+<span style="color:red">red</span><br>
+<span style="color:green">green</span><br>
+<span style="color:blue">blue</span><br>
+Inserting links: <a href="https://johncms.com">https://johncms.com</a>, images, tables, videos and much more' => 'Конок китеби визуалдык редактордо тексттин толук форматталышын колдойт:<br>
+<span style="font-weight: bold">калың</span><br>
+<span style="font-style:italic">кыйгач</span><br>
+<span style="text-decoration:underline">асты сызылган</span><br>
+<span style="color:red">кызыл</span><br>
+<span style="color:green">жашыл</span><br>
+<span style="color:blue">көк</span><br>
+Шилтемелерди коюу: <a href="https://johncms.com">https://johncms.com</a>, сүрөттөр, таблицалар, видеолор жана дагы көптөгөн нерселер',
+      'Welcome to the Guestbook!' => 'Конок китебине кош келиңиз!',
+      'A sample reply from the Administrator' => 'Администратордун жообунун мисалы',
       'Clear guestbook' => 'Конок китебин тазалоо',
       'Clearing parameters' => 'Тазалоо жолдору',
       'Older than 1 week' => '1 жумадан жогору',

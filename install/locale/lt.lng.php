@@ -11,7 +11,7 @@
       'Setting' => 'Nustatymai',
       'Completion' => 'Baigimas',
       'PHP version' => 'PHP versija',
-      'The PHP version must be at least %s' => 'PHP versija turi buti ne mazesnia nei ',
+      'The PHP version must be at least %s' => 'PHP versija turi buti ne mazesnia nei %s',
       'Yes' => 'Taip',
       'No' => 'Ne',
       'PHP extension PDO must be installed' => 'PDO turi buti irasyta',

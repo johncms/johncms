@@ -97,7 +97,7 @@
       'You are not allowed to vote for users' => 'Sizga ovoz berish mumkin emas',
       'It is forbidden to vote for administration' => 'Sayt ma\'muryatiga ovoz berish ta\'qiqlangan',
       'Cheating karma is forbidden' => 'Ovozlarni soxtalashtirish taqiqlanadi',
-      'Users can take part in voting if they have stayed on a site not less %s and their score on the forum %d posts.' => 'Foydalanuvchilar ovoz berishda ishtirok etishlari mumkin, agar ular kamida% s saytda bo\'lishgan bo\'lsa va forumdagi habarlari %d bo\'lsa',
+      'Users can take part in voting if they have stayed on a site not less %s and their score on the forum %d posts.' => 'Foydalanuvchilar ovoz berishda ishtirok etishlari mumkin, agar ular kamida %s saytda bo\'lishgan bo\'lsa va forumdagi habarlari %d bo\'lsa',
       'days' => 'Kunlar',
       'You can vote for single user just one time for 24 hours' => '24 soat davomida bitta foydalanuvchi uchun faqat bir marta ovoz berish mumkin',
       'You have exceeded the limit of votes. New voices will be added %s' => 'Sizning ovoz berish imkoniyatingiz tugadi, yangi ovozni %s da qo\'shish mumkin',

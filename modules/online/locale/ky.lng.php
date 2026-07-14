@@ -11,6 +11,7 @@
       'Who is online?' => 'Ким желеде?',
       'IP Activity' => 'IP аракеттер',
       'Users' => 'Колдонуучулар',
+      'Access denied' => 'Кирүүгө тыюу салынган',
       'Guest' => 'Коноктор',
       'List is empty' => 'Тизмеси бош',
       'Total' => 'Баары',

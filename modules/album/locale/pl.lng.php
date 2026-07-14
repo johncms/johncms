@@ -55,7 +55,7 @@
       'Top Worst' => 'Top najgorsze',
       'Unread Comments' => 'Nieprzeczytane komentarze',
       'Choose file' => 'Wybierz plik',
-      'Allowed format image JPG, JPEG, PNG, GIF<br>File size should not exceed %d kb.' => 'Dozwolony format obrazu JPG, JPEG, PNG, GIF<br>Rozmiar pliku nie powinien przekraczać.',
+      'Allowed format image JPG, JPEG, PNG, GIF<br>File size should not exceed %d kb.' => 'Dozwolony format obrazu JPG, JPEG, PNG, GIF<br>Rozmiar pliku nie powinien przekraczać %d kb.',
       'Description' => 'Opis',
       'Save' => 'Zapisz',
       'Cancel' => 'Anuluj',

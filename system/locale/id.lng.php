@@ -7,7 +7,7 @@
     array (
       'New reply on the forum' => 'Baru membalas di forum',
       'New vote in karma' => 'Suara baru di karma',
-      'User <b>#user_name#</b> voted in <a href="#karma_url#">your karma</a>.' => 'Pengguna <b>#username#</b> memilih <a href="#karma_url#">karma anda</a>.',
+      'User <b>#user_name#</b> voted in <a href="#karma_url#">your karma</a>.' => 'Pengguna <b>#user_name#</b> memilih <a href="#karma_url#">karma anda</a>.',
       'On the Homepage' => 'Pada Homepage',
       'Watching the photo album' => 'Menonton album foto',
       'Users' => 'Pengguna',

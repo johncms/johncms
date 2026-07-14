@@ -10,7 +10,7 @@
       'Library' => 'Biblioteka',
       'Articles do not exist' => 'Artykuły nie istnieją',
       'Write Article' => 'Napisz artykuł',
-      'You cannot add the Article so often<br>Please, wait %d sec.' => 'Nie wolno pisać wiadomość tak szybko!<br>Proszę, odczekać.',
+      'You cannot add the Article so often<br>Please, wait %d sec.' => 'Nie wolno pisać wiadomość tak szybko!<br>Proszę, odczekać %d sek.',
       'You have not entered the name' => 'Nie wpisałeś nazwy',
       'The file is invalid encoding, preferably UTF-8' => 'Plik jest nieprawidłowo kodowany, najlepiej w UTF-8',
       'Invalid file format allowed * .txt' => 'Nieprawidłowy plik w formacie * .txt',

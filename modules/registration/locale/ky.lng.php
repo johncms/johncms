@@ -6,6 +6,7 @@
     '' => 
     array (
       'Registration' => 'Катталуу',
+      'You must accept the consent to continue' => 'Улантуу үчүн макулдукту кабыл алышыңыз керек',
       'Registration on the website' => 'Сайтка катталуу',
       'Email confirmation' => 'Электрондук почта тастыктоосу',
       'User is not found' => 'Колдонуучу табылган жок',

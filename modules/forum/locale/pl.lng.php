@@ -48,7 +48,7 @@
       'New message' => 'Nowa wiadomość',
       'Access forbidden' => 'Dostęp zabroniony',
       'You cannot write in a closed topic' => 'Nie możesz pisać w zamkniętym temacie',
-      'You cannot add the message so often<br>Please, wait %d sec.' => 'Nie wolno pisać wiadomość tak szybko!<br>Proszę, odczekać.',
+      'You cannot add the message so often<br>Please, wait %d sec.' => 'Nie wolno pisać wiadomość tak szybko!<br>Proszę, odczekać %d sek.',
       'Text is too short' => 'Tekst jest za krótki',
       'Message already exists' => 'Taka wiadomość już istnieje',
       'Go to Section' => 'Idż do sekcji',

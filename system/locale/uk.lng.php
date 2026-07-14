@@ -126,7 +126,7 @@ PHP повинен працювати з драйвером за замовчу�
       'Supervisor' => 'Супервізор',
       'You have a ban' => 'Ви маєте бан',
       'The form submitted did not originate from the expected site' => 'Форма, представлена не походить з очікуваного сайту',
-      'You cannot add the message so often. Please, wait %value% seconds.' => 'Ви не можете додавати повідомлення так часто. Будь ласка, зачекайте %d секунд.',
+      'You cannot add the message so often. Please, wait %value% seconds.' => 'Ви не можете додавати повідомлення так часто. Будь ласка, зачекайте %value% секунд.',
       'A record matching the input was found' => 'Було знайдено підходящий запис',
       'No record matching the input was found' => 'По вашому запиту нічого не знайдено',
       'Value is required and can\'t be empty' => 'Поле є обов\'язковим і не може бути порожнім',
