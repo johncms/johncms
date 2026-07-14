@@ -129,8 +129,8 @@ msgid "Context"
 msgstr "Контекст"
 
 #: modules/consent/templates/admin/form.phtml:39
-msgid "The form where the consent is shown. Pick one of the suggestions."
-msgstr "Форма, в которой показывается согласие. Выберите один из вариантов."
+msgid "The form where the consent is shown. Pick one of the suggestions or type the context of your own form."
+msgstr "Форма, в которой показывается согласие. Выберите один из вариантов или введите контекст своей формы."
 
 #: modules/consent/templates/admin/form.phtml:43
 #: modules/consent/templates/admin/list.phtml:32

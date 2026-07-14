@@ -36,7 +36,7 @@ $this->layout('system::layout/default');
             <?php if (isset($errors['context'])): ?>
                 <div class="invalid-feedback"><?= implode('<br>', $errors['context']) ?></div>
             <?php endif ?>
-            <div class="text-muted small"><?= __('The form where the consent is shown. Pick one of the suggestions.') ?></div>
+            <div class="text-muted small"><?= __('The form where the consent is shown. Pick one of the suggestions or type the context of your own form.') ?></div>
         </div>
 
         <div class="form-group">

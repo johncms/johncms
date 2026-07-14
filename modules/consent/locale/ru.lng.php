@@ -30,7 +30,7 @@
       'Delete' => 'Удалить',
       'Cancel' => 'Отмена',
       'Context' => 'Контекст',
-      'The form where the consent is shown. Pick one of the suggestions.' => 'Форма, в которой показывается согласие. Выберите один из вариантов.',
+      'The form where the consent is shown. Pick one of the suggestions or type the context of your own form.' => 'Форма, в которой показывается согласие. Выберите один из вариантов или введите контекст своей формы.',
       'Language' => 'Язык',
       'Title' => 'Заголовок',
       'Text' => 'Текст',

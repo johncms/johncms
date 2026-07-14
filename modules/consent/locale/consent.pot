@@ -109,7 +109,7 @@ msgid "Context"
 msgstr ""
 
 #: modules/consent/templates/admin/form.phtml:39
-msgid "The form where the consent is shown. Pick one of the suggestions."
+msgid "The form where the consent is shown. Pick one of the suggestions or type the context of your own form."
 msgstr ""
 
 #: modules/consent/templates/admin/form.phtml:43
