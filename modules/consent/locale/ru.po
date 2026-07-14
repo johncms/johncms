@@ -42,6 +42,14 @@ msgstr "Редактирование согласия"
 msgid "Add consent"
 msgstr "Добавить согласие"
 
+#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:141
+msgid "Registration form"
+msgstr "Форма регистрации"
+
+#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:142
+msgid "Contacts form"
+msgstr "Форма обратной связи"
+
 #: modules/consent/src/Application/Controllers/Admin/ConsentLogController.php:32
 #: modules/consent/templates/admin/list.phtml:21
 msgid "Consent log"
@@ -121,8 +129,8 @@ msgid "Context"
 msgstr "Контекст"
 
 #: modules/consent/templates/admin/form.phtml:39
-msgid "Where the consent is shown, e.g. register, feedback, newsletter."
-msgstr "Где показывается согласие, например: register, feedback, newsletter."
+msgid "The form where the consent is shown. Pick one of the suggestions."
+msgstr "Форма, в которой показывается согласие. Выберите один из вариантов."
 
 #: modules/consent/templates/admin/form.phtml:43
 #: modules/consent/templates/admin/list.phtml:32

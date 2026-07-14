@@ -20,9 +20,6 @@ final readonly class ConsentEditController
 {
     private const URL = '/admin/consents';
 
-    /** Known form contexts, offered as suggestions in the admin form. */
-    private const KNOWN_CONTEXTS = ['register', 'contacts'];
-
     /**
      * The title may carry inline HTML with links, so the column is TEXT.
      *
@@ -124,10 +121,26 @@ final readonly class ConsentEditController
             'back_url'    => self::URL,
             'fields'      => $fields,
             'errors'      => $errors,
-            'contexts'    => self::KNOWN_CONTEXTS,
+            'contexts'    => $this->knownContexts(),
             'languages'   => $languages,
             'locale'      => $this->translator->getLocale(),
         ]);
+    }
+
+    /**
+     * Contexts of the forms shipped with the CMS, suggested in the admin form.
+     *
+     * The field itself stays free text: a module may ask the service for any context, so a
+     * code that is missing here is still valid and is used as entered.
+     *
+     * @return list<array{code: string, name: string}>
+     */
+    private function knownContexts(): array
+    {
+        return [
+            ['code' => 'register', 'name' => __('Registration form')],
+            ['code' => 'contacts', 'name' => __('Contacts form')],
+        ];
     }
 
     /**

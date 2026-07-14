@@ -11,24 +11,32 @@ msgid "Delete consent"
 msgstr ""
 
 #: modules/consent/src/Application/Controllers/Admin/ConsentDeleteController.php:51
-#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:113
+#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:110
 #: modules/consent/src/Application/Controllers/Admin/ConsentListController.php:34
 #: modules/consent/src/Application/Controllers/Admin/ConsentLogController.php:35
 msgid "Consents"
 msgstr ""
 
-#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:103
+#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:100
 #: modules/consent/src/Application/Controllers/Admin/CookieBannerController.php:47
 msgid "Changes saved successfully"
 msgstr ""
 
-#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:111
+#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:108
 msgid "Edit consent"
 msgstr ""
 
-#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:111
+#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:108
 #: modules/consent/templates/admin/list.phtml:20
 msgid "Add consent"
+msgstr ""
+
+#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:141
+msgid "Registration form"
+msgstr ""
+
+#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:142
+msgid "Contacts form"
 msgstr ""
 
 #: modules/consent/src/Application/Controllers/Admin/ConsentLogController.php:34
@@ -101,7 +109,7 @@ msgid "Context"
 msgstr ""
 
 #: modules/consent/templates/admin/form.phtml:39
-msgid "Where the consent is shown, e.g. register, feedback, newsletter."
+msgid "The form where the consent is shown. Pick one of the suggestions."
 msgstr ""
 
 #: modules/consent/templates/admin/form.phtml:43
