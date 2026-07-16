@@ -32,12 +32,12 @@
             <directory name="modules/rss"/>
 
             <directory name="system/src-legacy"/>
-            <directory name="system/vendor"/>
+            <directory name="vendor"/>
         </ignoreFiles>
     </projectFiles>
 
     <stubs>
-        <file name="system/vendor/gettext/translator/src/functions.php"/>
+        <file name="vendor/gettext/translator/src/functions.php"/>
     </stubs>
 
     <issueHandlers>

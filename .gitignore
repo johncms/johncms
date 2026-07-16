@@ -8,7 +8,7 @@
 /node_modules
 /phpcs.xml
 /translate.xml
-/system/vendor
+/vendor
 /mix-manifest.json
 .env
 docker-compose.override.yml

@@ -16,7 +16,7 @@ if (! isset($_GET['img'])) {
     exit;
 }
 
-require '../../../system/vendor/autoload.php';
+require '../../../vendor/autoload.php';
 
 $width = 220;
 $height = 300;

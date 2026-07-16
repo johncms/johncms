@@ -24,8 +24,7 @@
     },
     "config": {
         "optimize-autoloader": true,
-        "sort-packages": true,
-        "vendor-dir": "system/vendor"
+        "sort-packages": true
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
