@@ -46,7 +46,7 @@ class Assets implements ExtensionInterface
 
         if ($this->isAdmin()) {
             $file = (string) realpath(PUBLIC_THEMES_PATH . 'admin/assets/' . $url);
-            $resultUrl = $this->urlFromPath($file, PUBLIC_PATH);
+            $resultUrl = $this->urlFromPath($file);
 
             if (is_file($file)) {
                 return $versionStamp
@@ -59,7 +59,7 @@ class Assets implements ExtensionInterface
 
         foreach ([$this->config['skindef'], 'default'] as $skin) {
             $file = (string) realpath(PUBLIC_THEMES_PATH . $skin . '/assets/' . $url);
-            $resultUrl = $this->urlFromPath($file, PUBLIC_PATH);
+            $resultUrl = $this->urlFromPath($file);
 
             if (is_file($file)) {
                 return $versionStamp
@@ -71,9 +71,12 @@ class Assets implements ExtensionInterface
         throw new InvalidArgumentException('Unable to locate the asset: ' . $url);
     }
 
-    public function urlFromPath(string $path, string $rootPath): string
+    /**
+     * @param string|null $basePath Document root the URL is relative to. Defaults to PUBLIC_PATH.
+     */
+    public function urlFromPath(string $path, ?string $basePath = null): string
     {
-        return di(PublicUrlResolver::class)->fromPath($path, $rootPath);
+        return di(PublicUrlResolver::class)->fromPath($path, $basePath);
     }
 
     private function isAdmin(): bool
