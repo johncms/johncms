@@ -3,14 +3,24 @@
 const DS = DIRECTORY_SEPARATOR;
 
 define('ROOT_PATH', dirname(__DIR__) . DS);
-const ASSETS_PATH = ROOT_PATH . 'assets' . DS;
+
+// Web document root. Everything below this path is directly reachable by URL.
+// TODO: point to ROOT_PATH . 'public' . DS once the document root is moved.
+const PUBLIC_PATH = ROOT_PATH;
+
 const CONFIG_PATH = ROOT_PATH . 'config' . DS;
 const DATA_PATH = ROOT_PATH . 'data' . DS;
-const UPLOAD_PATH = ROOT_PATH . 'upload' . DS;
 const CACHE_PATH = DATA_PATH . 'cache' . DS;
 const LOG_PATH = DATA_PATH . 'logs' . DS;
-const THEMES_PATH = ROOT_PATH . 'themes' . DS;
 const MODULES_PATH = ROOT_PATH . 'modules' . DS;
+
+// Theme sources and templates. Not web-accessible.
+const THEMES_PATH = ROOT_PATH . 'themes' . DS;
+// Published theme assets. Web-accessible.
+const PUBLIC_THEMES_PATH = PUBLIC_PATH . 'themes' . DS;
+
+const ASSETS_PATH = PUBLIC_PATH . 'assets' . DS;
+const UPLOAD_PATH = PUBLIC_PATH . 'upload' . DS;
 const CMS_VERSION = '9.9';
 
 const USE_CRON = false;
