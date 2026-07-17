@@ -8,12 +8,16 @@
  * @link      https://johncms.com JohnCMS Project
  */
 
+// Resolved from __DIR__: this line runs before the constants are defined.
+require __DIR__ . '/../../../vendor/autoload.php';
+
 $radius = 4;
 
 $file = htmlspecialchars(urldecode($_GET['file'])) ?? '';
+$attachPath = UPLOAD_PATH . 'forum/attach/' . $file;
 
-if (! empty($file) && file_exists('../../../upload/forum/attach/' . $file)) {
-    list($width, $height, $type) = getimagesize('../../../upload/forum/attach/' . $file);
+if (! empty($file) && file_exists($attachPath)) {
+    list($width, $height, $type) = getimagesize($attachPath);
 
     switch ($type) {
         case 1:
@@ -51,7 +55,7 @@ if (! empty($file) && file_exists('../../../upload/forum/attach/' . $file)) {
         }
 
         $function = 'imageCreateFrom' . $att_ext;
-        $image = $function('../../../upload/forum/attach/' . $file);
+        $image = $function($attachPath);
 
         if ($att_ext == 'gif') {
             $tmp = imagecreate($tn_width, $tn_height);

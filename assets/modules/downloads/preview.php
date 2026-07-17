@@ -16,7 +16,8 @@ if (! isset($_GET['img'])) {
     exit;
 }
 
-require '../../../vendor/autoload.php';
+// Resolved from __DIR__: this line runs before the constants are defined.
+require __DIR__ . '/../../../vendor/autoload.php';
 
 $width = 220;
 $height = 300;
@@ -24,9 +25,18 @@ $height = 300;
 $copyright = '';
 $type = isset($_GET['type']) ? (int) $_GET['type'] : 0;
 $image = htmlspecialchars(rawurldecode($_GET['img']));
-$image = '../../../' . strtr($image, ['../' => '', '//' => '/', './' => '_',]);
+// Callers pass the path with or without a leading slash.
+$image = PUBLIC_PATH . ltrim(strtr($image, ['../' => '', '//' => '/', './' => '_',]), '/');
 
-if ($image && file_exists($image)) {
+$image = realpath($image);
+$publicPath = realpath(PUBLIC_PATH);
+
+// Never serve anything from outside of the document root.
+if ($image === false || $publicPath === false || ! str_starts_with($image, $publicPath . DIRECTORY_SEPARATOR)) {
+    exit;
+}
+
+if (file_exists($image)) {
     $att_ext = strtolower(pathinfo($image, PATHINFO_EXTENSION));
     $pic_ext = [
         'gif',
