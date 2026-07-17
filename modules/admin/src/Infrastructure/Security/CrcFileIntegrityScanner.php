@@ -12,7 +12,6 @@ use Johncms\Modules\Admin\Domain\Services\FileIntegrityScannerInterface;
 final class CrcFileIntegrityScanner implements FileIntegrityScannerInterface
 {
     private const SNAPSHOT_FILE = 'security-scanner-snapshot.cache';
-    private const SCAN_FOLDERS = ['', 'assets', 'config', 'data', 'modules', 'system', 'themes', 'upload'];
     private const FILE_PATTERN = '#.*\.(php|cgi|pl|perl|php3|php4|php5|php6|phtml|py|htaccess|tpl)$#i';
 
     public function snapshotExists(): bool
@@ -49,13 +48,39 @@ final class CrcFileIntegrityScanner implements FileIntegrityScannerInterface
     }
 
     /**
+     * Directories covered by the snapshot. The root is scanned without
+     * recursion: the directories below it are listed separately.
+     *
+     * @return array<string, bool> Map of an absolute path to the recursion flag.
+     */
+    private function scanTargets(): array
+    {
+        $targets = [
+            rtrim(ROOT_PATH, '/')      => false,
+            rtrim(CONFIG_PATH, '/')    => true,
+            rtrim(DATA_PATH, '/')      => true,
+            rtrim(MODULES_PATH, '/')   => true,
+            rtrim(ROOT_PATH . 'system', '/') => true,
+            rtrim(THEMES_PATH, '/')    => true,
+        ];
+
+        // Directories inside the document root. They coincide with the ones
+        // above as long as PUBLIC_PATH equals ROOT_PATH.
+        foreach (['assets', 'themes', 'upload', 'install'] as $folder) {
+            $targets[rtrim(PUBLIC_PATH . $folder, '/')] = true;
+        }
+
+        return $targets;
+    }
+
+    /**
      * @return array<string, string> Карта путь → CRC текущих файлов.
      */
     private function collect(): array
     {
         $files = [];
-        foreach (self::SCAN_FOLDERS as $folder) {
-            $this->scanDirectory(rtrim(ROOT_PATH . $folder, '/'), $files);
+        foreach ($this->scanTargets() as $directory => $recursive) {
+            $this->scanDirectory($directory, $files, $recursive);
         }
 
         return $files;
@@ -64,7 +89,7 @@ final class CrcFileIntegrityScanner implements FileIntegrityScannerInterface
     /**
      * @param array<string, string> $files
      */
-    private function scanDirectory(string $dir, array &$files): void
+    private function scanDirectory(string $dir, array &$files, bool $recursive): void
     {
         $handle = @opendir($dir);
         if ($handle === false) {
@@ -78,8 +103,8 @@ final class CrcFileIntegrityScanner implements FileIntegrityScannerInterface
 
             $fullPath = $dir . '/' . $file;
             if (is_dir($fullPath)) {
-                if (rtrim($dir, '/') !== rtrim(ROOT_PATH, '/')) {
-                    $this->scanDirectory($fullPath, $files);
+                if ($recursive) {
+                    $this->scanDirectory($fullPath, $files, true);
                 }
                 continue;
             }
