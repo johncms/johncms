@@ -63,11 +63,7 @@ function di(string $service): mixed
 
 function pathToUrl(string $path): string
 {
-    $diff = array_diff(
-        explode(DIRECTORY_SEPARATOR, realpath($path)),
-        explode(DIRECTORY_SEPARATOR, realpath(ROOT_PATH))
-    );
-    return '/' . implode('/', $diff);
+    return di(\Johncms\Http\PublicUrlResolver::class)->fromPath($path);
 }
 
 /**

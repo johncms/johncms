@@ -12,8 +12,8 @@ declare(strict_types=1);
 
 namespace Johncms\System\View\Extension;
 
-use Illuminate\Support\Str;
 use InvalidArgumentException;
+use Johncms\Http\PublicUrlResolver;
 use Mobicms\Render\Engine;
 use Mobicms\Render\ExtensionInterface;
 use Psr\Container\ContainerInterface;
@@ -73,7 +73,7 @@ class Assets implements ExtensionInterface
 
     public function urlFromPath(string $path, string $rootPath): string
     {
-        return Str::after(realpath($path), realpath($rootPath));
+        return di(PublicUrlResolver::class)->fromPath($path, $rootPath);
     }
 
     private function isAdmin(): bool

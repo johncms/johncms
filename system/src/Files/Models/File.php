@@ -14,8 +14,8 @@ namespace Johncms\Files\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
 use Johncms\Casts\DateHuman;
+use Johncms\Http\PublicUrlResolver;
 
 /**
  * Class File
@@ -55,6 +55,6 @@ class File extends Model
 
     public function getUrlAttribute(): string
     {
-        return Str::after(realpath(UPLOAD_PATH . $this->path), realpath(ROOT_PATH));
+        return di(PublicUrlResolver::class)->fromPath(UPLOAD_PATH . $this->path);
     }
 }
