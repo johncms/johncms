@@ -10,7 +10,7 @@ final class FileSystemThemeListProvider implements ThemeListProviderInterface
 {
     public function getAvailable(): array
     {
-        $directories = glob(ROOT_PATH . 'themes/*', GLOB_ONLYDIR) ?: [];
+        $directories = glob(THEMES_PATH . '*', GLOB_ONLYDIR) ?: [];
         $themes = array_map('basename', $directories);
 
         return array_values(array_filter($themes, static fn (string $theme): bool => $theme !== 'admin'));

@@ -41,7 +41,7 @@ final readonly class GetManagedLanguagesUseCase
                 $item['new_version'] = $available[$code]['version'];
             }
 
-            $flag = THEMES_PATH . 'default/assets/images/flags/' . strtolower($code) . '.svg';
+            $flag = PUBLIC_THEMES_PATH . 'default/assets/images/flags/' . strtolower($code) . '.svg';
             if (is_file($flag)) {
                 $item['flag'] = pathToUrl($flag);
             }

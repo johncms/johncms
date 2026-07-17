@@ -49,8 +49,8 @@ final class FileSystemLanguageFilesManager implements LanguageFilesManagerInterf
         $files = glob(ROOT_PATH . 'modules/*/locale/' . $code . '.lng.php') ?: [];
         $files[] = ROOT_PATH . 'system/locale/' . $code . '.ini';
         $files[] = ROOT_PATH . 'system/locale/' . $code . '.lng.php';
-        $files[] = ROOT_PATH . 'themes/default/assets/images/flags/' . $code . '.png';
-        $files[] = ROOT_PATH . 'themes/default/assets/images/flags/' . $code . '.svg';
+        $files[] = PUBLIC_THEMES_PATH . 'default/assets/images/flags/' . $code . '.png';
+        $files[] = PUBLIC_THEMES_PATH . 'default/assets/images/flags/' . $code . '.svg';
 
         return $files;
     }

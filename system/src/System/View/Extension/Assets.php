@@ -45,7 +45,7 @@ class Assets implements ExtensionInterface
         $url = ltrim($url, '/');
 
         if ($this->isAdmin()) {
-            $file = (string) realpath(THEMES_PATH . 'admin/assets/' . $url);
+            $file = (string) realpath(PUBLIC_THEMES_PATH . 'admin/assets/' . $url);
             $resultUrl = $this->urlFromPath($file, PUBLIC_PATH);
 
             if (is_file($file)) {
@@ -58,7 +58,7 @@ class Assets implements ExtensionInterface
         }
 
         foreach ([$this->config['skindef'], 'default'] as $skin) {
-            $file = (string) realpath(THEMES_PATH . $skin . '/assets/' . $url);
+            $file = (string) realpath(PUBLIC_THEMES_PATH . $skin . '/assets/' . $url);
             $resultUrl = $this->urlFromPath($file, PUBLIC_PATH);
 
             if (is_file($file)) {
