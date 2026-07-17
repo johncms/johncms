@@ -46,7 +46,7 @@ class Assets implements ExtensionInterface
 
         if ($this->isAdmin()) {
             $file = (string) realpath(THEMES_PATH . 'admin/assets/' . $url);
-            $resultUrl = $this->urlFromPath($file, ROOT_PATH);
+            $resultUrl = $this->urlFromPath($file, PUBLIC_PATH);
 
             if (is_file($file)) {
                 return $versionStamp
@@ -59,7 +59,7 @@ class Assets implements ExtensionInterface
 
         foreach ([$this->config['skindef'], 'default'] as $skin) {
             $file = (string) realpath(THEMES_PATH . $skin . '/assets/' . $url);
-            $resultUrl = $this->urlFromPath($file, ROOT_PATH);
+            $resultUrl = $this->urlFromPath($file, PUBLIC_PATH);
 
             if (is_file($file)) {
                 return $versionStamp

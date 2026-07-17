@@ -46,7 +46,7 @@ class Avatar implements ExtensionInterface
         if ($userId > 0) {
             $avatar = UPLOAD_PATH . 'users/avatar/' . $userId . '.png';
             if (file_exists($avatar)) {
-                return $this->assets->urlFromPath($avatar, ROOT_PATH) .
+                return $this->assets->urlFromPath($avatar, PUBLIC_PATH) .
                     '?v=' . filemtime($avatar);
             }
         }
