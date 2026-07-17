@@ -1,44 +1,21 @@
-# Protect files and directories
-<FilesMatch "\.(po|mo|phtml|cache|dat)$|^(\.(?!well-known).composer\.(json|lock))$|^#.*#$|\.php(~)$">
-  <IfModule mod_authz_core.c>
-    Require all denied
-  </IfModule>
-  <IfModule !mod_authz_core.c>
-    Order allow,deny
-  </IfModule>
-</FilesMatch>
+# The document root of JohnCMS is the public/ directory.
+#
+# This file is only a fallback for shared hosting where the document root
+# cannot be changed. It forwards every request into public/ and denies access
+# to the application code. If you can point the document root at public/,
+# do that instead: it keeps the code out of the web tree entirely.
 
 Options -Indexes
-DirectoryIndex index.php
 
-AddDefaultCharset UTF-8
+RedirectMatch 403 ^/(config|data|modules|system|tests|vendor)/
+RedirectMatch 403 ^/themes/[^/]+/(src|templates)/
 
-<IfModule mod_expires.c>
-    ExpiresActive on
-    ExpiresDefault                                      "access plus 1 month"
+<IfModule mod_rewrite.c>
+    RewriteEngine On
 
-  # Data interchange
-    ExpiresByType application/json                      "access plus 0 seconds"
-    ExpiresByType application/ld+json                   "access plus 0 seconds"
-    ExpiresByType application/xml                       "access plus 0 seconds"
-    ExpiresByType text/xml                              "access plus 0 seconds"
+    # Loop guard. Matched against the per-directory URI, which has no leading
+    # slash and no directory prefix, so an installation in a subdirectory works.
+    RewriteRule ^public/ - [L]
 
-  # Favicon (cannot be renamed!) and cursor images
-    ExpiresByType image/x-icon                          "access plus 1 week"
-
-  # HTML
-    ExpiresByType text/html                             "access plus 0 seconds"
-
-  # Manifest files
-    ExpiresByType application/x-web-app-manifest+json   "access plus 0 seconds"
-    ExpiresByType text/cache-manifest                   "access plus 0 seconds"
-
-  # Web feeds
-    ExpiresByType application/atom+xml                  "access plus 1 hour"
-    ExpiresByType application/rss+xml                   "access plus 1 hour"
+    RewriteRule ^(.*)$ public/$1 [L]
 </IfModule>
-
-RewriteEngine on
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . index.php [L]

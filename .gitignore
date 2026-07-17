@@ -9,7 +9,7 @@
 /phpcs.xml
 /translate.xml
 /vendor
-/mix-manifest.json
+/public/mix-manifest.json
 .env
 docker-compose.override.yml
 
@@ -21,39 +21,39 @@ docker-compose.override.yml
 /data/admin_tasks/
 
 # Themes folder ignores
-/themes/default/assets/css/app.css.map
-/themes/default/assets/js/app.js.map
+/public/themes/default/assets/css/app.css.map
+/public/themes/default/assets/js/app.js.map
 
 # Upload folder ignores
-/upload/downloads/files/*
-!/upload/downloads/files/index.php
-/upload/downloads/screen/*
-!/upload/downloads/screen/index.php
-/upload/forum/attach/*
-!/upload/forum/attach/index.php
-/upload/forum/topics/*
-!/upload/forum/topics/index.php
-/upload/mail/*
-!/upload/mail/index.php
-/upload/users/album/*
-!/upload/users/album/index.php
-/upload/users/avatar/*
-!/upload/users/avatar/index.php
-/upload/users/photo/*
-!/upload/users/photo/index.php
-/upload/library/tmp/*
-!/upload/library/tmp/.gitkeep
-/upload/library/images/big/*
-!/upload/library/images/big/.gitkeep
-/upload/library/images/orig/*
-!/upload/library/images/orig/.gitkeep
-/upload/library/images/small/*
-!/upload/library/images/small/.gitkeep
-/upload/forum_files/*
+/public/upload/downloads/files/*
+!/public/upload/downloads/files/index.php
+/public/upload/downloads/screen/*
+!/public/upload/downloads/screen/index.php
+/public/upload/forum/attach/*
+!/public/upload/forum/attach/index.php
+/public/upload/forum/topics/*
+!/public/upload/forum/topics/index.php
+/public/upload/mail/*
+!/public/upload/mail/index.php
+/public/upload/users/album/*
+!/public/upload/users/album/index.php
+/public/upload/users/avatar/*
+!/public/upload/users/avatar/index.php
+/public/upload/users/photo/*
+!/public/upload/users/photo/index.php
+/public/upload/library/tmp/*
+!/public/upload/library/tmp/.gitkeep
+/public/upload/library/images/big/*
+!/public/upload/library/images/big/.gitkeep
+/public/upload/library/images/orig/*
+!/public/upload/library/images/orig/.gitkeep
+/public/upload/library/images/small/*
+!/public/upload/library/images/small/.gitkeep
+/public/upload/forum_files/*
 
 # Generated sitemap files
-/sitemap.xml
-/sitemap-*.xml
+/public/sitemap.xml
+/public/sitemap-*.xml
 
 # Codex runtime marker
 .codex

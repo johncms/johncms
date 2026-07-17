@@ -1,8 +1,10 @@
 let mix = require('laravel-mix');
 let WebpackRTLPlugin = require('webpack-rtl-plugin');
 mix.disableNotifications();
-mix.js('themes/default/src/js/app.js', 'themes/default/assets/js').vue()
-        .sass('themes/default/src/scss/app.scss', 'themes/default/assets/css')
+// The document root. Asset URLs in mix-manifest.json are relative to it.
+mix.setPublicPath('public');
+mix.js('themes/default/src/js/app.js', 'public/themes/default/assets/js').vue()
+        .sass('themes/default/src/scss/app.scss', 'public/themes/default/assets/css')
         .webpackConfig({
             plugins: [
                 new WebpackRTLPlugin()

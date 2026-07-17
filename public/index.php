@@ -11,12 +11,12 @@ use Johncms\System\Http\Request;
 
 // Paths are resolved from __DIR__: both lines run before the constants are defined.
 // If the system is not installed, redirect to the installer.
-if (! is_file(__DIR__ . '/config/autoload/database.local.php')) {
+if (! is_file(dirname(__DIR__) . '/config/autoload/database.local.php')) {
     header('Location: /install/');
     exit;
 }
 
-require __DIR__ . '/system/bootstrap.php';
+require dirname(__DIR__) . '/system/bootstrap.php';
 
 $container = \Johncms\Container\PSRContainerFactory::getContainer();
 $logger = $container->get(\Psr\Log\LoggerInterface::class);

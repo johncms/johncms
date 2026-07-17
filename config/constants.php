@@ -5,8 +5,7 @@ const DS = DIRECTORY_SEPARATOR;
 define('ROOT_PATH', dirname(__DIR__) . DS);
 
 // Web document root. Everything below this path is directly reachable by URL.
-// TODO: point to ROOT_PATH . 'public' . DS once the document root is moved.
-const PUBLIC_PATH = ROOT_PATH;
+const PUBLIC_PATH = ROOT_PATH . 'public' . DS;
 
 const CONFIG_PATH = ROOT_PATH . 'config' . DS;
 const DATA_PATH = ROOT_PATH . 'data' . DS;

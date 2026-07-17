@@ -148,7 +148,7 @@
     <!-- Installation -->
     <domain>
         <name>install</name>
-        <target>install/locale</target>
-        <sourceDir>install</sourceDir>
+        <target>public/install/locale</target>
+        <sourceDir>public/install</sourceDir>
     </domain>
 </scanRuleset>

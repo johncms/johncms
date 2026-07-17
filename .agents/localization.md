@@ -11,7 +11,7 @@ PHP/phtml sources → composer translate-scan → <domain>.pot → <lang>.po →
 Crowdin is synced **manually, via CLI commands only**. There is no automatic sync: nothing is pushed or pulled in the background, and no CI job updates the repo. The repository is the source of truth — a `.po` edited and committed here stays as-is until someone explicitly runs a Crowdin command.
 
 * `composer translate-scan` (`i18n:scan`) — scans sources per domain from `translate.xml` / `translate.xml.dist` and regenerates `<domain>.pot` templates.
-* `composer translate` (`i18n:translate`) — converts every `.po` file (`system/locale/*.po`, `modules/*/locale/*.po`, `install/locale/*.po`) into `.lng.php` dictionaries used at runtime.
+* `composer translate` (`i18n:translate`) — converts every `.po` file (`system/locale/*.po`, `modules/*/locale/*.po`, `public/install/locale/*.po`) into `.lng.php` dictionaries used at runtime.
 
 Run both via the php-fpm container:
 

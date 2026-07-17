@@ -17,7 +17,7 @@ if (! isset($_GET['img'])) {
 }
 
 // Resolved from __DIR__: this line runs before the constants are defined.
-require __DIR__ . '/../../../vendor/autoload.php';
+require dirname(__DIR__, 4) . '/vendor/autoload.php';
 
 $width = 220;
 $height = 300;

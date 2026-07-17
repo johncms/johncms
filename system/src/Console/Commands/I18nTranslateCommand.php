@@ -50,7 +50,7 @@ final class I18nTranslateCommand extends Command
         $patterns = [
             ROOT_PATH . 'system/locale/*.po',
             ROOT_PATH . 'modules/*/locale/*.po',
-            ROOT_PATH . 'install/locale/*.po',
+            PUBLIC_PATH . 'install/locale/*.po',
         ];
 
         $files = [];

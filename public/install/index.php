@@ -22,7 +22,7 @@ if (PHP_VERSION_ID < 80200) {
 }
 
 // Resolved from __DIR__: this line runs before the constants are defined.
-require dirname(__DIR__) . '/vendor/autoload.php';
+require dirname(__DIR__, 2) . '/vendor/autoload.php';
 
 // Load the configuration
 $config = (new \Johncms\Config\ConfigLoader(CONFIG_PATH . 'autoload'))->load();

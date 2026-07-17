@@ -6,7 +6,7 @@ server {
     http2  on;
     server_name ${NGINX_SERVER_NAME};
 
-    root /app;
+    root /app/public;
     index index.php;
     charset utf-8;
 
