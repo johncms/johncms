@@ -39,10 +39,22 @@ server {
 
     error_page 404 /index.php;
 
+    # Uploaded files are never executed. The ^~ prefix stops the regex
+    # locations below from picking them up, static files keep being served.
+    location ^~ /upload/ {
+        location ~ \.(php|phtml|phar|php[3-8]|phps|cgi|pl|py)$ {
+            deny all;
+        }
+    }
+
     location ~ \.php$ {
         fastcgi_pass ${COMPOSE_PROJECT_NAME}.php-fpm:9000;
         fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
         include fastcgi_params;
+    }
+
+    location ~ /\.(?!well-known).* {
+        deny all;
     }
 
     error_log /var/log/nginx/error.log;
