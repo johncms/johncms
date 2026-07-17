@@ -33,7 +33,7 @@ $defaultPassword = '';
 $defaultDatabase = 'johncms';
 
 if (file_exists('/.dockerenv')) {
-    $envFile = dirname(__DIR__, 2) . '/.env';
+    $envFile = ROOT_PATH . '.env';
     if (file_exists($envFile)) {
         $env = [];
         foreach (file($envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $line) {

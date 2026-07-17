@@ -69,29 +69,32 @@ $error_extensions = array_filter(
 );
 
 $folders = [
-    'data/cache/',
-    'data/logs/',
-    'upload/downloads/files/',
-    'upload/downloads/screen/',
-    'upload/forum/attach/',
-    'upload/forum/topics/',
-    'upload/library/',
-    'upload/library/tmp',
-    'upload/library/images',
-    'upload/library/images/big',
-    'upload/library/images/orig',
-    'upload/library/images/small',
-    'upload/users/album/',
-    'upload/users/avatar/',
-    'upload/users/photo/',
-    'upload/mail/',
-    'config/autoload/',
+    CACHE_PATH,
+    LOG_PATH,
+    UPLOAD_PATH . 'downloads/files/',
+    UPLOAD_PATH . 'downloads/screen/',
+    UPLOAD_PATH . 'forum/attach/',
+    UPLOAD_PATH . 'forum/topics/',
+    UPLOAD_PATH . 'library/',
+    UPLOAD_PATH . 'library/tmp',
+    UPLOAD_PATH . 'library/images',
+    UPLOAD_PATH . 'library/images/big',
+    UPLOAD_PATH . 'library/images/orig',
+    UPLOAD_PATH . 'library/images/small',
+    UPLOAD_PATH . 'users/album/',
+    UPLOAD_PATH . 'users/avatar/',
+    UPLOAD_PATH . 'users/photo/',
+    UPLOAD_PATH . 'mail/',
+    CONFIG_PATH . 'autoload/',
+    // The sitemap and robots.txt are written here.
+    PUBLIC_PATH,
 ];
 
 $folder_right_errors = [];
-foreach ($folders as $val) {
-    if (! is_writable(ROOT_PATH . $val)) {
-        $folder_right_errors[] = $val;
+foreach ($folders as $folder) {
+    if (! is_writable($folder)) {
+        // Show the path relative to the installation root.
+        $folder_right_errors[] = str_replace(ROOT_PATH, '', $folder) ?: './';
     }
 }
 

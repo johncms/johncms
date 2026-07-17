@@ -21,7 +21,8 @@ if (PHP_VERSION_ID < 80200) {
     die('<div style="text-align: center; font-size: xx-large"><strong>ERROR!</strong><br>Your needs PHP 8.2 or higher</div>');
 }
 
-require '../vendor/autoload.php';
+// Resolved from __DIR__: this line runs before the constants are defined.
+require dirname(__DIR__) . '/vendor/autoload.php';
 
 // Load the configuration
 $config = (new \Johncms\Config\ConfigLoader(CONFIG_PATH . 'autoload'))->load();
@@ -35,7 +36,7 @@ $request = di(Request::class);
 
 $translator = new Translator();
 $translator->setLocale($_SESSION['lng'] ?? 'en');
-$translator->addTranslationDomain('install', ROOT_PATH . 'install/locale');
+$translator->addTranslationDomain('install', __DIR__ . '/locale');
 $translator->defaultDomain('install');
 TranslatorFunctions::register($translator);
 
@@ -57,7 +58,11 @@ $loader->addPrefix('Install', __DIR__ . '/lib');
 
 $current_step = $request->getQuery('step', 1, FILTER_VALIDATE_INT);
 
-if ($current_step !== 5 && is_file('../config/autoload/database.local.php') && is_file('../config/autoload/system.local.php')) {
+if (
+    $current_step !== 5
+    && is_file(CONFIG_PATH . 'autoload/database.local.php')
+    && is_file(CONFIG_PATH . 'autoload/system.local.php')
+) {
     die('<div style="text-align: center; font-size: xx-large"><strong>ERROR!</strong><br>The system is already installed</div>');
 }
 
@@ -93,21 +98,21 @@ $view->addData(['current_step' => $current_step, 'steps' => $steps]);
 
 switch ($current_step) {
     case 5:
-        require 'steps/step_5.php';
+        require __DIR__ . '/steps/step_5.php';
         break;
 
     case 4:
-        require 'steps/step_4.php';
+        require __DIR__ . '/steps/step_4.php';
         break;
 
     case 3:
-        require 'steps/step_3.php';
+        require __DIR__ . '/steps/step_3.php';
         break;
 
     case 2:
-        require 'steps/step_2.php';
+        require __DIR__ . '/steps/step_2.php';
         break;
 
     default:
-        require 'steps/step_1.php';
+        require __DIR__ . '/steps/step_1.php';
 }
