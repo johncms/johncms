@@ -61,7 +61,7 @@ final readonly class SitemapGenerator
             $this->cleanupStaleChunks($generatedChunkFiles);
 
             $indexXml = $this->buildSitemapIndexXml($homeUrl, $generatedChunkFiles);
-            $this->atomicWrite(ROOT_PATH . 'sitemap.xml', $indexXml);
+            $this->atomicWrite(PUBLIC_PATH . 'sitemap.xml', $indexXml);
 
             $this->robotsTxtUpdater->update($homeUrl);
         } finally {
@@ -106,7 +106,7 @@ final readonly class SitemapGenerator
         $filename = sprintf('sitemap-%s-%d.xml', $groupName, $chunkIndex);
         $xml = $this->buildUrlSetXml($entries);
 
-        $this->atomicWrite(ROOT_PATH . $filename, $xml);
+        $this->atomicWrite(PUBLIC_PATH . $filename, $xml);
 
         return $filename;
     }
@@ -161,11 +161,11 @@ final readonly class SitemapGenerator
      */
     private function cleanupStaleChunks(array $generatedChunkFiles): void
     {
-        $existingChunkPaths = glob(ROOT_PATH . 'sitemap-*.xml') ?: [];
+        $existingChunkPaths = glob(PUBLIC_PATH . 'sitemap-*.xml') ?: [];
 
         $expectedPaths = [];
         foreach ($generatedChunkFiles as $filename) {
-            $expectedPaths[] = ROOT_PATH . $filename;
+            $expectedPaths[] = PUBLIC_PATH . $filename;
         }
 
         foreach ($existingChunkPaths as $chunkPath) {

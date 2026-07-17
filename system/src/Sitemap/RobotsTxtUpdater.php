@@ -8,7 +8,7 @@ final class RobotsTxtUpdater
 {
     public function update(string $homeUrl): void
     {
-        $robotsPath = ROOT_PATH . 'robots.txt';
+        $robotsPath = PUBLIC_PATH . 'robots.txt';
         $sitemapLine = 'Sitemap: ' . $homeUrl . '/sitemap.xml';
 
         $lines = [];
