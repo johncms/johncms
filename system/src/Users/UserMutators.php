@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Johncms\Users;
 
 use Carbon\Carbon;
+use Johncms\Security\HTMLPurifier;
 use Johncms\System\i18n\Translator;
 use Johncms\System\Legacy\Tools;
 use Johncms\System\Users\UserConfig;
@@ -185,7 +186,9 @@ trait UserMutators
     {
         /** @var Tools $tools */
         $tools = di(Tools::class);
-        return $tools->smilies($tools->checkout($this->about, 1, 1));
+        /** @var \HTMLPurifier $purifier */
+        $purifier = di(HTMLPurifier::class);
+        return $tools->smilies($purifier->purify((string) $this->about));
     }
 
     /**
@@ -195,9 +198,9 @@ trait UserMutators
      */
     public function getWebsiteAttribute(): string
     {
-        /** @var Tools $tools */
-        $tools = di(Tools::class);
-        return $tools->checkout($this->www, 0, 1);
+        /** @var \HTMLPurifier $purifier */
+        $purifier = di(HTMLPurifier::class);
+        return $purifier->purify((string) $this->www);
     }
 
     /**
