@@ -12,16 +12,16 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [16.x]
+        node-version: [22.x]
     steps:
       - uses: actions/checkout@v6
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2-beta
         with:
           node-version: ${{ matrix.node-version }}
-      - name: npm install, prod
+      - name: npm install, build
         run: |
-          npm install
-          npm run prod
+          npm ci
+          npm run build
         env:
           CI: true
