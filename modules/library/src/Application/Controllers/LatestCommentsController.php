@@ -58,7 +58,7 @@ final readonly class LatestCommentsController
             $list[] = [
                 'id'    => $row['id'],
                 'name'  => $row['name'],
-                'text'  => $this->tools->checkout(substr($row['text'], 0, 500), 0, 2),
+                'text'  => mb_substr(trim(strip_tags((string) $row['text'])), 0, 500),
                 'who'   => $this->tools->checkout($row['user_name']) . ' (' . $this->tools->displayDate($row['time']) . ')',
                 'image' => file_exists(UPLOAD_PATH . 'library/images/small/' . $row['id'] . '.png'),
             ];

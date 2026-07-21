@@ -101,12 +101,11 @@ trait MessageMutators
      */
     public function getPostPreviewAttribute(): string
     {
-        $post_preview = '';
-        if (mb_strlen($this->text) > 500) {
-            $post_preview = $this->tools->checkout(mb_substr($this->text, 0, 500), 0, 2);
-            $post_preview .= '...';
+        $plainText = trim(strip_tags($this->text));
+        if (mb_strlen($plainText) <= 500) {
+            return '';
         }
-        return $post_preview;
+        return mb_substr($plainText, 0, 500) . '...';
     }
 
     /**
