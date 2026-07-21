@@ -44,10 +44,10 @@ JohnCMS is an open-source PHP community CMS. It includes a forum, news, library,
    ```bash
    composer install
    ```
-3. Install Node.js dependencies and build assets:
+3. Install Node.js dependencies and build the frontend:
    ```bash
    npm install
-   npm run prod
+   npm run build
    ```
 4. Open `http://your.site/install` in a browser and follow the installer steps.
 5. **Delete the `/install` directory** after installation is complete.
@@ -71,8 +71,13 @@ JohnCMS is an open-source PHP community CMS. It includes a forum, news, library,
    ```bash
    make composer-install
    ```
-4. Open `http://your.site/install` in a browser and follow the installer steps.
-5. **Delete the `/install` directory** after installation is complete.
+4. Build the frontend on the host (the containers do not include Node.js):
+   ```bash
+   npm install
+   npm run build
+   ```
+5. Open `http://your.site/install` in a browser and follow the installer steps.
+6. **Delete the `/install` directory** after installation is complete.
 
 The Docker setup includes Nginx, PHP-FPM, MariaDB, and [Ofelia](https://github.com/mcuadros/ofelia) for running the scheduler automatically every minute.
 
@@ -95,9 +100,9 @@ For detailed Docker configuration instructions see [.docker/readme.md](.docker/r
 ## Updating from repository
 
 - If `composer.json` changed — re-run `composer install`.
-- If `package.json` changed — re-run `npm install && npm run prod`.
-- If only `.scss`/`.js` files changed — re-run `npm run prod`.
-- During development, use `npm run watch` to rebuild assets automatically on change.
+- If `package.json` changed — re-run `npm install && npm run build`.
+- If only `.scss`/`.js`/`.vue` files changed — re-run `npm run build`.
+- During development, use `npm run dev` to start the Vite dev server with hot module replacement.
 
 ## Documentation
 
