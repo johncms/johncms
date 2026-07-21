@@ -29,7 +29,6 @@ use Johncms\System\Http\Request;
 use Johncms\System\Http\RequestFactory;
 use Johncms\System\i18n\Translator;
 use Johncms\System\i18n\TranslatorServiceFactory;
-use Johncms\System\Legacy\Bbcode;
 use Johncms\System\Legacy\Tools;
 use Johncms\System\Users\UserFactory;
 use Johncms\System\View\Extension\Assets;
@@ -101,7 +100,6 @@ return static function (ContainerConfigurator $container): void {
     $services->set(\Johncms\Users\Repository\UserRepositoryInterface::class, \Johncms\Users\Repository\EloquentUserRepository::class);
     $services->set(\Johncms\System\Users\User::class)->factory(service(UserFactory::class));
 
-    $services->set(Bbcode::class)->factory([Bbcode::class, 'create']);
     $services->set(Tools::class)->factory([Tools::class, 'create']);
     $services->set(NavChain::class)->factory([NavChain::class, 'create']);
     $services->set(ImageManager::class)->factory(service(ImageManagerFactory::class));

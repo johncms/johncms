@@ -69,7 +69,7 @@ final readonly class NewArticlesController
                 'id'           => $text->id,
                 'url'          => $text->url,
                 'name'         => $this->tools->checkout($text->name),
-                'announce'     => $this->tools->checkout($text->announce, 0, 0),
+                'announce'     => $this->tools->checkout($text->announce),
                 'cover'        => file_exists(UPLOAD_PATH . 'library/images/small/' . $text->id . '.png'),
                 'tags'         => $obj->getAllStatTags() ? $obj->getAllStatTags(1) : null,
                 'ratingView'   => $rate->viewRate(1),

@@ -58,7 +58,7 @@ final readonly class PhotoPresenter
             albumName: $photo->album->name ?? '',
             picture: $this->picture($photo->user_id, $photo->img_name),
             previewPicture: $this->picture($photo->user_id, $photo->tmb_name),
-            formattedDescription: $this->tools->smilies($this->tools->checkout($photo->description, 1, 0)),
+            formattedDescription: $this->tools->smilies($this->tools->checkout($photo->description, 1)),
             displayDate: $this->tools->displayDate($photo->time),
             views: $photo->views,
             downloads: $photo->downloads,

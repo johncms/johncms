@@ -81,7 +81,7 @@ final readonly class ForumSearchController
             'forum::forum_search',
             [
                 'pagination'        => $pagination->render(),
-                'query'             => $this->tools->checkout($result->query, 0, 0),
+                'query'             => $this->tools->checkout($result->query),
                 'search_t'          => $result->searchInTopicNames,
                 'results'           => $result->results,
                 'total'             => $result->total,

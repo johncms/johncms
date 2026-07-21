@@ -112,14 +112,10 @@ class Tools
      *                     0 - не обрабатывать (по умолчанию)
      *                     1 - обрабатывать
      *                     2 - вместо переносов строки вставляются пробелы
-     * @param int $tags Параметр обработки тэгов
-     *                     0 - не обрабатывать (по умолчанию)
-     *                     1 - обрабатывать
-     *                     2 - вырезать тэги
      *
      * @return string
      */
-    public function checkout($str, $br = 0, $tags = 0)
+    public function checkout($str, $br = 0)
     {
         $str = htmlentities(trim($str), ENT_QUOTES, 'UTF-8');
 
@@ -127,12 +123,6 @@ class Tools
             $str = nl2br($str);
         } elseif ($br == 2) {
             $str = str_replace("\r\n", ' ', $str);
-        }
-
-        if ($tags == 1) {
-            $str = $this->container->get(Bbcode::class)->tags($str);
-        } elseif ($tags == 2) {
-            $str = $this->container->get(Bbcode::class)->notags($str);
         }
 
         return trim($str);

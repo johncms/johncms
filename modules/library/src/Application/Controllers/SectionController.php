@@ -151,7 +151,7 @@ final readonly class SectionController
                 'id'         => $article->id,
                 'url'        => $article->url,
                 'name'       => $article->name,
-                'announce'   => $this->tools->checkout($article->announce, 0, 0),
+                'announce'   => $this->tools->checkout($article->announce),
                 'who'        => $uploader . '&nbsp;(' . $this->tools->displayDate($article->time) . ')',
                 'ratingView' => $rate->viewRate(1),
                 'tags'       => (new Hashtags($article->id))->getAllStatTags(1) ?: null,

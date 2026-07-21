@@ -207,7 +207,7 @@ final readonly class ReplyMessageController
                 'form_action'       => $this->getReplyUrl($sourceMessage->id, $page),
                 'is_quote'          => $isQuote,
                 'add_file'          => $addFiles,
-                'msg'               => $msg === '' ? '' : $this->tools->checkout($msg, 0, 0),
+                'msg'               => $msg === '' ? '' : $this->tools->checkout($msg),
                 'message'           => $sourceMessage,
                 'settings_forum'    => $this->getForumSettings(),
                 'show_post_preview' => ($this->request->getPost('submit') === null && $this->request->getPost('msg') !== null),

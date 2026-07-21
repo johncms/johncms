@@ -168,7 +168,7 @@ final readonly class NewMessageController
                 'topic'             => $topic,
                 'form_action'       => '/forum/new-message/' . $topic->id . '/' . ($page > 1 ? '?page=' . $page : ''),
                 'add_file'          => $addFiles,
-                'msg'               => $msg === '' ? '' : $this->tools->checkout($msg, 0, 0),
+                'msg'               => $msg === '' ? '' : $this->tools->checkout($msg),
                 'settings_forum'    => $this->getForumSettings(),
                 'show_post_preview' => ($msg !== '' && $this->request->getPost('submit') === null),
                 'back_url'          => $this->buildTopicBackUrl($topic->url, $page),

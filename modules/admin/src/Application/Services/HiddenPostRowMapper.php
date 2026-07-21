@@ -43,7 +43,7 @@ final readonly class HiddenPostRowMapper
         $author = $message->user_id ? User::query()->find($message->user_id) : null;
         $topic = ForumTopic::query()->find($message->topic_id);
 
-        $text = $this->tools->checkout(mb_substr($message->text, 0, 500), 1, 0);
+        $text = $this->tools->checkout(mb_substr($message->text, 0, 500), 1);
         $text = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $text);
 
         return [
