@@ -27,6 +27,7 @@ final readonly class CommentsReviewController
         private DownloadFilePathService $filePathService,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
+        private \HTMLPurifier $purifier,
     ) {
         $this->controllerContext->initModule('downloads');
     }
@@ -62,7 +63,7 @@ final readonly class CommentsReviewController
         foreach ($result->comments as $comment) {
             $attrs = unserialize($comment->getAttribute('attributes'), ['allowed_classes' => false]);
 
-            $text = $this->tools->checkout($comment->text, 1, 1);
+            $text = $this->purifier->purify($comment->text);
             $text = $this->tools->smilies($text, ($comment->user_rights ?? 0) >= 1 ? 1 : 0);
 
             $replyText = '';
@@ -70,7 +71,7 @@ final readonly class CommentsReviewController
             $replyAuthorUrl = '';
             $replyAuthorName = '';
             if (! empty($comment->reply)) {
-                $reply = $this->tools->checkout($comment->reply, 1, 1);
+                $reply = $this->purifier->purify($comment->reply);
                 $replyText = $this->tools->smilies($reply, ($attrs['reply_rights'] ?? 0) >= 1 ? 1 : 0);
                 $replyTime = $this->tools->displayDate($attrs['reply_time']);
                 $replyAuthorUrl = '/profile/' . $attrs['reply_id'];
