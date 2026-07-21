@@ -11,7 +11,6 @@ use Johncms\Modules\Forum\Application\UseCases\ViewForumTopicUseCase;
 use Johncms\NavChain;
 use Johncms\Security\Csrf;
 use Johncms\System\Http\Request;
-use Johncms\System\Legacy\Bbcode;
 use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
@@ -26,7 +25,6 @@ final readonly class ForumTopicController
         private NavChain $navChain,
         private ViewForumTopicUseCase $viewForumTopicUseCase,
         private Csrf $csrf,
-        private Bbcode $bbcode,
         private PaginationFactory $paginationFactory,
     ) {
     }
@@ -101,7 +99,6 @@ final readonly class ForumTopicController
                 $result->viewData,
                 [
                     'pagination'   => $pagination->render(),
-                    'bbcode'       => $this->bbcode->buttons('new_message', 'msg'),
                     'unread_count' => $this->tools->formatNumber($counters->forumUnreadCount()),
                     'csrf_token'   => $this->csrf->getToken(),
                 ]
