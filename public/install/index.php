@@ -14,6 +14,7 @@ use Gettext\TranslatorFunctions;
 use Johncms\System\Http\Request;
 use Johncms\System\i18n\Translator;
 use Johncms\System\View\Extension\Assets;
+use Johncms\System\View\Extension\Vite;
 use Johncms\System\View\Render;
 
 // Check the current PHP version
@@ -45,6 +46,7 @@ $view = new Render('phtml');
 $view->setTheme('default');
 $view->addFolder('system', realpath(THEMES_PATH . 'default/templates/system'));
 $view->loadExtension(di(Assets::class));
+$view->loadExtension(di(Vite::class));
 $view->addData(
     [
         'locale' => $translator->getLocale(),

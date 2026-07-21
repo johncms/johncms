@@ -2,7 +2,7 @@
   <div class="mt-4 comments-list">
     <h3 class="fw-bold">{{ __('comments') }} <span class="text-success" v-if="messages.total > 0">{{ messages.total }}</span></h3>
     <div v-if="messages.data && messages.data.length < 1" class="alert alert-info">{{ __('empty_list') }}</div>
-    <div class="new_post-item" v-for="message in messages.data">
+    <div class="new_post-item" v-for="message in messages.data" :key="message.id">
       <div class="new_post-header d-flex justify-content-between">
         <div class="post-user">
           <a :href="message.user.profile_url" v-if="message.user.profile_url">

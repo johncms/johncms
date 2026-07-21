@@ -9,7 +9,6 @@
 /phpcs.xml
 /translate.xml
 /vendor
-/public/mix-manifest.json
 .env
 docker-compose.override.yml
 
@@ -20,9 +19,8 @@ docker-compose.override.yml
 !/data/logs/.gitkeep
 /data/admin_tasks/
 
-# Themes folder ignores
-/public/themes/default/assets/css/app.css.map
-/public/themes/default/assets/js/app.js.map
+# Vite dev server marker, written while "npm run dev" is running
+/public/hot
 
 # Upload folder ignores
 /public/upload/downloads/files/*

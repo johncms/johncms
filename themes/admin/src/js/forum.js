@@ -1,3 +1,5 @@
+import { Tooltip } from 'bootstrap';
+
 $('#first_post')
   .on('hide.bs.collapse', function (e) {
     togglePreview();
@@ -54,7 +56,9 @@ $(function () {
       }
     }
   });
-  $('[data-bs-toggle="tooltip"]').tooltip();
+  document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(function (el) {
+    Tooltip.getOrCreateInstance(el);
+  });
 });
 
 $(".custom-file-input").on("change", function () {

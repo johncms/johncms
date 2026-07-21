@@ -23,7 +23,7 @@
     <meta name="Generator" content="JohnCMS, https://johncms.com">
     <meta name="robots" content="noindex, nofollow">
     <meta name="theme-color" content="#586776">
-    <link rel="stylesheet" href="<?= $this->asset('css/app.css', true) ?>">
+    <?= $this->vite('themes/default/src/js/app.js') ?>
     <link rel="shortcut icon" href="<?= $this->asset('images/favicon.ico') ?>">
     <?= $this->section('styles', '') ?>
     <title><?= (isset($title) ? $this->e($title) : 'JohnCMS') ?></title>
@@ -116,9 +116,6 @@
         <div class="modal-content"></div>
     </div>
 </div>
-<script src="<?= $this->asset('js/manifest.js', true) ?>"></script>
-<script src="<?= $this->asset('js/vendor.js', true) ?>"></script>
-<script src="<?= $this->asset('js/app.js', true) ?>"></script>
 <?= $this->section('scripts', '') ?>
 </body>
 </html>

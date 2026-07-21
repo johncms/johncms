@@ -1,3 +1,5 @@
+import { Modal } from 'bootstrap';
+
 /**
  * This file is part of JohnCMS Content Management System.
  *
@@ -43,7 +45,9 @@ $(document).on('click', '.select_language', function (event) {
     dataType: "html",
     data: select_language_form.serialize(),
     success: function (html) {
-      $('.ajax_modal').modal('hide');
+      document.querySelectorAll('.ajax_modal').forEach(function (el) {
+        Modal.getInstance(el)?.hide();
+      });
       document.location.href = document.location.href;
     }
   });

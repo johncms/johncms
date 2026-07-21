@@ -34,6 +34,7 @@ use Johncms\System\Legacy\Tools;
 use Johncms\System\Users\UserFactory;
 use Johncms\System\View\Extension\Assets;
 use Johncms\System\View\Extension\Avatar;
+use Johncms\System\View\Extension\Vite;
 use Johncms\System\View\Render;
 use Johncms\System\View\RenderEngineFactory;
 use Johncms\System\View\Theme;
@@ -113,6 +114,7 @@ return static function (ContainerConfigurator $container): void {
 
     $services->set(Assets::class)->factory([Assets::class, 'create']);
     $services->set(Avatar::class)->factory([Avatar::class, 'create']);
+    $services->set(Vite::class);
     $services->set(Environment::class)->factory([Environment::class, 'create']);
     $services->set(RouteCollection::class)->factory(service(RouteCollectorFactory::class));
     $services->set(RequestContext::class)->factory(service(RequestContextFactory::class));

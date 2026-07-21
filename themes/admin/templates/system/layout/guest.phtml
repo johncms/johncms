@@ -17,11 +17,7 @@
     <meta name="Generator" content="JohnCMS, https://johncms.com">
     <?= $this->section('meta', '') ?>
     <meta name="theme-color" content="#586776">
-    <?php if ($locale === 'ar'): ?>
-        <link rel="stylesheet" href="<?= $this->asset('css/app.rtl.css', true) ?>">
-    <?php else: ?>
-        <link rel="stylesheet" href="<?= $this->asset('css/app.css', true) ?>">
-    <?php endif; ?>
+    <?= $this->vite('themes/admin/src/js/app.js', $locale === 'ar') ?>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700,700i&display=swap">
     <link rel="shortcut icon" href="<?= $this->asset('images/favicon.ico') ?>">
     <?= $this->section('styles', '') ?>
@@ -36,9 +32,6 @@
         <div class="modal-content"></div>
     </div>
 </div>
-<script src="<?= $this->asset('js/manifest.js', true) ?>"></script>
-<script src="<?= $this->asset('js/vendor.js', true) ?>"></script>
-<script src="<?= $this->asset('js/app.js', true) ?>"></script>
 <?= $this->section('scripts', '') ?>
 </body>
 </html>

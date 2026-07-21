@@ -5,7 +5,7 @@
       <textarea :name="name" :id="id" class="form-control" :class="classes + (errors ? 'is-invalid' : '')" v-model="model_value"></textarea>
       <div class="invalid-feedback d-block" v-if="errors">{{ errors }}</div>
     </div>
-    <div v-for="file in attached_files">
+    <div v-for="file in attached_files" :key="file.id">
       <input type="hidden" name="attached_files[]" v-model="file.id">
     </div>
   </div>

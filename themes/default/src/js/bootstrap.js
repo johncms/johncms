@@ -1,17 +1,16 @@
 /**
- * We'll load jQuery and the Bootstrap jQuery plugin which provides support
- * for JavaScript based Bootstrap features such as modals and tabs. This
- * code may be modified to fit the specific needs of your application.
+ * This file is part of JohnCMS Content Management System.
+ *
+ * @copyright JohnCMS Community
+ * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
+ * @link      https://johncms.com JohnCMS Project
  */
 
-try {
-  window.Popper = require('popper.js').default;
-  window.$ = window.jQuery = require('jquery');
-  window.axios = require('axios');
-  window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-  var _ = require('lodash');
-  require('bootstrap');
-} catch (e) {
-}
+// Must stay first: both libraries below register their jQuery plugins while they
+// are evaluated, and only find jQuery if it has already been published on window.
+import './globals';
+import flatpickr from 'flatpickr';
+import 'bootstrap';
 
-
+// The flatpickr locale files are loaded as plain <script> tags and extend window.flatpickr.l10ns.
+window.flatpickr = flatpickr;

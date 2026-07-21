@@ -6,19 +6,24 @@
  * @link      https://johncms.com JohnCMS Project
  */
 
-import Vue from "vue";
+// Must stay first: it publishes jQuery, axios and lodash as globals.
+import './bootstrap';
+import '../scss/app.scss';
 
-require('./bootstrap');
-require('./jquery.magnific-popup');
-require("flatpickr");
-require('./menu');
-require('./prism');
-require('./forum');
-require('./modals');
-require('./slider');
-require('./progress');
-require('./wysibb');
-require('./main');
+import './jquery.magnific-popup';
+import './menu';
+import './prism';
+import './forum';
+import './modals';
+import './slider';
+import './progress';
+import './main';
+
+import { createApp } from 'vue';
+import { Bootstrap5Pagination } from 'laravel-vue-pagination';
+
+// Prism is loaded in manual mode, see ./bootstrap.
+window.Prism.highlightAll();
 
 /**
  * The following block of code may be used to automatically register your
@@ -28,14 +33,19 @@ require('./main');
  * Автозагрузка компонентов
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
-const files = require.context('./', true, /\.vue$/i)
-files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
+const components = import.meta.glob('./components/**/*.vue', { eager: true });
 
-Vue.component('pagination', require('laravel-vue-pagination'));
+/**
+ * The site is server rendered, so Vue is mounted as separate islands: every
+ * .vue_app element becomes its own application using the markup as a template.
+ */
+document.querySelectorAll('.vue_app').forEach(function (el) {
+    const app = createApp({});
 
-const vue_apps = document.querySelectorAll('.vue_app');
-vue_apps.forEach(function (el) {
-  new Vue({
-    el: el,
-  });
+    Object.entries(components).forEach(function ([path, component]) {
+        app.component(path.split('/').pop().replace(/\.vue$/, ''), component.default);
+    });
+
+    app.component('pagination', Bootstrap5Pagination);
+    app.mount(el);
 });

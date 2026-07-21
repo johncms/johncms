@@ -38,11 +38,7 @@ $theme = di(\Johncms\System\View\Theme::class);
     <?php
     endif ?>
     <meta name="theme-color" content="#586776">
-    <?php if($locale === 'ar'): ?>
-        <link rel="stylesheet" href="<?= $this->asset('css/app.rtl.css', true) ?>">
-    <?php else: ?>
-        <link rel="stylesheet" href="<?= $this->asset('css/app.css', true) ?>">
-    <?php endif; ?>
+    <?= $this->vite('themes/admin/src/js/app.js', $locale === 'ar') ?>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700,700i&display=swap">
     <link rel="shortcut icon" href="<?= $this->asset('images/favicon.ico') ?>">
     <?= $this->section('styles', '') ?>
@@ -176,16 +172,18 @@ $theme = di(\Johncms\System\View\Theme::class);
         <div class="modal-content"></div>
     </div>
 </div>
-<script src="<?= $this->asset('js/manifest.js', true) ?>"></script>
-<script src="<?= $this->asset('js/vendor.js', true) ?>"></script>
-<script src="<?= $this->asset('js/app.js', true) ?>"></script>
 <?php
 if ($locale !== 'en'): ?>
     <?php
     try { // TODO: improve the asset method for simplify this construction
         ?>
-        <script src="<?= $this->asset('js/flatpickr/' . $locale . '.js') ?>"></script>
-        <script>flatpickr.localize(flatpickr.l10ns.<?= $locale ?>);</script>
+        <?php // The bundle is a deferred module, so the locale has to wait for it to define flatpickr. ?>
+        <script src="<?= $this->asset('js/flatpickr/' . $locale . '.js') ?>" defer></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                flatpickr.localize(flatpickr.l10ns.<?= $locale ?>);
+            });
+        </script>
         <?php
     } catch (Exception $exception) {
     }

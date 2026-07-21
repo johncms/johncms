@@ -17,6 +17,7 @@ use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
 use Johncms\System\View\Extension\Assets;
 use Johncms\System\View\Extension\Avatar;
+use Johncms\System\View\Extension\Vite;
 use Psr\Container\ContainerInterface;
 use Johncms\System\i18n\Translator;
 
@@ -37,6 +38,7 @@ class RenderEngineFactory
 
         $engine->loadExtension($container->get(Assets::class));
         $engine->loadExtension($container->get(Avatar::class));
+        $engine->loadExtension($container->get(Vite::class));
         $engine->addData(
             [
                 'container'  => $container,
