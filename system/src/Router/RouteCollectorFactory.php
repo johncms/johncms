@@ -26,7 +26,6 @@ class RouteCollectorFactory
         $router = new RouteCollection(new RouteRequirements());
         $this->addRoutesFromConfig($router, $user);
         $this->addModuleRoutes($router, $user);
-        $this->addLocalRoutes($router, $user);
 
         return $router->compile();
     }
@@ -41,18 +40,6 @@ class RouteCollectorFactory
     {
         foreach (glob(MODULES_PATH . '*/config/routes.php') as $file) {
             $registerRoutes = require $file;
-            $registerRoutes($router, $user);
-        }
-    }
-
-    private function addLocalRoutes(RouteCollection $router, User $user): void
-    {
-        if (is_file(CONFIG_PATH . 'routes.local.php')) {
-            trigger_error(
-                'config/routes.local.php is deprecated. Move your routes to modules/{name}/config/routes.php instead.',
-                E_USER_DEPRECATED
-            );
-            $registerRoutes = require CONFIG_PATH . 'routes.local.php';
             $registerRoutes($router, $user);
         }
     }

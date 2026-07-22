@@ -40,40 +40,6 @@ final class RouteCollectorFactoryTest extends TestCase
         );
     }
 
-    public function testLocalRoutesAreLoadedWhenFileExists(): void
-    {
-        $localRoutesFile = CONFIG_PATH . 'routes.local.php';
-        $content = <<<'PHP'
-            <?php
-            declare(strict_types=1);
-            use Johncms\Router\RouteCollection;
-            use Johncms\System\Users\User;
-            return static function (RouteCollection $router, User $user): void {
-                $router->get('/test-local-route', 'modules/test/index.php');
-            };
-            PHP;
-
-        file_put_contents($localRoutesFile, $content);
-
-        try {
-            $this->expectUserDeprecationMessageMatches('/config\/routes\.local\.php is deprecated/');
-            $routes = (new RouteCollectorFactory())($this->container);
-            $localRoute = $this->findRouteByPath($routes, '/test-local-route');
-            self::assertNotNull($localRoute, 'Route from routes.local.php should be loaded');
-        } finally {
-            unlink($localRoutesFile);
-        }
-    }
-
-    public function testNoErrorWhenLocalRoutesFileMissing(): void
-    {
-        $localRoutesFile = CONFIG_PATH . 'routes.local.php';
-        self::assertFileDoesNotExist($localRoutesFile);
-
-        $routes = (new RouteCollectorFactory())($this->container);
-        self::assertInstanceOf(RouteCollection::class, $routes);
-    }
-
     private function findRouteByPath(RouteCollection $routes, string $path): ?\Symfony\Component\Routing\Route
     {
         foreach ($routes->all() as $route) {
