@@ -86,6 +86,16 @@ composer check
 ```
 
 
+## Using AI Coding Agents
+
+If you work with an AI coding assistant, this repository ships its rules and review
+checklists for you. `AGENTS.md` in the project root is the entry point and the detailed
+rules live in `.agents/`. Claude Code additionally gets ready-made reviewers and a
+`/review-self` command; the checklists themselves are tool-agnostic and work with any agent.
+
+See `.agents/README.md` for how it fits together and how to use it with another tool.
+
+
 [github]: https://github.com/johncms/johncms
 [contributor code of conduct]: https://github.com/johncms/johncms/blob/master/.github/CODE_OF_CONDUCT.md
 [issues]: https://github.com/johncms/johncms/issues

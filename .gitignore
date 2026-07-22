@@ -1,6 +1,10 @@
 # Common ignores
 /.idea
-/.claude
+# Agent tooling: shared reviewers and commands are versioned (see .agents/README.md),
+# personal settings and scratch notes stay local
+/.claude/*
+!/.claude/agents/
+!/.claude/commands/
 /config/autoload/*.local.php
 /config/*.local.php
 /dist

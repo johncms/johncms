@@ -6,7 +6,9 @@ This document guides contributors and automated agents when working in this code
 
 ## Topic Guides (read on demand)
 
-Detailed rules live in `.agents/`. Before touching the listed area, READ the matching guide first:
+Detailed rules live in `.agents/` — see `.agents/README.md` for how the agent tooling is
+organised and which tools are supported. Before touching the listed area, READ the matching
+guide first:
 
 * Module layers, dependency rules, refactoring principles, repository rules → read `.agents/architecture.md`
 * Actions with access checks (guard → context → action), exception mapping → read `.agents/access-guard.md`
@@ -14,6 +16,17 @@ Detailed rules live in `.agents/`. Before touching the listed area, READ the mat
 * User input handling, output escaping in templates → read `.agents/escaping.md`
 * Translations, `.po`/`.pot`/`.lng.php` files, `__()` strings → read `.agents/localization.md`
 * Creating a new module (structure, autoload, DI, routes, templates) → read `.agents/new-module.md`
+* Self-review after finishing an implementation (architecture, security, PHP quality, localization) → read `.agents/review/README.md`
+
+## Self-Review
+
+After finishing an implementation task, **before reporting back to the user**, run the
+self-review protocol in `.agents/review/README.md`: the deterministic gate
+(`sh .agents/scripts/verify.sh`) followed by the relevant checklists in `.agents/review/`.
+Fix what it finds, then report what was fixed and what was left open.
+
+In Claude Code this is the `/review-self` command. Other tools read the same checklists
+directly from `.agents/review/`.
 
 ## Project Context
 
@@ -126,11 +139,10 @@ Before committing:
 
 * Changes are scoped to the task.
 * No unrelated files were modified.
-* Backend style check and tests pass:
+* The verification gate passes — style check, static analysis, and tests:
 
 ```bash
-docker exec $(docker ps -q -f name=johncms9.php-fpm) composer cs-check
-docker exec $(docker ps -q -f name=johncms9.php-fpm) composer test
+sh .agents/scripts/verify.sh
 ```
 
 Fix style violations with:
@@ -139,6 +151,7 @@ Fix style violations with:
 docker exec $(docker ps -q -f name=johncms9.php-fpm) composer cs-fix
 ```
 
+* Self-review was run and its findings addressed (see `.agents/review/README.md`).
 * UI build succeeds if frontend code was changed.
 * Services and repositories are injected via interfaces.
 
