@@ -55,6 +55,19 @@ export default defineConfig({
     // The public directory is the document root, it must not be copied into itself.
     publicDir: false,
 
+    css: {
+        preprocessorOptions: {
+            scss: {
+                // Bootstrap still relies on APIs deprecated in Dart Sass, there is
+                // nothing to fix on our side until it is updated upstream.
+                quietDeps: true,
+                // Bootstrap 5 is only distributed as @import-based sources, so the
+                // theme entrypoints cannot move to @use before Bootstrap 6.
+                silenceDeprecations: ['import'],
+            },
+        },
+    },
+
     resolve: {
         alias: {
             // Vue islands are mounted on server-rendered markup, which needs the runtime compiler.
