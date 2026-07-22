@@ -80,7 +80,6 @@
         ],
         "psr-4": {
             "Johncms\\": "system/src/",
-            "Johncms\\System\\Legacy\\": "system/src-legacy/",
             "Johncms\\Modules\\Album\\": "modules/album/src/",
             "Johncms\\Modules\\Collections\\": "modules/collections/src/",
             "Johncms\\Modules\\Guestbook\\": "modules/guestbook/src/",

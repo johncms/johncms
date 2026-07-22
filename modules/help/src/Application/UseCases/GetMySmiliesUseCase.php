@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Help\Application\UseCases;
 
-use Johncms\System\Legacy\Tools;
+use Johncms\Smilies\SmiliesRendererInterface;
 use Johncms\Users\User;
+use Johncms\Utils\Transliterator;
 
 final readonly class GetMySmiliesUseCase
 {
     public function __construct(
         private User $currentUser,
-        private Tools $tools,
+        private SmiliesRendererInterface $smiliesRenderer,
     ) {
     }
 
@@ -31,8 +32,8 @@ final readonly class GetMySmiliesUseCase
             $items[] = [
                 'can_del'   => true,
                 'lat_smile' => $value,
-                'smile'     => $this->tools->trans($smile),
-                'picture'   => $this->tools->smilies($smile, $this->currentUser->rights >= 1 ? 1 : 0),
+                'smile'     => Transliterator::toCyrillic($smile),
+                'picture'   => $this->smiliesRenderer->render($smile, $this->currentUser->rights >= 1),
             ];
         }
 

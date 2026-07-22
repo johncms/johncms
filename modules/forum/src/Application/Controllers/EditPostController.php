@@ -14,7 +14,6 @@ use Johncms\Modules\Forum\Application\UseCases\EnsureEditPostAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetEditPostContextUseCase;
 use Johncms\Security\Csrf;
 use Johncms\System\Http\Request;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\Utility\EditorContentNormalizer;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
@@ -26,7 +25,6 @@ final readonly class EditPostController
         private ControllerContext $controllerContext,
         private Render $render,
         private Request $request,
-        private Tools $tools,
         private EditorContentNormalizer $editorContentNormalizer,
         private Csrf $csrf,
         private User $currentUser,
@@ -113,8 +111,8 @@ final readonly class EditPostController
         }
 
         $message = $this->request->getPost('msg') === null
-            ? htmlentities((string) $context->message->getRawOriginal('text'), ENT_QUOTES, 'UTF-8')
-            : $this->tools->checkout((string) $this->request->getPost('msg'), 0, 0);
+            ? (string) $context->message->getRawOriginal('text')
+            : (string) $this->request->getPost('msg');
 
         return $this->render->render(
             'forum::edit_post',

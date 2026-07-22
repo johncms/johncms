@@ -8,16 +8,19 @@ use Johncms\Modules\Profile\Application\DTO\KarmaListDTO;
 use Johncms\Modules\Profile\Application\Exceptions\ProfileNotFoundException;
 use Johncms\Modules\Profile\Domain\Repository\KarmaRepositoryInterface;
 use Johncms\Modules\Profile\Domain\Repository\ProfileUserRepositoryInterface;
-use Johncms\System\Legacy\Tools;
+use Johncms\Smilies\SmiliesRendererInterface;
 use Johncms\Users\Karma;
 use Johncms\Users\User;
+use Johncms\Utils\DateFormatterInterface;
+use Johncms\Utils\PlainTextFormatter;
 
 final readonly class GetKarmaListUseCase
 {
     public function __construct(
         private ProfileUserRepositoryInterface $profileUserRepository,
         private KarmaRepositoryInterface $karmaRepository,
-        private Tools $tools,
+        private DateFormatterInterface $dateFormatter,
+        private SmiliesRendererInterface $smiliesRenderer,
         private User $currentUser,
     ) {
     }
@@ -48,8 +51,8 @@ final readonly class GetKarmaListUseCase
                 'points'       => $vote->points,
                 'user_id'      => $vote->user_id,
                 'name'         => $vote->name,
-                'display_date' => $this->tools->displayDate($vote->time),
-                'text'         => $this->tools->smilies($this->tools->checkout($vote->text)),
+                'display_date' => $this->dateFormatter->format($vote->time),
+                'text'         => $this->smiliesRenderer->render(PlainTextFormatter::escape($vote->text)),
             ];
             if ($isSupervisor) {
                 $item['delete_url'] = $base . '/delete/' . $vote->id . '?type=' . $type;

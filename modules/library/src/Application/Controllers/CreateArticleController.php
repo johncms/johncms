@@ -12,8 +12,8 @@ use Johncms\Modules\Library\Application\Services\LibrarySlugService;
 use Johncms\Modules\Library\Domain\Models\LibraryCategory;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
+use Johncms\Security\AntifloodCheckerInterface;
 use Johncms\System\Http\Request;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Modules\Library\Application\Services\Hashtags;
@@ -26,7 +26,7 @@ final readonly class CreateArticleController
         private Render $render,
         private NavChain $navChain,
         private Request $request,
-        private Tools $tools,
+        private AntifloodCheckerInterface $antifloodChecker,
         private User $currentUser,
         private LibrarySlugService $slugService,
         private LibraryArticlePathService $articlePathService,
@@ -80,7 +80,7 @@ final readonly class CreateArticleController
 
         $errors = [];
 
-        $flood = $this->tools->antiflood();
+        $flood = $this->antifloodChecker->getRemainingSeconds();
         if ($flood) {
             $errors[] = sprintf(__('You cannot add the Article so often<br>Please, wait %d sec.'), $flood);
             return $this->renderForm($catId, $formUrl, $name, $announce, (string) ($post['text'] ?? ''), $tag, $errors, false, null);

@@ -13,10 +13,10 @@ declare(strict_types=1);
 namespace Johncms\System\View;
 
 use Johncms\Security\Csrf;
-use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
 use Johncms\System\View\Extension\Assets;
 use Johncms\System\View\Extension\Avatar;
+use Johncms\System\View\Extension\Formatter;
 use Johncms\System\View\Extension\Vite;
 use Psr\Container\ContainerInterface;
 use Johncms\System\i18n\Translator;
@@ -39,13 +39,13 @@ class RenderEngineFactory
         $engine->loadExtension($container->get(Assets::class));
         $engine->loadExtension($container->get(Avatar::class));
         $engine->loadExtension($container->get(Vite::class));
+        $engine->loadExtension($container->get(Formatter::class));
         $engine->addData(
             [
                 'container'  => $container,
                 'config'     => $config,
                 'locale'     => $container->get(Translator::class)->getLocale(),
                 'user'       => $container->get(User::class),
-                'tools'      => $container->get(Tools::class),
                 'csrf_token' => $container->get(Csrf::class)->getToken(),
             ]
         );

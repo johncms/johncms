@@ -15,3 +15,31 @@ Detailed change can see in the [repository log](https://github.com/johncms/johnc
   Исходники тем (`themes/<тема>/src`, `templates`) остались в корне; собранные ассеты авторам тем нужно класть в `public/themes/<тема>/assets/`.
 - Composer: зависимости переехали из `system/vendor` в стандартный `vendor/`. При обновлении удалите каталог `system/vendor` и выполните `composer install`.
 - Из каталога `install/` удалены разовые скрипты обновления с версий ниже 9.9, конвертеры и скрипты доустановки модулей 9.9. Обновляйтесь по пути 9.8 → 9.9 → 10.0: скрипты и инструкции к ним остались в ветке `9.x`. Каталог `install/` теперь содержит только веб-инсталлятор.
+- **Удалён легаси-класс `Johncms\System\Legacy\Tools`.** Вместе с ним удалены каталог `system/src-legacy/` и весь namespace `Johncms\System\Legacy\`. Методы разнесены по подходящим местам:
+
+  | Было | Стало |
+  |---|---|
+  | `Tools::antiflood()` | `Johncms\Security\AntifloodCheckerInterface::getRemainingSeconds()` |
+  | `Tools::checkout()` | удалён без прямой замены, см. ниже |
+  | `Tools::displayDate()` | `Johncms\Utils\DateFormatterInterface::format()` |
+  | `Tools::displayError()` | удалён без замены (не использовался) |
+  | `Tools::displayPlace()` | `Johncms\Users\UserPlaceFormatterInterface::format()` |
+  | `Tools::formatNumber()` | `Johncms\Utils\ShortNumberFormatter::format()` |
+  | `Tools::getSections()` | `Johncms\Modules\Forum\Application\Services\ForumSectionTreeService::getAncestors()` |
+  | `Tools::getSectionsTree()` | `Johncms\Modules\Forum\Application\Services\ForumSectionTreeService::getFlatTree()` |
+  | `Tools::getUser()` | модель `Johncms\Users\User` |
+  | `Tools::isIgnor()` | `Johncms\Users\IgnoreListCheckerInterface::isBlockedBy()` |
+  | `Tools::recountForumTopic()` | `Johncms\Modules\Forum\Application\Services\ForumTopicStatsRecalculator::recalculate()` |
+  | `Tools::rusLat()` | `Johncms\Utils\Transliterator::toLatin()` |
+  | `Tools::smilies()` | `Johncms\Smilies\SmiliesRendererInterface::render()` |
+  | `Tools::timecount()` | `Johncms\Utils\DurationFormatter::format()` |
+  | `Tools::trans()` | `Johncms\Utils\Transliterator::toCyrillic()` |
+
+  Отдельно про изменения контрактов:
+
+  * **Переменная `$tools` больше не передаётся в шаблоны.** Авторам тем нужно перейти на функции шаблонов `$this->formatNumber(...)` и `$this->displayDate(...)`, которые регистрирует новое расширение `Johncms\System\View\Extension\Formatter`.
+  * `Tools::checkout()` (`htmlentities` на этапе подготовки данных) удалён: по правилу «escape on output» экранирование теперь выполняется в шаблонах через `$this->e()`. Для HTML-фрагментов, которые собираются в PHP, добавлен `Johncms\Utils\PlainTextFormatter` (`escape()` и `toHtml()` — экранирование с `nl2br`).
+  * `antiflood()` возвращал `int|false`, новый `getRemainingSeconds()` возвращает `int` (0 — флуда нет).
+  * `smilies($str, $adm)` принимал `int|bool` вторым аргументом, новый `render(string $text, bool $withAdminSmilies)` — строго `bool`.
+
+  Попутно исправлено: убрано двойное экранирование в поиске по форуму и в хлебных крошках; добавлено экранирование значения редактора CKEditor, заголовка новой темы форума, ссылок из рекламных блоков и списков в модуле library; в админке снова корректно выделяется текущий родительский раздел при редактировании раздела форума; `isIgnor()` больше не возвращает закешированный результат от предыдущего пользователя; пересчёт статистики темы не падает на теме без сообщений.

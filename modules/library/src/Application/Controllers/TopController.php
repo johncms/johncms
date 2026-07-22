@@ -10,10 +10,11 @@ use Johncms\Modules\Library\Domain\Models\LibraryCategory;
 use Johncms\Modules\Library\Domain\Repository\LibraryTextRepositoryInterface;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Johncms\Modules\Library\Application\Services\Hashtags;
 use Johncms\Modules\Library\Application\Services\Rating;
+use Johncms\Utils\DateFormatterInterface;
+use Johncms\Utils\PlainTextFormatter;
 
 final readonly class TopController
 {
@@ -22,7 +23,7 @@ final readonly class TopController
         private Render $render,
         private NavChain $navChain,
         private Request $request,
-        private Tools $tools,
+        private DateFormatterInterface $dateFormatter,
         private LibraryTextRepositoryInterface $repository,
     ) {
         $this->controllerContext->initModule('library');
@@ -68,21 +69,21 @@ final readonly class TopController
             $category = LibraryCategory::query()->find($text->cat_id);
 
             $uploader = $text->uploader_id
-                ? '<a href="' . config('johncms')['homeurl'] . '/profile/' . $text->uploader_id . '">' . $this->tools->checkout($text->uploader) . '</a>'
-                : $this->tools->checkout($text->uploader);
+                ? '<a href="' . config('johncms')['homeurl'] . '/profile/' . $text->uploader_id . '">' . PlainTextFormatter::escape($text->uploader) . '</a>'
+                : PlainTextFormatter::escape($text->uploader);
 
             $items[] = [
                 'id'          => $text->id,
                 'url'         => $text->url,
-                'name'        => $this->tools->checkout($text->name),
-                'announce'    => $this->tools->checkout($text->announce),
+                'name'        => $text->name,
+                'announce'    => $text->announce,
                 'cover'       => file_exists(UPLOAD_PATH . 'library/images/small/' . $text->id . '.png'),
                 'tags'        => $obj->getAllStatTags() ? $obj->getAllStatTags(1) : null,
                 'ratingView'  => $rate->viewRate(1),
-                'who'         => $uploader . ' (' . $this->tools->displayDate($text->time) . ')',
+                'who'         => $uploader . ' (' . $this->dateFormatter->format($text->time) . ')',
                 'cat_id'      => $text->cat_id,
                 'cat_url'     => $category ? $category->url : '/library/',
-                'cat_name'    => $category ? $this->tools->checkout($category->name) : '',
+                'cat_name'    => $category?->name ?? '',
                 'comments'    => $text->comments,
                 'comm_count'  => $text->comm_count,
             ];

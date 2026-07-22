@@ -62,6 +62,13 @@ interface ForumTopicRepositoryInterface
     public function incrementViewCount(int $topicId): void;
 
     /**
+     * Writes the recalculated denormalized topic counters and last post data.
+     *
+     * @param array<string, mixed> $stats
+     */
+    public function updateStats(int $topicId, array $stats): void;
+
+    /**
      * @return iterable<int, ForumTopic>
      */
     public function getCursorForSitemap(): iterable;

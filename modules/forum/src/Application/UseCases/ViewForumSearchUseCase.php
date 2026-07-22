@@ -11,8 +11,8 @@ use Johncms\Modules\Forum\Application\Exceptions\ForumValidationException;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Domain\Repository\ForumSearchHistoryRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumSearchRepositoryInterface;
-use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
+use Johncms\Utils\DateFormatterInterface;
 
 final readonly class ViewForumSearchUseCase
 {
@@ -20,7 +20,7 @@ final readonly class ViewForumSearchUseCase
         private ForumSearchRepositoryInterface $searchRepository,
         private ForumSearchHistoryRepositoryInterface $searchHistoryRepository,
         private ForumTopicPathService $topicPathService,
-        private Tools $tools,
+        private DateFormatterInterface $dateFormatter,
         private User $currentUser,
     ) {
     }
@@ -95,7 +95,7 @@ final readonly class ViewForumSearchUseCase
                 $row['post_url'] = '/forum/post/' . (int) ($row['id'] ?? 0) . '/';
             }
 
-            $row['formatted_date'] = $this->tools->displayDate($date);
+            $row['formatted_date'] = $this->dateFormatter->format($date);
             $results[] = $row;
         }
 

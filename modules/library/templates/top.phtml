@@ -25,11 +25,11 @@ $this->layout('system::layout/default');
 <?php if ($total) : ?>
     <?php foreach ($items as $top) : ?>
         <div class="new_post-item without_avatar">
-            <a href="<?= $top['url'] ?>" class="post-title"><?= $top['name'] ?></a>
-            <div class="post-body"><?= $top['announce'] ?></div>
+            <a href="<?= $top['url'] ?>" class="post-title"><?= $this->e($top['name']) ?></a>
+            <div class="post-body"><?= $this->e($top['announce']) ?></div>
             <div class="text-muted small d-flex align-items-center flex-wrap">
                 <div class="me-2">
-                    <span><?= __('Section:') ?></span> <a href="<?= $top['cat_url'] ?>"><?= $top['cat_name'] ?></a>
+                    <span><?= __('Section:') ?></span> <a href="<?= $top['cat_url'] ?>"><?= $this->e($top['cat_name']) ?></a>
                 </div>
                 <div class="me-2">
                     <span><?= __('Author:') ?></span><?= $top['who'] ?>

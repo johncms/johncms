@@ -9,16 +9,16 @@ use Johncms\Modules\Profile\Application\Exceptions\ProfileAccessForbiddenExcepti
 use Johncms\Modules\Profile\Application\Exceptions\ProfileNotFoundException;
 use Johncms\Modules\Profile\Domain\Repository\IpHistoryRepositoryInterface;
 use Johncms\Modules\Profile\Domain\Repository\ProfileUserRepositoryInterface;
-use Johncms\System\Legacy\Tools;
 use Johncms\Users\IpHistory;
 use Johncms\Users\User;
+use Johncms\Utils\DateFormatterInterface;
 
 final readonly class GetIpHistoryUseCase
 {
     public function __construct(
         private ProfileUserRepositoryInterface $profileUserRepository,
         private IpHistoryRepositoryInterface $ipHistoryRepository,
-        private Tools $tools,
+        private DateFormatterInterface $dateFormatter,
         private User $currentUser,
     ) {
     }
@@ -45,7 +45,7 @@ final readonly class GetIpHistoryUseCase
             $items[] = [
                 'ip'           => $ip,
                 'search_url'   => '/admin/ip-search/history?ip=' . $ip,
-                'display_date' => $this->tools->displayDate($record->time),
+                'display_date' => $this->dateFormatter->format($record->time),
             ];
         }
 

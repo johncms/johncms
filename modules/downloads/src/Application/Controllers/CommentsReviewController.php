@@ -11,9 +11,10 @@ use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Downloads\Application\Services\DownloadFilePathService;
 use Johncms\Modules\Downloads\Application\UseCases\ViewCommentsReviewUseCase;
 use Johncms\NavChain;
-use Johncms\System\Legacy\Tools;
+use Johncms\Smilies\SmiliesRendererInterface;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
+use Johncms\Utils\DateFormatterInterface;
 
 final readonly class CommentsReviewController
 {
@@ -21,7 +22,8 @@ final readonly class CommentsReviewController
         private ControllerContext $controllerContext,
         private Render $render,
         private NavChain $navChain,
-        private Tools $tools,
+        private DateFormatterInterface $dateFormatter,
+        private SmiliesRendererInterface $smiliesRenderer,
         private User $currentUser,
         private ViewCommentsReviewUseCase $useCase,
         private DownloadFilePathService $filePathService,
@@ -64,7 +66,7 @@ final readonly class CommentsReviewController
             $attrs = unserialize($comment->getAttribute('attributes'), ['allowed_classes' => false]);
 
             $text = $this->purifier->purify($comment->text);
-            $text = $this->tools->smilies($text, ($comment->user_rights ?? 0) >= 1 ? 1 : 0);
+            $text = $this->smiliesRenderer->render($text, ($comment->user_rights ?? 0) >= 1);
 
             $replyText = '';
             $replyTime = '';
@@ -72,8 +74,8 @@ final readonly class CommentsReviewController
             $replyAuthorName = '';
             if (! empty($comment->reply)) {
                 $reply = $this->purifier->purify($comment->reply);
-                $replyText = $this->tools->smilies($reply, ($attrs['reply_rights'] ?? 0) >= 1 ? 1 : 0);
-                $replyTime = $this->tools->displayDate($attrs['reply_time']);
+                $replyText = $this->smiliesRenderer->render($reply, ($attrs['reply_rights'] ?? 0) >= 1);
+                $replyTime = $this->dateFormatter->format($attrs['reply_time']);
                 $replyAuthorUrl = '/profile/' . $attrs['reply_id'];
                 $replyAuthorName = $attrs['reply_name'];
             }
@@ -81,7 +83,7 @@ final readonly class CommentsReviewController
             $items[] = [
                 'user_id'                 => $comment->user_id,
                 'name'                    => $attrs['author_name'],
-                'created'                 => $this->tools->displayDate($comment->time),
+                'created'                 => $this->dateFormatter->format($comment->time),
                 'post_text'               => $text,
                 'reply_text'              => $replyText,
                 'reply_time'              => $replyTime,
@@ -97,7 +99,7 @@ final readonly class CommentsReviewController
                 'user_agent'              => $attrs['author_browser'] ?? '',
                 'edit_count'              => $attrs['edit_count'] ?? 0,
                 'editor_name'             => $attrs['edit_name'] ?? '',
-                'edit_time'               => ! empty($attrs['edit_time']) ? $this->tools->displayDate($attrs['edit_time']) : '',
+                'edit_time'               => ! empty($attrs['edit_time']) ? $this->dateFormatter->format($attrs['edit_time']) : '',
                 'edit_url'                => '',
                 'delete_url'              => '',
             ];

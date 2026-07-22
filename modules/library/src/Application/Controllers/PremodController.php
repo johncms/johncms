@@ -11,9 +11,10 @@ use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
 use Johncms\System\Http\Session;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
+use Johncms\Utils\DateFormatterInterface;
+use Johncms\Utils\PlainTextFormatter;
 
 final readonly class PremodController
 {
@@ -23,7 +24,7 @@ final readonly class PremodController
         private NavChain $navChain,
         private Request $request,
         private Session $session,
-        private Tools $tools,
+        private DateFormatterInterface $dateFormatter,
         private User $currentUser,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
@@ -91,13 +92,13 @@ final readonly class PremodController
         $articleData = [];
         foreach ($articles as $article) {
             $uploader = $article->uploader_id
-                ? '<a href="' . config('johncms')['homeurl'] . '/profile/' . $article->uploader_id . '">' . $this->tools->checkout($article->uploader) . '</a>'
-                : $this->tools->checkout($article->uploader);
+                ? '<a href="' . config('johncms')['homeurl'] . '/profile/' . $article->uploader_id . '">' . PlainTextFormatter::escape($article->uploader) . '</a>'
+                : PlainTextFormatter::escape($article->uploader);
             $articleData[] = [
                 'id'   => $article->id,
                 'url'  => $article->url,
                 'name' => $article->name,
-                'who'  => $uploader . ' (' . $this->tools->displayDate($article->time) . ')',
+                'who'  => $uploader . ' (' . $this->dateFormatter->format($article->time) . ')',
             ];
         }
 

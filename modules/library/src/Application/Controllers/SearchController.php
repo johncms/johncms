@@ -11,9 +11,10 @@ use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Library\Domain\Repository\LibraryTextRepositoryInterface;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Johncms\Modules\Library\Application\Services\Utils;
+use Johncms\Utils\DateFormatterInterface;
+use Johncms\Utils\PlainTextFormatter;
 
 final readonly class SearchController
 {
@@ -22,7 +23,7 @@ final readonly class SearchController
         private Render $render,
         private NavChain $navChain,
         private Request $request,
-        private Tools $tools,
+        private DateFormatterInterface $dateFormatter,
         private LibraryTextRepositoryInterface $repository,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
@@ -96,8 +97,8 @@ final readonly class SearchController
                     }
                     $pos = $pos < 100 ? 100 : $pos;
 
-                    $name = $this->tools->checkout($text->name);
-                    $excerpt = $this->tools->checkout(mb_substr($plainText, $pos - 100, 400));
+                    $name = PlainTextFormatter::escape($text->name);
+                    $excerpt = PlainTextFormatter::escape(mb_substr($plainText, $pos - 100, 400));
 
                     foreach ($words as $word) {
                         if ($inTitle) {
@@ -108,8 +109,8 @@ final readonly class SearchController
                     }
 
                     $author = $text->uploader_id
-                        ? '<a href="' . config('johncms')['homeurl'] . '/profile/' . $text->uploader_id . '">' . $this->tools->checkout($text->uploader) . '</a>'
-                        : $this->tools->checkout($text->uploader);
+                        ? '<a href="' . config('johncms')['homeurl'] . '/profile/' . $text->uploader_id . '">' . PlainTextFormatter::escape($text->uploader) . '</a>'
+                        : PlainTextFormatter::escape($text->uploader);
 
                     $items[] = [
                         'id'          => $text->id,
@@ -117,7 +118,7 @@ final readonly class SearchController
                         'name'        => $name,
                         'text'        => $excerpt,
                         'author'      => $author,
-                        'time'        => $this->tools->displayDate($text->time),
+                        'time'        => $this->dateFormatter->format($text->time),
                         'count_views' => $text->count_views,
                     ];
                 }

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Johncms\Media\MediaEmbed;
 use Johncms\Security\HTMLPurifier;
-use Johncms\System\Legacy\Tools;
+use Johncms\Smilies\SmiliesRendererInterface;
 use Simba77\EmbedMedia\Embed;
 
 final class DownloadFile extends Model
@@ -32,14 +32,14 @@ final class DownloadFile extends Model
 
     protected \HTMLPurifier $purifier;
     protected Embed $media;
-    protected Tools $tools;
+    protected SmiliesRendererInterface $smiliesRenderer;
 
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
         $this->purifier = di(HTMLPurifier::class);
         $this->media = di(MediaEmbed::class);
-        $this->tools = di(Tools::class);
+        $this->smiliesRenderer = di(SmiliesRendererInterface::class);
     }
 
     public function category(): BelongsTo
@@ -51,6 +51,6 @@ final class DownloadFile extends Model
     {
         $text = $this->purifier->purify((string) $this->about);
         $text = $this->media->embedMedia($text);
-        return $this->tools->smilies($text);
+        return $this->smiliesRenderer->render($text);
     }
 }

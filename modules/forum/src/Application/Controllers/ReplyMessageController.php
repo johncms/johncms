@@ -13,9 +13,10 @@ use Johncms\Modules\Forum\Application\UseCases\AttachUploadedFilesToMessageUseCa
 use Johncms\Modules\Forum\Application\UseCases\GetReplyMessageContextUseCase;
 use Johncms\Modules\Forum\Application\UseCases\ReplyMessageUseCase;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
+use Johncms\Security\AntifloodCheckerInterface;
+use Johncms\Smilies\SmiliesRendererInterface;
 use Johncms\System\Http\Request;
 use Johncms\System\Http\Session;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\Utility\EditorContentNormalizer;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
@@ -28,7 +29,8 @@ final readonly class ReplyMessageController
         private Render $render,
         private Request $request,
         private Session $session,
-        private Tools $tools,
+        private AntifloodCheckerInterface $antifloodChecker,
+        private SmiliesRendererInterface $smiliesRenderer,
         private EditorContentNormalizer $editorContentNormalizer,
         private \HTMLPurifier $purifier,
         private Embed $embed,
@@ -93,7 +95,7 @@ final readonly class ReplyMessageController
             );
         }
 
-        $flood = $this->tools->antiflood();
+        $flood = $this->antifloodChecker->getRemainingSeconds();
         if ($flood) {
             return $this->render->render(
                 'system::pages/result',
@@ -194,7 +196,7 @@ final readonly class ReplyMessageController
 
         $msgPreview = $this->purifier->purify($msg);
         $msgPreview = $this->embed->embedMedia($msgPreview);
-        $msgPreview = $this->tools->smilies($msgPreview, $this->currentUser->rights > 0);
+        $msgPreview = $this->smiliesRenderer->render($msgPreview, $this->currentUser->rights > 0);
 
         return $this->render->render(
             'forum::reply_message',
@@ -207,7 +209,7 @@ final readonly class ReplyMessageController
                 'form_action'       => $this->getReplyUrl($sourceMessage->id, $page),
                 'is_quote'          => $isQuote,
                 'add_file'          => $addFiles,
-                'msg'               => $msg === '' ? '' : $this->tools->checkout($msg),
+                'msg'               => $msg,
                 'message'           => $sourceMessage,
                 'settings_forum'    => $this->getForumSettings(),
                 'show_post_preview' => ($this->request->getPost('submit') === null && $this->request->getPost('msg') !== null),

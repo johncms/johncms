@@ -14,7 +14,7 @@ $this->layout('system::layout/default');
 <?php foreach ($list as $article) : ?>
     <div class="new_post-item without_avatar">
         <a href="<?= $article['url'] ?>" class="card-title h3"><?= $this->e($article['name']) ?></a>
-        <div class="post-body"><?= $article['text'] ?></div>
+        <div class="post-body"><?= $this->e($article['text']) ?></div>
         <?php if ($article['tags']) : ?>
             <div class="mb-1"><?= $article['tags'] ?></div>
         <?php endif; ?>

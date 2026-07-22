@@ -15,7 +15,7 @@ use Johncms\Modules\Guestbook\Application\UseCases\ListGuestbookEntriesUseCase;
 use Johncms\Modules\Guestbook\Domain\Models\GuestbookEntry;
 use Johncms\Modules\Guestbook\Domain\Repository\GuestbookEntryRepositoryInterface;
 use Johncms\System\Http\Session;
-use Johncms\System\Legacy\Tools;
+use Johncms\Smilies\SmiliesRendererInterface;
 use Johncms\Users\User;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -149,10 +149,10 @@ final class ListGuestbookEntriesUseCaseTest extends TestCase
         $media = $this->createMock(Embed::class);
         $media->method('embedMedia')->willReturnArgument(0);
 
-        $tools = $this->createMock(Tools::class);
-        $tools->method('smilies')->willReturnArgument(0);
+        $smiliesRenderer = $this->createMock(SmiliesRendererInterface::class);
+        $smiliesRenderer->method('render')->willReturnArgument(0);
 
-        return new GuestbookEntryTextFormatter($purifier, $media, $tools);
+        return new GuestbookEntryTextFormatter($purifier, $media, $smiliesRenderer);
     }
 
     /**

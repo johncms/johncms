@@ -10,13 +10,13 @@ use Johncms\Modules\Forum\Application\DTO\DeletePostResultDTO;
 use Johncms\Modules\Forum\Application\DTO\EditPostContextDTO;
 use Johncms\Modules\Forum\Application\Services\ForumSectionPathService;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
+use Johncms\Modules\Forum\Application\Services\ForumTopicStatsRecalculator;
 use Johncms\Modules\Forum\Domain\Repository\ForumFileRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageFileRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumUnreadRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumVoteRepositoryInterface;
-use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
 use League\Flysystem\FilesystemException;
 
@@ -25,13 +25,13 @@ final readonly class DeletePostUseCase
     public function __construct(
         private ForumMessageRepositoryInterface $messageRepository,
         private ForumTopicRepositoryInterface $topicRepository,
+        private ForumTopicStatsRecalculator $topicStatsRecalculator,
         private ForumFileRepositoryInterface $fileRepository,
         private ForumMessageFileRepositoryInterface $messageFileRepository,
         private ForumVoteRepositoryInterface $voteRepository,
         private ForumUnreadRepositoryInterface $unreadRepository,
         private ForumSectionPathService $sectionPathService,
         private ForumTopicPathService $topicPathService,
-        private Tools $tools,
         private User $currentUser,
         private FileStorage $fileStorage,
     ) {
@@ -105,7 +105,7 @@ final readonly class DeletePostUseCase
         }
 
         if ($shouldRecountTopic) {
-            $this->tools->recountForumTopic($topic->id);
+            $this->topicStatsRecalculator->recalculate($topic->id);
         }
 
         return new DeletePostResultDTO($redirectUrl);

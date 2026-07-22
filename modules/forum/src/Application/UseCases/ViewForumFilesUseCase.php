@@ -14,8 +14,9 @@ use Johncms\Modules\Forum\Domain\Query\ForumFileScopeQuery;
 use Johncms\Modules\Forum\Domain\Repository\ForumFileRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumSectionRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
-use Johncms\System\Legacy\Tools;
+use Johncms\Smilies\SmiliesRendererInterface;
 use Johncms\Users\User;
+use Johncms\Utils\DateFormatterInterface;
 use Simba77\EmbedMedia\Embed;
 
 final readonly class ViewForumFilesUseCase
@@ -25,7 +26,8 @@ final readonly class ViewForumFilesUseCase
         private ForumSectionRepositoryInterface $sectionRepository,
         private ForumTopicRepositoryInterface $topicRepository,
         private ForumTopicPathService $topicPathService,
-        private Tools $tools,
+        private DateFormatterInterface $dateFormatter,
+        private SmiliesRendererInterface $smiliesRenderer,
         private \HTMLPurifier $purifier,
         private Embed $embed,
         private User $currentUser,
@@ -257,11 +259,11 @@ final readonly class ViewForumFilesUseCase
             $text = mb_substr((string) ($row['text'] ?? ''), 0, 500);
             $text = $this->purifier->purify($text);
             $text = $this->embed->embedMedia($text);
-            $text = $this->tools->smilies($text, ! empty($row['rights']) ? 1 : 0);
+            $text = $this->smiliesRenderer->render($text, ! empty($row['rights']));
 
             $page = (int) ceil((int) ($row['page'] ?? 0) / $this->currentUser->config->kmess);
             $row['post_text'] = $text;
-            $row['post_time'] = $this->tools->displayDate((int) $row['time']);
+            $row['post_time'] = $this->dateFormatter->format((int) $row['time']);
             $row['user_profile_link'] = '';
 
             if ($this->currentUser->isValid() && (int) $this->currentUser->id !== (int) $row['user_id']) {

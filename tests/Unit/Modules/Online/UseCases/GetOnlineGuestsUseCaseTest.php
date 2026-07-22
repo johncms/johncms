@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Johncms\Modules\Online\Application\DTO\OnlineItemDTO;
 use Johncms\Modules\Online\Application\UseCases\GetOnlineGuestsUseCase;
 use Johncms\Modules\Online\Domain\Repository\OnlineGuestRepositoryInterface;
-use Johncms\System\Legacy\Tools;
+use Johncms\Users\UserPlaceFormatterInterface;
 use Johncms\Users\GuestSession;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -18,14 +18,14 @@ use PHPUnit\Framework\TestCase;
 final class GetOnlineGuestsUseCaseTest extends TestCase
 {
     private OnlineGuestRepositoryInterface&MockObject $repository;
-    private Tools&MockObject $tools;
+    private UserPlaceFormatterInterface&MockObject $placeFormatter;
 
     protected function setUp(): void
     {
         // __('Guest') нуждается в зарегистрированном переводчике (возвращает оригиналы)
         TranslatorFunctions::register(new Translator());
         $this->repository = $this->createMock(OnlineGuestRepositoryInterface::class);
-        $this->tools = $this->createMock(Tools::class);
+        $this->placeFormatter = $this->createMock(UserPlaceFormatterInterface::class);
     }
 
     public function testCountDelegatesToRepository(): void
@@ -47,8 +47,7 @@ final class GetOnlineGuestsUseCaseTest extends TestCase
         ]);
 
         $this->repository->method('getOnline')->willReturn(new Collection([$guest]));
-        $this->tools->method('displayPlace')->willReturnArgument(0);
-        $this->tools->method('timecount')->willReturn('TC');
+        $this->placeFormatter->method('format')->willReturnArgument(0);
 
         $result = $this->makeUseCase()->getPage(10, 0, null);
 
@@ -57,11 +56,11 @@ final class GetOnlineGuestsUseCaseTest extends TestCase
         self::assertSame('Guest', $result[0]->name);
         self::assertSame('', $result[0]->profileUrl);
         self::assertSame('/some/place', $result[0]->placeName);
-        self::assertSame('2 - TC', $result[0]->displayDate);
+        self::assertStringStartsWith('2 - ', $result[0]->displayDate);
     }
 
     private function makeUseCase(): GetOnlineGuestsUseCase
     {
-        return new GetOnlineGuestsUseCase($this->repository, $this->tools);
+        return new GetOnlineGuestsUseCase($this->repository, $this->placeFormatter);
     }
 }

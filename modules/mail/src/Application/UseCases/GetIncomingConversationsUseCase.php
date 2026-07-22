@@ -9,9 +9,9 @@ use Johncms\Modules\Mail\Application\DTO\ConversationItemDTO;
 use Johncms\Modules\Mail\Application\DTO\ConversationListResultDTO;
 use Johncms\Modules\Mail\Application\Services\MailMessagePreviewService;
 use Johncms\Modules\Mail\Domain\Repository\MailMessageRepositoryInterface;
-use Johncms\System\Legacy\Tools;
 use Johncms\UserProperties;
 use Johncms\Users\User;
+use Johncms\Utils\DateFormatterInterface;
 
 final readonly class GetIncomingConversationsUseCase
 {
@@ -19,7 +19,7 @@ final readonly class GetIncomingConversationsUseCase
         private MailMessageRepositoryInterface $mailMessageRepository,
         private User $currentUser,
         private UserProperties $userProperties,
-        private Tools $tools,
+        private DateFormatterInterface $dateFormatter,
         private MailMessagePreviewService $previewService,
     ) {
     }
@@ -46,8 +46,6 @@ final readonly class GetIncomingConversationsUseCase
     private function mapToDTO(Collection $users): Collection
     {
         $items = collect();
-        $tools = $this->tools;
-
         foreach ($users as $user) {
             if (! $user instanceof User) {
                 continue;
@@ -63,7 +61,7 @@ final readonly class GetIncomingConversationsUseCase
 
             if ($lastMessage) {
                 $previewText = $this->previewService->render($lastMessage->text, $user->id, (bool) $user->rights);
-                $displayDate = $tools->displayDate($lastMessage->time);
+                $displayDate = $this->dateFormatter->format($lastMessage->time);
                 $unread = ! $lastMessage->read;
             }
 

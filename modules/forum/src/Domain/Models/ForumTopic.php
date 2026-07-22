@@ -18,8 +18,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Johncms\Casts\Serialize;
-use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
+use Johncms\Utils\DateFormatterInterface;
 
 /**
  * Class Topic
@@ -73,7 +73,7 @@ use Johncms\Users\User;
  * @property ForumFile $files
  *
  * @property User $current_user
- * @property Tools $tools
+ * @property DateFormatterInterface $dateFormatter
  */
 class ForumTopic extends Model
 {
@@ -144,16 +144,13 @@ class ForumTopic extends Model
      */
     protected $current_user;
 
-    /**
-     * @var Tools
-     */
-    protected $tools;
+    protected DateFormatterInterface $dateFormatter;
 
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
         $this->current_user = di(User::class);
-        $this->tools = di(Tools::class);
+        $this->dateFormatter = di(DateFormatterInterface::class);
     }
 
     /**

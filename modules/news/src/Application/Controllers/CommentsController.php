@@ -18,9 +18,9 @@ use Johncms\Modules\News\Application\Utils\Helpers;
 use Johncms\Modules\News\Domain\Models\NewsArticle;
 use Johncms\Modules\News\Domain\Models\NewsComments;
 use Johncms\Security\HTMLPurifier;
+use Johncms\Smilies\SmiliesRendererInterface;
 use Johncms\System\Http\Environment;
 use Johncms\System\Http\Request;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Extension\Avatar;
 use Johncms\Users\User;
 use League\Flysystem\FilesystemException;
@@ -39,10 +39,10 @@ final readonly class CommentsController
      *
      * @param int $article_id
      * @param Avatar $avatar
-     * @param Tools $tools
+     * @param SmiliesRendererInterface $smiliesRenderer
      * @param User $current_user
      */
-    public function index(int $article_id, Avatar $avatar, Tools $tools, User $current_user): void
+    public function index(int $article_id, Avatar $avatar, SmiliesRendererInterface $smiliesRenderer, User $current_user): void
     {
         if ($article_id === 0) {
             http_response_code(400);
@@ -70,7 +70,7 @@ final readonly class CommentsController
         $array = [
             'current_page'   => $currentPage,
             'data'           => $comments->map(
-                static function (NewsComments $comment) use ($avatar, $tools, $current_user, $purifier, $embed) {
+                static function (NewsComments $comment) use ($avatar, $smiliesRenderer, $current_user, $purifier, $embed) {
                     $user = $comment->user;
                     $user_data = [];
                     if ($user) {
@@ -87,7 +87,7 @@ final readonly class CommentsController
 
                     $text = $purifier->purify($comment->text);
                     $text = $embed->embedMedia($text);
-                    $text = $tools->smilies($text, ($user->rights > 0));
+                    $text = $smiliesRenderer->render($text, ($user->rights > 0));
 
                     $message = [
                         'id'         => $comment->id,

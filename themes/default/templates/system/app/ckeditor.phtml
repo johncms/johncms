@@ -24,7 +24,7 @@ if ($locale !== 'en') {
         errors="<?= $errors ?>"
         id="<?= $name ?>"
         label="<?= $label ?>"
-        value="<?= $value ?>"
+        value="<?= $this->e($value) ?>"
         :allow_upload="<?= (! isset($allow_upload) || $allow_upload ? 'true' : 'false'); ?>"
     ></ckeditor-input-component>
 </div>

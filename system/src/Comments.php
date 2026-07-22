@@ -14,11 +14,15 @@ namespace Johncms;
 
 use Johncms\Container\PSRContainerFactory;
 use Johncms\Media\MediaEmbed;
+use Johncms\Security\AntifloodCheckerInterface;
 use Johncms\Security\HTMLPurifier;
+use Johncms\Smilies\SmiliesRendererInterface;
 use Johncms\System\Http\Environment;
 use Johncms\System\Users\User;
-use Johncms\System\Legacy\Tools;
+use Johncms\Users\IgnoreListCheckerInterface;
+use Johncms\Users\User as UserModel;
 use Johncms\System\Utility\EditorContentNormalizer;
+use Johncms\Utils\DateFormatterInterface;
 use Johncms\System\View\Render;
 use PDO;
 
@@ -54,8 +58,11 @@ class Comments
     /** @var PDO */
     private $db;
 
-    /** @var Tools */
-    private $tools;
+    private SmiliesRendererInterface $smiliesRenderer;
+
+    private DateFormatterInterface $dateFormatter;
+
+    private IgnoreListCheckerInterface $ignoreListChecker;
 
     /** @var HTMLPurifier */
     private $purifier;
@@ -114,7 +121,9 @@ class Comments
     {
         global $mod, $start;
         $container = PSRContainerFactory::getContainer();
-        $this->tools = $container->get(Tools::class);
+        $this->smiliesRenderer = $container->get(SmiliesRendererInterface::class);
+        $this->dateFormatter = $container->get(DateFormatterInterface::class);
+        $this->ignoreListChecker = $container->get(IgnoreListCheckerInterface::class);
         $this->db = $container->get(PDO::class);
         $this->systemUser = $container->get(User::class);
         $this->view = di(Render::class);
@@ -225,7 +234,7 @@ class Comments
                         } else {
                             $data = [];
                             $text = '<a href="' . $homeurl . '/profile/' . $res['user_id'] . '"><b>' . $attributes['author_name'] . '</b></a>' .
-                                ' (' . $this->tools->displayDate($res['time']) . ')<br />' .
+                                ' (' . $this->dateFormatter->format($res['time']) . ')<br />' .
                                 $this->purifier->purify($res['text']);
                             $reply = $res['reply'];
                             $data['message_form'] = $this->msgForm('&amp;mod=reply&amp;item=' . $this->item, $text, $reply);
@@ -267,9 +276,9 @@ class Comments
                     if ($req->rowCount()) {
                         $res = $req->fetch();
                         $attributes = unserialize($res['attributes'], ['allowed_classes' => false]);
-                        $user = $this->tools->getUser((int) $res['user_id']);
+                        $user = UserModel::query()->find((int) $res['user_id']);
 
-                        if ($user->rights > $this->systemUser->rights) {
+                        if (($user->rights ?? 0) > $this->systemUser->rights) {
                             echo $this->view->render(
                                 'system::pages/result',
                                 [
@@ -324,7 +333,7 @@ class Comments
                             }
                         } else {
                             $author = '<a href="' . $homeurl . '/profile/' . $res['user_id'] . '"><b>' . $attributes['author_name'] . '</b></a>';
-                            $author .= ' (' . $this->tools->displayDate($res['time']) . ')<br />';
+                            $author .= ' (' . $this->dateFormatter->format($res['time']) . ')<br />';
                             $author .= $this->purifier->purify($res['text']);
                             $text = $res['text'];
                             $data = [];
@@ -417,7 +426,7 @@ class Comments
                     ! $this->ban &&
                     isset($_POST['submit']) &&
                     $this->systemUser->isValid() &&
-                    ! $this->tools->isIgnor($this->owner) &&
+                    ! $this->ignoreListChecker->isBlockedBy($this->owner, $this->systemUser->id) &&
                     ($message = $this->msgCheck(true)) !== false
                 ) {
                     if (empty($message['error'])) {
@@ -448,7 +457,7 @@ class Comments
                         $res['ip'] = $attributes['author_ip'];
                         $res['ip_via_proxy'] = $attributes['author_ip_via_proxy'] ?? 0;
                         $res['user_agent'] = $attributes['author_browser'];
-                        $res['created'] = $this->tools->displayDate($res['time']);
+                        $res['created'] = $this->dateFormatter->format($res['time']);
 
                         $res['reply_url'] = '';
                         $res['edit_url'] = '';
@@ -467,12 +476,12 @@ class Comments
 
                         $text = $this->purifier->purify($res['text']);
                         $text = $this->embed->embedMedia($text);
-                        $text = $this->tools->smilies($text, $res['rights'] >= 1 ? 1 : 0);
+                        $text = $this->smiliesRenderer->render($text, $res['rights'] >= 1);
 
                         $res['post_text'] = $text;
                         $res['edit_count'] = $attributes['edit_count'] ?? 0;
                         $res['editor_name'] = $attributes['edit_name'] ?? '';
-                        $res['edit_time'] = ! empty($attributes['edit_time']) ? $this->tools->displayDate($attributes['edit_time']) : '';
+                        $res['edit_time'] = ! empty($attributes['edit_time']) ? $this->dateFormatter->format($attributes['edit_time']) : '';
 
                         $user_properties = new UserProperties();
                         $user_data = $user_properties->getFromArray($res);
@@ -482,9 +491,9 @@ class Comments
                         if (! empty($res['reply'])) {
                             $reply = $this->purifier->purify($res['reply']);
                             $reply = $this->embed->embedMedia($reply);
-                            $reply = $this->tools->smilies($reply, $attributes['reply_rights'] >= 1 ? 1 : 0);
+                            $reply = $this->smiliesRenderer->render($reply, $attributes['reply_rights'] >= 1);
                             $res['reply_text'] = $reply;
-                            $res['reply_time'] = $this->tools->displayDate($attributes['reply_time']);
+                            $res['reply_time'] = $this->dateFormatter->format($attributes['reply_time']);
                             $res['reply_author_url'] = '/profile/' . $attributes['reply_id'];
                             $res['reply_author_name'] = $attributes['reply_name'];
                         }
@@ -496,7 +505,7 @@ class Comments
                 $data['items'] = $items;
                 $data['total'] = $this->total;
 
-                if (! $this->ban && $this->systemUser->isValid() && ! $this->tools->isIgnor($this->owner)) {
+                if (! $this->ban && $this->systemUser->isValid() && ! $this->ignoreListChecker->isBlockedBy($this->owner, $this->systemUser->id)) {
                     $data['message_form'] = $this->msgForm();
                 }
 
@@ -613,7 +622,7 @@ class Comments
             $error[] = d__('system', 'Text is too short');
         } else {
             // Проверка на флуд
-            $flood = PSRContainerFactory::getContainer()->get(Tools::class)->antiflood();
+            $flood = PSRContainerFactory::getContainer()->get(AntifloodCheckerInterface::class)->getRemainingSeconds();
 
             if ($flood) {
                 $error[] = d__('system', 'You cannot add the message so often<br>Please, wait') . ' ' . $flood . '&#160;' . d__('system', 'seconds');

@@ -7,14 +7,15 @@ namespace Johncms\Modules\Online\Application\UseCases;
 use Johncms\Modules\Forum\Application\Services\ForumVisitorPlaceFormatter;
 use Johncms\Modules\Online\Application\DTO\OnlineItemDTO;
 use Johncms\Modules\Online\Domain\Repository\OnlineUserRepositoryInterface;
-use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
+use Johncms\Users\UserPlaceFormatterInterface;
+use Johncms\Utils\DurationFormatter;
 
 final readonly class GetOnlineUsersUseCase
 {
     public function __construct(
         private OnlineUserRepositoryInterface $repository,
-        private Tools $tools,
+        private UserPlaceFormatterInterface $userPlaceFormatter,
     ) {
     }
 
@@ -34,7 +35,7 @@ final readonly class GetOnlineUsersUseCase
                 name:                $user->name,
                 isOnline:            $user->is_online,
                 profileUrl:          $user->profile_url,
-                displayDate:         $user->movings . ' - ' . $this->tools->timecount(time() - $user->sestime),
+                displayDate:         $user->movings . ' - ' . DurationFormatter::format(time() - $user->sestime),
                 placeName:           $this->placeName((string) $user->place, $placeFormatter),
                 ip:                  $user->ip,
                 searchIpUrl:         $user->search_ip_url,
@@ -49,6 +50,6 @@ final readonly class GetOnlineUsersUseCase
     {
         return $placeFormatter !== null && str_starts_with($place, '/forum')
             ? $placeFormatter->format($place)
-            : $this->tools->displayPlace($place);
+            : $this->userPlaceFormatter->format($place);
     }
 }

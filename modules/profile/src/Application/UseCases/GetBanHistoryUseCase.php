@@ -8,16 +8,15 @@ use Johncms\Modules\Profile\Application\DTO\BanHistoryDTO;
 use Johncms\Modules\Profile\Application\Exceptions\ProfileNotFoundException;
 use Johncms\Modules\Profile\Domain\Repository\BanRepositoryInterface;
 use Johncms\Modules\Profile\Domain\Repository\ProfileUserRepositoryInterface;
-use Johncms\System\Legacy\Tools;
 use Johncms\Users\Ban;
 use Johncms\Users\User;
+use Johncms\Utils\DurationFormatter;
 
 final readonly class GetBanHistoryUseCase
 {
     public function __construct(
         private ProfileUserRepositoryInterface $profileUserRepository,
         private BanRepositoryInterface $banRepository,
-        private Tools $tools,
         private User $currentUser,
     ) {
     }
@@ -67,9 +66,9 @@ final readonly class GetBanHistoryUseCase
             $items[] = [
                 'ban_type_name'    => $types[$ban->ban_type] ?? '',
                 'ban_started'      => date('d.m.Y / H:i', $ban->ban_while),
-                'reason_formatted' => $this->tools->checkout($ban->ban_reason),
-                'time_name'        => $period < 86400000 ? $this->tools->timecount($period) : __('Till cancel'),
-                'remain'           => $remain > 0 ? $this->tools->timecount($remain) : '',
+                'reason_formatted' => $ban->ban_reason,
+                'time_name'        => $period < 86400000 ? DurationFormatter::format($period) : __('Till cancel'),
+                'remain'           => $remain > 0 ? DurationFormatter::format($remain) : '',
                 'ban_who'          => $ban->ban_who,
                 'buttons'          => $buttons,
             ];

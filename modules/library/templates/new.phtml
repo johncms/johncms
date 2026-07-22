@@ -13,11 +13,11 @@ $this->layout('system::layout/default');
 <?php if ($total) : ?>
     <?php foreach ($items as $newlist): ?>
         <div class="new_post-item without_avatar">
-            <a href="<?= $newlist['url'] ?>" class="card-title h3"><?= $newlist['name'] ?></a>
-            <div class="post-body"><?= $newlist['announce'] ?></div>
+            <a href="<?= $newlist['url'] ?>" class="card-title h3"><?= $this->e($newlist['name']) ?></a>
+            <div class="post-body"><?= $this->e($newlist['announce']) ?></div>
             <div class="text-muted small d-flex align-items-center flex-wrap">
                 <div class="me-2">
-                    <span><?= __('Section:') ?></span> <a href="<?= $newlist['cat_url'] ?>"><?= $newlist['catalog_name'] ?></a>
+                    <span><?= __('Section:') ?></span> <a href="<?= $newlist['cat_url'] ?>"><?= $this->e($newlist['catalog_name']) ?></a>
                 </div>
                 <div class="me-2">
                     <span><?= __('Author:') ?></span><?= $newlist['who'] ?>

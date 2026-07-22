@@ -9,8 +9,8 @@ use Johncms\Modules\Forum\Application\Services\ForumLegacyRedirectResolver;
 use Johncms\Modules\Forum\Application\UseCases\ViewForumIndexUseCase;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
+use Johncms\Utils\ShortNumberFormatter;
 
 final readonly class ForumIndexController
 {
@@ -19,7 +19,6 @@ final readonly class ForumIndexController
         private Render $render,
         private Request $request,
         private NavChain $navChain,
-        private Tools $tools,
         private ForumLegacyRedirectResolver $legacyRedirectResolver,
         private ViewForumIndexUseCase $viewForumIndexUseCase,
     ) {
@@ -59,8 +58,8 @@ final readonly class ForumIndexController
                     'online_u' => $result->onlineUsers,
                     'online_g' => $result->onlineGuests,
                 ],
-                'files_count'  => $result->showFileCounters ? $this->tools->formatNumber($result->filesCount) : 0,
-                'unread_count' => $this->tools->formatNumber($counters->forumUnreadCount()),
+                'files_count'  => $result->showFileCounters ? ShortNumberFormatter::format($result->filesCount) : 0,
+                'unread_count' => ShortNumberFormatter::format($counters->forumUnreadCount()),
             ]
         );
     }

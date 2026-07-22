@@ -6,7 +6,8 @@ namespace Johncms\Modules\Admin\Application\Services;
 
 use Illuminate\Support\Collection;
 use Johncms\Modules\Admin\Domain\Models\Ad;
-use Johncms\System\Legacy\Tools;
+use Johncms\Utils\DateFormatterInterface;
+use Johncms\Utils\DurationFormatter;
 
 /**
  * Готовит строку рекламной ссылки для шаблона списка: вычисляет условия договора
@@ -15,7 +16,7 @@ use Johncms\System\Legacy\Tools;
 final readonly class AdRowMapper
 {
     public function __construct(
-        private Tools $tools,
+        private DateFormatterInterface $dateFormatter,
     ) {
     }
 
@@ -44,7 +45,7 @@ final readonly class AdRowMapper
             'name'         => str_replace('|', '; ', $ad->name),
             'active'       => $ad->to === 0,
             'direct_link'  => $ad->show === 1,
-            'display_time' => $this->tools->displayDate($ad->time),
+            'display_time' => $this->dateFormatter->format($ad->time),
             'place'        => $this->placeLabels()[$ad->layout] ?? '',
             'show_for'     => $this->audienceLabels()[$ad->view] ?? '',
             'agreement'    => $this->agreement($ad),
@@ -60,7 +61,7 @@ final readonly class AdRowMapper
             $parts[] = $ad->count_link . ' ' . __('hits');
         }
         if ($ad->day > 0) {
-            $parts[] = $this->tools->timecount($ad->day * 86400);
+            $parts[] = DurationFormatter::format($ad->day * 86400);
         }
 
         return implode(', ', $parts);
@@ -78,7 +79,7 @@ final readonly class AdRowMapper
         if ($ad->day > 0) {
             $left = $ad->day * 86400 - (time() - $ad->time);
             if ($left > 0) {
-                $parts[] = $this->tools->timecount($left);
+                $parts[] = DurationFormatter::format($left);
             }
         }
 

@@ -12,8 +12,9 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Domain\Models;
 
-use Johncms\System\Legacy\Tools;
+use Johncms\Smilies\SmiliesRendererInterface;
 use Johncms\Users\User;
+use Johncms\Utils\DateFormatterInterface;
 
 /**
  * Trait MessageMutators
@@ -22,7 +23,7 @@ use Johncms\Users\User;
  *
  * @property User $current_user
  * @property User $user_data
- * @property Tools $tools
+ * @property DateFormatterInterface $dateFormatter
  */
 trait MessageMutators
 {
@@ -78,7 +79,7 @@ trait MessageMutators
      */
     public function getPostTimeAttribute(): string
     {
-        return $this->tools->displayDate($this->date);
+        return $this->dateFormatter->format($this->date);
     }
 
     /**
@@ -90,7 +91,7 @@ trait MessageMutators
     {
         $text = $this->purifier->purify($this->text);
         $text = $this->media->embedMedia($text);
-        $text = $this->tools->smilies($text, $this->rights ? 1 : 0);
+        $text = di(SmiliesRendererInterface::class)->render($text, (bool) $this->rights);
         return $text;
     }
 

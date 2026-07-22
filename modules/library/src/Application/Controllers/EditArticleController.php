@@ -10,7 +10,6 @@ use Johncms\Modules\Library\Domain\Models\LibraryCategory;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Modules\Library\Application\Services\Hashtags;
@@ -24,7 +23,6 @@ final readonly class EditArticleController
         private Render $render,
         private NavChain $navChain,
         private Request $request,
-        private Tools $tools,
         private User $currentUser,
         private LibrarySlugService $slugService,
     ) {
@@ -61,7 +59,7 @@ final readonly class EditArticleController
         $dirNav = new Tree($article->cat_id);
         $dirNav->processNavPanel();
         $dirNav->printNavPanel();
-        $this->navChain->add($this->tools->checkout($article->name), $article->url);
+        $this->navChain->add($article->name, $article->url);
         $this->navChain->add(__('Edit Article'));
 
         $this->render->addData([

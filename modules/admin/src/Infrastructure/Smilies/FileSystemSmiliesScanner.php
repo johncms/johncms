@@ -5,16 +5,11 @@ declare(strict_types=1);
 namespace Johncms\Modules\Admin\Infrastructure\Smilies;
 
 use Johncms\Modules\Admin\Domain\Services\SmiliesScannerInterface;
-use Johncms\System\Legacy\Tools;
+use Johncms\Utils\Transliterator;
 
 final class FileSystemSmiliesScanner implements SmiliesScannerInterface
 {
     private const ALLOWED_EXTENSIONS = ['gif', 'jpg', 'jpeg', 'png'];
-
-    public function __construct(
-        private readonly Tools $tools,
-    ) {
-    }
 
     public function scan(): array
     {
@@ -34,7 +29,7 @@ final class FileSystemSmiliesScanner implements SmiliesScannerInterface
         foreach ($this->images($base . 'admin' . DS . '*') as $path) {
             $name = pathinfo($path, PATHINFO_FILENAME);
             $url = $homeUrl . '/assets/emoticons/admin/' . basename($path);
-            $smilies['adm'][':' . $this->tools->trans($name) . ':'] = $this->img($url);
+            $smilies['adm'][':' . Transliterator::toCyrillic($name) . ':'] = $this->img($url);
             $smilies['adm'][':' . $name . ':'] = $this->img($url);
         }
 
@@ -42,7 +37,7 @@ final class FileSystemSmiliesScanner implements SmiliesScannerInterface
         foreach ($this->images($base . 'user' . DS . '*' . DS . '*') as $path) {
             $name = pathinfo($path, PATHINFO_FILENAME);
             $url = $homeUrl . '/assets/emoticons/user/' . basename(dirname($path)) . '/' . basename($path);
-            $smilies['usr'][':' . $this->tools->trans($name) . ':'] = $this->img($url);
+            $smilies['usr'][':' . Transliterator::toCyrillic($name) . ':'] = $this->img($url);
             $smilies['usr'][':' . $name . ':'] = $this->img($url);
         }
 

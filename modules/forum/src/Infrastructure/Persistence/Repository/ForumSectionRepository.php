@@ -95,4 +95,11 @@ final class ForumSectionRepository implements ForumSectionRepositoryInterface
             ->orderBy('id')
             ->get();
     }
+
+    public function getAllOrdered(): Collection
+    {
+        return ForumSection::query()
+            ->orderBy('sort')
+            ->get();
+    }
 }

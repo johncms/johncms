@@ -11,16 +11,15 @@ use Johncms\Modules\Forum\Application\UseCases\ViewForumTopicUseCase;
 use Johncms\NavChain;
 use Johncms\Security\Csrf;
 use Johncms\System\Http\Request;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
+use Johncms\Utils\ShortNumberFormatter;
 
 final readonly class ForumTopicController
 {
     public function __construct(
         private Render $render,
         private Request $request,
-        private Tools $tools,
         private User $currentUser,
         private NavChain $navChain,
         private ViewForumTopicUseCase $viewForumTopicUseCase,
@@ -99,7 +98,7 @@ final readonly class ForumTopicController
                 $result->viewData,
                 [
                     'pagination'   => $pagination->render(),
-                    'unread_count' => $this->tools->formatNumber($counters->forumUnreadCount()),
+                    'unread_count' => ShortNumberFormatter::format($counters->forumUnreadCount()),
                     'csrf_token'   => $this->csrf->getToken(),
                 ]
             )

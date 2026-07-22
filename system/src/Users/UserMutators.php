@@ -14,8 +14,8 @@ namespace Johncms\Users;
 
 use Carbon\Carbon;
 use Johncms\Security\HTMLPurifier;
+use Johncms\Smilies\SmiliesRendererInterface;
 use Johncms\System\i18n\Translator;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\Users\UserConfig;
 
 trait UserMutators
@@ -172,9 +172,7 @@ trait UserMutators
      */
     public function getDisplayPlaceAttribute(): string
     {
-        /** @var Tools $tools */
-        $tools = di(Tools::class);
-        return $tools->displayPlace($this->place);
+        return di(UserPlaceFormatterInterface::class)->format($this->place);
     }
 
     /**
@@ -184,11 +182,9 @@ trait UserMutators
      */
     public function getFormattedAboutAttribute(): string
     {
-        /** @var Tools $tools */
-        $tools = di(Tools::class);
         /** @var \HTMLPurifier $purifier */
         $purifier = di(HTMLPurifier::class);
-        return $tools->smilies($purifier->purify((string) $this->about));
+        return di(SmiliesRendererInterface::class)->render($purifier->purify((string) $this->about));
     }
 
     /**

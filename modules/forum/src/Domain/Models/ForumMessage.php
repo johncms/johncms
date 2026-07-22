@@ -20,8 +20,8 @@ use Johncms\Casts\Ip;
 use Johncms\Casts\TimeToDate;
 use Johncms\Media\MediaEmbed;
 use Johncms\Security\HTMLPurifier;
-use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
+use Johncms\Utils\DateFormatterInterface;
 use Simba77\EmbedMedia\Embed;
 
 /**
@@ -129,17 +129,14 @@ class ForumMessage extends Model
     protected \HTMLPurifier $purifier;
     protected Embed $media;
 
-    /**
-     * @var Tools
-     */
-    protected $tools;
+    protected DateFormatterInterface $dateFormatter;
 
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
         $this->purifier = di(HTMLPurifier::class);
         $this->current_user = di(User::class);
-        $this->tools = di(Tools::class);
+        $this->dateFormatter = di(DateFormatterInterface::class);
         $this->media = di(MediaEmbed::class);
     }
 

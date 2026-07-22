@@ -9,7 +9,6 @@ use Johncms\Modules\Profile\Application\Exceptions\KarmaVoteException;
 use Johncms\Modules\Profile\Application\Exceptions\ProfileNotFoundException;
 use Johncms\Modules\Profile\Domain\Repository\KarmaRepositoryInterface;
 use Johncms\Modules\Profile\Domain\Repository\ProfileUserRepositoryInterface;
-use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
 
 final readonly class GetVoteContextUseCase
@@ -17,7 +16,6 @@ final readonly class GetVoteContextUseCase
     public function __construct(
         private ProfileUserRepositoryInterface $profileUserRepository,
         private KarmaRepositoryInterface $karmaRepository,
-        private Tools $tools,
         private User $currentUser,
     ) {
     }
@@ -73,7 +71,7 @@ final readonly class GetVoteContextUseCase
 
         return new VoteContextDTO(
             targetId: $target->id,
-            targetName: $this->tools->checkout($target->name),
+            targetName: $target->name,
             availablePoints: $config['karma_points'] - $sum,
         );
     }

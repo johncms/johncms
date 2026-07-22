@@ -5,19 +5,21 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\UseCases;
 
 use Johncms\Modules\Forum\Application\DTO\PostMessageResultDTO;
+use Johncms\Modules\Forum\Application\Services\ForumTopicStatsRecalculator;
 use Johncms\Modules\Forum\Domain\Models\ForumMessage;
 use Johncms\Modules\Forum\Domain\Models\ForumTopic;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
 use Johncms\Notifications\Notification;
+use Johncms\Smilies\SmiliesRendererInterface;
 use Johncms\System\Http\Environment;
-use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
 
 final readonly class ReplyMessageUseCase
 {
     public function __construct(
         private ForumMessageRepositoryInterface $messageRepository,
-        private Tools $tools,
+        private ForumTopicStatsRecalculator $topicStatsRecalculator,
+        private SmiliesRendererInterface $smiliesRenderer,
         private Environment $environment,
         private User $currentUser,
         private Notification $notification,
@@ -49,7 +51,7 @@ final readonly class ReplyMessageUseCase
             ]
         );
 
-        $this->tools->recountForumTopic($topic->id);
+        $this->topicStatsRecalculator->recalculate($topic->id);
 
         $this->sendNotification($sourceMessage, $topic, (int) $message->id, $messageText);
 
@@ -75,7 +77,7 @@ final readonly class ReplyMessageUseCase
     {
         $previewMessage = strip_tags(trim($messageText));
         $previewMessage = strlen($previewMessage) > 200 ? mb_substr($previewMessage, 0, 200) . '...' : $previewMessage;
-        $previewMessage = $this->tools->smilies($previewMessage, ($this->currentUser->rights > 0));
+        $previewMessage = $this->smiliesRenderer->render($previewMessage, ($this->currentUser->rights > 0));
 
         $this->notification->create(
             [

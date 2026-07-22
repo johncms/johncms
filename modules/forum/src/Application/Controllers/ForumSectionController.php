@@ -10,15 +10,14 @@ use Johncms\Modules\Forum\Application\ForumUtils;
 use Johncms\Modules\Forum\Application\UseCases\ViewForumSectionUseCase;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
+use Johncms\Utils\ShortNumberFormatter;
 
 final readonly class ForumSectionController
 {
     public function __construct(
         private Render $render,
         private Request $request,
-        private Tools $tools,
         private NavChain $navChain,
         private ViewForumSectionUseCase $viewForumSectionUseCase,
         private PaginationFactory $paginationFactory,
@@ -63,9 +62,9 @@ final readonly class ForumSectionController
                 'online_g' => $result->onlineGuests,
             ],
             'files_count'  => config('forum')['settings']['file_counters']
-                ? $this->tools->formatNumber($result->filesCount)
+                ? ShortNumberFormatter::format($result->filesCount)
                 : 0,
-            'unread_count' => $this->tools->formatNumber($counters->forumUnreadCount()),
+            'unread_count' => ShortNumberFormatter::format($counters->forumUnreadCount()),
         ];
 
         if ($result->template === 'forum::topics') {

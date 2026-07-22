@@ -26,7 +26,7 @@ Rules:
 
 ## Pagination
 
-Use `Johncms\Http\Pagination` for all paginated lists in new and refactored code. **Do not use** the legacy fork `johncms/johncms-pagination` (Laravel `LengthAwarePaginator` / `->paginate()`) or `Tools::displayPagination` — both are being removed together with `system/src-legacy`.
+Use `Johncms\Http\Pagination` for all paginated lists in new and refactored code. **Do not use** the legacy fork `johncms/johncms-pagination` (Laravel `LengthAwarePaginator` / `->paginate()`) — it is being removed.
 
 Components:
 

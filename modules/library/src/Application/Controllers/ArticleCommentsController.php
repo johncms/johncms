@@ -11,7 +11,6 @@ use Johncms\Modules\Library\Application\Services\LibraryArticlePathService;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Modules\Library\Application\Services\Tree;
@@ -23,7 +22,6 @@ final readonly class ArticleCommentsController
         private Render $render,
         private NavChain $navChain,
         private Request $request,
-        private Tools $tools,
         private User $currentUser,
         private LibraryArticlePathService $articlePathService,
     ) {
@@ -60,11 +58,11 @@ final readonly class ArticleCommentsController
         $dir_nav->processNavPanel();
         $dir_nav->printNavPanel();
 
-        $articleName = $this->tools->checkout($article->name);
+        $articleName = $article->name;
         $shortName = mb_strlen($article->name) > 30
             ? mb_substr($article->name, 0, 30) . '...'
             : $article->name;
-        $documentTitle = $this->tools->checkout($shortName) . ' — ' . __('Comments') . ' — ' . __('Library');
+        $documentTitle = $shortName . ' — ' . __('Comments') . ' — ' . __('Library');
 
         $articleUrl = $this->articlePathService->getArticleUrlById($id) ?? '/library/';
         $this->navChain->add($articleName, $articleUrl);

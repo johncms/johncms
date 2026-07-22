@@ -45,7 +45,6 @@ Tech stack:
 
 * `modules/` — application modules
 * `system/src/` — primary application code
-* `system/src-legacy/` — legacy code targeted for gradual removal
 * `themes/` — admin and public templates
 * `assets/` — shared static assets
 * `config/` — configuration files
@@ -59,14 +58,6 @@ Tech stack:
 * Inject services and repositories via interfaces; repository contracts live in Domain as `*RepositoryInterface`.
 * Security: **escape on output, not on input** — never HTML-escape data when saving to DB (details in `.agents/escaping.md`).
 * Always start Eloquent queries with `Model::query()->...`, never `Model::where(...)` directly.
-
-## Legacy Code Rules
-
-Legacy code lives in `system/src-legacy`.
-
-* Do not introduce new features into legacy code.
-* Only modify legacy code when required for refactoring.
-* Move extracted logic into `system/src`.
 
 ## PHP Style Rules
 

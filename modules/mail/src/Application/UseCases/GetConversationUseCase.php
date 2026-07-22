@@ -9,19 +9,23 @@ use Johncms\Modules\Mail\Application\DTO\MessageItemDTO;
 use Johncms\Modules\Mail\Application\Exceptions\UserNotFoundException;
 use Johncms\Modules\Mail\Application\Services\MailFileService;
 use Johncms\Modules\Mail\Domain\Models\MailMessage;
+use Johncms\Modules\Mail\Domain\Repository\ContactRepositoryInterface;
 use Johncms\Modules\Mail\Domain\Repository\MailMessageRepositoryInterface;
-use Johncms\System\Legacy\Tools;
+use Johncms\Smilies\SmiliesRendererInterface;
 use Johncms\UserProperties;
 use Johncms\Users\User;
+use Johncms\Utils\DateFormatterInterface;
 use Simba77\EmbedMedia\Embed;
 
 final readonly class GetConversationUseCase
 {
     public function __construct(
         private MailMessageRepositoryInterface $mailMessageRepository,
+        private ContactRepositoryInterface $contactRepository,
         private MailFileService $mailFileService,
         private UserProperties $userProperties,
-        private Tools $tools,
+        private DateFormatterInterface $dateFormatter,
+        private SmiliesRendererInterface $smiliesRenderer,
         private \HTMLPurifier $purifier,
         private Embed $media,
         private User $currentUser,
@@ -46,7 +50,7 @@ final readonly class GetConversationUseCase
 
         $canWrite = empty($this->currentUser->ban['1'])
             && empty($this->currentUser->ban['3'])
-            && ! $this->tools->isIgnor($contactId);
+            && ! $this->contactRepository->isBlocked($contactId, $this->currentUser->id);
 
         return new ConversationResultDTO(
             items: $items,
@@ -88,7 +92,7 @@ final readonly class GetConversationUseCase
 
             $text = $this->purifier->purify($message->text);
             $text = $this->media->embedMedia($text);
-            $text = $this->tools->smilies($text, $authorRights >= 1 ? 1 : 0);
+            $text = $this->smiliesRenderer->render($text, $authorRights >= 1);
 
             $files = [];
             if ($message->file_name) {
@@ -106,7 +110,7 @@ final readonly class GetConversationUseCase
                 name: $author->name ?? '',
                 read: $message->read,
                 text: $text,
-                displayDate: $this->tools->displayDate($message->time),
+                displayDate: $this->dateFormatter->format($message->time),
                 userIsOnline: $userData['user_is_online'] ?? false,
                 userProfileLink: $userData['user_profile_link'] ?? '',
                 userRightsName: $userData['user_rights_name'] ?? '',

@@ -31,7 +31,6 @@
             <directory name="modules/registration"/>
             <directory name="modules/rss"/>
 
-            <directory name="system/src-legacy"/>
             <directory name="vendor"/>
         </ignoreFiles>
     </projectFiles>

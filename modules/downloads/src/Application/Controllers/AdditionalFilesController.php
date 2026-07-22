@@ -14,8 +14,8 @@ use Johncms\Modules\Downloads\Domain\Models\DownloadMoreFile;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
 use Johncms\System\Http\Session;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
+use Johncms\Utils\DateFormatterInterface;
 
 final readonly class AdditionalFilesController
 {
@@ -32,7 +32,7 @@ final readonly class AdditionalFilesController
         private Request $request,
         private Session $session,
         private NavChain $navChain,
-        private Tools $tools,
+        private DateFormatterInterface $dateFormatter,
         private CategoryNavService $categoryNavService,
         private DownloadFilePathService $filePathService,
     ) {
@@ -88,7 +88,7 @@ final readonly class AdditionalFilesController
                 'id'           => $more->id,
                 'name'         => $more->name,
                 'rus_name'     => htmlspecialchars($more->rus_name),
-                'display_date' => $this->tools->displayDate($more->time),
+                'display_date' => $this->dateFormatter->format($more->time),
                 'display_size' => FilePresenter::formatFileSize($more->size),
                 'edit_url'     => $baseUrl . '?edit=' . $more->id,
                 'delete_url'   => $baseUrl . '?del=' . $more->id,

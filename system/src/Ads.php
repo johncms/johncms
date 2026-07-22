@@ -12,8 +12,8 @@ declare(strict_types=1);
 
 namespace Johncms;
 
-use Johncms\System\Legacy\Tools;
 use Johncms\System\Users\User;
+use Johncms\Utils\PlainTextFormatter;
 use PDO;
 
 class Ads
@@ -21,19 +21,15 @@ class Ads
     /** @var PDO */
     private $db;
 
-    /** @var Tools */
-    private $tools;
-
     /** @var User */
     private $user;
 
     /** @var null|array */
     private $ads;
 
-    public function __construct(PDO $pdo, Tools $tools, User $user)
+    public function __construct(PDO $pdo, User $user)
     {
         $this->db = $pdo;
-        $this->tools = $tools;
         $this->user = $user;
     }
 
@@ -72,7 +68,7 @@ class Ads
             }
 
             $place = $this->getPlace($res);
-            $ads[$place][] = '<a href="' . ($res['show'] ? $this->tools->checkout($res['link']) : '/redirect/?id=' . $res['id']) . '">' . $name . '</a><br>';
+            $ads[$place][] = '<a href="' . ($res['show'] ? PlainTextFormatter::escape($res['link']) : '/redirect/?id=' . $res['id']) . '">' . $name . '</a><br>';
 
             if (
                 ($res['count_link'] !== 0 && $res['count'] >= $res['count_link']) ||

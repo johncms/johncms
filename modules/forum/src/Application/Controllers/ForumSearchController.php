@@ -12,7 +12,6 @@ use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\ViewForumSearchUseCase;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 
@@ -23,7 +22,6 @@ final readonly class ForumSearchController
         private Render $render,
         private Request $request,
         private NavChain $navChain,
-        private Tools $tools,
         private User $currentUser,
         private ForumErrorRenderer $forumErrorRenderer,
         private ViewForumSearchUseCase $viewForumSearchUseCase,
@@ -81,7 +79,7 @@ final readonly class ForumSearchController
             'forum::forum_search',
             [
                 'pagination'        => $pagination->render(),
-                'query'             => $this->tools->checkout($result->query),
+                'query'             => $result->query,
                 'search_t'          => $result->searchInTopicNames,
                 'results'           => $result->results,
                 'total'             => $result->total,

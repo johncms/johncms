@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Help\Application\UseCases;
 
-use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
+use Johncms\Utils\Transliterator;
 
 final readonly class GetAdminSmiliesUseCase
 {
@@ -13,7 +13,6 @@ final readonly class GetAdminSmiliesUseCase
 
     public function __construct(
         private User $currentUser,
-        private Tools $tools,
     ) {
     }
 
@@ -40,7 +39,7 @@ final readonly class GetAdminSmiliesUseCase
             $items[] = [
                 'can_add'   => $this->currentUser->isValid() && ! in_array($smile, $userSmilies),
                 'lat_smile' => $smile,
-                'smile'     => $this->tools->trans($smile),
+                'smile'     => Transliterator::toCyrillic($smile),
                 'picture'   => '/assets/emoticons/admin/' . $file,
             ];
         }

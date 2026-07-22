@@ -7,15 +7,15 @@ namespace Johncms\Modules\Admin\Application\Services;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Domain\Models\ForumSection;
 use Johncms\Modules\Forum\Domain\Models\ForumTopic;
-use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
+use Johncms\Utils\DateFormatterInterface;
 
 final readonly class HiddenTopicRowMapper
 {
     private const BASE = '/admin/forum/hidden-topics';
 
     public function __construct(
-        private Tools $tools,
+        private DateFormatterInterface $dateFormatter,
         private ForumTopicPathService $topicPath,
         private User $currentUser,
     ) {
@@ -59,7 +59,7 @@ final readonly class HiddenTopicRowMapper
             'id'                      => $topic->user_id,
             'user_name'               => $topic->user_name,
             'user_profile_link'       => $this->profileLink($topic->user_id),
-            'display_date'            => $this->tools->displayDate($topic->mod_last_post_date),
+            'display_date'            => $this->dateFormatter->format($topic->mod_last_post_date),
             'topic_name'              => $topic->name,
             'topic_url'               => $this->topicPath->getTopicUrlById((int) $topic->id) ?? '/forum/',
             'path'                    => $path,

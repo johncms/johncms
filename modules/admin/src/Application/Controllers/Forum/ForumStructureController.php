@@ -9,10 +9,10 @@ use Johncms\Modules\Admin\Application\UseCases\AddForumSectionUseCase;
 use Johncms\Modules\Admin\Application\UseCases\DeleteForumSectionUseCase;
 use Johncms\Modules\Admin\Application\UseCases\EditForumSectionUseCase;
 use Johncms\Modules\Admin\Domain\Repository\ForumStructureRepositoryInterface;
+use Johncms\Modules\Forum\Application\Services\ForumSectionTreeService;
 use Johncms\Modules\Forum\Domain\Models\ForumSection;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
@@ -26,7 +26,7 @@ final readonly class ForumStructureController
         private Render $render,
         private Request $request,
         private NavChain $navChain,
-        private Tools $tools,
+        private ForumSectionTreeService $sectionTree,
         private User $currentUser,
         private ForumStructureRepositoryInterface $repository,
         private AddForumSectionUseCase $addSection,
@@ -278,9 +278,7 @@ final readonly class ForumStructureController
         $this->render->addData($this->menu($title));
 
         $categories = [['id' => 0, 'name' => ' - ', 'selected' => empty($section->parent)]];
-        $tree = [];
-        $this->tools->getSectionsTree($tree);
-        foreach ($tree as $item) {
+        foreach ($this->sectionTree->getFlatTree() as $item) {
             $categories[] = [
                 'id'       => $item['id'],
                 'name'     => $item['name'],

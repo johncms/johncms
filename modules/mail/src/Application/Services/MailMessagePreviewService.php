@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Mail\Application\Services;
 
-use Johncms\System\Legacy\Tools;
+use Johncms\Smilies\SmiliesRendererInterface;
 use Simba77\EmbedMedia\Embed;
 
 /**
@@ -15,7 +15,7 @@ final readonly class MailMessagePreviewService
     private const PREVIEW_LIMIT = 500;
 
     public function __construct(
-        private Tools $tools,
+        private SmiliesRendererInterface $smiliesRenderer,
         private \HTMLPurifier $purifier,
         private Embed $media,
     ) {
@@ -38,7 +38,7 @@ final readonly class MailMessagePreviewService
                 )
             );
             $plain = mb_substr($plain, 0, self::PREVIEW_LIMIT);
-            $preview = $this->tools->smilies(htmlspecialchars($plain, ENT_QUOTES, 'UTF-8'), $smileMode);
+            $preview = $this->smiliesRenderer->render(htmlspecialchars($plain, ENT_QUOTES, 'UTF-8'), $smileMode);
 
             return $preview . '...<a href="/mail/write/' . $contactId . '">' . __('Continue') . ' &gt;&gt;</a>';
         }
@@ -46,6 +46,6 @@ final readonly class MailMessagePreviewService
         $html = $this->purifier->purify($rawText);
         $html = $this->media->embedMedia($html);
 
-        return $this->tools->smilies($html, $smileMode);
+        return $this->smiliesRenderer->render($html, $smileMode);
     }
 }

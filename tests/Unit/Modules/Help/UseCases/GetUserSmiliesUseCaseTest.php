@@ -7,7 +7,6 @@ namespace Tests\Unit\Modules\Help\UseCases;
 use Gettext\Translator;
 use Gettext\TranslatorFunctions;
 use Johncms\Modules\Help\Application\UseCases\GetUserSmiliesUseCase;
-use Johncms\System\Legacy\Tools;
 use PHPUnit\Framework\TestCase;
 use Tests\Support\UserFactory;
 
@@ -31,6 +30,6 @@ final class GetUserSmiliesUseCaseTest extends TestCase
 
     private function makeUseCase(): GetUserSmiliesUseCase
     {
-        return new GetUserSmiliesUseCase(UserFactory::make(), $this->createMock(Tools::class));
+        return new GetUserSmiliesUseCase(UserFactory::make());
     }
 }

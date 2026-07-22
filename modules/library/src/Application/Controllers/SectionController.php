@@ -11,7 +11,6 @@ use Johncms\Modules\Library\Application\Services\LibraryCategoryPathService;
 use Johncms\Modules\Library\Domain\Models\LibraryCategory;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Modules\Library\Application\Services\Hashtags;
@@ -19,13 +18,15 @@ use Johncms\Modules\Library\Application\Services\Rating;
 use Johncms\Modules\Library\Application\Services\Tree;
 use Johncms\Modules\Library\Application\Services\Utils;
 use Johncms\Modules\Library\Application\Services\ViewHelper;
+use Johncms\Utils\DateFormatterInterface;
+use Johncms\Utils\PlainTextFormatter;
 
 final readonly class SectionController
 {
     public function __construct(
         private Render $render,
         private NavChain $navChain,
-        private Tools $tools,
+        private DateFormatterInterface $dateFormatter,
         private User $currentUser,
         private LibraryCategoryPathService $categoryPathService,
         private PaginationFactory $paginationFactory,
@@ -94,8 +95,8 @@ final readonly class SectionController
             $list[] = [
                 'id'                    => $section->id,
                 'url'                   => $section->url,
-                'name'                  => $this->tools->checkout($section->name),
-                'description'           => $section->description ? $this->tools->checkout($section->description) : null,
+                'name'                  => $section->name,
+                'description'           => $section->description,
                 'libCounter'            => Utils::libCounter($section->id, $section->dir),
                 'sectionListAdminPanel' => ViewHelper::sectionsListAdminPanel($id, $section->id, $i, $total),
             ];
@@ -143,16 +144,16 @@ final readonly class SectionController
         $list = [];
         foreach ($articles as $article) {
             $uploader = $article->uploader_id
-                ? '<a href="' . config('johncms')['homeurl'] . '/profile/' . $article->uploader_id . '">' . $this->tools->checkout($article->uploader) . '</a>'
-                : $this->tools->checkout($article->uploader);
+                ? '<a href="' . config('johncms')['homeurl'] . '/profile/' . $article->uploader_id . '">' . PlainTextFormatter::escape($article->uploader) . '</a>'
+                : PlainTextFormatter::escape($article->uploader);
 
             $rate = new Rating($article->id);
             $list[] = [
                 'id'         => $article->id,
                 'url'        => $article->url,
                 'name'       => $article->name,
-                'announce'   => $this->tools->checkout($article->announce),
-                'who'        => $uploader . '&nbsp;(' . $this->tools->displayDate($article->time) . ')',
+                'announce'   => $article->announce,
+                'who'        => $uploader . '&nbsp;(' . $this->dateFormatter->format($article->time) . ')',
                 'ratingView' => $rate->viewRate(1),
                 'tags'       => (new Hashtags($article->id))->getAllStatTags(1) ?: null,
             ];

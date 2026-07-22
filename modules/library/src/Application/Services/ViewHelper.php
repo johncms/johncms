@@ -15,7 +15,6 @@ namespace Johncms\Modules\Library\Application\Services;
 use Johncms\Modules\Library\Application\Services\LibraryArticlePathService;
 use Johncms\Modules\Library\Application\Services\LibraryCategoryPathService;
 use Johncms\NavChain;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 
 class ViewHelper
@@ -40,12 +39,11 @@ class ViewHelper
 
     public static function printNavPanel(array $data): void
     {
-        $tools       = di(Tools::class);
         $nav_chain   = di(NavChain::class);
         $pathService = di(LibraryCategoryPathService::class);
         foreach ($data as $value) {
             $url = $pathService->getCategoryUrlById($value['id']) ?? '/library/';
-            $nav_chain->add($tools->checkout($value['name']), $url);
+            $nav_chain->add($value['name'], $url);
         }
     }
 

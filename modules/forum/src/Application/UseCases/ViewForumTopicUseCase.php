@@ -18,8 +18,8 @@ use Johncms\Modules\Forum\Domain\Repository\ForumUnreadRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumVoteRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumWhoRepositoryInterface;
 use Johncms\Notifications\Notification;
-use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
+use Johncms\Utils\ShortNumberFormatter;
 
 final readonly class ViewForumTopicUseCase
 {
@@ -31,7 +31,6 @@ final readonly class ViewForumTopicUseCase
         private ForumWhoRepositoryInterface $whoRepository,
         private ForumSectionPathService $sectionPathService,
         private ForumTopicPathService $topicPathService,
-        private Tools $tools,
         private User $currentUser,
     ) {
     }
@@ -227,7 +226,7 @@ final readonly class ViewForumTopicUseCase
                 'online'           => $online,
                 'total'            => $total,
                 'files_count'      => $forumSettings['file_counters']
-                    ? $this->tools->formatNumber((int) ($topic->files_count ?? 0))
+                    ? ShortNumberFormatter::format((int) ($topic->files_count ?? 0))
                     : 0,
                 'filter_by_author' => $isFilterEnabled,
                 'poll_data'        => $pollData,

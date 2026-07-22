@@ -16,8 +16,9 @@ use Johncms\Modules\Forum\Application\UseCases\GetNewTopicContextUseCase;
 use Johncms\Modules\Forum\Domain\Models\ForumMessage;
 use Johncms\Modules\Forum\Domain\Models\ForumTopic;
 use Johncms\NavChain;
+use Johncms\Security\AntifloodCheckerInterface;
+use Johncms\Smilies\SmiliesRendererInterface;
 use Johncms\System\Http\Request;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\Utility\EditorContentNormalizer;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
@@ -30,7 +31,8 @@ final readonly class NewTopicController
         private ControllerContext $controllerContext,
         private Render $render,
         private Request $request,
-        private Tools $tools,
+        private AntifloodCheckerInterface $antifloodChecker,
+        private SmiliesRendererInterface $smiliesRenderer,
         private EditorContentNormalizer $editorContentNormalizer,
         private \HTMLPurifier $purifier,
         private Embed $embed,
@@ -64,7 +66,7 @@ final readonly class NewTopicController
             pageNotFound();
         }
 
-        $flood = $this->tools->antiflood();
+        $flood = $this->antifloodChecker->getRemainingSeconds();
         if ($flood) {
             return $this->render->render(
                 'system::pages/result',
@@ -147,7 +149,7 @@ final readonly class NewTopicController
 
         $msgPreview = $this->purifier->purify((string) $data['message']);
         $msgPreview = $this->embed->embedMedia($msgPreview);
-        $msgPreview = $this->tools->smilies($msgPreview, $this->currentUser->rights > 0);
+        $msgPreview = $this->smiliesRenderer->render($msgPreview, $this->currentUser->rights > 0);
 
         ForumUtils::buildBreadcrumbs($section->parent, $section->name, $section->url);
         $this->navChain->add(__('New Topic'));
@@ -166,7 +168,7 @@ final readonly class NewTopicController
                 'id'                => $section->id,
                 'th'                => $data['name'],
                 'add_files'         => ($data['add_files'] === 1),
-                'msg'               => $this->tools->checkout((string) $data['message'], 0, 0),
+                'msg'               => (string) $data['message'],
                 'back_url'          => $section->url,
                 'show_post_preview' => ! empty($data['name']) && ! empty($data['message']) && ! $this->request->getPost('submit'),
                 'preview_message'   => $msgPreview,

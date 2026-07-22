@@ -9,8 +9,9 @@ use Johncms\Modules\Forum\Application\DTO\UnreadTopicsResultDTO;
 use Johncms\Modules\Forum\Application\Services\ForumSectionPathService;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
-use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
+use Johncms\Utils\DateFormatterInterface;
+use Johncms\Utils\ShortNumberFormatter;
 
 final readonly class ViewUnreadTopicsUseCase
 {
@@ -18,7 +19,7 @@ final readonly class ViewUnreadTopicsUseCase
         private ForumTopicRepositoryInterface $topicRepository,
         private ForumSectionPathService $sectionPathService,
         private ForumTopicPathService $topicPathService,
-        private Tools $tools,
+        private DateFormatterInterface $dateFormatter,
         private User $currentUser,
     ) {
     }
@@ -54,14 +55,14 @@ final readonly class ViewUnreadTopicsUseCase
         foreach ($rows as $row) {
             if ($this->currentUser->rights >= 7) {
                 $pagesCount = (int) ceil((int) $row['mod_post_count'] / $this->currentUser->config->kmess);
-                $row['show_posts_count'] = $this->tools->formatNumber((int) $row['mod_post_count']);
+                $row['show_posts_count'] = ShortNumberFormatter::format((int) $row['mod_post_count']);
                 $row['show_last_author'] = $row['mod_last_post_author_name'];
-                $row['show_last_post_date'] = $this->tools->displayDate((int) $row['mod_last_post_date']);
+                $row['show_last_post_date'] = $this->dateFormatter->format((int) $row['mod_last_post_date']);
             } else {
                 $pagesCount = (int) ceil((int) $row['post_count'] / $this->currentUser->config->kmess);
-                $row['show_posts_count'] = $this->tools->formatNumber((int) $row['post_count']);
+                $row['show_posts_count'] = ShortNumberFormatter::format((int) $row['post_count']);
                 $row['show_last_author'] = $row['last_post_author_name'];
-                $row['show_last_post_date'] = $this->tools->displayDate((int) $row['last_post_date']);
+                $row['show_last_post_date'] = $this->dateFormatter->format((int) $row['last_post_date']);
             }
 
             $row['has_icons'] = ! empty($row['pinned']) || ! empty($row['has_poll']) || ! empty($row['closed']) || ! empty($row['deleted']);

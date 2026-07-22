@@ -7,7 +7,9 @@ namespace Johncms\Modules\Album\Application\Services;
 use Johncms\Modules\Album\Application\DTO\PhotoDetailDTO;
 use Johncms\Modules\Album\Application\DTO\PhotoViewDTO;
 use Johncms\Modules\Album\Domain\Models\AlbumPhoto;
-use Johncms\System\Legacy\Tools;
+use Johncms\Smilies\SmiliesRendererInterface;
+use Johncms\Utils\DateFormatterInterface;
+use Johncms\Utils\PlainTextFormatter;
 
 /**
  * Builds presentation data for album photos (formerly the Albums\Photo accessors).
@@ -17,7 +19,8 @@ final readonly class PhotoPresenter
     private const PREVIEW_TEXT_LIMIT = 100;
 
     public function __construct(
-        private Tools $tools,
+        private DateFormatterInterface $dateFormatter,
+        private SmiliesRendererInterface $smiliesRenderer,
     ) {
     }
 
@@ -58,8 +61,8 @@ final readonly class PhotoPresenter
             albumName: $photo->album->name ?? '',
             picture: $this->picture($photo->user_id, $photo->img_name),
             previewPicture: $this->picture($photo->user_id, $photo->tmb_name),
-            formattedDescription: $this->tools->smilies($this->tools->checkout($photo->description, 1)),
-            displayDate: $this->tools->displayDate($photo->time),
+            formattedDescription: $this->smiliesRenderer->render(PlainTextFormatter::toHtml((string) $photo->description)),
+            displayDate: $this->dateFormatter->format($photo->time),
             views: $photo->views,
             downloads: $photo->downloads,
             rating: $photo->rating,

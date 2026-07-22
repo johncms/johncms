@@ -1,7 +1,6 @@
 <?php
 /**
  * @var string $locale
- * @var Johncms\System\Legacy\Tools $tools
  * @var Johncms\System\Users\User $user
  * @var Johncms\Ads $ads
  */
@@ -42,7 +41,7 @@ $themeIconSprite = $this->asset('icons/sprite.svg', true);
                 </svg>
                 <span class="flex-grow-1"><?= d__('system', 'News archive') ?></span>
                 <?php if ($news_counters['new'] > 0): ?>
-                    <span class="badge rounded-pill bg-danger">+ <?= $tools->formatNumber($news_counters['new']) ?></span>
+                    <span class="badge rounded-pill bg-danger">+ <?= $this->formatNumber($news_counters['new']) ?></span>
                 <?php endif ?>
             </a>
         </li>
@@ -54,7 +53,7 @@ $themeIconSprite = $this->asset('icons/sprite.svg', true);
                     </svg>
                     <span class="flex-grow-1"><?= d__('system', 'Forum') ?></span>
                     <?php if ($forum_counters['new_messages'] > 0): ?>
-                        <span class="badge rounded-pill bg-danger">+ <?= $tools->formatNumber($forum_counters['new_messages']) ?></span>
+                        <span class="badge rounded-pill bg-danger">+ <?= $this->formatNumber($forum_counters['new_messages']) ?></span>
                     <?php endif; ?>
                 </a>
             </li>
@@ -67,7 +66,7 @@ $themeIconSprite = $this->asset('icons/sprite.svg', true);
                     </svg>
                     <span class="flex-grow-1"><?= d__('system', 'Guestbook') ?></span>
                     <?php if ($guestbook_counters['guestbook'] > 0): ?>
-                        <span class="badge rounded-pill bg-danger">+ <?= $tools->formatNumber($guestbook_counters['guestbook']) ?></span>
+                        <span class="badge rounded-pill bg-danger">+ <?= $this->formatNumber($guestbook_counters['guestbook']) ?></span>
                     <?php endif ?>
                 </a>
             </li>
@@ -80,7 +79,7 @@ $themeIconSprite = $this->asset('icons/sprite.svg', true);
                     </svg>
                     <span class="flex-grow-1"><?= d__('system', 'Downloads') ?></span>
                     <?php if ($downloads_counters['new'] > 0): ?>
-                        <span class="badge rounded-pill bg-danger">+ <?= $tools->formatNumber($downloads_counters['new']) ?></span>
+                        <span class="badge rounded-pill bg-danger">+ <?= $this->formatNumber($downloads_counters['new']) ?></span>
                     <?php endif ?>
                 </a>
             </li>
@@ -93,7 +92,7 @@ $themeIconSprite = $this->asset('icons/sprite.svg', true);
                     </svg>
                     <span class="flex-grow-1"><?= d__('system', 'Library') ?></span>
                     <?php if ($library_counters['new'] > 0): ?>
-                        <span class="badge rounded-pill bg-danger">+ <?= $tools->formatNumber($library_counters['new']) ?></span>
+                        <span class="badge rounded-pill bg-danger">+ <?= $this->formatNumber($library_counters['new']) ?></span>
                     <?php endif ?>
                 </a>
             </li>
@@ -105,7 +104,7 @@ $themeIconSprite = $this->asset('icons/sprite.svg', true);
                 </svg>
                 <span class="flex-grow-1"><?= d__('system', 'Users') ?></span>
                 <?php if ($users_counters['new'] > 0): ?>
-                    <span class="badge rounded-pill bg-danger">+ <?= $tools->formatNumber($users_counters['new']) ?></span>
+                    <span class="badge rounded-pill bg-danger">+ <?= $this->formatNumber($users_counters['new']) ?></span>
                 <?php endif ?>
             </a>
         </li>
@@ -116,7 +115,7 @@ $themeIconSprite = $this->asset('icons/sprite.svg', true);
                 </svg>
                 <span class="flex-grow-1"><?= d__('system', 'Photo Albums') ?></span>
                 <?php if ($album_counters['new'] > 0): ?>
-                    <span class="badge rounded-pill bg-danger">+ <?= $tools->formatNumber($album_counters['new']) ?></span>
+                    <span class="badge rounded-pill bg-danger">+ <?= $this->formatNumber($album_counters['new']) ?></span>
                 <?php endif ?>
             </a>
         </li>
@@ -156,7 +155,7 @@ $themeIconSprite = $this->asset('icons/sprite.svg', true);
                     <span class="flex-grow-1 text-danger"><?= d__('system', 'Admin Chat') ?></span>
                     <?php if ($guestbook_counters['admin_club'] > 0): ?>
                         <span class="badge rounded-pill bg-danger">
-                                <?= $tools->formatNumber($guestbook_counters['admin_club']) ?>
+                                <?= $this->formatNumber($guestbook_counters['admin_club']) ?>
                             </span>
                     <?php endif ?>
                 </a>

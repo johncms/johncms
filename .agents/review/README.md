@@ -34,7 +34,7 @@ code are not findings — mention them at most as a one-line note.
 
 | Reviewer | Checklist | Run when the diff touches |
 | --- | --- | --- |
-| Architecture | `.agents/review/architecture.md` | any PHP under `modules/`, `system/src/`, `system/src-legacy/` |
+| Architecture | `.agents/review/architecture.md` | any PHP under `modules/`, `system/src/` |
 | Security | `.agents/review/security.md` | any PHP, `.phtml`, or template file |
 | PHP quality | `.agents/review/php-quality.md` | any PHP file |
 | Localization | `.agents/review/localization.md` | `*.po`, `*.pot`, `*.lng.php`, `translate.xml*`, `crowdin.yml`, or new/changed `__()` / `d__()` / `n__()` / `dn__()` strings |

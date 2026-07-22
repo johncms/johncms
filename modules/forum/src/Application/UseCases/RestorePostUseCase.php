@@ -5,17 +5,17 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\UseCases;
 
 use Johncms\Modules\Forum\Application\DTO\EditPostContextDTO;
+use Johncms\Modules\Forum\Application\Services\ForumTopicStatsRecalculator;
 use Johncms\Modules\Forum\Domain\Repository\ForumFileRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
-use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
 
 final readonly class RestorePostUseCase
 {
     public function __construct(
         private ForumMessageRepositoryInterface $messageRepository,
+        private ForumTopicStatsRecalculator $topicStatsRecalculator,
         private ForumFileRepositoryInterface $fileRepository,
-        private Tools $tools,
         private User $currentUser,
     ) {
     }
@@ -31,6 +31,6 @@ final readonly class RestorePostUseCase
 
         $this->messageRepository->restoreById($message->id, $this->currentUser->name);
         $this->fileRepository->restoreByPostId($message->id);
-        $this->tools->recountForumTopic($message->topic_id);
+        $this->topicStatsRecalculator->recalculate($message->topic_id);
     }
 }

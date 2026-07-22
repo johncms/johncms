@@ -10,20 +10,21 @@ use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Library\Application\Services\LibraryArticlePathService;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Modules\Library\Application\Services\ArticleTextRenderer;
 use Johncms\Modules\Library\Application\Services\Hashtags;
 use Johncms\Modules\Library\Application\Services\Rating;
 use Johncms\Modules\Library\Application\Services\Tree;
+use Johncms\Utils\DateFormatterInterface;
+use Johncms\Utils\PlainTextFormatter;
 
 final readonly class ArticleController
 {
     public function __construct(
         private Render $render,
         private NavChain $navChain,
-        private Tools $tools,
+        private DateFormatterInterface $dateFormatter,
         private User $currentUser,
         private LibraryArticlePathService $articlePathService,
         private PaginationFactory $paginationFactory,
@@ -77,9 +78,9 @@ final readonly class ArticleController
         $dirNav = new Tree($article->cat_id);
         $dirNav->processNavPanel();
         $dirNav->printNavPanel();
-        $this->navChain->add($this->tools->checkout($article->name));
+        $this->navChain->add($article->name);
 
-        $pageTitle = $this->tools->checkout($article->name);
+        $pageTitle = $article->name;
         $meta      = new PageMeta($pageTitle . ' — ' . __('Library'), $page);
         $this->render->addData([
             'title'      => $meta->title,
@@ -100,9 +101,9 @@ final readonly class ArticleController
             $ratingView = $rate->viewRate(1);
 
             $uploader = $article->uploader_id
-                ? '<a href="' . config('johncms')['homeurl'] . '/profile/' . $article->uploader_id . '">' . $this->tools->checkout($article->uploader) . '</a>'
-                : $this->tools->checkout($article->uploader);
-            $who = $uploader . ' (' . $this->tools->displayDate($article->time) . ')';
+                ? '<a href="' . config('johncms')['homeurl'] . '/profile/' . $article->uploader_id . '">' . PlainTextFormatter::escape($article->uploader) . '</a>'
+                : PlainTextFormatter::escape($article->uploader);
+            $who = $uploader . ' (' . $this->dateFormatter->format($article->time) . ')';
 
             $cover = file_exists(UPLOAD_PATH . 'library/images/big/' . $id . '.png');
         }

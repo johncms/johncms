@@ -9,15 +9,16 @@ use Johncms\Modules\Profile\Application\DTO\VoteKarmaCommand;
 use Johncms\Modules\Profile\Domain\Repository\KarmaRepositoryInterface;
 use Johncms\Modules\Profile\Domain\Repository\ProfileUserRepositoryInterface;
 use Johncms\Notifications\Notification;
-use Johncms\System\Legacy\Tools;
+use Johncms\Smilies\SmiliesRendererInterface;
 use Johncms\Users\User;
+use Johncms\Utils\PlainTextFormatter;
 
 final readonly class VoteKarmaUseCase
 {
     public function __construct(
         private ProfileUserRepositoryInterface $profileUserRepository,
         private KarmaRepositoryInterface $karmaRepository,
-        private Tools $tools,
+        private SmiliesRendererInterface $smiliesRenderer,
         private User $currentUser,
     ) {
     }
@@ -53,7 +54,7 @@ final readonly class VoteKarmaUseCase
                     'user_name'   => htmlspecialchars($this->currentUser->name),
                     'karma_url'   => '/profile/' . $context->targetId . '/karma?type=2',
                     'vote_points' => ($type ? '+' : '-') . $points,
-                    'message'     => $this->tools->smilies($this->tools->checkout($text)),
+                    'message'     => $this->smiliesRenderer->render(PlainTextFormatter::escape($text)),
                 ],
             ]
         );

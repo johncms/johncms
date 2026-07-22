@@ -16,8 +16,8 @@ use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Domain\Models\ForumFile;
 use Johncms\Modules\Forum\Domain\Models\ForumMessage;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
-use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
+use Johncms\Utils\DateFormatterInterface;
 
 final readonly class ViewPostUseCase
 {
@@ -25,7 +25,7 @@ final readonly class ViewPostUseCase
         private ForumMessageRepositoryInterface $messageRepository,
         private ForumTopicPathService $topicPathService,
         private User $currentUser,
-        private Tools $tools,
+        private DateFormatterInterface $dateFormatter,
     ) {
     }
 
@@ -61,7 +61,7 @@ final readonly class ViewPostUseCase
             $editTime = (int) $message->getRawOriginal('edit_time');
             $editInfo = new PostEditInfoDTO(
                 editorName: $message->editor_name,
-                editedAt: $editTime ? $this->tools->displayDate($editTime) : '',
+                editedAt: $editTime ? $this->dateFormatter->format($editTime) : '',
                 editCount: (int) $message->edit_count
             );
         }
@@ -77,7 +77,7 @@ final readonly class ViewPostUseCase
             id: $message->id,
             isDeleted: (bool) $message->deleted,
             body: $message->post_text,
-            createdAt: $this->tools->displayDate((int) $message->date),
+            createdAt: $this->dateFormatter->format((int) $message->date),
             author: $author,
             editInfo: $editInfo,
             files: $files,

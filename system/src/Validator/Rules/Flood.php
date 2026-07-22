@@ -10,7 +10,7 @@
 
 namespace Johncms\Validator\Rules;
 
-use Johncms\System\Legacy\Tools;
+use Johncms\Security\AntifloodCheckerInterface;
 use Laminas\Validator\AbstractValidator;
 
 class Flood extends AbstractValidator
@@ -26,10 +26,8 @@ class Flood extends AbstractValidator
         $this->setValue($value);
         $isValid = true;
 
-        /** @var Tools $tools */
-        $tools = di(Tools::class);
-        $flood_check = $tools->antiflood();
-        if ($flood_check) {
+        $flood_check = di(AntifloodCheckerInterface::class)->getRemainingSeconds();
+        if ($flood_check > 0) {
             $this->error(self::FLOOD, $flood_check);
             $isValid = false;
         }

@@ -24,7 +24,7 @@ $this->layout('system::layout/default');
 ?>
 
 <?php if ($show_post_preview): ?>
-    <h3><?= $th ?></h3>
+    <h3><?= $this->e($th) ?></h3>
     <div class="new_post-item mb-4">
         <div class="new_post-header d-flex justify-content-between">
             <div class="post-user">
@@ -47,7 +47,7 @@ $this->layout('system::layout/default');
             <div class="flex-grow-1 post-user d-flex flex-wrap overflow-hidden d-flex align-items-center">
                 <div class="w-100">
                     <div class="user-name d-inline me-2"><?= $user->name ?></div>
-                    <div class="post-meta d-inline me-2"><?= $tools->displayDate(time()) ?></div>
+                    <div class="post-meta d-inline me-2"><?= $this->displayDate(time()) ?></div>
                 </div>
                 <?php if (! empty($user->status)): ?>
                     <div class="overflow-hidden text-nowrap text-dark-brown overflow-ellipsis small">
@@ -69,7 +69,7 @@ $this->layout('system::layout/default');
     <?php endif ?>
     <div class="form-group">
         <label for="th"><?= __('Title') ?></label>
-        <input type="text" class="form-control <?= ! empty($errors['name']) ? 'is-invalid' : '' ?>" id="th" placeholder="" name="th" value="<?= $th ?>" maxlength="200" required>
+        <input type="text" class="form-control <?= ! empty($errors['name']) ? 'is-invalid' : '' ?>" id="th" placeholder="" name="th" value="<?= $this->e($th) ?>" maxlength="200" required>
         <?php if (! empty($errors['name'])): ?>
             <div class="invalid-feedback d-block"><?= implode(', ', $errors['name']) ?></div>
         <?php endif ?>

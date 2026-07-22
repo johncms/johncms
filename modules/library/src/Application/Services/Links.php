@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Library\Application\Services;
 
-use Johncms\System\Legacy\Tools;
+use Johncms\Utils\PlainTextFormatter;
 
 class Links
 {
@@ -24,13 +24,10 @@ class Links
 
     private string $res = '';
 
-    private Tools $tools;
-
     public function __construct(array $in, string $link_url = '/library/tags?tag=')
     {
         $this->link_url = $link_url;
         $this->in       = $in;
-        $this->tools    = di(Tools::class);
     }
 
     public function proccess(string $tpl): self|false
@@ -47,12 +44,12 @@ class Links
 
     public function tplTag(string $n): string
     {
-        return '<a href="' . $this->link_url . $n . '">' . $this->tools->checkout($n) . '</a>';
+        return '<a href="' . $this->link_url . rawurlencode($n) . '">' . PlainTextFormatter::escape($n) . '</a>';
     }
 
     public function tplCloud(array $n): string
     {
-        return '<a href="' . $this->link_url . $this->tools->checkout($n['name']) . '"><span style="font-size: ' . $n['rang'] . ' em;">' . $this->tools->checkout($n['name']) . '</span></a>';
+        return '<a href="' . $this->link_url . rawurlencode($n['name']) . '"><span style="font-size: ' . $n['rang'] . ' em;">' . PlainTextFormatter::escape($n['name']) . '</span></a>';
     }
 
     public function linkSeparator(string $separator = ' | '): self|false

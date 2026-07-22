@@ -62,7 +62,7 @@ final readonly class EditFileController
             'file_data'  => [
                 'text'      => htmlspecialchars($file->rus_name),
                 'name_link' => htmlspecialchars($file->text),
-                'desc'      => htmlspecialchars($file->about, ENT_QUOTES, 'UTF-8'),
+                'desc'      => $file->about,
             ],
             'audio_tags'  => $audioTags,
             'action_url'  => '/downloads/edit-file/' . $id . '/',

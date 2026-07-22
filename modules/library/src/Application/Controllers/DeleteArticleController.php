@@ -8,7 +8,6 @@ use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Modules\Library\Application\Services\Tree;
@@ -21,7 +20,6 @@ final readonly class DeleteArticleController
         private Render $render,
         private NavChain $navChain,
         private Request $request,
-        private Tools $tools,
         private User $currentUser,
     ) {
         $this->controllerContext->initModule('library');
@@ -52,7 +50,7 @@ final readonly class DeleteArticleController
         $dirNav = new Tree($article->cat_id);
         $dirNav->processNavPanel();
         $dirNav->printNavPanel();
-        $this->navChain->add($this->tools->checkout($article->name), $article->url);
+        $this->navChain->add($article->name, $article->url);
         $this->navChain->add(__('Delete Article'));
 
         $this->render->addData([

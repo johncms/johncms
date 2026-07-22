@@ -1,7 +1,7 @@
 # PHP Quality Review Checklist
 
-Rules come from `AGENTS.md` (PHP Style Rules, Naming Conventions, Error Handling, Legacy
-Code Rules). Follow the protocol in `.agents/review/README.md`.
+Rules come from `AGENTS.md` (PHP Style Rules, Naming Conventions, Error Handling).
+Follow the protocol in `.agents/review/README.md`.
 
 ## Deterministic Gate
 
@@ -45,10 +45,8 @@ as "some tests fail".
 * Error messages are specific and actionable.
 * Unused caught exception variables are omitted: `catch (EditVoteWrongDataException)`.
 
-## Legacy & Reuse
+## Reuse
 
-* No new functionality added to `system/src-legacy`; legacy touched only where the
-  refactoring required it, with extracted logic moved to `system/src`.
 * No helper or logic duplicated — an existing implementation elsewhere in the codebase
   should have been reused. Grep before accepting a new helper as justified.
 * All comments, PHPDoc, and inline notes are written in English.

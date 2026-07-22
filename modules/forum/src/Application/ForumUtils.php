@@ -13,13 +13,12 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Johncms\Modules\Forum\Application\Services\ForumSectionTreeService;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Domain\Models\ForumMessage;
 use Johncms\Modules\Forum\Domain\Models\ForumTopic;
-use Johncms\Modules\Forum\Domain\Repository\ForumSectionRepositoryInterface;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 
@@ -34,16 +33,11 @@ class ForumUtils
      */
     public static function buildBreadcrumbs(int $parent = 0, string $current_item_name = '', string $current_item_url = ''): void
     {
-        /** @var Tools $tools */
-        $tools = di(Tools::class);
         /** @var NavChain $nav_chain */
         $nav_chain = di(NavChain::class);
 
-        $tree = [];
-        $tools->getSections($tree, $parent);
-        foreach ($tree as $item) {
-            $section = di(ForumSectionRepositoryInterface::class)->findById((int) $item['id']);
-            $nav_chain->add($item['name'], $section !== null ? $section->url : '/forum/');
+        foreach (di(ForumSectionTreeService::class)->getAncestors($parent) as $section) {
+            $nav_chain->add($section->name, $section->url);
         }
 
         if (! empty($current_item_name)) {

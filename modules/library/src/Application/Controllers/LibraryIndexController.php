@@ -9,7 +9,6 @@ use Johncms\Modules\Library\Application\LegacyRedirectHandler;
 use Johncms\Modules\Library\Domain\Models\LibraryCategory;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Modules\Library\Application\Services\Utils;
@@ -22,7 +21,6 @@ final readonly class LibraryIndexController
         private Render $render,
         private NavChain $navChain,
         private LegacyRedirectHandler $legacyRedirectHandler,
-        private Tools $tools,
         private User $currentUser,
     ) {
         $this->controllerContext->initModule('library');
@@ -54,9 +52,9 @@ final readonly class LibraryIndexController
             $list[] = [
                 'id'                    => $section->id,
                 'url'                   => $section->url,
-                'name'                  => $this->tools->checkout($section->name),
+                'name'                  => $section->name,
                 'dir'                   => $section->dir,
-                'description'           => $section->description ? $this->tools->checkout($section->description) : null,
+                'description'           => $section->description,
                 'libCounter'            => Utils::libCounter($section->id, $section->dir),
                 'sectionListAdminPanel' => ViewHelper::sectionsListAdminPanel(0, $section->id, $i, $total),
             ];

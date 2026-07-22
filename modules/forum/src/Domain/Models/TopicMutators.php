@@ -13,8 +13,9 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Domain\Models;
 
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
-use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
+use Johncms\Utils\DateFormatterInterface;
+use Johncms\Utils\ShortNumberFormatter;
 
 /**
  * Trait TopicMutators
@@ -22,7 +23,7 @@ use Johncms\Users\User;
  * @package Forum\Models
  *
  * @property User $current_user
- * @property Tools $tools
+ * @property DateFormatterInterface $dateFormatter
  *
  * @property string $calculated_meta_description
  * @property string $calculated_meta_keywords
@@ -47,9 +48,9 @@ trait TopicMutators
     public function getShowPostsCountAttribute(): string
     {
         if ($this->current_user->rights >= 7) {
-            return (string) $this->tools->formatNumber($this->mod_post_count);
+            return ShortNumberFormatter::format($this->mod_post_count);
         }
-        return (string) $this->tools->formatNumber($this->post_count);
+        return ShortNumberFormatter::format($this->post_count);
     }
 
     /**
@@ -73,9 +74,9 @@ trait TopicMutators
     public function getShowLastPostDateAttribute(): string
     {
         if ($this->current_user->rights >= 7) {
-            return $this->tools->displayDate($this->mod_last_post_date);
+            return $this->dateFormatter->format($this->mod_last_post_date);
         }
-        return $this->tools->displayDate($this->last_post_date);
+        return $this->dateFormatter->format($this->last_post_date);
     }
 
     /**
@@ -125,7 +126,7 @@ trait TopicMutators
      */
     public function getFormattedViewCountAttribute(): string
     {
-        return (string) $this->tools->formatNumber($this->view_count);
+        return ShortNumberFormatter::format($this->view_count);
     }
 
     /**

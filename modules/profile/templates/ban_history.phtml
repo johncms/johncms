@@ -38,7 +38,7 @@ $this->layout(
                             <?php endif ?>
                         </div>
                         <div>
-                            <?= $item['reason_formatted'] ?>
+                            <?= $this->e($item['reason_formatted']) ?>
                         </div>
                         <div class="text-muted small mb-2">
                             <?php if ($user->rights > 0): ?>

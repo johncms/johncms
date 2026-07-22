@@ -6,8 +6,9 @@ namespace Johncms\Modules\Library\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\NavChain;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
+use Johncms\Utils\DateFormatterInterface;
+use Johncms\Utils\PlainTextFormatter;
 use PDO;
 
 final readonly class LatestCommentsController
@@ -16,7 +17,7 @@ final readonly class LatestCommentsController
         private ControllerContext $controllerContext,
         private Render $render,
         private NavChain $navChain,
-        private Tools $tools,
+        private DateFormatterInterface $dateFormatter,
         private PDO $db,
     ) {
         $this->controllerContext->initModule('library');
@@ -59,7 +60,7 @@ final readonly class LatestCommentsController
                 'id'    => $row['id'],
                 'name'  => $row['name'],
                 'text'  => mb_substr(trim(strip_tags((string) $row['text'])), 0, 500),
-                'who'   => $this->tools->checkout($row['user_name']) . ' (' . $this->tools->displayDate($row['time']) . ')',
+                'who'   => PlainTextFormatter::escape($row['user_name']) . ' (' . $this->dateFormatter->format($row['time']) . ')',
                 'image' => file_exists(UPLOAD_PATH . 'library/images/small/' . $row['id'] . '.png'),
             ];
         }

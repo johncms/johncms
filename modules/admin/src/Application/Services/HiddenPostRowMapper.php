@@ -7,15 +7,16 @@ namespace Johncms\Modules\Admin\Application\Services;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Domain\Models\ForumMessage;
 use Johncms\Modules\Forum\Domain\Models\ForumTopic;
-use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
+use Johncms\Utils\DateFormatterInterface;
+use Johncms\Utils\PlainTextFormatter;
 
 final readonly class HiddenPostRowMapper
 {
     private const BASE = '/admin/forum/hidden-posts';
 
     public function __construct(
-        private Tools $tools,
+        private DateFormatterInterface $dateFormatter,
         private ForumTopicPathService $topicPath,
         private User $currentUser,
     ) {
@@ -43,14 +44,14 @@ final readonly class HiddenPostRowMapper
         $author = $message->user_id ? User::query()->find($message->user_id) : null;
         $topic = ForumTopic::query()->find($message->topic_id);
 
-        $text = $this->tools->checkout(mb_substr($message->text, 0, 500), 1);
+        $text = PlainTextFormatter::toHtml(mb_substr($message->text, 0, 500));
         $text = preg_replace('#\[c\](.*?)\[/c\]#si', '<div class="quote">\1</div>', $text);
 
         return [
             'id'                      => $message->user_id,
             'user_name'               => $message->user_name,
             'user_profile_link'       => $this->profileLink($message->user_id),
-            'display_date'            => $this->tools->displayDate($message->date),
+            'display_date'            => $this->dateFormatter->format($message->date),
             'topic_name'              => $topic->name ?? '',
             'topic_url'               => $topic !== null ? ($this->topicPath->getTopicUrlById((int) $topic->id) ?? '/forum/') : '/forum/',
             'formatted_text'          => $text,
@@ -65,7 +66,7 @@ final readonly class HiddenPostRowMapper
             'deleted_by'              => $message->deleted_by,
             'edit_count'              => $message->edit_count,
             'editor_name'             => $message->editor_name,
-            'edit_time'               => $message->edit_time ? $this->tools->displayDate($message->edit_time) : '',
+            'edit_time'               => $message->edit_time ? $this->dateFormatter->format($message->edit_time) : '',
             'buttons'                 => [
                 ['url' => self::BASE . '?tsort=' . $message->topic_id, 'name' => __('by topic')],
                 ['url' => self::BASE . '?usort=' . $message->user_id, 'name' => __('by author')],

@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\UseCases;
 
+use Johncms\Modules\Forum\Application\Services\ForumTopicStatsRecalculator;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
-use Johncms\System\Legacy\Tools;
 
 final readonly class BulkDeletePostsUseCase
 {
     public function __construct(
         private ForumMessageRepositoryInterface $messageRepository,
-        private Tools $tools,
+        private ForumTopicStatsRecalculator $topicStatsRecalculator,
     ) {
     }
 
@@ -26,6 +26,6 @@ final readonly class BulkDeletePostsUseCase
         }
 
         $this->messageRepository->markDeletedByIds($existingIds, $deletedBy);
-        $this->tools->recountForumTopic($topicId);
+        $this->topicStatsRecalculator->recalculate($topicId);
     }
 }

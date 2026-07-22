@@ -11,9 +11,10 @@ use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Johncms\Modules\Library\Application\Services\Hashtags;
+use Johncms\Utils\DateFormatterInterface;
+use Johncms\Utils\PlainTextFormatter;
 
 final readonly class TagsController
 {
@@ -22,7 +23,7 @@ final readonly class TagsController
         private Render $render,
         private NavChain $navChain,
         private Request $request,
-        private Tools $tools,
+        private DateFormatterInterface $dateFormatter,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
     ) {
@@ -89,17 +90,17 @@ final readonly class TagsController
                 continue;
             }
             $uploader = $article->uploader_id
-                ? '<a href="' . config('johncms')['homeurl'] . '/profile/' . $article->uploader_id . '">' . $this->tools->checkout($article->uploader) . '</a>'
-                : $this->tools->checkout($article->uploader);
+                ? '<a href="' . config('johncms')['homeurl'] . '/profile/' . $article->uploader_id . '">' . PlainTextFormatter::escape($article->uploader) . '</a>'
+                : PlainTextFormatter::escape($article->uploader);
 
             $tags      = (new Hashtags($article->id))->getAllStatTags(1);
             $list[] = [
                 'id'          => $article->id,
                 'url'         => $article->url,
                 'name'        => $article->name,
-                'text'        => $this->tools->checkout(strip_tags((string) $article->text_preview)),
+                'text'        => strip_tags((string) $article->text_preview),
                 'cover'       => file_exists(UPLOAD_PATH . 'library/images/small/' . $article->id . '.png'),
-                'who'         => $uploader . ' (' . $this->tools->displayDate($article->time) . ')',
+                'who'         => $uploader . ' (' . $this->dateFormatter->format($article->time) . ')',
                 'count_views' => $article->count_views,
                 'comm_count'  => $article->comm_count,
                 'comments'    => $article->comments,

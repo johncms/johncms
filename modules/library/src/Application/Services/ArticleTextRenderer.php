@@ -8,7 +8,7 @@ use DOMDocument;
 use DOMElement;
 use Johncms\Media\MediaEmbed;
 use Johncms\Security\HTMLPurifier;
-use Johncms\System\Legacy\Tools;
+use Johncms\Smilies\SmiliesRendererInterface;
 use Simba77\EmbedMedia\Embed;
 
 final class ArticleTextRenderer
@@ -17,13 +17,13 @@ final class ArticleTextRenderer
 
     private \HTMLPurifier $purifier;
     private Embed $media;
-    private Tools $tools;
+    private SmiliesRendererInterface $smiliesRenderer;
 
     public function __construct()
     {
         $this->purifier = di(HTMLPurifier::class);
         $this->media = di(MediaEmbed::class);
-        $this->tools = di(Tools::class);
+        $this->smiliesRenderer = di(SmiliesRendererInterface::class);
     }
 
     /**
@@ -93,6 +93,6 @@ final class ArticleTextRenderer
     {
         $text = $this->purifier->purify($pageHtml);
         $text = $this->media->embedMedia($text);
-        return $this->tools->smilies($text, $isAdmin ? 1 : 0);
+        return $this->smiliesRenderer->render($text, $isAdmin);
     }
 }

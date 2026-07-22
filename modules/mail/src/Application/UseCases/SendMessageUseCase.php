@@ -10,7 +10,7 @@ use Johncms\Modules\Mail\Application\Services\MailFileService;
 use Johncms\Modules\Mail\Domain\Models\MailMessage;
 use Johncms\Modules\Mail\Domain\Repository\ContactRepositoryInterface;
 use Johncms\Modules\Mail\Domain\Repository\MailMessageRepositoryInterface;
-use Johncms\System\Legacy\Tools;
+use Johncms\Security\AntifloodCheckerInterface;
 use Johncms\Users\User;
 use Psr\Http\Message\UploadedFileInterface;
 
@@ -20,7 +20,7 @@ final readonly class SendMessageUseCase
         private MailMessageRepositoryInterface $mailMessageRepository,
         private ContactRepositoryInterface $contactRepository,
         private MailFileService $mailFileService,
-        private Tools $tools,
+        private AntifloodCheckerInterface $antifloodChecker,
         private User $currentUser,
     ) {
     }
@@ -48,7 +48,7 @@ final readonly class SendMessageUseCase
             throw new SendMessageException(__('You cannot send messages to yourself'));
         }
 
-        $flood = $this->tools->antiflood();
+        $flood = $this->antifloodChecker->getRemainingSeconds();
         if ($flood) {
             throw new SendMessageException(
                 sprintf(__('You cannot add the message so often. Please, wait %d sec.'), $flood)

@@ -16,8 +16,8 @@ use Johncms\Modules\Profile\Application\Services\ForumActivityPreviewService;
 use Johncms\Modules\Profile\Domain\Enums\ActivityType;
 use Johncms\Modules\Profile\Domain\Repository\ProfileActivityRepositoryInterface;
 use Johncms\Modules\Profile\Domain\Repository\ProfileUserRepositoryInterface;
-use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
+use Johncms\Utils\DateFormatterInterface;
 
 final readonly class GetActivityUseCase
 {
@@ -27,7 +27,7 @@ final readonly class GetActivityUseCase
         private ForumActivityPreviewService $forumPreview,
         private ForumTopicPathService $topicPathService,
         private GuestbookEntryTextFormatter $guestbookTextFormatter,
-        private Tools $tools,
+        private DateFormatterInterface $dateFormatter,
         private User $currentUser,
     ) {
     }
@@ -115,7 +115,7 @@ final readonly class GetActivityUseCase
                 'topic_id'      => $message->topic_id,
                 'text'          => $this->forumPreview->make((string) $message->text, (int) $message->rights),
                 'message_url'   => '/forum/post/' . $message->id . '/',
-                'display_date'  => $this->tools->displayDate($message->date),
+                'display_date'  => $this->dateFormatter->format($message->date),
                 'category_name' => $category->name ?? '',
                 'category_url'  => '/forum/?id=' . ($category->id ?? ''),
                 'section_name'  => $section->name ?? '',
@@ -149,7 +149,7 @@ final readonly class GetActivityUseCase
                     (string) ($firstMessage->text ?? ''),
                     (int) ($firstMessage->rights ?? 0)
                 ),
-                'display_date'  => $this->tools->displayDate($topic->last_post_date),
+                'display_date'  => $this->dateFormatter->format($topic->last_post_date),
                 'category_name' => $category->name ?? '',
                 'category_url'  => '/forum/?id=' . ($category->id ?? ''),
                 'section_name'  => $section->name ?? '',
@@ -172,7 +172,7 @@ final readonly class GetActivityUseCase
                 continue;
             }
             $rows[] = [
-                'display_date' => $this->tools->displayDate((int) $entry->getRawOriginal('time')),
+                'display_date' => $this->dateFormatter->format((int) $entry->getRawOriginal('time')),
                 'text'         => $this->guestbookTextFormatter->formatPost($entry),
             ];
         }

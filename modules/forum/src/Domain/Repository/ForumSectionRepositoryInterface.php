@@ -41,4 +41,9 @@ interface ForumSectionRepositoryInterface
      * @return Collection<int, ForumSection>
      */
     public function getAllForSitemap(): Collection;
+
+    /**
+     * @return Collection<int, ForumSection>
+     */
+    public function getAllOrdered(): Collection;
 }

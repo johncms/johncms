@@ -7,21 +7,21 @@ namespace Johncms\Modules\Forum\Application\UseCases;
 use Carbon\Carbon;
 use Johncms\Modules\Forum\Application\DTO\NewTopicResultDTO;
 use Johncms\Modules\Forum\Application\Services\ForumTopicSlugService;
+use Johncms\Modules\Forum\Application\Services\ForumTopicStatsRecalculator;
 use Johncms\Modules\Forum\Domain\Models\ForumMessage;
 use Johncms\Modules\Forum\Domain\Models\ForumSection;
 use Johncms\Modules\Forum\Domain\Models\ForumTopic;
 use Johncms\Modules\Forum\Domain\Models\ForumUnread;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
 use Johncms\System\Http\Environment;
-use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
 
 final readonly class CreateTopicUseCase
 {
     public function __construct(
         private ForumTopicRepositoryInterface $topicRepository,
+        private ForumTopicStatsRecalculator $topicStatsRecalculator,
         private ForumTopicSlugService $topicSlugService,
-        private Tools $tools,
         private Environment $environment,
         private User $currentUser,
     ) {
@@ -60,7 +60,7 @@ final readonly class CreateTopicUseCase
         $message->text = $messageText;
         $message->save();
 
-        $this->tools->recountForumTopic($topic->id);
+        $this->topicStatsRecalculator->recalculate($topic->id);
 
         $this->currentUser->update(
             [

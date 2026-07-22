@@ -5,14 +5,13 @@ declare(strict_types=1);
 namespace Johncms\Modules\Community\Application\UseCases;
 
 use Johncms\Modules\Community\Domain\Repository\CommunityUserRepositoryInterface;
-use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
+use Johncms\Utils\Transliterator;
 
 final readonly class ViewSearchUseCase
 {
     public function __construct(
         private CommunityUserRepositoryInterface $communityUserRepository,
-        private Tools $tools,
     ) {
     }
 
@@ -46,6 +45,6 @@ final readonly class ViewSearchUseCase
 
     private function buildSearchLike(string $search): string
     {
-        return '%' . $this->tools->rusLat($search) . '%';
+        return '%' . Transliterator::toLatin($search) . '%';
     }
 }

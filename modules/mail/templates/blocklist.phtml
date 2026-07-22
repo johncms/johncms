@@ -45,11 +45,11 @@ $this->layout('system::layout/default');
                                 <a href="/profile/<?= $user->id ?>" class="text-decoration-none fw-bold"><?= $this->e($user->name) ?></a>
                             </div>
                             <div class="text-muted small">
-                                <?= $tools->displayDate($contact->time) ?>
+                                <?= $this->displayDate($contact->time) ?>
                             </div>
                         </div>
                         <div class="user-info small text-muted">
-                            <?= __('User since:') ?> <?= $tools->displayDate($user->datereg) ?>
+                            <?= __('User since:') ?> <?= $this->displayDate($user->datereg) ?>
                         </div>
                         <div class="mt-3">
                             <a href="/mail/write/<?= $user->id ?>" class="btn btn-sm btn-outline-primary"><?= __('Correspondence') ?></a>

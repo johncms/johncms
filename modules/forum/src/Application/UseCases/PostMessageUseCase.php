@@ -5,21 +5,21 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\UseCases;
 
 use Johncms\Modules\Forum\Application\DTO\PostMessageResultDTO;
+use Johncms\Modules\Forum\Application\Services\ForumTopicStatsRecalculator;
 use Johncms\Modules\Forum\Domain\Models\ForumMessage;
 use Johncms\Modules\Forum\Domain\Models\ForumTopic;
 use Johncms\Modules\Forum\Domain\Models\ForumUnread;
 use Johncms\Modules\Forum\Domain\Repository\ForumFileRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
 use Johncms\System\Http\Environment;
-use Johncms\System\Legacy\Tools;
 use Johncms\Users\User;
 
 final readonly class PostMessageUseCase
 {
     public function __construct(
         private ForumMessageRepositoryInterface $messageRepository,
+        private ForumTopicStatsRecalculator $topicStatsRecalculator,
         private ForumFileRepositoryInterface $fileRepository,
-        private Tools $tools,
         private Environment $environment,
         private User $currentUser,
     ) {
@@ -40,7 +40,7 @@ final readonly class PostMessageUseCase
             $messageId = $this->insertMessage($topic, $messageText);
         }
 
-        $this->tools->recountForumTopic($topic->id);
+        $this->topicStatsRecalculator->recalculate($topic->id);
 
         $this->currentUser->update(
             [

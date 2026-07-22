@@ -9,7 +9,7 @@ use Johncms\Modules\Profile\Application\DTO\SendRecoveryCommand;
 use Johncms\Modules\Profile\Application\Exceptions\PasswordRecoveryException;
 use Johncms\Modules\Profile\Domain\Repository\ProfileUserRepositoryInterface;
 use Johncms\System\i18n\Translator;
-use Johncms\System\Legacy\Tools;
+use Johncms\Utils\Transliterator;
 
 final readonly class SendPasswordRecoveryUseCase
 {
@@ -18,13 +18,12 @@ final readonly class SendPasswordRecoveryUseCase
     public function __construct(
         private ProfileUserRepositoryInterface $profileUserRepository,
         private Translator $translator,
-        private Tools $tools,
     ) {
     }
 
     public function execute(SendRecoveryCommand $command, string $homeUrl): void
     {
-        $nick = $this->tools->rusLat($command->nick);
+        $nick = Transliterator::toLatin($command->nick);
         $email = trim($command->email);
 
         if (! $nick || ! $email) {

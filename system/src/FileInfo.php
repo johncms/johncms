@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms;
 
-use Johncms\System\Legacy\Tools;
+use Johncms\Utils\Transliterator;
 use SplFileInfo;
 
 class FileInfo extends SplFileInfo
@@ -63,9 +63,7 @@ class FileInfo extends SplFileInfo
      */
     public function sanitizeName(string $name): string
     {
-        /** @var Tools $tools */
-        $tools = di(Tools::class);
-        $name = $tools->rusLat($name, false);
+        $name = Transliterator::toLatin($name, false);
 
         $name = preg_replace('~[^-a-zA-Z0-9_]+~u', '_', $name);
         $name = trim($name, '_');

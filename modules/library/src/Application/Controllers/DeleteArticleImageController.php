@@ -8,7 +8,6 @@ use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
-use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Modules\Library\Application\Services\Tree;
@@ -21,7 +20,6 @@ final readonly class DeleteArticleImageController
         private Render $render,
         private NavChain $navChain,
         private Request $request,
-        private Tools $tools,
         private User $currentUser,
     ) {
         $this->controllerContext->initModule('library');
@@ -45,7 +43,7 @@ final readonly class DeleteArticleImageController
         $dirNav->processNavPanel();
         $dirNav->printNavPanel();
 
-        $articleName = $article !== null ? $this->tools->checkout($article->name) : '';
+        $articleName = $article !== null ? $article->name : '';
         $this->navChain->add($articleName, '/library/?id=' . $id);
         $this->navChain->add(__('Delete Cover Image'));
 

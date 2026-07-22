@@ -33,7 +33,7 @@ $this->layout(
     ) ?>
 <?php endif; ?>
 <form action="<?= $data['form_action'] ?>" method="post">
-    <h3><?= $data['vote_title'] ?></h3>
+    <h3><?= $this->e($data['vote_title']) ?></h3>
 
     <h4><?= __('Type of vote') ?></h4>
     <div class="custom-control custom-radio">
