@@ -38,9 +38,9 @@ final readonly class AdminController
         $this->navChain->add(__('News'), '/admin/news/');
     }
 
-    public function index(): void
+    public function index(): Response
     {
-        echo $this->render->render('news::admin/index');
+        return new Response($this->render->render('news::admin/index'));
     }
 
     /**
