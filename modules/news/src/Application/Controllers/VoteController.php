@@ -6,9 +6,10 @@ namespace Johncms\Modules\News\Application\Controllers;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Johncms\Http\Controller\ControllerContext;
-use Johncms\Modules\News\Application\Utils\Helpers;
 use Johncms\Modules\News\Domain\Models\NewsArticle;
 use Johncms\Users\User;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class VoteController
 {
@@ -25,11 +26,10 @@ final readonly class VoteController
      * @param int $article_id
      * @param bool $type_vote
      */
-    public function add(User $user, int $article_id, bool $type_vote = false): void
+    public function add(User $user, int $article_id, bool $type_vote = false): Response
     {
         if (! $user->isValid()) {
-            http_response_code(403);
-            Helpers::returnJson(['error' => __('The user is not authorized')]);
+            return new JsonResponse(['error' => __('The user is not authorized')], Response::HTTP_FORBIDDEN);
         }
 
         try {
@@ -43,7 +43,7 @@ final readonly class VoteController
                 ]
             );
             $current_article->loadSum('votes', 'vote');
-            Helpers::returnJson(
+            return new JsonResponse(
                 [
                     'message' => __('Your vote is accepted'),
                     'rating'  => $current_article->rating,
@@ -51,8 +51,7 @@ final readonly class VoteController
                 ]
             );
         } catch (ModelNotFoundException $exception) {
-            http_response_code(404);
-            Helpers::returnJson(['error' => $exception->getMessage()]);
+            return new JsonResponse(['error' => $exception->getMessage()], Response::HTTP_NOT_FOUND);
         }
     }
 }

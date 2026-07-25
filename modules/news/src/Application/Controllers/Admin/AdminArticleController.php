@@ -12,6 +12,8 @@ use Illuminate\Support\Str;
 use Johncms\FileInfo;
 use Johncms\Files\FileStorage;
 use Johncms\Http\Controller\AdminControllerContext;
+use Johncms\Http\ExceptionResponseFactory;
+use Johncms\Logs\DebugDetailsPolicy;
 use Johncms\Modules\News\Application\Utils\Helpers;
 use Johncms\Modules\News\Domain\Models\NewsArticle;
 use Johncms\Modules\News\Domain\Models\NewsSearchIndex;
@@ -22,6 +24,10 @@ use Johncms\System\Utility\EditorContentNormalizer;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use League\Flysystem\FilesystemException;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class AdminArticleController
 {
@@ -30,6 +36,9 @@ final readonly class AdminArticleController
         private Render $render,
         private NavChain $navChain,
         private EditorContentNormalizer $editorContentNormalizer,
+        private ExceptionResponseFactory $exceptionResponses,
+        private DebugDetailsPolicy $debugDetailsPolicy,
+        private LoggerInterface $logger,
     ) {
         $this->controllerContext->initModule('news');
         $this->navChain->add(__('News'), '/admin/news/');
@@ -49,9 +58,9 @@ final readonly class AdminArticleController
      * @param Request $request
      * @param User $user
      * @param int $section_id
-     * @return string
+     * @return Response
      */
-    public function add(Request $request, User $user, int $section_id = 0): string
+    public function add(Request $request, User $user, int $section_id = 0): Response
     {
         $this->render->addData(
             [
@@ -136,8 +145,7 @@ final readonly class AdminArticleController
                         ]
                     );
                     $_SESSION['success_message'] = __('The article was created successfully');
-                    header('Location: /admin/news/content/' . $section_id);
-                    exit;
+                    return new RedirectResponse('/admin/news/content/' . $section_id);
                 }
                 $errors[] = __('An article with this code already exists');
             }
@@ -145,7 +153,7 @@ final readonly class AdminArticleController
 
         $data['errors'] = $errors;
 
-        return $this->render->render('news::admin/add_article', ['data' => $data]);
+        return new Response($this->render->render('news::admin/add_article', ['data' => $data]));
     }
 
     /**
@@ -154,9 +162,9 @@ final readonly class AdminArticleController
      * @param int $article_id
      * @param Request $request
      * @param User $user
-     * @return string
+     * @return Response
      */
-    public function edit(int $article_id, Request $request, User $user): string
+    public function edit(int $article_id, Request $request, User $user): Response
     {
         $this->render->addData(
             [
@@ -238,8 +246,7 @@ final readonly class AdminArticleController
                         ['text' => $search_text]
                     );
                     $_SESSION['success_message'] = __('The article was updated successfully');
-                    header('Location: /admin/news/content/' . $article->section_id . '/');
-                    exit;
+                    return new RedirectResponse('/admin/news/content/' . $article->section_id . '/');
                 }
                 $errors[] = __('An article with this code already exists');
             }
@@ -247,7 +254,7 @@ final readonly class AdminArticleController
 
         $data['errors'] = $errors;
 
-        return $this->render->render('news::admin/add_article', ['data' => $data]);
+        return new Response($this->render->render('news::admin/add_article', ['data' => $data]));
     }
 
     /**
@@ -257,14 +264,15 @@ final readonly class AdminArticleController
      * @param Request $request
      * @param FileStorage $storage
      */
-    public function del(int $article_id, Request $request, FileStorage $storage): void
+    public function del(int $article_id, Request $request, FileStorage $storage): Response
     {
         $data = [];
         // Get the section to delete
         try {
             $article = (new NewsArticle())->findOrFail($article_id);
         } catch (ModelNotFoundException $exception) {
-            exit($exception->getMessage());
+            $this->logger->error($exception->getMessage(), ['exception' => $exception]);
+            return $this->exceptionResponses->internalServerError($exception, $this->debugDetailsPolicy->allowed());
         }
 
         $post = $request->request->all();
@@ -287,12 +295,12 @@ final readonly class AdminArticleController
                 }
                 $article->delete();
             } catch (\Exception $exception) {
-                exit($exception->getMessage());
+                $this->logger->error($exception->getMessage(), ['exception' => $exception]);
+                return $this->exceptionResponses->internalServerError($exception, $this->debugDetailsPolicy->allowed());
             }
 
             $_SESSION['success_message'] = __('The article was successfully deleted');
-            header('Location: /admin/news/content/' . $article->section_id);
-            exit;
+            return new RedirectResponse('/admin/news/content/' . $article->section_id);
         }
 
         $data['article'] = $article;
@@ -303,17 +311,17 @@ final readonly class AdminArticleController
 
         $data['action_url'] = '/admin/news/del_article/' . $article_id;
 
-        echo $this->render->render('news::admin/del', ['data' => $data]);
+        return new Response($this->render->render('news::admin/del', ['data' => $data]));
     }
 
-    public function loadFile(Request $request): string
+    public function loadFile(Request $request): JsonResponse
     {
         try {
             /** @var UploadedFile[] $files */
             $files = $request->files->all();
             $file_info = new FileInfo($files['upload']->getClientOriginalName());
             if (! $file_info->isImage()) {
-                return json_encode(
+                return new JsonResponse(
                     [
                         'error' => [
                             'message' => __('Only images are allowed'),
@@ -329,12 +337,9 @@ final readonly class AdminArticleController
                 'uploaded' => 1,
                 'url'      => $file->url,
             ];
-            header('Content-Type: application/json');
-            return json_encode($file_array);
+            return new JsonResponse($file_array);
         } catch (FilesystemException | Exception $e) {
-            http_response_code(500);
-            header('Content-Type: application/json');
-            return json_encode(['errors' => $e->getMessage()]);
+            return new JsonResponse(['errors' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }

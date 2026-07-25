@@ -8,6 +8,8 @@ use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
 use Johncms\Http\Controller\AdminControllerContext;
+use Johncms\Http\ExceptionResponseFactory;
+use Johncms\Logs\DebugDetailsPolicy;
 use Johncms\Modules\News\Application\Section;
 use Johncms\Modules\News\Application\Utils\Helpers;
 use Johncms\Modules\News\Domain\Models\NewsArticle;
@@ -15,6 +17,9 @@ use Johncms\Modules\News\Domain\Models\NewsSection;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\System\View\Render;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class AdminSectionController
 {
@@ -22,6 +27,9 @@ final readonly class AdminSectionController
         private AdminControllerContext $controllerContext,
         private Render $render,
         private NavChain $navChain,
+        private ExceptionResponseFactory $exceptionResponses,
+        private DebugDetailsPolicy $debugDetailsPolicy,
+        private LoggerInterface $logger,
     ) {
         $this->controllerContext->initModule('news');
         $this->navChain->add(__('News'), '/admin/news/');
@@ -41,9 +49,9 @@ final readonly class AdminSectionController
      * @param Request $request
      * @param Section $section_service
      * @param int $section_id
-     * @return string
+     * @return Response
      */
-    public function add(Request $request, Section $section_service, int $section_id = 0): string
+    public function add(Request $request, Section $section_service, int $section_id = 0): Response
     {
         $this->render->addData(
             [
@@ -114,8 +122,7 @@ final readonly class AdminSectionController
                     (new NewsSection())->create($data['fields']);
                     $section_service->clearCache();
                     $_SESSION['success_message'] = __('The section was created successfully');
-                    header('Location: /admin/news/content/' . $section_id);
-                    exit;
+                    return new RedirectResponse('/admin/news/content/' . $section_id);
                 }
                 $errors[] = __('A section with this code already exists');
             }
@@ -123,7 +130,7 @@ final readonly class AdminSectionController
 
         $data['errors'] = $errors;
 
-        return $this->render->render('news::admin/add_section', ['data' => $data]);
+        return new Response($this->render->render('news::admin/add_section', ['data' => $data]));
     }
 
     /**
@@ -131,9 +138,9 @@ final readonly class AdminSectionController
      *
      * @param int $section_id
      * @param Request $request
-     * @return string
+     * @return Response
      */
-    public function edit(int $section_id, Request $request): string
+    public function edit(int $section_id, Request $request): Response
     {
         $this->navChain->add(__('Edit section'));
         $this->render->addData(
@@ -189,8 +196,7 @@ final readonly class AdminSectionController
                 if (! $check) {
                     $section->update($data['fields']);
                     $_SESSION['success_message'] = __('The section was updated successfully');
-                    header('Location: /admin/news/content/' . $section->parent);
-                    exit;
+                    return new RedirectResponse('/admin/news/content/' . $section->parent);
                 }
                 $errors[] = __('A section with this code already exists');
             }
@@ -198,7 +204,7 @@ final readonly class AdminSectionController
 
         $data['errors'] = $errors;
 
-        return $this->render->render('news::admin/add_section', ['data' => $data]);
+        return new Response($this->render->render('news::admin/add_section', ['data' => $data]));
     }
 
     /**
@@ -207,17 +213,18 @@ final readonly class AdminSectionController
      * @param int $section_id
      * @param Request $request
      * @param Section $section_service
-     * @return string
+     * @return Response
      * @throws Exception
      */
-    public function del(int $section_id, Request $request, Section $section_service): string
+    public function del(int $section_id, Request $request, Section $section_service): Response
     {
         $data = [];
         // Get the section to delete
         try {
             $section = (new NewsSection())->findOrFail($section_id);
         } catch (ModelNotFoundException $exception) {
-            exit($exception->getMessage());
+            $this->logger->error($exception->getMessage(), ['exception' => $exception]);
+            return $this->exceptionResponses->internalServerError($exception, $this->debugDetailsPolicy->allowed());
         }
 
         $post = $request->request->all();
@@ -238,8 +245,7 @@ final readonly class AdminSectionController
             (new NewsSection())->whereIn('id', $children_sections)->delete();
 
             $_SESSION['success_message'] = __('The section was successfully deleted');
-            header('Location: /admin/news/content/' . $section->parent);
-            exit;
+            return new RedirectResponse('/admin/news/content/' . $section->parent);
         }
 
         $data['section'] = $section;
@@ -250,6 +256,6 @@ final readonly class AdminSectionController
 
         $data['action_url'] = '/admin/news/del_section/' . $section_id;
 
-        return $this->render->render('news::admin/del', ['data' => $data]);
+        return new Response($this->render->render('news::admin/del', ['data' => $data]));
     }
 }

@@ -14,7 +14,6 @@ use Johncms\Files\FileStorage;
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Media\MediaEmbed;
-use Johncms\Modules\News\Application\Utils\Helpers;
 use Johncms\Modules\News\Domain\Models\NewsArticle;
 use Johncms\Modules\News\Domain\Models\NewsComments;
 use Johncms\Security\HTMLPurifier;
@@ -24,6 +23,8 @@ use Johncms\Http\Request;
 use Johncms\System\View\Extension\Avatar;
 use Johncms\Users\User;
 use League\Flysystem\FilesystemException;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class CommentsController
 {
@@ -42,11 +43,10 @@ final readonly class CommentsController
      * @param SmiliesRendererInterface $smiliesRenderer
      * @param User $current_user
      */
-    public function index(int $article_id, Avatar $avatar, SmiliesRendererInterface $smiliesRenderer, User $current_user): void
+    public function index(int $article_id, Avatar $avatar, SmiliesRendererInterface $smiliesRenderer, User $current_user): Response
     {
         if ($article_id === 0) {
-            http_response_code(400);
-            Helpers::returnJson(['error' => __('Bad Request')]);
+            return new JsonResponse(['error' => __('Bad Request')], Response::HTTP_BAD_REQUEST);
         }
 
         $pagination = $this->paginationFactory->create(
@@ -128,21 +128,19 @@ final readonly class CommentsController
             'total'          => $total,
         ];
 
-        Helpers::returnJson($array);
+        return new JsonResponse($array);
     }
 
-    public function add(int $article_id, Request $request, User $user, Environment $env): void
+    public function add(int $article_id, Request $request, User $user, Environment $env): Response
     {
         $post_body = $this->decodeJsonBody($request);
 
         if (! empty($user->ban)) {
-            http_response_code(403);
-            Helpers::returnJson(['message' => __('You have a ban!')]);
+            return new JsonResponse(['message' => __('You have a ban!')], Response::HTTP_FORBIDDEN);
         }
 
         if (! $user->isValid()) {
-            http_response_code(403);
-            Helpers::returnJson(['message' => __('You are not logged in')]);
+            return new JsonResponse(['message' => __('You are not logged in')], Response::HTTP_FORBIDDEN);
         }
 
         try {
@@ -169,17 +167,16 @@ final readonly class CommentsController
                     (new NewsComments())->where('article_id', $article->id)->count(),
                     $user->config->kmess
                 )->getTotalPages();
-                Helpers::returnJson(['message' => __('The comment was added successfully'), 'last_page' => $last_page]);
-            } else {
-                http_response_code(422);
-                Helpers::returnJson(['message' => __('Enter the comment text')]);
+                return new JsonResponse(['message' => __('The comment was added successfully'), 'last_page' => $last_page]);
             }
+
+            return new JsonResponse(['message' => __('Enter the comment text')], Response::HTTP_UNPROCESSABLE_ENTITY);
         } catch (ModelNotFoundException $exception) {
-            Helpers::returnJson(['message' => $exception->getMessage()]);
+            return new JsonResponse(['message' => $exception->getMessage()]);
         }
     }
 
-    public function del(Request $request, User $user, FileStorage $storage): void
+    public function del(Request $request, User $user, FileStorage $storage): Response
     {
         $post_body = $this->decodeJsonBody($request);
 
@@ -198,29 +195,26 @@ final readonly class CommentsController
                         }
                     }
                     $post->forceDelete();
-                    Helpers::returnJson(['message' => __('The comment was deleted successfully')]);
+                    return new JsonResponse(['message' => __('The comment was deleted successfully')]);
                 } catch (\Exception $e) {
-                    http_response_code(500);
-                    Helpers::returnJson(['message' => $e->getMessage()]);
+                    return new JsonResponse(['message' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
                 }
-            } else {
-                http_response_code(403);
-                Helpers::returnJson(['message' => __('Access denied')]);
             }
+
+            return new JsonResponse(['message' => __('Access denied')], Response::HTTP_FORBIDDEN);
         } catch (ModelNotFoundException $exception) {
-            http_response_code(404);
-            Helpers::returnJson(['message' => $exception->getMessage()]);
+            return new JsonResponse(['message' => $exception->getMessage()], Response::HTTP_NOT_FOUND);
         }
     }
 
-    public function loadFile(Request $request): string
+    public function loadFile(Request $request): JsonResponse
     {
         try {
             /** @var UploadedFile[] $files */
             $files = $request->files->all();
             $file_info = new FileInfo($files['upload']->getClientOriginalName());
             if (! $file_info->isImage()) {
-                return json_encode(
+                return new JsonResponse(
                     [
                         'error' => [
                             'message' => __('Only images are allowed'),
@@ -236,12 +230,9 @@ final readonly class CommentsController
                 'uploaded' => 1,
                 'url'      => $file->url,
             ];
-            header('Content-Type: application/json');
-            return json_encode($file_array);
+            return new JsonResponse($file_array);
         } catch (FilesystemException | Exception $e) {
-            http_response_code(500);
-            header('Content-Type: application/json');
-            return json_encode(['errors' => $e->getMessage()]);
+            return new JsonResponse(['errors' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 

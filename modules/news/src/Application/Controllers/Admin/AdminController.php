@@ -14,6 +14,8 @@ use Johncms\Modules\News\Domain\Models\NewsSection;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\System\View\Render;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class AdminController
 {
@@ -103,9 +105,9 @@ final readonly class AdminController
      * Module settings page.
      *
      * @param Request $request
-     * @return string
+     * @return Response
      */
-    public function settings(Request $request): string
+    public function settings(Request $request): Response
     {
         $data = [
             'title'       => __('Settings'),
@@ -143,16 +145,14 @@ final readonly class AdminController
 
             $configFile = "<?php\n\n" . 'return ' . var_export(['news' => $config], true) . ";\n";
             if (! file_put_contents(CONFIG_PATH . 'autoload/news.local.php', $configFile)) {
-                echo 'ERROR: Can not write news.local.php';
-                exit;
+                return new Response('ERROR: Can not write news.local.php');
             }
             if (function_exists('opcache_reset')) {
                 opcache_reset();
             }
 
             $_SESSION['message'] = __('Settings saved!');
-            header('Location: /admin/news/settings/');
-            exit;
+            return new RedirectResponse('/admin/news/settings/');
         }
 
         if (! empty($_SESSION['message'])) {
@@ -179,6 +179,6 @@ final readonly class AdminController
         $data['current_settings'] = array_merge($default_settings, $config);
 
         // Выводим шаблон настроек уведомлений
-        return $this->render->render('news::admin/settings', ['data' => $data]);
+        return new Response($this->render->render('news::admin/settings', ['data' => $data]));
     }
 }

@@ -63,16 +63,4 @@ class Helpers
         $purifier = di(HTMLPurifier::class);
         return $purifier->purify($html);
     }
-
-    /**
-     * Метод возвращает ответ в json формате
-     *
-     * @param array $array
-     */
-    public static function returnJson(array $array): void
-    {
-        header('Content-Type: application/json');
-        echo json_encode($array);
-        exit;
-    }
 }
