@@ -11,11 +11,6 @@ use Johncms\System\Users\User;
 date_default_timezone_set('UTC');
 mb_internal_encoding('UTF-8');
 
-// Check the current PHP version
-if (PHP_VERSION_ID < 70300) {
-    die('<h1>ERROR!</h1><p>Your needs PHP 7.3 or higher</p>');
-}
-
 // If there are no dependencies, we stop the script and displays an error
 if (! is_file(dirname(__DIR__) . '/vendor/autoload.php')) {
     die('<h1>ERROR</h1><p>Missing dependencies</p>');
