@@ -16,6 +16,7 @@ use Johncms\Modules\Profile\Application\UseCases\GetEditContextUseCase;
 use Johncms\Modules\Profile\Application\UseCases\UpdateProfileUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
@@ -32,6 +33,7 @@ final readonly class EditProfileController
         private UpdateProfileUseCase $updateProfileUseCase,
         private DeleteAvatarUseCase $deleteAvatarUseCase,
         private DeletePhotoUseCase $deletePhotoUseCase,
+        private Session $session,
     ) {
         $this->controllerContext->initModule('profile');
     }
@@ -43,11 +45,7 @@ final readonly class EditProfileController
             return $context;
         }
 
-        $successMessage = null;
-        if (! empty($_SESSION['success_message'])) {
-            $successMessage = (string) $_SESSION['success_message'];
-            unset($_SESSION['success_message']);
-        }
+        $successMessage = $this->session->getFlash('success_message');
 
         return $this->renderForm($context, $this->formDataFromUser($context->profileUser), [], $successMessage);
     }
@@ -67,7 +65,7 @@ final readonly class EditProfileController
             return $this->renderForm($context, $command->toFormData(), $e->getErrors(), null);
         }
 
-        $_SESSION['success_message'] = __('Data saved');
+        $this->session->flash('success_message', __('Data saved'));
         redirect('/profile/' . $context->profileUser->id . '/edit');
     }
 
@@ -82,7 +80,7 @@ final readonly class EditProfileController
         }
 
         $this->deleteAvatarUseCase->execute($context->profileUser->id);
-        $_SESSION['success_message'] = __('Avatar is successfully removed');
+        $this->session->flash('success_message', __('Avatar is successfully removed'));
         redirect('/profile/' . $context->profileUser->id . '/edit');
     }
 
@@ -97,7 +95,7 @@ final readonly class EditProfileController
         }
 
         $this->deletePhotoUseCase->execute($context->profileUser->id);
-        $_SESSION['success_message'] = __('Photo is successfully removed');
+        $this->session->flash('success_message', __('Photo is successfully removed'));
         redirect('/profile/' . $context->profileUser->id . '/edit');
     }
 

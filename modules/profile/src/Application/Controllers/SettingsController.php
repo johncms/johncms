@@ -13,6 +13,7 @@ use Johncms\Modules\Profile\Application\UseCases\MailSettingsUseCase;
 use Johncms\Modules\Profile\Application\UseCases\UserSettingsUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 
@@ -27,6 +28,7 @@ final readonly class SettingsController
         private UserSettingsUseCase $userSettingsUseCase,
         private ForumSettingsUseCase $forumSettingsUseCase,
         private MailSettingsUseCase $mailSettingsUseCase,
+        private Session $session,
     ) {
         $this->controllerContext->initModule('profile');
     }
@@ -63,17 +65,17 @@ final readonly class SettingsController
 
         $selectedLng = $this->userSettingsUseCase->save($command, $this->currentUser);
         if ($selectedLng !== null) {
-            $_SESSION['lng'] = $selectedLng;
+            $this->session->set('lng', $selectedLng);
         }
 
-        $_SESSION['set_ok'] = 1;
+        $this->session->flash('set_ok', true);
         redirect('/profile/settings');
     }
 
     public function resetGeneral(): string
     {
         $this->userSettingsUseCase->reset($this->currentUser);
-        $_SESSION['reset_ok'] = 1;
+        $this->session->flash('reset_ok', true);
         redirect('/profile/settings');
     }
 
@@ -201,13 +203,11 @@ final readonly class SettingsController
 
     private function pullFlash(): ?string
     {
-        if (isset($_SESSION['set_ok'])) {
-            unset($_SESSION['set_ok']);
+        if ($this->session->getFlash('set_ok')) {
             return __('Settings saved successfully');
         }
 
-        if (isset($_SESSION['reset_ok'])) {
-            unset($_SESSION['reset_ok']);
+        if ($this->session->getFlash('reset_ok')) {
             return __('Default settings are set');
         }
 
