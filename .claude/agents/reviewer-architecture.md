@@ -1,6 +1,6 @@
 ---
 name: reviewer-architecture
-description: Reviews changed PHP code against the project's architecture rules — module layers, dependency direction, repository thinness, guard → context → action flow, naming. Read-only. Use after implementing a change in modules/ or system/src/.
+description: Reviews changed PHP code against the project's architecture rules — module layers, dependency direction, repository thinness, guard → context → action flow, naming. Read-only. On demand only: launch it solely when the user explicitly asks for a review (e.g. `/review-self`), never automatically after finishing an implementation.
 tools: Read, Grep, Glob, Bash
 ---
 

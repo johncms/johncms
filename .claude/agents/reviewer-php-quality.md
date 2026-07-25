@@ -1,6 +1,6 @@
 ---
 name: reviewer-php-quality
-description: Reviews changed PHP for style and quality — strict_types, PSR-4, typing, final/readonly, naming suffixes, error handling, legacy rules, duplicated helpers. Runs the cs-check/test gate. Read-only. Use after implementing a PHP change.
+description: Reviews changed PHP for style and quality — strict_types, PSR-4, typing, final/readonly, naming suffixes, error handling, legacy rules, duplicated helpers. Runs the cs-check/test gate. Read-only. On demand only: launch it solely when the user explicitly asks for a review (e.g. `/review-self`), never automatically after finishing an implementation.
 tools: Read, Grep, Glob, Bash
 ---
 

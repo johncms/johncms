@@ -1,6 +1,6 @@
 ---
 name: reviewer-security
-description: Reviews changed code for security issues — output escaping, XSS in templates, raw SQL, missing access checks on write operations, unsafe uploads, leaked secrets. Read-only. Use after implementing a change touching PHP or templates.
+description: Reviews changed code for security issues — output escaping, XSS in templates, raw SQL, missing access checks on write operations, unsafe uploads, leaked secrets. Read-only. On demand only: launch it solely when the user explicitly asks for a review (e.g. `/review-self`), never automatically after finishing an implementation.
 tools: Read, Grep, Glob, Bash
 ---
 

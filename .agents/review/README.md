@@ -1,6 +1,12 @@
 # Self-Review Protocol
 
-Run this after finishing an implementation task, before reporting back to the user.
+Run this **only when the user explicitly asks for a review** (in Claude Code: `/review-self`,
+or a direct request to run one of the reviewers). It is not part of finishing a task.
+
+After an ordinary implementation task an agent runs the deterministic gate
+(`sh .agents/scripts/verify.sh`) and nothing else. The checklists below are expensive — a
+full pass costs several times more tokens than the implementation — so spending them is the
+user's call, not the agent's.
 
 The checklists in this directory are tool-agnostic — any agent reads the same files.
 Tool-specific wrappers (for Claude Code: `.claude/commands/review-self.md` and

@@ -1,6 +1,6 @@
 ---
 name: reviewer-localization
-description: Reviews changed code for i18n issues — hardcoded user-facing text, msgid quality, hand-edited .pot/.lng.php, noisy .po diffs, missing translate.xml/crowdin.yml registration. Read-only. Use when the change touches translations or adds user-facing strings.
+description: Reviews changed code for i18n issues — hardcoded user-facing text, msgid quality, hand-edited .pot/.lng.php, noisy .po diffs, missing translate.xml/crowdin.yml registration. Read-only. On demand only: launch it solely when the user explicitly asks for a review (e.g. `/review-self`), never automatically after finishing an implementation.
 tools: Read, Grep, Glob, Bash
 ---
 

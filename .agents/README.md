@@ -18,7 +18,7 @@ automatically; `CLAUDE.md` is a symlink to it for Claude Code.
 | `localization.md` | translations, `.po`/`.pot`/`.lng.php`, `__()` strings |
 | `pagination.md` | paginated lists, page titles / meta description |
 | `new-module.md` | creating a new module |
-| `review/` | self-review protocol and checklists (see below) |
+| `review/` | self-review protocol and checklists, run on demand (see below) |
 | `scripts/verify.sh` | the deterministic gate: `cs-check`, `test` |
 
 **`.claude/`** contains only thin wrappers that declare the reviewers and the
@@ -27,8 +27,10 @@ written twice — if a wrapper starts containing rules instead of references, th
 
 ## Self-review
 
-After finishing an implementation, agents run a self-review before reporting back: the
-deterministic gate, then the relevant checklists in `.agents/review/`. The protocol —
+After finishing an implementation, agents run only the deterministic gate
+(`sh .agents/scripts/verify.sh`). The review checklists in `.agents/review/` are run **on
+demand**, when a developer asks for a review — they are not triggered automatically, because
+a full pass costs several times more tokens than the implementation itself. The protocol —
 scope, finding format, severity levels, stop rule — lives in `.agents/review/README.md`.
 
 Reviewers are read-only by design: they report findings, the implementing agent applies the
