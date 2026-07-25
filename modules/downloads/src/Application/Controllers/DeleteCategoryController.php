@@ -9,8 +9,10 @@ use Johncms\Modules\Downloads\Application\Services\DownloadCategoryPathService;
 use Johncms\Modules\Downloads\Application\UseCases\DeleteCategoryUseCase;
 use Johncms\Modules\Downloads\Domain\Models\DownloadCategory;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class DeleteCategoryController
 {
@@ -25,7 +27,7 @@ final readonly class DeleteCategoryController
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(int $id): string
+    public function __invoke(int $id): Response
     {
         $subcategoryCount = DownloadCategory::query()->where('refid', $id)->count();
         $category = DownloadCategory::query()->find($id);
@@ -39,24 +41,23 @@ final readonly class DeleteCategoryController
         ]);
 
         if ($subcategoryCount > 0) {
-            return $this->render->render('system::pages/result', [
+            return new Response($this->render->render('system::pages/result', [
                 'title'         => __('Delete Folder'),
                 'type'          => 'alert-danger',
                 'message'       => __('Before removing, delete subdirectories'),
                 'back_url'      => '/downloads/',
                 'back_url_name' => __('Downloads'),
-            ]);
+            ]));
         }
 
         if ($category === null) {
-            http_response_code(404);
-            return $this->render->render('system::pages/result', [
+            return new Response($this->render->render('system::pages/result', [
                 'title'         => __('Delete Folder'),
                 'type'          => 'alert-danger',
                 'message'       => __('The directory does not exist'),
                 'back_url'      => '/downloads/',
                 'back_url_name' => __('Downloads'),
-            ]);
+            ]), Response::HTTP_NOT_FOUND);
         }
 
         if ($this->request->getMethod() === 'POST') {
@@ -65,14 +66,14 @@ final readonly class DeleteCategoryController
             $redirectUrl = $refid > 0
                 ? ($this->categoryPathService->getCategoryUrlById($refid) ?? '/downloads/')
                 : '/downloads/';
-            header('Location: ' . $redirectUrl);
-            exit;
+
+            return new RedirectResponse($redirectUrl);
         }
 
-        return $this->render->render('downloads::folder_delete', [
+        return new Response($this->render->render('downloads::folder_delete', [
             'folder_name' => htmlspecialchars($category->rus_name),
             'action_url'  => '/downloads/categories/' . $id . '/delete',
             'back_url'    => $this->categoryPathService->getCategoryUrl($category),
-        ]);
+        ]));
     }
 }

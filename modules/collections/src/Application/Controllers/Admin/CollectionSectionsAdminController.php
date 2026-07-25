@@ -19,7 +19,7 @@ use Johncms\Modules\Collections\Domain\Models\ContentCollectionSection;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionSectionRepositoryInterface;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 
@@ -120,7 +120,7 @@ final readonly class CollectionSectionsAdminController
             return $this->wrongData($collection_id, null);
         }
 
-        $id = (int) $this->request->getPost('id', 0, FILTER_VALIDATE_INT) ?: null;
+        $id = $this->request->bodyInt('id') ?: null;
 
         // The parent is fixed on edit (taken from the section) and comes from the
         // form context on create; a create parent must belong to the collection.
@@ -283,11 +283,11 @@ final readonly class CollectionSectionsAdminController
     {
         return [
             'parent'      => $parent,
-            'code'        => trim((string) $this->request->getPost('code', '')),
-            'name'        => trim((string) $this->request->getPost('name', '')),
-            'description' => trim((string) $this->request->getPost('description', '')),
-            'active'      => $this->request->getPost('active') !== null ? 1 : 0,
-            'sort'        => (int) $this->request->getPost('sort', 100, FILTER_VALIDATE_INT),
+            'code'        => trim($this->request->body('code', '')),
+            'name'        => trim($this->request->body('name', '')),
+            'description' => trim($this->request->body('description', '')),
+            'active'      => $this->request->hasBody('active') ? 1 : 0,
+            'sort'        => $this->request->bodyInt('sort', 100),
         ];
     }
 
@@ -357,12 +357,12 @@ final readonly class CollectionSectionsAdminController
 
     private function queryParent(): ?int
     {
-        return ((int) $this->request->getQuery('parent', 0, FILTER_VALIDATE_INT)) ?: null;
+        return ($this->request->queryInt('parent')) ?: null;
     }
 
     private function postParent(): ?int
     {
-        return ((int) $this->request->getPost('parent', 0, FILTER_VALIDATE_INT)) ?: null;
+        return ($this->request->bodyInt('parent')) ?: null;
     }
 
     private function baseUrl(int $collectionId): string
@@ -446,7 +446,7 @@ final readonly class CollectionSectionsAdminController
     private function isCsrfValid(): bool
     {
         $validator = new Validator(
-            ['csrf_token' => (string) $this->request->getPost('csrf_token', '')],
+            ['csrf_token' => $this->request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

@@ -10,8 +10,8 @@ use Johncms\Modules\Guestbook\Application\Exceptions\GuestbookEntryNotFoundExcep
 use Johncms\Modules\Guestbook\Application\UseCases\EditGuestbookEntryUseCase;
 use Johncms\Modules\Guestbook\Application\UseCases\EnsureGuestbookEntryManageAccessUseCase;
 use Johncms\Modules\Guestbook\Application\UseCases\GetGuestbookEntryContextUseCase;
-use Johncms\System\Http\Request;
-use Johncms\System\Http\Session;
+use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\System\Utility\EditorContentNormalizer;
 use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
@@ -35,7 +35,7 @@ final readonly class EditEntryController
     {
         $baseUrl = '/guestbook/';
 
-        $id = (int) $this->request->getQuery('id', 0, FILTER_VALIDATE_INT);
+        $id = $this->request->queryInt('id');
         $errors = [];
         $this->render->addData(['title' => __('Edit message'), 'page_title' => __('Edit message')]);
 
@@ -58,9 +58,9 @@ final readonly class EditEntryController
         }
 
         $text = $this->editorContentNormalizer->trimEdgeEmptyBlocks(
-            (string) $this->request->getPost('message', $entry->text)
+            $this->request->body('message', (string) $entry->text)
         );
-        $attachedFiles = (array) $this->request->getPost('attached_files', [], FILTER_VALIDATE_INT);
+        $attachedFiles = (array) $this->request->bodyInts('attached_files');
 
         if ($this->request->getMethod() === 'POST') {
             $rules = [
@@ -76,7 +76,7 @@ final readonly class EditEntryController
             $validator = new Validator(
                 [
                     'message'    => $text,
-                    'csrf_token' => $this->request->getPost('csrf_token', ''),
+                    'csrf_token' => $this->request->body('csrf_token', ''),
                 ],
                 $rules
             );

@@ -13,11 +13,11 @@ declare(strict_types=1);
 namespace Johncms\Files;
 
 use Exception;
-use GuzzleHttp\Psr7\UploadedFile;
 use Johncms\Files\Exceptions\BadRequest;
 use Johncms\Files\Exceptions\FileNotFound;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use League\Flysystem\FilesystemException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FileStorage
 {
@@ -32,7 +32,7 @@ class FileStorage
      */
     public function saveFromRequest(string $field_name, string $working_dir, bool $multiple = false)
     {
-        $request_files = di(Request::class)->getUploadedFiles();
+        $request_files = di(Request::class)->files->all();
         if (! array_key_exists($field_name, $request_files)) {
             throw new BadRequest(sprintf('There is no file field named "%s" in the request', $field_name));
         }
@@ -54,10 +54,10 @@ class FileStorage
             }
 
             $tmp_file = $this->makeTmpName();
-            $uploaded_file->moveTo($tmp_file);
+            $uploaded_file->move(dirname($tmp_file), basename($tmp_file));
 
             $saved_files[] = (new File($tmp_file))
-                ->setFileName($uploaded_file->getClientFilename() ?? 'untitled_file')
+                ->setFileName($uploaded_file->getClientOriginalName() ?: 'untitled_file')
                 ->setParentDir($working_dir)
                 ->save();
 

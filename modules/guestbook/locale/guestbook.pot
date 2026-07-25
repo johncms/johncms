@@ -24,7 +24,7 @@ msgstr ""
 #: modules/guestbook/src/Application/Controllers/DeleteEntryController.php:68
 #: modules/guestbook/src/Application/Controllers/EditEntryController.php:53
 #: modules/guestbook/src/Application/Controllers/ReplyController.php:55
-#: modules/guestbook/src/Application/Controllers/UploadFileController.php:36
+#: modules/guestbook/src/Application/Controllers/UploadFileController.php:37
 msgid "Wrong data"
 msgstr ""
 
@@ -71,7 +71,7 @@ msgstr ""
 msgid "Your reply to the message was saved"
 msgstr ""
 
-#: modules/guestbook/src/Application/Controllers/UploadFileController.php:47
+#: modules/guestbook/src/Application/Controllers/UploadFileController.php:48
 msgid "Only images are allowed"
 msgstr ""
 

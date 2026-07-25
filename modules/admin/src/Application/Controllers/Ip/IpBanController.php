@@ -15,7 +15,7 @@ use Johncms\Modules\Admin\Application\UseCases\StoreIpBanUseCase;
 use Johncms\Modules\Admin\Domain\Enums\IpBanType;
 use Johncms\Modules\Admin\Domain\Models\BanIp;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
@@ -90,11 +90,11 @@ final readonly class IpBanController
             return $this->newForm(__('Wrong data'));
         }
 
-        $term = (int) $this->request->getPost('term', 1, FILTER_VALIDATE_INT);
-        $url = trim((string) $this->request->getPost('url', ''));
-        $reason = trim((string) $this->request->getPost('reason', ''));
+        $term = $this->request->bodyInt('term', 1);
+        $url = trim($this->request->body('url', ''));
+        $reason = trim($this->request->body('reason', ''));
 
-        $result = $this->prepareIpBan->execute((string) $this->request->getPost('ip', ''));
+        $result = $this->prepareIpBan->execute($this->request->body('ip', ''));
 
         if ($result->hasErrors()) {
             return $this->newForm(implode('<br>', $result->errors));
@@ -113,8 +113,8 @@ final readonly class IpBanController
             return $this->newForm(__('Wrong data'));
         }
 
-        $ip1 = (int) $this->request->getPost('ip1', 0, FILTER_VALIDATE_INT);
-        $ip2 = (int) $this->request->getPost('ip2', 0, FILTER_VALIDATE_INT);
+        $ip1 = $this->request->bodyInt('ip1');
+        $ip2 = $this->request->bodyInt('ip2');
         if ($ip1 <= 0 || $ip2 <= 0) {
             return $this->newForm(__('Invalid IP'));
         }
@@ -122,10 +122,10 @@ final readonly class IpBanController
         $this->storeIpBan->execute(
             $ip1,
             $ip2,
-            (int) $this->request->getPost('term', 1, FILTER_VALIDATE_INT),
-            trim((string) $this->request->getPost('url', '')),
+            $this->request->bodyInt('term', 1),
+            trim($this->request->body('url', '')),
             $this->currentUser->name,
-            trim((string) $this->request->getPost('reason', '')),
+            trim($this->request->body('reason', '')),
         );
 
         redirect(self::URL);
@@ -149,7 +149,7 @@ final readonly class IpBanController
             return $this->error(__('Wrong data'));
         }
 
-        $ip = ip2long(trim((string) $this->request->getPost('ip', '')));
+        $ip = ip2long(trim($this->request->body('ip', '')));
         if ($ip === false) {
             return $this->error(__('Invalid IP'));
         }
@@ -321,7 +321,7 @@ final readonly class IpBanController
     private function isCsrfValid(): bool
     {
         $validator = new Validator(
-            ['csrf_token' => (string) $this->request->getPost('csrf_token', '')],
+            ['csrf_token' => $this->request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

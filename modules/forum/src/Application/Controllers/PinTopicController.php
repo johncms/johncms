@@ -10,7 +10,7 @@ use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\GetPinTopicContextUseCase;
 use Johncms\Modules\Forum\Application\UseCases\PinTopicUseCase;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 
 final readonly class PinTopicController
@@ -43,7 +43,7 @@ final readonly class PinTopicController
             pageNotFound();
         }
 
-        $pin = $this->request->getQuery('pin') !== null;
+        $pin = $this->request->query->has('pin');
         $this->pinTopicUseCase->execute($topic->id, $pin);
         redirect($topic->url);
     }

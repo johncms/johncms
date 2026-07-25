@@ -11,7 +11,7 @@ use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Downloads\Application\UseCases\SearchFilesUseCase;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 
 final readonly class SearchController
@@ -31,8 +31,8 @@ final readonly class SearchController
 
     public function __invoke(): string
     {
-        $rawQuery = trim((string) $this->request->getQuery('search', ''));
-        $searchInDescription = (bool) $this->request->getQuery('id', 0);
+        $rawQuery = trim($this->request->queryParam('search', ''));
+        $searchInDescription = (bool) $this->request->queryInt('id', 0);
 
         $this->navChain->add(__('Downloads'), '/downloads/');
         $this->navChain->add(__('Search'), '/downloads/search/');

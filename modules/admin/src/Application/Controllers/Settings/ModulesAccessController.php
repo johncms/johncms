@@ -9,7 +9,7 @@ use Johncms\Modules\Admin\Application\DTO\ModulesAccessDTO;
 use Johncms\Modules\Admin\Application\UseCases\UpdateModulesAccessUseCase;
 use Johncms\Modules\Admin\Domain\Exceptions\ConfigWriteException;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 
@@ -51,21 +51,21 @@ final readonly class ModulesAccessController
     private function buildDto(): ModulesAccessDTO
     {
         return new ModulesAccessDTO(
-            registration: (int) $this->request->getPost('reg', 0, FILTER_VALIDATE_INT),
-            forum: (int) $this->request->getPost('forum', 0, FILTER_VALIDATE_INT),
-            guestbook: (int) $this->request->getPost('guest', 0, FILTER_VALIDATE_INT),
-            library: (int) $this->request->getPost('lib', 0, FILTER_VALIDATE_INT),
-            libraryComments: (bool) $this->request->getPost('libcomm', 0, FILTER_VALIDATE_INT),
-            downloads: (int) $this->request->getPost('down', 0, FILTER_VALIDATE_INT),
-            downloadsComments: (bool) $this->request->getPost('downcomm', 0, FILTER_VALIDATE_INT),
-            community: (int) $this->request->getPost('active', 0, FILTER_VALIDATE_INT),
+            registration: $this->request->bodyInt('reg'),
+            forum: $this->request->bodyInt('forum'),
+            guestbook: $this->request->bodyInt('guest'),
+            library: $this->request->bodyInt('lib'),
+            libraryComments: (bool) $this->request->bodyInt('libcomm'),
+            downloads: $this->request->bodyInt('down'),
+            downloadsComments: (bool) $this->request->bodyInt('downcomm'),
+            community: $this->request->bodyInt('active'),
         );
     }
 
     private function isCsrfValid(): bool
     {
         $validator = new Validator(
-            ['csrf_token' => (string) $this->request->getPost('csrf_token', '')],
+            ['csrf_token' => $this->request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

@@ -1,0 +1,33 @@
+includes:
+    - phpstan-baseline.neon
+
+parameters:
+    level: 5
+
+    paths:
+        - config
+        - modules
+        - public
+        - system/src
+        - system/bootstrap.php
+        - system/helpers.php
+        - tests
+
+    excludePaths:
+        analyseAndScan:
+            # Generated translation catalogues: huge literal arrays, no logic.
+            - modules/*/locale/*.lng.php
+            - config/autoload/*.local.php
+
+    # Constants (ROOT_PATH, CACHE_PATH, ...) and the global helpers (di(), config()) arrive
+    # through Composer's "files" autoload, which PHPStan already executes — listing them as
+    # bootstrapFiles would only re-run them and warn about redefined constants.
+    #
+    # The gettext helpers are different: they sit behind function_exists() guards, so nothing
+    # declares them at analysis time and they have to be scanned explicitly.
+    scanFiles:
+        - vendor/gettext/translator/src/functions.php
+
+    treatPhpDocTypesAsCertain: false
+
+    tmpDir: data/cache/.phpstan

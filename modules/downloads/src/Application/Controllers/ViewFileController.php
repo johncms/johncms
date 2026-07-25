@@ -17,10 +17,11 @@ use Johncms\Modules\Downloads\Application\UseCases\ToggleBookmarkUseCase;
 use Johncms\Modules\Downloads\Application\UseCases\ViewFileUseCase;
 use Johncms\Modules\Downloads\Application\UseCases\VoteOnFileUseCase;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
-use Johncms\System\Http\Session;
+use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class ViewFileController
 {
@@ -41,7 +42,7 @@ final readonly class ViewFileController
     ) {
     }
 
-    public function __invoke(string $filePath): string
+    public function __invoke(string $filePath): Response
     {
         $parsed = $this->filePathService->parseFilePath('/downloads/' . ltrim($filePath, '/'));
         if ($parsed === null) {
@@ -53,16 +54,18 @@ final readonly class ViewFileController
         try {
             $result = $this->viewFileUseCase->execute($id);
         } catch (FileNotFoundException) {
-            http_response_code(404);
-            return $this->render->render(
-                'system::pages/result',
-                [
-                    'title'         => __('File not found'),
-                    'type'          => 'alert-danger',
-                    'message'       => __('File not found'),
-                    'back_url'      => '/downloads/',
-                    'back_url_name' => __('Downloads'),
-                ]
+            return new Response(
+                $this->render->render(
+                    'system::pages/result',
+                    [
+                        'title'         => __('File not found'),
+                        'type'          => 'alert-danger',
+                        'message'       => __('File not found'),
+                        'back_url'      => '/downloads/',
+                        'back_url_name' => __('Downloads'),
+                    ]
+                ),
+                Response::HTTP_NOT_FOUND
             );
         }
 
@@ -87,37 +90,41 @@ final readonly class ViewFileController
         }
 
         if (! is_file($file->dir . '/' . $file->name)) {
-            http_response_code(404);
-            return $this->render->render(
-                'system::pages/result',
-                [
-                    'title'         => __('File not found'),
-                    'type'          => 'alert-danger',
-                    'message'       => __('File not found'),
-                    'back_url'      => '/downloads/',
-                    'back_url_name' => __('Downloads'),
-                ]
+            return new Response(
+                $this->render->render(
+                    'system::pages/result',
+                    [
+                        'title'         => __('File not found'),
+                        'type'          => 'alert-danger',
+                        'message'       => __('File not found'),
+                        'back_url'      => '/downloads/',
+                        'back_url_name' => __('Downloads'),
+                    ]
+                ),
+                Response::HTTP_NOT_FOUND
             );
         }
 
         if ($file->type === 3 && $this->currentUser->rights < 6 && $this->currentUser->rights !== 4) {
-            http_response_code(403);
-            return $this->render->render(
-                'system::pages/result',
-                [
-                    'title'         => __('The file is awaiting moderation'),
-                    'type'          => 'alert-danger',
-                    'message'       => __('The file is awaiting moderation'),
-                    'back_url'      => '/downloads/',
-                    'back_url_name' => __('Downloads'),
-                ]
+            return new Response(
+                $this->render->render(
+                    'system::pages/result',
+                    [
+                        'title'         => __('The file is awaiting moderation'),
+                        'type'          => 'alert-danger',
+                        'message'       => __('The file is awaiting moderation'),
+                        'back_url'      => '/downloads/',
+                        'back_url_name' => __('Downloads'),
+                    ]
+                ),
+                Response::HTTP_FORBIDDEN
             );
         }
 
         // Voting (session state is an HTTP concern, stays here)
         $sessionIndex = 'rate_file_' . $id;
-        $hasVoteAction = $this->request->getQuery('plus') !== null || $this->request->getQuery('minus') !== null;
-        $isPlus = $this->request->getQuery('plus') !== null;
+        $hasVoteAction = $this->request->query->has('plus') || $this->request->query->has('minus');
+        $isPlus = $this->request->query->has('plus');
 
         $vote = $this->voteUseCase->execute(
             $id,
@@ -132,9 +139,9 @@ final readonly class ViewFileController
         // Bookmarks
         $bookmarkAction = null;
         if ($this->currentUser->isValid()) {
-            if ($this->request->getQuery('addBookmark') !== null) {
+            if ($this->request->query->has('addBookmark')) {
                 $bookmarkAction = 'add';
-            } elseif ($this->request->getQuery('delBookmark') !== null) {
+            } elseif ($this->request->query->has('delBookmark')) {
                 $bookmarkAction = 'remove';
             }
         }
@@ -197,7 +204,7 @@ final readonly class ViewFileController
 
         $fileUrl = $this->filePathService->getFileUrl($file);
 
-        return $this->render->render(
+        return new Response($this->render->render(
             'downloads::view',
             [
                 'id'           => $id,
@@ -211,7 +218,7 @@ final readonly class ViewFileController
                         : '/downloads/',
                 ],
             ]
-        );
+        ));
     }
 
     private function buildCategoryNavChain(DownloadCategory $category): void

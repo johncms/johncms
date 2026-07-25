@@ -18,6 +18,7 @@ use Johncms\Modules\Library\Application\Services\Rating;
 use Johncms\Modules\Library\Application\Services\Tree;
 use Johncms\Utils\DateFormatterInterface;
 use Johncms\Utils\PlainTextFormatter;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class ArticleController
 {
@@ -32,7 +33,7 @@ final readonly class ArticleController
     ) {
     }
 
-    public function __invoke(string $libraryPath): string
+    public function __invoke(string $libraryPath): Response
     {
         $parsed = $this->articlePathService->parseArticlePath('/library/' . ltrim($libraryPath, '/'));
         if ($parsed === null) {
@@ -43,12 +44,14 @@ final readonly class ArticleController
         $article = LibraryText::query()->find($id);
 
         if ($article === null || (! $article->premod && ! ($this->currentUser->rights > 4))) {
-            http_response_code(404);
-            return $this->render->render('system::pages/result', [
-                'title'   => __('Library'),
-                'type'    => 'alert-danger',
-                'message' => __('Articles do not exist'),
-            ]);
+            return new Response(
+                $this->render->render('system::pages/result', [
+                    'title'   => __('Library'),
+                    'type'    => 'alert-danger',
+                    'message' => __('Articles do not exist'),
+                ]),
+                Response::HTTP_NOT_FOUND
+            );
         }
 
         if (! isset($_SESSION['lib']) || $_SESSION['lib'] !== $id) {
@@ -110,7 +113,7 @@ final readonly class ArticleController
 
         $articleUrl = $article->url;
 
-        return $this->render->render('library::book', [
+        return new Response($this->render->render('library::book', [
             'res'         => [
                 'id'          => $article->id,
                 'url'         => $articleUrl,
@@ -129,6 +132,6 @@ final readonly class ArticleController
             'cover'       => $cover,
             'moderMenu'   => $moderMenu,
             'pagination'  => $pagination->render(),
-        ]);
+        ]));
     }
 }

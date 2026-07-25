@@ -74,7 +74,7 @@ msgstr ""
 
 #: modules/consent/templates/admin/cookie-banner.phtml:65
 #: modules/consent/templates/admin/delete.phtml:17
-#: modules/consent/templates/admin/form.phtml:88
+#: modules/consent/templates/admin/form.phtml:87
 #: modules/consent/templates/admin/list.phtml:34
 #: modules/consent/templates/admin/log.phtml:23
 msgid "Version"
@@ -85,7 +85,7 @@ msgid "Increase the version to show the banner again to everyone."
 msgstr ""
 
 #: modules/consent/templates/admin/cookie-banner.phtml:75
-#: modules/consent/templates/admin/form.phtml:109
+#: modules/consent/templates/admin/form.phtml:108
 msgid "Save"
 msgstr ""
 
@@ -99,7 +99,7 @@ msgid "Delete"
 msgstr ""
 
 #: modules/consent/templates/admin/delete.phtml:24
-#: modules/consent/templates/admin/form.phtml:110
+#: modules/consent/templates/admin/form.phtml:109
 msgid "Cancel"
 msgstr ""
 
@@ -122,23 +122,23 @@ msgstr ""
 msgid "Title"
 msgstr ""
 
-#: modules/consent/templates/admin/form.phtml:69
+#: modules/consent/templates/admin/form.phtml:68
 msgid "Shown next to the checkbox in the form. HTML is allowed, for example links to other pages:"
 msgstr ""
 
-#: modules/consent/templates/admin/form.phtml:75
+#: modules/consent/templates/admin/form.phtml:74
 msgid "Text"
 msgstr ""
 
-#: modules/consent/templates/admin/form.phtml:84
+#: modules/consent/templates/admin/form.phtml:83
 msgid "Full text of the consent, shown on a separate page. Leave it empty if the consent has no page of its own: then the checkbox shows only the title, without a link to the text."
 msgstr ""
 
-#: modules/consent/templates/admin/form.phtml:101
+#: modules/consent/templates/admin/form.phtml:100
 msgid "Required (blocks the form without the checkbox)"
 msgstr ""
 
-#: modules/consent/templates/admin/form.phtml:106
+#: modules/consent/templates/admin/form.phtml:105
 #: modules/consent/templates/admin/list.phtml:36
 msgid "Active"
 msgstr ""

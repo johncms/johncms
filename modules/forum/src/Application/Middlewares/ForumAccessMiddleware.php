@@ -8,7 +8,7 @@ use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\Router\MiddlewareInterface;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 
 final readonly class ForumAccessMiddleware implements MiddlewareInterface

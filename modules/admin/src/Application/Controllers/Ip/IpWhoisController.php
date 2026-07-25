@@ -8,7 +8,7 @@ use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Modules\Admin\Application\DTO\IpWhoisResultDTO;
 use Johncms\Modules\Admin\Application\UseCases\GetIpWhoisUseCase;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 
 final readonly class IpWhoisController
@@ -25,7 +25,7 @@ final readonly class IpWhoisController
 
     public function __invoke(): string
     {
-        $ip = (string) $this->request->getQuery('ip', '', FILTER_VALIDATE_IP);
+        $ip = (string) (filter_var($this->request->queryParam('ip'), FILTER_VALIDATE_IP) ?: '');
 
         $title = 'IP Whois';
         $this->navChain->add($title);

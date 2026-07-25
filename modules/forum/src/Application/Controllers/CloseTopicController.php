@@ -11,7 +11,7 @@ use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Application\UseCases\CloseTopicUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetCloseTopicContextUseCase;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 
 final readonly class CloseTopicController
@@ -45,7 +45,7 @@ final readonly class CloseTopicController
             pageNotFound();
         }
 
-        $closed = $this->request->getQuery('closed') !== null;
+        $closed = $this->request->query->has('closed');
         $this->closeTopicUseCase->execute($topicId, $closed);
         redirect($this->topicPathService->getTopicUrlById($topicId) ?? '/forum/');
     }

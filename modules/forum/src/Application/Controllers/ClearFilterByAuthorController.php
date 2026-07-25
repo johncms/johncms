@@ -9,7 +9,7 @@ use Johncms\Modules\Forum\Application\Exceptions\ForumValidationException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\ClearFilterByAuthorUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetFilterByAuthorContextUseCase;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 
@@ -28,10 +28,10 @@ final readonly class ClearFilterByAuthorController
 
     public function __invoke(int $id): string
     {
-        $page = max(1, (int) $this->request->getQuery('page', 1));
+        $page = max(1, $this->request->queryInt('page', 1));
 
         $validator = new Validator(
-            ['csrf_token' => (string) $this->request->getPost('csrf_token', '')],
+            ['csrf_token' => $this->request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

@@ -42,12 +42,12 @@ msgstr ""
 msgid "List of users"
 msgstr ""
 
-#: modules/community/src/Application/UseCases/ViewSearchUseCase.php:26
+#: modules/community/src/Application/UseCases/ViewSearchUseCase.php:25
 #: modules/community/templates/index.phtml:32
 msgid "Nickname"
 msgstr ""
 
-#: modules/community/src/Application/UseCases/ViewSearchUseCase.php:26
+#: modules/community/src/Application/UseCases/ViewSearchUseCase.php:25
 msgid "Invalid length"
 msgstr ""
 

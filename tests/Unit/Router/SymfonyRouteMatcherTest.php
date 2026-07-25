@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Router;
 
+use Johncms\Http\Request;
+use Johncms\Http\RequestPathNormalizer;
 use Johncms\Router\RouteMatchResult;
 use Johncms\Router\SymfonyRouteMatcher;
 use PHPUnit\Framework\TestCase;
@@ -34,7 +36,7 @@ final class SymfonyRouteMatcherTest extends TestCase
         );
 
         $context = new RequestContext();
-        $matcher = new SymfonyRouteMatcher(new UrlMatcher($routes, $context), $context);
+        $matcher = new SymfonyRouteMatcher(new UrlMatcher($routes, $context), $context, new RequestPathNormalizer());
 
         $result = $matcher->dispatch('GET', '/forum/topic/42');
 
@@ -50,7 +52,7 @@ final class SymfonyRouteMatcherTest extends TestCase
         $routes->add('guestbook.clean', new Route('/guestbook/clean', ['_handler' => 'clean_handler'], [], [], '', [], ['GET']));
 
         $context = new RequestContext();
-        $matcher = new SymfonyRouteMatcher(new UrlMatcher($routes, $context), $context);
+        $matcher = new SymfonyRouteMatcher(new UrlMatcher($routes, $context), $context, new RequestPathNormalizer());
 
         $result = $matcher->dispatch('POST', '/guestbook/clean');
 
@@ -65,12 +67,30 @@ final class SymfonyRouteMatcherTest extends TestCase
         $routes->add('custom.homepage', new Route('/', ['_handler' => 'override_handler'], [], [], '', [], ['GET']), 1);
 
         $context = new RequestContext();
-        $matcher = new SymfonyRouteMatcher(new UrlMatcher($routes, $context), $context);
+        $matcher = new SymfonyRouteMatcher(new UrlMatcher($routes, $context), $context, new RequestPathNormalizer());
 
         $result = $matcher->dispatch('GET', '/');
 
         self::assertSame(RouteMatchResult::FOUND, $result->status);
         self::assertSame('override_handler', $result->handler);
+    }
+
+    public function testMatchRequestNormalizesThePathAndRefreshesTheContext(): void
+    {
+        $routes = new RouteCollection();
+        $routes->add('forum.index', new Route('/forum', ['_handler' => 'forum_handler'], [], [], '', [], ['GET']));
+
+        $context = new RequestContext();
+        $matcher = new SymfonyRouteMatcher(new UrlMatcher($routes, $context), $context, new RequestPathNormalizer());
+
+        // Trailing slash and the legacy entry point both have to reach the same route.
+        self::assertSame(RouteMatchResult::FOUND, $matcher->matchRequest(Request::create('/forum/'))->status);
+        self::assertSame(RouteMatchResult::FOUND, $matcher->matchRequest(Request::create('/forum/index.php'))->status);
+
+        $matcher->matchRequest(Request::create('https://example.org/forum', 'GET'));
+
+        self::assertSame('example.org', $context->getHost());
+        self::assertSame('https', $context->getScheme());
     }
 
     public function testDispatchReturnsNotFoundResult(): void
@@ -79,7 +99,7 @@ final class SymfonyRouteMatcherTest extends TestCase
         $routes->add('home', new Route('/', ['_handler' => 'home_handler'], [], [], '', [], ['GET']));
 
         $context = new RequestContext();
-        $matcher = new SymfonyRouteMatcher(new UrlMatcher($routes, $context), $context);
+        $matcher = new SymfonyRouteMatcher(new UrlMatcher($routes, $context), $context, new RequestPathNormalizer());
 
         $result = $matcher->dispatch('GET', '/unknown');
 

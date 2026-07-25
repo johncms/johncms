@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Http\Pagination;
 
 use Johncms\Http\Pagination\Pagination;
-use Johncms\System\Http\Request;
+use Johncms\Http\QueryStringBuilder;
 use Johncms\System\View\Render;
 use PHPUnit\Framework\TestCase;
 
@@ -142,19 +142,14 @@ final class PaginationTest extends TestCase
         int $currentPage = 1,
         ?Render $renderer = null,
     ): Pagination {
-        $request = $this->createMock(Request::class);
-        $request->method('getQueryString')->willReturnCallback(
-            static fn (array $removeParams = [], array $addParams = []): string => $addParams === []
-                ? '/guestbook/'
-                : '/guestbook/?' . http_build_query($addParams)
-        );
-
         return new Pagination(
-            request:     $request,
-            renderer:    $renderer ?? $this->createMock(Render::class),
-            total:       $total,
-            perPage:     $perPage,
-            currentPage: $currentPage,
+            queryStringBuilder: new QueryStringBuilder(),
+            renderer:           $renderer ?? $this->createMock(Render::class),
+            currentPath:        '/guestbook/',
+            currentQuery:       [],
+            total:              $total,
+            perPage:            $perPage,
+            currentPage:        $currentPage,
         );
     }
 }

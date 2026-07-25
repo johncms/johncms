@@ -11,7 +11,7 @@ use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\ViewForumFilesUseCase;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 
@@ -32,16 +32,16 @@ final readonly class ForumFilesController
 
     public function __invoke(): string
     {
-        $page = max(1, (int) $this->request->getQuery('page', 1));
+        $page = max(1, $this->request->queryInt('page', 1));
         $start = ($page - 1) * (int) $this->currentUser->config->kmess;
 
         $query = new ForumFilesQueryDTO(
             start: $start,
-            contextCategoryId: max(0, (int) $this->request->getQuery('c', 0)),
-            contextSectionId: max(0, (int) $this->request->getQuery('s', 0)),
-            contextTopicId: max(0, (int) $this->request->getQuery('t', 0)),
-            fileType: $this->normalizeFileType((int) $this->request->getQuery('do', 0)),
-            isNew: $this->request->getQuery('new') !== null,
+            contextCategoryId: max(0, $this->request->queryInt('c', 0)),
+            contextSectionId: max(0, $this->request->queryInt('s', 0)),
+            contextTopicId: max(0, $this->request->queryInt('t', 0)),
+            fileType: $this->normalizeFileType($this->request->queryInt('do', 0)),
+            isNew: $this->request->query->has('new'),
         );
 
         try {

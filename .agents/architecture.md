@@ -31,6 +31,19 @@ Infrastructure
 * Implement repository contracts in **Infrastructure**.
 * Inject interfaces into services, use cases, and controllers.
 
+### HTTP types stay in the HTTP layer
+
+* HTTP request/response types (`Johncms\Http\Request`, `Response`, and the framework
+  types they extend) are allowed **only in controllers, middleware and the HTTP layer itself**
+  — `system/src/Http/` (the kernel, `RequestPathNormalizer`, `ResponseNormalizer`,
+  `ExceptionResponseFactory`, pagination) and the router. Turning a request into a response is
+  what those classes are for; the rule exists to keep HTTP out of everything else.
+* Application and Domain must not reference them. Do not accept a `Request` in a use case,
+  DTO, service, or repository, and do not leak an HTTP upload type (e.g. PSR-7
+  `UploadedFileInterface`) past the controller — map it to a plain DTO first.
+* Controllers translate HTTP into calls on the layers below and translate the result back
+  into a response; the HTTP mapping lives there and nowhere else.
+
 ## Refactoring Principles
 
 Refactor in **small, safe steps** while preserving existing behavior.

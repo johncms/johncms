@@ -10,7 +10,7 @@ use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\GetCuratorsContextUseCase;
 use Johncms\Modules\Forum\Application\UseCases\UpdateCuratorsUseCase;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 
 final readonly class CuratorsController
@@ -54,14 +54,14 @@ final readonly class CuratorsController
         }
 
         $topic = $context['topic'];
-        $page = max(1, (int) $this->request->getQuery('page', 1));
+        $page = max(1, $this->request->queryInt('page', 1));
         $total = count($context['candidates']);
 
         $selectedUsers = ! empty($topic->curators) ? $topic->curators : [];
         $saved = false;
 
-        if ($this->request->getPost('submit') !== null) {
-            $selectedUsers = $this->request->getPost('users', []);
+        if ($this->request->hasBody('submit')) {
+            $selectedUsers = $this->request->bodyList('users');
             if (! is_array($selectedUsers)) {
                 $selectedUsers = [];
             }
@@ -82,7 +82,7 @@ final readonly class CuratorsController
             ];
         }
 
-        if ($this->request->getPost('submit') !== null && $total > 0) {
+        if ($this->request->hasBody('submit') && $total > 0) {
             $this->updateCuratorsUseCase->execute($topic, $curators);
             $saved = true;
         }

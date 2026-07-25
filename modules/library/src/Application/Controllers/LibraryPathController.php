@@ -8,6 +8,7 @@ use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Library\Application\Services\LibraryArticlePathService;
 use Johncms\Modules\Library\Application\Services\LibraryCategoryPathService;
 use Johncms\System\View\Render;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class LibraryPathController
 {
@@ -23,7 +24,7 @@ final readonly class LibraryPathController
         $this->render->addFolder('libraryHelpers', MODULES_PATH . 'library/templates/helpers/');
     }
 
-    public function __invoke(string $libraryPath): string
+    public function __invoke(string $libraryPath): Response
     {
         if ($this->categoryPathService->findCategoryByPath($libraryPath) !== null) {
             return $this->sectionController->__invoke($libraryPath);

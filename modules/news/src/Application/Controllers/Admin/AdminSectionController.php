@@ -13,7 +13,7 @@ use Johncms\Modules\News\Application\Utils\Helpers;
 use Johncms\Modules\News\Domain\Models\NewsArticle;
 use Johncms\Modules\News\Domain\Models\NewsSection;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 
 final readonly class AdminSectionController
@@ -73,11 +73,11 @@ final readonly class AdminSectionController
             'section_id' => $section_id,
             'fields'     => [
                 'parent'      => $section_id,
-                'name'        => $request->getPost('name', ''),
-                'code'        => $request->getPost('code', ''),
-                'keywords'    => $request->getPost('keywords', ''),
-                'description' => $request->getPost('description', ''),
-                'text'        => $request->getPost('text', ''),
+                'name'        => $request->body('name', ''),
+                'code'        => $request->body('code', ''),
+                'keywords'    => $request->body('keywords', ''),
+                'description' => $request->body('description', ''),
+                'text'        => $request->body('text', ''),
             ],
         ];
 
@@ -155,11 +155,11 @@ final readonly class AdminSectionController
             'back_url'   => '/admin/news/content/' . $section->parent,
             'section_id' => $section_id,
             'fields'     => [
-                'name'        => $request->getPost('name', $section->name),
-                'code'        => $request->getPost('code', $section->code),
-                'keywords'    => $request->getPost('keywords', $section->keywords),
-                'description' => $request->getPost('description', $section->description),
-                'text'        => $request->getPost('text', $section->text),
+                'name'        => $request->body('name', (string) $section->name),
+                'code'        => $request->body('code', (string) $section->code),
+                'keywords'    => $request->body('keywords', (string) $section->keywords),
+                'description' => $request->body('description', (string) $section->description),
+                'text'        => $request->body('text', (string) $section->text),
             ],
         ];
 
@@ -220,7 +220,7 @@ final readonly class AdminSectionController
             exit($exception->getMessage());
         }
 
-        $post = $request->getParsedBody();
+        $post = $request->request->all();
 
         // Checking the data and deleting the section
         if (

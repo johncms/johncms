@@ -9,7 +9,7 @@ use Johncms\Modules\Admin\Domain\Exceptions\ConfigWriteException;
 use Johncms\Modules\Consent\Application\DTO\CookieBannerSettingsDTO;
 use Johncms\Modules\Consent\Application\UseCases\UpdateCookieBannerSettingsUseCase;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 
@@ -52,7 +52,7 @@ final readonly class CookieBannerController
     {
         $languageCodes = array_keys(config('johncms')['lng_list'] ?? []);
 
-        $postedTexts = $this->request->getPost('cookie_banner_text');
+        $postedTexts = $this->request->body('cookie_banner_text');
         $texts = [];
         if (is_array($postedTexts)) {
             foreach ($languageCodes as $code) {
@@ -61,8 +61,8 @@ final readonly class CookieBannerController
         }
 
         return new CookieBannerSettingsDTO(
-            enabled: $this->request->getPost('cookie_banner_enabled') !== null ? 1 : 0,
-            version: max(1, (int) $this->request->getPost('cookie_banner_version', 1, FILTER_VALIDATE_INT)),
+            enabled: $this->request->hasBody('cookie_banner_enabled') ? 1 : 0,
+            version: max(1, $this->request->bodyInt('cookie_banner_version', 1)),
             texts: $texts,
         );
     }
@@ -70,7 +70,7 @@ final readonly class CookieBannerController
     private function isCsrfValid(): bool
     {
         $validator = new Validator(
-            ['csrf_token' => (string) $this->request->getPost('csrf_token', '')],
+            ['csrf_token' => $this->request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

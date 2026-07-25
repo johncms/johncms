@@ -17,7 +17,7 @@ use Johncms\Media\MediaEmbed;
 use Johncms\Security\AntifloodCheckerInterface;
 use Johncms\Security\HTMLPurifier;
 use Johncms\Smilies\SmiliesRendererInterface;
-use Johncms\System\Http\Environment;
+use Johncms\Http\Environment;
 use Johncms\System\Users\User;
 use Johncms\Users\IgnoreListCheckerInterface;
 use Johncms\Users\User as UserModel;

@@ -8,7 +8,7 @@ use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Login\Application\UseCases\PerformLoginUseCase;
 use Johncms\Modules\Login\Domain\Enums\LoginStatus;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 
 final readonly class LoginController
@@ -28,10 +28,10 @@ final readonly class LoginController
         $this->navChain->add(__('Login'));
 
         $error = [];
-        $userLogin = (string) $this->request->getPost('n', '');
-        $userPass = (string) $this->request->getPost('p', '');
+        $userLogin = $this->request->body('n', '');
+        $userPass = $this->request->body('p', '');
 
-        if ($this->request->getPost('login') !== null) {
+        if ($this->request->hasBody('login')) {
             if (empty($userLogin)) {
                 $error[] = __('You have not entered login');
             }
@@ -41,7 +41,7 @@ final readonly class LoginController
             }
 
             if (! $error) {
-                $captchaCode = (string) $this->request->getPost('code', '');
+                $captchaCode = $this->request->body('code', '');
                 $result = $this->performLogin->execute($userLogin, $userPass, $captchaCode);
 
                 return match ($result->status) {

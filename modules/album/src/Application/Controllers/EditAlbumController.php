@@ -14,7 +14,7 @@ use Johncms\Modules\Album\Application\Exceptions\AlbumValidationException;
 use Johncms\Modules\Album\Application\UseCases\GetEditAlbumContextUseCase;
 use Johncms\Modules\Album\Application\UseCases\SaveAlbumUseCase;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 
@@ -79,7 +79,7 @@ final readonly class EditAlbumController
         try {
             $this->saveAlbumUseCase->execute($command, $context);
         } catch (AlbumValidationException $e) {
-            return $this->renderForm($context, $command->toFormData(), $e->errors);
+            return $this->renderForm($context, $command->toFormData(), $e->getErrors());
         }
 
         return $this->render->render(
@@ -126,10 +126,10 @@ final readonly class EditAlbumController
     private function buildCommand(): SaveAlbumCommand
     {
         return new SaveAlbumCommand(
-            name: (string) $this->request->getPost('name', ''),
-            description: (string) $this->request->getPost('description', ''),
-            password: (string) $this->request->getPost('password', ''),
-            access: (int) $this->request->getPost('access', 0, FILTER_VALIDATE_INT),
+            name: $this->request->body('name', ''),
+            description: $this->request->body('description', ''),
+            password: $this->request->body('password', ''),
+            access: $this->request->bodyInt('access'),
         );
     }
 

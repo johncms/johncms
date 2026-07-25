@@ -9,12 +9,13 @@ use Johncms\Modules\Library\Application\Services\LibrarySlugService;
 use Johncms\Modules\Library\Domain\Models\LibraryCategory;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Modules\Library\Application\Services\Hashtags;
 use Johncms\Modules\Library\Application\Services\Tree;
 use Johncms\Modules\Library\Application\Services\Utils;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class EditArticleController
 {
@@ -29,17 +30,19 @@ final readonly class EditArticleController
         $this->controllerContext->initModule('library');
     }
 
-    public function __invoke(int $id): string
+    public function __invoke(int $id): Response
     {
         $article = LibraryText::query()->find($id);
 
         if ($article === null) {
-            http_response_code(404);
-            return $this->render->render('system::pages/result', [
-                'title'   => __('Edit Article'),
-                'type'    => 'alert-danger',
-                'message' => __('Articles do not exist'),
-            ]);
+            return new Response(
+                $this->render->render('system::pages/result', [
+                    'title'   => __('Edit Article'),
+                    'type'    => 'alert-danger',
+                    'message' => __('Articles do not exist'),
+                ]),
+                Response::HTTP_NOT_FOUND
+            );
         }
 
         $isAdmin = $this->currentUser->rights > 4;
@@ -47,12 +50,14 @@ final readonly class EditArticleController
             && (int) $article->uploader_id === (int) $this->currentUser->id;
 
         if (! $isAdmin && ! $isOwner) {
-            http_response_code(403);
-            return $this->render->render('system::pages/result', [
-                'title'   => __('Edit Article'),
-                'type'    => 'alert-danger',
-                'message' => __('Access forbidden'),
-            ]);
+            return new Response(
+                $this->render->render('system::pages/result', [
+                    'title'   => __('Edit Article'),
+                    'type'    => 'alert-danger',
+                    'message' => __('Access forbidden'),
+                ]),
+                Response::HTTP_FORBIDDEN
+            );
         }
 
         $this->navChain->add(__('Library'), '/library/');
@@ -70,11 +75,11 @@ final readonly class EditArticleController
         if ($this->request->getMethod() === 'POST') {
             $this->save($id, $article, $isAdmin);
             $article->refresh();
-            return $this->render->render('library::edit_article', [
+            return new Response($this->render->render('library::edit_article', [
                 'id'          => $id,
                 'article_url' => $article->url,
                 'saved'       => true,
-            ]);
+            ]));
         }
 
         $categories = $isAdmin
@@ -83,7 +88,7 @@ final readonly class EditArticleController
 
         $tags = (new Hashtags($id))->getAllStatTags() ?: '';
 
-        return $this->render->render('library::edit_article', [
+        return new Response($this->render->render('library::edit_article', [
             'id'          => $id,
             'article_url' => $article->url,
             'article'     => $article,
@@ -91,12 +96,12 @@ final readonly class EditArticleController
             'tags'        => $tags,
             'isAdmin'     => $isAdmin,
             'saved'       => false,
-        ]);
+        ]));
     }
 
     private function save(int $id, LibraryText $article, bool $isAdmin): void
     {
-        $post = $this->request->getParsedBody();
+        $post = $this->request->request->all();
 
         if (isset($post['tags'])) {
             $obj = new Hashtags($id);
@@ -108,9 +113,9 @@ final readonly class EditArticleController
             }
         }
 
-        $files = $this->request->getUploadedFiles();
+        $files = $this->request->files->all();
         $screen = $files['image'] ?? null;
-        if ($screen !== null && $screen->getClientFilename()) {
+        if ($screen !== null && $screen->getClientOriginalName()) {
             try {
                 Utils::imageUpload($id, $screen);
             } catch (\Exception) {

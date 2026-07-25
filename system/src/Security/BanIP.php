@@ -13,7 +13,7 @@ declare(strict_types=1);
 namespace Johncms\Security;
 
 use Illuminate\Database\Capsule\Manager;
-use Johncms\System\Http\Environment;
+use Johncms\Http\Environment;
 
 class BanIP
 {

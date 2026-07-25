@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Album\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\UploadedFileMapper;
 use Johncms\Modules\Album\Application\Exceptions\AlbumEditForbiddenException;
 use Johncms\Modules\Album\Application\Exceptions\AlbumNotFoundException;
 use Johncms\Modules\Album\Application\Exceptions\ImageUploadException;
@@ -12,9 +13,10 @@ use Johncms\Modules\Album\Application\UseCases\GetUploadPhotoContextUseCase;
 use Johncms\Modules\Album\Application\UseCases\UploadPhotoUseCase;
 use Johncms\Modules\Album\Domain\Models\Album;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 final readonly class UploadPhotoController
 {
@@ -26,6 +28,7 @@ final readonly class UploadPhotoController
         private User $currentUser,
         private GetUploadPhotoContextUseCase $getContextUseCase,
         private UploadPhotoUseCase $uploadPhotoUseCase,
+        private UploadedFileMapper $uploadedFileMapper,
     ) {
         $this->controllerContext->initModule('album');
     }
@@ -47,14 +50,14 @@ final readonly class UploadPhotoController
             return $album;
         }
 
-        $file = $this->request->getUploadedFiles()['imagefile'] ?? null;
-        $description = (string) $this->request->getPost('description', '');
+        $uploaded = $this->request->files->get('imagefile');
+        $description = $this->request->body('description', '');
 
         try {
-            if ($file === null) {
+            if (! $uploaded instanceof UploadedFile) {
                 throw new ImageUploadException(__('An error occurred'));
             }
-            $this->uploadPhotoUseCase->execute($album, $file, $description);
+            $this->uploadPhotoUseCase->execute($album, $this->uploadedFileMapper->fromUploadedFile($uploaded), $description);
         } catch (ImageUploadException $e) {
             return $this->renderForm($album, [$e->getMessage()]);
         }

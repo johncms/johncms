@@ -7,7 +7,8 @@ namespace Johncms\Modules\Downloads\Application\Controllers;
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Downloads\Domain\Models\DownloadCategory;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 final readonly class RecountController
 {
@@ -18,9 +19,9 @@ final readonly class RecountController
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(): never
+    public function __invoke(): RedirectResponse
     {
-        $id = max(0, (int) $this->request->getQuery('id', 0));
+        $id = max(0, $this->request->queryInt('id', 0));
 
         DownloadCategory::query()->each(function (DownloadCategory $category): void {
             $count = DownloadFile::query()
@@ -30,7 +31,6 @@ final readonly class RecountController
             $category->update(['total' => $count]);
         });
 
-        header('Location: /downloads/' . ($id ? '?id=' . $id : ''));
-        exit;
+        return new RedirectResponse('/downloads/' . ($id ? '?id=' . $id : ''));
     }
 }

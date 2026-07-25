@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Tests\Unit\Modules\Guestbook\Access;
 
 use Johncms\Modules\Guestbook\Application\Access\GuestbookMode;
-use Johncms\System\Http\Request;
-use Johncms\System\Http\Session;
+use Johncms\Http\Request;
+use Johncms\Http\Session;
 use PHPUnit\Framework\TestCase;
 use Tests\Support\UserFactory;
 
@@ -76,9 +76,6 @@ final class GuestbookModeTest extends TestCase
 
     private function makeRequest(string $do): Request
     {
-        $request = $this->createMock(Request::class);
-        $request->method('getQuery')->with('do')->willReturn($do);
-
-        return $request;
+        return new Request(['do' => $do]);
     }
 }

@@ -24,55 +24,55 @@ msgid "Themes"
 msgstr ""
 
 #: modules/profile/src/Application/Controllers/ActivityController.php:117
-#: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:42
+#: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:41
 #: modules/profile/templates/ban.phtml:46
 #: modules/profile/templates/statistics.phtml:55
 msgid "Comments"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/AvatarController.php:52
-#: modules/profile/src/Application/Controllers/PhotoController.php:52
+#: modules/profile/src/Application/Controllers/AvatarController.php:55
+#: modules/profile/src/Application/Controllers/PhotoController.php:55
 msgid "An error occurred"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/AvatarController.php:59
-#: modules/profile/src/Application/Controllers/AvatarController.php:71
-#: modules/profile/src/Application/Controllers/AvatarController.php:82
-#: modules/profile/src/Application/Controllers/AvatarController.php:125
+#: modules/profile/src/Application/Controllers/AvatarController.php:62
+#: modules/profile/src/Application/Controllers/AvatarController.php:74
+#: modules/profile/src/Application/Controllers/AvatarController.php:85
+#: modules/profile/src/Application/Controllers/AvatarController.php:128
 msgid "Upload Avatar"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/AvatarController.php:63
+#: modules/profile/src/Application/Controllers/AvatarController.php:66
 #: modules/profile/src/Application/Controllers/ChangePasswordController.php:97
-#: modules/profile/src/Application/Controllers/PhotoController.php:63
+#: modules/profile/src/Application/Controllers/PhotoController.php:66
 msgid "Repeat"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/AvatarController.php:73
+#: modules/profile/src/Application/Controllers/AvatarController.php:76
 msgid "The avatar is successfully uploaded"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/AvatarController.php:75
+#: modules/profile/src/Application/Controllers/AvatarController.php:78
 #: modules/profile/src/Application/Controllers/ChangePasswordController.php:114
 #: modules/profile/src/Application/Controllers/KarmaController.php:127
-#: modules/profile/src/Application/Controllers/PhotoController.php:75
+#: modules/profile/src/Application/Controllers/PhotoController.php:78
 #: modules/profile/src/Application/Controllers/RestorePasswordController.php:121
 #: modules/profile/templates/restore_password.phtml:43
 #: modules/profile/templates/restore_password_set.phtml:19
 msgid "Continue"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/AvatarController.php:84
+#: modules/profile/src/Application/Controllers/AvatarController.php:87
 #: modules/profile/src/Application/Controllers/EditProfileController.php:190
-#: modules/profile/src/Application/Controllers/PhotoController.php:84
+#: modules/profile/src/Application/Controllers/PhotoController.php:87
 #: modules/profile/src/Application/UseCases/GetProfileViewUseCase.php:76
 msgid "My Profile"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/AvatarController.php:84
+#: modules/profile/src/Application/Controllers/AvatarController.php:87
 #: modules/profile/src/Application/Controllers/EditProfileController.php:190
 #: modules/profile/src/Application/Controllers/GuestbookController.php:47
-#: modules/profile/src/Application/Controllers/PhotoController.php:84
+#: modules/profile/src/Application/Controllers/PhotoController.php:87
 #: modules/profile/templates/account.phtml:30
 msgid "Profile"
 msgstr ""
@@ -222,7 +222,7 @@ msgstr ""
 #: modules/profile/src/Application/Controllers/GuestbookController.php:48
 #: modules/profile/src/Application/Controllers/GuestbookController.php:63
 #: modules/profile/src/Application/Controllers/GuestbookController.php:76
-#: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:44
+#: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:43
 #: modules/profile/templates/account.phtml:40
 #: modules/profile/templates/ban.phtml:50
 #: modules/profile/templates/statistics.phtml:54
@@ -281,14 +281,14 @@ msgstr ""
 msgid "Access forbidden"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/PhotoController.php:59
-#: modules/profile/src/Application/Controllers/PhotoController.php:71
-#: modules/profile/src/Application/Controllers/PhotoController.php:82
-#: modules/profile/src/Application/Controllers/PhotoController.php:125
+#: modules/profile/src/Application/Controllers/PhotoController.php:62
+#: modules/profile/src/Application/Controllers/PhotoController.php:74
+#: modules/profile/src/Application/Controllers/PhotoController.php:85
+#: modules/profile/src/Application/Controllers/PhotoController.php:128
 msgid "Upload Photo"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/PhotoController.php:73
+#: modules/profile/src/Application/Controllers/PhotoController.php:76
 msgid "The photo is successfully uploaded"
 msgstr ""
 
@@ -346,7 +346,7 @@ msgstr ""
 
 #: modules/profile/src/Application/Controllers/SettingsController.php:127
 #: modules/profile/src/Application/Controllers/SettingsController.php:191
-#: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:43
+#: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:42
 #: modules/profile/templates/ban.phtml:56
 #: modules/profile/templates/statistics.phtml:53
 msgid "Forum"
@@ -424,31 +424,31 @@ msgstr ""
 msgid "You do not have enought rights to ban this user"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:39
+#: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:38
 #: modules/profile/templates/ban.phtml:38
 msgid "Full block"
 msgstr ""
 
+#: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:39
 #: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:40
-#: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:41
 #: modules/profile/templates/ban.phtml:42
 msgid "Private messages"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:45
+#: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:44
 #: modules/profile/templates/ban.phtml:62
 msgid "Library"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:61
+#: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:60
 msgid "Cancel Ban"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:64
+#: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:63
 msgid "Delete Ban"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:71
+#: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:70
 #: modules/profile/templates/ban.phtml:88
 msgid "Till cancel"
 msgstr ""
@@ -457,17 +457,17 @@ msgstr ""
 msgid "You cannot edit profile of higher administration"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/GetKarmaListUseCase.php:61
+#: modules/profile/src/Application/UseCases/GetKarmaListUseCase.php:64
 msgid "All"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/GetKarmaListUseCase.php:62
+#: modules/profile/src/Application/UseCases/GetKarmaListUseCase.php:65
 #: modules/profile/templates/karma_vote.phtml:41
 #: modules/profile/templates/view.phtml:136
 msgid "Positive"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/GetKarmaListUseCase.php:63
+#: modules/profile/src/Application/UseCases/GetKarmaListUseCase.php:66
 #: modules/profile/templates/karma_vote.phtml:45
 #: modules/profile/templates/view.phtml:142
 msgid "Negative"
@@ -495,7 +495,7 @@ msgid "Edit"
 msgstr ""
 
 #: modules/profile/src/Application/UseCases/GetRecoveryContextUseCase.php:28
-#: modules/profile/src/Application/UseCases/SendPasswordRecoveryUseCase.php:36
+#: modules/profile/src/Application/UseCases/SendPasswordRecoveryUseCase.php:35
 msgid "User does not exists"
 msgstr ""
 
@@ -507,49 +507,49 @@ msgstr ""
 msgid "Time allotted for the password recovery has been exceeded"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/GetVoteContextUseCase.php:35
+#: modules/profile/src/Application/UseCases/GetVoteContextUseCase.php:33
 msgid "You are not allowed to vote for users"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/GetVoteContextUseCase.php:42
+#: modules/profile/src/Application/UseCases/GetVoteContextUseCase.php:40
 msgid "It is forbidden to vote for administration"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/GetVoteContextUseCase.php:46
+#: modules/profile/src/Application/UseCases/GetVoteContextUseCase.php:44
 msgid "Cheating karma is forbidden"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/GetVoteContextUseCase.php:51
+#: modules/profile/src/Application/UseCases/GetVoteContextUseCase.php:49
 #, php-format
 msgid "Users can take part in voting if they have stayed on a site not less %s and their score on the forum %d posts."
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/GetVoteContextUseCase.php:52
+#: modules/profile/src/Application/UseCases/GetVoteContextUseCase.php:50
 msgid "days"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/GetVoteContextUseCase.php:59
+#: modules/profile/src/Application/UseCases/GetVoteContextUseCase.php:57
 msgid "You can vote for single user just one time for 24 hours"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/GetVoteContextUseCase.php:65
+#: modules/profile/src/Application/UseCases/GetVoteContextUseCase.php:63
 #, php-format
 msgid "You have exceeded the limit of votes. New voices will be added %s"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/SendPasswordRecoveryUseCase.php:31
+#: modules/profile/src/Application/UseCases/SendPasswordRecoveryUseCase.php:30
 msgid "The required fields are not filled"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/SendPasswordRecoveryUseCase.php:40
+#: modules/profile/src/Application/UseCases/SendPasswordRecoveryUseCase.php:39
 msgid "Invalid Email address"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/SendPasswordRecoveryUseCase.php:44
+#: modules/profile/src/Application/UseCases/SendPasswordRecoveryUseCase.php:43
 msgid "Password can be recovered 1 time per day"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/SendPasswordRecoveryUseCase.php:59
+#: modules/profile/src/Application/UseCases/SendPasswordRecoveryUseCase.php:58
 msgid "Password recovery"
 msgstr ""
 

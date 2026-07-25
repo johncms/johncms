@@ -13,9 +13,11 @@ use Johncms\FileInfo;
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
-use Johncms\System\Http\Session;
+use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\System\View\Render;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class EditScreenController
 {
@@ -32,7 +34,7 @@ final readonly class EditScreenController
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(int $id): string
+    public function __invoke(int $id): Response
     {
         $file = DownloadFile::query()
             ->where('id', $id)
@@ -44,8 +46,8 @@ final readonly class EditScreenController
         }
 
         if ($this->request->getMethod() === 'POST') {
-            $doParam = $this->request->getQuery('do');
-            if ($doParam !== null) {
+            $doParam = $this->request->queryParam('do');
+            if ($doParam !== '') {
                 return $this->handleDelete($id, $doParam);
             }
 
@@ -66,18 +68,18 @@ final readonly class EditScreenController
         $this->navChain->add($pageTitle, $this->filePathService->getFileUrl($file));
         $this->navChain->add(__('Managing Screenshots'));
 
-        return $this->render->render('downloads::edit_screen', [
+        return new Response($this->render->render('downloads::edit_screen', [
             'id'           => $id,
             'screens'      => ScreenService::getScreens($id),
             'delete_token' => $deleteToken,
             'action_url'   => '/downloads/edit-screen/' . $id . '/',
             'file_url'     => $this->filePathService->getFileUrl($file),
-        ]);
+        ]));
     }
 
-    private function handleDelete(int $id, string $filename): string
+    private function handleDelete(int $id, string $filename): Response
     {
-        $post = $this->request->getParsedBody();
+        $post = $this->request->request->all();
         $sessionToken = $this->session->get('delete_token');
 
         if (
@@ -92,12 +94,10 @@ final readonly class EditScreenController
             }
         }
 
-        http_response_code(302);
-        header('Location: /downloads/edit-screen/' . $id . '/');
-        exit;
+        return new RedirectResponse('/downloads/edit-screen/' . $id . '/');
     }
 
-    private function handleUpload(int $id): string
+    private function handleUpload(int $id): Response
     {
         $uploadUrl = '/downloads/edit-screen/' . $id . '/';
         $screensDir = \UPLOAD_PATH . 'downloads' . \DS . 'screen' . \DS . $id;
@@ -106,18 +106,18 @@ final readonly class EditScreenController
             throw new \RuntimeException(sprintf('Directory "%s" was not created', $screensDir));
         }
 
-        $files = $this->request->getUploadedFiles();
+        $files = $this->request->files->all();
         if (empty($files) || empty($files['screen'])) {
-            return $this->render->render('system::pages/result', [
+            return new Response($this->render->render('system::pages/result', [
                 'title'         => __('Upload screenshot'),
                 'type'          => 'alert-danger',
                 'message'       => __('Screenshot not attached'),
                 'back_url'      => $uploadUrl,
                 'back_url_name' => __('Repeat'),
-            ]);
+            ]));
         }
 
-        /** @var \GuzzleHttp\Psr7\UploadedFile $screenshot */
+        /** @var \Symfony\Component\HttpFoundation\File\UploadedFile $screenshot */
         $screenshot = $files['screen'];
         $fileName = $screensDir . \DS . $id . '.png';
         if (file_exists($fileName)) {
@@ -125,40 +125,42 @@ final readonly class EditScreenController
         }
 
         try {
-            $img = $this->imageManager->make($screenshot->getStream());
+            $img = $this->imageManager->make($screenshot->getPathname());
             $img->resize(1920, 1080, static function ($constraint): void {
                 $constraint->aspectRatio();
                 $constraint->upsize();
             });
             $img->save($fileName, 100, 'png');
-
-            return $this->render->render('system::pages/result', [
-                'title'         => __('Upload screenshot'),
-                'type'          => 'alert-success',
-                'message'       => __('Screenshot is attached'),
-                'back_url'      => $uploadUrl,
-                'back_url_name' => __('Back'),
-            ]);
+            // Rendering stays outside the try: the catch below reports an image-processing
+            // failure, and a template error must not be misreported as one (nor have its raw
+            // message printed to the visitor).
         } catch (Exception $e) {
-            return $this->render->render('system::pages/result', [
+            return new Response($this->render->render('system::pages/result', [
                 'title'         => __('Upload screenshot'),
                 'type'          => 'alert-danger',
                 'message'       => __('Screenshot not attached') . ' ' . $e->getMessage(),
                 'back_url'      => $uploadUrl,
                 'back_url_name' => __('Repeat'),
-            ]);
+            ]));
         }
+
+        return new Response($this->render->render('system::pages/result', [
+            'title'         => __('Upload screenshot'),
+            'type'          => 'alert-success',
+            'message'       => __('Screenshot is attached'),
+            'back_url'      => $uploadUrl,
+            'back_url_name' => __('Back'),
+        ]));
     }
 
-    private function notFound(): string
+    private function notFound(): Response
     {
-        http_response_code(404);
-        return $this->render->render('system::pages/result', [
+        return new Response($this->render->render('system::pages/result', [
             'title'         => __('File not found'),
             'type'          => 'alert-danger',
             'message'       => __('File not found'),
             'back_url'      => '/downloads/',
             'back_url_name' => __('Downloads'),
-        ]);
+        ]), Response::HTTP_NOT_FOUND);
     }
 }

@@ -11,7 +11,7 @@ use Johncms\Modules\Album\Application\Exceptions\AlbumPasswordRequiredException;
 use Johncms\Modules\Album\Application\Exceptions\AlbumPhotoNotFoundException;
 use Johncms\Modules\Album\Application\UseCases\GetPhotoViewUseCase;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 
@@ -31,10 +31,9 @@ final readonly class ShowPhotoController
 
     public function __invoke(int $img): string
     {
-        $submittedPassword = $this->request->getPost('password');
-        $pageRaw = $this->request->getQuery('page');
-        $page = $pageRaw !== null ? max(1, (int) $pageRaw) : null;
-        $addToProfile = $this->request->getQuery('profile') !== null;
+        $submittedPassword = $this->request->body('password');
+        $page = $this->request->query->has('page') ? max(1, $this->request->queryInt('page')) : null;
+        $addToProfile = $this->request->query->has('profile');
 
         try {
             $result = $this->useCase->execute($img, $page, $submittedPassword, $addToProfile);

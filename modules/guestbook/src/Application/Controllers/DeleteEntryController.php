@@ -10,8 +10,8 @@ use Johncms\Modules\Guestbook\Application\Exceptions\GuestbookEntryNotFoundExcep
 use Johncms\Modules\Guestbook\Application\UseCases\DeleteGuestbookEntryUseCase;
 use Johncms\Modules\Guestbook\Application\UseCases\EnsureGuestbookEntryManageAccessUseCase;
 use Johncms\Modules\Guestbook\Application\UseCases\GetGuestbookEntryContextUseCase;
-use Johncms\System\Http\Request;
-use Johncms\System\Http\Session;
+use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 
@@ -34,17 +34,17 @@ final readonly class DeleteEntryController
         $baseUrl = '/guestbook/';
 
         if ($this->request->getMethod() !== 'POST') {
-            $id = (int) $this->request->getQuery('id', 0, FILTER_VALIDATE_INT);
+            $id = $this->request->queryInt('id');
             return $this->render->render('guestbook::confirm_delete', ['id' => $id]);
         }
 
-        $validator = new Validator(['csrf_token' => $this->request->getPost('csrf_token')], ['csrf_token' => ['Csrf']]);
+        $validator = new Validator(['csrf_token' => $this->request->body('csrf_token')], ['csrf_token' => ['Csrf']]);
         if (! $validator->isValid()) {
             $this->session->flash('errors', $validator->getErrors());
             redirect($baseUrl);
         }
 
-        $id = (int) $this->request->getPost('id', 0, FILTER_VALIDATE_INT);
+        $id = $this->request->bodyInt('id');
 
         try {
             $entry = $this->contextUseCase->execute($id);

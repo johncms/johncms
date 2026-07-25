@@ -12,7 +12,7 @@ use Johncms\Modules\Admin\Application\Services\AdminUserRowMapper;
 use Johncms\Modules\Admin\Application\UseCases\SearchUsersByIpUseCase;
 use Johncms\Modules\Admin\Domain\Enums\IpSearchMode;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 
 final readonly class IpSearchController
@@ -34,9 +34,9 @@ final readonly class IpSearchController
     {
         $searchMode = $mode === 'history' ? IpSearchMode::HISTORY : IpSearchMode::ACTUAL;
 
-        $search = (string) $this->request->getQuery('ip', '', FILTER_VALIDATE_IP);
+        $search = (string) (filter_var($this->request->queryParam('ip'), FILTER_VALIDATE_IP) ?: '');
         if ($search === '') {
-            $search = trim((string) $this->request->getQuery('search', ''));
+            $search = trim($this->request->queryParam('search', ''));
         }
 
         $pagination = $this->paginationFactory->create($this->searchUsersByIpUseCase->count($search, $searchMode));

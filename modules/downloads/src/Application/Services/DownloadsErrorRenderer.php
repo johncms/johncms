@@ -6,17 +6,19 @@ namespace Johncms\Modules\Downloads\Application\Services;
 
 use Johncms\Modules\Downloads\Application\Exceptions\DownloadsException;
 use Johncms\System\View\Render;
+use Symfony\Component\HttpFoundation\Response;
 
 final class DownloadsErrorRenderer
 {
-    public function render(Render $render, DownloadsException $exception): string
+    public function render(Render $render, DownloadsException $exception): Response
     {
-        http_response_code($exception->getErrorCode()->httpStatus());
-
-        return $render->render('system::pages/result', [
-            'title'   => $exception->getErrorCode()->title(),
-            'type'    => 'alert-danger',
-            'message' => $exception->getErrorCode()->message(),
-        ]);
+        return new Response(
+            $render->render('system::pages/result', [
+                'title'   => $exception->getErrorCode()->title(),
+                'type'    => 'alert-danger',
+                'message' => $exception->getErrorCode()->message(),
+            ]),
+            $exception->getErrorCode()->httpStatus()
+        );
     }
 }

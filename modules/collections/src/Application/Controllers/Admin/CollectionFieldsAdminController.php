@@ -17,7 +17,7 @@ use Johncms\Modules\Collections\Domain\Models\ContentCollectionField;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionFieldRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 
@@ -93,7 +93,7 @@ final readonly class CollectionFieldsAdminController
             return $this->wrongData($collection_id);
         }
 
-        $id = (int) $this->request->getPost('id', 0, FILTER_VALIDATE_INT) ?: null;
+        $id = $this->request->bodyInt('id') ?: null;
         if ($id !== null && $this->findOwnedField($collection_id, $id) === null) {
             return $this->wrongData($collection_id);
         }
@@ -213,12 +213,12 @@ final readonly class CollectionFieldsAdminController
     private function fieldsFromRequest(): array
     {
         return [
-            'code'     => trim((string) $this->request->getPost('code', '')),
-            'name'     => trim((string) $this->request->getPost('name', '')),
-            'type'     => (string) $this->request->getPost('type', ''),
-            'required' => $this->request->getPost('required') !== null ? 1 : 0,
-            'multiple' => $this->request->getPost('multiple') !== null ? 1 : 0,
-            'sort'     => (int) $this->request->getPost('sort', 100, FILTER_VALIDATE_INT),
+            'code'     => trim($this->request->body('code', '')),
+            'name'     => trim($this->request->body('name', '')),
+            'type'     => $this->request->body('type', ''),
+            'required' => $this->request->hasBody('required') ? 1 : 0,
+            'multiple' => $this->request->hasBody('multiple') ? 1 : 0,
+            'sort'     => $this->request->bodyInt('sort', 100),
         ];
     }
 
@@ -382,7 +382,7 @@ final readonly class CollectionFieldsAdminController
     private function isCsrfValid(): bool
     {
         $validator = new Validator(
-            ['csrf_token' => (string) $this->request->getPost('csrf_token', '')],
+            ['csrf_token' => $this->request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

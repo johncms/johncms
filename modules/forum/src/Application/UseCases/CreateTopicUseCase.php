@@ -13,7 +13,7 @@ use Johncms\Modules\Forum\Domain\Models\ForumSection;
 use Johncms\Modules\Forum\Domain\Models\ForumTopic;
 use Johncms\Modules\Forum\Domain\Models\ForumUnread;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
-use Johncms\System\Http\Environment;
+use Johncms\Http\Environment;
 use Johncms\Users\User;
 
 final readonly class CreateTopicUseCase

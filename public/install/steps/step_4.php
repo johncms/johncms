@@ -15,7 +15,7 @@ use Johncms\Modules\Admin\Application\UseCases\RebuildSmiliesCacheUseCase;
 use Johncms\Modules\Admin\Domain\Services\LanguageFilesManagerInterface;
 use Johncms\Modules\ModuleInstaller;
 use Johncms\Modules\Modules;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -34,11 +34,17 @@ $view->addData(
 );
 
 $fields = [
-    'homeurl'        => $request->getPost('homeurl', ($request->isHttps() ? 'https://' : 'http://') . $_SERVER['SERVER_NAME'], FILTER_SANITIZE_URL),
-    'email'          => $request->getPost('email'),
-    'admin_login'    => $request->getPost('admin_login', 'admin'),
-    'admin_password' => $request->getPost('admin_password', ''),
-    'install_demo'   => $request->getPost('install_demo', 0, FILTER_VALIDATE_INT),
+    // getSchemeAndHttpHost() replaces the former isHttps() + SERVER_NAME pair and additionally
+    // keeps a non-standard port. The sanitize filter on the submitted value is preserved.
+    'homeurl'        => $request->request->filter(
+        'homeurl',
+        $request->getSchemeAndHttpHost(),
+        FILTER_SANITIZE_URL
+    ),
+    'email'          => $request->body('email'),
+    'admin_login'    => $request->body('admin_login', 'admin'),
+    'admin_password' => $request->body('admin_password'),
+    'install_demo'   => $request->bodyInt('install_demo'),
 ];
 
 $errors = [];

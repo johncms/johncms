@@ -9,7 +9,7 @@ use Johncms\Modules\Admin\Application\DTO\ForumSettingsDTO;
 use Johncms\Modules\Admin\Application\UseCases\UpdateForumSettingsUseCase;
 use Johncms\Modules\Admin\Domain\Exceptions\ConfigWriteException;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 
@@ -39,13 +39,13 @@ final readonly class ForumSettingsController
         }
 
         $dto = new ForumSettingsDTO(
-            fileCounters: $this->request->getPost('file_counters') !== null,
-            topicKeywords: trim((string) $this->request->getPost('topic_keywords', '')),
-            topicDescription: trim((string) $this->request->getPost('topic_description', '')),
-            sectionKeywords: trim((string) $this->request->getPost('section_keywords', '')),
-            sectionDescription: trim((string) $this->request->getPost('section_description', '')),
-            forumKeywords: trim((string) $this->request->getPost('forum_keywords', '')),
-            forumDescription: trim((string) $this->request->getPost('forum_description', '')),
+            fileCounters: $this->request->hasBody('file_counters'),
+            topicKeywords: trim($this->request->body('topic_keywords', '')),
+            topicDescription: trim($this->request->body('topic_description', '')),
+            sectionKeywords: trim($this->request->body('section_keywords', '')),
+            sectionDescription: trim($this->request->body('section_description', '')),
+            forumKeywords: trim($this->request->body('forum_keywords', '')),
+            forumDescription: trim($this->request->body('forum_description', '')),
         );
 
         try {
@@ -61,7 +61,7 @@ final readonly class ForumSettingsController
     private function isCsrfValid(): bool
     {
         $validator = new Validator(
-            ['csrf_token' => (string) $this->request->getPost('csrf_token', '')],
+            ['csrf_token' => $this->request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

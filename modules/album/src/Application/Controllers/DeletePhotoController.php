@@ -11,7 +11,7 @@ use Johncms\Modules\Album\Application\UseCases\DeletePhotoUseCase;
 use Johncms\Modules\Album\Application\UseCases\GetDeletePhotoContextUseCase;
 use Johncms\Modules\Album\Domain\Models\AlbumPhoto;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
@@ -111,7 +111,7 @@ final readonly class DeletePhotoController
     private function isCsrfValid(): bool
     {
         $validator = new Validator(
-            ['csrf_token' => (string) $this->request->getPost('csrf_token', '')],
+            ['csrf_token' => $this->request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

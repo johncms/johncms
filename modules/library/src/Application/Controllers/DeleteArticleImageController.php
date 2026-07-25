@@ -7,11 +7,12 @@ namespace Johncms\Modules\Library\Application\Controllers;
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Modules\Library\Application\Services\Tree;
 use Johncms\Modules\Library\Application\Services\Utils;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class DeleteArticleImageController
 {
@@ -25,15 +26,17 @@ final readonly class DeleteArticleImageController
         $this->controllerContext->initModule('library');
     }
 
-    public function __invoke(int $id): string
+    public function __invoke(int $id): Response
     {
         if (! ($this->currentUser->rights > 4)) {
-            http_response_code(403);
-            return $this->render->render('system::pages/result', [
-                'title'   => __('Delete'),
-                'type'    => 'alert-danger',
-                'message' => __('Access forbidden'),
-            ]);
+            return new Response(
+                $this->render->render('system::pages/result', [
+                    'title'   => __('Delete'),
+                    'type'    => 'alert-danger',
+                    'message' => __('Access forbidden'),
+                ]),
+                Response::HTTP_FORBIDDEN
+            );
         }
 
         $article = LibraryText::query()->find($id);
@@ -54,15 +57,15 @@ final readonly class DeleteArticleImageController
 
         $deleted = false;
 
-        if ($this->request->getQuery('yes', null) !== null) {
+        if ($this->request->query->has('yes')) {
             Utils::unlinkImages($id);
             $deleted = true;
         }
 
-        return $this->render->render('library::delete_article_image', [
+        return new Response($this->render->render('library::delete_article_image', [
             'id'      => $id,
             'name'    => $article?->name ?? '',
             'deleted' => $deleted,
-        ]);
+        ]));
     }
 }

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\UseCases;
 
-use GuzzleHttp\Psr7\UploadedFile;
 use Illuminate\Support\Collection;
 use Johncms\FileInfo;
+use Johncms\Http\UploadedFileDTO;
 use Johncms\Modules\Forum\Application\DTO\AttachFileToPostResultDTO;
 use Johncms\Modules\Forum\Application\Exceptions\UploadException;
 use Johncms\Modules\Forum\Domain\Models\ForumFile;
@@ -15,6 +15,7 @@ use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Domain\Repository\ForumFileRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
 use Johncms\Users\User;
+use RuntimeException;
 
 final readonly class AttachFileToPostUseCase
 {
@@ -26,14 +27,13 @@ final readonly class AttachFileToPostUseCase
     }
 
     /**
-     * @param array<string, UploadedFile|array> $uploadedFiles
      * @param array<string, array<int, string>> $extensions
      */
     public function execute(
         int $messageId,
         array $extensions,
         int $maxFileSizeKb,
-        array $uploadedFiles,
+        ?UploadedFileDTO $file,
     ): AttachFileToPostResultDTO {
         $message = $this->messageRepository->findById($messageId);
         if ($message === null) {
@@ -42,16 +42,15 @@ final readonly class AttachFileToPostUseCase
 
         $topicId = (int) $message->topic_id;
 
-        if (empty($uploadedFiles) || empty($uploadedFiles['fail']) || ! $uploadedFiles['fail'] instanceof UploadedFile) {
+        if ($file === null || ! $file->isValid()) {
             throw new UploadException([__('Error uploading file')]);
         }
 
-        $file = $uploadedFiles['fail'];
-        $fileInfo = new FileInfo($file->getClientFilename());
+        $fileInfo = new FileInfo((string) $file->clientName);
         $extension = strtolower($fileInfo->getExtension());
         $errors = [];
 
-        if ($file->getSize() !== null && $file->getSize() > 1024 * $maxFileSizeKb) {
+        if ($file->size !== null && $file->size > 1024 * $maxFileSizeKb) {
             $errors[] = __('File size exceed') . ' ' . $maxFileSizeKb . 'kb.';
         }
 
@@ -67,8 +66,9 @@ final readonly class AttachFileToPostUseCase
         }
 
         if (! $errors) {
-            $file->moveTo(UPLOAD_PATH . 'forum/attach/' . $fileName);
-            if (! $file->isMoved()) {
+            try {
+                $file->moveTo(UPLOAD_PATH . 'forum/attach/' . $fileName);
+            } catch (RuntimeException) {
                 $errors[] = __('Error uploading file');
             }
         }

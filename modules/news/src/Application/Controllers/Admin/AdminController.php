@@ -12,7 +12,7 @@ use Johncms\Modules\News\Application\Utils\Helpers;
 use Johncms\Modules\News\Domain\Models\NewsArticle;
 use Johncms\Modules\News\Domain\Models\NewsSection;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 
 final readonly class AdminController
@@ -124,21 +124,21 @@ final readonly class AdminController
 
         if ($request->getMethod() === 'POST') {
             $config = [
-                'homepage_show'     => (bool) $request->getPost('homepage_show', false),
-                'homepage_quantity' => $request->getPost('homepage_quantity', 3, FILTER_VALIDATE_INT),
-                'homepage_days'     => $request->getPost('homepage_days', 0, FILTER_VALIDATE_INT),
+                'homepage_show'     => (bool) $request->body('homepage_show'),
+                'homepage_quantity' => $request->bodyInt('homepage_quantity', 3),
+                'homepage_days'     => $request->bodyInt('homepage_days'),
 
-                'title'            => $request->getPost('title', ''),
-                'meta_keywords'    => $request->getPost('meta_keywords', ''),
-                'meta_description' => $request->getPost('meta_description', ''),
+                'title'            => $request->body('title', ''),
+                'meta_keywords'    => $request->body('meta_keywords', ''),
+                'meta_description' => $request->body('meta_description', ''),
 
-                'section_title'            => $request->getPost('section_title', ''),
-                'section_meta_keywords'    => $request->getPost('section_meta_keywords', ''),
-                'section_meta_description' => $request->getPost('section_meta_description', ''),
+                'section_title'            => $request->body('section_title', ''),
+                'section_meta_keywords'    => $request->body('section_meta_keywords', ''),
+                'section_meta_description' => $request->body('section_meta_description', ''),
 
-                'article_title'            => $request->getPost('article_title', ''),
-                'article_meta_keywords'    => $request->getPost('article_meta_keywords', ''),
-                'article_meta_description' => $request->getPost('article_meta_description', ''),
+                'article_title'            => $request->body('article_title', ''),
+                'article_meta_keywords'    => $request->body('article_meta_keywords', ''),
+                'article_meta_description' => $request->body('article_meta_description', ''),
             ];
 
             $configFile = "<?php\n\n" . 'return ' . var_export(['news' => $config], true) . ";\n";

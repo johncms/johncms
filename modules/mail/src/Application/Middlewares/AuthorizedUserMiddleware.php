@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Mail\Application\Middlewares;
 
 use Johncms\Router\MiddlewareInterface;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\Users\User;
 
 final readonly class AuthorizedUserMiddleware implements MiddlewareInterface

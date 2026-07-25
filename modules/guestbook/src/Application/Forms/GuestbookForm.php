@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Guestbook\Application\Forms;
 
 use Johncms\Modules\Guestbook\Domain\Models\GuestbookEntry;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\Utility\EditorContentNormalizer;
 use Johncms\Users\User;
 
@@ -21,13 +21,13 @@ class GuestbookForm
     public function getFormData(): array
     {
         $form_data = [
-            'name'       => (string) $this->request->getPost('name', ''),
-            'message'    => $this->editorContentNormalizer->trimEdgeEmptyBlocks((string) $this->request->getPost('message', '')),
-            'csrf_token' => $this->request->getPost('csrf_token', ''),
-            'code'       => $this->request->getPost('code', ''),
+            'name'       => $this->request->body('name', ''),
+            'message'    => $this->editorContentNormalizer->trimEdgeEmptyBlocks($this->request->body('message', '')),
+            'csrf_token' => $this->request->body('csrf_token', ''),
+            'code'       => $this->request->body('code', ''),
         ];
         $form_data = array_map('trim', $form_data);
-        $form_data['attached_files'] = (array) $this->request->getPost('attached_files', [], FILTER_VALIDATE_INT);
+        $form_data['attached_files'] = (array) $this->request->bodyInts('attached_files');
 
         return $form_data;
     }

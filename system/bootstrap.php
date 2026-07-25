@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Johncms\Modules\Modules;
 use Johncms\Security\BanIP;
-use Johncms\System\Http\Environment;
+use Johncms\Http\Environment;
 use Johncms\System\i18n\Translator;
 use Johncms\System\Users\User;
 
@@ -45,6 +45,22 @@ if (DEBUG) {
 }
 
 $container = \Johncms\Container\PSRContainerFactory::getContainer();
+
+// Registered here rather than in the front controller: everything below — sessions, the ban
+// check, the translator, module autoloading — used to run before any handler existed, so a
+// failure during boot printed an uncaught fatal and was never logged.
+(new \Johncms\Logs\GlobalErrorHandler(
+    logger:    $container->get(\Psr\Log\LoggerInterface::class),
+    container: $container
+))->registerHandlers();
+
+// The Request service is synthetic, so it has to be published before anything resolves it.
+// The kernel republishes the request of every cycle it handles; this one covers the legacy code
+// that reaches for Request during boot (Environment, BanIP) and the console commands.
+$container->set(
+    \Johncms\Http\Request::class,
+    $container->get(\Johncms\Http\RequestFactory::class)($container)
+);
 
 if (! defined('CONSOLE_MODE') || CONSOLE_MODE === false) {
     header('X-Powered-CMS: JohnCMS');

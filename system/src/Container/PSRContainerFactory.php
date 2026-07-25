@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Johncms\Container;
 
-use Psr\Container\ContainerInterface;
+use Psr\Container\ContainerInterface as PsrContainerInterface;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
 use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
@@ -21,7 +22,7 @@ class PSRContainerFactory
             require_once $cachePath;
             $container = new \ProjectServiceContainer();
 
-            $container->set(ContainerInterface::class, $container);
+            $container->set(PsrContainerInterface::class, $container);
 
             self::$containerInstance = $container;
 
@@ -64,7 +65,7 @@ class PSRContainerFactory
 
     private function loadCoreServices(ContainerBuilder $container): void
     {
-        $container->set(ContainerInterface::class, $container);
+        $container->set(PsrContainerInterface::class, $container);
         $loader = new PhpFileLoader(
             $container,
             new FileLocator(ROOT_PATH . 'system/config')

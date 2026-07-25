@@ -12,9 +12,9 @@ use Johncms\Modules\Contacts\Application\Services\ContactSettingsProvider;
 use Johncms\Modules\Contacts\Application\Services\ContactsCaptchaService;
 use Johncms\Modules\Contacts\Application\UseCases\SubmitContactMessageUseCase;
 use Johncms\NavChain;
-use Johncms\System\Http\Environment;
-use Johncms\System\Http\Request;
-use Johncms\System\Http\Session;
+use Johncms\Http\Environment;
+use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
@@ -59,7 +59,7 @@ final readonly class ContactsController
             $consentFields = [];
             foreach ($consents as $consent) {
                 $field = 'consent_' . $consent->id;
-                $formData[$field] = (string) $this->request->getPost($field, '');
+                $formData[$field] = $this->request->body($field, '');
                 if ($consent->isRequired) {
                     $consentFields[$field] = ['Identical' => ['token' => '1']];
                 }

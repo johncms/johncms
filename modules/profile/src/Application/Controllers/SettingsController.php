@@ -12,7 +12,7 @@ use Johncms\Modules\Profile\Application\UseCases\ForumSettingsUseCase;
 use Johncms\Modules\Profile\Application\UseCases\MailSettingsUseCase;
 use Johncms\Modules\Profile\Application\UseCases\UserSettingsUseCase;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 
@@ -53,12 +53,12 @@ final readonly class SettingsController
     public function saveGeneral(): string
     {
         $command = new UpdateUserSettingsCommand(
-            timeshift: (int) $this->request->getPost('timeshift', 0, FILTER_VALIDATE_INT),
-            directUrl: $this->request->getPost('directUrl') !== null,
-            youtube: $this->request->getPost('youtube') !== null,
-            fieldHeight: (int) $this->request->getPost('fieldHeight', 3, FILTER_VALIDATE_INT),
-            kmess: (int) $this->request->getPost('kmess', 10, FILTER_VALIDATE_INT),
-            lng: trim((string) $this->request->getPost('iso', '')),
+            timeshift: $this->request->bodyInt('timeshift'),
+            directUrl: $this->request->hasBody('directUrl'),
+            youtube: $this->request->hasBody('youtube'),
+            fieldHeight: $this->request->bodyInt('fieldHeight', 3),
+            kmess: $this->request->bodyInt('kmess', 10),
+            lng: trim($this->request->body('iso', '')),
         );
 
         $selectedLng = $this->userSettingsUseCase->save($command, $this->currentUser);
@@ -85,10 +85,10 @@ final readonly class SettingsController
     public function saveForum(): string
     {
         $command = new UpdateForumSettingsCommand(
-            farea: $this->request->getPost('farea') !== null,
-            upfp: $this->request->getPost('upfp') !== null,
-            preview: $this->request->getPost('preview') !== null,
-            postclip: (int) $this->request->getPost('postclip', 1, FILTER_VALIDATE_INT),
+            farea: $this->request->hasBody('farea'),
+            upfp: $this->request->hasBody('upfp'),
+            preview: $this->request->hasBody('preview'),
+            postclip: $this->request->bodyInt('postclip', 1),
         );
 
         $setForum = $this->forumSettingsUseCase->save($command, $this->currentUser);
@@ -109,7 +109,7 @@ final readonly class SettingsController
     public function saveMail(): string
     {
         $command = new UpdateMailSettingsCommand(
-            access: (int) $this->request->getPost('access', 0, FILTER_VALIDATE_INT),
+            access: $this->request->bodyInt('access'),
         );
 
         $setMail = $this->mailSettingsUseCase->save($command, $this->currentUser);

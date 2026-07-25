@@ -11,9 +11,10 @@ use Johncms\Modules\Downloads\Application\Services\DownloadCategoryPathService;
 use Johncms\Modules\Downloads\Application\Services\DownloadFilePathService;
 use Johncms\Modules\Downloads\Domain\Models\DownloadCategory;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class ImportFileController
 {
@@ -36,19 +37,18 @@ final readonly class ImportFileController
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(int $id): string
+    public function __invoke(int $id): Response
     {
         $category = DownloadCategory::query()->find($id);
 
         if ($category === null || ! is_dir($category->dir)) {
-            http_response_code(404);
-            return $this->render->render('system::pages/result', [
+            return new Response($this->render->render('system::pages/result', [
                 'title'         => __('Error'),
                 'type'          => 'alert-danger',
                 'message'       => __('The directory does not exist'),
                 'back_url'      => '/downloads/',
                 'back_url_name' => __('Downloads'),
-            ]);
+            ]), Response::HTTP_NOT_FOUND);
         }
 
         $allowedExtensions = $category->field ? explode(', ', $category->text) : self::DEFAULT_EXTENSIONS;
@@ -64,17 +64,17 @@ final readonly class ImportFileController
             return $this->handleImport($id, $category->dir, $allowedExtensions, $baseUrl);
         }
 
-        return $this->render->render('downloads::import', [
+        return new Response($this->render->render('downloads::import', [
             'id'         => $id,
             'action_url' => $baseUrl,
             'cancel_url' => $this->categoryPathService->getCategoryUrl($category),
             'extensions' => implode(', ', $allowedExtensions),
-        ]);
+        ]));
     }
 
-    private function handleImport(int $id, string $categoryDir, array $allowedExtensions, string $baseUrl): string
+    private function handleImport(int $id, string $categoryDir, array $allowedExtensions, string $baseUrl): Response
     {
-        $post = $this->request->getParsedBody();
+        $post = $this->request->request->all();
         $errors = [];
 
         $url = isset($post['url']) ? trim($post['url']) : null;
@@ -134,13 +134,13 @@ final readonly class ImportFileController
         }
 
         if (! copy($url, $categoryDir . '/' . $filename)) {
-            return $this->render->render('system::pages/result', [
+            return new Response($this->render->render('system::pages/result', [
                 'title'         => __('File import'),
                 'type'          => 'alert-danger',
                 'message'       => __('File not attached'),
                 'back_url'      => $baseUrl,
                 'back_url_name' => __('Repeat'),
-            ]);
+            ]));
         }
 
         $file = DownloadFile::query()->create([
@@ -158,14 +158,14 @@ final readonly class ImportFileController
 
         $screenAttached = null;
         $screenError = null;
-        $files = $this->request->getUploadedFiles();
-        /** @var \GuzzleHttp\Psr7\UploadedFile|null $screenshot */
+        $files = $this->request->files->all();
+        /** @var \Symfony\Component\HttpFoundation\File\UploadedFile|null $screenshot */
         $screenshot = $files['screen'] ?? null;
         if ($screenshot !== null && ! $screenshot->getError()) {
             $screensDir = \UPLOAD_PATH . 'downloads' . \DS . 'screen' . \DS . $file->id;
             if (mkdir($screensDir, 0777, true) || is_dir($screensDir)) {
                 try {
-                    $img = $this->imageManager->make($screenshot->getStream());
+                    $img = $this->imageManager->make($screenshot->getPathname());
                     $img->resize(1920, 1080, static function ($constraint): void {
                         $constraint->aspectRatio();
                         $constraint->upsize();
@@ -181,7 +181,7 @@ final readonly class ImportFileController
 
         $this->incrementCategoryCounters($id);
 
-        return $this->render->render('downloads::file_import_result', [
+        return new Response($this->render->render('downloads::file_import_result', [
             'id'                    => $id,
             'urls'                  => [
                 'view_file_url' => $this->filePathService->getFileUrl($file),
@@ -189,7 +189,7 @@ final readonly class ImportFileController
             ],
             'screen_attached'       => $screenAttached,
             'screen_attached_error' => $screenError,
-        ]);
+        ]));
     }
 
     private function incrementCategoryCounters(int $categoryId): void
@@ -210,14 +210,14 @@ final readonly class ImportFileController
         }
     }
 
-    private function renderErrors(array $errors, string $backUrl): string
+    private function renderErrors(array $errors, string $backUrl): Response
     {
-        return $this->render->render('system::pages/result', [
+        return new Response($this->render->render('system::pages/result', [
             'title'         => __('File import'),
             'type'          => 'alert-danger',
             'message'       => $errors,
             'back_url'      => $backUrl,
             'back_url_name' => __('Repeat'),
-        ]);
+        ]));
     }
 }

@@ -18,7 +18,7 @@ use Johncms\Modules\Collections\Application\UseCases\SaveCollectionUseCase;
 use Johncms\Modules\Collections\Domain\Models\ContentCollection;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 
@@ -88,7 +88,7 @@ final readonly class CollectionsAdminController
             return $this->error(__('Wrong data'));
         }
 
-        $id = (int) $this->request->getPost('id', 0, FILTER_VALIDATE_INT) ?: null;
+        $id = $this->request->bodyInt('id') ?: null;
         $fields = $this->fieldsFromRequest();
         $errors = $this->validate($fields);
 
@@ -179,14 +179,14 @@ final readonly class CollectionsAdminController
     private function fieldsFromRequest(): array
     {
         return [
-            'code'         => trim((string) $this->request->getPost('code', '')),
-            'name'         => trim((string) $this->request->getPost('name', '')),
-            'description'  => trim((string) $this->request->getPost('description', '')),
-            'active'       => $this->request->getPost('active') !== null ? 1 : 0,
-            'public'       => $this->request->getPost('public') !== null ? 1 : 0,
-            'sort'         => (int) $this->request->getPost('sort', 100, FILTER_VALIDATE_INT),
-            'has_sections' => $this->request->getPost('has_sections') !== null ? 1 : 0,
-            'per_page'     => max(1, abs((int) $this->request->getPost('per_page', 10, FILTER_VALIDATE_INT))),
+            'code'         => trim($this->request->body('code', '')),
+            'name'         => trim($this->request->body('name', '')),
+            'description'  => trim($this->request->body('description', '')),
+            'active'       => $this->request->hasBody('active') ? 1 : 0,
+            'public'       => $this->request->hasBody('public') ? 1 : 0,
+            'sort'         => $this->request->bodyInt('sort', 100),
+            'has_sections' => $this->request->hasBody('has_sections') ? 1 : 0,
+            'per_page'     => max(1, abs($this->request->bodyInt('per_page', 10))),
         ];
     }
 
@@ -301,7 +301,7 @@ final readonly class CollectionsAdminController
     private function isCsrfValid(): bool
     {
         $validator = new Validator(
-            ['csrf_token' => (string) $this->request->getPost('csrf_token', '')],
+            ['csrf_token' => $this->request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

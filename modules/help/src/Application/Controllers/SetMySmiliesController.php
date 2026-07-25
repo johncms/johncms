@@ -13,7 +13,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Help\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 
@@ -43,11 +43,11 @@ final readonly class SetMySmiliesController
             ]);
         }
 
-        $adm = (bool) $this->request->getQuery('adm', false);
-        $cat = trim((string) $this->request->getQuery('cat', ''));
-        $page = max(1, (int) $this->request->getQuery('page', 1));
+        $adm = (bool) $this->request->queryParam('adm');
+        $cat = trim($this->request->queryParam('cat', ''));
+        $page = max(1, $this->request->queryInt('page', 1));
 
-        $post = $this->request->getParsedBody();
+        $post = $this->request->request->all();
         $isAdd = isset($post['add']);
         $isDelete = isset($post['delete']);
 

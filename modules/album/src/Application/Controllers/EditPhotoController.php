@@ -11,7 +11,7 @@ use Johncms\Modules\Album\Application\UseCases\EditPhotoUseCase;
 use Johncms\Modules\Album\Application\UseCases\GetEditPhotoContextUseCase;
 use Johncms\Modules\Album\Domain\Models\AlbumPhoto;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 
@@ -46,7 +46,7 @@ final readonly class EditPhotoController
             return $photo;
         }
 
-        $this->editPhotoUseCase->execute($photo, (string) $this->request->getPost('description', ''));
+        $this->editPhotoUseCase->execute($photo, $this->request->body('description', ''));
 
         return $this->render->render(
             'system::pages/result',

@@ -11,7 +11,7 @@
 declare(strict_types=1);
 
 use Gettext\TranslatorFunctions;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\i18n\Translator;
 use Johncms\System\View\Extension\Assets;
 use Johncms\System\View\Extension\Vite;
@@ -28,6 +28,16 @@ require dirname(__DIR__, 2) . '/vendor/autoload.php';
 // Load the configuration
 $config = (new \Johncms\Config\ConfigLoader(CONFIG_PATH . 'autoload'))->load();
 \Johncms\Config\ConfigRepository::init($config);
+
+// The installer is reachable by anyone before the site exists, so it needs the same error
+// handling as the front controller: failures are logged, and their details are shown only
+// when DEBUG allows it. Without this an uncaught exception here is governed by php.ini
+// display_errors and can dump a stack trace to the visitor.
+$container = \Johncms\Container\PSRContainerFactory::getContainer();
+(new \Johncms\Logs\GlobalErrorHandler(
+    logger:    $container->get(\Psr\Log\LoggerInterface::class),
+    container: $container
+))->registerHandlers();
 
 session_name('SESID');
 session_start();
@@ -58,7 +68,7 @@ $loader = new Aura\Autoload\Loader();
 $loader->register();
 $loader->addPrefix('Install', __DIR__ . '/lib');
 
-$current_step = $request->getQuery('step', 1, FILTER_VALIDATE_INT);
+$current_step = $request->queryInt('step', 1);
 
 if (
     $current_step !== 5

@@ -20,6 +20,7 @@ use Johncms\Modules\Library\Application\Services\Utils;
 use Johncms\Modules\Library\Application\Services\ViewHelper;
 use Johncms\Utils\DateFormatterInterface;
 use Johncms\Utils\PlainTextFormatter;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class SectionController
 {
@@ -34,17 +35,19 @@ final readonly class SectionController
     ) {
     }
 
-    public function __invoke(string $categoryPath): string
+    public function __invoke(string $categoryPath): Response
     {
         $category = $this->categoryPathService->findCategoryByPath($categoryPath);
 
         if ($category === null) {
-            http_response_code(404);
-            return $this->render->render('system::pages/result', [
-                'title'   => __('Library'),
-                'type'    => 'alert-danger',
-                'message' => __('Section does not exist'),
-            ]);
+            return new Response(
+                $this->render->render('system::pages/result', [
+                    'title'   => __('Library'),
+                    'type'    => 'alert-danger',
+                    'message' => __('Section does not exist'),
+                ]),
+                Response::HTTP_NOT_FOUND
+            );
         }
 
         $id = $category->id;
@@ -63,7 +66,7 @@ final readonly class SectionController
         return $this->renderBookList($category, $isAdmin);
     }
 
-    private function renderSectionsList(LibraryCategory $category, bool $isAdmin): string
+    private function renderSectionsList(LibraryCategory $category, bool $isAdmin): Response
     {
         $id    = $category->id;
         $total = LibraryCategory::query()->where('parent', $id)->count();
@@ -102,17 +105,17 @@ final readonly class SectionController
             ];
         }
 
-        return $this->render->render('library::sectionslist', [
+        return new Response($this->render->render('library::sectionslist', [
             'total'        => $total,
             'admin'        => $isAdmin,
             'id'           => $id,
             'category_url' => $category->url,
             'list'         => $list,
             'pagination'   => $pagination->render(),
-        ]);
+        ]));
     }
 
-    private function renderBookList(LibraryCategory $category, bool $isAdmin): string
+    private function renderBookList(LibraryCategory $category, bool $isAdmin): Response
     {
         $id    = $category->id;
         $total = LibraryText::query()->where('cat_id', $id)->where('premod', 1)->count();
@@ -159,7 +162,7 @@ final readonly class SectionController
             ];
         }
 
-        return $this->render->render('library::booklist', [
+        return new Response($this->render->render('library::booklist', [
             'total'      => $total,
             'admin'      => $isAdmin,
             'moderMenu'  => $moderMenu,
@@ -167,6 +170,6 @@ final readonly class SectionController
             'category_url' => $category->url,
             'list'       => $list,
             'pagination' => $pagination->render(),
-        ]);
+        ]));
     }
 }

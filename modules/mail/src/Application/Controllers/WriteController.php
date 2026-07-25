@@ -8,17 +8,18 @@ use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
+use Johncms\Http\UploadedFileMapper;
 use Johncms\Modules\Mail\Application\DTO\SendMessageCommand;
 use Johncms\Modules\Mail\Application\Exceptions\SendMessageException;
 use Johncms\Modules\Mail\Application\Exceptions\UserNotFoundException;
 use Johncms\Modules\Mail\Application\UseCases\GetConversationUseCase;
 use Johncms\Modules\Mail\Application\UseCases\SendMessageUseCase;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\Utility\EditorContentNormalizer;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
-use Psr\Http\Message\UploadedFileInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 final readonly class WriteController
 {
@@ -33,18 +34,19 @@ final readonly class WriteController
         private SendMessageUseCase $sendMessageUseCase,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
+        private UploadedFileMapper $uploadedFileMapper,
     ) {
         $this->controllerContext->initModule('mail');
     }
 
     public function send(int $id): string
     {
-        $text = trim($this->editorContentNormalizer->trimEdgeEmptyBlocks((string) $this->request->getPost('text', '')));
+        $text = trim($this->editorContentNormalizer->trimEdgeEmptyBlocks($this->request->body('text', '')));
 
-        $files = $this->request->getUploadedFiles();
-        $file = $files['fail'] ?? null;
-        if (! $file instanceof UploadedFileInterface || $file->getError() === UPLOAD_ERR_NO_FILE) {
-            $file = null;
+        $uploaded = $this->request->files->get('fail');
+        $file = null;
+        if ($uploaded instanceof UploadedFile && $uploaded->getError() !== UPLOAD_ERR_NO_FILE) {
+            $file = $this->uploadedFileMapper->fromUploadedFile($uploaded);
         }
 
         try {

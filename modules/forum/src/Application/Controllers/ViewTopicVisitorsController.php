@@ -15,7 +15,7 @@ use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Modules\Forum\Application\UseCases\ViewTopicVisitorsUseCase;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 
@@ -55,8 +55,8 @@ final readonly class ViewTopicVisitorsController
             );
         }
 
-        $showGuests = $this->request->getQuery('mode') === 'guests';
-        $page = max(1, (int) $this->request->getQuery('page', 1));
+        $showGuests = $this->request->queryParam('mode') === 'guests';
+        $page = max(1, $this->request->queryInt('page', 1));
         $start = ($page - 1) * (int) $this->currentUser->config->kmess;
 
         try {

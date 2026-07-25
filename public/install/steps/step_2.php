@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 
 /** @var Request $request */
 $request = di(Request::class);

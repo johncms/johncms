@@ -21,9 +21,7 @@ class Utils
     public static function redir404(): void
     {
         $config = config('johncms');
-        ob_get_level() && ob_end_clean();
-        header('Location: ' . $config['homeurl'] . '/?err');
-        exit;
+        redirect($config['homeurl'] . '/?err');
     }
 
     public static function position(string $text, string $chr): int
@@ -60,7 +58,7 @@ class Utils
 
         /** @var ImageManager $image_manager */
         $image_manager = di(ImageManager::class);
-        $img           = $image_manager->make($image->getStream());
+        $img           = $image_manager->make($image->getPathname());
         $img->save(UPLOAD_PATH . 'library/images/orig/' . $id . '.png', 100, 'png');
         $img->resize(
             $bigSize,

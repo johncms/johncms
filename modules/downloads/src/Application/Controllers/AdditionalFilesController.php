@@ -12,10 +12,12 @@ use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\Modules\Downloads\Domain\Models\DownloadMoreFile;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
-use Johncms\System\Http\Session;
+use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\System\View\Render;
 use Johncms\Utils\DateFormatterInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class AdditionalFilesController
 {
@@ -39,7 +41,7 @@ final readonly class AdditionalFilesController
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(int $id): string
+    public function __invoke(int $id): Response
     {
         $file = DownloadFile::query()
             ->where('id', $id)
@@ -57,8 +59,8 @@ final readonly class AdditionalFilesController
 
         $baseUrl = '/downloads/additional-files/' . $id . '/';
 
-        $editId = $this->request->getQuery('edit') !== null ? (int) $this->request->getQuery('edit') : null;
-        $delId = $this->request->getQuery('del') !== null ? (int) $this->request->getQuery('del') : null;
+        $editId = $this->request->query->has('edit') ? (int) $this->request->queryParam('edit') : null;
+        $delId = $this->request->query->has('del') ? (int) $this->request->queryParam('del') : null;
 
         if ($editId !== null) {
             return $this->handleEdit($id, $file, $editId, $baseUrl);
@@ -75,7 +77,7 @@ final readonly class AdditionalFilesController
         return $this->showList($id, $file, $baseUrl);
     }
 
-    private function showList(int $id, DownloadFile $file, string $baseUrl): string
+    private function showList(int $id, DownloadFile $file, string $baseUrl): Response
     {
         $pageTitle = htmlspecialchars($file->rus_name);
         $this->render->addData([
@@ -95,16 +97,16 @@ final readonly class AdditionalFilesController
             ];
         })->all();
 
-        return $this->render->render('downloads::files_more', [
+        return new Response($this->render->render('downloads::files_more', [
             'id'               => $id,
             'additional_files' => $additionalFiles,
             'action_url'       => $baseUrl,
             'extensions'       => implode(', ', self::DEFAULT_EXTENSIONS),
             'file_url'         => $this->filePathService->getFileUrl($file),
-        ]);
+        ]));
     }
 
-    private function handleEdit(int $id, DownloadFile $file, int $editId, string $baseUrl): string
+    private function handleEdit(int $id, DownloadFile $file, int $editId, string $baseUrl): Response
     {
         $moreFile = DownloadMoreFile::query()->find($editId);
 
@@ -113,14 +115,13 @@ final readonly class AdditionalFilesController
         }
 
         if ($this->request->getMethod() === 'POST') {
-            $post = $this->request->getParsedBody();
+            $post = $this->request->request->all();
             $nameLink = isset($post['name_link']) ? htmlspecialchars(mb_substr($post['name_link'], 0, 200)) : null;
 
             if ($nameLink) {
                 $moreFile->update(['rus_name' => $nameLink]);
-                http_response_code(302);
-                header('Location: ' . $baseUrl);
-                exit;
+
+                return new RedirectResponse($baseUrl);
             }
         }
 
@@ -130,15 +131,15 @@ final readonly class AdditionalFilesController
             'page_title' => $pageTitle,
         ]);
 
-        return $this->render->render('downloads::edit_additional_form', [
+        return new Response($this->render->render('downloads::edit_additional_form', [
             'id'         => $id,
             'file_name'  => htmlspecialchars($moreFile->rus_name),
             'action_url' => $baseUrl . '?edit=' . $editId,
             'back_url'   => $baseUrl,
-        ]);
+        ]));
     }
 
-    private function handleDelete(int $id, DownloadFile $file, int $delId, string $baseUrl): string
+    private function handleDelete(int $id, DownloadFile $file, int $delId, string $baseUrl): Response
     {
         $moreFile = DownloadMoreFile::query()->find($delId);
 
@@ -146,9 +147,9 @@ final readonly class AdditionalFilesController
             return $this->notFound();
         }
 
-        $hasYes = $this->request->getQuery('yes') !== null;
+        $hasYes = $this->request->query->has('yes');
         if ($hasYes && $this->request->getMethod() === 'POST') {
-            $post = $this->request->getParsedBody();
+            $post = $this->request->request->all();
             $sessionToken = $this->session->get('delete_token');
 
             if (isset($post['delete_token']) && $sessionToken !== null && $sessionToken === $post['delete_token']) {
@@ -158,9 +159,7 @@ final readonly class AdditionalFilesController
                 $moreFile->delete();
             }
 
-            http_response_code(302);
-            header('Location: ' . $baseUrl);
-            exit;
+            return new RedirectResponse($baseUrl);
         }
 
         $deleteToken = uniqid('', true);
@@ -172,24 +171,24 @@ final readonly class AdditionalFilesController
             'page_title' => $pageTitle,
         ]);
 
-        return $this->render->render('downloads::delete_additional', [
+        return new Response($this->render->render('downloads::delete_additional', [
             'id'           => $id,
             'delete_token' => $deleteToken,
             'action_url'   => $baseUrl . '?del=' . $delId . '&yes',
             'back_url'     => $baseUrl,
-        ]);
+        ]));
     }
 
-    private function handleUpload(int $id, DownloadFile $file, string $baseUrl): string
+    private function handleUpload(int $id, DownloadFile $file, string $baseUrl): Response
     {
         $config = config('johncms');
-        $post = $this->request->getParsedBody();
-        $files = $this->request->getUploadedFiles();
+        $post = $this->request->request->all();
+        $files = $this->request->files->all();
         $errors = [];
 
         $linkFile = isset($post['link_file']) ? str_replace('./', '_', trim($post['link_file'])) : null;
 
-        /** @var \GuzzleHttp\Psr7\UploadedFile|null $uploadedFile */
+        /** @var \Symfony\Component\HttpFoundation\File\UploadedFile|null $uploadedFile */
         $uploadedFile = $files['fail'] ?? null;
 
         $fname = null;
@@ -210,7 +209,7 @@ final readonly class AdditionalFilesController
             }
         } elseif ($uploadedFile !== null) {
             $doFile = true;
-            $fname = $uploadedFile->getClientFilename();
+            $fname = $uploadedFile->getClientOriginalName();
             $fsize = $uploadedFile->getSize();
         }
 
@@ -254,8 +253,12 @@ final readonly class AdditionalFilesController
                     $fsize = $copied ? filesize($file->dir . '/' . $newFname) : 0;
                     $moved = $copied;
                 } else {
-                    $uploadedFile->moveTo($file->dir . '/' . $newFname);
-                    $moved = $uploadedFile->isMoved();
+                    try {
+                        $uploadedFile->move($file->dir, $newFname);
+                        $moved = true;
+                    } catch (\Symfony\Component\HttpFoundation\File\Exception\FileException) {
+                        $moved = false;
+                    }
                 }
 
                 if ($moved) {
@@ -267,37 +270,36 @@ final readonly class AdditionalFilesController
                         'size'     => (int) $fsize,
                     ]);
 
-                    return $this->render->render('system::pages/result', [
+                    return new Response($this->render->render('system::pages/result', [
                         'title'         => __('File attached'),
                         'type'          => 'alert-success',
                         'message'       => __('File attached'),
                         'back_url'      => $this->filePathService->getFileUrl($file),
                         'back_url_name' => __('Back'),
-                    ]);
+                    ]));
                 }
 
                 $errors[] = __('File not attached');
             }
         }
 
-        return $this->render->render('system::pages/result', [
+        return new Response($this->render->render('system::pages/result', [
             'title'         => __('Error'),
             'type'          => 'alert-danger',
             'message'       => $errors,
             'back_url'      => $baseUrl,
             'back_url_name' => __('Repeat'),
-        ]);
+        ]));
     }
 
-    private function notFound(): string
+    private function notFound(): Response
     {
-        http_response_code(404);
-        return $this->render->render('system::pages/result', [
+        return new Response($this->render->render('system::pages/result', [
             'title'         => __('File not found'),
             'type'          => 'alert-danger',
             'message'       => __('File not found'),
             'back_url'      => '/downloads/',
             'back_url_name' => __('Downloads'),
-        ]);
+        ]), Response::HTTP_NOT_FOUND);
     }
 }

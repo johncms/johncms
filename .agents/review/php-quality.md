@@ -5,9 +5,14 @@ Follow the protocol in `.agents/review/README.md`.
 
 ## Deterministic Gate
 
-Report the outcome of `sh .agents/scripts/verify.sh` — `composer cs-check` and
-`composer test`. Every failure is a `BLOCKER`. Quote the failing output, do not summarize it
+Report the outcome of `sh .agents/scripts/verify.sh` — `composer cs-check`, `composer phpstan`
+and `composer test`. Every failure is a `BLOCKER`. Quote the failing output, do not summarize it
 as "some tests fail".
+
+PHPStan runs at level 5 against a baseline (`phpstan-baseline.neon`) that accepts the existing
+legacy debt, so anything it reports was introduced by the change under review. A change that
+*grows* the baseline needs a stated reason — silently regenerating it to make the gate green
+is the same as disabling the check.
 
 ## Structure
 
@@ -17,6 +22,11 @@ as "some tests fail".
 * Class names `PascalCase`, methods and properties `camelCase`.
 * Suffixes used correctly: `*Controller`, `*UseCase`, `*DTO`, `*RepositoryInterface`,
   `*Command`, `*Query`, `*Handler`, `*Mapper`, `*Compiler`.
+* A new class with a scalar constructor argument (exception, DTO, value object) that lives under
+  a directory registered with a wide `$services->load(...)` must be excluded there — otherwise
+  autowiring cannot resolve the argument and **the whole container stops compiling**, taking
+  every page down. `cs-check`, PHPStan and the unit tests all stay green on that failure;
+  `tests/Unit/Container/ContainerCompilationTest.php` is what catches it.
 
 ## Types
 
@@ -44,6 +54,11 @@ as "some tests fail".
 * Guard clauses and early returns over nested conditionals.
 * Error messages are specific and actionable.
 * Unused caught exception variables are omitted: `catch (EditVoteWrongDataException)`.
+* A broad `catch (\Throwable)` / `catch (\Exception)` must not wrap code that can perform
+  HTTP control flow — `redirect()`, `pageNotFound()`, or anything reaching them. Those raise
+  exceptions the kernel is meant to turn into a response, so swallowing one silently converts
+  a redirect or a 404 into whatever the catch block returns. Either narrow the catch to the
+  types the `try` can actually throw, or move the control-flow call outside the `try`.
 
 ## Reuse
 

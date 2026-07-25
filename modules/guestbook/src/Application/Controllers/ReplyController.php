@@ -11,8 +11,8 @@ use Johncms\Modules\Guestbook\Application\Services\GuestbookEntryTextFormatter;
 use Johncms\Modules\Guestbook\Application\UseCases\EnsureGuestbookEntryManageAccessUseCase;
 use Johncms\Modules\Guestbook\Application\UseCases\GetGuestbookEntryContextUseCase;
 use Johncms\Modules\Guestbook\Application\UseCases\ReplyToGuestbookEntryUseCase;
-use Johncms\System\Http\Request;
-use Johncms\System\Http\Session;
+use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\System\Utility\EditorContentNormalizer;
 use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
@@ -37,7 +37,7 @@ final readonly class ReplyController
     {
         $baseUrl = '/guestbook/';
 
-        $id = (int) $this->request->getQuery('id', 0, FILTER_VALIDATE_INT);
+        $id = $this->request->queryInt('id');
         $errors = [];
         $this->render->addData(['title' => __('Reply'), 'page_title' => __('Reply')]);
 
@@ -60,9 +60,9 @@ final readonly class ReplyController
         }
 
         $text = $this->editorContentNormalizer->trimEdgeEmptyBlocks(
-            (string) $this->request->getPost('message', $entry->otvet)
+            $this->request->body('message', (string) $entry->otvet)
         );
-        $attachedFiles = (array) $this->request->getPost('attached_files', [], FILTER_VALIDATE_INT);
+        $attachedFiles = (array) $this->request->bodyInts('attached_files');
 
         if ($this->request->getMethod() === 'POST') {
             $rules = [
@@ -78,7 +78,7 @@ final readonly class ReplyController
             $validator = new Validator(
                 [
                     'message'    => $text,
-                    'csrf_token' => $this->request->getPost('csrf_token', ''),
+                    'csrf_token' => $this->request->body('csrf_token', ''),
                 ],
                 $rules
             );

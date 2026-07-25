@@ -11,7 +11,7 @@ use Johncms\Modules\Forum\Domain\Models\ForumTopic;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
 use Johncms\Notifications\Notification;
 use Johncms\Smilies\SmiliesRendererInterface;
-use Johncms\System\Http\Environment;
+use Johncms\Http\Environment;
 use Johncms\Users\User;
 
 final readonly class ReplyMessageUseCase

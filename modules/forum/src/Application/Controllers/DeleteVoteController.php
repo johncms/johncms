@@ -11,7 +11,7 @@ use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Application\UseCases\DeleteVoteUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureDeleteVoteAccessUseCase;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 
 final readonly class DeleteVoteController
@@ -54,7 +54,7 @@ final readonly class DeleteVoteController
             );
         }
 
-        if ($this->request->getQuery('yes') !== null) {
+        if ($this->request->query->has('yes')) {
             $this->deleteVoteUseCase->execute($id);
             return $this->render->render(
                 'system::pages/result',

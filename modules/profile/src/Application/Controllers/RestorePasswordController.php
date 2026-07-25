@@ -11,7 +11,7 @@ use Johncms\Modules\Profile\Application\UseCases\CompletePasswordRecoveryUseCase
 use Johncms\Modules\Profile\Application\UseCases\GetRecoveryContextUseCase;
 use Johncms\Modules\Profile\Application\UseCases\SendPasswordRecoveryUseCase;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 use Mobicms\Captcha\Code;
@@ -51,7 +51,7 @@ final readonly class RestorePasswordController
         $this->navChain->add(__('Restore password'));
 
         $captchaValid = (new Validator(
-            ['captcha' => $this->request->getPost('code')],
+            ['captcha' => $this->request->body('code')],
             ['captcha' => ['Captcha']]
         ))->isValid();
         unset($_SESSION['code']);
@@ -63,8 +63,8 @@ final readonly class RestorePasswordController
         try {
             $this->sendPasswordRecovery->execute(
                 new SendRecoveryCommand(
-                    nick: (string) $this->request->getPost('nick', ''),
-                    email: (string) $this->request->getPost('email', ''),
+                    nick: $this->request->body('nick', ''),
+                    email: $this->request->body('email', ''),
                 ),
                 config('johncms')['homeurl'] ?? ''
             );

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Registration\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 
@@ -21,8 +21,8 @@ final readonly class ConfirmEmailController
 
     public function __invoke(): string
     {
-        $id = (int) $this->request->getQuery('id', 0, FILTER_VALIDATE_INT);
-        $code = (string) $this->request->getQuery('code', '');
+        $id = $this->request->queryInt('id');
+        $code = $this->request->queryParam('code', '');
 
         $confirmUser = null;
         if ($id > 0 && $code !== '') {

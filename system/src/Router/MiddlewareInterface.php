@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Router;
 
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 
 interface MiddlewareInterface
 {

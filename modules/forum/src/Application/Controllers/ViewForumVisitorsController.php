@@ -12,7 +12,7 @@ use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumUserAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\ViewForumVisitorsUseCase;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 
@@ -40,8 +40,8 @@ final readonly class ViewForumVisitorsController
             return $this->forumErrorRenderer->render($this->render, $exception);
         }
 
-        $showGuests = $this->request->getQuery('mode') === 'guests';
-        $page = max(1, (int) $this->request->getQuery('page', 1));
+        $showGuests = $this->request->queryParam('mode') === 'guests';
+        $page = max(1, $this->request->queryInt('page', 1));
         $start = ($page - 1) * (int) $this->currentUser->config->kmess;
         $result = $this->viewForumVisitorsUseCase->execute(
             new ForumVisitorsQueryDTO(

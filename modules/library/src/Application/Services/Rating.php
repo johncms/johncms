@@ -53,8 +53,38 @@ class Rating
             $stmt = $this->db->prepare('INSERT INTO `cms_library_rating` (`user_id`, `st_id`, `point`) VALUES (?, ?, ?)');
             $stmt->execute([$user->id, $this->lib_id, $point]);
         }
-        header('Location: ' . $_SERVER['HTTP_REFERER']);
-        exit;
+
+        redirect($this->safeRefererUrl());
+    }
+
+    /**
+     * Builds a same-origin redirect target from the Referer header.
+     *
+     * The Referer is attacker-controlled input: a crafted value could point to an
+     * external host and turn this into an open redirect. Only the path and query
+     * string are kept (the host is always discarded), so the result never leaves
+     * the current site regardless of what the header contains.
+     *
+     * A path starting with a second slash or a backslash is rejected as well:
+     * browsers normalise "/\evil.com" into the protocol-relative "//evil.com",
+     * which would leave the site despite the leading slash.
+     */
+    private function safeRefererUrl(): string
+    {
+        $referer = $_SERVER['HTTP_REFERER'] ?? '';
+        $path    = parse_url($referer, PHP_URL_PATH);
+
+        if (! is_string($path) || ! str_starts_with($path, '/')) {
+            return '/library/';
+        }
+
+        if (str_starts_with($path, '//') || str_starts_with($path, '/\\')) {
+            return '/library/';
+        }
+
+        $query = parse_url($referer, PHP_URL_QUERY);
+
+        return is_string($query) ? $path . '?' . $query : $path;
     }
 
     private function getRate(): int

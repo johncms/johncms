@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms\System\Users;
 
-use Johncms\System\Http\Environment;
+use Johncms\Http\Environment;
 use Psr\Container\ContainerInterface;
 
 class UserStat

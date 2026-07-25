@@ -6,7 +6,7 @@ namespace Johncms\Modules\Guestbook\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Guestbook\Application\Access\GuestbookMode;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 
 final readonly class SwitchTypeController
 {

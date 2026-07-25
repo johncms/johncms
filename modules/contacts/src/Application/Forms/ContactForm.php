@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Johncms\Modules\Contacts\Application\Forms;
 
 use Johncms\Modules\Contacts\Domain\Models\ContactMessage;
-use Johncms\System\Http\Environment;
-use Johncms\System\Http\Request;
+use Johncms\Http\Environment;
+use Johncms\Http\Request;
 use Johncms\Users\User;
 use Laminas\Validator\Hostname;
 
@@ -30,12 +30,12 @@ final readonly class ContactForm
     public function getFormData(): array
     {
         $formData = [
-            'name'                 => (string) $this->request->getPost('name', ''),
-            'email'                => (string) $this->request->getPost('email', ''),
-            'message'              => (string) $this->request->getPost('message', ''),
-            'code'                 => (string) $this->request->getPost('code', ''),
-            'csrf_token'           => (string) $this->request->getPost('csrf_token', ''),
-            self::HONEYPOT_FIELD   => (string) $this->request->getPost(self::HONEYPOT_FIELD, ''),
+            'name'                 => $this->request->body('name', ''),
+            'email'                => $this->request->body('email', ''),
+            'message'              => $this->request->body('message', ''),
+            'code'                 => $this->request->body('code', ''),
+            'csrf_token'           => $this->request->body('csrf_token', ''),
+            self::HONEYPOT_FIELD   => $this->request->body(self::HONEYPOT_FIELD, ''),
         ];
 
         $formData = array_map('trim', $formData);

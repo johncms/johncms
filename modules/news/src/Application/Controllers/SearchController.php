@@ -10,7 +10,7 @@ use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\News\Domain\Models\NewsArticle;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 
 final class SearchController
@@ -48,7 +48,7 @@ final class SearchController
             ]
         );
 
-        $query = $request->getQuery('query');
+        $query = $request->queryParam('query');
         $articles = null;
         $pagination = '';
         if (! empty($query)) {
@@ -99,7 +99,7 @@ final class SearchController
             ]
         );
 
-        $query = $request->getQuery('tag');
+        $query = $request->queryParam('tag');
         $articles = null;
         $pagination = '';
         if (! empty($query)) {

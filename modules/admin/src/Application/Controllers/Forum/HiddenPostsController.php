@@ -11,7 +11,7 @@ use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Admin\Application\Services\HiddenPostRowMapper;
 use Johncms\Modules\Admin\Application\UseCases\ManageHiddenForumUseCase;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
@@ -87,12 +87,12 @@ final readonly class HiddenPostsController
      */
     private function filters(): array
     {
-        $topicId = $this->request->getQuery('tsort', null, FILTER_VALIDATE_INT);
+        $topicId = filter_var($this->request->queryParam('tsort'), FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
         if ($topicId !== null) {
             return [abs((int) $topicId), null, '?tsort=' . abs((int) $topicId), __('by topic')];
         }
 
-        $userId = $this->request->getQuery('usort', null, FILTER_VALIDATE_INT);
+        $userId = filter_var($this->request->queryParam('usort'), FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
         if ($userId !== null) {
             return [null, abs((int) $userId), '?usort=' . abs((int) $userId), __('by author')];
         }
@@ -103,7 +103,7 @@ final readonly class HiddenPostsController
     private function isCsrfValid(): bool
     {
         $validator = new Validator(
-            ['csrf_token' => (string) $this->request->getPost('csrf_token', '')],
+            ['csrf_token' => $this->request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

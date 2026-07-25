@@ -12,7 +12,7 @@ use Johncms\Modules\Forum\Application\UseCases\DeletePostUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureEditPostAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetEditPostContextUseCase;
 use Johncms\Security\Csrf;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
@@ -64,7 +64,7 @@ final readonly class DeletePostController
 
         if ($this->request->getMethod() === 'POST') {
             $validator = new Validator(
-                ['csrf_token' => (string) $this->request->getPost('csrf_token', '')],
+                ['csrf_token' => $this->request->body('csrf_token', '')],
                 ['csrf_token' => ['Csrf']]
             );
 
@@ -81,7 +81,7 @@ final readonly class DeletePostController
                 );
             }
 
-            $action = (string) $this->request->getPost('action', 'delete');
+            $action = $this->request->body('action', 'delete');
             $hardDelete = $action === 'delete' && $this->currentUser->rights === 9;
             $result = $this->deletePostUseCase->execute($context, $hardDelete, $this->getForumSettings());
             redirect($result->redirectUrl);

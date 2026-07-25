@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\UploadedFileMapper;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\UploadException;
 use Johncms\Modules\Forum\Application\Exceptions\UploadExpiredException;
@@ -13,8 +14,9 @@ use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Application\UseCases\AttachFileToPostUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetAttachFileContextUseCase;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 final readonly class AddFileController
 {
@@ -26,6 +28,7 @@ final readonly class AddFileController
         private GetAttachFileContextUseCase $contextUseCase,
         private AttachFileToPostUseCase $attachFileToPostUseCase,
         private ForumTopicPathService $topicPathService,
+        private UploadedFileMapper $uploadedFileMapper,
     ) {
         $this->controllerContext->initModule('forum');
     }
@@ -34,7 +37,7 @@ final readonly class AddFileController
     {
         $config = config('johncms');
         $forumConfig = config('forum');
-        $page = (int) $this->request->getQuery('page', 1);
+        $page = $this->request->queryInt('page', 1);
 
         try {
             $context = $this->contextUseCase->execute($id, $page);
@@ -65,12 +68,17 @@ final readonly class AddFileController
         $page = $context->page;
 
         if ($this->request->getMethod() === 'POST') {
+            $uploaded = $this->request->files->get('fail');
+            $file = $uploaded instanceof UploadedFile
+                ? $this->uploadedFileMapper->fromUploadedFile($uploaded)
+                : null;
+
             try {
                 $result = $this->attachFileToPostUseCase->execute(
                     messageId: $id,
                     extensions: $forumConfig['extensions'],
                     maxFileSizeKb: (int) $config['flsz'],
-                    uploadedFiles: $this->request->getUploadedFiles(),
+                    file: $file,
                 );
             } catch (ForumNotFoundException $exception) {
                 return $this->forumErrorRenderer->render(

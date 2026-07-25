@@ -9,7 +9,7 @@ use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\ClearForumSearchHistoryUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumUserAccessUseCase;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 
 final readonly class ClearForumSearchHistoryController
@@ -33,7 +33,7 @@ final readonly class ClearForumSearchHistoryController
             return $this->forumErrorRenderer->render($this->render, $exception);
         }
 
-        if ($this->request->getPost('submit') !== null) {
+        if ($this->request->hasBody('submit')) {
             $this->clearForumSearchHistoryUseCase->execute();
             redirect('/forum/search/');
         }

@@ -15,8 +15,8 @@ use Johncms\Modules\Forum\Application\UseCases\PostMessageUseCase;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
 use Johncms\Security\AntifloodCheckerInterface;
 use Johncms\Smilies\SmiliesRendererInterface;
-use Johncms\System\Http\Request;
-use Johncms\System\Http\Session;
+use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\System\Utility\EditorContentNormalizer;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
@@ -47,7 +47,7 @@ final readonly class NewMessageController
 
     public function __invoke(int $id): string
     {
-        $page = max(1, (int) $this->request->getQuery('page', 1));
+        $page = max(1, $this->request->queryInt('page', 1));
 
         try {
             $topic = $this->contextUseCase->execute($id);
@@ -93,13 +93,13 @@ final readonly class NewMessageController
             );
         }
 
-        $msg = $this->editorContentNormalizer->trimEdgeEmptyBlocks((string) $this->request->getPost('msg', ''));
+        $msg = $this->editorContentNormalizer->trimEdgeEmptyBlocks($this->request->body('msg', ''));
         $msg = trim($msg);
-        $addFiles = $this->request->getPost('addfiles') !== null;
-        $attachedFiles = (array) $this->request->getPost('attached_files', [], FILTER_VALIDATE_INT);
+        $addFiles = $this->request->hasBody('addfiles');
+        $attachedFiles = (array) $this->request->bodyInts('attached_files');
 
         if (
-            $this->request->getPost('submit') !== null
+            $this->request->hasBody('submit')
             && $msg !== ''
             && $this->isValidToken()
         ) {
@@ -172,7 +172,7 @@ final readonly class NewMessageController
                 'add_file'          => $addFiles,
                 'msg'               => $msg,
                 'settings_forum'    => $this->getForumSettings(),
-                'show_post_preview' => ($msg !== '' && $this->request->getPost('submit') === null),
+                'show_post_preview' => ($msg !== '' && ! $this->request->hasBody('submit')),
                 'back_url'          => $this->buildTopicBackUrl($topic->url, $page),
                 'preview_message'   => $msgPreview,
                 'is_new_message'    => true,
@@ -200,7 +200,7 @@ final readonly class NewMessageController
 
     private function isValidToken(): bool
     {
-        $token = (string) $this->request->getPost('token', '');
+        $token = $this->request->body('token', '');
         $sessionToken = (string) $this->session->get('token', '');
 
         return $token !== '' && $sessionToken !== '' && hash_equals($sessionToken, $token);

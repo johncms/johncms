@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\Controllers;
 
-use GuzzleHttp\Psr7\UploadedFile;
 use Johncms\FileInfo;
 use Johncms\Files\FileStorage;
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\UploadedFileMapper;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\Users\User;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Psr\Log\LoggerInterface;
 use Throwable;
 
@@ -24,6 +25,7 @@ final readonly class UploadFileController
         private EnsureForumAccessUseCase $forumAccessUseCase,
         private User $currentUser,
         private LoggerInterface $logger,
+        private UploadedFileMapper $uploadedFileMapper,
     ) {
         $this->controllerContext->initModule('forum');
     }
@@ -51,13 +53,12 @@ final readonly class UploadFileController
         }
 
         try {
-            /** @var UploadedFile[] $files */
-            $files = $this->request->getUploadedFiles();
-            if (empty($files['upload']) || ! $files['upload'] instanceof UploadedFile) {
+            $upload = $this->request->files->get('upload');
+            if (! $upload instanceof UploadedFile) {
                 return json_encode(['error' => ['message' => __('Error uploading file')]]);
             }
 
-            $fileInfo = new FileInfo((string) $files['upload']->getClientFilename());
+            $fileInfo = new FileInfo((string) $this->uploadedFileMapper->fromUploadedFile($upload)->clientName);
             if (! $fileInfo->isImage()) {
                 return json_encode(['error' => ['message' => __('Only images are allowed')]]);
             }
@@ -80,7 +81,7 @@ final readonly class UploadFileController
                     'feature'      => 'upload_file',
                     'user_id'      => $this->currentUser->id,
                     'trace'        => $exception->getTraceAsString(),
-                    'request_data' => $this->request->getParsedBody(),
+                    'request_data' => $this->request->request->all(),
                 ]
             );
 

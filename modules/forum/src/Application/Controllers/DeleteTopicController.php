@@ -12,7 +12,7 @@ use Johncms\Modules\Forum\Application\Services\ForumSectionPathService;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Application\UseCases\DeleteTopicUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetDeleteTopicContextUseCase;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 
@@ -62,8 +62,8 @@ final readonly class DeleteTopicController
             );
         }
 
-        if ($this->request->getPost('submit') !== null) {
-            $deleteMode = (int) $this->request->getPost('del', 0);
+        if ($this->request->hasBody('submit')) {
+            $deleteMode = $this->request->bodyInt('del', 0);
 
             if ($deleteMode === 2 && $this->user->rights === 9) {
                 $this->deleteTopicUseCase->deleteTopic($topic->id);

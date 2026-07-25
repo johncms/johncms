@@ -11,7 +11,7 @@ use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\BulkDeletePostsUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetBulkDeletePostsContextUseCase;
 use Johncms\Security\Csrf;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
@@ -46,12 +46,12 @@ final readonly class BulkDeletePostsController
             );
         }
 
-        $ids = $this->extractIds((array) $this->request->getPost('post_ids', []));
-        $confirmIds = $this->extractIds((array) $this->request->getPost('ids', []));
+        $ids = $this->extractIds((array) $this->request->bodyList('post_ids'));
+        $confirmIds = $this->extractIds((array) $this->request->bodyList('ids'));
 
-        if ($this->request->getPost('confirm') !== null) {
+        if ($this->request->hasBody('confirm')) {
             $validator = new Validator(
-                ['csrf_token' => (string) $this->request->getPost('csrf_token', '')],
+                ['csrf_token' => $this->request->body('csrf_token', '')],
                 ['csrf_token' => ['Csrf']]
             );
 

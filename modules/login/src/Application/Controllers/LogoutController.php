@@ -6,7 +6,7 @@ namespace Johncms\Modules\Login\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 
@@ -29,7 +29,7 @@ final readonly class LogoutController
             exit;
         }
 
-        if ($this->request->getPost('logout') !== null) {
+        if ($this->request->hasBody('logout')) {
             $_SESSION = [];
             setcookie('cuid', '', time() - 3600, '/');
             setcookie('cups', '', time() - 3600, '/');
@@ -38,7 +38,7 @@ final readonly class LogoutController
         }
 
         $config = config('johncms');
-        $referer = $this->request->getServer('HTTP_REFERER', $config['homeurl'], FILTER_SANITIZE_SPECIAL_CHARS);
+        $referer = $this->request->server->filter('HTTP_REFERER', $config['homeurl'], FILTER_SANITIZE_SPECIAL_CHARS);
 
         $this->navChain->add(__('Personal'), '/profile/account');
         $this->navChain->add(__('Logout'));

@@ -12,11 +12,11 @@ $analytics = $counters->counters();
 $ads = di(Johncms\Ads::class);
 $ads_array = $ads->getAds();
 $theme = di(\Johncms\System\View\Theme::class);
-$request = di(\Johncms\System\Http\Request::class);
+$request = di(\Johncms\Http\Request::class);
 
 $baseTitle = isset($title) ? (string) $title : (string) $config['copyright'];
 $documentTitle = $baseTitle;
-$isHomePage = (string) $request->getUri()->getPath() === '/';
+$isHomePage = $request->getPathInfo() === '/';
 if (! $isHomePage && ! empty($baseTitle) && $baseTitle !== (string) $config['copyright']) {
     $documentTitle = $baseTitle . ' | ' . $config['copyright'];
 }

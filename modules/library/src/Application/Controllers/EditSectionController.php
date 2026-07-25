@@ -11,10 +11,11 @@ use Johncms\Modules\Library\Application\Services\LibrarySlugService;
 use Johncms\Modules\Library\Domain\Models\LibraryCategory;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Modules\Library\Application\Services\Tree;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class EditSectionController
 {
@@ -30,26 +31,30 @@ final readonly class EditSectionController
         $this->controllerContext->initModule('library');
     }
 
-    public function __invoke(int $id): string
+    public function __invoke(int $id): Response
     {
         if (! ($this->currentUser->rights > 4)) {
-            http_response_code(403);
-            return $this->render->render('system::pages/result', [
-                'title'   => __('Edit Section'),
-                'type'    => 'alert-danger',
-                'message' => __('Access forbidden'),
-            ]);
+            return new Response(
+                $this->render->render('system::pages/result', [
+                    'title'   => __('Edit Section'),
+                    'type'    => 'alert-danger',
+                    'message' => __('Access forbidden'),
+                ]),
+                Response::HTTP_FORBIDDEN
+            );
         }
 
         $category = LibraryCategory::query()->find($id);
 
         if ($category === null) {
-            http_response_code(404);
-            return $this->render->render('system::pages/result', [
-                'title'   => __('Edit Section'),
-                'type'    => 'alert-danger',
-                'message' => __('Section does not exist'),
-            ]);
+            return new Response(
+                $this->render->render('system::pages/result', [
+                    'title'   => __('Edit Section'),
+                    'type'    => 'alert-danger',
+                    'message' => __('Section does not exist'),
+                ]),
+                Response::HTTP_NOT_FOUND
+            );
         }
 
         $this->navChain->add(__('Library'), '/library/');
@@ -65,11 +70,11 @@ final readonly class EditSectionController
 
         if ($this->request->getMethod() === 'POST') {
             $this->save($id, $category);
-            return $this->render->render('library::edit_section', [
+            return new Response($this->render->render('library::edit_section', [
                 'id'           => $id,
                 'category_url' => $category->url,
                 'saved'        => true,
-            ]);
+            ]));
         }
 
         $isEmpty = ! LibraryCategory::query()->where('parent', $id)->exists()
@@ -77,19 +82,19 @@ final readonly class EditSectionController
 
         $parentSections = $this->getParentSections($id);
 
-        return $this->render->render('library::edit_section', [
+        return new Response($this->render->render('library::edit_section', [
             'id'             => $id,
             'category_url'   => $category->url,
             'category'       => $category,
             'isEmpty'        => $isEmpty,
             'parentSections' => $parentSections,
             'saved'          => false,
-        ]);
+        ]));
     }
 
     private function save(int $id, LibraryCategory $category): void
     {
-        $post = $this->request->getParsedBody();
+        $post = $this->request->request->all();
 
         $newName     = mb_substr(trim((string) ($post['name'] ?? '')), 0, 100);
         $newParentId = isset($post['move']) && LibraryCategory::query()->count() > 1

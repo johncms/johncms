@@ -8,7 +8,7 @@ use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Forum\Application\Services\ForumLegacyRedirectResolver;
 use Johncms\Modules\Forum\Application\UseCases\ViewForumIndexUseCase;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Utils\ShortNumberFormatter;
 
@@ -27,7 +27,7 @@ final readonly class ForumIndexController
 
     public function __invoke(): string
     {
-        $legacyRedirectUrl = $this->legacyRedirectResolver->resolve($this->request->getQueryParams());
+        $legacyRedirectUrl = $this->legacyRedirectResolver->resolve($this->request->query->all());
         if ($legacyRedirectUrl !== null) {
             http_response_code(301);
             header('Location: ' . $legacyRedirectUrl);

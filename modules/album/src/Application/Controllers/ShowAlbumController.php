@@ -12,7 +12,7 @@ use Johncms\Modules\Album\Application\Exceptions\AlbumNotFoundException;
 use Johncms\Modules\Album\Application\Exceptions\AlbumPasswordRequiredException;
 use Johncms\Modules\Album\Application\UseCases\GetAlbumViewUseCase;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 
@@ -33,7 +33,7 @@ final readonly class ShowAlbumController
 
     public function __invoke(int $al): string
     {
-        $submittedPassword = $this->request->getPost('password');
+        $submittedPassword = $this->request->body('password');
 
         try {
             $pagination = $this->paginationFactory->create($this->useCase->count($al, $submittedPassword));

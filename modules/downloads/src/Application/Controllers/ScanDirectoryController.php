@@ -13,11 +13,12 @@ use Johncms\Modules\Downloads\Domain\Models\DownloadComment;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\Modules\Downloads\Domain\Models\DownloadMoreFile;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class ScanDirectoryController
 {
@@ -32,12 +33,12 @@ final readonly class ScanDirectoryController
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(): string
+    public function __invoke(): Response
     {
         set_time_limit(99999);
 
-        $id = max(0, (int) $this->request->getQuery('id', 0));
-        $do = $this->request->getQuery('do') ?? '';
+        $id = max(0, $this->request->queryInt('id', 0));
+        $do = $this->request->queryParam('do') ?? '';
 
         $this->navChain->add(__('Downloads'), '/downloads/');
         $this->navChain->add(__('Update'));
@@ -54,7 +55,7 @@ final readonly class ScanDirectoryController
         return $this->handleScan($id);
     }
 
-    private function handleClean(int $id): string
+    private function handleClean(int $id): Response
     {
         $seenRealFiles = [];
         DownloadFile::query()->orderBy('id')->each(function (DownloadFile $file) use (&$seenRealFiles): void {
@@ -110,13 +111,13 @@ final readonly class ScanDirectoryController
             ? ($this->categoryPathService->getCategoryUrlById($id) ?? '/downloads/')
             : '/downloads/';
 
-        return $this->render->render('system::pages/result', [
+        return new Response($this->render->render('system::pages/result', [
             'title'         => __('Remove missing files'),
             'type'          => 'alert-success',
             'message'       => __('Database successfully updated'),
             'back_url'      => $backUrl,
             'back_url_name' => __('Back'),
-        ]);
+        ]));
     }
 
     private function deleteCategoryFiles(int $categoryId): void
@@ -130,22 +131,21 @@ final readonly class ScanDirectoryController
         DownloadFile::query()->where('refid', $categoryId)->delete();
     }
 
-    private function handleScan(int $id): string
+    private function handleScan(int $id): Response
     {
-        $yes = $this->request->getQuery('yes') !== null;
-        $mod = (int) $this->request->getQuery('mod', 0);
+        $yes = $this->request->query->has('yes');
+        $mod = $this->request->queryInt('mod', 0);
 
         if ($id > 0) {
             $category = DownloadCategory::query()->find($id);
             if ($category === null || ! is_dir($category->dir)) {
-                http_response_code(404);
-                return $this->render->render('system::pages/result', [
+                return new Response($this->render->render('system::pages/result', [
                     'title'         => __('Error'),
                     'type'          => 'alert-danger',
                     'message'       => __('The directory does not exist'),
                     'back_url'      => '/downloads/',
                     'back_url_name' => __('Downloads'),
-                ]);
+                ]), Response::HTTP_NOT_FOUND);
             }
             $scanDir = $category->dir;
         } else {
@@ -164,14 +164,14 @@ final readonly class ScanDirectoryController
             ? $this->categoryPathService->getCategoryUrl($category)
             : '/downloads/';
 
-        return $this->render->render('downloads::scan_dir', [
+        return new Response($this->render->render('downloads::scan_dir', [
             'id'           => $id,
             'urls'         => ['downloads' => '/downloads/'],
             'updated_info' => $updatedInfo,
             'select_mode'  => $selectMode,
             'back_url'     => $backUrl,
             'back_name'    => __('Back'),
-        ]);
+        ]));
     }
 
     private function scan(string $scanDir, int $mod): array

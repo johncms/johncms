@@ -13,6 +13,7 @@ use Johncms\Modules\Downloads\Application\UseCases\ViewFavoritesUseCase;
 use Johncms\NavChain;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class FavoritesController
 {
@@ -29,17 +30,19 @@ final readonly class FavoritesController
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(): string
+    public function __invoke(): Response
     {
         if (! $this->currentUser->isValid()) {
-            http_response_code(403);
-            return $this->render->render(
-                'system::pages/result',
-                [
-                    'title'   => __('Downloads'),
-                    'type'    => 'alert-danger',
-                    'message' => __('For registered users only'),
-                ]
+            return new Response(
+                $this->render->render(
+                    'system::pages/result',
+                    [
+                        'title'   => __('Downloads'),
+                        'type'    => 'alert-danger',
+                        'message' => __('For registered users only'),
+                    ]
+                ),
+                Response::HTTP_FORBIDDEN
             );
         }
 
@@ -70,7 +73,7 @@ final readonly class FavoritesController
             'description' => $meta->description,
         ]);
 
-        return $this->render->render(
+        return new Response($this->render->render(
             'downloads::bookmarks',
             [
                 'files'       => $files,
@@ -78,6 +81,6 @@ final readonly class FavoritesController
                 'pagination'  => $pagination->render(),
                 'urls'        => ['downloads' => '/downloads/'],
             ]
-        );
+        ));
     }
 }

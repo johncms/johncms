@@ -7,7 +7,7 @@ namespace Johncms\Modules\Mail\Application\Controllers;
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Mail\Application\UseCases\GetBlocklistUseCase;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 
 final readonly class BlocklistIndexController

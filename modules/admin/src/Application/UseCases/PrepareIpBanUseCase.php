@@ -7,7 +7,7 @@ namespace Johncms\Modules\Admin\Application\UseCases;
 use Johncms\Modules\Admin\Application\DTO\PreparedIpBanDTO;
 use Johncms\Modules\Admin\Application\Services\IpRangeParser;
 use Johncms\Modules\Admin\Domain\Repository\IpBanRepositoryInterface;
-use Johncms\System\Http\Environment;
+use Johncms\Http\Environment;
 
 final readonly class PrepareIpBanUseCase
 {

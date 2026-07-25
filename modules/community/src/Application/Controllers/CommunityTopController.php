@@ -7,7 +7,7 @@ namespace Johncms\Modules\Community\Application\Controllers;
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Community\Application\UseCases\ViewTopUseCase;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 
@@ -41,7 +41,7 @@ final readonly class CommunityTopController
             );
         }
 
-        $route = $this->request->getCurrentRouteParams();
+        $route = $this->request->attributes->all();
         $mod = (string) ($route['mod'] ?? '');
         $result = $this->viewTopUseCase->execute($mod);
 

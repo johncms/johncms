@@ -13,9 +13,11 @@ use Johncms\Modules\Downloads\Application\Services\DownloadLegacyRedirectResolve
 use Johncms\Modules\Downloads\Domain\Models\DownloadCategory;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class IndexController
 {
@@ -34,13 +36,11 @@ final readonly class IndexController
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(): string
+    public function __invoke(): Response
     {
-        $redirect = $this->legacyRedirectResolver->resolve($this->request->getQueryParams());
+        $redirect = $this->legacyRedirectResolver->resolve($this->request->query->all());
         if ($redirect !== null) {
-            http_response_code(301);
-            header('Location: ' . $redirect);
-            exit;
+            return new RedirectResponse($redirect, Response::HTTP_MOVED_PERMANENTLY);
         }
 
         $this->navChain->add(__('Downloads'), '/downloads/');
@@ -111,7 +111,7 @@ final readonly class IndexController
                 }
 
                 if ($this->request->getMethod() === 'POST') {
-                    $post = $this->request->getParsedBody();
+                    $post = $this->request->request->all();
                     if (isset($post['sort_down'])) {
                         $_SESSION['sort_down'] = $post['sort_down'] ? 1 : 0;
                     }
@@ -138,7 +138,7 @@ final readonly class IndexController
             }
         }
 
-        return $this->render->render('downloads::index', [
+        return new Response($this->render->render('downloads::index', [
             'id'          => 0,
             'urls'        => $urls,
             'pagination'  => $pagination->render(),
@@ -148,6 +148,6 @@ final readonly class IndexController
             'categories'  => $categories,
             'total_cat'   => $totalCat,
             'can_upload'  => false,
-        ]);
+        ]));
     }
 }

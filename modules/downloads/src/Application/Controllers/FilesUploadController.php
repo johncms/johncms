@@ -14,7 +14,7 @@ use Johncms\Modules\Downloads\Application\Services\DownloadSlugService;
 use Johncms\Modules\Downloads\Domain\Models\DownloadCategory;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 
@@ -80,20 +80,20 @@ final readonly class FilesUploadController
 
     private function handleUpload(int $id, string $categoryDir, array $allowedExtensions, bool $isAdmin): string
     {
-        $uploadedFiles = $this->request->getUploadedFiles();
+        $uploadedFiles = $this->request->files->all();
         $uploadUrl = '/downloads/upload/' . $id . '/';
 
         if (empty($uploadedFiles) || empty($uploadedFiles['fail'])) {
             return $this->error(__('File not attached'), $uploadUrl, __('Repeat'));
         }
 
-        $post = $this->request->getParsedBody();
+        $post = $this->request->request->all();
         $config = config('johncms');
 
-        /** @var \GuzzleHttp\Psr7\UploadedFile $uploadedFile */
+        /** @var \Symfony\Component\HttpFoundation\File\UploadedFile $uploadedFile */
         $uploadedFile = $uploadedFiles['fail'];
 
-        $fileInfo = new FileInfo($uploadedFile->getClientFilename());
+        $fileInfo = new FileInfo($uploadedFile->getClientOriginalName());
         $ext = strtolower($fileInfo->getExtension());
 
         $newFileName = isset($post['new_file']) ? trim($post['new_file']) : null;
@@ -138,9 +138,9 @@ final readonly class FilesUploadController
             $fname = time() . $fname;
         }
 
-        $uploadedFile->moveTo($categoryDir . '/' . $fname);
-
-        if (! $uploadedFile->isMoved()) {
+        try {
+            $uploadedFile->move($categoryDir, $fname);
+        } catch (\Symfony\Component\HttpFoundation\File\Exception\FileException) {
             return $this->error(__('File not attached'), $uploadUrl, __('Repeat'));
         }
 
@@ -170,13 +170,13 @@ final readonly class FilesUploadController
 
         $screenAttached = null;
         $screenError = null;
-        /** @var \GuzzleHttp\Psr7\UploadedFile|null $screenshot */
+        /** @var \Symfony\Component\HttpFoundation\File\UploadedFile|null $screenshot */
         $screenshot = $uploadedFiles['screen'] ?? null;
         if ($screenshot !== null) {
             $screensDir = \UPLOAD_PATH . 'downloads' . \DS . 'screen' . \DS . $file->id;
             if (mkdir($screensDir, 0777, true) || is_dir($screensDir)) {
                 try {
-                    $img = $this->imageManager->make($screenshot->getStream());
+                    $img = $this->imageManager->make($screenshot->getPathname());
                     $img->resize(1920, 1080, static function ($constraint): void {
                         $constraint->aspectRatio();
                         $constraint->upsize();

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Http\Pagination;
 
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 
 final readonly class PaginationGuard
 {
@@ -22,7 +22,7 @@ final readonly class PaginationGuard
     public function redirectUrl(Pagination $pagination): ?string
     {
         $paramName = $pagination->getPageParamName();
-        $queryParams = $this->request->getQueryParams();
+        $queryParams = $this->request->query->all();
         if (! array_key_exists($paramName, $queryParams)) {
             return null;
         }

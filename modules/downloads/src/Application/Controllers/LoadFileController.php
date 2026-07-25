@@ -7,10 +7,12 @@ namespace Johncms\Modules\Downloads\Application\Controllers;
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\Modules\Downloads\Domain\Models\DownloadMoreFile;
-use Johncms\System\Http\Request;
-use Johncms\System\Http\Session;
+use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class LoadFileController
 {
@@ -24,7 +26,7 @@ final readonly class LoadFileController
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(int $id): string
+    public function __invoke(int $id): Response
     {
         $file = DownloadFile::query()
             ->where('id', $id)
@@ -41,9 +43,8 @@ final readonly class LoadFileController
 
         $link = '/' . $file->dir . '/' . $file->name;
 
-        $moreId = $this->request->getQuery('more');
-        if ($moreId !== null) {
-            $moreId = abs((int) $moreId);
+        $moreId = abs($this->request->queryInt('more'));
+        if ($moreId > 0) {
             $moreFile = DownloadMoreFile::query()
                 ->where('refid', $id)
                 ->where('id', $moreId)
@@ -62,23 +63,23 @@ final readonly class LoadFileController
             $this->session->set($sessionKey, 1);
         }
 
-        http_response_code(302);
-        header('Location: ' . $link);
-        exit;
+        return new RedirectResponse($link);
     }
 
-    private function notFound(): string
+    private function notFound(): Response
     {
-        http_response_code(404);
-        return $this->render->render(
-            'system::pages/result',
-            [
-                'title'         => __('File not found'),
-                'type'          => 'alert-danger',
-                'message'       => __('File not found'),
-                'back_url'      => '/downloads/',
-                'back_url_name' => __('Downloads'),
-            ]
+        return new Response(
+            $this->render->render(
+                'system::pages/result',
+                [
+                    'title'         => __('File not found'),
+                    'type'          => 'alert-danger',
+                    'message'       => __('File not found'),
+                    'back_url'      => '/downloads/',
+                    'back_url_name' => __('Downloads'),
+                ]
+            ),
+            Response::HTTP_NOT_FOUND
         );
     }
 }

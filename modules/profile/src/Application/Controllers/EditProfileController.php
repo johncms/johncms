@@ -15,7 +15,7 @@ use Johncms\Modules\Profile\Application\UseCases\DeletePhotoUseCase;
 use Johncms\Modules\Profile\Application\UseCases\GetEditContextUseCase;
 use Johncms\Modules\Profile\Application\UseCases\UpdateProfileUseCase;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
@@ -120,7 +120,7 @@ final readonly class EditProfileController
     private function isCsrfValid(): bool
     {
         $validator = new Validator(
-            ['csrf_token' => (string) $this->request->getPost('csrf_token', '')],
+            ['csrf_token' => $this->request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 
@@ -130,25 +130,25 @@ final readonly class EditProfileController
     private function buildCommand(): UpdateProfileCommand
     {
         return new UpdateProfileCommand(
-            imname: (string) $this->request->getPost('imname', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
-            live: (string) $this->request->getPost('live', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
-            dayb: htmlspecialchars((string) $this->request->getPost('dayb', '')),
-            monthb: htmlspecialchars((string) $this->request->getPost('monthb', '')),
-            yearofbirth: htmlspecialchars((string) $this->request->getPost('yearofbirth', '')),
-            about: (string) $this->request->getPost('about', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
-            mibile: (string) $this->request->getPost('mibile', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
-            mail: (string) $this->request->getPost('mail', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
-            mailvis: (int) $this->request->getPost('mailvis', 0, FILTER_VALIDATE_INT),
-            skype: (string) $this->request->getPost('skype', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
-            jabber: (string) $this->request->getPost('jabber', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
-            www: (string) $this->request->getPost('www', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
-            status: (string) $this->request->getPost('status', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
-            csrfToken: (string) $this->request->getPost('csrf_token', ''),
-            name: (string) $this->request->getPost('name', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
-            karmaOff: (int) $this->request->getPost('karma_off', 0, FILTER_VALIDATE_INT),
-            sex: (string) $this->request->getPost('sex', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
-            rights: (int) $this->request->getPost('rights', 0, FILTER_VALIDATE_INT),
-            adminNotes: (string) $this->request->getPost('admin_notes', ''),
+            imname: (string) $this->request->request->filter('imname', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            live: (string) $this->request->request->filter('live', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            dayb: htmlspecialchars($this->request->body('dayb', '')),
+            monthb: htmlspecialchars($this->request->body('monthb', '')),
+            yearofbirth: htmlspecialchars($this->request->body('yearofbirth', '')),
+            about: (string) $this->request->request->filter('about', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            mibile: (string) $this->request->request->filter('mibile', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            mail: (string) $this->request->request->filter('mail', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            mailvis: $this->request->bodyInt('mailvis'),
+            skype: (string) $this->request->request->filter('skype', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            jabber: (string) $this->request->request->filter('jabber', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            www: (string) $this->request->request->filter('www', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            status: (string) $this->request->request->filter('status', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            csrfToken: $this->request->body('csrf_token', ''),
+            name: (string) $this->request->request->filter('name', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            karmaOff: $this->request->bodyInt('karma_off'),
+            sex: (string) $this->request->request->filter('sex', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            rights: $this->request->bodyInt('rights'),
+            adminNotes: $this->request->body('admin_notes', ''),
         );
     }
 

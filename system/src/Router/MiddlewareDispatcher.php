@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Router;
 
 use InvalidArgumentException;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Psr\Container\ContainerInterface;
 
 final class MiddlewareDispatcher

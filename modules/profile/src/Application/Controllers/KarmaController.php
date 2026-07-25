@@ -20,7 +20,7 @@ use Johncms\Modules\Profile\Application\UseCases\GetNewKarmaUseCase;
 use Johncms\Modules\Profile\Application\UseCases\GetVoteContextUseCase;
 use Johncms\Modules\Profile\Application\UseCases\VoteKarmaUseCase;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
@@ -111,9 +111,9 @@ final readonly class KarmaController
         }
 
         $command = new VoteKarmaCommand(
-            type: (int) $this->request->getPost('type', 0, FILTER_VALIDATE_INT),
-            points: (int) $this->request->getPost('points', 0, FILTER_VALIDATE_INT),
-            text: (string) $this->request->getPost('text', ''),
+            type: $this->request->bodyInt('type'),
+            points: $this->request->bodyInt('points'),
+            text: $this->request->body('text', ''),
         );
         $this->voteKarmaUseCase->execute($command, $context);
 
@@ -327,7 +327,7 @@ final readonly class KarmaController
     private function isCsrfValid(): bool
     {
         $validator = new Validator(
-            ['csrf_token' => (string) $this->request->getPost('csrf_token', '')],
+            ['csrf_token' => $this->request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 
@@ -336,6 +336,6 @@ final readonly class KarmaController
 
     private function resolveType(): int
     {
-        return (int) $this->request->getQuery('type', 0, FILTER_VALIDATE_INT);
+        return $this->request->queryInt('type');
     }
 }

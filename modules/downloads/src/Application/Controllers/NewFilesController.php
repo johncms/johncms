@@ -12,7 +12,7 @@ use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Downloads\Application\Exceptions\DownloadNotFoundException;
 use Johncms\Modules\Downloads\Application\UseCases\ViewNewFilesUseCase;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 
 final readonly class NewFilesController
@@ -32,7 +32,7 @@ final readonly class NewFilesController
 
     public function __invoke(): string
     {
-        $categoryId = max(0, (int) $this->request->getQuery('id', 0));
+        $categoryId = max(0, $this->request->queryInt('id', 0));
 
         try {
             $pagination = $this->paginationFactory->create($this->useCase->count($categoryId));

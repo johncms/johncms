@@ -8,7 +8,7 @@ use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Modules\Admin\Application\UseCases\RebuildSmiliesCacheUseCase;
 use Johncms\Modules\Admin\Domain\Exceptions\SmiliesCacheWriteException;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 
@@ -50,7 +50,7 @@ final readonly class EmoticonsController
     private function isCsrfValid(): bool
     {
         $validator = new Validator(
-            ['csrf_token' => (string) $this->request->getPost('csrf_token', '')],
+            ['csrf_token' => $this->request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

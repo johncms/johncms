@@ -10,8 +10,10 @@ use Johncms\Modules\Downloads\Application\Services\DownloadFilePathService;
 use Johncms\Modules\Downloads\Application\Services\DownloadSlugService;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class EditFileController
 {
@@ -30,7 +32,7 @@ final readonly class EditFileController
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(int $id): string
+    public function __invoke(int $id): Response
     {
         $file = DownloadFile::query()
             ->where('id', $id)
@@ -57,7 +59,7 @@ final readonly class EditFileController
         $this->navChain->add(htmlspecialchars($file->rus_name), $this->filePathService->getFileUrl($file));
         $this->navChain->add(__('Edit File'));
 
-        return $this->render->render('downloads::edit_file_form', [
+        return new Response($this->render->render('downloads::edit_file_form', [
             'id'         => $id,
             'file_data'  => [
                 'text'      => htmlspecialchars($file->rus_name),
@@ -67,24 +69,24 @@ final readonly class EditFileController
             'audio_tags'  => $audioTags,
             'action_url'  => '/downloads/edit-file/' . $id . '/',
             'file_url'    => $this->filePathService->getFileUrl($file),
-        ]);
+        ]));
     }
 
-    private function handleSave(int $id, DownloadFile $file, array $audioTags): string
+    private function handleSave(int $id, DownloadFile $file, array $audioTags): Response
     {
-        $post = $this->request->getParsedBody();
+        $post = $this->request->request->all();
         $name = isset($post['text']) ? trim($post['text']) : null;
         $nameLink = isset($post['name_link']) ? htmlspecialchars(mb_substr($post['name_link'], 0, 200)) : null;
         $desc = isset($post['desc']) ? trim($post['desc']) : null;
 
         if (! $name || ! $nameLink) {
-            return $this->render->render('system::pages/result', [
+            return new Response($this->render->render('system::pages/result', [
                 'title'         => __('Edit File'),
                 'type'          => 'alert-danger',
                 'message'       => __('The required fields are not filled'),
                 'back_url'      => '/downloads/edit-file/' . $id . '/',
                 'back_url_name' => __('Repeat'),
-            ]);
+            ]));
         }
 
         $slug = $this->slugService->generateUniqueFileSlug($name, (int) $file->refid, $id);
@@ -111,9 +113,8 @@ final readonly class EditFileController
         }
 
         $fileUrl = $this->filePathService->getFileUrl($file);
-        http_response_code(302);
-        header('Location: ' . $fileUrl);
-        exit;
+
+        return new RedirectResponse($fileUrl);
     }
 
     private function readAudioTags(string $filePath): array
@@ -137,15 +138,14 @@ final readonly class EditFileController
         return $tags;
     }
 
-    private function notFound(): string
+    private function notFound(): Response
     {
-        http_response_code(404);
-        return $this->render->render('system::pages/result', [
+        return new Response($this->render->render('system::pages/result', [
             'title'         => __('File not found'),
             'type'          => 'alert-danger',
             'message'       => __('File not found'),
             'back_url'      => '/downloads/',
             'back_url_name' => __('Downloads'),
-        ]);
+        ]), Response::HTTP_NOT_FOUND);
     }
 }

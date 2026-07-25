@@ -9,12 +9,14 @@ use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
-use Johncms\System\Http\Session;
+use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Utils\DateFormatterInterface;
 use Johncms\Utils\PlainTextFormatter;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class PremodController
 {
@@ -32,15 +34,17 @@ final readonly class PremodController
         $this->controllerContext->initModule('library');
     }
 
-    public function __invoke(): string
+    public function __invoke(): Response
     {
         if (! ($this->currentUser->rights > 4)) {
-            http_response_code(403);
-            return $this->render->render('system::pages/result', [
-                'title'   => __('Moderation Articles'),
-                'type'    => 'alert-danger',
-                'message' => __('Access forbidden'),
-            ]);
+            return new Response(
+                $this->render->render('system::pages/result', [
+                    'title'   => __('Moderation Articles'),
+                    'type'    => 'alert-danger',
+                    'message' => __('Access forbidden'),
+                ]),
+                Response::HTTP_FORBIDDEN
+            );
         }
 
         $this->navChain->add(__('Library'), '/library/');
@@ -51,7 +55,7 @@ final readonly class PremodController
             'page_title' => __('Moderation Articles'),
         ]);
 
-        $approveId = (int) $this->request->getQuery('approve', 0);
+        $approveId = $this->request->queryInt('approve', 0);
 
         if ($approveId > 0) {
             $article = LibraryText::query()->find($approveId);
@@ -59,15 +63,13 @@ final readonly class PremodController
                 $article->update(['premod' => 1]);
                 $this->session->flash('premod_approved_name', $article->name);
             }
-            header('Location: /library/premod', true, 302);
-            exit;
+            return new RedirectResponse('/library/premod');
         }
 
-        if ($this->request->getQuery('approve-all') !== null) {
+        if ($this->request->query->has('approve-all')) {
             LibraryText::query()->where('premod', 0)->update(['premod' => 1]);
             $this->session->flash('premod_approved_all', true);
-            header('Location: /library/premod', true, 302);
-            exit;
+            return new RedirectResponse('/library/premod');
         }
 
         $approvedName = $this->session->getFlash('premod_approved_name');
@@ -102,12 +104,12 @@ final readonly class PremodController
             ];
         }
 
-        return $this->render->render('library::premod', [
+        return new Response($this->render->render('library::premod', [
             'approvedName' => $approvedName,
             'approvedAll'  => $approvedAll,
             'total'        => $total,
             'articles'     => $articleData,
             'pagination'   => $pagination->render(),
-        ]);
+        ]));
     }
 }

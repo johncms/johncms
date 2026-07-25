@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Language\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 
 final readonly class LanguageController

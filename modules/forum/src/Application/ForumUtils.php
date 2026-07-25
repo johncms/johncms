@@ -18,7 +18,7 @@ use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Domain\Models\ForumMessage;
 use Johncms\Modules\Forum\Domain\Models\ForumTopic;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 
@@ -87,7 +87,7 @@ class ForumUtils
 
                 /** @var Request $env */
                 $request = di(Request::class);
-                $host = $request->getServer('HTTP_HOST', '');
+                $host = $request->server->getString('HTTP_HOST', '');
 
                 parse_str($parsed_url['query'] ?? '', $query_params);
 

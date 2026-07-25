@@ -6,7 +6,7 @@ namespace Tests\Unit\Modules\Guestbook\Forms;
 
 use Johncms\Config\ConfigRepository;
 use Johncms\Modules\Guestbook\Application\Forms\GuestbookForm;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\Utility\EditorContentNormalizer;
 use Johncms\Users\User;
 use PHPUnit\Framework\TestCase;
@@ -21,14 +21,13 @@ final class GuestbookFormTest extends TestCase
 
     public function testFormDataIsTrimmedAndNormalized(): void
     {
-        $request = $this->createMock(Request::class);
-        $request->method('getPost')->willReturnCallback(static fn (string $name) => match ($name) {
+        $request = new Request([], [
             'name'           => '  John  ',
             'message'        => '<p>&nbsp;</p> Hello world ',
             'csrf_token'     => ' token ',
             'code'           => ' 123 ',
             'attached_files' => ['3', 7],
-        });
+        ]);
 
         $form = new GuestbookForm($request, UserFactory::make(), new EditorContentNormalizer());
         $formData = $form->getFormData();
@@ -37,7 +36,7 @@ final class GuestbookFormTest extends TestCase
         self::assertSame('Hello world', $formData['message']);
         self::assertSame('token', $formData['csrf_token']);
         self::assertSame('123', $formData['code']);
-        self::assertSame(['3', 7], $formData['attached_files']);
+        self::assertSame([3, 7], $formData['attached_files']);
     }
 
     public function testValidationRulesForValidUser(): void
@@ -61,6 +60,6 @@ final class GuestbookFormTest extends TestCase
 
     private function makeForm(User $user): GuestbookForm
     {
-        return new GuestbookForm($this->createMock(Request::class), $user, new EditorContentNormalizer());
+        return new GuestbookForm(new Request(), $user, new EditorContentNormalizer());
     }
 }

@@ -6,7 +6,7 @@ namespace Johncms\Modules\Admin\Application\Controllers\Users;
 
 use Illuminate\Support\Str;
 use Johncms\Http\Controller\AdminControllerContext;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\Users\User;
 use Johncms\System\View\Render;
 use Mobicms\Captcha\Code;
@@ -40,9 +40,9 @@ final readonly class UsersController
         $error = [];
         $captcha = false;
         $display_form = 1;
-        $user_login = trim((string) $request->getPost('n', ''));
-        $user_pass = trim((string) $request->getPost('p', ''));
-        $captchaCode = trim((string) $request->getPost('code', ''));
+        $user_login = trim($request->body('n', ''));
+        $user_pass = trim($request->body('p', ''));
+        $captchaCode = trim($request->body('code', ''));
 
         if (empty($user_login)) {
             $error[] = __('You have not entered login');

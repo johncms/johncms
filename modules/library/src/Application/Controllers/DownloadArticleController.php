@@ -6,6 +6,8 @@ namespace Johncms\Modules\Library\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 final readonly class DownloadArticleController
 {
@@ -15,18 +17,16 @@ final readonly class DownloadArticleController
         $this->controllerContext->initModule('library');
     }
 
-    public function __invoke(int $id, string $type): string
+    public function __invoke(int $id, string $type): Response
     {
         if (! in_array($type, ['txt', 'fb2'], true)) {
-            http_response_code(404);
-            return '';
+            return new Response('', Response::HTTP_NOT_FOUND);
         }
 
         $article = LibraryText::query()->find($id);
 
         if ($article === null) {
-            http_response_code(404);
-            return '';
+            return new Response('', Response::HTTP_NOT_FOUND);
         }
 
         $content = match ($type) {
@@ -34,13 +34,16 @@ final readonly class DownloadArticleController
             'fb2' => $this->buildFb2($article),
         };
 
-        header('Content-Type: application/octet-stream');
-        header('Content-Description: inline; File Transfer');
-        header('Content-Disposition: attachment; filename="book' . time() . '.' . $type . '"');
-        header('Content-Transfer-Encoding: binary');
-        header('Content-Length: ' . strlen($content));
+        $response = new StreamedResponse(static function () use ($content): void {
+            echo $content;
+        });
+        $response->headers->set('Content-Type', 'application/octet-stream');
+        $response->headers->set('Content-Description', 'inline; File Transfer');
+        $response->headers->set('Content-Disposition', 'attachment; filename="book' . time() . '.' . $type . '"');
+        $response->headers->set('Content-Transfer-Encoding', 'binary');
+        $response->headers->set('Content-Length', (string) strlen($content));
 
-        return $content;
+        return $response;
     }
 
     private function buildTxt(LibraryText $article): string

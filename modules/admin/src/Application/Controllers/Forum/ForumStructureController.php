@@ -12,7 +12,7 @@ use Johncms\Modules\Admin\Domain\Repository\ForumStructureRepositoryInterface;
 use Johncms\Modules\Forum\Application\Services\ForumSectionTreeService;
 use Johncms\Modules\Forum\Domain\Models\ForumSection;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
@@ -38,7 +38,7 @@ final readonly class ForumStructureController
 
     public function structure(): string
     {
-        $parentId = (int) $this->request->getQuery('id', 0, FILTER_VALIDATE_INT);
+        $parentId = $this->request->queryInt('id');
 
         if ($parentId > 0) {
             $current = $this->repository->find($parentId);
@@ -77,7 +77,7 @@ final readonly class ForumStructureController
 
     public function addForm(?string $error = null): string
     {
-        $parentId = (int) $this->request->getQuery('parent', 0, FILTER_VALIDATE_INT);
+        $parentId = $this->request->queryInt('parent');
         $parentName = '';
         if ($parentId > 0) {
             $parent = $this->repository->find($parentId);
@@ -108,9 +108,9 @@ final readonly class ForumStructureController
             return $this->addForm(__('Wrong data'));
         }
 
-        $parentId = (int) $this->request->getQuery('parent', 0, FILTER_VALIDATE_INT);
-        $name = trim((string) $this->request->getPost('name', ''));
-        $description = trim((string) $this->request->getPost('desc', ''));
+        $parentId = $this->request->queryInt('parent');
+        $name = trim($this->request->body('name', ''));
+        $description = trim($this->request->body('desc', ''));
 
         $errors = [];
         if ($name === '') {
@@ -129,8 +129,8 @@ final readonly class ForumStructureController
             $parentId,
             $name,
             $description,
-            abs((int) $this->request->getPost('allow', 0, FILTER_VALIDATE_INT)),
-            (int) $this->request->getPost('section_type', 0, FILTER_VALIDATE_INT),
+            abs($this->request->bodyInt('allow')),
+            $this->request->bodyInt('section_type'),
         );
 
         redirect(self::URL . ($parentId ? '?id=' . $parentId : ''));
@@ -155,7 +155,7 @@ final readonly class ForumStructureController
 
         $fields = $this->fieldsFromRequest($section);
         $validator = new Validator(
-            ['name' => $fields['name'], 'csrf_token' => (string) $this->request->getPost('csrf_token', '')],
+            ['name' => $fields['name'], 'csrf_token' => $this->request->body('csrf_token', '')],
             ['name' => ['NotEmpty', 'StringLength' => ['min' => 2, 'max' => 150]], 'csrf_token' => ['Csrf']]
         );
 
@@ -208,7 +208,7 @@ final readonly class ForumStructureController
             ]);
         }
 
-        $ref = (int) $this->request->getQuery('cat', 0, FILTER_VALIDATE_INT) ?: (int) $section->parent;
+        $ref = $this->request->queryInt('cat') ?: (int) $section->parent;
 
         return $this->render->render('admin::forum/del_confirm_move_topics', [
             'id'          => $id,
@@ -243,7 +243,7 @@ final readonly class ForumStructureController
         }
 
         if (! $isTopicSection) {
-            $target = (int) $this->request->getPost('category', 0, FILTER_VALIDATE_INT);
+            $target = $this->request->bodyInt('category');
             if ($target <= 0 || $target === $id || $this->repository->find($target) === null) {
                 return $this->error(__('Wrong data'));
             }
@@ -251,7 +251,7 @@ final readonly class ForumStructureController
             redirect(self::URL);
         }
 
-        if ($this->request->getPost('delete') !== null) {
+        if ($this->request->hasBody('delete')) {
             if ($this->currentUser->rights !== 9) {
                 return $this->error(__('Access denied'));
             }
@@ -261,7 +261,7 @@ final readonly class ForumStructureController
             redirect(self::URL . ($parent ? '?id=' . $parent : ''));
         }
 
-        $target = (int) $this->request->getPost('subcat', 0, FILTER_VALIDATE_INT);
+        $target = $this->request->bodyInt('subcat');
         $targetSection = $this->repository->find($target);
         if ($target <= 0 || $target === $id || $targetSection === null || (int) $targetSection->section_type !== 1) {
             return $this->error(__('Wrong data'));
@@ -318,14 +318,14 @@ final readonly class ForumStructureController
     private function fieldsFromRequest(ForumSection $section): array
     {
         return [
-            'name'             => trim((string) $this->request->getPost('name', $section->name)),
-            'description'      => trim((string) $this->request->getPost('description', $section->description)),
-            'sort'             => (int) $this->request->getPost('sort', $section->sort ?? 100, FILTER_VALIDATE_INT),
-            'section_type'     => (int) $this->request->getPost('section_type', (int) ($section->section_type ?? 0), FILTER_VALIDATE_INT),
-            'parent'           => (int) $this->request->getPost('parent', (int) ($section->parent ?? 0), FILTER_VALIDATE_INT),
-            'access'           => (int) $this->request->getPost('access', (int) ($section->access ?? 0), FILTER_VALIDATE_INT),
-            'meta_description' => trim((string) $this->request->getPost('meta_description', $section->meta_description ?? '')),
-            'meta_keywords'    => trim((string) $this->request->getPost('meta_keywords', $section->meta_keywords ?? '')),
+            'name'             => trim($this->request->body('name', (string) $section->name)),
+            'description'      => trim($this->request->body('description', (string) $section->description)),
+            'sort'             => $this->request->bodyInt('sort', $section->sort ?? 100),
+            'section_type'     => $this->request->bodyInt('section_type', (int) ($section->section_type ?? 0)),
+            'parent'           => $this->request->bodyInt('parent', (int) ($section->parent ?? 0)),
+            'access'           => $this->request->bodyInt('access', (int) ($section->access ?? 0)),
+            'meta_description' => trim($this->request->body('meta_description', $section->meta_description ?? '')),
+            'meta_keywords'    => trim($this->request->body('meta_keywords', $section->meta_keywords ?? '')),
         ];
     }
 
@@ -370,7 +370,7 @@ final readonly class ForumStructureController
     private function isCsrfValid(): bool
     {
         $validator = new Validator(
-            ['csrf_token' => (string) $this->request->getPost('csrf_token', '')],
+            ['csrf_token' => $this->request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

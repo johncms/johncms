@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Mail\Application\Services;
 
-use Psr\Http\Message\UploadedFileInterface;
+use Johncms\Http\UploadedFileDTO;
+use RuntimeException;
 
 final class MailFileService
 {
@@ -96,14 +97,14 @@ final class MailFileService
         return $fileName;
     }
 
-    public function storeUploadedFile(UploadedFileInterface $file, string $fileName): bool
+    public function storeUploadedFile(UploadedFileDTO $file, string $fileName): bool
     {
         $target = self::UPLOAD_MAIL_PATH . $fileName;
 
         try {
             $file->moveTo($target);
             @chmod($target, 0666);
-        } catch (\Throwable) {
+        } catch (RuntimeException) {
             return false;
         }
 

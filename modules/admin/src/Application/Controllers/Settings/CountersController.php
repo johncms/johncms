@@ -10,7 +10,7 @@ use Johncms\Modules\Admin\Application\UseCases\ManageCounterUseCase;
 use Johncms\Modules\Admin\Application\UseCases\SaveCounterUseCase;
 use Johncms\Modules\Admin\Domain\Models\Counter;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
@@ -89,13 +89,13 @@ final readonly class CountersController
             return $this->error(__('Wrong data'));
         }
 
-        $id = (int) $this->request->getPost('id', 0, FILTER_VALIDATE_INT);
-        $name = mb_substr(trim((string) $this->request->getPost('name', '')), 0, 25);
-        $link1 = trim((string) $this->request->getPost('link1', ''));
-        $link2 = trim((string) $this->request->getPost('link2', ''));
-        $mode = (int) $this->request->getPost('mode', 1, FILTER_VALIDATE_INT);
-        $requireCookieConsent = $this->request->getPost('require_cookie_consent') !== null;
-        $enabled = $this->request->getPost('switch') !== null;
+        $id = $this->request->bodyInt('id');
+        $name = mb_substr(trim($this->request->body('name', '')), 0, 25);
+        $link1 = trim($this->request->body('link1', ''));
+        $link2 = trim($this->request->body('link2', ''));
+        $mode = $this->request->bodyInt('mode', 1);
+        $requireCookieConsent = $this->request->hasBody('require_cookie_consent');
+        $enabled = $this->request->hasBody('switch');
 
         if ($name === '' || $link1 === '') {
             return $this->error(__('The required fields are not filled'));
@@ -123,13 +123,13 @@ final readonly class CountersController
             return $this->error(__('Wrong data'));
         }
 
-        $id = (int) $this->request->getPost('id', 0, FILTER_VALIDATE_INT);
-        $name = mb_substr(trim((string) $this->request->getPost('name', '')), 0, 25);
-        $link1 = trim((string) $this->request->getPost('link1', ''));
-        $link2 = trim((string) $this->request->getPost('link2', ''));
-        $mode = (int) $this->request->getPost('mode', 1, FILTER_VALIDATE_INT);
-        $requireCookieConsent = $this->request->getPost('require_cookie_consent') !== null;
-        $enabled = $this->request->getPost('switch') !== null;
+        $id = $this->request->bodyInt('id');
+        $name = mb_substr(trim($this->request->body('name', '')), 0, 25);
+        $link1 = trim($this->request->body('link1', ''));
+        $link2 = trim($this->request->body('link2', ''));
+        $mode = $this->request->bodyInt('mode', 1);
+        $requireCookieConsent = $this->request->hasBody('require_cookie_consent');
+        $enabled = $this->request->hasBody('switch');
 
         if ($name === '' || $link1 === '') {
             return $this->error(__('The required fields are not filled'));
@@ -143,7 +143,7 @@ final readonly class CountersController
     public function toggle(int $id): string
     {
         if ($this->isCsrfValid()) {
-            $enabled = (int) $this->request->getPost('enabled', 0, FILTER_VALIDATE_INT) === 1;
+            $enabled = $this->request->bodyInt('enabled') === 1;
             $this->manageCounter->toggle($id, $enabled);
         }
 
@@ -252,7 +252,7 @@ final readonly class CountersController
     private function isCsrfValid(): bool
     {
         $validator = new Validator(
-            ['csrf_token' => (string) $this->request->getPost('csrf_token', '')],
+            ['csrf_token' => $this->request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

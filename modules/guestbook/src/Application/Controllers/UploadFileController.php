@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace Johncms\Modules\Guestbook\Application\Controllers;
 
 use Exception;
-use GuzzleHttp\Psr7\UploadedFile;
 use Johncms\FileInfo;
 use Johncms\Files\FileStorage;
 use Johncms\Http\Controller\ControllerContext;
-use Johncms\System\Http\Request;
+use Johncms\Http\UploadedFileMapper;
+use Johncms\Http\Request;
 use League\Flysystem\FilesystemException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 final readonly class UploadFileController
 {
@@ -18,6 +19,7 @@ final readonly class UploadFileController
         private ControllerContext $context,
         private Request $request,
         private FileStorage $fileStorage,
+        private UploadedFileMapper $uploadedFileMapper,
     ) {
         $this->context->initModule('guestbook');
     }
@@ -27,9 +29,8 @@ final readonly class UploadFileController
         header('Content-Type: application/json');
 
         try {
-            /** @var UploadedFile[] $files */
-            $files = $this->request->getUploadedFiles();
-            if (! isset($files['upload'])) {
+            $upload = $this->request->files->get('upload');
+            if (! $upload instanceof UploadedFile) {
                 return json_encode(
                     [
                         'error' => [
@@ -39,7 +40,7 @@ final readonly class UploadFileController
                 );
             }
 
-            $file_info = new FileInfo($files['upload']->getClientFilename());
+            $file_info = new FileInfo((string) $this->uploadedFileMapper->fromUploadedFile($upload)->clientName);
             if (! $file_info->isImage()) {
                 return json_encode(
                     [

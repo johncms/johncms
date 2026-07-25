@@ -13,7 +13,7 @@ msgstr ""
 #: modules/mail/src/Application/Controllers/IncomingConversationsController.php:39
 #: modules/mail/src/Application/Controllers/OutgoingConversationsController.php:39
 #: modules/mail/src/Application/Controllers/UnblockUserController.php:37
-#: modules/mail/src/Application/Controllers/WriteController.php:97
+#: modules/mail/src/Application/Controllers/WriteController.php:99
 msgid "My Account"
 msgstr ""
 
@@ -29,9 +29,9 @@ msgstr ""
 #: modules/mail/src/Application/Controllers/IncomingConversationsController.php:40
 #: modules/mail/src/Application/Controllers/OutgoingConversationsController.php:40
 #: modules/mail/src/Application/Controllers/UnblockUserController.php:38
-#: modules/mail/src/Application/Controllers/WriteController.php:60
-#: modules/mail/src/Application/Controllers/WriteController.php:87
-#: modules/mail/src/Application/Controllers/WriteController.php:98
+#: modules/mail/src/Application/Controllers/WriteController.php:62
+#: modules/mail/src/Application/Controllers/WriteController.php:89
+#: modules/mail/src/Application/Controllers/WriteController.php:100
 msgid "Mail"
 msgstr ""
 
@@ -116,8 +116,8 @@ msgstr ""
 #: modules/mail/src/Application/Controllers/DeleteContactController.php:81
 #: modules/mail/src/Application/Controllers/DeleteMessageController.php:42
 #: modules/mail/src/Application/UseCases/GetContactListUseCase.php:91
-#: modules/mail/src/Application/UseCases/GetIncomingConversationsUseCase.php:80
-#: modules/mail/src/Application/UseCases/GetOutgoingConversationsUseCase.php:80
+#: modules/mail/src/Application/UseCases/GetIncomingConversationsUseCase.php:78
+#: modules/mail/src/Application/UseCases/GetOutgoingConversationsUseCase.php:78
 #: modules/mail/templates/blocklist.phtml:56
 #: modules/mail/templates/messages.phtml:183
 msgid "Delete"
@@ -130,7 +130,7 @@ msgstr ""
 #: modules/mail/src/Application/Controllers/ClearConversationController.php:70
 #: modules/mail/src/Application/Controllers/DeleteContactController.php:71
 #: modules/mail/src/Application/Controllers/DeleteMessageController.php:70
-#: modules/mail/src/Application/Controllers/WriteController.php:64
+#: modules/mail/src/Application/Controllers/WriteController.php:66
 #: modules/mail/templates/contact_list.phtml:80
 #: modules/mail/templates/conversations.phtml:108
 #: modules/mail/templates/files.phtml:78
@@ -139,7 +139,7 @@ msgid "Back"
 msgstr ""
 
 #: modules/mail/src/Application/Controllers/ClearConversationController.php:82
-#: modules/mail/src/Application/Controllers/WriteController.php:89
+#: modules/mail/src/Application/Controllers/WriteController.php:91
 #: modules/mail/src/Application/UseCases/SendMessageUseCase.php:39
 msgid "User does not exists"
 msgstr ""
@@ -215,7 +215,7 @@ msgstr ""
 msgid "Unblock"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/WriteController.php:95
+#: modules/mail/src/Application/Controllers/WriteController.php:97
 msgid "New message"
 msgstr ""
 
@@ -232,15 +232,15 @@ msgid "Blocklist"
 msgstr ""
 
 #: modules/mail/src/Application/UseCases/GetContactListUseCase.php:87
-#: modules/mail/src/Application/UseCases/GetIncomingConversationsUseCase.php:76
-#: modules/mail/src/Application/UseCases/GetOutgoingConversationsUseCase.php:76
+#: modules/mail/src/Application/UseCases/GetIncomingConversationsUseCase.php:74
+#: modules/mail/src/Application/UseCases/GetOutgoingConversationsUseCase.php:74
 #: modules/mail/templates/blocklist.phtml:55
 msgid "Correspondence"
 msgstr ""
 
 #: modules/mail/src/Application/UseCases/GetContactListUseCase.php:95
-#: modules/mail/src/Application/UseCases/GetIncomingConversationsUseCase.php:84
-#: modules/mail/src/Application/UseCases/GetOutgoingConversationsUseCase.php:84
+#: modules/mail/src/Application/UseCases/GetIncomingConversationsUseCase.php:82
+#: modules/mail/src/Application/UseCases/GetOutgoingConversationsUseCase.php:82
 msgid "Block User"
 msgstr ""
 

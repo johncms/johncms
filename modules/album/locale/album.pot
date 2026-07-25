@@ -20,7 +20,7 @@ msgstr ""
 #: modules/album/src/Application/Controllers/ShowPhotoController.php:86
 #: modules/album/src/Application/Controllers/SortAlbumController.php:91
 #: modules/album/src/Application/Controllers/TopController.php:34
-#: modules/album/src/Application/Controllers/UploadPhotoController.php:81
+#: modules/album/src/Application/Controllers/UploadPhotoController.php:84
 #: modules/album/src/Application/Controllers/UserAlbumsController.php:37
 #: modules/album/src/Application/Controllers/UserAlbumsController.php:72
 #: modules/album/src/Application/Controllers/UsersListController.php:37
@@ -41,7 +41,7 @@ msgstr ""
 #: modules/album/src/Application/Controllers/PhotoCommentsController.php:50
 #: modules/album/src/Application/Controllers/ShowAlbumController.php:68
 #: modules/album/src/Application/Controllers/ShowPhotoController.php:55
-#: modules/album/src/Application/Controllers/UploadPhotoController.php:82
+#: modules/album/src/Application/Controllers/UploadPhotoController.php:85
 #: modules/album/src/Application/Controllers/UserAlbumsController.php:70
 #: modules/album/src/Application/Controllers/UserAlbumsController.php:73
 msgid "Your albums"
@@ -55,7 +55,7 @@ msgstr ""
 #: modules/album/src/Application/Controllers/PhotoCommentsController.php:50
 #: modules/album/src/Application/Controllers/ShowAlbumController.php:68
 #: modules/album/src/Application/Controllers/ShowPhotoController.php:55
-#: modules/album/src/Application/Controllers/UploadPhotoController.php:82
+#: modules/album/src/Application/Controllers/UploadPhotoController.php:85
 #: modules/album/src/Application/Controllers/UserAlbumsController.php:73
 msgid "User albums"
 msgstr ""
@@ -148,7 +148,7 @@ msgstr ""
 #: modules/album/src/Application/Controllers/EditPhotoController.php:58
 #: modules/album/src/Application/Controllers/MovePhotoController.php:51
 #: modules/album/src/Application/Controllers/MovePhotoController.php:113
-#: modules/album/src/Application/Controllers/UploadPhotoController.php:69
+#: modules/album/src/Application/Controllers/UploadPhotoController.php:72
 msgid "Continue"
 msgstr ""
 
@@ -197,18 +197,18 @@ msgstr ""
 msgid "View photo"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/UploadPhotoController.php:55
+#: modules/album/src/Application/Controllers/UploadPhotoController.php:58
 #: modules/album/src/Application/UseCases/UploadPhotoUseCase.php:37
 msgid "An error occurred"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/UploadPhotoController.php:65
-#: modules/album/src/Application/Controllers/UploadPhotoController.php:79
-#: modules/album/src/Application/Controllers/UploadPhotoController.php:128
+#: modules/album/src/Application/Controllers/UploadPhotoController.php:68
+#: modules/album/src/Application/Controllers/UploadPhotoController.php:82
+#: modules/album/src/Application/Controllers/UploadPhotoController.php:131
 msgid "Upload image"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/UploadPhotoController.php:67
+#: modules/album/src/Application/Controllers/UploadPhotoController.php:70
 msgid "Image uploaded"
 msgstr ""
 

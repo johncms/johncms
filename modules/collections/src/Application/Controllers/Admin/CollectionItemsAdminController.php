@@ -23,7 +23,7 @@ use Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemRepositor
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionSectionRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 
@@ -115,7 +115,7 @@ final readonly class CollectionItemsAdminController
             return $this->wrongData($collection_id);
         }
 
-        $id = (int) $this->request->getPost('id', 0, FILTER_VALIDATE_INT) ?: null;
+        $id = $this->request->bodyInt('id') ?: null;
         if ($id !== null && $this->findOwnedItem($collection_id, $id) === null) {
             return $this->wrongData($collection_id);
         }
@@ -294,14 +294,14 @@ final readonly class CollectionItemsAdminController
     {
         return [
             'section_id'   => $this->hasSections($collection) ? $this->postSection() : null,
-            'code'         => trim((string) $this->request->getPost('code', '')),
-            'name'         => trim((string) $this->request->getPost('name', '')),
-            'active'       => $this->request->getPost('active') !== null ? 1 : 0,
-            'active_from'  => trim((string) $this->request->getPost('active_from', '')),
-            'active_to'    => trim((string) $this->request->getPost('active_to', '')),
-            'sort'         => (int) $this->request->getPost('sort', 100, FILTER_VALIDATE_INT),
-            'preview_text' => trim((string) $this->request->getPost('preview_text', '')),
-            'detail_text'  => trim((string) $this->request->getPost('detail_text', '')),
+            'code'         => trim($this->request->body('code', '')),
+            'name'         => trim($this->request->body('name', '')),
+            'active'       => $this->request->hasBody('active') ? 1 : 0,
+            'active_from'  => trim($this->request->body('active_from', '')),
+            'active_to'    => trim($this->request->body('active_to', '')),
+            'sort'         => $this->request->bodyInt('sort', 100),
+            'preview_text' => trim($this->request->body('preview_text', '')),
+            'detail_text'  => trim($this->request->body('detail_text', '')),
             'values'       => $this->submittedValues($fieldDefs),
         ];
     }
@@ -396,7 +396,7 @@ final readonly class CollectionItemsAdminController
     {
         $values = [];
         foreach ($fieldDefs as $field) {
-            $raw = (string) $this->request->getPost('field_' . $field->code, '');
+            $raw = $this->request->body('field_' . $field->code, '');
             if ($field->multiple) {
                 $lines = preg_split('/\r\n|\r|\n/', $raw) ?: [];
                 $values[$field->code] = array_values(array_filter(
@@ -438,12 +438,12 @@ final readonly class CollectionItemsAdminController
 
     private function querySection(): ?int
     {
-        return ((int) $this->request->getQuery('section', 0, FILTER_VALIDATE_INT)) ?: null;
+        return ($this->request->queryInt('section')) ?: null;
     }
 
     private function postSection(): ?int
     {
-        return ((int) $this->request->getPost('section_id', 0, FILTER_VALIDATE_INT)) ?: null;
+        return ($this->request->bodyInt('section_id')) ?: null;
     }
 
     private function baseUrl(int $collectionId): string
@@ -513,7 +513,7 @@ final readonly class CollectionItemsAdminController
     private function isCsrfValid(): bool
     {
         $validator = new Validator(
-            ['csrf_token' => (string) $this->request->getPost('csrf_token', '')],
+            ['csrf_token' => $this->request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

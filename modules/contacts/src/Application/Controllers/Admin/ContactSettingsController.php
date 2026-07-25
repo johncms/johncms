@@ -11,7 +11,7 @@ use Johncms\Modules\Contacts\Application\DTO\SocialLinkDTO;
 use Johncms\Modules\Contacts\Application\Services\ContactSettingsProvider;
 use Johncms\Modules\Contacts\Application\UseCases\UpdateContactSettingsUseCase;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 
@@ -56,10 +56,10 @@ final readonly class ContactSettingsController
     private function buildDto(): ContactSettingsDTO
     {
         return new ContactSettingsDTO(
-            formEnabled: $this->request->getPost('contacts_form_enabled') !== null,
-            notifyEmail: trim((string) $this->request->getPost('contacts_notify_email', '')),
-            email: trim((string) $this->request->getPost('contacts_email', '')),
-            phone: trim((string) $this->request->getPost('contacts_phone', '')),
+            formEnabled: $this->request->hasBody('contacts_form_enabled'),
+            notifyEmail: trim($this->request->body('contacts_notify_email', '')),
+            email: trim($this->request->body('contacts_email', '')),
+            phone: trim($this->request->body('contacts_phone', '')),
             socials: $this->postedSocials(),
             addresses: $this->postedTranslations('contacts_address'),
             workingHours: $this->postedTranslations('contacts_working_hours'),
@@ -74,7 +74,7 @@ final readonly class ContactSettingsController
      */
     private function postedSocials(): array
     {
-        $lines = preg_split('/\R/', (string) $this->request->getPost('contacts_socials', '')) ?: [];
+        $lines = preg_split('/\R/', $this->request->body('contacts_socials', '')) ?: [];
 
         $links = [];
         foreach ($lines as $line) {
@@ -101,7 +101,7 @@ final readonly class ContactSettingsController
      */
     private function postedTranslations(string $field): array
     {
-        $posted = $this->request->getPost($field);
+        $posted = $this->request->body($field);
         if (! is_array($posted)) {
             return [];
         }
@@ -125,7 +125,7 @@ final readonly class ContactSettingsController
     private function isCsrfValid(): bool
     {
         $validator = new Validator(
-            ['csrf_token' => (string) $this->request->getPost('csrf_token', '')],
+            ['csrf_token' => $this->request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

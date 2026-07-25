@@ -13,7 +13,7 @@ use Johncms\Modules\Album\Application\UseCases\MovePhotoUseCase;
 use Johncms\Modules\Album\Domain\Models\AlbumPhoto;
 use Johncms\Modules\Album\Domain\Repository\AlbumRepositoryInterface;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 
@@ -95,7 +95,7 @@ final readonly class MovePhotoController
             return $photo;
         }
 
-        $targetAlbumId = (int) $this->request->getPost('al', 0, FILTER_VALIDATE_INT);
+        $targetAlbumId = $this->request->bodyInt('al');
 
         try {
             $albumId = $this->movePhotoUseCase->execute($photo, $targetAlbumId);

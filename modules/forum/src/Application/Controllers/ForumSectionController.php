@@ -9,7 +9,7 @@ use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\ForumUtils;
 use Johncms\Modules\Forum\Application\UseCases\ViewForumSectionUseCase;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Utils\ShortNumberFormatter;
 
@@ -28,7 +28,7 @@ final readonly class ForumSectionController
     {
         unset($_SESSION['fsort_id'], $_SESSION['fsort_users']);
 
-        $page = max(1, (int) $this->request->getQuery('page', 1));
+        $page = max(1, $this->request->queryInt('page', 1));
 
         try {
             $result = $this->viewForumSectionUseCase->execute($sectionPath, $page);

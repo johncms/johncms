@@ -8,8 +8,8 @@ use Exception;
 use Intervention\Image\ImageManager;
 use Johncms\Modules\Album\Application\Exceptions\ImageUploadException;
 use Johncms\Modules\Album\Domain\Models\Album;
+use Johncms\Http\UploadedFileDTO;
 use Johncms\Modules\Album\Domain\Repository\AlbumPhotoRepositoryInterface;
-use Psr\Http\Message\UploadedFileInterface;
 
 final readonly class UploadPhotoUseCase
 {
@@ -25,10 +25,10 @@ final readonly class UploadPhotoUseCase
     ) {
     }
 
-    public function execute(Album $album, UploadedFileInterface $file, string $description): void
+    public function execute(Album $album, UploadedFileDTO $file, string $description): void
     {
         $maxKb = (int) config('johncms')['flsz'];
-        if ($file->getSize() > 1024 * $maxKb) {
+        if ($file->size > 1024 * $maxKb) {
             throw new ImageUploadException(__('The weight of the file exceeds') . ' ' . $maxKb . 'kb.');
         }
 
@@ -43,7 +43,7 @@ final readonly class UploadPhotoUseCase
 
         try {
             // Save the original, scaled down to fit within the maximum bounds.
-            $img = $this->imageManager->make($file->getStream())
+            $img = $this->imageManager->make($file->tmpPath)
                 ->resize(
                     self::ORIGINAL_WIDTH,
                     self::ORIGINAL_HEIGHT,
@@ -56,7 +56,7 @@ final readonly class UploadPhotoUseCase
             $img->save($dir . $originalFile, 100, 'jpg');
 
             // Build the thumbnail: a blurred, cropped backdrop with the scaled image centered on top.
-            $resized = $this->imageManager->make($file->getStream())
+            $resized = $this->imageManager->make($file->tmpPath)
                 ->resize(
                     self::THUMB_WIDTH,
                     self::THUMB_HEIGHT,

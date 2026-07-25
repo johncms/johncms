@@ -13,7 +13,7 @@ use Johncms\Modules\Admin\Application\UseCases\ApproveRegistrationUseCase;
 use Johncms\Modules\Admin\Application\UseCases\DeleteRegistrationUseCase;
 use Johncms\Modules\Admin\Application\UseCases\GetPendingRegistrationsUseCase;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
@@ -123,7 +123,7 @@ final readonly class RegistrationModerationController
     public function deleteByIp(): string
     {
         if ($this->isCsrfValid()) {
-            $ip = (int) $this->request->getPost('ip', 0, FILTER_VALIDATE_INT);
+            $ip = $this->request->bodyInt('ip');
             if ($ip > 0) {
                 $this->deleteRegistration->executeByIp($ip);
                 $_SESSION['success_message'] = __('All unconfirmed registrations with selected IP were deleted');
@@ -135,13 +135,13 @@ final readonly class RegistrationModerationController
 
     private function postedId(): int
     {
-        return (int) $this->request->getPost('id', 0, FILTER_VALIDATE_INT);
+        return $this->request->bodyInt('id');
     }
 
     private function isCsrfValid(): bool
     {
         $validator = new Validator(
-            ['csrf_token' => (string) $this->request->getPost('csrf_token', '')],
+            ['csrf_token' => $this->request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

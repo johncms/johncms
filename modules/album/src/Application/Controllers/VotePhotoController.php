@@ -11,7 +11,7 @@ use Johncms\Modules\Album\Application\UseCases\EnsureVoteAccessUseCase;
 use Johncms\Modules\Album\Application\UseCases\GetVotePhotoContextUseCase;
 use Johncms\Modules\Album\Application\UseCases\VotePhotoUseCase;
 use Johncms\Modules\Album\Domain\Enums\VoteType;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 
@@ -56,7 +56,7 @@ final readonly class VotePhotoController
     private function isCsrfValid(): bool
     {
         $validator = new Validator(
-            ['csrf_token' => (string) $this->request->getPost('csrf_token', '')],
+            ['csrf_token' => $this->request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

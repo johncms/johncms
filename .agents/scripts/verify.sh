@@ -21,8 +21,13 @@ fi
 echo "==> composer cs-check"
 docker exec "$CONTAINER" composer cs-check
 
-# Psalm is intentionally not part of the gate: psalm.xml.dist still references modules that
-# no longer exist, so `composer psalm` cannot run. Add it back once the config is fixed.
+# Static analysis: PHPStan level 5 with a baseline (phpstan-baseline.neon) that accepts the
+# existing legacy debt. Only NEW findings fail the gate. When a change legitimately shifts
+# baselined code, regenerate with:
+#   docker exec $(docker ps -q -f name=johncms9.php-fpm) composer phpstan-baseline
+# and review the diff — a shrinking baseline is good, a growing one needs a reason.
+echo "==> composer phpstan"
+docker exec "$CONTAINER" composer phpstan
 
 echo "==> composer test"
 docker exec "$CONTAINER" composer test

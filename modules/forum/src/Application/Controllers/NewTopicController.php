@@ -18,7 +18,7 @@ use Johncms\Modules\Forum\Domain\Models\ForumTopic;
 use Johncms\NavChain;
 use Johncms\Security\AntifloodCheckerInterface;
 use Johncms\Smilies\SmiliesRendererInterface;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\Utility\EditorContentNormalizer;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
@@ -49,7 +49,7 @@ final readonly class NewTopicController
 
     public function __invoke(int $id): string
     {
-        $page = max(1, (int) $this->request->getQuery('page', 1));
+        $page = max(1, $this->request->queryInt('page', 1));
 
         try {
             $section = $this->contextUseCase->execute($id);
@@ -81,22 +81,22 @@ final readonly class NewTopicController
         }
 
         $data = [
-            'name'       => $this->request->getPost('th', ''),
+            'name'       => $this->request->body('th', ''),
             'message'    => $this->editorContentNormalizer->trimEdgeEmptyBlocks(
-                ForumUtils::topicLink((string) $this->request->getPost('msg', ''))
+                ForumUtils::topicLink($this->request->body('msg', ''))
             ),
-            'csrf_token' => $this->request->getPost('csrf_token', ''),
-            'add_files'  => (int) $this->request->getPost('addfiles', 0),
-            'attached_files' => (array) $this->request->getPost('attached_files', [], FILTER_VALIDATE_INT),
+            'csrf_token' => $this->request->body('csrf_token', ''),
+            'add_files'  => $this->request->bodyInt('addfiles', 0),
+            'attached_files' => (array) $this->request->bodyInts('attached_files'),
         ];
 
         if ($this->currentUser->rights > 0) {
-            $data['meta_keywords'] = (string) $this->request->getPost('meta_keywords');
-            $data['meta_description'] = (string) $this->request->getPost('meta_description');
+            $data['meta_keywords'] = $this->request->body('meta_keywords');
+            $data['meta_description'] = $this->request->body('meta_description');
         }
 
         $errors = [];
-        if ($this->request->getPost('submit')) {
+        if ($this->request->body('submit')) {
             $rules = [
                 'name'       => [
                     'NotEmpty',
@@ -170,7 +170,7 @@ final readonly class NewTopicController
                 'add_files'         => ($data['add_files'] === 1),
                 'msg'               => (string) $data['message'],
                 'back_url'          => $section->url,
-                'show_post_preview' => ! empty($data['name']) && ! empty($data['message']) && ! $this->request->getPost('submit'),
+                'show_post_preview' => ! empty($data['name']) && ! empty($data['message']) && ! $this->request->body('submit'),
                 'preview_message'   => $msgPreview,
                 'errors'            => $errors,
                 'data'              => $data,

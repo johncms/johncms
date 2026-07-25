@@ -11,7 +11,7 @@ use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Application\UseCases\CreateVoteUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetAddVoteContextUseCase;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 
 final readonly class AddVoteController
@@ -55,24 +55,24 @@ final readonly class AddVoteController
             );
         }
 
-        $countVoteRaw = $this->request->getPost('count_vote', 0);
+        $countVoteRaw = $this->request->bodyInt('count_vote', 0);
         $countVote = (int) $countVoteRaw;
-        if ($this->request->getPost('plus', null) !== null) {
+        if ($this->request->hasBody('plus')) {
             $countVote++;
-        } elseif ($this->request->getPost('minus', null) !== null) {
+        } elseif ($this->request->hasBody('minus')) {
             $countVote--;
         }
         $countVote = $this->normalizeVoteCount($countVote);
 
-        if ($this->request->getPost('submit', null) !== null) {
-            $voteName = mb_substr(trim((string) $this->request->getPost('name_vote', '')), 0, 200);
-            $firstAnswer = trim((string) $this->request->getPost('0', ''));
-            $secondAnswer = trim((string) $this->request->getPost('1', ''));
+        if ($this->request->hasBody('submit')) {
+            $voteName = mb_substr(trim($this->request->body('name_vote', '')), 0, 200);
+            $firstAnswer = trim($this->request->body('0', ''));
+            $secondAnswer = trim($this->request->body('1', ''));
 
             if ($voteName !== '' && $firstAnswer !== '' && $secondAnswer !== '' && ! empty($countVoteRaw)) {
                 $answers = [];
                 for ($vote = 0; $vote < $countVote; $vote++) {
-                    $text = mb_substr(trim((string) $this->request->getPost((string) $vote, '')), 0, 150);
+                    $text = mb_substr(trim($this->request->body((string) $vote, '')), 0, 150);
                     if ($text === '') {
                         continue;
                     }
@@ -112,7 +112,7 @@ final readonly class AddVoteController
             $votes[] = [
                 'input_name'  => $vote,
                 'input_label' => __('Answer') . ' ' . ($vote + 1),
-                'input_value' => htmlentities((string) $this->request->getPost((string) $vote, ''), ENT_QUOTES, 'UTF-8'),
+                'input_value' => htmlentities($this->request->body((string) $vote, ''), ENT_QUOTES, 'UTF-8'),
             ];
         }
 
@@ -124,7 +124,7 @@ final readonly class AddVoteController
                 'id'         => $topicId,
                 'back_url'   => $this->topicPathService->getTopicUrlById($topicId) ?? '/forum/',
                 'count_vote' => $countVote,
-                'poll_name'  => htmlentities((string) $this->request->getPost('name_vote', ''), ENT_QUOTES, 'UTF-8'),
+                'poll_name'  => htmlentities($this->request->body('name_vote', ''), ENT_QUOTES, 'UTF-8'),
                 'votes'      => $votes,
             ]
         );

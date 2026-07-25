@@ -12,7 +12,7 @@ use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumUserAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\ViewTopicsByPeriodUseCase;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 
@@ -40,11 +40,11 @@ final readonly class TopicsPeriodController
             return $this->forumErrorRenderer->render($this->render, $exception);
         }
 
-        $hours = (int) ($this->request->getPost('vr', $this->request->getQuery('vr', 24)) ?? 24);
+        $hours = $this->request->bodyInt('vr', $this->request->queryInt('vr', 24));
         if ($hours <= 0) {
             $hours = 24;
         }
-        $page = max(1, (int) $this->request->getQuery('page', 1));
+        $page = max(1, $this->request->queryInt('page', 1));
         $start = ($page - 1) * (int) $this->currentUser->config->kmess;
 
         $result = $this->viewTopicsByPeriodUseCase->execute(

@@ -10,7 +10,7 @@ use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Downloads\Application\FilePresenter;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 
 final readonly class FilesModerationController
@@ -37,13 +37,13 @@ final readonly class FilesModerationController
             'page_title' => __('Files awaiting moderation'),
         ]);
 
-        $acceptId = (int) $this->request->getQuery('accept', 0);
+        $acceptId = $this->request->queryInt('accept', 0);
         if ($acceptId) {
             return $this->handleAcceptOne($acceptId);
         }
 
         if ($this->request->getMethod() === 'POST') {
-            $post = $this->request->getParsedBody();
+            $post = $this->request->request->all();
             if (isset($post['all_mod'])) {
                 return $this->handleAcceptAll();
             }

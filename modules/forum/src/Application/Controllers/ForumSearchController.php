@@ -11,7 +11,7 @@ use Johncms\Modules\Forum\Application\Exceptions\ForumValidationException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\ViewForumSearchUseCase;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 
@@ -32,9 +32,9 @@ final readonly class ForumSearchController
 
     public function __invoke(): string
     {
-        $search = rawurldecode(trim((string) $this->request->getQuery('search', '')));
-        $searchInTopicNames = $this->request->getQuery('t') !== null;
-        $page = max(1, (int) $this->request->getQuery('page', 1));
+        $search = rawurldecode(trim($this->request->queryParam('search', '')));
+        $searchInTopicNames = $this->request->query->has('t');
+        $page = max(1, $this->request->queryInt('page', 1));
         $offset = ($page - 1) * (int) $this->currentUser->config->kmess;
 
         try {

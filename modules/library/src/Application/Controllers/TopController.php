@@ -9,7 +9,7 @@ use Johncms\Http\PageMeta;
 use Johncms\Modules\Library\Domain\Models\LibraryCategory;
 use Johncms\Modules\Library\Domain\Repository\LibraryTextRepositoryInterface;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Modules\Library\Application\Services\Hashtags;
 use Johncms\Modules\Library\Application\Services\Rating;
@@ -32,7 +32,7 @@ final readonly class TopController
 
     public function __invoke(): string
     {
-        $sort = $this->request->getQuery('sort', 'read');
+        $sort = $this->request->queryParam('sort', 'read');
         $sort = in_array($sort, ['read', 'rating', 'comm'], true) ? $sort : 'read';
 
         $pageTitle = __('Rating articles');

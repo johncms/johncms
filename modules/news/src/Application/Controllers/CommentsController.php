@@ -6,7 +6,7 @@ namespace Johncms\Modules\News\Application\Controllers;
 
 use Carbon\Carbon;
 use Exception;
-use GuzzleHttp\Psr7\UploadedFile;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Arr;
 use Johncms\FileInfo;
@@ -19,8 +19,8 @@ use Johncms\Modules\News\Domain\Models\NewsArticle;
 use Johncms\Modules\News\Domain\Models\NewsComments;
 use Johncms\Security\HTMLPurifier;
 use Johncms\Smilies\SmiliesRendererInterface;
-use Johncms\System\Http\Environment;
-use Johncms\System\Http\Request;
+use Johncms\Http\Environment;
+use Johncms\Http\Request;
 use Johncms\System\View\Extension\Avatar;
 use Johncms\Users\User;
 use League\Flysystem\FilesystemException;
@@ -133,10 +133,7 @@ final readonly class CommentsController
 
     public function add(int $article_id, Request $request, User $user, Environment $env): void
     {
-        $post_body = $request->getBody();
-        if ($post_body) {
-            $post_body = json_decode($post_body->getContents(), true);
-        }
+        $post_body = $this->decodeJsonBody($request);
 
         if (! empty($user->ban)) {
             http_response_code(403);
@@ -150,7 +147,7 @@ final readonly class CommentsController
 
         try {
             $article = (new NewsArticle())->findOrFail($article_id);
-            $comment = trim($post_body['comment']);
+            $comment = trim((string) ($post_body['comment'] ?? ''));
             if (! empty($comment)) {
                 $attached_files = array_map('intval', (array) ($post_body['attached_files'] ?? []));
                 (new NewsComments())->create(
@@ -184,10 +181,7 @@ final readonly class CommentsController
 
     public function del(Request $request, User $user, FileStorage $storage): void
     {
-        $post_body = $request->getBody();
-        if ($post_body) {
-            $post_body = json_decode($post_body->getContents(), true);
-        }
+        $post_body = $this->decodeJsonBody($request);
 
         $comment_id = $post_body['comment_id'] ?? 0;
 
@@ -223,8 +217,8 @@ final readonly class CommentsController
     {
         try {
             /** @var UploadedFile[] $files */
-            $files = $request->getUploadedFiles();
-            $file_info = new FileInfo($files['upload']->getClientFilename());
+            $files = $request->files->all();
+            $file_info = new FileInfo($files['upload']->getClientOriginalName());
             if (! $file_info->isImage()) {
                 return json_encode(
                     [
@@ -249,5 +243,17 @@ final readonly class CommentsController
             header('Content-Type: application/json');
             return json_encode(['errors' => $e->getMessage()]);
         }
+    }
+
+    /**
+     * Decodes the JSON body these endpoints are called with.
+     *
+     * @return array<string, mixed>
+     */
+    private function decodeJsonBody(Request $request): array
+    {
+        $decoded = json_decode($request->getContent(), true);
+
+        return is_array($decoded) ? $decoded : [];
     }
 }

@@ -11,7 +11,7 @@
 declare(strict_types=1);
 
 use Johncms\Modules\Admin\Domain\Services\LanguageFilesManagerInterface;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 
 /** @var Request $request */
 $request = di(Request::class);
@@ -26,7 +26,7 @@ $view->addData(
     ]
 );
 
-$request_locale = $request->getQuery('set_locale');
+$request_locale = $request->queryParam('set_locale');
 
 $lng_list = $languageFilesManager->getInstalled();
 

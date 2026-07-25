@@ -43,7 +43,6 @@
         "dragonmantank/cron-expression": "^3.4",
         "ezyang/htmlpurifier": "^4.13",
         "gettext/translator": "^1.0",
-        "guzzlehttp/psr7": "^2.8",
         "illuminate/cache": "^12.41.1",
         "illuminate/database": "^12.41.1",
         "illuminate/filesystem": "^12.41.1",
@@ -61,17 +60,19 @@
         "symfony/config": "^7.4",
         "symfony/console": "^7.4",
         "symfony/dependency-injection": "^7.4",
+        "symfony/http-foundation": "^7.4",
+        "symfony/http-kernel": "^7.4",
         "symfony/mailer": "^v7.4.0",
         "symfony/routing": "^7.4"
     },
     "require-dev": {
         "gettext/gettext": "^5.5",
         "gettext/php-scanner": "^2.0",
+        "phpstan/phpstan": "^2.2",
         "phpunit/phpunit": "^11.5",
         "roave/security-advisories": "dev-master",
         "squizlabs/php_codesniffer": "^3.6",
-        "symfony/var-dumper": "^7.4",
-        "vimeo/psalm": "^6.8"
+        "symfony/var-dumper": "^7.4"
     },
     "autoload": {
         "files": [
@@ -112,14 +113,17 @@
     },
     "scripts": {
         "check": [
-            "@cs-check"
+            "@cs-check",
+            "@phpstan",
+            "@test"
         ],
         "cs-check": "phpcs",
         "cs-fix": "phpcbf",
-        "psalm": "XDG_CACHE_HOME=/tmp/.cache psalm",
-        "psalm-fix": "XDG_CACHE_HOME=/tmp/.cache psalm --alter --issues=MissingReturnType,MissingParamType",
+        "phpstan": "phpstan analyse --no-progress --memory-limit=1G",
+        "phpstan-baseline": "phpstan analyse --no-progress --memory-limit=1G --generate-baseline=phpstan-baseline.neon",
         "test": "phpunit --colors=always",
         "test:unit": "phpunit --testsuite unit --colors=always",
+        "test:functional": "phpunit --testsuite functional --colors=always",
         "translate": "php system/bin/console i18n:translate",
         "translate-scan": "php system/bin/console i18n:scan"
     }

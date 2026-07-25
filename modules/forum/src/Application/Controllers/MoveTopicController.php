@@ -12,7 +12,7 @@ use Johncms\Modules\Forum\Application\UseCases\EnsureMoveTopicAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetMoveTopicContextUseCase;
 use Johncms\Modules\Forum\Application\UseCases\MoveTopicUseCase;
 use Johncms\Security\Csrf;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 
@@ -35,7 +35,7 @@ final readonly class MoveTopicController
     {
         try {
             $this->accessUseCase->execute();
-            $other = $this->request->getQuery('other', null, FILTER_VALIDATE_INT);
+            $other = filter_var($this->request->queryParam('other'), FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
             $otherCategoryId = $other !== null && $other > 0 ? $other : null;
             $context = $this->contextUseCase->execute($id, $otherCategoryId);
         } catch (ForumAccessDeniedException | ForumNotFoundException $exception) {
@@ -49,11 +49,11 @@ final readonly class MoveTopicController
             );
         }
 
-        if ($this->request->getPost('submit') !== null) {
-            $targetSectionId = $this->request->getPost('razd', 0, FILTER_VALIDATE_INT);
+        if ($this->request->hasBody('submit')) {
+            $targetSectionId = $this->request->bodyInt('razd');
 
             $validator = new Validator(
-                ['csrf_token' => (string) $this->request->getPost('csrf_token', '')],
+                ['csrf_token' => $this->request->body('csrf_token', '')],
                 ['csrf_token' => ['Csrf']]
             );
 

@@ -11,7 +11,7 @@ use Johncms\Modules\Admin\Application\Exceptions\WrongUserDataException;
 use Johncms\Modules\Admin\Application\UseCases\DeleteUserUseCase;
 use Johncms\Modules\Admin\Application\UseCases\GetUserDeletionContextUseCase;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 
@@ -72,8 +72,8 @@ final readonly class DeleteUserController
 
         $this->deleteUser->execute(
             $id,
-            $this->request->getPost('comments') !== null,
-            $this->request->getPost('forum') !== null,
+            $this->request->hasBody('comments'),
+            $this->request->hasBody('forum'),
         );
 
         return $this->render->render(
@@ -99,7 +99,7 @@ final readonly class DeleteUserController
     private function isCsrfValid(): bool
     {
         $validator = new Validator(
-            ['csrf_token' => (string) $this->request->getPost('csrf_token', '')],
+            ['csrf_token' => $this->request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

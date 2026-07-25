@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\UseCases;
 
-use Johncms\System\Http\Session;
+use Johncms\Http\Session;
 
 final readonly class ClearFilterByAuthorUseCase
 {

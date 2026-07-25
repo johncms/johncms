@@ -10,7 +10,7 @@ use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Community\Application\UseCases\ViewSearchUseCase;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 
@@ -49,7 +49,7 @@ final readonly class CommunitySearchController
         $pageTitle = __('User Search');
         $this->navChain->add($pageTitle);
 
-        $search = trim(rawurldecode((string) $this->request->getQuery('search', '')));
+        $search = trim(rawurldecode($this->request->queryParam('search', '')));
         $errors = $this->viewSearchUseCase->validate($search);
         $hasSearch = $search !== '' && $errors === [];
 

@@ -12,7 +12,7 @@ use Johncms\Modules\Downloads\Application\Services\DownloadCategoryPathService;
 use Johncms\Modules\Downloads\Domain\Models\DownloadCategory;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 
@@ -114,7 +114,7 @@ final readonly class DownloadCategoryController
                 }
 
                 if ($this->request->getMethod() === 'POST') {
-                    $post = $this->request->getParsedBody();
+                    $post = $this->request->request->all();
                     if (isset($post['sort_down'])) {
                         $_SESSION['sort_down'] = $post['sort_down'] ? 1 : 0;
                     }

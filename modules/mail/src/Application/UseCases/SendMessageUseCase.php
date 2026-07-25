@@ -10,9 +10,9 @@ use Johncms\Modules\Mail\Application\Services\MailFileService;
 use Johncms\Modules\Mail\Domain\Models\MailMessage;
 use Johncms\Modules\Mail\Domain\Repository\ContactRepositoryInterface;
 use Johncms\Modules\Mail\Domain\Repository\MailMessageRepositoryInterface;
+use Johncms\Http\UploadedFileDTO;
 use Johncms\Security\AntifloodCheckerInterface;
 use Johncms\Users\User;
-use Psr\Http\Message\UploadedFileInterface;
 
 final readonly class SendMessageUseCase
 {
@@ -133,13 +133,13 @@ final readonly class SendMessageUseCase
     /**
      * @return array{0: string, 1: int} Stored file name and size
      */
-    private function validateFile(UploadedFileInterface $file): array
+    private function validateFile(UploadedFileDTO $file): array
     {
-        if ($file->getError() !== UPLOAD_ERR_OK) {
+        if (! $file->isValid()) {
             throw new SendMessageException(__('Error uploading file'));
         }
 
-        $parsed = $this->mailFileService->parseFileName((string) $file->getClientFilename());
+        $parsed = $this->mailFileService->parseFileName((string) $file->clientName);
 
         if ($parsed['filename'] === '') {
             throw new SendMessageException(__('It is forbidden to upload files without a name'));
@@ -149,7 +149,7 @@ final readonly class SendMessageUseCase
             throw new SendMessageException(__('It is forbidden to upload files without extension'));
         }
 
-        $size = (int) $file->getSize();
+        $size = (int) $file->size;
         $maxKb = (int) (config('johncms')['flsz'] ?? 0);
         if ($size > 1024 * $maxKb) {
             throw new SendMessageException(__('The size of the file exceeds the maximum allowable upload'));

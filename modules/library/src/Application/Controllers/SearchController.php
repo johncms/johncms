@@ -10,7 +10,7 @@ use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Library\Domain\Repository\LibraryTextRepositoryInterface;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Modules\Library\Application\Services\Utils;
 use Johncms\Utils\DateFormatterInterface;
@@ -36,13 +36,13 @@ final readonly class SearchController
         $this->navChain->add(__('Library'), '/library/');
         $this->navChain->add(__('Search'));
 
-        $rawQuery = $this->request->getQuery('search', false);
-        $query = $rawQuery !== false ? rawurldecode(trim((string) $rawQuery)) : false;
+        $rawQuery = $this->request->query->has('search') ? $this->request->queryParam('search') : false;
+        $query = $rawQuery !== false ? rawurldecode(trim($rawQuery)) : false;
         if ($query !== false) {
             $query = trim(preg_replace('/[+\-><()~*"]+/', ' ', $query));
         }
 
-        $inTitle = $this->request->getQuery('t', false) !== false;
+        $inTitle = $this->request->query->has('t');
 
         if ($query === false || $query === '') {
             $documentTitle = __('Search') . ' — ' . __('Library');

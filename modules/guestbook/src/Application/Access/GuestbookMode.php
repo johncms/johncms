@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Guestbook\Application\Access;
 
-use Johncms\System\Http\Request;
-use Johncms\System\Http\Session;
+use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\Users\User;
 
 final readonly class GuestbookMode
@@ -35,7 +35,7 @@ final readonly class GuestbookMode
             return;
         }
 
-        if ($request->getQuery('do') === 'set') {
+        if ($request->queryParam('do') === 'set') {
             $this->session->set(self::SESSION_KEY, 1);
         } else {
             $this->session->remove(self::SESSION_KEY);

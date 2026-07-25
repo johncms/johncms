@@ -15,6 +15,7 @@ use Johncms\Smilies\SmiliesRendererInterface;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Utils\DateFormatterInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class CommentsReviewController
 {
@@ -34,21 +35,23 @@ final readonly class CommentsReviewController
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(): string
+    public function __invoke(): Response
     {
         $config = config('johncms');
 
         if (! $config['mod_down_comm'] && $this->currentUser->rights < 7) {
-            http_response_code(403);
-            return $this->render->render(
-                'system::pages/result',
-                [
-                    'title'         => __('Comments are disabled'),
-                    'type'          => 'alert-danger',
-                    'message'       => __('Comments are disabled'),
-                    'back_url'      => '/downloads/',
-                    'back_url_name' => __('Downloads'),
-                ]
+            return new Response(
+                $this->render->render(
+                    'system::pages/result',
+                    [
+                        'title'         => __('Comments are disabled'),
+                        'type'          => 'alert-danger',
+                        'message'       => __('Comments are disabled'),
+                        'back_url'      => '/downloads/',
+                        'back_url_name' => __('Downloads'),
+                    ]
+                ),
+                Response::HTTP_FORBIDDEN
             );
         }
 
@@ -118,7 +121,7 @@ final readonly class CommentsReviewController
             'description' => $meta->description,
         ]);
 
-        return $this->render->render(
+        return new Response($this->render->render(
             'downloads::comments_review',
             [
                 'data' => [
@@ -127,6 +130,6 @@ final readonly class CommentsReviewController
                 ],
                 'urls' => ['downloads' => '/downloads/'],
             ]
-        );
+        ));
     }
 }

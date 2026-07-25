@@ -11,6 +11,11 @@
         <testsuite name="unit">
             <directory>tests/Unit</directory>
         </testsuite>
+        <!-- Drives real requests through Kernel::handle(); needs the database of the local
+             stand, and skips itself when it is not reachable (see FunctionalTestCase). -->
+        <testsuite name="functional">
+            <directory>tests/Functional</directory>
+        </testsuite>
     </testsuites>
 
     <source>

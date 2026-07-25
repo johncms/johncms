@@ -10,7 +10,7 @@ use Johncms\Modules\Album\Application\Exceptions\AlbumNotFoundException;
 use Johncms\Modules\Album\Application\UseCases\GetSortAlbumContextUseCase;
 use Johncms\Modules\Album\Application\UseCases\MoveAlbumUseCase;
 use Johncms\Modules\Album\Domain\Models\Album;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 
@@ -76,7 +76,7 @@ final readonly class SortAlbumController
     private function isCsrfValid(): bool
     {
         $validator = new Validator(
-            ['csrf_token' => (string) $this->request->getPost('csrf_token', '')],
+            ['csrf_token' => $this->request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

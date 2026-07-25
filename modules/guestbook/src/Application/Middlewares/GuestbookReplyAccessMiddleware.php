@@ -6,7 +6,7 @@ namespace Johncms\Modules\Guestbook\Application\Middlewares;
 
 use Johncms\Exceptions\PageNotFoundException;
 use Johncms\Router\MiddlewareInterface;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\Users\User;
 
 final readonly class GuestbookReplyAccessMiddleware implements MiddlewareInterface

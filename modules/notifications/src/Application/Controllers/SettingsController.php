@@ -7,7 +7,7 @@ namespace Johncms\Modules\Notifications\Application\Controllers;
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Notifications\Application\UseCases\SaveSettingsUseCase;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 
@@ -32,7 +32,7 @@ final readonly class SettingsController
         $this->navChain->add($title, '/notifications/settings/');
 
         if ($this->request->getMethod() === 'POST') {
-            $showForumUnread = (bool) $this->request->getPost('show_forum_unread', 0, FILTER_VALIDATE_INT);
+            $showForumUnread = (bool) $this->request->bodyInt('show_forum_unread');
             $this->saveSettingsUseCase->execute($showForumUnread);
             $_SESSION['message'] = __('Settings saved!');
             header('Location: /notifications/settings/');

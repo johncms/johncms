@@ -34,9 +34,9 @@ use Johncms\Users\IgnoreListCheckerInterface;
 use Johncms\Users\UserPlaceFormatter;
 use Johncms\Users\UserPlaceFormatterInterface;
 use Johncms\Sitemap\SitemapGenerator;
-use Johncms\System\Http\Environment;
-use Johncms\System\Http\Request;
-use Johncms\System\Http\RequestFactory;
+use Johncms\Http\Environment;
+use Johncms\Http\Request;
+use Johncms\Http\RequestFactory;
 use Johncms\System\i18n\Translator;
 use Johncms\System\i18n\TranslatorServiceFactory;
 use Johncms\System\Users\UserFactory;
@@ -48,6 +48,7 @@ use Johncms\System\View\Render;
 use Johncms\System\View\RenderEngineFactory;
 use Johncms\System\View\Theme;
 use Psr\Container\ContainerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface as SymfonyContainerInterface;
 use Psr\Log\LoggerInterface;
 use Simba77\EmbedMedia\Embed;
 use Symfony\Component\Console\Application;
@@ -76,6 +77,9 @@ return static function (ContainerConfigurator $container): void {
                 ROOT_PATH . 'system/src/Counters.php',
                 ROOT_PATH . 'system/src/FileInfo.php',
                 ROOT_PATH . 'system/src/Config',
+                // Exceptions are never services: those with scalar constructor arguments
+                // (HttpRedirectException) break the container compilation when autowired.
+                ROOT_PATH . 'system/src/Exceptions',
                 ROOT_PATH . 'system/src/Files',
                 ROOT_PATH . 'system/src/Modules',
                 ROOT_PATH . 'system/src/Router/Route.php',
@@ -94,6 +98,7 @@ return static function (ContainerConfigurator $container): void {
                 ROOT_PATH . 'system/src/Scheduler/ScheduledTaskDefinition.php',
                 ROOT_PATH . 'system/src/Http/PageMeta.php',
                 ROOT_PATH . 'system/src/Http/Pagination/Pagination.php',
+                ROOT_PATH . 'system/src/Http/UploadedFileDTO.php',
             ]
         )
         ->autowire()
@@ -101,10 +106,19 @@ return static function (ContainerConfigurator $container): void {
         ->public();
 
     $services->set(ContainerInterface::class)->synthetic();
+    // The kernel needs the container's set() to publish the current request, which only the
+    // Symfony interface declares. Same instance, so di() and constructor injection agree.
+    $services->alias(SymfonyContainerInterface::class, ContainerInterface::class);
     $services->set(Filesystem::class, Filesystem::class);
     $services->set(FileStorage::class, FileStorage::class);
     $services->set(LoggerInterface::class)->factory(service(LoggerFactory::class));
-    $services->set(Request::class)->factory(service(RequestFactory::class));
+    // Synthetic: the request of the current cycle is published by the kernel (and once at boot
+    // for the legacy code that resolves services before the kernel runs). A container-built
+    // singleton would freeze the first request of a worker process forever.
+    $services->set(Request::class)->synthetic();
+    // Alias the HttpFoundation base class to the same instance so code type-hinting the base
+    // class resolves to our Request wrapper.
+    $services->alias(\Symfony\Component\HttpFoundation\Request::class, Request::class);
     $services->set(\PDO::class, PdoFactory::class)->factory(service(PdoFactory::class));
     $services->set(\Johncms\Users\User::class)->factory(service(\Johncms\Users\UserFactory::class));
     $services->set(\Johncms\Users\Repository\UserRepositoryInterface::class, \Johncms\Users\Repository\EloquentUserRepository::class);

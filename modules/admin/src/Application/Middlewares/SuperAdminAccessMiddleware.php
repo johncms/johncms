@@ -6,7 +6,7 @@ namespace Johncms\Modules\Admin\Application\Middlewares;
 
 use Johncms\Modules\Admin\Domain\Enums\UserRights;
 use Johncms\Router\MiddlewareInterface;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\i18n\Translator;
 use Johncms\System\View\Render;
 use Johncms\Users\User;

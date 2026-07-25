@@ -6,7 +6,7 @@ namespace Tests\Unit\Router;
 
 use Johncms\Router\MiddlewareDispatcher;
 use Johncms\Router\MiddlewareInterface;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 
@@ -16,7 +16,7 @@ final class MiddlewareDispatcherTest extends TestCase
     {
         $container = $this->createMock(ContainerInterface::class);
         $dispatcher = new MiddlewareDispatcher($container);
-        $request = new Request('GET', '/forum');
+        $request = Request::create('/forum', 'GET');
         $executionLog = [];
 
         $first = static function (Request $request, callable $next) use (&$executionLog): mixed {
@@ -51,7 +51,7 @@ final class MiddlewareDispatcherTest extends TestCase
 
     public function testDispatchResolvesClassStringMiddlewareFromContainer(): void
     {
-        $request = new Request('GET', '/');
+        $request = Request::create('/', 'GET');
         $middleware = new class () implements MiddlewareInterface {
             public function handle(Request $request, callable $next): mixed
             {
@@ -80,7 +80,7 @@ final class MiddlewareDispatcherTest extends TestCase
     {
         $container = $this->createMock(ContainerInterface::class);
         $dispatcher = new MiddlewareDispatcher($container);
-        $request = new Request('GET', '/');
+        $request = Request::create('/', 'GET');
         $nextWasCalled = false;
 
         $shortCircuitMiddleware = static function (Request $request, callable $next): string {
@@ -104,7 +104,7 @@ final class MiddlewareDispatcherTest extends TestCase
     {
         $container = $this->createMock(ContainerInterface::class);
         $dispatcher = new MiddlewareDispatcher($container);
-        $request = new Request('GET', '/');
+        $request = Request::create('/', 'GET');
 
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Could not resolve middleware');

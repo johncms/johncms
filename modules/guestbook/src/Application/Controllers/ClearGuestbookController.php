@@ -8,8 +8,8 @@ use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Guestbook\Application\Access\GuestbookMode;
 use Johncms\Modules\Guestbook\Application\UseCases\ClearGuestbookUseCase;
 use Johncms\Modules\Guestbook\Domain\Enums\ClearGuestbookPeriod;
-use Johncms\System\Http\Request;
-use Johncms\System\Http\Session;
+use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 
@@ -31,13 +31,13 @@ final readonly class ClearGuestbookController
         $baseUrl = '/guestbook/';
 
         if ($this->request->getMethod() === 'POST') {
-            $validator = new Validator(['csrf_token' => $this->request->getPost('csrf_token')], ['csrf_token' => ['Csrf']]);
+            $validator = new Validator(['csrf_token' => $this->request->body('csrf_token')], ['csrf_token' => ['Csrf']]);
             if (! $validator->isValid()) {
                 $this->session->flash('errors', $validator->getErrors());
                 redirect($baseUrl);
             }
 
-            $period = ClearGuestbookPeriod::tryFrom((int) $this->request->getPost('cl', 0, FILTER_VALIDATE_INT))
+            $period = ClearGuestbookPeriod::tryFrom($this->request->bodyInt('cl'))
                 ?? ClearGuestbookPeriod::OlderThanWeek;
 
             $this->clearUseCase->execute($this->mode->isAdminClub(), $period);

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Contacts\Application\Services;
 
-use Johncms\System\Http\Session;
+use Johncms\Http\Session;
 use Mobicms\Captcha\Code;
 use Mobicms\Captcha\Image;
 use Psr\Log\LoggerInterface;

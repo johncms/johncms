@@ -18,6 +18,7 @@ use Johncms\System\i18n\Translator;
 use Johncms\System\View\Render;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Throwable;
 
 class EmailSender
 {
@@ -48,7 +49,27 @@ class EmailSender
             $translator->addTranslationDomain('system', ROOT_PATH . 'system/locale');
             TranslatorFunctions::register($translator);
             $view->addData(['locale' => $item->locale]);
-            $message_body = $view->render($item->template, $item->fields);
+
+            // Per-message isolation. Render failures used to be swallowed by Render itself and
+            // the exception message was mailed out as the message body; now they propagate, and
+            // without this guard one unrenderable row would abort the batch on every run and
+            // block the whole queue for good. The row is marked as handled — the same way an
+            // undeliverable row is treated above — so a template that cannot render is not
+            // retried forever.
+            try {
+                $message_body = $view->render($item->template, $item->fields);
+            } catch (Throwable $exception) {
+                $logger->error(
+                    'Unable to render the email template',
+                    [
+                        'template'  => $item->template,
+                        'message_id' => $item->id,
+                        'exception' => $exception,
+                    ]
+                );
+                $item->update(['sent_at' => Carbon::now()]);
+                continue;
+            }
 
             // In some cases, using the @ symbol in the sender's name resulted in an error.
             if (str_contains($fields['name_to'], '@')) {

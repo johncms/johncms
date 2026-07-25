@@ -10,7 +10,7 @@ use Johncms\Modules\Forum\Application\ForumUtils;
 use Johncms\Modules\Forum\Application\UseCases\ViewForumTopicUseCase;
 use Johncms\NavChain;
 use Johncms\Security\Csrf;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Utils\ShortNumberFormatter;
@@ -32,9 +32,9 @@ final readonly class ForumTopicController
     {
         $setForum = $this->getForumSettings();
         $perPage = (int) $this->currentUser->config->kmess;
-        $page = max(1, (int) $this->request->getQuery('page', 1));
+        $page = max(1, $this->request->queryInt('page', 1));
         if ($page === 1) {
-            $start = max(0, (int) $this->request->getQuery('start', 0));
+            $start = max(0, $this->request->queryInt('start', 0));
             if ($start > 0) {
                 $page = (int) floor($start / max(1, $perPage)) + 1;
             }
@@ -51,8 +51,8 @@ final readonly class ForumTopicController
             $result = $this->viewForumTopicUseCase->execute(
                 path: $path,
                 page: $page,
-                showClip: $this->request->getQuery('clip') !== null,
-                showVoteResult: $this->request->getQuery('vote_result') !== null,
+                showClip: $this->request->query->has('clip'),
+                showVoteResult: $this->request->query->has('vote_result'),
                 incrementViewCount: $this->shouldIncrementViewCount($path),
                 setForum: $setForum,
                 filterEnabled: $filterEnabled,

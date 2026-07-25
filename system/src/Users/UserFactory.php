@@ -12,8 +12,8 @@ declare(strict_types=1);
 
 namespace Johncms\Users;
 
-use Johncms\System\Http\Environment;
-use Johncms\System\Http\Request;
+use Johncms\Http\Environment;
+use Johncms\Http\Request;
 use Psr\Container\ContainerInterface;
 
 class UserFactory
@@ -37,8 +37,8 @@ class UserFactory
     protected function getUserData(): User
     {
         /** @psalm-suppress PossiblyNullArgument */
-        $userPassword = md5((string) $this->request->getCookie('cups', ''));
-        $userId = (int) $this->request->getCookie('cuid', 0);
+        $userPassword = md5((string) $this->request->cookies->getString('cups', ''));
+        $userId = $this->request->cookies->getInt('cuid', 0);
 
         if ($userId && $userPassword) {
             return $this->authentication($userId, $userPassword);

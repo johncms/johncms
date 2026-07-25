@@ -14,7 +14,7 @@ use Johncms\Modules\Guestbook\Application\Services\GuestbookEntryTextFormatter;
 use Johncms\Modules\Guestbook\Application\UseCases\ListGuestbookEntriesUseCase;
 use Johncms\Modules\Guestbook\Domain\Models\GuestbookEntry;
 use Johncms\Modules\Guestbook\Domain\Repository\GuestbookEntryRepositoryInterface;
-use Johncms\System\Http\Session;
+use Johncms\Http\Session;
 use Johncms\Smilies\SmiliesRendererInterface;
 use Johncms\Users\User;
 use PHPUnit\Framework\MockObject\MockObject;

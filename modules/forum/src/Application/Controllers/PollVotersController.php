@@ -14,7 +14,7 @@ use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Application\UseCases\EnsurePollVotersAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\ViewPollVotersUseCase;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 
 final readonly class PollVotersController
@@ -37,7 +37,7 @@ final readonly class PollVotersController
     {
         try {
             $this->accessUseCase->execute($id);
-            $page = max(1, (int) $this->request->getQuery('page', 1));
+            $page = max(1, $this->request->queryInt('page', 1));
             $result = $this->viewPollVotersUseCase->execute(
                 new PollVotersQueryDTO(
                     topicId: $id,

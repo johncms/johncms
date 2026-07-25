@@ -11,7 +11,7 @@ use Johncms\Modules\Admin\Application\UseCases\RemoveLanguageUseCase;
 use Johncms\Modules\Admin\Application\UseCases\SaveLanguageSettingsUseCase;
 use Johncms\Modules\Admin\Domain\Exceptions\ConfigWriteException;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 
@@ -44,12 +44,12 @@ final readonly class LanguagesController
             return $this->renderIndex(__('Wrong data'));
         }
 
-        $defaultCode = $this->request->getPost('lng');
-        $updateList = $this->request->getPost('update') !== null;
+        $defaultCode = $this->request->body('lng');
+        $updateList = $this->request->hasBody('update');
 
         try {
             $this->saveLanguageSettings->execute(
-                $defaultCode !== null ? trim((string) $defaultCode) : null,
+                $defaultCode !== '' ? $defaultCode : null,
                 $updateList
             );
         } catch (ConfigWriteException) {
@@ -138,7 +138,7 @@ final readonly class LanguagesController
             return null;
         }
 
-        $code = trim((string) $this->request->getPost('code', ''));
+        $code = trim($this->request->body('code', ''));
 
         return $code !== '' ? $code : null;
     }
@@ -146,7 +146,7 @@ final readonly class LanguagesController
     private function isCsrfValid(): bool
     {
         $validator = new Validator(
-            ['csrf_token' => (string) $this->request->getPost('csrf_token', '')],
+            ['csrf_token' => $this->request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

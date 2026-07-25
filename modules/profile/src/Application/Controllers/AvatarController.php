@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Profile\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\UploadedFileMapper;
 use Johncms\Modules\Profile\Application\DTO\EditProfileContextDTO;
 use Johncms\Modules\Profile\Application\Exceptions\ImageUploadException;
 use Johncms\Modules\Profile\Application\Exceptions\ProfileAccessForbiddenException;
@@ -12,8 +13,9 @@ use Johncms\Modules\Profile\Application\Exceptions\ProfileNotFoundException;
 use Johncms\Modules\Profile\Application\UseCases\GetEditContextUseCase;
 use Johncms\Modules\Profile\Application\UseCases\UploadAvatarUseCase;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 final readonly class AvatarController
 {
@@ -24,6 +26,7 @@ final readonly class AvatarController
         private NavChain $navChain,
         private GetEditContextUseCase $getEditContextUseCase,
         private UploadAvatarUseCase $uploadAvatarUseCase,
+        private UploadedFileMapper $uploadedFileMapper,
     ) {
         $this->controllerContext->initModule('profile');
     }
@@ -45,13 +48,13 @@ final readonly class AvatarController
             return $context;
         }
 
-        $file = $this->request->getUploadedFiles()['imagefile'] ?? null;
+        $uploaded = $this->request->files->get('imagefile');
 
         try {
-            if ($file === null) {
+            if (! $uploaded instanceof UploadedFile) {
                 throw new ImageUploadException(__('An error occurred'));
             }
-            $this->uploadAvatarUseCase->execute($context->profileUser->id, $file);
+            $this->uploadAvatarUseCase->execute($context->profileUser->id, $this->uploadedFileMapper->fromUploadedFile($uploaded));
         } catch (ImageUploadException $e) {
             return $this->render->render(
                 'system::pages/result',

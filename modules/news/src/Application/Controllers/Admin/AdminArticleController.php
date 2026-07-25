@@ -6,7 +6,7 @@ namespace Johncms\Modules\News\Application\Controllers\Admin;
 
 use Carbon\Carbon;
 use Exception;
-use GuzzleHttp\Psr7\UploadedFile;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
 use Johncms\FileInfo;
@@ -17,7 +17,7 @@ use Johncms\Modules\News\Domain\Models\NewsArticle;
 use Johncms\Modules\News\Domain\Models\NewsSearchIndex;
 use Johncms\Modules\News\Domain\Models\NewsSection;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\Utility\EditorContentNormalizer;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
@@ -80,23 +80,23 @@ final readonly class AdminArticleController
             'back_url'   => '/admin/news/content/' . $section_id,
             'section_id' => $section_id,
             'fields'     => [
-                'active'       => (int) $request->getPost('active', 1),
+                'active'       => $request->bodyInt('active', 1),
                 'section_id'   => $section_id,
-                'active_from'  => htmlspecialchars((string) $request->getPost('active_from', '')),
-                'active_to'    => htmlspecialchars((string) $request->getPost('active_to', '')),
-                'name'         => $request->getPost('name', ''),
-                'page_title'   => $request->getPost('page_title', ''),
-                'code'         => $request->getPost('code', ''),
-                'keywords'     => $request->getPost('keywords', ''),
-                'description'  => $request->getPost('description', ''),
-                'tags'         => $request->getPost('tags', ''),
-                'preview_text' => $request->getPost('preview_text', ''),
-                'text'         => $request->getPost('text', ''),
+                'active_from'  => htmlspecialchars($request->body('active_from', '')),
+                'active_to'    => htmlspecialchars($request->body('active_to', '')),
+                'name'         => $request->body('name', ''),
+                'page_title'   => $request->body('page_title', ''),
+                'code'         => $request->body('code', ''),
+                'keywords'     => $request->body('keywords', ''),
+                'description'  => $request->body('description', ''),
+                'tags'         => $request->body('tags', ''),
+                'preview_text' => $request->body('preview_text', ''),
+                'text'         => $request->body('text', ''),
             ],
         ];
 
         $data['fields'] = array_map('trim', $data['fields']);
-        $data['fields']['attached_files'] = (array) $request->getPost('attached_files', [], FILTER_VALIDATE_INT);
+        $data['fields']['attached_files'] = (array) $request->bodyInts('attached_files');
 
         $errors = [];
         // Processing the sent data from the form.
@@ -186,22 +186,22 @@ final readonly class AdminArticleController
             'back_url'   => '/admin/news/content/' . $article->section_id . '/',
             'article_id' => $article_id,
             'fields'     => [
-                'active'       => (int) $request->getPost('active', $article->active),
-                'active_from'  => htmlspecialchars((string) $request->getPost('active_from', $active_from ?? '')),
-                'active_to'    => htmlspecialchars((string) $request->getPost('active_to', $active_to ?? '')),
-                'name'         => $request->getPost('name', $article->name),
-                'page_title'   => $request->getPost('page_title', $article->page_title),
-                'code'         => $request->getPost('code', $article->code),
-                'keywords'     => $request->getPost('keywords', $article->keywords),
-                'description'  => $request->getPost('description', $article->description),
-                'tags'         => $request->getPost('tags', implode(', ', $article->tags)),
-                'preview_text' => $request->getPost('preview_text', $article->preview_text),
-                'text'         => $request->getPost('text', $article->text),
+                'active'       => $request->bodyInt('active', (int) $article->active),
+                'active_from'  => htmlspecialchars($request->body('active_from', $active_from ?? '')),
+                'active_to'    => htmlspecialchars($request->body('active_to', $active_to ?? '')),
+                'name'         => $request->body('name', (string) $article->name),
+                'page_title'   => $request->body('page_title', (string) $article->page_title),
+                'code'         => $request->body('code', (string) $article->code),
+                'keywords'     => $request->body('keywords', (string) $article->keywords),
+                'description'  => $request->body('description', (string) $article->description),
+                'tags'         => $request->body('tags', implode(', ', $article->tags)),
+                'preview_text' => $request->body('preview_text', (string) $article->preview_text),
+                'text'         => $request->body('text', (string) $article->text),
             ],
         ];
 
         $data['fields'] = array_map('trim', $data['fields']);
-        $data['fields']['attached_files'] = (array) $request->getPost('attached_files', [], FILTER_VALIDATE_INT);
+        $data['fields']['attached_files'] = (array) $request->bodyInts('attached_files');
 
         $errors = [];
         // Processing the sent data from the form.
@@ -267,7 +267,7 @@ final readonly class AdminArticleController
             exit($exception->getMessage());
         }
 
-        $post = $request->getParsedBody();
+        $post = $request->request->all();
 
         // Checking the data and deleting the section
         if (
@@ -310,8 +310,8 @@ final readonly class AdminArticleController
     {
         try {
             /** @var UploadedFile[] $files */
-            $files = $request->getUploadedFiles();
-            $file_info = new FileInfo($files['upload']->getClientFilename());
+            $files = $request->files->all();
+            $file_info = new FileInfo($files['upload']->getClientOriginalName());
             if (! $file_info->isImage()) {
                 return json_encode(
                     [

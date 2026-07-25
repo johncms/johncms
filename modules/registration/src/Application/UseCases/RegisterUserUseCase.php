@@ -6,7 +6,7 @@ namespace Johncms\Modules\Registration\Application\UseCases;
 
 use Johncms\Mail\EmailMessage;
 use Johncms\Modules\Registration\Application\DTO\RegistrationFormDTO;
-use Johncms\System\Http\Environment;
+use Johncms\Http\Environment;
 use Johncms\System\i18n\Translator;
 use Johncms\Users\User;
 

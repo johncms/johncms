@@ -14,7 +14,7 @@ use Johncms\Modules\Online\Application\UseCases\GetOnlineUsersUseCase;
 use Johncms\NavChain;
 use Johncms\System\i18n\Translator;
 use Johncms\System\View\Render;
-use Throwable;
+use Psr\Container\NotFoundExceptionInterface;
 
 final readonly class IndexController
 {
@@ -38,10 +38,14 @@ final readonly class IndexController
         $this->navChain->add(__('Online'), '/online/');
 
         $forumPlaceFormatter = null;
+        // The forum module is optional: when it is not installed the container has no
+        // ForumVisitorPlaceFormatter and the online list simply shows no forum locations.
+        // Only that absence is tolerated — a forum that is installed but misconfigured must
+        // surface instead of being swallowed by a bare catch-all.
         try {
             $forumPlaceFormatter = di(ForumVisitorPlaceFormatter::class);
             $this->translator->addTranslationDomain('forum', MODULES_PATH . 'forum/locale', false);
-        } catch (Throwable) {
+        } catch (NotFoundExceptionInterface) {
         }
 
         $filters = $this->filtersBuilder->build('users');

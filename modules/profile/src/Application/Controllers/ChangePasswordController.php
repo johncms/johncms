@@ -13,7 +13,7 @@ use Johncms\Modules\Profile\Application\Exceptions\ProfileNotFoundException;
 use Johncms\Modules\Profile\Application\UseCases\ChangePasswordUseCase;
 use Johncms\Modules\Profile\Application\UseCases\GetChangePasswordContextUseCase;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 
@@ -77,14 +77,14 @@ final readonly class ChangePasswordController
         }
 
         $title = $this->buildTitle($context);
-        $newPassword = trim((string) $this->request->getPost('newpass', ''));
+        $newPassword = trim($this->request->body('newpass', ''));
 
         try {
             $this->changePasswordUseCase->execute(new ChangePasswordCommand(
                 profileUserId: $context->profileUserId,
-                oldPassword: trim((string) $this->request->getPost('oldpass', '')),
+                oldPassword: trim($this->request->body('oldpass', '')),
                 newPassword: $newPassword,
-                confirmPassword: trim((string) $this->request->getPost('newconf', '')),
+                confirmPassword: trim($this->request->body('newconf', '')),
             ));
         } catch (ChangePasswordException $e) {
             return $this->render->render(

@@ -6,7 +6,7 @@ namespace Johncms\Modules\Library\Application;
 
 use Johncms\Modules\Library\Application\Services\LibraryArticlePathService;
 use Johncms\Modules\Library\Application\Services\LibraryCategoryPathService;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 
 final readonly class LegacyRedirectHandler
 {
@@ -19,37 +19,32 @@ final readonly class LegacyRedirectHandler
 
     public function handle(): void
     {
-        $id  = $this->request->getQuery('id', 0, FILTER_VALIDATE_INT);
-        $act = (string) $this->request->getQuery('act', '');
-        $do  = (string) $this->request->getQuery('do', '');
+        $id  = $this->request->queryInt('id');
+        $act = $this->request->queryParam('act', '');
+        $do  = $this->request->queryParam('do', '');
 
         if ($act === 'lastcom') {
-            header('Location: /library/latest-comments', true, 301);
-            exit;
+            redirect('/library/latest-comments', 301);
         }
 
-        if ($act === 'tags' && $this->request->getQuery('tag') !== null) {
-            header('Location: /library/tags?tag=' . urlencode((string) $this->request->getQuery('tag')), true, 301);
-            exit;
+        if ($act === 'tags' && $this->request->query->has('tag')) {
+            redirect('/library/tags?tag=' . urlencode($this->request->queryParam('tag')), 301);
         }
 
         if ($id > 0 && $do === 'dir') {
             $url = $this->categoryPathService->getCategoryUrlById($id) ?? '/library/';
-            header('Location: ' . $url, true, 301);
-            exit;
+            redirect($url, 301);
         }
 
         if ($id > 0 && $do === '') {
             $url = $this->articlePathService->getArticleUrlById($id) ?? '/library/';
-            header('Location: ' . $url, true, 301);
-            exit;
+            redirect($url, 301);
         }
 
         if ($act === 'download' && $id > 0) {
-            $type = $this->request->getQuery('type', 'txt');
+            $type = $this->request->queryParam('type', 'txt');
             $type = in_array($type, ['txt', 'fb2'], true) ? $type : 'txt';
-            header('Location: /library/article/' . $id . '/download/' . $type, true, 301);
-            exit;
+            redirect('/library/article/' . $id . '/download/' . $type, 301);
         }
     }
 }

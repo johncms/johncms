@@ -9,9 +9,10 @@ use Johncms\Modules\Downloads\Application\Services\DownloadCategoryPathService;
 use Johncms\Modules\Downloads\Application\Services\DownloadSlugService;
 use Johncms\Modules\Downloads\Domain\Models\DownloadCategory;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class CreateCategoryController
 {
@@ -34,9 +35,9 @@ final readonly class CreateCategoryController
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(): string
+    public function __invoke(): Response
     {
-        $refid = max(0, (int) $this->request->getQuery('refid', 0));
+        $refid = max(0, $this->request->queryInt('refid', 0));
 
         $this->navChain->add(__('Downloads'), '/downloads/');
         $this->navChain->add(__('Create Folder'));
@@ -50,14 +51,13 @@ final readonly class CreateCategoryController
         if ($refid > 0) {
             $parentCategory = DownloadCategory::query()->find($refid);
             if ($parentCategory === null || ! is_dir($parentCategory->dir)) {
-                http_response_code(404);
-                return $this->render->render('system::pages/result', [
+                return new Response($this->render->render('system::pages/result', [
                     'title'         => __('Create Folder'),
                     'type'          => 'alert-danger',
                     'message'       => __('The directory does not exist'),
                     'back_url'      => '/downloads/',
                     'back_url_name' => __('Downloads'),
-                ]);
+                ]), Response::HTTP_NOT_FOUND);
             }
             $baseDir = $parentCategory->dir;
         } else {
@@ -74,7 +74,7 @@ final readonly class CreateCategoryController
             return $this->handleCreate($refid, $baseDir, $baseUrl);
         }
 
-        return $this->render->render('downloads::folder_form', [
+        return new Response($this->render->render('downloads::folder_form', [
             'id'            => $refid,
             'action_url'    => $baseUrl,
             'cancel_url'    => $cancelUrl,
@@ -82,12 +82,12 @@ final readonly class CreateCategoryController
             'edit_form'     => false,
             'folder_params' => ['name' => '', 'rus_name' => '', 'desc' => '', 'user_down' => '', 'format' => ''],
             'urls'          => ['downloads' => '/downloads/'],
-        ]);
+        ]));
     }
 
-    private function handleCreate(int $refid, string $baseDir, string $baseUrl): string
+    private function handleCreate(int $refid, string $baseDir, string $baseUrl): Response
     {
-        $post = $this->request->getParsedBody();
+        $post = $this->request->request->all();
         $name = trim($post['name'] ?? '');
         $rusName = trim($post['rus_name'] ?? '');
         $desc = trim($post['desc'] ?? '');
@@ -113,13 +113,13 @@ final readonly class CreateCategoryController
         }
 
         if ($errors) {
-            return $this->render->render('system::pages/result', [
+            return new Response($this->render->render('system::pages/result', [
                 'title'         => __('Create Folder'),
                 'type'          => 'alert-danger',
                 'message'       => $errors,
                 'back_url'      => $baseUrl,
                 'back_url_name' => __('Repeat'),
-            ]);
+            ]));
         }
 
         if (empty($rusName)) {
@@ -129,13 +129,13 @@ final readonly class CreateCategoryController
         $dir = $baseDir . \DS . $name;
 
         if (is_dir($dir) || ! mkdir($dir, 0777)) {
-            return $this->render->render('system::pages/result', [
+            return new Response($this->render->render('system::pages/result', [
                 'title'         => __('Create Folder'),
                 'type'          => 'alert-danger',
                 'message'       => __('Error creating categories'),
                 'back_url'      => $baseUrl,
                 'back_url_name' => __('Repeat'),
-            ]);
+            ]));
         }
 
         chmod($dir, 0777);
@@ -154,12 +154,12 @@ final readonly class CreateCategoryController
             'rus_name' => $rusName,
         ]);
 
-        return $this->render->render('system::pages/result', [
+        return new Response($this->render->render('system::pages/result', [
             'title'         => __('Create Folder'),
             'type'          => 'alert-success',
             'message'       => __('The Folder is created'),
             'back_url'      => $this->categoryPathService->getCategoryUrl($category),
             'back_url_name' => __('Continue'),
-        ]);
+        ]));
     }
 }

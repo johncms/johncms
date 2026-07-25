@@ -1,6 +1,8 @@
 <?php
 
-const DS = DIRECTORY_SEPARATOR;
+// Guarded because tooling that boots the Composer autoloader more than once in a process
+// (PHPStan's phar does) would otherwise re-run this file and warn about a redefined constant.
+defined('DS') || define('DS', DIRECTORY_SEPARATOR);
 
 define('ROOT_PATH', dirname(__DIR__) . DS);
 

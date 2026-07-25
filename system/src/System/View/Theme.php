@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\System\View;
 
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 
 class Theme
 {
@@ -20,7 +20,7 @@ class Theme
 
     public function getCurrentTheme(): string
     {
-        $currentTheme = $this->request->getCookie('siteTheme', 'auto');
+        $currentTheme = $this->request->cookies->getString('siteTheme', 'auto');
 
         if (! in_array($currentTheme, self::AVAILABLE_THEMES, true)) {
             $currentTheme = 'auto';

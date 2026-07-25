@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Online\Application\Middlewares;
 
 use Johncms\Router\MiddlewareInterface;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 

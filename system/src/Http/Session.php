@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-namespace Johncms\System\Http;
+namespace Johncms\Http;
 
 use Illuminate\Support\Arr;
 

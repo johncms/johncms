@@ -9,9 +9,10 @@ use Johncms\Modules\Library\Application\Services\LibraryCategoryPathService;
 use Johncms\Modules\Library\Application\Services\LibrarySlugService;
 use Johncms\Modules\Library\Domain\Models\LibraryCategory;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class CreateSectionController
 {
@@ -27,20 +28,22 @@ final readonly class CreateSectionController
         $this->controllerContext->initModule('library');
     }
 
-    public function __invoke(): string
+    public function __invoke(): Response
     {
         if ($this->currentUser->rights <= 4) {
-            http_response_code(403);
-            return $this->render->render('system::pages/result', [
-                'title'         => __('Create Section'),
-                'type'          => 'alert-danger',
-                'message'       => __('Access denied'),
-                'back_url'      => '/library/',
-                'back_url_name' => __('Library'),
-            ]);
+            return new Response(
+                $this->render->render('system::pages/result', [
+                    'title'         => __('Create Section'),
+                    'type'          => 'alert-danger',
+                    'message'       => __('Access denied'),
+                    'back_url'      => '/library/',
+                    'back_url_name' => __('Library'),
+                ]),
+                Response::HTTP_FORBIDDEN
+            );
         }
 
-        $parentId = max(0, (int) $this->request->getQuery('id', 0));
+        $parentId = max(0, $this->request->queryInt('id', 0));
         $formUrl = '/library/section/create' . ($parentId ? '?id=' . $parentId : '');
 
         $this->navChain->add(__('Library'), '/library/');
@@ -58,19 +61,19 @@ final readonly class CreateSectionController
         return $this->renderForm($parentId, $formUrl, false);
     }
 
-    private function handlePost(int $parentId, string $formUrl): string
+    private function handlePost(int $parentId, string $formUrl): Response
     {
-        $post = $this->request->getParsedBody();
+        $post = $this->request->request->all();
         $name = trim((string) ($post['name'] ?? ''));
 
         if (empty($name)) {
-            return $this->render->render('system::pages/result', [
+            return new Response($this->render->render('system::pages/result', [
                 'title'         => __('Create Section'),
                 'type'          => 'alert-danger',
                 'message'       => __('You have not entered the name'),
                 'back_url'      => $formUrl,
                 'back_url_name' => __('Repeat'),
-            ]);
+            ]));
         }
 
         $pos  = (int) LibraryCategory::query()->max('id') + 1;
@@ -88,17 +91,17 @@ final readonly class CreateSectionController
         return $this->renderForm($parentId, $formUrl, true);
     }
 
-    private function renderForm(int $parentId, string $formUrl, bool $created): string
+    private function renderForm(int $parentId, string $formUrl, bool $created): Response
     {
         $parentUrl = $parentId > 0
             ? $this->categoryPathService->getCategoryUrlById($parentId) ?? '/library/'
             : '/library/';
 
-        return $this->render->render('library::section_create', [
+        return new Response($this->render->render('library::section_create', [
             'form_url'   => $formUrl,
             'parent_id'  => $parentId,
             'parent_url' => $parentUrl,
             'created'    => $created,
-        ]);
+        ]));
     }
 }

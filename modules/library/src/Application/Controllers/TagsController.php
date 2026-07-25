@@ -10,11 +10,12 @@ use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Modules\Library\Application\Services\Hashtags;
 use Johncms\Utils\DateFormatterInterface;
 use Johncms\Utils\PlainTextFormatter;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class TagsController
 {
@@ -30,32 +31,34 @@ final readonly class TagsController
         $this->controllerContext->initModule('library');
     }
 
-    public function __invoke(): string
+    public function __invoke(): Response
     {
         $this->navChain->add(__('Library'), '/library/');
         $this->navChain->add(__('Tags'));
 
-        $tag = trim((string) $this->request->getQuery('tag', ''));
+        $tag = trim($this->request->queryParam('tag', ''));
 
         if ($tag === '') {
-            http_response_code(404);
-            return $this->render->render('system::pages/result', [
-                'title'    => __('Tags'),
-                'type'     => 'alert-info',
-                'message'  => __('The list is empty'),
-                'back_url' => '/library/',
-            ]);
+            return new Response(
+                $this->render->render('system::pages/result', [
+                    'title'    => __('Tags'),
+                    'type'     => 'alert-info',
+                    'message'  => __('The list is empty'),
+                    'back_url' => '/library/',
+                ]),
+                Response::HTTP_NOT_FOUND
+            );
         }
 
         $articleIds = (new Hashtags(0))->getAllTagStats($tag);
 
         if (! $articleIds) {
-            return $this->render->render('system::pages/result', [
+            return new Response($this->render->render('system::pages/result', [
                 'title'    => __('Tags'),
                 'type'     => 'alert-info',
                 'message'  => __('The list is empty'),
                 'back_url' => '/library/',
-            ]);
+            ]));
         }
 
         $total = count($articleIds);
@@ -108,11 +111,11 @@ final readonly class TagsController
             ];
         }
 
-        return $this->render->render('library::tags', [
+        return new Response($this->render->render('library::tags', [
             'total'      => $total,
             'list'       => $list,
             'tag'        => $tag,
             'pagination' => $pagination->render(),
-        ]);
+        ]));
     }
 }

@@ -11,7 +11,7 @@ use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\ChangeTopicUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetChangeTopicContextUseCase;
 use Johncms\Modules\Forum\Domain\Models\ForumTopic;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 
@@ -47,10 +47,10 @@ final readonly class ChangeTopicController
         }
 
         $formData = [
-            'name'             => (string) $this->request->getPost('name', $topic->name),
-            'meta_keywords'    => (string) $this->request->getPost('meta_keywords', $topic->meta_keywords ?? ''),
-            'meta_description' => (string) $this->request->getPost('meta_description', $topic->meta_description ?? ''),
-            'csrf_token'       => (string) $this->request->getPost('csrf_token', ''),
+            'name'             => $this->request->body('name', (string) $topic->name),
+            'meta_keywords'    => $this->request->body('meta_keywords', $topic->meta_keywords ?? ''),
+            'meta_description' => $this->request->body('meta_description', $topic->meta_description ?? ''),
+            'csrf_token'       => $this->request->body('csrf_token', ''),
         ];
 
         $errors = [];

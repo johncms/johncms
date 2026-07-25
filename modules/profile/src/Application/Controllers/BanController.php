@@ -20,7 +20,7 @@ use Johncms\Modules\Profile\Application\UseCases\DeleteBanUseCase;
 use Johncms\Modules\Profile\Application\UseCases\GetBanFormContextUseCase;
 use Johncms\Modules\Profile\Application\UseCases\GetBanHistoryUseCase;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
@@ -91,11 +91,11 @@ final readonly class BanController
         }
 
         $command = new BanUserCommand(
-            term: (int) $this->request->getPost('term', 0, FILTER_VALIDATE_INT),
-            timeval: (int) $this->request->getPost('timeval', 0, FILTER_VALIDATE_INT),
-            time: (int) $this->request->getPost('time', 0, FILTER_VALIDATE_INT),
-            reason: (string) $this->request->getPost('reason', ''),
-            banref: (int) $this->request->getPost('banref', 0, FILTER_VALIDATE_INT),
+            term: $this->request->bodyInt('term'),
+            timeval: $this->request->bodyInt('timeval'),
+            time: $this->request->bodyInt('time'),
+            reason: $this->request->body('reason', ''),
+            banref: $this->request->bodyInt('banref'),
         );
 
         try {
@@ -273,7 +273,7 @@ final readonly class BanController
                 'page_title' => $title,
                 'data'       => [
                     'form_action' => '/profile/' . $target->id . '/bans/new',
-                    'post_id'     => $this->request->getQuery('fid', 0, FILTER_VALIDATE_INT),
+                    'post_id'     => $this->request->queryInt('fid'),
                     'back_url'    => '/profile/' . $target->id,
                     'user_login'  => $target->name,
                 ],
@@ -355,7 +355,7 @@ final readonly class BanController
     private function isCsrfValid(): bool
     {
         $validator = new Validator(
-            ['csrf_token' => (string) $this->request->getPost('csrf_token', '')],
+            ['csrf_token' => $this->request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

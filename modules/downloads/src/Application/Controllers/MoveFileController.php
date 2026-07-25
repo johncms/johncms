@@ -11,9 +11,10 @@ use Johncms\Modules\Downloads\Application\UseCases\MoveFileUseCase;
 use Johncms\Modules\Downloads\Domain\Models\DownloadCategory;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class MoveFileController
 {
@@ -30,7 +31,7 @@ final readonly class MoveFileController
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(int $id): string
+    public function __invoke(int $id): Response
     {
         if ($this->currentUser->rights <= 6) {
             return $this->notFound();
@@ -51,8 +52,8 @@ final readonly class MoveFileController
         $this->navChain->add(__('Move File'));
 
         $baseUrl = '/downloads/move-file/' . $id . '/';
-        $catId = (int) ($this->request->getQuery('catId') ?? 0);
-        $do = $this->request->getQuery('do') ?? '';
+        $catId = (int) ($this->request->queryParam('catId') ?? 0);
+        $do = $this->request->queryParam('do') ?? '';
 
         $category = $catId ? DownloadCategory::query()->find($catId) : null;
         if ($catId && $category === null) {
@@ -66,7 +67,7 @@ final readonly class MoveFileController
         return $this->showBrowser($id, $file, $catId, $baseUrl);
     }
 
-    private function showBrowser(int $id, DownloadFile $file, int $catId, string $baseUrl): string
+    private function showBrowser(int $id, DownloadFile $file, int $catId, string $baseUrl): Response
     {
         $sections = DownloadCategory::query()
             ->where('refid', $catId)
@@ -91,36 +92,36 @@ final readonly class MoveFileController
             'page_title' => __('Move File'),
         ]);
 
-        return $this->render->render('downloads::move_file', [
+        return new Response($this->render->render('downloads::move_file', [
             'id'       => $id,
             'sections' => $sections,
             'back_url' => $this->filePathService->getFileUrl($file),
             'urls'     => ['move_to_current_url' => $moveToCurrentUrl],
-        ]);
+        ]));
     }
 
-    private function handleTransfer(int $id, DownloadFile $file, int $catId, DownloadCategory $category, string $baseUrl): string
+    private function handleTransfer(int $id, DownloadFile $file, int $catId, DownloadCategory $category, string $baseUrl): Response
     {
         if ($catId === (int) $file->refid) {
-            return $this->render->render('system::pages/result', [
+            return new Response($this->render->render('system::pages/result', [
                 'title'         => __('Move File'),
                 'type'          => 'alert-info',
                 'message'       => __('This is the current directory'),
                 'back_url'      => $baseUrl . '?catId=' . $catId,
                 'back_url_name' => __('Back'),
-            ]);
+            ]));
         }
 
-        if ($this->request->getQuery('yes') !== null) {
+        if ($this->request->query->has('yes')) {
             $this->moveFileUseCase->execute($file, $category);
 
-            return $this->render->render('system::pages/result', [
+            return new Response($this->render->render('system::pages/result', [
                 'title'         => __('Move File'),
                 'type'          => 'alert-success',
                 'message'       => __('The file has been moved'),
                 'back_url'      => '/downloads/recount',
                 'back_url_name' => __('Update counters'),
-            ]);
+            ]));
         }
 
         $pageTitle = htmlspecialchars($file->rus_name);
@@ -129,22 +130,21 @@ final readonly class MoveFileController
             'page_title' => $pageTitle,
         ]);
 
-        return $this->render->render('downloads::move_file_confirm', [
+        return new Response($this->render->render('downloads::move_file_confirm', [
             'id'         => $id,
             'action_url' => $baseUrl . '?catId=' . $catId . '&do=transfer&yes',
             'back_url'   => $this->filePathService->getFileUrl($file),
-        ]);
+        ]));
     }
 
-    private function notFound(): string
+    private function notFound(): Response
     {
-        http_response_code(404);
-        return $this->render->render('system::pages/result', [
+        return new Response($this->render->render('system::pages/result', [
             'title'         => __('File not found'),
             'type'          => 'alert-danger',
             'message'       => __('File not found'),
             'back_url'      => '/downloads/',
             'back_url_name' => __('Downloads'),
-        ]);
+        ]), Response::HTTP_NOT_FOUND);
     }
 }

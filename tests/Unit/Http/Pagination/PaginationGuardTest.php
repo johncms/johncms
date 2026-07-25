@@ -6,10 +6,10 @@ namespace Tests\Unit\Http\Pagination;
 
 use Johncms\Http\Pagination\Pagination;
 use Johncms\Http\Pagination\PaginationGuard;
-use Johncms\System\Http\Request;
+use Johncms\Http\QueryStringBuilder;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use PHPUnit\Framework\TestCase;
-use PHPUnit\Framework\MockObject\MockObject;
 
 final class PaginationGuardTest extends TestCase
 {
@@ -80,29 +80,23 @@ final class PaginationGuardTest extends TestCase
     }
 
     /**
-     * @return Request&MockObject
+     * @param array<string, mixed> $queryParams
      */
     private function makeRequest(array $queryParams): Request
     {
-        $request = $this->createMock(Request::class);
-        $request->method('getQueryParams')->willReturn($queryParams);
-        $request->method('getQueryString')->willReturnCallback(
-            static fn (array $removeParams = [], array $addParams = []): string => $addParams === []
-                ? '/guestbook/'
-                : '/guestbook/?' . http_build_query($addParams)
-        );
-
-        return $request;
+        return new Request($queryParams);
     }
 
     private function makePagination(Request $request, int $total = 50): Pagination
     {
         return new Pagination(
-            request:     $request,
-            renderer:    $this->createMock(Render::class),
-            total:       $total,
-            perPage:     10,
-            currentPage: 1,
+            queryStringBuilder: new QueryStringBuilder(),
+            renderer:           $this->createMock(Render::class),
+            currentPath:        '/guestbook/',
+            currentQuery:       $request->query->all(),
+            total:              $total,
+            perPage:            10,
+            currentPage:        1,
         );
     }
 }

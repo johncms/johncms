@@ -10,8 +10,8 @@ use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\ViewFilterByAuthorUseCase;
 use Johncms\NavChain;
 use Johncms\Security\Csrf;
-use Johncms\System\Http\Request;
-use Johncms\System\Http\Session;
+use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\System\View\Render;
 
 final readonly class FilterByAuthorController
@@ -31,7 +31,7 @@ final readonly class FilterByAuthorController
 
     public function __invoke(int $id): string
     {
-        $page = max(1, (int) $this->request->getQuery('page', 1));
+        $page = max(1, $this->request->queryInt('page', 1));
 
         try {
             $context = $this->viewFilterByAuthorUseCase->execute($id);

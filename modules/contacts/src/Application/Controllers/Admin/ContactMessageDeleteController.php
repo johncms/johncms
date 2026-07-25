@@ -8,7 +8,7 @@ use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Modules\Contacts\Application\UseCases\DeleteContactMessageUseCase;
 use Johncms\Modules\Contacts\Domain\Repository\ContactMessageRepositoryInterface;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 
@@ -36,7 +36,7 @@ final readonly class ContactMessageDeleteController
 
         if ($this->request->getMethod() === 'POST') {
             $validator = new Validator(
-                ['csrf_token' => (string) $this->request->getPost('csrf_token', '')],
+                ['csrf_token' => $this->request->body('csrf_token', '')],
                 ['csrf_token' => ['Csrf']]
             );
 

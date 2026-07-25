@@ -15,7 +15,7 @@ use Johncms\Modules\Admin\Application\UseCases\ManageAdUseCase;
 use Johncms\Modules\Admin\Application\UseCases\SaveAdUseCase;
 use Johncms\Modules\Admin\Domain\Models\Ad;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 
@@ -40,7 +40,7 @@ final readonly class AdsController
 
     public function index(): string
     {
-        $type = $this->clampType((int) $this->request->getQuery('type', 0, FILTER_VALIDATE_INT));
+        $type = $this->clampType($this->request->queryInt('type'));
 
         $pagination = $this->paginationFactory->create($this->getList->count($type));
 
@@ -90,7 +90,7 @@ final readonly class AdsController
             return $this->error(__('Wrong data'));
         }
 
-        $id = (int) $this->request->getPost('id', 0, FILTER_VALIDATE_INT) ?: null;
+        $id = $this->request->bodyInt('id') ?: null;
         $fields = $this->fieldsFromRequest();
         $errors = $this->validate($fields);
 
@@ -215,18 +215,18 @@ final readonly class AdsController
     private function fieldsFromRequest(): array
     {
         return [
-            'link'       => trim((string) $this->request->getPost('link', '')),
-            'name'       => trim((string) $this->request->getPost('name', '')),
-            'color'      => mb_substr(trim((string) $this->request->getPost('color', '')), 0, 6),
-            'count_link' => abs((int) $this->request->getPost('count', 0, FILTER_VALIDATE_INT)),
-            'day'        => abs((int) $this->request->getPost('day', 0, FILTER_VALIDATE_INT)),
-            'view'       => abs((int) $this->request->getPost('view', 0, FILTER_VALIDATE_INT)),
-            'type'       => $this->clampType((int) $this->request->getPost('type', 0, FILTER_VALIDATE_INT)),
-            'layout'     => abs((int) $this->request->getPost('layout', 0, FILTER_VALIDATE_INT)),
-            'show'       => $this->request->getPost('show') !== null ? 1 : 0,
-            'bold'       => $this->request->getPost('bold') !== null ? 1 : 0,
-            'italic'     => $this->request->getPost('italic') !== null ? 1 : 0,
-            'underline'  => $this->request->getPost('underline') !== null ? 1 : 0,
+            'link'       => trim($this->request->body('link', '')),
+            'name'       => trim($this->request->body('name', '')),
+            'color'      => mb_substr(trim($this->request->body('color', '')), 0, 6),
+            'count_link' => abs($this->request->bodyInt('count')),
+            'day'        => abs($this->request->bodyInt('day')),
+            'view'       => abs($this->request->bodyInt('view')),
+            'type'       => $this->clampType($this->request->bodyInt('type')),
+            'layout'     => abs($this->request->bodyInt('layout')),
+            'show'       => $this->request->hasBody('show') ? 1 : 0,
+            'bold'       => $this->request->hasBody('bold') ? 1 : 0,
+            'italic'     => $this->request->hasBody('italic') ? 1 : 0,
+            'underline'  => $this->request->hasBody('underline') ? 1 : 0,
         ];
     }
 
@@ -358,7 +358,7 @@ final readonly class AdsController
     private function isCsrfValid(): bool
     {
         $validator = new Validator(
-            ['csrf_token' => (string) $this->request->getPost('csrf_token', '')],
+            ['csrf_token' => $this->request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

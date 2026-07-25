@@ -13,7 +13,7 @@ use Johncms\Modules\Album\Application\Exceptions\AlbumPhotoNotFoundException;
 use Johncms\Modules\Album\Application\UseCases\GetPhotoCommentsContextUseCase;
 use Johncms\Modules\Album\Domain\Repository\AlbumPhotoRepositoryInterface;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 
@@ -55,8 +55,8 @@ final readonly class PhotoCommentsController
 
         // Globals consumed by the legacy Comments class.
         global $mod, $start;
-        $mod = $this->request->getQuery('mod', '');
-        $page = max(1, (int) $this->request->getQuery('page', 1));
+        $mod = $this->request->queryParam('mod', '');
+        $page = max(1, $this->request->queryInt('page', 1));
         $start = isset($_REQUEST['page'])
             ? ($page - 1) * (int) $this->currentUser->config->kmess
             : (isset($_GET['start']) ? abs((int) $_GET['start']) : 0);

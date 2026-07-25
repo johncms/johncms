@@ -12,7 +12,8 @@ declare(strict_types=1);
 
 use Aura\Autoload\Loader;
 use Johncms\Config\ConfigRepository;
-use Johncms\System\View\Render;
+use Johncms\Exceptions\HttpRedirectException;
+use Johncms\Exceptions\PageNotFoundException;
 
 /**
  * @param string $service
@@ -50,12 +51,12 @@ function di(string $service): mixed
 
         @trigger_error(
             sprintf(
-                'Calling di("route") is deprecated. Use di(\Johncms\System\Http\Request::class)->getCurrentRouteParams() instead. Called at %s.',
+                'Calling di("route") is deprecated. Use di(\Johncms\Http\Request::class)->attributes->all() instead. Called at %s.',
                 $location
             ),
             E_USER_DEPRECATED
         );
-        return di(\Johncms\System\Http\Request::class)->getCurrentRouteParams();
+        return di(\Johncms\Http\Request::class)->attributes->all();
     }
 
     return \Johncms\Container\PSRContainerFactory::getContainer()->get($service);
@@ -67,40 +68,24 @@ function pathToUrl(string $path): string
 }
 
 /**
- * Отображение ошибки 404
+ * Answer the request with the 404 page.
  *
- * @param string $template
- * @param string $title
- * @param string $message
- * @return never-return
+ * Throws instead of rendering and exiting: the HTTP layer catches the exception and builds
+ * the response, so the page can be rendered once, in one place.
+ *
+ * @throws PageNotFoundException
+ * @throws HttpRedirectException if the current URI is listed in config/redirects.php
  */
 function pageNotFound(
     string $template = 'system::error/404',
     string $title = '',
     string $message = ''
-): void {
+): never {
     checkRedirect();
 
-    $engine = di(Render::class);
-
-    if (! headers_sent()) {
-        header('HTTP/1.0 404 Not Found');
-    }
-
-    // The default translation domain is the one of the module that is handling the request,
-    // so the system domain has to be named explicitly here.
-    echo $engine->render(
-        $template,
-        [
-            'title'   => ! empty($title)
-                ? $title
-                : d__('system', 'ERROR: 404 Not Found'),
-            'message' => ! empty($message)
-                ? $message
-                : d__('system', 'You are looking for something that doesn\'t exist or may have moved'),
-        ]
-    );
-    exit;
+    throw (new PageNotFoundException($message))
+        ->setTemplate($template)
+        ->setTitle($title);
 }
 
 /**
@@ -178,24 +163,40 @@ function module_lib_loader($module_name, $dir = 'lib')
     $loader->addPrefix(ucfirst($module_name), ROOT_PATH . 'modules/' . $module_name . '/' . $dir);
 }
 
-function checkRedirect()
+/**
+ * Redirect the request if its URI is listed in config/redirects.php.
+ *
+ * @throws HttpRedirectException
+ */
+function checkRedirect(): void
 {
+    $requestUri = $_SERVER['REQUEST_URI'] ?? '';
     $redirects = require CONFIG_PATH . 'redirects.php';
-    if (array_key_exists($_SERVER['REQUEST_URI'], $redirects)) {
-        http_response_code(301);
-        header('Location: ' . $redirects[$_SERVER['REQUEST_URI']]);
-        exit;
+    if (! array_key_exists($requestUri, $redirects)) {
+        return;
     }
+
+    $target = $redirects[$requestUri];
+    if (! is_string($target) || $target === '') {
+        throw new RuntimeException(
+            sprintf('The redirect target for "%s" in config/redirects.php must be a non-empty string.', $requestUri)
+        );
+    }
+
+    redirect($target, 301);
 }
 
 /**
- * @param string $url
- * @return never-return
+ * Answer the request with an HTTP redirect.
+ *
+ * Throws instead of sending a Location header and exiting: the HTTP layer catches the exception
+ * and builds the response, so nothing is written to the output from the middle of an action.
+ *
+ * @throws HttpRedirectException
  */
-function redirect(string $url)
+function redirect(string $url, int $status = 302): never
 {
-    header('Location: ' . $url);
-    exit;
+    throw new HttpRedirectException($url, $status);
 }
 
 /**

@@ -8,11 +8,11 @@ msgid "Guests"
 msgstr ""
 
 #: modules/online/src/Application/Controllers/GuestController.php:38
-#: modules/online/src/Application/Controllers/GuestController.php:56
+#: modules/online/src/Application/Controllers/GuestController.php:60
 #: modules/online/src/Application/Controllers/HistoryController.php:38
-#: modules/online/src/Application/Controllers/HistoryController.php:56
+#: modules/online/src/Application/Controllers/HistoryController.php:60
 #: modules/online/src/Application/Controllers/IndexController.php:38
-#: modules/online/src/Application/Controllers/IndexController.php:56
+#: modules/online/src/Application/Controllers/IndexController.php:60
 #: modules/online/src/Application/Controllers/IpController.php:34
 #: modules/online/src/Application/Controllers/IpController.php:45
 #: modules/online/src/Application/Middlewares/OnlineAdminMiddleware.php:25
@@ -41,7 +41,7 @@ msgstr ""
 msgid "Access denied"
 msgstr ""
 
-#: modules/online/src/Application/UseCases/GetOnlineGuestsUseCase.php:34
+#: modules/online/src/Application/UseCases/GetOnlineGuestsUseCase.php:35
 msgid "Guest"
 msgstr ""
 

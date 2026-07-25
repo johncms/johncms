@@ -12,7 +12,7 @@ use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Application\UseCases\DeleteVoteAnswerUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetEditVoteContextUseCase;
 use Johncms\Modules\Forum\Application\UseCases\UpdateVoteUseCase;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 
 final readonly class EditVoteController
@@ -57,10 +57,10 @@ final readonly class EditVoteController
             );
         }
 
-        $deleteAnswer = $this->request->getQuery('delvote', null) !== null;
-        $voteId = abs((int) $this->request->getQuery('vote', 0));
+        $deleteAnswer = $this->request->query->has('delvote');
+        $voteId = abs($this->request->queryInt('vote', 0));
         if ($deleteAnswer && $voteId > 0) {
-            if ($this->request->getQuery('yes', null) !== null) {
+            if ($this->request->query->has('yes')) {
                 $this->deleteVoteAnswerUseCase->execute($context->topicId, $voteId);
                 redirect('/forum/editvote/' . $context->topicId . '/');
             }
@@ -77,18 +77,18 @@ final readonly class EditVoteController
             );
         }
 
-        if ($this->request->getPost('submit', null) !== null) {
-            $pollName = mb_substr(trim((string) $this->request->getPost('name_vote', '')), 0, 200);
+        if ($this->request->hasBody('submit')) {
+            $pollName = mb_substr(trim($this->request->body('name_vote', '')), 0, 200);
 
             $existingAnswers = [];
             foreach ($context->answers as $answer) {
                 $inputName = $answer->id . 'vote';
-                $existingAnswers[$answer->id] = mb_substr(trim((string) $this->request->getPost($inputName, '')), 0, 150);
+                $existingAnswers[$answer->id] = mb_substr(trim($this->request->body($inputName, '')), 0, 150);
             }
 
             $newAnswers = [];
             for ($vote = $context->savedVote; $vote < 20; $vote++) {
-                $value = mb_substr(trim((string) $this->request->getPost((string) $vote, '')), 0, 150);
+                $value = mb_substr(trim($this->request->body((string) $vote, '')), 0, 150);
                 if ($value === '') {
                     continue;
                 }
@@ -110,11 +110,11 @@ final readonly class EditVoteController
             );
         }
 
-        $countVote = (int) $this->request->getPost('count_vote', $context->savedVote);
+        $countVote = $this->request->bodyInt('count_vote', $context->savedVote);
         if ($context->savedVote < 20) {
-            if ($this->request->getPost('plus', null) !== null) {
+            if ($this->request->hasBody('plus')) {
                 $countVote++;
-            } elseif ($this->request->getPost('minus', null) !== null) {
+            } elseif ($this->request->hasBody('minus')) {
                 $countVote--;
             }
 
@@ -147,7 +147,7 @@ final readonly class EditVoteController
             $votes[] = [
                 'input_name'  => $vote,
                 'input_label' => __('Answer') . ' ' . ($vote + 1),
-                'input_value' => htmlentities((string) $this->request->getPost((string) $vote, ''), ENT_QUOTES, 'UTF-8'),
+                'input_value' => htmlentities($this->request->body((string) $vote, ''), ENT_QUOTES, 'UTF-8'),
             ];
         }
 

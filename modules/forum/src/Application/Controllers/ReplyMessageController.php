@@ -15,8 +15,8 @@ use Johncms\Modules\Forum\Application\UseCases\ReplyMessageUseCase;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
 use Johncms\Security\AntifloodCheckerInterface;
 use Johncms\Smilies\SmiliesRendererInterface;
-use Johncms\System\Http\Request;
-use Johncms\System\Http\Session;
+use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\System\Utility\EditorContentNormalizer;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
@@ -47,7 +47,7 @@ final readonly class ReplyMessageController
 
     public function __invoke(int $id): string
     {
-        $page = max(1, (int) $this->request->getQuery('page', 1));
+        $page = max(1, $this->request->queryInt('page', 1));
 
         try {
             $context = $this->contextUseCase->execute($id);
@@ -109,13 +109,13 @@ final readonly class ReplyMessageController
             );
         }
 
-        $msg = $this->editorContentNormalizer->trimEdgeEmptyBlocks((string) $this->request->getPost('msg', ''));
+        $msg = $this->editorContentNormalizer->trimEdgeEmptyBlocks($this->request->body('msg', ''));
         $msg = trim($msg);
-        $addFiles = $this->request->getPost('addfiles') !== null;
-        $attachedFiles = (array) $this->request->getPost('attached_files', [], FILTER_VALIDATE_INT);
+        $addFiles = $this->request->hasBody('addfiles');
+        $attachedFiles = (array) $this->request->bodyInts('attached_files');
 
         if (
-            $this->request->getPost('submit') !== null
+            $this->request->hasBody('submit')
             && $this->isValidToken()
         ) {
             if ($msg === '') {
@@ -185,7 +185,7 @@ final readonly class ReplyMessageController
 
         $token = $this->regenerateToken();
 
-        $isQuote = $this->request->getQuery('quote') !== null;
+        $isQuote = $this->request->query->has('quote');
         $quoteText = (string) $sourceMessage->getRawOriginal('text');
 
         if ($isQuote) {
@@ -212,7 +212,7 @@ final readonly class ReplyMessageController
                 'msg'               => $msg,
                 'message'           => $sourceMessage,
                 'settings_forum'    => $this->getForumSettings(),
-                'show_post_preview' => ($this->request->getPost('submit') === null && $this->request->getPost('msg') !== null),
+                'show_post_preview' => (! $this->request->hasBody('submit') && $this->request->hasBody('msg')),
                 'back_url'          => $this->buildTopicBackUrl($topic->url, $page),
                 'is_new_message'    => false,
                 'preview_message'   => $msgPreview,
@@ -240,7 +240,7 @@ final readonly class ReplyMessageController
 
     private function isValidToken(): bool
     {
-        $token = (string) $this->request->getPost('token', '');
+        $token = $this->request->body('token', '');
         $sessionToken = (string) $this->session->get('token', '');
 
         return $token !== '' && $sessionToken !== '' && hash_equals($sessionToken, $token);
@@ -260,7 +260,7 @@ final readonly class ReplyMessageController
         if ($page > 1) {
             $url .= '?page=' . $page;
         }
-        if ($this->request->getQuery('quote') !== null) {
+        if ($this->request->query->has('quote')) {
             $url .= ($page > 1 ? '&amp;' : '?') . 'quote=1';
         }
 

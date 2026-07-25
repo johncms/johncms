@@ -9,7 +9,7 @@ use Johncms\Modules\Admin\Application\DTO\AntifloodSettingsDTO;
 use Johncms\Modules\Admin\Application\UseCases\UpdateAntifloodSettingsUseCase;
 use Johncms\Modules\Admin\Domain\Exceptions\ConfigWriteException;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 
@@ -51,18 +51,18 @@ final readonly class AntifloodSettingsController
     private function buildDto(): AntifloodSettingsDTO
     {
         return new AntifloodSettingsDTO(
-            mode: (int) $this->request->getPost('mode', 1, FILTER_VALIDATE_INT),
-            day: (int) $this->request->getPost('day', 10, FILTER_VALIDATE_INT),
-            night: (int) $this->request->getPost('night', 30, FILTER_VALIDATE_INT),
-            dayFrom: (int) $this->request->getPost('dayfrom', 10, FILTER_VALIDATE_INT),
-            dayTo: (int) $this->request->getPost('dayto', 22, FILTER_VALIDATE_INT),
+            mode: $this->request->bodyInt('mode', 1),
+            day: $this->request->bodyInt('day', 10),
+            night: $this->request->bodyInt('night', 30),
+            dayFrom: $this->request->bodyInt('dayfrom', 10),
+            dayTo: $this->request->bodyInt('dayto', 22),
         );
     }
 
     private function isCsrfValid(): bool
     {
         $validator = new Validator(
-            ['csrf_token' => (string) $this->request->getPost('csrf_token', '')],
+            ['csrf_token' => $this->request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

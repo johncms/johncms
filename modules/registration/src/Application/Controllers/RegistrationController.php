@@ -10,8 +10,8 @@ use Johncms\Modules\Consent\Application\Services\ConsentService;
 use Johncms\Modules\Registration\Application\DTO\RegistrationFormDTO;
 use Johncms\Modules\Registration\Application\UseCases\RegisterUserUseCase;
 use Johncms\NavChain;
-use Johncms\System\Http\Environment;
-use Johncms\System\Http\Request;
+use Johncms\Http\Environment;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
@@ -48,18 +48,18 @@ final readonly class RegistrationController
         $consents = $this->consentService->getFormConsents('register');
 
         $fields = [
-            'name'     => (string) $this->request->getPost('name', ''),
-            'name_lat' => Str::slug((string) $this->request->getPost('name', ''), '_'),
-            'password' => (string) $this->request->getPost('password', ''),
-            'sex'      => (string) $this->request->getPost('sex', ''),
-            'imname'   => (string) $this->request->getPost('imname', ''),
-            'about'    => (string) $this->request->getPost('about', ''),
-            'captcha'  => $this->request->getPost('captcha'),
-            'email'    => (string) $this->request->getPost('email', ''),
+            'name'     => $this->request->body('name', ''),
+            'name_lat' => Str::slug($this->request->body('name', ''), '_'),
+            'password' => $this->request->body('password', ''),
+            'sex'      => $this->request->body('sex', ''),
+            'imname'   => $this->request->body('imname', ''),
+            'about'    => $this->request->body('about', ''),
+            'captcha'  => $this->request->body('captcha'),
+            'email'    => $this->request->body('email', ''),
         ];
 
         foreach ($consents as $consent) {
-            $fields['consent_' . $consent->id] = $this->request->getPost('consent_' . $consent->id);
+            $fields['consent_' . $consent->id] = $this->request->body('consent_' . $consent->id);
         }
 
         $errors = [];

@@ -10,7 +10,7 @@ use Johncms\Modules\Forum\Application\Exceptions\ForumValidationException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\GetSubmitVoteContextUseCase;
 use Johncms\Modules\Forum\Application\UseCases\SubmitVoteUseCase;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 
@@ -31,7 +31,7 @@ final readonly class SubmitVoteController
     public function __invoke(int $id): string
     {
         try {
-            $voteId = (int) $this->request->getPost('vote', 0);
+            $voteId = $this->request->bodyInt('vote', 0);
             $context = $this->contextUseCase->execute($id, $voteId, $this->user->id);
         } catch (ForumAccessDeniedException | ForumValidationException $exception) {
             return $this->forumErrorRenderer->render(
@@ -46,7 +46,7 @@ final readonly class SubmitVoteController
 
         $this->submitVoteUseCase->execute($context->topicId, $context->voteId, $this->user->id);
 
-        $referer = htmlspecialchars((string) $this->request->getServer('HTTP_REFERER', '/forum/'));
+        $referer = htmlspecialchars((string) $this->request->server->getString('HTTP_REFERER', '/forum/'));
         return $this->render->render(
             'system::pages/result',
             [

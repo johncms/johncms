@@ -19,7 +19,7 @@ automatically; `CLAUDE.md` is a symlink to it for Claude Code.
 | `pagination.md` | paginated lists, page titles / meta description |
 | `new-module.md` | creating a new module |
 | `review/` | self-review protocol and checklists, run on demand (see below) |
-| `scripts/verify.sh` | the deterministic gate: `cs-check`, `test` |
+| `scripts/verify.sh` | the deterministic gate: `cs-check`, `phpstan`, `test` |
 
 **`.claude/`** contains only thin wrappers that declare the reviewers and the
 `/review-self` command in Claude Code's format and then point at `.agents/`. No rule is

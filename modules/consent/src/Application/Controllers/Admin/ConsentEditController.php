@@ -11,7 +11,7 @@ use Johncms\Modules\Consent\Application\UseCases\UpdateConsentUseCase;
 use Johncms\Modules\Consent\Domain\Models\Consent;
 use Johncms\Modules\Consent\Domain\Repository\ConsentRepositoryInterface;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\i18n\Translator;
 use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
@@ -69,7 +69,7 @@ final readonly class ConsentEditController
                     'language'   => $fields['language'],
                     'title'      => $fields['title'],
                     'version'    => $fields['version'],
-                    'csrf_token' => (string) $this->request->getPost('csrf_token', ''),
+                    'csrf_token' => $this->request->body('csrf_token', ''),
                 ],
                 [
                     'context'    => ['NotEmpty', 'StringLength' => ['max' => 100]],
@@ -165,13 +165,13 @@ final readonly class ConsentEditController
     private function fieldsFromRequest(): array
     {
         return [
-            'context'     => trim((string) $this->request->getPost('context', '')),
-            'language'    => trim((string) $this->request->getPost('language', '')),
-            'title'       => trim((string) $this->request->getPost('title', '')),
-            'text'        => (string) $this->request->getPost('text', ''),
-            'version'     => trim((string) $this->request->getPost('version', '')),
-            'is_required' => $this->request->getPost('is_required') !== null,
-            'is_active'   => $this->request->getPost('is_active') !== null,
+            'context'     => trim($this->request->body('context', '')),
+            'language'    => trim($this->request->body('language', '')),
+            'title'       => trim($this->request->body('title', '')),
+            'text'        => $this->request->body('text', ''),
+            'version'     => trim($this->request->body('version', '')),
+            'is_required' => $this->request->hasBody('is_required'),
+            'is_active'   => $this->request->hasBody('is_active'),
         ];
     }
 }

@@ -7,7 +7,7 @@ namespace Johncms\Modules\Redirect\Application\Controllers;
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Redirect\Application\UseCases\RedirectByIdUseCase;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 
 final readonly class RedirectController
@@ -24,8 +24,8 @@ final readonly class RedirectController
 
     public function __invoke(): string
     {
-        $id = (int) $this->request->getQuery('id', 0);
-        $url = $this->request->getQuery('url', '');
+        $id = $this->request->queryInt('id', 0);
+        $url = $this->request->queryParam('url', '');
 
         $url = $url !== '' ? strip_tags(rawurldecode(trim($url))) : '';
 
@@ -56,7 +56,7 @@ final readonly class RedirectController
 
     private function handleByUrl(string $url): string
     {
-        $submit = $this->request->getPost('submit') !== null;
+        $submit = $this->request->hasBody('submit');
         $referer = $_SERVER['HTTP_REFERER'] ?? '/';
 
         if ($submit) {

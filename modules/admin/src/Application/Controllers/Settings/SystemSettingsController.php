@@ -10,7 +10,7 @@ use Johncms\Modules\Admin\Application\UseCases\UpdateSystemSettingsUseCase;
 use Johncms\Modules\Admin\Domain\Exceptions\ConfigWriteException;
 use Johncms\Modules\Admin\Domain\Services\ThemeListProviderInterface;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 
@@ -52,32 +52,32 @@ final readonly class SystemSettingsController
 
     private function buildDto(): SystemSettingsDTO
     {
-        $currentHost = 'https://' . $this->request->getServer('HTTP_HOST', '');
+        $currentHost = 'https://' . $this->request->server->getString('HTTP_HOST', '');
 
         return new SystemSettingsDTO(
-            theme: (string) $this->request->getPost('skindef', 'default'),
-            email: (string) $this->request->getPost('madm', 'example@example.com'),
-            timeShift: (int) $this->request->getPost('timeshift', 0, FILTER_VALIDATE_INT),
-            copyright: (string) $this->request->getPost('copyright', 'JohnCMS'),
-            homeUrl: (string) $this->request->getPost('homeurl', $currentHost),
-            maxFileSize: (int) $this->request->getPost('flsz', 0, FILTER_VALIDATE_INT),
-            gzip: (int) $this->request->getPost('gz', 0, FILTER_VALIDATE_INT),
-            metaTitle: (string) $this->request->getPost('meta_title', 'johncms'),
-            metaKeywords: (string) $this->request->getPost('meta_key', 'johncms'),
-            metaDescription: (string) $this->request->getPost('meta_desc', 'johncms'),
-            userEmailRequired: (int) $this->request->getPost('user_email_required', 0, FILTER_VALIDATE_INT),
-            userEmailConfirmation: (int) $this->request->getPost('user_email_confirmation', 0, FILTER_VALIDATE_INT),
-            privacyPolicyUrl: trim((string) $this->request->getPost('privacy_policy_url', '')),
-            termsOfUseUrl: trim((string) $this->request->getPost('terms_of_use_url', '')),
-            personalDataPolicyUrl: trim((string) $this->request->getPost('personal_data_policy_url', '')),
-            cookiePolicyUrl: trim((string) $this->request->getPost('cookie_policy_url', '')),
+            theme: $this->request->body('skindef', 'default'),
+            email: $this->request->body('madm', 'example@example.com'),
+            timeShift: $this->request->bodyInt('timeshift'),
+            copyright: $this->request->body('copyright', 'JohnCMS'),
+            homeUrl: $this->request->body('homeurl', $currentHost),
+            maxFileSize: $this->request->bodyInt('flsz'),
+            gzip: $this->request->bodyInt('gz'),
+            metaTitle: $this->request->body('meta_title', 'johncms'),
+            metaKeywords: $this->request->body('meta_key', 'johncms'),
+            metaDescription: $this->request->body('meta_desc', 'johncms'),
+            userEmailRequired: $this->request->bodyInt('user_email_required'),
+            userEmailConfirmation: $this->request->bodyInt('user_email_confirmation'),
+            privacyPolicyUrl: trim($this->request->body('privacy_policy_url', '')),
+            termsOfUseUrl: trim($this->request->body('terms_of_use_url', '')),
+            personalDataPolicyUrl: trim($this->request->body('personal_data_policy_url', '')),
+            cookiePolicyUrl: trim($this->request->body('cookie_policy_url', '')),
         );
     }
 
     private function isCsrfValid(): bool
     {
         $validator = new Validator(
-            ['csrf_token' => (string) $this->request->getPost('csrf_token', '')],
+            ['csrf_token' => $this->request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

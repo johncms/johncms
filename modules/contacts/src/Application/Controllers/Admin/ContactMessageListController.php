@@ -11,7 +11,7 @@ use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Contacts\Application\UseCases\ListContactMessagesUseCase;
 use Johncms\Modules\Contacts\Domain\Enums\ContactMessageStatus;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 
 final readonly class ContactMessageListController
@@ -32,7 +32,7 @@ final readonly class ContactMessageListController
 
     public function __invoke(): string
     {
-        $statusParam = $this->request->getQuery('status');
+        $statusParam = $this->request->queryParam('status');
         $status = ContactMessageStatus::tryFromString(is_string($statusParam) ? $statusParam : null);
 
         $pagination = $this->paginationFactory->create($this->messages->count($status));

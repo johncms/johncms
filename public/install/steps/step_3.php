@@ -15,7 +15,7 @@ use Install\Database;
 use Johncms\Checker\DBChecker;
 use Johncms\Modules\ModuleInstaller;
 use Johncms\Modules\Modules;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 
 /** @var Request $request */
 $request = di(Request::class);
@@ -53,11 +53,11 @@ if (file_exists('/.dockerenv')) {
 }
 
 $fields = [
-    'db_host'     => $request->getPost('db_host', $defaultHost),
-    'db_port'     => $request->getPost('db_port', 3306, FILTER_VALIDATE_INT),
-    'db_name'     => $request->getPost('db_name', $defaultDatabase),
-    'db_user'     => $request->getPost('db_user', $defaultUser),
-    'db_password' => $request->getPost('db_password', $defaultPassword),
+    'db_host'     => $request->body('db_host', $defaultHost),
+    'db_port'     => $request->bodyInt('db_port', 3306),
+    'db_name'     => $request->body('db_name', $defaultDatabase),
+    'db_user'     => $request->body('db_user', $defaultUser),
+    'db_password' => $request->body('db_password', $defaultPassword),
 ];
 
 $errors = [];
@@ -102,7 +102,7 @@ if ($request->getMethod() === 'POST') {
 
         if (
             $check_mysqlnd &&
-            (! $version_info['error'] || $request->getPost('anyway_continue') === 'yes') &&
+            (! $version_info['error'] || $request->body('anyway_continue') === 'yes') &&
             file_put_contents(CONFIG_PATH . 'autoload/database.local.php', $db_file)
         ) {
             Database::createTables($version_info['error']);

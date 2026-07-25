@@ -12,7 +12,7 @@ use Johncms\Modules\Forum\Application\UseCases\EnsureEditPostAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetEditPostContextUseCase;
 use Johncms\Modules\Forum\Application\UseCases\RestorePostUseCase;
 use Johncms\Security\Csrf;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
@@ -64,7 +64,7 @@ final readonly class RestorePostController
 
         if ($this->request->getMethod() === 'POST') {
             $validator = new Validator(
-                ['csrf_token' => (string) $this->request->getPost('csrf_token', '')],
+                ['csrf_token' => $this->request->body('csrf_token', '')],
                 ['csrf_token' => ['Csrf']]
             );
 

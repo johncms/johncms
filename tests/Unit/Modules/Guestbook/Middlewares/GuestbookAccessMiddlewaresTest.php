@@ -10,7 +10,7 @@ use Johncms\Modules\Guestbook\Application\Middlewares\GuestbookCleanAccessMiddle
 use Johncms\Modules\Guestbook\Application\Middlewares\GuestbookEditAccessMiddleware;
 use Johncms\Modules\Guestbook\Application\Middlewares\GuestbookReplyAccessMiddleware;
 use Johncms\Router\MiddlewareInterface;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\Users\User;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
@@ -30,7 +30,7 @@ final class GuestbookAccessMiddlewaresTest extends TestCase
     {
         $middleware = $this->makeMiddleware($middlewareClass, $this->makeUser($rights));
 
-        $result = $middleware->handle($this->createMock(Request::class), static fn () => 'passed');
+        $result = $middleware->handle(Request::create('/'), static fn () => 'passed');
 
         self::assertSame('passed', $result);
     }
@@ -53,7 +53,7 @@ final class GuestbookAccessMiddlewaresTest extends TestCase
         $middleware = $this->makeMiddleware($middlewareClass, $this->makeUser($rights));
 
         $this->expectException(PageNotFoundException::class);
-        $middleware->handle($this->createMock(Request::class), static fn () => 'passed');
+        $middleware->handle(Request::create('/'), static fn () => 'passed');
     }
 
     public static function deniedProvider(): array
@@ -75,7 +75,7 @@ final class GuestbookAccessMiddlewaresTest extends TestCase
         $middleware = $this->makeMiddleware($middlewareClass, $guest);
 
         $this->expectException(PageNotFoundException::class);
-        $middleware->handle($this->createMock(Request::class), static fn () => 'passed');
+        $middleware->handle(Request::create('/'), static fn () => 'passed');
     }
 
     public static function middlewareProvider(): array

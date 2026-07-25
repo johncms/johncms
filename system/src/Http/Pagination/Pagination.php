@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Http\Pagination;
 
 use Compolomus\Pagination\Pagination as PaginationCalculator;
-use Johncms\System\Http\Request;
+use Johncms\Http\QueryStringBuilder;
 use Johncms\System\View\Render;
 
 final class Pagination
@@ -20,9 +20,14 @@ final class Pagination
     private readonly int $totalPages;
     private readonly PaginationCalculator $calculator;
 
+    /**
+     * @param array<string, mixed> $currentQuery Current query parameters (e.g. $_GET).
+     */
     public function __construct(
-        private readonly Request $request,
+        private readonly QueryStringBuilder $queryStringBuilder,
         private readonly Render $renderer,
+        private readonly string $currentPath,
+        private readonly array $currentQuery,
         private readonly int $total,
         int $perPage,
         int $currentPage,
@@ -76,10 +81,10 @@ final class Pagination
     public function getUrl(int $page): string
     {
         if ($page <= 1) {
-            return $this->request->getQueryString([$this->pageParamName]);
+            return $this->queryStringBuilder->build($this->currentPath, $this->currentQuery, [$this->pageParamName]);
         }
 
-        return $this->request->getQueryString([], [$this->pageParamName => $page]);
+        return $this->queryStringBuilder->build($this->currentPath, $this->currentQuery, [], [$this->pageParamName => $page]);
     }
 
     /**

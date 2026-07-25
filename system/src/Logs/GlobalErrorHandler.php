@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Johncms\Logs;
 
 use ErrorException;
-use Johncms\Users\User;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 use Throwable;
@@ -191,18 +190,6 @@ final class GlobalErrorHandler
 
     private function canShowDebug(): bool
     {
-        if (php_sapi_name() === 'cli' || DEBUG_FOR_ALL) {
-            return true;
-        }
-
-        if (! DEBUG) {
-            return false;
-        }
-
-        try {
-            return $this->container->get(User::class)?->rights > 0;
-        } catch (Throwable) {
-            return false;
-        }
+        return (new DebugDetailsPolicy($this->container))->allowed();
     }
 }

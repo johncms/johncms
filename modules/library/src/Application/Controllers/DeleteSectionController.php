@@ -8,10 +8,11 @@ use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Library\Domain\Models\LibraryCategory;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Modules\Library\Application\Services\Tree;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class DeleteSectionController
 {
@@ -25,25 +26,27 @@ final readonly class DeleteSectionController
         $this->controllerContext->initModule('library');
     }
 
-    public function __invoke(int $id): string
+    public function __invoke(int $id): Response
     {
         if (! ($this->currentUser->rights > 4)) {
-            http_response_code(403);
-            return $this->render->render('system::pages/result', [
-                'title'   => __('Delete'),
-                'type'    => 'alert-danger',
-                'message' => __('Access forbidden'),
-            ]);
+            return new Response(
+                $this->render->render('system::pages/result', [
+                    'title'   => __('Delete'),
+                    'type'    => 'alert-danger',
+                    'message' => __('Access forbidden'),
+                ]),
+                Response::HTTP_FORBIDDEN
+            );
         }
 
         $category = LibraryCategory::query()->find($id);
 
         if ($category === null) {
-            return $this->render->render('system::pages/result', [
+            return new Response($this->render->render('system::pages/result', [
                 'title'   => __('Delete'),
                 'type'    => 'alert-danger',
                 'message' => __('Section does not exist'),
-            ]);
+            ]));
         }
 
         $this->navChain->add(__('Library'), '/library/');
@@ -67,16 +70,16 @@ final readonly class DeleteSectionController
         return $this->handleNonEmptySection($id, $category->name, (bool) $category->dir);
     }
 
-    private function handleEmptySection(int $id, string $name): string
+    private function handleEmptySection(int $id, string $name): Response
     {
         $deleted = false;
 
-        if ($this->request->getQuery('yes', null) !== null) {
+        if ($this->request->query->has('yes')) {
             LibraryCategory::query()->where('id', $id)->delete();
             $deleted = true;
         }
 
-        return $this->render->render('library::delete_section', [
+        return new Response($this->render->render('library::delete_section', [
             'id'              => $id,
             'name'            => $name,
             'isEmpty'         => true,
@@ -87,13 +90,13 @@ final readonly class DeleteSectionController
             'moveSections'    => null,
             'pendingMove'     => null,
             'deleteAllResult' => null,
-        ]);
+        ]));
     }
 
-    private function handleNonEmptySection(int $id, string $name, bool $isDir): string
+    private function handleNonEmptySection(int $id, string $name, bool $isDir): Response
     {
-        $post = $this->request->getParsedBody();
-        $mode = (string) ($post['mode'] ?? $this->request->getQuery('do', ''));
+        $post = $this->request->request->all();
+        $mode = (string) ($post['mode'] ?? $this->request->queryParam('do', ''));
 
         $moving = false;
         $moveTarget = null;
@@ -103,8 +106,8 @@ final readonly class DeleteSectionController
 
         switch ($mode) {
             case 'moveaction':
-                if ($this->request->getQuery('movedeny', null) !== null) {
-                    $move = (int) $this->request->getQuery('move', 0);
+                if ($this->request->query->has('movedeny')) {
+                    $move = $this->request->queryInt('move', 0);
                     if ($isDir) {
                         LibraryCategory::query()->where('parent', $id)->update(['parent' => $move]);
                     } else {
@@ -123,7 +126,7 @@ final readonly class DeleteSectionController
                 break;
 
             case 'delall':
-                if ($this->request->getQuery('deldeny', null) !== null) {
+                if ($this->request->query->has('deldeny')) {
                     $childs = new Tree($id);
                     $counts = $childs->getAllChildsId()->cleanDir();
                     $deleteAllResult = sprintf(
@@ -138,7 +141,7 @@ final readonly class DeleteSectionController
                 break;
         }
 
-        return $this->render->render('library::delete_section', [
+        return new Response($this->render->render('library::delete_section', [
             'id'              => $id,
             'name'            => $name,
             'isEmpty'         => false,
@@ -149,7 +152,7 @@ final readonly class DeleteSectionController
             'moveSections'    => $moveSections,
             'pendingMove'     => $pendingMove,
             'deleteAllResult' => $deleteAllResult,
-        ]);
+        ]));
     }
 
     /** @return array<int, string>|null */

@@ -12,9 +12,10 @@ use Johncms\Modules\Downloads\Application\Services\DownloadFilePathService;
 use Johncms\Modules\Downloads\Application\Exceptions\FileNotFoundException;
 use Johncms\Modules\Downloads\Domain\Repository\DownloadFileRepositoryInterface;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class FileCommentsController
 {
@@ -31,21 +32,23 @@ final readonly class FileCommentsController
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(int $id): string
+    public function __invoke(int $id): Response
     {
         $config = config('johncms');
 
         if (! $config['mod_down_comm'] && $this->currentUser->rights < 7) {
-            http_response_code(403);
-            return $this->render->render(
-                'system::pages/result',
-                [
-                    'title'         => __('Comments'),
-                    'type'          => 'alert-danger',
-                    'message'       => __('Comments are disabled'),
-                    'back_url'      => '/downloads/',
-                    'back_url_name' => __('Downloads'),
-                ]
+            return new Response(
+                $this->render->render(
+                    'system::pages/result',
+                    [
+                        'title'         => __('Comments'),
+                        'type'          => 'alert-danger',
+                        'message'       => __('Comments are disabled'),
+                        'back_url'      => '/downloads/',
+                        'back_url_name' => __('Downloads'),
+                    ]
+                ),
+                Response::HTTP_FORBIDDEN
             );
         }
 
@@ -55,44 +58,50 @@ final readonly class FileCommentsController
                 throw new FileNotFoundException();
             }
         } catch (FileNotFoundException) {
-            http_response_code(404);
-            return $this->render->render(
-                'system::pages/result',
-                [
-                    'title'         => __('File not found'),
-                    'type'          => 'alert-danger',
-                    'message'       => __('File not found'),
-                    'back_url'      => '/downloads/',
-                    'back_url_name' => __('Downloads'),
-                ]
+            return new Response(
+                $this->render->render(
+                    'system::pages/result',
+                    [
+                        'title'         => __('File not found'),
+                        'type'          => 'alert-danger',
+                        'message'       => __('File not found'),
+                        'back_url'      => '/downloads/',
+                        'back_url_name' => __('Downloads'),
+                    ]
+                ),
+                Response::HTTP_NOT_FOUND
             );
         }
 
         if (! is_file($file->dir . '/' . $file->name)) {
-            http_response_code(404);
-            return $this->render->render(
-                'system::pages/result',
-                [
-                    'title'         => __('File not found'),
-                    'type'          => 'alert-danger',
-                    'message'       => __('File not found'),
-                    'back_url'      => '/downloads/',
-                    'back_url_name' => __('Downloads'),
-                ]
+            return new Response(
+                $this->render->render(
+                    'system::pages/result',
+                    [
+                        'title'         => __('File not found'),
+                        'type'          => 'alert-danger',
+                        'message'       => __('File not found'),
+                        'back_url'      => '/downloads/',
+                        'back_url_name' => __('Downloads'),
+                    ]
+                ),
+                Response::HTTP_NOT_FOUND
             );
         }
 
         if ($file->type === 3 && $this->currentUser->rights < 6 && $this->currentUser->rights !== 4) {
-            http_response_code(403);
-            return $this->render->render(
-                'system::pages/result',
-                [
-                    'title'         => __('The file is awaiting moderation'),
-                    'type'          => 'alert-danger',
-                    'message'       => __('The file is awaiting moderation'),
-                    'back_url'      => '/downloads/',
-                    'back_url_name' => __('Downloads'),
-                ]
+            return new Response(
+                $this->render->render(
+                    'system::pages/result',
+                    [
+                        'title'         => __('The file is awaiting moderation'),
+                        'type'          => 'alert-danger',
+                        'message'       => __('The file is awaiting moderation'),
+                        'back_url'      => '/downloads/',
+                        'back_url_name' => __('Downloads'),
+                    ]
+                ),
+                Response::HTTP_FORBIDDEN
             );
         }
 
@@ -109,8 +118,8 @@ final readonly class FileCommentsController
 
         // Set globals required by the legacy Comments class
         global $mod, $start;
-        $mod = $this->request->getQuery('mod', '');
-        $page = max(1, (int) $this->request->getQuery('page', 1));
+        $mod = $this->request->queryParam('mod', '');
+        $page = max(1, $this->request->queryInt('page', 1));
         $start = isset($_REQUEST['page'])
             ? ($page - 1) * (int) $this->currentUser->config->kmess
             : (isset($_GET['start']) ? abs((int) $_GET['start']) : 0);
@@ -134,6 +143,6 @@ final readonly class FileCommentsController
             'templates_namespace' => 'system',
             'back_url'            => $this->filePathService->getFileUrl($file),
         ]);
-        return (string) ob_get_clean();
+        return new Response((string) ob_get_clean());
     }
 }

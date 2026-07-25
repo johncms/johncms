@@ -64,7 +64,7 @@ msgid "The article was successfully deleted"
 msgstr ""
 
 #: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:319
-#: modules/news/src/Application/Controllers/CommentsController.php:232
+#: modules/news/src/Application/Controllers/CommentsController.php:226
 msgid "Only images are allowed"
 msgstr ""
 
@@ -116,27 +116,27 @@ msgstr ""
 msgid "Bad Request"
 msgstr ""
 
-#: modules/news/src/Application/Controllers/CommentsController.php:143
+#: modules/news/src/Application/Controllers/CommentsController.php:140
 msgid "You have a ban!"
 msgstr ""
 
-#: modules/news/src/Application/Controllers/CommentsController.php:148
+#: modules/news/src/Application/Controllers/CommentsController.php:145
 msgid "You are not logged in"
 msgstr ""
 
-#: modules/news/src/Application/Controllers/CommentsController.php:175
+#: modules/news/src/Application/Controllers/CommentsController.php:172
 msgid "The comment was added successfully"
 msgstr ""
 
-#: modules/news/src/Application/Controllers/CommentsController.php:178
+#: modules/news/src/Application/Controllers/CommentsController.php:175
 msgid "Enter the comment text"
 msgstr ""
 
-#: modules/news/src/Application/Controllers/CommentsController.php:207
+#: modules/news/src/Application/Controllers/CommentsController.php:201
 msgid "The comment was deleted successfully"
 msgstr ""
 
-#: modules/news/src/Application/Controllers/CommentsController.php:214
+#: modules/news/src/Application/Controllers/CommentsController.php:208
 msgid "Access denied"
 msgstr ""
 
@@ -336,26 +336,26 @@ msgstr ""
 msgid "Confirm the action"
 msgstr ""
 
-#: modules/news/templates/admin/del.phtml:20
+#: modules/news/templates/admin/del.phtml:18
 msgid "Section:"
 msgstr ""
 
-#: modules/news/templates/admin/del.phtml:23
+#: modules/news/templates/admin/del.phtml:21
 msgid "Article:"
 msgstr ""
 
-#: modules/news/templates/admin/del.phtml:25
+#: modules/news/templates/admin/del.phtml:23
 msgid "Do you really want to delete?"
 msgstr ""
 
-#: modules/news/templates/admin/del.phtml:28
+#: modules/news/templates/admin/del.phtml:26
 #: modules/news/templates/admin/sections.phtml:70
 #: modules/news/templates/admin/sections.phtml:97
 #: modules/news/templates/public/article.phtml:59
 msgid "Delete"
 msgstr ""
 
-#: modules/news/templates/admin/del.phtml:29
+#: modules/news/templates/admin/del.phtml:27
 #: modules/news/templates/admin/settings.phtml:139
 msgid "Cancel"
 msgstr ""

@@ -4,7 +4,7 @@ msgstr ""
 
 #: config/notifications.global.php:20
 #: config/places.global.php:17
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:55
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:54
 #: modules/homepage/templates/index.phtml:68
 msgid "Forum"
 msgstr ""
@@ -39,7 +39,7 @@ msgid "Watching the photo album"
 msgstr ""
 
 #: config/places.global.php:14
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:106
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:105
 #: modules/homepage/templates/index.phtml:128
 msgid "Users"
 msgstr ""
@@ -49,20 +49,20 @@ msgid "Users List"
 msgstr ""
 
 #: config/places.global.php:16
-#: system/src/Comments.php:181
-#: system/src/Comments.php:217
-#: system/src/Comments.php:250
-#: system/src/Comments.php:276
-#: system/src/Comments.php:317
-#: system/src/Comments.php:349
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:81
+#: system/src/Comments.php:190
+#: system/src/Comments.php:226
+#: system/src/Comments.php:259
+#: system/src/Comments.php:285
+#: system/src/Comments.php:326
+#: system/src/Comments.php:358
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:80
 #: modules/homepage/templates/index.phtml:98
 msgid "Downloads"
 msgstr ""
 
 #: config/places.global.php:18
 #: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:102
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:68
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:67
 #: modules/homepage/templates/index.phtml:83
 msgid "Guestbook"
 msgstr ""
@@ -72,7 +72,7 @@ msgid "Reading the FAQ"
 msgstr ""
 
 #: config/places.global.php:20
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:94
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:93
 #: modules/homepage/templates/index.phtml:113
 msgid "Library"
 msgstr ""
@@ -86,7 +86,7 @@ msgstr ""
 #: modules/login/templates/login.phtml:4
 #: modules/login/templates/login.phtml:5
 #: modules/login/templates/login.phtml:38
-#: themes/default/templates/system/app/sidebar-user-menu.phtml:71
+#: themes/default/templates/system/app/sidebar-user-menu.phtml:70
 msgid "Login"
 msgstr ""
 
@@ -138,7 +138,7 @@ msgid "You have not entered password"
 msgstr ""
 
 #: modules/login/src/Application/Controllers/LogoutController.php:43
-#: themes/default/templates/system/app/sidebar-user-menu.phtml:53
+#: themes/default/templates/system/app/sidebar-user-menu.phtml:52
 msgid "Personal"
 msgstr ""
 
@@ -199,7 +199,7 @@ msgid "Forgot password?"
 msgstr ""
 
 #: modules/login/templates/login.phtml:41
-#: themes/default/templates/system/app/sidebar-user-menu.phtml:79
+#: themes/default/templates/system/app/sidebar-user-menu.phtml:78
 msgid "Registration"
 msgstr ""
 
@@ -221,7 +221,7 @@ msgstr ""
 #: modules/notifications/src/Application/Controllers/IndexController.php:41
 #: modules/notifications/src/Application/Controllers/IndexController.php:44
 #: modules/notifications/src/Application/Controllers/SettingsController.php:31
-#: themes/default/templates/system/app/sidebar-user-menu.phtml:41
+#: themes/default/templates/system/app/sidebar-user-menu.phtml:40
 msgid "Notifications"
 msgstr ""
 
@@ -312,43 +312,18 @@ msgid "Go to Link"
 msgstr ""
 
 #: modules/redirect/templates/index.phtml:44
-#: system/src/Comments.php:185
-#: system/src/Comments.php:221
-#: system/src/Comments.php:234
-#: system/src/Comments.php:254
-#: system/src/Comments.php:280
-#: system/src/Comments.php:321
-#: system/src/Comments.php:333
-#: system/src/Comments.php:353
+#: system/src/Comments.php:194
+#: system/src/Comments.php:230
+#: system/src/Comments.php:243
+#: system/src/Comments.php:263
+#: system/src/Comments.php:289
+#: system/src/Comments.php:330
+#: system/src/Comments.php:342
+#: system/src/Comments.php:362
 #: themes/default/templates/system/pages/comments_list.phtml:156
 #: themes/default/templates/system/pages/result.phtml:33
 msgid "Back"
 msgstr ""
-
-#: system/helpers.php:101
-msgid "ERROR: 404 Not Found"
-msgstr ""
-
-#: system/helpers.php:104
-msgid "You are looking for something that doesn't exist or may have moved"
-msgstr ""
-
-#: system/src-legacy/Bbcode.php:158
-msgid "Added"
-msgstr ""
-
-#: system/src-legacy/Tools.php:174
-msgid "ERROR"
-msgstr ""
-
-#: system/src-legacy/Tools.php:213
-msgid "Somewhere on the site"
-msgstr ""
-
-#: system/src-legacy/Tools.php:410
-msgid "Day"
-msgid_plural "Days"
-msgstr[0] ""
 
 #: system/src/Checker/SystemChecker.php:29
 msgid "PHP version"
@@ -448,54 +423,54 @@ msgid ""
 "PHP should work with the default driver: <a href=\"https://www.php.net/manual/en/intro.mysqlnd.php\" target=\"_blank\">MySQL Native Driver (mysqlnd)</a>."
 msgstr ""
 
-#: system/src/Comments.php:170
-#: system/src/Comments.php:239
-#: system/src/Comments.php:240
+#: system/src/Comments.php:179
+#: system/src/Comments.php:248
+#: system/src/Comments.php:249
 #: themes/default/templates/system/pages/comments_list.phtml:124
 msgid "Reply"
 msgstr ""
 
-#: system/src/Comments.php:183
+#: system/src/Comments.php:192
 msgid "Administrator already replied to this message"
 msgstr ""
 
-#: system/src/Comments.php:252
-#: system/src/Comments.php:351
+#: system/src/Comments.php:261
+#: system/src/Comments.php:360
 msgid "Wrong data"
 msgstr ""
 
-#: system/src/Comments.php:264
-#: system/src/Comments.php:338
-#: system/src/Comments.php:339
+#: system/src/Comments.php:273
+#: system/src/Comments.php:347
+#: system/src/Comments.php:348
 #: themes/default/templates/system/pages/comments_list.phtml:136
 msgid "Edit"
 msgstr ""
 
-#: system/src/Comments.php:278
+#: system/src/Comments.php:287
 msgid "You cannot edit posts of higher administration"
 msgstr ""
 
-#: system/src/Comments.php:363
-#: system/src/Comments.php:403
-#: system/src/Comments.php:404
+#: system/src/Comments.php:372
+#: system/src/Comments.php:412
+#: system/src/Comments.php:413
 #: themes/default/templates/system/pages/comments_delete.phtml:24
 #: themes/default/templates/system/pages/comments_list.phtml:139
 msgid "Delete"
 msgstr ""
 
-#: system/src/Comments.php:613
+#: system/src/Comments.php:622
 msgid "Text is too short"
 msgstr ""
 
-#: system/src/Comments.php:619
+#: system/src/Comments.php:628
 msgid "You cannot add the message so often<br>Please, wait"
 msgstr ""
 
-#: system/src/Comments.php:619
+#: system/src/Comments.php:628
 msgid "seconds"
 msgstr ""
 
-#: system/src/Comments.php:627
+#: system/src/Comments.php:636
 msgid "Message already exists"
 msgstr ""
 
@@ -507,12 +482,28 @@ msgstr ""
 msgid "Last activity"
 msgstr ""
 
+#: system/src/Http/ExceptionResponseFactory.php:44
+msgid "Method Not Allowed"
+msgstr ""
+
+#: system/src/Http/ExceptionResponseFactory.php:68
+msgid "ERROR: 404 Not Found"
+msgstr ""
+
+#: system/src/Http/ExceptionResponseFactory.php:71
+msgid "You are looking for something that doesn't exist or may have moved"
+msgstr ""
+
+#: system/src/Http/ExceptionResponseFactory.php:87
+msgid "Bad Request"
+msgstr ""
+
 #: system/src/Http/PageMeta.php:18
-#: modules/forum/src/Application/Controllers/ForumSearchController.php:100
-#: modules/forum/src/Application/Controllers/ForumSearchController.php:109
-#: modules/forum/src/Application/Controllers/ForumTopicController.php:150
-#: modules/forum/src/Application/Controllers/ForumTopicController.php:159
-#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:414
+#: modules/forum/src/Application/Controllers/ForumSearchController.php:98
+#: modules/forum/src/Application/Controllers/ForumSearchController.php:107
+#: modules/forum/src/Application/Controllers/ForumTopicController.php:146
+#: modules/forum/src/Application/Controllers/ForumTopicController.php:155
+#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:416
 msgid "Page"
 msgstr ""
 
@@ -522,34 +513,43 @@ msgid "Home"
 msgstr ""
 
 #: system/src/UserProperties.php:68
-#: system/src/Users/UserMutators.php:61
+#: system/src/Users/UserMutators.php:62
 msgid "Forum moderator"
 msgstr ""
 
 #: system/src/UserProperties.php:69
-#: system/src/Users/UserMutators.php:62
+#: system/src/Users/UserMutators.php:63
 msgid "Download moderator"
 msgstr ""
 
 #: system/src/UserProperties.php:70
-#: system/src/Users/UserMutators.php:63
+#: system/src/Users/UserMutators.php:64
 msgid "Library moderator"
 msgstr ""
 
 #: system/src/UserProperties.php:71
-#: system/src/Users/UserMutators.php:64
+#: system/src/Users/UserMutators.php:65
 msgid "Super moderator"
 msgstr ""
 
 #: system/src/UserProperties.php:72
-#: system/src/Users/UserMutators.php:65
+#: system/src/Users/UserMutators.php:66
 msgid "Administrator"
 msgstr ""
 
 #: system/src/UserProperties.php:73
-#: system/src/Users/UserMutators.php:66
+#: system/src/Users/UserMutators.php:67
 msgid "Supervisor"
 msgstr ""
+
+#: system/src/Users/UserPlaceFormatter.php:52
+msgid "Somewhere on the site"
+msgstr ""
+
+#: system/src/Utils/DurationFormatter.php:27
+msgid "Day"
+msgid_plural "Days"
+msgstr[0] ""
 
 #: system/src/Validator/messages.php:13
 msgid "You have a ban"
@@ -693,79 +693,79 @@ msgstr ""
 msgid "Time"
 msgstr ""
 
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:23
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:202
-#: modules/admin/templates/sidebar-admin-menu.phtml:24
-#: modules/admin/templates/sidebar-admin-menu.phtml:321
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:24
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:360
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:22
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:201
+#: modules/admin/templates/sidebar-admin-menu.phtml:23
+#: modules/admin/templates/sidebar-admin-menu.phtml:320
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:23
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:359
 msgid "Set Light Theme"
 msgstr ""
 
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:23
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:201
-#: modules/admin/templates/sidebar-admin-menu.phtml:24
-#: modules/admin/templates/sidebar-admin-menu.phtml:320
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:24
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:359
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:22
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:200
+#: modules/admin/templates/sidebar-admin-menu.phtml:23
+#: modules/admin/templates/sidebar-admin-menu.phtml:319
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:23
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:358
 msgid "Set Dark Theme"
 msgstr ""
 
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:43
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:42
 msgid "News archive"
 msgstr ""
 
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:117
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:116
 msgid "Photo Albums"
 msgstr ""
 
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:128
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:127
 msgid "Information, FAQ"
 msgstr ""
 
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:136
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:135
 msgid "Contacts"
 msgstr ""
 
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:147
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:146
 msgid "Admin Panel"
 msgstr ""
 
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:156
+#: themes/default/templates/system/app/sidebar-main-menu.phtml:155
 msgid "Admin Chat"
 msgstr ""
 
-#: themes/default/templates/system/app/sidebar-user-menu.phtml:23
+#: themes/default/templates/system/app/sidebar-user-menu.phtml:22
 #: modules/registration/templates/email_confirmed.phtml:22
 msgid "Log In"
 msgstr ""
 
-#: themes/default/templates/system/app/sidebar-user-menu.phtml:61
+#: themes/default/templates/system/app/sidebar-user-menu.phtml:60
 msgid "Exit"
 msgstr ""
 
-#: themes/default/templates/system/layout/default.phtml:153
+#: themes/default/templates/system/layout/default.phtml:149
 msgid "Privacy Policy"
 msgstr ""
 
-#: themes/default/templates/system/layout/default.phtml:154
+#: themes/default/templates/system/layout/default.phtml:150
 msgid "Terms of Use"
 msgstr ""
 
-#: themes/default/templates/system/layout/default.phtml:155
+#: themes/default/templates/system/layout/default.phtml:151
 msgid "Personal Data Processing Policy"
 msgstr ""
 
-#: themes/default/templates/system/layout/default.phtml:156
+#: themes/default/templates/system/layout/default.phtml:152
 msgid "Cookie Policy"
 msgstr ""
 
-#: themes/default/templates/system/layout/default.phtml:229
+#: themes/default/templates/system/layout/default.phtml:225
 #, php-format
 msgid "We use cookies to improve the site. By continuing to use the site, you agree to our %sPrivacy Policy%s."
 msgstr ""
 
-#: themes/default/templates/system/layout/default.phtml:232
+#: themes/default/templates/system/layout/default.phtml:228
 msgid "Accept"
 msgstr ""
 

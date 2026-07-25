@@ -9,9 +9,11 @@ use Johncms\Modules\Downloads\Application\Services\DownloadCategoryPathService;
 use Johncms\Modules\Downloads\Application\Services\DownloadSlugService;
 use Johncms\Modules\Downloads\Domain\Models\DownloadCategory;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class EditCategoryController
 {
@@ -34,19 +36,18 @@ final readonly class EditCategoryController
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(int $id): string
+    public function __invoke(int $id): Response
     {
         $category = DownloadCategory::query()->find($id);
 
         if ($category === null || ! is_dir($category->dir)) {
-            http_response_code(404);
-            return $this->render->render('system::pages/result', [
+            return new Response($this->render->render('system::pages/result', [
                 'title'         => __('Edit Folder'),
                 'type'          => 'alert-danger',
                 'message'       => __('The directory does not exist'),
                 'back_url'      => '/downloads/',
                 'back_url_name' => __('Downloads'),
-            ]);
+            ]), Response::HTTP_NOT_FOUND);
         }
 
         $this->navChain->add(__('Downloads'), '/downloads/');
@@ -57,7 +58,7 @@ final readonly class EditCategoryController
             'page_title' => __('Edit Folder'),
         ]);
 
-        $do = $this->request->getQuery('do') ?? '';
+        $do = $this->request->queryParam('do') ?? '';
 
         if ($do === 'up' || $do === 'down') {
             return $this->handleSort($category, $do);
@@ -70,7 +71,7 @@ final readonly class EditCategoryController
         return $this->showForm($id, $category);
     }
 
-    private function handleSort(DownloadCategory $category, string $direction): string
+    private function handleSort(DownloadCategory $category, string $direction): Response
     {
         $sibling = DownloadCategory::query()
             ->where('refid', $category->refid)
@@ -87,13 +88,13 @@ final readonly class EditCategoryController
         $backUrl = $category->refid > 0
             ? ($this->categoryPathService->getCategoryUrlById((int) $category->refid) ?? '/downloads/')
             : '/downloads/';
-        header('Location: ' . $backUrl);
-        exit;
+
+        return new RedirectResponse($backUrl);
     }
 
-    private function handleSave(int $id, DownloadCategory $category): string
+    private function handleSave(int $id, DownloadCategory $category): Response
     {
-        $post = $this->request->getParsedBody();
+        $post = $this->request->request->all();
         $rusName = trim($post['rus_name'] ?? '');
         $desc = trim($post['desc'] ?? '');
         $errors = [];
@@ -117,13 +118,13 @@ final readonly class EditCategoryController
         }
 
         if ($errors) {
-            return $this->render->render('system::pages/result', [
+            return new Response($this->render->render('system::pages/result', [
                 'title'         => __('Edit Folder'),
                 'type'          => 'alert-danger',
                 'message'       => $errors,
                 'back_url'      => '/downloads/categories/' . $id . '/edit',
                 'back_url_name' => __('Repeat'),
-            ]);
+            ]));
         }
 
         $slug = $this->slugService->generateUniqueCategorySlug($rusName, (int) $category->refid, $id);
@@ -136,13 +137,12 @@ final readonly class EditCategoryController
             'slug'     => $slug,
         ]);
 
-        header('Location: ' . $this->categoryPathService->getCategoryUrl($category));
-        exit;
+        return new RedirectResponse($this->categoryPathService->getCategoryUrl($category));
     }
 
-    private function showForm(int $id, DownloadCategory $category): string
+    private function showForm(int $id, DownloadCategory $category): Response
     {
-        return $this->render->render('downloads::folder_form', [
+        return new Response($this->render->render('downloads::folder_form', [
             'id'            => $id,
             'action_url'    => '/downloads/categories/' . $id . '/edit',
             'cancel_url'    => $this->categoryPathService->getCategoryUrl($category),
@@ -156,6 +156,6 @@ final readonly class EditCategoryController
                 'format'    => htmlspecialchars($category->text),
             ],
             'urls'          => ['downloads' => '/downloads/'],
-        ]);
+        ]));
     }
 }

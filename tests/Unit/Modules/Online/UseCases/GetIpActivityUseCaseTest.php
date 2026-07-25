@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Modules\Online\UseCases;
 
 use Johncms\Modules\Online\Application\UseCases\GetIpActivityUseCase;
-use Johncms\System\Http\Environment;
+use Johncms\Http\Environment;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 

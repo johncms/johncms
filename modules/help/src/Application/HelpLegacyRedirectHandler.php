@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Help\Application;
 
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 
 final readonly class HelpLegacyRedirectHandler
 {
@@ -22,15 +22,15 @@ final readonly class HelpLegacyRedirectHandler
 
     public function handle(): void
     {
-        $act = (string) $this->request->getQuery('act', '');
+        $act = $this->request->queryParam('act', '');
 
         if ($act === '') {
             return;
         }
 
-        $id     = (int) $this->request->getQuery('id', 0, FILTER_VALIDATE_INT);
-        $avatar = (int) $this->request->getQuery('avatar', 0, FILTER_VALIDATE_INT);
-        $cat    = trim((string) $this->request->getQuery('cat', ''));
+        $id     = $this->request->queryInt('id');
+        $avatar = $this->request->queryInt('avatar');
+        $cat    = trim($this->request->queryParam('cat', ''));
 
         $url = match ($act) {
             'forum'       => '/help/forum/',

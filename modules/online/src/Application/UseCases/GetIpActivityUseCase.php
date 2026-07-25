@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Online\Application\UseCases;
 
-use Johncms\System\Http\Environment;
+use Johncms\Http\Environment;
 
 final readonly class GetIpActivityUseCase
 {

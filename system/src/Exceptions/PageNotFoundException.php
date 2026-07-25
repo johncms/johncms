@@ -16,11 +16,13 @@ use RuntimeException;
 
 class PageNotFoundException extends RuntimeException
 {
-    /** @var string */
-    protected $title = 'ERROR: 404 Not Found';
+    /**
+     * Empty on purpose: a property default has to be a constant expression, so the translated
+     * default cannot live here. The HTTP layer applies it (see Http\ExceptionResponseFactory).
+     */
+    protected string $title = '';
 
-    /** @var string */
-    protected $template = 'system::error/404';
+    protected string $template = 'system::error/404';
 
     public function setTitle(string $title): PageNotFoundException
     {

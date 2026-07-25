@@ -13,7 +13,7 @@ use Johncms\Modules\Forum\Application\UseCases\EditPostUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureEditPostAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetEditPostContextUseCase;
 use Johncms\Security\Csrf;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\Utility\EditorContentNormalizer;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
@@ -39,7 +39,7 @@ final readonly class EditPostController
 
     public function __invoke(int $id): string
     {
-        $page = max(1, (int) $this->request->getQuery('page', 1));
+        $page = max(1, $this->request->queryInt('page', 1));
 
         try {
             $context = $this->contextUseCase->execute($id, $this->getForumSettings());
@@ -68,10 +68,10 @@ final readonly class EditPostController
             );
         }
 
-        if ($this->request->getPost('submit') !== null) {
-            $msg = $this->editorContentNormalizer->trimEdgeEmptyBlocks((string) $this->request->getPost('msg', ''));
+        if ($this->request->hasBody('submit')) {
+            $msg = $this->editorContentNormalizer->trimEdgeEmptyBlocks($this->request->body('msg', ''));
             $msg = trim($msg);
-            $attachedFiles = (array) $this->request->getPost('attached_files', [], FILTER_VALIDATE_INT);
+            $attachedFiles = (array) $this->request->bodyInts('attached_files');
             if ($msg === '') {
                 return $this->render->render(
                     'system::pages/result',
@@ -86,7 +86,7 @@ final readonly class EditPostController
             }
 
             $validator = new Validator(
-                ['csrf_token' => (string) $this->request->getPost('csrf_token', '')],
+                ['csrf_token' => $this->request->body('csrf_token', '')],
                 ['csrf_token' => ['Csrf']]
             );
             if (! $validator->isValid()) {
@@ -110,9 +110,9 @@ final readonly class EditPostController
             redirect($context->topic->url . ($context->page > 1 ? '?page=' . $context->page : ''));
         }
 
-        $message = $this->request->getPost('msg') === null
+        $message = ! $this->request->hasBody('msg')
             ? (string) $context->message->getRawOriginal('text')
-            : (string) $this->request->getPost('msg');
+            : $this->request->body('msg');
 
         return $this->render->render(
             'forum::edit_post',

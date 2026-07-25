@@ -10,10 +10,11 @@ use Johncms\Http\PageMeta;
 use Johncms\Modules\Library\Application\Services\LibraryArticlePathService;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Modules\Library\Application\Services\Tree;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class ArticleCommentsController
 {
@@ -28,30 +29,34 @@ final readonly class ArticleCommentsController
         $this->controllerContext->initModule('library');
     }
 
-    public function __invoke(int $id): string
+    public function __invoke(int $id): Response
     {
         if (! $this->currentUser->isValid()) {
-            http_response_code(403);
-            return $this->render->render('system::pages/result', [
-                'title'         => __('Comments'),
-                'type'          => 'alert-danger',
-                'message'       => __('Access forbidden'),
-                'back_url'      => '/library/',
-                'back_url_name' => __('Library'),
-            ]);
+            return new Response(
+                $this->render->render('system::pages/result', [
+                    'title'         => __('Comments'),
+                    'type'          => 'alert-danger',
+                    'message'       => __('Access forbidden'),
+                    'back_url'      => '/library/',
+                    'back_url_name' => __('Library'),
+                ]),
+                Response::HTTP_FORBIDDEN
+            );
         }
 
         $article = LibraryText::query()->find($id);
 
         if ($article === null) {
-            http_response_code(404);
-            return $this->render->render('system::pages/result', [
-                'title'         => __('Comments'),
-                'type'          => 'alert-danger',
-                'message'       => __('Access forbidden'),
-                'back_url'      => '/library/',
-                'back_url_name' => __('Library'),
-            ]);
+            return new Response(
+                $this->render->render('system::pages/result', [
+                    'title'         => __('Comments'),
+                    'type'          => 'alert-danger',
+                    'message'       => __('Access forbidden'),
+                    'back_url'      => '/library/',
+                    'back_url_name' => __('Library'),
+                ]),
+                Response::HTTP_NOT_FOUND
+            );
         }
 
         $dir_nav = new Tree($article->cat_id);
@@ -69,8 +74,8 @@ final readonly class ArticleCommentsController
         $this->navChain->add(__('Comments'));
 
         global $mod, $start;
-        $mod = $this->request->getQuery('mod', '');
-        $page = max(1, (int) $this->request->getQuery('page', 1));
+        $mod = $this->request->queryParam('mod', '');
+        $page = max(1, $this->request->queryInt('page', 1));
         $start = isset($_REQUEST['page'])
             ? ($page - 1) * (int) $this->currentUser->config->kmess
             : (isset($_GET['start']) ? abs((int) $_GET['start']) : 0);
@@ -97,6 +102,6 @@ final readonly class ArticleCommentsController
             $article->increment('comm_count');
         }
 
-        return $output;
+        return new Response($output);
     }
 }

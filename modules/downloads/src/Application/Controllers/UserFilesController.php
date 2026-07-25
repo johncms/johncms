@@ -14,6 +14,7 @@ use Johncms\Modules\Downloads\Application\UseCases\ViewUserFilesUseCase;
 use Johncms\NavChain;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class UserFilesController
 {
@@ -30,7 +31,7 @@ final readonly class UserFilesController
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(int $id): string
+    public function __invoke(int $id): Response
     {
         try {
             $pagination = $this->paginationFactory->create($this->useCase->count($id));
@@ -42,16 +43,18 @@ final readonly class UserFilesController
 
             $result = $this->useCase->getPage($id, $pagination->getPerPage(), $pagination->getOffset());
         } catch (UserNotFoundException) {
-            http_response_code(404);
-            return $this->render->render(
-                'system::pages/result',
-                [
-                    'title'         => __('Downloads'),
-                    'type'          => 'alert-danger',
-                    'message'       => __('User does not exists'),
-                    'back_url'      => '/downloads/',
-                    'back_url_name' => __('Downloads'),
-                ]
+            return new Response(
+                $this->render->render(
+                    'system::pages/result',
+                    [
+                        'title'         => __('Downloads'),
+                        'type'          => 'alert-danger',
+                        'message'       => __('User does not exists'),
+                        'back_url'      => '/downloads/',
+                        'back_url_name' => __('Downloads'),
+                    ]
+                ),
+                Response::HTTP_NOT_FOUND
             );
         }
 
@@ -89,7 +92,7 @@ final readonly class UserFilesController
             'description' => $meta->description,
         ]);
 
-        return $this->render->render(
+        return new Response($this->render->render(
             'downloads::files_user',
             [
                 'show_user'  => $showUser,
@@ -98,6 +101,6 @@ final readonly class UserFilesController
                 'pagination' => $pagination->render(),
                 'urls'       => ['downloads' => '/downloads/'],
             ]
-        );
+        ));
     }
 }

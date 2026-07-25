@@ -2,68 +2,68 @@ msgid ""
 msgstr ""
 "X-Domain: library\n"
 
-#: modules/library/src/Application/Controllers/ArticleCommentsController.php:38
-#: modules/library/src/Application/Controllers/ArticleCommentsController.php:51
-#: modules/library/src/Application/Controllers/ArticleCommentsController.php:67
-#: modules/library/src/Application/Controllers/ArticleCommentsController.php:71
-#: modules/library/src/Application/Controllers/ArticleCommentsController.php:93
+#: modules/library/src/Application/Controllers/ArticleCommentsController.php:36
+#: modules/library/src/Application/Controllers/ArticleCommentsController.php:49
+#: modules/library/src/Application/Controllers/ArticleCommentsController.php:65
+#: modules/library/src/Application/Controllers/ArticleCommentsController.php:69
+#: modules/library/src/Application/Controllers/ArticleCommentsController.php:91
 msgid "Comments"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/ArticleCommentsController.php:40
-#: modules/library/src/Application/Controllers/ArticleCommentsController.php:53
-#: modules/library/src/Application/Controllers/DeleteArticleController.php:37
-#: modules/library/src/Application/Controllers/DeleteArticleImageController.php:37
+#: modules/library/src/Application/Controllers/ArticleCommentsController.php:38
+#: modules/library/src/Application/Controllers/ArticleCommentsController.php:51
+#: modules/library/src/Application/Controllers/DeleteArticleController.php:35
+#: modules/library/src/Application/Controllers/DeleteArticleImageController.php:35
 #: modules/library/src/Application/Controllers/DeleteSectionController.php:35
-#: modules/library/src/Application/Controllers/EditArticleController.php:56
+#: modules/library/src/Application/Controllers/EditArticleController.php:54
 #: modules/library/src/Application/Controllers/EditSectionController.php:40
-#: modules/library/src/Application/Controllers/PremodController.php:41
+#: modules/library/src/Application/Controllers/PremodController.php:42
 #: modules/library/src/Application/Middlewares/LibraryAccessMiddleware.php:28
 msgid "Access forbidden"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/ArticleCommentsController.php:42
-#: modules/library/src/Application/Controllers/ArticleCommentsController.php:55
-#: modules/library/src/Application/Controllers/ArticleCommentsController.php:67
-#: modules/library/src/Application/Controllers/ArticleController.php:47
-#: modules/library/src/Application/Controllers/ArticleController.php:76
-#: modules/library/src/Application/Controllers/ArticleController.php:83
+#: modules/library/src/Application/Controllers/ArticleCommentsController.php:40
+#: modules/library/src/Application/Controllers/ArticleCommentsController.php:53
+#: modules/library/src/Application/Controllers/ArticleCommentsController.php:65
+#: modules/library/src/Application/Controllers/ArticleController.php:48
+#: modules/library/src/Application/Controllers/ArticleController.php:77
+#: modules/library/src/Application/Controllers/ArticleController.php:84
 #: modules/library/src/Application/Controllers/CreateArticleController.php:43
 #: modules/library/src/Application/Controllers/CreateArticleController.php:60
 #: modules/library/src/Application/Controllers/CreateSectionController.php:39
 #: modules/library/src/Application/Controllers/CreateSectionController.php:46
-#: modules/library/src/Application/Controllers/DeleteArticleController.php:51
-#: modules/library/src/Application/Controllers/DeleteArticleImageController.php:43
+#: modules/library/src/Application/Controllers/DeleteArticleController.php:49
+#: modules/library/src/Application/Controllers/DeleteArticleImageController.php:41
 #: modules/library/src/Application/Controllers/DeleteSectionController.php:49
-#: modules/library/src/Application/Controllers/EditArticleController.php:60
+#: modules/library/src/Application/Controllers/EditArticleController.php:58
 #: modules/library/src/Application/Controllers/EditSectionController.php:55
-#: modules/library/src/Application/Controllers/LatestCommentsController.php:27
-#: modules/library/src/Application/Controllers/LibraryIndexController.php:36
-#: modules/library/src/Application/Controllers/LibraryIndexController.php:39
-#: modules/library/src/Application/Controllers/LibraryIndexController.php:40
-#: modules/library/src/Application/Controllers/NewArticlesController.php:45
-#: modules/library/src/Application/Controllers/NewArticlesController.php:47
-#: modules/library/src/Application/Controllers/PremodController.php:45
-#: modules/library/src/Application/Controllers/SearchController.php:35
-#: modules/library/src/Application/Controllers/SearchController.php:47
-#: modules/library/src/Application/Controllers/SearchController.php:74
-#: modules/library/src/Application/Controllers/SectionController.php:43
-#: modules/library/src/Application/Controllers/SectionController.php:51
-#: modules/library/src/Application/Controllers/SectionController.php:76
-#: modules/library/src/Application/Controllers/SectionController.php:125
-#: modules/library/src/Application/Controllers/TagsController.php:34
-#: modules/library/src/Application/Controllers/TagsController.php:69
-#: modules/library/src/Application/Controllers/TopController.php:38
-#: modules/library/src/Application/Controllers/TopController.php:40
+#: modules/library/src/Application/Controllers/LatestCommentsController.php:28
+#: modules/library/src/Application/Controllers/LibraryIndexController.php:34
+#: modules/library/src/Application/Controllers/LibraryIndexController.php:37
+#: modules/library/src/Application/Controllers/LibraryIndexController.php:38
+#: modules/library/src/Application/Controllers/NewArticlesController.php:46
+#: modules/library/src/Application/Controllers/NewArticlesController.php:48
+#: modules/library/src/Application/Controllers/PremodController.php:46
+#: modules/library/src/Application/Controllers/SearchController.php:36
+#: modules/library/src/Application/Controllers/SearchController.php:48
+#: modules/library/src/Application/Controllers/SearchController.php:75
+#: modules/library/src/Application/Controllers/SectionController.php:44
+#: modules/library/src/Application/Controllers/SectionController.php:52
+#: modules/library/src/Application/Controllers/SectionController.php:77
+#: modules/library/src/Application/Controllers/SectionController.php:126
+#: modules/library/src/Application/Controllers/TagsController.php:35
+#: modules/library/src/Application/Controllers/TagsController.php:70
+#: modules/library/src/Application/Controllers/TopController.php:39
+#: modules/library/src/Application/Controllers/TopController.php:41
 #: modules/library/src/Application/Middlewares/LibraryAccessMiddleware.php:34
 #: modules/library/templates/helpers/printNavPanel.phtml:2
 #: modules/library/templates/tagcloud.phtml:2
 msgid "Library"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/ArticleController.php:49
-#: modules/library/src/Application/Controllers/DeleteArticleController.php:47
-#: modules/library/src/Application/Controllers/EditArticleController.php:43
+#: modules/library/src/Application/Controllers/ArticleController.php:50
+#: modules/library/src/Application/Controllers/DeleteArticleController.php:45
+#: modules/library/src/Application/Controllers/EditArticleController.php:41
 msgid "Articles do not exist"
 msgstr ""
 
@@ -119,9 +119,9 @@ msgstr ""
 msgid "Repeat"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/DeleteArticleController.php:35
-#: modules/library/src/Application/Controllers/DeleteArticleController.php:45
-#: modules/library/src/Application/Controllers/DeleteArticleImageController.php:35
+#: modules/library/src/Application/Controllers/DeleteArticleController.php:33
+#: modules/library/src/Application/Controllers/DeleteArticleController.php:43
+#: modules/library/src/Application/Controllers/DeleteArticleImageController.php:33
 #: modules/library/src/Application/Controllers/DeleteSectionController.php:33
 #: modules/library/src/Application/Controllers/DeleteSectionController.php:43
 #: modules/library/templates/book.phtml:77
@@ -132,22 +132,22 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/DeleteArticleController.php:56
-#: modules/library/src/Application/Controllers/DeleteArticleController.php:59
-#: modules/library/src/Application/Controllers/DeleteArticleController.php:60
+#: modules/library/src/Application/Controllers/DeleteArticleController.php:54
+#: modules/library/src/Application/Controllers/DeleteArticleController.php:57
+#: modules/library/src/Application/Controllers/DeleteArticleController.php:58
 msgid "Delete Article"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/DeleteArticleImageController.php:50
-#: modules/library/src/Application/Controllers/DeleteArticleImageController.php:53
-#: modules/library/src/Application/Controllers/DeleteArticleImageController.php:54
+#: modules/library/src/Application/Controllers/DeleteArticleImageController.php:48
+#: modules/library/src/Application/Controllers/DeleteArticleImageController.php:51
+#: modules/library/src/Application/Controllers/DeleteArticleImageController.php:52
 #: modules/library/templates/edit_article.phtml:24
 msgid "Delete Cover Image"
 msgstr ""
 
 #: modules/library/src/Application/Controllers/DeleteSectionController.php:45
 #: modules/library/src/Application/Controllers/EditSectionController.php:51
-#: modules/library/src/Application/Controllers/SectionController.php:45
+#: modules/library/src/Application/Controllers/SectionController.php:46
 msgid "Section does not exist"
 msgstr ""
 
@@ -174,11 +174,11 @@ msgstr ""
 msgid "Date"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/EditArticleController.php:41
-#: modules/library/src/Application/Controllers/EditArticleController.php:54
-#: modules/library/src/Application/Controllers/EditArticleController.php:65
-#: modules/library/src/Application/Controllers/EditArticleController.php:68
-#: modules/library/src/Application/Controllers/EditArticleController.php:69
+#: modules/library/src/Application/Controllers/EditArticleController.php:39
+#: modules/library/src/Application/Controllers/EditArticleController.php:52
+#: modules/library/src/Application/Controllers/EditArticleController.php:63
+#: modules/library/src/Application/Controllers/EditArticleController.php:66
+#: modules/library/src/Application/Controllers/EditArticleController.php:67
 msgid "Edit Article"
 msgstr ""
 
@@ -190,49 +190,49 @@ msgstr ""
 msgid "Edit Section"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/LatestCommentsController.php:28
-#: modules/library/src/Application/Controllers/LatestCommentsController.php:31
+#: modules/library/src/Application/Controllers/LatestCommentsController.php:29
 #: modules/library/src/Application/Controllers/LatestCommentsController.php:32
+#: modules/library/src/Application/Controllers/LatestCommentsController.php:33
 #: modules/library/templates/main.phtml:34
 msgid "Latest comments"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/NewArticlesController.php:44
+#: modules/library/src/Application/Controllers/NewArticlesController.php:45
 #: modules/library/templates/main.phtml:28
 msgid "New Articles"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/PremodController.php:39
-#: modules/library/src/Application/Controllers/PremodController.php:46
-#: modules/library/src/Application/Controllers/PremodController.php:49
+#: modules/library/src/Application/Controllers/PremodController.php:40
+#: modules/library/src/Application/Controllers/PremodController.php:47
 #: modules/library/src/Application/Controllers/PremodController.php:50
+#: modules/library/src/Application/Controllers/PremodController.php:51
 #: modules/library/templates/main.phtml:68
 msgid "Moderation Articles"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/SearchController.php:36
-#: modules/library/src/Application/Controllers/SearchController.php:47
-#: modules/library/src/Application/Controllers/SearchController.php:50
+#: modules/library/src/Application/Controllers/SearchController.php:37
+#: modules/library/src/Application/Controllers/SearchController.php:48
+#: modules/library/src/Application/Controllers/SearchController.php:51
 #: modules/library/templates/main.phtml:31
 #: modules/library/templates/search.phtml:25
 msgid "Search"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/SearchController.php:73
+#: modules/library/src/Application/Controllers/SearchController.php:74
 #, php-format
 msgid "Search results for: %s"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/TagsController.php:35
-#: modules/library/src/Application/Controllers/TagsController.php:42
-#: modules/library/src/Application/Controllers/TagsController.php:53
+#: modules/library/src/Application/Controllers/TagsController.php:36
+#: modules/library/src/Application/Controllers/TagsController.php:43
+#: modules/library/src/Application/Controllers/TagsController.php:54
 #: modules/library/templates/article_create.phtml:66
 #: modules/library/templates/edit_article.phtml:64
 msgid "Tags"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/TagsController.php:44
-#: modules/library/src/Application/Controllers/TagsController.php:55
+#: modules/library/src/Application/Controllers/TagsController.php:45
+#: modules/library/src/Application/Controllers/TagsController.php:56
 #: modules/library/src/Application/Services/Hashtags.php:171
 #: modules/library/templates/booklist.phtml:34
 #: modules/library/templates/lastcom.phtml:24
@@ -243,25 +243,25 @@ msgstr ""
 msgid "The list is empty"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/TagsController.php:68
+#: modules/library/src/Application/Controllers/TagsController.php:69
 #, php-format
 msgid "Articles tagged: %s"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/TopController.php:37
+#: modules/library/src/Application/Controllers/TopController.php:38
 #: modules/library/templates/main.phtml:33
 msgid "Rating articles"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/TopController.php:50
+#: modules/library/src/Application/Controllers/TopController.php:51
 msgid "Most readings"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/TopController.php:51
+#: modules/library/src/Application/Controllers/TopController.php:52
 msgid "By rating"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/TopController.php:52
+#: modules/library/src/Application/Controllers/TopController.php:53
 msgid "By comments"
 msgstr ""
 

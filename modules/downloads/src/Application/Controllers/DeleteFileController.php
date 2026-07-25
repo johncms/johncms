@@ -12,9 +12,11 @@ use Johncms\Modules\Downloads\Application\Exceptions\FileNotFoundException;
 use Johncms\Modules\Downloads\Application\UseCases\DeleteFileUseCase;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
-use Johncms\System\Http\Session;
+use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\System\View\Render;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class DeleteFileController
 {
@@ -32,7 +34,7 @@ final readonly class DeleteFileController
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(int $id): string
+    public function __invoke(int $id): Response
     {
         if ($this->request->getMethod() === 'POST') {
             return $this->handleDelete($id);
@@ -61,17 +63,17 @@ final readonly class DeleteFileController
         $this->navChain->add($pageTitle, $this->filePathService->getFileUrl($file));
         $this->navChain->add(__('Delete File'));
 
-        return $this->render->render('downloads::delete_file', [
+        return new Response($this->render->render('downloads::delete_file', [
             'id'           => $id,
             'delete_token' => $deleteToken,
             'action_url'   => '/downloads/delete-file/' . $id . '/',
             'back_url'     => $this->filePathService->getFileUrl($file),
-        ]);
+        ]));
     }
 
-    private function handleDelete(int $id): string
+    private function handleDelete(int $id): Response
     {
-        $post = $this->request->getParsedBody();
+        $post = $this->request->request->all();
         $sessionToken = $this->session->get('delete_token');
 
         if (
@@ -93,20 +95,18 @@ final readonly class DeleteFileController
         $redirectUrl = $refid > 0
             ? ($this->categoryPathService->getCategoryUrlById($refid) ?? '/downloads/')
             : '/downloads/';
-        http_response_code(302);
-        header('Location: ' . $redirectUrl);
-        exit;
+
+        return new RedirectResponse($redirectUrl);
     }
 
-    private function notFound(): string
+    private function notFound(): Response
     {
-        http_response_code(404);
-        return $this->render->render('system::pages/result', [
+        return new Response($this->render->render('system::pages/result', [
             'title'         => __('File not found'),
             'type'          => 'alert-danger',
             'message'       => __('File not found'),
             'back_url'      => '/downloads/',
             'back_url_name' => __('Downloads'),
-        ]);
+        ]), Response::HTTP_NOT_FOUND);
     }
 }

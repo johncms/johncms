@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms\System\i18n;
 
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\Users\User;
 use Johncms\System\Users\UserConfig;
 use Psr\Container\ContainerInterface;
@@ -36,7 +36,10 @@ class TranslatorServiceFactory
                 $userConfig->lng,
                 $config['lng'] ?? 'en',
                 $config['lng_list'] ?? [],
-                $request->getPost('setlng')
+                // Read from the query only: this factory runs during boot, and reading the body
+                // would decode a JSON payload there — an unparsable one then killed the whole
+                // boot with an uncaught JsonException, before any error handler was registered.
+                $request->query->getString('setlng') ?: null
             )
         );
 

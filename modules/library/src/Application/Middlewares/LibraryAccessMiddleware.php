@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace Johncms\Modules\Library\Application\Middlewares;
 
 use Johncms\Router\MiddlewareInterface;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class LibraryAccessMiddleware implements MiddlewareInterface
 {
@@ -29,12 +30,14 @@ final readonly class LibraryAccessMiddleware implements MiddlewareInterface
         }
 
         if ($error) {
-            http_response_code(403);
-            return $this->render->render('system::pages/result', [
-                'title'   => __('Library'),
-                'type'    => 'alert-danger',
-                'message' => $error,
-            ]);
+            return new Response(
+                $this->render->render('system::pages/result', [
+                    'title'   => __('Library'),
+                    'type'    => 'alert-danger',
+                    'message' => $error,
+                ]),
+                Response::HTTP_FORBIDDEN
+            );
         }
 
         return $next($request);

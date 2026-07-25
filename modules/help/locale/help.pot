@@ -121,62 +121,62 @@ msgid "Save"
 msgstr ""
 
 #: modules/help/src/Application/Controllers/SmiliesCatalogController.php:92
-#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:85
+#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:84
 msgid "Animals"
 msgstr ""
 
 #: modules/help/src/Application/Controllers/SmiliesCatalogController.php:93
-#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:86
+#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:85
 msgid "Brawl, Weapons"
 msgstr ""
 
 #: modules/help/src/Application/Controllers/SmiliesCatalogController.php:94
-#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:87
+#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:86
 msgid "Emotions"
 msgstr ""
 
 #: modules/help/src/Application/Controllers/SmiliesCatalogController.php:95
-#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:88
+#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:87
 msgid "Flowers"
 msgstr ""
 
 #: modules/help/src/Application/Controllers/SmiliesCatalogController.php:96
-#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:89
+#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:88
 msgid "Food, Alcohol"
 msgstr ""
 
 #: modules/help/src/Application/Controllers/SmiliesCatalogController.php:97
-#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:90
+#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:89
 msgid "Gestures"
 msgstr ""
 
 #: modules/help/src/Application/Controllers/SmiliesCatalogController.php:98
-#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:91
+#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:90
 msgid "Holidays"
 msgstr ""
 
 #: modules/help/src/Application/Controllers/SmiliesCatalogController.php:99
-#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:92
+#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:91
 msgid "Love"
 msgstr ""
 
 #: modules/help/src/Application/Controllers/SmiliesCatalogController.php:100
-#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:93
+#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:92
 msgid "Miscellaneous"
 msgstr ""
 
 #: modules/help/src/Application/Controllers/SmiliesCatalogController.php:101
-#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:94
+#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:93
 msgid "Music, Dancing"
 msgstr ""
 
 #: modules/help/src/Application/Controllers/SmiliesCatalogController.php:102
-#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:95
+#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:94
 msgid "Sports"
 msgstr ""
 
 #: modules/help/src/Application/Controllers/SmiliesCatalogController.php:103
-#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:96
+#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:95
 msgid "Technology"
 msgstr ""
 

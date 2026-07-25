@@ -13,11 +13,12 @@ use Johncms\Modules\Library\Domain\Models\LibraryCategory;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
 use Johncms\Security\AntifloodCheckerInterface;
-use Johncms\System\Http\Request;
+use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Modules\Library\Application\Services\Hashtags;
 use Johncms\Modules\Library\Application\Services\Utils;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class CreateArticleController
 {
@@ -35,9 +36,9 @@ final readonly class CreateArticleController
         $this->controllerContext->initModule('library');
     }
 
-    public function __invoke(): string
+    public function __invoke(): Response
     {
-        $catId = max(0, (int) $this->request->getQuery('id', 0));
+        $catId = max(0, $this->request->queryInt('id', 0));
         $isAdmin = $this->currentUser->rights > 4;
 
         $this->navChain->add(__('Library'), '/library/');
@@ -51,14 +52,16 @@ final readonly class CreateArticleController
         $category = LibraryCategory::query()->find($catId);
 
         if (! $isAdmin && (! $this->currentUser->isValid() || $category === null)) {
-            http_response_code(404);
-            return $this->render->render('system::pages/result', [
-                'title'         => __('Write Article'),
-                'type'          => 'alert-danger',
-                'message'       => __('Access denied'),
-                'back_url'      => '/library/',
-                'back_url_name' => __('Library'),
-            ]);
+            return new Response(
+                $this->render->render('system::pages/result', [
+                    'title'         => __('Write Article'),
+                    'type'          => 'alert-danger',
+                    'message'       => __('Access denied'),
+                    'back_url'      => '/library/',
+                    'back_url_name' => __('Library'),
+                ]),
+                Response::HTTP_NOT_FOUND
+            );
         }
 
         $formUrl = '/library/article/create?id=' . $catId;
@@ -70,9 +73,9 @@ final readonly class CreateArticleController
         return $this->renderForm($catId, $formUrl, '', '', '', '', [], false, null, null);
     }
 
-    private function handlePost(int $catId, bool $isAdmin, string $formUrl): string
+    private function handlePost(int $catId, bool $isAdmin, string $formUrl): Response
     {
-        $post = $this->request->getParsedBody();
+        $post = $this->request->request->all();
         $name = mb_substr(trim((string) ($post['name'] ?? '')), 0, 100);
         $announce = mb_substr(trim((string) ($post['announce'] ?? '')), 0, 500);
         $tag = trim((string) ($post['tags'] ?? ''));
@@ -91,13 +94,13 @@ final readonly class CreateArticleController
         }
 
         $text = '';
-        $files = $this->request->getUploadedFiles();
+        $files = $this->request->files->all();
         $textFile = $files['textfile'] ?? null;
 
-        if ($textFile !== null && $textFile->getClientFilename()) {
-            $ext = pathinfo($textFile->getClientFilename(), PATHINFO_EXTENSION);
+        if ($textFile !== null && $textFile->getClientOriginalName()) {
+            $ext = pathinfo($textFile->getClientOriginalName(), PATHINFO_EXTENSION);
             if (mb_strtolower($ext) === 'txt') {
-                $content = (string) $textFile->getStream();
+                $content = (string) file_get_contents($textFile->getPathname());
                 if (mb_check_encoding($content, 'windows-1251')) {
                     $content = (string) iconv('windows-1251', 'UTF-8', $content);
                 } elseif (mb_check_encoding($content, 'KOI8-R')) {
@@ -138,7 +141,7 @@ final readonly class CreateArticleController
         $cid = $article->id;
 
         $imageFile = $files['image'] ?? null;
-        if ($imageFile !== null && $imageFile->getClientFilename()) {
+        if ($imageFile !== null && $imageFile->getClientOriginalName()) {
             try {
                 Utils::imageUpload($cid, $imageFile);
             } catch (\Exception) {
@@ -173,10 +176,10 @@ final readonly class CreateArticleController
         bool $approved,
         ?int $cid,
         ?string $articleUrl,
-    ): string {
+    ): Response {
         $catUrl = $this->categoryPathService->getCategoryUrlById($catId) ?? '/library/';
 
-        return $this->render->render('library::article_create', [
+        return new Response($this->render->render('library::article_create', [
             'form_url'    => $formUrl,
             'cat_id'      => $catId,
             'cat_url'     => $catUrl,
@@ -189,7 +192,7 @@ final readonly class CreateArticleController
             'approved'    => $approved,
             'cid'         => $cid,
             'article_url' => $articleUrl,
-        ]);
+        ]));
     }
 
     /**
