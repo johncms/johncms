@@ -1254,10 +1254,16 @@ php-quality) + гейт зелёные (383 теста: 352 unit + 31 functional
 
 **4a. Все `$_SESSION` — на существующий фасад.** Поведение не меняется вообще: фасад по-прежнему
 пишет в корень `$_SESSION`. Механическая правка, коммит на модуль, каждый деплоябелен.
-Порядок по объёму: `admin` (59), `news` (21), `collections` (20), `system` (19), `downloads` (16),
+Порядок по объёму: `admin` (59), ~~`news` (21)~~ ✅, `collections` (20), `system` (19), `downloads` (16),
 `profile` (15), `contacts` (12), `consent` (9), `forum` (8), остальные — по 2–6.
 
 **Готово, когда**: `grep -c '\$_SESSION'` по `modules/` и `system/src/` — 0 (кроме самого фасада).
+
+**✅ `news` закрыт (2026-07-26).** 4 файла, 21 обращение. Все три admin-контроллера и `Article`-сервис
+переведены на `Johncms\Http\Session` (flash/getFlash для success-сообщений, set/get для delete_token
+и news_viewed_articles). `Article` переведён на constructor promotion (`final readonly`), удалена
+регулирующая `$services->set(Article::class)` из конфига (без autowire — причина
+`ArgumentCountError`). Следующий: `admin` (59).
 
 **4b. Атомарная подмена реализации фасада.** Одна точка изменения вместо 225.
 

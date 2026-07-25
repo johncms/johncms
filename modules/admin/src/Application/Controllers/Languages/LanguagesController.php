@@ -12,6 +12,7 @@ use Johncms\Modules\Admin\Application\UseCases\SaveLanguageSettingsUseCase;
 use Johncms\Modules\Admin\Domain\Exceptions\ConfigWriteException;
 use Johncms\NavChain;
 use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 
@@ -29,6 +30,7 @@ final readonly class LanguagesController
         private GetManagedLanguagesUseCase $getManagedLanguages,
         private InstallLanguageUseCase $installLanguage,
         private RemoveLanguageUseCase $removeLanguage,
+        private Session $session,
     ) {
         $this->controllerContext->initModule('admin');
     }
@@ -56,9 +58,9 @@ final readonly class LanguagesController
             return $this->renderIndex(__('ERROR: Can not write file `system.local.php`'));
         }
 
-        $_SESSION['success_message'] = $updateList
+        $this->session->flash('success_message', $updateList
             ? __('Descriptions have been updated successfully')
-            : __('Settings are saved successfully');
+            : __('Settings are saved successfully'));
         redirect(self::URL);
     }
 
@@ -68,11 +70,7 @@ final readonly class LanguagesController
         $this->navChain->add(__('Languages'), self::URL);
         $this->navChain->add($title, self::MANAGE_URL);
 
-        $message = null;
-        if (! empty($_SESSION['success_message'])) {
-            $message = (string) $_SESSION['success_message'];
-            unset($_SESSION['success_message']);
-        }
+        $message = $this->session->getFlash('success_message');
 
         $this->render->addData(
             [
@@ -108,9 +106,9 @@ final readonly class LanguagesController
         if ($code !== null) {
             try {
                 $this->removeLanguage->execute($code);
-                $_SESSION['success_message'] = __('The language was successfully deleted');
+                $this->session->flash('success_message', __('The language was successfully deleted'));
             } catch (ConfigWriteException) {
-                $_SESSION['success_message'] = __('ERROR: Can not write file `system.local.php`');
+                $this->session->flash('success_message', __('ERROR: Can not write file `system.local.php`'));
             }
         }
 
@@ -123,9 +121,9 @@ final readonly class LanguagesController
         if ($code !== null) {
             try {
                 $this->installLanguage->execute($code);
-                $_SESSION['success_message'] = $successMessage;
+                $this->session->flash('success_message', $successMessage);
             } catch (ConfigWriteException) {
-                $_SESSION['success_message'] = __('ERROR: Can not write file `system.local.php`');
+                $this->session->flash('success_message', __('ERROR: Can not write file `system.local.php`'));
             }
         }
 
@@ -158,11 +156,7 @@ final readonly class LanguagesController
         $title = __('Languages');
         $this->navChain->add($title, self::URL);
 
-        $successMessage = null;
-        if (! empty($_SESSION['success_message'])) {
-            $successMessage = (string) $_SESSION['success_message'];
-            unset($_SESSION['success_message']);
-        }
+        $successMessage = $this->session->getFlash('success_message');
 
         $this->render->addData(
             [

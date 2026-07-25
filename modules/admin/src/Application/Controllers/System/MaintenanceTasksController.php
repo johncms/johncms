@@ -8,6 +8,7 @@ use Johncms\AdminTasks\AdminTaskBusyException;
 use Johncms\AdminTasks\AdminTaskRegistry;
 use Johncms\AdminTasks\AdminTaskStatus;
 use Johncms\Http\Controller\AdminControllerContext;
+use Johncms\Http\Session;
 use Johncms\Modules\Admin\Application\Exceptions\MaintenanceTaskNotFoundException;
 use Johncms\Modules\Admin\Application\UseCases\GetMaintenanceTasksUseCase;
 use Johncms\Modules\Admin\Application\UseCases\QueueMaintenanceTaskUseCase;
@@ -30,6 +31,7 @@ final readonly class MaintenanceTasksController
         private GetMaintenanceTasksUseCase $getTasks,
         private RunMaintenanceTaskUseCase $runTask,
         private QueueMaintenanceTaskUseCase $queueTask,
+        private Session $session,
     ) {
         $this->controllerContext->initModule('admin');
     }
@@ -54,12 +56,12 @@ final readonly class MaintenanceTasksController
         try {
             if ($task->background) {
                 $this->queueTask->execute($commandName);
-                $_SESSION['success_message'] = __('The task has been queued and will start within a minute');
+                $this->session->flash('success_message', __('The task has been queued and will start within a minute'));
             } else {
                 $state = $this->runTask->execute($commandName);
-                $_SESSION['success_message'] = $state?->status === AdminTaskStatus::Done
+                $this->session->flash('success_message', $state?->status === AdminTaskStatus::Done
                     ? __('The task has been completed')
-                    : __('The task has failed');
+                    : __('The task has failed'));
             }
         } catch (MaintenanceTaskNotFoundException) {
             return $this->renderList(__('Wrong data'));
@@ -85,11 +87,7 @@ final readonly class MaintenanceTasksController
         $title = __('Maintenance');
         $this->navChain->add($title);
 
-        $successMessage = null;
-        if (! empty($_SESSION['success_message'])) {
-            $successMessage = (string) $_SESSION['success_message'];
-            unset($_SESSION['success_message']);
-        }
+        $successMessage = $this->session->getFlash('success_message');
 
         $this->render->addData(
             [

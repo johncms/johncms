@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Admin\Application\Controllers\Settings;
 
 use Johncms\Http\Controller\AdminControllerContext;
+use Johncms\Http\Session;
 use Johncms\Modules\Admin\Application\DTO\ModulesAccessDTO;
 use Johncms\Modules\Admin\Application\UseCases\UpdateModulesAccessUseCase;
 use Johncms\Modules\Admin\Domain\Exceptions\ConfigWriteException;
@@ -23,6 +24,7 @@ final readonly class ModulesAccessController
         private Request $request,
         private NavChain $navChain,
         private UpdateModulesAccessUseCase $updateModulesAccessUseCase,
+        private Session $session,
     ) {
         $this->controllerContext->initModule('admin');
     }
@@ -44,7 +46,7 @@ final readonly class ModulesAccessController
             return $this->renderForm(__('ERROR: Can not write file `system.local.php`'));
         }
 
-        $_SESSION['success_message'] = __('Settings are saved successfully');
+        $this->session->flash('success_message', __('Settings are saved successfully'));
         redirect(self::URL);
     }
 
@@ -77,11 +79,7 @@ final readonly class ModulesAccessController
         $title = __('Permissions');
         $this->navChain->add($title);
 
-        $successMessage = null;
-        if (! empty($_SESSION['success_message'])) {
-            $successMessage = (string) $_SESSION['success_message'];
-            unset($_SESSION['success_message']);
-        }
+        $successMessage = $this->session->getFlash('success_message');
 
         $this->render->addData(
             [

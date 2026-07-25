@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Admin\Application\Controllers\System;
 
 use Johncms\Http\Controller\AdminControllerContext;
+use Johncms\Http\Session;
 use Johncms\Modules\Admin\Application\UseCases\RebuildSmiliesCacheUseCase;
 use Johncms\Modules\Admin\Domain\Exceptions\SmiliesCacheWriteException;
 use Johncms\NavChain;
@@ -22,6 +23,7 @@ final readonly class EmoticonsController
         private Request $request,
         private NavChain $navChain,
         private RebuildSmiliesCacheUseCase $rebuildSmiliesCacheUseCase,
+        private Session $session,
     ) {
         $this->controllerContext->initModule('admin');
     }
@@ -43,7 +45,7 @@ final readonly class EmoticonsController
             return $this->renderPage(__('Error updating cache'));
         }
 
-        $_SESSION['success_message'] = __('Smilie cache updated successfully') . ': ' . $total;
+        $this->session->flash('success_message', __('Smilie cache updated successfully') . ': ' . $total);
         redirect(self::URL);
     }
 
@@ -62,11 +64,7 @@ final readonly class EmoticonsController
         $title = __('Smilies');
         $this->navChain->add($title);
 
-        $successMessage = null;
-        if (! empty($_SESSION['success_message'])) {
-            $successMessage = (string) $_SESSION['success_message'];
-            unset($_SESSION['success_message']);
-        }
+        $successMessage = $this->session->getFlash('success_message');
 
         $this->render->addData(
             [

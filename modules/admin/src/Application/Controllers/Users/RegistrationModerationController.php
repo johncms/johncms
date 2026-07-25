@@ -14,6 +14,7 @@ use Johncms\Modules\Admin\Application\UseCases\DeleteRegistrationUseCase;
 use Johncms\Modules\Admin\Application\UseCases\GetPendingRegistrationsUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
@@ -34,6 +35,7 @@ final readonly class RegistrationModerationController
         private RegistrationRowMapper $rowMapper,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
+        private Session $session,
     ) {
         $this->controllerContext->initModule('admin');
     }
@@ -52,11 +54,7 @@ final readonly class RegistrationModerationController
         $title = __('Registration confirmation');
         $this->navChain->add($title);
 
-        $successMessage = null;
-        if (! empty($_SESSION['success_message'])) {
-            $successMessage = (string) $_SESSION['success_message'];
-            unset($_SESSION['success_message']);
-        }
+        $successMessage = $this->session->getFlash('success_message');
 
         $meta = new PageMeta($title, $pagination->getCurrentPage());
         $this->render->addData(
@@ -84,7 +82,7 @@ final readonly class RegistrationModerationController
     {
         if ($this->isCsrfValid() && ($id = $this->postedId()) > 0) {
             $this->approveRegistration->execute($id, $this->currentUser->name);
-            $_SESSION['success_message'] = __('Registration is confirmed');
+            $this->session->flash('success_message', __('Registration is confirmed'));
         }
 
         redirect(self::URL);
@@ -94,7 +92,7 @@ final readonly class RegistrationModerationController
     {
         if ($this->isCsrfValid()) {
             $this->approveRegistration->executeAll($this->currentUser->name);
-            $_SESSION['success_message'] = __('Registration is confirmed');
+            $this->session->flash('success_message', __('Registration is confirmed'));
         }
 
         redirect(self::URL);
@@ -104,7 +102,7 @@ final readonly class RegistrationModerationController
     {
         if ($this->isCsrfValid() && ($id = $this->postedId()) > 0) {
             $this->deleteRegistration->execute($id);
-            $_SESSION['success_message'] = __('User deleted');
+            $this->session->flash('success_message', __('User deleted'));
         }
 
         redirect(self::URL);
@@ -114,7 +112,7 @@ final readonly class RegistrationModerationController
     {
         if ($this->isCsrfValid()) {
             $this->deleteRegistration->executeAll();
-            $_SESSION['success_message'] = __('All unconfirmed registrations were removed');
+            $this->session->flash('success_message', __('All unconfirmed registrations were removed'));
         }
 
         redirect(self::URL);
@@ -126,7 +124,7 @@ final readonly class RegistrationModerationController
             $ip = $this->request->bodyInt('ip');
             if ($ip > 0) {
                 $this->deleteRegistration->executeByIp($ip);
-                $_SESSION['success_message'] = __('All unconfirmed registrations with selected IP were deleted');
+                $this->session->flash('success_message', __('All unconfirmed registrations with selected IP were deleted'));
             }
         }
 

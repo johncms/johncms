@@ -16,6 +16,7 @@ use Johncms\Modules\Admin\Application\UseCases\SaveAdUseCase;
 use Johncms\Modules\Admin\Domain\Models\Ad;
 use Johncms\NavChain;
 use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 
@@ -34,6 +35,7 @@ final readonly class AdsController
         private AdRowMapper $rowMapper,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
+        private Session $session,
     ) {
         $this->controllerContext->initModule('admin');
     }
@@ -100,7 +102,7 @@ final readonly class AdsController
 
         $isUpdate = $this->saveAd->execute($id, $this->dtoFromFields($fields));
 
-        $_SESSION['success_message'] = $isUpdate ? __('Link successfully changed') : __('Link successfully added');
+        $this->session->flash('success_message', $isUpdate ? __('Link successfully changed') : __('Link successfully added'));
         redirect(self::URL . '?type=' . $fields['type']);
     }
 

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Admin\Application\Controllers\Users;
 
 use Johncms\Http\Controller\AdminControllerContext;
+use Johncms\Http\Session;
 use Johncms\Modules\Admin\Application\UseCases\CleanupInactiveUsersUseCase;
 use Johncms\Modules\Admin\Domain\Repository\InactiveUsersRepositoryInterface;
 use Johncms\NavChain;
@@ -23,6 +24,7 @@ final readonly class UserCleanupController
         private NavChain $navChain,
         private InactiveUsersRepositoryInterface $inactiveUsers,
         private CleanupInactiveUsersUseCase $cleanupInactiveUsers,
+        private Session $session,
     ) {
         $this->controllerContext->initModule('admin');
     }
@@ -39,7 +41,7 @@ final readonly class UserCleanupController
         }
 
         $deleted = $this->cleanupInactiveUsers->execute();
-        $_SESSION['success_message'] = __('Inactive profiles deleted') . ': ' . $deleted;
+        $this->session->flash('success_message', __('Inactive profiles deleted') . ': ' . $deleted);
         redirect(self::URL);
     }
 
@@ -58,11 +60,7 @@ final readonly class UserCleanupController
         $title = __('Database cleanup');
         $this->navChain->add($title);
 
-        $successMessage = null;
-        if (! empty($_SESSION['success_message'])) {
-            $successMessage = (string) $_SESSION['success_message'];
-            unset($_SESSION['success_message']);
-        }
+        $successMessage = $this->session->getFlash('success_message');
 
         $this->render->addData(
             [

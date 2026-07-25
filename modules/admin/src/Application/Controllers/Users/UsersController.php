@@ -7,6 +7,7 @@ namespace Johncms\Modules\Admin\Application\Controllers\Users;
 use Illuminate\Support\Str;
 use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\System\Users\User;
 use Johncms\System\View\Render;
 use Mobicms\Captcha\Code;
@@ -20,6 +21,7 @@ final readonly class UsersController
     public function __construct(
         private AdminControllerContext $controllerContext,
         private Render $render,
+        private Session $session,
     ) {
         $this->controllerContext->initModule('admin');
     }
@@ -65,7 +67,8 @@ final readonly class UsersController
 
                 if ($loginUser->failed_login > 2) {
                     if ($captchaCode) {
-                        if (mb_strlen($captchaCode) > 2 && strtolower($captchaCode) === strtolower($_SESSION['code'])) {
+                        $sessionCode = $this->session->get('code');
+                        if (mb_strlen($captchaCode) > 2 && strtolower($captchaCode) === strtolower($sessionCode)) {
                             // Если введен правильный проверочный код
                             $captcha = true;
                         } else {
@@ -73,11 +76,11 @@ final readonly class UsersController
                             $error[] = __('The security code is not correct');
                         }
 
-                        unset($_SESSION['code']);
+                        $this->session->remove('code');
                     } else {
                         // Показываем CAPTCHA
                         $code = (string) new Code();
-                        $_SESSION['code'] = $code;
+                        $this->session->set('code', $code);
                         return new Response(
                             $this->render->render(
                                 'admin::users/captcha',

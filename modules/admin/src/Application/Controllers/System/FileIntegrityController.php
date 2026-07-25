@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Admin\Application\Controllers\System;
 
 use Johncms\Http\Controller\AdminControllerContext;
+use Johncms\Http\Session;
 use Johncms\Modules\Admin\Application\UseCases\CreateFileIntegritySnapshotUseCase;
 use Johncms\Modules\Admin\Application\UseCases\ScanFileIntegrityUseCase;
 use Johncms\NavChain;
@@ -23,6 +24,7 @@ final readonly class FileIntegrityController
         private NavChain $navChain,
         private ScanFileIntegrityUseCase $scanFileIntegrity,
         private CreateFileIntegritySnapshotUseCase $createSnapshotUseCase,
+        private Session $session,
     ) {
         $this->controllerContext->initModule('admin');
     }
@@ -89,7 +91,7 @@ final readonly class FileIntegrityController
     {
         if ($this->isCsrfValid()) {
             $this->createSnapshotUseCase->execute();
-            $_SESSION['success_message'] = __('Snapshot successfully created');
+            $this->session->flash('success_message', __('Snapshot successfully created'));
         }
 
         redirect(self::URL);

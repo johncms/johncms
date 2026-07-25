@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Admin\Application\Controllers\Settings;
 
 use Johncms\Http\Controller\AdminControllerContext;
+use Johncms\Http\Session;
 use Johncms\Modules\Admin\Application\DTO\SystemSettingsDTO;
 use Johncms\Modules\Admin\Application\UseCases\UpdateSystemSettingsUseCase;
 use Johncms\Modules\Admin\Domain\Exceptions\ConfigWriteException;
@@ -25,6 +26,7 @@ final readonly class SystemSettingsController
         private NavChain $navChain,
         private UpdateSystemSettingsUseCase $updateSystemSettingsUseCase,
         private ThemeListProviderInterface $themeListProvider,
+        private Session $session,
     ) {
         $this->controllerContext->initModule('admin');
     }
@@ -46,7 +48,7 @@ final readonly class SystemSettingsController
             return $this->renderForm(__('ERROR: Can not write file `system.local.php`'));
         }
 
-        $_SESSION['success_message'] = __('Settings are saved successfully');
+        $this->session->flash('success_message', __('Settings are saved successfully'));
         redirect(self::URL);
     }
 
@@ -89,11 +91,7 @@ final readonly class SystemSettingsController
         $title = __('System Settings');
         $this->navChain->add($title);
 
-        $successMessage = null;
-        if (! empty($_SESSION['success_message'])) {
-            $successMessage = (string) $_SESSION['success_message'];
-            unset($_SESSION['success_message']);
-        }
+        $successMessage = $this->session->getFlash('success_message');
 
         $this->render->addData(
             [

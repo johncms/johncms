@@ -8,6 +8,7 @@ use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Modules\Admin\Application\UseCases\ApplyAmnestyUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 
@@ -21,6 +22,7 @@ final readonly class AmnestyController
         private Request $request,
         private NavChain $navChain,
         private ApplyAmnestyUseCase $applyAmnesty,
+        private Session $session,
     ) {
         $this->controllerContext->initModule('admin');
     }
@@ -39,9 +41,9 @@ final readonly class AmnestyController
         $clearDatabase = $this->request->bodyInt('term') === 1;
         $this->applyAmnesty->execute($clearDatabase);
 
-        $_SESSION['success_message'] = $clearDatabase
+        $this->session->flash('success_message', $clearDatabase
             ? __('Amnesty has been successful')
-            : __('All the users with active bans were unbanned (Except for bans &quot;till cancel&quot;)');
+            : __('All the users with active bans were unbanned (Except for bans &quot;till cancel&quot;)'));
         redirect('/admin/bans');
     }
 
