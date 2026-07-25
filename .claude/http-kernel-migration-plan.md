@@ -15,7 +15,7 @@
 | `symfony/http-kernel` | **Не тащим целиком.** Реализуем свой `Johncms\Http\Kernel implements HttpKernelInterface, TerminableInterface` |
 | Event-стек Symfony (`RouterListener`, `ControllerResolver`, `EventDispatcher`) | Не вводим. Оставляем свои `MiddlewareDispatcher` + `ActionInvoker` |
 | Целевой рантайм | **FrankenPHP worker mode / RoadRunner** (process-per-worker). Swoole — non-goal |
-| Порядок | Request → гейт статического анализа → Response → скелет ядра → вычистка сайд-эффектов → достройка ядра → сессия → request-scope → рантайм (уточнено 2026-07-24). На 2026-07-25 пройдено до скелета ядра включительно |
+| Порядок | Request → гейт статического анализа → Response → скелет ядра → вычистка сайд-эффектов → достройка ядра → сессия → request-scope → рантайм (уточнено 2026-07-24). На 2026-07-25 пройден весь этап 3 (включая достройку ядра, 3b); остаётся сессия (этап 4) |
 | Управляющий поток (`redirect` / 404) | Исключения `HttpRedirectException` / `PageNotFoundException`, единая точка перехвата в HTTP-слое (2a, готово 2026-07-25) |
 
 Обоснование выбора HttpFoundation вместо PSR-7:
@@ -643,8 +643,7 @@ PHP-FPM по FastCGI, а не `proxy_pass`: он отдаёт `REMOTE_ADDR = $re
 `@property int $ip` на моделях врут про свои же касты. Чистка докблоков — отдельная задача,
 она будет уменьшать baseline.
 
-### 🚧 Этап 2. Response (L) — основной объём работы. 2a-pre / 2a / 2b / 3a готовы;
-2c идёт помодульно (закрыты `downloads`, `library`), дальше `news`; затем 2d
+### ✅ Этап 2. Response (L) — основной объём работы, завершён (2a-pre / 2a / 2b / 3a / 2c / 2d готовы)
 
 **Порядок внутри этапов 2–3 изменён 2026-07-24**: `2a-pre → 2a → 2b → 3a (скелет ядра) → 2c → 3b`.
 Причина — 2c это самый большой кусок плана (60 файлов, 57 `exit`, 62 `header()`), и в исходном
@@ -842,17 +841,144 @@ php-quality) + гейт зелёные.
 
 **→ Здесь выполняется 3a (скелет ядра) — см. этап 3.** 2c метётся уже под функциональными тестами.
 
-**2c. Вычистка прямых сайд-эффектов** — помодульно, от простого к сложному.
-На 2026-07-25 закрыты `downloads`, `library`, `news`, `help`, `redirect`, `mail`, `login`;
-осталось **50** мест: `notifications` / `forum` / `album` / `admin` / `collections` и легаси
-`system` (`Comments.php`, `BanIP.php`).
+**✅ 2c. Вычистка прямых сайд-эффектов — готово (2026-07-25).** Шло помодульно, от простого к
+сложному. Закрыты `downloads`, `library`, `news`, `help`, `redirect`, `mail`, `login`,
+`collections`, `online`, `registration`, `notifications`, `guestbook`, `admin`, `profile`, `album`,
+`forum`; легаси `system` разобран (`Comments.php` закрыт, `BanIP.php` и оба `UserFactory` оставлены
+осознанно — см. ниже). **Этап 2c закрыт для `system/src`.**
 
-**Не забыть: 13 `setcookie()` — тоже часть 2c, и они пока не тронуты** (4 из них в `login`:
-`LoginController.php:77-78`, `LogoutController.php:35-36`). Под FPM прямой вызов работает, но это
-ровно то же process-global состояние, от которого уходит этап: в worker-режиме cookie должна
-уезжать через `$response->headers->setCookie()`. Помодульная вычистка `header()`/`exit` их
-не задевает, поэтому легко закрыть этап, забыв про них — считать 2c готовым только когда
-`grep -rn 'setcookie(' modules/ system/src` пуст.
+**✅ `system/Comments.php` закрыт (2026-07-25).** Три `header('Location: ' . str_replace('&amp;',
+'&', $this->url))` (строки 221, 321, 401 — ветки `reply`/`edit`/`del`) заменены на
+`redirect(str_replace('&amp;', '&', $this->url))`; сама трансформация `&amp;` → `&` сохранена
+1:1, статус остаётся дефолтным 302 хелпера (легаси не выставлял `http_response_code()` до
+`header()`, поэтому 302 — не изменение поведения, а факт: раньше эффективный статус тем не
+менее оказывался 200, потому что `Comments` не возвращает `Response`, а вызывающие контроллеры
+оборачивают его вывод (`ob_start()`/`ob_get_clean()`) в `new Response($html)` без статуса — этот
+`Response` со статусом по умолчанию 200 «побеждал» `header('Location')` на этапе
+`sendHeaders()`, где Symfony зовёт `http_response_code($this->statusCode)` уже после того, как
+PHP выставил неявный 302 от самого вызова `header('Location: ...')`. Браузер получал `Location`
+при статусе 200 и, как правило, игнорировал его. Перевод на `redirect()` не просто вычищает
+сайд-эффект, а чинит этот живой баг — редирект после ответа на комментарий/гостевую книгу теперь
+действительно происходит.
+
+Все четыре вызывающих (`downloads/FileCommentsController`, `album/PhotoCommentsController`,
+`profile/GuestbookController`, `library/ArticleCommentsController`) — контроллеры, резолвящиеся
+и вызываемые исключительно через `ActionInvoker`/`MiddlewareDispatcher` внутри `Kernel::handle()`,
+других вызывающих `new Comments(...)` в репозитории нет. Все четыре оборачивают вызов конструктора
+в `ob_start()`/`ob_get_clean()`; когда `redirect()` бросает исключение, буфер остаётся открытым
+(в этих ветках он пуст — до `header()`/`redirect()` в них ничего не `echo`-илось), и PHP сам
+сбрасывает его в конце запроса. Функционально это не отличается от прямой отправки: тело всё
+равно долетает до клиента тем же процессом до завершения запроса, просто на один явный `flush`
+позже. Проверено смоук-тестами (функциональный набор зелёный) и логически — не блокер.
+
+**Оставлено осознанно (долг вне рамок 2c для `system/src`):**
+
+* **`system/src/Security/BanIP.php:57,59,61,66,67`** — `header('Location')` ×2 + `exit`,
+  `http_response_code(403)` + `exit('Access denied')`. Единственный вызывающий —
+  `system/bootstrap.php:78` (`(new BanIP())->checkBan();`), который выполняется **до**
+  `Kernel::handle()` — `public/index.php:17` делает `require 'system/bootstrap.php'` целиком,
+  и только затем на строке 22 вызывает `handle()`. Исключения `HttpRedirectException` /
+  `PageNotFoundException` перехватывает только сам `Kernel::handle()` (2a/3a); если бросить их
+  отсюда, они долетят до `GlobalErrorHandler` (уже зарегистрирован на этот момент, строка 52-55
+  бутстрапа) и дадут отформатированный, но всё равно **500** вместо редиректа/403 — то есть бан
+  по IP или редирект забаненного перестанет работать, а вместо этого каждый забаненный посетитель
+  будет получать 500 и засорять лог. Оставлено как есть. Починка требует, чтобы бан-чек либо
+  переехал внутрь `handle()` (тогда это уже не бутстрап, а часть пайплайна ядра — вероятно,
+  middleware), либо ядро научилось строить `Response` до полной маршрутизации — оба варианта
+  меняют форму пайплайна, а не просто сайд-эффект, и решаются на этапе 5 (или отдельным решением
+  раньше, но не в рамках вычистки 2c).
+* **`system/src/Users/UserFactory.php:121-122`** и **`system/src/System/Users/UserFactory.php:166-167`**
+  — по два `setcookie('cuid', '')` / `setcookie('cups', '')` в `userUnset()`. Оба класса — DI-фабрики
+  (`__invoke(ContainerInterface $container): User`), зарегистрированные в `system/config/services.php:123,125`
+  под `Johncms\Users\User::class` и `Johncms\System\Users\User::class` соответственно (второй —
+  `@deprecated`, но живой: алиас `Johncms\System\Users\User` всё ещё резолвится в
+  `system/bootstrap.php:94`, то есть **до** `handle()`). Фабрика возвращает `User`, а не `Response` —
+  архитектурно ей и не положено видеть HTTP-ответ, поэтому вопрос не в «до или после `handle()`», а
+  в том, что у DI-фабрики в принципе нет объекта, на который можно повесить `Set-Cookie`. Оставлено
+  как есть — это долг этапа 5 («Request-scope в контейнере»), где вводятся объекты, привязанные к
+  запросу/ответу. Дешёвый вариант на будущее (не внедрён молча, только предложение): раз оба класса
+  уже читают `cuid`/`cups` через `Request::cookies`, симметричный `Response`, публикуемый ядром
+  так же, как сейчас публикуется `Request` (synthetic-сервис, см. 3a), позволил бы фабрике звать
+  `$container->get(Response::class)->headers->clearCookie(...)` без изобретения отдельного
+  «cookie jar» — но это расширяет контракт `Response` до объекта, который могут мутировать
+  сервисы вне контроллера, и такое решение стоит принимать осознанно, а не походя здесь.
+
+**✅ `forum` закрыт (2026-07-25) — последний и самый запутанный модуль этапа.** 33 файла делят
+общий error-рендерер `ForumErrorRenderer::render(): Response` (раньше `: string` +
+`http_response_code($exception->getErrorCode()->httpStatus())`); мигрирован вместе со всеми
+вызывающими за один заход, иначе получилась бы ровно та полумиграция, о которой предупреждает
+конец 2b. Каждый из 32 контроллеров-вызывающих (плюс `ForumAccessMiddleware`, у которого
+`handle(): mixed` не требовал правки) переведён на `__invoke(): Response` целиком, включая
+успешные/валидационные ответы, которые сами `http_response_code` не звали, но делят метод с
+вызовом рендерера — тот же паттерн, что и `album`/`guestbook`. `ForumTopicController.php` и
+`ForumSectionController.php` — `http_response_code($errorCode->httpStatus())` перед
+`ForumUtils::notFound()`/`pageNotFound()` оказался мёртвым кодом: `ForumNotFoundException`
+маппится только на `FORUM_NOT_FOUND` (404), и `pageNotFound()` всё равно всегда отвечает 404
+через `ExceptionResponseFactory::fromPageNotFound()` — убран без замены, `addData(['error_code'
+=> ...])` перед исключением сохранён (шаблон 404 это поле не читает, но это не HTTP-side-эффект).
+`ForumUtils::notFound()` (`header('HTTP/1.0 404 Not Found')` + `echo` + `exit`) имел единственного
+вызывающего — `ForumTopicController`; метод удалён целиком, вызов заменён на
+`pageNotFound(title: __('Forum'), message: __('Topic has been deleted or does not exists'))`,
+что меняет шаблон (`system::pages/result` → дефолтный `system::error/404`, теряется `back_url`),
+но сохраняет статус и переведённый текст — тот же компромисс, что предписан для
+`ForumUtils.php:57,69` в задании (нет `Response`, некому вернуть, глобальный хелпер — правильный
+идиом, тем более что остальные семь мест в модуле уже вызывают голый `pageNotFound()`).
+`ForumIndexController` — `http_response_code(301) + header('Location') + exit` → `redirect($url,
+301)`, статус 301 сохранён явным аргументом (не дефолтный 302 хелпера). `DownloadFileController` —
+тот же паттерн, что `downloads`/`mail`/`album`: `redirect()` на статический URL, файл сам не
+читает; приватный `renderNotFound()` стал `Response` со статусом 404. `UploadFileController` —
+`header('Content-Type: application/json')` + четыре ветки `http_response_code` (403/403/[200 по
+умолчанию]/500) → `JsonResponse` с явными статусами `HTTP_FORBIDDEN`/`HTTP_INTERNAL_SERVER_ERROR`,
+JSON-тело и коды 1:1. PHPStan попутно нашёл живое улучшение: с `never`-типизированным
+`pageNotFound()` анализатор доказал недостижимость кода после catch в
+`ForumTopicController`, из-за чего протухшая запись baseline `variable.undefined` (`$result might
+not be defined`, count 9) перестала совпадать с реальными ошибками — удалена, а не расширена.
+`ForumPathController` (диспетчер `ForumSectionController`/`ForumTopicController` по пути) не
+трогался: обе цели остались `string`, поэтому его сигнатура `string` тоже осталась верной.
+
+**✅ `album` закрыт (2026-07-25).** Восемь контроллеров, 1 `header('Location')` + `exit` +
+`http_response_code(302)`, 9 `http_response_code(403)`. `DownloadPhotoController` — тот же
+паттерн, что и `downloads`/`mail`: `DownloadPhotoUseCase::execute()` возвращает статический
+URL файла (считая уникальную загрузку), сам файл контроллер не читает, поэтому это
+`RedirectResponse` со статусом **302** (не `BinaryFileResponse`). Остальные семь контроллеров —
+общий паттерн `resolveContext(): T|string` (сентинел через `is_string()`) с приватным гардом,
+кодирующим 403 через `http_response_code()` перед `return` строки-ошибки; переведены на
+`resolveContext(): T|Response` с проверкой `instanceof Response`, статус зашит в `renderError()`
+(`Delete{Album,Photo}Controller`, `Edit{Album,Photo}Controller` — по два места 403 каждый,
+`MovePhotoController`, `SortAlbumController`, `UploadPhotoController` — по одному). Мигрированы
+целиком, включая формы/подтверждения/успешные ответы, которые сами по себе `http_response_code`
+не звали, но делят приватные рендереры с гардами. `SortAlbumController::moveUp/moveDown`
+заканчиваются вызовом `redirect()` (уже `never` с 2a) — сигнатура действия честно `Response`,
+хотя тело никогда до `return` не доходит.
+
+**✅ Долг «13 `setcookie()`» закрыт.** Оставшиеся четыре — оба в `login`
+(`LoginController.php:77-78`, `LogoutController.php:35-36`) — переведены на
+`$response->headers->setCookie(Cookie::create(...))` с явными `secure: false, httpOnly: false,
+sameSite: null` (тот же паритет, что и у `registration`/`admin`); удаление cookie при логауте —
+тот же вызов с `expire` в прошлом и пустым значением. `grep -rn 'setcookie(' modules/ system/src`
+теперь пуст.
+
+**✅ `profile` закрыт (2026-07-25).** Модуль отсутствовал в таблице ниже — пропуск в исходном
+учёте 2c, не в исполнении: пять `http_response_code(403)` (`ResetSettingsController`,
+`PhotoController`, `IpHistoryController`, `AvatarController`, `EditProfileController`), один
+динамический `http_response_code($statusCode)` (`BanController::renderError()`, вызывается с 200
+или 403 — оба значения сохранены статусом на `Response`), два `http_response_code(403)` внутри
+guard-хелперов `KarmaController::supervisorGuard()`/`BanController::{staff,supervisor}Guard()`, и
+один `setcookie('cups', ...)` в `ChangePasswordController::change()`. Контроллеры, где ошибка
+раньше кодировалась как `string|EditProfileContextDTO` (сентинел через `is_string()`), переведены
+на `Response|EditProfileContextDTO` с проверкой `instanceof Response` — `PhotoController`,
+`AvatarController`, `EditProfileController::resolveContext()`.
+
+`ChangePasswordController::change()` — единственный `setcookie()` без аргумента `path` во всём
+проекте (`setcookie('cups', md5($newPassword), $expire)`, без `'/'`). Symfony `Cookie` не умеет
+опускать атрибут `Path` вовсе (`Cookie::__construct` делает `$this->path = $path ?: '/'`, то есть
+пустая строка/`null` молча превращаются в `/`), а PHP без аргумента `path` тоже не отправляет
+`Path` вовсе — это оставляет браузеру RFC 6265 §5.1.4 "default path" (путь текущего запроса без
+последнего сегмента). Раз просто пропустить `path` нельзя, паритет воспроизведён явным вычислением
+этого default-path (`ChangePasswordController::defaultCookiePath()`) и передачей его в
+`Cookie::create()`, а не молчаливой подстановкой `'/'` (что расширило бы область действия cookie).
+Не исправлено — сохранено как легаси-поведение; вероятный баг (эта `cups` не совпадает по scope с
+`cups`, выставленной при логине с `path: '/'`), но вне рамок 2c.
 
 *Долг, оставленный сознательно (паритет с легаси).* JSON-ветки загрузки файлов
 (`news/CommentsController`, `news/Admin/AdminArticleController`) по-прежнему кладут
@@ -869,8 +995,11 @@ JSON-эндпоинтами, не в рамках вычистки сайд-эф
 | ✅ `help` | 5 | 3 | 4 — готово 2026-07-25 (301 в `HelpLegacyRedirectHandler` сохранён) |
 | ✅ `redirect` | 4 | 4 | 5 — готово 2026-07-25. Модуль по назначению редиректит на **внешние** адреса (`https://johncms.com/404`, URL из хранилища): это не open redirect, проверку хоста сюда добавлять нельзя |
 | ✅ `mail` / `login` | по 3 | по 3 | 6 — готово 2026-07-25. `mail/DownloadFileController` — тоже `RedirectResponse`, а не `BinaryFileResponse` (редирект на статический URL) |
-| `notifications` / `forum` / `album` / `admin` / `collections` | 1–2 | 1–2 | 7 |
-| `system` (`Comments.php`, `BanIP.php`) | 5 | 5 | 8 (легаси, последним) |
+| ✅ `collections` / `online` / `registration` / `notifications` | 2 | 3 | 7 — готово 2026-07-25. `collections/CollectionRouterController::notFound()` — `exit;` после `pageNotFound()` было мёртвым кодом (сам `pageNotFound()` уже `never`), просто убрано, заодно снята устаревшая запись `deadCode.unreachable` из baseline; `online/OnlineAdminMiddleware` → `Response` со статусом 403 (паритет с `http_response_code(403)`); `registration/RegistrationController` — оба `setcookie()` перенесены на `$response->headers->setCookie()` с явными `secure: false, httpOnly: false, sameSite: null`, чтобы не добавить атрибуты, которых не было у легаси-вызова; `notifications/{Clear,Settings}Controller` → `RedirectResponse` |
+| ✅ `guestbook` / `admin` | 0 | 1 (`admin`, оба middleware) | 8 — готово 2026-07-25. `guestbook`: три `http_response_code(403)` (Delete/Edit/Reply-контроллеры) стали статусом на `Response`, `UploadFileController` перестроен на `JsonResponse` (`header('Content-Type: application/json')` и `http_response_code(500)` ушли, JSON-тело и коды 200/500 сохранены 1:1); `admin`: `AdminAccessMiddleware`/`SuperAdminAccessMiddleware` — `renderForbidden()` из `header('HTTP/1.0 403 Forbidden') + echo + exit` стал `Response` со статусом 403 (заодно ушла ставшая ненужной проверка `headers_sent()`); `UsersController::login()` — оба `setcookie()` перенесены на `RedirectResponse` + `$response->headers->setCookie()` (те же явные `secure: false, httpOnly: false, sameSite: null`); поскольку следом шёл глобальный `redirect('/admin/')` (бросает исключение, к моменту которого локальный `$response` с куками уже недостижим), этот конкретный редирект собран как `new RedirectResponse('/admin/')` вместо вызова хелпера — единственный способ пронести куки на ответ 1:1 |
+| ✅ `album` | 1 | 1 | 9 — готово 2026-07-25 (плюс 9 `http_response_code(403)`; `DownloadPhotoController` → `RedirectResponse`, статус 302 сохранён) |
+| ✅ `forum` | 1 | 0 | 10 — готово 2026-07-25 (последний и самый запутанный модуль этапа; 301 в `ForumIndexController` сохранён явным аргументом `redirect($url, 301)`, JSON-статусы `UploadFileController` 1:1, `ForumErrorRenderer` и все 33 его вызывающих мигрированы одним заходом) |
+| ✅ `system` (`Comments.php`) | 5 | 5 | 11 — готово 2026-07-25. `BanIP.php` (2 `header('Location')` + 2 `exit`) не тронут — вызывается из `bootstrap.php` до `handle()`, см. раздел выше; `setcookie()` в обоих `UserFactory` — тот же остаток, что и общий долг «объекты, привязанные к запросу», см. ниже |
 
 Плюс: 16 `json_encode` + `header('Content-Type: application/json')` → `JsonResponse`;
 104 `http_response_code()` → статус в `Response`; 13 `setcookie()` → `$response->headers->setCookie()`.
@@ -913,12 +1042,55 @@ grep -B6 'identifier: .*always' phpstan-baseline.neon | grep 'path:'
 нормализуют `/\evil.com` в протокол-относительный `//evil.com`, то есть одной проверки
 «начинается со слеша» недостаточно.
 
-**2d. Единая точка отправки.** `echo $result` в `public/index.php` заменяется на `$response->send()`.
-`ob_start('ob_gzhandler')` из `system/bootstrap.php` удаляется — сжатие отдаём веб-серверу.
+**✅ 2d. Единая точка отправки — готово (2026-07-25, не закоммичено).**
 
-**Готово, когда**: ни один контроллер не пишет в вывод напрямую; `grep -c 'exit\|die('` по `modules/` — 0.
+* ✅ **Хвост 2c закрыт.** Единственный оставшийся прямой `echo` в контроллерах —
+  `news/Application/Controllers/Admin/AdminController.php::index()` — переведён на
+  `Response` (`return new Response($this->render->render('news::admin/index'));`, сигнатура
+  `: void` → `: Response`). Проверено скобочно-нейтральным `grep` по `modules/` и `system/src`:
+  других `echo`/`print` не осталось, кроме заранее известных легитимных исключений
+  (`library/DownloadArticleController.php` — `echo` внутри колбэка `StreamedResponse`;
+  `system/src/Comments.php` — четыре вызывающих контроллера сами оборачивают его вывод в
+  `ob_start()`/`ob_get_clean()`; `GlobalErrorHandler.php` — обработчик последней инстанции;
+  `public/assets/modules/forum/thumbinal.php` — legacy-скрипт вне ядра).
+* ✅ **Глобальная буферизация убрана.** Блок `ob_start('ob_gzhandler')` / `ob_start()` в конце
+  `system/bootstrap.php` удалён целиком — сжатие теперь делает nginx (`.docker/nginx/nginx.conf`,
+  `gzip on`; `text/html` gzip'ится всегда, в `gzip_types` его перечислять не нужно). Проверено:
+  `grep -rn 'ob_start\|ob_get_clean\|ob_end_'` по `modules/` и `system/src` находит только четыре
+  самодостаточные пары в контроллерах-обёртках `Comments` (downloads/FileCommentsController,
+  album/PhotoCommentsController, profile/GuestbookController, library/ArticleCommentsController) —
+  ни одна не рассчитывает на снятый глобальный буфер.
+* ✅ **Точка отправки: `send(false)` оставлен осознанно, не молча.** `send(true)` вызвал бы
+  `fastcgi_finish_request()` и ушёл бы к клиенту до хвоста с `EmailSender::send()` — это цель, но
+  сессия к этому моменту не закрыта (`session_write_close()` нигде не вызывается явно, лок держится
+  до конца скрипта), и следующий запрос того же посетителя ждал бы весь SMTP-батч. Полноценный
+  `send(true)` требует парного `session_write_close()` перед ним и инфраструктуры `terminate()`,
+  которой на 2d ещё нет — обе вещи по плану приходят вместе в 3b. Комментарий в `public/index.php`
+  переписан, чтобы объяснять именно это решение (старый текст ссылался на буфер `ob_gzhandler`,
+  который этим же этапом удалён, — стал бы враньём).
+* ✅ Единая точка отправки подтверждена: `grep -rn '\->send('` по `modules/`, `system/src`,
+  `public/index.php` находит ровно один вызов `Response::send()` — в `public/index.php`.
+  Прямых `header()` в контроллерах/модулях не осталось (`system/src/Security/BanIP.php` — известный
+  долг вне рамок 2c/2d, исполняется в `bootstrap.php` до `Kernel::handle()`).
 
-### 🚧 Этап 3. Kernel (M) — 3a готов (2026-07-25), остался 3b
+**Гейт**: `sh .agents/scripts/verify.sh` (cs-check/phpstan/test) и
+`composer test:functional` в контейнере — зелёные.
+
+**Смоук на стенде** (`http://localhost:32769`): `/` — 200, тело есть, заголовки не задвоены;
+`Accept-Encoding: gzip` на `/` — ответ приходит с `Content-Encoding: gzip` (компрессию теперь
+делает nginx, не PHP); `/admin/` — 302 `Location: /admin/login`; `/no-such-page` — 404;
+`/forum/`, `/news/`, `/downloads/`, `/library/`, `/guestbook/`, `/registration/`, `/login` — 200,
+непустое тело; `/admin/news` (и `/admin/news/`) — 404 без фатала: это не регрессия 2d, а
+существовавшая раньше особенность роутинга — `modules/news/config/routes.php` регистрирует
+`/admin/news*` только при `$user->rights >= 9 && $user->isValid()` на этапе компиляции роутов,
+поэтому для гостя маршрута попросту нет (роутер отдаёт 404 раньше `AdminAccessMiddleware`,
+который для гостя сделал бы 302 на `/admin/login`).
+
+**Готово, когда**: ни один контроллер не пишет в вывод напрямую — да; `grep -c 'exit\|die('` по
+`modules/` — не 0 (легаси-паттерн `exit`/`die` внутри строковых литералов и комментариев остаётся,
+но управляющих `exit`/`die` после HTTP-хелперов не осталось — все переведены на исключения в 2a/2c).
+
+### ✅ Этап 3. Kernel (M) — 3a и 3b готовы (2026-07-25)
 
 **3a. ✅ ГОТОВО (2026-07-25, не закоммичено). Скелет ядра.** Self-review (architecture/security/
 php-quality) + гейт зелёные (383 теста: 352 unit + 31 functional). Что сделано:
@@ -1003,26 +1175,66 @@ php-quality) + гейт зелёные (383 теста: 352 unit + 31 functional
 метётся вслепую, а критерии готовности этапов 2c, 4 и 5 непроверяемы: приёмка этапа 5 буквально
 сформулирована через два последовательных `handle()` в одном процессе.
 
-**3b. Достройка ядра — после 2c/2d.**
+**3b. ✅ ГОТОВО (2026-07-25, не закоммичено). Достройка ядра.** Гейт (`verify.sh` + `test:functional`)
+и смоук на стенде зелёные.
 
-* `MiddlewareInterface::handle()` меняет возвращаемый тип `mixed` → `Response` (14 реализаций).
-  Решено делать одним коммитом, см. открытый вопрос 4.
-* `implements TerminableInterface`; `UserStat` и `EmailSender::send()` переезжают в `terminate()`.
-* `public/index.php` схлопывается до создания ядра, `handle()`, `send()`, `terminate()`.
+* ✅ `MiddlewareInterface::handle()`: `mixed` → `Response`, одним коммитом, как решено в открытом
+  вопросе 4. Все 15 реализаций (`grep -rl 'implements MiddlewareInterface'`) переведены на
+  `: Response`, с добавлением `use Symfony\Component\HttpFoundation\Response` там, где его не было.
+  Чтобы это стало правдой в рантайме, а не только в сигнатуре, нормализация переехала внутрь
+  пайплайна: замыкание-`handler`, которое `Kernel::handleRaw()` передаёт в
+  `MiddlewareDispatcher::dispatch()`, теперь само зовёт `ResponseNormalizer::normalize()` и
+  возвращает `Response`; `dispatch()`/`buildPipeline()`/`wrapMiddleware()`/`callMiddleware()`
+  типизированы на `Response` вместо `mixed`. Переходный контракт контроллера
+  (`Response|string|null`) не тронут — нормализатор тот же, просто вызывается на один шаг раньше.
+  Задело четыре юнит-теста, гонявшие `dispatch()`/несколько middleware со строками вместо
+  `Response` (`MiddlewareDispatcherTest`, `TrimStringsMiddlewareTest`,
+  `GuestbookAccessMiddlewaresTest`) — переведены на реальные объекты `Response`.
+* ✅ **Легаси-шов по статусу убран.** `grep -rn 'http_response_code(' modules/ system/src`
+  подтвердил ровно три места — `Kernel` (это и убрали), `GlobalErrorHandler` и `BanIP.php`
+  (последний работает до `Kernel::handle()`, см. долг 2c) — то есть контроллеров, выставляющих
+  статус глобально, после 2c не осталось. Убраны оба конца шва: сброс `http_response_code(200)`
+  в начале `handle()` и чтение `http_response_code() ?: 200` перед `normalize()` в
+  `handleRaw()` — `normalize()` теперь использует свой дефолт (200).
+* ✅ `Kernel implements TerminableInterface`, `terminate(Request $request, Response $response): void`.
+  Переехали: `new UserStat($this->container)` (было единственным не-request-driven сайд-эффектом
+  в середине `handleRaw()` — теперь пост-response, между собой и очередью писем порядка не
+  важно) и блок отправки почты из хвоста `public/index.php`, условия сохранены 1:1
+  (`! USE_CRON && ! defined('_IN_JOHNADM') && $response->isSuccessful()`, `cron.cache`, `filemtime`).
+* ✅ `public/index.php` — 13 строк кода (без учёта проверки установки и комментариев):
+  bootstrap → `$kernel->handle($request)` → `$response->send()` → `$kernel->terminate(...)`.
+* ✅ **`send()`/сессия — полное решение, не `send(false)` навсегда.** Перед тем как разрешать
+  `send(true)`, проверено, не пишет ли что-то в `$_SESSION` после построения `Response` и
+  оказавшееся бы в `terminate()`: `UserStat` (читает `User`/`Environment`, пишет только в БД,
+  `$_SESSION` не касается), `EmailSender::send()` (рендерит письма и шлёт их, `$_SESSION` не
+  трогает), `Cleanup` (выполняется в `bootstrap.php` **до** `handle()`, вне области). Проверка
+  чистая (`grep -rn 'session_write_close\|session_start\|session_status'` — единственный
+  `session_start()` остаётся в `bootstrap.php`), поэтому:
+  * в конце `Kernel::handle()`, после того как `$response` уже построен (успешно или через
+    маппинг исключений) — `session_write_close()`, но только если
+    `session_status() === PHP_SESSION_ACTIVE` и не `CONSOLE_MODE` (функциональный харнесс поднимает
+    бутстрап с `CONSOLE_MODE = true` и без сессии вовсе — направление задано этапом 4b);
+  * `public/index.php` теперь зовёт полный `$response->send()` (было `send(false)`) —
+    `fastcgi_finish_request()` можно звать безопасно, потому что сессия уже закрыта и следующий
+    запрос того же посетителя не ждёт `terminate()`;
+  * `terminate()` вызывается после `send()`.
+  Функциональный набор (31 тест, много последовательных `handle()` в одном процессе) остаётся
+  зелёным без изменений — `CONSOLE_MODE` исключает его из закрытия сессии.
 
-**Готово, когда**: `public/index.php` ≤ 15 строк, вся HTTP-логика в `system/src/Http/`,
-функциональный смоук-набор зелёный.
+**Готово, когда**: `public/index.php` ≤ 15 строк — да (13); вся HTTP-логика в `system/src/Http/` —
+да; функциональный смоук-набор зелёный — да (31/31).
 
-**Долги, оставленные 3a осознанно** (кроме уже записанных выше по 2c/2d):
+**Долги, оставленные 3a осознанно (закрыты в 3b, кроме отмеченного):**
 
-* `Kernel::handleRaw()` зовёт глобальный `pageNotFound()` (ради `checkRedirect()`, который читает
-  `$_SERVER['REQUEST_URI']`) и `new UserStat($container)` — единственные две не-request-driven
-  точки ядра. `UserStat` уезжает в `terminate()` (3b), карта редиректов — в сервис, принимающий
-  `Request` (этап 5, вместе с остальными суперглобалами).
+* ~~`Kernel::handleRaw()` зовёт... `new UserStat($container)`~~ — закрыто, переехало в `terminate()`.
+* `Kernel::handleRaw()` по-прежнему зовёт глобальный `pageNotFound()` (ради `checkRedirect()`,
+  который читает `$_SERVER['REQUEST_URI']`) — карта редиректов остаётся сервисом, принимающим
+  `Request`, этап 5.
 * Ядро отвергает `SUB_REQUEST` явным `LogicException`: `handle()` публикует запрос в контейнер без
   восстановления родительского. Если под-запросы понадобятся — нужен `RequestStack` (этап 5/6).
 * Функциональный набор пишет в БД стенда (гостевые записи `UserStat`, счётчики) и не откатывает:
-  транзакционная изоляция появится, когда/если появится отдельная тестовая БД.
+  транзакционная изоляция появится, когда/если появится отдельная тестовая БД. Подтверждено смоуком
+  3b: `cms_sessions.views`/`lastdate` растут на каждый реальный запрос через `terminate()`.
 * Ветка 301 `checkRedirect()` по-прежнему без теста: карта читается `require` из
   `config/redirects.php` без шва. Закрывается вместе с выносом карты в сервис (этап 5).
 * `data/cache/container.php` (если оператор включил `CACHE_CONTAINER`) после смены `Request` на
