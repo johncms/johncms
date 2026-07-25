@@ -9,6 +9,8 @@ use Johncms\Modules\Mail\Application\UseCases\BlockUserUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\System\View\Render;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class BlockUserController
 {
@@ -22,7 +24,7 @@ final readonly class BlockUserController
         $this->controllerContext->initModule('mail');
     }
 
-    public function __invoke(int $userId): string
+    public function __invoke(int $userId): Response
     {
         if ($this->request->getMethod() === 'POST') {
             try {
@@ -34,8 +36,7 @@ final readonly class BlockUserController
                 $_SESSION['message_type'] = 'error';
             }
 
-            header('Location: /mail/blocklist');
-            exit;
+            return new RedirectResponse('/mail/blocklist');
         }
 
         // Show confirmation page
@@ -56,11 +57,11 @@ final readonly class BlockUserController
             'submit_btn_name' => __('Block'),
         ];
 
-        return $this->render->render(
+        return new Response($this->render->render(
             'mail::confirm',
             [
                 'data'       => $data,
             ]
-        );
+        ));
     }
 }

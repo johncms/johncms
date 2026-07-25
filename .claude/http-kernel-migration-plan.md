@@ -386,6 +386,15 @@ final readonly class ReplyController
 * `modules/login/.../LogoutController.php:41` — `HTTP_REFERER`
 * `system/src/System/Http/Environment.php:85`
 
+**⚠️ В `LogoutController` это не только стилистика, но и живой XSS** (найден 2026-07-25 при
+проверке 2c). `HTTP_REFERER` фильтруется `FILTER_SANITIZE_SPECIAL_CHARS` и попадает в
+`modules/login/templates/logout.phtml:12` как `href="<?= $referer ?>"`. Кавычки экранированы,
+выйти из атрибута нельзя, но `javascript:` этот фильтр не блокирует: посетитель, пришедший на
+`/logout` с подготовленным Referer, выполнит скрипт кликом по кнопке «Отмена». Требуется действие
+жертвы, поэтому не блокер, но при разборе 1a-ter это место чинится в первую очередь — валидацией
+схемы URL, а не усилением фильтра. В 2c сознательно сохранён паритет: правка тут меняет
+экранирование, а не HTTP-слой.
+
 Просто убрать фильтр нельзя: данные уже лежат в БД экранированными, а шаблон
 `modules/profile/templates/edit.phtml:193` выводит их **без** экранирования именно поэтому.
 Нужен связный набор: снять фильтр + добавить экранирование в шаблоны + миграция уже испорченных
@@ -834,7 +843,16 @@ php-quality) + гейт зелёные.
 **→ Здесь выполняется 3a (скелет ядра) — см. этап 3.** 2c метётся уже под функциональными тестами.
 
 **2c. Вычистка прямых сайд-эффектов** — помодульно, от простого к сложному.
-На 2026-07-25 закрыты `downloads`, `library` и `news`; осталось ~85 мест в остальных модулях.
+На 2026-07-25 закрыты `downloads`, `library`, `news`, `help`, `redirect`, `mail`, `login`;
+осталось **50** мест: `notifications` / `forum` / `album` / `admin` / `collections` и легаси
+`system` (`Comments.php`, `BanIP.php`).
+
+**Не забыть: 13 `setcookie()` — тоже часть 2c, и они пока не тронуты** (4 из них в `login`:
+`LoginController.php:77-78`, `LogoutController.php:35-36`). Под FPM прямой вызов работает, но это
+ровно то же process-global состояние, от которого уходит этап: в worker-режиме cookie должна
+уезжать через `$response->headers->setCookie()`. Помодульная вычистка `header()`/`exit` их
+не задевает, поэтому легко закрыть этап, забыв про них — считать 2c готовым только когда
+`grep -rn 'setcookie(' modules/ system/src` пуст.
 
 *Долг, оставленный сознательно (паритет с легаси).* JSON-ветки загрузки файлов
 (`news/CommentsController`, `news/Admin/AdminArticleController`) по-прежнему кладут
@@ -848,9 +866,9 @@ JSON-эндпоинтами, не в рамках вычистки сайд-эф
 | ✅ `downloads` | 11 | 11 | 1 — готово 2026-07-25. `LoadFileController` отдаёт **`RedirectResponse`**, а не `BinaryFileResponse`: он редиректит на статический URL файла, файл сам не читает. План здесь был неточен |
 | ✅ `library` | 10 | 13 | 2 — готово 2026-07-25 (`DownloadArticleController` → `StreamedResponse`, заголовки 1:1) |
 | ✅ `news` | 7 | 12 | 3 — готово 2026-07-25. Три `exit($exception->getMessage())` отдавали текст исключения посетителю со **статусом 200** и без логирования; теперь логгер + `ExceptionResponseFactory::internalServerError()` с `DebugDetailsPolicy`. `Helpers::returnJson()` (echo + exit в утилите) удалён — оба вызывающих строят `JsonResponse` сами |
-| `help` | 5 | 3 | 4 |
-| `redirect` | 4 | 4 | 5 |
-| `mail` / `login` | по 3 | по 3 | 6 |
+| ✅ `help` | 5 | 3 | 4 — готово 2026-07-25 (301 в `HelpLegacyRedirectHandler` сохранён) |
+| ✅ `redirect` | 4 | 4 | 5 — готово 2026-07-25. Модуль по назначению редиректит на **внешние** адреса (`https://johncms.com/404`, URL из хранилища): это не open redirect, проверку хоста сюда добавлять нельзя |
+| ✅ `mail` / `login` | по 3 | по 3 | 6 — готово 2026-07-25. `mail/DownloadFileController` — тоже `RedirectResponse`, а не `BinaryFileResponse` (редирект на статический URL) |
 | `notifications` / `forum` / `album` / `admin` / `collections` | 1–2 | 1–2 | 7 |
 | `system` (`Comments.php`, `BanIP.php`) | 5 | 5 | 8 (легаси, последним) |
 

@@ -20,6 +20,7 @@ use Johncms\Modules\Help\Application\UseCases\GetUserSmiliesUseCase;
 use Johncms\NavChain;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class UserSmiliesController
 {
@@ -35,17 +36,16 @@ final readonly class UserSmiliesController
         $this->controllerContext->initModule('help');
     }
 
-    public function __invoke(string $cat): string
+    public function __invoke(string $cat): Response
     {
         if (! $this->userSmilies->isValidCategory($cat)) {
-            http_response_code(404);
-            return $this->render->render('system::pages/result', [
+            return new Response($this->render->render('system::pages/result', [
                 'title'         => __('Wrong data'),
                 'type'          => 'alert-danger',
                 'message'       => __('The directory does not exist'),
                 'back_url'      => '/help/smilies/',
                 'back_url_name' => __('Back'),
-            ]);
+            ]), Response::HTTP_NOT_FOUND);
         }
 
         $title = $this->userSmilies->categoryTitle($cat);
@@ -86,6 +86,6 @@ final readonly class UserSmiliesController
             $data['form_action'] = '/help/smilies/set/?cat=' . urlencode($cat) . '&page=' . $pagination->getCurrentPage();
         }
 
-        return $this->render->render('help::smiles_list', ['data' => $data]);
+        return new Response($this->render->render('help::smiles_list', ['data' => $data]));
     }
 }

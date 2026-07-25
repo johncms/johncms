@@ -20,6 +20,7 @@ use Johncms\Modules\Help\Application\UseCases\GetMySmiliesUseCase;
 use Johncms\NavChain;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class MySmiliesController
 {
@@ -35,17 +36,16 @@ final readonly class MySmiliesController
         $this->controllerContext->initModule('help');
     }
 
-    public function __invoke(): string
+    public function __invoke(): Response
     {
         if (! $this->currentUser->isValid()) {
-            http_response_code(403);
-            return $this->render->render('system::pages/result', [
+            return new Response($this->render->render('system::pages/result', [
                 'title'         => __('Access denied'),
                 'type'          => 'alert-danger',
                 'message'       => __('You are not logged in'),
                 'back_url'      => '/help/smilies/',
                 'back_url_name' => __('Back'),
-            ]);
+            ]), Response::HTTP_FORBIDDEN);
         }
 
         $title = __('My smilies');
@@ -68,7 +68,7 @@ final readonly class MySmiliesController
             'description' => $meta->description,
         ]);
 
-        return $this->render->render('help::my_smiles_list', [
+        return new Response($this->render->render('help::my_smiles_list', [
             'data' => [
                 'items'       => $this->mySmilies->getPage($pagination->getPerPage(), $pagination->getOffset()),
                 'total'       => $pagination->getTotal(),
@@ -76,6 +76,6 @@ final readonly class MySmiliesController
                 'form_action' => '/help/smilies/set/?page=' . $pagination->getCurrentPage(),
                 'back_url'    => '/help/smilies/',
             ],
-        ]);
+        ]));
     }
 }

@@ -9,6 +9,8 @@ use Johncms\Modules\Redirect\Application\UseCases\RedirectByIdUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\System\View\Render;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class RedirectController
 {
@@ -22,7 +24,7 @@ final readonly class RedirectController
         $this->controllerContext->initModule('redirect');
     }
 
-    public function __invoke(): string
+    public function __invoke(): Response
     {
         $id = $this->request->queryInt('id', 0);
         $url = $this->request->queryParam('url', '');
@@ -38,36 +40,32 @@ final readonly class RedirectController
         }
 
         // Если нет ни id ни url, можно вернуть 404 или редирект на главную
-        header('Location: /');
-        exit;
+        return new RedirectResponse('/');
     }
 
-    private function handleById(int $id): string
+    private function handleById(int $id): Response
     {
         $redirectUrl = $this->redirectByIdUseCase->execute($id);
         if ($redirectUrl === null) {
-            header('Location: https://johncms.com/404');
-            exit;
+            return new RedirectResponse('https://johncms.com/404');
         }
 
-        header('Location: ' . $redirectUrl);
-        exit;
+        return new RedirectResponse($redirectUrl);
     }
 
-    private function handleByUrl(string $url): string
+    private function handleByUrl(string $url): Response
     {
         $submit = $this->request->hasBody('submit');
         $referer = $_SERVER['HTTP_REFERER'] ?? '/';
 
         if ($submit) {
-            header('Location: ' . $url);
-            exit;
+            return new RedirectResponse($url);
         }
 
         $title = __('Redirect to an external link');
         $this->navChain->add($title);
 
-        return $this->render->render(
+        return new Response($this->render->render(
             'redirect::index',
             [
                 'title'        => $title,
@@ -76,6 +74,6 @@ final readonly class RedirectController
                 'referer'      => htmlspecialchars($referer),
                 'url'          => $url,
             ]
-        );
+        ));
     }
 }

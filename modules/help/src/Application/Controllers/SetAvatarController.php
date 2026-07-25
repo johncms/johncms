@@ -17,6 +17,7 @@ use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class SetAvatarController
 {
@@ -30,30 +31,28 @@ final readonly class SetAvatarController
         $this->controllerContext->initModule('help');
     }
 
-    public function __invoke(string $id, int $avatar): string
+    public function __invoke(string $id, int $avatar): Response
     {
         if (! $this->currentUser->isValid()) {
-            http_response_code(403);
-            return $this->render->render('system::pages/result', [
+            return new Response($this->render->render('system::pages/result', [
                 'title'         => __('Access denied'),
                 'type'          => 'alert-danger',
                 'message'       => __('You are not logged in'),
                 'back_url'      => '/help/avatars/' . $id . '/',
                 'back_url_name' => __('Back'),
-            ]);
+            ]), Response::HTTP_FORBIDDEN);
         }
 
         $sourcePath = ASSETS_PATH . 'avatars/' . $id . '/' . $avatar . '.png';
 
         if (! is_file($sourcePath)) {
-            http_response_code(404);
-            return $this->render->render('system::pages/result', [
+            return new Response($this->render->render('system::pages/result', [
                 'title'         => __('Wrong data'),
                 'type'          => 'alert-danger',
                 'message'       => __('File does not exist'),
                 'back_url'      => '/help/avatars/' . $id . '/',
                 'back_url_name' => __('Back'),
-            ]);
+            ]), Response::HTTP_NOT_FOUND);
         }
 
         $pageTitle = __('Set to Profile');
@@ -70,25 +69,25 @@ final readonly class SetAvatarController
         if ($this->request->getMethod() === 'POST') {
             $targetPath = UPLOAD_PATH . 'users/avatar/' . $this->currentUser->id . '.png';
             if (@copy($sourcePath, $targetPath)) {
-                return $this->render->render('system::pages/result', [
+                return new Response($this->render->render('system::pages/result', [
                     'title'         => $pageTitle,
                     'type'          => 'alert-success',
                     'message'       => __('Avatar has been successfully applied'),
                     'back_url'      => '/profile/' . $this->currentUser->id . '/edit',
                     'back_url_name' => __('Continue'),
-                ]);
+                ]));
             }
 
-            return $this->render->render('system::pages/result', [
+            return new Response($this->render->render('system::pages/result', [
                 'title'         => $pageTitle,
                 'type'          => 'alert-danger',
                 'message'       => __('An error occurred'),
                 'back_url'      => '/help/avatars/',
                 'back_url_name' => __('Back'),
-            ]);
+            ]));
         }
 
-        return $this->render->render('help::confirm', [
+        return new Response($this->render->render('help::confirm', [
             'data' => [
                 'form_action'     => '/help/avatars/' . $id . '/set/' . $avatar . '/',
                 'message'         => __('Are you sure you want to set yourself this avatar?'),
@@ -96,6 +95,6 @@ final readonly class SetAvatarController
                 'back_url'        => '/help/avatars/' . $id . '/',
                 'submit_btn_name' => __('Save'),
             ],
-        ]);
+        ]));
     }
 }

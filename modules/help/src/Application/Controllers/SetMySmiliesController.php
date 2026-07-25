@@ -16,6 +16,8 @@ use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class SetMySmiliesController
 {
@@ -30,17 +32,16 @@ final readonly class SetMySmiliesController
         $this->controllerContext->initModule('help');
     }
 
-    public function __invoke(): string
+    public function __invoke(): Response
     {
         if (! $this->currentUser->isValid()) {
-            http_response_code(403);
-            return $this->render->render('system::pages/result', [
+            return new Response($this->render->render('system::pages/result', [
                 'title'         => __('Access denied'),
                 'type'          => 'alert-danger',
                 'message'       => __('You are not logged in'),
                 'back_url'      => '/help/smilies/',
                 'back_url_name' => __('Back'),
-            ]);
+            ]), Response::HTTP_FORBIDDEN);
         }
 
         $adm = (bool) $this->request->queryParam('adm');
@@ -57,8 +58,7 @@ final readonly class SetMySmiliesController
             || ($isAdd && empty($post['add_sm']));
 
         if ($invalidRequest) {
-            header('Location: /help/smilies/my/');
-            exit;
+            return new RedirectResponse('/help/smilies/my/');
         }
 
         $smilies = is_array($this->currentUser->smileys) ? $this->currentUser->smileys : [];
@@ -80,12 +80,13 @@ final readonly class SetMySmiliesController
         $pageSuffix = $page > 1 ? '?page=' . $page : '';
 
         if ($isDelete || isset($post['clean'])) {
-            header('Location: /help/smilies/my/' . $pageSuffix);
-        } elseif ($adm) {
-            header('Location: /help/smilies/admin/' . $pageSuffix);
-        } else {
-            header('Location: /help/smilies/' . urlencode($cat) . '/' . $pageSuffix);
+            return new RedirectResponse('/help/smilies/my/' . $pageSuffix);
         }
-        exit;
+
+        if ($adm) {
+            return new RedirectResponse('/help/smilies/admin/' . $pageSuffix);
+        }
+
+        return new RedirectResponse('/help/smilies/' . urlencode($cat) . '/' . $pageSuffix);
     }
 }

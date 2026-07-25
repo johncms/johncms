@@ -8,6 +8,8 @@ use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Mail\Application\Exceptions\MessageNotFoundException;
 use Johncms\Modules\Mail\Application\UseCases\DownloadFileUseCase;
 use Johncms\System\View\Render;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class DownloadFileController
 {
@@ -19,12 +21,12 @@ final readonly class DownloadFileController
         $this->controllerContext->initModule('mail');
     }
 
-    public function __invoke(int $id): string
+    public function __invoke(int $id): Response
     {
         try {
             $fileUrl = $this->downloadFileUseCase->execute($id);
         } catch (MessageNotFoundException) {
-            return $this->render->render(
+            return new Response($this->render->render(
                 'system::pages/result',
                 [
                     'title'   => __('Mail'),
@@ -32,10 +34,9 @@ final readonly class DownloadFileController
                     'message' => __('Such file does not exist'),
                     'back_url' => '/mail/files',
                 ]
-            );
+            ));
         }
 
-        header('Location: ' . $fileUrl);
-        exit;
+        return new RedirectResponse($fileUrl);
     }
 }

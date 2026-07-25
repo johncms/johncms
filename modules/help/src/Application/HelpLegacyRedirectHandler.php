@@ -44,8 +44,7 @@ final readonly class HelpLegacyRedirectHandler
         };
 
         if ($url !== null) {
-            header('Location: ' . $url, true, 301);
-            exit;
+            redirect($url, 301);
         }
     }
 

@@ -10,6 +10,8 @@ use Johncms\Modules\Login\Domain\Enums\LoginStatus;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\System\View\Render;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class LoginController
 {
@@ -23,7 +25,7 @@ final readonly class LoginController
         $this->controllerContext->initModule('login');
     }
 
-    public function __invoke(): string
+    public function __invoke(): Response
     {
         $this->navChain->add(__('Login'));
 
@@ -46,35 +48,34 @@ final readonly class LoginController
 
                 return match ($result->status) {
                     LoginStatus::Success => $this->handleSuccess($result->userId, $result->passwordHash),
-                    LoginStatus::CaptchaRequired => $this->render->render(
+                    LoginStatus::CaptchaRequired => new Response($this->render->render(
                         'login::captcha',
                         [
                             'captcha'    => $result->captcha,
                             'user_login' => $userLogin,
                             'user_pass'  => $userPass,
                         ]
-                    ),
-                    LoginStatus::EmailNotConfirmed => $this->render->render('login::confirm', ['confirm' => 'email']),
-                    LoginStatus::ModerationPending => $this->render->render('login::confirm', ['confirm' => 'moderation']),
-                    LoginStatus::Error => $this->render->render(
+                    )),
+                    LoginStatus::EmailNotConfirmed => new Response($this->render->render('login::confirm', ['confirm' => 'email'])),
+                    LoginStatus::ModerationPending => new Response($this->render->render('login::confirm', ['confirm' => 'moderation'])),
+                    LoginStatus::Error => new Response($this->render->render(
                         'login::login',
                         ['error' => $result->errors, 'user_login' => $userLogin]
-                    ),
+                    )),
                 };
             }
         }
 
-        return $this->render->render(
+        return new Response($this->render->render(
             'login::login',
             ['error' => $error, 'user_login' => $userLogin]
-        );
+        ));
     }
 
-    private function handleSuccess(?int $userId, ?string $passwordHash): string
+    private function handleSuccess(?int $userId, ?string $passwordHash): Response
     {
         setcookie('cuid', (string) $userId, time() + 3600 * 24 * 365, '/');
         setcookie('cups', (string) $passwordHash, time() + 3600 * 24 * 365, '/');
-        header('Location: /');
-        exit;
+        return new RedirectResponse('/');
     }
 }

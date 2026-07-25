@@ -18,6 +18,7 @@ use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Help\Application\UseCases\GetAvatarsUseCase;
 use Johncms\NavChain;
 use Johncms\System\View\Render;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class AvatarListController
 {
@@ -32,17 +33,16 @@ final readonly class AvatarListController
         $this->controllerContext->initModule('help');
     }
 
-    public function __invoke(string $id): string
+    public function __invoke(string $id): Response
     {
         if (! $this->avatars->directoryExists($id)) {
-            http_response_code(404);
-            return $this->render->render('system::pages/result', [
+            return new Response($this->render->render('system::pages/result', [
                 'title'         => __('Wrong data'),
                 'type'          => 'alert-danger',
                 'message'       => __('The directory does not exist'),
                 'back_url'      => '/help/avatars/',
                 'back_url_name' => __('Back'),
-            ]);
+            ]), Response::HTTP_NOT_FOUND);
         }
 
         $title = $this->avatars->directoryTitle($id);
@@ -63,7 +63,7 @@ final readonly class AvatarListController
             redirect($redirectUrl);
         }
 
-        return $this->render->render('help::avatar_list', [
+        return new Response($this->render->render('help::avatar_list', [
             'data' => [
                 'items'      => $this->avatars->getPage($id, $pagination->getPerPage(), $pagination->getOffset()),
                 'total'      => $pagination->getTotal(),
@@ -71,6 +71,6 @@ final readonly class AvatarListController
                 'pagination' => $pagination->render(),
                 'back_url'   => '/help/avatars/',
             ],
-        ]);
+        ]));
     }
 }

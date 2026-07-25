@@ -9,6 +9,8 @@ use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class LogoutController
 {
@@ -22,19 +24,17 @@ final readonly class LogoutController
         $this->controllerContext->initModule('login');
     }
 
-    public function __invoke(): string
+    public function __invoke(): Response
     {
         if (! $this->currentUser->isValid()) {
-            header('Location: /login/');
-            exit;
+            return new RedirectResponse('/login/');
         }
 
         if ($this->request->hasBody('logout')) {
             $_SESSION = [];
             setcookie('cuid', '', time() - 3600, '/');
             setcookie('cups', '', time() - 3600, '/');
-            header('Location: /');
-            exit;
+            return new RedirectResponse('/');
         }
 
         $config = config('johncms');
@@ -43,6 +43,6 @@ final readonly class LogoutController
         $this->navChain->add(__('Personal'), '/profile/account');
         $this->navChain->add(__('Logout'));
 
-        return $this->render->render('login::logout', ['referer' => $referer]);
+        return new Response($this->render->render('login::logout', ['referer' => $referer]));
     }
 }

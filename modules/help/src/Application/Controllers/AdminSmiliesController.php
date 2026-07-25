@@ -20,6 +20,7 @@ use Johncms\Modules\Help\Application\UseCases\GetAdminSmiliesUseCase;
 use Johncms\NavChain;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class AdminSmiliesController
 {
@@ -35,15 +36,14 @@ final readonly class AdminSmiliesController
         $this->controllerContext->initModule('help');
     }
 
-    public function __invoke(): string
+    public function __invoke(): Response
     {
         if ($this->currentUser->rights < 1) {
-            http_response_code(403);
-            return $this->render->render('system::pages/result', [
+            return new Response($this->render->render('system::pages/result', [
                 'title'   => __('For administration'),
                 'type'    => 'alert-danger',
                 'message' => __('Access forbidden'),
-            ]);
+            ]), Response::HTTP_FORBIDDEN);
         }
 
         $title = __('For administration');
@@ -66,7 +66,7 @@ final readonly class AdminSmiliesController
             'description' => $meta->description,
         ]);
 
-        return $this->render->render('help::smiles_list', [
+        return new Response($this->render->render('help::smiles_list', [
             'data' => [
                 'items'               => $this->adminSmilies->getPage($pagination->getPerPage(), $pagination->getOffset()),
                 'total'               => $pagination->getTotal(),
@@ -76,6 +76,6 @@ final readonly class AdminSmiliesController
                 'form_action'         => '/help/smilies/set/?adm=1&page=' . $pagination->getCurrentPage(),
                 'back_url'            => '/help/smilies/',
             ],
-        ]);
+        ]));
     }
 }

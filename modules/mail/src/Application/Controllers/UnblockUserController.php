@@ -9,6 +9,8 @@ use Johncms\Modules\Mail\Application\UseCases\UnblockUserUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\System\View\Render;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class UnblockUserController
 {
@@ -22,15 +24,14 @@ final readonly class UnblockUserController
         $this->controllerContext->initModule('mail');
     }
 
-    public function __invoke(int $userId): string
+    public function __invoke(int $userId): Response
     {
         if ($this->request->getMethod() === 'POST') {
             $this->unblockUserUseCase->execute($userId);
             $_SESSION['message'] = __('User unblocked successfully');
             $_SESSION['message_type'] = 'success';
 
-            header('Location: /mail/blocklist');
-            exit;
+            return new RedirectResponse('/mail/blocklist');
         }
 
         // Show confirmation page
@@ -51,11 +52,11 @@ final readonly class UnblockUserController
             'submit_btn_name' => __('Unblock'),
         ];
 
-        return $this->render->render(
+        return new Response($this->render->render(
             'mail::confirm',
             [
                 'data'       => $data,
             ]
-        );
+        ));
     }
 }
