@@ -14,6 +14,7 @@ use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class EditPhotoController
 {
@@ -29,38 +30,40 @@ final readonly class EditPhotoController
         $this->controllerContext->initModule('album');
     }
 
-    public function form(int $img): string
+    public function form(int $img): Response
     {
         $photo = $this->resolveContext($img);
-        if (is_string($photo)) {
+        if ($photo instanceof Response) {
             return $photo;
         }
 
         return $this->renderForm($photo, $photo->description);
     }
 
-    public function save(int $img): string
+    public function save(int $img): Response
     {
         $photo = $this->resolveContext($img);
-        if (is_string($photo)) {
+        if ($photo instanceof Response) {
             return $photo;
         }
 
         $this->editPhotoUseCase->execute($photo, $this->request->body('description', ''));
 
-        return $this->render->render(
-            'system::pages/result',
-            [
-                'title'         => __('Edit image'),
-                'type'          => 'alert-success',
-                'message'       => __('Image successfully changed'),
-                'back_url'      => '/album/' . $photo->album_id,
-                'back_url_name' => __('Continue'),
-            ]
+        return new Response(
+            $this->render->render(
+                'system::pages/result',
+                [
+                    'title'         => __('Edit image'),
+                    'type'          => 'alert-success',
+                    'message'       => __('Image successfully changed'),
+                    'back_url'      => '/album/' . $photo->album_id,
+                    'back_url_name' => __('Continue'),
+                ]
+            )
         );
     }
 
-    private function renderForm(AlbumPhoto $photo, string $description): string
+    private function renderForm(AlbumPhoto $photo, string $description): Response
     {
         $title = __('Edit image');
 
@@ -76,48 +79,50 @@ final readonly class EditPhotoController
             'page_title' => $title,
         ]);
 
-        return $this->render->render(
-            'album::edit_photo',
-            [
-                'title'      => $title,
-                'page_title' => $title,
-                'data'       => [
-                    'action_url'  => '/album/photo/' . $photo->id . '/edit',
-                    'back_url'    => '/album/' . $photo->album_id,
-                    'image_url'   => pathToUrl(UPLOAD_PATH . 'users/album/' . $photo->user_id . '/' . $photo->tmb_name),
-                    'description' => $description,
-                ],
-            ]
+        return new Response(
+            $this->render->render(
+                'album::edit_photo',
+                [
+                    'title'      => $title,
+                    'page_title' => $title,
+                    'data'       => [
+                        'action_url'  => '/album/photo/' . $photo->id . '/edit',
+                        'back_url'    => '/album/' . $photo->album_id,
+                        'image_url'   => pathToUrl(UPLOAD_PATH . 'users/album/' . $photo->user_id . '/' . $photo->tmb_name),
+                        'description' => $description,
+                    ],
+                ]
+            )
         );
     }
 
     /**
      * Resolve the photo with the access guard, or a rendered error page (with the proper HTTP status set).
-     *
-     * @return AlbumPhoto|string
      */
-    private function resolveContext(int $img): AlbumPhoto|string
+    private function resolveContext(int $img): AlbumPhoto|Response
     {
         try {
             return $this->getContextUseCase->execute($img);
         } catch (AlbumPhotoNotFoundException $e) {
             return $this->renderError($e->getMessage());
         } catch (AlbumEditForbiddenException $e) {
-            http_response_code(403);
-            return $this->renderError($e->getMessage());
+            return $this->renderError($e->getMessage(), 403);
         }
     }
 
-    private function renderError(string $message): string
+    private function renderError(string $message, int $status = 200): Response
     {
-        return $this->render->render(
-            'system::pages/result',
-            [
-                'title'    => __('Edit image'),
-                'type'     => 'alert-danger',
-                'message'  => $message,
-                'back_url' => '/album',
-            ]
+        return new Response(
+            $this->render->render(
+                'system::pages/result',
+                [
+                    'title'    => __('Edit image'),
+                    'type'     => 'alert-danger',
+                    'message'  => $message,
+                    'back_url' => '/album',
+                ]
+            ),
+            $status
         );
     }
 }

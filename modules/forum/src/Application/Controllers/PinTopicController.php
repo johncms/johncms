@@ -12,6 +12,7 @@ use Johncms\Modules\Forum\Application\UseCases\GetPinTopicContextUseCase;
 use Johncms\Modules\Forum\Application\UseCases\PinTopicUseCase;
 use Johncms\Http\Request;
 use Johncms\System\View\Render;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class PinTopicController
 {
@@ -26,7 +27,7 @@ final readonly class PinTopicController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(int $id): string
+    public function __invoke(int $id): Response
     {
         try {
             $topic = $this->contextUseCase->execute($id);

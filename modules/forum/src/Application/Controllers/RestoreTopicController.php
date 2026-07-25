@@ -12,6 +12,7 @@ use Johncms\Modules\Forum\Application\UseCases\GetRestoreTopicContextUseCase;
 use Johncms\Modules\Forum\Application\UseCases\RestoreTopicUseCase;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class RestoreTopicController
 {
@@ -26,7 +27,7 @@ final readonly class RestoreTopicController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(int $id): string
+    public function __invoke(int $id): Response
     {
         try {
             $topic = $this->contextUseCase->execute($id);

@@ -13,6 +13,7 @@ use Johncms\Security\Csrf;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
 use Johncms\System\View\Render;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class FilterByAuthorController
 {
@@ -29,7 +30,7 @@ final readonly class FilterByAuthorController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(int $id): string
+    public function __invoke(int $id): Response
     {
         $page = max(1, $this->request->queryInt('page', 1));
 
@@ -63,22 +64,24 @@ final readonly class FilterByAuthorController
         $this->navChain->add($context->topic->name, $context->topic->url);
         $this->navChain->add(__('Filter by author'));
 
-        return $this->render->render(
-            'forum::filter_by_author',
-            [
-                'title'               => __('Filter by author'),
-                'page_title'          => __('Filter by author'),
-                'id'                  => $context->topic->id,
-                'back_url'            => $context->topic->url . ($page > 1 ? '?page=' . $page : ''),
-                'total'               => count($context->authors),
-                'list'                => $context->authors,
-                'topic'               => $context->topic,
-                'saved'               => false,
-                'selected_user_ids'   => $selectedUsers,
-                'set_filter_action'   => '/forum/filter/' . $context->topic->id . '/set/' . ($page > 1 ? '?page=' . $page : ''),
-                'clear_filter_action' => '/forum/filter/' . $context->topic->id . '/clear/' . ($page > 1 ? '?page=' . $page : ''),
-                'csrf_token'          => $this->csrf->getToken(),
-            ]
+        return new Response(
+            $this->render->render(
+                'forum::filter_by_author',
+                [
+                    'title'               => __('Filter by author'),
+                    'page_title'          => __('Filter by author'),
+                    'id'                  => $context->topic->id,
+                    'back_url'            => $context->topic->url . ($page > 1 ? '?page=' . $page : ''),
+                    'total'               => count($context->authors),
+                    'list'                => $context->authors,
+                    'topic'               => $context->topic,
+                    'saved'               => false,
+                    'selected_user_ids'   => $selectedUsers,
+                    'set_filter_action'   => '/forum/filter/' . $context->topic->id . '/set/' . ($page > 1 ? '?page=' . $page : ''),
+                    'clear_filter_action' => '/forum/filter/' . $context->topic->id . '/clear/' . ($page > 1 ? '?page=' . $page : ''),
+                    'csrf_token'          => $this->csrf->getToken(),
+                ]
+            )
         );
     }
 }

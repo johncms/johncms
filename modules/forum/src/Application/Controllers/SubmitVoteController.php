@@ -13,6 +13,7 @@ use Johncms\Modules\Forum\Application\UseCases\SubmitVoteUseCase;
 use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class SubmitVoteController
 {
@@ -28,7 +29,7 @@ final readonly class SubmitVoteController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(int $id): string
+    public function __invoke(int $id): Response
     {
         try {
             $voteId = $this->request->bodyInt('vote', 0);
@@ -47,16 +48,18 @@ final readonly class SubmitVoteController
         $this->submitVoteUseCase->execute($context->topicId, $context->voteId, $this->user->id);
 
         $referer = htmlspecialchars((string) $this->request->server->getString('HTTP_REFERER', '/forum/'));
-        return $this->render->render(
-            'system::pages/result',
-            [
-                'title'         => __('Forum'),
-                'page_title'    => __('Forum'),
-                'type'          => 'alert-success',
-                'message'       => __('Vote accepted'),
-                'back_url'      => $referer,
-                'back_url_name' => __('Back'),
-            ]
+        return new Response(
+            $this->render->render(
+                'system::pages/result',
+                [
+                    'title'         => __('Forum'),
+                    'page_title'    => __('Forum'),
+                    'type'          => 'alert-success',
+                    'message'       => __('Vote accepted'),
+                    'back_url'      => $referer,
+                    'back_url_name' => __('Back'),
+                ]
+            )
         );
     }
 }

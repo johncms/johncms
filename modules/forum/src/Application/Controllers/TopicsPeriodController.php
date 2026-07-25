@@ -15,6 +15,7 @@ use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class TopicsPeriodController
 {
@@ -32,7 +33,7 @@ final readonly class TopicsPeriodController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(): string
+    public function __invoke(): Response
     {
         try {
             $this->forumUserAccessUseCase->execute();
@@ -60,18 +61,20 @@ final readonly class TopicsPeriodController
 
         $pagination = $this->paginationFactory->create($result->total, null, 'page', $page);
 
-        return $this->render->render(
-            'forum::new_topics',
-            [
-                'pagination'    => $pagination->render(),
-                'title'         => $caption,
-                'page_title'    => $caption,
-                'empty_message' => __('There is nothing new in this forum for selected period'),
-                'topics'        => $result->topics,
-                'total'         => $result->total,
-                'show_period'   => true,
-                'period_action' => '/forum/topics-period/',
-            ]
+        return new Response(
+            $this->render->render(
+                'forum::new_topics',
+                [
+                    'pagination'    => $pagination->render(),
+                    'title'         => $caption,
+                    'page_title'    => $caption,
+                    'empty_message' => __('There is nothing new in this forum for selected period'),
+                    'topics'        => $result->topics,
+                    'total'         => $result->total,
+                    'show_period'   => true,
+                    'period_action' => '/forum/topics-period/',
+                ]
+            )
         );
     }
 }

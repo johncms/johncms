@@ -18,6 +18,7 @@ use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class ViewTopicVisitorsController
 {
@@ -37,7 +38,7 @@ final readonly class ViewTopicVisitorsController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(int $id): string
+    public function __invoke(int $id): Response
     {
         try {
             $this->forumUserAccessUseCase->execute();
@@ -88,23 +89,25 @@ final readonly class ViewTopicVisitorsController
 
         $pagination = $this->paginationFactory->create($result->total, null, 'page', $page);
 
-        return $this->render->render(
-            'forum::who',
-            [
-                'title'           => $caption,
-                'page_title'      => $caption,
-                'empty_message'   => __('The list is empty'),
-                'items'           => $result->items,
-                'pagination'      => $pagination->render(),
-                'total'           => $result->total,
-                'topic'           => $topic !== null ? htmlentities((string) $topic->name, ENT_QUOTES, 'UTF-8') : '',
-                'is_users'        => ! $showGuests,
-                'users_list_url'  => '/forum/topic-visitors/' . $id . '/',
-                'guests_list_url' => '/forum/topic-visitors/' . $id . '/?mode=guests',
-                'show_period'     => false,
-                'id'              => $id,
-                'topic_url'       => $this->topicPathService->getTopicUrlById($id) ?? '/forum/',
-            ]
+        return new Response(
+            $this->render->render(
+                'forum::who',
+                [
+                    'title'           => $caption,
+                    'page_title'      => $caption,
+                    'empty_message'   => __('The list is empty'),
+                    'items'           => $result->items,
+                    'pagination'      => $pagination->render(),
+                    'total'           => $result->total,
+                    'topic'           => $topic !== null ? htmlentities((string) $topic->name, ENT_QUOTES, 'UTF-8') : '',
+                    'is_users'        => ! $showGuests,
+                    'users_list_url'  => '/forum/topic-visitors/' . $id . '/',
+                    'guests_list_url' => '/forum/topic-visitors/' . $id . '/?mode=guests',
+                    'show_period'     => false,
+                    'id'              => $id,
+                    'topic_url'       => $this->topicPathService->getTopicUrlById($id) ?? '/forum/',
+                ]
+            )
         );
     }
 }

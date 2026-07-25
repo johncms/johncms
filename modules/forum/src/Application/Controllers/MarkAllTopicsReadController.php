@@ -12,6 +12,7 @@ use Johncms\Modules\Forum\Application\UseCases\MarkAllTopicsReadUseCase;
 use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class MarkAllTopicsReadController
 {
@@ -26,7 +27,7 @@ final readonly class MarkAllTopicsReadController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(): string
+    public function __invoke(): Response
     {
         try {
             $this->forumUserAccessUseCase->execute();
@@ -40,31 +41,35 @@ final readonly class MarkAllTopicsReadController
         );
 
         if (! $validator->isValid()) {
-            return $this->render->render(
-                'system::pages/result',
-                [
-                    'title'         => __('Unread'),
-                    'page_title'    => __('Unread'),
-                    'type'          => 'alert-danger',
-                    'message'       => __('Wrong data'),
-                    'back_url'      => '/forum/unread/',
-                    'back_url_name' => __('Back'),
-                ]
+            return new Response(
+                $this->render->render(
+                    'system::pages/result',
+                    [
+                        'title'         => __('Unread'),
+                        'page_title'    => __('Unread'),
+                        'type'          => 'alert-danger',
+                        'message'       => __('Wrong data'),
+                        'back_url'      => '/forum/unread/',
+                        'back_url_name' => __('Back'),
+                    ]
+                )
             );
         }
 
         $this->markAllTopicsReadUseCase->execute();
 
-        return $this->render->render(
-            'system::pages/result',
-            [
-                'title'         => __('Unread'),
-                'page_title'    => __('Unread'),
-                'type'          => 'alert-success',
-                'message'       => __('All topics marked as read'),
-                'back_url'      => '/forum/',
-                'back_url_name' => __('Forum'),
-            ]
+        return new Response(
+            $this->render->render(
+                'system::pages/result',
+                [
+                    'title'         => __('Unread'),
+                    'page_title'    => __('Unread'),
+                    'type'          => 'alert-success',
+                    'message'       => __('All topics marked as read'),
+                    'back_url'      => '/forum/',
+                    'back_url_name' => __('Forum'),
+                ]
+            )
         );
     }
 }

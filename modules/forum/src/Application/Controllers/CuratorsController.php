@@ -12,6 +12,7 @@ use Johncms\Modules\Forum\Application\UseCases\GetCuratorsContextUseCase;
 use Johncms\Modules\Forum\Application\UseCases\UpdateCuratorsUseCase;
 use Johncms\Http\Request;
 use Johncms\System\View\Render;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class CuratorsController
 {
@@ -26,7 +27,7 @@ final readonly class CuratorsController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(int $id): string
+    public function __invoke(int $id): Response
     {
         try {
             $context = $this->contextUseCase->execute($id);
@@ -87,19 +88,21 @@ final readonly class CuratorsController
             $saved = true;
         }
 
-        return $this->render->render(
-            'forum::curators',
-            [
-                'title'         => __('Curators'),
-                'page_title'    => __('Curators'),
-                'id'            => $topic->id,
-                'page'          => $page,
-                'back_url'      => $topic->url . ($page > 1 ? '?page=' . $page : ''),
-                'total'         => $total,
-                'curators_list' => $curatorsList,
-                'topic'         => $topic,
-                'saved'         => $saved,
-            ]
+        return new Response(
+            $this->render->render(
+                'forum::curators',
+                [
+                    'title'         => __('Curators'),
+                    'page_title'    => __('Curators'),
+                    'id'            => $topic->id,
+                    'page'          => $page,
+                    'back_url'      => $topic->url . ($page > 1 ? '?page=' . $page : ''),
+                    'total'         => $total,
+                    'curators_list' => $curatorsList,
+                    'topic'         => $topic,
+                    'saved'         => $saved,
+                ]
+            )
         );
     }
 }

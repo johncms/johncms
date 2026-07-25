@@ -16,6 +16,7 @@ use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class AvatarController
 {
@@ -31,20 +32,20 @@ final readonly class AvatarController
         $this->controllerContext->initModule('profile');
     }
 
-    public function form(int $id): string
+    public function form(int $id): Response
     {
         $context = $this->resolveContext($id);
-        if (is_string($context)) {
+        if ($context instanceof Response) {
             return $context;
         }
 
         return $this->renderForm($context);
     }
 
-    public function upload(int $id): string
+    public function upload(int $id): Response
     {
         $context = $this->resolveContext($id);
-        if (is_string($context)) {
+        if ($context instanceof Response) {
             return $context;
         }
 
@@ -56,31 +57,35 @@ final readonly class AvatarController
             }
             $this->uploadAvatarUseCase->execute($context->profileUser->id, $this->uploadedFileMapper->fromUploadedFile($uploaded));
         } catch (ImageUploadException $e) {
-            return $this->render->render(
-                'system::pages/result',
-                [
-                    'title'         => __('Upload Avatar'),
-                    'type'          => 'alert-danger',
-                    'message'       => $e->getMessage(),
-                    'back_url'      => '/profile/' . $context->profileUser->id . '/edit/avatar',
-                    'back_url_name' => __('Repeat'),
-                ]
+            return new Response(
+                $this->render->render(
+                    'system::pages/result',
+                    [
+                        'title'         => __('Upload Avatar'),
+                        'type'          => 'alert-danger',
+                        'message'       => $e->getMessage(),
+                        'back_url'      => '/profile/' . $context->profileUser->id . '/edit/avatar',
+                        'back_url_name' => __('Repeat'),
+                    ]
+                )
             );
         }
 
-        return $this->render->render(
-            'system::pages/result',
-            [
-                'title'         => __('Upload Avatar'),
-                'type'          => 'alert-success',
-                'message'       => __('The avatar is successfully uploaded'),
-                'back_url'      => '/profile/' . $context->profileUser->id . '/edit',
-                'back_url_name' => __('Continue'),
-            ]
+        return new Response(
+            $this->render->render(
+                'system::pages/result',
+                [
+                    'title'         => __('Upload Avatar'),
+                    'type'          => 'alert-success',
+                    'message'       => __('The avatar is successfully uploaded'),
+                    'back_url'      => '/profile/' . $context->profileUser->id . '/edit',
+                    'back_url_name' => __('Continue'),
+                ]
+            )
         );
     }
 
-    private function renderForm(EditProfileContextDTO $context): string
+    private function renderForm(EditProfileContextDTO $context): Response
     {
         $title = __('Upload Avatar');
 
@@ -92,43 +97,44 @@ final readonly class AvatarController
             'page_title' => $title,
         ]);
 
-        return $this->render->render(
-            'profile::images',
-            [
-                'title'      => $title,
-                'page_title' => $title,
-                'data'       => [
-                    'form_action' => '/profile/' . $context->profileUser->id . '/edit/avatar',
-                    'back_url'    => '/profile/' . $context->profileUser->id,
-                ],
-            ]
+        return new Response(
+            $this->render->render(
+                'profile::images',
+                [
+                    'title'      => $title,
+                    'page_title' => $title,
+                    'data'       => [
+                        'form_action' => '/profile/' . $context->profileUser->id . '/edit/avatar',
+                        'back_url'    => '/profile/' . $context->profileUser->id,
+                    ],
+                ]
+            )
         );
     }
 
-    /**
-     * @return EditProfileContextDTO|string
-     */
-    private function resolveContext(int $id): EditProfileContextDTO|string
+    private function resolveContext(int $id): EditProfileContextDTO|Response
     {
         try {
             return $this->getEditContextUseCase->execute($id);
         } catch (ProfileNotFoundException $e) {
             return $this->renderError($e->getMessage());
         } catch (ProfileAccessForbiddenException $e) {
-            http_response_code(403);
-            return $this->renderError($e->getMessage());
+            return $this->renderError($e->getMessage(), 403);
         }
     }
 
-    private function renderError(string $message): string
+    private function renderError(string $message, int $status = 200): Response
     {
-        return $this->render->render(
-            'system::pages/result',
-            [
-                'title'   => __('Upload Avatar'),
-                'type'    => 'alert-danger',
-                'message' => $message,
-            ]
+        return new Response(
+            $this->render->render(
+                'system::pages/result',
+                [
+                    'title'   => __('Upload Avatar'),
+                    'type'    => 'alert-danger',
+                    'message' => $message,
+                ]
+            ),
+            $status
         );
     }
 }

@@ -13,6 +13,7 @@ use Johncms\Modules\Forum\Application\UseCases\CreateVoteUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetAddVoteContextUseCase;
 use Johncms\Http\Request;
 use Johncms\System\View\Render;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class AddVoteController
 {
@@ -28,7 +29,7 @@ final readonly class AddVoteController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(int $id): string
+    public function __invoke(int $id): Response
     {
         try {
             $topicId = $this->contextUseCase->execute($id);
@@ -81,29 +82,33 @@ final readonly class AddVoteController
 
                 $this->createVoteUseCase->execute($topicId, $voteName, $answers);
 
-                return $this->render->render(
+                return new Response(
+                    $this->render->render(
+                        'system::pages/result',
+                        [
+                            'title'         => __('Add Poll'),
+                            'page_title'    => __('Add Poll'),
+                            'type'          => 'alert-success',
+                            'message'       => __('Poll added'),
+                            'back_url'      => $this->topicPathService->getTopicUrlById($topicId) ?? '/forum/',
+                            'back_url_name' => __('Continue'),
+                        ]
+                    )
+                );
+            }
+
+            return new Response(
+                $this->render->render(
                     'system::pages/result',
                     [
                         'title'         => __('Add Poll'),
                         'page_title'    => __('Add Poll'),
-                        'type'          => 'alert-success',
-                        'message'       => __('Poll added'),
-                        'back_url'      => $this->topicPathService->getTopicUrlById($topicId) ?? '/forum/',
-                        'back_url_name' => __('Continue'),
+                        'type'          => 'alert-danger',
+                        'message'       => __('The required fields are not filled'),
+                        'back_url'      => '/forum/addvote/' . $topicId . '/',
+                        'back_url_name' => __('Repeat'),
                     ]
-                );
-            }
-
-            return $this->render->render(
-                'system::pages/result',
-                [
-                    'title'         => __('Add Poll'),
-                    'page_title'    => __('Add Poll'),
-                    'type'          => 'alert-danger',
-                    'message'       => __('The required fields are not filled'),
-                    'back_url'      => '/forum/addvote/' . $topicId . '/',
-                    'back_url_name' => __('Repeat'),
-                ]
+                )
             );
         }
 
@@ -116,17 +121,19 @@ final readonly class AddVoteController
             ];
         }
 
-        return $this->render->render(
-            'forum::add_poll',
-            [
-                'title'      => __('Add File'),
-                'page_title' => __('Add File'),
-                'id'         => $topicId,
-                'back_url'   => $this->topicPathService->getTopicUrlById($topicId) ?? '/forum/',
-                'count_vote' => $countVote,
-                'poll_name'  => htmlentities($this->request->body('name_vote', ''), ENT_QUOTES, 'UTF-8'),
-                'votes'      => $votes,
-            ]
+        return new Response(
+            $this->render->render(
+                'forum::add_poll',
+                [
+                    'title'      => __('Add File'),
+                    'page_title' => __('Add File'),
+                    'id'         => $topicId,
+                    'back_url'   => $this->topicPathService->getTopicUrlById($topicId) ?? '/forum/',
+                    'count_vote' => $countVote,
+                    'poll_name'  => htmlentities($this->request->body('name_vote', ''), ENT_QUOTES, 'UTF-8'),
+                    'votes'      => $votes,
+                ]
+            )
         );
     }
 

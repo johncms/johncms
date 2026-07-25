@@ -13,6 +13,7 @@ use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\Http\Request;
 use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Psr\Log\LoggerInterface;
 use Throwable;
 
@@ -30,15 +31,12 @@ final readonly class UploadFileController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(): string
+    public function __invoke(): JsonResponse
     {
-        header('Content-Type: application/json');
-
         try {
             $this->forumAccessUseCase->execute();
         } catch (ForumAccessDeniedException) {
-            http_response_code(403);
-            return json_encode(['error' => ['message' => __('Access denied')]]);
+            return new JsonResponse(['error' => ['message' => __('Access denied')]], JsonResponse::HTTP_FORBIDDEN);
         }
 
         $config = config('johncms');
@@ -48,24 +46,23 @@ final readonly class UploadFileController
             || isset($this->currentUser->ban[11])
             || (! $this->currentUser->rights && $config['mod_forum'] === 3)
         ) {
-            http_response_code(403);
-            return json_encode(['error' => ['message' => __('Access denied')]]);
+            return new JsonResponse(['error' => ['message' => __('Access denied')]], JsonResponse::HTTP_FORBIDDEN);
         }
 
         try {
             $upload = $this->request->files->get('upload');
             if (! $upload instanceof UploadedFile) {
-                return json_encode(['error' => ['message' => __('Error uploading file')]]);
+                return new JsonResponse(['error' => ['message' => __('Error uploading file')]]);
             }
 
             $fileInfo = new FileInfo((string) $this->uploadedFileMapper->fromUploadedFile($upload)->clientName);
             if (! $fileInfo->isImage()) {
-                return json_encode(['error' => ['message' => __('Only images are allowed')]]);
+                return new JsonResponse(['error' => ['message' => __('Only images are allowed')]]);
             }
 
             $file = $this->fileStorage->saveFromRequest('upload', 'forum_files');
 
-            return json_encode(
+            return new JsonResponse(
                 [
                     'id'       => $file->id,
                     'name'     => $file->name,
@@ -85,8 +82,10 @@ final readonly class UploadFileController
                 ]
             );
 
-            http_response_code(500);
-            return json_encode(['error' => ['message' => __('Error uploading file')]]);
+            return new JsonResponse(
+                ['error' => ['message' => __('Error uploading file')]],
+                JsonResponse::HTTP_INTERNAL_SERVER_ERROR
+            );
         }
     }
 }

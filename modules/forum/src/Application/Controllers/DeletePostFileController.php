@@ -17,6 +17,7 @@ use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class DeletePostFileController
 {
@@ -35,7 +36,7 @@ final readonly class DeletePostFileController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(int $id, int $fid): string
+    public function __invoke(int $id, int $fid): Response
     {
         try {
             $context = $this->contextUseCase->execute($id, $this->getForumSettings());
@@ -72,15 +73,17 @@ final readonly class DeletePostFileController
             );
 
             if (! $validator->isValid()) {
-                return $this->render->render(
-                    'system::pages/result',
-                    [
-                        'title'         => __('Delete file'),
-                        'type'          => 'alert-danger',
-                        'message'       => __('Wrong data'),
-                        'back_url'      => '/forum/delete-post-file/' . $id . '/' . $fid . '/',
-                        'back_url_name' => __('Back'),
-                    ]
+                return new Response(
+                    $this->render->render(
+                        'system::pages/result',
+                        [
+                            'title'         => __('Delete file'),
+                            'type'          => 'alert-danger',
+                            'message'       => __('Wrong data'),
+                            'back_url'      => '/forum/delete-post-file/' . $id . '/' . $fid . '/',
+                            'back_url_name' => __('Back'),
+                        ]
+                    )
                 );
             }
 
@@ -88,17 +91,19 @@ final readonly class DeletePostFileController
             redirect($context->backUrl);
         }
 
-        return $this->render->render(
-            'forum::delete_file',
-            [
-                'title'         => __('Delete file'),
-                'page_title'    => __('Delete file'),
-                'id'            => $id,
-                'fid'           => $fid,
-                'back_url'      => $context->backUrl,
-                'csrf_token'    => $this->csrf->getToken(),
-                'delete_action' => '/forum/delete-post-file/' . $id . '/' . $fid . '/',
-            ]
+        return new Response(
+            $this->render->render(
+                'forum::delete_file',
+                [
+                    'title'         => __('Delete file'),
+                    'page_title'    => __('Delete file'),
+                    'id'            => $id,
+                    'fid'           => $fid,
+                    'back_url'      => $context->backUrl,
+                    'csrf_token'    => $this->csrf->getToken(),
+                    'delete_action' => '/forum/delete-post-file/' . $id . '/' . $fid . '/',
+                ]
+            )
         );
     }
 

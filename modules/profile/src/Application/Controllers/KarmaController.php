@@ -24,6 +24,7 @@ use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class KarmaController
 {
@@ -45,7 +46,7 @@ final readonly class KarmaController
         $this->controllerContext->initModule('profile');
     }
 
-    public function index(int $id): string
+    public function index(int $id): Response
     {
         $this->ensureKarmaEnabled();
 
@@ -67,7 +68,7 @@ final readonly class KarmaController
         return $this->renderList(__('Karma'), $id, $dto, $pagination);
     }
 
-    public function newResponses(int $id): string
+    public function newResponses(int $id): Response
     {
         $this->ensureKarmaEnabled();
 
@@ -83,7 +84,7 @@ final readonly class KarmaController
         return $this->renderList(__('New responses'), $id, $dto, $pagination);
     }
 
-    public function voteForm(int $id): string
+    public function voteForm(int $id): Response
     {
         $this->ensureKarmaEnabled();
 
@@ -98,7 +99,7 @@ final readonly class KarmaController
         return $this->renderVoteForm($context);
     }
 
-    public function vote(int $id): string
+    public function vote(int $id): Response
     {
         $this->ensureKarmaEnabled();
 
@@ -117,19 +118,21 @@ final readonly class KarmaController
         );
         $this->voteKarmaUseCase->execute($command, $context);
 
-        return $this->render->render(
-            'system::pages/result',
-            [
-                'title'         => __('Karma'),
-                'type'          => 'alert-success',
-                'message'       => __('You have successfully voted'),
-                'back_url'      => '/profile/' . $context->targetId,
-                'back_url_name' => __('Continue'),
-            ]
+        return new Response(
+            $this->render->render(
+                'system::pages/result',
+                [
+                    'title'         => __('Karma'),
+                    'type'          => 'alert-success',
+                    'message'       => __('You have successfully voted'),
+                    'back_url'      => '/profile/' . $context->targetId,
+                    'back_url_name' => __('Continue'),
+                ]
+            )
         );
     }
 
-    public function deleteForm(int $id, int $voteId): string
+    public function deleteForm(int $id, int $voteId): Response
     {
         $this->ensureKarmaEnabled();
         if ($error = $this->supervisorGuard()) {
@@ -151,7 +154,7 @@ final readonly class KarmaController
         );
     }
 
-    public function delete(int $id, int $voteId): string
+    public function delete(int $id, int $voteId): Response
     {
         $this->ensureKarmaEnabled();
         if ($error = $this->supervisorGuard()) {
@@ -172,7 +175,7 @@ final readonly class KarmaController
         redirect('/profile/' . $id . '/karma?type=' . $this->resolveType());
     }
 
-    public function cleanForm(int $id): string
+    public function cleanForm(int $id): Response
     {
         $this->ensureKarmaEnabled();
         if ($error = $this->supervisorGuard()) {
@@ -186,7 +189,7 @@ final readonly class KarmaController
         );
     }
 
-    public function clean(int $id): string
+    public function clean(int $id): Response
     {
         $this->ensureKarmaEnabled();
         if ($error = $this->supervisorGuard()) {
@@ -201,7 +204,7 @@ final readonly class KarmaController
         redirect('/profile/' . $id);
     }
 
-    private function renderList(string $title, int $profileId, KarmaListDTO $dto, Pagination $pagination): string
+    private function renderList(string $title, int $profileId, KarmaListDTO $dto, Pagination $pagination): Response
     {
         $this->navChain->add(__('User Profile'), '/profile/' . $profileId);
         $this->navChain->add(__('Karma'));
@@ -211,24 +214,26 @@ final readonly class KarmaController
             'page_title' => $title,
         ]);
 
-        return $this->render->render(
-            'profile::karma',
-            [
-                'title'      => $title,
-                'page_title' => $title,
-                'data'       => [
-                    'filters'    => $dto->filters,
-                    'items'      => $dto->items,
-                    'total'      => $pagination->getTotal(),
-                    'pagination' => $pagination->render(),
-                    'reset_url'  => $dto->resetUrl,
-                    'back_url'   => $dto->backUrl,
-                ],
-            ]
+        return new Response(
+            $this->render->render(
+                'profile::karma',
+                [
+                    'title'      => $title,
+                    'page_title' => $title,
+                    'data'       => [
+                        'filters'    => $dto->filters,
+                        'items'      => $dto->items,
+                        'total'      => $pagination->getTotal(),
+                        'pagination' => $pagination->render(),
+                        'reset_url'  => $dto->resetUrl,
+                        'back_url'   => $dto->backUrl,
+                    ],
+                ]
+            )
         );
     }
 
-    private function renderVoteForm(VoteContextDTO $context): string
+    private function renderVoteForm(VoteContextDTO $context): Response
     {
         $title = __('Karma');
 
@@ -240,22 +245,24 @@ final readonly class KarmaController
             'page_title' => $title,
         ]);
 
-        return $this->render->render(
-            'profile::karma_vote',
-            [
-                'title'      => $title,
-                'page_title' => $title,
-                'data'       => [
-                    'options'     => range(1, $context->availablePoints),
-                    'vote_title'  => __('Vote for') . ': ' . $context->targetName,
-                    'form_action' => '/profile/' . $context->targetId . '/karma/vote',
-                    'back_url'    => '/profile/' . $context->targetId,
-                ],
-            ]
+        return new Response(
+            $this->render->render(
+                'profile::karma_vote',
+                [
+                    'title'      => $title,
+                    'page_title' => $title,
+                    'data'       => [
+                        'options'     => range(1, $context->availablePoints),
+                        'vote_title'  => __('Vote for') . ': ' . $context->targetName,
+                        'form_action' => '/profile/' . $context->targetId . '/karma/vote',
+                        'back_url'    => '/profile/' . $context->targetId,
+                    ],
+                ]
+            )
         );
     }
 
-    private function renderConfirm(string $message, string $formAction, string $backUrl): string
+    private function renderConfirm(string $message, string $formAction, string $backUrl): Response
     {
         $title = __('Karma');
 
@@ -267,51 +274,57 @@ final readonly class KarmaController
             'page_title' => $title,
         ]);
 
-        return $this->render->render(
-            'profile::karma_delete',
-            [
-                'title'      => $title,
-                'page_title' => $title,
-                'data'       => [
-                    'message'     => $message,
-                    'form_action' => $formAction,
-                    'back_url'    => $backUrl,
-                ],
-            ]
+        return new Response(
+            $this->render->render(
+                'profile::karma_delete',
+                [
+                    'title'      => $title,
+                    'page_title' => $title,
+                    'data'       => [
+                        'message'     => $message,
+                        'form_action' => $formAction,
+                        'back_url'    => $backUrl,
+                    ],
+                ]
+            )
         );
     }
 
-    private function renderVoteErrors(array $errors, int $profileId): string
+    private function renderVoteErrors(array $errors, int $profileId): Response
     {
-        return $this->render->render(
-            'system::pages/result',
-            [
-                'title'         => __('Karma'),
-                'type'          => 'alert-danger',
-                'message'       => $errors,
-                'back_url'      => '/profile/' . $profileId,
-                'back_url_name' => __('Back'),
-            ]
+        return new Response(
+            $this->render->render(
+                'system::pages/result',
+                [
+                    'title'         => __('Karma'),
+                    'type'          => 'alert-danger',
+                    'message'       => $errors,
+                    'back_url'      => '/profile/' . $profileId,
+                    'back_url_name' => __('Back'),
+                ]
+            )
         );
     }
 
-    private function renderError(string $message): string
+    private function renderError(string $message, int $status = 200): Response
     {
-        return $this->render->render(
-            'system::pages/result',
-            [
-                'title'   => __('Karma'),
-                'type'    => 'alert-danger',
-                'message' => $message,
-            ]
+        return new Response(
+            $this->render->render(
+                'system::pages/result',
+                [
+                    'title'   => __('Karma'),
+                    'type'    => 'alert-danger',
+                    'message' => $message,
+                ]
+            ),
+            $status
         );
     }
 
-    private function supervisorGuard(): ?string
+    private function supervisorGuard(): ?Response
     {
         if ($this->currentUser->rights !== 9) {
-            http_response_code(403);
-            return $this->renderError(__('Access forbidden'));
+            return $this->renderError(__('Access forbidden'), 403);
         }
 
         return null;

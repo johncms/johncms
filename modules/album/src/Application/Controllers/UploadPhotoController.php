@@ -17,6 +17,7 @@ use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class UploadPhotoController
 {
@@ -33,20 +34,20 @@ final readonly class UploadPhotoController
         $this->controllerContext->initModule('album');
     }
 
-    public function form(int $al): string
+    public function form(int $al): Response
     {
         $album = $this->resolveContext($al);
-        if (is_string($album)) {
+        if ($album instanceof Response) {
             return $album;
         }
 
         return $this->renderForm($album, []);
     }
 
-    public function upload(int $al): string
+    public function upload(int $al): Response
     {
         $album = $this->resolveContext($al);
-        if (is_string($album)) {
+        if ($album instanceof Response) {
             return $album;
         }
 
@@ -62,22 +63,24 @@ final readonly class UploadPhotoController
             return $this->renderForm($album, [$e->getMessage()]);
         }
 
-        return $this->render->render(
-            'system::pages/result',
-            [
-                'title'         => __('Upload image'),
-                'type'          => 'alert-success',
-                'message'       => __('Image uploaded'),
-                'back_url'      => '/album/' . $album->id,
-                'back_url_name' => __('Continue'),
-            ]
+        return new Response(
+            $this->render->render(
+                'system::pages/result',
+                [
+                    'title'         => __('Upload image'),
+                    'type'          => 'alert-success',
+                    'message'       => __('Image uploaded'),
+                    'back_url'      => '/album/' . $album->id,
+                    'back_url_name' => __('Continue'),
+                ]
+            )
         );
     }
 
     /**
      * @param list<string> $errors
      */
-    private function renderForm(Album $album, array $errors): string
+    private function renderForm(Album $album, array $errors): Response
     {
         $title = __('Upload image');
 
@@ -92,47 +95,49 @@ final readonly class UploadPhotoController
             'page_title' => $title,
         ]);
 
-        return $this->render->render(
-            'album::add_photo',
-            [
-                'title'      => $title,
-                'page_title' => $title,
-                'data'       => [
-                    'action_url'    => '/album/' . $album->id . '/upload',
-                    'back_url'      => '/album/' . $album->id,
-                    'error_message' => $errors,
-                ],
-            ]
+        return new Response(
+            $this->render->render(
+                'album::add_photo',
+                [
+                    'title'      => $title,
+                    'page_title' => $title,
+                    'data'       => [
+                        'action_url'    => '/album/' . $album->id . '/upload',
+                        'back_url'      => '/album/' . $album->id,
+                        'error_message' => $errors,
+                    ],
+                ]
+            )
         );
     }
 
     /**
      * Resolve the album with the access guard, or a rendered error page (with the proper HTTP status set).
-     *
-     * @return Album|string
      */
-    private function resolveContext(int $al): Album|string
+    private function resolveContext(int $al): Album|Response
     {
         try {
             return $this->getContextUseCase->execute($al);
         } catch (AlbumNotFoundException $e) {
             return $this->renderError($e->getMessage());
         } catch (AlbumEditForbiddenException $e) {
-            http_response_code(403);
-            return $this->renderError($e->getMessage());
+            return $this->renderError($e->getMessage(), 403);
         }
     }
 
-    private function renderError(string $message): string
+    private function renderError(string $message, int $status = 200): Response
     {
-        return $this->render->render(
-            'system::pages/result',
-            [
-                'title'    => __('Upload image'),
-                'type'     => 'alert-danger',
-                'message'  => $message,
-                'back_url' => '/album',
-            ]
+        return new Response(
+            $this->render->render(
+                'system::pages/result',
+                [
+                    'title'    => __('Upload image'),
+                    'type'     => 'alert-danger',
+                    'message'  => $message,
+                    'back_url' => '/album',
+                ]
+            ),
+            $status
         );
     }
 }

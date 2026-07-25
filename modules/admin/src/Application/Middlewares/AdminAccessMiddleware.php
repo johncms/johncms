@@ -10,6 +10,7 @@ use Johncms\Http\Request;
 use Johncms\System\i18n\Translator;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Базовый гейт админпанели: доступ только авторизованным пользователям
@@ -27,34 +28,32 @@ final readonly class AdminAccessMiddleware implements MiddlewareInterface
     ) {
     }
 
-    public function handle(Request $request, callable $next): mixed
+    public function handle(Request $request, callable $next): Response
     {
         if (! $this->user->isValid()) {
             redirect('/admin/login');
         }
 
         if ($this->user->rights < UserRights::ADMIN->value) {
-            $this->renderForbidden();
+            return $this->renderForbidden();
         }
 
         return $next($request);
     }
 
-    private function renderForbidden(): never
+    private function renderForbidden(): Response
     {
         $this->translator->addTranslationDomain('admin', MODULES_PATH . 'admin/locale', false);
 
-        if (! headers_sent()) {
-            header('HTTP/1.0 403 Forbidden');
-        }
-
-        echo $this->render->render(
-            'system::error/403',
-            [
-                'title'   => d__('admin', 'Access denied'),
-                'message' => '',
-            ]
+        return new Response(
+            $this->render->render(
+                'system::error/403',
+                [
+                    'title'   => d__('admin', 'Access denied'),
+                    'message' => '',
+                ]
+            ),
+            Response::HTTP_FORBIDDEN
         );
-        exit;
     }
 }

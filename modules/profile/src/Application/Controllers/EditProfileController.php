@@ -19,6 +19,7 @@ use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class EditProfileController
 {
@@ -35,10 +36,10 @@ final readonly class EditProfileController
         $this->controllerContext->initModule('profile');
     }
 
-    public function form(int $id): string
+    public function form(int $id): Response
     {
         $context = $this->resolveContext($id);
-        if (is_string($context)) {
+        if ($context instanceof Response) {
             return $context;
         }
 
@@ -51,10 +52,10 @@ final readonly class EditProfileController
         return $this->renderForm($context, $this->formDataFromUser($context->profileUser), [], $successMessage);
     }
 
-    public function save(int $id): string
+    public function save(int $id): Response
     {
         $context = $this->resolveContext($id);
-        if (is_string($context)) {
+        if ($context instanceof Response) {
             return $context;
         }
 
@@ -70,10 +71,10 @@ final readonly class EditProfileController
         redirect('/profile/' . $context->profileUser->id . '/edit');
     }
 
-    public function deleteAvatar(int $id): string
+    public function deleteAvatar(int $id): Response
     {
         $context = $this->resolveContext($id);
-        if (is_string($context)) {
+        if ($context instanceof Response) {
             return $context;
         }
         if (! $this->isCsrfValid()) {
@@ -85,10 +86,10 @@ final readonly class EditProfileController
         redirect('/profile/' . $context->profileUser->id . '/edit');
     }
 
-    public function deletePhoto(int $id): string
+    public function deletePhoto(int $id): Response
     {
         $context = $this->resolveContext($id);
-        if (is_string($context)) {
+        if ($context instanceof Response) {
             return $context;
         }
         if (! $this->isCsrfValid()) {
@@ -102,18 +103,15 @@ final readonly class EditProfileController
 
     /**
      * Resolve the edit context or, on failure, a rendered error page (with the proper HTTP status set).
-     *
-     * @return EditProfileContextDTO|string
      */
-    private function resolveContext(int $id): EditProfileContextDTO|string
+    private function resolveContext(int $id): EditProfileContextDTO|Response
     {
         try {
             return $this->getEditContextUseCase->execute($id);
         } catch (ProfileNotFoundException $e) {
             return $this->renderError($e->getMessage());
         } catch (ProfileAccessForbiddenException $e) {
-            http_response_code(403);
-            return $this->renderError($e->getMessage());
+            return $this->renderError($e->getMessage(), 403);
         }
     }
 
@@ -183,7 +181,7 @@ final readonly class EditProfileController
      * @param array<string, mixed> $formData
      * @param array<string, mixed> $errors
      */
-    private function renderForm(EditProfileContextDTO $context, array $formData, array $errors, ?string $successMessage): string
+    private function renderForm(EditProfileContextDTO $context, array $formData, array $errors, ?string $successMessage): Response
     {
         $title = __('Edit Profile');
 
@@ -204,33 +202,38 @@ final readonly class EditProfileController
             'page_title' => $title,
         ]);
 
-        return $this->render->render(
-            'profile::edit',
-            [
-                'title'      => $title,
-                'page_title' => $title,
-                'data'       => [
-                    'errors'          => $errors,
-                    'success_message' => $successMessage,
-                    'back_url'        => '/profile/' . $context->profileUser->id,
-                    'form_action'     => '/profile/' . $context->profileUser->id . '/edit',
-                    'has_avatar'      => $hasAvatar,
-                    'user'            => $userArray,
-                    'form_data'       => $formData,
-                ],
-            ]
+        return new Response(
+            $this->render->render(
+                'profile::edit',
+                [
+                    'title'      => $title,
+                    'page_title' => $title,
+                    'data'       => [
+                        'errors'          => $errors,
+                        'success_message' => $successMessage,
+                        'back_url'        => '/profile/' . $context->profileUser->id,
+                        'form_action'     => '/profile/' . $context->profileUser->id . '/edit',
+                        'has_avatar'      => $hasAvatar,
+                        'user'            => $userArray,
+                        'form_data'       => $formData,
+                    ],
+                ]
+            )
         );
     }
 
-    private function renderError(string $message): string
+    private function renderError(string $message, int $status = 200): Response
     {
-        return $this->render->render(
-            'system::pages/result',
-            [
-                'title'   => __('Edit Profile'),
-                'type'    => 'alert-danger',
-                'message' => $message,
-            ]
+        return new Response(
+            $this->render->render(
+                'system::pages/result',
+                [
+                    'title'   => __('Edit Profile'),
+                    'type'    => 'alert-danger',
+                    'message' => $message,
+                ]
+            ),
+            $status
         );
     }
 }

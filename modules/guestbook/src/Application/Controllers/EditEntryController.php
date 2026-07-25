@@ -15,6 +15,7 @@ use Johncms\Http\Session;
 use Johncms\System\Utility\EditorContentNormalizer;
 use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class EditEntryController
 {
@@ -31,7 +32,7 @@ final readonly class EditEntryController
         $this->context->initModule('guestbook');
     }
 
-    public function __invoke(): string
+    public function __invoke(): Response
     {
         $baseUrl = '/guestbook/';
 
@@ -45,15 +46,17 @@ final readonly class EditEntryController
         } catch (GuestbookEntryNotFoundException) {
             pageNotFound();
         } catch (GuestbookAccessDeniedException) {
-            http_response_code(403);
-            return $this->render->render(
-                'system::pages/result',
-                [
-                    'title'    => __('Edit message'),
-                    'message'  => __('Wrong data'),
-                    'type'     => 'alert-danger',
-                    'back_url' => $baseUrl,
-                ]
+            return new Response(
+                $this->render->render(
+                    'system::pages/result',
+                    [
+                        'title'    => __('Edit message'),
+                        'message'  => __('Wrong data'),
+                        'type'     => 'alert-danger',
+                        'back_url' => $baseUrl,
+                    ]
+                ),
+                Response::HTTP_FORBIDDEN
             );
         }
 
@@ -89,14 +92,16 @@ final readonly class EditEntryController
             $errors = $validator->getErrors();
         }
 
-        return $this->render->render(
-            'guestbook::edit',
-            [
-                'id'      => $id,
-                'message' => $entry,
-                'text'    => $text,
-                'errors'  => $errors,
-            ]
+        return new Response(
+            $this->render->render(
+                'guestbook::edit',
+                [
+                    'id'      => $id,
+                    'message' => $entry,
+                    'text'    => $text,
+                    'errors'  => $errors,
+                ]
+            )
         );
     }
 }

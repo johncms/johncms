@@ -60,10 +60,13 @@ final readonly class ForumTopicController
                 filterByUsers: $filterByUsers,
             );
         } catch (ForumNotFoundException $exception) {
-            $errorCode = $exception->getErrorCode();
-            http_response_code($errorCode->httpStatus());
-            $this->render->addData(["error_code" => $errorCode->value]);
-            ForumUtils::notFound();
+            // ForumNotFoundException always maps to FORUM_NOT_FOUND (404), the same status
+            // pageNotFound() answers with, so no separate status assignment is needed here.
+            $this->render->addData(['error_code' => $exception->getErrorCode()->value]);
+            pageNotFound(
+                title: __('Forum'),
+                message: __('Topic has been deleted or does not exists'),
+            );
         }
 
         $this->navChain->add(__('Forum'), '/forum/');

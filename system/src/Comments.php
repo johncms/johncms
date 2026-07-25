@@ -218,7 +218,7 @@ class Comments
                                     ]
                                 );
 
-                                header('Location: ' . str_replace('&amp;', '&', $this->url));
+                                redirect(str_replace('&amp;', '&', $this->url));
                             } else {
                                 echo $this->view->render(
                                     'system::pages/result',
@@ -318,7 +318,7 @@ class Comments
                                     ]
                                 );
 
-                                header('Location: ' . str_replace('&amp;', '&', $this->url));
+                                redirect(str_replace('&amp;', '&', $this->url));
                             } else {
                                 echo $this->view->render(
                                     'system::pages/result',
@@ -398,7 +398,7 @@ class Comments
                             // Обновляем счетчик комментариев
                             $this->msgTotal(1);
                         }
-                        header('Location: ' . str_replace('&amp;', '&', $this->url));
+                        redirect(str_replace('&amp;', '&', $this->url));
                     } else {
                         $data = [
                             'delete_url' => $this->buildUrl('&amp;mod=del&amp;item=' . $this->item . '&amp;yes'),

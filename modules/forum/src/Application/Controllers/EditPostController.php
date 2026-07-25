@@ -18,6 +18,7 @@ use Johncms\System\Utility\EditorContentNormalizer;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class EditPostController
 {
@@ -37,7 +38,7 @@ final readonly class EditPostController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(int $id): string
+    public function __invoke(int $id): Response
     {
         $page = max(1, $this->request->queryInt('page', 1));
 
@@ -73,15 +74,17 @@ final readonly class EditPostController
             $msg = trim($msg);
             $attachedFiles = (array) $this->request->bodyInts('attached_files');
             if ($msg === '') {
-                return $this->render->render(
-                    'system::pages/result',
-                    [
-                        'title'         => __('Edit Message'),
-                        'type'          => 'alert-danger',
-                        'message'       => __('You have not entered the message'),
-                        'back_url'      => '/forum/edit-post/' . $id . '/' . ($page > 1 ? '?page=' . $page : ''),
-                        'back_url_name' => __('Repeat'),
-                    ]
+                return new Response(
+                    $this->render->render(
+                        'system::pages/result',
+                        [
+                            'title'         => __('Edit Message'),
+                            'type'          => 'alert-danger',
+                            'message'       => __('You have not entered the message'),
+                            'back_url'      => '/forum/edit-post/' . $id . '/' . ($page > 1 ? '?page=' . $page : ''),
+                            'back_url_name' => __('Repeat'),
+                        ]
+                    )
                 );
             }
 
@@ -90,15 +93,17 @@ final readonly class EditPostController
                 ['csrf_token' => ['Csrf']]
             );
             if (! $validator->isValid()) {
-                return $this->render->render(
-                    'system::pages/result',
-                    [
-                        'title'         => __('Edit Message'),
-                        'type'          => 'alert-danger',
-                        'message'       => __('Wrong data'),
-                        'back_url'      => '/forum/edit-post/' . $id . '/',
-                        'back_url_name' => __('Back'),
-                    ]
+                return new Response(
+                    $this->render->render(
+                        'system::pages/result',
+                        [
+                            'title'         => __('Edit Message'),
+                            'type'          => 'alert-danger',
+                            'message'       => __('Wrong data'),
+                            'back_url'      => '/forum/edit-post/' . $id . '/',
+                            'back_url_name' => __('Back'),
+                        ]
+                    )
                 );
             }
 
@@ -114,18 +119,20 @@ final readonly class EditPostController
             ? (string) $context->message->getRawOriginal('text')
             : $this->request->body('msg');
 
-        return $this->render->render(
-            'forum::edit_post',
-            [
-                'title'          => __('Edit Message'),
-                'page_title'     => __('Edit Message'),
-                'id'             => $id,
-                'msg'            => $message,
-                'page'           => $page,
-                'back_url'       => $context->backUrl,
-                'settings_forum' => $this->getForumSettings(),
-                'csrf_token'     => $this->csrf->getToken(),
-            ]
+        return new Response(
+            $this->render->render(
+                'forum::edit_post',
+                [
+                    'title'          => __('Edit Message'),
+                    'page_title'     => __('Edit Message'),
+                    'id'             => $id,
+                    'msg'            => $message,
+                    'page'           => $page,
+                    'back_url'       => $context->backUrl,
+                    'settings_forum' => $this->getForumSettings(),
+                    'csrf_token'     => $this->csrf->getToken(),
+                ]
+            )
         );
     }
 

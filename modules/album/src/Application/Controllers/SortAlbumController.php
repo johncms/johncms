@@ -13,6 +13,7 @@ use Johncms\Modules\Album\Domain\Models\Album;
 use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class SortAlbumController
 {
@@ -26,10 +27,10 @@ final readonly class SortAlbumController
         $this->controllerContext->initModule('album');
     }
 
-    public function moveUp(int $al): string
+    public function moveUp(int $al): Response
     {
         $album = $this->resolveContext($al);
-        if (is_string($album)) {
+        if ($album instanceof Response) {
             return $album;
         }
         if (! $this->isCsrfValid()) {
@@ -41,10 +42,10 @@ final readonly class SortAlbumController
         redirect('/album/user/' . $album->user_id);
     }
 
-    public function moveDown(int $al): string
+    public function moveDown(int $al): Response
     {
         $album = $this->resolveContext($al);
-        if (is_string($album)) {
+        if ($album instanceof Response) {
             return $album;
         }
         if (! $this->isCsrfValid()) {
@@ -58,18 +59,15 @@ final readonly class SortAlbumController
 
     /**
      * Resolve the album with the access guard, or a rendered error page (with the proper HTTP status set).
-     *
-     * @return Album|string
      */
-    private function resolveContext(int $al): Album|string
+    private function resolveContext(int $al): Album|Response
     {
         try {
             return $this->getContextUseCase->execute($al);
         } catch (AlbumNotFoundException $e) {
             return $this->renderError($e->getMessage());
         } catch (AlbumEditForbiddenException $e) {
-            http_response_code(403);
-            return $this->renderError($e->getMessage());
+            return $this->renderError($e->getMessage(), 403);
         }
     }
 
@@ -83,15 +81,18 @@ final readonly class SortAlbumController
         return $validator->isValid();
     }
 
-    private function renderError(string $message): string
+    private function renderError(string $message, int $status = 200): Response
     {
-        return $this->render->render(
-            'system::pages/result',
-            [
-                'title'   => __('Albums'),
-                'type'    => 'alert-danger',
-                'message' => $message,
-            ]
+        return new Response(
+            $this->render->render(
+                'system::pages/result',
+                [
+                    'title'   => __('Albums'),
+                    'type'    => 'alert-danger',
+                    'message' => $message,
+                ]
+            ),
+            $status
         );
     }
 }

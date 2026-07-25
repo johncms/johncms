@@ -11,6 +11,7 @@ use Johncms\Modules\Profile\Application\UseCases\GetResetSettingsContextUseCase;
 use Johncms\Modules\Profile\Application\UseCases\ResetUserSettingsUseCase;
 use Johncms\NavChain;
 use Johncms\System\View\Render;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class ResetSettingsController
 {
@@ -24,7 +25,7 @@ final readonly class ResetSettingsController
         $this->controllerContext->initModule('profile');
     }
 
-    public function __invoke(int $id): string
+    public function __invoke(int $id): Response
     {
         $title = __('Reset user settings');
 
@@ -33,8 +34,7 @@ final readonly class ResetSettingsController
         } catch (ProfileNotFoundException $e) {
             return $this->renderError($title, $e->getMessage());
         } catch (ProfileAccessForbiddenException $e) {
-            http_response_code(403);
-            return $this->renderError($title, $e->getMessage());
+            return $this->renderError($title, $e->getMessage(), 403);
         }
 
         $this->resetUserSettingsUseCase->execute($context->profileUserId);
@@ -42,26 +42,31 @@ final readonly class ResetSettingsController
         $this->navChain->add($context->profileUserName, '/profile/' . $context->profileUserId);
         $this->navChain->add($title);
 
-        return $this->render->render(
-            'system::pages/result',
-            [
-                'title'    => $title,
-                'type'     => 'alert-success',
-                'message'  => sprintf(__('For user %s default settings were set.'), $context->profileUserName),
-                'back_url' => '/profile/' . $context->profileUserId,
-            ]
+        return new Response(
+            $this->render->render(
+                'system::pages/result',
+                [
+                    'title'    => $title,
+                    'type'     => 'alert-success',
+                    'message'  => sprintf(__('For user %s default settings were set.'), $context->profileUserName),
+                    'back_url' => '/profile/' . $context->profileUserId,
+                ]
+            )
         );
     }
 
-    private function renderError(string $title, string $message): string
+    private function renderError(string $title, string $message, int $status = 200): Response
     {
-        return $this->render->render(
-            'system::pages/result',
-            [
-                'title'   => $title,
-                'type'    => 'alert-danger',
-                'message' => $message,
-            ]
+        return new Response(
+            $this->render->render(
+                'system::pages/result',
+                [
+                    'title'   => $title,
+                    'type'    => 'alert-danger',
+                    'message' => $message,
+                ]
+            ),
+            $status
         );
     }
 }

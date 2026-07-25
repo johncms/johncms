@@ -261,12 +261,6 @@ parameters:
 			path: modules/album/src/Infrastructure/Persistence/Repository/EloquentAlbumRepository.php
 
 		-
-			message: '#^Unreachable statement \- code above always terminates\.$#'
-			identifier: deadCode.unreachable
-			count: 1
-			path: modules/collections/src/Application/Controllers/CollectionRouterController.php
-
-		-
 			message: '#^Strict comparison using \!\=\= between non\-empty\-string and '''' will always evaluate to true\.$#'
 			identifier: notIdentical.alwaysTrue
 			count: 1
@@ -1285,12 +1279,6 @@ parameters:
 			identifier: function.alreadyNarrowedType
 			count: 1
 			path: modules/forum/src/Application/Controllers/CuratorsController.php
-
-		-
-			message: '#^Variable \$result might not be defined\.$#'
-			identifier: variable.undefined
-			count: 9
-			path: modules/forum/src/Application/Controllers/ForumTopicController.php
 
 		-
 			message: '#^Call to function is_array\(\) with array will always evaluate to true\.$#'

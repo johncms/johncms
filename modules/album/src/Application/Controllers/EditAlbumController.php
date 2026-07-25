@@ -17,6 +17,7 @@ use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class EditAlbumController
 {
@@ -32,47 +33,47 @@ final readonly class EditAlbumController
         $this->controllerContext->initModule('album');
     }
 
-    public function createForm(int $id): string
+    public function createForm(int $id): Response
     {
         $context = $this->resolveCreateContext($id);
-        if (is_string($context)) {
+        if ($context instanceof Response) {
             return $context;
         }
 
         return $this->renderForm($context, $this->emptyFormData(), []);
     }
 
-    public function createSave(int $id): string
+    public function createSave(int $id): Response
     {
         $context = $this->resolveCreateContext($id);
-        if (is_string($context)) {
+        if ($context instanceof Response) {
             return $context;
         }
 
         return $this->handleSave($context);
     }
 
-    public function editForm(int $al): string
+    public function editForm(int $al): Response
     {
         $context = $this->resolveEditContext($al);
-        if (is_string($context)) {
+        if ($context instanceof Response) {
             return $context;
         }
 
         return $this->renderForm($context, $this->formDataFromAlbum($context), []);
     }
 
-    public function editSave(int $al): string
+    public function editSave(int $al): Response
     {
         $context = $this->resolveEditContext($al);
-        if (is_string($context)) {
+        if ($context instanceof Response) {
             return $context;
         }
 
         return $this->handleSave($context);
     }
 
-    private function handleSave(EditAlbumContextDTO $context): string
+    private function handleSave(EditAlbumContextDTO $context): Response
     {
         $command = $this->buildCommand();
 
@@ -82,44 +83,38 @@ final readonly class EditAlbumController
             return $this->renderForm($context, $command->toFormData(), $e->getErrors());
         }
 
-        return $this->render->render(
-            'system::pages/result',
-            [
-                'title'    => $this->title($context),
-                'type'     => 'alert-success',
-                'message'  => $context->isEdit() ? __('Album successfully changed') : __('Album successfully created'),
-                'back_url' => '/album/user/' . $context->ownerId,
-            ]
+        return new Response(
+            $this->render->render(
+                'system::pages/result',
+                [
+                    'title'    => $this->title($context),
+                    'type'     => 'alert-success',
+                    'message'  => $context->isEdit() ? __('Album successfully changed') : __('Album successfully created'),
+                    'back_url' => '/album/user/' . $context->ownerId,
+                ]
+            )
         );
     }
 
-    /**
-     * @return EditAlbumContextDTO|string
-     */
-    private function resolveCreateContext(int $id): EditAlbumContextDTO|string
+    private function resolveCreateContext(int $id): EditAlbumContextDTO|Response
     {
         try {
             return $this->getContextUseCase->forCreate($id);
         } catch (AlbumOwnerNotFoundException $e) {
             return $this->renderError($e->getMessage());
         } catch (AlbumEditForbiddenException $e) {
-            http_response_code(403);
-            return $this->renderError($e->getMessage());
+            return $this->renderError($e->getMessage(), 403);
         }
     }
 
-    /**
-     * @return EditAlbumContextDTO|string
-     */
-    private function resolveEditContext(int $al): EditAlbumContextDTO|string
+    private function resolveEditContext(int $al): EditAlbumContextDTO|Response
     {
         try {
             return $this->getContextUseCase->forEdit($al);
         } catch (AlbumNotFoundException $e) {
             return $this->renderError($e->getMessage());
         } catch (AlbumEditForbiddenException $e) {
-            http_response_code(403);
-            return $this->renderError($e->getMessage());
+            return $this->renderError($e->getMessage(), 403);
         }
     }
 
@@ -165,7 +160,7 @@ final readonly class EditAlbumController
      * @param array{name: string, description: string, password: string, access: int} $formData
      * @param list<string> $errors
      */
-    private function renderForm(EditAlbumContextDTO $context, array $formData, array $errors): string
+    private function renderForm(EditAlbumContextDTO $context, array $formData, array $errors): Response
     {
         $title = $this->title($context);
         $actionUrl = $context->isEdit()
@@ -185,18 +180,20 @@ final readonly class EditAlbumController
             'page_title' => $title,
         ]);
 
-        return $this->render->render(
-            'album::album_form',
-            [
-                'title'      => $title,
-                'page_title' => $title,
-                'data'       => [
-                    'error_message' => $errors,
-                    'action_url'    => $actionUrl,
-                    'back_url'      => '/album/user/' . $context->ownerId,
-                    'form_data'     => $formData,
-                ],
-            ]
+        return new Response(
+            $this->render->render(
+                'album::album_form',
+                [
+                    'title'      => $title,
+                    'page_title' => $title,
+                    'data'       => [
+                        'error_message' => $errors,
+                        'action_url'    => $actionUrl,
+                        'back_url'      => '/album/user/' . $context->ownerId,
+                        'form_data'     => $formData,
+                    ],
+                ]
+            )
         );
     }
 
@@ -205,15 +202,18 @@ final readonly class EditAlbumController
         return $context->isEdit() ? __('Edit Album') : __('Create Album');
     }
 
-    private function renderError(string $message): string
+    private function renderError(string $message, int $status = 200): Response
     {
-        return $this->render->render(
-            'system::pages/result',
-            [
-                'title'   => __('Albums'),
-                'type'    => 'alert-danger',
-                'message' => $message,
-            ]
+        return new Response(
+            $this->render->render(
+                'system::pages/result',
+                [
+                    'title'   => __('Albums'),
+                    'type'    => 'alert-danger',
+                    'message' => $message,
+                ]
+            ),
+            $status
         );
     }
 }

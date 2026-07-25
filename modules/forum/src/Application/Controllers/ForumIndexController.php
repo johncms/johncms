@@ -29,9 +29,7 @@ final readonly class ForumIndexController
     {
         $legacyRedirectUrl = $this->legacyRedirectResolver->resolve($this->request->query->all());
         if ($legacyRedirectUrl !== null) {
-            http_response_code(301);
-            header('Location: ' . $legacyRedirectUrl);
-            exit;
+            redirect($legacyRedirectUrl, 301);
         }
 
         /** @var \Johncms\Counters $counters */

@@ -14,6 +14,7 @@ use Johncms\Http\Request;
 use Johncms\Http\Session;
 use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class DeleteEntryController
 {
@@ -29,13 +30,13 @@ final readonly class DeleteEntryController
         $this->context->initModule('guestbook');
     }
 
-    public function __invoke(): string
+    public function __invoke(): Response
     {
         $baseUrl = '/guestbook/';
 
         if ($this->request->getMethod() !== 'POST') {
             $id = $this->request->queryInt('id');
-            return $this->render->render('guestbook::confirm_delete', ['id' => $id]);
+            return new Response($this->render->render('guestbook::confirm_delete', ['id' => $id]));
         }
 
         $validator = new Validator(['csrf_token' => $this->request->body('csrf_token')], ['csrf_token' => ['Csrf']]);
@@ -50,25 +51,29 @@ final readonly class DeleteEntryController
             $entry = $this->contextUseCase->execute($id);
             $this->manageAccessUseCase->execute($entry);
         } catch (GuestbookEntryNotFoundException) {
-            return $this->render->render(
-                'system::pages/result',
-                [
-                    'title'    => __('Delete message'),
-                    'message'  => __('Wrong data'),
-                    'type'     => 'alert-danger',
-                    'back_url' => $baseUrl,
-                ]
+            return new Response(
+                $this->render->render(
+                    'system::pages/result',
+                    [
+                        'title'    => __('Delete message'),
+                        'message'  => __('Wrong data'),
+                        'type'     => 'alert-danger',
+                        'back_url' => $baseUrl,
+                    ]
+                )
             );
         } catch (GuestbookAccessDeniedException) {
-            http_response_code(403);
-            return $this->render->render(
-                'system::pages/result',
-                [
-                    'title'    => __('Delete message'),
-                    'message'  => __('Wrong data'),
-                    'type'     => 'alert-danger',
-                    'back_url' => $baseUrl,
-                ]
+            return new Response(
+                $this->render->render(
+                    'system::pages/result',
+                    [
+                        'title'    => __('Delete message'),
+                        'message'  => __('Wrong data'),
+                        'type'     => 'alert-danger',
+                        'back_url' => $baseUrl,
+                    ]
+                ),
+                Response::HTTP_FORBIDDEN
             );
         }
 

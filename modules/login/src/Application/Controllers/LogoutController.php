@@ -9,6 +9,7 @@ use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
+use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -32,9 +33,11 @@ final readonly class LogoutController
 
         if ($this->request->hasBody('logout')) {
             $_SESSION = [];
-            setcookie('cuid', '', time() - 3600, '/');
-            setcookie('cups', '', time() - 3600, '/');
-            return new RedirectResponse('/');
+            $response = new RedirectResponse('/');
+            $expire = time() - 3600;
+            $response->headers->setCookie(Cookie::create('cuid', '', $expire, '/', null, false, false, false, null));
+            $response->headers->setCookie(Cookie::create('cups', '', $expire, '/', null, false, false, false, null));
+            return $response;
         }
 
         $config = config('johncms');

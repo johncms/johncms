@@ -11,6 +11,7 @@ use Johncms\Modules\Forum\Application\UseCases\ClearForumSearchHistoryUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumUserAccessUseCase;
 use Johncms\Http\Request;
 use Johncms\System\View\Render;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class ClearForumSearchHistoryController
 {
@@ -25,7 +26,7 @@ final readonly class ClearForumSearchHistoryController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(): string
+    public function __invoke(): Response
     {
         try {
             $this->forumUserAccessUseCase->execute();
@@ -38,13 +39,15 @@ final readonly class ClearForumSearchHistoryController
             redirect('/forum/search/');
         }
 
-        return $this->render->render(
-            'forum::clear_search_history',
-            [
-                'title'      => __('Forum search'),
-                'page_title' => __('Forum search'),
-                'back_url'   => '/forum/search/',
-            ]
+        return new Response(
+            $this->render->render(
+                'forum::clear_search_history',
+                [
+                    'title'      => __('Forum search'),
+                    'page_title' => __('Forum search'),
+                    'back_url'   => '/forum/search/',
+                ]
+            )
         );
     }
 }

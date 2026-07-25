@@ -15,6 +15,7 @@ use Johncms\Modules\Forum\Application\UseCases\GetDeleteTopicContextUseCase;
 use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class DeleteTopicController
 {
@@ -35,7 +36,7 @@ final readonly class DeleteTopicController
     /**
      * @throws \Throwable
      */
-    public function __invoke(int $id): string
+    public function __invoke(int $id): Response
     {
         try {
             $topic = $this->contextUseCase->execute($id);
@@ -74,16 +75,18 @@ final readonly class DeleteTopicController
             redirect($this->sectionPathService->getSectionUrlById($topic->section_id) ?? '/forum/');
         }
 
-        return $this->render->render(
-            'forum::delete_topic',
-            [
-                'title'           => __('Delete Topic'),
-                'page_title'      => __('Delete Topic'),
-                'id'              => $topic->id,
-                'back_url'        => $this->topicPathService->getTopicUrlById($topic->id) ?? '/forum/',
-                'can_hard_delete' => $this->user->rights === 9,
-                'delete_url'      => '/forum/delete-topic/' . $topic->id . '/',
-            ]
+        return new Response(
+            $this->render->render(
+                'forum::delete_topic',
+                [
+                    'title'           => __('Delete Topic'),
+                    'page_title'      => __('Delete Topic'),
+                    'id'              => $topic->id,
+                    'back_url'        => $this->topicPathService->getTopicUrlById($topic->id) ?? '/forum/',
+                    'can_hard_delete' => $this->user->rights === 9,
+                    'delete_url'      => '/forum/delete-topic/' . $topic->id . '/',
+                ]
+            )
         );
     }
 }

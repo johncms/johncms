@@ -14,6 +14,7 @@ use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class ForumSearchController
 {
@@ -30,7 +31,7 @@ final readonly class ForumSearchController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(): string
+    public function __invoke(): Response
     {
         $search = rawurldecode(trim($this->request->queryParam('search', '')));
         $searchInTopicNames = $this->request->query->has('t');
@@ -75,17 +76,19 @@ final readonly class ForumSearchController
 
         $pagination = $this->paginationFactory->create($result->total, null, 'page', $page);
 
-        return $this->render->render(
-            'forum::forum_search',
-            [
-                'pagination'        => $pagination->render(),
-                'query'             => $result->query,
-                'search_t'          => $result->searchInTopicNames,
-                'results'           => $result->results,
-                'total'             => $result->total,
-                'search_history'    => $result->historyTerms,
-                'history_reset_url' => '/forum/search/history/clear/',
-            ]
+        return new Response(
+            $this->render->render(
+                'forum::forum_search',
+                [
+                    'pagination'        => $pagination->render(),
+                    'query'             => $result->query,
+                    'search_t'          => $result->searchInTopicNames,
+                    'results'           => $result->results,
+                    'total'             => $result->total,
+                    'search_history'    => $result->historyTerms,
+                    'history_reset_url' => '/forum/search/history/clear/',
+                ]
+            )
         );
     }
 

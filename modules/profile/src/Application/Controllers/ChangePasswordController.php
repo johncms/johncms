@@ -16,6 +16,8 @@ use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
+use Symfony\Component\HttpFoundation\Cookie;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class ChangePasswordController
 {
@@ -31,15 +33,14 @@ final readonly class ChangePasswordController
         $this->controllerContext->initModule('profile');
     }
 
-    public function form(int $id): string
+    public function form(int $id): Response
     {
         try {
             $context = $this->getChangePasswordContextUseCase->execute($id);
         } catch (ProfileNotFoundException $e) {
             return $this->renderError(__('Change Password'), $e->getMessage());
         } catch (ProfileAccessForbiddenException $e) {
-            http_response_code(403);
-            return $this->renderError(__('Change Password'), $e->getMessage());
+            return $this->renderError(__('Change Password'), $e->getMessage(), 403);
         }
 
         $title = $this->buildTitle($context);
@@ -51,29 +52,30 @@ final readonly class ChangePasswordController
             'page_title' => $title,
         ]);
 
-        return $this->render->render(
-            'profile::password',
-            [
-                'title'      => $title,
-                'page_title' => $title,
-                'data'       => [
-                    'form_action'             => '/profile/' . $context->profileUserId . '/password',
-                    'show_old_password_field' => $context->isSelf,
-                    'back_url'                => '/profile/' . $context->profileUserId,
-                ],
-            ]
+        return new Response(
+            $this->render->render(
+                'profile::password',
+                [
+                    'title'      => $title,
+                    'page_title' => $title,
+                    'data'       => [
+                        'form_action'             => '/profile/' . $context->profileUserId . '/password',
+                        'show_old_password_field' => $context->isSelf,
+                        'back_url'                => '/profile/' . $context->profileUserId,
+                    ],
+                ]
+            )
         );
     }
 
-    public function change(int $id): string
+    public function change(int $id): Response
     {
         try {
             $context = $this->getChangePasswordContextUseCase->execute($id);
         } catch (ProfileNotFoundException $e) {
             return $this->renderError(__('Change Password'), $e->getMessage());
         } catch (ProfileAccessForbiddenException $e) {
-            http_response_code(403);
-            return $this->renderError(__('Change Password'), $e->getMessage());
+            return $this->renderError(__('Change Password'), $e->getMessage(), 403);
         }
 
         $title = $this->buildTitle($context);
@@ -87,33 +89,46 @@ final readonly class ChangePasswordController
                 confirmPassword: trim($this->request->body('newconf', '')),
             ));
         } catch (ChangePasswordException $e) {
-            return $this->render->render(
-                'system::pages/result',
-                [
-                    'title'         => $title,
-                    'type'          => 'alert-danger',
-                    'message'       => $e->getErrors(),
-                    'back_url'      => '/profile/' . $context->profileUserId . '/password',
-                    'back_url_name' => __('Repeat'),
-                ]
+            return new Response(
+                $this->render->render(
+                    'system::pages/result',
+                    [
+                        'title'         => $title,
+                        'type'          => 'alert-danger',
+                        'message'       => $e->getErrors(),
+                        'back_url'      => '/profile/' . $context->profileUserId . '/password',
+                        'back_url_name' => __('Repeat'),
+                    ]
+                )
             );
         }
 
-        // Keep the persistent login cookie in sync after changing one's own password
+        $response = new Response(
+            $this->render->render(
+                'system::pages/result',
+                [
+                    'title'         => $title,
+                    'type'          => 'alert-success',
+                    'message'       => __('Password successfully changed'),
+                    'back_url'      => $context->isSelf ? '/login' : '/profile/' . $context->profileUserId,
+                    'back_url_name' => __('Continue'),
+                ]
+            )
+        );
+
+        // Keep the persistent login cookie in sync after changing one's own password.
+        // The legacy call omitted the path argument, so PHP sent no Path attribute and the
+        // browser scoped the cookie to the "default path" per RFC 6265 5.1.4 (the current
+        // request path with the last segment removed) rather than site-wide '/'. Cookie::create()
+        // always forces an explicit Path attribute, so that default is reproduced here instead of
+        // silently widening the cookie to '/'.
         if ($context->isSelf && isset($_COOKIE['cuid'], $_COOKIE['cups'])) {
-            setcookie('cups', md5($newPassword), time() + 3600 * 24 * 365);
+            $response->headers->setCookie(
+                Cookie::create('cups', md5($newPassword), time() + 3600 * 24 * 365, $this->defaultCookiePath(), null, false, false, false, null)
+            );
         }
 
-        return $this->render->render(
-            'system::pages/result',
-            [
-                'title'         => $title,
-                'type'          => 'alert-success',
-                'message'       => __('Password successfully changed'),
-                'back_url'      => $context->isSelf ? '/login' : '/profile/' . $context->profileUserId,
-                'back_url_name' => __('Continue'),
-            ]
-        );
+        return $response;
     }
 
     private function buildTitle(ChangePasswordContextDTO $context): string
@@ -121,15 +136,34 @@ final readonly class ChangePasswordController
         return $context->profileUserName . ': ' . __('Change Password');
     }
 
-    private function renderError(string $title, string $message): string
+    /**
+     * RFC 6265 5.1.4 "default path" for the current request: the request path with everything
+     * from (and including) the right-most slash removed, or '/' if there is none/only one slash.
+     */
+    private function defaultCookiePath(): string
     {
-        return $this->render->render(
-            'system::pages/result',
-            [
-                'title'   => $title,
-                'type'    => 'alert-danger',
-                'message' => $message,
-            ]
+        $path = $this->request->getPathInfo();
+        $lastSlash = strrpos($path, '/');
+
+        if ($lastSlash === false || $lastSlash === 0) {
+            return '/';
+        }
+
+        return substr($path, 0, $lastSlash);
+    }
+
+    private function renderError(string $title, string $message, int $status = 200): Response
+    {
+        return new Response(
+            $this->render->render(
+                'system::pages/result',
+                [
+                    'title'   => $title,
+                    'type'    => 'alert-danger',
+                    'message' => $message,
+                ]
+            ),
+            $status
         );
     }
 }

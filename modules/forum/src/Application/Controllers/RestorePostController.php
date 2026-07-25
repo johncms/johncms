@@ -16,6 +16,7 @@ use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class RestorePostController
 {
@@ -33,7 +34,7 @@ final readonly class RestorePostController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(int $id): string
+    public function __invoke(int $id): Response
     {
         try {
             $context = $this->contextUseCase->execute($id, $this->getForumSettings());
@@ -69,15 +70,17 @@ final readonly class RestorePostController
             );
 
             if (! $validator->isValid()) {
-                return $this->render->render(
-                    'system::pages/result',
-                    [
-                        'title'         => __('Restore Message'),
-                        'type'          => 'alert-danger',
-                        'message'       => __('Wrong data'),
-                        'back_url'      => '/forum/restore-post/' . $id . '/',
-                        'back_url_name' => __('Back'),
-                    ]
+                return new Response(
+                    $this->render->render(
+                        'system::pages/result',
+                        [
+                            'title'         => __('Restore Message'),
+                            'type'          => 'alert-danger',
+                            'message'       => __('Wrong data'),
+                            'back_url'      => '/forum/restore-post/' . $id . '/',
+                            'back_url_name' => __('Back'),
+                        ]
+                    )
                 );
             }
 
@@ -85,15 +88,17 @@ final readonly class RestorePostController
             redirect($context->backUrl);
         }
 
-        return $this->render->render(
-            'forum::restore_post',
-            [
-                'title'          => __('Restore Message'),
-                'page_title'     => __('Restore Message'),
-                'back_url'       => $context->backUrl,
-                'restore_action' => '/forum/restore-post/' . $id . '/',
-                'csrf_token'     => $this->csrf->getToken(),
-            ]
+        return new Response(
+            $this->render->render(
+                'forum::restore_post',
+                [
+                    'title'          => __('Restore Message'),
+                    'page_title'     => __('Restore Message'),
+                    'back_url'       => $context->backUrl,
+                    'restore_action' => '/forum/restore-post/' . $id . '/',
+                    'csrf_token'     => $this->csrf->getToken(),
+                ]
+            )
         );
     }
 

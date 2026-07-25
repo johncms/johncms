@@ -19,6 +19,8 @@ use Laminas\Validator\Hostname;
 use Laminas\Validator\Identical;
 use Mobicms\Captcha\Code;
 use Mobicms\Captcha\Image;
+use Symfony\Component\HttpFoundation\Cookie;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class RegistrationController
 {
@@ -35,12 +37,12 @@ final readonly class RegistrationController
         $this->controllerContext->initModule('registration');
     }
 
-    public function __invoke(): string
+    public function __invoke(): Response
     {
         $config = config('johncms');
 
         if (! $config['mod_reg'] || $this->currentUser->isValid()) {
-            return $this->render->render('registration::registration_closed');
+            return new Response($this->render->render('registration::registration_closed'));
         }
 
         $this->navChain->add(__('Registration'));
@@ -130,19 +132,24 @@ final readonly class RegistrationController
                     }
                 }
 
+                $response = new Response(
+                    $this->render->render(
+                        'registration::registration_result',
+                        [
+                            'usid'     => $newUser->id,
+                            'reg_nick' => $fields['name'],
+                            'reg_pass' => $fields['password'],
+                        ]
+                    )
+                );
+
                 if ($config['mod_reg'] !== 1 && empty($config['user_email_confirmation'])) {
-                    setcookie('cuid', (string) $newUser->id, time() + 3600 * 24 * 365, '/');
-                    setcookie('cups', md5($fields['password']), time() + 3600 * 24 * 365, '/');
+                    $expire = time() + 3600 * 24 * 365;
+                    $response->headers->setCookie(Cookie::create('cuid', (string) $newUser->id, $expire, '/', null, false, false, false, null));
+                    $response->headers->setCookie(Cookie::create('cups', md5($fields['password']), $expire, '/', null, false, false, false, null));
                 }
 
-                return $this->render->render(
-                    'registration::registration_result',
-                    [
-                        'usid'     => $newUser->id,
-                        'reg_nick' => $fields['name'],
-                        'reg_pass' => $fields['password'],
-                    ]
-                );
+                return $response;
             }
 
             $errors = $validator->getErrors();
@@ -152,14 +159,16 @@ final readonly class RegistrationController
         $code = (string) new Code();
         $_SESSION['code'] = $code;
 
-        return $this->render->render(
-            'registration::index',
-            [
-                'errors'   => $errors,
-                'fields'   => $fields,
-                'captcha'  => new Image($code),
-                'consents' => $consents,
-            ]
+        return new Response(
+            $this->render->render(
+                'registration::index',
+                [
+                    'errors'   => $errors,
+                    'fields'   => $fields,
+                    'captcha'  => new Image($code),
+                    'consents' => $consents,
+                ]
+            )
         );
     }
 }

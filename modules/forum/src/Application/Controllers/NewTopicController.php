@@ -24,6 +24,7 @@ use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
 use Simba77\EmbedMedia\Embed;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class NewTopicController
 {
@@ -47,7 +48,7 @@ final readonly class NewTopicController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(int $id): string
+    public function __invoke(int $id): Response
     {
         $page = max(1, $this->request->queryInt('page', 1));
 
@@ -68,15 +69,17 @@ final readonly class NewTopicController
 
         $flood = $this->antifloodChecker->getRemainingSeconds();
         if ($flood) {
-            return $this->render->render(
-                'system::pages/result',
-                [
-                    'title'         => __('New Topic'),
-                    'type'          => 'alert-danger',
-                    'message'       => sprintf(__('You cannot add the message so often<br>Please, wait %d sec.'), $flood),
-                    'back_url'      => $section->url . ($page > 1 ? '?page=' . $page : ''),
-                    'back_url_name' => __('Back'),
-                ]
+            return new Response(
+                $this->render->render(
+                    'system::pages/result',
+                    [
+                        'title'         => __('New Topic'),
+                        'type'          => 'alert-danger',
+                        'message'       => sprintf(__('You cannot add the message so often<br>Please, wait %d sec.'), $flood),
+                        'back_url'      => $section->url . ($page > 1 ? '?page=' . $page : ''),
+                        'back_url_name' => __('Back'),
+                    ]
+                )
             );
         }
 
@@ -161,20 +164,22 @@ final readonly class NewTopicController
             ]
         );
 
-        return $this->render->render(
-            'forum::new_topic',
-            [
-                'settings_forum'    => $this->getForumSettings(),
-                'id'                => $section->id,
-                'th'                => $data['name'],
-                'add_files'         => ($data['add_files'] === 1),
-                'msg'               => (string) $data['message'],
-                'back_url'          => $section->url,
-                'show_post_preview' => ! empty($data['name']) && ! empty($data['message']) && ! $this->request->body('submit'),
-                'preview_message'   => $msgPreview,
-                'errors'            => $errors,
-                'data'              => $data,
-            ]
+        return new Response(
+            $this->render->render(
+                'forum::new_topic',
+                [
+                    'settings_forum'    => $this->getForumSettings(),
+                    'id'                => $section->id,
+                    'th'                => $data['name'],
+                    'add_files'         => ($data['add_files'] === 1),
+                    'msg'               => (string) $data['message'],
+                    'back_url'          => $section->url,
+                    'show_post_preview' => ! empty($data['name']) && ! empty($data['message']) && ! $this->request->body('submit'),
+                    'preview_message'   => $msgPreview,
+                    'errors'            => $errors,
+                    'data'              => $data,
+                ]
+            )
         );
     }
 

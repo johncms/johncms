@@ -15,6 +15,7 @@ use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class DeletePhotoController
 {
@@ -30,10 +31,10 @@ final readonly class DeletePhotoController
         $this->controllerContext->initModule('album');
     }
 
-    public function confirm(int $img): string
+    public function confirm(int $img): Response
     {
         $photo = $this->resolveContext($img);
-        if (is_string($photo)) {
+        if ($photo instanceof Response) {
             return $photo;
         }
 
@@ -51,24 +52,26 @@ final readonly class DeletePhotoController
             'page_title' => $title,
         ]);
 
-        return $this->render->render(
-            'album::confirm_delete',
-            [
-                'title'      => $title,
-                'page_title' => $title,
-                'data'       => [
-                    'message'     => __('Are you sure you want to delete this image?'),
-                    'form_action' => '/album/photo/' . $photo->id . '/delete',
-                    'back_url'    => '/album/' . $photo->album_id,
-                ],
-            ]
+        return new Response(
+            $this->render->render(
+                'album::confirm_delete',
+                [
+                    'title'      => $title,
+                    'page_title' => $title,
+                    'data'       => [
+                        'message'     => __('Are you sure you want to delete this image?'),
+                        'form_action' => '/album/photo/' . $photo->id . '/delete',
+                        'back_url'    => '/album/' . $photo->album_id,
+                    ],
+                ]
+            )
         );
     }
 
-    public function delete(int $img): string
+    public function delete(int $img): Response
     {
         $photo = $this->resolveContext($img);
-        if (is_string($photo)) {
+        if ($photo instanceof Response) {
             return $photo;
         }
         if (! $this->isCsrfValid()) {
@@ -79,32 +82,30 @@ final readonly class DeletePhotoController
 
         $this->deletePhotoUseCase->execute($photo);
 
-        return $this->render->render(
-            'system::pages/result',
-            [
-                'title'    => __('Delete image'),
-                'type'     => 'alert-success',
-                'message'  => __('Image successfully deleted'),
-                'back_url' => '/album/' . $albumId,
-            ]
+        return new Response(
+            $this->render->render(
+                'system::pages/result',
+                [
+                    'title'    => __('Delete image'),
+                    'type'     => 'alert-success',
+                    'message'  => __('Image successfully deleted'),
+                    'back_url' => '/album/' . $albumId,
+                ]
+            )
         );
     }
 
     /**
      * Resolve the photo with the access guard, or a rendered error page (with the proper HTTP status set).
-     *
-     * @return AlbumPhoto|string
      */
-    private function resolveContext(int $img): AlbumPhoto|string
+    private function resolveContext(int $img): AlbumPhoto|Response
     {
         try {
             return $this->getContextUseCase->execute($img);
         } catch (AlbumPhotoNotFoundException $e) {
-            http_response_code(403);
-            return $this->renderError($e->getMessage());
+            return $this->renderError($e->getMessage(), 403);
         } catch (AlbumEditForbiddenException $e) {
-            http_response_code(403);
-            return $this->renderError($e->getMessage());
+            return $this->renderError($e->getMessage(), 403);
         }
     }
 
@@ -118,16 +119,19 @@ final readonly class DeletePhotoController
         return $validator->isValid();
     }
 
-    private function renderError(string $message): string
+    private function renderError(string $message, int $status = 200): Response
     {
-        return $this->render->render(
-            'system::pages/result',
-            [
-                'title'    => __('Delete image'),
-                'type'     => 'alert-danger',
-                'message'  => $message,
-                'back_url' => '/album',
-            ]
+        return new Response(
+            $this->render->render(
+                'system::pages/result',
+                [
+                    'title'    => __('Delete image'),
+                    'type'     => 'alert-danger',
+                    'message'  => $message,
+                    'back_url' => '/album',
+                ]
+            ),
+            $status
         );
     }
 }

@@ -15,6 +15,7 @@ use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class ViewForumVisitorsController
 {
@@ -32,7 +33,7 @@ final readonly class ViewForumVisitorsController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(): string
+    public function __invoke(): Response
     {
         try {
             $this->forumUserAccessUseCase->execute();
@@ -56,20 +57,22 @@ final readonly class ViewForumVisitorsController
 
         $pagination = $this->paginationFactory->create($result->total, null, 'page', $page);
 
-        return $this->render->render(
-            'forum::who',
-            [
-                'title'           => $caption,
-                'page_title'      => $caption,
-                'empty_message'   => __('The list is empty'),
-                'items'           => $result->items,
-                'pagination'      => $pagination->render(),
-                'total'           => $result->total,
-                'is_users'        => ! $showGuests,
-                'users_list_url'  => '/forum/visitors/',
-                'guests_list_url' => '/forum/visitors/?mode=guests',
-                'show_period'     => false,
-            ]
+        return new Response(
+            $this->render->render(
+                'forum::who',
+                [
+                    'title'           => $caption,
+                    'page_title'      => $caption,
+                    'empty_message'   => __('The list is empty'),
+                    'items'           => $result->items,
+                    'pagination'      => $pagination->render(),
+                    'total'           => $result->total,
+                    'is_users'        => ! $showGuests,
+                    'users_list_url'  => '/forum/visitors/',
+                    'guests_list_url' => '/forum/visitors/?mode=guests',
+                    'show_period'     => false,
+                ]
+            )
         );
     }
 }

@@ -14,6 +14,7 @@ use Johncms\Modules\Forum\Domain\Models\ForumTopic;
 use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class ChangeTopicController
 {
@@ -28,7 +29,7 @@ final readonly class ChangeTopicController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(int $id): string
+    public function __invoke(int $id): Response
     {
         try {
             $topic = $this->contextUseCase->execute($id);
@@ -92,17 +93,19 @@ final readonly class ChangeTopicController
             $errors = $validator->getErrors();
         }
 
-        return $this->render->render(
-            'forum::change_topic',
-            [
-                'title'      => __('Change the topic'),
-                'page_title' => __('Change the topic'),
-                'id'         => $topic->id,
-                'topic'      => $topic,
-                'form_data'  => $formData,
-                'back_url'   => $topic->url,
-                'errors'     => $errors,
-            ]
+        return new Response(
+            $this->render->render(
+                'forum::change_topic',
+                [
+                    'title'      => __('Change the topic'),
+                    'page_title' => __('Change the topic'),
+                    'id'         => $topic->id,
+                    'topic'      => $topic,
+                    'form_data'  => $formData,
+                    'back_url'   => $topic->url,
+                    'errors'     => $errors,
+                ]
+            )
         );
     }
 }

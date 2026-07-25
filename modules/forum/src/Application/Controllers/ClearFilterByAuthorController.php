@@ -12,6 +12,7 @@ use Johncms\Modules\Forum\Application\UseCases\GetFilterByAuthorContextUseCase;
 use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class ClearFilterByAuthorController
 {
@@ -26,7 +27,7 @@ final readonly class ClearFilterByAuthorController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(int $id): string
+    public function __invoke(int $id): Response
     {
         $page = max(1, $this->request->queryInt('page', 1));
 
@@ -36,16 +37,18 @@ final readonly class ClearFilterByAuthorController
         );
 
         if (! $validator->isValid()) {
-            return $this->render->render(
-                'system::pages/result',
-                [
-                    'title'         => __('Filter by author'),
-                    'page_title'    => __('Filter by author'),
-                    'type'          => 'alert-danger',
-                    'message'       => __('Wrong data'),
-                    'back_url'      => '/forum/filter/' . $id . '/' . ($page > 1 ? '?page=' . $page : ''),
-                    'back_url_name' => __('Back'),
-                ]
+            return new Response(
+                $this->render->render(
+                    'system::pages/result',
+                    [
+                        'title'         => __('Filter by author'),
+                        'page_title'    => __('Filter by author'),
+                        'type'          => 'alert-danger',
+                        'message'       => __('Wrong data'),
+                        'back_url'      => '/forum/filter/' . $id . '/' . ($page > 1 ? '?page=' . $page : ''),
+                        'back_url_name' => __('Back'),
+                    ]
+                )
             );
         }
 

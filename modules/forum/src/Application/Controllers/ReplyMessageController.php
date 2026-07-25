@@ -21,6 +21,7 @@ use Johncms\System\Utility\EditorContentNormalizer;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Simba77\EmbedMedia\Embed;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class ReplyMessageController
 {
@@ -45,7 +46,7 @@ final readonly class ReplyMessageController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(int $id): string
+    public function __invoke(int $id): Response
     {
         $page = max(1, $this->request->queryInt('page', 1));
 
@@ -70,42 +71,48 @@ final readonly class ReplyMessageController
         $sourceMessage = $context->message;
 
         if (($topic->deleted || $topic->closed) && $this->currentUser->rights < 7) {
-            return $this->render->render(
-                'system::pages/result',
-                [
-                    'title'         => __('New message'),
-                    'type'          => 'alert-danger',
-                    'message'       => __('You cannot write in a closed topic'),
-                    'back_url'      => $topic->url,
-                    'back_url_name' => __('Back'),
-                ]
+            return new Response(
+                $this->render->render(
+                    'system::pages/result',
+                    [
+                        'title'         => __('New message'),
+                        'type'          => 'alert-danger',
+                        'message'       => __('You cannot write in a closed topic'),
+                        'back_url'      => $topic->url,
+                        'back_url_name' => __('Back'),
+                    ]
+                )
             );
         }
 
         if ($sourceMessage->user_id === $this->currentUser->id) {
-            return $this->render->render(
-                'system::pages/result',
-                [
-                    'title'         => __('New message'),
-                    'type'          => 'alert-danger',
-                    'message'       => __('You can not reply to your own message'),
-                    'back_url'      => $topic->url,
-                    'back_url_name' => __('Back'),
-                ]
+            return new Response(
+                $this->render->render(
+                    'system::pages/result',
+                    [
+                        'title'         => __('New message'),
+                        'type'          => 'alert-danger',
+                        'message'       => __('You can not reply to your own message'),
+                        'back_url'      => $topic->url,
+                        'back_url_name' => __('Back'),
+                    ]
+                )
             );
         }
 
         $flood = $this->antifloodChecker->getRemainingSeconds();
         if ($flood) {
-            return $this->render->render(
-                'system::pages/result',
-                [
-                    'title'         => __('New message'),
-                    'type'          => 'alert-danger',
-                    'message'       => sprintf(__('You cannot add the message so often<br>Please, wait %d sec.'), $flood),
-                    'back_url'      => $this->buildTopicBackUrl($topic->url, $page),
-                    'back_url_name' => __('Back'),
-                ]
+            return new Response(
+                $this->render->render(
+                    'system::pages/result',
+                    [
+                        'title'         => __('New message'),
+                        'type'          => 'alert-danger',
+                        'message'       => sprintf(__('You cannot add the message so often<br>Please, wait %d sec.'), $flood),
+                        'back_url'      => $this->buildTopicBackUrl($topic->url, $page),
+                        'back_url_name' => __('Back'),
+                    ]
+                )
             );
         }
 
@@ -119,42 +126,48 @@ final readonly class ReplyMessageController
             && $this->isValidToken()
         ) {
             if ($msg === '') {
-                return $this->render->render(
-                    'system::pages/result',
-                    [
-                        'title'         => __('New message'),
-                        'type'          => 'alert-danger',
-                        'message'       => __('You have not entered the message'),
-                        'back_url'      => $this->getReplyUrl($id, $page),
-                        'back_url_name' => __('Repeat'),
-                    ]
+                return new Response(
+                    $this->render->render(
+                        'system::pages/result',
+                        [
+                            'title'         => __('New message'),
+                            'type'          => 'alert-danger',
+                            'message'       => __('You have not entered the message'),
+                            'back_url'      => $this->getReplyUrl($id, $page),
+                            'back_url_name' => __('Repeat'),
+                        ]
+                    )
                 );
             }
 
             if (mb_strlen($msg) < 4) {
-                return $this->render->render(
-                    'system::pages/result',
-                    [
-                        'title'         => __('New message'),
-                        'type'          => 'alert-danger',
-                        'message'       => __('Text is too short'),
-                        'back_url'      => $topic->url,
-                        'back_url_name' => __('Back'),
-                    ]
+                return new Response(
+                    $this->render->render(
+                        'system::pages/result',
+                        [
+                            'title'         => __('New message'),
+                            'type'          => 'alert-danger',
+                            'message'       => __('Text is too short'),
+                            'back_url'      => $topic->url,
+                            'back_url_name' => __('Back'),
+                        ]
+                    )
                 );
             }
 
             $lastMessage = $this->messageRepository->findLastMessageByUser($this->currentUser->id);
             if ($lastMessage !== null && $msg === (string) $lastMessage->getRawOriginal('text')) {
-                return $this->render->render(
-                    'system::pages/result',
-                    [
-                        'title'         => __('New message'),
-                        'type'          => 'alert-danger',
-                        'message'       => __('Message already exists'),
-                        'back_url'      => $this->buildTopicBackUrl($topic->url, $page),
-                        'back_url_name' => __('Back'),
-                    ]
+                return new Response(
+                    $this->render->render(
+                        'system::pages/result',
+                        [
+                            'title'         => __('New message'),
+                            'type'          => 'alert-danger',
+                            'message'       => __('Message already exists'),
+                            'back_url'      => $this->buildTopicBackUrl($topic->url, $page),
+                            'back_url_name' => __('Back'),
+                        ]
+                    )
                 );
             }
 
@@ -198,25 +211,27 @@ final readonly class ReplyMessageController
         $msgPreview = $this->embed->embedMedia($msgPreview);
         $msgPreview = $this->smiliesRenderer->render($msgPreview, $this->currentUser->rights > 0);
 
-        return $this->render->render(
-            'forum::reply_message',
-            [
-                'title'             => __('Reply to message'),
-                'page_title'        => __('Reply to message'),
-                'id'                => $sourceMessage->id,
-                'token'             => $token,
-                'topic'             => $topic,
-                'form_action'       => $this->getReplyUrl($sourceMessage->id, $page),
-                'is_quote'          => $isQuote,
-                'add_file'          => $addFiles,
-                'msg'               => $msg,
-                'message'           => $sourceMessage,
-                'settings_forum'    => $this->getForumSettings(),
-                'show_post_preview' => (! $this->request->hasBody('submit') && $this->request->hasBody('msg')),
-                'back_url'          => $this->buildTopicBackUrl($topic->url, $page),
-                'is_new_message'    => false,
-                'preview_message'   => $msgPreview,
-            ]
+        return new Response(
+            $this->render->render(
+                'forum::reply_message',
+                [
+                    'title'             => __('Reply to message'),
+                    'page_title'        => __('Reply to message'),
+                    'id'                => $sourceMessage->id,
+                    'token'             => $token,
+                    'topic'             => $topic,
+                    'form_action'       => $this->getReplyUrl($sourceMessage->id, $page),
+                    'is_quote'          => $isQuote,
+                    'add_file'          => $addFiles,
+                    'msg'               => $msg,
+                    'message'           => $sourceMessage,
+                    'settings_forum'    => $this->getForumSettings(),
+                    'show_post_preview' => (! $this->request->hasBody('submit') && $this->request->hasBody('msg')),
+                    'back_url'          => $this->buildTopicBackUrl($topic->url, $page),
+                    'is_new_message'    => false,
+                    'preview_message'   => $msgPreview,
+                ]
+            )
         );
     }
 

@@ -8,6 +8,7 @@ use Johncms\Router\MiddlewareInterface;
 use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class OnlineAdminMiddleware implements MiddlewareInterface
 {
@@ -17,15 +18,17 @@ final readonly class OnlineAdminMiddleware implements MiddlewareInterface
     ) {
     }
 
-    public function handle(Request $request, callable $next): mixed
+    public function handle(Request $request, callable $next): Response
     {
         if (! $this->currentUser->rights) {
-            http_response_code(403);
-            return $this->render->render('system::pages/result', [
-                'title'   => __('Online'),
-                'type'    => 'alert-danger',
-                'message' => __('Access denied'),
-            ]);
+            return new Response(
+                $this->render->render('system::pages/result', [
+                    'title'   => __('Online'),
+                    'type'    => 'alert-danger',
+                    'message' => __('Access denied'),
+                ]),
+                Response::HTTP_FORBIDDEN
+            );
         }
 
         return $next($request);

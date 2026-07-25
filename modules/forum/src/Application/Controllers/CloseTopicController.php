@@ -13,6 +13,7 @@ use Johncms\Modules\Forum\Application\UseCases\CloseTopicUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetCloseTopicContextUseCase;
 use Johncms\Http\Request;
 use Johncms\System\View\Render;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class CloseTopicController
 {
@@ -28,7 +29,7 @@ final readonly class CloseTopicController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(int $id): string
+    public function __invoke(int $id): Response
     {
         try {
             $topicId = $this->contextUseCase->execute($id);

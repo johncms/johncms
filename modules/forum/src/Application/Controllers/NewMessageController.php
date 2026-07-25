@@ -21,6 +21,7 @@ use Johncms\System\Utility\EditorContentNormalizer;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Simba77\EmbedMedia\Embed;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class NewMessageController
 {
@@ -45,7 +46,7 @@ final readonly class NewMessageController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(int $id): string
+    public function __invoke(int $id): Response
     {
         $page = max(1, $this->request->queryInt('page', 1));
 
@@ -67,29 +68,33 @@ final readonly class NewMessageController
         }
 
         if (($topic->deleted || $topic->closed) && $this->currentUser->rights < 7) {
-            return $this->render->render(
-                'system::pages/result',
-                [
-                    'title'         => __('New message'),
-                    'type'          => 'alert-danger',
-                    'message'       => __('You cannot write in a closed topic'),
-                    'back_url'      => $topic->url,
-                    'back_url_name' => __('Back'),
-                ]
+            return new Response(
+                $this->render->render(
+                    'system::pages/result',
+                    [
+                        'title'         => __('New message'),
+                        'type'          => 'alert-danger',
+                        'message'       => __('You cannot write in a closed topic'),
+                        'back_url'      => $topic->url,
+                        'back_url_name' => __('Back'),
+                    ]
+                )
             );
         }
 
         $flood = $this->antifloodChecker->getRemainingSeconds();
         if ($flood) {
-            return $this->render->render(
-                'system::pages/result',
-                [
-                    'title'         => __('New message'),
-                    'type'          => 'alert-danger',
-                    'message'       => sprintf(__('You cannot add the message so often<br>Please, wait %d sec.'), $flood),
-                    'back_url'      => $this->buildTopicBackUrl($topic->url, $page),
-                    'back_url_name' => __('Back'),
-                ]
+            return new Response(
+                $this->render->render(
+                    'system::pages/result',
+                    [
+                        'title'         => __('New message'),
+                        'type'          => 'alert-danger',
+                        'message'       => sprintf(__('You cannot add the message so often<br>Please, wait %d sec.'), $flood),
+                        'back_url'      => $this->buildTopicBackUrl($topic->url, $page),
+                        'back_url_name' => __('Back'),
+                    ]
+                )
             );
         }
 
@@ -104,29 +109,33 @@ final readonly class NewMessageController
             && $this->isValidToken()
         ) {
             if (mb_strlen($msg) < 4) {
-                return $this->render->render(
-                    'system::pages/result',
-                    [
-                        'title'         => __('New message'),
-                        'type'          => 'alert-danger',
-                        'message'       => __('Text is too short'),
-                        'back_url'      => $topic->url,
-                        'back_url_name' => __('Back'),
-                    ]
+                return new Response(
+                    $this->render->render(
+                        'system::pages/result',
+                        [
+                            'title'         => __('New message'),
+                            'type'          => 'alert-danger',
+                            'message'       => __('Text is too short'),
+                            'back_url'      => $topic->url,
+                            'back_url_name' => __('Back'),
+                        ]
+                    )
                 );
             }
 
             $lastMessage = $this->messageRepository->findLastMessageByUser($this->currentUser->id);
             if ($lastMessage !== null && $msg === (string) $lastMessage->getRawOriginal('text')) {
-                return $this->render->render(
-                    'system::pages/result',
-                    [
-                        'title'         => __('New message'),
-                        'type'          => 'alert-danger',
-                        'message'       => __('Message already exists'),
-                        'back_url'      => $this->buildTopicBackUrl($topic->url, $page),
-                        'back_url_name' => __('Back'),
-                    ]
+                return new Response(
+                    $this->render->render(
+                        'system::pages/result',
+                        [
+                            'title'         => __('New message'),
+                            'type'          => 'alert-danger',
+                            'message'       => __('Message already exists'),
+                            'back_url'      => $this->buildTopicBackUrl($topic->url, $page),
+                            'back_url_name' => __('Back'),
+                        ]
+                    )
                 );
             }
 
@@ -160,23 +169,25 @@ final readonly class NewMessageController
         $msgPreview = $this->embed->embedMedia($msgPreview);
         $msgPreview = $this->smiliesRenderer->render($msgPreview, $this->currentUser->rights > 0);
 
-        return $this->render->render(
-            'forum::reply_message',
-            [
-                'title'             => __('New message'),
-                'page_title'        => __('New message'),
-                'id'                => $topic->id,
-                'token'             => $token,
-                'topic'             => $topic,
-                'form_action'       => '/forum/new-message/' . $topic->id . '/' . ($page > 1 ? '?page=' . $page : ''),
-                'add_file'          => $addFiles,
-                'msg'               => $msg,
-                'settings_forum'    => $this->getForumSettings(),
-                'show_post_preview' => ($msg !== '' && ! $this->request->hasBody('submit')),
-                'back_url'          => $this->buildTopicBackUrl($topic->url, $page),
-                'preview_message'   => $msgPreview,
-                'is_new_message'    => true,
-            ]
+        return new Response(
+            $this->render->render(
+                'forum::reply_message',
+                [
+                    'title'             => __('New message'),
+                    'page_title'        => __('New message'),
+                    'id'                => $topic->id,
+                    'token'             => $token,
+                    'topic'             => $topic,
+                    'form_action'       => '/forum/new-message/' . $topic->id . '/' . ($page > 1 ? '?page=' . $page : ''),
+                    'add_file'          => $addFiles,
+                    'msg'               => $msg,
+                    'settings_forum'    => $this->getForumSettings(),
+                    'show_post_preview' => ($msg !== '' && ! $this->request->hasBody('submit')),
+                    'back_url'          => $this->buildTopicBackUrl($topic->url, $page),
+                    'preview_message'   => $msgPreview,
+                    'is_new_message'    => true,
+                ]
+            )
         );
     }
 

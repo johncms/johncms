@@ -15,6 +15,7 @@ use Johncms\Security\Csrf;
 use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class MoveTopicController
 {
@@ -31,7 +32,7 @@ final readonly class MoveTopicController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(int $id): string
+    public function __invoke(int $id): Response
     {
         try {
             $this->accessUseCase->execute();
@@ -58,15 +59,17 @@ final readonly class MoveTopicController
             );
 
             if (! $validator->isValid() || $targetSectionId <= 0) {
-                return $this->render->render(
-                    'system::pages/result',
-                    [
-                        'title'         => __('Wrong data'),
-                        'type'          => 'alert-danger',
-                        'message'       => __('Wrong data'),
-                        'back_url'      => '/forum/',
-                        'back_url_name' => __('Back'),
-                    ]
+                return new Response(
+                    $this->render->render(
+                        'system::pages/result',
+                        [
+                            'title'         => __('Wrong data'),
+                            'type'          => 'alert-danger',
+                            'message'       => __('Wrong data'),
+                            'back_url'      => '/forum/',
+                            'back_url_name' => __('Back'),
+                        ]
+                    )
                 );
             }
 
@@ -89,19 +92,21 @@ final readonly class MoveTopicController
             redirect($context->topic->url);
         }
 
-        return $this->render->render(
-            'forum::move_topic',
-            [
-                'title'            => __('Move topic'),
-                'page_title'       => __('Move topic'),
-                'id'               => $id,
-                'current_section'  => $context->currentSection,
-                'current_sections' => $context->currentSections,
-                'other_categories' => $context->otherCategories,
-                'back_url'         => $context->topic->url,
-                'form_action'      => '/forum/move-topic/' . $id . '/',
-                'csrf_token'       => $this->csrf->getToken(),
-            ]
+        return new Response(
+            $this->render->render(
+                'forum::move_topic',
+                [
+                    'title'            => __('Move topic'),
+                    'page_title'       => __('Move topic'),
+                    'id'               => $id,
+                    'current_section'  => $context->currentSection,
+                    'current_sections' => $context->currentSections,
+                    'other_categories' => $context->otherCategories,
+                    'back_url'         => $context->topic->url,
+                    'form_action'      => '/forum/move-topic/' . $id . '/',
+                    'csrf_token'       => $this->csrf->getToken(),
+                ]
+            )
         );
     }
 }

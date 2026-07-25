@@ -12,6 +12,7 @@ use Johncms\Http\UploadedFileMapper;
 use Johncms\Http\Request;
 use League\Flysystem\FilesystemException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 final readonly class UploadFileController
 {
@@ -24,14 +25,12 @@ final readonly class UploadFileController
         $this->context->initModule('guestbook');
     }
 
-    public function __invoke(): string
+    public function __invoke(): JsonResponse
     {
-        header('Content-Type: application/json');
-
         try {
             $upload = $this->request->files->get('upload');
             if (! $upload instanceof UploadedFile) {
-                return json_encode(
+                return new JsonResponse(
                     [
                         'error' => [
                             'message' => __('Wrong data'),
@@ -42,7 +41,7 @@ final readonly class UploadFileController
 
             $file_info = new FileInfo((string) $this->uploadedFileMapper->fromUploadedFile($upload)->clientName);
             if (! $file_info->isImage()) {
-                return json_encode(
+                return new JsonResponse(
                     [
                         'error' => [
                             'message' => __('Only images are allowed'),
@@ -58,15 +57,15 @@ final readonly class UploadFileController
                 'uploaded' => 1,
                 'url'      => $file->url,
             ];
-            return json_encode($file_array);
+            return new JsonResponse($file_array);
         } catch (FilesystemException | Exception $e) {
-            http_response_code(500);
-            return json_encode(
+            return new JsonResponse(
                 [
                     'error' => [
                         'message' => $e->getMessage(),
                     ],
-                ]
+                ],
+                JsonResponse::HTTP_INTERNAL_SERVER_ERROR
             );
         }
     }

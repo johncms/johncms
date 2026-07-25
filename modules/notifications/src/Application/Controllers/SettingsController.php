@@ -10,6 +10,8 @@ use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class SettingsController
 {
@@ -24,7 +26,7 @@ final readonly class SettingsController
         $this->controllerContext->initModule('notifications');
     }
 
-    public function __invoke(): string
+    public function __invoke(): Response
     {
         $title = __('Settings');
 
@@ -35,8 +37,7 @@ final readonly class SettingsController
             $showForumUnread = (bool) $this->request->bodyInt('show_forum_unread');
             $this->saveSettingsUseCase->execute($showForumUnread);
             $_SESSION['message'] = __('Settings saved!');
-            header('Location: /notifications/settings/');
-            exit;
+            return new RedirectResponse('/notifications/settings/');
         }
 
         $message = '';
@@ -53,7 +54,7 @@ final readonly class SettingsController
             'page_title' => $title,
         ]);
 
-        return $this->render->render('notifications::settings', [
+        return new Response($this->render->render('notifications::settings', [
             'data' => [
                 'title'            => $title,
                 'page_title'       => $title,
@@ -62,6 +63,6 @@ final readonly class SettingsController
                 'message'          => $message,
                 'current_settings' => $currentSettings,
             ],
-        ]);
+        ]));
     }
 }

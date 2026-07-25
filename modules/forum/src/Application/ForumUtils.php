@@ -19,7 +19,6 @@ use Johncms\Modules\Forum\Domain\Models\ForumMessage;
 use Johncms\Modules\Forum\Domain\Models\ForumTopic;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
 use Johncms\Users\User;
 
 class ForumUtils
@@ -43,30 +42,6 @@ class ForumUtils
         if (! empty($current_item_name)) {
             $nav_chain->add($current_item_name, $current_item_url);
         }
-    }
-
-    /**
-     * Page not found
-     */
-    public static function notFound(): void
-    {
-        checkRedirect();
-        $view = di(Render::class);
-
-        if (! headers_sent()) {
-            header('HTTP/1.0 404 Not Found');
-        }
-
-        echo $view->render(
-            'system::pages/result',
-            [
-                'title'    => __('Forum'),
-                'type'     => 'alert-danger',
-                'message'  => __('Topic has been deleted or does not exists'),
-                'back_url' => '/forum/',
-            ]
-        );
-        exit;
     }
 
     /**

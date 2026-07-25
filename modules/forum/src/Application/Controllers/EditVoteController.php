@@ -14,6 +14,7 @@ use Johncms\Modules\Forum\Application\UseCases\GetEditVoteContextUseCase;
 use Johncms\Modules\Forum\Application\UseCases\UpdateVoteUseCase;
 use Johncms\Http\Request;
 use Johncms\System\View\Render;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class EditVoteController
 {
@@ -30,7 +31,7 @@ final readonly class EditVoteController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(int $id): string
+    public function __invoke(int $id): Response
     {
         try {
             $context = $this->contextUseCase->execute($id);
@@ -65,15 +66,17 @@ final readonly class EditVoteController
                 redirect('/forum/editvote/' . $context->topicId . '/');
             }
 
-            return $this->render->render(
-                'forum::delete_answer',
-                [
-                    'title'      => __('Delete Answer'),
-                    'page_title' => __('Delete Answer'),
-                    'id'         => $context->topicId,
-                    'delete_url' => '/forum/editvote/' . $context->topicId . '/?vote=' . $voteId . '&amp;delvote&amp;yes',
-                    'back_url'   => '/forum/editvote/' . $context->topicId . '/',
-                ]
+            return new Response(
+                $this->render->render(
+                    'forum::delete_answer',
+                    [
+                        'title'      => __('Delete Answer'),
+                        'page_title' => __('Delete Answer'),
+                        'id'         => $context->topicId,
+                        'delete_url' => '/forum/editvote/' . $context->topicId . '/?vote=' . $voteId . '&amp;delvote&amp;yes',
+                        'back_url'   => '/forum/editvote/' . $context->topicId . '/',
+                    ]
+                )
             );
         }
 
@@ -97,16 +100,18 @@ final readonly class EditVoteController
 
             $this->updateVoteUseCase->execute($context->topicId, $pollName, $existingAnswers, $newAnswers);
 
-            return $this->render->render(
-                'system::pages/result',
-                [
-                    'title'         => __('Edit Poll'),
-                    'page_title'    => __('Edit Poll'),
-                    'type'          => 'alert-success',
-                    'message'       => __('Poll changed'),
-                    'back_url'      => $this->topicPathService->getTopicUrlById($context->topicId) ?? '/forum/',
-                    'back_url_name' => __('Continue'),
-                ]
+            return new Response(
+                $this->render->render(
+                    'system::pages/result',
+                    [
+                        'title'         => __('Edit Poll'),
+                        'page_title'    => __('Edit Poll'),
+                        'type'          => 'alert-success',
+                        'message'       => __('Poll changed'),
+                        'back_url'      => $this->topicPathService->getTopicUrlById($context->topicId) ?? '/forum/',
+                        'back_url_name' => __('Continue'),
+                    ]
+                )
             );
         }
 
@@ -151,18 +156,20 @@ final readonly class EditVoteController
             ];
         }
 
-        return $this->render->render(
-            'forum::edit_poll',
-            [
-                'title'      => __('Edit Poll'),
-                'page_title' => __('Edit Poll'),
-                'id'         => $context->topicId,
-                'back_url'   => $this->topicPathService->getTopicUrlById($context->topicId) ?? '/forum/',
-                'saved_vote' => $context->savedVote,
-                'count_vote' => $countVote,
-                'poll_name'  => htmlentities($context->pollName, ENT_QUOTES, 'UTF-8'),
-                'votes'      => $votes,
-            ]
+        return new Response(
+            $this->render->render(
+                'forum::edit_poll',
+                [
+                    'title'      => __('Edit Poll'),
+                    'page_title' => __('Edit Poll'),
+                    'id'         => $context->topicId,
+                    'back_url'   => $this->topicPathService->getTopicUrlById($context->topicId) ?? '/forum/',
+                    'saved_vote' => $context->savedVote,
+                    'count_vote' => $countVote,
+                    'poll_name'  => htmlentities($context->pollName, ENT_QUOTES, 'UTF-8'),
+                    'votes'      => $votes,
+                ]
+            )
         );
     }
 }

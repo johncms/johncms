@@ -10,6 +10,7 @@ use Johncms\Modules\Login\Domain\Enums\LoginStatus;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\System\View\Render;
+use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -74,8 +75,10 @@ final readonly class LoginController
 
     private function handleSuccess(?int $userId, ?string $passwordHash): Response
     {
-        setcookie('cuid', (string) $userId, time() + 3600 * 24 * 365, '/');
-        setcookie('cups', (string) $passwordHash, time() + 3600 * 24 * 365, '/');
-        return new RedirectResponse('/');
+        $response = new RedirectResponse('/');
+        $expire = time() + 3600 * 24 * 365;
+        $response->headers->setCookie(Cookie::create('cuid', (string) $userId, $expire, '/', null, false, false, false, null));
+        $response->headers->setCookie(Cookie::create('cups', (string) $passwordHash, $expire, '/', null, false, false, false, null));
+        return $response;
     }
 }

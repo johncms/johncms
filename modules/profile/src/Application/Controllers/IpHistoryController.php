@@ -13,6 +13,7 @@ use Johncms\Modules\Profile\Application\Exceptions\ProfileNotFoundException;
 use Johncms\Modules\Profile\Application\UseCases\GetIpHistoryUseCase;
 use Johncms\NavChain;
 use Johncms\System\View\Render;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class IpHistoryController
 {
@@ -27,7 +28,7 @@ final readonly class IpHistoryController
         $this->controllerContext->initModule('profile');
     }
 
-    public function __invoke(int $id): string
+    public function __invoke(int $id): Response
     {
         $title = __('IP History');
 
@@ -43,8 +44,7 @@ final readonly class IpHistoryController
         } catch (ProfileNotFoundException $e) {
             return $this->renderError($title, $e->getMessage());
         } catch (ProfileAccessForbiddenException $e) {
-            http_response_code(403);
-            return $this->renderError($title, $e->getMessage());
+            return $this->renderError($title, $e->getMessage(), 403);
         }
 
         $this->navChain->add($result->profileName, $result->backUrl);
@@ -57,28 +57,33 @@ final readonly class IpHistoryController
             'description' => $meta->description,
         ]);
 
-        return $this->render->render(
-            'profile::ip_history',
-            [
-                'data' => [
-                    'items'      => $result->items,
-                    'total'      => $pagination->getTotal(),
-                    'pagination' => $pagination->render(),
-                    'back_url'   => $result->backUrl,
-                ],
-            ]
+        return new Response(
+            $this->render->render(
+                'profile::ip_history',
+                [
+                    'data' => [
+                        'items'      => $result->items,
+                        'total'      => $pagination->getTotal(),
+                        'pagination' => $pagination->render(),
+                        'back_url'   => $result->backUrl,
+                    ],
+                ]
+            )
         );
     }
 
-    private function renderError(string $title, string $message): string
+    private function renderError(string $title, string $message, int $status = 200): Response
     {
-        return $this->render->render(
-            'system::pages/result',
-            [
-                'title'   => $title,
-                'type'    => 'alert-danger',
-                'message' => $message,
-            ]
+        return new Response(
+            $this->render->render(
+                'system::pages/result',
+                [
+                    'title'   => $title,
+                    'type'    => 'alert-danger',
+                    'message' => $message,
+                ]
+            ),
+            $status
         );
     }
 }

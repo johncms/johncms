@@ -17,6 +17,7 @@ use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class AddFileController
 {
@@ -33,7 +34,7 @@ final readonly class AddFileController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(int $id): string
+    public function __invoke(int $id): Response
     {
         $config = config('johncms');
         $forumConfig = config('forum');
@@ -108,17 +109,19 @@ final readonly class AddFileController
             $topicId = $result->topicId;
         }
 
-        return $this->render->render(
-            'forum::add_file',
-            [
-                'title'         => __('Add File'),
-                'page_title'    => __('Add File'),
-                'id'            => $id,
-                'file_attached' => $fileAttached,
-                'topic_id'      => $topicId,
-                'back_url'      => $this->getTopicUrl($topicId, $page),
-                'config'        => $config,
-            ]
+        return new Response(
+            $this->render->render(
+                'forum::add_file',
+                [
+                    'title'         => __('Add File'),
+                    'page_title'    => __('Add File'),
+                    'id'            => $id,
+                    'file_attached' => $fileAttached,
+                    'topic_id'      => $topicId,
+                    'back_url'      => $this->getTopicUrl($topicId, $page),
+                    'config'        => $config,
+                ]
+            )
         );
     }
 

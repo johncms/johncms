@@ -33,9 +33,9 @@ final readonly class ForumSectionController
         try {
             $result = $this->viewForumSectionUseCase->execute($sectionPath, $page);
         } catch (ForumNotFoundException $exception) {
-            $errorCode = $exception->getErrorCode();
-            http_response_code($errorCode->httpStatus());
-            $this->render->addData(["error_code" => $errorCode->value]);
+            // ForumNotFoundException always maps to FORUM_NOT_FOUND (404), the same status
+            // pageNotFound() answers with, so no separate status assignment is needed here.
+            $this->render->addData(['error_code' => $exception->getErrorCode()->value]);
             pageNotFound();
         }
 

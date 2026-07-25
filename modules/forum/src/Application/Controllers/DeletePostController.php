@@ -16,6 +16,7 @@ use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class DeletePostController
 {
@@ -33,7 +34,7 @@ final readonly class DeletePostController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(int $id): string
+    public function __invoke(int $id): Response
     {
         try {
             $context = $this->contextUseCase->execute($id, $this->getForumSettings());
@@ -69,15 +70,17 @@ final readonly class DeletePostController
             );
 
             if (! $validator->isValid()) {
-                return $this->render->render(
-                    'system::pages/result',
-                    [
-                        'title'         => __('Delete Message'),
-                        'type'          => 'alert-danger',
-                        'message'       => __('Wrong data'),
-                        'back_url'      => '/forum/delete-post/' . $id . '/',
-                        'back_url_name' => __('Back'),
-                    ]
+                return new Response(
+                    $this->render->render(
+                        'system::pages/result',
+                        [
+                            'title'         => __('Delete Message'),
+                            'type'          => 'alert-danger',
+                            'message'       => __('Wrong data'),
+                            'back_url'      => '/forum/delete-post/' . $id . '/',
+                            'back_url_name' => __('Back'),
+                        ]
+                    )
                 );
             }
 
@@ -87,18 +90,20 @@ final readonly class DeletePostController
             redirect($result->redirectUrl);
         }
 
-        return $this->render->render(
-            'forum::delete_post',
-            [
-                'title'           => __('Delete Message'),
-                'page_title'      => __('Delete Message'),
-                'id'              => $id,
-                'posts'           => $context->posts,
-                'back_url'        => $context->backUrl,
-                'csrf_token'      => $this->csrf->getToken(),
-                'can_hard_delete' => $this->currentUser->rights === 9,
-                'delete_action'   => '/forum/delete-post/' . $id . '/',
-            ]
+        return new Response(
+            $this->render->render(
+                'forum::delete_post',
+                [
+                    'title'           => __('Delete Message'),
+                    'page_title'      => __('Delete Message'),
+                    'id'              => $id,
+                    'posts'           => $context->posts,
+                    'back_url'        => $context->backUrl,
+                    'csrf_token'      => $this->csrf->getToken(),
+                    'can_hard_delete' => $this->currentUser->rights === 9,
+                    'delete_action'   => '/forum/delete-post/' . $id . '/',
+                ]
+            )
         );
     }
 

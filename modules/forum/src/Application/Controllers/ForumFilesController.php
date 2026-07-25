@@ -14,6 +14,7 @@ use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class ForumFilesController
 {
@@ -30,7 +31,7 @@ final readonly class ForumFilesController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(): string
+    public function __invoke(): Response
     {
         $page = max(1, $this->request->queryInt('page', 1));
         $start = ($page - 1) * (int) $this->currentUser->config->kmess;
@@ -72,7 +73,9 @@ final readonly class ForumFilesController
             $viewData['pagination'] = $pagination->render();
         }
 
-        return $this->render->render($result->template, $viewData);
+        return new Response(
+            $this->render->render($result->template, $viewData)
+        );
     }
 
     private function normalizeFileType(int $fileType): int

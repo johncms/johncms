@@ -13,6 +13,7 @@ use Johncms\Modules\Forum\Application\ForumUtils;
 use Johncms\NavChain;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class ShowPostController
 {
@@ -27,7 +28,7 @@ final readonly class ShowPostController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(int $id): string
+    public function __invoke(int $id): Response
     {
         try {
             $result = $this->viewPostUseCase->execute(
@@ -68,12 +69,14 @@ final readonly class ShowPostController
             (string) $result['topic']->url
         );
 
-        return $this->render->render(
-            'forum::show_post',
-            [
-                'post'  => $result['post'],
-                'topic' => $result['topic'],
-            ]
+        return new Response(
+            $this->render->render(
+                'forum::show_post',
+                [
+                    'post'  => $result['post'],
+                    'topic' => $result['topic'],
+                ]
+            )
         );
     }
 

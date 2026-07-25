@@ -16,6 +16,7 @@ use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class MovePhotoController
 {
@@ -32,24 +33,26 @@ final readonly class MovePhotoController
         $this->controllerContext->initModule('album');
     }
 
-    public function form(int $img): string
+    public function form(int $img): Response
     {
         $photo = $this->resolveContext($img);
-        if (is_string($photo)) {
+        if ($photo instanceof Response) {
             return $photo;
         }
 
         $targets = $this->albumRepository->getUserAlbumsExcept($photo->user_id, $photo->album_id);
         if ($targets->isEmpty()) {
-            return $this->render->render(
-                'system::pages/result',
-                [
-                    'title'         => __('Move image'),
-                    'type'          => 'alert-info',
-                    'message'       => __('You must create at least one additional album in order to move the image'),
-                    'back_url'      => '/album/user/' . $photo->user_id,
-                    'back_url_name' => __('Continue'),
-                ]
+            return new Response(
+                $this->render->render(
+                    'system::pages/result',
+                    [
+                        'title'         => __('Move image'),
+                        'type'          => 'alert-info',
+                        'message'       => __('You must create at least one additional album in order to move the image'),
+                        'back_url'      => '/album/user/' . $photo->user_id,
+                        'back_url_name' => __('Continue'),
+                    ]
+                )
             );
         }
 
@@ -74,24 +77,26 @@ final readonly class MovePhotoController
             'page_title' => $title,
         ]);
 
-        return $this->render->render(
-            'album::move_photo',
-            [
-                'title'      => $title,
-                'page_title' => $title,
-                'data'       => [
-                    'action_url' => '/album/photo/' . $photo->id . '/move',
-                    'back_url'   => '/album/' . $photo->album_id,
-                    'albums'     => $albums,
-                ],
-            ]
+        return new Response(
+            $this->render->render(
+                'album::move_photo',
+                [
+                    'title'      => $title,
+                    'page_title' => $title,
+                    'data'       => [
+                        'action_url' => '/album/photo/' . $photo->id . '/move',
+                        'back_url'   => '/album/' . $photo->album_id,
+                        'albums'     => $albums,
+                    ],
+                ]
+            )
         );
     }
 
-    public function move(int $img): string
+    public function move(int $img): Response
     {
         $photo = $this->resolveContext($img);
-        if (is_string($photo)) {
+        if ($photo instanceof Response) {
             return $photo;
         }
 
@@ -103,45 +108,47 @@ final readonly class MovePhotoController
             return $this->renderError($e->getMessage());
         }
 
-        return $this->render->render(
-            'system::pages/result',
-            [
-                'title'         => __('Move image'),
-                'type'          => 'alert-success',
-                'message'       => __('Image successfully moved to the selected album'),
-                'back_url'      => '/album/' . $albumId,
-                'back_url_name' => __('Continue'),
-            ]
+        return new Response(
+            $this->render->render(
+                'system::pages/result',
+                [
+                    'title'         => __('Move image'),
+                    'type'          => 'alert-success',
+                    'message'       => __('Image successfully moved to the selected album'),
+                    'back_url'      => '/album/' . $albumId,
+                    'back_url_name' => __('Continue'),
+                ]
+            )
         );
     }
 
     /**
      * Resolve the photo with the access guard, or a rendered error page (with the proper HTTP status set).
-     *
-     * @return AlbumPhoto|string
      */
-    private function resolveContext(int $img): AlbumPhoto|string
+    private function resolveContext(int $img): AlbumPhoto|Response
     {
         try {
             return $this->getContextUseCase->execute($img);
         } catch (AlbumPhotoNotFoundException $e) {
             return $this->renderError($e->getMessage());
         } catch (AlbumEditForbiddenException $e) {
-            http_response_code(403);
-            return $this->renderError($e->getMessage());
+            return $this->renderError($e->getMessage(), 403);
         }
     }
 
-    private function renderError(string $message): string
+    private function renderError(string $message, int $status = 200): Response
     {
-        return $this->render->render(
-            'system::pages/result',
-            [
-                'title'    => __('Move image'),
-                'type'     => 'alert-danger',
-                'message'  => $message,
-                'back_url' => '/album',
-            ]
+        return new Response(
+            $this->render->render(
+                'system::pages/result',
+                [
+                    'title'    => __('Move image'),
+                    'type'     => 'alert-danger',
+                    'message'  => $message,
+                    'back_url' => '/album',
+                ]
+            ),
+            $status
         );
     }
 }

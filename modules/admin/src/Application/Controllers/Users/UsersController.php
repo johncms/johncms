@@ -11,6 +11,9 @@ use Johncms\System\Users\User;
 use Johncms\System\View\Render;
 use Mobicms\Captcha\Code;
 use Mobicms\Captcha\Image;
+use Symfony\Component\HttpFoundation\Cookie;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class UsersController
 {
@@ -21,7 +24,7 @@ final readonly class UsersController
         $this->controllerContext->initModule('admin');
     }
 
-    public function login(User $user, Request $request): string
+    public function login(User $user, Request $request): Response
     {
         if ($user->isValid()) {
             redirect('/admin/');
@@ -75,14 +78,16 @@ final readonly class UsersController
                         // Показываем CAPTCHA
                         $code = (string) new Code();
                         $_SESSION['code'] = $code;
-                        return $this->render->render(
-                            'admin::users/captcha',
-                            [
-                                'captcha'    => new Image($code),
-                                'user_login' => $user_login,
-                                'user_pass'  => $user_pass,
-                                'id'         => $loginUser->id,
-                            ]
+                        return new Response(
+                            $this->render->render(
+                                'admin::users/captcha',
+                                [
+                                    'captcha'    => new Image($code),
+                                    'user_login' => $user_login,
+                                    'user_pass'  => $user_pass,
+                                    'id'         => $loginUser->id,
+                                ]
+                            )
                         );
                     }
                 }
@@ -97,11 +102,17 @@ final readonly class UsersController
                             redirect('/');
                         } else {
                             // Если все проверки прошли удачно, подготавливаем вход на сайт
-                            setcookie('cuid', (string) $loginUser->id, time() + 3600 * 24 * 365, '/');
-                            setcookie('cups', md5($user_pass), time() + 3600 * 24 * 365, '/');
+                            $expire = time() + 3600 * 24 * 365;
+                            $response = new RedirectResponse('/admin/');
+                            $response->headers->setCookie(
+                                Cookie::create('cuid', (string) $loginUser->id, $expire, '/', null, false, false, false, null)
+                            );
+                            $response->headers->setCookie(
+                                Cookie::create('cups', md5($user_pass), $expire, '/', null, false, false, false, null)
+                            );
 
                             $db->exec("UPDATE `users` SET `sestime` = '" . time() . "' WHERE `id` = " . $loginUser->id);
-                            redirect('/admin/');
+                            return $response;
                         }
                     } else {
                         // Если логин неудачный
@@ -120,17 +131,19 @@ final readonly class UsersController
         }
 
         if ($display_form) {
-            return $this->render->render(
-                'admin::users/login',
-                [
-                    'data' => [
-                        'error'      => isset($_POST['login']) ? $error : [],
-                        'user_login' => $user_login ?? '',
-                    ],
-                ]
+            return new Response(
+                $this->render->render(
+                    'admin::users/login',
+                    [
+                        'data' => [
+                            'error'      => isset($_POST['login']) ? $error : [],
+                            'user_login' => $user_login ?? '',
+                        ],
+                    ]
+                )
             );
         }
 
-        return '';
+        return new Response('');
     }
 }

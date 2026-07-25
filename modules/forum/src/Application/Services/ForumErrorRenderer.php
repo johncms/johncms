@@ -6,18 +6,21 @@ namespace Johncms\Modules\Forum\Application\Services;
 
 use Johncms\Modules\Forum\Application\Exceptions\ForumException;
 use Johncms\System\View\Render;
+use Symfony\Component\HttpFoundation\Response;
 
 final class ForumErrorRenderer
 {
     /**
      * @param array<string, mixed> $overrides
      */
-    public function render(Render $render, ForumException $exception, array $overrides = []): string
+    public function render(Render $render, ForumException $exception, array $overrides = []): Response
     {
         $payload = $this->forException($exception, $overrides);
-        http_response_code($exception->getErrorCode()->httpStatus());
 
-        return $render->render('system::pages/result', $payload);
+        return new Response(
+            $render->render('system::pages/result', $payload),
+            $exception->getErrorCode()->httpStatus()
+        );
     }
 
     /**

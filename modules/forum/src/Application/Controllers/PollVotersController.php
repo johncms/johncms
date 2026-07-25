@@ -16,6 +16,7 @@ use Johncms\Modules\Forum\Application\UseCases\ViewPollVotersUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\System\View\Render;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class PollVotersController
 {
@@ -33,7 +34,7 @@ final readonly class PollVotersController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(int $id): string
+    public function __invoke(int $id): Response
     {
         try {
             $this->accessUseCase->execute($id);
@@ -72,19 +73,21 @@ final readonly class PollVotersController
 
         $pagination = $this->paginationFactory->create($result->total, null, 'page', $page);
 
-        return $this->render->render(
-            'forum::voted_users',
-            [
-                'title'         => $caption,
-                'page_title'    => $caption,
-                'empty_message' => __('No one has voted in this poll yet'),
-                'poll_name'     => htmlentities($result->pollName, ENT_QUOTES, 'UTF-8'),
-                'items'         => $result->items,
-                'pagination'    => $pagination->render(),
-                'total'         => $result->total,
-                'id'            => $id,
-                'topic_url'     => $this->topicPathService->getTopicUrlById($id) ?? '/forum/',
-            ]
+        return new Response(
+            $this->render->render(
+                'forum::voted_users',
+                [
+                    'title'         => $caption,
+                    'page_title'    => $caption,
+                    'empty_message' => __('No one has voted in this poll yet'),
+                    'poll_name'     => htmlentities($result->pollName, ENT_QUOTES, 'UTF-8'),
+                    'items'         => $result->items,
+                    'pagination'    => $pagination->render(),
+                    'total'         => $result->total,
+                    'id'            => $id,
+                    'topic_url'     => $this->topicPathService->getTopicUrlById($id) ?? '/forum/',
+                ]
+            )
         );
     }
 }

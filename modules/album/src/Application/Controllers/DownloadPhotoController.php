@@ -11,6 +11,8 @@ use Johncms\Modules\Album\Application\Exceptions\AlbumPhotoFileMissingException;
 use Johncms\Modules\Album\Application\Exceptions\AlbumPhotoNotFoundException;
 use Johncms\Modules\Album\Application\UseCases\DownloadPhotoUseCase;
 use Johncms\System\View\Render;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class DownloadPhotoController
 {
@@ -22,7 +24,7 @@ final readonly class DownloadPhotoController
         $this->controllerContext->initModule('album');
     }
 
-    public function __invoke(int $img): string
+    public function __invoke(int $img): Response
     {
         try {
             $url = $this->useCase->execute($img);
@@ -34,22 +36,23 @@ final readonly class DownloadPhotoController
             return $this->renderError(__('File does not exist'));
         }
 
-        http_response_code(302);
-        header('Location: ' . $url);
-        exit;
+        // The photo is served from a static URL, so a redirect is all that is needed.
+        return new RedirectResponse($url, 302);
     }
 
-    private function renderError(string $message): string
+    private function renderError(string $message): Response
     {
-        return $this->render->render(
-            'system::pages/result',
-            [
-                'title'         => __('Albums'),
-                'type'          => 'alert-danger',
-                'message'       => $message,
-                'back_url'      => '/album',
-                'back_url_name' => __('Albums'),
-            ]
+        return new Response(
+            $this->render->render(
+                'system::pages/result',
+                [
+                    'title'         => __('Albums'),
+                    'type'          => 'alert-danger',
+                    'message'       => $message,
+                    'back_url'      => '/album',
+                    'back_url_name' => __('Albums'),
+                ]
+            )
         );
     }
 }

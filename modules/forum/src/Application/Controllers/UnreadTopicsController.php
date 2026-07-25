@@ -16,6 +16,7 @@ use Johncms\Security\Csrf;
 use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class UnreadTopicsController
 {
@@ -34,7 +35,7 @@ final readonly class UnreadTopicsController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(): string
+    public function __invoke(): Response
     {
         try {
             $this->forumUserAccessUseCase->execute();
@@ -56,20 +57,22 @@ final readonly class UnreadTopicsController
 
         $pagination = $this->paginationFactory->create($result->total, null, 'page', $page);
 
-        return $this->render->render(
-            'forum::new_topics',
-            [
-                'pagination'           => $pagination->render(),
-                'title'                => $caption,
-                'page_title'           => $caption,
-                'empty_message'        => __('The list is empty'),
-                'topics'               => $result->topics,
-                'total'                => $result->total,
-                'show_period'          => false,
-                'mark_as_read_action'  => '/forum/unread/mark-read/',
-                'mark_as_read_enabled' => $result->total > 0,
-                'csrf_token'           => $this->csrf->getToken(),
-            ]
+        return new Response(
+            $this->render->render(
+                'forum::new_topics',
+                [
+                    'pagination'           => $pagination->render(),
+                    'title'                => $caption,
+                    'page_title'           => $caption,
+                    'empty_message'        => __('The list is empty'),
+                    'topics'               => $result->topics,
+                    'total'                => $result->total,
+                    'show_period'          => false,
+                    'mark_as_read_action'  => '/forum/unread/mark-read/',
+                    'mark_as_read_enabled' => $result->total > 0,
+                    'csrf_token'           => $this->csrf->getToken(),
+                ]
+            )
         );
     }
 }

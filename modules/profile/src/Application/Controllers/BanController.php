@@ -24,6 +24,7 @@ use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class BanController
 {
@@ -45,7 +46,7 @@ final readonly class BanController
         $this->controllerContext->initModule('profile');
     }
 
-    public function history(int $id): string
+    public function history(int $id): Response
     {
         try {
             $pagination = $this->paginationFactory->create($this->getBanHistoryUseCase->count($id));
@@ -63,7 +64,7 @@ final readonly class BanController
         return $this->renderHistory($id, $dto, $pagination);
     }
 
-    public function createForm(int $id): string
+    public function createForm(int $id): Response
     {
         try {
             $target = $this->getBanFormContextUseCase->execute($id);
@@ -76,7 +77,7 @@ final readonly class BanController
         return $this->renderForm($target);
     }
 
-    public function create(int $id): string
+    public function create(int $id): Response
     {
         try {
             $target = $this->getBanFormContextUseCase->execute($id);
@@ -107,7 +108,7 @@ final readonly class BanController
         return $this->renderResult(__('User banned'), 'alert-success', '/profile/' . $id);
     }
 
-    public function cancelForm(int $id, int $banId): string
+    public function cancelForm(int $id, int $banId): Response
     {
         if ($error = $this->staffGuard()) {
             return $error;
@@ -130,7 +131,7 @@ final readonly class BanController
         );
     }
 
-    public function cancel(int $id, int $banId): string
+    public function cancel(int $id, int $banId): Response
     {
         if ($error = $this->staffGuard()) {
             return $error;
@@ -152,7 +153,7 @@ final readonly class BanController
         return $this->renderResult(__('Ban terminated'), 'alert-success', '/profile/' . $id . '/bans', __('Ban termination'));
     }
 
-    public function deleteForm(int $id, int $banId): string
+    public function deleteForm(int $id, int $banId): Response
     {
         if ($error = $this->supervisorGuard()) {
             return $error;
@@ -173,7 +174,7 @@ final readonly class BanController
         );
     }
 
-    public function delete(int $id, int $banId): string
+    public function delete(int $id, int $banId): Response
     {
         if ($error = $this->supervisorGuard()) {
             return $error;
@@ -193,7 +194,7 @@ final readonly class BanController
         return $this->renderResult(__('Ban deleted'), 'alert-success', '/profile/' . $id . '/bans', __('Delete ban'));
     }
 
-    public function clearForm(int $id): string
+    public function clearForm(int $id): Response
     {
         if ($error = $this->supervisorGuard(__('Violations history can be cleared by Supervisor only'))) {
             return $error;
@@ -208,7 +209,7 @@ final readonly class BanController
         );
     }
 
-    public function clear(int $id): string
+    public function clear(int $id): Response
     {
         if ($error = $this->supervisorGuard(__('Violations history can be cleared by Supervisor only'))) {
             return $error;
@@ -222,7 +223,7 @@ final readonly class BanController
         return $this->renderResult(__('Violations history cleared'), 'alert-success', '/profile/' . $id . '/bans', __('Violations history'));
     }
 
-    private function renderHistory(int $profileId, BanHistoryDTO $dto, Pagination $pagination): string
+    private function renderHistory(int $profileId, BanHistoryDTO $dto, Pagination $pagination): Response
     {
         $title = __('Violations History');
 
@@ -236,25 +237,27 @@ final readonly class BanController
 
         $paginationHtml = $pagination->render();
 
-        return $this->render->render(
-            'profile::ban_history',
-            [
-                'title'      => $title,
-                'page_title' => $title,
-                'pagination' => $paginationHtml,
-                'data'       => [
-                    'user_name'         => $dto->userName,
-                    'items'             => $dto->items,
-                    'total'             => $pagination->getTotal(),
-                    'pagination'        => $paginationHtml,
-                    'clear_history_url' => $dto->clearHistoryUrl,
-                    'back_url'          => $dto->backUrl,
-                ],
-            ]
+        return new Response(
+            $this->render->render(
+                'profile::ban_history',
+                [
+                    'title'      => $title,
+                    'page_title' => $title,
+                    'pagination' => $paginationHtml,
+                    'data'       => [
+                        'user_name'         => $dto->userName,
+                        'items'             => $dto->items,
+                        'total'             => $pagination->getTotal(),
+                        'pagination'        => $paginationHtml,
+                        'clear_history_url' => $dto->clearHistoryUrl,
+                        'back_url'          => $dto->backUrl,
+                    ],
+                ]
+            )
         );
     }
 
-    private function renderForm(User $target): string
+    private function renderForm(User $target): Response
     {
         $title = __('Ban the User');
 
@@ -266,22 +269,24 @@ final readonly class BanController
             'page_title' => $title,
         ]);
 
-        return $this->render->render(
-            'profile::ban',
-            [
-                'title'      => $title,
-                'page_title' => $title,
-                'data'       => [
-                    'form_action' => '/profile/' . $target->id . '/bans/new',
-                    'post_id'     => $this->request->queryInt('fid'),
-                    'back_url'    => '/profile/' . $target->id,
-                    'user_login'  => $target->name,
-                ],
-            ]
+        return new Response(
+            $this->render->render(
+                'profile::ban',
+                [
+                    'title'      => $title,
+                    'page_title' => $title,
+                    'data'       => [
+                        'form_action' => '/profile/' . $target->id . '/bans/new',
+                        'post_id'     => $this->request->queryInt('fid'),
+                        'back_url'    => '/profile/' . $target->id,
+                        'user_login'  => $target->name,
+                    ],
+                ]
+            )
         );
     }
 
-    private function renderConfirm(string $title, string $message, string $submitName, string $formAction, string $backUrl): string
+    private function renderConfirm(string $title, string $message, string $submitName, string $formAction, string $backUrl): Response
     {
         $this->navChain->add($title);
 
@@ -290,51 +295,54 @@ final readonly class BanController
             'page_title' => $title,
         ]);
 
-        return $this->render->render(
-            'profile::ban_cancel',
-            [
-                'title'      => $title,
-                'page_title' => $title,
-                'data'       => [
-                    'message'     => $message,
-                    'submit_name' => $submitName,
-                    'form_action' => $formAction,
-                    'back_url'    => $backUrl,
-                ],
-            ]
+        return new Response(
+            $this->render->render(
+                'profile::ban_cancel',
+                [
+                    'title'      => $title,
+                    'page_title' => $title,
+                    'data'       => [
+                        'message'     => $message,
+                        'submit_name' => $submitName,
+                        'form_action' => $formAction,
+                        'back_url'    => $backUrl,
+                    ],
+                ]
+            )
         );
     }
 
-    private function renderResult(string $message, string $type, string $backUrl, ?string $title = null): string
+    private function renderResult(string $message, string $type, string $backUrl, ?string $title = null): Response
     {
-        return $this->render->render(
-            'system::pages/result',
-            [
-                'title'    => $title ?? __('Ban the User'),
-                'type'     => $type,
-                'message'  => $message,
-                'back_url' => $backUrl,
-            ]
+        return new Response(
+            $this->render->render(
+                'system::pages/result',
+                [
+                    'title'    => $title ?? __('Ban the User'),
+                    'type'     => $type,
+                    'message'  => $message,
+                    'back_url' => $backUrl,
+                ]
+            )
         );
     }
 
-    private function renderError(string $message, int $statusCode = 200): string
+    private function renderError(string $message, int $statusCode = 200): Response
     {
-        if ($statusCode !== 200) {
-            http_response_code($statusCode);
-        }
-
-        return $this->render->render(
-            'system::pages/result',
-            [
-                'title'   => __('Ban the User'),
-                'type'    => 'alert-danger',
-                'message' => $message,
-            ]
+        return new Response(
+            $this->render->render(
+                'system::pages/result',
+                [
+                    'title'   => __('Ban the User'),
+                    'type'    => 'alert-danger',
+                    'message' => $message,
+                ]
+            ),
+            $statusCode
         );
     }
 
-    private function staffGuard(): ?string
+    private function staffGuard(): ?Response
     {
         if ($this->currentUser->rights < 7) {
             return $this->renderError(__('Wrong data'), 403);
@@ -343,7 +351,7 @@ final readonly class BanController
         return null;
     }
 
-    private function supervisorGuard(?string $message = null): ?string
+    private function supervisorGuard(?string $message = null): ?Response
     {
         if ($this->currentUser->rights !== 9) {
             return $this->renderError($message ?? __('Wrong data'), 403);

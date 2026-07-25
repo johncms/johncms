@@ -218,6 +218,5 @@ final readonly class CollectionRouterController
     private function notFound(): never
     {
         pageNotFound();
-        exit;
     }
 }

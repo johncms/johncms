@@ -15,6 +15,7 @@ use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
+use Symfony\Component\HttpFoundation\Response;
 
 final readonly class DeleteAlbumController
 {
@@ -30,10 +31,10 @@ final readonly class DeleteAlbumController
         $this->controllerContext->initModule('album');
     }
 
-    public function confirm(int $al): string
+    public function confirm(int $al): Response
     {
         $context = $this->resolveContext($al);
-        if (is_string($context)) {
+        if ($context instanceof Response) {
             return $context;
         }
 
@@ -51,24 +52,26 @@ final readonly class DeleteAlbumController
             'page_title' => $title,
         ]);
 
-        return $this->render->render(
-            'album::confirm_delete',
-            [
-                'title'      => $title,
-                'page_title' => $title,
-                'data'       => [
-                    'message'     => __('Are you sure you want to delete this album? If it contains photos, they also will be deleted.'),
-                    'form_action' => '/album/' . $album->id . '/delete',
-                    'back_url'    => '/album/user/' . $album->user_id,
-                ],
-            ]
+        return new Response(
+            $this->render->render(
+                'album::confirm_delete',
+                [
+                    'title'      => $title,
+                    'page_title' => $title,
+                    'data'       => [
+                        'message'     => __('Are you sure you want to delete this album? If it contains photos, they also will be deleted.'),
+                        'form_action' => '/album/' . $album->id . '/delete',
+                        'back_url'    => '/album/user/' . $album->user_id,
+                    ],
+                ]
+            )
         );
     }
 
-    public function delete(int $al): string
+    public function delete(int $al): Response
     {
         $context = $this->resolveContext($al);
-        if (is_string($context)) {
+        if ($context instanceof Response) {
             return $context;
         }
         if (! $this->isCsrfValid()) {
@@ -80,32 +83,30 @@ final readonly class DeleteAlbumController
 
         $this->deleteAlbumUseCase->execute($album);
 
-        return $this->render->render(
-            'system::pages/result',
-            [
-                'title'    => __('Delete album'),
-                'type'     => 'alert-success',
-                'message'  => __('Album deleted'),
-                'back_url' => '/album/user/' . $ownerId,
-            ]
+        return new Response(
+            $this->render->render(
+                'system::pages/result',
+                [
+                    'title'    => __('Delete album'),
+                    'type'     => 'alert-success',
+                    'message'  => __('Album deleted'),
+                    'back_url' => '/album/user/' . $ownerId,
+                ]
+            )
         );
     }
 
     /**
      * Resolve the delete context or, on failure, a rendered error page (with the proper HTTP status set).
-     *
-     * @return DeleteAlbumContextDTO|string
      */
-    private function resolveContext(int $al): DeleteAlbumContextDTO|string
+    private function resolveContext(int $al): DeleteAlbumContextDTO|Response
     {
         try {
             return $this->getContextUseCase->execute($al);
         } catch (AlbumNotFoundException $e) {
-            http_response_code(403);
-            return $this->renderError($e->getMessage());
+            return $this->renderError($e->getMessage(), 403);
         } catch (AlbumEditForbiddenException $e) {
-            http_response_code(403);
-            return $this->renderError($e->getMessage());
+            return $this->renderError($e->getMessage(), 403);
         }
     }
 
@@ -119,15 +120,18 @@ final readonly class DeleteAlbumController
         return $validator->isValid();
     }
 
-    private function renderError(string $message): string
+    private function renderError(string $message, int $status = 200): Response
     {
-        return $this->render->render(
-            'system::pages/result',
-            [
-                'title'   => __('Albums'),
-                'type'    => 'alert-danger',
-                'message' => $message,
-            ]
+        return new Response(
+            $this->render->render(
+                'system::pages/result',
+                [
+                    'title'   => __('Albums'),
+                    'type'    => 'alert-danger',
+                    'message' => $message,
+                ]
+            ),
+            $status
         );
     }
 }
