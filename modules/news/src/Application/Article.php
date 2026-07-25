@@ -14,17 +14,16 @@ namespace Johncms\Modules\News\Application;
 
 use Illuminate\Database\Eloquent\Collection;
 use Johncms\Exceptions\PageNotFoundException;
+use Johncms\Http\Session;
 use Johncms\Modules\News\Domain\Models\NewsArticle;
 use Johncms\NavChain;
 
-class Article
+final readonly class Article
 {
-    /** @var NavChain */
-    protected $nav_chain;
-
-    public function __construct()
-    {
-        $this->nav_chain = di(NavChain::class);
+    public function __construct(
+        private Session $session,
+        private NavChain $navChain,
+    ) {
     }
 
     public function countArticles(array $sections = []): int
@@ -66,12 +65,14 @@ class Article
             throw new PageNotFoundException(__('The requested article was not found.'));
         }
         // Фиксируем количество просмотров
-        if (empty($_SESSION['news_viewed_articles']) || ! in_array($article->id, $_SESSION['news_viewed_articles'], true)) {
+        $viewedArticles = $this->session->get('news_viewed_articles', []);
+        if (empty($viewedArticles) || ! in_array($article->id, $viewedArticles, true)) {
             ++$article->view_count;
             $article->save();
-            $_SESSION['news_viewed_articles'][] = $article->id;
+            $viewedArticles[] = $article->id;
+            $this->session->set('news_viewed_articles', $viewedArticles);
         }
-        $this->nav_chain->add($article->name, $article->url);
+        $this->navChain->add($article->name, $article->url);
         return $article;
     }
 }

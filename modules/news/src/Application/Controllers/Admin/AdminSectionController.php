@@ -14,6 +14,7 @@ use Johncms\Modules\News\Application\Section;
 use Johncms\Modules\News\Application\Utils\Helpers;
 use Johncms\Modules\News\Domain\Models\NewsArticle;
 use Johncms\Modules\News\Domain\Models\NewsSection;
+use Johncms\Http\Session;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\System\View\Render;
@@ -30,6 +31,7 @@ final readonly class AdminSectionController
         private ExceptionResponseFactory $exceptionResponses,
         private DebugDetailsPolicy $debugDetailsPolicy,
         private LoggerInterface $logger,
+        private Session $session,
     ) {
         $this->controllerContext->initModule('news');
         $this->navChain->add(__('News'), '/admin/news/');
@@ -121,7 +123,7 @@ final readonly class AdminSectionController
                 if (! $check) {
                     (new NewsSection())->create($data['fields']);
                     $section_service->clearCache();
-                    $_SESSION['success_message'] = __('The section was created successfully');
+                    $this->session->flash('success_message', __('The section was created successfully'));
                     return new RedirectResponse('/admin/news/content/' . $section_id);
                 }
                 $errors[] = __('A section with this code already exists');
@@ -195,7 +197,7 @@ final readonly class AdminSectionController
 
                 if (! $check) {
                     $section->update($data['fields']);
-                    $_SESSION['success_message'] = __('The section was updated successfully');
+                    $this->session->flash('success_message', __('The section was updated successfully'));
                     return new RedirectResponse('/admin/news/content/' . $section->parent);
                 }
                 $errors[] = __('A section with this code already exists');
@@ -228,11 +230,12 @@ final readonly class AdminSectionController
         }
 
         $post = $request->request->all();
+        $sessionToken = $this->session->get('delete_token');
 
         // Checking the data and deleting the section
         if (
-            isset($post['delete_token'], $_SESSION['delete_token']) &&
-            $_SESSION['delete_token'] === $post['delete_token'] &&
+            isset($post['delete_token'], $sessionToken) &&
+            $sessionToken === $post['delete_token'] &&
             $request->getMethod() === 'POST'
         ) {
             $children_sections = $section_service->getCachedSubsections($section);
@@ -244,7 +247,7 @@ final readonly class AdminSectionController
             // Delete subsections
             (new NewsSection())->whereIn('id', $children_sections)->delete();
 
-            $_SESSION['success_message'] = __('The section was successfully deleted');
+            $this->session->flash('success_message', __('The section was successfully deleted'));
             return new RedirectResponse('/admin/news/content/' . $section->parent);
         }
 
@@ -252,7 +255,7 @@ final readonly class AdminSectionController
 
         // Generate the token
         $data['delete_token'] = uniqid('', true);
-        $_SESSION['delete_token'] = $data['delete_token'];
+        $this->session->set('delete_token', $data['delete_token']);
 
         $data['action_url'] = '/admin/news/del_section/' . $section_id;
 

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use Johncms\Modules\News\Application\Article;
 use Johncms\Modules\News\Application\Section;
 use Johncms\Modules\News\Application\Sitemap\NewsUrlsProvider;
 
@@ -19,7 +18,6 @@ return static function (ContainerConfigurator $container): void {
         ->autoconfigure()
         ->public();
 
-    $services->set(Article::class, Article::class)->public();
     $services->set(Section::class, Section::class)->public();
     $services->set(NewsUrlsProvider::class, NewsUrlsProvider::class)->tag('johncms.sitemap_provider')->public();
 };

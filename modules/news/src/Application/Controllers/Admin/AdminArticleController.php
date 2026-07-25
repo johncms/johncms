@@ -18,6 +18,7 @@ use Johncms\Modules\News\Application\Utils\Helpers;
 use Johncms\Modules\News\Domain\Models\NewsArticle;
 use Johncms\Modules\News\Domain\Models\NewsSearchIndex;
 use Johncms\Modules\News\Domain\Models\NewsSection;
+use Johncms\Http\Session;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\System\Utility\EditorContentNormalizer;
@@ -39,6 +40,7 @@ final readonly class AdminArticleController
         private ExceptionResponseFactory $exceptionResponses,
         private DebugDetailsPolicy $debugDetailsPolicy,
         private LoggerInterface $logger,
+        private Session $session,
     ) {
         $this->controllerContext->initModule('news');
         $this->navChain->add(__('News'), '/admin/news/');
@@ -144,7 +146,7 @@ final readonly class AdminArticleController
                             'text'       => $search_text,
                         ]
                     );
-                    $_SESSION['success_message'] = __('The article was created successfully');
+                    $this->session->flash('success_message', __('The article was created successfully'));
                     return new RedirectResponse('/admin/news/content/' . $section_id);
                 }
                 $errors[] = __('An article with this code already exists');
@@ -245,7 +247,7 @@ final readonly class AdminArticleController
                         ['article_id' => $article->id],
                         ['text' => $search_text]
                     );
-                    $_SESSION['success_message'] = __('The article was updated successfully');
+                    $this->session->flash('success_message', __('The article was updated successfully'));
                     return new RedirectResponse('/admin/news/content/' . $article->section_id . '/');
                 }
                 $errors[] = __('An article with this code already exists');
@@ -276,11 +278,12 @@ final readonly class AdminArticleController
         }
 
         $post = $request->request->all();
+        $sessionToken = $this->session->get('delete_token');
 
         // Checking the data and deleting the section
         if (
-            isset($post['delete_token'], $_SESSION['delete_token']) &&
-            $_SESSION['delete_token'] === $post['delete_token'] &&
+            isset($post['delete_token'], $sessionToken) &&
+            $sessionToken === $post['delete_token'] &&
             $request->getMethod() === 'POST'
         ) {
             // Delete article
@@ -299,7 +302,7 @@ final readonly class AdminArticleController
                 return $this->exceptionResponses->internalServerError($exception, $this->debugDetailsPolicy->allowed());
             }
 
-            $_SESSION['success_message'] = __('The article was successfully deleted');
+            $this->session->flash('success_message', __('The article was successfully deleted'));
             return new RedirectResponse('/admin/news/content/' . $article->section_id);
         }
 
@@ -307,7 +310,7 @@ final readonly class AdminArticleController
 
         // Generate the token
         $data['delete_token'] = uniqid('', true);
-        $_SESSION['delete_token'] = $data['delete_token'];
+        $this->session->set('delete_token', $data['delete_token']);
 
         $data['action_url'] = '/admin/news/del_article/' . $article_id;
 

@@ -11,6 +11,7 @@ use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\News\Application\Utils\Helpers;
 use Johncms\Modules\News\Domain\Models\NewsArticle;
 use Johncms\Modules\News\Domain\Models\NewsSection;
+use Johncms\Http\Session;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\System\View\Render;
@@ -25,6 +26,7 @@ final readonly class AdminController
         private NavChain $navChain,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
+        private Session $session,
     ) {
         $this->controllerContext->initModule('news');
 
@@ -67,9 +69,9 @@ final readonly class AdminController
         }
 
         $data = [];
-        if (! empty($_SESSION['success_message'])) {
-            $data['messages'] = htmlspecialchars($_SESSION['success_message']);
-            unset($_SESSION['success_message']);
+        $flashMessage = $this->session->getFlash('success_message');
+        if (! empty($flashMessage)) {
+            $data['messages'] = htmlspecialchars($flashMessage);
         }
 
         $data['sections'] = (new NewsSection())->where('parent', $section_id)->get();
@@ -151,13 +153,13 @@ final readonly class AdminController
                 opcache_reset();
             }
 
-            $_SESSION['message'] = __('Settings saved!');
+            $this->session->flash('message', __('Settings saved!'));
             return new RedirectResponse('/admin/news/settings/');
         }
 
-        if (! empty($_SESSION['message'])) {
-            $data['message'] = htmlspecialchars($_SESSION['message']);
-            unset($_SESSION['message']);
+        $flashMessage = $this->session->getFlash('message');
+        if (! empty($flashMessage)) {
+            $data['message'] = htmlspecialchars($flashMessage);
         }
 
         // Стандартные настройки
