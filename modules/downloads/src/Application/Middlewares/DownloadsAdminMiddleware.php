@@ -18,7 +18,7 @@ final readonly class DownloadsAdminMiddleware implements MiddlewareInterface
     ) {
     }
 
-    public function handle(Request $request, callable $next): mixed
+    public function handle(Request $request, callable $next): Response
     {
         if ($this->currentUser->rights < 6 && $this->currentUser->rights !== 4) {
             return new Response(

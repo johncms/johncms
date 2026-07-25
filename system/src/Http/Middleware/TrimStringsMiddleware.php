@@ -14,6 +14,7 @@ namespace Johncms\Http\Middleware;
 
 use Johncms\Http\Request;
 use Johncms\Router\MiddlewareInterface;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\InputBag;
 
 /**
@@ -44,7 +45,7 @@ final class TrimStringsMiddleware implements MiddlewareInterface
      */
     private const EXCEPT = [];
 
-    public function handle(Request $request, callable $next): mixed
+    public function handle(Request $request, callable $next): Response
     {
         $this->trimBag($request->request);
         $this->trimBag($request->query);

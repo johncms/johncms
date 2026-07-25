@@ -9,6 +9,7 @@ use Johncms\Router\MiddlewareInterface;
 use Johncms\Http\Request;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 final class MiddlewareDispatcherTest extends TestCase
 {
@@ -19,14 +20,14 @@ final class MiddlewareDispatcherTest extends TestCase
         $request = Request::create('/forum', 'GET');
         $executionLog = [];
 
-        $first = static function (Request $request, callable $next) use (&$executionLog): mixed {
+        $first = static function (Request $request, callable $next) use (&$executionLog): Response {
             $executionLog[] = 'first.before';
             $result = $next($request);
             $executionLog[] = 'first.after';
             return $result;
         };
 
-        $second = static function (Request $request, callable $next) use (&$executionLog): mixed {
+        $second = static function (Request $request, callable $next) use (&$executionLog): Response {
             $executionLog[] = 'second.before';
             $result = $next($request);
             $executionLog[] = 'second.after';
@@ -36,13 +37,13 @@ final class MiddlewareDispatcherTest extends TestCase
         $result = $dispatcher->dispatch(
             request: $request,
             middlewares: [$first, $second],
-            handler: static function (Request $request) use (&$executionLog): string {
+            handler: static function (Request $request) use (&$executionLog): Response {
                 $executionLog[] = 'handler';
-                return 'ok:' . $request->getMethod();
+                return new Response('ok:' . $request->getMethod());
             },
         );
 
-        self::assertSame('ok:GET', $result);
+        self::assertSame('ok:GET', $result->getContent());
         self::assertSame(
             ['first.before', 'second.before', 'handler', 'second.after', 'first.after'],
             $executionLog,
@@ -53,9 +54,9 @@ final class MiddlewareDispatcherTest extends TestCase
     {
         $request = Request::create('/', 'GET');
         $middleware = new class () implements MiddlewareInterface {
-            public function handle(Request $request, callable $next): mixed
+            public function handle(Request $request, callable $next): Response
             {
-                return 'class-string:' . $next($request);
+                return new Response('class-string:' . $next($request)->getContent());
             }
         };
 
@@ -70,10 +71,10 @@ final class MiddlewareDispatcherTest extends TestCase
         $result = $dispatcher->dispatch(
             request: $request,
             middlewares: [TestContainerMiddleware::class],
-            handler: static fn (Request $request): string => 'handler:' . $request->getMethod(),
+            handler: static fn (Request $request): Response => new Response('handler:' . $request->getMethod()),
         );
 
-        self::assertSame('class-string:handler:GET', $result);
+        self::assertSame('class-string:handler:GET', $result->getContent());
     }
 
     public function testDispatchSupportsShortCircuitMiddleware(): void
@@ -83,20 +84,20 @@ final class MiddlewareDispatcherTest extends TestCase
         $request = Request::create('/', 'GET');
         $nextWasCalled = false;
 
-        $shortCircuitMiddleware = static function (Request $request, callable $next): string {
-            return 'blocked';
+        $shortCircuitMiddleware = static function (Request $request, callable $next): Response {
+            return new Response('blocked');
         };
 
         $result = $dispatcher->dispatch(
             request: $request,
             middlewares: [$shortCircuitMiddleware],
-            handler: static function (Request $request) use (&$nextWasCalled): string {
+            handler: static function (Request $request) use (&$nextWasCalled): Response {
                 $nextWasCalled = true;
-                return 'handler:' . $request->getMethod();
+                return new Response('handler:' . $request->getMethod());
             },
         );
 
-        self::assertSame('blocked', $result);
+        self::assertSame('blocked', $result->getContent());
         self::assertFalse($nextWasCalled);
     }
 
@@ -112,7 +113,7 @@ final class MiddlewareDispatcherTest extends TestCase
         $dispatcher->dispatch(
             request: $request,
             middlewares: [new \stdClass()],
-            handler: static fn (Request $request): string => 'handler:' . $request->getMethod(),
+            handler: static fn (Request $request): Response => new Response('handler:' . $request->getMethod()),
         );
     }
 }

@@ -18,6 +18,7 @@ use Johncms\Exceptions\PageNotFoundException;
 use Johncms\Http\Controller\ActionInvoker;
 use Johncms\Http\Middleware\TrimStringsMiddleware;
 use Johncms\Logs\DebugDetailsPolicy;
+use Johncms\Mail\EmailSender;
 use Johncms\Router\MiddlewareDispatcher;
 use Johncms\Router\RouteMatchResult;
 use Johncms\Router\SymfonyRouteMatcher;
@@ -31,6 +32,7 @@ use Symfony\Component\HttpFoundation\Exception\SessionNotFoundException;
 use Symfony\Component\HttpFoundation\Request as HttpFoundationRequest;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Symfony\Component\HttpKernel\TerminableInterface;
 use Throwable;
 
 /**
@@ -41,9 +43,9 @@ use Throwable;
  * interface is what the symfony/runtime bridges to FrankenPHP and RoadRunner expect (stage 6),
  * while routing and the pipeline stay the project's own MiddlewareDispatcher + ActionInvoker.
  *
- * TerminableInterface and the post-response work (UserStat, the mail queue) follow in stage 3b.
+ * TerminableInterface carries the post-response work (UserStat, the mail queue) — see terminate().
  */
-final readonly class Kernel implements HttpKernelInterface
+final readonly class Kernel implements HttpKernelInterface, TerminableInterface
 {
     public function __construct(
         private ContainerInterface $container,
@@ -64,8 +66,8 @@ final readonly class Kernel implements HttpKernelInterface
     ): Response {
         if ($type !== self::MAIN_REQUEST) {
             // Nothing issues sub-requests today, and handle() has main-request-only side effects:
-            // it republishes the request into the container and resets the legacy status code,
-            // with nothing restoring the parent afterwards (Symfony solves this with RequestStack).
+            // it republishes the request into the container, with nothing restoring the parent
+            // afterwards (Symfony solves this with RequestStack).
             throw new LogicException('The kernel does not support sub-requests.');
         }
 
@@ -77,17 +79,25 @@ final readonly class Kernel implements HttpKernelInterface
             );
         }
 
-        // http_response_code() is process-global and nothing resets it between two handle() calls
-        // in one process. Legacy controllers still set the status through it (stage 2c), so a 403
-        // from an earlier request would otherwise become the status of this one.
-        http_response_code(Response::HTTP_OK);
-
         $this->container->set(Request::class, $request);
 
-        if (! $catch) {
-            return $this->handleRaw($request);
+        $response = $catch ? $this->handleCaught($request) : $this->handleRaw($request);
+
+        // The session must be closed before the response reaches the client, not after: send()
+        // detaches the client connection (fastcgi_finish_request()) before terminate() runs, and
+        // PHP otherwise keeps the session file locked until script shutdown — the next request
+        // from the same visitor would then queue behind terminate()'s work (the mail batch).
+        // CONSOLE_MODE never starts a session, and the functional test harness may call handle()
+        // repeatedly without one either, hence the PHP_SESSION_ACTIVE guard.
+        if ((! defined('CONSOLE_MODE') || CONSOLE_MODE === false) && session_status() === PHP_SESSION_ACTIVE) {
+            session_write_close();
         }
 
+        return $response;
+    }
+
+    private function handleCaught(Request $request): Response
+    {
         try {
             return $this->handleRaw($request);
         } catch (HttpRedirectException $exception) {
@@ -113,6 +123,23 @@ final readonly class Kernel implements HttpKernelInterface
         }
     }
 
+    public function terminate(HttpFoundationRequest $request, Response $response): void
+    {
+        // Register the location of the visitor on the site. Moved here from handleRaw(): it is a
+        // post-response side effect (a database write), not something the response depends on.
+        new UserStat($this->container);
+
+        // Only successfully served requests flush the mail queue: a redirect or an error page has
+        // no business running it. Kept 1:1 with the condition that used to live in public/index.php.
+        if (! USE_CRON && ! defined('_IN_JOHNADM') && $response->isSuccessful()) {
+            $cronCache = CACHE_PATH . 'cron.cache';
+            if (! file_exists($cronCache) || filemtime($cronCache) < (time() - 5)) {
+                EmailSender::send();
+                file_put_contents($cronCache, time());
+            }
+        }
+    }
+
     private function handleRaw(Request $request): Response
     {
         $match = $this->routeMatcher->matchRequest($request);
@@ -125,21 +152,19 @@ final readonly class Kernel implements HttpKernelInterface
             pageNotFound();
         }
 
-        // Register the location of the visitor on the site
-        new UserStat($this->container);
-
         $request->attributes->add($match->params);
 
-        $result = $this->middlewareDispatcher->dispatch(
+        // The handler passed to the pipeline already returns a Response: normalizing here, before
+        // the middleware stack runs, is what lets MiddlewareInterface::handle() be typed to
+        // Response instead of mixed. The transitional contract (a controller action may still
+        // return a Response, a string or null) is unchanged — it is just enforced one call earlier.
+        return $this->middlewareDispatcher->dispatch(
             request: $request,
             middlewares: [TrimStringsMiddleware::class, ...$match->middlewares],
-            handler: fn (Request $request): mixed => $this->invokeController($match->handler, $request, $match->params),
+            handler: fn (Request $request): Response => $this->responseNormalizer->normalize(
+                $this->invokeController($match->handler, $request, $match->params)
+            ),
         );
-
-        // Transitional contract: an action returns a Response, a string or nothing. The status is
-        // read from http_response_code() because controllers that still set it that way would
-        // otherwise have their status overwritten by the one of the response (stage 2c).
-        return $this->responseNormalizer->normalize($result, http_response_code() ?: Response::HTTP_OK);
     }
 
     /**

@@ -7,6 +7,7 @@ namespace Johncms\Router;
 use InvalidArgumentException;
 use Johncms\Http\Request;
 use Psr\Container\ContainerInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 final class MiddlewareDispatcher
 {
@@ -17,8 +18,9 @@ final class MiddlewareDispatcher
 
     /**
      * @param list<mixed> $middlewares
+     * @param callable(Request): Response $handler
      */
-    public function dispatch(Request $request, array $middlewares, callable $handler): mixed
+    public function dispatch(Request $request, array $middlewares, callable $handler): Response
     {
         $pipeline = $this->buildPipeline($middlewares, $handler);
 
@@ -27,10 +29,11 @@ final class MiddlewareDispatcher
 
     /**
      * @param list<mixed> $middlewares
+     * @param callable(Request): Response $handler
      */
     private function buildPipeline(array $middlewares, callable $handler): callable
     {
-        $next = fn (Request $request): mixed => $handler($request);
+        $next = fn (Request $request): Response => $handler($request);
 
         foreach (array_reverse($middlewares) as $middleware) {
             $next = $this->wrapMiddleware($middleware, $next);
@@ -39,12 +42,18 @@ final class MiddlewareDispatcher
         return $next;
     }
 
+    /**
+     * @param callable(Request): Response $next
+     */
     private function wrapMiddleware(mixed $middleware, callable $next): callable
     {
-        return fn (Request $request): mixed => $this->callMiddleware($middleware, $request, $next);
+        return fn (Request $request): Response => $this->callMiddleware($middleware, $request, $next);
     }
 
-    private function callMiddleware(mixed $middleware, Request $request, callable $next): mixed
+    /**
+     * @param callable(Request): Response $next
+     */
+    private function callMiddleware(mixed $middleware, Request $request, callable $next): Response
     {
         $resolved = $this->resolveMiddleware($middleware);
 

@@ -8,6 +8,7 @@ use Johncms\Modules\Downloads\Application\Exceptions\DownloadsAccessDeniedExcept
 use Johncms\Modules\Downloads\Application\Services\DownloadsErrorRenderer;
 use Johncms\Modules\Downloads\Application\UseCases\EnsureDownloadsAccessUseCase;
 use Johncms\Router\MiddlewareInterface;
+use Symfony\Component\HttpFoundation\Response;
 use Johncms\Http\Request;
 use Johncms\System\View\Render;
 
@@ -20,7 +21,7 @@ final readonly class DownloadsAccessMiddleware implements MiddlewareInterface
     ) {
     }
 
-    public function handle(Request $request, callable $next): mixed
+    public function handle(Request $request, callable $next): Response
     {
         try {
             $this->ensureDownloadsAccessUseCase->execute();

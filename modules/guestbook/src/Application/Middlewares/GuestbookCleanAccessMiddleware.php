@@ -6,6 +6,7 @@ namespace Johncms\Modules\Guestbook\Application\Middlewares;
 
 use Johncms\Exceptions\PageNotFoundException;
 use Johncms\Router\MiddlewareInterface;
+use Symfony\Component\HttpFoundation\Response;
 use Johncms\Http\Request;
 use Johncms\System\Users\User;
 
@@ -16,7 +17,7 @@ final readonly class GuestbookCleanAccessMiddleware implements MiddlewareInterfa
     ) {
     }
 
-    public function handle(Request $request, callable $next): mixed
+    public function handle(Request $request, callable $next): Response
     {
         if (! $this->user->isValid() || $this->user->rights < 7) {
             throw new PageNotFoundException();

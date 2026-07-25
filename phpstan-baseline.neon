@@ -2884,7 +2884,7 @@ parameters:
 			message: '#^Negated boolean expression is always true\.$#'
 			identifier: booleanNot.alwaysTrue
 			count: 1
-			path: public/index.php
+			path: system/src/Http/Kernel.php
 
 		-
 			message: '#^Comparison operation "\<" between int\<80200, 80599\> and 80200 is always false\.$#'

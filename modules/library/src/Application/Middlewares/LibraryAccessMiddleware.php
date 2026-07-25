@@ -18,7 +18,7 @@ final readonly class LibraryAccessMiddleware implements MiddlewareInterface
     ) {
     }
 
-    public function handle(Request $request, callable $next): mixed
+    public function handle(Request $request, callable $next): Response
     {
         $config = config('johncms');
         $error = '';

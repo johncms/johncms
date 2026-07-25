@@ -7,6 +7,7 @@ namespace Tests\Unit\Http\Middleware;
 use Johncms\Http\Middleware\TrimStringsMiddleware;
 use Johncms\Http\Request;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Tests for TrimStringsMiddleware (plan stage 1a-bis): reproduces the legacy always-trim
@@ -83,18 +84,18 @@ final class TrimStringsMiddlewareTest extends TestCase
 
         $result = (new TrimStringsMiddleware())->handle(
             $request,
-            static function (Request $passed) use (&$received): string {
+            static function (Request $passed) use (&$received): Response {
                 $received = $passed;
-                return 'response';
+                return new Response('response');
             },
         );
 
         self::assertSame($request, $received);
-        self::assertSame('response', $result);
+        self::assertSame('response', $result->getContent());
     }
 
     private function applyMiddleware(Request $request): void
     {
-        (new TrimStringsMiddleware())->handle($request, static fn (Request $r): null => null);
+        (new TrimStringsMiddleware())->handle($request, static fn (Request $r): Response => new Response());
     }
 }

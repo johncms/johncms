@@ -8,6 +8,7 @@ use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\Router\MiddlewareInterface;
+use Symfony\Component\HttpFoundation\Response;
 use Johncms\Http\Request;
 use Johncms\System\View\Render;
 
@@ -20,7 +21,7 @@ final readonly class ForumAccessMiddleware implements MiddlewareInterface
     ) {
     }
 
-    public function handle(Request $request, callable $next): mixed
+    public function handle(Request $request, callable $next): Response
     {
         try {
             $this->ensureForumAccessUseCase->execute();
