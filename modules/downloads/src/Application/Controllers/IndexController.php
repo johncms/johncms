@@ -14,6 +14,7 @@ use Johncms\Modules\Downloads\Domain\Models\DownloadCategory;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\NavChain;
 use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -32,6 +33,7 @@ final readonly class IndexController
         private DownloadCategoryPathService $categoryPathService,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
+        private Session $session,
     ) {
         $this->controllerContext->initModule('downloads');
     }
@@ -103,26 +105,19 @@ final readonly class IndexController
 
         if ($totalFiles > 0) {
             if ($totalFiles > 1) {
-                if (! isset($_SESSION['sort_down'])) {
-                    $_SESSION['sort_down'] = 0;
-                }
-                if (! isset($_SESSION['sort_down2'])) {
-                    $_SESSION['sort_down2'] = 0;
-                }
-
                 if ($this->request->getMethod() === 'POST') {
                     $post = $this->request->request->all();
                     if (isset($post['sort_down'])) {
-                        $_SESSION['sort_down'] = $post['sort_down'] ? 1 : 0;
+                        $this->session->set('sort_down', $post['sort_down'] ? 1 : 0);
                     }
                     if (isset($post['sort_down2'])) {
-                        $_SESSION['sort_down2'] = $post['sort_down2'] ? 1 : 0;
+                        $this->session->set('sort_down2', $post['sort_down2'] ? 1 : 0);
                     }
                 }
             }
 
-            $sortColumn = ($_SESSION['sort_down'] ?? 0) ? 'name' : 'time';
-            $sortDir = ($_SESSION['sort_down2'] ?? 0) ? 'asc' : 'desc';
+            $sortColumn = ($this->session->get('sort_down', 0)) ? 'name' : 'time';
+            $sortDir = ($this->session->get('sort_down2', 0)) ? 'asc' : 'desc';
 
             $rows = DownloadFile::query()
                 ->where('refid', 0)
