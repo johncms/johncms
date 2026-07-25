@@ -19,6 +19,7 @@ use Johncms\Modules\Collections\Domain\Models\ContentCollection;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
 use Johncms\NavChain;
 use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 
@@ -37,6 +38,7 @@ final readonly class CollectionsAdminController
         private DeleteCollectionUseCase $deleteCollection,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
+        private Session $session,
     ) {
         $this->controllerContext->initModule('collections');
     }
@@ -63,7 +65,7 @@ final readonly class CollectionsAdminController
             'total'           => $pagination->getTotal(),
             'add_url'         => self::URL . '/new',
             'pagination'      => $pagination->render(),
-            'success_message' => $this->pullFlash(),
+            'success_message' => $this->session->getFlash('success_message') ?? '',
         ]);
     }
 
@@ -104,7 +106,7 @@ final readonly class CollectionsAdminController
             return $this->renderForm($id, $fields, [__('This code is reserved and cannot be used')]);
         }
 
-        $_SESSION['success_message'] = $isUpdate ? __('Changes saved') : __('Created successfully');
+        $this->session->flash('success_message', $isUpdate ? __('Changes saved') : __('Created successfully'));
         redirect(self::URL);
     }
 
@@ -132,7 +134,7 @@ final readonly class CollectionsAdminController
     {
         if ($this->isCsrfValid()) {
             $this->deleteCollection->execute($id);
-            $_SESSION['success_message'] = __('Deleted successfully');
+            $this->session->flash('success_message', __('Deleted successfully'));
         }
 
         redirect(self::URL);
@@ -284,18 +286,6 @@ final readonly class CollectionsAdminController
             'message'  => $message,
             'back_url' => self::URL,
         ]);
-    }
-
-    private function pullFlash(): string
-    {
-        if (empty($_SESSION['success_message'])) {
-            return '';
-        }
-
-        $message = (string) $_SESSION['success_message'];
-        unset($_SESSION['success_message']);
-
-        return $message;
     }
 
     private function isCsrfValid(): bool

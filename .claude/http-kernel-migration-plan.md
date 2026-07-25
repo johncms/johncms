@@ -1254,7 +1254,7 @@ php-quality) + гейт зелёные (383 теста: 352 unit + 31 functional
 
 **4a. Все `$_SESSION` — на существующий фасад.** Поведение не меняется вообще: фасад по-прежнему
 пишет в корень `$_SESSION`. Механическая правка, коммит на модуль, каждый деплоябелен.
-Порядок по объёму: `admin` (59), ~~`news` (21)~~ ✅, `collections` (20), `system` (19), `downloads` (16),
+Порядок по объёму: ~~`admin` (59)~~ ✅, ~~`news` (21)~~ ✅, ~~`collections` (20)~~ ✅, ~~`system` (19)~~ ✅, `downloads` (16),
 `profile` (15), `contacts` (12), `consent` (9), `forum` (8), остальные — по 2–6.
 
 **Готово, когда**: `grep -c '\$_SESSION'` по `modules/` и `system/src/` — 0 (кроме самого фасада).
@@ -1264,6 +1264,16 @@ php-quality) + гейт зелёные (383 теста: 352 unit + 31 functional
 и news_viewed_articles). `Article` переведён на constructor promotion (`final readonly`), удалена
 регулирующая `$services->set(Article::class)` из конфига (без autowire — причина
 `ArgumentCountError`). Следующий: `admin` (59).
+
+**✅ `admin` закрыт (2026-07-26).** 14 файлов, 48 обращений. Все `$_SESSION['success_message']` заменены на `$this->session->flash()/getFlash()`.
+
+**✅ `collections` закрыт (2026-07-26).** 4 файла, 20 обращений. Тот же паттерн flash-сообщений. Следующий: `downloads` (16).
+
+**✅ `system` закрыт (2026-07-26).** 19 обращений в 3 файлах:
+- `Comments.php`: `$_SESSION['code']` → `$this->session->set/get` (Session injected via container in constructor)
+- `TranslatorServiceFactory.php`: `$_SESSION['lng']` → `$session->set/get/has` (via `getSession()` helper)
+- `Validator/Rules/Captcha.php`: `$_SESSION[$this->sessionField]` → `$session->has/get` (via `di(Session::class)`)
+- `Security/Csrf.php`: `$_SESSION['_csrf'][$token_id]` → `$this->session->set/get` (constructor injection, factory method updated)
 
 **4b. Атомарная подмена реализации фасада.** Одна точка изменения вместо 225.
 

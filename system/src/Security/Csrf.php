@@ -10,20 +10,26 @@
 
 namespace Johncms\Security;
 
+use Johncms\Http\Session;
+
 class Csrf
 {
     public const SESSION_NAMESPACE = '_csrf';
 
     public const DEFAULT_TOKEN_ID = '_token';
 
+    public function __construct(private readonly Session $session)
+    {
+    }
+
     public function __invoke(): self
     {
         return $this;
     }
 
-    public static function create(): self
+    public static function create(Session $session): self
     {
-        return new self();
+        return new self($session);
     }
 
     /**
@@ -34,11 +40,12 @@ class Csrf
      */
     public function getToken(string $token_id = self::DEFAULT_TOKEN_ID)
     {
-        if (empty($_SESSION[self::SESSION_NAMESPACE][$token_id])) {
+        $key = self::SESSION_NAMESPACE . '.' . $token_id;
+        if (empty($this->session->get($key))) {
             $this->refreshToken($token_id);
         }
 
-        return $_SESSION[self::SESSION_NAMESPACE][$token_id];
+        return $this->session->get($key);
     }
 
     /**
@@ -48,7 +55,7 @@ class Csrf
      */
     public function refreshToken(string $token_id = self::DEFAULT_TOKEN_ID): void
     {
-        $_SESSION[self::SESSION_NAMESPACE][$token_id] = $this->generateToken();
+        $this->session->set(self::SESSION_NAMESPACE . '.' . $token_id, $this->generateToken());
     }
 
     /**

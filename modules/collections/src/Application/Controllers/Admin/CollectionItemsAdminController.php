@@ -24,6 +24,7 @@ use Johncms\Modules\Collections\Domain\Repository\ContentCollectionSectionReposi
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
 use Johncms\NavChain;
 use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 
@@ -41,6 +42,7 @@ final readonly class CollectionItemsAdminController
         private ListCollectionItemsUseCase $listItems,
         private SaveCollectionItemUseCase $saveItem,
         private DeleteCollectionItemUseCase $deleteItem,
+        private Session $session,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
     ) {
@@ -75,7 +77,7 @@ final readonly class CollectionItemsAdminController
             'add_url'         => $this->baseUrl($collection_id) . '/new',
             'back_url'        => '/admin/collections',
             'pagination'      => $pagination->render(),
-            'success_message' => $this->pullFlash(),
+            'success_message' => $this->session->getFlash('success_message') ?? '',
         ]);
     }
 
@@ -135,7 +137,7 @@ final readonly class CollectionItemsAdminController
         }
 
         // $id is non-null only for an existing, owned item (guarded above), so it reliably marks an update.
-        $_SESSION['success_message'] = $id !== null ? __('Changes saved') : __('Created successfully');
+        $this->session->flash('success_message', $id !== null ? __('Changes saved') : __('Created successfully'));
         redirect($this->baseUrl($collection_id));
     }
 
@@ -172,7 +174,7 @@ final readonly class CollectionItemsAdminController
 
         if ($this->isCsrfValid() && $this->findOwnedItem($collection_id, $id) !== null) {
             $this->deleteItem->execute($id);
-            $_SESSION['success_message'] = __('Deleted successfully');
+            $this->session->flash('success_message', __('Deleted successfully'));
         }
 
         redirect($this->baseUrl($collection_id));
@@ -496,18 +498,6 @@ final readonly class CollectionItemsAdminController
             'message'  => __('Wrong data'),
             'back_url' => $this->baseUrl($collectionId),
         ]);
-    }
-
-    private function pullFlash(): string
-    {
-        if (empty($_SESSION['success_message'])) {
-            return '';
-        }
-
-        $message = (string) $_SESSION['success_message'];
-        unset($_SESSION['success_message']);
-
-        return $message;
     }
 
     private function isCsrfValid(): bool

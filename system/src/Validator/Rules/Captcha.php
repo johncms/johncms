@@ -10,6 +10,7 @@
 
 namespace Johncms\Validator\Rules;
 
+use Johncms\Http\Session;
 use Laminas\Validator\AbstractValidator;
 
 class Captcha extends AbstractValidator
@@ -29,11 +30,12 @@ class Captcha extends AbstractValidator
     {
         $this->setValue($value);
         $isValid = true;
+        $session = \di(Session::class);
 
         if (
-            ! isset($_SESSION[$this->sessionField]) ||
-            empty($_SESSION[$this->sessionField]) ||
-            strtolower($_SESSION[$this->sessionField]) !== strtolower($value)
+            ! $session->has($this->sessionField) ||
+            empty($session->get($this->sessionField)) ||
+            strtolower($session->get($this->sessionField)) !== strtolower($value)
         ) {
             $this->error(self::CAPTCHA);
             $isValid = false;

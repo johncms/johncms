@@ -17,6 +17,7 @@ use Johncms\Media\MediaEmbed;
 use Johncms\Security\AntifloodCheckerInterface;
 use Johncms\Security\HTMLPurifier;
 use Johncms\Smilies\SmiliesRendererInterface;
+use Johncms\Http\Session;
 use Johncms\Http\Environment;
 use Johncms\System\Users\User;
 use Johncms\Users\IgnoreListCheckerInterface;
@@ -43,8 +44,8 @@ class Comments
     /** @var bool|int Локальный идентификатор */
     private $item;
 
-    /** @var bool|int */
-    private $owner = false;
+    /** @var int */
+    private $owner = 0;
 
     /** @var bool Имеет ли юзер активный бан? */
     private $ban = false;
@@ -69,6 +70,8 @@ class Comments
 
     /** @var MediaEmbed */
     private $embed;
+
+    private Session $session;
 
     /** @var User */
     private $systemUser;
@@ -130,6 +133,7 @@ class Comments
         $this->nav_chain = di(NavChain::class);
         $this->purifier = di(HTMLPurifier::class);
         $this->embed = di(MediaEmbed::class);
+        $this->session = $container->get(Session::class);
 
         $kmess = $this->systemUser->config->kmess;
 
@@ -156,7 +160,7 @@ class Comments
 
         // Назначение пользовательских прав
         if (isset($arg['owner'])) {
-            $this->owner = $arg['owner'];
+            $this->owner = (int) $arg['owner'];
 
             if ($this->systemUser->isValid() && $arg['owner'] == $this->systemUser->id && ! $this->ban) {
                 $this->access_delete = $arg['owner_delete'] ?? false;
@@ -433,7 +437,7 @@ class Comments
                         // Записываем комментарий в базу
                         $this->addComment($message['text']);
                         $this->total = $this->msgTotal(1);
-                        $_SESSION['code'] = $message['code'];
+                        $this->session->set('code', $message['code']);
                     } else {
                         // Показываем ошибки, если есть
                         $data['error'] = $message['error'];
@@ -610,7 +614,7 @@ class Comments
         $normalizer = new EditorContentNormalizer();
         $message = $normalizer->trimEdgeEmptyBlocks(isset($_POST['message']) ? trim($_POST['message']) : '');
         $code = isset($_POST['code']) ? (int) ($_POST['code']) : null;
-        $code_chk = $_SESSION['code'] ?? null;
+        $code_chk = $this->session->get('code');
 
         // Проверяем код
         if ($code == $code_chk) {

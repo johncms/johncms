@@ -18,6 +18,7 @@ use Johncms\Modules\Collections\Domain\Repository\ContentCollectionFieldReposito
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
 use Johncms\NavChain;
 use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 
@@ -33,6 +34,7 @@ final readonly class CollectionFieldsAdminController
         private ListCollectionFieldsUseCase $listFields,
         private SaveCollectionFieldUseCase $saveField,
         private DeleteCollectionFieldUseCase $deleteField,
+        private Session $session,
     ) {
         $this->controllerContext->initModule('collections');
     }
@@ -53,7 +55,7 @@ final readonly class CollectionFieldsAdminController
             'items'           => $this->mapRows($collection_id, $this->listFields->getByCollection($collection_id)),
             'add_url'         => $this->baseUrl($collection_id) . '/new',
             'back_url'        => '/admin/collections',
-            'success_message' => $this->pullFlash(),
+            'success_message' => $this->session->getFlash('success_message') ?? '',
         ]);
     }
 
@@ -111,7 +113,7 @@ final readonly class CollectionFieldsAdminController
             return $this->renderForm($collection, $id, $fields, [__('A field with this code already exists')]);
         }
 
-        $_SESSION['success_message'] = $isUpdate ? __('Changes saved') : __('Created successfully');
+        $this->session->flash('success_message', $isUpdate ? __('Changes saved') : __('Created successfully'));
         redirect($this->baseUrl($collection_id));
     }
 
@@ -148,7 +150,7 @@ final readonly class CollectionFieldsAdminController
 
         if ($this->isCsrfValid() && $this->findOwnedField($collection_id, $id) !== null) {
             $this->deleteField->execute($id);
-            $_SESSION['success_message'] = __('Deleted successfully');
+            $this->session->flash('success_message', __('Deleted successfully'));
         }
 
         redirect($this->baseUrl($collection_id));
@@ -365,18 +367,6 @@ final readonly class CollectionFieldsAdminController
             'message'  => __('Wrong data'),
             'back_url' => $this->baseUrl($collectionId),
         ]);
-    }
-
-    private function pullFlash(): string
-    {
-        if (empty($_SESSION['success_message'])) {
-            return '';
-        }
-
-        $message = (string) $_SESSION['success_message'];
-        unset($_SESSION['success_message']);
-
-        return $message;
     }
 
     private function isCsrfValid(): bool

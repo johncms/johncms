@@ -20,6 +20,7 @@ use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInt
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionSectionRepositoryInterface;
 use Johncms\NavChain;
 use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 
@@ -35,6 +36,7 @@ final readonly class CollectionSectionsAdminController
         private ListCollectionSectionsUseCase $listSections,
         private SaveCollectionSectionUseCase $saveSection,
         private DeleteCollectionSectionUseCase $deleteSection,
+        private Session $session,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
     ) {
@@ -75,7 +77,7 @@ final readonly class CollectionSectionsAdminController
             'add_url'         => $this->urlWithParent($this->baseUrl($collection_id) . '/new', $parent),
             'back_url'        => $this->parentUpUrl($collection_id, $parentSection),
             'pagination'      => $pagination->render(),
-            'success_message' => $this->pullFlash(),
+            'success_message' => $this->session->getFlash('success_message') ?? '',
         ]);
     }
 
@@ -150,7 +152,7 @@ final readonly class CollectionSectionsAdminController
             return $this->renderForm($collection, $id, $fields, [__('A section with this code already exists')]);
         }
 
-        $_SESSION['success_message'] = $isUpdate ? __('Changes saved') : __('Created successfully');
+        $this->session->flash('success_message', $isUpdate ? __('Changes saved') : __('Created successfully'));
         redirect($this->urlWithParent($this->baseUrl($collection_id), $parent));
     }
 
@@ -191,7 +193,7 @@ final readonly class CollectionSectionsAdminController
 
         if ($this->isCsrfValid() && $section !== null) {
             $this->deleteSection->execute($id);
-            $_SESSION['success_message'] = __('Deleted successfully');
+            $this->session->flash('success_message', __('Deleted successfully'));
         }
 
         redirect($this->urlWithParent($this->baseUrl($collection_id), $parent));
@@ -429,18 +431,6 @@ final readonly class CollectionSectionsAdminController
             'message'  => __('Wrong data'),
             'back_url' => $this->urlWithParent($this->baseUrl($collectionId), $parent),
         ]);
-    }
-
-    private function pullFlash(): string
-    {
-        if (empty($_SESSION['success_message'])) {
-            return '';
-        }
-
-        $message = (string) $_SESSION['success_message'];
-        unset($_SESSION['success_message']);
-
-        return $message;
     }
 
     private function isCsrfValid(): bool
