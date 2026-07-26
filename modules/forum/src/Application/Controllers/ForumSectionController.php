@@ -10,6 +10,7 @@ use Johncms\Modules\Forum\Application\ForumUtils;
 use Johncms\Modules\Forum\Application\UseCases\ViewForumSectionUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\System\View\Render;
 use Johncms\Utils\ShortNumberFormatter;
 
@@ -18,6 +19,7 @@ final readonly class ForumSectionController
     public function __construct(
         private Render $render,
         private Request $request,
+        private Session $session,
         private NavChain $navChain,
         private ViewForumSectionUseCase $viewForumSectionUseCase,
         private PaginationFactory $paginationFactory,
@@ -26,7 +28,8 @@ final readonly class ForumSectionController
 
     public function __invoke(string $sectionPath): string
     {
-        unset($_SESSION['fsort_id'], $_SESSION['fsort_users']);
+        $this->session->remove('fsort_id');
+        $this->session->remove('fsort_users');
 
         $page = max(1, $this->request->queryInt('page', 1));
 

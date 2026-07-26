@@ -12,6 +12,7 @@ use Johncms\Modules\Consent\Domain\Models\Consent;
 use Johncms\Modules\Consent\Domain\Repository\ConsentRepositoryInterface;
 use Johncms\NavChain;
 use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\System\i18n\Translator;
 use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
@@ -32,6 +33,7 @@ final readonly class ConsentEditController
         private AdminControllerContext $controllerContext,
         private Render $render,
         private Request $request,
+        private Session $session,
         private NavChain $navChain,
         private Translator $translator,
         private ConsentRepositoryInterface $repository,
@@ -97,7 +99,7 @@ final readonly class ConsentEditController
                     $this->createConsent->execute($dto);
                 }
 
-                $_SESSION['success_message'] = __('Changes saved successfully');
+                $this->session->flash('success_message', __('Changes saved successfully'));
                 redirect(self::URL);
             }
 

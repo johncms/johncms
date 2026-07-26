@@ -7,6 +7,7 @@ namespace Johncms\Modules\Library\Application\Controllers;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
+use Johncms\Http\Session;
 use Johncms\Modules\Library\Application\Services\LibraryArticlePathService;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
@@ -24,6 +25,7 @@ final readonly class ArticleController
 {
     public function __construct(
         private Render $render,
+        private Session $session,
         private NavChain $navChain,
         private DateFormatterInterface $dateFormatter,
         private User $currentUser,
@@ -54,8 +56,8 @@ final readonly class ArticleController
             );
         }
 
-        if (! isset($_SESSION['lib']) || $_SESSION['lib'] !== $id) {
-            $_SESSION['lib'] = $id;
+        if (! $this->session->has('lib') || $this->session->get('lib') !== $id) {
+            $this->session->set('lib', $id);
             $article->increment('count_views');
         }
 

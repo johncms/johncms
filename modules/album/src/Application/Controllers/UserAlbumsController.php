@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Album\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\Session;
 use Johncms\Modules\Album\Application\Exceptions\AlbumOwnerNotFoundException;
 use Johncms\Modules\Album\Application\UseCases\GetUserAlbumsUseCase;
 use Johncms\NavChain;
@@ -16,6 +17,7 @@ final readonly class UserAlbumsController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
+        private Session $session,
         private NavChain $navChain,
         private User $currentUser,
         private GetUserAlbumsUseCase $useCase,
@@ -26,7 +28,7 @@ final readonly class UserAlbumsController
     public function __invoke(int $id): string
     {
         // Leaving the album list clears any unlocked password-protected album session.
-        unset($_SESSION['ap']);
+        $this->session->remove('ap');
 
         try {
             $result = $this->useCase->execute($id);

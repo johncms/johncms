@@ -11,6 +11,7 @@ use Johncms\Modules\Forum\Application\UseCases\ViewForumTopicUseCase;
 use Johncms\NavChain;
 use Johncms\Security\Csrf;
 use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Utils\ShortNumberFormatter;
@@ -20,6 +21,7 @@ final readonly class ForumTopicController
     public function __construct(
         private Render $render,
         private Request $request,
+        private Session $session,
         private User $currentUser,
         private NavChain $navChain,
         private ViewForumTopicUseCase $viewForumTopicUseCase,
@@ -41,10 +43,10 @@ final readonly class ForumTopicController
         }
 
         $filterByUsers = [];
-        $filterTopicId = isset($_SESSION['fsort_id']) ? (int) $_SESSION['fsort_id'] : 0;
-        $filterEnabled = $filterTopicId > 0 && ! empty($_SESSION['fsort_users']);
-        if ($filterEnabled && is_array($_SESSION['fsort_users'])) {
-            $filterByUsers = array_map('intval', $_SESSION['fsort_users']);
+        $filterTopicId = (int) $this->session->get('fsort_id', 0);
+        $filterEnabled = $filterTopicId > 0 && ! empty($this->session->get('fsort_users'));
+        if ($filterEnabled && is_array($this->session->get('fsort_users'))) {
+            $filterByUsers = array_map('intval', $this->session->get('fsort_users'));
         }
 
         try {
@@ -110,8 +112,10 @@ final readonly class ForumTopicController
 
     private function shouldIncrementViewCount(string $path): bool
     {
-        if (empty($_SESSION['viewed_topics']) || ! in_array($path, (array) $_SESSION['viewed_topics'], true)) {
-            $_SESSION['viewed_topics'][] = $path;
+        $viewedTopics = (array) $this->session->get('viewed_topics', []);
+        if (! in_array($path, $viewedTopics, true)) {
+            $viewedTopics[] = $path;
+            $this->session->set('viewed_topics', $viewedTopics);
 
             return true;
         }

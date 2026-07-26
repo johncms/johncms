@@ -9,6 +9,7 @@ use Johncms\Modules\Contacts\Application\UseCases\DeleteContactMessageUseCase;
 use Johncms\Modules\Contacts\Domain\Repository\ContactMessageRepositoryInterface;
 use Johncms\NavChain;
 use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 
@@ -20,6 +21,7 @@ final readonly class ContactMessageDeleteController
         private AdminControllerContext $controllerContext,
         private Render $render,
         private Request $request,
+        private Session $session,
         private NavChain $navChain,
         private ContactMessageRepositoryInterface $repository,
         private DeleteContactMessageUseCase $deleteMessage,
@@ -42,7 +44,7 @@ final readonly class ContactMessageDeleteController
 
             if ($validator->isValid()) {
                 $this->deleteMessage->execute($message);
-                $_SESSION['success_message'] = __('Record deleted');
+                $this->session->flash('success_message', __('Record deleted'));
                 redirect(self::URL);
             }
         }

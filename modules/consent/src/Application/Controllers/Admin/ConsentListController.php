@@ -7,6 +7,7 @@ namespace Johncms\Modules\Consent\Application\Controllers\Admin;
 use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
+use Johncms\Http\Session;
 use Johncms\Modules\Consent\Application\Services\ConsentTitleFormatter;
 use Johncms\Modules\Consent\Domain\Models\Consent;
 use Johncms\Modules\Consent\Domain\Repository\ConsentRepositoryInterface;
@@ -20,6 +21,7 @@ final readonly class ConsentListController
     public function __construct(
         private AdminControllerContext $controllerContext,
         private Render $render,
+        private Session $session,
         private NavChain $navChain,
         private ConsentRepositoryInterface $repository,
         private ConsentTitleFormatter $titleFormatter,
@@ -47,11 +49,7 @@ final readonly class ConsentListController
             redirect($redirectUrl);
         }
 
-        $successMessage = null;
-        if (! empty($_SESSION['success_message'])) {
-            $successMessage = (string) $_SESSION['success_message'];
-            unset($_SESSION['success_message']);
-        }
+        $successMessage = $this->session->getFlash('success_message');
 
         $consents = $this->repository->getPage($pagination->getPerPage(), $pagination->getOffset());
 

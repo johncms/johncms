@@ -72,4 +72,9 @@ class Session
     {
         Arr::forget($_SESSION, $key);
     }
+
+    public function clear(): void
+    {
+        $_SESSION = [];
+    }
 }

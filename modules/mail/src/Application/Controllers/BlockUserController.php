@@ -8,6 +8,7 @@ use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Mail\Application\UseCases\BlockUserUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\System\View\Render;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,6 +19,7 @@ final readonly class BlockUserController
         private ControllerContext $controllerContext,
         private Render $render,
         private Request $request,
+        private Session $session,
         private NavChain $navChain,
         private BlockUserUseCase $blockUserUseCase,
     ) {
@@ -29,11 +31,11 @@ final readonly class BlockUserController
         if ($this->request->getMethod() === 'POST') {
             try {
                 $this->blockUserUseCase->execute($userId);
-                $_SESSION['message'] = __('User blocked successfully');
-                $_SESSION['message_type'] = 'success';
+                $this->session->flash('message', __('User blocked successfully'));
+                $this->session->flash('message_type', 'success');
             } catch (\InvalidArgumentException $e) {
-                $_SESSION['message'] = $e->getMessage();
-                $_SESSION['message_type'] = 'error';
+                $this->session->flash('message', $e->getMessage());
+                $this->session->flash('message_type', 'error');
             }
 
             return new RedirectResponse('/mail/blocklist');

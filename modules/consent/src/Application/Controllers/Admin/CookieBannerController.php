@@ -10,6 +10,7 @@ use Johncms\Modules\Consent\Application\DTO\CookieBannerSettingsDTO;
 use Johncms\Modules\Consent\Application\UseCases\UpdateCookieBannerSettingsUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 
@@ -21,6 +22,7 @@ final readonly class CookieBannerController
         private AdminControllerContext $controllerContext,
         private Render $render,
         private Request $request,
+        private Session $session,
         private NavChain $navChain,
         private UpdateCookieBannerSettingsUseCase $updateCookieBannerSettings,
     ) {
@@ -44,7 +46,7 @@ final readonly class CookieBannerController
             return $this->renderForm(__('ERROR: Can not write file `system.local.php`'));
         }
 
-        $_SESSION['success_message'] = __('Changes saved successfully');
+        $this->session->flash('success_message', __('Changes saved successfully'));
         redirect(self::URL);
     }
 
@@ -82,11 +84,7 @@ final readonly class CookieBannerController
         $title = __('Cookie banner');
         $this->navChain->add($title);
 
-        $successMessage = null;
-        if (! empty($_SESSION['success_message'])) {
-            $successMessage = (string) $_SESSION['success_message'];
-            unset($_SESSION['success_message']);
-        }
+        $successMessage = $this->session->getFlash('success_message');
 
         $config = config('johncms');
         $languages = [];

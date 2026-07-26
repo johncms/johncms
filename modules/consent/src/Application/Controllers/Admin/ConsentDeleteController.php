@@ -9,6 +9,7 @@ use Johncms\Modules\Consent\Application\UseCases\DeleteConsentUseCase;
 use Johncms\Modules\Consent\Domain\Repository\ConsentRepositoryInterface;
 use Johncms\NavChain;
 use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 
@@ -20,6 +21,7 @@ final readonly class ConsentDeleteController
         private AdminControllerContext $controllerContext,
         private Render $render,
         private Request $request,
+        private Session $session,
         private NavChain $navChain,
         private ConsentRepositoryInterface $repository,
         private DeleteConsentUseCase $deleteConsent,
@@ -42,7 +44,7 @@ final readonly class ConsentDeleteController
 
             if ($validator->isValid()) {
                 $this->deleteConsent->execute($consent);
-                $_SESSION['success_message'] = __('Record deleted');
+                $this->session->flash('success_message', __('Record deleted'));
                 redirect(self::URL);
             }
         }

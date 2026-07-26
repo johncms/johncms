@@ -12,6 +12,7 @@ use Johncms\Modules\Contacts\Application\UseCases\ListContactMessagesUseCase;
 use Johncms\Modules\Contacts\Domain\Enums\ContactMessageStatus;
 use Johncms\NavChain;
 use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\System\View\Render;
 
 final readonly class ContactMessageListController
@@ -22,6 +23,7 @@ final readonly class ContactMessageListController
         private AdminControllerContext $controllerContext,
         private Render $render,
         private Request $request,
+        private Session $session,
         private NavChain $navChain,
         private ListContactMessagesUseCase $messages,
         private PaginationFactory $paginationFactory,
@@ -45,11 +47,7 @@ final readonly class ContactMessageListController
         $this->navChain->add(__('Contacts'), '/admin/contacts');
         $this->navChain->add($title, self::URL);
 
-        $successMessage = null;
-        if (! empty($_SESSION['success_message'])) {
-            $successMessage = (string) $_SESSION['success_message'];
-            unset($_SESSION['success_message']);
-        }
+        $successMessage = $this->session->getFlash('success_message');
 
         $meta = new PageMeta($title, $pagination->getCurrentPage());
         $this->render->addData(

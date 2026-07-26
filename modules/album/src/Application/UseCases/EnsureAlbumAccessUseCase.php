@@ -8,6 +8,7 @@ use Johncms\Modules\Album\Application\Exceptions\AlbumAccessDeniedException;
 use Johncms\Modules\Album\Application\Exceptions\AlbumPasswordRequiredException;
 use Johncms\Modules\Album\Domain\Enums\AlbumAccess;
 use Johncms\Modules\Album\Domain\Models\Album;
+use Johncms\Http\Session;
 use Johncms\Users\User;
 
 /**
@@ -23,6 +24,7 @@ final readonly class EnsureAlbumAccessUseCase
 
     public function __construct(
         private User $currentUser,
+        private Session $session,
     ) {
     }
 
@@ -39,7 +41,7 @@ final readonly class EnsureAlbumAccessUseCase
 
         // Leaving a non password-protected album clears any unlocked-password session.
         if ($access !== AlbumAccess::Password) {
-            unset($_SESSION['ap']);
+            $this->session->remove('ap');
         }
 
         if ($album->user_id === $this->currentUser->id || $this->currentUser->rights >= $bypassRights) {
@@ -54,13 +56,13 @@ final readonly class EnsureAlbumAccessUseCase
             $incorrectPassword = false;
             if ($submittedPassword !== null) {
                 if ($album->password === trim($submittedPassword)) {
-                    $_SESSION['ap'] = $album->password;
+                    $this->session->set('ap', $album->password);
                 } else {
                     $incorrectPassword = true;
                 }
             }
 
-            if (! isset($_SESSION['ap']) || $_SESSION['ap'] !== $album->password) {
+            if (! $this->session->has('ap') || $this->session->get('ap') !== $album->password) {
                 throw new AlbumPasswordRequiredException($album->id, $album->user_id, $incorrectPassword);
             }
         }

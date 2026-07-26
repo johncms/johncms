@@ -8,6 +8,7 @@ use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Mail\Application\UseCases\UnblockUserUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\System\View\Render;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,6 +19,7 @@ final readonly class UnblockUserController
         private ControllerContext $controllerContext,
         private Render $render,
         private Request $request,
+        private Session $session,
         private NavChain $navChain,
         private UnblockUserUseCase $unblockUserUseCase,
     ) {
@@ -28,8 +30,8 @@ final readonly class UnblockUserController
     {
         if ($this->request->getMethod() === 'POST') {
             $this->unblockUserUseCase->execute($userId);
-            $_SESSION['message'] = __('User unblocked successfully');
-            $_SESSION['message_type'] = 'success';
+            $this->session->flash('message', __('User unblocked successfully'));
+            $this->session->flash('message_type', 'success');
 
             return new RedirectResponse('/mail/blocklist');
         }

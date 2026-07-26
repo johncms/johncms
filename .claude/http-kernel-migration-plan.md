@@ -1240,7 +1240,7 @@ php-quality) + гейт зелёные (383 теста: 352 unit + 31 functional
 * `data/cache/container.php` (если оператор включил `CACHE_CONTAINER`) после смены `Request` на
   synthetic обязан быть удалён — со старым дампом `set()` в ядре упадёт. Строка в CHANGELOG 10.0.
 
-### — Этап 4. Сессия (M) — строго два шага, порядок критичен
+### 🚧 Этап 4. Сессия (M) — 4a завершён (2026-07-26), 4b в работе
 
 Существующий `Session` (после этапа 1d — `Johncms\Http\Session`) — уже готовая точка абстракции,
 менять вызовы дважды не придётся.
@@ -1255,7 +1255,7 @@ php-quality) + гейт зелёные (383 теста: 352 unit + 31 functional
 **4a. Все `$_SESSION` — на существующий фасад.** Поведение не меняется вообще: фасад по-прежнему
 пишет в корень `$_SESSION`. Механическая правка, коммит на модуль, каждый деплоябелен.
 Порядок по объёму: ~~`admin` (59)~~ ✅, ~~`news` (21)~~ ✅, ~~`collections` (20)~~ ✅, ~~`system` (19)~~ ✅, ~~`downloads` (16)~~ ✅, ~~`profile` (15)~~ ✅,
-`profile` (15), `contacts` (12), `consent` (9), `forum` (8), остальные — по 2–6.
+~~`contacts` (12)~~ ✅, ~~`consent` (9)~~ ✅, ~~`forum` (8)~~ ✅, ~~`login` (5)~~ ✅, ~~`notifications` (5)~~ ✅, ~~`album` (4)~~ ✅, ~~`mail` (6)~~ ✅, ~~`library` (2)~~ ✅, ~~`registration` (2)~~ ✅.
 
 **Готово, когда**: `grep -c '\$_SESSION'` по `modules/` и `system/src/` — 0 (кроме самого фасада).
 
@@ -1276,6 +1276,28 @@ php-quality) + гейт зелёные (383 теста: 352 unit + 31 functional
 - `Security/Csrf.php`: `$_SESSION['_csrf'][$token_id]` → `$this->session->set/get` (constructor injection, factory method updated)
 
 **✅ `downloads` закрыт (2026-07-26).** 2 файла, 16 обращений. `IndexController.php` и `DownloadCategoryController.php` — `$_SESSION['sort_down']` / `$_SESSION['sort_down2']` → `$this->session->get/set` с default `0`.
+
+**✅ `profile` закрыт (2026-07-26).** 3 файла, 15 обращений. `SettingsController.php` — `$_SESSION['lng']` → `$this->session->set`, `set_ok`/`reset_ok` → flash. `EditProfileController.php` — `$_SESSION['success_message']` → `$this->session->flash/getFlash`. `RestorePasswordController.php` — `$_SESSION['code']` → `$this->session->set/remove`.
+
+**✅ `contacts` закрыт (2026-07-26).** 4 файла, 12 обращений. Все `success_message` в админ-контроллерах переведены на `$this->session->flash()/getFlash()`.
+
+**✅ `consent` закрыт (2026-07-26).** 4 файла, 9 обращений. `success_message` и редиректные флеши переведены на фасад с сохранением UX-потока.
+
+**✅ `forum` закрыт (2026-07-26).** 3 файла, 8 обращений. `fsort_*`, `viewed_topics` и `token` переведены на `$this->session->get/set/remove` без смены семантики фильтра и счётчиков просмотров.
+
+**✅ `login` закрыт (2026-07-26).** 2 файла, 5 обращений. Капча (`code`) и очистка сессии на logout переведены на фасад (`set/get/remove/clear`).
+
+**✅ `notifications` закрыт (2026-07-26).** 2 файла, 5 обращений. Сообщения `message` переведены на флеш-семантику фасада (`flash/getFlash`).
+
+**✅ `album` закрыт (2026-07-26).** 2 файла, 4 обращения. Ключ `ap` (парольный доступ к альбомам) переведён на фасад, включая проверку/сброс при смене контекста.
+
+**✅ `mail` закрыт (2026-07-26).** 2 файла, 6 обращений. `message`/`message_type` в блок-листе переведены на flash через фасад.
+
+**✅ `library` закрыт (2026-07-26).** 1 файл, 2 обращения. Ключ `lib` (антидубль счётчика просмотров) переведён на фасад.
+
+**✅ `registration` закрыт (2026-07-26).** 1 файл, 2 обращения. Капча `code` переведена на `$this->session->set/remove`.
+
+**Итог 4a (2026-07-26):** `grep -c '\$_SESSION'` по `modules/` = 0, по `system/src/` — только `Johncms\Http\Session`.
 
 **4b. Атомарная подмена реализации фасада.** Одна точка изменения вместо 225.
 

@@ -12,6 +12,7 @@ use Johncms\Modules\Contacts\Application\Services\ContactSettingsProvider;
 use Johncms\Modules\Contacts\Application\UseCases\UpdateContactSettingsUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 
@@ -23,6 +24,7 @@ final readonly class ContactSettingsController
         private AdminControllerContext $controllerContext,
         private Render $render,
         private Request $request,
+        private Session $session,
         private NavChain $navChain,
         private ContactSettingsProvider $settingsProvider,
         private UpdateContactSettingsUseCase $updateSettings,
@@ -49,7 +51,7 @@ final readonly class ContactSettingsController
             return $this->renderForm($settings, __('ERROR: Can not write file `system.local.php`'));
         }
 
-        $_SESSION['success_message'] = __('Changes saved successfully');
+        $this->session->flash('success_message', __('Changes saved successfully'));
         redirect(self::URL);
     }
 
@@ -137,11 +139,7 @@ final readonly class ContactSettingsController
         $title = __('Contacts');
         $this->navChain->add($title, self::URL);
 
-        $successMessage = null;
-        if (! empty($_SESSION['success_message'])) {
-            $successMessage = (string) $_SESSION['success_message'];
-            unset($_SESSION['success_message']);
-        }
+        $successMessage = $this->session->getFlash('success_message');
 
         $languages = [];
         foreach (config('johncms')['lng_list'] ?? [] as $code => $data) {

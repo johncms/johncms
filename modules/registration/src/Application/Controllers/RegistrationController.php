@@ -12,6 +12,7 @@ use Johncms\Modules\Registration\Application\UseCases\RegisterUserUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Environment;
 use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
@@ -28,6 +29,7 @@ final readonly class RegistrationController
         private ControllerContext $controllerContext,
         private Render $render,
         private Request $request,
+        private Session $session,
         private NavChain $navChain,
         private User $currentUser,
         private RegisterUserUseCase $registerUser,
@@ -153,11 +155,11 @@ final readonly class RegistrationController
             }
 
             $errors = $validator->getErrors();
-            unset($_SESSION['code']);
+            $this->session->remove('code');
         }
 
         $code = (string) new Code();
-        $_SESSION['code'] = $code;
+        $this->session->set('code', $code);
 
         return new Response(
             $this->render->render(

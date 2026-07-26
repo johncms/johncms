@@ -18,6 +18,7 @@ use Johncms\Modules\Forum\Domain\Repository\ForumUnreadRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumVoteRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumWhoRepositoryInterface;
 use Johncms\Notifications\Notification;
+use Johncms\Http\Session;
 use Johncms\Users\User;
 use Johncms\Utils\ShortNumberFormatter;
 
@@ -32,6 +33,7 @@ final readonly class ViewForumTopicUseCase
         private ForumSectionPathService $sectionPathService,
         private ForumTopicPathService $topicPathService,
         private User $currentUser,
+        private Session $session,
     ) {
     }
 
@@ -198,7 +200,7 @@ final readonly class ViewForumTopicUseCase
         $token = null;
         if ($writeAccess && ! empty($setForum['farea'])) {
             $token = random_int(1000, 100000);
-            $_SESSION['token'] = $token;
+            $this->session->set('token', $token);
         }
 
         $curatorsArray = [];

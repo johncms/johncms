@@ -10,6 +10,7 @@ use Johncms\Modules\Contacts\Domain\Enums\ContactMessageStatus;
 use Johncms\Modules\Contacts\Domain\Repository\ContactMessageRepositoryInterface;
 use Johncms\NavChain;
 use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 
@@ -21,6 +22,7 @@ final readonly class ContactMessageViewController
         private AdminControllerContext $controllerContext,
         private Render $render,
         private Request $request,
+        private Session $session,
         private NavChain $navChain,
         private ContactMessageRepositoryInterface $repository,
         private MarkContactMessageProcessedUseCase $markProcessed,
@@ -37,7 +39,7 @@ final readonly class ContactMessageViewController
 
         if ($this->request->getMethod() === 'POST' && $this->isCsrfValid()) {
             $this->markProcessed->execute($message);
-            $_SESSION['success_message'] = __('The message is marked as processed');
+            $this->session->flash('success_message', __('The message is marked as processed'));
             redirect(self::URL . '/' . $message->id);
         }
 
@@ -46,11 +48,7 @@ final readonly class ContactMessageViewController
         $this->navChain->add(__('Contact messages'), self::URL);
         $this->navChain->add($title);
 
-        $successMessage = null;
-        if (! empty($_SESSION['success_message'])) {
-            $successMessage = (string) $_SESSION['success_message'];
-            unset($_SESSION['success_message']);
-        }
+        $successMessage = $this->session->getFlash('success_message');
 
         $this->render->addData(
             [

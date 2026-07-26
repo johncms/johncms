@@ -8,6 +8,7 @@ use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Notifications\Application\UseCases\SaveSettingsUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -19,6 +20,7 @@ final readonly class SettingsController
         private ControllerContext $controllerContext,
         private Render $render,
         private Request $request,
+        private Session $session,
         private NavChain $navChain,
         private User $currentUser,
         private SaveSettingsUseCase $saveSettingsUseCase,
@@ -36,15 +38,11 @@ final readonly class SettingsController
         if ($this->request->getMethod() === 'POST') {
             $showForumUnread = (bool) $this->request->bodyInt('show_forum_unread');
             $this->saveSettingsUseCase->execute($showForumUnread);
-            $_SESSION['message'] = __('Settings saved!');
+            $this->session->flash('message', __('Settings saved!'));
             return new RedirectResponse('/notifications/settings/');
         }
 
-        $message = '';
-        if (! empty($_SESSION['message'])) {
-            $message = $_SESSION['message'];
-            unset($_SESSION['message']);
-        }
+        $message = (string) $this->session->getFlash('message');
 
         $defaultSettings = ['show_forum_unread' => true];
         $currentSettings = array_merge($defaultSettings, ($this->currentUser->notification_settings ?? []));

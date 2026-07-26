@@ -1,12 +1,6 @@
 parameters:
 	ignoreErrors:
 		-
-			message: '#^Comparison operation "\<" between int\<80200, 80599\> and 70300 is always false\.$#'
-			identifier: smaller.alwaysFalse
-			count: 1
-			path: system/bootstrap.php
-
-		-
 			message: '#^If condition is always true\.$#'
 			identifier: if.alwaysTrue
 			count: 1

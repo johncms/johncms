@@ -7,6 +7,7 @@ namespace Johncms\Modules\Login\Application\Controllers;
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\NavChain;
 use Johncms\Http\Request;
+use Johncms\Http\Session;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\Cookie;
@@ -19,6 +20,7 @@ final readonly class LogoutController
         private ControllerContext $controllerContext,
         private Render $render,
         private Request $request,
+        private Session $session,
         private NavChain $navChain,
         private User $currentUser,
     ) {
@@ -32,7 +34,7 @@ final readonly class LogoutController
         }
 
         if ($this->request->hasBody('logout')) {
-            $_SESSION = [];
+            $this->session->clear();
             $response = new RedirectResponse('/');
             $expire = time() - 3600;
             $response->headers->setCookie(Cookie::create('cuid', '', $expire, '/', null, false, false, false, null));

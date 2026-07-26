@@ -8,11 +8,17 @@ use Illuminate\Support\Str;
 use Johncms\Modules\Login\Application\DTO\LoginResultDTO;
 use Johncms\Modules\Login\Domain\Enums\LoginStatus;
 use Johncms\Users\User;
+use Johncms\Http\Session;
 use Mobicms\Captcha\Code;
 use Mobicms\Captcha\Image;
 
 final class PerformLoginUseCase
 {
+    public function __construct(
+        private readonly Session $session,
+    ) {
+    }
+
     public function execute(string $userLogin, string $userPass, string $captchaCode = ''): LoginResultDTO
     {
         $loginUser = User::query()->where('name_lat', Str::slug($userLogin, '_'))->first();
@@ -24,7 +30,7 @@ final class PerformLoginUseCase
         if ($loginUser->failed_login > 2) {
             if (! $captchaCode) {
                 $code = (string) new Code();
-                $_SESSION['code'] = $code;
+                $this->session->set('code', $code);
 
                 return new LoginResultDTO(
                     LoginStatus::CaptchaRequired,
@@ -32,12 +38,12 @@ final class PerformLoginUseCase
                 );
             }
 
-            if (mb_strlen($captchaCode) < 3 || strtolower($captchaCode) !== strtolower((string) ($_SESSION['code'] ?? ''))) {
-                unset($_SESSION['code']);
+            if (mb_strlen($captchaCode) < 3 || strtolower($captchaCode) !== strtolower((string) ($this->session->get('code', '')))) {
+                $this->session->remove('code');
                 return new LoginResultDTO(LoginStatus::Error, [__('The security code is not correct')]);
             }
 
-            unset($_SESSION['code']);
+            $this->session->remove('code');
         }
 
         if (md5(md5($userPass)) !== $loginUser->password) {
