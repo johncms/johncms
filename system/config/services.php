@@ -58,6 +58,8 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\Matcher\UrlMatcherInterface;
 use Symfony\Component\Routing\RequestContext;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Contracts\Service\ResetInterface;
 use Symfony\Component\Routing\RouteCollection;
 
 return static function (ContainerConfigurator $container): void {
@@ -69,6 +71,10 @@ return static function (ContainerConfigurator $container): void {
 
     // Any Symfony Console Command service is auto-registered in the CLI application.
     $services->instanceof(Command::class)->tag('johncms.console_command');
+
+    // A shared service that caches something belonging to one request implements ResetInterface;
+    // the kernel clears every one of them before it starts serving the next request.
+    $services->instanceof(ResetInterface::class)->tag('johncms.resettable');
 
     $services->load(
         'Johncms\\',
@@ -121,6 +127,13 @@ return static function (ContainerConfigurator $container): void {
     // Alias the HttpFoundation base class to the same instance so code type-hinting the base
     // class resolves to our Request wrapper.
     $services->alias(\Symfony\Component\HttpFoundation\Request::class, Request::class);
+    // The current request for services that outlive a single one. Unlike the Request service it
+    // is a stable object: the kernel pushes the request of every cycle onto it, so a singleton
+    // holding the stack always reads the request being served rather than the one it was built
+    // with.
+    $services->set(RequestStack::class, RequestStack::class);
+    $services->set(\Johncms\Http\Kernel::class)
+        ->arg('$resettableServices', tagged_iterator('johncms.resettable'));
     // The session storage depends on the runtime (native under HTTP, in-memory in the console),
     // so the facade is built by a factory instead of being autowired from its constructor.
     $services->set(Session::class)->factory(service(SessionFactory::class));
@@ -147,7 +160,7 @@ return static function (ContainerConfigurator $container): void {
     $services->set(Avatar::class)->factory([Avatar::class, 'create']);
     $services->set(Vite::class);
     $services->set(Formatter::class)->autowire();
-    $services->set(Environment::class)->factory([Environment::class, 'create']);
+    $services->set(Environment::class)->autowire();
     $services->set(RouteCollection::class)->factory(service(RouteCollectorFactory::class));
     $services->set(RequestContext::class)->factory(service(RequestContextFactory::class));
     $services->set(UrlMatcher::class)

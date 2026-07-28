@@ -12,7 +12,9 @@ declare(strict_types=1);
 
 namespace Johncms;
 
-class NavChain
+use Symfony\Contracts\Service\ResetInterface;
+
+class NavChain implements ResetInterface
 {
     /** @var array */
     private $items = [];
@@ -26,6 +28,17 @@ class NavChain
     public function __invoke(): self
     {
         return $this;
+    }
+
+    /**
+     * Drops the chain built for the request that has been served. Without it the breadcrumbs of
+     * every request handled by a worker process would keep growing.
+     */
+    public function reset(): void
+    {
+        $this->items = [];
+        $this->show_home_page = true;
+        $this->last_is_active = true;
     }
 
     public static function create(): self

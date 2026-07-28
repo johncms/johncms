@@ -30,9 +30,11 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Exception\RequestExceptionInterface;
 use Symfony\Component\HttpFoundation\Exception\SessionNotFoundException;
 use Symfony\Component\HttpFoundation\Request as HttpFoundationRequest;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\TerminableInterface;
+use Symfony\Contracts\Service\ResetInterface;
 use Throwable;
 
 /**
@@ -57,6 +59,10 @@ final readonly class Kernel implements HttpKernelInterface, TerminableInterface
         private DebugDetailsPolicy $debugDetailsPolicy,
         private LoggerInterface $logger,
         private Session $session,
+        private RequestStack $requestStack,
+        private Environment $environment,
+        /** @var iterable<ResetInterface> Shared services caching something that belongs to one request. */
+        private iterable $resettableServices,
     ) {
     }
 
@@ -81,23 +87,43 @@ final readonly class Kernel implements HttpKernelInterface, TerminableInterface
         }
 
         $this->container->set(Request::class, $request);
+        $this->requestStack->push($request);
+
+        // Everything a shared service cached for the previous request is dropped here, before the
+        // first of them is asked anything. Under FPM there is nothing to drop; in a worker this is
+        // what keeps one visitor's address, breadcrumbs or page title out of the next answer.
+        foreach ($this->resettableServices as $service) {
+            $service->reset();
+        }
+
+        if ($this->isWebRuntime()) {
+            // A write to the request-rate cache, so it belongs to the request cycle and not to a
+            // service constructor: resolving Environment must not be what records a visit.
+            $this->environment->logRequestRate();
+        }
 
         // Under FPM the boot already started the session for this request, so this is a no-op —
         // it is here to keep the per-request start in one place for the worker runtime, where the
         // boot runs once and every cycle after the first arrives with the session closed by save()
         // below. Native storage cannot be restarted once headers are sent, so a worker will also
         // need a different storage in SessionFactory.
-        if ($this->sessionIsEnabled()) {
+        if ($this->isWebRuntime()) {
             $this->session->start();
         }
 
-        $response = $catch ? $this->handleCaught($request) : $this->handleRaw($request);
+        try {
+            $response = $catch ? $this->handleCaught($request) : $this->handleRaw($request);
+        } finally {
+            // Pop even when handleRaw() throws (catch = false), or the stack grows by one request
+            // per failed cycle and getCurrentRequest() keeps answering with a request already served.
+            $this->requestStack->pop();
+        }
 
         // The session must be closed before the response reaches the client, not after: send()
         // detaches the client connection (fastcgi_finish_request()) before terminate() runs, and
         // PHP otherwise keeps the session file locked until script shutdown — the next request
         // from the same visitor would then queue behind terminate()'s work (the mail batch).
-        if ($this->sessionIsEnabled() && $this->session->isStarted()) {
+        if ($this->isWebRuntime() && $this->session->isStarted()) {
             $this->session->save();
         }
 
@@ -105,11 +131,11 @@ final readonly class Kernel implements HttpKernelInterface, TerminableInterface
     }
 
     /**
-     * Console runs (cron, commands, the functional test harness) get in-memory session storage
-     * from SessionFactory: there is nothing to open or write there, so the kernel leaves the
-     * session alone.
+     * Whether this process is serving an actual HTTP request. Console runs — cron, commands, the
+     * functional test harness — must not open a session (SessionFactory gives them in-memory
+     * storage instead) and must not record a visit in the request-rate log.
      */
-    private function sessionIsEnabled(): bool
+    private function isWebRuntime(): bool
     {
         return ! defined('CONSOLE_MODE') || CONSOLE_MODE === false;
     }

@@ -7,15 +7,10 @@ namespace Tests\Unit\Http;
 use Johncms\Http\Environment;
 use Johncms\Http\Request;
 use PHPUnit\Framework\TestCase;
-use ReflectionClass;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Tests for visitor-address resolution.
- *
- * Environment is instantiated without its constructor on purpose: the constructor resolves the
- * request through di() and writes the request-rate cache file, neither of which belongs in a
- * unit test. Both are legacy traits scheduled to go once the request scope is explicit; the
- * address logic under test here does not depend on them.
  */
 final class EnvironmentTest extends TestCase
 {
@@ -143,13 +138,9 @@ final class EnvironmentTest extends TestCase
      */
     private function environmentFor(array $server): Environment
     {
-        $request = Request::create('/', 'GET', [], [], [], $server);
+        $requestStack = new RequestStack();
+        $requestStack->push(Request::create('/', 'GET', [], [], [], $server));
 
-        $environment = (new ReflectionClass(Environment::class))->newInstanceWithoutConstructor();
-
-        $property = (new ReflectionClass(Environment::class))->getProperty('request');
-        $property->setValue($environment, $request);
-
-        return $environment;
+        return new Environment($requestStack);
     }
 }

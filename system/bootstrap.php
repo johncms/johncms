@@ -52,10 +52,12 @@ $container = \Johncms\Container\PSRContainerFactory::getContainer();
 // The Request service is synthetic, so it has to be published before anything resolves it.
 // The kernel republishes the request of every cycle it handles; this one covers the legacy code
 // that reaches for Request during boot (Environment, BanIP) and the console commands.
-$container->set(
-    \Johncms\Http\Request::class,
-    $container->get(\Johncms\Http\RequestFactory::class)($container)
-);
+$bootRequest = $container->get(\Johncms\Http\RequestFactory::class)($container);
+$container->set(\Johncms\Http\Request::class, $bootRequest);
+// Services that outlive a single request read the current one off the stack. This is the bottom
+// entry, covering everything resolved during boot and the console commands; the kernel pushes the
+// request of each cycle on top of it.
+$container->get(\Symfony\Component\HttpFoundation\RequestStack::class)->push($bootRequest);
 
 if (! defined('CONSOLE_MODE') || CONSOLE_MODE === false) {
     header('X-Powered-CMS: JohnCMS');
@@ -67,9 +69,6 @@ if (! defined('CONSOLE_MODE') || CONSOLE_MODE === false) {
     // configured by SessionFactory. In a worker runtime this boot runs once — Kernel::handle()
     // starts the session of every subsequent request.
     $container->get(Johncms\Http\Session::class)->start();
-
-    /** @var Environment $env */
-    $env = $container->get(Environment::class);
 
     /** @var PDO $db */
     $db = $container->get(PDO::class);
@@ -89,8 +88,7 @@ Gettext\TranslatorFunctions::register($translator);
 
 (new Modules())->registerAutoloader();
 
-/** @var Johncms\System\Users\UserConfig $userConfig */
-$userConfig = $container->get(User::class)->config;
-
-$page = isset($_REQUEST['page']) && $_REQUEST['page'] > 0 ? (int) ($_REQUEST['page']) : 1;
-$start = isset($_REQUEST['page']) ? $page * $userConfig->kmess - $userConfig->kmess : (isset($_GET['start']) ? abs((int) ($_GET['start'])) : 0);
+// Resolving the current user authenticates the visitor by their cookies and, as a side effect,
+// runs the ban check and records the IP history. Kept here so that happens on every request
+// rather than on whichever service first asks for the user.
+$container->get(User::class);

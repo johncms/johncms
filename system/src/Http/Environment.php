@@ -13,6 +13,9 @@ declare(strict_types=1);
 namespace Johncms\Http;
 
 use Psr\Container\ContainerInterface;
+use RuntimeException;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Contracts\Service\ResetInterface;
 
 /**
  * Per-request environment facts: the visitor address, the user agent and the short-term
@@ -22,8 +25,13 @@ use Psr\Container\ContainerInterface;
  * proxies configured in config/autoload/http.global.php, so behind a reverse proxy getIp()
  * returns the visitor rather than the proxy, and a forwarded header coming from an untrusted
  * source is ignored instead of being taken at face value.
+ *
+ * The request comes from the RequestStack rather than being held directly: this is a shared
+ * service, and a request captured at construction would be the wrong one for every request but
+ * the first under a long-running runtime. Everything derived from it is cached per request and
+ * dropped by reset().
  */
-class Environment
+class Environment implements ResetInterface
 {
     /** Stand-in for an address that cannot be represented as an unsigned-int IPv4 value. */
     private const FALLBACK_IP = '127.0.0.1';
@@ -44,12 +52,9 @@ class Environment
     /** @var list<int> */
     private array $ipCount = [];
 
-    private Request $request;
-
-    public function __construct()
-    {
-        $this->request = di(Request::class);
-        $this->ipLog();
+    public function __construct(
+        private readonly RequestStack $requestStack,
+    ) {
     }
 
     public function __invoke(ContainerInterface $container)
@@ -57,9 +62,17 @@ class Environment
         return $this;
     }
 
-    public static function create(): self
+    /**
+     * Drops everything derived from the request being served. Called once per request, so the
+     * next visitor is not answered with the previous one's address or request-rate log.
+     */
+    public function reset(): void
     {
-        return new self();
+        $this->clientIp = '';
+        $this->proxyIp = null;
+        $this->addressesResolved = false;
+        $this->userAgent = null;
+        $this->ipCount = [];
     }
 
     /**
@@ -99,7 +112,7 @@ class Environment
     public function getUserAgent(): string
     {
         if ($this->userAgent === null) {
-            $userAgent = $this->request->server->filter(
+            $userAgent = $this->request()->server->filter(
                 'HTTP_USER_AGENT',
                 'Not Recognised',
                 FILTER_SANITIZE_SPECIAL_CHARS
@@ -133,11 +146,27 @@ class Environment
             return;
         }
 
-        $chain = array_values(array_filter($this->request->getClientIps(), 'is_string'));
+        $chain = array_values(array_filter($this->request()->getClientIps(), 'is_string'));
 
         $this->clientIp = $chain[0] ?? self::FALLBACK_IP;
         $this->proxyIp = $chain[1] ?? null;
         $this->addressesResolved = true;
+    }
+
+    /**
+     * The request being served. There is always one: the bootstrap pushes the request it built
+     * from the globals before any service is resolved, and the kernel pushes the request of every
+     * cycle on top of it.
+     */
+    private function request(): Request
+    {
+        $request = $this->requestStack->getCurrentRequest();
+
+        if (! $request instanceof Request) {
+            throw new RuntimeException('No request is being served: the request stack is empty.');
+        }
+
+        return $request;
     }
 
     private function toLong(string $ip): int
@@ -158,7 +187,12 @@ class Environment
         return filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) ?: self::FALLBACK_IP;
     }
 
-    private function ipLog(): void
+    /**
+     * Records the current visitor in the short-term request-rate log and loads the entries of the
+     * last minute into getIpLog(). A write, so it is called once per request by the kernel rather
+     * than from the constructor, where resolving this service would have been enough to trigger it.
+     */
+    public function logRequestRate(): void
     {
         $file = CACHE_PATH . 'ip-requests-list.cache';
         $in = $this->openIpCache($file);
