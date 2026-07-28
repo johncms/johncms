@@ -1474,10 +1474,31 @@ php-quality) + гейт зелёные (383 теста: 352 unit + 31 functional
 восстанавливая дефолтный домен. Смена на ту же локаль — no-op (под FPM ядро ничего не делает).
 `EmailSender` не затронут: он создаёт свой `Translator` и ставит локаль до регистрации домена.
 
-**Остаток 5a (не сделано):** развязка `Environment` от Application-слоя шести модулей. Три места
-захвата запроса из контейнера (`FileStorage`, `forum/ForumUtils`, `TranslatorServiceFactory`)
-резолвили его на каждый вызов; `TranslatorServiceFactory` запрос больше не читает вовсе,
-оставшиеся два получают актуальный запрос, потому что `Request` синтетический и переиздаётся ядром.
+**5a-5: ✅ ГОТОВО (2026-07-28, не закоммичено). Журнал частоты запросов вынесен из `Environment`.**
+`Johncms\Security\RequestRateLogInterface` + `FileRequestRateLog` (формат файла `pack('LL', …)`
+сохранён 1:1): ядро пишет `record($request->getClientIp())`, `online/GetIpActivityUseCase` читает
+`recentAddresses()`. Интерфейс оперирует адресами **строками** — long остался деталью файловой
+реализации. `Environment` потерял `logRequestRate()`, `getIpLog()` и `$ipCount`, то есть перестал
+быть и хранилищем, и per-request кэшем одновременно.
+
+Заодно `online` полностью свободен от `Environment`: текущий адрес приходит третьим параметром
+`getPage()` из контроллера (`$request->getClientIp()`) — это и есть развязка Application-слоя,
+показанная на самом неудобном из шести модулей.
+
+**Решение о формате адреса (принято 2026-07-28).** Long-форма не выходит за границу записи в БД:
+в Application и контроллеры адрес передаётся строкой, `ip2long` живёт в касте `Johncms\Casts\Ip`
+и в шести легаси-местах с сырым SQL. Это подготовка к IPv6 — тогда миграция сведётся к смене типа
+колонок, каста и бэкфиллу, без правок в модулях. Разведка по IPv6 (12 колонок, диапазонные баны
+через `BETWEEN`, отсутствие механизма миграций схемы) — в `.claude/ipv6-support-analysis.md`.
+Сам IPv6 в этот план не входит.
+
+**Остаток 5a (не сделано):** развязка `Environment` от Application-слоя оставшихся модулей —
+`forum` (3 юзкейса), `registration`, `admin/PrepareIpBanUseCase`, `contacts/ContactForm`:
+адрес и user-agent уходят параметром/в команду, `Environment` из конструкторов Application
+исчезает. Три места захвата запроса из контейнера (`FileStorage`, `forum/ForumUtils`,
+`TranslatorServiceFactory`) резолвили его на каждый вызов; `TranslatorServiceFactory` запрос
+больше не читает вовсе, оставшиеся два получают актуальный запрос, потому что `Request`
+синтетический и переиздаётся ядром.
 
 **5a. Инфраструктура request-scope (сам, один коммит).** Точечный `reset()` там, где он нужен
 (`Render` — только `TemplateData`; `NavChain` — `$items`; `Environment`; `Session`), вызов из

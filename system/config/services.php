@@ -23,6 +23,8 @@ use Johncms\Router\RequestContextFactory;
 use Johncms\Router\SymfonyRouteMatcher;
 use Johncms\Security\Csrf;
 use Johncms\Security\AntifloodChecker;
+use Johncms\Security\FileRequestRateLog;
+use Johncms\Security\RequestRateLogInterface;
 use Johncms\Security\AntifloodCheckerInterface;
 use Johncms\Security\HTMLPurifier;
 use Johncms\Smilies\SmiliesRenderer;
@@ -143,6 +145,7 @@ return static function (ContainerConfigurator $container): void {
     $services->set(\Johncms\System\Users\User::class)->factory(service(UserFactory::class));
 
     $services->set(AntifloodCheckerInterface::class, AntifloodChecker::class)->autowire();
+    $services->set(RequestRateLogInterface::class, FileRequestRateLog::class);
     $services->set(SmiliesRendererInterface::class, SmiliesRenderer::class);
     $services->set(UserPlaceFormatterInterface::class, UserPlaceFormatter::class)->autowire();
     $services->set(IgnoreListCheckerInterface::class, IgnoreListChecker::class);

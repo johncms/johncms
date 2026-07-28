@@ -22,6 +22,7 @@ use Johncms\Mail\EmailSender;
 use Johncms\Router\MiddlewareDispatcher;
 use Johncms\Router\RouteMatchResult;
 use Johncms\Router\SymfonyRouteMatcher;
+use Johncms\Security\RequestRateLogInterface;
 use Johncms\System\i18n\LocaleResolver;
 use Johncms\System\i18n\Translator;
 use Johncms\System\Users\UserStat;
@@ -63,7 +64,7 @@ final readonly class Kernel implements HttpKernelInterface, TerminableInterface
         private LoggerInterface $logger,
         private Session $session,
         private RequestStack $requestStack,
-        private Environment $environment,
+        private RequestRateLogInterface $requestRateLog,
         private CurrentUserAuthenticator $currentUserAuthenticator,
         private LocaleResolver $localeResolver,
         private Translator $translator,
@@ -103,9 +104,9 @@ final readonly class Kernel implements HttpKernelInterface, TerminableInterface
         }
 
         if ($this->isWebRuntime()) {
-            // A write to the request-rate cache, so it belongs to the request cycle and not to a
-            // service constructor: resolving Environment must not be what records a visit.
-            $this->environment->logRequestRate();
+            // A write, so it belongs to the request cycle rather than to a service constructor:
+            // resolving a service must not be what records a visit.
+            $this->requestRateLog->record($this->clientIp($request) ?? '');
         }
 
         // Under FPM the boot already started the session for this request, so this is a no-op —

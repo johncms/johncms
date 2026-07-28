@@ -18,8 +18,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Contracts\Service\ResetInterface;
 
 /**
- * Per-request environment facts: the visitor address, the user agent and the short-term
- * request-rate log.
+ * Per-request environment facts: the visitor address and the user agent.
  *
  * Address resolution is delegated to HttpFoundation: it honours the trusted
  * proxies configured in config/autoload/http.global.php, so behind a reverse proxy getIp()
@@ -49,9 +48,6 @@ class Environment implements ResetInterface
 
     private ?string $userAgent = null;
 
-    /** @var list<int> */
-    private array $ipCount = [];
-
     public function __construct(
         private readonly RequestStack $requestStack,
     ) {
@@ -72,7 +68,6 @@ class Environment implements ResetInterface
         $this->proxyIp = null;
         $this->addressesResolved = false;
         $this->userAgent = null;
-        $this->ipCount = [];
     }
 
     /**
@@ -121,11 +116,6 @@ class Environment implements ResetInterface
         }
 
         return $this->userAgent;
-    }
-
-    public function getIpLog(): array
-    {
-        return $this->ipCount;
     }
 
     /**
@@ -185,58 +175,5 @@ class Environment implements ResetInterface
     private function toIpv4(string $ip): string
     {
         return filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) ?: self::FALLBACK_IP;
-    }
-
-    /**
-     * Records the current visitor in the short-term request-rate log and loads the entries of the
-     * last minute into getIpLog(). A write, so it is called once per request by the kernel rather
-     * than from the constructor, where resolving this service would have been enough to trigger it.
-     */
-    public function logRequestRate(): void
-    {
-        $file = CACHE_PATH . 'ip-requests-list.cache';
-        $in = $this->openIpCache($file);
-        $tmp = [];
-
-        if (false !== $in && flock($in, LOCK_EX)) {
-            while ($block = fread($in, 8)) {
-                $arr = unpack('Lip/Ltime', $block);
-
-                if ((time() - $arr['time']) > 60) {
-                    continue;
-                }
-
-                $tmp[] = $arr;
-                $this->ipCount[] = $arr['ip'];
-            }
-
-            $this->writeIpCache($in, $tmp);
-        }
-    }
-
-    /**
-     * @param string $file
-     * @return false|resource
-     */
-    private function openIpCache(string $file)
-    {
-        return fopen($file, (file_exists($file) ? 'r+' : 'w+'));
-    }
-
-    /**
-     * @param resource $resource
-     * @param array $array
-     */
-    private function writeIpCache($resource, array $array): void
-    {
-        fseek($resource, 0);
-        ftruncate($resource, 0);
-
-        foreach ($array as $iValue) {
-            fwrite($resource, pack('LL', $iValue['ip'], $iValue['time']));
-        }
-
-        fwrite($resource, pack('LL', $this->getIp(), time()));
-        fclose($resource);
     }
 }

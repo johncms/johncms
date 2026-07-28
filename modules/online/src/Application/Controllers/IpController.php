@@ -6,6 +6,7 @@ namespace Johncms\Modules\Online\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\PageMeta;
+use Johncms\Http\Request;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Online\Application\FiltersBuilder;
@@ -27,7 +28,7 @@ final readonly class IpController
         $this->controllerContext->initModule('online');
     }
 
-    public function __invoke(): string
+    public function __invoke(Request $request): string
     {
         $pageTitle = __('IP Activity');
 
@@ -51,7 +52,11 @@ final readonly class IpController
 
         $total = $pagination->getTotal();
         $items = $total > 0
-            ? $this->ipActivity->getPage($pagination->getPerPage(), $pagination->getOffset())
+            ? $this->ipActivity->getPage(
+                $pagination->getPerPage(),
+                $pagination->getOffset(),
+                $request->getClientIp() ?? ''
+            )
             : [];
 
         return $this->render->render('online::ip', [
