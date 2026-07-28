@@ -22,6 +22,8 @@ use Johncms\Mail\EmailSender;
 use Johncms\Router\MiddlewareDispatcher;
 use Johncms\Router\RouteMatchResult;
 use Johncms\Router\SymfonyRouteMatcher;
+use Johncms\System\i18n\LocaleResolver;
+use Johncms\System\i18n\Translator;
 use Johncms\System\Users\UserStat;
 use Johncms\Users\CurrentUserAuthenticator;
 use LogicException;
@@ -63,6 +65,8 @@ final readonly class Kernel implements HttpKernelInterface, TerminableInterface
         private RequestStack $requestStack,
         private Environment $environment,
         private CurrentUserAuthenticator $currentUserAuthenticator,
+        private LocaleResolver $localeResolver,
+        private Translator $translator,
         /** @var iterable<ResetInterface> Shared services caching something that belongs to one request. */
         private iterable $resettableServices,
     ) {
@@ -117,6 +121,11 @@ final readonly class Kernel implements HttpKernelInterface, TerminableInterface
         // under FPM, where the boot already did it for this very request; in a worker it is what
         // keeps the previous visitor from answering as the current one.
         $this->currentUserAuthenticator->authenticate();
+
+        // The language of this visitor, applied on top of the translator built at boot. Resolving
+        // it needs the user, hence the order; setting the same locale again is a no-op, so under
+        // FPM this costs nothing.
+        $this->translator->setLocale($this->localeResolver->resolve());
 
         try {
             $response = $catch ? $this->handleCaught($request) : $this->handleRaw($request);
