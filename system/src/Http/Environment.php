@@ -18,7 +18,7 @@ use Psr\Container\ContainerInterface;
  * Per-request environment facts: the visitor address, the user agent and the short-term
  * request-rate log.
  *
- * Address resolution is delegated to HttpFoundation (plan stage 1e): it honours the trusted
+ * Address resolution is delegated to HttpFoundation: it honours the trusted
  * proxies configured in config/autoload/http.global.php, so behind a reverse proxy getIp()
  * returns the visitor rather than the proxy, and a forwarded header coming from an untrusted
  * source is ignored instead of being taken at face value.

@@ -19,8 +19,8 @@ use Psr\Container\ContainerInterface;
  *
  * It registers our Request subclass as HttpFoundation's factory so createFromGlobals()
  * returns a Johncms\Http\Request, applies the trusted-proxy configuration, and returns the
- * populated request. Under a worker runtime (stage 6) the kernel supplies the request instead
- * and this factory is only used for the classic per-request FPM mode.
+ * populated request. Under a worker runtime the kernel supplies the request instead, and this
+ * factory is only used for the classic per-request FPM mode.
  */
 final readonly class RequestFactory
 {
@@ -63,7 +63,7 @@ final readonly class RequestFactory
      *
      * An empty list keeps the permissive default, which is correct for a single-site install
      * whose web server already rejects unknown hosts. A non-matching host makes HttpFoundation
-     * throw SuspiciousOperationException, which the kernel maps to a 400 (plan stage 3).
+     * throw SuspiciousOperationException, which the kernel maps to a 400.
      */
     private static function configureTrustedHosts(): void
     {

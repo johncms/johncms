@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
 /**
- * Tests for the framework-agnostic uploaded-file DTO (plan stage 1c).
+ * Tests for the framework-agnostic uploaded-file DTO.
  */
 final class UploadedFileDTOTest extends TestCase
 {

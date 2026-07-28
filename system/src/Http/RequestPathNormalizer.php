@@ -15,7 +15,7 @@ namespace Johncms\Http;
 /**
  * Turns the raw path of a request into the path the route collection is matched against.
  *
- * Extracted from public/index.php (plan stage 3a), where it was an anonymous function reading
+ * Extracted from public/index.php, where it was an anonymous function reading
  * $_SERVER directly. The routes are declared without a trailing slash and with decoded
  * characters, so both normalizations have to happen before matching.
  */

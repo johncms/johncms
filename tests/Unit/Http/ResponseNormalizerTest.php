@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use stdClass;
 
 /**
- * Tests for the transitional Response|string|null contract (plan stage 2b).
+ * Tests for the transitional Response|string|null contract.
  */
 final class ResponseNormalizerTest extends TestCase
 {

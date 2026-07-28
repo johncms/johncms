@@ -8,7 +8,7 @@ namespace Johncms\Modules\Collections\Domain\Enums;
  * Allowlisted comparison operators for CollectionItemQuery filters.
  *
  * Only values from this enum may reach the query builder; the operator is never
- * interpolated into SQL as a raw string (see the security rules in the plan).
+ * interpolated into SQL as a raw string.
  */
 enum FilterOperator: string
 {

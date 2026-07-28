@@ -40,7 +40,7 @@ class Render extends Engine
      * Plates raises. The engine is a container singleton while every controller registers its
      * module namespace on construction, so the second request handled in one process used to die
      * with 'The template namespace "forum" is already being used.' — found by the functional
-     * smoke set of plan stage 3a, and a hard blocker for the worker runtime of stage 6.
+     * smoke set, and a hard blocker for a worker runtime.
      *
      * Only a repeated registration of the very same directories is silent: a different directory
      * under a name already taken is a genuine clash between modules and still raises.

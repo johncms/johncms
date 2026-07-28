@@ -8,7 +8,7 @@ use Johncms\Router\RequestContextFactory;
 use PHPUnit\Framework\TestCase;
 
 /**
- * The factory builds an empty context on purpose (plan stage 3a).
+ * The factory builds an empty context on purpose.
  *
  * It used to fill it from the request, which resolved the host while the container was still
  * building the kernel: a Host header failing the trusted-host patterns then raised

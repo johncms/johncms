@@ -12,11 +12,11 @@ use RuntimeException;
 use Symfony\Component\HttpFoundation\Request as BaseRequest;
 
 /**
- * Tests for ActionInvoker (plan stage 1e, item 1).
+ * Tests for ActionInvoker.
  *
  * The central guarantee: an action typed on Request receives the request travelling through
  * the middleware pipeline, never the shared instance held by the container. Without it the
- * "Request as an action argument" convention (stage 1a-quater) buys no request isolation,
+ * "Request as an action argument" convention buys no request isolation,
  * and middleware that rewrites the request stops reaching controllers.
  */
 final class ActionInvokerTest extends TestCase

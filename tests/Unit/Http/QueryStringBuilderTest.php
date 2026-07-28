@@ -8,7 +8,7 @@ use Johncms\Http\QueryStringBuilder;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Tests for QueryStringBuilder (plan stage 1a): the query-string assembly extracted from the
+ * Tests for QueryStringBuilder: the query-string assembly extracted from the
  * former Request::getQueryString().
  */
 final class QueryStringBuilderTest extends TestCase

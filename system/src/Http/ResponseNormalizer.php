@@ -54,7 +54,7 @@ final readonly class ResponseNormalizer
      * and sendHeaders() is the one place that sends Content-Type with replace = true — so calling
      * prepare() on a wrapped legacy body would silently turn the application/json of the 16 JSON
      * endpoints and the octet-stream of the library download into text/html. Do not call prepare()
-     * here or in the kernel until those controllers build their own Response (stage 2c).
+     * here or in the kernel until those controllers build their own Response.
      */
     private function wrapLegacyOutput(string $content, int $status): Response
     {

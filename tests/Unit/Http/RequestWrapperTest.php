@@ -9,11 +9,11 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 
 /**
- * Contract tests for the HttpFoundation-based Request wrapper (plan stage 1a).
+ * Contract tests for the HttpFoundation-based Request wrapper.
  *
  * These mirror the legacy PSR-7 contract (RequestInputBehaviorTest) with two intentional
- * differences that the plan calls out:
- *   - the wrapper does NOT trim (trimming moves to TrimStringsMiddleware, stage 1a-bis);
+ * differences from the former Request:
+ *   - the wrapper does NOT trim (trimming lives in TrimStringsMiddleware);
  *   - invalid integers fall back to the default via the soft bodyInt()/queryInt() mode.
  */
 final class RequestWrapperTest extends TestCase

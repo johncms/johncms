@@ -9,7 +9,7 @@ use Johncms\Modules\Album\Application\Exceptions\AlbumValidationException;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Regression test for a fatal error found by PHPStan (plan stage 1.5).
+ * Regression test for a fatal error found by PHPStan.
  *
  * The class used to redeclare the inherited $errors property as promoted readonly, which PHP
  * rejects at class-declaration time — so merely constructing the exception killed the request.

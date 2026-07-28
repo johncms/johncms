@@ -12,7 +12,7 @@ use Psr\Container\ContainerInterface;
 use Symfony\Component\HttpFoundation\Exception\SuspiciousOperationException;
 
 /**
- * Tests for the classic-FPM request factory (plan stages 1b and 1e).
+ * Tests for the classic-FPM request factory.
  *
  * The factory mutates HttpFoundation global static state (the request factory, trusted proxies
  * and trusted hosts), so every test resets that state in tearDown to avoid leaking into others.

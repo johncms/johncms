@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Tests\Functional\FunctionalTestCase;
 
 /**
- * Smoke set over the main routes of every module (plan stage 3a).
+ * Smoke set over the main routes of every module.
  *
  * Guards what the unit suite cannot: that a real request survives routing, the middleware
  * pipeline, the controller, the templates and the response normalization. Stages 2c, 4 and 5
@@ -82,7 +82,7 @@ final class KernelSmokeTest extends FunctionalTestCase
 
     /**
      * A route that only admins may see answers 403, and that status is set the legacy way with
-     * http_response_code() deep inside the module. Pins the status seam of stage 2b end to end.
+     * http_response_code() deep inside the module. Pins that status seam end to end.
      */
     public function testAdminOnlyRouteKeepsItsLegacyForbiddenStatus(): void
     {
@@ -141,7 +141,7 @@ final class KernelSmokeTest extends FunctionalTestCase
 
     /**
      * A controller that still calls http_response_code() keeps its status: the normalizer takes
-     * it instead of overwriting it with the 200 of a fresh Response (stage 2b).
+     * it instead of overwriting it with the 200 of a fresh Response.
      */
     public function testLegacyStatusCodeOfAControllerIsPreserved(): void
     {

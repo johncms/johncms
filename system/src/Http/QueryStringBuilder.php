@@ -14,10 +14,10 @@ namespace Johncms\Http;
 
 /**
  * Builds a path + query string from a set of query parameters, with parameters to remove
- * and to add. Extracted from the former Request::getQueryString() (stage 1a): the name
- * collides with HttpFoundation's own Request::getQueryString(), and query-string assembly is
- * a presentation concern rather than request state. Request-agnostic on purpose so it survives
- * the base-class switch in stage 1d.
+ * and to add. Extracted from the former Request::getQueryString(): the name collides with
+ * HttpFoundation's own Request::getQueryString(), and query-string assembly is a presentation
+ * concern rather than request state. Request-agnostic on purpose, so it is unaffected by what
+ * the Request wrapper inherits from.
  */
 final readonly class QueryStringBuilder
 {

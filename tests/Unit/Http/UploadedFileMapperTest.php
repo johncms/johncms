@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
- * Tests for UploadedFileMapper (plan stage 1c/1d): HttpFoundation uploaded file -> UploadedFileDTO.
+ * Tests for UploadedFileMapper: HttpFoundation uploaded file -> UploadedFileDTO.
  */
 final class UploadedFileMapperTest extends TestCase
 {

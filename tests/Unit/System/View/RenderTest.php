@@ -16,7 +16,7 @@ use RuntimeException;
  * message as the rendered output. That turned any template failure into a 200 response whose
  * body was a raw error string, leaked the message to visitors regardless of DEBUG, and logged
  * nothing. Templates execute inside that call, so it also hid anything they raise from the
- * caller. Since stage 3a a template failure is caught by Kernel::handle(), which logs it and
+ * caller. A template failure is caught by Kernel::handle(), which logs it and
  * answers 500; the point of these tests is that the view layer does not swallow it first.
  */
 final class RenderTest extends TestCase
@@ -47,7 +47,7 @@ final class RenderTest extends TestCase
     /**
      * The engine is a container singleton while every controller registers its module namespace on
      * construction, so a second request in one process re-registers the same namespace. That used
-     * to raise and take the request down (plan stage 3a).
+     * to raise and take the request down.
      */
     public function testRegisteringTheSameFolderTwiceIsANoOp(): void
     {

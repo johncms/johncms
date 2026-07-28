@@ -10,7 +10,7 @@ use Johncms\Exceptions\PageNotFoundException;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Tests for the control-flow helpers (plan stage 2a).
+ * Tests for the control-flow helpers.
  *
  * They used to send headers and call exit; now they throw, so that building and sending
  * the response stays the job of the HTTP layer.

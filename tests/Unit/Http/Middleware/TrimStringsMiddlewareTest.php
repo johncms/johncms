@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Tests for TrimStringsMiddleware (plan stage 1a-bis): reproduces the legacy always-trim
+ * Tests for TrimStringsMiddleware: reproduces the legacy always-trim
  * behaviour that moved out of the Request wrapper into one explicit middleware.
  */
 final class TrimStringsMiddlewareTest extends TestCase

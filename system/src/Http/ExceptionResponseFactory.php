@@ -79,7 +79,7 @@ final readonly class ExceptionResponseFactory
      * A malformed request: an array where a scalar parameter is expected (?id[]=1), or a Host
      * header that did not pass the trusted-host patterns. Both used to reach GlobalErrorHandler
      * and answer 500 with a log entry per request, which let an unauthenticated client fill the
-     * log by looping requests (plan stage 3a).
+     * log by looping requests.
      */
     public function badRequest(): Response
     {

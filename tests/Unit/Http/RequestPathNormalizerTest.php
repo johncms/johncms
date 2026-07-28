@@ -10,7 +10,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Pins the path normalization that moved out of public/index.php into the kernel (plan stage 3a).
+ * Pins the path normalization that moved out of public/index.php into the kernel.
  */
 final class RequestPathNormalizerTest extends TestCase
 {

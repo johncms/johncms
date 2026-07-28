@@ -10,12 +10,12 @@ use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 
 /**
- * Tests for visitor-address resolution (plan stage 1e, item 4).
+ * Tests for visitor-address resolution.
  *
  * Environment is instantiated without its constructor on purpose: the constructor resolves the
  * request through di() and writes the request-rate cache file, neither of which belongs in a
- * unit test. Both are legacy traits scheduled for stage 5; the address logic under test here
- * does not depend on them.
+ * unit test. Both are legacy traits scheduled to go once the request scope is explicit; the
+ * address logic under test here does not depend on them.
  */
 final class EnvironmentTest extends TestCase
 {

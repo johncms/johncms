@@ -19,7 +19,7 @@ use Throwable;
 /**
  * Decides whether the details of a failure may be shown to the current visitor.
  *
- * Extracted from GlobalErrorHandler (plan stage 3a) so the kernel answers 500 with exactly the
+ * Extracted from GlobalErrorHandler so the kernel answers 500 with exactly the
  * same visibility rule: DEBUG alone is not enough — the shipped config/constants.php has
  * DEBUG = true, so showing details on DEBUG alone would leak stack traces to every visitor.
  */

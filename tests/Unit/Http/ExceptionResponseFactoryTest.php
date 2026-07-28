@@ -16,7 +16,7 @@ use RuntimeException;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Tests for the factory that turns control-flow exceptions into responses (plan stage 2a).
+ * Tests for the factory that turns control-flow exceptions into responses.
  */
 final class ExceptionResponseFactoryTest extends TestCase
 {

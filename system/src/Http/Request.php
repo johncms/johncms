@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Request as BaseRequest;
 /**
  * Thin JohnCMS wrapper over Symfony HttpFoundation Request.
  *
- * Charter (see .claude/http-kernel-migration-plan.md, stage 1a):
+ * Charter:
  *   - no get* methods (the whole get* surface belongs to HttpFoundation);
  *   - no own request state (route params live in $request->attributes);
  *   - thin delegates only, no $filter/$options in signatures, no business logic;
@@ -32,7 +32,7 @@ use Symfony\Component\HttpFoundation\Request as BaseRequest;
  * calling the bags directly ($request->query->getInt('id')).
  *
  * Note: trimming is intentionally NOT done here. HttpFoundation does not trim, and the
- * historical always-trim behaviour is reproduced once, in TrimStringsMiddleware (stage 1a-bis).
+ * historical always-trim behaviour is reproduced once, in TrimStringsMiddleware.
  */
 final class Request extends BaseRequest
 {
@@ -120,7 +120,7 @@ final class Request extends BaseRequest
      * Read an integer with the "soft" invalid-input policy: a failed filter (e.g. ?id=abc)
      * falls back to the default, reproducing the legacy Request. An array in a scalar
      * parameter (e.g. ?id[]=1) is a type-confusion attempt and is deliberately NOT caught —
-     * it surfaces as BadRequestException, which the kernel maps to a 400 (plan stage 1a/3).
+     * it surfaces as BadRequestException, which the kernel maps to a 400.
      */
     private function softInt(InputBag $bag, string $key, int $default): int
     {
