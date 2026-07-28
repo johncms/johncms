@@ -15,6 +15,7 @@ namespace Johncms;
 use Johncms\System\Users\User;
 use PDO;
 use Psr\Container\ContainerInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class CountersFactory
 {
@@ -24,7 +25,8 @@ class CountersFactory
             $container->get(PDO::class),
             $container->get(User::class),
             config('johncms.homeurl', ''),
-            $container->get(Cache::class)
+            $container->get(Cache::class),
+            $container->get(RequestStack::class)
         );
     }
 }

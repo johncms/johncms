@@ -15,6 +15,7 @@ namespace Johncms;
 use Johncms\Notifications\Notification;
 use Johncms\System\Users\User;
 use PDO;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class Counters
 {
@@ -39,12 +40,26 @@ class Counters
     /** @var Cache */
     private $cache;
 
-    public function __construct(PDO $pdo, User $user, string $homeUrl, Cache $cache)
+    /** @var RequestStack */
+    private $requestStack;
+
+    public function __construct(PDO $pdo, User $user, string $homeUrl, Cache $cache, RequestStack $requestStack)
     {
         $this->db = $pdo;
         $this->user = $user;
         $this->homeurl = $homeUrl;
         $this->cache = $cache;
+        $this->requestStack = $requestStack;
+    }
+
+    /**
+     * Whether the request being served is the home page. Set by HomepageController on the request
+     * itself: it used to be the _IS_HOMEPAGE constant, which belongs to the process — once the
+     * home page had been served, every later page of the same worker looked like the home page.
+     */
+    private function isHomePage(): bool
+    {
+        return (bool) $this->requestStack->getCurrentRequest()?->attributes->get('is_homepage', false);
     }
 
     /**
@@ -520,7 +535,7 @@ class Counters
             while ($res = $req->fetch()) {
                 $link1 = ($res['mode'] === 1 || $res['mode'] === 2) ? $res['link1'] : $res['link2'];
                 $link2 = $res['mode'] === 2 ? $res['link1'] : $res['link2'];
-                $count = defined('_IS_HOMEPAGE') ? $link1 : $link2;
+                $count = $this->isHomePage() ? $link1 : $link2;
                 if (empty($count)) {
                     continue;
                 }

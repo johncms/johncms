@@ -15,6 +15,7 @@ namespace Johncms;
 use Johncms\System\Users\User;
 use Johncms\Utils\PlainTextFormatter;
 use PDO;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class Ads
 {
@@ -27,10 +28,14 @@ class Ads
     /** @var null|array */
     private $ads;
 
-    public function __construct(PDO $pdo, User $user)
+    /** @var RequestStack */
+    private $requestStack;
+
+    public function __construct(PDO $pdo, User $user, RequestStack $requestStack)
     {
         $this->db = $pdo;
         $this->user = $user;
+        $this->requestStack = $requestStack;
     }
 
     /**
@@ -109,12 +114,22 @@ class Ads
      * @param array $item
      * @return bool
      */
+    /**
+     * Whether the request being served is the home page. Set by HomepageController on the request
+     * itself: it used to be the _IS_HOMEPAGE constant, which belongs to the process — once the
+     * home page had been served, every later page of the same worker looked like the home page.
+     */
+    private function isHomePage(): bool
+    {
+        return (bool) $this->requestStack->getCurrentRequest()?->attributes->get('is_homepage', false);
+    }
+
     private function checkAccess(array $item): bool
     {
         return (
                 empty($item['layout']) ||
-                ($item['layout'] === 1 && defined('_IS_HOMEPAGE')) ||
-                ($item['layout'] === 2 && ! defined('_IS_HOMEPAGE'))
+                ($item['layout'] === 1 && $this->isHomePage()) ||
+                ($item['layout'] === 2 && ! $this->isHomePage())
             ) &&
             (
                 empty($item['view']) ||

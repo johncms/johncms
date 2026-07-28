@@ -6,6 +6,7 @@ namespace Johncms\Modules\Homepage\Controllers;
 
 use Johncms\Counters;
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\Request;
 use Johncms\Modules\News\Domain\Models\NewsArticle;
 use Johncms\NavChain;
 use Johncms\System\View\Render;
@@ -20,9 +21,12 @@ final readonly class HomepageController
         $this->context->initModule('homepage');
     }
 
-    public function __invoke(): string
+    public function __invoke(Request $request): string
     {
-        define('_IS_HOMEPAGE', 1);
+        // Marks the request, not the process: Ads and Counters read the flag from here to pick
+        // what belongs on the home page. It used to be the _IS_HOMEPAGE constant, which cannot be
+        // unset — under a long-running runtime every page served after the home page inherited it.
+        $request->attributes->set('is_homepage', true);
         $this->navChain->showHomePage(false);
 
         $config = config('johncms');

@@ -15,6 +15,7 @@ namespace Johncms;
 use Johncms\System\Users\User;
 use PDO;
 use Psr\Container\ContainerInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class AdsFactory
 {
@@ -22,7 +23,8 @@ class AdsFactory
     {
         return new Ads(
             $container->get(PDO::class),
-            $container->get(User::class)
+            $container->get(User::class),
+            $container->get(RequestStack::class)
         );
     }
 }
