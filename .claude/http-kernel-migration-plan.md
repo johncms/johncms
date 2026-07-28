@@ -1240,7 +1240,7 @@ php-quality) + гейт зелёные (383 теста: 352 unit + 31 functional
 * `data/cache/container.php` (если оператор включил `CACHE_CONTAINER`) после смены `Request` на
   synthetic обязан быть удалён — со старым дампом `set()` в ядре упадёт. Строка в CHANGELOG 10.0.
 
-### 🚧 Этап 4. Сессия (M) — 4a завершён (2026-07-26), 4b в работе
+### ✅ Этап 4. Сессия (M) — 4a завершён (2026-07-26), 4b завершён (2026-07-26)
 
 Существующий `Session` (после этапа 1d — `Johncms\Http\Session`) — уже готовая точка абстракции,
 менять вызовы дважды не придётся.
@@ -1301,18 +1301,37 @@ php-quality) + гейт зелёные (383 теста: 352 unit + 31 functional
 
 **4b. Атомарная подмена реализации фасада.** Одна точка изменения вместо 225.
 
-* Переписать `Session` поверх `Symfony\Component\HttpFoundation\Session\SessionInterface`
-  (сохранив `get/set/has/remove/flash/getFlash`; у HttpFoundation flash-bag уже есть).
+* ✅ `Session` переписан поверх `Symfony\Component\HttpFoundation\Session\Session`
+  (сохранив `get/set/has/remove/clear/flash/getFlash`; у HttpFoundation flash-bag уже есть).
   Семантика flash совпадает достаточно: сейчас `getFlash()` удаляет при чтении, у Symfony —
   `get()` из `FlashBag` тоже одноразовый.
-* `session_start()` из `system/bootstrap.php` убрать — сессию стартует ядро,
-  на каждый запрос (под воркером — старт/`session_write_close()` в рамках `handle()`).
+* ✅ `session_start()` из `system/bootstrap.php` заменён на явный `Session::start()` в том же
+  месте (web-ветка, до всего остального). Так надо: фасад Symfony стартует сессию при первом
+  же **чтении** ключа, а `bootstrap.php:80` резолвит `Translator`, чья фабрика читает `lng`.
+  Первая редакция 4b полагалась на старт в `Kernel::handle()` — до ядра дело не доходило,
+  сессия открывалась неявно внутри фабрики переводчика. `Session::start()` идемпотентен,
+  вызов в ядре оставлен как единственная точка старта для воркер-рантайма (там native storage
+  придётся менять — см. открытый вопрос 5). `Session::save()` перед ответом — без изменений.
+* ✅ Storage выбирает `SessionFactory` по рантайму: native под HTTP, `MockArraySessionStorage`
+  под `CONSOLE_MODE`. Иначе крон и консольные команды открывали настоящую сессию (через то же
+  чтение `lng`) и плодили файлы `sess_*`. Заодно сервис `Session` теперь зарегистрирован в
+  `system/config/services.php` явно, а не собирается автовайрингом с дефолтом аргумента.
+* ✅ `session_name('SESID')` перенесён в `SessionFactory`.
+* ✅ `Csrf` переписан: dot-notation (`_csrf._token`) заменена на вложенный массив
+  (`$_csrf` → `['_token' => ...]`), т.к. Symfony `AttributeBag` не поддерживает dot-notation.
+* ✅ Добавлен `Session::invalidate()` (сброс + смена id), логаут переведён на него: `clear()`
+  оставлял прежний идентификатор валидным.
+* ✅ Тесты переведены с прямых `$_SESSION` на API сессии (`MockArraySessionStorage`).
 * **Живые сессии инвалидируются**: данные существующих установок лежат в корне `$_SESSION`,
   после переключения читаться перестанут — все разлогинятся. Для мажорной версии приемлемо,
-  но это осознанное решение и строка в `CHANGELOG.md`, а не сюрприз при апгрейде.
+  но это осознанное решение и строка в `CHANGELOG.md`, а не сюрприз при апгрейде. ✅ Записано
+  в `CHANGELOG.md` вместе с потерей dot-notation в публичном API фасада.
 * Storage оставляем native, сменным его делаем только если понадобится (см. открытый вопрос 5).
 
 **Готово, когда**: фасад не упоминает `$_SESSION`, функциональный смоук-набор с авторизацией зелёный.
+✅ Фасад не упоминает `$_SESSION`. Verify (cs-check, phpstan, phpunit: 383 tests) — зелёный.
+Проверено вручную: в `CONSOLE_MODE` `session_status() === PHP_SESSION_NONE` и файлы сессий
+не создаются, в web-режиме сессия `SESID` стартует один раз на boot.
 
 ### — Этап 5. Request-scope в контейнере (M) — здесь решается long-running
 
@@ -1328,6 +1347,7 @@ php-quality) + гейт зелёные (383 теста: 352 unit + 31 functional
 | `Translator` | домены, регистрируемые из конструкторов контроллеров |
 | `User` / `System\Users\User` | текущий пользователь |
 | `Environment` | добавлено 2026-07-24: синглтон, кэширует `$ip`, `$ipViaProxy`, `$userAgent`, `$ipCount` — чистое per-request состояние. Плюс `di(Request::class)` прямо в конструкторе (`Environment.php:34`) |
+| `Session` | добавлено 2026-07-26 (этап 4b): фасад держит один экземпляр `Symfony\...\Session` со всеми бэгами. В воркере данные сессии одного посетителя уедут в следующий запрос — нужен `synthetic`/`reset()` **и** storage, переживающий закрытие заголовков (native не перезапускается после отправки headers) |
 
 Решение:
 

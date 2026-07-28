@@ -7,6 +7,7 @@ namespace Tests\Functional;
 use Johncms\Container\PSRContainerFactory;
 use Johncms\Http\Kernel;
 use Johncms\Http\Request;
+use Johncms\Http\Session;
 use PDO;
 use PDOException;
 use PHPUnit\Framework\TestCase;
@@ -14,7 +15,7 @@ use Psr\Container\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Harness for the functional suite (plan stage 3a): boots the application once and drives real
+ * Harness for the functional suite: boots the application once and drives real
  * requests through Kernel::handle().
  *
  * Two things to know before adding tests here:
@@ -26,8 +27,9 @@ use Symfony\Component\HttpFoundation\Response;
  * 2. Every shared service that takes Request in its constructor keeps the first request of the
  *    process — 145 of the 221 controllers, plus collaborators such as PaginationFactory. So the
  *    contract of this suite is one request per route per process, and assertions stay on statuses
- *    and structure rather than on request-specific content. Stage 5 makes the request scope
- *    explicit and brings the isolation test for two sequential handle() calls.
+ *    and structure rather than on request-specific content. Making the request scope explicit
+ *    in the container is what lifts that limitation, together with an isolation test for two
+ *    sequential handle() calls.
  */
 abstract class FunctionalTestCase extends TestCase
 {
@@ -39,9 +41,10 @@ abstract class FunctionalTestCase extends TestCase
     {
         $this->bootApplication();
 
-        // The console bootstrap does not start a session, and legacy code reads $_SESSION
-        // unconditionally. An array is enough: nothing here asserts on session persistence.
-        $_SESSION = [];
+        // The container is booted once per process, so the session facade is shared by every test
+        // in the class. Under CONSOLE_MODE it holds in-memory storage (SessionFactory), and
+        // clearing it keeps one test from seeing what another one wrote.
+        $this->container()->get(Session::class)->clear();
     }
 
     protected function handleRequest(
@@ -54,7 +57,7 @@ abstract class FunctionalTestCase extends TestCase
 
         // Legacy code still reads the superglobals directly — checkRedirect() through
         // pageNotFound(), UserStat, the admin-theme detection of RenderEngineFactory. Keep them in
-        // sync with the request under test until stage 5 routes all of it through Request.
+        // sync with the request under test until all of it goes through Request.
         $_SERVER['REQUEST_URI'] = $request->getRequestUri();
         $_SERVER['REQUEST_METHOD'] = $request->getMethod();
         $_GET = $request->query->all();

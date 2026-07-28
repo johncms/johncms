@@ -37,6 +37,8 @@ use Johncms\Sitemap\SitemapGenerator;
 use Johncms\Http\Environment;
 use Johncms\Http\Request;
 use Johncms\Http\RequestFactory;
+use Johncms\Http\Session;
+use Johncms\Http\SessionFactory;
 use Johncms\System\i18n\Translator;
 use Johncms\System\i18n\TranslatorServiceFactory;
 use Johncms\System\Users\UserFactory;
@@ -119,6 +121,9 @@ return static function (ContainerConfigurator $container): void {
     // Alias the HttpFoundation base class to the same instance so code type-hinting the base
     // class resolves to our Request wrapper.
     $services->alias(\Symfony\Component\HttpFoundation\Request::class, Request::class);
+    // The session storage depends on the runtime (native under HTTP, in-memory in the console),
+    // so the facade is built by a factory instead of being autowired from its constructor.
+    $services->set(Session::class)->factory(service(SessionFactory::class));
     $services->set(\PDO::class, PdoFactory::class)->factory(service(PdoFactory::class));
     $services->set(\Johncms\Users\User::class)->factory(service(\Johncms\Users\UserFactory::class));
     $services->set(\Johncms\Users\Repository\UserRepositoryInterface::class, \Johncms\Users\Repository\EloquentUserRepository::class);

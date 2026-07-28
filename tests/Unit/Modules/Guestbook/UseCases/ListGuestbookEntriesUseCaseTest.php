@@ -9,40 +9,38 @@ use Gettext\TranslatorFunctions;
 use HTMLPurifier;
 use Illuminate\Database\Eloquent\Collection;
 use Johncms\Config\ConfigRepository;
+use Johncms\Http\Session;
 use Johncms\Modules\Guestbook\Application\Access\GuestbookMode;
 use Johncms\Modules\Guestbook\Application\Services\GuestbookEntryTextFormatter;
 use Johncms\Modules\Guestbook\Application\UseCases\ListGuestbookEntriesUseCase;
 use Johncms\Modules\Guestbook\Domain\Models\GuestbookEntry;
 use Johncms\Modules\Guestbook\Domain\Repository\GuestbookEntryRepositoryInterface;
-use Johncms\Http\Session;
 use Johncms\Smilies\SmiliesRendererInterface;
 use Johncms\Users\User;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Simba77\EmbedMedia\Embed;
+use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 use Tests\Support\UserFactory;
 
 final class ListGuestbookEntriesUseCaseTest extends TestCase
 {
     private GuestbookEntryRepositoryInterface&MockObject $repository;
 
+    private Session $session;
+
     protected function setUp(): void
     {
-        $_SESSION = [];
         ConfigRepository::init([]);
         // rights_name дёргает d__() — нужен зарегистрированный переводчик (возвращает оригиналы)
         TranslatorFunctions::register(new Translator());
         $this->repository = $this->createMock(GuestbookEntryRepositoryInterface::class);
-    }
-
-    protected function tearDown(): void
-    {
-        $_SESSION = [];
+        $this->session = new Session(new MockArraySessionStorage());
     }
 
     public function testCountPassesAdminClubModeToRepository(): void
     {
-        $_SESSION['ga'] = 1;
+        $this->session->set('ga', 1);
 
         $this->repository->expects(self::once())->method('countEntries')->with(true)->willReturn(42);
 
@@ -135,7 +133,7 @@ final class ListGuestbookEntriesUseCaseTest extends TestCase
         return new ListGuestbookEntriesUseCase(
             $this->repository,
             $currentUser,
-            new GuestbookMode($currentUser, new Session()),
+            new GuestbookMode($currentUser, $this->session),
             $this->makeTextFormatter(),
         );
     }

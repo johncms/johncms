@@ -61,8 +61,12 @@ if (! defined('CONSOLE_MODE') || CONSOLE_MODE === false) {
     header('X-Powered-CMS: JohnCMS');
     header('X-CMS-Version: ' . CMS_VERSION);
 
-    session_name('SESID');
-    session_start();
+    // The session is started explicitly and before anything else touches the facade: reading a
+    // key would otherwise start it implicitly (the translator below looks up the 'lng' key), and
+    // the point where a session opens must not depend on resolution order. The session name is
+    // configured by SessionFactory. In a worker runtime this boot runs once — Kernel::handle()
+    // starts the session of every subsequent request.
+    $container->get(Johncms\Http\Session::class)->start();
 
     /** @var Environment $env */
     $env = $container->get(Environment::class);

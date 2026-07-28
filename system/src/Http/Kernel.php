@@ -37,10 +37,10 @@ use Throwable;
 
 /**
  * Turns a request into a response: route matching, the middleware pipeline, the controller and
- * the mapping of the HTTP control-flow exceptions (plan stage 3a).
+ * the mapping of the HTTP control-flow exceptions.
  *
  * Implements HttpKernelInterface without pulling in symfony/http-kernel's event stack — the
- * interface is what the symfony/runtime bridges to FrankenPHP and RoadRunner expect (stage 6),
+ * interface is what the symfony/runtime bridges to FrankenPHP and RoadRunner expect,
  * while routing and the pipeline stay the project's own MiddlewareDispatcher + ActionInvoker.
  *
  * TerminableInterface carries the post-response work (UserStat, the mail queue) — see terminate().
@@ -56,6 +56,7 @@ final readonly class Kernel implements HttpKernelInterface, TerminableInterface
         private ExceptionResponseFactory $exceptionResponses,
         private DebugDetailsPolicy $debugDetailsPolicy,
         private LoggerInterface $logger,
+        private Session $session,
     ) {
     }
 
@@ -73,7 +74,7 @@ final readonly class Kernel implements HttpKernelInterface, TerminableInterface
 
         if (! $request instanceof Request) {
             // Runtime bridges that build a plain HttpFoundation request (RoadRunner, Swoole) need
-            // an adapter rebuilding our subclass from the bags — that comes with stage 6.
+            // an adapter rebuilding our subclass from the bags, which does not exist yet.
             throw new LogicException(
                 sprintf('The kernel expects a %s, %s given.', Request::class, get_debug_type($request))
             );
@@ -81,19 +82,36 @@ final readonly class Kernel implements HttpKernelInterface, TerminableInterface
 
         $this->container->set(Request::class, $request);
 
+        // Under FPM the boot already started the session for this request, so this is a no-op —
+        // it is here to keep the per-request start in one place for the worker runtime, where the
+        // boot runs once and every cycle after the first arrives with the session closed by save()
+        // below. Native storage cannot be restarted once headers are sent, so a worker will also
+        // need a different storage in SessionFactory.
+        if ($this->sessionIsEnabled()) {
+            $this->session->start();
+        }
+
         $response = $catch ? $this->handleCaught($request) : $this->handleRaw($request);
 
         // The session must be closed before the response reaches the client, not after: send()
         // detaches the client connection (fastcgi_finish_request()) before terminate() runs, and
         // PHP otherwise keeps the session file locked until script shutdown — the next request
         // from the same visitor would then queue behind terminate()'s work (the mail batch).
-        // CONSOLE_MODE never starts a session, and the functional test harness may call handle()
-        // repeatedly without one either, hence the PHP_SESSION_ACTIVE guard.
-        if ((! defined('CONSOLE_MODE') || CONSOLE_MODE === false) && session_status() === PHP_SESSION_ACTIVE) {
-            session_write_close();
+        if ($this->sessionIsEnabled() && $this->session->isStarted()) {
+            $this->session->save();
         }
 
         return $response;
+    }
+
+    /**
+     * Console runs (cron, commands, the functional test harness) get in-memory session storage
+     * from SessionFactory: there is nothing to open or write there, so the kernel leaves the
+     * session alone.
+     */
+    private function sessionIsEnabled(): bool
+    {
+        return ! defined('CONSOLE_MODE') || CONSOLE_MODE === false;
     }
 
     private function handleCaught(Request $request): Response

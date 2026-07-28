@@ -34,28 +34,30 @@ class Csrf
 
     /**
      * Get the generated token
-     *
-     * @param string $token_id
-     * @return mixed
      */
-    public function getToken(string $token_id = self::DEFAULT_TOKEN_ID)
+    public function getToken(string $token_id = self::DEFAULT_TOKEN_ID): string
     {
-        $key = self::SESSION_NAMESPACE . '.' . $token_id;
-        if (empty($this->session->get($key))) {
-            $this->refreshToken($token_id);
-        }
+        // The tokens are kept as one nested array under a single key: the session facade stores
+        // flat keys and does not resolve dot notation.
+        $tokens = $this->session->get(self::SESSION_NAMESPACE, []);
 
-        return $this->session->get($key);
+        return empty($tokens[$token_id]) ? $this->refreshToken($token_id) : $tokens[$token_id];
     }
 
     /**
      * Refresh token
      *
-     * @param string $token_id
+     * @return string The freshly generated token
      */
-    public function refreshToken(string $token_id = self::DEFAULT_TOKEN_ID): void
+    public function refreshToken(string $token_id = self::DEFAULT_TOKEN_ID): string
     {
-        $this->session->set(self::SESSION_NAMESPACE . '.' . $token_id, $this->generateToken());
+        $token = $this->generateToken();
+
+        $tokens = $this->session->get(self::SESSION_NAMESPACE, []);
+        $tokens[$token_id] = $token;
+        $this->session->set(self::SESSION_NAMESPACE, $tokens);
+
+        return $token;
     }
 
     /**

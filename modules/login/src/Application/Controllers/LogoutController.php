@@ -34,7 +34,7 @@ final readonly class LogoutController
         }
 
         if ($this->request->hasBody('logout')) {
-            $this->session->clear();
+            $this->session->invalidate();
             $response = new RedirectResponse('/');
             $expire = time() - 3600;
             $response->headers->setCookie(Cookie::create('cuid', '', $expire, '/', null, false, false, false, null));

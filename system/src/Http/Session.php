@@ -12,69 +12,116 @@ declare(strict_types=1);
 
 namespace Johncms\Http;
 
-use Illuminate\Support\Arr;
+use Symfony\Component\HttpFoundation\Session\Session as SymfonySession;
+use Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface;
 
+/**
+ * Application-level session facade over Symfony's session.
+ *
+ * Keys are flat: dot notation (`a.b.c`) is not resolved, nested data is read and written as
+ * whole arrays (see Johncms\Security\Csrf).
+ *
+ * The storage is chosen by SessionFactory, not here. Reading any key starts the session when
+ * it is not started yet, which is why the web bootstrap starts it explicitly before anything
+ * else touches the facade — where a session opens must not depend on resolution order.
+ */
 class Session
 {
-    protected const FLASH_PREFIX = '_flash_';
+    private SymfonySession $symfonySession;
 
-    /**
-     * @param string $key
-     * @param mixed $value
-     */
-    public function flash(string $key, $value): void
+    public function __construct(SessionStorageInterface $storage)
     {
-        $_SESSION[self::FLASH_PREFIX . $key] = $value;
+        $this->symfonySession = new SymfonySession($storage);
     }
 
     /**
-     * @param string $key
-     * @return mixed|null
+     * Flash a value for the next request (single-read then delete).
      */
-    public function getFlash(string $key)
+    public function flash(string $key, mixed $value): void
     {
-        $value = $_SESSION[self::FLASH_PREFIX . $key] ?? null;
-        unset($_SESSION[self::FLASH_PREFIX . $key]);
-        return $value;
+        // The flash bag stores a list of messages per key. Wrapping in an array keeps array
+        // values intact — FlashBag::set() casts a bare value with (array), which would flatten
+        // an array payload into several messages.
+        $this->symfonySession->getFlashBag()->set($key, [$value]);
     }
 
     /**
-     * @param string $key
-     * @param mixed|null $default
-     * @return mixed
-     * @psalm-suppress NullReference
+     * Read and delete a flashed value.
      */
-    public function get(string $key, $default = null)
+    public function getFlash(string $key): mixed
     {
-        return Arr::get($_SESSION, $key, $default);
+        $messages = $this->symfonySession->getFlashBag()->get($key);
+
+        return $messages[0] ?? null;
     }
 
-    /**
-     * @param string $key
-     * @param mixed $value
-     * @psalm-suppress NullReference
-     */
-    public function set(string $key, $value): void
+    public function get(string $key, mixed $default = null): mixed
     {
-        Arr::set($_SESSION, $key, $value);
+        return $this->symfonySession->get($key, $default);
+    }
+
+    public function set(string $key, mixed $value): void
+    {
+        $this->symfonySession->set($key, $value);
     }
 
     public function has(string $key): bool
     {
-        return Arr::has($_SESSION, $key);
+        return $this->symfonySession->has($key);
     }
 
     /**
-     * @param array|string $key
-     * @psalm-suppress NullReference
+     * @param array<int, string>|string $key
      */
-    public function remove($key): void
+    public function remove(array|string $key): void
     {
-        Arr::forget($_SESSION, $key);
+        foreach ((array) $key as $item) {
+            $this->symfonySession->remove($item);
+        }
     }
 
+    /**
+     * Clear all session data (attributes + flash), keeping the session id.
+     */
     public function clear(): void
     {
-        $_SESSION = [];
+        $this->symfonySession->clear();
+        $this->symfonySession->getFlashBag()->clear();
+    }
+
+    /**
+     * Clear all session data and issue a new session id. Use this on logout: keeping the id
+     * would leave the pre-logout identifier valid for whoever else knows it (session fixation).
+     */
+    public function invalidate(): void
+    {
+        $this->clear();
+        $this->symfonySession->migrate(true);
+    }
+
+    /**
+     * Start the session. Idempotent: does nothing when the session is already started.
+     */
+    public function start(): void
+    {
+        if (! $this->symfonySession->isStarted()) {
+            $this->symfonySession->start();
+        }
+    }
+
+    /**
+     * Whether the session has been started.
+     */
+    public function isStarted(): bool
+    {
+        return $this->symfonySession->isStarted();
+    }
+
+    /**
+     * Write session data and close the session.
+     */
+    public function save(): void
+    {
+        $this->symfonySession->save();
     }
 }
