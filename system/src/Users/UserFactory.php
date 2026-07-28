@@ -14,44 +14,65 @@ namespace Johncms\Users;
 
 use Johncms\Http\Environment;
 use Johncms\Http\Request;
-use Psr\Container\ContainerInterface;
 
 class UserFactory
 {
-    /** @var Environment */
-    private $env;
-
-    /** @var Request */
-    private $request;
-
-    public function __invoke(ContainerInterface $container)
-    {
-        $this->env = $container->get(Environment::class);
-        $this->request = $container->get(Request::class);
-        return $this->getUserData();
+    public function __construct(
+        private readonly Environment $env,
+    ) {
     }
 
     /**
-     * @return User
+     * Builds the shared instance holding the current user: a guest, since the request it belongs
+     * to is not known at container build time. It is authenticate() that loads the visitor into
+     * it, once per request.
      */
-    protected function getUserData(): User
+    public function __invoke(): User
     {
-        /** @psalm-suppress PossiblyNullArgument */
-        $userPassword = md5((string) $this->request->cookies->getString('cups', ''));
-        $userId = $this->request->cookies->getInt('cuid', 0);
+        return new User();
+    }
 
-        if ($userId && $userPassword) {
-            return $this->authentication($userId, $userPassword);
+    /**
+     * Identifies the visitor of the given request by their cookies and loads them into the shared
+     * current-user instance.
+     */
+    public function authenticate(User $currentUser, Request $request): void
+    {
+        $this->hydrate($currentUser, $this->resolveUser($request));
+    }
+
+    protected function resolveUser(Request $request): User
+    {
+        $userId = $request->cookies->getInt('cuid', 0);
+
+        if ($userId !== 0) {
+            return $this->authentication($userId, md5($request->cookies->getString('cups', '')));
         }
 
         return new User();
     }
 
-    private function authentication(int $userId, string $userPassword): ?User
+    /**
+     * Replaces the state of the shared instance with the one of the visitor just identified.
+     *
+     * The instance itself must survive: the constructors of the controllers and of the services
+     * built from them hold a reference to it, so handing out a new object would leave them with
+     * the user of the request the container was built for.
+     */
+    private function hydrate(User $currentUser, User $visitor): void
     {
-        $user = (new User())->find($userId);
+        $currentUser->setRawAttributes($visitor->getAttributes(), true);
+        $currentUser->exists = $visitor->exists;
+        // Anything loaded for the previous visitor (the ip history, the notifications) belongs to
+        // them, and Eloquent would keep serving it from here as if it were the current user's.
+        $currentUser->setRelations([]);
+    }
 
-        if ($user) {
+    private function authentication(int $userId, string $userPassword): User
+    {
+        $user = User::query()->find($userId);
+
+        if ($user instanceof User) {
             if ($userPassword === $user->password && $this->checkPermit($user)) {
                 $this->ipHistory($user); // Фиксируем историю IP
                 return $user;

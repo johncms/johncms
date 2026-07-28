@@ -6,7 +6,7 @@ use Johncms\Modules\Modules;
 use Johncms\Security\BanIP;
 use Johncms\Http\Environment;
 use Johncms\System\i18n\Translator;
-use Johncms\System\Users\User;
+use Johncms\Users\CurrentUserAuthenticator;
 
 date_default_timezone_set('UTC');
 mb_internal_encoding('UTF-8');
@@ -79,6 +79,12 @@ if (! defined('CONSOLE_MODE') || CONSOLE_MODE === false) {
     new Johncms\System\Utility\Cleanup($db);
 }
 
+// Authenticates the visitor by their cookies and, as a side effect, runs the ban check and
+// records the IP history. Called before the translator, which picks the locale from the user
+// settings. In a worker runtime this covers the boot request only — Kernel::handle() then
+// authenticates the visitor of every subsequent request.
+$container->get(CurrentUserAuthenticator::class)->authenticate();
+
 // Register the system languages domain and folder
 $translator = di(Translator::class);
 $translator->addTranslationDomain('system', __DIR__ . '/locale');
@@ -87,8 +93,3 @@ $translator->defaultDomain('system');
 Gettext\TranslatorFunctions::register($translator);
 
 (new Modules())->registerAutoloader();
-
-// Resolving the current user authenticates the visitor by their cookies and, as a side effect,
-// runs the ban check and records the IP history. Kept here so that happens on every request
-// rather than on whichever service first asks for the user.
-$container->get(User::class);

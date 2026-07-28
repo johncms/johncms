@@ -51,9 +51,10 @@ abstract class FunctionalTestCase extends TestCase
         string $uri,
         string $method = 'GET',
         array $parameters = [],
-        array $server = []
+        array $server = [],
+        array $cookies = []
     ): Response {
-        $request = Request::create($uri, $method, $parameters, [], [], $server);
+        $request = Request::create($uri, $method, $parameters, $cookies, [], $server);
 
         // Legacy code still reads the superglobals directly — checkRedirect() through
         // pageNotFound(), UserStat, the admin-theme detection of RenderEngineFactory. Keep them in
@@ -62,6 +63,7 @@ abstract class FunctionalTestCase extends TestCase
         $_SERVER['REQUEST_METHOD'] = $request->getMethod();
         $_GET = $request->query->all();
         $_POST = $request->request->all();
+        $_COOKIE = $request->cookies->all();
 
         return $this->container()->get(Kernel::class)->handle($request);
     }

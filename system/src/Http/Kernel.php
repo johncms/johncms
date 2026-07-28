@@ -23,6 +23,7 @@ use Johncms\Router\MiddlewareDispatcher;
 use Johncms\Router\RouteMatchResult;
 use Johncms\Router\SymfonyRouteMatcher;
 use Johncms\System\Users\UserStat;
+use Johncms\Users\CurrentUserAuthenticator;
 use LogicException;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
@@ -61,6 +62,7 @@ final readonly class Kernel implements HttpKernelInterface, TerminableInterface
         private Session $session,
         private RequestStack $requestStack,
         private Environment $environment,
+        private CurrentUserAuthenticator $currentUserAuthenticator,
         /** @var iterable<ResetInterface> Shared services caching something that belongs to one request. */
         private iterable $resettableServices,
     ) {
@@ -110,6 +112,11 @@ final readonly class Kernel implements HttpKernelInterface, TerminableInterface
         if ($this->isWebRuntime()) {
             $this->session->start();
         }
+
+        // The visitor of this request is loaded into the shared current-user services. A no-op
+        // under FPM, where the boot already did it for this very request; in a worker it is what
+        // keeps the previous visitor from answering as the current one.
+        $this->currentUserAuthenticator->authenticate();
 
         try {
             $response = $catch ? $this->handleCaught($request) : $this->handleRaw($request);

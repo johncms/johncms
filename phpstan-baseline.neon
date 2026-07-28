@@ -3073,48 +3073,6 @@ parameters:
 			path: system/src/Users/User.php
 
 		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$failed_login\.$#'
-			identifier: property.notFound
-			count: 2
-			path: system/src/Users/UserFactory.php
-
-		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$password\.$#'
-			identifier: property.notFound
-			count: 1
-			path: system/src/Users/UserFactory.php
-
-		-
-			message: '#^Method Johncms\\Users\\UserFactory\:\:authentication\(\) never returns null so it can be removed from the return type\.$#'
-			identifier: return.unusedType
-			count: 1
-			path: system/src/Users/UserFactory.php
-
-		-
-			message: '#^Method Johncms\\Users\\UserFactory\:\:authentication\(\) should return Johncms\\Users\\User\|null but returns Illuminate\\Database\\Eloquent\\Model\.$#'
-			identifier: return.type
-			count: 1
-			path: system/src/Users/UserFactory.php
-
-		-
-			message: '#^Parameter \#1 \$user of method Johncms\\Users\\UserFactory\:\:checkPermit\(\) expects Johncms\\Users\\User, Illuminate\\Database\\Eloquent\\Model given\.$#'
-			identifier: argument.type
-			count: 1
-			path: system/src/Users/UserFactory.php
-
-		-
-			message: '#^Parameter \#1 \$user of method Johncms\\Users\\UserFactory\:\:ipHistory\(\) expects Johncms\\Users\\User, Illuminate\\Database\\Eloquent\\Model given\.$#'
-			identifier: argument.type
-			count: 1
-			path: system/src/Users/UserFactory.php
-
-		-
-			message: '#^Right side of && is always true\.$#'
-			identifier: booleanAnd.rightAlwaysTrue
-			count: 1
-			path: system/src/Users/UserFactory.php
-
-		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Collections\\Domain\\Models\\ContentCollectionSection\:\:\$child_sections_count\.$#'
 			identifier: property.notFound
 			count: 1

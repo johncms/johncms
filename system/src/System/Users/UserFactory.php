@@ -14,7 +14,7 @@ namespace Johncms\System\Users;
 
 use Johncms\Http\Environment;
 use Johncms\Http\Request;
-use Psr\Container\ContainerInterface;
+use PDO;
 
 /**
  * Class UserFactory
@@ -28,36 +28,40 @@ use Psr\Container\ContainerInterface;
  * @deprecated
  * @see \Johncms\Users\UserFactory
  */
-#[\AllowDynamicProperties]
 class UserFactory
 {
-    /**
-     * @var \PDO
-     */
-    private $db;
-
-    /** @var Environment */
-    private $env;
-
-    /** @var Request */
-    private $request;
-
-    public function __invoke(ContainerInterface $container)
-    {
-        $this->db = di(\PDO::class);
-        $this->env = di(Environment::class);
-        $this->request = di(Request::class);
-        return new User($this->getUserData());
+    public function __construct(
+        private readonly PDO $db,
+        private readonly Environment $env,
+    ) {
     }
 
     /**
-     * @return array
+     * Builds the shared instance holding the current user: a guest, since the request it belongs
+     * to is not known at container build time. It is authenticate() that loads the visitor into
+     * it, once per request.
      */
-    protected function getUserData()
+    public function __invoke(): User
     {
-        /** @psalm-suppress PossiblyNullArgument */
-        $userPassword = md5((string) $this->request->cookies->getString('cups', ''));
-        $userId = $this->request->cookies->getInt('cuid', 0);
+        return new User();
+    }
+
+    /**
+     * Identifies the visitor of the given request by their cookies and loads them into the shared
+     * current-user instance. Also runs the ban check and records the IP history.
+     */
+    public function authenticate(User $currentUser, Request $request): void
+    {
+        $currentUser->setProperties($this->getUserData($request));
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    protected function getUserData(Request $request): array
+    {
+        $userPassword = md5($request->cookies->getString('cups', ''));
+        $userId = $request->cookies->getInt('cuid', 0);
 
         if ($userId && $userPassword) {
             return $this->authentification($userId, $userPassword);
