@@ -53,19 +53,20 @@ final readonly class PhotoCommentsController
         $this->navChain->add(__('Photo'), '/album/photo/' . $context->photoId);
         $this->navChain->add(__('Comments'));
 
-        // Globals consumed by the legacy Comments class.
-        global $mod, $start;
+        // Display parameters of the legacy Comments class.
         $mod = $this->request->queryParam('mod', '');
         $page = max(1, $this->request->queryInt('page', 1));
-        $start = isset($_REQUEST['page'])
+        $start = $this->request->query->has('page')
             ? ($page - 1) * (int) $this->currentUser->config->kmess
-            : (isset($_GET['start']) ? abs((int) $_GET['start']) : 0);
+            : abs($this->request->queryInt('start', 0));
 
         $meta = new PageMeta(__('Comments'), $page);
 
         // Comments renders a complete page (including layout) internally, so capture and return as-is.
         ob_start();
         $comm = new Comments([
+            'mod'                 => $mod,
+            'start'               => $start,
             'comments_table'      => 'cms_album_comments',
             'object_table'        => 'cms_album_files',
             'script'              => '/album/photo/' . $img . '/comments',

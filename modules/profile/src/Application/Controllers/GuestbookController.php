@@ -47,13 +47,12 @@ final readonly class GuestbookController
         $this->navChain->add(__('Profile') . ': ' . $profileUser->name, '/profile/' . $profileUser->id);
         $this->navChain->add(__('Guestbook'));
 
-        // Set the globals required by the legacy Comments class
-        global $mod, $start;
+        // Display parameters of the legacy Comments class.
         $mod = $this->request->queryParam('mod', '');
         $page = max(1, $this->request->queryInt('page', 1));
-        $start = isset($_REQUEST['page'])
+        $start = $this->request->query->has('page')
             ? ($page - 1) * (int) $this->currentUser->config->kmess
-            : (isset($_GET['start']) ? abs((int) $_GET['start']) : 0);
+            : abs($this->request->queryInt('start', 0));
 
         // Reset the unread counter only when the owner simply views the guestbook (not during reply/edit/delete)
         if (! $mod) {
@@ -65,6 +64,8 @@ final readonly class GuestbookController
         // Comments renders a complete page (including layout) internally, so capture and return as-is.
         ob_start();
         new Comments([
+            'mod'                 => $mod,
+            'start'               => $start,
             'comments_table'      => 'cms_users_guestbook',
             'object_table'        => 'users',
             'script'              => '/profile/' . $profileUser->id . '/guestbook',

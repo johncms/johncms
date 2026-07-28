@@ -46,8 +46,7 @@ final readonly class DownloadCategoryController
 
         $canUpload = (bool) $category->field && $this->currentUser->isValid();
 
-        $old = time() - 259200;
-        $GLOBALS['old'] = $old;
+        $old = time() - FilePresenter::NEW_FILE_PERIOD;
 
         $totalNew = DownloadFile::query()
             ->where('type', 2)

@@ -122,7 +122,12 @@ class Comments
      */
     public function __construct($arg = [])
     {
-        global $mod, $start;
+        // The sub-action ('reply', 'edit', 'del') and the offset of the comment page. Both come
+        // from the calling controller, which reads them off the request. $start is interpolated
+        // into the LIMIT clause below, so the cast is what keeps that safe.
+        $mod = (string) ($arg['mod'] ?? '');
+        $start = max(0, (int) ($arg['start'] ?? 0));
+
         $container = PSRContainerFactory::getContainer();
         $this->smiliesRenderer = $container->get(SmiliesRendererInterface::class);
         $this->dateFormatter = $container->get(DateFormatterInterface::class);

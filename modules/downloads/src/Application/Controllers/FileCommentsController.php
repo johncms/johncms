@@ -116,19 +116,19 @@ final readonly class FileCommentsController
             : $file->rus_name;
         $documentTitle = htmlspecialchars($shortName) . ' — ' . __('Comments') . ' — ' . __('Downloads');
 
-        // Set globals required by the legacy Comments class
-        global $mod, $start;
         $mod = $this->request->queryParam('mod', '');
         $page = max(1, $this->request->queryInt('page', 1));
-        $start = isset($_REQUEST['page'])
+        $start = $this->request->query->has('page')
             ? ($page - 1) * (int) $this->currentUser->config->kmess
-            : (isset($_GET['start']) ? abs((int) $_GET['start']) : 0);
+            : abs($this->request->queryInt('start', 0));
 
         $meta = new PageMeta($documentTitle, $page);
 
         // Comments renders a complete page (including layout) internally, so capture and return as-is.
         ob_start();
         new Comments([
+            'mod'                 => $mod,
+            'start'               => $start,
             'object_comm_count'   => 'total',
             'comments_table'      => 'download__comments',
             'object_table'        => 'download__files',

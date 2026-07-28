@@ -73,17 +73,18 @@ final readonly class ArticleCommentsController
         $this->navChain->add($articleName, $articleUrl);
         $this->navChain->add(__('Comments'));
 
-        global $mod, $start;
         $mod = $this->request->queryParam('mod', '');
         $page = max(1, $this->request->queryInt('page', 1));
-        $start = isset($_REQUEST['page'])
+        $start = $this->request->query->has('page')
             ? ($page - 1) * (int) $this->currentUser->config->kmess
-            : (isset($_GET['start']) ? abs((int) $_GET['start']) : 0);
+            : abs($this->request->queryInt('start', 0));
 
         $meta = new PageMeta($documentTitle, $page);
 
         ob_start();
         $comments = new Comments([
+            'mod'            => $mod,
+            'start'          => $start,
             'comments_table' => 'cms_library_comments',
             'object_table'   => 'library_texts',
             'script'         => '/library/article/' . $id . '/comments',

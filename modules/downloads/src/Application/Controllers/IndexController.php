@@ -53,8 +53,7 @@ final readonly class IndexController
             'page_title' => $title,
         ]);
 
-        $old = time() - 259200;
-        $GLOBALS['old'] = $old;
+        $old = time() - FilePresenter::NEW_FILE_PERIOD;
 
         $totalNew = DownloadFile::query()
             ->where('type', 2)

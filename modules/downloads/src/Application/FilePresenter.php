@@ -11,6 +11,9 @@ use Johncms\Users\User;
 
 final class FilePresenter
 {
+    /** How long a file keeps the "new" mark, in seconds. */
+    public const NEW_FILE_PERIOD = 259200;
+
     private const EXTENSIONS = [
         'mp3'  => 8,
         'png'  => 5,
@@ -37,7 +40,7 @@ final class FilePresenter
 
     public function present(DownloadFile $file, bool $withRating = false): array
     {
-        $old = $GLOBALS['old'] ?? 0;
+        $old = time() - self::NEW_FILE_PERIOD;
         $config = config('johncms');
         $extension = pathinfo($file->name, PATHINFO_EXTENSION);
         $iconId = self::EXTENSIONS[$extension] ?? 9;
