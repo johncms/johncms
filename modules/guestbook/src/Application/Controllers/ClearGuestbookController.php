@@ -17,7 +17,6 @@ final readonly class ClearGuestbookController
 {
     public function __construct(
         private ControllerContext $context,
-        private Request $request,
         private Render $render,
         private Session $session,
         private GuestbookMode $mode,
@@ -26,18 +25,18 @@ final readonly class ClearGuestbookController
         $this->context->initModule('guestbook');
     }
 
-    public function __invoke(): string
+    public function __invoke(Request $request): string
     {
         $baseUrl = '/guestbook/';
 
-        if ($this->request->getMethod() === 'POST') {
-            $validator = new Validator(['csrf_token' => $this->request->body('csrf_token')], ['csrf_token' => ['Csrf']]);
+        if ($request->getMethod() === 'POST') {
+            $validator = new Validator(['csrf_token' => $request->body('csrf_token')], ['csrf_token' => ['Csrf']]);
             if (! $validator->isValid()) {
                 $this->session->flash('errors', $validator->getErrors());
                 redirect($baseUrl);
             }
 
-            $period = ClearGuestbookPeriod::tryFrom($this->request->bodyInt('cl'))
+            $period = ClearGuestbookPeriod::tryFrom($request->bodyInt('cl'))
                 ?? ClearGuestbookPeriod::OlderThanWeek;
 
             $this->clearUseCase->execute($this->mode->isAdminClub(), $period);

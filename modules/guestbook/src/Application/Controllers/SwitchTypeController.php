@@ -12,15 +12,14 @@ final readonly class SwitchTypeController
 {
     public function __construct(
         private ControllerContext $context,
-        private Request $request,
         private GuestbookMode $guestbookMode,
     ) {
         $this->context->initModule('guestbook');
     }
 
-    public function __invoke(): string
+    public function __invoke(Request $request): string
     {
-        $this->guestbookMode->switch($this->request);
+        $this->guestbookMode->switch($request);
         redirect('/guestbook/');
     }
 }

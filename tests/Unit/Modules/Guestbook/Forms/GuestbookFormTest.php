@@ -29,8 +29,8 @@ final class GuestbookFormTest extends TestCase
             'attached_files' => ['3', 7],
         ]);
 
-        $form = new GuestbookForm($request, UserFactory::make(), new EditorContentNormalizer());
-        $formData = $form->getFormData();
+        $form = new GuestbookForm(UserFactory::make(), new EditorContentNormalizer());
+        $formData = $form->getFormData($request);
 
         self::assertSame('John', $formData['name']);
         self::assertSame('Hello world', $formData['message']);
@@ -60,6 +60,6 @@ final class GuestbookFormTest extends TestCase
 
     private function makeForm(User $user): GuestbookForm
     {
-        return new GuestbookForm(new Request(), $user, new EditorContentNormalizer());
+        return new GuestbookForm($user, new EditorContentNormalizer());
     }
 }

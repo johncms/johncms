@@ -12,22 +12,21 @@ use Johncms\Users\User;
 class GuestbookForm
 {
     public function __construct(
-        private readonly Request $request,
         private readonly User $user,
         private readonly EditorContentNormalizer $editorContentNormalizer,
     ) {
     }
 
-    public function getFormData(): array
+    public function getFormData(Request $request): array
     {
         $form_data = [
-            'name'       => $this->request->body('name', ''),
-            'message'    => $this->editorContentNormalizer->trimEdgeEmptyBlocks($this->request->body('message', '')),
-            'csrf_token' => $this->request->body('csrf_token', ''),
-            'code'       => $this->request->body('code', ''),
+            'name'       => $request->body('name', ''),
+            'message'    => $this->editorContentNormalizer->trimEdgeEmptyBlocks($request->body('message', '')),
+            'csrf_token' => $request->body('csrf_token', ''),
+            'code'       => $request->body('code', ''),
         ];
         $form_data = array_map('trim', $form_data);
-        $form_data['attached_files'] = (array) $this->request->bodyInts('attached_files');
+        $form_data['attached_files'] = (array) $request->bodyInts('attached_files');
 
         return $form_data;
     }

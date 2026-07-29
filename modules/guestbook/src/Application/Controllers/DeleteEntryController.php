@@ -20,7 +20,6 @@ final readonly class DeleteEntryController
 {
     public function __construct(
         private ControllerContext $context,
-        private Request $request,
         private Render $render,
         private Session $session,
         private GetGuestbookEntryContextUseCase $contextUseCase,
@@ -30,22 +29,22 @@ final readonly class DeleteEntryController
         $this->context->initModule('guestbook');
     }
 
-    public function __invoke(): Response
+    public function __invoke(Request $request): Response
     {
         $baseUrl = '/guestbook/';
 
-        if ($this->request->getMethod() !== 'POST') {
-            $id = $this->request->queryInt('id');
+        if ($request->getMethod() !== 'POST') {
+            $id = $request->queryInt('id');
             return new Response($this->render->render('guestbook::confirm_delete', ['id' => $id]));
         }
 
-        $validator = new Validator(['csrf_token' => $this->request->body('csrf_token')], ['csrf_token' => ['Csrf']]);
+        $validator = new Validator(['csrf_token' => $request->body('csrf_token')], ['csrf_token' => ['Csrf']]);
         if (! $validator->isValid()) {
             $this->session->flash('errors', $validator->getErrors());
             redirect($baseUrl);
         }
 
-        $id = $this->request->bodyInt('id');
+        $id = $request->bodyInt('id');
 
         try {
             $entry = $this->contextUseCase->execute($id);

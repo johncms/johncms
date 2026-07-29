@@ -18,17 +18,16 @@ final readonly class UploadFileController
 {
     public function __construct(
         private ControllerContext $context,
-        private Request $request,
         private FileStorage $fileStorage,
         private UploadedFileMapper $uploadedFileMapper,
     ) {
         $this->context->initModule('guestbook');
     }
 
-    public function __invoke(): JsonResponse
+    public function __invoke(Request $request): JsonResponse
     {
         try {
-            $upload = $this->request->files->get('upload');
+            $upload = $request->files->get('upload');
             if (! $upload instanceof UploadedFile) {
                 return new JsonResponse(
                     [

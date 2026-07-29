@@ -29,7 +29,6 @@ final readonly class GuestbookController
         private ControllerContext $controllerContext,
         private Render $render,
         private NavChain $navChain,
-        private Request $request,
         private Session $session,
         private Environment $environment,
         private User $user,
@@ -45,7 +44,7 @@ final readonly class GuestbookController
         $this->controllerContext->initModule('guestbook');
     }
 
-    public function __invoke(): string
+    public function __invoke(Request $request): string
     {
         $pageTitle = $this->mode->isGuestbook() ? __('Guestbook') : __('Admin Club');
         $baseUrl = '/guestbook/';
@@ -65,8 +64,8 @@ final readonly class GuestbookController
 
         $errors = $this->session->getFlash('errors') ?? [];
 
-        if ($this->request->getMethod() === 'POST' && $this->access->canWrite()) {
-            $formData = $this->form->getFormData();
+        if ($request->getMethod() === 'POST' && $this->access->canWrite()) {
+            $formData = $this->form->getFormData($request);
             $validator = new Validator($formData, $this->form->getValidationRules());
             if ($validator->isValid()) {
                 $this->createEntry->execute(
@@ -88,7 +87,7 @@ final readonly class GuestbookController
 
         $pagination = $this->paginationFactory->create($this->guestbookEntries->count());
 
-        if ($this->request->getMethod() !== 'POST') {
+        if ($request->getMethod() !== 'POST') {
             $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
             if ($redirectUrl !== null) {
                 redirect($redirectUrl);
@@ -114,7 +113,7 @@ final readonly class GuestbookController
                 'canWrite'   => $this->access->canWrite(),
                 'canClear'   => $this->access->canClear(),
                 'errors'     => $errors,
-                'formData'   => $this->form->getFormData(),
+                'formData'   => $this->form->getFormData($request),
                 'captcha'    => $showCaptcha ? $this->captchaService->generate() : '',
                 'message'    => $this->session->getFlash('message'),
             ]

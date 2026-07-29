@@ -22,7 +22,6 @@ final readonly class ReplyController
 {
     public function __construct(
         private ControllerContext $context,
-        private Request $request,
         private Render $render,
         private Session $session,
         private EditorContentNormalizer $editorContentNormalizer,
@@ -34,11 +33,11 @@ final readonly class ReplyController
         $this->context->initModule('guestbook');
     }
 
-    public function __invoke(): Response
+    public function __invoke(Request $request): Response
     {
         $baseUrl = '/guestbook/';
 
-        $id = $this->request->queryInt('id');
+        $id = $request->queryInt('id');
         $errors = [];
         $this->render->addData(['title' => __('Reply'), 'page_title' => __('Reply')]);
 
@@ -63,11 +62,11 @@ final readonly class ReplyController
         }
 
         $text = $this->editorContentNormalizer->trimEdgeEmptyBlocks(
-            $this->request->body('message', (string) $entry->otvet)
+            $request->body('message', (string) $entry->otvet)
         );
-        $attachedFiles = (array) $this->request->bodyInts('attached_files');
+        $attachedFiles = (array) $request->bodyInts('attached_files');
 
-        if ($this->request->getMethod() === 'POST') {
+        if ($request->getMethod() === 'POST') {
             $rules = [
                 'message'    => [
                     'NotEmpty',
@@ -81,7 +80,7 @@ final readonly class ReplyController
             $validator = new Validator(
                 [
                     'message'    => $text,
-                    'csrf_token' => $this->request->body('csrf_token', ''),
+                    'csrf_token' => $request->body('csrf_token', ''),
                 ],
                 $rules
             );
