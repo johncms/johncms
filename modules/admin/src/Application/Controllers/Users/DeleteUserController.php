@@ -20,7 +20,6 @@ final readonly class DeleteUserController
     public function __construct(
         private AdminControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private GetUserDeletionContextUseCase $getContext,
         private DeleteUserUseCase $deleteUser,
@@ -55,12 +54,12 @@ final readonly class DeleteUserController
         );
     }
 
-    public function delete(int $id): string
+    public function delete(Request $request, int $id): string
     {
         $title = __('Delete user');
         $this->navChain->add($title);
 
-        if (! $this->isCsrfValid()) {
+        if (! $this->isCsrfValid($request)) {
             return $this->renderError($title, __('Wrong data'));
         }
 
@@ -72,8 +71,8 @@ final readonly class DeleteUserController
 
         $this->deleteUser->execute(
             $id,
-            $this->request->hasBody('comments'),
-            $this->request->hasBody('forum'),
+            $request->hasBody('comments'),
+            $request->hasBody('forum'),
         );
 
         return $this->render->render(
@@ -96,10 +95,10 @@ final readonly class DeleteUserController
         };
     }
 
-    private function isCsrfValid(): bool
+    private function isCsrfValid(Request $request): bool
     {
         $validator = new Validator(
-            ['csrf_token' => $this->request->body('csrf_token', '')],
+            ['csrf_token' => $request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

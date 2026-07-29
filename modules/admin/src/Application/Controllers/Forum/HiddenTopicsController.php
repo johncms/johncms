@@ -23,7 +23,6 @@ final readonly class HiddenTopicsController
     public function __construct(
         private AdminControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private User $currentUser,
         private ManageHiddenForumUseCase $manageHidden,
@@ -34,9 +33,9 @@ final readonly class HiddenTopicsController
         $this->controllerContext->initModule('admin');
     }
 
-    public function index(): string
+    public function index(Request $request): string
     {
-        [$userId, $sectionId, $filterLink, $filteredBy] = $this->filters();
+        [$userId, $sectionId, $filterLink, $filteredBy] = $this->filters($request);
 
         $pagination = $this->paginationFactory->create($this->manageHidden->countTopics($userId, $sectionId));
 
@@ -70,13 +69,13 @@ final readonly class HiddenTopicsController
         ]);
     }
 
-    public function deleteAll(): string
+    public function deleteAll(Request $request): string
     {
-        if (! $this->isCsrfValid() || $this->currentUser->rights !== 9) {
+        if (! $this->isCsrfValid($request) || $this->currentUser->rights !== 9) {
             redirect(self::URL);
         }
 
-        [$userId, $sectionId] = $this->filters();
+        [$userId, $sectionId] = $this->filters($request);
         $this->manageHidden->purgeTopics($userId, $sectionId);
 
         redirect(self::URL);
@@ -85,14 +84,14 @@ final readonly class HiddenTopicsController
     /**
      * @return array{0: int|null, 1: int|null, 2: string, 3: string|null}
      */
-    private function filters(): array
+    private function filters(Request $request): array
     {
-        $userId = filter_var($this->request->queryParam('usort'), FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
+        $userId = filter_var($request->queryParam('usort'), FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
         if ($userId !== null) {
             return [abs((int) $userId), null, '?usort=' . abs((int) $userId), __('by author')];
         }
 
-        $sectionId = filter_var($this->request->queryParam('rsort'), FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
+        $sectionId = filter_var($request->queryParam('rsort'), FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
         if ($sectionId !== null) {
             return [null, abs((int) $sectionId), '?rsort=' . abs((int) $sectionId), __('by section')];
         }
@@ -100,10 +99,10 @@ final readonly class HiddenTopicsController
         return [null, null, '', null];
     }
 
-    private function isCsrfValid(): bool
+    private function isCsrfValid(Request $request): bool
     {
         $validator = new Validator(
-            ['csrf_token' => $this->request->body('csrf_token', '')],
+            ['csrf_token' => $request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

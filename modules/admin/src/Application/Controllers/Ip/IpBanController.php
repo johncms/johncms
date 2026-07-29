@@ -28,7 +28,6 @@ final readonly class IpBanController
     public function __construct(
         private AdminControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private Environment $environment,
         private NavChain $navChain,
         private User $currentUser,
@@ -86,17 +85,17 @@ final readonly class IpBanController
         ]);
     }
 
-    public function prepare(): string
+    public function prepare(Request $request): string
     {
-        if (! $this->isCsrfValid()) {
+        if (! $this->isCsrfValid($request)) {
             return $this->newForm(__('Wrong data'));
         }
 
-        $term = $this->request->bodyInt('term', 1);
-        $url = trim($this->request->body('url', ''));
-        $reason = trim($this->request->body('reason', ''));
+        $term = $request->bodyInt('term', 1);
+        $url = trim($request->body('url', ''));
+        $reason = trim($request->body('reason', ''));
 
-        $result = $this->prepareIpBan->execute($this->request->body('ip', ''), $this->environment->getClientInfo());
+        $result = $this->prepareIpBan->execute($request->body('ip', ''), $this->environment->getClientInfo());
 
         if ($result->hasErrors()) {
             return $this->newForm(implode('<br>', $result->errors));
@@ -109,14 +108,14 @@ final readonly class IpBanController
         return $this->renderConfirm($result->ip1, $result->ip2, $result->mode, $term, $url, $reason);
     }
 
-    public function store(): string
+    public function store(Request $request): string
     {
-        if (! $this->isCsrfValid()) {
+        if (! $this->isCsrfValid($request)) {
             return $this->newForm(__('Wrong data'));
         }
 
-        $ip1 = $this->request->bodyInt('ip1');
-        $ip2 = $this->request->bodyInt('ip2');
+        $ip1 = $request->bodyInt('ip1');
+        $ip2 = $request->bodyInt('ip2');
         if ($ip1 <= 0 || $ip2 <= 0) {
             return $this->newForm(__('Invalid IP'));
         }
@@ -124,10 +123,10 @@ final readonly class IpBanController
         $this->storeIpBan->execute(
             $ip1,
             $ip2,
-            $this->request->bodyInt('term', 1),
-            trim($this->request->body('url', '')),
+            $request->bodyInt('term', 1),
+            trim($request->body('url', '')),
             $this->currentUser->name,
-            trim($this->request->body('reason', '')),
+            trim($request->body('reason', '')),
         );
 
         redirect(self::URL);
@@ -145,13 +144,13 @@ final readonly class IpBanController
         ]);
     }
 
-    public function search(): string
+    public function search(Request $request): string
     {
-        if (! $this->isCsrfValid()) {
+        if (! $this->isCsrfValid($request)) {
             return $this->error(__('Wrong data'));
         }
 
-        $ip = ip2long(trim($this->request->body('ip', '')));
+        $ip = ip2long(trim($request->body('ip', '')));
         if ($ip === false) {
             return $this->error(__('Invalid IP'));
         }
@@ -191,9 +190,9 @@ final readonly class IpBanController
         ]);
     }
 
-    public function delete(int $id): string
+    public function delete(Request $request, int $id): string
     {
-        if ($this->isCsrfValid()) {
+        if ($this->isCsrfValid($request)) {
             $this->manageIpBan->delete($id);
         }
 
@@ -214,9 +213,9 @@ final readonly class IpBanController
         ]);
     }
 
-    public function clear(): string
+    public function clear(Request $request): string
     {
-        if ($this->isCsrfValid()) {
+        if ($this->isCsrfValid($request)) {
             $this->manageIpBan->clearAll();
         }
 
@@ -320,10 +319,10 @@ final readonly class IpBanController
         ];
     }
 
-    private function isCsrfValid(): bool
+    private function isCsrfValid(Request $request): bool
     {
         $validator = new Validator(
-            ['csrf_token' => $this->request->body('csrf_token', '')],
+            ['csrf_token' => $request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

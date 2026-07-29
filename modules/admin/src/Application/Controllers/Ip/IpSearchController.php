@@ -20,7 +20,6 @@ final readonly class IpSearchController
     public function __construct(
         private AdminControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private SearchUsersByIpUseCase $searchUsersByIpUseCase,
         private AdminUserRowMapper $rowMapper,
@@ -30,13 +29,13 @@ final readonly class IpSearchController
         $this->controllerContext->initModule('admin');
     }
 
-    public function __invoke(?string $mode = null): string
+    public function __invoke(Request $request, ?string $mode = null): string
     {
         $searchMode = $mode === 'history' ? IpSearchMode::HISTORY : IpSearchMode::ACTUAL;
 
-        $search = (string) (filter_var($this->request->queryParam('ip'), FILTER_VALIDATE_IP) ?: '');
+        $search = (string) (filter_var($request->queryParam('ip'), FILTER_VALIDATE_IP) ?: '');
         if ($search === '') {
-            $search = trim($this->request->queryParam('search', ''));
+            $search = trim($request->queryParam('search', ''));
         }
 
         $pagination = $this->paginationFactory->create($this->searchUsersByIpUseCase->count($search, $searchMode));

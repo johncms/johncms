@@ -19,7 +19,6 @@ final readonly class AmnestyController
     public function __construct(
         private AdminControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private ApplyAmnestyUseCase $applyAmnesty,
         private Session $session,
@@ -32,13 +31,13 @@ final readonly class AmnestyController
         return $this->renderForm();
     }
 
-    public function apply(): string
+    public function apply(Request $request): string
     {
-        if (! $this->isCsrfValid()) {
+        if (! $this->isCsrfValid($request)) {
             return $this->renderForm(__('Wrong data'));
         }
 
-        $clearDatabase = $this->request->bodyInt('term') === 1;
+        $clearDatabase = $request->bodyInt('term') === 1;
         $this->applyAmnesty->execute($clearDatabase);
 
         $this->session->flash('success_message', $clearDatabase
@@ -47,10 +46,10 @@ final readonly class AmnestyController
         redirect('/admin/bans');
     }
 
-    private function isCsrfValid(): bool
+    private function isCsrfValid(Request $request): bool
     {
         $validator = new Validator(
-            ['csrf_token' => $this->request->body('csrf_token', '')],
+            ['csrf_token' => $request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

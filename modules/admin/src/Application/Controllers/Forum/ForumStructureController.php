@@ -24,7 +24,6 @@ final readonly class ForumStructureController
     public function __construct(
         private AdminControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private ForumSectionTreeService $sectionTree,
         private User $currentUser,
@@ -36,9 +35,9 @@ final readonly class ForumStructureController
         $this->controllerContext->initModule('admin');
     }
 
-    public function structure(): string
+    public function structure(Request $request): string
     {
-        $parentId = $this->request->queryInt('id');
+        $parentId = $request->queryInt('id');
 
         if ($parentId > 0) {
             $current = $this->repository->find($parentId);
@@ -75,9 +74,9 @@ final readonly class ForumStructureController
         ]);
     }
 
-    public function addForm(?string $error = null): string
+    public function addForm(Request $request, ?string $error = null): string
     {
-        $parentId = $this->request->queryInt('parent');
+        $parentId = $request->queryInt('parent');
         $parentName = '';
         if ($parentId > 0) {
             $parent = $this->repository->find($parentId);
@@ -102,15 +101,15 @@ final readonly class ForumStructureController
         ]);
     }
 
-    public function add(): string
+    public function add(Request $request): string
     {
-        if (! $this->isCsrfValid()) {
-            return $this->addForm(__('Wrong data'));
+        if (! $this->isCsrfValid($request)) {
+            return $this->addForm($request, __('Wrong data'));
         }
 
-        $parentId = $this->request->queryInt('parent');
-        $name = trim($this->request->body('name', ''));
-        $description = trim($this->request->body('desc', ''));
+        $parentId = $request->queryInt('parent');
+        $name = trim($request->body('name', ''));
+        $description = trim($request->body('desc', ''));
 
         $errors = [];
         if ($name === '') {
@@ -122,15 +121,15 @@ final readonly class ForumStructureController
             $errors[] = __('Description should be at least 2 characters in length');
         }
         if ($errors !== []) {
-            return $this->addForm(implode('<br>', $errors));
+            return $this->addForm($request, implode('<br>', $errors));
         }
 
         $this->addSection->execute(
             $parentId,
             $name,
             $description,
-            abs($this->request->bodyInt('allow')),
-            $this->request->bodyInt('section_type'),
+            abs($request->bodyInt('allow')),
+            $request->bodyInt('section_type'),
         );
 
         redirect(self::URL . ($parentId ? '?id=' . $parentId : ''));
@@ -146,16 +145,16 @@ final readonly class ForumStructureController
         return $this->renderEditForm($section, $this->fieldsFromSection($section), []);
     }
 
-    public function edit(int $id): string
+    public function edit(Request $request, int $id): string
     {
         $section = $this->repository->find($id);
         if ($section === null) {
             redirect(self::URL);
         }
 
-        $fields = $this->fieldsFromRequest($section);
+        $fields = $this->fieldsFromRequest($request, $section);
         $validator = new Validator(
-            ['name' => $fields['name'], 'csrf_token' => $this->request->body('csrf_token', '')],
+            ['name' => $fields['name'], 'csrf_token' => $request->body('csrf_token', '')],
             ['name' => ['NotEmpty', 'StringLength' => ['min' => 2, 'max' => 150]], 'csrf_token' => ['Csrf']]
         );
 
@@ -174,7 +173,7 @@ final readonly class ForumStructureController
         return $this->renderEditForm($section, $fields, $errors);
     }
 
-    public function deleteConfirm(int $id): string
+    public function deleteConfirm(Request $request, int $id): string
     {
         $section = $this->repository->find($id);
         if ($section === null) {
@@ -208,7 +207,7 @@ final readonly class ForumStructureController
             ]);
         }
 
-        $ref = $this->request->queryInt('cat') ?: (int) $section->parent;
+        $ref = $request->queryInt('cat') ?: (int) $section->parent;
 
         return $this->render->render('admin::forum/del_confirm_move_topics', [
             'id'          => $id,
@@ -220,9 +219,9 @@ final readonly class ForumStructureController
         ]);
     }
 
-    public function delete(int $id): string
+    public function delete(Request $request, int $id): string
     {
-        if (! $this->isCsrfValid()) {
+        if (! $this->isCsrfValid($request)) {
             return $this->error(__('Wrong data'));
         }
 
@@ -243,7 +242,7 @@ final readonly class ForumStructureController
         }
 
         if (! $isTopicSection) {
-            $target = $this->request->bodyInt('category');
+            $target = $request->bodyInt('category');
             if ($target <= 0 || $target === $id || $this->repository->find($target) === null) {
                 return $this->error(__('Wrong data'));
             }
@@ -251,7 +250,7 @@ final readonly class ForumStructureController
             redirect(self::URL);
         }
 
-        if ($this->request->hasBody('delete')) {
+        if ($request->hasBody('delete')) {
             if ($this->currentUser->rights !== 9) {
                 return $this->error(__('Access denied'));
             }
@@ -261,7 +260,7 @@ final readonly class ForumStructureController
             redirect(self::URL . ($parent ? '?id=' . $parent : ''));
         }
 
-        $target = $this->request->bodyInt('subcat');
+        $target = $request->bodyInt('subcat');
         $targetSection = $this->repository->find($target);
         if ($target <= 0 || $target === $id || $targetSection === null || (int) $targetSection->section_type !== 1) {
             return $this->error(__('Wrong data'));
@@ -315,17 +314,17 @@ final readonly class ForumStructureController
     /**
      * @return array<string, mixed>
      */
-    private function fieldsFromRequest(ForumSection $section): array
+    private function fieldsFromRequest(Request $request, ForumSection $section): array
     {
         return [
-            'name'             => trim($this->request->body('name', (string) $section->name)),
-            'description'      => trim($this->request->body('description', (string) $section->description)),
-            'sort'             => $this->request->bodyInt('sort', $section->sort ?? 100),
-            'section_type'     => $this->request->bodyInt('section_type', (int) ($section->section_type ?? 0)),
-            'parent'           => $this->request->bodyInt('parent', (int) ($section->parent ?? 0)),
-            'access'           => $this->request->bodyInt('access', (int) ($section->access ?? 0)),
-            'meta_description' => trim($this->request->body('meta_description', $section->meta_description ?? '')),
-            'meta_keywords'    => trim($this->request->body('meta_keywords', $section->meta_keywords ?? '')),
+            'name'             => trim($request->body('name', (string) $section->name)),
+            'description'      => trim($request->body('description', (string) $section->description)),
+            'sort'             => $request->bodyInt('sort', $section->sort ?? 100),
+            'section_type'     => $request->bodyInt('section_type', (int) ($section->section_type ?? 0)),
+            'parent'           => $request->bodyInt('parent', (int) ($section->parent ?? 0)),
+            'access'           => $request->bodyInt('access', (int) ($section->access ?? 0)),
+            'meta_description' => trim($request->body('meta_description', $section->meta_description ?? '')),
+            'meta_keywords'    => trim($request->body('meta_keywords', $section->meta_keywords ?? '')),
         ];
     }
 
@@ -367,10 +366,10 @@ final readonly class ForumStructureController
         ];
     }
 
-    private function isCsrfValid(): bool
+    private function isCsrfValid(Request $request): bool
     {
         $validator = new Validator(
-            ['csrf_token' => $this->request->body('csrf_token', '')],
+            ['csrf_token' => $request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

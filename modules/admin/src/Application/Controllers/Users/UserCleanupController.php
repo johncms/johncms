@@ -20,7 +20,6 @@ final readonly class UserCleanupController
     public function __construct(
         private AdminControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private InactiveUsersRepositoryInterface $inactiveUsers,
         private CleanupInactiveUsersUseCase $cleanupInactiveUsers,
@@ -34,9 +33,9 @@ final readonly class UserCleanupController
         return $this->renderConfirm();
     }
 
-    public function clean(): string
+    public function clean(Request $request): string
     {
-        if (! $this->isCsrfValid()) {
+        if (! $this->isCsrfValid($request)) {
             return $this->renderConfirm(__('Wrong data'));
         }
 
@@ -45,10 +44,10 @@ final readonly class UserCleanupController
         redirect(self::URL);
     }
 
-    private function isCsrfValid(): bool
+    private function isCsrfValid(Request $request): bool
     {
         $validator = new Validator(
-            ['csrf_token' => $this->request->body('csrf_token', '')],
+            ['csrf_token' => $request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

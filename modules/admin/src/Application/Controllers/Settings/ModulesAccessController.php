@@ -21,7 +21,6 @@ final readonly class ModulesAccessController
     public function __construct(
         private AdminControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private UpdateModulesAccessUseCase $updateModulesAccessUseCase,
         private Session $session,
@@ -34,14 +33,14 @@ final readonly class ModulesAccessController
         return $this->renderForm();
     }
 
-    public function save(): string
+    public function save(Request $request): string
     {
-        if (! $this->isCsrfValid()) {
+        if (! $this->isCsrfValid($request)) {
             return $this->renderForm(__('Wrong data'));
         }
 
         try {
-            $this->updateModulesAccessUseCase->execute($this->buildDto());
+            $this->updateModulesAccessUseCase->execute($this->buildDto($request));
         } catch (ConfigWriteException) {
             return $this->renderForm(__('ERROR: Can not write file `system.local.php`'));
         }
@@ -50,24 +49,24 @@ final readonly class ModulesAccessController
         redirect(self::URL);
     }
 
-    private function buildDto(): ModulesAccessDTO
+    private function buildDto(Request $request): ModulesAccessDTO
     {
         return new ModulesAccessDTO(
-            registration: $this->request->bodyInt('reg'),
-            forum: $this->request->bodyInt('forum'),
-            guestbook: $this->request->bodyInt('guest'),
-            library: $this->request->bodyInt('lib'),
-            libraryComments: (bool) $this->request->bodyInt('libcomm'),
-            downloads: $this->request->bodyInt('down'),
-            downloadsComments: (bool) $this->request->bodyInt('downcomm'),
-            community: $this->request->bodyInt('active'),
+            registration: $request->bodyInt('reg'),
+            forum: $request->bodyInt('forum'),
+            guestbook: $request->bodyInt('guest'),
+            library: $request->bodyInt('lib'),
+            libraryComments: (bool) $request->bodyInt('libcomm'),
+            downloads: $request->bodyInt('down'),
+            downloadsComments: (bool) $request->bodyInt('downcomm'),
+            community: $request->bodyInt('active'),
         );
     }
 
-    private function isCsrfValid(): bool
+    private function isCsrfValid(Request $request): bool
     {
         $validator = new Validator(
-            ['csrf_token' => $this->request->body('csrf_token', '')],
+            ['csrf_token' => $request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

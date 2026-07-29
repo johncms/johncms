@@ -27,7 +27,6 @@ final readonly class AdsController
     public function __construct(
         private AdminControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private GetAdListUseCase $getList,
         private SaveAdUseCase $saveAd,
@@ -40,9 +39,9 @@ final readonly class AdsController
         $this->controllerContext->initModule('admin');
     }
 
-    public function index(): string
+    public function index(Request $request): string
     {
-        $type = $this->clampType($this->request->queryInt('type'));
+        $type = $this->clampType($request->queryInt('type'));
 
         $pagination = $this->paginationFactory->create($this->getList->count($type));
 
@@ -86,14 +85,14 @@ final readonly class AdsController
         return $this->renderForm($id, $this->fieldsFromAd($ad));
     }
 
-    public function store(): string
+    public function store(Request $request): string
     {
-        if (! $this->isCsrfValid()) {
+        if (! $this->isCsrfValid($request)) {
             return $this->error(__('Wrong data'));
         }
 
-        $id = $this->request->bodyInt('id') ?: null;
-        $fields = $this->fieldsFromRequest();
+        $id = $request->bodyInt('id') ?: null;
+        $fields = $this->fieldsFromRequest($request);
         $errors = $this->validate($fields);
 
         if ($errors !== []) {
@@ -106,20 +105,20 @@ final readonly class AdsController
         redirect(self::URL . '?type=' . $fields['type']);
     }
 
-    public function up(int $id): string
+    public function up(Request $request, int $id): string
     {
-        return $this->reorder($id, 'up');
+        return $this->reorder($request, $id, 'up');
     }
 
-    public function down(int $id): string
+    public function down(Request $request, int $id): string
     {
-        return $this->reorder($id, 'down');
+        return $this->reorder($request, $id, 'down');
     }
 
-    public function toggle(int $id): string
+    public function toggle(Request $request, int $id): string
     {
         $type = $this->manageAd->find($id)?->type ?? 0;
-        if ($this->isCsrfValid()) {
+        if ($this->isCsrfValid($request)) {
             $this->manageAd->toggle($id);
         }
 
@@ -145,10 +144,10 @@ final readonly class AdsController
         ]);
     }
 
-    public function delete(int $id): string
+    public function delete(Request $request, int $id): string
     {
         $type = $this->manageAd->find($id)?->type ?? 0;
-        if ($this->isCsrfValid()) {
+        if ($this->isCsrfValid($request)) {
             $this->manageAd->delete($id);
         }
 
@@ -168,19 +167,19 @@ final readonly class AdsController
         ]);
     }
 
-    public function clear(): string
+    public function clear(Request $request): string
     {
-        if ($this->isCsrfValid()) {
+        if ($this->isCsrfValid($request)) {
             $this->manageAd->deleteInactive();
         }
 
         redirect(self::URL);
     }
 
-    private function reorder(int $id, string $direction): string
+    private function reorder(Request $request, int $id, string $direction): string
     {
         $type = $this->manageAd->find($id)?->type ?? 0;
-        if ($this->isCsrfValid()) {
+        if ($this->isCsrfValid($request)) {
             $direction === 'up' ? $this->manageAd->moveUp($id) : $this->manageAd->moveDown($id);
         }
 
@@ -214,21 +213,21 @@ final readonly class AdsController
     /**
      * @return array<string, mixed>
      */
-    private function fieldsFromRequest(): array
+    private function fieldsFromRequest(Request $request): array
     {
         return [
-            'link'       => trim($this->request->body('link', '')),
-            'name'       => trim($this->request->body('name', '')),
-            'color'      => mb_substr(trim($this->request->body('color', '')), 0, 6),
-            'count_link' => abs($this->request->bodyInt('count')),
-            'day'        => abs($this->request->bodyInt('day')),
-            'view'       => abs($this->request->bodyInt('view')),
-            'type'       => $this->clampType($this->request->bodyInt('type')),
-            'layout'     => abs($this->request->bodyInt('layout')),
-            'show'       => $this->request->hasBody('show') ? 1 : 0,
-            'bold'       => $this->request->hasBody('bold') ? 1 : 0,
-            'italic'     => $this->request->hasBody('italic') ? 1 : 0,
-            'underline'  => $this->request->hasBody('underline') ? 1 : 0,
+            'link'       => trim($request->body('link', '')),
+            'name'       => trim($request->body('name', '')),
+            'color'      => mb_substr(trim($request->body('color', '')), 0, 6),
+            'count_link' => abs($request->bodyInt('count')),
+            'day'        => abs($request->bodyInt('day')),
+            'view'       => abs($request->bodyInt('view')),
+            'type'       => $this->clampType($request->bodyInt('type')),
+            'layout'     => abs($request->bodyInt('layout')),
+            'show'       => $request->hasBody('show') ? 1 : 0,
+            'bold'       => $request->hasBody('bold') ? 1 : 0,
+            'italic'     => $request->hasBody('italic') ? 1 : 0,
+            'underline'  => $request->hasBody('underline') ? 1 : 0,
         ];
     }
 
@@ -357,10 +356,10 @@ final readonly class AdsController
         ];
     }
 
-    private function isCsrfValid(): bool
+    private function isCsrfValid(Request $request): bool
     {
         $validator = new Validator(
-            ['csrf_token' => $this->request->body('csrf_token', '')],
+            ['csrf_token' => $request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

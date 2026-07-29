@@ -26,7 +26,7 @@ final readonly class UsersController
         $this->controllerContext->initModule('admin');
     }
 
-    public function login(User $user, Request $request): Response
+    public function login(Request $request, User $user): Response
     {
         if ($user->isValid()) {
             redirect('/admin/');

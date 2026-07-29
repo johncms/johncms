@@ -25,7 +25,6 @@ final readonly class MaintenanceTasksController
     public function __construct(
         private AdminControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private AdminTaskRegistry $registry,
         private GetMaintenanceTasksUseCase $getTasks,
@@ -41,13 +40,13 @@ final readonly class MaintenanceTasksController
         return $this->renderList();
     }
 
-    public function run(): string
+    public function run(Request $request): string
     {
-        if (! $this->isCsrfValid()) {
+        if (! $this->isCsrfValid($request)) {
             return $this->renderList(__('Wrong data'));
         }
 
-        $commandName = $this->request->body('command', '');
+        $commandName = $request->body('command', '');
         $task = $this->registry->find($commandName);
         if ($task === null) {
             return $this->renderList(__('Wrong data'));
@@ -72,10 +71,10 @@ final readonly class MaintenanceTasksController
         redirect(self::URL);
     }
 
-    private function isCsrfValid(): bool
+    private function isCsrfValid(Request $request): bool
     {
         $validator = new Validator(
-            ['csrf_token' => $this->request->body('csrf_token', '')],
+            ['csrf_token' => $request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

@@ -21,7 +21,6 @@ final readonly class AntifloodSettingsController
     public function __construct(
         private AdminControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private UpdateAntifloodSettingsUseCase $updateAntifloodSettingsUseCase,
         private Session $session,
@@ -34,14 +33,14 @@ final readonly class AntifloodSettingsController
         return $this->renderForm();
     }
 
-    public function save(): string
+    public function save(Request $request): string
     {
-        if (! $this->isCsrfValid()) {
+        if (! $this->isCsrfValid($request)) {
             return $this->renderForm(__('Wrong data'));
         }
 
         try {
-            $this->updateAntifloodSettingsUseCase->execute($this->buildDto());
+            $this->updateAntifloodSettingsUseCase->execute($this->buildDto($request));
         } catch (ConfigWriteException) {
             return $this->renderForm(__('ERROR: Can not write file `system.local.php`'));
         }
@@ -50,21 +49,21 @@ final readonly class AntifloodSettingsController
         redirect(self::URL);
     }
 
-    private function buildDto(): AntifloodSettingsDTO
+    private function buildDto(Request $request): AntifloodSettingsDTO
     {
         return new AntifloodSettingsDTO(
-            mode: $this->request->bodyInt('mode', 1),
-            day: $this->request->bodyInt('day', 10),
-            night: $this->request->bodyInt('night', 30),
-            dayFrom: $this->request->bodyInt('dayfrom', 10),
-            dayTo: $this->request->bodyInt('dayto', 22),
+            mode: $request->bodyInt('mode', 1),
+            day: $request->bodyInt('day', 10),
+            night: $request->bodyInt('night', 30),
+            dayFrom: $request->bodyInt('dayfrom', 10),
+            dayTo: $request->bodyInt('dayto', 22),
         );
     }
 
-    private function isCsrfValid(): bool
+    private function isCsrfValid(Request $request): bool
     {
         $validator = new Validator(
-            ['csrf_token' => $this->request->body('csrf_token', '')],
+            ['csrf_token' => $request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

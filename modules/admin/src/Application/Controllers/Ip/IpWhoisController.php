@@ -16,16 +16,15 @@ final readonly class IpWhoisController
     public function __construct(
         private AdminControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private GetIpWhoisUseCase $getIpWhoisUseCase,
     ) {
         $this->controllerContext->initModule('admin');
     }
 
-    public function __invoke(): string
+    public function __invoke(Request $request): string
     {
-        $ip = (string) (filter_var($this->request->queryParam('ip'), FILTER_VALIDATE_IP) ?: '');
+        $ip = (string) (filter_var($request->queryParam('ip'), FILTER_VALIDATE_IP) ?: '');
 
         $title = 'IP Whois';
         $this->navChain->add($title);

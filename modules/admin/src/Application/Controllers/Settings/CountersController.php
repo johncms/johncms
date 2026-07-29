@@ -22,7 +22,6 @@ final readonly class CountersController
     public function __construct(
         private AdminControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private User $currentUser,
         private GetCounterListUseCase $getList,
@@ -83,19 +82,19 @@ final readonly class CountersController
         return $this->renderForm($counter);
     }
 
-    public function preview(): string
+    public function preview(Request $request): string
     {
-        if (! $this->isCsrfValid()) {
+        if (! $this->isCsrfValid($request)) {
             return $this->error(__('Wrong data'));
         }
 
-        $id = $this->request->bodyInt('id');
-        $name = mb_substr(trim($this->request->body('name', '')), 0, 25);
-        $link1 = trim($this->request->body('link1', ''));
-        $link2 = trim($this->request->body('link2', ''));
-        $mode = $this->request->bodyInt('mode', 1);
-        $requireCookieConsent = $this->request->hasBody('require_cookie_consent');
-        $enabled = $this->request->hasBody('switch');
+        $id = $request->bodyInt('id');
+        $name = mb_substr(trim($request->body('name', '')), 0, 25);
+        $link1 = trim($request->body('link1', ''));
+        $link2 = trim($request->body('link2', ''));
+        $mode = $request->bodyInt('mode', 1);
+        $requireCookieConsent = $request->hasBody('require_cookie_consent');
+        $enabled = $request->hasBody('switch');
 
         if ($name === '' || $link1 === '') {
             return $this->error(__('The required fields are not filled'));
@@ -117,19 +116,19 @@ final readonly class CountersController
         ]);
     }
 
-    public function store(): string
+    public function store(Request $request): string
     {
-        if (! $this->isCsrfValid()) {
+        if (! $this->isCsrfValid($request)) {
             return $this->error(__('Wrong data'));
         }
 
-        $id = $this->request->bodyInt('id');
-        $name = mb_substr(trim($this->request->body('name', '')), 0, 25);
-        $link1 = trim($this->request->body('link1', ''));
-        $link2 = trim($this->request->body('link2', ''));
-        $mode = $this->request->bodyInt('mode', 1);
-        $requireCookieConsent = $this->request->hasBody('require_cookie_consent');
-        $enabled = $this->request->hasBody('switch');
+        $id = $request->bodyInt('id');
+        $name = mb_substr(trim($request->body('name', '')), 0, 25);
+        $link1 = trim($request->body('link1', ''));
+        $link2 = trim($request->body('link2', ''));
+        $mode = $request->bodyInt('mode', 1);
+        $requireCookieConsent = $request->hasBody('require_cookie_consent');
+        $enabled = $request->hasBody('switch');
 
         if ($name === '' || $link1 === '') {
             return $this->error(__('The required fields are not filled'));
@@ -140,28 +139,28 @@ final readonly class CountersController
         redirect(self::URL);
     }
 
-    public function toggle(int $id): string
+    public function toggle(Request $request, int $id): string
     {
-        if ($this->isCsrfValid()) {
-            $enabled = $this->request->bodyInt('enabled') === 1;
+        if ($this->isCsrfValid($request)) {
+            $enabled = $request->bodyInt('enabled') === 1;
             $this->manageCounter->toggle($id, $enabled);
         }
 
         redirect(self::URL . '/' . $id);
     }
 
-    public function up(int $id): string
+    public function up(Request $request, int $id): string
     {
-        if ($this->isCsrfValid()) {
+        if ($this->isCsrfValid($request)) {
             $this->manageCounter->moveUp($id);
         }
 
         redirect(self::URL);
     }
 
-    public function down(int $id): string
+    public function down(Request $request, int $id): string
     {
-        if ($this->isCsrfValid()) {
+        if ($this->isCsrfValid($request)) {
             $this->manageCounter->moveDown($id);
         }
 
@@ -187,9 +186,9 @@ final readonly class CountersController
         ]);
     }
 
-    public function delete(int $id): string
+    public function delete(Request $request, int $id): string
     {
-        if ($this->isCsrfValid()) {
+        if ($this->isCsrfValid($request)) {
             $this->manageCounter->delete($id);
         }
 
@@ -249,10 +248,10 @@ final readonly class CountersController
         ];
     }
 
-    private function isCsrfValid(): bool
+    private function isCsrfValid(Request $request): bool
     {
         $validator = new Validator(
-            ['csrf_token' => $this->request->body('csrf_token', '')],
+            ['csrf_token' => $request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

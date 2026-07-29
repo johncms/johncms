@@ -22,7 +22,6 @@ final readonly class KarmaController
     public function __construct(
         private AdminControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private UpdateKarmaSettingsUseCase $updateKarmaSettings,
         private ResetKarmaUseCase $resetKarma,
@@ -36,17 +35,17 @@ final readonly class KarmaController
         return $this->renderForm();
     }
 
-    public function save(): string
+    public function save(Request $request): string
     {
-        if (! $this->isCsrfValid()) {
+        if (! $this->isCsrfValid($request)) {
             return $this->renderForm(__('Wrong data'));
         }
 
         $dto = new KarmaSettingsDTO(
-            karmaPoints: abs($this->request->bodyInt('karma_points')),
-            forumPosts: abs($this->request->bodyInt('forum')),
-            enabled: $this->request->hasBody('on'),
-            forbidAdmin: $this->request->hasBody('adm'),
+            karmaPoints: abs($request->bodyInt('karma_points')),
+            forumPosts: abs($request->bodyInt('forum')),
+            enabled: $request->hasBody('on'),
+            forbidAdmin: $request->hasBody('adm'),
         );
 
         try {
@@ -79,9 +78,9 @@ final readonly class KarmaController
         ]);
     }
 
-    public function reset(): string
+    public function reset(Request $request): string
     {
-        if ($this->isCsrfValid()) {
+        if ($this->isCsrfValid($request)) {
             $this->resetKarma->execute();
             $this->session->flash('success_message', __('Karma is cleared'));
         }
@@ -89,10 +88,10 @@ final readonly class KarmaController
         redirect(self::URL);
     }
 
-    private function isCsrfValid(): bool
+    private function isCsrfValid(Request $request): bool
     {
         $validator = new Validator(
-            ['csrf_token' => $this->request->body('csrf_token', '')],
+            ['csrf_token' => $request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

@@ -20,7 +20,6 @@ final readonly class EmoticonsController
     public function __construct(
         private AdminControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private RebuildSmiliesCacheUseCase $rebuildSmiliesCacheUseCase,
         private Session $session,
@@ -33,9 +32,9 @@ final readonly class EmoticonsController
         return $this->renderPage();
     }
 
-    public function rebuild(): string
+    public function rebuild(Request $request): string
     {
-        if (! $this->isCsrfValid()) {
+        if (! $this->isCsrfValid($request)) {
             return $this->renderPage(__('Wrong data'));
         }
 
@@ -49,10 +48,10 @@ final readonly class EmoticonsController
         redirect(self::URL);
     }
 
-    private function isCsrfValid(): bool
+    private function isCsrfValid(Request $request): bool
     {
         $validator = new Validator(
-            ['csrf_token' => $this->request->body('csrf_token', '')],
+            ['csrf_token' => $request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

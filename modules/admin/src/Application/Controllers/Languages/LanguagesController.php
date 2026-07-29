@@ -24,7 +24,6 @@ final readonly class LanguagesController
     public function __construct(
         private AdminControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private SaveLanguageSettingsUseCase $saveLanguageSettings,
         private GetManagedLanguagesUseCase $getManagedLanguages,
@@ -40,14 +39,14 @@ final readonly class LanguagesController
         return $this->renderIndex();
     }
 
-    public function save(): string
+    public function save(Request $request): string
     {
-        if (! $this->isCsrfValid()) {
+        if (! $this->isCsrfValid($request)) {
             return $this->renderIndex(__('Wrong data'));
         }
 
-        $defaultCode = $this->request->body('lng');
-        $updateList = $this->request->hasBody('update');
+        $defaultCode = $request->body('lng');
+        $updateList = $request->hasBody('update');
 
         try {
             $this->saveLanguageSettings->execute(
@@ -90,19 +89,19 @@ final readonly class LanguagesController
         );
     }
 
-    public function install(): string
+    public function install(Request $request): string
     {
-        return $this->runCatalogAction(__('The language was successfully installed'));
+        return $this->runCatalogAction($request, __('The language was successfully installed'));
     }
 
-    public function update(): string
+    public function update(Request $request): string
     {
-        return $this->runCatalogAction(__('The language was successfully updated'));
+        return $this->runCatalogAction($request, __('The language was successfully updated'));
     }
 
-    public function delete(): string
+    public function delete(Request $request): string
     {
-        $code = $this->validatedCode();
+        $code = $this->validatedCode($request);
         if ($code !== null) {
             try {
                 $this->removeLanguage->execute($code);
@@ -115,9 +114,9 @@ final readonly class LanguagesController
         redirect(self::MANAGE_URL);
     }
 
-    private function runCatalogAction(string $successMessage): string
+    private function runCatalogAction(Request $request, string $successMessage): string
     {
-        $code = $this->validatedCode();
+        $code = $this->validatedCode($request);
         if ($code !== null) {
             try {
                 $this->installLanguage->execute($code);
@@ -130,21 +129,21 @@ final readonly class LanguagesController
         redirect(self::MANAGE_URL);
     }
 
-    private function validatedCode(): ?string
+    private function validatedCode(Request $request): ?string
     {
-        if (! $this->isCsrfValid()) {
+        if (! $this->isCsrfValid($request)) {
             return null;
         }
 
-        $code = trim($this->request->body('code', ''));
+        $code = trim($request->body('code', ''));
 
         return $code !== '' ? $code : null;
     }
 
-    private function isCsrfValid(): bool
+    private function isCsrfValid(Request $request): bool
     {
         $validator = new Validator(
-            ['csrf_token' => $this->request->body('csrf_token', '')],
+            ['csrf_token' => $request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

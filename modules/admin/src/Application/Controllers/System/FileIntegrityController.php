@@ -20,7 +20,6 @@ final readonly class FileIntegrityController
     public function __construct(
         private AdminControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private ScanFileIntegrityUseCase $scanFileIntegrity,
         private CreateFileIntegritySnapshotUseCase $createSnapshotUseCase,
@@ -87,9 +86,9 @@ final readonly class FileIntegrityController
         ]);
     }
 
-    public function createSnapshot(): string
+    public function createSnapshot(Request $request): string
     {
-        if ($this->isCsrfValid()) {
+        if ($this->isCsrfValid($request)) {
             $this->createSnapshotUseCase->execute();
             $this->session->flash('success_message', __('Snapshot successfully created'));
         }
@@ -97,10 +96,10 @@ final readonly class FileIntegrityController
         redirect(self::URL);
     }
 
-    private function isCsrfValid(): bool
+    private function isCsrfValid(Request $request): bool
     {
         $validator = new Validator(
-            ['csrf_token' => $this->request->body('csrf_token', '')],
+            ['csrf_token' => $request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

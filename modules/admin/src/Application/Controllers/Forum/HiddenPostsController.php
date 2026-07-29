@@ -23,7 +23,6 @@ final readonly class HiddenPostsController
     public function __construct(
         private AdminControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private User $currentUser,
         private ManageHiddenForumUseCase $manageHidden,
@@ -34,9 +33,9 @@ final readonly class HiddenPostsController
         $this->controllerContext->initModule('admin');
     }
 
-    public function index(): string
+    public function index(Request $request): string
     {
-        [$topicId, $userId, $filterLink, $filteredBy] = $this->filters();
+        [$topicId, $userId, $filterLink, $filteredBy] = $this->filters($request);
 
         $pagination = $this->paginationFactory->create($this->manageHidden->countPosts($topicId, $userId));
 
@@ -70,13 +69,13 @@ final readonly class HiddenPostsController
         ]);
     }
 
-    public function deleteAll(): string
+    public function deleteAll(Request $request): string
     {
-        if (! $this->isCsrfValid() || $this->currentUser->rights !== 9) {
+        if (! $this->isCsrfValid($request) || $this->currentUser->rights !== 9) {
             redirect(self::URL);
         }
 
-        [$topicId, $userId] = $this->filters();
+        [$topicId, $userId] = $this->filters($request);
         $this->manageHidden->purgePosts($topicId, $userId);
 
         redirect(self::URL);
@@ -85,14 +84,14 @@ final readonly class HiddenPostsController
     /**
      * @return array{0: int|null, 1: int|null, 2: string, 3: string|null}
      */
-    private function filters(): array
+    private function filters(Request $request): array
     {
-        $topicId = filter_var($this->request->queryParam('tsort'), FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
+        $topicId = filter_var($request->queryParam('tsort'), FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
         if ($topicId !== null) {
             return [abs((int) $topicId), null, '?tsort=' . abs((int) $topicId), __('by topic')];
         }
 
-        $userId = filter_var($this->request->queryParam('usort'), FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
+        $userId = filter_var($request->queryParam('usort'), FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
         if ($userId !== null) {
             return [null, abs((int) $userId), '?usort=' . abs((int) $userId), __('by author')];
         }
@@ -100,10 +99,10 @@ final readonly class HiddenPostsController
         return [null, null, '', null];
     }
 
-    private function isCsrfValid(): bool
+    private function isCsrfValid(Request $request): bool
     {
         $validator = new Validator(
-            ['csrf_token' => $this->request->body('csrf_token', '')],
+            ['csrf_token' => $request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

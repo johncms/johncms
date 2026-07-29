@@ -21,7 +21,6 @@ final readonly class ForumSettingsController
     public function __construct(
         private AdminControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private UpdateForumSettingsUseCase $updateForumSettings,
         private Session $session,
@@ -34,20 +33,20 @@ final readonly class ForumSettingsController
         return $this->renderForm();
     }
 
-    public function save(): string
+    public function save(Request $request): string
     {
-        if (! $this->isCsrfValid()) {
+        if (! $this->isCsrfValid($request)) {
             return $this->renderForm(__('Wrong data'));
         }
 
         $dto = new ForumSettingsDTO(
-            fileCounters: $this->request->hasBody('file_counters'),
-            topicKeywords: trim($this->request->body('topic_keywords', '')),
-            topicDescription: trim($this->request->body('topic_description', '')),
-            sectionKeywords: trim($this->request->body('section_keywords', '')),
-            sectionDescription: trim($this->request->body('section_description', '')),
-            forumKeywords: trim($this->request->body('forum_keywords', '')),
-            forumDescription: trim($this->request->body('forum_description', '')),
+            fileCounters: $request->hasBody('file_counters'),
+            topicKeywords: trim($request->body('topic_keywords', '')),
+            topicDescription: trim($request->body('topic_description', '')),
+            sectionKeywords: trim($request->body('section_keywords', '')),
+            sectionDescription: trim($request->body('section_description', '')),
+            forumKeywords: trim($request->body('forum_keywords', '')),
+            forumDescription: trim($request->body('forum_description', '')),
         );
 
         try {
@@ -60,10 +59,10 @@ final readonly class ForumSettingsController
         redirect(self::URL);
     }
 
-    private function isCsrfValid(): bool
+    private function isCsrfValid(Request $request): bool
     {
         $validator = new Validator(
-            ['csrf_token' => $this->request->body('csrf_token', '')],
+            ['csrf_token' => $request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 
