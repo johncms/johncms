@@ -21,7 +21,6 @@ final readonly class EditPhotoController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private User $currentUser,
         private GetEditPhotoContextUseCase $getContextUseCase,
@@ -40,14 +39,14 @@ final readonly class EditPhotoController
         return $this->renderForm($photo, $photo->description);
     }
 
-    public function save(int $img): Response
+    public function save(Request $request, int $img): Response
     {
         $photo = $this->resolveContext($img);
         if ($photo instanceof Response) {
             return $photo;
         }
 
-        $this->editPhotoUseCase->execute($photo, $this->request->body('description', ''));
+        $this->editPhotoUseCase->execute($photo, $request->body('description', ''));
 
         return new Response(
             $this->render->render(

@@ -20,20 +20,19 @@ final readonly class SortAlbumController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private GetSortAlbumContextUseCase $getContextUseCase,
         private MoveAlbumUseCase $moveAlbumUseCase,
     ) {
         $this->controllerContext->initModule('album');
     }
 
-    public function moveUp(int $al): Response
+    public function moveUp(Request $request, int $al): Response
     {
         $album = $this->resolveContext($al);
         if ($album instanceof Response) {
             return $album;
         }
-        if (! $this->isCsrfValid()) {
+        if (! $this->isCsrfValid($request)) {
             return $this->renderError(__('Wrong data'));
         }
 
@@ -42,13 +41,13 @@ final readonly class SortAlbumController
         redirect('/album/user/' . $album->user_id);
     }
 
-    public function moveDown(int $al): Response
+    public function moveDown(Request $request, int $al): Response
     {
         $album = $this->resolveContext($al);
         if ($album instanceof Response) {
             return $album;
         }
-        if (! $this->isCsrfValid()) {
+        if (! $this->isCsrfValid($request)) {
             return $this->renderError(__('Wrong data'));
         }
 
@@ -71,10 +70,10 @@ final readonly class SortAlbumController
         }
     }
 
-    private function isCsrfValid(): bool
+    private function isCsrfValid(Request $request): bool
     {
         $validator = new Validator(
-            ['csrf_token' => $this->request->body('csrf_token', '')],
+            ['csrf_token' => $request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

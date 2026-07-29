@@ -23,7 +23,6 @@ final readonly class MovePhotoController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private User $currentUser,
         private AlbumRepositoryInterface $albumRepository,
@@ -93,14 +92,14 @@ final readonly class MovePhotoController
         );
     }
 
-    public function move(int $img): Response
+    public function move(Request $request, int $img): Response
     {
         $photo = $this->resolveContext($img);
         if ($photo instanceof Response) {
             return $photo;
         }
 
-        $targetAlbumId = $this->request->bodyInt('al');
+        $targetAlbumId = $request->bodyInt('al');
 
         try {
             $albumId = $this->movePhotoUseCase->execute($photo, $targetAlbumId);

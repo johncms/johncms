@@ -24,7 +24,6 @@ final readonly class UploadPhotoController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private User $currentUser,
         private GetUploadPhotoContextUseCase $getContextUseCase,
@@ -44,15 +43,15 @@ final readonly class UploadPhotoController
         return $this->renderForm($album, []);
     }
 
-    public function upload(int $al): Response
+    public function upload(Request $request, int $al): Response
     {
         $album = $this->resolveContext($al);
         if ($album instanceof Response) {
             return $album;
         }
 
-        $uploaded = $this->request->files->get('imagefile');
-        $description = $this->request->body('description', '');
+        $uploaded = $request->files->get('imagefile');
+        $description = $request->body('description', '');
 
         try {
             if (! $uploaded instanceof UploadedFile) {

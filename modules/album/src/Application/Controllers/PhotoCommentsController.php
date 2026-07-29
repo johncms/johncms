@@ -22,7 +22,6 @@ final readonly class PhotoCommentsController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private User $currentUser,
         private GetPhotoCommentsContextUseCase $useCase,
@@ -31,7 +30,7 @@ final readonly class PhotoCommentsController
         $this->controllerContext->initModule('album');
     }
 
-    public function __invoke(int $img): string
+    public function __invoke(Request $request, int $img): string
     {
         try {
             $context = $this->useCase->execute($img);
@@ -54,11 +53,11 @@ final readonly class PhotoCommentsController
         $this->navChain->add(__('Comments'));
 
         // Display parameters of the legacy Comments class.
-        $mod = $this->request->queryParam('mod', '');
-        $page = max(1, $this->request->queryInt('page', 1));
-        $start = $this->request->query->has('page')
+        $mod = $request->queryParam('mod', '');
+        $page = max(1, $request->queryInt('page', 1));
+        $start = $request->query->has('page')
             ? ($page - 1) * (int) $this->currentUser->config->kmess
-            : abs($this->request->queryInt('start', 0));
+            : abs($request->queryInt('start', 0));
 
         $meta = new PageMeta(__('Comments'), $page);
 

@@ -24,7 +24,6 @@ final readonly class EditAlbumController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private User $currentUser,
         private GetEditAlbumContextUseCase $getContextUseCase,
@@ -43,14 +42,14 @@ final readonly class EditAlbumController
         return $this->renderForm($context, $this->emptyFormData(), []);
     }
 
-    public function createSave(int $id): Response
+    public function createSave(Request $request, int $id): Response
     {
         $context = $this->resolveCreateContext($id);
         if ($context instanceof Response) {
             return $context;
         }
 
-        return $this->handleSave($context);
+        return $this->handleSave($request, $context);
     }
 
     public function editForm(int $al): Response
@@ -63,19 +62,19 @@ final readonly class EditAlbumController
         return $this->renderForm($context, $this->formDataFromAlbum($context), []);
     }
 
-    public function editSave(int $al): Response
+    public function editSave(Request $request, int $al): Response
     {
         $context = $this->resolveEditContext($al);
         if ($context instanceof Response) {
             return $context;
         }
 
-        return $this->handleSave($context);
+        return $this->handleSave($request, $context);
     }
 
-    private function handleSave(EditAlbumContextDTO $context): Response
+    private function handleSave(Request $request, EditAlbumContextDTO $context): Response
     {
-        $command = $this->buildCommand();
+        $command = $this->buildCommand($request);
 
         try {
             $this->saveAlbumUseCase->execute($command, $context);
@@ -118,13 +117,13 @@ final readonly class EditAlbumController
         }
     }
 
-    private function buildCommand(): SaveAlbumCommand
+    private function buildCommand(Request $request): SaveAlbumCommand
     {
         return new SaveAlbumCommand(
-            name: $this->request->body('name', ''),
-            description: $this->request->body('description', ''),
-            password: $this->request->body('password', ''),
-            access: $this->request->bodyInt('access'),
+            name: $request->body('name', ''),
+            description: $request->body('description', ''),
+            password: $request->body('password', ''),
+            access: $request->bodyInt('access'),
         );
     }
 

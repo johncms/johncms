@@ -22,7 +22,6 @@ final readonly class DeleteAlbumController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private User $currentUser,
         private GetDeleteAlbumContextUseCase $getContextUseCase,
@@ -68,13 +67,13 @@ final readonly class DeleteAlbumController
         );
     }
 
-    public function delete(int $al): Response
+    public function delete(Request $request, int $al): Response
     {
         $context = $this->resolveContext($al);
         if ($context instanceof Response) {
             return $context;
         }
-        if (! $this->isCsrfValid()) {
+        if (! $this->isCsrfValid($request)) {
             return $this->renderError(__('Wrong data'));
         }
 
@@ -110,10 +109,10 @@ final readonly class DeleteAlbumController
         }
     }
 
-    private function isCsrfValid(): bool
+    private function isCsrfValid(Request $request): bool
     {
         $validator = new Validator(
-            ['csrf_token' => $this->request->body('csrf_token', '')],
+            ['csrf_token' => $request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

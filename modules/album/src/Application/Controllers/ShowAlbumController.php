@@ -21,7 +21,6 @@ final readonly class ShowAlbumController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private User $currentUser,
         private GetAlbumViewUseCase $useCase,
@@ -31,14 +30,14 @@ final readonly class ShowAlbumController
         $this->controllerContext->initModule('album');
     }
 
-    public function __invoke(int $al): string
+    public function __invoke(Request $request, int $al): string
     {
-        $submittedPassword = $this->request->body('password');
+        $submittedPassword = $request->body('password');
 
         try {
             $pagination = $this->paginationFactory->create($this->useCase->count($al, $submittedPassword));
 
-            if ($this->request->getMethod() !== 'POST') {
+            if ($request->getMethod() !== 'POST') {
                 $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
                 if ($redirectUrl !== null) {
                     redirect($redirectUrl);

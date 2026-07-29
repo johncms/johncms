@@ -20,7 +20,6 @@ final readonly class VotePhotoController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private GetVotePhotoContextUseCase $getContextUseCase,
         private EnsureVoteAccessUseCase $ensureAccessUseCase,
         private VotePhotoUseCase $votePhotoUseCase,
@@ -28,14 +27,14 @@ final readonly class VotePhotoController
         $this->controllerContext->initModule('album');
     }
 
-    public function __invoke(int $img, string $type): string
+    public function __invoke(Request $request, int $img, string $type): string
     {
         $voteType = VoteType::tryFrom($type);
         if ($voteType === null) {
             return $this->renderError(__('Wrong data'));
         }
 
-        if (! $this->isCsrfValid()) {
+        if (! $this->isCsrfValid($request)) {
             return $this->renderError(__('Wrong data'));
         }
 
@@ -53,10 +52,10 @@ final readonly class VotePhotoController
         redirect('/album/photo/' . $photo->id);
     }
 
-    private function isCsrfValid(): bool
+    private function isCsrfValid(Request $request): bool
     {
         $validator = new Validator(
-            ['csrf_token' => $this->request->body('csrf_token', '')],
+            ['csrf_token' => $request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

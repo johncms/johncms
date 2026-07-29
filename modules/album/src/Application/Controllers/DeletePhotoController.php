@@ -22,7 +22,6 @@ final readonly class DeletePhotoController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private User $currentUser,
         private GetDeletePhotoContextUseCase $getContextUseCase,
@@ -68,13 +67,13 @@ final readonly class DeletePhotoController
         );
     }
 
-    public function delete(int $img): Response
+    public function delete(Request $request, int $img): Response
     {
         $photo = $this->resolveContext($img);
         if ($photo instanceof Response) {
             return $photo;
         }
-        if (! $this->isCsrfValid()) {
+        if (! $this->isCsrfValid($request)) {
             return $this->renderError(__('Wrong data'));
         }
 
@@ -109,10 +108,10 @@ final readonly class DeletePhotoController
         }
     }
 
-    private function isCsrfValid(): bool
+    private function isCsrfValid(Request $request): bool
     {
         $validator = new Validator(
-            ['csrf_token' => $this->request->body('csrf_token', '')],
+            ['csrf_token' => $request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

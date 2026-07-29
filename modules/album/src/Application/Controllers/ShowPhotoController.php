@@ -20,7 +20,6 @@ final readonly class ShowPhotoController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private User $currentUser,
         private GetPhotoViewUseCase $useCase,
@@ -29,11 +28,11 @@ final readonly class ShowPhotoController
         $this->controllerContext->initModule('album');
     }
 
-    public function __invoke(int $img): string
+    public function __invoke(Request $request, int $img): string
     {
-        $submittedPassword = $this->request->body('password');
-        $page = $this->request->query->has('page') ? max(1, $this->request->queryInt('page')) : null;
-        $addToProfile = $this->request->query->has('profile');
+        $submittedPassword = $request->body('password');
+        $page = $request->query->has('page') ? max(1, $request->queryInt('page')) : null;
+        $addToProfile = $request->query->has('profile');
 
         try {
             $result = $this->useCase->execute($img, $page, $submittedPassword, $addToProfile);
