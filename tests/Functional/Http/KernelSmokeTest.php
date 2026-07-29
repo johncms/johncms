@@ -40,10 +40,9 @@ final class KernelSmokeTest extends FunctionalTestCase
      */
     public static function publicRoutes(): array
     {
-        // /community/search is deliberately absent: it is the route of the 400 test below, and
-        // a controller serving two requests in one process keeps the first one (see the harness).
         $routes = [
             '/',
+            '/community/search',
             '/forum',
             '/forum/files',
             '/forum/search',

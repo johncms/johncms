@@ -333,7 +333,7 @@ final readonly class AdminArticleController
                 );
             }
 
-            $file = (new FileStorage())->saveFromRequest('upload', 'news');
+            $file = (new FileStorage())->saveFromRequest($request, 'upload', 'news');
             $file_array = [
                 'id'       => $file->id,
                 'name'     => $file->name,

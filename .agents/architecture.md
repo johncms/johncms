@@ -44,6 +44,30 @@ Infrastructure
 * Controllers translate HTTP into calls on the layers below and translate the result back
   into a response; the HTTP mapping lives there and nowhere else.
 
+### How a class gets the current request
+
+Controllers are container singletons, so a request stored in one outlives the request it belongs
+to: in a worker runtime every later cycle would be answered with the first request of the process.
+
+* **A controller takes `Request` as an argument of the action**, first, before the route
+  parameters — never in the constructor, never in a property. Only the actions that actually read
+  the request take it; form and confirmation actions keep their signatures.
+* **A private helper of a controller receives the request as a parameter.** Passing it down the
+  call chain is the point; storing it in a property to save the parameter reintroduces the leak.
+* **Never resolve the request from the container** — no `di(Request::class)`, no
+  `$container->get(Request::class)`. It is a synthetic service the kernel republishes per cycle, so
+  a captured reference is a request already served.
+* **A service that outlives the request** and needs a fact about it has three options, in order of
+  preference: take the fact as a parameter (a string address, a host — see `ClientInfoDTO`); take
+  the `Request` as a parameter of the method that reads it, when a whole set of fields is needed;
+  or read it from `Symfony\Component\HttpFoundation\RequestStack`. The stack is the last resort and
+  is allowed **only in `system/src/`** — in a module's Application layer it is the same hidden
+  capture in a different shape. It earns its place when the callers number in the dozens and their
+  actions have no request to pass (`PaginationFactory`, `Theme`, `Environment`).
+* A shared service that caches anything per request implements
+  `Symfony\Contracts\Service\ResetInterface`; the container tags it and the kernel resets it at the
+  start of every cycle.
+
 ## Refactoring Principles
 
 Refactor in **small, safe steps** while preserving existing behavior.

@@ -24,12 +24,11 @@ use Symfony\Component\HttpFoundation\Response;
  *    Without a reachable database every test is skipped, which is why CI — which runs
  *    `composer test:unit` — stays green without one. Assert on statuses and structural
  *    fragments, never on the content of a particular install.
- * 2. Every shared service that takes Request in its constructor keeps the first request of the
- *    process — 145 of the 221 controllers, plus collaborators such as PaginationFactory. So the
- *    contract of this suite is one request per route per process, and assertions stay on statuses
- *    and structure rather than on request-specific content. Making the request scope explicit
- *    in the container is what lifts that limitation, together with an isolation test for two
- *    sequential handle() calls.
+ * 2. Several requests may be driven through one process, including several through the same
+ *    controller: nothing holds a request beyond the cycle it belongs to, and the kernel resets the
+ *    shared services that cache per-request state. RequestIsolationTest is what guards that.
+ *    Render is the exception — the page title and the theme are still process state, so do not
+ *    assert on them across requests.
  */
 abstract class FunctionalTestCase extends TestCase
 {

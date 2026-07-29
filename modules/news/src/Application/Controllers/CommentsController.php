@@ -223,7 +223,7 @@ final readonly class CommentsController
                 );
             }
 
-            $file = (new FileStorage())->saveFromRequest('upload', 'news_comments');
+            $file = (new FileStorage())->saveFromRequest($request, 'upload', 'news_comments');
             $file_array = [
                 'id'       => $file->id,
                 'name'     => $file->name,

@@ -59,7 +59,7 @@ final readonly class UploadFileController
                 return new JsonResponse(['error' => ['message' => __('Only images are allowed')]]);
             }
 
-            $file = $this->fileStorage->saveFromRequest('upload', 'forum_files');
+            $file = $this->fileStorage->saveFromRequest($request, 'upload', 'forum_files');
 
             return new JsonResponse(
                 [

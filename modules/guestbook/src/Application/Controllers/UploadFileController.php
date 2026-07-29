@@ -49,7 +49,7 @@ final readonly class UploadFileController
                 );
             }
 
-            $file = $this->fileStorage->saveFromRequest('upload', 'guestbook');
+            $file = $this->fileStorage->saveFromRequest($request, 'upload', 'guestbook');
             $file_array = [
                 'id'       => $file->id,
                 'name'     => $file->name,

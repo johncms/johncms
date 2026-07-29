@@ -24,15 +24,18 @@ class FileStorage
     /**
      * Saving files from the request
      *
+     * The request is a parameter rather than a dependency: this class outlives a single request,
+     * so resolving it from the container would hand it a request already served.
+     *
      * @param string $field_name
      * @param string $working_dir
      * @param bool $multiple
      * @return Models\File|Models\File[]
      * @throws FilesystemException
      */
-    public function saveFromRequest(string $field_name, string $working_dir, bool $multiple = false)
+    public function saveFromRequest(Request $request, string $field_name, string $working_dir, bool $multiple = false)
     {
-        $request_files = di(Request::class)->files->all();
+        $request_files = $request->files->all();
         if (! array_key_exists($field_name, $request_files)) {
             throw new BadRequest(sprintf('There is no file field named "%s" in the request', $field_name));
         }
