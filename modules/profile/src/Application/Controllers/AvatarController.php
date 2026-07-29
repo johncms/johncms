@@ -23,7 +23,6 @@ final readonly class AvatarController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private GetEditContextUseCase $getEditContextUseCase,
         private UploadAvatarUseCase $uploadAvatarUseCase,
@@ -42,14 +41,14 @@ final readonly class AvatarController
         return $this->renderForm($context);
     }
 
-    public function upload(int $id): Response
+    public function upload(Request $request, int $id): Response
     {
         $context = $this->resolveContext($id);
         if ($context instanceof Response) {
             return $context;
         }
 
-        $uploaded = $this->request->files->get('imagefile');
+        $uploaded = $request->files->get('imagefile');
 
         try {
             if (! $uploaded instanceof UploadedFile) {

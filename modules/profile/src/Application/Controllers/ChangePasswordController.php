@@ -24,7 +24,6 @@ final readonly class ChangePasswordController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private User $currentUser,
         private GetChangePasswordContextUseCase $getChangePasswordContextUseCase,
@@ -68,7 +67,7 @@ final readonly class ChangePasswordController
         );
     }
 
-    public function change(int $id): Response
+    public function change(Request $request, int $id): Response
     {
         try {
             $context = $this->getChangePasswordContextUseCase->execute($id);
@@ -79,14 +78,14 @@ final readonly class ChangePasswordController
         }
 
         $title = $this->buildTitle($context);
-        $newPassword = trim($this->request->body('newpass', ''));
+        $newPassword = trim($request->body('newpass', ''));
 
         try {
             $this->changePasswordUseCase->execute(new ChangePasswordCommand(
                 profileUserId: $context->profileUserId,
-                oldPassword: trim($this->request->body('oldpass', '')),
+                oldPassword: trim($request->body('oldpass', '')),
                 newPassword: $newPassword,
-                confirmPassword: trim($this->request->body('newconf', '')),
+                confirmPassword: trim($request->body('newconf', '')),
             ));
         } catch (ChangePasswordException $e) {
             return new Response(
@@ -124,7 +123,7 @@ final readonly class ChangePasswordController
         // silently widening the cookie to '/'.
         if ($context->isSelf && isset($_COOKIE['cuid'], $_COOKIE['cups'])) {
             $response->headers->setCookie(
-                Cookie::create('cups', md5($newPassword), time() + 3600 * 24 * 365, $this->defaultCookiePath(), null, false, false, false, null)
+                Cookie::create('cups', md5($newPassword), time() + 3600 * 24 * 365, $this->defaultCookiePath($request), null, false, false, false, null)
             );
         }
 
@@ -140,9 +139,9 @@ final readonly class ChangePasswordController
      * RFC 6265 5.1.4 "default path" for the current request: the request path with everything
      * from (and including) the right-most slash removed, or '/' if there is none/only one slash.
      */
-    private function defaultCookiePath(): string
+    private function defaultCookiePath(Request $request): string
     {
-        $path = $this->request->getPathInfo();
+        $path = $request->getPathInfo();
         $lastSlash = strrpos($path, '/');
 
         if ($lastSlash === false || $lastSlash === 0) {

@@ -31,7 +31,6 @@ final readonly class KarmaController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private User $currentUser,
         private GetKarmaListUseCase $getKarmaListUseCase,
@@ -46,11 +45,11 @@ final readonly class KarmaController
         $this->controllerContext->initModule('profile');
     }
 
-    public function index(int $id): Response
+    public function index(Request $request, int $id): Response
     {
         $this->ensureKarmaEnabled();
 
-        $type = $this->resolveType();
+        $type = $this->resolveType($request);
 
         try {
             $pagination = $this->paginationFactory->create($this->getKarmaListUseCase->count($id, $type));
@@ -99,7 +98,7 @@ final readonly class KarmaController
         return $this->renderVoteForm($context);
     }
 
-    public function vote(int $id): Response
+    public function vote(Request $request, int $id): Response
     {
         $this->ensureKarmaEnabled();
 
@@ -112,9 +111,9 @@ final readonly class KarmaController
         }
 
         $command = new VoteKarmaCommand(
-            type: $this->request->bodyInt('type'),
-            points: $this->request->bodyInt('points'),
-            text: $this->request->body('text', ''),
+            type: $request->bodyInt('type'),
+            points: $request->bodyInt('points'),
+            text: $request->body('text', ''),
         );
         $this->voteKarmaUseCase->execute($command, $context);
 
@@ -132,7 +131,7 @@ final readonly class KarmaController
         );
     }
 
-    public function deleteForm(int $id, int $voteId): Response
+    public function deleteForm(Request $request, int $id, int $voteId): Response
     {
         $this->ensureKarmaEnabled();
         if ($error = $this->supervisorGuard()) {
@@ -145,7 +144,7 @@ final readonly class KarmaController
             return $this->renderError(__('Wrong data'));
         }
 
-        $type = $this->resolveType();
+        $type = $this->resolveType($request);
 
         return $this->renderConfirm(
             __('Do you really want to delete comment?'),
@@ -154,13 +153,13 @@ final readonly class KarmaController
         );
     }
 
-    public function delete(int $id, int $voteId): Response
+    public function delete(Request $request, int $id, int $voteId): Response
     {
         $this->ensureKarmaEnabled();
         if ($error = $this->supervisorGuard()) {
             return $error;
         }
-        if (! $this->isCsrfValid()) {
+        if (! $this->isCsrfValid($request)) {
             return $this->renderError(__('Wrong data'));
         }
 
@@ -172,7 +171,7 @@ final readonly class KarmaController
 
         $this->deleteKarmaVoteUseCase->delete($vote);
 
-        redirect('/profile/' . $id . '/karma?type=' . $this->resolveType());
+        redirect('/profile/' . $id . '/karma?type=' . $this->resolveType($request));
     }
 
     public function cleanForm(int $id): Response
@@ -189,13 +188,13 @@ final readonly class KarmaController
         );
     }
 
-    public function clean(int $id): Response
+    public function clean(Request $request, int $id): Response
     {
         $this->ensureKarmaEnabled();
         if ($error = $this->supervisorGuard()) {
             return $error;
         }
-        if (! $this->isCsrfValid()) {
+        if (! $this->isCsrfValid($request)) {
             return $this->renderError(__('Wrong data'));
         }
 
@@ -337,18 +336,18 @@ final readonly class KarmaController
         }
     }
 
-    private function isCsrfValid(): bool
+    private function isCsrfValid(Request $request): bool
     {
         $validator = new Validator(
-            ['csrf_token' => $this->request->body('csrf_token', '')],
+            ['csrf_token' => $request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 
         return $validator->isValid();
     }
 
-    private function resolveType(): int
+    private function resolveType(Request $request): int
     {
-        return $this->request->queryInt('type');
+        return $request->queryInt('type');
     }
 }

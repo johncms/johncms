@@ -20,7 +20,6 @@ final readonly class GuestbookController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private User $currentUser,
         private GetGuestbookContextUseCase $getGuestbookContextUseCase,
@@ -29,7 +28,7 @@ final readonly class GuestbookController
         $this->controllerContext->initModule('profile');
     }
 
-    public function __invoke(int $id): string
+    public function __invoke(Request $request, int $id): string
     {
         try {
             $profileUser = $this->getGuestbookContextUseCase->execute($id);
@@ -48,11 +47,11 @@ final readonly class GuestbookController
         $this->navChain->add(__('Guestbook'));
 
         // Display parameters of the legacy Comments class.
-        $mod = $this->request->queryParam('mod', '');
-        $page = max(1, $this->request->queryInt('page', 1));
-        $start = $this->request->query->has('page')
+        $mod = $request->queryParam('mod', '');
+        $page = max(1, $request->queryInt('page', 1));
+        $start = $request->query->has('page')
             ? ($page - 1) * (int) $this->currentUser->config->kmess
-            : abs($this->request->queryInt('start', 0));
+            : abs($request->queryInt('start', 0));
 
         // Reset the unread counter only when the owner simply views the guestbook (not during reply/edit/delete)
         if (! $mod) {

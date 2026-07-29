@@ -23,7 +23,6 @@ final readonly class RestorePasswordController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private SendPasswordRecoveryUseCase $sendPasswordRecovery,
         private GetRecoveryContextUseCase $getRecoveryContext,
@@ -48,12 +47,12 @@ final readonly class RestorePasswordController
         );
     }
 
-    public function send(): string
+    public function send(Request $request): string
     {
         $this->navChain->add(__('Restore password'));
 
         $captchaValid = (new Validator(
-            ['captcha' => $this->request->body('code')],
+            ['captcha' => $request->body('code')],
             ['captcha' => ['Captcha']]
         ))->isValid();
         $this->session->remove('code');
@@ -65,8 +64,8 @@ final readonly class RestorePasswordController
         try {
             $this->sendPasswordRecovery->execute(
                 new SendRecoveryCommand(
-                    nick: $this->request->body('nick', ''),
-                    email: $this->request->body('email', ''),
+                    nick: $request->body('nick', ''),
+                    email: $request->body('email', ''),
                 ),
                 config('johncms')['homeurl'] ?? ''
             );

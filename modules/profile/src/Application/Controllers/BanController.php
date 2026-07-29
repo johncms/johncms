@@ -31,7 +31,6 @@ final readonly class BanController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private User $currentUser,
         private GetBanHistoryUseCase $getBanHistoryUseCase,
@@ -64,7 +63,7 @@ final readonly class BanController
         return $this->renderHistory($id, $dto, $pagination);
     }
 
-    public function createForm(int $id): Response
+    public function createForm(Request $request, int $id): Response
     {
         try {
             $target = $this->getBanFormContextUseCase->execute($id);
@@ -74,10 +73,10 @@ final readonly class BanController
             return $this->renderError($e->getMessage(), 403);
         }
 
-        return $this->renderForm($target);
+        return $this->renderForm($request, $target);
     }
 
-    public function create(int $id): Response
+    public function create(Request $request, int $id): Response
     {
         try {
             $target = $this->getBanFormContextUseCase->execute($id);
@@ -87,16 +86,16 @@ final readonly class BanController
             return $this->renderError($e->getMessage(), 403);
         }
 
-        if (! $this->isCsrfValid()) {
+        if (! $this->isCsrfValid($request)) {
             return $this->renderError(__('Wrong data'));
         }
 
         $command = new BanUserCommand(
-            term: $this->request->bodyInt('term'),
-            timeval: $this->request->bodyInt('timeval'),
-            time: $this->request->bodyInt('time'),
-            reason: $this->request->body('reason', ''),
-            banref: $this->request->bodyInt('banref'),
+            term: $request->bodyInt('term'),
+            timeval: $request->bodyInt('timeval'),
+            time: $request->bodyInt('time'),
+            reason: $request->body('reason', ''),
+            banref: $request->bodyInt('banref'),
         );
 
         try {
@@ -131,12 +130,12 @@ final readonly class BanController
         );
     }
 
-    public function cancel(int $id, int $banId): Response
+    public function cancel(Request $request, int $id, int $banId): Response
     {
         if ($error = $this->staffGuard()) {
             return $error;
         }
-        if (! $this->isCsrfValid()) {
+        if (! $this->isCsrfValid($request)) {
             return $this->renderError(__('Wrong data'));
         }
 
@@ -174,12 +173,12 @@ final readonly class BanController
         );
     }
 
-    public function delete(int $id, int $banId): Response
+    public function delete(Request $request, int $id, int $banId): Response
     {
         if ($error = $this->supervisorGuard()) {
             return $error;
         }
-        if (! $this->isCsrfValid()) {
+        if (! $this->isCsrfValid($request)) {
             return $this->renderError(__('Wrong data'));
         }
 
@@ -209,12 +208,12 @@ final readonly class BanController
         );
     }
 
-    public function clear(int $id): Response
+    public function clear(Request $request, int $id): Response
     {
         if ($error = $this->supervisorGuard(__('Violations history can be cleared by Supervisor only'))) {
             return $error;
         }
-        if (! $this->isCsrfValid()) {
+        if (! $this->isCsrfValid($request)) {
             return $this->renderError(__('Wrong data'));
         }
 
@@ -257,7 +256,7 @@ final readonly class BanController
         );
     }
 
-    private function renderForm(User $target): Response
+    private function renderForm(Request $request, User $target): Response
     {
         $title = __('Ban the User');
 
@@ -277,7 +276,7 @@ final readonly class BanController
                     'page_title' => $title,
                     'data'       => [
                         'form_action' => '/profile/' . $target->id . '/bans/new',
-                        'post_id'     => $this->request->queryInt('fid'),
+                        'post_id'     => $request->queryInt('fid'),
                         'back_url'    => '/profile/' . $target->id,
                         'user_login'  => $target->name,
                     ],
@@ -360,10 +359,10 @@ final readonly class BanController
         return null;
     }
 
-    private function isCsrfValid(): bool
+    private function isCsrfValid(Request $request): bool
     {
         $validator = new Validator(
-            ['csrf_token' => $this->request->body('csrf_token', '')],
+            ['csrf_token' => $request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

@@ -22,7 +22,6 @@ final readonly class SettingsController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private User $currentUser,
         private UserSettingsUseCase $userSettingsUseCase,
@@ -52,15 +51,15 @@ final readonly class SettingsController
         return $this->renderPage('profile::settings', __('General setting'), $data);
     }
 
-    public function saveGeneral(): string
+    public function saveGeneral(Request $request): string
     {
         $command = new UpdateUserSettingsCommand(
-            timeshift: $this->request->bodyInt('timeshift'),
-            directUrl: $this->request->hasBody('directUrl'),
-            youtube: $this->request->hasBody('youtube'),
-            fieldHeight: $this->request->bodyInt('fieldHeight', 3),
-            kmess: $this->request->bodyInt('kmess', 10),
-            lng: trim($this->request->body('iso', '')),
+            timeshift: $request->bodyInt('timeshift'),
+            directUrl: $request->hasBody('directUrl'),
+            youtube: $request->hasBody('youtube'),
+            fieldHeight: $request->bodyInt('fieldHeight', 3),
+            kmess: $request->bodyInt('kmess', 10),
+            lng: trim($request->body('iso', '')),
         );
 
         $selectedLng = $this->userSettingsUseCase->save($command, $this->currentUser);
@@ -84,13 +83,13 @@ final readonly class SettingsController
         return $this->renderForumView($this->forumSettingsUseCase->getCurrent($this->currentUser), null);
     }
 
-    public function saveForum(): string
+    public function saveForum(Request $request): string
     {
         $command = new UpdateForumSettingsCommand(
-            farea: $this->request->hasBody('farea'),
-            upfp: $this->request->hasBody('upfp'),
-            preview: $this->request->hasBody('preview'),
-            postclip: $this->request->bodyInt('postclip', 1),
+            farea: $request->hasBody('farea'),
+            upfp: $request->hasBody('upfp'),
+            preview: $request->hasBody('preview'),
+            postclip: $request->bodyInt('postclip', 1),
         );
 
         $setForum = $this->forumSettingsUseCase->save($command, $this->currentUser);
@@ -108,10 +107,10 @@ final readonly class SettingsController
         return $this->renderMailView($this->mailSettingsUseCase->getCurrent($this->currentUser), null);
     }
 
-    public function saveMail(): string
+    public function saveMail(Request $request): string
     {
         $command = new UpdateMailSettingsCommand(
-            access: $this->request->bodyInt('access'),
+            access: $request->bodyInt('access'),
         );
 
         $setMail = $this->mailSettingsUseCase->save($command, $this->currentUser);

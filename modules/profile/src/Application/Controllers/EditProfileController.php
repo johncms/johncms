@@ -27,7 +27,6 @@ final readonly class EditProfileController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private GetEditContextUseCase $getEditContextUseCase,
         private UpdateProfileUseCase $updateProfileUseCase,
@@ -50,14 +49,14 @@ final readonly class EditProfileController
         return $this->renderForm($context, $this->formDataFromUser($context->profileUser), [], $successMessage);
     }
 
-    public function save(int $id): Response
+    public function save(Request $request, int $id): Response
     {
         $context = $this->resolveContext($id);
         if ($context instanceof Response) {
             return $context;
         }
 
-        $command = $this->buildCommand();
+        $command = $this->buildCommand($request);
 
         try {
             $this->updateProfileUseCase->execute($command, $context->profileUser);
@@ -69,13 +68,13 @@ final readonly class EditProfileController
         redirect('/profile/' . $context->profileUser->id . '/edit');
     }
 
-    public function deleteAvatar(int $id): Response
+    public function deleteAvatar(Request $request, int $id): Response
     {
         $context = $this->resolveContext($id);
         if ($context instanceof Response) {
             return $context;
         }
-        if (! $this->isCsrfValid()) {
+        if (! $this->isCsrfValid($request)) {
             return $this->renderError(__('Wrong data'));
         }
 
@@ -84,13 +83,13 @@ final readonly class EditProfileController
         redirect('/profile/' . $context->profileUser->id . '/edit');
     }
 
-    public function deletePhoto(int $id): Response
+    public function deletePhoto(Request $request, int $id): Response
     {
         $context = $this->resolveContext($id);
         if ($context instanceof Response) {
             return $context;
         }
-        if (! $this->isCsrfValid()) {
+        if (! $this->isCsrfValid($request)) {
             return $this->renderError(__('Wrong data'));
         }
 
@@ -113,38 +112,38 @@ final readonly class EditProfileController
         }
     }
 
-    private function isCsrfValid(): bool
+    private function isCsrfValid(Request $request): bool
     {
         $validator = new Validator(
-            ['csrf_token' => $this->request->body('csrf_token', '')],
+            ['csrf_token' => $request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 
         return $validator->isValid();
     }
 
-    private function buildCommand(): UpdateProfileCommand
+    private function buildCommand(Request $request): UpdateProfileCommand
     {
         return new UpdateProfileCommand(
-            imname: (string) $this->request->request->filter('imname', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
-            live: (string) $this->request->request->filter('live', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
-            dayb: htmlspecialchars($this->request->body('dayb', '')),
-            monthb: htmlspecialchars($this->request->body('monthb', '')),
-            yearofbirth: htmlspecialchars($this->request->body('yearofbirth', '')),
-            about: (string) $this->request->request->filter('about', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
-            mibile: (string) $this->request->request->filter('mibile', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
-            mail: (string) $this->request->request->filter('mail', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
-            mailvis: $this->request->bodyInt('mailvis'),
-            skype: (string) $this->request->request->filter('skype', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
-            jabber: (string) $this->request->request->filter('jabber', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
-            www: (string) $this->request->request->filter('www', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
-            status: (string) $this->request->request->filter('status', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
-            csrfToken: $this->request->body('csrf_token', ''),
-            name: (string) $this->request->request->filter('name', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
-            karmaOff: $this->request->bodyInt('karma_off'),
-            sex: (string) $this->request->request->filter('sex', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
-            rights: $this->request->bodyInt('rights'),
-            adminNotes: $this->request->body('admin_notes', ''),
+            imname: (string) $request->request->filter('imname', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            live: (string) $request->request->filter('live', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            dayb: htmlspecialchars($request->body('dayb', '')),
+            monthb: htmlspecialchars($request->body('monthb', '')),
+            yearofbirth: htmlspecialchars($request->body('yearofbirth', '')),
+            about: (string) $request->request->filter('about', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            mibile: (string) $request->request->filter('mibile', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            mail: (string) $request->request->filter('mail', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            mailvis: $request->bodyInt('mailvis'),
+            skype: (string) $request->request->filter('skype', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            jabber: (string) $request->request->filter('jabber', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            www: (string) $request->request->filter('www', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            status: (string) $request->request->filter('status', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            csrfToken: $request->body('csrf_token', ''),
+            name: (string) $request->request->filter('name', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            karmaOff: $request->bodyInt('karma_off'),
+            sex: (string) $request->request->filter('sex', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            rights: $request->bodyInt('rights'),
+            adminNotes: $request->body('admin_notes', ''),
         );
     }
 
