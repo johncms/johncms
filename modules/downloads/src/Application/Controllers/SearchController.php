@@ -19,7 +19,6 @@ final readonly class SearchController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private SearchFilesUseCase $useCase,
         private FilePresenter $filePresenter,
@@ -29,10 +28,10 @@ final readonly class SearchController
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(): string
+    public function __invoke(Request $request): string
     {
-        $rawQuery = trim($this->request->queryParam('search', ''));
-        $searchInDescription = (bool) $this->request->queryInt('id', 0);
+        $rawQuery = trim($request->queryParam('search', ''));
+        $searchInDescription = (bool) $request->queryInt('id', 0);
 
         $this->navChain->add(__('Downloads'), '/downloads/');
         $this->navChain->add(__('Search'), '/downloads/search/');

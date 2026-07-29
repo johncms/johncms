@@ -18,7 +18,6 @@ final readonly class FilesModerationController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private FilePresenter $filePresenter,
         private PaginationFactory $paginationFactory,
@@ -27,7 +26,7 @@ final readonly class FilesModerationController
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(): string
+    public function __invoke(Request $request): string
     {
         $this->navChain->add(__('Downloads'), '/downloads/');
         $this->navChain->add(__('Files awaiting moderation'));
@@ -37,13 +36,13 @@ final readonly class FilesModerationController
             'page_title' => __('Files awaiting moderation'),
         ]);
 
-        $acceptId = $this->request->queryInt('accept', 0);
+        $acceptId = $request->queryInt('accept', 0);
         if ($acceptId) {
             return $this->handleAcceptOne($acceptId);
         }
 
-        if ($this->request->getMethod() === 'POST') {
-            $post = $this->request->request->all();
+        if ($request->getMethod() === 'POST') {
+            $post = $request->request->all();
             if (isset($post['all_mod'])) {
                 return $this->handleAcceptAll();
             }

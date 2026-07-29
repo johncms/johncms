@@ -24,7 +24,6 @@ final readonly class EditScreenController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private Session $session,
         private NavChain $navChain,
         private ImageManager $imageManager,
@@ -34,7 +33,7 @@ final readonly class EditScreenController
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(int $id): Response
+    public function __invoke(Request $request, int $id): Response
     {
         $file = DownloadFile::query()
             ->where('id', $id)
@@ -45,13 +44,13 @@ final readonly class EditScreenController
             return $this->notFound();
         }
 
-        if ($this->request->getMethod() === 'POST') {
-            $doParam = $this->request->queryParam('do');
+        if ($request->getMethod() === 'POST') {
+            $doParam = $request->queryParam('do');
             if ($doParam !== '') {
-                return $this->handleDelete($id, $doParam);
+                return $this->handleDelete($request, $id, $doParam);
             }
 
-            return $this->handleUpload($id);
+            return $this->handleUpload($request, $id);
         }
 
         $deleteToken = uniqid('', true);
@@ -77,9 +76,9 @@ final readonly class EditScreenController
         ]));
     }
 
-    private function handleDelete(int $id, string $filename): Response
+    private function handleDelete(Request $request, int $id, string $filename): Response
     {
-        $post = $this->request->request->all();
+        $post = $request->request->all();
         $sessionToken = $this->session->get('delete_token');
 
         if (
@@ -97,7 +96,7 @@ final readonly class EditScreenController
         return new RedirectResponse('/downloads/edit-screen/' . $id . '/');
     }
 
-    private function handleUpload(int $id): Response
+    private function handleUpload(Request $request, int $id): Response
     {
         $uploadUrl = '/downloads/edit-screen/' . $id . '/';
         $screensDir = \UPLOAD_PATH . 'downloads' . \DS . 'screen' . \DS . $id;
@@ -106,7 +105,7 @@ final readonly class EditScreenController
             throw new \RuntimeException(sprintf('Directory "%s" was not created', $screensDir));
         }
 
-        $files = $this->request->files->all();
+        $files = $request->files->all();
         if (empty($files) || empty($files['screen'])) {
             return new Response($this->render->render('system::pages/result', [
                 'title'         => __('Upload screenshot'),

@@ -21,7 +21,6 @@ final readonly class MoveFileController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private User $currentUser,
         private MoveFileUseCase $moveFileUseCase,
@@ -31,7 +30,7 @@ final readonly class MoveFileController
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(int $id): Response
+    public function __invoke(Request $request, int $id): Response
     {
         if ($this->currentUser->rights <= 6) {
             return $this->notFound();
@@ -52,8 +51,8 @@ final readonly class MoveFileController
         $this->navChain->add(__('Move File'));
 
         $baseUrl = '/downloads/move-file/' . $id . '/';
-        $catId = (int) ($this->request->queryParam('catId') ?? 0);
-        $do = $this->request->queryParam('do') ?? '';
+        $catId = (int) ($request->queryParam('catId') ?? 0);
+        $do = $request->queryParam('do') ?? '';
 
         $category = $catId ? DownloadCategory::query()->find($catId) : null;
         if ($catId && $category === null) {
@@ -61,7 +60,7 @@ final readonly class MoveFileController
         }
 
         if ($do === 'transfer' && $catId) {
-            return $this->handleTransfer($id, $file, $catId, $category, $baseUrl);
+            return $this->handleTransfer($request, $id, $file, $catId, $category, $baseUrl);
         }
 
         return $this->showBrowser($id, $file, $catId, $baseUrl);
@@ -100,7 +99,7 @@ final readonly class MoveFileController
         ]));
     }
 
-    private function handleTransfer(int $id, DownloadFile $file, int $catId, DownloadCategory $category, string $baseUrl): Response
+    private function handleTransfer(Request $request, int $id, DownloadFile $file, int $catId, DownloadCategory $category, string $baseUrl): Response
     {
         if ($catId === (int) $file->refid) {
             return new Response($this->render->render('system::pages/result', [
@@ -112,7 +111,7 @@ final readonly class MoveFileController
             ]));
         }
 
-        if ($this->request->query->has('yes')) {
+        if ($request->query->has('yes')) {
             $this->moveFileUseCase->execute($file, $category);
 
             return new Response($this->render->render('system::pages/result', [

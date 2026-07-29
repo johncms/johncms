@@ -30,7 +30,6 @@ final readonly class FilesUploadController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private User $currentUser,
         private ImageManager $imageManager,
@@ -41,7 +40,7 @@ final readonly class FilesUploadController
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(int $id): string
+    public function __invoke(Request $request, int $id): string
     {
         $category = DownloadCategory::query()->find($id);
 
@@ -66,8 +65,8 @@ final readonly class FilesUploadController
             'page_title' => __('Upload File'),
         ]);
 
-        if ($this->request->getMethod() === 'POST') {
-            return $this->handleUpload($id, $category->dir, $allowedExtensions, $isAdmin);
+        if ($request->getMethod() === 'POST') {
+            return $this->handleUpload($request, $id, $category->dir, $allowedExtensions, $isAdmin);
         }
 
         return $this->render->render('downloads::file_upload', [
@@ -78,16 +77,16 @@ final readonly class FilesUploadController
         ]);
     }
 
-    private function handleUpload(int $id, string $categoryDir, array $allowedExtensions, bool $isAdmin): string
+    private function handleUpload(Request $request, int $id, string $categoryDir, array $allowedExtensions, bool $isAdmin): string
     {
-        $uploadedFiles = $this->request->files->all();
+        $uploadedFiles = $request->files->all();
         $uploadUrl = '/downloads/upload/' . $id . '/';
 
         if (empty($uploadedFiles) || empty($uploadedFiles['fail'])) {
             return $this->error(__('File not attached'), $uploadUrl, __('Repeat'));
         }
 
-        $post = $this->request->request->all();
+        $post = $request->request->all();
         $config = config('johncms');
 
         /** @var \Symfony\Component\HttpFoundation\File\UploadedFile $uploadedFile */

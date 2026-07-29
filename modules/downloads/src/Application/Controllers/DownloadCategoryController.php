@@ -21,7 +21,6 @@ final readonly class DownloadCategoryController
 {
     public function __construct(
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private User $currentUser,
         private FilePresenter $filePresenter,
@@ -32,7 +31,7 @@ final readonly class DownloadCategoryController
     ) {
     }
 
-    public function __invoke(string $categoryPath): string
+    public function __invoke(Request $request, string $categoryPath): string
     {
         $category = $this->categoryPathService->findCategoryByPath($categoryPath);
         if ($category === null) {
@@ -89,7 +88,7 @@ final readonly class DownloadCategoryController
         $totalFiles = DownloadFile::query()->where('refid', $category->id)->where('type', '<', 3)->count();
 
         $pagination = $this->paginationFactory->create($totalFiles);
-        if ($this->request->getMethod() !== 'POST') {
+        if ($request->getMethod() !== 'POST') {
             $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
             if ($redirectUrl !== null) {
                 redirect($redirectUrl);
@@ -107,8 +106,8 @@ final readonly class DownloadCategoryController
 
         if ($totalFiles > 0) {
             if ($totalFiles > 1) {
-                if ($this->request->getMethod() === 'POST') {
-                    $post = $this->request->request->all();
+                if ($request->getMethod() === 'POST') {
+                    $post = $request->request->all();
                     if (isset($post['sort_down'])) {
                         $this->session->set('sort_down', $post['sort_down'] ? 1 : 0);
                     }

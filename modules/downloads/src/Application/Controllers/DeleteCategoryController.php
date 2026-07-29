@@ -19,7 +19,6 @@ final readonly class DeleteCategoryController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private DeleteCategoryUseCase $deleteCategoryUseCase,
         private DownloadCategoryPathService $categoryPathService,
@@ -27,7 +26,7 @@ final readonly class DeleteCategoryController
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(int $id): Response
+    public function __invoke(Request $request, int $id): Response
     {
         $subcategoryCount = DownloadCategory::query()->where('refid', $id)->count();
         $category = DownloadCategory::query()->find($id);
@@ -60,7 +59,7 @@ final readonly class DeleteCategoryController
             ]), Response::HTTP_NOT_FOUND);
         }
 
-        if ($this->request->getMethod() === 'POST') {
+        if ($request->getMethod() === 'POST') {
             $refid = (int) $category->refid;
             $this->deleteCategoryUseCase->execute($category);
             $redirectUrl = $refid > 0

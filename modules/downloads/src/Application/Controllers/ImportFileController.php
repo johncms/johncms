@@ -28,7 +28,6 @@ final readonly class ImportFileController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private User $currentUser,
         private ImageManager $imageManager,
         private DownloadFilePathService $filePathService,
@@ -37,7 +36,7 @@ final readonly class ImportFileController
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(int $id): Response
+    public function __invoke(Request $request, int $id): Response
     {
         $category = DownloadCategory::query()->find($id);
 
@@ -60,8 +59,8 @@ final readonly class ImportFileController
             'page_title' => __('File import'),
         ]);
 
-        if ($this->request->getMethod() === 'POST') {
-            return $this->handleImport($id, $category->dir, $allowedExtensions, $baseUrl);
+        if ($request->getMethod() === 'POST') {
+            return $this->handleImport($request, $id, $category, $allowedExtensions, $baseUrl);
         }
 
         return new Response($this->render->render('downloads::import', [
@@ -72,9 +71,9 @@ final readonly class ImportFileController
         ]));
     }
 
-    private function handleImport(int $id, string $categoryDir, array $allowedExtensions, string $baseUrl): Response
+    private function handleImport(Request $request, int $id, DownloadCategory $category, array $allowedExtensions, string $baseUrl): Response
     {
-        $post = $this->request->request->all();
+        $post = $request->request->all();
         $errors = [];
 
         $url = isset($post['url']) ? trim($post['url']) : null;
@@ -129,11 +128,11 @@ final readonly class ImportFileController
             return $this->renderErrors($errors, $baseUrl);
         }
 
-        if (file_exists($categoryDir . '/' . $filename)) {
+        if (file_exists($category->dir . '/' . $filename)) {
             $filename = time() . $filename;
         }
 
-        if (! copy($url, $categoryDir . '/' . $filename)) {
+        if (! copy($url, $category->dir . '/' . $filename)) {
             return new Response($this->render->render('system::pages/result', [
                 'title'         => __('File import'),
                 'type'          => 'alert-danger',
@@ -145,7 +144,7 @@ final readonly class ImportFileController
 
         $file = DownloadFile::query()->create([
             'refid'    => $id,
-            'dir'      => $categoryDir,
+            'dir'      => $category->dir,
             'time'     => time(),
             'name'     => $filename,
             'text'     => $linkText,
@@ -158,7 +157,7 @@ final readonly class ImportFileController
 
         $screenAttached = null;
         $screenError = null;
-        $files = $this->request->files->all();
+        $files = $request->files->all();
         /** @var \Symfony\Component\HttpFoundation\File\UploadedFile|null $screenshot */
         $screenshot = $files['screen'] ?? null;
         if ($screenshot !== null && ! $screenshot->getError()) {

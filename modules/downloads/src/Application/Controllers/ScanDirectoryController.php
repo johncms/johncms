@@ -25,7 +25,6 @@ final readonly class ScanDirectoryController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private User $currentUser,
         private DownloadCategoryPathService $categoryPathService,
@@ -33,12 +32,12 @@ final readonly class ScanDirectoryController
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(): Response
+    public function __invoke(Request $request): Response
     {
         set_time_limit(99999);
 
-        $id = max(0, $this->request->queryInt('id', 0));
-        $do = $this->request->queryParam('do') ?? '';
+        $id = max(0, $request->queryInt('id', 0));
+        $do = $request->queryParam('do') ?? '';
 
         $this->navChain->add(__('Downloads'), '/downloads/');
         $this->navChain->add(__('Update'));
@@ -52,7 +51,7 @@ final readonly class ScanDirectoryController
             return $this->handleClean($id);
         }
 
-        return $this->handleScan($id);
+        return $this->handleScan($request, $id);
     }
 
     private function handleClean(int $id): Response
@@ -131,10 +130,10 @@ final readonly class ScanDirectoryController
         DownloadFile::query()->where('refid', $categoryId)->delete();
     }
 
-    private function handleScan(int $id): Response
+    private function handleScan(Request $request, int $id): Response
     {
-        $yes = $this->request->query->has('yes');
-        $mod = $this->request->queryInt('mod', 0);
+        $yes = $request->query->has('yes');
+        $mod = $request->queryInt('mod', 0);
 
         if ($id > 0) {
             $category = DownloadCategory::query()->find($id);

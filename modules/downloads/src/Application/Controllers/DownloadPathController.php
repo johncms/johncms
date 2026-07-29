@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\Request;
 use Johncms\Modules\Downloads\Application\Services\DownloadCategoryPathService;
 use Johncms\Modules\Downloads\Application\Services\DownloadFilePathService;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,14 +22,14 @@ final readonly class DownloadPathController
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(string $categoryPath): Response
+    public function __invoke(Request $request, string $categoryPath): Response
     {
         if ($this->categoryPathService->findCategoryByPath($categoryPath) !== null) {
-            return new Response($this->categoryController->__invoke($categoryPath));
+            return new Response($this->categoryController->__invoke($request, $categoryPath));
         }
 
         if ($this->filePathService->parseFilePath('/downloads/' . ltrim($categoryPath, '/')) !== null) {
-            return $this->viewFileController->__invoke($categoryPath);
+            return $this->viewFileController->__invoke($request, $categoryPath);
         }
 
         pageNotFound();

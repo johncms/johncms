@@ -27,7 +27,6 @@ final readonly class ViewFileController
 {
     public function __construct(
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private User $currentUser,
         private Session $session,
@@ -42,7 +41,7 @@ final readonly class ViewFileController
     ) {
     }
 
-    public function __invoke(string $filePath): Response
+    public function __invoke(Request $request, string $filePath): Response
     {
         $parsed = $this->filePathService->parseFilePath('/downloads/' . ltrim($filePath, '/'));
         if ($parsed === null) {
@@ -123,8 +122,8 @@ final readonly class ViewFileController
 
         // Voting (session state is an HTTP concern, stays here)
         $sessionIndex = 'rate_file_' . $id;
-        $hasVoteAction = $this->request->query->has('plus') || $this->request->query->has('minus');
-        $isPlus = $this->request->query->has('plus');
+        $hasVoteAction = $request->query->has('plus') || $request->query->has('minus');
+        $isPlus = $request->query->has('plus');
 
         $vote = $this->voteUseCase->execute(
             $id,
@@ -139,9 +138,9 @@ final readonly class ViewFileController
         // Bookmarks
         $bookmarkAction = null;
         if ($this->currentUser->isValid()) {
-            if ($this->request->query->has('addBookmark')) {
+            if ($request->query->has('addBookmark')) {
                 $bookmarkAction = 'add';
-            } elseif ($this->request->query->has('delBookmark')) {
+            } elseif ($request->query->has('delBookmark')) {
                 $bookmarkAction = 'remove';
             }
         }

@@ -26,7 +26,6 @@ final readonly class CreateCategoryController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private User $currentUser,
         private DownloadSlugService $slugService,
@@ -35,9 +34,9 @@ final readonly class CreateCategoryController
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(): Response
+    public function __invoke(Request $request): Response
     {
-        $refid = max(0, $this->request->queryInt('refid', 0));
+        $refid = max(0, $request->queryInt('refid', 0));
 
         $this->navChain->add(__('Downloads'), '/downloads/');
         $this->navChain->add(__('Create Folder'));
@@ -70,8 +69,8 @@ final readonly class CreateCategoryController
 
         $baseUrl = '/downloads/categories/create' . ($refid ? '?refid=' . $refid : '');
 
-        if ($this->request->getMethod() === 'POST') {
-            return $this->handleCreate($refid, $baseDir, $baseUrl);
+        if ($request->getMethod() === 'POST') {
+            return $this->handleCreate($request, $refid, $baseDir, $baseUrl);
         }
 
         return new Response($this->render->render('downloads::folder_form', [
@@ -85,9 +84,9 @@ final readonly class CreateCategoryController
         ]));
     }
 
-    private function handleCreate(int $refid, string $baseDir, string $baseUrl): Response
+    private function handleCreate(Request $request, int $refid, string $baseDir, string $baseUrl): Response
     {
-        $post = $this->request->request->all();
+        $post = $request->request->all();
         $name = trim($post['name'] ?? '');
         $rusName = trim($post['rus_name'] ?? '');
         $desc = trim($post['desc'] ?? '');

@@ -27,7 +27,6 @@ final readonly class EditCategoryController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private User $currentUser,
         private DownloadSlugService $slugService,
@@ -36,7 +35,7 @@ final readonly class EditCategoryController
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(int $id): Response
+    public function __invoke(Request $request, int $id): Response
     {
         $category = DownloadCategory::query()->find($id);
 
@@ -58,14 +57,14 @@ final readonly class EditCategoryController
             'page_title' => __('Edit Folder'),
         ]);
 
-        $do = $this->request->queryParam('do') ?? '';
+        $do = $request->queryParam('do') ?? '';
 
         if ($do === 'up' || $do === 'down') {
             return $this->handleSort($category, $do);
         }
 
-        if ($this->request->getMethod() === 'POST') {
-            return $this->handleSave($id, $category);
+        if ($request->getMethod() === 'POST') {
+            return $this->handleSave($request, $id, $category);
         }
 
         return $this->showForm($id, $category);
@@ -92,9 +91,9 @@ final readonly class EditCategoryController
         return new RedirectResponse($backUrl);
     }
 
-    private function handleSave(int $id, DownloadCategory $category): Response
+    private function handleSave(Request $request, int $id, DownloadCategory $category): Response
     {
-        $post = $this->request->request->all();
+        $post = $request->request->all();
         $rusName = trim($post['rus_name'] ?? '');
         $desc = trim($post['desc'] ?? '');
         $errors = [];

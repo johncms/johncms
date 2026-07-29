@@ -14,14 +14,13 @@ final readonly class RecountController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Request $request,
     ) {
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(): RedirectResponse
+    public function __invoke(Request $request): RedirectResponse
     {
-        $id = max(0, $this->request->queryInt('id', 0));
+        $id = max(0, $request->queryInt('id', 0));
 
         DownloadCategory::query()->each(function (DownloadCategory $category): void {
             $count = DownloadFile::query()

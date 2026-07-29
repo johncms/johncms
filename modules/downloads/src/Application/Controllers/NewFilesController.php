@@ -20,7 +20,6 @@ final readonly class NewFilesController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private ViewNewFilesUseCase $useCase,
         private FilePresenter $filePresenter,
@@ -30,9 +29,9 @@ final readonly class NewFilesController
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(): string
+    public function __invoke(Request $request): string
     {
-        $categoryId = max(0, $this->request->queryInt('id', 0));
+        $categoryId = max(0, $request->queryInt('id', 0));
 
         try {
             $pagination = $this->paginationFactory->create($this->useCase->count($categoryId));

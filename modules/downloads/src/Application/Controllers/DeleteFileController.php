@@ -23,7 +23,6 @@ final readonly class DeleteFileController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private Session $session,
         private NavChain $navChain,
         private DeleteFileUseCase $deleteFileUseCase,
@@ -34,10 +33,10 @@ final readonly class DeleteFileController
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(int $id): Response
+    public function __invoke(Request $request, int $id): Response
     {
-        if ($this->request->getMethod() === 'POST') {
-            return $this->handleDelete($id);
+        if ($request->getMethod() === 'POST') {
+            return $this->handleDelete($request, $id);
         }
 
         $file = DownloadFile::query()
@@ -71,9 +70,9 @@ final readonly class DeleteFileController
         ]));
     }
 
-    private function handleDelete(int $id): Response
+    private function handleDelete(Request $request, int $id): Response
     {
-        $post = $this->request->request->all();
+        $post = $request->request->all();
         $sessionToken = $this->session->get('delete_token');
 
         if (

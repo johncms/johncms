@@ -25,7 +25,6 @@ final readonly class IndexController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private User $currentUser,
         private FilePresenter $filePresenter,
@@ -38,9 +37,9 @@ final readonly class IndexController
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(): Response
+    public function __invoke(Request $request): Response
     {
-        $redirect = $this->legacyRedirectResolver->resolve($this->request->query->all());
+        $redirect = $this->legacyRedirectResolver->resolve($request->query->all());
         if ($redirect !== null) {
             return new RedirectResponse($redirect, Response::HTTP_MOVED_PERMANENTLY);
         }
@@ -93,7 +92,7 @@ final readonly class IndexController
         $totalFiles = DownloadFile::query()->where('refid', 0)->where('type', '<', 3)->count();
 
         $pagination = $this->paginationFactory->create($totalFiles);
-        if ($this->request->getMethod() !== 'POST') {
+        if ($request->getMethod() !== 'POST') {
             $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
             if ($redirectUrl !== null) {
                 redirect($redirectUrl);
@@ -104,8 +103,8 @@ final readonly class IndexController
 
         if ($totalFiles > 0) {
             if ($totalFiles > 1) {
-                if ($this->request->getMethod() === 'POST') {
-                    $post = $this->request->request->all();
+                if ($request->getMethod() === 'POST') {
+                    $post = $request->request->all();
                     if (isset($post['sort_down'])) {
                         $this->session->set('sort_down', $post['sort_down'] ? 1 : 0);
                     }

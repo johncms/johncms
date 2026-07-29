@@ -19,14 +19,13 @@ final readonly class LoadFileController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private Session $session,
         private User $currentUser,
     ) {
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(int $id): Response
+    public function __invoke(Request $request, int $id): Response
     {
         $file = DownloadFile::query()
             ->where('id', $id)
@@ -43,7 +42,7 @@ final readonly class LoadFileController
 
         $link = '/' . $file->dir . '/' . $file->name;
 
-        $moreId = abs($this->request->queryInt('more'));
+        $moreId = abs($request->queryInt('more'));
         if ($moreId > 0) {
             $moreFile = DownloadMoreFile::query()
                 ->where('refid', $id)

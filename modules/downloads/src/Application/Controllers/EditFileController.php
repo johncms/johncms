@@ -23,7 +23,6 @@ final readonly class EditFileController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private CategoryNavService $categoryNavService,
         private DownloadFilePathService $filePathService,
@@ -32,7 +31,7 @@ final readonly class EditFileController
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(int $id): Response
+    public function __invoke(Request $request, int $id): Response
     {
         $file = DownloadFile::query()
             ->where('id', $id)
@@ -45,8 +44,8 @@ final readonly class EditFileController
 
         $audioTags = $this->readAudioTags($file->dir . '/' . $file->name);
 
-        if ($this->request->getMethod() === 'POST') {
-            return $this->handleSave($id, $file, $audioTags);
+        if ($request->getMethod() === 'POST') {
+            return $this->handleSave($request, $id, $file, $audioTags);
         }
 
         $this->render->addData([
@@ -72,9 +71,9 @@ final readonly class EditFileController
         ]));
     }
 
-    private function handleSave(int $id, DownloadFile $file, array $audioTags): Response
+    private function handleSave(Request $request, int $id, DownloadFile $file, array $audioTags): Response
     {
-        $post = $this->request->request->all();
+        $post = $request->request->all();
         $name = isset($post['text']) ? trim($post['text']) : null;
         $nameLink = isset($post['name_link']) ? htmlspecialchars(mb_substr($post['name_link'], 0, 200)) : null;
         $desc = isset($post['desc']) ? trim($post['desc']) : null;

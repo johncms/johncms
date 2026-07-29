@@ -31,7 +31,6 @@ final readonly class AdditionalFilesController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private Session $session,
         private NavChain $navChain,
         private DateFormatterInterface $dateFormatter,
@@ -41,7 +40,7 @@ final readonly class AdditionalFilesController
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(int $id): Response
+    public function __invoke(Request $request, int $id): Response
     {
         $file = DownloadFile::query()
             ->where('id', $id)
@@ -59,19 +58,19 @@ final readonly class AdditionalFilesController
 
         $baseUrl = '/downloads/additional-files/' . $id . '/';
 
-        $editId = $this->request->query->has('edit') ? (int) $this->request->queryParam('edit') : null;
-        $delId = $this->request->query->has('del') ? (int) $this->request->queryParam('del') : null;
+        $editId = $request->query->has('edit') ? (int) $request->queryParam('edit') : null;
+        $delId = $request->query->has('del') ? (int) $request->queryParam('del') : null;
 
         if ($editId !== null) {
-            return $this->handleEdit($id, $file, $editId, $baseUrl);
+            return $this->handleEdit($request, $id, $file, $editId, $baseUrl);
         }
 
         if ($delId !== null) {
-            return $this->handleDelete($id, $file, $delId, $baseUrl);
+            return $this->handleDelete($request, $id, $file, $delId, $baseUrl);
         }
 
-        if ($this->request->getMethod() === 'POST') {
-            return $this->handleUpload($id, $file, $baseUrl);
+        if ($request->getMethod() === 'POST') {
+            return $this->handleUpload($request, $id, $file, $baseUrl);
         }
 
         return $this->showList($id, $file, $baseUrl);
@@ -106,7 +105,7 @@ final readonly class AdditionalFilesController
         ]));
     }
 
-    private function handleEdit(int $id, DownloadFile $file, int $editId, string $baseUrl): Response
+    private function handleEdit(Request $request, int $id, DownloadFile $file, int $editId, string $baseUrl): Response
     {
         $moreFile = DownloadMoreFile::query()->find($editId);
 
@@ -114,8 +113,8 @@ final readonly class AdditionalFilesController
             return $this->notFound();
         }
 
-        if ($this->request->getMethod() === 'POST') {
-            $post = $this->request->request->all();
+        if ($request->getMethod() === 'POST') {
+            $post = $request->request->all();
             $nameLink = isset($post['name_link']) ? htmlspecialchars(mb_substr($post['name_link'], 0, 200)) : null;
 
             if ($nameLink) {
@@ -139,7 +138,7 @@ final readonly class AdditionalFilesController
         ]));
     }
 
-    private function handleDelete(int $id, DownloadFile $file, int $delId, string $baseUrl): Response
+    private function handleDelete(Request $request, int $id, DownloadFile $file, int $delId, string $baseUrl): Response
     {
         $moreFile = DownloadMoreFile::query()->find($delId);
 
@@ -147,9 +146,9 @@ final readonly class AdditionalFilesController
             return $this->notFound();
         }
 
-        $hasYes = $this->request->query->has('yes');
-        if ($hasYes && $this->request->getMethod() === 'POST') {
-            $post = $this->request->request->all();
+        $hasYes = $request->query->has('yes');
+        if ($hasYes && $request->getMethod() === 'POST') {
+            $post = $request->request->all();
             $sessionToken = $this->session->get('delete_token');
 
             if (isset($post['delete_token']) && $sessionToken !== null && $sessionToken === $post['delete_token']) {
@@ -179,11 +178,11 @@ final readonly class AdditionalFilesController
         ]));
     }
 
-    private function handleUpload(int $id, DownloadFile $file, string $baseUrl): Response
+    private function handleUpload(Request $request, int $id, DownloadFile $file, string $baseUrl): Response
     {
         $config = config('johncms');
-        $post = $this->request->request->all();
-        $files = $this->request->files->all();
+        $post = $request->request->all();
+        $files = $request->files->all();
         $errors = [];
 
         $linkFile = isset($post['link_file']) ? str_replace('./', '_', trim($post['link_file'])) : null;

@@ -441,19 +441,19 @@ parameters:
 			path: modules/downloads/src/Application/Controllers/AdditionalFilesController.php
 
 		-
-			message: '#^Parameter \#2 \$file of method Johncms\\Modules\\Downloads\\Application\\Controllers\\AdditionalFilesController\:\:handleDelete\(\) expects Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile, stdClass given\.$#'
+			message: '#^Parameter \#3 \$file of method Johncms\\Modules\\Downloads\\Application\\Controllers\\AdditionalFilesController\:\:handleDelete\(\) expects Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile, stdClass given\.$#'
 			identifier: argument.type
 			count: 1
 			path: modules/downloads/src/Application/Controllers/AdditionalFilesController.php
 
 		-
-			message: '#^Parameter \#2 \$file of method Johncms\\Modules\\Downloads\\Application\\Controllers\\AdditionalFilesController\:\:handleEdit\(\) expects Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile, stdClass given\.$#'
+			message: '#^Parameter \#3 \$file of method Johncms\\Modules\\Downloads\\Application\\Controllers\\AdditionalFilesController\:\:handleEdit\(\) expects Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile, stdClass given\.$#'
 			identifier: argument.type
 			count: 1
 			path: modules/downloads/src/Application/Controllers/AdditionalFilesController.php
 
 		-
-			message: '#^Parameter \#2 \$file of method Johncms\\Modules\\Downloads\\Application\\Controllers\\AdditionalFilesController\:\:handleUpload\(\) expects Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile, stdClass given\.$#'
+			message: '#^Parameter \#3 \$file of method Johncms\\Modules\\Downloads\\Application\\Controllers\\AdditionalFilesController\:\:handleUpload\(\) expects Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile, stdClass given\.$#'
 			identifier: argument.type
 			count: 1
 			path: modules/downloads/src/Application/Controllers/AdditionalFilesController.php
@@ -639,7 +639,7 @@ parameters:
 			path: modules/downloads/src/Application/Controllers/EditFileController.php
 
 		-
-			message: '#^Parameter \#2 \$file of method Johncms\\Modules\\Downloads\\Application\\Controllers\\EditFileController\:\:handleSave\(\) expects Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile, stdClass given\.$#'
+			message: '#^Parameter \#3 \$file of method Johncms\\Modules\\Downloads\\Application\\Controllers\\EditFileController\:\:handleSave\(\) expects Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile, stdClass given\.$#'
 			identifier: argument.type
 			count: 1
 			path: modules/downloads/src/Application/Controllers/EditFileController.php
@@ -713,7 +713,7 @@ parameters:
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$dir\.$#'
 			identifier: property.notFound
-			count: 2
+			count: 4
 			path: modules/downloads/src/Application/Controllers/ImportFileController.php
 
 		-
@@ -732,12 +732,6 @@ parameters:
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 2
-			path: modules/downloads/src/Application/Controllers/ImportFileController.php
-
-		-
-			message: '#^Undefined variable\: \$category$#'
-			identifier: variable.undefined
-			count: 1
 			path: modules/downloads/src/Application/Controllers/ImportFileController.php
 
 		-
@@ -837,7 +831,7 @@ parameters:
 			path: modules/downloads/src/Application/Controllers/MoveFileController.php
 
 		-
-			message: '#^Parameter \#2 \$file of method Johncms\\Modules\\Downloads\\Application\\Controllers\\MoveFileController\:\:handleTransfer\(\) expects Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile, stdClass given\.$#'
+			message: '#^Parameter \#3 \$file of method Johncms\\Modules\\Downloads\\Application\\Controllers\\MoveFileController\:\:handleTransfer\(\) expects Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile, stdClass given\.$#'
 			identifier: argument.type
 			count: 1
 			path: modules/downloads/src/Application/Controllers/MoveFileController.php
