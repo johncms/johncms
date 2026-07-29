@@ -125,9 +125,10 @@ final readonly class RegistrationController
                     email: $fields['email'],
                 );
 
-                $newUser = $this->registerUser->execute($dto);
+                $clientInfo = $this->env->getClientInfo();
+                $newUser = $this->registerUser->execute($dto, $clientInfo);
 
-                $ip = (string) $this->env->getIp(false);
+                $ip = $clientInfo->ip;
                 foreach ($consents as $consent) {
                     if ($fields['consent_' . $consent->id] === '1') {
                         $this->consentService->logAcceptance($consent->id, $newUser->id, $ip, $consent->version);

@@ -109,6 +109,7 @@ return static function (ContainerConfigurator $container): void {
                 ROOT_PATH . 'system/src/Http/PageMeta.php',
                 ROOT_PATH . 'system/src/Http/Pagination/Pagination.php',
                 ROOT_PATH . 'system/src/Http/UploadedFileDTO.php',
+                ROOT_PATH . 'system/src/Security/ClientInfoDTO.php',
             ]
         )
         ->autowire()

@@ -18,6 +18,7 @@ use Johncms\Modules\Forum\Domain\Models\ForumTopic;
 use Johncms\NavChain;
 use Johncms\Security\AntifloodCheckerInterface;
 use Johncms\Smilies\SmiliesRendererInterface;
+use Johncms\Http\Environment;
 use Johncms\Http\Request;
 use Johncms\System\Utility\EditorContentNormalizer;
 use Johncms\System\View\Render;
@@ -32,6 +33,7 @@ final readonly class NewTopicController
         private ControllerContext $controllerContext,
         private Render $render,
         private Request $request,
+        private Environment $environment,
         private AntifloodCheckerInterface $antifloodChecker,
         private SmiliesRendererInterface $smiliesRenderer,
         private EditorContentNormalizer $editorContentNormalizer,
@@ -134,6 +136,7 @@ final readonly class NewTopicController
                     messageText: (string) $data['message'],
                     metaKeywords: $data['meta_keywords'] ?? null,
                     metaDescription: $data['meta_description'] ?? null,
+                    clientInfo: $this->environment->getClientInfo(),
                 );
                 $this->attachUploadedFilesUseCase->execute(
                     messageId: $result->messageId,

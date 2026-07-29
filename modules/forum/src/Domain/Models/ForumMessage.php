@@ -37,8 +37,8 @@ use Simba77\EmbedMedia\Embed;
  * @property int $user_id
  * @property string $user_name
  * @property string $user_agent
- * @property int $ip
- * @property int $ip_via_proxy
+ * @property string $ip
+ * @property string $ip_via_proxy
  * @property bool $pinned
  * @property string $editor_name
  * @property int $edit_time

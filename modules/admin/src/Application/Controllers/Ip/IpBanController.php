@@ -15,6 +15,7 @@ use Johncms\Modules\Admin\Application\UseCases\StoreIpBanUseCase;
 use Johncms\Modules\Admin\Domain\Enums\IpBanType;
 use Johncms\Modules\Admin\Domain\Models\BanIp;
 use Johncms\NavChain;
+use Johncms\Http\Environment;
 use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
@@ -28,6 +29,7 @@ final readonly class IpBanController
         private AdminControllerContext $controllerContext,
         private Render $render,
         private Request $request,
+        private Environment $environment,
         private NavChain $navChain,
         private User $currentUser,
         private GetIpBanListUseCase $getList,
@@ -94,7 +96,7 @@ final readonly class IpBanController
         $url = trim($this->request->body('url', ''));
         $reason = trim($this->request->body('reason', ''));
 
-        $result = $this->prepareIpBan->execute($this->request->body('ip', ''));
+        $result = $this->prepareIpBan->execute($this->request->body('ip', ''), $this->environment->getClientInfo());
 
         if ($result->hasErrors()) {
             return $this->newForm(implode('<br>', $result->errors));

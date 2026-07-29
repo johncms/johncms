@@ -11,7 +11,7 @@ use Johncms\Modules\Forum\Domain\Models\ForumTopic;
 use Johncms\Modules\Forum\Domain\Models\ForumUnread;
 use Johncms\Modules\Forum\Domain\Repository\ForumFileRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
-use Johncms\Http\Environment;
+use Johncms\Security\ClientInfoDTO;
 use Johncms\Users\User;
 
 final readonly class PostMessageUseCase
@@ -20,7 +20,6 @@ final readonly class PostMessageUseCase
         private ForumMessageRepositoryInterface $messageRepository,
         private ForumTopicStatsRecalculator $topicStatsRecalculator,
         private ForumFileRepositoryInterface $fileRepository,
-        private Environment $environment,
         private User $currentUser,
     ) {
     }
@@ -30,6 +29,7 @@ final readonly class PostMessageUseCase
         string $messageText,
         bool $addFiles,
         array $forumSettings,
+        ClientInfoDTO $clientInfo,
     ): PostMessageResultDTO {
         $messageId = null;
         if (! $addFiles) {
@@ -37,7 +37,7 @@ final readonly class PostMessageUseCase
         }
 
         if ($messageId === null) {
-            $messageId = $this->insertMessage($topic, $messageText);
+            $messageId = $this->insertMessage($topic, $messageText, $clientInfo);
         }
 
         $this->topicStatsRecalculator->recalculate($topic->id);
@@ -65,16 +65,16 @@ final readonly class PostMessageUseCase
         );
     }
 
-    private function insertMessage(ForumTopic $topic, string $messageText): int
+    private function insertMessage(ForumTopic $topic, string $messageText, ClientInfoDTO $clientInfo): int
     {
         $message = new ForumMessage();
         $message->topic_id = $topic->id;
         $message->date = time();
         $message->user_id = $this->currentUser->id;
         $message->user_name = $this->currentUser->name;
-        $message->ip = $this->environment->getIp(false);
-        $message->ip_via_proxy = $this->environment->getIpViaProxy(false);
-        $message->user_agent = $this->environment->getUserAgent();
+        $message->ip = $clientInfo->ip;
+        $message->ip_via_proxy = $clientInfo->ipViaProxy;
+        $message->user_agent = $clientInfo->userAgent;
         $message->text = $messageText;
 
         $this->messageRepository->save($message);

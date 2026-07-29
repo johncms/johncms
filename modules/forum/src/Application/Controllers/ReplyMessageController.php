@@ -15,6 +15,7 @@ use Johncms\Modules\Forum\Application\UseCases\ReplyMessageUseCase;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
 use Johncms\Security\AntifloodCheckerInterface;
 use Johncms\Smilies\SmiliesRendererInterface;
+use Johncms\Http\Environment;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
 use Johncms\System\Utility\EditorContentNormalizer;
@@ -29,6 +30,7 @@ final readonly class ReplyMessageController
         private ControllerContext $controllerContext,
         private Render $render,
         private Request $request,
+        private Environment $environment,
         private Session $session,
         private AntifloodCheckerInterface $antifloodChecker,
         private SmiliesRendererInterface $smiliesRenderer,
@@ -182,7 +184,8 @@ final readonly class ReplyMessageController
                 topic: $topic,
                 messageText: $msg,
                 addFiles: $addFiles,
-                forumSettings: $this->getForumSettings()
+                forumSettings: $this->getForumSettings(),
+                clientInfo: $this->environment->getClientInfo(),
             );
             $this->attachUploadedFilesUseCase->execute(
                 messageId: $result->messageId,

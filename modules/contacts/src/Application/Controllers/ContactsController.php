@@ -65,10 +65,11 @@ final readonly class ContactsController
                 }
             }
 
+            $clientInfo = $this->environment->getClientInfo();
             $consentMessage = __('You must accept the consent to continue');
             $validator = new Validator(
                 $formData,
-                $this->form->getValidationRules() + $consentFields,
+                $this->form->getValidationRules($clientInfo) + $consentFields,
                 [
                     'Identical' => [
                         Identical::NOT_SAME      => $consentMessage,
@@ -78,15 +79,14 @@ final readonly class ContactsController
             );
 
             if ($validator->isValid()) {
-                $ip = (string) $this->environment->getIp(false);
                 $this->submitMessage->execute(
                     new CreateContactMessageDTO(
                         userId:    $this->user->isValid() ? $this->user->id : null,
                         name:      $formData['name'],
                         email:     $formData['email'],
                         message:   $formData['message'],
-                        ip:        $ip,
-                        userAgent: $this->environment->getUserAgent(),
+                        ip:        $clientInfo->ip,
+                        userAgent: $clientInfo->userAgent,
                     )
                 );
 
@@ -95,7 +95,7 @@ final readonly class ContactsController
                         $this->consentService->logAcceptance(
                             $consent->id,
                             $this->user->isValid() ? $this->user->id : null,
-                            $ip,
+                            $clientInfo->ip,
                             $consent->version
                         );
                     }

@@ -133,6 +133,33 @@ final class EnvironmentTest extends TestCase
         self::assertSame(ip2long('127.0.0.1'), $env->getIp());
     }
 
+    public function testClientInfoCarriesBothAddressesAndTheUserAgent(): void
+    {
+        Request::setTrustedProxies(['172.18.0.3'], Request::HEADER_X_FORWARDED_FOR);
+
+        $env = $this->environmentFor([
+            'REMOTE_ADDR'          => '172.18.0.3',
+            'HTTP_X_FORWARDED_FOR' => '198.51.100.9, 203.0.113.7',
+            'HTTP_USER_AGENT'      => 'Test/1.0',
+        ]);
+
+        $clientInfo = $env->getClientInfo();
+
+        self::assertSame('203.0.113.7', $clientInfo->ip);
+        self::assertSame('198.51.100.9', $clientInfo->ipViaProxy);
+        self::assertSame('Test/1.0', $clientInfo->userAgent);
+    }
+
+    public function testClientInfoLeavesTheProxyAddressEmptyForADirectVisitor(): void
+    {
+        // The Ip cast turns an empty address into 0, which is what the previous int-zero return
+        // value of getIpViaProxy() stored — the columns keep seeing the same thing.
+        $clientInfo = $this->environmentFor(['REMOTE_ADDR' => '203.0.113.7'])->getClientInfo();
+
+        self::assertSame('203.0.113.7', $clientInfo->ip);
+        self::assertSame('', $clientInfo->ipViaProxy);
+    }
+
     /**
      * @param array<string, string> $server
      */

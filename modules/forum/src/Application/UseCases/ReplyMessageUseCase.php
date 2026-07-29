@@ -11,7 +11,7 @@ use Johncms\Modules\Forum\Domain\Models\ForumTopic;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
 use Johncms\Notifications\Notification;
 use Johncms\Smilies\SmiliesRendererInterface;
-use Johncms\Http\Environment;
+use Johncms\Security\ClientInfoDTO;
 use Johncms\Users\User;
 
 final readonly class ReplyMessageUseCase
@@ -20,7 +20,6 @@ final readonly class ReplyMessageUseCase
         private ForumMessageRepositoryInterface $messageRepository,
         private ForumTopicStatsRecalculator $topicStatsRecalculator,
         private SmiliesRendererInterface $smiliesRenderer,
-        private Environment $environment,
         private User $currentUser,
         private Notification $notification,
     ) {
@@ -32,15 +31,16 @@ final readonly class ReplyMessageUseCase
         string $messageText,
         bool $addFiles,
         array $forumSettings,
+        ClientInfoDTO $clientInfo,
     ): PostMessageResultDTO {
         $message = new ForumMessage();
         $message->topic_id = $topic->id;
         $message->date = time();
         $message->user_id = $this->currentUser->id;
         $message->user_name = $this->currentUser->name;
-        $message->ip = $this->environment->getIp(false);
-        $message->ip_via_proxy = $this->environment->getIpViaProxy(false);
-        $message->user_agent = $this->environment->getUserAgent();
+        $message->ip = $clientInfo->ip;
+        $message->ip_via_proxy = $clientInfo->ipViaProxy;
+        $message->user_agent = $clientInfo->userAgent;
         $message->text = $messageText;
         $this->messageRepository->save($message);
 

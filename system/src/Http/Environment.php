@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms\Http;
 
+use Johncms\Security\ClientInfoDTO;
 use Psr\Container\ContainerInterface;
 use RuntimeException;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -102,6 +103,22 @@ class Environment implements ResetInterface
         return $return_long
             ? $this->toLong($this->proxyIp)
             : $this->toIpv4($this->proxyIp);
+    }
+
+    /**
+     * The visitor facts in the form the layers below HTTP take them: plain strings, no request.
+     * This is the only way Application and Domain code gets an address or a user agent — they
+     * must not reach for this service themselves.
+     */
+    public function getClientInfo(): ClientInfoDTO
+    {
+        $this->resolveAddresses();
+
+        return new ClientInfoDTO(
+            ip: $this->toIpv4($this->clientIp),
+            ipViaProxy: $this->proxyIp === null ? '' : $this->toIpv4($this->proxyIp),
+            userAgent: $this->getUserAgent(),
+        );
     }
 
     public function getUserAgent(): string

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Johncms\Modules\Contacts\Application\Forms;
 
 use Johncms\Modules\Contacts\Domain\Models\ContactMessage;
-use Johncms\Http\Environment;
 use Johncms\Http\Request;
+use Johncms\Security\ClientInfoDTO;
 use Johncms\Users\User;
 use Laminas\Validator\Hostname;
 
@@ -19,7 +19,6 @@ final readonly class ContactForm
 
     public function __construct(
         private Request $request,
-        private Environment $environment,
         private User $user,
     ) {
     }
@@ -54,7 +53,7 @@ final readonly class ContactForm
      * @return array<string, array<int|string, mixed>>
      * @psalm-suppress MissingClosureReturnType,MissingClosureParamType
      */
-    public function getValidationRules(): array
+    public function getValidationRules(ClientInfoDTO $clientInfo): array
     {
         $rules = [
             'name'               => [
@@ -71,8 +70,8 @@ final readonly class ContactForm
                 'ModelNotExists' => [
                     'model'   => ContactMessage::class,
                     'field'   => 'message',
-                    'exclude' => function ($query) {
-                        $query->where('ip_address', (string) $this->environment->getIp(false))
+                    'exclude' => function ($query) use ($clientInfo) {
+                        $query->where('ip_address', $clientInfo->ip)
                             ->where('created_at', '>', date('Y-m-d H:i:s', time() - 600));
                     },
                 ],

@@ -7,18 +7,17 @@ namespace Johncms\Modules\Admin\Application\UseCases;
 use Johncms\Modules\Admin\Application\DTO\PreparedIpBanDTO;
 use Johncms\Modules\Admin\Application\Services\IpRangeParser;
 use Johncms\Modules\Admin\Domain\Repository\IpBanRepositoryInterface;
-use Johncms\Http\Environment;
+use Johncms\Security\ClientInfoDTO;
 
 final readonly class PrepareIpBanUseCase
 {
     public function __construct(
         private IpRangeParser $parser,
         private IpBanRepositoryInterface $repository,
-        private Environment $environment,
     ) {
     }
 
-    public function execute(string $rawIp): PreparedIpBanDTO
+    public function execute(string $rawIp, ClientInfoDTO $clientInfo): PreparedIpBanDTO
     {
         $rawIp = trim($rawIp);
         if ($rawIp === '') {
@@ -38,7 +37,7 @@ final readonly class PrepareIpBanUseCase
             return new PreparedIpBanDTO(conflicts: $conflicts);
         }
 
-        if ($this->isOwnIpInRange($ip1, $ip2)) {
+        if ($this->isOwnIpInRange($clientInfo, $ip1, $ip2)) {
             return new PreparedIpBanDTO(errors: [__('Ban impossible. Your own IP address in the range')]);
         }
 
@@ -49,12 +48,21 @@ final readonly class PrepareIpBanUseCase
         );
     }
 
-    private function isOwnIpInRange(int $ip1, int $ip2): bool
+    /**
+     * The admin's own addresses go through the same parser as the range being banned, so both
+     * sides of the comparison are produced the same way. An address that does not parse — the
+     * empty proxy address of a visitor who came directly — simply takes part in no comparison.
+     */
+    private function isOwnIpInRange(ClientInfoDTO $clientInfo, int $ip1, int $ip2): bool
     {
-        $ip = (int) $this->environment->getIp();
-        $proxy = (int) $this->environment->getIpViaProxy();
+        foreach ([$clientInfo->ip, $clientInfo->ipViaProxy] as $address) {
+            $ownIp = $this->parser->parse($address);
+            if ($ownIp->isValid() && $ownIp->from >= $ip1 && $ownIp->from <= $ip2) {
+                return true;
+            }
+        }
 
-        return ($ip >= $ip1 && $ip <= $ip2) || ($proxy >= $ip1 && $proxy <= $ip2);
+        return false;
     }
 
     /**

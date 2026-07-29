@@ -13,7 +13,7 @@ use Johncms\Modules\Forum\Domain\Models\ForumSection;
 use Johncms\Modules\Forum\Domain\Models\ForumTopic;
 use Johncms\Modules\Forum\Domain\Models\ForumUnread;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
-use Johncms\Http\Environment;
+use Johncms\Security\ClientInfoDTO;
 use Johncms\Users\User;
 
 final readonly class CreateTopicUseCase
@@ -22,7 +22,6 @@ final readonly class CreateTopicUseCase
         private ForumTopicRepositoryInterface $topicRepository,
         private ForumTopicStatsRecalculator $topicStatsRecalculator,
         private ForumTopicSlugService $topicSlugService,
-        private Environment $environment,
         private User $currentUser,
     ) {
     }
@@ -33,6 +32,7 @@ final readonly class CreateTopicUseCase
         string $messageText,
         ?string $metaKeywords,
         ?string $metaDescription,
+        ClientInfoDTO $clientInfo,
     ): NewTopicResultDTO {
         $topic = new ForumTopic();
         $topic->section_id = $section->id;
@@ -54,9 +54,9 @@ final readonly class CreateTopicUseCase
         $message->date = time();
         $message->user_id = $this->currentUser->id;
         $message->user_name = $this->currentUser->name;
-        $message->ip = $this->environment->getIp(false);
-        $message->ip_via_proxy = $this->environment->getIpViaProxy(false);
-        $message->user_agent = $this->environment->getUserAgent();
+        $message->ip = $clientInfo->ip;
+        $message->ip_via_proxy = $clientInfo->ipViaProxy;
+        $message->user_agent = $clientInfo->userAgent;
         $message->text = $messageText;
         $message->save();
 

@@ -6,19 +6,18 @@ namespace Johncms\Modules\Registration\Application\UseCases;
 
 use Johncms\Mail\EmailMessage;
 use Johncms\Modules\Registration\Application\DTO\RegistrationFormDTO;
-use Johncms\Http\Environment;
+use Johncms\Security\ClientInfoDTO;
 use Johncms\System\i18n\Translator;
 use Johncms\Users\User;
 
 final readonly class RegisterUserUseCase
 {
     public function __construct(
-        private Environment $env,
         private Translator $translator,
     ) {
     }
 
-    public function execute(RegistrationFormDTO $dto): User
+    public function execute(RegistrationFormDTO $dto, ClientInfoDTO $clientInfo): User
     {
         $config = config('johncms');
 
@@ -32,9 +31,9 @@ final readonly class RegisterUserUseCase
                 'sex'               => $dto->sex,
                 'mail'              => $dto->email,
                 'rights'            => 0,
-                'ip'                => $this->env->getIp(false),
-                'ip_via_proxy'      => $this->env->getIpViaProxy(false),
-                'browser'           => $this->env->getUserAgent(),
+                'ip'                => $clientInfo->ip,
+                'ip_via_proxy'      => $clientInfo->ipViaProxy,
+                'browser'           => $clientInfo->userAgent,
                 'datereg'           => time(),
                 'lastdate'          => time(),
                 'sestime'           => time(),

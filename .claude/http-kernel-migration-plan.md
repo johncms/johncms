@@ -1492,10 +1492,28 @@ php-quality) + гейт зелёные (383 теста: 352 unit + 31 functional
 через `BETWEEN`, отсутствие механизма миграций схемы) — в `.claude/ipv6-support-analysis.md`.
 Сам IPv6 в этот план не входит.
 
-**Остаток 5a (не сделано):** развязка `Environment` от Application-слоя оставшихся модулей —
-`forum` (3 юзкейса), `registration`, `admin/PrepareIpBanUseCase`, `contacts/ContactForm`:
-адрес и user-agent уходят параметром/в команду, `Environment` из конструкторов Application
-исчезает. Три места захвата запроса из контейнера (`FileStorage`, `forum/ForumUtils`,
+**5a-6: ✅ ГОТОВО (2026-07-29, не закоммичено). `Environment` вне Application-слоя.**
+Введён `Johncms\Security\ClientInfoDTO` (`ip`, `ipViaProxy`, `userAgent` — строки) и
+`Environment::getClientInfo()`: контроллер берёт факты о посетителе и передаёт их вниз одним
+аргументом. Мигрированы `forum` (`CreateTopic`/`PostMessage`/`ReplyMessage`), `registration`
+(`RegisterUserUseCase`), `admin/PrepareIpBanUseCase`, `contacts/ContactForm::getValidationRules()`.
+`Environment` в `modules/` остался **только в контроллерах**.
+
+Адреса пересекают границу строками (решение 5a-5): в БД их переводит каст `Johncms\Casts\Ip`,
+который пустую строку и невалидный адрес одинаково кладёт как `0` — ровно то, что писал
+прежний `getIpViaProxy(false)` своим int-нулём. Заодно исправлены протухшие аннотации
+`ForumMessage::$ip` / `$ip_via_proxy` (`int` → `string`: каст отдаёт строку) — их неверность
+и обнаружил PHPStan на новом присваивании. `ClientInfoDTO` исключён из автовайринга
+(скалярный конструктор), иначе контейнер не компилируется.
+
+Одно изменение поведения в `PrepareIpBanUseCase`: собственные адреса админа теперь проходят
+через тот же `IpRangeParser`, что и баним��й диапазон, и адрес, который не разбирается (пустой
+`ipViaProxy` у пришедшего напрямую), в сравнении не участвует. Раньше он участвовал нулём и при
+маске `*.*.*.*` давал ложное «ваш адрес в диапазоне».
+
+**Остаток 5a:** незакрытым остаётся только `Session` — точечный `reset()` и публикация из ядра
+(единственный per-request сервис из таблицы выше, который всё ещё живёт как обычный синглтон).
+Три места захвата запроса из контейнера (`FileStorage`, `forum/ForumUtils`,
 `TranslatorServiceFactory`) резолвили его на каждый вызов; `TranslatorServiceFactory` запрос
 больше не читает вовсе, оставшиеся два получают актуальный запрос, потому что `Request`
 синтетический и переиздаётся ядром.
