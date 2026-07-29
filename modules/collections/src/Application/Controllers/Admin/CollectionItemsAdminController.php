@@ -33,7 +33,6 @@ final readonly class CollectionItemsAdminController
     public function __construct(
         private AdminControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private ContentCollectionRepositoryInterface $collectionRepository,
         private ContentCollectionSectionRepositoryInterface $sectionRepository,
@@ -49,14 +48,14 @@ final readonly class CollectionItemsAdminController
         $this->controllerContext->initModule('collections');
     }
 
-    public function index(int $collection_id): string
+    public function index(Request $request, int $collection_id): string
     {
         $collection = $this->collectionRepository->findById($collection_id);
         if ($collection === null) {
             return $this->collectionNotFound();
         }
 
-        $sectionId = $this->querySection();
+        $sectionId = $this->querySection($request);
 
         $pagination = $this->paginationFactory->create($this->listItems->count($collection_id, $sectionId));
 
@@ -81,14 +80,14 @@ final readonly class CollectionItemsAdminController
         ]);
     }
 
-    public function newForm(int $collection_id): string
+    public function newForm(Request $request, int $collection_id): string
     {
         $collection = $this->collectionRepository->findById($collection_id);
         if ($collection === null) {
             return $this->collectionNotFound();
         }
 
-        return $this->renderForm($collection, null, $this->defaultFields($this->querySection()), []);
+        return $this->renderForm($collection, null, $this->defaultFields($this->querySection($request)), []);
     }
 
     public function editForm(int $collection_id, int $id): string
@@ -106,24 +105,24 @@ final readonly class CollectionItemsAdminController
         return $this->renderForm($collection, $id, $this->fieldsFromItem($item), $item->getValuesMap());
     }
 
-    public function store(int $collection_id): string
+    public function store(Request $request, int $collection_id): string
     {
         $collection = $this->collectionRepository->findById($collection_id);
         if ($collection === null) {
             return $this->collectionNotFound();
         }
 
-        if (! $this->isCsrfValid()) {
+        if (! $this->isCsrfValid($request)) {
             return $this->wrongData($collection_id);
         }
 
-        $id = $this->request->bodyInt('id') ?: null;
+        $id = $request->bodyInt('id') ?: null;
         if ($id !== null && $this->findOwnedItem($collection_id, $id) === null) {
             return $this->wrongData($collection_id);
         }
 
         $fieldDefs = $this->fieldRepository->getByCollection($collection_id);
-        $fields = $this->fieldsFromRequest($collection, $fieldDefs);
+        $fields = $this->fieldsFromRequest($request, $collection, $fieldDefs);
         $errors = $this->validate($collection, $fields);
 
         if ($errors !== []) {
@@ -166,13 +165,13 @@ final readonly class CollectionItemsAdminController
         ]);
     }
 
-    public function delete(int $collection_id, int $id): string
+    public function delete(Request $request, int $collection_id, int $id): string
     {
         if ($this->collectionRepository->findById($collection_id) === null) {
             return $this->collectionNotFound();
         }
 
-        if ($this->isCsrfValid() && $this->findOwnedItem($collection_id, $id) !== null) {
+        if ($this->isCsrfValid($request) && $this->findOwnedItem($collection_id, $id) !== null) {
             $this->deleteItem->execute($id);
             $this->session->flash('success_message', __('Deleted successfully'));
         }
@@ -292,19 +291,19 @@ final readonly class CollectionItemsAdminController
      * @param Collection<int, \Johncms\Modules\Collections\Domain\Models\ContentCollectionField> $fieldDefs
      * @return array<string, mixed>
      */
-    private function fieldsFromRequest(ContentCollection $collection, Collection $fieldDefs): array
+    private function fieldsFromRequest(Request $request, ContentCollection $collection, Collection $fieldDefs): array
     {
         return [
-            'section_id'   => $this->hasSections($collection) ? $this->postSection() : null,
-            'code'         => trim($this->request->body('code', '')),
-            'name'         => trim($this->request->body('name', '')),
-            'active'       => $this->request->hasBody('active') ? 1 : 0,
-            'active_from'  => trim($this->request->body('active_from', '')),
-            'active_to'    => trim($this->request->body('active_to', '')),
-            'sort'         => $this->request->bodyInt('sort', 100),
-            'preview_text' => trim($this->request->body('preview_text', '')),
-            'detail_text'  => trim($this->request->body('detail_text', '')),
-            'values'       => $this->submittedValues($fieldDefs),
+            'section_id'   => $this->hasSections($collection) ? $this->postSection($request) : null,
+            'code'         => trim($request->body('code', '')),
+            'name'         => trim($request->body('name', '')),
+            'active'       => $request->hasBody('active') ? 1 : 0,
+            'active_from'  => trim($request->body('active_from', '')),
+            'active_to'    => trim($request->body('active_to', '')),
+            'sort'         => $request->bodyInt('sort', 100),
+            'preview_text' => trim($request->body('preview_text', '')),
+            'detail_text'  => trim($request->body('detail_text', '')),
+            'values'       => $this->submittedValues($request, $fieldDefs),
         ];
     }
 
@@ -394,11 +393,11 @@ final readonly class CollectionItemsAdminController
      * @param Collection<int, \Johncms\Modules\Collections\Domain\Models\ContentCollectionField> $fieldDefs
      * @return array<string, string|list<string>>
      */
-    private function submittedValues(Collection $fieldDefs): array
+    private function submittedValues(Request $request, Collection $fieldDefs): array
     {
         $values = [];
         foreach ($fieldDefs as $field) {
-            $raw = $this->request->body('field_' . $field->code, '');
+            $raw = $request->body('field_' . $field->code, '');
             if ($field->multiple) {
                 $lines = preg_split('/\r\n|\r|\n/', $raw) ?: [];
                 $values[$field->code] = array_values(array_filter(
@@ -438,14 +437,14 @@ final readonly class CollectionItemsAdminController
         return ! empty($collection->settings['has_sections']);
     }
 
-    private function querySection(): ?int
+    private function querySection(Request $request): ?int
     {
-        return ($this->request->queryInt('section')) ?: null;
+        return ($request->queryInt('section')) ?: null;
     }
 
-    private function postSection(): ?int
+    private function postSection(Request $request): ?int
     {
-        return ($this->request->bodyInt('section_id')) ?: null;
+        return ($request->bodyInt('section_id')) ?: null;
     }
 
     private function baseUrl(int $collectionId): string
@@ -500,10 +499,10 @@ final readonly class CollectionItemsAdminController
         ]);
     }
 
-    private function isCsrfValid(): bool
+    private function isCsrfValid(Request $request): bool
     {
         $validator = new Validator(
-            ['csrf_token' => $this->request->body('csrf_token', '')],
+            ['csrf_token' => $request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

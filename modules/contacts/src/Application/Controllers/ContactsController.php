@@ -28,7 +28,6 @@ final readonly class ContactsController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private Session $session,
         private NavChain $navChain,
         private Environment $environment,
@@ -42,7 +41,7 @@ final readonly class ContactsController
         $this->controllerContext->initModule('contacts');
     }
 
-    public function __invoke(): string
+    public function __invoke(Request $request): string
     {
         $pageTitle = __('Contacts');
         $this->navChain->add($pageTitle, self::URL);
@@ -52,14 +51,14 @@ final readonly class ContactsController
             ? $this->consentService->getFormConsents(self::CONSENT_CONTEXT)
             : [];
 
-        $formData = $this->form->getFormData();
+        $formData = $this->form->getFormData($request);
         $errors = [];
 
-        if ($this->request->getMethod() === 'POST' && $pageData->formEnabled) {
+        if ($request->getMethod() === 'POST' && $pageData->formEnabled) {
             $consentFields = [];
             foreach ($consents as $consent) {
                 $field = 'consent_' . $consent->id;
-                $formData[$field] = $this->request->body($field, '');
+                $formData[$field] = $request->body($field, '');
                 if ($consent->isRequired) {
                     $consentFields[$field] = ['Identical' => ['token' => '1']];
                 }

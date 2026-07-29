@@ -29,7 +29,6 @@ final readonly class CollectionSectionsAdminController
     public function __construct(
         private AdminControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private ContentCollectionRepositoryInterface $collectionRepository,
         private ContentCollectionSectionRepositoryInterface $sectionRepository,
@@ -43,14 +42,14 @@ final readonly class CollectionSectionsAdminController
         $this->controllerContext->initModule('collections');
     }
 
-    public function index(int $collection_id): string
+    public function index(Request $request, int $collection_id): string
     {
         $collection = $this->collectionRepository->findById($collection_id);
         if ($collection === null) {
             return $this->collectionNotFound();
         }
 
-        $parent = $this->queryParent();
+        $parent = $this->queryParent($request);
         $parentSection = $this->resolveParent($collection_id, $parent);
         if ($parent !== null && $parentSection === null) {
             redirect($this->baseUrl($collection_id));
@@ -81,14 +80,14 @@ final readonly class CollectionSectionsAdminController
         ]);
     }
 
-    public function newForm(int $collection_id): string
+    public function newForm(Request $request, int $collection_id): string
     {
         $collection = $this->collectionRepository->findById($collection_id);
         if ($collection === null) {
             return $this->collectionNotFound();
         }
 
-        $parent = $this->queryParent();
+        $parent = $this->queryParent($request);
         if ($parent !== null && $this->resolveParent($collection_id, $parent) === null) {
             redirect($this->baseUrl($collection_id));
         }
@@ -111,18 +110,18 @@ final readonly class CollectionSectionsAdminController
         return $this->renderForm($collection, $id, $this->fieldsFromSection($section));
     }
 
-    public function store(int $collection_id): string
+    public function store(Request $request, int $collection_id): string
     {
         $collection = $this->collectionRepository->findById($collection_id);
         if ($collection === null) {
             return $this->collectionNotFound();
         }
 
-        if (! $this->isCsrfValid()) {
+        if (! $this->isCsrfValid($request)) {
             return $this->wrongData($collection_id, null);
         }
 
-        $id = $this->request->bodyInt('id') ?: null;
+        $id = $request->bodyInt('id') ?: null;
 
         // The parent is fixed on edit (taken from the section) and comes from the
         // form context on create; a create parent must belong to the collection.
@@ -133,13 +132,13 @@ final readonly class CollectionSectionsAdminController
             }
             $parent = $section->parent;
         } else {
-            $parent = $this->postParent();
+            $parent = $this->postParent($request);
             if ($parent !== null && $this->resolveParent($collection_id, $parent) === null) {
                 return $this->wrongData($collection_id, null);
             }
         }
 
-        $fields = $this->fieldsFromRequest($parent);
+        $fields = $this->fieldsFromRequest($request, $parent);
         $errors = $this->validate($fields);
 
         if ($errors !== []) {
@@ -182,7 +181,7 @@ final readonly class CollectionSectionsAdminController
         ]);
     }
 
-    public function delete(int $collection_id, int $id): string
+    public function delete(Request $request, int $collection_id, int $id): string
     {
         if ($this->collectionRepository->findById($collection_id) === null) {
             return $this->collectionNotFound();
@@ -191,7 +190,7 @@ final readonly class CollectionSectionsAdminController
         $section = $this->findOwnedSection($collection_id, $id);
         $parent = $section?->parent;
 
-        if ($this->isCsrfValid() && $section !== null) {
+        if ($this->isCsrfValid($request) && $section !== null) {
             $this->deleteSection->execute($id);
             $this->session->flash('success_message', __('Deleted successfully'));
         }
@@ -281,15 +280,15 @@ final readonly class CollectionSectionsAdminController
     /**
      * @return array<string, mixed>
      */
-    private function fieldsFromRequest(?int $parent): array
+    private function fieldsFromRequest(Request $request, ?int $parent): array
     {
         return [
             'parent'      => $parent,
-            'code'        => trim($this->request->body('code', '')),
-            'name'        => trim($this->request->body('name', '')),
-            'description' => trim($this->request->body('description', '')),
-            'active'      => $this->request->hasBody('active') ? 1 : 0,
-            'sort'        => $this->request->bodyInt('sort', 100),
+            'code'        => trim($request->body('code', '')),
+            'name'        => trim($request->body('name', '')),
+            'description' => trim($request->body('description', '')),
+            'active'      => $request->hasBody('active') ? 1 : 0,
+            'sort'        => $request->bodyInt('sort', 100),
         ];
     }
 
@@ -357,14 +356,14 @@ final readonly class CollectionSectionsAdminController
         return $errors;
     }
 
-    private function queryParent(): ?int
+    private function queryParent(Request $request): ?int
     {
-        return ($this->request->queryInt('parent')) ?: null;
+        return ($request->queryInt('parent')) ?: null;
     }
 
-    private function postParent(): ?int
+    private function postParent(Request $request): ?int
     {
-        return ($this->request->bodyInt('parent')) ?: null;
+        return ($request->bodyInt('parent')) ?: null;
     }
 
     private function baseUrl(int $collectionId): string
@@ -433,10 +432,10 @@ final readonly class CollectionSectionsAdminController
         ]);
     }
 
-    private function isCsrfValid(): bool
+    private function isCsrfValid(Request $request): bool
     {
         $validator = new Validator(
-            ['csrf_token' => $this->request->body('csrf_token', '')],
+            ['csrf_token' => $request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

@@ -22,7 +22,6 @@ final readonly class ContactMessageListController
     public function __construct(
         private AdminControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private Session $session,
         private NavChain $navChain,
         private ListContactMessagesUseCase $messages,
@@ -32,9 +31,9 @@ final readonly class ContactMessageListController
         $this->controllerContext->initModule('contacts');
     }
 
-    public function __invoke(): string
+    public function __invoke(Request $request): string
     {
-        $statusParam = $this->request->queryParam('status');
+        $statusParam = $request->queryParam('status');
         $status = ContactMessageStatus::tryFromString(is_string($statusParam) ? $statusParam : null);
 
         $pagination = $this->paginationFactory->create($this->messages->count($status));

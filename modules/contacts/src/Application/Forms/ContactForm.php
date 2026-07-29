@@ -18,7 +18,6 @@ final readonly class ContactForm
     public const HONEYPOT_FIELD = 'contact_link';
 
     public function __construct(
-        private Request $request,
         private User $user,
     ) {
     }
@@ -26,15 +25,15 @@ final readonly class ContactForm
     /**
      * @return array<string, string>
      */
-    public function getFormData(): array
+    public function getFormData(Request $request): array
     {
         $formData = [
-            'name'                 => $this->request->body('name', ''),
-            'email'                => $this->request->body('email', ''),
-            'message'              => $this->request->body('message', ''),
-            'code'                 => $this->request->body('code', ''),
-            'csrf_token'           => $this->request->body('csrf_token', ''),
-            self::HONEYPOT_FIELD   => $this->request->body(self::HONEYPOT_FIELD, ''),
+            'name'                 => $request->body('name', ''),
+            'email'                => $request->body('email', ''),
+            'message'              => $request->body('message', ''),
+            'code'                 => $request->body('code', ''),
+            'csrf_token'           => $request->body('csrf_token', ''),
+            self::HONEYPOT_FIELD   => $request->body(self::HONEYPOT_FIELD, ''),
         ];
 
         $formData = array_map('trim', $formData);

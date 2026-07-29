@@ -14,15 +14,14 @@ final readonly class ConfirmEmailController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
     ) {
         $this->controllerContext->initModule('registration');
     }
 
-    public function __invoke(): string
+    public function __invoke(Request $request): string
     {
-        $id = $this->request->queryInt('id');
-        $code = $this->request->queryParam('code', '');
+        $id = $request->queryInt('id');
+        $code = $request->queryParam('code', '');
 
         $confirmUser = null;
         if ($id > 0 && $code !== '') {

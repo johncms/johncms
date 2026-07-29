@@ -19,7 +19,6 @@ final readonly class SettingsController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private Session $session,
         private NavChain $navChain,
         private User $currentUser,
@@ -28,15 +27,15 @@ final readonly class SettingsController
         $this->controllerContext->initModule('notifications');
     }
 
-    public function __invoke(): Response
+    public function __invoke(Request $request): Response
     {
         $title = __('Settings');
 
         $this->navChain->add(__('Notifications'), '/notifications/');
         $this->navChain->add($title, '/notifications/settings/');
 
-        if ($this->request->getMethod() === 'POST') {
-            $showForumUnread = (bool) $this->request->bodyInt('show_forum_unread');
+        if ($request->getMethod() === 'POST') {
+            $showForumUnread = (bool) $request->bodyInt('show_forum_unread');
             $this->saveSettingsUseCase->execute($showForumUnread);
             $this->session->flash('message', __('Settings saved!'));
             return new RedirectResponse('/notifications/settings/');

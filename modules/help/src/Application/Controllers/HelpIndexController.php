@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Help\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\Request;
 use Johncms\Modules\Help\Application\HelpLegacyRedirectHandler;
 use Johncms\NavChain;
 use Johncms\System\View\Render;
@@ -28,9 +29,9 @@ final readonly class HelpIndexController
         $this->controllerContext->initModule('help');
     }
 
-    public function __invoke(): string
+    public function __invoke(Request $request): string
     {
-        $this->legacyRedirectHandler->handle();
+        $this->legacyRedirectHandler->handle($request);
 
         $title = __('Information, FAQ');
 

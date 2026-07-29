@@ -315,18 +315,6 @@ parameters:
 			path: modules/community/src/Infrastructure/Persistence/Repository/CommunityUserRepository.php
 
 		-
-			message: '#^Call to function is_array\(\) with string will always evaluate to false\.$#'
-			identifier: function.impossibleType
-			count: 1
-			path: modules/consent/src/Application/Controllers/Admin/CookieBannerController.php
-
-		-
-			message: '#^Offset \(int\|string\) on \*NEVER\* on left side of \?\? always exists and is not nullable\.$#'
-			identifier: nullCoalesce.offset
-			count: 1
-			path: modules/consent/src/Application/Controllers/Admin/CookieBannerController.php
-
-		-
 			message: '#^Using nullsafe property access "\?\-\>version" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
 			identifier: nullsafe.neverNull
 			count: 1
@@ -361,18 +349,6 @@ parameters:
 			identifier: nullsafe.neverNull
 			count: 1
 			path: modules/contacts/src/Application/Controllers/Admin/ContactMessageListController.php
-
-		-
-			message: '#^Call to function is_array\(\) with string will always evaluate to false\.$#'
-			identifier: function.impossibleType
-			count: 1
-			path: modules/contacts/src/Application/Controllers/Admin/ContactSettingsController.php
-
-		-
-			message: '#^Offset mixed on \*NEVER\* on left side of \?\? always exists and is not nullable\.$#'
-			identifier: nullCoalesce.offset
-			count: 1
-			path: modules/contacts/src/Application/Controllers/Admin/ContactSettingsController.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Contacts\\Infrastructure\\Persistence\\Repository\\ContactMessageRepository\:\:getPage\(\) should return Illuminate\\Support\\Collection\<int, Johncms\\Modules\\Contacts\\Domain\\Models\\ContactMessage\> but returns Illuminate\\Support\\Collection\<int, stdClass\>\.$#'
@@ -1987,12 +1963,6 @@ parameters:
 			identifier: property.notFound
 			count: 2
 			path: modules/library/src/Application/Services/LibraryCategoryPathService.php
-
-		-
-			message: '#^Property Johncms\\Modules\\Mail\\Application\\Controllers\\BlocklistIndexController\:\:\$request is never read, only written\.$#'
-			identifier: property.onlyWritten
-			count: 1
-			path: modules/mail/src/Application/Controllers/BlocklistIndexController.php
 
 		-
 			message: '#^Property Johncms\\Modules\\Mail\\Application\\Controllers\\WriteController\:\:\$currentUser is never read, only written\.$#'

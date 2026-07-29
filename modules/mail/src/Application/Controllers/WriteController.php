@@ -26,7 +26,6 @@ final readonly class WriteController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private User $currentUser,
         private EditorContentNormalizer $editorContentNormalizer,
@@ -39,11 +38,11 @@ final readonly class WriteController
         $this->controllerContext->initModule('mail');
     }
 
-    public function send(int $id): string
+    public function send(Request $request, int $id): string
     {
-        $text = trim($this->editorContentNormalizer->trimEdgeEmptyBlocks($this->request->body('text', '')));
+        $text = trim($this->editorContentNormalizer->trimEdgeEmptyBlocks($request->body('text', '')));
 
-        $uploaded = $this->request->files->get('fail');
+        $uploaded = $request->files->get('fail');
         $file = null;
         if ($uploaded instanceof UploadedFile && $uploaded->getError() !== UPLOAD_ERR_NO_FILE) {
             $file = $this->uploadedFileMapper->fromUploadedFile($uploaded);

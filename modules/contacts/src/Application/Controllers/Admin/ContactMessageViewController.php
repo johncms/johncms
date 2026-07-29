@@ -21,7 +21,6 @@ final readonly class ContactMessageViewController
     public function __construct(
         private AdminControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private Session $session,
         private NavChain $navChain,
         private ContactMessageRepositoryInterface $repository,
@@ -30,14 +29,14 @@ final readonly class ContactMessageViewController
         $this->controllerContext->initModule('contacts');
     }
 
-    public function __invoke(int $id): string
+    public function __invoke(Request $request, int $id): string
     {
         $message = $this->repository->findById($id);
         if ($message === null) {
             redirect(self::URL);
         }
 
-        if ($this->request->getMethod() === 'POST' && $this->isCsrfValid()) {
+        if ($request->getMethod() === 'POST' && $this->isCsrfValid($request)) {
             $this->markProcessed->execute($message);
             $this->session->flash('success_message', __('The message is marked as processed'));
             redirect(self::URL . '/' . $message->id);
@@ -73,10 +72,10 @@ final readonly class ContactMessageViewController
         );
     }
 
-    private function isCsrfValid(): bool
+    private function isCsrfValid(Request $request): bool
     {
         $validator = new Validator(
-            ['csrf_token' => $this->request->body('csrf_token', '')],
+            ['csrf_token' => $request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

@@ -18,7 +18,6 @@ final readonly class BlockUserController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private Session $session,
         private NavChain $navChain,
         private BlockUserUseCase $blockUserUseCase,
@@ -26,9 +25,9 @@ final readonly class BlockUserController
         $this->controllerContext->initModule('mail');
     }
 
-    public function __invoke(int $userId): Response
+    public function __invoke(Request $request, int $userId): Response
     {
-        if ($this->request->getMethod() === 'POST') {
+        if ($request->getMethod() === 'POST') {
             try {
                 $this->blockUserUseCase->execute($userId);
                 $this->session->flash('message', __('User blocked successfully'));

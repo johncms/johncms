@@ -20,7 +20,6 @@ final readonly class ConsentDeleteController
     public function __construct(
         private AdminControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private Session $session,
         private NavChain $navChain,
         private ConsentRepositoryInterface $repository,
@@ -29,16 +28,16 @@ final readonly class ConsentDeleteController
         $this->controllerContext->initModule('consent');
     }
 
-    public function __invoke(int $id): string
+    public function __invoke(Request $request, int $id): string
     {
         $consent = $this->repository->findById($id);
         if ($consent === null) {
             redirect(self::URL);
         }
 
-        if ($this->request->getMethod() === 'POST') {
+        if ($request->getMethod() === 'POST') {
             $validator = new Validator(
-                ['csrf_token' => $this->request->body('csrf_token', '')],
+                ['csrf_token' => $request->body('csrf_token', '')],
                 ['csrf_token' => ['Csrf']]
             );
 

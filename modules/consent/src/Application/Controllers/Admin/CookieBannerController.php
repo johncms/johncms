@@ -21,7 +21,6 @@ final readonly class CookieBannerController
     public function __construct(
         private AdminControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private Session $session,
         private NavChain $navChain,
         private UpdateCookieBannerSettingsUseCase $updateCookieBannerSettings,
@@ -34,14 +33,14 @@ final readonly class CookieBannerController
         return $this->renderForm();
     }
 
-    public function save(): string
+    public function save(Request $request): string
     {
-        if (! $this->isCsrfValid()) {
+        if (! $this->isCsrfValid($request)) {
             return $this->renderForm(__('Wrong data'));
         }
 
         try {
-            $this->updateCookieBannerSettings->execute($this->buildDto());
+            $this->updateCookieBannerSettings->execute($this->buildDto($request));
         } catch (ConfigWriteException) {
             return $this->renderForm(__('ERROR: Can not write file `system.local.php`'));
         }
@@ -50,29 +49,27 @@ final readonly class CookieBannerController
         redirect(self::URL);
     }
 
-    private function buildDto(): CookieBannerSettingsDTO
+    private function buildDto(Request $request): CookieBannerSettingsDTO
     {
         $languageCodes = array_keys(config('johncms')['lng_list'] ?? []);
 
-        $postedTexts = $this->request->body('cookie_banner_text');
+        $postedTexts = $request->bodyList('cookie_banner_text');
         $texts = [];
-        if (is_array($postedTexts)) {
-            foreach ($languageCodes as $code) {
-                $texts[$code] = trim((string) ($postedTexts[$code] ?? ''));
-            }
+        foreach ($languageCodes as $code) {
+            $texts[$code] = trim((string) ($postedTexts[$code] ?? ''));
         }
 
         return new CookieBannerSettingsDTO(
-            enabled: $this->request->hasBody('cookie_banner_enabled') ? 1 : 0,
-            version: max(1, $this->request->bodyInt('cookie_banner_version', 1)),
+            enabled: $request->hasBody('cookie_banner_enabled') ? 1 : 0,
+            version: max(1, $request->bodyInt('cookie_banner_version', 1)),
             texts: $texts,
         );
     }
 
-    private function isCsrfValid(): bool
+    private function isCsrfValid(Request $request): bool
     {
         $validator = new Validator(
-            ['csrf_token' => $this->request->body('csrf_token', '')],
+            ['csrf_token' => $request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

@@ -21,7 +21,6 @@ final readonly class CommunitySearchController
         private Render $render,
         private NavChain $navChain,
         private User $currentUser,
-        private Request $request,
         private ViewSearchUseCase $viewSearchUseCase,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
@@ -29,7 +28,7 @@ final readonly class CommunitySearchController
         $this->controllerContext->initModule('community');
     }
 
-    public function __invoke(): string
+    public function __invoke(Request $request): string
     {
         $communityTitle = __('Community');
         $this->navChain->add($communityTitle, '/community/');
@@ -49,7 +48,7 @@ final readonly class CommunitySearchController
         $pageTitle = __('User Search');
         $this->navChain->add($pageTitle);
 
-        $search = trim(rawurldecode($this->request->queryParam('search', '')));
+        $search = trim(rawurldecode($request->queryParam('search', '')));
         $errors = $this->viewSearchUseCase->validate($search);
         $hasSearch = $search !== '' && $errors === [];
 

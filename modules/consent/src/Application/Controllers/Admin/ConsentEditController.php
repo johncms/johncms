@@ -32,7 +32,6 @@ final readonly class ConsentEditController
     public function __construct(
         private AdminControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private Session $session,
         private NavChain $navChain,
         private Translator $translator,
@@ -43,7 +42,7 @@ final readonly class ConsentEditController
         $this->controllerContext->initModule('consent');
     }
 
-    public function __invoke(?int $id = null): string
+    public function __invoke(Request $request, ?int $id = null): string
     {
         $consent = null;
         if ($id !== null) {
@@ -63,15 +62,15 @@ final readonly class ConsentEditController
             $languages[] = ['code' => $code, 'name' => $data['name'] ?? $code];
         }
 
-        if ($this->request->getMethod() === 'POST') {
-            $fields = $this->fieldsFromRequest();
+        if ($request->getMethod() === 'POST') {
+            $fields = $this->fieldsFromRequest($request);
             $validator = new Validator(
                 [
                     'context'    => $fields['context'],
                     'language'   => $fields['language'],
                     'title'      => $fields['title'],
                     'version'    => $fields['version'],
-                    'csrf_token' => $this->request->body('csrf_token', ''),
+                    'csrf_token' => $request->body('csrf_token', ''),
                 ],
                 [
                     'context'    => ['NotEmpty', 'StringLength' => ['max' => 100]],
@@ -164,16 +163,16 @@ final readonly class ConsentEditController
     /**
      * @return array<string, mixed>
      */
-    private function fieldsFromRequest(): array
+    private function fieldsFromRequest(Request $request): array
     {
         return [
-            'context'     => trim($this->request->body('context', '')),
-            'language'    => trim($this->request->body('language', '')),
-            'title'       => trim($this->request->body('title', '')),
-            'text'        => $this->request->body('text', ''),
-            'version'     => trim($this->request->body('version', '')),
-            'is_required' => $this->request->hasBody('is_required'),
-            'is_active'   => $this->request->hasBody('is_active'),
+            'context'     => trim($request->body('context', '')),
+            'language'    => trim($request->body('language', '')),
+            'title'       => trim($request->body('title', '')),
+            'text'        => $request->body('text', ''),
+            'version'     => trim($request->body('version', '')),
+            'is_required' => $request->hasBody('is_required'),
+            'is_active'   => $request->hasBody('is_active'),
         ];
     }
 }

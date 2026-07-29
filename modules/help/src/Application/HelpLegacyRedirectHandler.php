@@ -16,21 +16,17 @@ use Johncms\Http\Request;
 
 final readonly class HelpLegacyRedirectHandler
 {
-    public function __construct(private Request $request)
+    public function handle(Request $request): void
     {
-    }
-
-    public function handle(): void
-    {
-        $act = $this->request->queryParam('act', '');
+        $act = $request->queryParam('act', '');
 
         if ($act === '') {
             return;
         }
 
-        $id     = $this->request->queryInt('id');
-        $avatar = $this->request->queryInt('avatar');
-        $cat    = trim($this->request->queryParam('cat', ''));
+        $id     = $request->queryInt('id');
+        $avatar = $request->queryInt('avatar');
+        $cat    = trim($request->queryParam('cat', ''));
 
         $url = match ($act) {
             'forum'       => '/help/forum/',

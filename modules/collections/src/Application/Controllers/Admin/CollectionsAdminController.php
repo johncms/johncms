@@ -30,7 +30,6 @@ final readonly class CollectionsAdminController
     public function __construct(
         private AdminControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private ContentCollectionRepositoryInterface $repository,
         private ListCollectionsUseCase $listCollections,
@@ -84,14 +83,14 @@ final readonly class CollectionsAdminController
         return $this->renderForm($id, $this->fieldsFromCollection($collection));
     }
 
-    public function store(): string
+    public function store(Request $request): string
     {
-        if (! $this->isCsrfValid()) {
+        if (! $this->isCsrfValid($request)) {
             return $this->error(__('Wrong data'));
         }
 
-        $id = $this->request->bodyInt('id') ?: null;
-        $fields = $this->fieldsFromRequest();
+        $id = $request->bodyInt('id') ?: null;
+        $fields = $this->fieldsFromRequest($request);
         $errors = $this->validate($fields);
 
         if ($errors !== []) {
@@ -130,9 +129,9 @@ final readonly class CollectionsAdminController
         ]);
     }
 
-    public function delete(int $id): string
+    public function delete(Request $request, int $id): string
     {
-        if ($this->isCsrfValid()) {
+        if ($this->isCsrfValid($request)) {
             $this->deleteCollection->execute($id);
             $this->session->flash('success_message', __('Deleted successfully'));
         }
@@ -178,17 +177,17 @@ final readonly class CollectionsAdminController
     /**
      * @return array<string, mixed>
      */
-    private function fieldsFromRequest(): array
+    private function fieldsFromRequest(Request $request): array
     {
         return [
-            'code'         => trim($this->request->body('code', '')),
-            'name'         => trim($this->request->body('name', '')),
-            'description'  => trim($this->request->body('description', '')),
-            'active'       => $this->request->hasBody('active') ? 1 : 0,
-            'public'       => $this->request->hasBody('public') ? 1 : 0,
-            'sort'         => $this->request->bodyInt('sort', 100),
-            'has_sections' => $this->request->hasBody('has_sections') ? 1 : 0,
-            'per_page'     => max(1, abs($this->request->bodyInt('per_page', 10))),
+            'code'         => trim($request->body('code', '')),
+            'name'         => trim($request->body('name', '')),
+            'description'  => trim($request->body('description', '')),
+            'active'       => $request->hasBody('active') ? 1 : 0,
+            'public'       => $request->hasBody('public') ? 1 : 0,
+            'sort'         => $request->bodyInt('sort', 100),
+            'has_sections' => $request->hasBody('has_sections') ? 1 : 0,
+            'per_page'     => max(1, abs($request->bodyInt('per_page', 10))),
         ];
     }
 
@@ -288,10 +287,10 @@ final readonly class CollectionsAdminController
         ]);
     }
 
-    private function isCsrfValid(): bool
+    private function isCsrfValid(Request $request): bool
     {
         $validator = new Validator(
-            ['csrf_token' => $this->request->body('csrf_token', '')],
+            ['csrf_token' => $request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

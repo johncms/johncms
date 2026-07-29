@@ -25,13 +25,12 @@ final readonly class SetAvatarController
         private ControllerContext $controllerContext,
         private Render $render,
         private NavChain $navChain,
-        private Request $request,
         private User $currentUser,
     ) {
         $this->controllerContext->initModule('help');
     }
 
-    public function __invoke(string $id, int $avatar): Response
+    public function __invoke(Request $request, string $id, int $avatar): Response
     {
         if (! $this->currentUser->isValid()) {
             return new Response($this->render->render('system::pages/result', [
@@ -66,7 +65,7 @@ final readonly class SetAvatarController
             'page_title' => $pageTitle,
         ]);
 
-        if ($this->request->getMethod() === 'POST') {
+        if ($request->getMethod() === 'POST') {
             $targetPath = UPLOAD_PATH . 'users/avatar/' . $this->currentUser->id . '.png';
             if (@copy($sourcePath, $targetPath)) {
                 return new Response($this->render->render('system::pages/result', [

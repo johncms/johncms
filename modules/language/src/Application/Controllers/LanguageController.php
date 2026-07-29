@@ -13,14 +13,13 @@ final readonly class LanguageController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
     ) {
         $this->controllerContext->initModule('language');
     }
 
-    public function __invoke(): string
+    public function __invoke(Request $request): string
     {
-        if ($this->request->getMethod() === 'POST') {
+        if ($request->getMethod() === 'POST') {
             return '';
         }
 

@@ -19,22 +19,21 @@ final readonly class LoginController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private PerformLoginUseCase $performLogin,
     ) {
         $this->controllerContext->initModule('login');
     }
 
-    public function __invoke(): Response
+    public function __invoke(Request $request): Response
     {
         $this->navChain->add(__('Login'));
 
         $error = [];
-        $userLogin = $this->request->body('n', '');
-        $userPass = $this->request->body('p', '');
+        $userLogin = $request->body('n', '');
+        $userPass = $request->body('p', '');
 
-        if ($this->request->hasBody('login')) {
+        if ($request->hasBody('login')) {
             if (empty($userLogin)) {
                 $error[] = __('You have not entered login');
             }
@@ -44,7 +43,7 @@ final readonly class LoginController
             }
 
             if (! $error) {
-                $captchaCode = $this->request->body('code', '');
+                $captchaCode = $request->body('code', '');
                 $result = $this->performLogin->execute($userLogin, $userPass, $captchaCode);
 
                 return match ($result->status) {

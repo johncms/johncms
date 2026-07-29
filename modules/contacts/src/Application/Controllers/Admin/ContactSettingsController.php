@@ -23,7 +23,6 @@ final readonly class ContactSettingsController
     public function __construct(
         private AdminControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private Session $session,
         private NavChain $navChain,
         private ContactSettingsProvider $settingsProvider,
@@ -37,11 +36,11 @@ final readonly class ContactSettingsController
         return $this->renderForm($this->settingsProvider->getSettings());
     }
 
-    public function save(): string
+    public function save(Request $request): string
     {
-        $settings = $this->buildDto();
+        $settings = $this->buildDto($request);
 
-        if (! $this->isCsrfValid()) {
+        if (! $this->isCsrfValid($request)) {
             return $this->renderForm($settings, __('Wrong data'));
         }
 
@@ -55,17 +54,17 @@ final readonly class ContactSettingsController
         redirect(self::URL);
     }
 
-    private function buildDto(): ContactSettingsDTO
+    private function buildDto(Request $request): ContactSettingsDTO
     {
         return new ContactSettingsDTO(
-            formEnabled: $this->request->hasBody('contacts_form_enabled'),
-            notifyEmail: trim($this->request->body('contacts_notify_email', '')),
-            email: trim($this->request->body('contacts_email', '')),
-            phone: trim($this->request->body('contacts_phone', '')),
-            socials: $this->postedSocials(),
-            addresses: $this->postedTranslations('contacts_address'),
-            workingHours: $this->postedTranslations('contacts_working_hours'),
-            texts: $this->postedTranslations('contacts_text'),
+            formEnabled: $request->hasBody('contacts_form_enabled'),
+            notifyEmail: trim($request->body('contacts_notify_email', '')),
+            email: trim($request->body('contacts_email', '')),
+            phone: trim($request->body('contacts_phone', '')),
+            socials: $this->postedSocials($request),
+            addresses: $this->postedTranslations($request, 'contacts_address'),
+            workingHours: $this->postedTranslations($request, 'contacts_working_hours'),
+            texts: $this->postedTranslations($request, 'contacts_text'),
         );
     }
 
@@ -74,9 +73,9 @@ final readonly class ContactSettingsController
      *
      * @return list<SocialLinkDTO>
      */
-    private function postedSocials(): array
+    private function postedSocials(Request $request): array
     {
-        $lines = preg_split('/\R/', $this->request->body('contacts_socials', '')) ?: [];
+        $lines = preg_split('/\R/', $request->body('contacts_socials', '')) ?: [];
 
         $links = [];
         foreach ($lines as $line) {
@@ -101,12 +100,9 @@ final readonly class ContactSettingsController
     /**
      * @return array<string, string>
      */
-    private function postedTranslations(string $field): array
+    private function postedTranslations(Request $request, string $field): array
     {
-        $posted = $this->request->body($field);
-        if (! is_array($posted)) {
-            return [];
-        }
+        $posted = $request->bodyList($field);
 
         $values = [];
         foreach ($this->languageCodes() as $code) {
@@ -124,10 +120,10 @@ final readonly class ContactSettingsController
         return array_keys(config('johncms')['lng_list'] ?? []);
     }
 
-    private function isCsrfValid(): bool
+    private function isCsrfValid(Request $request): bool
     {
         $validator = new Validator(
-            ['csrf_token' => $this->request->body('csrf_token', '')],
+            ['csrf_token' => $request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

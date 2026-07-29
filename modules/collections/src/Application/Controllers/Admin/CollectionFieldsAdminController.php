@@ -27,7 +27,6 @@ final readonly class CollectionFieldsAdminController
     public function __construct(
         private AdminControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private ContentCollectionRepositoryInterface $collectionRepository,
         private ContentCollectionFieldRepositoryInterface $fieldRepository,
@@ -84,23 +83,23 @@ final readonly class CollectionFieldsAdminController
         return $this->renderForm($collection, $id, $this->fieldsFromField($field));
     }
 
-    public function store(int $collection_id): string
+    public function store(Request $request, int $collection_id): string
     {
         $collection = $this->collectionRepository->findById($collection_id);
         if ($collection === null) {
             return $this->collectionNotFound();
         }
 
-        if (! $this->isCsrfValid()) {
+        if (! $this->isCsrfValid($request)) {
             return $this->wrongData($collection_id);
         }
 
-        $id = $this->request->bodyInt('id') ?: null;
+        $id = $request->bodyInt('id') ?: null;
         if ($id !== null && $this->findOwnedField($collection_id, $id) === null) {
             return $this->wrongData($collection_id);
         }
 
-        $fields = $this->fieldsFromRequest();
+        $fields = $this->fieldsFromRequest($request);
         $errors = $this->validate($fields);
 
         if ($errors !== []) {
@@ -142,13 +141,13 @@ final readonly class CollectionFieldsAdminController
         ]);
     }
 
-    public function delete(int $collection_id, int $id): string
+    public function delete(Request $request, int $collection_id, int $id): string
     {
         if ($this->collectionRepository->findById($collection_id) === null) {
             return $this->collectionNotFound();
         }
 
-        if ($this->isCsrfValid() && $this->findOwnedField($collection_id, $id) !== null) {
+        if ($this->isCsrfValid($request) && $this->findOwnedField($collection_id, $id) !== null) {
             $this->deleteField->execute($id);
             $this->session->flash('success_message', __('Deleted successfully'));
         }
@@ -212,15 +211,15 @@ final readonly class CollectionFieldsAdminController
     /**
      * @return array<string, mixed>
      */
-    private function fieldsFromRequest(): array
+    private function fieldsFromRequest(Request $request): array
     {
         return [
-            'code'     => trim($this->request->body('code', '')),
-            'name'     => trim($this->request->body('name', '')),
-            'type'     => $this->request->body('type', ''),
-            'required' => $this->request->hasBody('required') ? 1 : 0,
-            'multiple' => $this->request->hasBody('multiple') ? 1 : 0,
-            'sort'     => $this->request->bodyInt('sort', 100),
+            'code'     => trim($request->body('code', '')),
+            'name'     => trim($request->body('name', '')),
+            'type'     => $request->body('type', ''),
+            'required' => $request->hasBody('required') ? 1 : 0,
+            'multiple' => $request->hasBody('multiple') ? 1 : 0,
+            'sort'     => $request->bodyInt('sort', 100),
         ];
     }
 
@@ -369,10 +368,10 @@ final readonly class CollectionFieldsAdminController
         ]);
     }
 
-    private function isCsrfValid(): bool
+    private function isCsrfValid(Request $request): bool
     {
         $validator = new Validator(
-            ['csrf_token' => $this->request->body('csrf_token', '')],
+            ['csrf_token' => $request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

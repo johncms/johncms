@@ -26,13 +26,12 @@ final readonly class SetMySmiliesController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private User $currentUser,
     ) {
         $this->controllerContext->initModule('help');
     }
 
-    public function __invoke(): Response
+    public function __invoke(Request $request): Response
     {
         if (! $this->currentUser->isValid()) {
             return new Response($this->render->render('system::pages/result', [
@@ -44,11 +43,11 @@ final readonly class SetMySmiliesController
             ]), Response::HTTP_FORBIDDEN);
         }
 
-        $adm = (bool) $this->request->queryParam('adm');
-        $cat = trim($this->request->queryParam('cat', ''));
-        $page = max(1, $this->request->queryInt('page', 1));
+        $adm = (bool) $request->queryParam('adm');
+        $cat = trim($request->queryParam('cat', ''));
+        $page = max(1, $request->queryInt('page', 1));
 
-        $post = $this->request->request->all();
+        $post = $request->request->all();
         $isAdd = isset($post['add']);
         $isDelete = isset($post['delete']);
 

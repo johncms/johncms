@@ -18,7 +18,6 @@ final readonly class UnblockUserController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private Session $session,
         private NavChain $navChain,
         private UnblockUserUseCase $unblockUserUseCase,
@@ -26,9 +25,9 @@ final readonly class UnblockUserController
         $this->controllerContext->initModule('mail');
     }
 
-    public function __invoke(int $userId): Response
+    public function __invoke(Request $request, int $userId): Response
     {
-        if ($this->request->getMethod() === 'POST') {
+        if ($request->getMethod() === 'POST') {
             $this->unblockUserUseCase->execute($userId);
             $this->session->flash('message', __('User unblocked successfully'));
             $this->session->flash('message_type', 'success');

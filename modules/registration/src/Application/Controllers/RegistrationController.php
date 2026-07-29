@@ -28,7 +28,6 @@ final readonly class RegistrationController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private Session $session,
         private NavChain $navChain,
         private User $currentUser,
@@ -39,7 +38,7 @@ final readonly class RegistrationController
         $this->controllerContext->initModule('registration');
     }
 
-    public function __invoke(): Response
+    public function __invoke(Request $request): Response
     {
         $config = config('johncms');
 
@@ -52,23 +51,23 @@ final readonly class RegistrationController
         $consents = $this->consentService->getFormConsents('register');
 
         $fields = [
-            'name'     => $this->request->body('name', ''),
-            'name_lat' => Str::slug($this->request->body('name', ''), '_'),
-            'password' => $this->request->body('password', ''),
-            'sex'      => $this->request->body('sex', ''),
-            'imname'   => $this->request->body('imname', ''),
-            'about'    => $this->request->body('about', ''),
-            'captcha'  => $this->request->body('captcha'),
-            'email'    => $this->request->body('email', ''),
+            'name'     => $request->body('name', ''),
+            'name_lat' => Str::slug($request->body('name', ''), '_'),
+            'password' => $request->body('password', ''),
+            'sex'      => $request->body('sex', ''),
+            'imname'   => $request->body('imname', ''),
+            'about'    => $request->body('about', ''),
+            'captcha'  => $request->body('captcha'),
+            'email'    => $request->body('email', ''),
         ];
 
         foreach ($consents as $consent) {
-            $fields['consent_' . $consent->id] = $this->request->body('consent_' . $consent->id);
+            $fields['consent_' . $consent->id] = $request->body('consent_' . $consent->id);
         }
 
         $errors = [];
 
-        if ($this->request->getMethod() === 'POST') {
+        if ($request->getMethod() === 'POST') {
             $rules = [
                 'name'     => [
                     'NotEmpty',

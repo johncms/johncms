@@ -19,7 +19,6 @@ final readonly class LogoutController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private Session $session,
         private NavChain $navChain,
         private User $currentUser,
@@ -27,13 +26,13 @@ final readonly class LogoutController
         $this->controllerContext->initModule('login');
     }
 
-    public function __invoke(): Response
+    public function __invoke(Request $request): Response
     {
         if (! $this->currentUser->isValid()) {
             return new RedirectResponse('/login/');
         }
 
-        if ($this->request->hasBody('logout')) {
+        if ($request->hasBody('logout')) {
             $this->session->invalidate();
             $response = new RedirectResponse('/');
             $expire = time() - 3600;
@@ -43,7 +42,7 @@ final readonly class LogoutController
         }
 
         $config = config('johncms');
-        $referer = $this->request->server->filter('HTTP_REFERER', $config['homeurl'], FILTER_SANITIZE_SPECIAL_CHARS);
+        $referer = $request->server->filter('HTTP_REFERER', $config['homeurl'], FILTER_SANITIZE_SPECIAL_CHARS);
 
         $this->navChain->add(__('Personal'), '/profile/account');
         $this->navChain->add(__('Logout'));

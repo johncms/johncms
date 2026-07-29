@@ -18,13 +18,12 @@ final readonly class CommunityTopController
         private Render $render,
         private NavChain $navChain,
         private User $currentUser,
-        private Request $request,
         private ViewTopUseCase $viewTopUseCase,
     ) {
         $this->controllerContext->initModule('community');
     }
 
-    public function __invoke(): string
+    public function __invoke(Request $request): string
     {
         $communityTitle = __('Community');
         $this->navChain->add($communityTitle, '/community/');
@@ -41,7 +40,7 @@ final readonly class CommunityTopController
             );
         }
 
-        $route = $this->request->attributes->all();
+        $route = $request->attributes->all();
         $mod = (string) ($route['mod'] ?? '');
         $result = $this->viewTopUseCase->execute($mod);
 
