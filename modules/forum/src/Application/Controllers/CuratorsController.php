@@ -19,7 +19,6 @@ final readonly class CuratorsController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private ForumErrorRenderer $forumErrorRenderer,
         private GetCuratorsContextUseCase $contextUseCase,
         private UpdateCuratorsUseCase $updateCuratorsUseCase,
@@ -27,7 +26,7 @@ final readonly class CuratorsController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(int $id): Response
+    public function __invoke(Request $request, int $id): Response
     {
         try {
             $context = $this->contextUseCase->execute($id);
@@ -55,14 +54,14 @@ final readonly class CuratorsController
         }
 
         $topic = $context['topic'];
-        $page = max(1, $this->request->queryInt('page', 1));
+        $page = max(1, $request->queryInt('page', 1));
         $total = count($context['candidates']);
 
         $selectedUsers = ! empty($topic->curators) ? $topic->curators : [];
         $saved = false;
 
-        if ($this->request->hasBody('submit')) {
-            $selectedUsers = $this->request->bodyList('users');
+        if ($request->hasBody('submit')) {
+            $selectedUsers = $request->bodyList('users');
             if (! is_array($selectedUsers)) {
                 $selectedUsers = [];
             }
@@ -83,7 +82,7 @@ final readonly class CuratorsController
             ];
         }
 
-        if ($this->request->hasBody('submit') && $total > 0) {
+        if ($request->hasBody('submit') && $total > 0) {
             $this->updateCuratorsUseCase->execute($topic, $curators);
             $saved = true;
         }

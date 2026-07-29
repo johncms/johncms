@@ -29,7 +29,6 @@ final readonly class NewMessageController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private Environment $environment,
         private Session $session,
         private AntifloodCheckerInterface $antifloodChecker,
@@ -48,9 +47,9 @@ final readonly class NewMessageController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(int $id): Response
+    public function __invoke(Request $request, int $id): Response
     {
-        $page = max(1, $this->request->queryInt('page', 1));
+        $page = max(1, $request->queryInt('page', 1));
 
         try {
             $topic = $this->contextUseCase->execute($id);
@@ -100,15 +99,15 @@ final readonly class NewMessageController
             );
         }
 
-        $msg = $this->editorContentNormalizer->trimEdgeEmptyBlocks($this->request->body('msg', ''));
+        $msg = $this->editorContentNormalizer->trimEdgeEmptyBlocks($request->body('msg', ''));
         $msg = trim($msg);
-        $addFiles = $this->request->hasBody('addfiles');
-        $attachedFiles = (array) $this->request->bodyInts('attached_files');
+        $addFiles = $request->hasBody('addfiles');
+        $attachedFiles = (array) $request->bodyInts('attached_files');
 
         if (
-            $this->request->hasBody('submit')
+            $request->hasBody('submit')
             && $msg !== ''
-            && $this->isValidToken()
+            && $this->isValidToken($request)
         ) {
             if (mb_strlen($msg) < 4) {
                 return new Response(
@@ -185,7 +184,7 @@ final readonly class NewMessageController
                     'add_file'          => $addFiles,
                     'msg'               => $msg,
                     'settings_forum'    => $this->getForumSettings(),
-                    'show_post_preview' => ($msg !== '' && ! $this->request->hasBody('submit')),
+                    'show_post_preview' => ($msg !== '' && ! $request->hasBody('submit')),
                     'back_url'          => $this->buildTopicBackUrl($topic->url, $page),
                     'preview_message'   => $msgPreview,
                     'is_new_message'    => true,
@@ -212,9 +211,9 @@ final readonly class NewMessageController
         return array_merge($setForumDefault, $setForum);
     }
 
-    private function isValidToken(): bool
+    private function isValidToken(Request $request): bool
     {
-        $token = $this->request->body('token', '');
+        $token = $request->body('token', '');
         $sessionToken = (string) $this->session->get('token', '');
 
         return $token !== '' && $sessionToken !== '' && hash_equals($sessionToken, $token);

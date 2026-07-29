@@ -20,7 +20,6 @@ final readonly class SubmitVoteController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private User $user,
         private ForumErrorRenderer $forumErrorRenderer,
         private GetSubmitVoteContextUseCase $contextUseCase,
@@ -29,10 +28,10 @@ final readonly class SubmitVoteController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(int $id): Response
+    public function __invoke(Request $request, int $id): Response
     {
         try {
-            $voteId = $this->request->bodyInt('vote', 0);
+            $voteId = $request->bodyInt('vote', 0);
             $context = $this->contextUseCase->execute($id, $voteId, $this->user->id);
         } catch (ForumAccessDeniedException | ForumValidationException $exception) {
             return $this->forumErrorRenderer->render(
@@ -47,7 +46,7 @@ final readonly class SubmitVoteController
 
         $this->submitVoteUseCase->execute($context->topicId, $context->voteId, $this->user->id);
 
-        $referer = htmlspecialchars((string) $this->request->server->getString('HTTP_REFERER', '/forum/'));
+        $referer = htmlspecialchars((string) $request->server->getString('HTTP_REFERER', '/forum/'));
         return new Response(
             $this->render->render(
                 'system::pages/result',

@@ -21,7 +21,6 @@ final readonly class UploadFileController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Request $request,
         private FileStorage $fileStorage,
         private EnsureForumAccessUseCase $forumAccessUseCase,
         private User $currentUser,
@@ -31,7 +30,7 @@ final readonly class UploadFileController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(): JsonResponse
+    public function __invoke(Request $request): JsonResponse
     {
         try {
             $this->forumAccessUseCase->execute();
@@ -50,7 +49,7 @@ final readonly class UploadFileController
         }
 
         try {
-            $upload = $this->request->files->get('upload');
+            $upload = $request->files->get('upload');
             if (! $upload instanceof UploadedFile) {
                 return new JsonResponse(['error' => ['message' => __('Error uploading file')]]);
             }
@@ -78,7 +77,7 @@ final readonly class UploadFileController
                     'feature'      => 'upload_file',
                     'user_id'      => $this->currentUser->id,
                     'trace'        => $exception->getTraceAsString(),
-                    'request_data' => $this->request->request->all(),
+                    'request_data' => $request->request->all(),
                 ]
             );
 

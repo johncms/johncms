@@ -18,7 +18,6 @@ final readonly class ForumSectionController
 {
     public function __construct(
         private Render $render,
-        private Request $request,
         private Session $session,
         private NavChain $navChain,
         private ViewForumSectionUseCase $viewForumSectionUseCase,
@@ -26,12 +25,12 @@ final readonly class ForumSectionController
     ) {
     }
 
-    public function __invoke(string $sectionPath): string
+    public function __invoke(Request $request, string $sectionPath): string
     {
         $this->session->remove('fsort_id');
         $this->session->remove('fsort_users');
 
-        $page = max(1, $this->request->queryInt('page', 1));
+        $page = max(1, $request->queryInt('page', 1));
 
         try {
             $result = $this->viewForumSectionUseCase->execute($sectionPath, $page);

@@ -22,7 +22,6 @@ final readonly class MoveTopicController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private Csrf $csrf,
         private ForumErrorRenderer $forumErrorRenderer,
         private EnsureMoveTopicAccessUseCase $accessUseCase,
@@ -32,11 +31,11 @@ final readonly class MoveTopicController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(int $id): Response
+    public function __invoke(Request $request, int $id): Response
     {
         try {
             $this->accessUseCase->execute();
-            $other = filter_var($this->request->queryParam('other'), FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
+            $other = filter_var($request->queryParam('other'), FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
             $otherCategoryId = $other !== null && $other > 0 ? $other : null;
             $context = $this->contextUseCase->execute($id, $otherCategoryId);
         } catch (ForumAccessDeniedException | ForumNotFoundException $exception) {
@@ -50,11 +49,11 @@ final readonly class MoveTopicController
             );
         }
 
-        if ($this->request->hasBody('submit')) {
-            $targetSectionId = $this->request->bodyInt('razd');
+        if ($request->hasBody('submit')) {
+            $targetSectionId = $request->bodyInt('razd');
 
             $validator = new Validator(
-                ['csrf_token' => $this->request->body('csrf_token', '')],
+                ['csrf_token' => $request->body('csrf_token', '')],
                 ['csrf_token' => ['Csrf']]
             );
 

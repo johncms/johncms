@@ -1287,12 +1287,6 @@ parameters:
 			path: modules/forum/src/Application/ForumUtils.php
 
 		-
-			message: '#^Variable \$env in PHPDoc tag @var does not match assigned variable \$request\.$#'
-			identifier: varTag.differentVariable
-			count: 1
-			path: modules/forum/src/Application/ForumUtils.php
-
-		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Forum\\Domain\\Models\\ForumUnread\:\:\$time\.$#'
 			identifier: property.notFound
 			count: 1

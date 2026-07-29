@@ -17,7 +17,6 @@ final readonly class ForumIndexController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private ForumLegacyRedirectResolver $legacyRedirectResolver,
         private ViewForumIndexUseCase $viewForumIndexUseCase,
@@ -25,9 +24,9 @@ final readonly class ForumIndexController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(): string
+    public function __invoke(Request $request): string
     {
-        $legacyRedirectUrl = $this->legacyRedirectResolver->resolve($this->request->query->all());
+        $legacyRedirectUrl = $this->legacyRedirectResolver->resolve($request->query->all());
         if ($legacyRedirectUrl !== null) {
             redirect($legacyRedirectUrl, 301);
         }

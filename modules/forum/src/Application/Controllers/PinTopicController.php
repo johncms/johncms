@@ -19,7 +19,6 @@ final readonly class PinTopicController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private ForumErrorRenderer $forumErrorRenderer,
         private GetPinTopicContextUseCase $contextUseCase,
         private PinTopicUseCase $pinTopicUseCase,
@@ -27,7 +26,7 @@ final readonly class PinTopicController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(int $id): Response
+    public function __invoke(Request $request, int $id): Response
     {
         try {
             $topic = $this->contextUseCase->execute($id);
@@ -44,7 +43,7 @@ final readonly class PinTopicController
             pageNotFound();
         }
 
-        $pin = $this->request->query->has('pin');
+        $pin = $request->query->has('pin');
         $this->pinTopicUseCase->execute($topic->id, $pin);
         redirect($topic->url);
     }

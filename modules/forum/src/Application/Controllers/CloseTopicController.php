@@ -20,7 +20,6 @@ final readonly class CloseTopicController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private ForumErrorRenderer $forumErrorRenderer,
         private GetCloseTopicContextUseCase $contextUseCase,
         private CloseTopicUseCase $closeTopicUseCase,
@@ -29,7 +28,7 @@ final readonly class CloseTopicController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(int $id): Response
+    public function __invoke(Request $request, int $id): Response
     {
         try {
             $topicId = $this->contextUseCase->execute($id);
@@ -46,7 +45,7 @@ final readonly class CloseTopicController
             pageNotFound();
         }
 
-        $closed = $this->request->query->has('closed');
+        $closed = $request->query->has('closed');
         $this->closeTopicUseCase->execute($topicId, $closed);
         redirect($this->topicPathService->getTopicUrlById($topicId) ?? '/forum/');
     }

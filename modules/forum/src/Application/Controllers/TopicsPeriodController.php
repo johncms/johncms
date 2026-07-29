@@ -22,7 +22,6 @@ final readonly class TopicsPeriodController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private User $currentUser,
         private EnsureForumUserAccessUseCase $forumUserAccessUseCase,
@@ -33,7 +32,7 @@ final readonly class TopicsPeriodController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(): Response
+    public function __invoke(Request $request): Response
     {
         try {
             $this->forumUserAccessUseCase->execute();
@@ -41,11 +40,11 @@ final readonly class TopicsPeriodController
             return $this->forumErrorRenderer->render($this->render, $exception);
         }
 
-        $hours = $this->request->bodyInt('vr', $this->request->queryInt('vr', 24));
+        $hours = $request->bodyInt('vr', $request->queryInt('vr', 24));
         if ($hours <= 0) {
             $hours = 24;
         }
-        $page = max(1, $this->request->queryInt('page', 1));
+        $page = max(1, $request->queryInt('page', 1));
         $start = ($page - 1) * (int) $this->currentUser->config->kmess;
 
         $result = $this->viewTopicsByPeriodUseCase->execute(

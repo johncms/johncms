@@ -22,7 +22,6 @@ final readonly class BulkDeletePostsController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private User $currentUser,
         private Csrf $csrf,
         private ForumErrorRenderer $forumErrorRenderer,
@@ -32,7 +31,7 @@ final readonly class BulkDeletePostsController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(int $id): Response
+    public function __invoke(Request $request, int $id): Response
     {
         try {
             $backUrl = $this->contextUseCase->execute($id);
@@ -47,12 +46,12 @@ final readonly class BulkDeletePostsController
             );
         }
 
-        $ids = $this->extractIds((array) $this->request->bodyList('post_ids'));
-        $confirmIds = $this->extractIds((array) $this->request->bodyList('ids'));
+        $ids = $this->extractIds((array) $request->bodyList('post_ids'));
+        $confirmIds = $this->extractIds((array) $request->bodyList('ids'));
 
-        if ($this->request->hasBody('confirm')) {
+        if ($request->hasBody('confirm')) {
             $validator = new Validator(
-                ['csrf_token' => $this->request->body('csrf_token', '')],
+                ['csrf_token' => $request->body('csrf_token', '')],
                 ['csrf_token' => ['Csrf']]
             );
 

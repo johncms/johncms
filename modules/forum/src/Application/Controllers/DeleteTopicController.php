@@ -22,7 +22,6 @@ final readonly class DeleteTopicController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private User $user,
         private ForumErrorRenderer $forumErrorRenderer,
         private GetDeleteTopicContextUseCase $contextUseCase,
@@ -36,7 +35,7 @@ final readonly class DeleteTopicController
     /**
      * @throws \Throwable
      */
-    public function __invoke(int $id): Response
+    public function __invoke(Request $request, int $id): Response
     {
         try {
             $topic = $this->contextUseCase->execute($id);
@@ -63,8 +62,8 @@ final readonly class DeleteTopicController
             );
         }
 
-        if ($this->request->hasBody('submit')) {
-            $deleteMode = $this->request->bodyInt('del', 0);
+        if ($request->hasBody('submit')) {
+            $deleteMode = $request->bodyInt('del', 0);
 
             if ($deleteMode === 2 && $this->user->rights === 9) {
                 $this->deleteTopicUseCase->deleteTopic($topic->id);

@@ -23,7 +23,6 @@ final readonly class DeletePostController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private Csrf $csrf,
         private User $currentUser,
         private ForumErrorRenderer $forumErrorRenderer,
@@ -34,7 +33,7 @@ final readonly class DeletePostController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(int $id): Response
+    public function __invoke(Request $request, int $id): Response
     {
         try {
             $context = $this->contextUseCase->execute($id, $this->getForumSettings());
@@ -63,9 +62,9 @@ final readonly class DeletePostController
             );
         }
 
-        if ($this->request->getMethod() === 'POST') {
+        if ($request->getMethod() === 'POST') {
             $validator = new Validator(
-                ['csrf_token' => $this->request->body('csrf_token', '')],
+                ['csrf_token' => $request->body('csrf_token', '')],
                 ['csrf_token' => ['Csrf']]
             );
 
@@ -84,7 +83,7 @@ final readonly class DeletePostController
                 );
             }
 
-            $action = $this->request->body('action', 'delete');
+            $action = $request->body('action', 'delete');
             $hardDelete = $action === 'delete' && $this->currentUser->rights === 9;
             $result = $this->deletePostUseCase->execute($context, $hardDelete, $this->getForumSettings());
             redirect($result->redirectUrl);

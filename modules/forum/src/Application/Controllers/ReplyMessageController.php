@@ -29,7 +29,6 @@ final readonly class ReplyMessageController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private Environment $environment,
         private Session $session,
         private AntifloodCheckerInterface $antifloodChecker,
@@ -48,9 +47,9 @@ final readonly class ReplyMessageController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(int $id): Response
+    public function __invoke(Request $request, int $id): Response
     {
-        $page = max(1, $this->request->queryInt('page', 1));
+        $page = max(1, $request->queryInt('page', 1));
 
         try {
             $context = $this->contextUseCase->execute($id);
@@ -118,14 +117,14 @@ final readonly class ReplyMessageController
             );
         }
 
-        $msg = $this->editorContentNormalizer->trimEdgeEmptyBlocks($this->request->body('msg', ''));
+        $msg = $this->editorContentNormalizer->trimEdgeEmptyBlocks($request->body('msg', ''));
         $msg = trim($msg);
-        $addFiles = $this->request->hasBody('addfiles');
-        $attachedFiles = (array) $this->request->bodyInts('attached_files');
+        $addFiles = $request->hasBody('addfiles');
+        $attachedFiles = (array) $request->bodyInts('attached_files');
 
         if (
-            $this->request->hasBody('submit')
-            && $this->isValidToken()
+            $request->hasBody('submit')
+            && $this->isValidToken($request)
         ) {
             if ($msg === '') {
                 return new Response(
@@ -135,7 +134,7 @@ final readonly class ReplyMessageController
                             'title'         => __('New message'),
                             'type'          => 'alert-danger',
                             'message'       => __('You have not entered the message'),
-                            'back_url'      => $this->getReplyUrl($id, $page),
+                            'back_url'      => $this->getReplyUrl($request, $id, $page),
                             'back_url_name' => __('Repeat'),
                         ]
                     )
@@ -201,7 +200,7 @@ final readonly class ReplyMessageController
 
         $token = $this->regenerateToken();
 
-        $isQuote = $this->request->query->has('quote');
+        $isQuote = $request->query->has('quote');
         $quoteText = (string) $sourceMessage->getRawOriginal('text');
 
         if ($isQuote) {
@@ -223,13 +222,13 @@ final readonly class ReplyMessageController
                     'id'                => $sourceMessage->id,
                     'token'             => $token,
                     'topic'             => $topic,
-                    'form_action'       => $this->getReplyUrl($sourceMessage->id, $page),
+                    'form_action'       => $this->getReplyUrl($request, $sourceMessage->id, $page),
                     'is_quote'          => $isQuote,
                     'add_file'          => $addFiles,
                     'msg'               => $msg,
                     'message'           => $sourceMessage,
                     'settings_forum'    => $this->getForumSettings(),
-                    'show_post_preview' => (! $this->request->hasBody('submit') && $this->request->hasBody('msg')),
+                    'show_post_preview' => (! $request->hasBody('submit') && $request->hasBody('msg')),
                     'back_url'          => $this->buildTopicBackUrl($topic->url, $page),
                     'is_new_message'    => false,
                     'preview_message'   => $msgPreview,
@@ -256,9 +255,9 @@ final readonly class ReplyMessageController
         return array_merge($setForumDefault, $setForum);
     }
 
-    private function isValidToken(): bool
+    private function isValidToken(Request $request): bool
     {
-        $token = $this->request->body('token', '');
+        $token = $request->body('token', '');
         $sessionToken = (string) $this->session->get('token', '');
 
         return $token !== '' && $sessionToken !== '' && hash_equals($sessionToken, $token);
@@ -272,13 +271,13 @@ final readonly class ReplyMessageController
         return $token;
     }
 
-    private function getReplyUrl(int $messageId, int $page = 1): string
+    private function getReplyUrl(Request $request, int $messageId, int $page = 1): string
     {
         $url = '/forum/reply-message/' . $messageId . '/';
         if ($page > 1) {
             $url .= '?page=' . $page;
         }
-        if ($this->request->query->has('quote')) {
+        if ($request->query->has('quote')) {
             $url .= ($page > 1 ? '&amp;' : '?') . 'quote=1';
         }
 

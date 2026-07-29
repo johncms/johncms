@@ -23,7 +23,6 @@ final readonly class PollVotersController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private ForumErrorRenderer $forumErrorRenderer,
         private EnsurePollVotersAccessUseCase $accessUseCase,
@@ -34,11 +33,11 @@ final readonly class PollVotersController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(int $id): Response
+    public function __invoke(Request $request, int $id): Response
     {
         try {
             $this->accessUseCase->execute($id);
-            $page = max(1, $this->request->queryInt('page', 1));
+            $page = max(1, $request->queryInt('page', 1));
             $result = $this->viewPollVotersUseCase->execute(
                 new PollVotersQueryDTO(
                     topicId: $id,

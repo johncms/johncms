@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\Request;
 use Johncms\Modules\Forum\Application\Services\ForumSectionPathService;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 
@@ -20,14 +21,14 @@ final readonly class ForumPathController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(string $sectionPath): string
+    public function __invoke(Request $request, string $sectionPath): string
     {
         if ($this->sectionPathService->findSectionByPath($sectionPath) !== null) {
-            return $this->forumSectionController->__invoke($sectionPath);
+            return $this->forumSectionController->__invoke($request, $sectionPath);
         }
 
         if ($this->topicPathService->parseTopicPath('/forum/' . ltrim($sectionPath, '/')) !== null) {
-            return $this->forumTopicController->__invoke($sectionPath);
+            return $this->forumTopicController->__invoke($request, $sectionPath);
         }
 
         pageNotFound();

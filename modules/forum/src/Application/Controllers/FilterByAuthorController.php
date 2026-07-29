@@ -20,7 +20,6 @@ final readonly class FilterByAuthorController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private Session $session,
         private NavChain $navChain,
         private Csrf $csrf,
@@ -30,9 +29,9 @@ final readonly class FilterByAuthorController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(int $id): Response
+    public function __invoke(Request $request, int $id): Response
     {
-        $page = max(1, $this->request->queryInt('page', 1));
+        $page = max(1, $request->queryInt('page', 1));
 
         try {
             $context = $this->viewFilterByAuthorUseCase->execute($id);

@@ -20,7 +20,6 @@ final readonly class AddVoteController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private ForumErrorRenderer $forumErrorRenderer,
         private GetAddVoteContextUseCase $contextUseCase,
         private CreateVoteUseCase $createVoteUseCase,
@@ -29,7 +28,7 @@ final readonly class AddVoteController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(int $id): Response
+    public function __invoke(Request $request, int $id): Response
     {
         try {
             $topicId = $this->contextUseCase->execute($id);
@@ -56,24 +55,24 @@ final readonly class AddVoteController
             );
         }
 
-        $countVoteRaw = $this->request->bodyInt('count_vote', 0);
+        $countVoteRaw = $request->bodyInt('count_vote', 0);
         $countVote = (int) $countVoteRaw;
-        if ($this->request->hasBody('plus')) {
+        if ($request->hasBody('plus')) {
             $countVote++;
-        } elseif ($this->request->hasBody('minus')) {
+        } elseif ($request->hasBody('minus')) {
             $countVote--;
         }
         $countVote = $this->normalizeVoteCount($countVote);
 
-        if ($this->request->hasBody('submit')) {
-            $voteName = mb_substr(trim($this->request->body('name_vote', '')), 0, 200);
-            $firstAnswer = trim($this->request->body('0', ''));
-            $secondAnswer = trim($this->request->body('1', ''));
+        if ($request->hasBody('submit')) {
+            $voteName = mb_substr(trim($request->body('name_vote', '')), 0, 200);
+            $firstAnswer = trim($request->body('0', ''));
+            $secondAnswer = trim($request->body('1', ''));
 
             if ($voteName !== '' && $firstAnswer !== '' && $secondAnswer !== '' && ! empty($countVoteRaw)) {
                 $answers = [];
                 for ($vote = 0; $vote < $countVote; $vote++) {
-                    $text = mb_substr(trim($this->request->body((string) $vote, '')), 0, 150);
+                    $text = mb_substr(trim($request->body((string) $vote, '')), 0, 150);
                     if ($text === '') {
                         continue;
                     }
@@ -117,7 +116,7 @@ final readonly class AddVoteController
             $votes[] = [
                 'input_name'  => $vote,
                 'input_label' => __('Answer') . ' ' . ($vote + 1),
-                'input_value' => htmlentities($this->request->body((string) $vote, ''), ENT_QUOTES, 'UTF-8'),
+                'input_value' => htmlentities($request->body((string) $vote, ''), ENT_QUOTES, 'UTF-8'),
             ];
         }
 
@@ -130,7 +129,7 @@ final readonly class AddVoteController
                     'id'         => $topicId,
                     'back_url'   => $this->topicPathService->getTopicUrlById($topicId) ?? '/forum/',
                     'count_vote' => $countVote,
-                    'poll_name'  => htmlentities($this->request->body('name_vote', ''), ENT_QUOTES, 'UTF-8'),
+                    'poll_name'  => htmlentities($request->body('name_vote', ''), ENT_QUOTES, 'UTF-8'),
                     'votes'      => $votes,
                 ]
             )

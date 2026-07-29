@@ -20,7 +20,6 @@ final readonly class DeleteVoteController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private ForumErrorRenderer $forumErrorRenderer,
         private EnsureDeleteVoteAccessUseCase $accessUseCase,
         private DeleteVoteUseCase $deleteVoteUseCase,
@@ -29,7 +28,7 @@ final readonly class DeleteVoteController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(int $id): Response
+    public function __invoke(Request $request, int $id): Response
     {
         try {
             $this->accessUseCase->execute($id);
@@ -55,7 +54,7 @@ final readonly class DeleteVoteController
             );
         }
 
-        if ($this->request->query->has('yes')) {
+        if ($request->query->has('yes')) {
             $this->deleteVoteUseCase->execute($id);
             return new Response(
                 $this->render->render(

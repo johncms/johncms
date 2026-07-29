@@ -24,7 +24,6 @@ final readonly class AddFileController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private ForumErrorRenderer $forumErrorRenderer,
         private GetAttachFileContextUseCase $contextUseCase,
         private AttachFileToPostUseCase $attachFileToPostUseCase,
@@ -34,11 +33,11 @@ final readonly class AddFileController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(int $id): Response
+    public function __invoke(Request $request, int $id): Response
     {
         $config = config('johncms');
         $forumConfig = config('forum');
-        $page = $this->request->queryInt('page', 1);
+        $page = $request->queryInt('page', 1);
 
         try {
             $context = $this->contextUseCase->execute($id, $page);
@@ -68,8 +67,8 @@ final readonly class AddFileController
         $topicId = $context->topicId;
         $page = $context->page;
 
-        if ($this->request->getMethod() === 'POST') {
-            $uploaded = $this->request->files->get('fail');
+        if ($request->getMethod() === 'POST') {
+            $uploaded = $request->files->get('fail');
             $file = $uploaded instanceof UploadedFile
                 ? $this->uploadedFileMapper->fromUploadedFile($uploaded)
                 : null;

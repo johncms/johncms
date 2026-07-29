@@ -25,7 +25,6 @@ final readonly class EditPostController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private EditorContentNormalizer $editorContentNormalizer,
         private Csrf $csrf,
         private User $currentUser,
@@ -38,9 +37,9 @@ final readonly class EditPostController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(int $id): Response
+    public function __invoke(Request $request, int $id): Response
     {
-        $page = max(1, $this->request->queryInt('page', 1));
+        $page = max(1, $request->queryInt('page', 1));
 
         try {
             $context = $this->contextUseCase->execute($id, $this->getForumSettings());
@@ -69,10 +68,10 @@ final readonly class EditPostController
             );
         }
 
-        if ($this->request->hasBody('submit')) {
-            $msg = $this->editorContentNormalizer->trimEdgeEmptyBlocks($this->request->body('msg', ''));
+        if ($request->hasBody('submit')) {
+            $msg = $this->editorContentNormalizer->trimEdgeEmptyBlocks($request->body('msg', ''));
             $msg = trim($msg);
-            $attachedFiles = (array) $this->request->bodyInts('attached_files');
+            $attachedFiles = (array) $request->bodyInts('attached_files');
             if ($msg === '') {
                 return new Response(
                     $this->render->render(
@@ -89,7 +88,7 @@ final readonly class EditPostController
             }
 
             $validator = new Validator(
-                ['csrf_token' => $this->request->body('csrf_token', '')],
+                ['csrf_token' => $request->body('csrf_token', '')],
                 ['csrf_token' => ['Csrf']]
             );
             if (! $validator->isValid()) {
@@ -115,9 +114,9 @@ final readonly class EditPostController
             redirect($context->topic->url . ($context->page > 1 ? '?page=' . $context->page : ''));
         }
 
-        $message = ! $this->request->hasBody('msg')
+        $message = ! $request->hasBody('msg')
             ? (string) $context->message->getRawOriginal('text')
-            : $this->request->body('msg');
+            : $request->body('msg');
 
         return new Response(
             $this->render->render(

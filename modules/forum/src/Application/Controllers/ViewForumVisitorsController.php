@@ -22,7 +22,6 @@ final readonly class ViewForumVisitorsController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private NavChain $navChain,
         private User $currentUser,
         private EnsureForumUserAccessUseCase $forumUserAccessUseCase,
@@ -33,7 +32,7 @@ final readonly class ViewForumVisitorsController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(): Response
+    public function __invoke(Request $request): Response
     {
         try {
             $this->forumUserAccessUseCase->execute();
@@ -41,8 +40,8 @@ final readonly class ViewForumVisitorsController
             return $this->forumErrorRenderer->render($this->render, $exception);
         }
 
-        $showGuests = $this->request->queryParam('mode') === 'guests';
-        $page = max(1, $this->request->queryInt('page', 1));
+        $showGuests = $request->queryParam('mode') === 'guests';
+        $page = max(1, $request->queryInt('page', 1));
         $start = ($page - 1) * (int) $this->currentUser->config->kmess;
         $result = $this->viewForumVisitorsUseCase->execute(
             new ForumVisitorsQueryDTO(

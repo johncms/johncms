@@ -19,7 +19,6 @@ final readonly class ClearFilterByAuthorController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private ForumErrorRenderer $forumErrorRenderer,
         private GetFilterByAuthorContextUseCase $contextUseCase,
         private ClearFilterByAuthorUseCase $clearFilterByAuthorUseCase,
@@ -27,12 +26,12 @@ final readonly class ClearFilterByAuthorController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(int $id): Response
+    public function __invoke(Request $request, int $id): Response
     {
-        $page = max(1, $this->request->queryInt('page', 1));
+        $page = max(1, $request->queryInt('page', 1));
 
         $validator = new Validator(
-            ['csrf_token' => $this->request->body('csrf_token', '')],
+            ['csrf_token' => $request->body('csrf_token', '')],
             ['csrf_token' => ['Csrf']]
         );
 

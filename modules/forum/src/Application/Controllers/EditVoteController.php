@@ -21,7 +21,6 @@ final readonly class EditVoteController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private ForumErrorRenderer $forumErrorRenderer,
         private GetEditVoteContextUseCase $contextUseCase,
         private UpdateVoteUseCase $updateVoteUseCase,
@@ -31,7 +30,7 @@ final readonly class EditVoteController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(int $id): Response
+    public function __invoke(Request $request, int $id): Response
     {
         try {
             $context = $this->contextUseCase->execute($id);
@@ -58,10 +57,10 @@ final readonly class EditVoteController
             );
         }
 
-        $deleteAnswer = $this->request->query->has('delvote');
-        $voteId = abs($this->request->queryInt('vote', 0));
+        $deleteAnswer = $request->query->has('delvote');
+        $voteId = abs($request->queryInt('vote', 0));
         if ($deleteAnswer && $voteId > 0) {
-            if ($this->request->query->has('yes')) {
+            if ($request->query->has('yes')) {
                 $this->deleteVoteAnswerUseCase->execute($context->topicId, $voteId);
                 redirect('/forum/editvote/' . $context->topicId . '/');
             }
@@ -80,18 +79,18 @@ final readonly class EditVoteController
             );
         }
 
-        if ($this->request->hasBody('submit')) {
-            $pollName = mb_substr(trim($this->request->body('name_vote', '')), 0, 200);
+        if ($request->hasBody('submit')) {
+            $pollName = mb_substr(trim($request->body('name_vote', '')), 0, 200);
 
             $existingAnswers = [];
             foreach ($context->answers as $answer) {
                 $inputName = $answer->id . 'vote';
-                $existingAnswers[$answer->id] = mb_substr(trim($this->request->body($inputName, '')), 0, 150);
+                $existingAnswers[$answer->id] = mb_substr(trim($request->body($inputName, '')), 0, 150);
             }
 
             $newAnswers = [];
             for ($vote = $context->savedVote; $vote < 20; $vote++) {
-                $value = mb_substr(trim($this->request->body((string) $vote, '')), 0, 150);
+                $value = mb_substr(trim($request->body((string) $vote, '')), 0, 150);
                 if ($value === '') {
                     continue;
                 }
@@ -115,11 +114,11 @@ final readonly class EditVoteController
             );
         }
 
-        $countVote = $this->request->bodyInt('count_vote', $context->savedVote);
+        $countVote = $request->bodyInt('count_vote', $context->savedVote);
         if ($context->savedVote < 20) {
-            if ($this->request->hasBody('plus')) {
+            if ($request->hasBody('plus')) {
                 $countVote++;
-            } elseif ($this->request->hasBody('minus')) {
+            } elseif ($request->hasBody('minus')) {
                 $countVote--;
             }
 
@@ -152,7 +151,7 @@ final readonly class EditVoteController
             $votes[] = [
                 'input_name'  => $vote,
                 'input_label' => __('Answer') . ' ' . ($vote + 1),
-                'input_value' => htmlentities($this->request->body((string) $vote, ''), ENT_QUOTES, 'UTF-8'),
+                'input_value' => htmlentities($request->body((string) $vote, ''), ENT_QUOTES, 'UTF-8'),
             ];
         }
 

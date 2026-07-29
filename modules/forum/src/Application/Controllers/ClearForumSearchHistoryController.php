@@ -18,7 +18,6 @@ final readonly class ClearForumSearchHistoryController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private EnsureForumUserAccessUseCase $forumUserAccessUseCase,
         private ForumErrorRenderer $forumErrorRenderer,
         private ClearForumSearchHistoryUseCase $clearForumSearchHistoryUseCase,
@@ -26,7 +25,7 @@ final readonly class ClearForumSearchHistoryController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(): Response
+    public function __invoke(Request $request): Response
     {
         try {
             $this->forumUserAccessUseCase->execute();
@@ -34,7 +33,7 @@ final readonly class ClearForumSearchHistoryController
             return $this->forumErrorRenderer->render($this->render, $exception);
         }
 
-        if ($this->request->hasBody('submit')) {
+        if ($request->hasBody('submit')) {
             $this->clearForumSearchHistoryUseCase->execute();
             redirect('/forum/search/');
         }

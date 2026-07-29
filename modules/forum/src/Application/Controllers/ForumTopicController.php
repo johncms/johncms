@@ -20,7 +20,6 @@ final readonly class ForumTopicController
 {
     public function __construct(
         private Render $render,
-        private Request $request,
         private Session $session,
         private User $currentUser,
         private NavChain $navChain,
@@ -30,13 +29,13 @@ final readonly class ForumTopicController
     ) {
     }
 
-    public function __invoke(string $path): string
+    public function __invoke(Request $request, string $path): string
     {
         $setForum = $this->getForumSettings();
         $perPage = (int) $this->currentUser->config->kmess;
-        $page = max(1, $this->request->queryInt('page', 1));
+        $page = max(1, $request->queryInt('page', 1));
         if ($page === 1) {
-            $start = max(0, $this->request->queryInt('start', 0));
+            $start = max(0, $request->queryInt('start', 0));
             if ($start > 0) {
                 $page = (int) floor($start / max(1, $perPage)) + 1;
             }
@@ -53,8 +52,8 @@ final readonly class ForumTopicController
             $result = $this->viewForumTopicUseCase->execute(
                 path: $path,
                 page: $page,
-                showClip: $this->request->query->has('clip'),
-                showVoteResult: $this->request->query->has('vote_result'),
+                showClip: $request->query->has('clip'),
+                showVoteResult: $request->query->has('vote_result'),
                 incrementViewCount: $this->shouldIncrementViewCount($path),
                 setForum: $setForum,
                 filterEnabled: $filterEnabled,

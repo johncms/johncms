@@ -21,7 +21,6 @@ final readonly class ChangeTopicController
     public function __construct(
         private ControllerContext $controllerContext,
         private Render $render,
-        private Request $request,
         private ForumErrorRenderer $forumErrorRenderer,
         private GetChangeTopicContextUseCase $contextUseCase,
         private ChangeTopicUseCase $changeTopicUseCase,
@@ -29,7 +28,7 @@ final readonly class ChangeTopicController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(int $id): Response
+    public function __invoke(Request $request, int $id): Response
     {
         try {
             $topic = $this->contextUseCase->execute($id);
@@ -48,14 +47,14 @@ final readonly class ChangeTopicController
         }
 
         $formData = [
-            'name'             => $this->request->body('name', (string) $topic->name),
-            'meta_keywords'    => $this->request->body('meta_keywords', $topic->meta_keywords ?? ''),
-            'meta_description' => $this->request->body('meta_description', $topic->meta_description ?? ''),
-            'csrf_token'       => $this->request->body('csrf_token', ''),
+            'name'             => $request->body('name', (string) $topic->name),
+            'meta_keywords'    => $request->body('meta_keywords', $topic->meta_keywords ?? ''),
+            'meta_description' => $request->body('meta_description', $topic->meta_description ?? ''),
+            'csrf_token'       => $request->body('csrf_token', ''),
         ];
 
         $errors = [];
-        if ($this->request->getMethod() === 'POST') {
+        if ($request->getMethod() === 'POST') {
             $rules = [
                 'name'          => [
                     'NotEmpty',

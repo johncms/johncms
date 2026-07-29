@@ -18,7 +18,6 @@ use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Domain\Models\ForumMessage;
 use Johncms\Modules\Forum\Domain\Models\ForumTopic;
 use Johncms\NavChain;
-use Johncms\Http\Request;
 use Johncms\Users\User;
 
 class ForumUtils
@@ -48,21 +47,18 @@ class ForumUtils
      * Replaces the URL to a bb-code with name of the topic.
      *
      * @param string $message
+     * @param string $host Host of the current request: only links pointing to it are replaced.
      * @return string
      */
-    public static function topicLink(string $message): string
+    public static function topicLink(string $message, string $host): string
     {
         $message = preg_replace_callback(
             '~\\[url=(https?://.+?)\\](.+?)\\[/url\\]|(https?://(www.)?[0-9a-zA-Z\.-]+\.[0-9a-zA-Z]{2,6}[0-9a-zA-Z/\?\.\~&amp;_=/%-:#]*)~',
-            static function ($link) {
+            static function ($link) use ($host) {
                 if (! isset($link[3])) {
                     return '[url=' . $link[1] . ']' . $link[2] . '[/url]';
                 }
                 $parsed_url = parse_url($link[3]);
-
-                /** @var Request $env */
-                $request = di(Request::class);
-                $host = $request->server->getString('HTTP_HOST', '');
 
                 parse_str($parsed_url['query'] ?? '', $query_params);
 
