@@ -23,7 +23,6 @@ final readonly class TagsController
         private ControllerContext $controllerContext,
         private Render $render,
         private NavChain $navChain,
-        private Request $request,
         private DateFormatterInterface $dateFormatter,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
@@ -31,12 +30,12 @@ final readonly class TagsController
         $this->controllerContext->initModule('library');
     }
 
-    public function __invoke(): Response
+    public function __invoke(Request $request): Response
     {
         $this->navChain->add(__('Library'), '/library/');
         $this->navChain->add(__('Tags'));
 
-        $tag = trim($this->request->queryParam('tag', ''));
+        $tag = trim($request->queryParam('tag', ''));
 
         if ($tag === '') {
             return new Response(

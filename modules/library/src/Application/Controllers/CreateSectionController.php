@@ -20,7 +20,6 @@ final readonly class CreateSectionController
         private ControllerContext $controllerContext,
         private Render $render,
         private NavChain $navChain,
-        private Request $request,
         private User $currentUser,
         private LibrarySlugService $slugService,
         private LibraryCategoryPathService $categoryPathService,
@@ -28,7 +27,7 @@ final readonly class CreateSectionController
         $this->controllerContext->initModule('library');
     }
 
-    public function __invoke(): Response
+    public function __invoke(Request $request): Response
     {
         if ($this->currentUser->rights <= 4) {
             return new Response(
@@ -43,7 +42,7 @@ final readonly class CreateSectionController
             );
         }
 
-        $parentId = max(0, $this->request->queryInt('id', 0));
+        $parentId = max(0, $request->queryInt('id', 0));
         $formUrl = '/library/section/create' . ($parentId ? '?id=' . $parentId : '');
 
         $this->navChain->add(__('Library'), '/library/');
@@ -54,16 +53,16 @@ final readonly class CreateSectionController
             'page_title' => __('Create Section'),
         ]);
 
-        if ($this->request->getMethod() === 'POST') {
-            return $this->handlePost($parentId, $formUrl);
+        if ($request->getMethod() === 'POST') {
+            return $this->handlePost($request, $parentId, $formUrl);
         }
 
         return $this->renderForm($parentId, $formUrl, false);
     }
 
-    private function handlePost(int $parentId, string $formUrl): Response
+    private function handlePost(Request $request, int $parentId, string $formUrl): Response
     {
-        $post = $this->request->request->all();
+        $post = $request->request->all();
         $name = trim((string) ($post['name'] ?? ''));
 
         if (empty($name)) {

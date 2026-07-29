@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Library\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\Request;
 use Johncms\Modules\Library\Application\LegacyRedirectHandler;
 use Johncms\Modules\Library\Domain\Models\LibraryCategory;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
@@ -27,9 +28,9 @@ final readonly class LibraryIndexController
         $this->render->addFolder('libraryHelpers', MODULES_PATH . 'library/templates/helpers/');
     }
 
-    public function __invoke(): string
+    public function __invoke(Request $request): string
     {
-        $this->legacyRedirectHandler->handle();
+        $this->legacyRedirectHandler->handle($request);
 
         $this->navChain->add(__('Library'), '/library/');
 

@@ -22,7 +22,6 @@ final readonly class TopController
         private ControllerContext $controllerContext,
         private Render $render,
         private NavChain $navChain,
-        private Request $request,
         private DateFormatterInterface $dateFormatter,
         private LibraryTextRepositoryInterface $repository,
     ) {
@@ -30,9 +29,9 @@ final readonly class TopController
         $this->render->addFolder('libraryHelpers', MODULES_PATH . 'library/templates/helpers/');
     }
 
-    public function __invoke(): string
+    public function __invoke(Request $request): string
     {
-        $sort = $this->request->queryParam('sort', 'read');
+        $sort = $request->queryParam('sort', 'read');
         $sort = in_array($sort, ['read', 'rating', 'comm'], true) ? $sort : 'read';
 
         $pageTitle = __('Rating articles');

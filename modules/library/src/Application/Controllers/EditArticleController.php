@@ -23,14 +23,13 @@ final readonly class EditArticleController
         private ControllerContext $controllerContext,
         private Render $render,
         private NavChain $navChain,
-        private Request $request,
         private User $currentUser,
         private LibrarySlugService $slugService,
     ) {
         $this->controllerContext->initModule('library');
     }
 
-    public function __invoke(int $id): Response
+    public function __invoke(Request $request, int $id): Response
     {
         $article = LibraryText::query()->find($id);
 
@@ -72,8 +71,8 @@ final readonly class EditArticleController
             'page_title' => __('Edit Article'),
         ]);
 
-        if ($this->request->getMethod() === 'POST') {
-            $this->save($id, $article, $isAdmin);
+        if ($request->getMethod() === 'POST') {
+            $this->save($request, $id, $article, $isAdmin);
             $article->refresh();
             return new Response($this->render->render('library::edit_article', [
                 'id'          => $id,
@@ -99,9 +98,9 @@ final readonly class EditArticleController
         ]));
     }
 
-    private function save(int $id, LibraryText $article, bool $isAdmin): void
+    private function save(Request $request, int $id, LibraryText $article, bool $isAdmin): void
     {
-        $post = $this->request->request->all();
+        $post = $request->request->all();
 
         if (isset($post['tags'])) {
             $obj = new Hashtags($id);
@@ -113,7 +112,7 @@ final readonly class EditArticleController
             }
         }
 
-        $files = $this->request->files->all();
+        $files = $request->files->all();
         $screen = $files['image'] ?? null;
         if ($screen !== null && $screen->getClientOriginalName()) {
             try {

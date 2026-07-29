@@ -22,14 +22,13 @@ final readonly class ArticleCommentsController
         private ControllerContext $controllerContext,
         private Render $render,
         private NavChain $navChain,
-        private Request $request,
         private User $currentUser,
         private LibraryArticlePathService $articlePathService,
     ) {
         $this->controllerContext->initModule('library');
     }
 
-    public function __invoke(int $id): Response
+    public function __invoke(Request $request, int $id): Response
     {
         if (! $this->currentUser->isValid()) {
             return new Response(
@@ -73,11 +72,11 @@ final readonly class ArticleCommentsController
         $this->navChain->add($articleName, $articleUrl);
         $this->navChain->add(__('Comments'));
 
-        $mod = $this->request->queryParam('mod', '');
-        $page = max(1, $this->request->queryInt('page', 1));
-        $start = $this->request->query->has('page')
+        $mod = $request->queryParam('mod', '');
+        $page = max(1, $request->queryInt('page', 1));
+        $start = $request->query->has('page')
             ? ($page - 1) * (int) $this->currentUser->config->kmess
-            : abs($this->request->queryInt('start', 0));
+            : abs($request->queryInt('start', 0));
 
         $meta = new PageMeta($documentTitle, $page);
 

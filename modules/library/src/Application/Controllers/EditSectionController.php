@@ -23,7 +23,6 @@ final readonly class EditSectionController
         private ControllerContext $controllerContext,
         private Render $render,
         private NavChain $navChain,
-        private Request $request,
         private User $currentUser,
         private LibrarySlugService $slugService,
         private LibraryCategoryPathService $categoryPathService,
@@ -31,7 +30,7 @@ final readonly class EditSectionController
         $this->controllerContext->initModule('library');
     }
 
-    public function __invoke(int $id): Response
+    public function __invoke(Request $request, int $id): Response
     {
         if (! ($this->currentUser->rights > 4)) {
             return new Response(
@@ -68,8 +67,8 @@ final readonly class EditSectionController
             'page_title' => __('Edit Section'),
         ]);
 
-        if ($this->request->getMethod() === 'POST') {
-            $this->save($id, $category);
+        if ($request->getMethod() === 'POST') {
+            $this->save($request, $id, $category);
             return new Response($this->render->render('library::edit_section', [
                 'id'           => $id,
                 'category_url' => $category->url,
@@ -92,9 +91,9 @@ final readonly class EditSectionController
         ]));
     }
 
-    private function save(int $id, LibraryCategory $category): void
+    private function save(Request $request, int $id, LibraryCategory $category): void
     {
-        $post = $this->request->request->all();
+        $post = $request->request->all();
 
         $newName     = mb_substr(trim((string) ($post['name'] ?? '')), 0, 100);
         $newParentId = isset($post['move']) && LibraryCategory::query()->count() > 1

@@ -22,7 +22,6 @@ final readonly class SearchController
         private ControllerContext $controllerContext,
         private Render $render,
         private NavChain $navChain,
-        private Request $request,
         private DateFormatterInterface $dateFormatter,
         private LibraryTextRepositoryInterface $repository,
         private PaginationFactory $paginationFactory,
@@ -31,18 +30,18 @@ final readonly class SearchController
         $this->controllerContext->initModule('library');
     }
 
-    public function __invoke(): string
+    public function __invoke(Request $request): string
     {
         $this->navChain->add(__('Library'), '/library/');
         $this->navChain->add(__('Search'));
 
-        $rawQuery = $this->request->query->has('search') ? $this->request->queryParam('search') : false;
+        $rawQuery = $request->query->has('search') ? $request->queryParam('search') : false;
         $query = $rawQuery !== false ? rawurldecode(trim($rawQuery)) : false;
         if ($query !== false) {
             $query = trim(preg_replace('/[+\-><()~*"]+/', ' ', $query));
         }
 
-        $inTitle = $this->request->query->has('t');
+        $inTitle = $request->query->has('t');
 
         if ($query === false || $query === '') {
             $documentTitle = __('Search') . ' — ' . __('Library');

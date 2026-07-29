@@ -20,13 +20,12 @@ final readonly class DeleteSectionController
         private ControllerContext $controllerContext,
         private Render $render,
         private NavChain $navChain,
-        private Request $request,
         private User $currentUser,
     ) {
         $this->controllerContext->initModule('library');
     }
 
-    public function __invoke(int $id): Response
+    public function __invoke(Request $request, int $id): Response
     {
         if (! ($this->currentUser->rights > 4)) {
             return new Response(
@@ -64,17 +63,17 @@ final readonly class DeleteSectionController
             || LibraryText::query()->where('cat_id', $id)->exists();
 
         if (! $hasChildren) {
-            return $this->handleEmptySection($id, $category->name);
+            return $this->handleEmptySection($request, $id, $category->name);
         }
 
-        return $this->handleNonEmptySection($id, $category->name, (bool) $category->dir);
+        return $this->handleNonEmptySection($request, $id, $category->name, (bool) $category->dir);
     }
 
-    private function handleEmptySection(int $id, string $name): Response
+    private function handleEmptySection(Request $request, int $id, string $name): Response
     {
         $deleted = false;
 
-        if ($this->request->query->has('yes')) {
+        if ($request->query->has('yes')) {
             LibraryCategory::query()->where('id', $id)->delete();
             $deleted = true;
         }
@@ -93,10 +92,10 @@ final readonly class DeleteSectionController
         ]));
     }
 
-    private function handleNonEmptySection(int $id, string $name, bool $isDir): Response
+    private function handleNonEmptySection(Request $request, int $id, string $name, bool $isDir): Response
     {
-        $post = $this->request->request->all();
-        $mode = (string) ($post['mode'] ?? $this->request->queryParam('do', ''));
+        $post = $request->request->all();
+        $mode = (string) ($post['mode'] ?? $request->queryParam('do', ''));
 
         $moving = false;
         $moveTarget = null;
@@ -106,8 +105,8 @@ final readonly class DeleteSectionController
 
         switch ($mode) {
             case 'moveaction':
-                if ($this->request->query->has('movedeny')) {
-                    $move = $this->request->queryInt('move', 0);
+                if ($request->query->has('movedeny')) {
+                    $move = $request->queryInt('move', 0);
                     if ($isDir) {
                         LibraryCategory::query()->where('parent', $id)->update(['parent' => $move]);
                     } else {
@@ -126,7 +125,7 @@ final readonly class DeleteSectionController
                 break;
 
             case 'delall':
-                if ($this->request->query->has('deldeny')) {
+                if ($request->query->has('deldeny')) {
                     $childs = new Tree($id);
                     $counts = $childs->getAllChildsId()->cleanDir();
                     $deleteAllResult = sprintf(

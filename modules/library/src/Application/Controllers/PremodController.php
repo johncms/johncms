@@ -24,7 +24,6 @@ final readonly class PremodController
         private ControllerContext $controllerContext,
         private Render $render,
         private NavChain $navChain,
-        private Request $request,
         private Session $session,
         private DateFormatterInterface $dateFormatter,
         private User $currentUser,
@@ -34,7 +33,7 @@ final readonly class PremodController
         $this->controllerContext->initModule('library');
     }
 
-    public function __invoke(): Response
+    public function __invoke(Request $request): Response
     {
         if (! ($this->currentUser->rights > 4)) {
             return new Response(
@@ -55,7 +54,7 @@ final readonly class PremodController
             'page_title' => __('Moderation Articles'),
         ]);
 
-        $approveId = $this->request->queryInt('approve', 0);
+        $approveId = $request->queryInt('approve', 0);
 
         if ($approveId > 0) {
             $article = LibraryText::query()->find($approveId);
@@ -66,7 +65,7 @@ final readonly class PremodController
             return new RedirectResponse('/library/premod');
         }
 
-        if ($this->request->query->has('approve-all')) {
+        if ($request->query->has('approve-all')) {
             LibraryText::query()->where('premod', 0)->update(['premod' => 1]);
             $this->session->flash('premod_approved_all', true);
             return new RedirectResponse('/library/premod');

@@ -1593,12 +1593,6 @@ parameters:
 			path: modules/library/src/Application/Controllers/CreateArticleController.php
 
 		-
-			message: '#^Method Johncms\\Modules\\Library\\Application\\Controllers\\CreateArticleController\:\:renderForm\(\) invoked with 9 parameters, 10 required\.$#'
-			identifier: arguments.count
-			count: 2
-			path: modules/library/src/Application/Controllers/CreateArticleController.php
-
-		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$cat_id\.$#'
 			identifier: property.notFound
 			count: 1

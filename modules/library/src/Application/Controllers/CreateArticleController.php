@@ -26,7 +26,6 @@ final readonly class CreateArticleController
         private ControllerContext $controllerContext,
         private Render $render,
         private NavChain $navChain,
-        private Request $request,
         private AntifloodCheckerInterface $antifloodChecker,
         private User $currentUser,
         private LibrarySlugService $slugService,
@@ -36,9 +35,9 @@ final readonly class CreateArticleController
         $this->controllerContext->initModule('library');
     }
 
-    public function __invoke(): Response
+    public function __invoke(Request $request): Response
     {
-        $catId = max(0, $this->request->queryInt('id', 0));
+        $catId = max(0, $request->queryInt('id', 0));
         $isAdmin = $this->currentUser->rights > 4;
 
         $this->navChain->add(__('Library'), '/library/');
@@ -66,16 +65,16 @@ final readonly class CreateArticleController
 
         $formUrl = '/library/article/create?id=' . $catId;
 
-        if ($this->request->getMethod() === 'POST') {
-            return $this->handlePost($catId, $isAdmin, $formUrl);
+        if ($request->getMethod() === 'POST') {
+            return $this->handlePost($request, $catId, $isAdmin, $formUrl);
         }
 
         return $this->renderForm($catId, $formUrl, '', '', '', '', [], false, null, null);
     }
 
-    private function handlePost(int $catId, bool $isAdmin, string $formUrl): Response
+    private function handlePost(Request $request, int $catId, bool $isAdmin, string $formUrl): Response
     {
-        $post = $this->request->request->all();
+        $post = $request->request->all();
         $name = mb_substr(trim((string) ($post['name'] ?? '')), 0, 100);
         $announce = mb_substr(trim((string) ($post['announce'] ?? '')), 0, 500);
         $tag = trim((string) ($post['tags'] ?? ''));
@@ -86,7 +85,7 @@ final readonly class CreateArticleController
         $flood = $this->antifloodChecker->getRemainingSeconds();
         if ($flood) {
             $errors[] = sprintf(__('You cannot add the Article so often<br>Please, wait %d sec.'), $flood);
-            return $this->renderForm($catId, $formUrl, $name, $announce, (string) ($post['text'] ?? ''), $tag, $errors, false, null);
+            return $this->renderForm($catId, $formUrl, $name, $announce, (string) ($post['text'] ?? ''), $tag, $errors, false, null, null);
         }
 
         if (empty($name)) {
@@ -94,7 +93,7 @@ final readonly class CreateArticleController
         }
 
         $text = '';
-        $files = $this->request->files->all();
+        $files = $request->files->all();
         $textFile = $files['textfile'] ?? null;
 
         if ($textFile !== null && $textFile->getClientOriginalName()) {
@@ -120,7 +119,7 @@ final readonly class CreateArticleController
         }
 
         if (! empty($errors)) {
-            return $this->renderForm($catId, $formUrl, $name, $announce, (string) ($post['text'] ?? ''), $tag, $errors, false, null);
+            return $this->renderForm($catId, $formUrl, $name, $announce, (string) ($post['text'] ?? ''), $tag, $errors, false, null, null);
         }
 
         $slug = $this->slugService->generateArticleSlug($name, $catId);

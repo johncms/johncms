@@ -20,13 +20,12 @@ final readonly class DeleteArticleImageController
         private ControllerContext $controllerContext,
         private Render $render,
         private NavChain $navChain,
-        private Request $request,
         private User $currentUser,
     ) {
         $this->controllerContext->initModule('library');
     }
 
-    public function __invoke(int $id): Response
+    public function __invoke(Request $request, int $id): Response
     {
         if (! ($this->currentUser->rights > 4)) {
             return new Response(
@@ -57,7 +56,7 @@ final readonly class DeleteArticleImageController
 
         $deleted = false;
 
-        if ($this->request->query->has('yes')) {
+        if ($request->query->has('yes')) {
             Utils::unlinkImages($id);
             $deleted = true;
         }
