@@ -5,11 +5,18 @@ declare(strict_types=1);
 namespace Johncms\Http\Pagination;
 
 use Johncms\Http\Request;
+use RuntimeException;
+use Symfony\Component\HttpFoundation\RequestStack;
 
+/**
+ * The request comes from the RequestStack rather than being held directly: this is a shared
+ * service, and a request captured at construction would be the wrong one for every request but
+ * the first under a long-running runtime.
+ */
 final readonly class PaginationGuard
 {
     public function __construct(
-        private Request $request,
+        private RequestStack $requestStack,
     ) {
     }
 
@@ -22,7 +29,7 @@ final readonly class PaginationGuard
     public function redirectUrl(Pagination $pagination): ?string
     {
         $paramName = $pagination->getPageParamName();
-        $queryParams = $this->request->query->all();
+        $queryParams = $this->request()->query->all();
         if (! array_key_exists($paramName, $queryParams)) {
             return null;
         }
@@ -39,5 +46,16 @@ final readonly class PaginationGuard
         }
 
         return null;
+    }
+
+    private function request(): Request
+    {
+        $request = $this->requestStack->getCurrentRequest();
+
+        if (! $request instanceof Request) {
+            throw new RuntimeException('No request is being served: the request stack is empty.');
+        }
+
+        return $request;
     }
 }

@@ -10,6 +10,7 @@ use Johncms\Http\QueryStringBuilder;
 use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 final class PaginationGuardTest extends TestCase
 {
@@ -76,7 +77,10 @@ final class PaginationGuardTest extends TestCase
 
     private function guard(Request $request): PaginationGuard
     {
-        return new PaginationGuard($request);
+        $requestStack = new RequestStack();
+        $requestStack->push($request);
+
+        return new PaginationGuard($requestStack);
     }
 
     /**

@@ -8,11 +8,18 @@ use Johncms\Http\QueryStringBuilder;
 use Johncms\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
+use RuntimeException;
+use Symfony\Component\HttpFoundation\RequestStack;
 
+/**
+ * The request comes from the RequestStack rather than being held directly: this is a shared
+ * service, and a request captured at construction would be the wrong one for every request but
+ * the first under a long-running runtime.
+ */
 final readonly class PaginationFactory
 {
     public function __construct(
-        private Request $request,
+        private RequestStack $requestStack,
         private Render $render,
         private User $user,
         private QueryStringBuilder $queryStringBuilder,
@@ -25,18 +32,30 @@ final readonly class PaginationFactory
         string $pageParamName = 'page',
         ?int $currentPage = null,
     ): Pagination {
+        $request = $this->request();
         $perPage ??= (int) $this->user->config->kmess;
-        $currentPage ??= $this->request->queryInt($pageParamName, 1);
+        $currentPage ??= $request->queryInt($pageParamName, 1);
 
         return new Pagination(
             queryStringBuilder: $this->queryStringBuilder,
             renderer:           $this->render,
-            currentPath:        $this->request->getPathInfo(),
-            currentQuery:       $this->request->query->all(),
+            currentPath:        $request->getPathInfo(),
+            currentQuery:       $request->query->all(),
             total:              $total,
             perPage:            $perPage,
             currentPage:        $currentPage,
             pageParamName:      $pageParamName,
         );
+    }
+
+    private function request(): Request
+    {
+        $request = $this->requestStack->getCurrentRequest();
+
+        if (! $request instanceof Request) {
+            throw new RuntimeException('No request is being served: the request stack is empty.');
+        }
+
+        return $request;
     }
 }
