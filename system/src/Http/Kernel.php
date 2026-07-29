@@ -129,22 +129,25 @@ final readonly class Kernel implements HttpKernelInterface, TerminableInterface
         $this->translator->setLocale($this->localeResolver->resolve());
 
         try {
-            $response = $catch ? $this->handleCaught($request) : $this->handleRaw($request);
+            return $catch ? $this->handleCaught($request) : $this->handleRaw($request);
         } finally {
             // Pop even when handleRaw() throws (catch = false), or the stack grows by one request
             // per failed cycle and getCurrentRequest() keeps answering with a request already served.
             $this->requestStack->pop();
-        }
 
-        // The session must be closed before the response reaches the client, not after: send()
-        // detaches the client connection (fastcgi_finish_request()) before terminate() runs, and
-        // PHP otherwise keeps the session file locked until script shutdown — the next request
-        // from the same visitor would then queue behind terminate()'s work (the mail batch).
-        if ($this->isWebRuntime() && $this->session->isStarted()) {
-            $this->session->save();
+            // The session must be closed before the response reaches the client, not after: send()
+            // detaches the client connection (fastcgi_finish_request()) before terminate() runs, and
+            // PHP otherwise keeps the session file locked until script shutdown — the next request
+            // from the same visitor would then queue behind terminate()'s work (the mail batch).
+            //
+            // In the finally block rather than after it, so a cycle that throws still closes the
+            // session it opened. That is what lets reset() treat an open session as belonging to
+            // the request being served: a worker cycle can never inherit one left open by the
+            // previous one, and answer a visitor with the session of whoever crashed before them.
+            if ($this->isWebRuntime() && $this->session->isStarted()) {
+                $this->session->save();
+            }
         }
-
-        return $response;
     }
 
     /**

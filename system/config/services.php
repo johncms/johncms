@@ -74,6 +74,15 @@ return static function (ContainerConfigurator $container): void {
     // Any Symfony Console Command service is auto-registered in the CLI application.
     $services->instanceof(Command::class)->tag('johncms.console_command');
 
+    // Defined before the ResetInterface rule below on purpose: instanceof conditionals apply to
+    // the definitions that follow them, and the console application implements ResetInterface.
+    // Tagged as resettable it would have the kernel build the whole console application, every
+    // command included, on every HTTP request just to reset it — while an HTTP cycle never
+    // touches it and it holds nothing belonging to a request.
+    $services->set(Application::class)
+        ->factory(service(\Johncms\Console\ConsoleApplicationFactory::class))
+        ->arg('$commands', tagged_iterator('johncms.console_command'));
+
     // A shared service that caches something belonging to one request implements ResetInterface;
     // the kernel clears every one of them before it starts serving the next request.
     $services->instanceof(ResetInterface::class)->tag('johncms.resettable');
@@ -186,7 +195,4 @@ return static function (ContainerConfigurator $container): void {
         ->arg('$commands', tagged_iterator('johncms.console_command'));
     $services->set(\Johncms\AdminTasks\AdminTaskRunner::class)
         ->arg('$mutex', service(\Johncms\AdminTasks\FileAdminTaskMutex::class));
-    $services->set(Application::class)
-        ->factory(service(\Johncms\Console\ConsoleApplicationFactory::class))
-        ->arg('$commands', tagged_iterator('johncms.console_command'));
 };

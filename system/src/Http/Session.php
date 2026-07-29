@@ -14,6 +14,7 @@ namespace Johncms\Http;
 
 use Symfony\Component\HttpFoundation\Session\Session as SymfonySession;
 use Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface;
+use Symfony\Contracts\Service\ResetInterface;
 
 /**
  * Application-level session facade over Symfony's session.
@@ -24,14 +25,39 @@ use Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface;
  * The storage is chosen by SessionFactory, not here. Reading any key starts the session when
  * it is not started yet, which is why the web bootstrap starts it explicitly before anything
  * else touches the facade — where a session opens must not depend on resolution order.
+ *
+ * The facade is shared, so it is reset between requests: see reset().
  */
-class Session
+class Session implements ResetInterface
 {
     private SymfonySession $symfonySession;
 
-    public function __construct(SessionStorageInterface $storage)
+    public function __construct(private readonly SessionStorageInterface $storage)
     {
         $this->symfonySession = new SymfonySession($storage);
+    }
+
+    /**
+     * Detaches the bags of the request that has been served, so nothing of one visitor's session
+     * can be answered to the next one. Called by the kernel before it starts serving a request.
+     *
+     * Closing a session does not unbind its bags: they are objects still holding the previous
+     * visitor's attributes and flashes. Reopening the session rebinds them, so in the normal
+     * cycle this is belt and braces — it is the abnormal one that matters, where the session
+     * cannot be reopened and the facade must read as empty rather than as somebody else.
+     *
+     * An open session belongs to the request being served — under FPM the boot opens it before
+     * the kernel runs — and is left alone: dropping its bags would lose what the request has
+     * written so far. A cycle that ends without closing its session cannot happen, the kernel
+     * closes it in a finally block, so an open session is never the previous visitor's.
+     */
+    public function reset(): void
+    {
+        if ($this->symfonySession->isStarted()) {
+            return;
+        }
+
+        $this->symfonySession = new SymfonySession($this->storage);
     }
 
     /**

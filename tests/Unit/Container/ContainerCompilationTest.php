@@ -5,8 +5,12 @@ declare(strict_types=1);
 namespace Tests\Unit\Container;
 
 use Johncms\Container\PSRContainerFactory;
+use Johncms\Http\Environment;
+use Johncms\Http\Session;
+use Johncms\NavChain;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use ReflectionClass;
 
 /**
@@ -44,6 +48,22 @@ final class ContainerCompilationTest extends TestCase
         $container = (new PSRContainerFactory())();
 
         self::assertInstanceOf(ContainerInterface::class, $container);
+    }
+
+    public function testTheResettableServicesAreTheRequestScopedOnesOnly(): void
+    {
+        // The kernel resets every service tagged johncms.resettable before it serves a request,
+        // and iterating that tag builds all of them. The tag comes from an instanceof rule on
+        // ResetInterface, which Symfony's console application implements too — tagging it would
+        // build the whole CLI application, commands included, on every HTTP request. Hence its
+        // definition sits before that rule in services.php, which this test guards.
+        $container = (new PSRContainerFactory())();
+        self::assertInstanceOf(ContainerBuilder::class, $container);
+
+        $tagged = array_keys($container->findTaggedServiceIds('johncms.resettable'));
+        sort($tagged);
+
+        self::assertSame([Environment::class, Session::class, NavChain::class], $tagged);
     }
 
     private function containerInstanceProperty(): \ReflectionProperty
