@@ -24,8 +24,6 @@ const ASSETS_PATH = PUBLIC_PATH . 'assets' . DS;
 const UPLOAD_PATH = PUBLIC_PATH . 'upload' . DS;
 const CMS_VERSION = '9.9';
 
-const USE_CRON = false;
-
 // Cache container. Recommended for production mode.
 // Remove the data/cache/container.php file to clear the cache. It creates automatically.
 const CACHE_CONTAINER = false;

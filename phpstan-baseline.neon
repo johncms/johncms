@@ -2827,12 +2827,6 @@ parameters:
 			path: public/assets/modules/forum/thumbinal.php
 
 		-
-			message: '#^Negated boolean expression is always true\.$#'
-			identifier: booleanNot.alwaysTrue
-			count: 1
-			path: system/src/Http/Kernel.php
-
-		-
 			message: '#^Comparison operation "\<" between int\<80200, 80599\> and 80200 is always false\.$#'
 			identifier: smaller.alwaysFalse
 			count: 1

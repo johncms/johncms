@@ -18,7 +18,6 @@ use Johncms\Exceptions\PageNotFoundException;
 use Johncms\Http\Controller\ActionInvoker;
 use Johncms\Http\Middleware\TrimStringsMiddleware;
 use Johncms\Logs\DebugDetailsPolicy;
-use Johncms\Mail\EmailSender;
 use Johncms\Router\MiddlewareDispatcher;
 use Johncms\Router\RouteMatchResult;
 use Johncms\Router\SymfonyRouteMatcher;
@@ -49,7 +48,7 @@ use Throwable;
  * interface is what the symfony/runtime bridges to FrankenPHP and RoadRunner expect,
  * while routing and the pipeline stay the project's own MiddlewareDispatcher + ActionInvoker.
  *
- * TerminableInterface carries the post-response work (UserStat, the mail queue) — see terminate().
+ * TerminableInterface carries the post-response work (UserStat) — see terminate().
  */
 final readonly class Kernel implements HttpKernelInterface, TerminableInterface
 {
@@ -106,14 +105,12 @@ final readonly class Kernel implements HttpKernelInterface, TerminableInterface
             // A write, so it belongs to the request cycle rather than to a service constructor:
             // resolving a service must not be what records a visit.
             $this->requestRateLog->record($this->clientIp($request) ?? '');
-        }
 
-        // Under FPM the boot already started the session for this request, so this is a no-op —
-        // it is here to keep the per-request start in one place for the worker runtime, where the
-        // boot runs once and every cycle after the first arrives with the session closed by save()
-        // below. Native storage cannot be restarted once headers are sent, so a worker will also
-        // need a different storage in SessionFactory.
-        if ($this->isWebRuntime()) {
+            // Under FPM the boot already started the session for this request, so this is a no-op —
+            // it is here to keep the per-request start in one place for the worker runtime, where
+            // the boot runs once and every cycle after the first arrives with the session closed by
+            // save() below. Native storage cannot be restarted once headers are sent, so a worker
+            // will also need a different storage in SessionFactory.
             $this->session->start();
         }
 
@@ -137,7 +134,7 @@ final readonly class Kernel implements HttpKernelInterface, TerminableInterface
             // The session must be closed before the response reaches the client, not after: send()
             // detaches the client connection (fastcgi_finish_request()) before terminate() runs, and
             // PHP otherwise keeps the session file locked until script shutdown — the next request
-            // from the same visitor would then queue behind terminate()'s work (the mail batch).
+            // from the same visitor would then queue behind terminate()'s work.
             //
             // In the finally block rather than after it, so a cycle that throws still closes the
             // session it opened. That is what lets reset() treat an open session as belonging to
@@ -191,16 +188,6 @@ final readonly class Kernel implements HttpKernelInterface, TerminableInterface
         // Register the location of the visitor on the site. Moved here from handleRaw(): it is a
         // post-response side effect (a database write), not something the response depends on.
         new UserStat($this->container);
-
-        // Only successfully served requests flush the mail queue: a redirect or an error page has
-        // no business running it. Kept 1:1 with the condition that used to live in public/index.php.
-        if (! USE_CRON && ! defined('_IN_JOHNADM') && $response->isSuccessful()) {
-            $cronCache = CACHE_PATH . 'cron.cache';
-            if (! file_exists($cronCache) || filemtime($cronCache) < (time() - 5)) {
-                EmailSender::send();
-                file_put_contents($cronCache, time());
-            }
-        }
     }
 
     private function handleRaw(Request $request): Response

@@ -24,6 +24,6 @@ $kernel = $container->get(Kernel::class);
 $response = $kernel->handle($request);
 // The session is already closed by Kernel::handle() at this point, so send(true) can call
 // fastcgi_finish_request() and flush the response to the client before terminate() below runs
-// its post-response work (UserStat, the mail queue).
+// its post-response work (UserStat).
 $response->send();
 $kernel->terminate($request, $response);
