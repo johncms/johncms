@@ -49,9 +49,10 @@ Infrastructure
 Controllers are container singletons, so a request stored in one outlives the request it belongs
 to: in a worker runtime every later cycle would be answered with the first request of the process.
 
-* **A controller takes `Request` as an argument of the action**, first, before the route
-  parameters — never in the constructor, never in a property. Only the actions that actually read
-  the request take it; form and confirmation actions keep their signatures.
+* **A controller takes `Request` as an argument of the action** — never in the constructor, never
+  in a property. Only the actions that actually read the request take it; form and confirmation
+  actions keep their signatures. `ActionInvoker` resolves the request by type and the route
+  parameters by name, so the order is free; existing actions put the request first.
 * **A private helper of a controller receives the request as a parameter.** Passing it down the
   call chain is the point; storing it in a property to save the parameter reintroduces the leak.
 * **The request does not exist as a service** — `di(Request::class)` and
