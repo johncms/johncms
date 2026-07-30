@@ -40,25 +40,6 @@ function di(string $service): mixed
         return config();
     }
 
-    // For backward compatibility return current route
-    if ($service === 'route') {
-        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2);
-        $caller = $trace[1] ?? null;
-
-        $location = $caller && isset($caller['file'], $caller['line'])
-            ? sprintf('%s:%d', $caller['file'], $caller['line'])
-            : 'unknown location';
-
-        @trigger_error(
-            sprintf(
-                'Calling di("route") is deprecated. Use di(\Johncms\Http\Request::class)->attributes->all() instead. Called at %s.',
-                $location
-            ),
-            E_USER_DEPRECATED
-        );
-        return di(\Johncms\Http\Request::class)->attributes->all();
-    }
-
     return \Johncms\Container\PSRContainerFactory::getContainer()->get($service);
 }
 
