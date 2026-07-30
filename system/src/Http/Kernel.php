@@ -28,9 +28,9 @@ use Johncms\System\i18n\Translator;
 use Johncms\System\Users\UserStat;
 use Johncms\Users\CurrentUserAuthenticator;
 use LogicException;
+use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Exception\RequestExceptionInterface;
 use Symfony\Component\HttpFoundation\Exception\SessionNotFoundException;
 use Symfony\Component\HttpFoundation\Request as HttpFoundationRequest;
@@ -80,8 +80,8 @@ final readonly class Kernel implements HttpKernelInterface, TerminableInterface
     ): Response {
         if ($type !== self::MAIN_REQUEST) {
             // Nothing issues sub-requests today, and handle() has main-request-only side effects:
-            // it republishes the request into the container, with nothing restoring the parent
-            // afterwards (Symfony solves this with RequestStack).
+            // it starts the session, authenticates the visitor and resets the per-request state of
+            // the shared services, none of which a sub-request may redo for the request around it.
             throw new LogicException('The kernel does not support sub-requests.');
         }
 
@@ -93,7 +93,6 @@ final readonly class Kernel implements HttpKernelInterface, TerminableInterface
             );
         }
 
-        $this->container->set(Request::class, $request);
         $this->requestStack->push($request);
 
         // Everything a shared service cached for the previous request is dropped here, before the

@@ -54,9 +54,12 @@ to: in a worker runtime every later cycle would be answered with the first reque
   the request take it; form and confirmation actions keep their signatures.
 * **A private helper of a controller receives the request as a parameter.** Passing it down the
   call chain is the point; storing it in a property to save the parameter reintroduces the leak.
-* **Never resolve the request from the container** — no `di(Request::class)`, no
-  `$container->get(Request::class)`. It is a synthetic service the kernel republishes per cycle, so
-  a captured reference is a request already served.
+* **The request does not exist as a service** — `di(Request::class)` and
+  `$container->get(Request::class)` throw. The only ways to it are the action argument and the
+  stack below.
+* **A template gets facts, not the request.** A thin service over `RequestStack` answers the
+  question the template actually asks (`CurrentPage::isHomePage()`, `Theme`), and the template
+  resolves that service. A template must not reach for the request itself.
 * **A service that outlives the request** and needs a fact about it has three options, in order of
   preference: take the fact as a parameter (a string address, a host — see `ClientInfoDTO`); take
   the `Request` as a parameter of the method that reads it, when a whole set of fields is needed;

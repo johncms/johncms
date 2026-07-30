@@ -7,6 +7,7 @@ namespace Tests\Functional\Http;
 use Johncms\Http\Environment;
 use Johncms\Http\Request;
 use Johncms\NavChain;
+use Psr\Container\NotFoundExceptionInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\Functional\FunctionalTestCase;
@@ -143,27 +144,39 @@ final class RequestIsolationTest extends FunctionalTestCase
     }
 
     /**
-     * Whoever asks the container for a Request must get the one being served, and the stack must be
-     * back to its boot entry afterwards: a cycle that leaves its request behind makes
-     * getCurrentRequest() answer with a request already served, and the stack grow per cycle.
+     * The stack must be back to its boot entry after every cycle: a cycle that leaves its request
+     * behind makes getCurrentRequest() answer with a request already served, and the stack grow by
+     * one entry per cycle. That the stack answers with the request being served *inside* a cycle is
+     * what testPaginationFollowsThePageOfTheCurrentRequest above proves.
      */
-    public function testTheContainerPublishesTheRequestOfTheCurrentCycle(): void
+    public function testTheStackIsBackToItsBootEntryAfterEveryCycle(): void
     {
         $requestStack = $this->container()->get(RequestStack::class);
         $bootRequest = $requestStack->getCurrentRequest();
 
         $this->handleRequest('/help?marker=first');
 
-        self::assertSame('first', $this->container()->get(Request::class)->queryParam('marker'));
-
-        $this->handleRequest('/help?marker=second');
-
-        self::assertSame('second', $this->container()->get(Request::class)->queryParam('marker'));
         self::assertSame(
             $bootRequest,
             $requestStack->getCurrentRequest(),
             'The request of a finished cycle is still on the stack.'
         );
+
+        $this->handleRequest('/help?marker=second');
+
+        self::assertSame($bootRequest, $requestStack->getCurrentRequest());
+    }
+
+    /**
+     * The request is not a service: the only ways to it are the action argument and the stack. A
+     * container entry would be a third one, and in a worker runtime a singleton frozen on the first
+     * request of the process.
+     */
+    public function testTheRequestIsNotAServiceInTheContainer(): void
+    {
+        $this->expectException(NotFoundExceptionInterface::class);
+
+        $this->container()->get(Request::class);
     }
 
     /**

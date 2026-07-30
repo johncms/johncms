@@ -37,8 +37,6 @@ use Johncms\Users\UserPlaceFormatter;
 use Johncms\Users\UserPlaceFormatterInterface;
 use Johncms\Sitemap\SitemapGenerator;
 use Johncms\Http\Environment;
-use Johncms\Http\Request;
-use Johncms\Http\RequestFactory;
 use Johncms\Http\Session;
 use Johncms\Http\SessionFactory;
 use Johncms\System\i18n\Translator;
@@ -52,7 +50,6 @@ use Johncms\System\View\Render;
 use Johncms\System\View\RenderEngineFactory;
 use Johncms\System\View\Theme;
 use Psr\Container\ContainerInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface as SymfonyContainerInterface;
 use Psr\Log\LoggerInterface;
 use Simba77\EmbedMedia\Embed;
 use Symfony\Component\Console\Application;
@@ -116,6 +113,9 @@ return static function (ContainerConfigurator $container): void {
                 ROOT_PATH . 'system/src/Scheduler/AsScheduledTask.php',
                 ROOT_PATH . 'system/src/Scheduler/ScheduledTaskDefinition.php',
                 ROOT_PATH . 'system/src/Http/PageMeta.php',
+                // The request is not a service: it belongs to a cycle, and a container-built one
+                // would be an empty request assembled from the globals of whoever asked first.
+                ROOT_PATH . 'system/src/Http/Request.php',
                 ROOT_PATH . 'system/src/Http/Pagination/Pagination.php',
                 ROOT_PATH . 'system/src/Http/UploadedFileDTO.php',
                 ROOT_PATH . 'system/src/Security/ClientInfoDTO.php',
@@ -125,24 +125,16 @@ return static function (ContainerConfigurator $container): void {
         ->autoconfigure()
         ->public();
 
+    // The container itself, published by PSRContainerFactory. Only the PSR interface is exposed:
+    // nothing in the application needs the Symfony-specific part of the contract.
     $services->set(ContainerInterface::class)->synthetic();
-    // The kernel needs the container's set() to publish the current request, which only the
-    // Symfony interface declares. Same instance, so di() and constructor injection agree.
-    $services->alias(SymfonyContainerInterface::class, ContainerInterface::class);
     $services->set(Filesystem::class, Filesystem::class);
     $services->set(FileStorage::class, FileStorage::class);
     $services->set(LoggerInterface::class)->factory(service(LoggerFactory::class));
-    // Synthetic: the request of the current cycle is published by the kernel (and once at boot
-    // for the legacy code that resolves services before the kernel runs). A container-built
-    // singleton would freeze the first request of a worker process forever.
-    $services->set(Request::class)->synthetic();
-    // Alias the HttpFoundation base class to the same instance so code type-hinting the base
-    // class resolves to our Request wrapper.
-    $services->alias(\Symfony\Component\HttpFoundation\Request::class, Request::class);
-    // The current request for services that outlive a single one. Unlike the Request service it
-    // is a stable object: the kernel pushes the request of every cycle onto it, so a singleton
-    // holding the stack always reads the request being served rather than the one it was built
-    // with.
+    // The request is not a service: a controller takes it as an action argument, and a service
+    // that outlives a single request reads the current one off the stack below. The kernel pushes
+    // the request of every cycle onto it, so a singleton holding the stack always reads the
+    // request being served rather than the one it was built with.
     $services->set(RequestStack::class, RequestStack::class);
     $services->set(\Johncms\Http\Kernel::class)
         ->arg('$resettableServices', tagged_iterator('johncms.resettable'));
