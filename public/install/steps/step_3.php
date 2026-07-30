@@ -17,8 +17,7 @@ use Johncms\Modules\ModuleInstaller;
 use Johncms\Modules\Modules;
 use Johncms\Http\Request;
 
-/** @var Request $request */
-$request = di(Request::class);
+/** @var Request $request Built by the installer entry point, which includes this file. */
 
 $view->addData(
     [

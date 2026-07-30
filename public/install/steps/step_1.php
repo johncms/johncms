@@ -13,8 +13,7 @@ declare(strict_types=1);
 use Johncms\Modules\Admin\Domain\Services\LanguageFilesManagerInterface;
 use Johncms\Http\Request;
 
-/** @var Request $request */
-$request = di(Request::class);
+/** @var Request $request Built by the installer entry point, which includes this file. */
 
 /** @var LanguageFilesManagerInterface $languageFilesManager */
 $languageFilesManager = di(LanguageFilesManagerInterface::class);

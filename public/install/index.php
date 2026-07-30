@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 use Gettext\TranslatorFunctions;
 use Johncms\Http\Request;
+use Johncms\Http\RequestFactory;
 use Johncms\System\i18n\Translator;
 use Johncms\System\View\Extension\Assets;
 use Johncms\System\View\Extension\Vite;
@@ -42,8 +43,10 @@ $container = \Johncms\Container\PSRContainerFactory::getContainer();
 session_name('SESID');
 session_start();
 
+// The installer runs before the application exists, so it builds its own request instead of
+// asking the container for one. The steps below are included into this scope and use it.
 /** @var Request $request */
-$request = di(Request::class);
+$request = $container->get(RequestFactory::class)($container);
 
 $translator = new Translator();
 $translator->setLocale($_SESSION['lng'] ?? 'en');

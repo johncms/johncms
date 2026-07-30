@@ -21,8 +21,7 @@ use Johncms\Validator\Validator;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
 
-/** @var Request $request */
-$request = di(Request::class);
+/** @var Request $request Built by the installer entry point, which includes this file. */
 
 di(PDO::class);
 
