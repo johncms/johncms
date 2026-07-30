@@ -49,14 +49,11 @@ $container = \Johncms\Container\PSRContainerFactory::getContainer();
     container: $container
 ))->registerHandlers();
 
-// The Request service is synthetic, so it has to be published before anything resolves it.
-// The kernel republishes the request of every cycle it handles; this one covers the legacy code
-// that reaches for Request during boot (Environment, BanIP) and the console commands.
-$bootRequest = $container->get(\Johncms\Http\RequestFactory::class)($container);
-$container->set(\Johncms\Http\Request::class, $bootRequest);
 // Services that outlive a single request read the current one off the stack. This is the bottom
 // entry, covering everything resolved during boot and the console commands; the kernel pushes the
-// request of each cycle on top of it.
+// request of each cycle on top of it. The front controller takes this request as the return value
+// of the bootstrap and hands it to the kernel.
+$bootRequest = $container->get(\Johncms\Http\RequestFactory::class)($container);
 $container->get(\Symfony\Component\HttpFoundation\RequestStack::class)->push($bootRequest);
 
 if (! defined('CONSOLE_MODE') || CONSOLE_MODE === false) {
@@ -93,3 +90,6 @@ $translator->defaultDomain('system');
 Gettext\TranslatorFunctions::register($translator);
 
 (new Modules())->registerAutoloader();
+
+// The request of this process, for the front controller: require returns it.
+return $bootRequest;

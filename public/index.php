@@ -13,12 +13,13 @@ if (! is_file(dirname(__DIR__) . '/config/autoload/database.local.php')) {
     exit;
 }
 
-require dirname(__DIR__) . '/system/bootstrap.php';
+// The bootstrap builds the request of this process and returns it.
+/** @var Request $request */
+$request = require dirname(__DIR__) . '/system/bootstrap.php';
 
 // The error handler is registered inside the bootstrap, so boot failures are covered too.
 $container = PSRContainerFactory::getContainer();
 $kernel = $container->get(Kernel::class);
-$request = $container->get(Request::class);
 
 $response = $kernel->handle($request);
 // The session is already closed by Kernel::handle() at this point, so send(true) can call
