@@ -9,7 +9,7 @@
 $counters = $container->get('counters');
 $notifications = $counters->notifications();
 $analytics = $counters->counters();
-$theme = di(\Johncms\System\View\Theme::class);
+$colorScheme = di(\Johncms\View\ColorScheme::class);
 ?>
 <!DOCTYPE html>
 <html lang="<?= $locale ?>" dir="<?= $locale === 'ar' ? 'rtl' : 'ltr' ?>">
@@ -44,7 +44,7 @@ $theme = di(\Johncms\System\View\Theme::class);
     <?= $this->section('styles', '') ?>
     <title><?= (isset($title) ? $this->e($title) : $config['copyright']) ?></title>
 </head>
-<body class="<?= $theme->getCurrentTheme() ?>">
+<body class="<?= $colorScheme->getCurrentScheme() ?>">
 <div class="wrapper min-vh-100 d-flex flex-column justify-content-between" id="app">
     <div class="page_layout justify-content-end d-flex w-100">
         <div class="sidebar">

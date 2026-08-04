@@ -56,7 +56,6 @@ TranslatorFunctions::register($translator);
 
 // Подключаем шаблонизатор
 $view = new Render('phtml');
-$view->setTheme('default');
 $view->addFolder('system', realpath(THEMES_PATH . 'default/templates/system'));
 $view->loadExtension(di(Assets::class));
 $view->loadExtension(di(Vite::class));

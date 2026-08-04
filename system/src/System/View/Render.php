@@ -25,12 +25,22 @@ use Mobicms\Render\Engine;
  */
 class Render extends Engine
 {
-    /** @var string */
-    private $theme = 'default';
+    /** @var (callable(): string)|null */
+    private $themeResolver = null;
 
-    public function setTheme(string $theme): void
+    /**
+     * Sets how the current theme name is obtained.
+     *
+     * A resolver rather than a name: the engine is a container singleton, and the theme depends
+     * on the request being served, so a name captured at construction would be the wrong one for
+     * every request but the first under a long-running runtime. The resolver is called when a
+     * template is being rendered, which is always inside a request.
+     *
+     * @param callable(): string $resolver
+     */
+    public function setThemeResolver(callable $resolver): void
     {
-        $this->theme = $theme;
+        $this->themeResolver = $resolver;
     }
 
     /**
@@ -42,24 +52,48 @@ class Render extends Engine
      * with 'The template namespace "forum" is already being used.' — found by the functional
      * smoke set, and a hard blocker for a worker runtime.
      *
-     * Only a repeated registration of the very same directories is silent: a different directory
+     * Only a repeated registration of the very same directory is silent: a different directory
      * under a name already taken is a genuine clash between modules and still raises.
      */
     public function addFolder(string $name, string $directory, array $search = []): Engine
     {
-        $searchFolder = [];
-        if ($this->theme !== 'default') {
-            $path = realpath(THEMES_PATH . $this->theme . '/templates/' . $name);
-            if ($path !== false) {
-                $searchFolder[] = $path;
-            }
-        }
-
-        if ($this->folderIsRegistered($name, $directory, $searchFolder)) {
+        if ($this->folderIsRegistered($name, $directory, $search)) {
             return $this;
         }
 
-        return parent::addFolder($name, $directory, $searchFolder);
+        return parent::addFolder($name, $directory, $search);
+    }
+
+    /**
+     * Returns the search paths of a namespace, the current theme first.
+     *
+     * The theme path is prepended here and not in addFolder() because it is only known once a
+     * request is being served. Plates walks the list backwards, so the last entry wins.
+     *
+     * @return array<string>
+     */
+    public function getFolder(string $name): array
+    {
+        $folders = parent::getFolder($name);
+        $themePath = $this->themePath($name);
+
+        return $themePath === null ? $folders : array_merge($folders, [$themePath]);
+    }
+
+    private function themePath(string $namespace): ?string
+    {
+        if ($this->themeResolver === null) {
+            return null;
+        }
+
+        $theme = ($this->themeResolver)();
+        if ($theme === '' || $theme === 'default') {
+            return null;
+        }
+
+        $path = realpath(THEMES_PATH . $theme . '/templates/' . $namespace);
+
+        return $path === false ? null : $path;
     }
 
     /**
@@ -68,7 +102,7 @@ class Render extends Engine
     private function folderIsRegistered(string $name, string $directory, array $search): bool
     {
         try {
-            $registered = $this->getFolder($name);
+            $registered = parent::getFolder($name);
         } catch (InvalidArgumentException) {
             return false;
         }

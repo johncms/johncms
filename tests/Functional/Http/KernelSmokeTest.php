@@ -80,6 +80,21 @@ final class KernelSmokeTest extends FunctionalTestCase
     }
 
     /**
+     * The admin panel is laid out by its own theme, and which theme serves a page is decided per
+     * request rather than once per process. Two requests in one process, one of each area: the
+     * theme the assets come from tells them apart, and it covers both the templates and the
+     * asset URLs.
+     */
+    public function testTheAdminAreaAndThePublicAreaAreServedByTheirOwnThemes(): void
+    {
+        $adminContent = (string) $this->handleRequest('/admin/login')->getContent();
+        $publicContent = (string) $this->handleRequest('/')->getContent();
+
+        self::assertStringContainsString('/themes/admin/assets/', $adminContent);
+        self::assertStringNotContainsString('/themes/admin/assets/', $publicContent);
+    }
+
+    /**
      * A route that only admins may see answers 403, and that status is set the legacy way with
      * http_response_code() deep inside the module. Pins that status seam end to end.
      */

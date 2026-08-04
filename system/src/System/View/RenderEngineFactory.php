@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms\System\View;
 
+use Johncms\Http\CurrentPage;
 use Johncms\Security\Csrf;
 use Johncms\Users\User;
 use Johncms\System\View\Extension\Assets;
@@ -28,13 +29,11 @@ class RenderEngineFactory
         $config = config('johncms');
         $engine = new Render('phtml');
 
-        if ($this->isAdmin()) {
-            $engine->setTheme('admin');
-            $engine->addFolder('system', realpath(THEMES_PATH . 'admin/templates/system'));
-        } else {
-            $engine->setTheme($config['skindef']);
-            $engine->addFolder('system', realpath(THEMES_PATH . 'default/templates/system'));
-        }
+        $currentPage = $container->get(CurrentPage::class);
+        $engine->setThemeResolver(
+            static fn (): string => $currentPage->isAdminArea() ? 'admin' : (string) $config['skindef']
+        );
+        $engine->addFolder('system', realpath(THEMES_PATH . 'default/templates/system'));
 
         $engine->loadExtension($container->get(Assets::class));
         $engine->loadExtension($container->get(Avatar::class));
@@ -51,14 +50,5 @@ class RenderEngineFactory
         );
 
         return $engine;
-    }
-
-    private function isAdmin(): bool
-    {
-        $path = parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH);
-        if (! is_string($path)) {
-            return false;
-        }
-        return $path === '/admin' || str_starts_with($path, '/admin/');
     }
 }

@@ -42,4 +42,18 @@ final readonly class CurrentPage
 
         return $request->getPathInfo() === '/';
     }
+
+    /**
+     * Whether the request is addressed to the admin panel. Outside of HTTP — the scheduler, the
+     * console, the mail queue — there is no request and the answer is false.
+     */
+    public function isAdminArea(): bool
+    {
+        $path = $this->requestStack->getCurrentRequest()?->getPathInfo();
+        if ($path === null) {
+            return false;
+        }
+
+        return $path === '/admin' || str_starts_with($path, '/admin/');
+    }
 }

@@ -67,6 +67,58 @@ final class RenderTest extends TestCase
         $render->addFolder('tests', __DIR__);
     }
 
+    /**
+     * The engine is a container singleton, so the theme cannot be baked into it: it depends on
+     * the request being served, and under a long-running runtime the first request would decide
+     * it for every later one. The resolver is asked when a namespace is resolved, which happens
+     * while a template is being rendered.
+     */
+    public function testTheThemeResolverIsCalledWhenANamespaceIsResolvedAndNotWhenItIsRegistered(): void
+    {
+        $calls = 0;
+        $render = new Render();
+        $render->setThemeResolver(function () use (&$calls): string {
+            $calls++;
+
+            return 'default';
+        });
+
+        $render->addFolder('tests', __DIR__ . '/templates');
+        self::assertSame(0, $calls);
+
+        $render->getFolder('tests');
+        self::assertSame(1, $calls);
+    }
+
+    /**
+     * The fallback chain of the shipped example theme: it holds a single template overriding the
+     * homepage module, and everything else falls back. Plates walks the list backwards, so the
+     * theme path has to be the last entry.
+     */
+    public function testThePathOfTheCurrentThemeIsSearchedBeforeTheModule(): void
+    {
+        $render = new Render();
+        $render->setThemeResolver(static fn (): string => 'example');
+        $render->addFolder('homepage', MODULES_PATH . 'homepage/templates');
+
+        self::assertSame(
+            [
+                rtrim(MODULES_PATH . 'homepage/templates', DS),
+                realpath(THEMES_PATH . 'example/templates/homepage'),
+            ],
+            $render->getFolder('homepage')
+        );
+    }
+
+    public function testANamespaceTheThemeDoesNotOverrideResolvesToTheModuleOnly(): void
+    {
+        $render = new Render();
+        $render->setThemeResolver(static fn (): string => 'example');
+        $render->addFolder('tests', __DIR__ . '/templates');
+
+        self::assertSame([__DIR__ . '/templates'], $render->getFolder('tests'));
+    }
+
     private function engine(): Render
     {
         $render = new Render();

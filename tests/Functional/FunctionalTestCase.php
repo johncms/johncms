@@ -27,8 +27,8 @@ use Symfony\Component\HttpFoundation\Response;
  * 2. Several requests may be driven through one process, including several through the same
  *    controller: nothing holds a request beyond the cycle it belongs to, and the kernel resets the
  *    shared services that cache per-request state. RequestIsolationTest is what guards that.
- *    Render is the exception — the page title and the theme are still process state, so do not
- *    assert on them across requests.
+ *    Render is the exception — the page title is still process state, so do not assert on it
+ *    across requests.
  */
 abstract class FunctionalTestCase extends TestCase
 {
@@ -56,8 +56,8 @@ abstract class FunctionalTestCase extends TestCase
         $request = Request::create($uri, $method, $parameters, $cookies, [], $server);
 
         // Legacy code still reads the superglobals directly — checkRedirect() through
-        // pageNotFound(), UserStat, the admin-theme detection of RenderEngineFactory. Keep them in
-        // sync with the request under test until all of it goes through Request.
+        // pageNotFound() and UserStat. Keep them in sync with the request under test until all of
+        // it goes through Request.
         $_SERVER['REQUEST_URI'] = $request->getRequestUri();
         $_SERVER['REQUEST_METHOD'] = $request->getMethod();
         $_GET = $request->query->all();

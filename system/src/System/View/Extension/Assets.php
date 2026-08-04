@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Johncms\System\View\Extension;
 
 use InvalidArgumentException;
+use Johncms\Http\CurrentPage;
 use Johncms\Http\PublicUrlResolver;
 use Mobicms\Render\Engine;
 use Mobicms\Render\ExtensionInterface;
@@ -23,9 +24,13 @@ class Assets implements ExtensionInterface
     /** @var array */
     private $config;
 
+    /** @var CurrentPage */
+    private $currentPage;
+
     public function __invoke(ContainerInterface $container): self
     {
         $this->config = config('johncms');
+        $this->currentPage = $container->get(CurrentPage::class);
 
         return $this;
     }
@@ -44,7 +49,7 @@ class Assets implements ExtensionInterface
     {
         $url = ltrim($url, '/');
 
-        if ($this->isAdmin()) {
+        if ($this->currentPage->isAdminArea()) {
             $file = (string) realpath(PUBLIC_THEMES_PATH . 'admin/assets/' . $url);
             $resultUrl = $this->urlFromPath($file);
 
@@ -77,11 +82,5 @@ class Assets implements ExtensionInterface
     public function urlFromPath(string $path, ?string $basePath = null): string
     {
         return di(PublicUrlResolver::class)->fromPath($path, $basePath);
-    }
-
-    private function isAdmin(): bool
-    {
-        $path = parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH) ?? '';
-        return $path === '/admin' || str_starts_with($path, '/admin/');
     }
 }

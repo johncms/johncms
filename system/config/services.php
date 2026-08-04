@@ -48,7 +48,10 @@ use Johncms\System\View\Extension\Formatter;
 use Johncms\System\View\Extension\Vite;
 use Johncms\System\View\Render;
 use Johncms\System\View\RenderEngineFactory;
-use Johncms\System\View\Theme;
+use Johncms\View\ColorScheme;
+use Johncms\View\DelegatingRenderer;
+use Johncms\View\PlatesRenderer;
+use Johncms\View\RendererInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 use Simba77\EmbedMedia\Embed;
@@ -174,12 +177,19 @@ return static function (ContainerConfigurator $container): void {
     $services->alias(UrlMatcherInterface::class, UrlMatcher::class);
     $services->set(SymfonyRouteMatcher::class);
     $services->set(Render::class)->factory(service(RenderEngineFactory::class));
+    // Templates are dispatched by the shape of their name — @namespace/file.twig to Twig,
+    // namespace::file to Plates — so a page moves to Twig on its own, without its module or
+    // any configuration moving with it. The Twig renderer joins the constructor once it exists.
+    $services->set(PlatesRenderer::class)->arg('$engine', service(Render::class));
+    $services->set(RendererInterface::class, DelegatingRenderer::class)
+        ->arg('$platesRenderer', service(PlatesRenderer::class))
+        ->arg('$twigRenderer', null);
     $services->set(Translator::class)->factory(service(TranslatorServiceFactory::class));
     $services->set(Cache::class)->factory([Cache::class, 'create']);
     $services->set(SitemapGenerator::class)->arg('$moduleProviders', tagged_iterator('johncms.sitemap_provider'));
     $services->set(MediaEmbed::class)->factory([MediaEmbed::class, 'create']);
     $services->set(Embed::class)->factory([MediaEmbed::class, 'create']);
-    $services->set(Theme::class);
+    $services->set(ColorScheme::class);
     $services->set(\Johncms\Scheduler\ScheduleMutexInterface::class, \Johncms\Scheduler\FileScheduleMutex::class);
     $services->set(\Johncms\Scheduler\ScheduledTaskRegistry::class)
         ->arg('$commands', tagged_iterator('johncms.console_command'));
