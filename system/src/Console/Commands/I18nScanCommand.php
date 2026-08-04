@@ -7,6 +7,7 @@ namespace Johncms\Console\Commands;
 use Gettext\Generator\PoGenerator;
 use Gettext\Scanner\PhpScanner;
 use Gettext\Translations;
+use Johncms\System\i18n\TwigScanner;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use SimpleXMLElement;
@@ -15,6 +16,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Twig\Environment;
 
 #[AsCommand(
     name: 'i18n:scan',
@@ -23,6 +25,11 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 )]
 final class I18nScanCommand extends Command
 {
+    public function __construct(private readonly Environment $twig)
+    {
+        parent::__construct();
+    }
+
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
@@ -34,6 +41,7 @@ final class I18nScanCommand extends Command
 
         $domains = [];
         $translations = [];
+        $translationsByDomain = [];
 
         foreach ($xml->domain as $domain) {
             $domainName = trim((string) $domain->name);
@@ -42,7 +50,9 @@ final class I18nScanCommand extends Command
             }
 
             $domains[] = $domain;
-            $translations[] = Translations::create($domainName);
+            $domainTranslations = Translations::create($domainName);
+            $translations[] = $domainTranslations;
+            $translationsByDomain[$domainName] = $domainTranslations;
         }
 
         if ($translations === []) {
@@ -50,6 +60,7 @@ final class I18nScanCommand extends Command
             return self::FAILURE;
         }
 
+        $twigScanner = new TwigScanner($this->twig, $translationsByDomain);
         $scanner = new PhpScanner(...$translations);
         $scanner->setFunctions(
             [
@@ -74,13 +85,21 @@ final class I18nScanCommand extends Command
 
             sort($files, SORT_STRING);
             $scanner->setDefaultDomain($domainName);
+            $twigScanner->setDefaultDomain($domainName);
 
             foreach ($files as $file) {
+                if (str_ends_with($file, '.twig')) {
+                    $twigScanner->scanFile($file);
+                    continue;
+                }
+
                 $scanner->scanFile($file);
             }
         }
 
         $generator = new PoGenerator();
+        // The Twig scanner writes into the very objects the PHP scanner was built with, so both
+        // passes end up in one .pot per domain.
         $scannedTranslations = $scanner->getTranslations();
 
         foreach ($domains as $domain) {
@@ -138,7 +157,7 @@ final class I18nScanCommand extends Command
             }
 
             $path = str_replace('\\', '/', $file->getPathname());
-            if (preg_match('/^.+\.(?:phtml|php)$/i', $path) === 1) {
+            if (preg_match('/^.+\.(?:twig|phtml|php)$/i', $path) === 1) {
                 $fileList[] = $path;
             }
         }

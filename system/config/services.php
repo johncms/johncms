@@ -48,10 +48,26 @@ use Johncms\System\View\Extension\Formatter;
 use Johncms\System\View\Extension\Vite;
 use Johncms\System\View\Render;
 use Johncms\System\View\RenderEngineFactory;
+use Johncms\Console\Commands\I18nScanCommand;
+use Johncms\Console\Commands\TwigCompileCommand;
+use Johncms\Console\Commands\TwigLintCommand;
 use Johncms\View\ColorScheme;
 use Johncms\View\DelegatingRenderer;
 use Johncms\View\PlatesRenderer;
 use Johncms\View\RendererInterface;
+use Johncms\View\Theme\FilesystemThemeRepository;
+use Johncms\View\Theme\ThemeRepositoryInterface;
+use Johncms\View\Twig\AppVariable;
+use Johncms\View\Twig\Extension\AppExtension;
+use Johncms\View\Twig\Extension\AssetExtension;
+use Johncms\View\Twig\Extension\FormatExtension;
+use Johncms\View\Twig\Extension\I18nExtension;
+use Johncms\View\Twig\Extension\PlatesBridgeExtension;
+use Johncms\View\Twig\TemplatePathRegistry;
+use Johncms\View\Twig\TwigEnvironmentFactory;
+use Johncms\View\Twig\TwigRenderer;
+use Johncms\View\ViewEnvironment;
+use Twig\Environment as TwigEnvironment;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 use Simba77\EmbedMedia\Embed;
@@ -122,6 +138,9 @@ return static function (ContainerConfigurator $container): void {
                 ROOT_PATH . 'system/src/Http/Pagination/Pagination.php',
                 ROOT_PATH . 'system/src/Http/UploadedFileDTO.php',
                 ROOT_PATH . 'system/src/Security/ClientInfoDTO.php',
+                ROOT_PATH . 'system/src/View/Theme/ThemeDTO.php',
+                // Built by the scan command with the translation set it fills, not by the container.
+                ROOT_PATH . 'system/src/System/i18n/TwigScanner.php',
             ]
         )
         ->autowire()
@@ -179,11 +198,38 @@ return static function (ContainerConfigurator $container): void {
     $services->set(Render::class)->factory(service(RenderEngineFactory::class));
     // Templates are dispatched by the shape of their name — @namespace/file.twig to Twig,
     // namespace::file to Plates — so a page moves to Twig on its own, without its module or
-    // any configuration moving with it. The Twig renderer joins the constructor once it exists.
+    // any configuration moving with it.
     $services->set(PlatesRenderer::class)->arg('$engine', service(Render::class));
     $services->set(RendererInterface::class, DelegatingRenderer::class)
         ->arg('$platesRenderer', service(PlatesRenderer::class))
-        ->arg('$twigRenderer', null);
+        ->arg('$twigRenderer', service(TwigRenderer::class));
+
+    $services->set(ThemeRepositoryInterface::class, FilesystemThemeRepository::class);
+    $services->set(TemplatePathRegistry::class)
+        ->arg('$providers', tagged_iterator('johncms.template_paths'));
+    // One environment serves the whole of HTTP: the admin panel and the public site differ by
+    // their namespaces, not by what a template can do, so they share the cache and the compiled
+    // components. Mail and the installer get their own once they move.
+    $services->set('johncms.twig.web', TwigEnvironment::class)
+        ->factory([service(TwigEnvironmentFactory::class), 'create'])
+        ->arg('$environment', ViewEnvironment::Web)
+        ->arg('$extensions', tagged_iterator('johncms.twig_extension'));
+    $services->set(TwigRenderer::class)->arg('$twig', service('johncms.twig.web'));
+    $services->set(TwigLintCommand::class)->arg('$twig', service('johncms.twig.web'));
+    $services->set(I18nScanCommand::class)->arg('$twig', service('johncms.twig.web'));
+    $services->set(TwigCompileCommand::class)->arg('$twig', service('johncms.twig.web'));
+
+    $services->set(AppVariable::class)
+        ->arg('$environment', ViewEnvironment::Web)
+        ->arg('$user', service_closure(\Johncms\Users\User::class))
+        ->arg('$csrf', service_closure(Csrf::class));
+    $services->set(AppExtension::class)
+        ->arg('$app', service_closure(AppVariable::class))
+        ->tag('johncms.twig_extension');
+    $services->set(I18nExtension::class)->tag('johncms.twig_extension');
+    $services->set(AssetExtension::class)->tag('johncms.twig_extension');
+    $services->set(FormatExtension::class)->tag('johncms.twig_extension');
+    $services->set(PlatesBridgeExtension::class)->tag('johncms.twig_extension');
     $services->set(Translator::class)->factory(service(TranslatorServiceFactory::class));
     $services->set(Cache::class)->factory([Cache::class, 'create']);
     $services->set(SitemapGenerator::class)->arg('$moduleProviders', tagged_iterator('johncms.sitemap_provider'));

@@ -32,4 +32,9 @@ docker exec "$CONTAINER" composer phpstan
 echo "==> composer test"
 docker exec "$CONTAINER" composer test
 
+# Templates are covered by nothing else in the gate: a syntax error in one is valid PHP-free
+# text to phpcs, phpstan and the tests, and only shows up as a broken page.
+echo "==> twig:lint"
+docker exec "$CONTAINER" php system/bin/console twig:lint
+
 echo "==> verification gate passed"
