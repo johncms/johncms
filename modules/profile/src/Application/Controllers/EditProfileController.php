@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Profile\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Profile\Application\DTO\EditProfileContextDTO;
 use Johncms\Modules\Profile\Application\DTO\UpdateProfileCommand;
 use Johncms\Modules\Profile\Application\Exceptions\EditProfileException;
@@ -17,7 +18,6 @@ use Johncms\Modules\Profile\Application\UseCases\UpdateProfileUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
-use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,21 +26,21 @@ final readonly class EditProfileController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private GetEditContextUseCase $getEditContextUseCase,
         private UpdateProfileUseCase $updateProfileUseCase,
         private DeleteAvatarUseCase $deleteAvatarUseCase,
         private DeletePhotoUseCase $deletePhotoUseCase,
         private Session $session,
+        private User $currentUser,
     ) {
         $this->controllerContext->initModule('profile');
     }
 
-    public function form(int $id): Response
+    public function form(int $id): ViewResponse
     {
         $context = $this->resolveContext($id);
-        if ($context instanceof Response) {
+        if ($context instanceof ViewResponse) {
             return $context;
         }
 
@@ -49,10 +49,10 @@ final readonly class EditProfileController
         return $this->renderForm($context, $this->formDataFromUser($context->profileUser), [], $successMessage);
     }
 
-    public function save(Request $request, int $id): Response
+    public function save(Request $request, int $id): ViewResponse
     {
         $context = $this->resolveContext($id);
-        if ($context instanceof Response) {
+        if ($context instanceof ViewResponse) {
             return $context;
         }
 
@@ -68,10 +68,10 @@ final readonly class EditProfileController
         redirect('/profile/' . $context->profileUser->id . '/edit');
     }
 
-    public function deleteAvatar(Request $request, int $id): Response
+    public function deleteAvatar(Request $request, int $id): ViewResponse
     {
         $context = $this->resolveContext($id);
-        if ($context instanceof Response) {
+        if ($context instanceof ViewResponse) {
             return $context;
         }
         if (! $this->isCsrfValid($request)) {
@@ -83,10 +83,10 @@ final readonly class EditProfileController
         redirect('/profile/' . $context->profileUser->id . '/edit');
     }
 
-    public function deletePhoto(Request $request, int $id): Response
+    public function deletePhoto(Request $request, int $id): ViewResponse
     {
         $context = $this->resolveContext($id);
-        if ($context instanceof Response) {
+        if ($context instanceof ViewResponse) {
             return $context;
         }
         if (! $this->isCsrfValid($request)) {
@@ -101,7 +101,7 @@ final readonly class EditProfileController
     /**
      * Resolve the edit context or, on failure, a rendered error page (with the proper HTTP status set).
      */
-    private function resolveContext(int $id): EditProfileContextDTO|Response
+    private function resolveContext(int $id): EditProfileContextDTO|ViewResponse
     {
         try {
             return $this->getEditContextUseCase->execute($id);
@@ -178,7 +178,7 @@ final readonly class EditProfileController
      * @param array<string, mixed> $formData
      * @param array<string, mixed> $errors
      */
-    private function renderForm(EditProfileContextDTO $context, array $formData, array $errors, ?string $successMessage): Response
+    private function renderForm(EditProfileContextDTO $context, array $formData, array $errors, ?string $successMessage): ViewResponse
     {
         $title = __('Edit Profile');
 
@@ -194,42 +194,32 @@ final readonly class EditProfileController
             $userArray['avatar_file'] = $avatarPath;
         }
 
-        $this->render->addData([
-            'title'      => $title,
-            'page_title' => $title,
-        ]);
-
-        return new Response(
-            $this->render->render(
-                'profile::edit',
-                [
-                    'title'      => $title,
-                    'page_title' => $title,
-                    'data'       => [
-                        'errors'          => $errors,
-                        'success_message' => $successMessage,
-                        'back_url'        => '/profile/' . $context->profileUser->id,
-                        'form_action'     => '/profile/' . $context->profileUser->id . '/edit',
-                        'has_avatar'      => $hasAvatar,
-                        'user'            => $userArray,
-                        'form_data'       => $formData,
-                    ],
-                ]
-            )
+        return new ViewResponse(
+            '@profile/public/edit.twig',
+            [
+                'title'           => $title,
+                'page_title'      => $title,
+                'errors'          => $errors,
+                'success_message' => $successMessage,
+                'back_url'        => '/profile/' . $context->profileUser->id,
+                'form_action'     => '/profile/' . $context->profileUser->id . '/edit',
+                'has_avatar'      => $hasAvatar,
+                'field_height'    => $this->currentUser->config->fieldHeight,
+                'user'            => $userArray,
+                'form_data'       => $formData,
+            ]
         );
     }
 
-    private function renderError(string $message, int $status = 200): Response
+    private function renderError(string $message, int $status = 200): ViewResponse
     {
-        return new Response(
-            $this->render->render(
-                'system::pages/result',
-                [
-                    'title'   => __('Edit Profile'),
-                    'type'    => 'alert-danger',
-                    'message' => $message,
-                ]
-            ),
+        return new ViewResponse(
+            '@theme/pages/result.twig',
+            [
+                'title'   => __('Edit Profile'),
+                'type'    => 'alert-danger',
+                'message' => $message,
+            ],
             $status
         );
     }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Profile\Application\Controllers;
 
 use Johncms\Comments;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\PageMeta;
 use Johncms\Modules\Profile\Application\Exceptions\ProfileNotFoundException;
@@ -12,14 +13,12 @@ use Johncms\Modules\Profile\Application\UseCases\GetGuestbookContextUseCase;
 use Johncms\Modules\Profile\Application\UseCases\MarkGuestbookReadUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
 use Johncms\Users\User;
 
 final readonly class GuestbookController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private User $currentUser,
         private GetGuestbookContextUseCase $getGuestbookContextUseCase,
@@ -28,13 +27,15 @@ final readonly class GuestbookController
         $this->controllerContext->initModule('profile');
     }
 
-    public function __invoke(Request $request, int $id): string
+    // The legacy Comments class prints a whole page of its own, so this action still hands back a
+    // string; the error pages it may answer with are views.
+    public function __invoke(Request $request, int $id): ViewResponse|string
     {
         try {
             $profileUser = $this->getGuestbookContextUseCase->execute($id);
         } catch (ProfileNotFoundException $e) {
-            return $this->render->render(
-                'system::pages/result',
+            return new ViewResponse(
+                '@theme/pages/result.twig',
                 [
                     'title'   => __('Guestbook'),
                     'type'    => 'alert-danger',

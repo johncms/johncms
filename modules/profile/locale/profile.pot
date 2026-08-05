@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "X-Domain: profile\n"
 
-#: modules/profile/src/Application/Controllers/AccountController.php:27
-#: modules/profile/src/Application/Controllers/SettingsController.php:160
+#: modules/profile/src/Application/Controllers/AccountController.php:26
+#: modules/profile/src/Application/Controllers/SettingsController.php:163
 msgid "My Account"
 msgstr ""
 
@@ -43,7 +43,7 @@ msgid "Upload Avatar"
 msgstr ""
 
 #: modules/profile/src/Application/Controllers/AvatarController.php:65
-#: modules/profile/src/Application/Controllers/ChangePasswordController.php:99
+#: modules/profile/src/Application/Controllers/ChangePasswordController.php:88
 #: modules/profile/src/Application/Controllers/PhotoController.php:65
 msgid "Repeat"
 msgstr ""
@@ -53,12 +53,12 @@ msgid "The avatar is successfully uploaded"
 msgstr ""
 
 #: modules/profile/src/Application/Controllers/AvatarController.php:77
-#: modules/profile/src/Application/Controllers/ChangePasswordController.php:113
+#: modules/profile/src/Application/Controllers/ChangePasswordController.php:121
 #: modules/profile/src/Application/Controllers/KarmaController.php:126
 #: modules/profile/src/Application/Controllers/PhotoController.php:77
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:122
-#: modules/profile/templates/restore_password.phtml:43
-#: modules/profile/templates/restore_password_set.phtml:19
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:121
+#: modules/profile/templates/public/restore-password-set.twig:13
+#: modules/profile/templates/public/restore-password.twig:43
 msgid "Continue"
 msgstr ""
 
@@ -71,9 +71,9 @@ msgstr ""
 
 #: modules/profile/src/Application/Controllers/AvatarController.php:86
 #: modules/profile/src/Application/Controllers/EditProfileController.php:185
-#: modules/profile/src/Application/Controllers/GuestbookController.php:46
+#: modules/profile/src/Application/Controllers/GuestbookController.php:47
 #: modules/profile/src/Application/Controllers/PhotoController.php:86
-#: modules/profile/templates/account.phtml:30
+#: modules/profile/templates/public/account.twig:13
 msgid "Profile"
 msgstr ""
 
@@ -129,9 +129,9 @@ msgstr ""
 
 #: modules/profile/src/Application/Controllers/BanController.php:169
 #: modules/profile/src/Application/UseCases/GetProfileViewUseCase.php:182
-#: modules/profile/templates/edit.phtml:108
-#: modules/profile/templates/edit.phtml:128
 #: modules/profile/templates/public/confirm-delete.twig:18
+#: modules/profile/templates/public/edit.twig:83
+#: modules/profile/templates/public/edit.twig:103
 #: modules/profile/templates/public/karma.twig:47
 msgid "Delete"
 msgstr ""
@@ -182,22 +182,22 @@ msgstr ""
 msgid "Ban the User"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/ChangePasswordController.php:40
-#: modules/profile/src/Application/Controllers/ChangePasswordController.php:42
-#: modules/profile/src/Application/Controllers/ChangePasswordController.php:47
-#: modules/profile/src/Application/Controllers/ChangePasswordController.php:75
-#: modules/profile/src/Application/Controllers/ChangePasswordController.php:77
-#: modules/profile/src/Application/Controllers/ChangePasswordController.php:135
-#: modules/profile/templates/account.phtml:85
-#: modules/profile/templates/edit.phtml:278
+#: modules/profile/src/Application/Controllers/ChangePasswordController.php:39
+#: modules/profile/src/Application/Controllers/ChangePasswordController.php:41
+#: modules/profile/src/Application/Controllers/ChangePasswordController.php:46
+#: modules/profile/src/Application/Controllers/ChangePasswordController.php:65
+#: modules/profile/src/Application/Controllers/ChangePasswordController.php:67
+#: modules/profile/src/Application/Controllers/ChangePasswordController.php:129
+#: modules/profile/templates/public/account.twig:68
+#: modules/profile/templates/public/edit.twig:235
 msgid "Change Password"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/ChangePasswordController.php:111
+#: modules/profile/src/Application/Controllers/ChangePasswordController.php:119
 msgid "Password successfully changed"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/ConfirmNewEmailController.php:27
+#: modules/profile/src/Application/Controllers/ConfirmNewEmailController.php:26
 msgid "Email confirmation"
 msgstr ""
 
@@ -214,17 +214,17 @@ msgid "Photo is successfully removed"
 msgstr ""
 
 #: modules/profile/src/Application/Controllers/EditProfileController.php:183
-#: modules/profile/src/Application/Controllers/EditProfileController.php:228
-#: modules/profile/templates/account.phtml:84
+#: modules/profile/src/Application/Controllers/EditProfileController.php:219
+#: modules/profile/templates/public/account.twig:67
 msgid "Edit Profile"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/GuestbookController.php:39
-#: modules/profile/src/Application/Controllers/GuestbookController.php:47
-#: modules/profile/src/Application/Controllers/GuestbookController.php:61
-#: modules/profile/src/Application/Controllers/GuestbookController.php:76
+#: modules/profile/src/Application/Controllers/GuestbookController.php:40
+#: modules/profile/src/Application/Controllers/GuestbookController.php:48
+#: modules/profile/src/Application/Controllers/GuestbookController.php:62
+#: modules/profile/src/Application/Controllers/GuestbookController.php:77
 #: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:43
-#: modules/profile/templates/account.phtml:40
+#: modules/profile/templates/public/account.twig:23
 #: modules/profile/templates/public/ban.twig:38
 #: modules/profile/templates/public/statistics.twig:36
 #: modules/profile/templates/public/view.twig:239
@@ -270,7 +270,7 @@ msgid "Vote for"
 msgstr ""
 
 #: modules/profile/src/Application/Controllers/KarmaController.php:272
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:136
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:135
 #: modules/profile/templates/public/ban-history.twig:81
 #: modules/profile/templates/public/components/list-footer.twig:18
 #: modules/profile/templates/public/statistics.twig:41
@@ -292,73 +292,69 @@ msgstr ""
 msgid "The photo is successfully uploaded"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/ResetSettingsController.php:30
+#: modules/profile/src/Application/Controllers/ResetSettingsController.php:29
 msgid "Reset user settings"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/ResetSettingsController.php:51
+#: modules/profile/src/Application/Controllers/ResetSettingsController.php:49
 #, php-format
 msgid "For user %s default settings were set."
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:37
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:52
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:79
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:88
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:106
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:118
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:132
-#: modules/profile/templates/restore_password.phtml:4
-#: modules/profile/templates/restore_password.phtml:5
-#: modules/profile/templates/restore_password.phtml:10
-#: modules/profile/templates/restore_password_set.phtml:10
-#: modules/profile/templates/restore_password_set.phtml:11
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:36
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:51
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:78
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:87
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:105
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:117
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:131
+#: modules/profile/templates/public/restore-password.twig:10
 msgid "Restore password"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:61
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:60
 msgid "Incorrect code"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:81
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:80
 msgid "Check your e-mail for further information"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:120
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:119
 msgid "Password successfully changed.<br>New password sent to your E-mail address."
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/SettingsController.php:51
-#: modules/profile/src/Application/Controllers/SettingsController.php:187
+#: modules/profile/src/Application/Controllers/SettingsController.php:54
+#: modules/profile/src/Application/Controllers/SettingsController.php:184
 msgid "General setting"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/SettingsController.php:97
-#: modules/profile/src/Application/Controllers/SettingsController.php:118
-#: modules/profile/src/Application/Controllers/SettingsController.php:206
+#: modules/profile/src/Application/Controllers/SettingsController.php:100
+#: modules/profile/src/Application/Controllers/SettingsController.php:121
+#: modules/profile/src/Application/Controllers/SettingsController.php:203
 msgid "Settings saved successfully"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/SettingsController.php:102
-#: modules/profile/src/Application/Controllers/SettingsController.php:210
+#: modules/profile/src/Application/Controllers/SettingsController.php:105
+#: modules/profile/src/Application/Controllers/SettingsController.php:207
 msgid "Default settings are set"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/SettingsController.php:128
-#: modules/profile/src/Application/Controllers/SettingsController.php:192
+#: modules/profile/src/Application/Controllers/SettingsController.php:131
+#: modules/profile/src/Application/Controllers/SettingsController.php:189
 #: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:42
 #: modules/profile/templates/public/ban.twig:44
 #: modules/profile/templates/public/statistics.twig:35
 msgid "Forum"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/SettingsController.php:145
-#: modules/profile/src/Application/Controllers/SettingsController.php:197
+#: modules/profile/src/Application/Controllers/SettingsController.php:148
+#: modules/profile/src/Application/Controllers/SettingsController.php:194
 msgid "Mail"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/SettingsController.php:161
-#: modules/profile/templates/account.phtml:81
+#: modules/profile/src/Application/Controllers/SettingsController.php:164
+#: modules/profile/templates/public/account.twig:64
 msgid "Settings"
 msgstr ""
 
@@ -566,330 +562,67 @@ msgstr ""
 msgid "The weight of the file exceeds"
 msgstr ""
 
-#: modules/profile/templates/account.phtml:26
+#: modules/profile/templates/public/account.twig:9
 msgid "My Pages"
 msgstr ""
 
-#: modules/profile/templates/account.phtml:33
+#: modules/profile/templates/public/account.twig:16
 msgid "Statistics"
 msgstr ""
 
-#: modules/profile/templates/account.phtml:36
+#: modules/profile/templates/public/account.twig:19
 #: modules/profile/templates/public/view.twig:238
 msgid "Photo Album"
 msgstr ""
 
-#: modules/profile/templates/account.phtml:45
+#: modules/profile/templates/public/account.twig:28
 msgid "My Mailbox"
 msgstr ""
 
-#: modules/profile/templates/account.phtml:49
+#: modules/profile/templates/public/account.twig:32
 msgid "Received"
 msgstr ""
 
-#: modules/profile/templates/account.phtml:56
+#: modules/profile/templates/public/account.twig:39
 msgid "Sent"
 msgstr ""
 
-#: modules/profile/templates/account.phtml:63
+#: modules/profile/templates/public/account.twig:46
 msgid "Files"
 msgstr ""
 
-#: modules/profile/templates/account.phtml:68
-#: modules/profile/templates/account.phtml:72
-#: modules/profile/templates/edit.phtml:196
+#: modules/profile/templates/public/account.twig:51
+#: modules/profile/templates/public/account.twig:55
+#: modules/profile/templates/public/edit.twig:161
 #: modules/profile/templates/public/view.twig:190
 msgid "Contacts"
 msgstr ""
 
-#: modules/profile/templates/account.phtml:76
+#: modules/profile/templates/public/account.twig:59
 msgid "Blocked"
 msgstr ""
 
-#: modules/profile/templates/account.phtml:86
+#: modules/profile/templates/public/account.twig:69
 msgid "System Settings"
-msgstr ""
-
-#: modules/profile/templates/confirm_new_email.phtml:13
-msgid "Thanks! Your e-mail has been successfully confirmed."
-msgstr ""
-
-#: modules/profile/templates/confirm_new_email.phtml:15
-msgid "Error when confirming e-mail. Invalid confirmation code."
-msgstr ""
-
-#: modules/profile/templates/edit.phtml:52
-#: modules/profile/templates/restore_password.phtml:12
-#: modules/profile/templates/restore_password.phtml:18
-msgid "Username"
-msgstr ""
-
-#: modules/profile/templates/edit.phtml:57
-#: modules/profile/templates/edit.phtml:64
-#: modules/profile/templates/edit.phtml:75
-msgid "Nickname"
-msgstr ""
-
-#: modules/profile/templates/edit.phtml:71
-msgid "Min.2, Max. 20"
-msgstr ""
-
-#: modules/profile/templates/edit.phtml:79
-#: modules/profile/templates/edit.phtml:85
-#: modules/profile/templates/public/view.twig:153
-msgid "Status"
-msgstr ""
-
-#: modules/profile/templates/edit.phtml:91
-msgid "Max. 50"
-msgstr ""
-
-#: modules/profile/templates/edit.phtml:95
-msgid "Avatar"
-msgstr ""
-
-#: modules/profile/templates/edit.phtml:103
-#: modules/profile/templates/edit.phtml:126
-msgid "Upload"
-msgstr ""
-
-#: modules/profile/templates/edit.phtml:105
-msgid "Select in Catalog"
-msgstr ""
-
-#: modules/profile/templates/edit.phtml:115
-#: modules/profile/templates/edit.phtml:119
-#: modules/profile/templates/public/view.twig:145
-msgid "Photo"
-msgstr ""
-
-#: modules/profile/templates/edit.phtml:133
-msgid "Personal info"
-msgstr ""
-
-#: modules/profile/templates/edit.phtml:136
-#: modules/profile/templates/edit.phtml:142
-msgid "Your name"
-msgstr ""
-
-#: modules/profile/templates/edit.phtml:150
-msgid "Date of birth (d.m.y)"
-msgstr ""
-
-#: modules/profile/templates/edit.phtml:153
-msgid "Day"
-msgstr ""
-
-#: modules/profile/templates/edit.phtml:161
-msgid "Month"
-msgstr ""
-
-#: modules/profile/templates/edit.phtml:169
-msgid "Year"
-msgstr ""
-
-#: modules/profile/templates/edit.phtml:179
-#: modules/profile/templates/edit.phtml:185
-#: modules/profile/templates/public/view.twig:177
-msgid "City, Country"
-msgstr ""
-
-#: modules/profile/templates/edit.phtml:192
-msgid "About myself"
-msgstr ""
-
-#: modules/profile/templates/edit.phtml:198
-#: modules/profile/templates/edit.phtml:204
-#: modules/profile/templates/public/view.twig:193
-msgid "Phone number"
-msgstr ""
-
-#: modules/profile/templates/edit.phtml:211
-#: modules/profile/templates/edit.phtml:217
-#: modules/profile/templates/public/view.twig:199
-msgid "E-mail"
-msgstr ""
-
-#: modules/profile/templates/edit.phtml:224
-msgid "The new email address is:"
-msgstr ""
-
-#: modules/profile/templates/edit.phtml:225
-msgid "Please check your email and confirm it."
-msgstr ""
-
-#: modules/profile/templates/edit.phtml:232
-msgid "Show in Profile"
-msgstr ""
-
-#: modules/profile/templates/edit.phtml:234
-msgid "Warning! Write your e-mail correctly. Your password will be sent to the email address on record for this account."
-msgstr ""
-
-#: modules/profile/templates/edit.phtml:237
-#: modules/profile/templates/edit.phtml:243
-#: modules/profile/templates/public/view.twig:208
-msgid "Skype"
-msgstr ""
-
-#: modules/profile/templates/edit.phtml:251
-#: modules/profile/templates/edit.phtml:257
-#: modules/profile/templates/public/view.twig:215
-msgid "Site"
-msgstr ""
-
-#: modules/profile/templates/edit.phtml:265
-msgid "Administrative Functions"
-msgstr ""
-
-#: modules/profile/templates/edit.phtml:268
-msgid "Admin notes"
-msgstr ""
-
-#: modules/profile/templates/edit.phtml:275
-msgid "Prohibit Karma"
-msgstr ""
-
-#: modules/profile/templates/edit.phtml:280
-msgid "Reset User options to default"
-msgstr ""
-
-#: modules/profile/templates/edit.phtml:284
-msgid "Select gender"
-msgstr ""
-
-#: modules/profile/templates/edit.phtml:287
-#: modules/profile/templates/public/view.twig:167
-msgid "Man"
-msgstr ""
-
-#: modules/profile/templates/edit.phtml:291
-#: modules/profile/templates/public/view.twig:169
-msgid "Woman"
-msgstr ""
-
-#: modules/profile/templates/edit.phtml:295
-msgid "Position on the Site"
-msgstr ""
-
-#: modules/profile/templates/edit.phtml:298
-msgid "User"
-msgstr ""
-
-#: modules/profile/templates/edit.phtml:302
-msgid "Forum Moderator"
-msgstr ""
-
-#: modules/profile/templates/edit.phtml:306
-msgid "Download Moderator"
-msgstr ""
-
-#: modules/profile/templates/edit.phtml:310
-msgid "Library Moderator"
-msgstr ""
-
-#: modules/profile/templates/edit.phtml:314
-msgid "Super Moderator"
-msgstr ""
-
-#: modules/profile/templates/edit.phtml:320
-msgid "Administrator"
-msgstr ""
-
-#: modules/profile/templates/edit.phtml:324
-msgid "Supervisor"
-msgstr ""
-
-#: modules/profile/templates/edit.phtml:332
-#: modules/profile/templates/forum_settings.phtml:73
-#: modules/profile/templates/mail_settings.phtml:56
-#: modules/profile/templates/password.phtml:62
-#: modules/profile/templates/public/images.twig:33
-#: modules/profile/templates/settings.phtml:113
-msgid "Save"
-msgstr ""
-
-#: modules/profile/templates/edit.phtml:333
-#: modules/profile/templates/forum_settings.phtml:74
-#: modules/profile/templates/mail_settings.phtml:57
-#: modules/profile/templates/password.phtml:63
-#: modules/profile/templates/public/ban-cancel.twig:19
-#: modules/profile/templates/public/ban.twig:87
-#: modules/profile/templates/public/confirm-delete.twig:19
-#: modules/profile/templates/public/images.twig:34
-#: modules/profile/templates/public/karma-vote.twig:47
-#: modules/profile/templates/settings.phtml:114
-msgid "Cancel"
-msgstr ""
-
-#: modules/profile/templates/forum_settings.phtml:42
-msgid "Basic settings"
-msgstr ""
-
-#: modules/profile/templates/forum_settings.phtml:46
-msgid "Inverse sorting"
-msgstr ""
-
-#: modules/profile/templates/forum_settings.phtml:50
-msgid "Use the form of a quick answer"
-msgstr ""
-
-#: modules/profile/templates/forum_settings.phtml:54
-msgid "Preview of messages"
-msgstr ""
-
-#: modules/profile/templates/forum_settings.phtml:57
-msgid "Attach first post"
-msgstr ""
-
-#: modules/profile/templates/forum_settings.phtml:61
-msgid "Always"
-msgstr ""
-
-#: modules/profile/templates/forum_settings.phtml:65
-msgid "In unread topics"
-msgstr ""
-
-#: modules/profile/templates/forum_settings.phtml:69
-msgid "Never"
-msgstr ""
-
-#: modules/profile/templates/forum_settings.phtml:75
-#: modules/profile/templates/settings.phtml:117
-msgid "Reset Settings"
-msgstr ""
-
-#: modules/profile/templates/mail_settings.phtml:44
-msgid "Who can write you?"
-msgstr ""
-
-#: modules/profile/templates/mail_settings.phtml:48
-msgid "All can write"
-msgstr ""
-
-#: modules/profile/templates/mail_settings.phtml:52
-msgid "Only my contacts"
-msgstr ""
-
-#: modules/profile/templates/password.phtml:30
-#: modules/profile/templates/password.phtml:36
-msgid "Enter old password"
-msgstr ""
-
-#: modules/profile/templates/password.phtml:42
-#: modules/profile/templates/password.phtml:48
-msgid "Enter new password"
-msgstr ""
-
-#: modules/profile/templates/password.phtml:52
-#: modules/profile/templates/password.phtml:58
-msgid "Repeat password"
 msgstr ""
 
 #: modules/profile/templates/public/activity.twig:20
 #: modules/profile/templates/public/ip-history.twig:27
 #: modules/profile/templates/public/karma.twig:23
 msgid "The list is empty"
+msgstr ""
+
+#: modules/profile/templates/public/ban-cancel.twig:19
+#: modules/profile/templates/public/ban.twig:87
+#: modules/profile/templates/public/confirm-delete.twig:19
+#: modules/profile/templates/public/edit.twig:277
+#: modules/profile/templates/public/forum-settings.twig:50
+#: modules/profile/templates/public/images.twig:34
+#: modules/profile/templates/public/karma-vote.twig:47
+#: modules/profile/templates/public/mail-settings.twig:31
+#: modules/profile/templates/public/password.twig:47
+#: modules/profile/templates/public/settings.twig:89
+msgid "Cancel"
 msgstr ""
 
 #: modules/profile/templates/public/ban-history.twig:14
@@ -968,6 +701,242 @@ msgstr ""
 msgid "To message"
 msgstr ""
 
+#: modules/profile/templates/public/confirm-new-email.twig:10
+msgid "Thanks! Your e-mail has been successfully confirmed."
+msgstr ""
+
+#: modules/profile/templates/public/confirm-new-email.twig:12
+msgid "Error when confirming e-mail. Invalid confirmation code."
+msgstr ""
+
+#: modules/profile/templates/public/edit.twig:31
+#: modules/profile/templates/public/restore-password.twig:12
+#: modules/profile/templates/public/restore-password.twig:18
+msgid "Username"
+msgstr ""
+
+#: modules/profile/templates/public/edit.twig:36
+#: modules/profile/templates/public/edit.twig:43
+#: modules/profile/templates/public/edit.twig:52
+msgid "Nickname"
+msgstr ""
+
+#: modules/profile/templates/public/edit.twig:48
+msgid "Min.2, Max. 20"
+msgstr ""
+
+#: modules/profile/templates/public/edit.twig:56
+#: modules/profile/templates/public/edit.twig:62
+#: modules/profile/templates/public/view.twig:153
+msgid "Status"
+msgstr ""
+
+#: modules/profile/templates/public/edit.twig:66
+msgid "Max. 50"
+msgstr ""
+
+#: modules/profile/templates/public/edit.twig:70
+msgid "Avatar"
+msgstr ""
+
+#: modules/profile/templates/public/edit.twig:78
+#: modules/profile/templates/public/edit.twig:101
+msgid "Upload"
+msgstr ""
+
+#: modules/profile/templates/public/edit.twig:80
+msgid "Select in Catalog"
+msgstr ""
+
+#: modules/profile/templates/public/edit.twig:90
+#: modules/profile/templates/public/edit.twig:94
+#: modules/profile/templates/public/view.twig:145
+msgid "Photo"
+msgstr ""
+
+#: modules/profile/templates/public/edit.twig:108
+msgid "Personal info"
+msgstr ""
+
+#: modules/profile/templates/public/edit.twig:111
+#: modules/profile/templates/public/edit.twig:117
+msgid "Your name"
+msgstr ""
+
+#: modules/profile/templates/public/edit.twig:123
+msgid "Date of birth (d.m.y)"
+msgstr ""
+
+#: modules/profile/templates/public/edit.twig:126
+msgid "Day"
+msgstr ""
+
+#: modules/profile/templates/public/edit.twig:132
+msgid "Month"
+msgstr ""
+
+#: modules/profile/templates/public/edit.twig:138
+msgid "Year"
+msgstr ""
+
+#: modules/profile/templates/public/edit.twig:146
+#: modules/profile/templates/public/edit.twig:152
+#: modules/profile/templates/public/view.twig:177
+msgid "City, Country"
+msgstr ""
+
+#: modules/profile/templates/public/edit.twig:157
+msgid "About myself"
+msgstr ""
+
+#: modules/profile/templates/public/edit.twig:163
+#: modules/profile/templates/public/edit.twig:169
+#: modules/profile/templates/public/view.twig:193
+msgid "Phone number"
+msgstr ""
+
+#: modules/profile/templates/public/edit.twig:174
+#: modules/profile/templates/public/edit.twig:180
+#: modules/profile/templates/public/view.twig:199
+msgid "E-mail"
+msgstr ""
+
+#: modules/profile/templates/public/edit.twig:185
+msgid "The new email address is:"
+msgstr ""
+
+#: modules/profile/templates/public/edit.twig:186
+msgid "Please check your email and confirm it."
+msgstr ""
+
+#: modules/profile/templates/public/edit.twig:193
+msgid "Show in Profile"
+msgstr ""
+
+#: modules/profile/templates/public/edit.twig:195
+msgid "Warning! Write your e-mail correctly. Your password will be sent to the email address on record for this account."
+msgstr ""
+
+#: modules/profile/templates/public/edit.twig:198
+#: modules/profile/templates/public/edit.twig:204
+#: modules/profile/templates/public/view.twig:208
+msgid "Skype"
+msgstr ""
+
+#: modules/profile/templates/public/edit.twig:210
+#: modules/profile/templates/public/edit.twig:216
+#: modules/profile/templates/public/view.twig:215
+msgid "Site"
+msgstr ""
+
+#: modules/profile/templates/public/edit.twig:222
+msgid "Administrative Functions"
+msgstr ""
+
+#: modules/profile/templates/public/edit.twig:225
+msgid "Admin notes"
+msgstr ""
+
+#: modules/profile/templates/public/edit.twig:232
+msgid "Prohibit Karma"
+msgstr ""
+
+#: modules/profile/templates/public/edit.twig:237
+msgid "Reset User options to default"
+msgstr ""
+
+#: modules/profile/templates/public/edit.twig:241
+msgid "Select gender"
+msgstr ""
+
+#: modules/profile/templates/public/edit.twig:244
+#: modules/profile/templates/public/view.twig:167
+msgid "Man"
+msgstr ""
+
+#: modules/profile/templates/public/edit.twig:248
+#: modules/profile/templates/public/view.twig:169
+msgid "Woman"
+msgstr ""
+
+#: modules/profile/templates/public/edit.twig:252
+msgid "Position on the Site"
+msgstr ""
+
+#: modules/profile/templates/public/edit.twig:254
+msgid "User"
+msgstr ""
+
+#: modules/profile/templates/public/edit.twig:255
+msgid "Forum Moderator"
+msgstr ""
+
+#: modules/profile/templates/public/edit.twig:256
+msgid "Download Moderator"
+msgstr ""
+
+#: modules/profile/templates/public/edit.twig:257
+msgid "Library Moderator"
+msgstr ""
+
+#: modules/profile/templates/public/edit.twig:258
+msgid "Super Moderator"
+msgstr ""
+
+#: modules/profile/templates/public/edit.twig:262
+msgid "Administrator"
+msgstr ""
+
+#: modules/profile/templates/public/edit.twig:263
+msgid "Supervisor"
+msgstr ""
+
+#: modules/profile/templates/public/edit.twig:276
+#: modules/profile/templates/public/forum-settings.twig:49
+#: modules/profile/templates/public/images.twig:33
+#: modules/profile/templates/public/mail-settings.twig:30
+#: modules/profile/templates/public/password.twig:46
+#: modules/profile/templates/public/settings.twig:88
+msgid "Save"
+msgstr ""
+
+#: modules/profile/templates/public/forum-settings.twig:18
+msgid "Basic settings"
+msgstr ""
+
+#: modules/profile/templates/public/forum-settings.twig:22
+msgid "Inverse sorting"
+msgstr ""
+
+#: modules/profile/templates/public/forum-settings.twig:26
+msgid "Use the form of a quick answer"
+msgstr ""
+
+#: modules/profile/templates/public/forum-settings.twig:30
+msgid "Preview of messages"
+msgstr ""
+
+#: modules/profile/templates/public/forum-settings.twig:33
+msgid "Attach first post"
+msgstr ""
+
+#: modules/profile/templates/public/forum-settings.twig:37
+msgid "Always"
+msgstr ""
+
+#: modules/profile/templates/public/forum-settings.twig:41
+msgid "In unread topics"
+msgstr ""
+
+#: modules/profile/templates/public/forum-settings.twig:45
+msgid "Never"
+msgstr ""
+
+#: modules/profile/templates/public/forum-settings.twig:51
+#: modules/profile/templates/public/settings.twig:92
+msgid "Reset Settings"
+msgstr ""
+
 #: modules/profile/templates/public/images.twig:24
 msgid "Choose file"
 msgstr ""
@@ -1007,6 +976,107 @@ msgstr ""
 
 #: modules/profile/templates/public/karma.twig:54
 msgid "Reset Karma"
+msgstr ""
+
+#: modules/profile/templates/public/mail-settings.twig:18
+msgid "Who can write you?"
+msgstr ""
+
+#: modules/profile/templates/public/mail-settings.twig:22
+msgid "All can write"
+msgstr ""
+
+#: modules/profile/templates/public/mail-settings.twig:26
+msgid "Only my contacts"
+msgstr ""
+
+#: modules/profile/templates/public/password.twig:14
+#: modules/profile/templates/public/password.twig:20
+msgid "Enter old password"
+msgstr ""
+
+#: modules/profile/templates/public/password.twig:26
+#: modules/profile/templates/public/password.twig:32
+msgid "Enter new password"
+msgstr ""
+
+#: modules/profile/templates/public/password.twig:36
+#: modules/profile/templates/public/password.twig:42
+msgid "Repeat password"
+msgstr ""
+
+#: modules/profile/templates/public/restore-password-set.twig:11
+msgid "A new password will be generated and sent to the E-mail address specified in your profile."
+msgstr ""
+
+#: modules/profile/templates/public/restore-password.twig:22
+#: modules/profile/templates/public/restore-password.twig:28
+msgid "Your E-mail"
+msgstr ""
+
+#: modules/profile/templates/public/restore-password.twig:31
+#: modules/profile/templates/public/restore-password.twig:40
+msgid "Verification code"
+msgstr ""
+
+#: modules/profile/templates/public/restore-password.twig:33
+msgid "Enter verification code"
+msgstr ""
+
+#: modules/profile/templates/public/restore-password.twig:47
+msgid "Password will be send to E-mail address specified in your profile.<br />WARNING !! If E-mail address has not been specified in your profile, you will not be able to recover your password."
+msgstr ""
+
+#: modules/profile/templates/public/settings.twig:22
+msgid "Time settings"
+msgstr ""
+
+#: modules/profile/templates/public/settings.twig:24
+#: modules/profile/templates/public/settings.twig:32
+msgid "Shift of time"
+msgstr ""
+
+#: modules/profile/templates/public/settings.twig:35
+msgid "System time"
+msgstr ""
+
+#: modules/profile/templates/public/settings.twig:39
+msgid "System Functions"
+msgstr ""
+
+#: modules/profile/templates/public/settings.twig:42
+msgid "Direct URL"
+msgstr ""
+
+#: modules/profile/templates/public/settings.twig:46
+msgid "Youtube Player"
+msgstr ""
+
+#: modules/profile/templates/public/settings.twig:49
+msgid "Text entering"
+msgstr ""
+
+#: modules/profile/templates/public/settings.twig:51
+#: modules/profile/templates/public/settings.twig:58
+msgid "Height of field"
+msgstr ""
+
+#: modules/profile/templates/public/settings.twig:62
+msgid "Appearance"
+msgstr ""
+
+#: modules/profile/templates/public/settings.twig:64
+#: modules/profile/templates/public/settings.twig:71
+msgid "Size of Lists"
+msgstr ""
+
+#: modules/profile/templates/public/settings.twig:76
+#: modules/profile/templates/public/settings.twig:78
+msgid "Select Language"
+msgstr ""
+
+#: modules/profile/templates/public/settings.twig:81
+msgid "Site Default"
 msgstr ""
 
 #: modules/profile/templates/public/statistics.twig:17
@@ -1103,78 +1173,4 @@ msgstr ""
 
 #: modules/profile/templates/public/view.twig:226
 msgid "Admin Notes"
-msgstr ""
-
-#: modules/profile/templates/restore_password.phtml:22
-#: modules/profile/templates/restore_password.phtml:28
-msgid "Your E-mail"
-msgstr ""
-
-#: modules/profile/templates/restore_password.phtml:31
-#: modules/profile/templates/restore_password.phtml:40
-msgid "Verification code"
-msgstr ""
-
-#: modules/profile/templates/restore_password.phtml:33
-msgid "Enter verification code"
-msgstr ""
-
-#: modules/profile/templates/restore_password.phtml:46
-msgid "Password will be send to E-mail address specified in your profile.<br />WARNING !! If E-mail address has not been specified in your profile, you will not be able to recover your password."
-msgstr ""
-
-#: modules/profile/templates/restore_password_set.phtml:17
-msgid "A new password will be generated and sent to the E-mail address specified in your profile."
-msgstr ""
-
-#: modules/profile/templates/settings.phtml:45
-msgid "Time settings"
-msgstr ""
-
-#: modules/profile/templates/settings.phtml:47
-#: modules/profile/templates/settings.phtml:55
-msgid "Shift of time"
-msgstr ""
-
-#: modules/profile/templates/settings.phtml:58
-msgid "System time"
-msgstr ""
-
-#: modules/profile/templates/settings.phtml:62
-msgid "System Functions"
-msgstr ""
-
-#: modules/profile/templates/settings.phtml:65
-msgid "Direct URL"
-msgstr ""
-
-#: modules/profile/templates/settings.phtml:69
-msgid "Youtube Player"
-msgstr ""
-
-#: modules/profile/templates/settings.phtml:72
-msgid "Text entering"
-msgstr ""
-
-#: modules/profile/templates/settings.phtml:74
-#: modules/profile/templates/settings.phtml:81
-msgid "Height of field"
-msgstr ""
-
-#: modules/profile/templates/settings.phtml:85
-msgid "Appearance"
-msgstr ""
-
-#: modules/profile/templates/settings.phtml:87
-#: modules/profile/templates/settings.phtml:94
-msgid "Size of Lists"
-msgstr ""
-
-#: modules/profile/templates/settings.phtml:99
-#: modules/profile/templates/settings.phtml:101
-msgid "Select Language"
-msgstr ""
-
-#: modules/profile/templates/settings.phtml:106
-msgid "Site Default"
 msgstr ""

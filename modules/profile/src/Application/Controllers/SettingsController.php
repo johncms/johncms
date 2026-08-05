@@ -11,17 +11,16 @@ use Johncms\Modules\Profile\Application\DTO\UpdateUserSettingsCommand;
 use Johncms\Modules\Profile\Application\UseCases\ForumSettingsUseCase;
 use Johncms\Modules\Profile\Application\UseCases\MailSettingsUseCase;
 use Johncms\Modules\Profile\Application\UseCases\UserSettingsUseCase;
+use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
-use Johncms\System\View\Render;
 use Johncms\Users\User;
 
 final readonly class SettingsController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private User $currentUser,
         private UserSettingsUseCase $userSettingsUseCase,
@@ -32,12 +31,16 @@ final readonly class SettingsController
         $this->controllerContext->initModule('profile');
     }
 
-    public function general(): string
+    public function general(): ViewResponse
     {
         $config = config('johncms');
 
         $data = [
-            'buttons'         => $this->buttons('general'),
+            'buttons'     => $this->buttons('general'),
+            'user_config' => $this->currentUser->config,
+            'site_lng'    => $config['lng'],
+            'lng_list'        => [],
+            'user_lng'        => '',
             'form_action'     => '/profile/settings',
             'system_time'     => date('H:i', time() + ($config['timeshift'] + $this->currentUser->set_user->timeshift) * 3600),
             'success_message' => $this->pullFlash(),
@@ -48,10 +51,10 @@ final readonly class SettingsController
             $data['lng_list'] = $config['lng_list'];
         }
 
-        return $this->renderPage('profile::settings', __('General setting'), $data);
+        return $this->renderPage('@profile/public/settings.twig', __('General setting'), $data);
     }
 
-    public function saveGeneral(Request $request): string
+    public function saveGeneral(Request $request): ViewResponse
     {
         $command = new UpdateUserSettingsCommand(
             timeshift: $request->bodyInt('timeshift'),
@@ -71,19 +74,19 @@ final readonly class SettingsController
         redirect('/profile/settings');
     }
 
-    public function resetGeneral(): string
+    public function resetGeneral(): ViewResponse
     {
         $this->userSettingsUseCase->reset($this->currentUser);
         $this->session->flash('reset_ok', true);
         redirect('/profile/settings');
     }
 
-    public function forum(): string
+    public function forum(): ViewResponse
     {
         return $this->renderForumView($this->forumSettingsUseCase->getCurrent($this->currentUser), null);
     }
 
-    public function saveForum(Request $request): string
+    public function saveForum(Request $request): ViewResponse
     {
         $command = new UpdateForumSettingsCommand(
             farea: $request->hasBody('farea'),
@@ -97,17 +100,17 @@ final readonly class SettingsController
         return $this->renderForumView($setForum, __('Settings saved successfully'));
     }
 
-    public function resetForum(): string
+    public function resetForum(): ViewResponse
     {
         return $this->renderForumView($this->forumSettingsUseCase->reset($this->currentUser), __('Default settings are set'));
     }
 
-    public function mail(): string
+    public function mail(): ViewResponse
     {
         return $this->renderMailView($this->mailSettingsUseCase->getCurrent($this->currentUser), null);
     }
 
-    public function saveMail(Request $request): string
+    public function saveMail(Request $request): ViewResponse
     {
         $command = new UpdateMailSettingsCommand(
             access: $request->bodyInt('access'),
@@ -121,10 +124,10 @@ final readonly class SettingsController
     /**
      * @param array<string, mixed> $setForum
      */
-    private function renderForumView(array $setForum, ?string $successMessage): string
+    private function renderForumView(array $setForum, ?string $successMessage): ViewResponse
     {
         return $this->renderPage(
-            'profile::forum_settings',
+            '@profile/public/forum-settings.twig',
             __('Forum'),
             [
                 'buttons'         => $this->buttons('forum'),
@@ -138,10 +141,10 @@ final readonly class SettingsController
     /**
      * @param array<string, mixed> $setMail
      */
-    private function renderMailView(array $setMail, ?string $successMessage): string
+    private function renderMailView(array $setMail, ?string $successMessage): ViewResponse
     {
         return $this->renderPage(
-            'profile::mail_settings',
+            '@profile/public/mail-settings.twig',
             __('Mail'),
             [
                 'buttons'         => $this->buttons('mail'),
@@ -155,23 +158,17 @@ final readonly class SettingsController
     /**
      * @param array<string, mixed> $data
      */
-    private function renderPage(string $template, string $title, array $data): string
+    private function renderPage(string $template, string $title, array $data): ViewResponse
     {
         $this->navChain->add(__('My Account'), '/profile/account');
         $this->navChain->add(__('Settings'), '/profile/settings');
         $this->navChain->add($title);
 
-        $this->render->addData([
-            'title'      => $title,
-            'page_title' => $title,
-        ]);
-
-        return $this->render->render(
+        return new ViewResponse(
             $template,
-            [
+            $data + [
                 'title'      => $title,
                 'page_title' => $title,
-                'data'       => $data,
             ]
         );
     }

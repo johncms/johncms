@@ -1,0 +1,10 @@
+{#
+    Tabs of the settings pages.
+
+    @param array buttons
+#}
+<div class="buttons mb-3">
+    {% for button in buttons %}
+        <a href="{{ button.url }}" class="btn btn-outline-primary mb-1 {{ button.active ? 'active' }}">{{ button.name }}</a>
+    {% endfor %}
+</div>

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Profile\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Profile\Application\DTO\ChangePasswordCommand;
 use Johncms\Modules\Profile\Application\DTO\ChangePasswordContextDTO;
 use Johncms\Modules\Profile\Application\Exceptions\ChangePasswordException;
@@ -14,7 +15,6 @@ use Johncms\Modules\Profile\Application\UseCases\ChangePasswordUseCase;
 use Johncms\Modules\Profile\Application\UseCases\GetChangePasswordContextUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,7 +23,6 @@ final readonly class ChangePasswordController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private User $currentUser,
         private GetChangePasswordContextUseCase $getChangePasswordContextUseCase,
@@ -32,7 +31,7 @@ final readonly class ChangePasswordController
         $this->controllerContext->initModule('profile');
     }
 
-    public function form(int $id): Response
+    public function form(int $id): ViewResponse
     {
         try {
             $context = $this->getChangePasswordContextUseCase->execute($id);
@@ -46,28 +45,19 @@ final readonly class ChangePasswordController
         $this->navChain->add($context->profileUserName, '/profile/' . $context->profileUserId);
         $this->navChain->add(__('Change Password'));
 
-        $this->render->addData([
-            'title'      => $title,
-            'page_title' => $title,
-        ]);
-
-        return new Response(
-            $this->render->render(
-                'profile::password',
-                [
-                    'title'      => $title,
-                    'page_title' => $title,
-                    'data'       => [
-                        'form_action'             => '/profile/' . $context->profileUserId . '/password',
-                        'show_old_password_field' => $context->isSelf,
-                        'back_url'                => '/profile/' . $context->profileUserId,
-                    ],
-                ]
-            )
+        return new ViewResponse(
+            '@profile/public/password.twig',
+            [
+                'title'                   => $title,
+                'page_title'              => $title,
+                'form_action'             => '/profile/' . $context->profileUserId . '/password',
+                'show_old_password_field' => $context->isSelf,
+                'back_url'                => '/profile/' . $context->profileUserId,
+            ]
         );
     }
 
-    public function change(Request $request, int $id): Response
+    public function change(Request $request, int $id): ViewResponse
     {
         try {
             $context = $this->getChangePasswordContextUseCase->execute($id);
@@ -88,32 +78,17 @@ final readonly class ChangePasswordController
                 confirmPassword: trim($request->body('newconf', '')),
             ));
         } catch (ChangePasswordException $e) {
-            return new Response(
-                $this->render->render(
-                    'system::pages/result',
-                    [
-                        'title'         => $title,
-                        'type'          => 'alert-danger',
-                        'message'       => $e->getErrors(),
-                        'back_url'      => '/profile/' . $context->profileUserId . '/password',
-                        'back_url_name' => __('Repeat'),
-                    ]
-                )
-            );
-        }
-
-        $response = new Response(
-            $this->render->render(
-                'system::pages/result',
+            return new ViewResponse(
+                '@theme/pages/result.twig',
                 [
                     'title'         => $title,
-                    'type'          => 'alert-success',
-                    'message'       => __('Password successfully changed'),
-                    'back_url'      => $context->isSelf ? '/login' : '/profile/' . $context->profileUserId,
-                    'back_url_name' => __('Continue'),
+                    'type'          => 'alert-danger',
+                    'message'       => $e->getErrors(),
+                    'back_url'      => '/profile/' . $context->profileUserId . '/password',
+                    'back_url_name' => __('Repeat'),
                 ]
-            )
-        );
+            );
+        }
 
         // Keep the persistent login cookie in sync after changing one's own password.
         // The legacy call omitted the path argument, so PHP sent no Path attribute and the
@@ -121,13 +96,32 @@ final readonly class ChangePasswordController
         // request path with the last segment removed) rather than site-wide '/'. Cookie::create()
         // always forces an explicit Path attribute, so that default is reproduced here instead of
         // silently widening the cookie to '/'.
-        if ($context->isSelf && isset($_COOKIE['cuid'], $_COOKIE['cups'])) {
-            $response->headers->setCookie(
-                Cookie::create('cups', md5($newPassword), time() + 3600 * 24 * 365, $this->defaultCookiePath($request), null, false, false, false, null)
+        $cookies = [];
+        if ($context->isSelf && $request->cookies->has('cuid') && $request->cookies->has('cups')) {
+            $cookies[] = Cookie::create(
+                'cups',
+                md5($newPassword),
+                time() + 3600 * 24 * 365,
+                $this->defaultCookiePath($request),
+                null,
+                false,
+                false,
+                false,
+                null
             );
         }
 
-        return $response;
+        return new ViewResponse(
+            '@theme/pages/result.twig',
+            [
+                'title'         => $title,
+                'type'          => 'alert-success',
+                'message'       => __('Password successfully changed'),
+                'back_url'      => $context->isSelf ? '/login' : '/profile/' . $context->profileUserId,
+                'back_url_name' => __('Continue'),
+            ],
+            cookies: $cookies
+        );
     }
 
     private function buildTitle(ChangePasswordContextDTO $context): string
@@ -151,17 +145,15 @@ final readonly class ChangePasswordController
         return substr($path, 0, $lastSlash);
     }
 
-    private function renderError(string $title, string $message, int $status = 200): Response
+    private function renderError(string $title, string $message, int $status = 200): ViewResponse
     {
-        return new Response(
-            $this->render->render(
-                'system::pages/result',
-                [
-                    'title'   => $title,
-                    'type'    => 'alert-danger',
-                    'message' => $message,
-                ]
-            ),
+        return new ViewResponse(
+            '@theme/pages/result.twig',
+            [
+                'title'   => $title,
+                'type'    => 'alert-danger',
+                'message' => $message,
+            ],
             $status
         );
     }

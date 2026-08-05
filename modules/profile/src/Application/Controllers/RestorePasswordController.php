@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Profile\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Profile\Application\DTO\SendRecoveryCommand;
 use Johncms\Modules\Profile\Application\Exceptions\PasswordRecoveryException;
 use Johncms\Modules\Profile\Application\UseCases\CompletePasswordRecoveryUseCase;
@@ -13,7 +14,6 @@ use Johncms\Modules\Profile\Application\UseCases\SendPasswordRecoveryUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
-use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 use Mobicms\Captcha\Code;
 use Mobicms\Captcha\Image;
@@ -22,7 +22,6 @@ final readonly class RestorePasswordController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private SendPasswordRecoveryUseCase $sendPasswordRecovery,
         private GetRecoveryContextUseCase $getRecoveryContext,
@@ -32,22 +31,22 @@ final readonly class RestorePasswordController
         $this->controllerContext->initModule('profile');
     }
 
-    public function form(): string
+    public function form(): ViewResponse
     {
         $this->navChain->add(__('Restore password'));
 
         $code = (string) new Code();
         $this->session->set('code', $code);
 
-        return $this->render->render(
-            'profile::restore_password',
+        return new ViewResponse(
+            '@profile/public/restore-password.twig',
             [
                 'captcha' => new Image($code),
             ]
         );
     }
 
-    public function send(Request $request): string
+    public function send(Request $request): ViewResponse
     {
         $this->navChain->add(__('Restore password'));
 
@@ -73,8 +72,8 @@ final readonly class RestorePasswordController
             return $this->error($e->getMessage());
         }
 
-        return $this->render->render(
-            'system::pages/result',
+        return new ViewResponse(
+            '@theme/pages/result.twig',
             [
                 'title'   => __('Restore password'),
                 'type'    => 'alert-success',
@@ -83,7 +82,7 @@ final readonly class RestorePasswordController
         );
     }
 
-    public function setForm(int $id, string $code): string
+    public function setForm(int $id, string $code): ViewResponse
     {
         $this->navChain->add(__('Restore password'));
 
@@ -93,15 +92,15 @@ final readonly class RestorePasswordController
             return $this->error($e->getMessage());
         }
 
-        return $this->render->render(
-            'profile::restore_password_set',
+        return new ViewResponse(
+            '@profile/public/restore-password-set.twig',
             [
                 'form_action' => '/profile/password-recovery/set/' . $id . '/' . $code,
             ]
         );
     }
 
-    public function set(int $id, string $code): string
+    public function set(int $id, string $code): ViewResponse
     {
         $this->navChain->add(__('Restore password'));
 
@@ -112,8 +111,8 @@ final readonly class RestorePasswordController
             return $this->error($e->getMessage());
         }
 
-        return $this->render->render(
-            'system::pages/result',
+        return new ViewResponse(
+            '@theme/pages/result.twig',
             [
                 'title'         => __('Restore password'),
                 'type'          => 'alert-success',
@@ -124,10 +123,10 @@ final readonly class RestorePasswordController
         );
     }
 
-    private function error(string $message): string
+    private function error(string $message): ViewResponse
     {
-        return $this->render->render(
-            'system::pages/result',
+        return new ViewResponse(
+            '@theme/pages/result.twig',
             [
                 'title'         => __('Restore password'),
                 'type'          => 'alert-danger',

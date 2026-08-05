@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Http\View;
 
+use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -17,11 +18,13 @@ final readonly class ViewResponse
 {
     /**
      * @param array<string, mixed> $data
+     * @param array<Cookie>        $cookies Set on the response the view is rendered into.
      */
     public function __construct(
         public string $template,
         public array $data = [],
         public int $status = Response::HTTP_OK,
+        public array $cookies = [],
     ) {
     }
 }

@@ -73,6 +73,10 @@ final readonly class ResponseNormalizer
         $response->headers->remove('Cache-Control');
         $response->headers->set('Content-Type', 'text/html; charset=UTF-8');
 
+        foreach ($view->cookies as $cookie) {
+            $response->headers->setCookie($cookie);
+        }
+
         return $response;
     }
 
