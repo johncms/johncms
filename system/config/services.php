@@ -37,6 +37,7 @@ use Johncms\Users\UserPlaceFormatter;
 use Johncms\Users\UserPlaceFormatterInterface;
 use Johncms\Sitemap\SitemapGenerator;
 use Johncms\Http\Environment;
+use Johncms\Http\ResponseNormalizer;
 use Johncms\Http\Session;
 use Johncms\Http\SessionFactory;
 use Johncms\System\i18n\Translator;
@@ -63,6 +64,7 @@ use Johncms\View\Twig\Extension\AssetExtension;
 use Johncms\View\Twig\Extension\FormatExtension;
 use Johncms\View\Twig\Extension\I18nExtension;
 use Johncms\View\Twig\Extension\PlatesBridgeExtension;
+use Johncms\View\Twig\Extension\SiteExtension;
 use Johncms\View\Twig\TemplatePathRegistry;
 use Johncms\View\Twig\TwigEnvironmentFactory;
 use Johncms\View\Twig\TwigRenderer;
@@ -132,6 +134,7 @@ return static function (ContainerConfigurator $container): void {
                 ROOT_PATH . 'system/src/Scheduler/AsScheduledTask.php',
                 ROOT_PATH . 'system/src/Scheduler/ScheduledTaskDefinition.php',
                 ROOT_PATH . 'system/src/Http/PageMeta.php',
+                ROOT_PATH . 'system/src/Http/View/ViewResponse.php',
                 // The request is not a service: it belongs to a cycle, and a container-built one
                 // would be an empty request assembled from the globals of whoever asked first.
                 ROOT_PATH . 'system/src/Http/Request.php',
@@ -179,6 +182,9 @@ return static function (ContainerConfigurator $container): void {
     $services->set(Ads::class)->factory(service(AdsFactory::class));
     $services->set(Csrf::class)->factory([Csrf::class, 'create']);
     $services->set('counters', Counters::class)->factory(service(CountersFactory::class));
+    // The counters are built by a factory under a string id; the alias is what lets a service or
+    // a controller ask for them by type.
+    $services->alias(Counters::class, 'counters');
     $services->set(MailFactory::class)->factory([MailFactory::class, 'create']);
     $services->set(HTMLPurifier::class)->factory([HTMLPurifier::class, 'create']);
     $services->set(\HTMLPurifier::class, \HTMLPurifier::class)->factory([HTMLPurifier::class, 'create']);
@@ -230,6 +236,10 @@ return static function (ContainerConfigurator $container): void {
     $services->set(AssetExtension::class)->tag('johncms.twig_extension');
     $services->set(FormatExtension::class)->tag('johncms.twig_extension');
     $services->set(PlatesBridgeExtension::class)->tag('johncms.twig_extension');
+    $services->set(SiteExtension::class)->tag('johncms.twig_extension');
+    // The renderer is handed over as a closure: a controller that returns a string or a Response
+    // of its own must not have the template environment assembled behind it.
+    $services->set(ResponseNormalizer::class)->arg('$renderer', service_closure(RendererInterface::class));
     $services->set(Translator::class)->factory(service(TranslatorServiceFactory::class));
     $services->set(Cache::class)->factory([Cache::class, 'create']);
     $services->set(SitemapGenerator::class)->arg('$moduleProviders', tagged_iterator('johncms.sitemap_provider'));

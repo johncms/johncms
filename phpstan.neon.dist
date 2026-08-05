@@ -28,6 +28,13 @@ parameters:
     scanFiles:
         - vendor/gettext/translator/src/functions.php
 
+    # Set per installation in config/constants.php, so their value in this repository says
+    # nothing about the value they have on a live site: without this every check of them reads
+    # as always true or always false.
+    dynamicConstantNames:
+        - DEBUG
+        - DEBUG_FOR_ALL
+
     treatPhpDocTypesAsCertain: false
 
     tmpDir: data/cache/.phpstan

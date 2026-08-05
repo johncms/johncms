@@ -1,0 +1,190 @@
+{# The main menu of the site, with the counters of each section and the sidebar footer. #}
+{% set counters = menu_counters() %}
+{% set before_menu_ads = ads('before_menu') %}
+{% set after_menu_ads = ads('after_menu') %}
+{% set languages = config('johncms.lng_list')|default({}) %}
+{% set theme_toggle_title = app.dark_scheme ? d__('system', 'Set Light Theme') : d__('system', 'Set Dark Theme') %}
+{% set icon_sprite = asset('icons/sprite.svg', true) %}
+<div class="flex-grow-1">
+    {% if before_menu_ads %}
+        <div class="ps-4 pe-3 pt-3">
+            {% for block in before_menu_ads %}
+                <div>{{ block }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    <ul class="nav nav__vertical">
+        <li>
+            <a href="/news/">
+                <svg class="icon">
+                    <use xlink:href="{{ asset('icons/sprite.svg') }}#book"/>
+                </svg>
+                <span class="flex-grow-1">{{ d__('system', 'News archive') }}</span>
+                {% if counters.news.new > 0 %}
+                    <span class="badge rounded-pill bg-danger">+ {{ counters.news.new|format_number }}</span>
+                {% endif %}
+            </a>
+        </li>
+        {% if config('johncms.mod_forum') or (app.user.isValid and app.user.rights >= 7) %}
+            <li>
+                <a href="/forum/">
+                    <svg class="icon">
+                        <use xlink:href="{{ asset('icons/sprite.svg') }}#forum"/>
+                    </svg>
+                    <span class="flex-grow-1">{{ d__('system', 'Forum') }}</span>
+                    {% if counters.forum.new_messages > 0 %}
+                        <span class="badge rounded-pill bg-danger">+ {{ counters.forum.new_messages|format_number }}</span>
+                    {% endif %}
+                </a>
+            </li>
+        {% endif %}
+        {% if config('johncms.mod_guest') or (app.user.isValid and app.user.rights >= 7) %}
+            <li>
+                <a href="/guestbook/ga">
+                    <svg class="icon">
+                        <use xlink:href="{{ asset('icons/sprite.svg') }}#chat"/>
+                    </svg>
+                    <span class="flex-grow-1">{{ d__('system', 'Guestbook') }}</span>
+                    {% if counters.guestbook.guestbook > 0 %}
+                        <span class="badge rounded-pill bg-danger">+ {{ counters.guestbook.guestbook|format_number }}</span>
+                    {% endif %}
+                </a>
+            </li>
+        {% endif %}
+        {% if config('johncms.mod_down') or (app.user.isValid and app.user.rights >= 7) %}
+            <li>
+                <a href="/downloads/">
+                    <svg class="icon">
+                        <use xlink:href="{{ asset('icons/sprite.svg') }}#download"/>
+                    </svg>
+                    <span class="flex-grow-1">{{ d__('system', 'Downloads') }}</span>
+                    {% if counters.downloads.new > 0 %}
+                        <span class="badge rounded-pill bg-danger">+ {{ counters.downloads.new|format_number }}</span>
+                    {% endif %}
+                </a>
+            </li>
+        {% endif %}
+        {% if config('johncms.mod_lib') or (app.user.isValid and app.user.rights >= 7) %}
+            <li>
+                <a href="/library/">
+                    <svg class="icon">
+                        <use xlink:href="{{ asset('icons/sprite.svg') }}#text"/>
+                    </svg>
+                    <span class="flex-grow-1">{{ d__('system', 'Library') }}</span>
+                    {% if counters.library.new > 0 %}
+                        <span class="badge rounded-pill bg-danger">+ {{ counters.library.new|format_number }}</span>
+                    {% endif %}
+                </a>
+            </li>
+        {% endif %}
+        <li>
+            <a href="/community/">
+                <svg class="icon">
+                    <use xlink:href="{{ asset('icons/sprite.svg') }}#users"/>
+                </svg>
+                <span class="flex-grow-1">{{ d__('system', 'Users') }}</span>
+                {% if counters.users.new > 0 %}
+                    <span class="badge rounded-pill bg-danger">+ {{ counters.users.new|format_number }}</span>
+                {% endif %}
+            </a>
+        </li>
+        <li>
+            <a href="/album/">
+                <svg class="icon">
+                    <use xlink:href="{{ asset('icons/sprite.svg') }}#picasa"/>
+                </svg>
+                <span class="flex-grow-1">{{ d__('system', 'Photo Albums') }}</span>
+                {% if counters.album.new > 0 %}
+                    <span class="badge rounded-pill bg-danger">+ {{ counters.album.new|format_number }}</span>
+                {% endif %}
+            </a>
+        </li>
+        <li>
+            <a href="/help/">
+                <svg class="icon">
+                    <use xlink:href="{{ asset('icons/sprite.svg') }}#info"/>
+                </svg>
+                <span class="flex-grow-1">{{ d__('system', 'Information, FAQ') }}</span>
+            </a>
+        </li>
+        <li>
+            <a href="/contacts/">
+                <svg class="icon">
+                    <use xlink:href="{{ asset('icons/sprite.svg') }}#messages"/>
+                </svg>
+                <span class="flex-grow-1">{{ d__('system', 'Contacts') }}</span>
+            </a>
+        </li>
+        {% if app.user.isValid and app.user.rights >= 1 %}
+            {% if app.user.rights >= 7 %}
+                <li>
+                    <div class="border-bottom mt-3 mb-3"></div>
+                    <a href="/admin/">
+                        <svg class="icon text-danger">
+                            <use xlink:href="{{ asset('icons/sprite.svg') }}#settings"/>
+                        </svg>
+                        <span class="flex-grow-1 text-danger">{{ d__('system', 'Admin Panel') }}</span>
+                    </a>
+                </li>
+            {% endif %}
+            <li>
+                <a href="/guestbook/ga?do=set">
+                    <svg class="icon text-danger">
+                        <use xlink:href="{{ asset('icons/sprite.svg') }}#forum"/>
+                    </svg>
+                    <span class="flex-grow-1 text-danger">{{ d__('system', 'Admin Chat') }}</span>
+                    {% if counters.guestbook.admin_club > 0 %}
+                        <span class="badge rounded-pill bg-danger">{{ counters.guestbook.admin_club|format_number }}</span>
+                    {% endif %}
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+    <div class="border-bottom"></div>
+</div>
+<div class="sidebar__footer">
+    {% if after_menu_ads %}
+        <div class="pe-3 pt-2 mb-2">
+            {% for block in after_menu_ads %}
+                <div>{{ block }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    <div>
+        <a href="/online/">
+            <svg class="icon sidebar_online">
+                <use xlink:href="{{ asset('icons/sprite.svg') }}#user"/>
+            </svg>
+            {{ online() }}
+        </a>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center">
+        {% if languages|length > 1 %}
+            <div class="mt-1">
+                <button class="btn btn-link ps-0" data-url="/language/" data-bs-toggle="modal" data-bs-target=".ajax_modal">
+                    <img class="icon icon-flag" src="{{ asset('images/flags/' ~ app.locale|lower ~ '.svg') }}" alt="{{ app.locale }}">
+                    {{ languages[app.locale].name|default(app.locale) }}
+                </button>
+            </div>
+        {% endif %}
+        <div>
+            <button
+                type="button"
+                class="btn btn-link p-0"
+                data-theme-toggle
+                data-current-theme="{{ app.color_scheme }}"
+                data-icon-sprite="{{ icon_sprite }}"
+                data-title-dark="{{ d__('system', 'Set Dark Theme') }}"
+                data-title-light="{{ d__('system', 'Set Light Theme') }}"
+                title="{{ theme_toggle_title }}"
+                aria-label="{{ theme_toggle_title }}"
+            >
+                <svg class="icon">
+                    <use xlink:href="{{ icon_sprite }}#{{ app.dark_scheme ? 'sun' : 'moon' }}"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+</div>

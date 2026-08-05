@@ -1,0 +1,45 @@
+{# Query count, memory and time of the page. Prints nothing unless debugging is on. #}
+{% set stats = debug_stats() %}
+{% if stats %}
+    <div class="small text-nowrap" style="margin-top: -5px;">
+        <a href="#" data-bs-toggle="modal" data-bs-target=".query_log_modal">SQL: {{ stats.queries|length }}</a>, {{ stats.memory }}, {{ stats.time }} sec.
+    </div>
+    {% if stats.queries %}
+        <div class="modal fade query_log_modal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header align-items-center">
+                        <h4 class="modal-title">
+                            {{ d__('system', 'Sql query log') }}
+                        </h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span class="icon">&times;</span>
+                        </button>
+                    </div>
+                    <div class="p-2">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col" class="border-top-0">#</th>
+                                <th scope="col" class="border-top-0">{{ d__('system', 'Query') }}</th>
+                                <th scope="col" class="border-top-0">{{ d__('system', 'Bindings') }}</th>
+                                <th scope="col" class="border-top-0">{{ d__('system', 'Time') }}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for key, query in stats.queries %}
+                                <tr>
+                                    <th scope="row">{{ key }}</th>
+                                    <td>{{ query.query }}</td>
+                                    <td>{{ query.bindings|join(', ') }}</td>
+                                    <td>{{ query.time }} ms.</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endif %}

@@ -23,4 +23,9 @@ final readonly class FormatRuntime implements RuntimeExtensionInterface
     {
         return $this->dateFormatter->format($timestamp);
     }
+
+    public function formatSize(int $bytes): string
+    {
+        return format_size($bytes);
+    }
 }

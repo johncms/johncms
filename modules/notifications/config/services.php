@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use Johncms\Counters;
 use Johncms\Modules\Notifications\Domain\Repository\NotificationRepositoryInterface;
 use Johncms\Modules\Notifications\Infrastructure\Persistence\Repository\EloquentNotificationRepository;
 
@@ -32,6 +31,4 @@ return static function (ContainerConfigurator $container): void {
         ->autoconfigure();
 
     $services->set(NotificationRepositoryInterface::class, EloquentNotificationRepository::class)->public();
-
-    $services->alias(Counters::class, 'counters');
 };

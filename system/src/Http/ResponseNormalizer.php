@@ -12,34 +12,68 @@ declare(strict_types=1);
 
 namespace Johncms\Http;
 
+use Johncms\Http\View\ViewResponse;
+use Johncms\View\RendererInterface;
 use LogicException;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Transitional contract of the HTTP layer: a controller action may return a Response, a string
- * or nothing, and it is normalized to a Response here. That way the 221 controllers migrate one
- * at a time instead of in a single commit.
+ * Transitional contract of the HTTP layer: a controller action may return a Response, a
+ * ViewResponse, a string or nothing, and it is normalized to a Response here. That way the 221
+ * controllers migrate one at a time instead of in a single commit.
  *
  * A wrapped string keeps the response transparent on purpose — see wrapLegacyOutput().
  */
 final readonly class ResponseNormalizer
 {
+    /**
+     * The renderer arrives as a closure: building it assembles the template environment, and a
+     * controller that returns a string or a Response of its own must not pay for it.
+     *
+     * @param callable(): RendererInterface $renderer
+     */
+    public function __construct(private mixed $renderer)
+    {
+    }
+
     public function normalize(mixed $result, int $status = Response::HTTP_OK): Response
     {
         if ($result instanceof Response) {
             return $result;
         }
 
+        if ($result instanceof ViewResponse) {
+            return $this->render($result);
+        }
+
         if ($result !== null && ! is_string($result)) {
             throw new LogicException(
                 sprintf(
-                    'A controller action must return a Response, a string or null, %s given.',
+                    'A controller action must return a Response, a ViewResponse, a string or null, %s given.',
                     get_debug_type($result)
                 )
             );
         }
 
         return $this->wrapLegacyOutput($result ?? '', $status);
+    }
+
+    /**
+     * A rendered page is HTML by definition, so unlike a legacy body it declares its content type
+     * instead of relying on the default of PHP.
+     */
+    private function render(ViewResponse $view): Response
+    {
+        $renderer = ($this->renderer)();
+
+        $response = new Response($renderer->render($view->template, $view->data), $view->status);
+
+        // The session sends a Cache-Control header of its own; a second one would be appended to
+        // it rather than replace it. See wrapLegacyOutput().
+        $response->headers->remove('Cache-Control');
+        $response->headers->set('Content-Type', 'text/html; charset=UTF-8');
+
+        return $response;
     }
 
     /**

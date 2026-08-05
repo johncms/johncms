@@ -7,21 +7,21 @@ namespace Johncms\Modules\Homepage\Controllers;
 use Johncms\Counters;
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\Request;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\News\Domain\Models\NewsArticle;
 use Johncms\NavChain;
-use Johncms\System\View\Render;
 
 final readonly class HomepageController
 {
     public function __construct(
         private ControllerContext $context,
         private NavChain $navChain,
-        private Render $render,
+        private Counters $counters,
     ) {
         $this->context->initModule('homepage');
     }
 
-    public function __invoke(Request $request): string
+    public function __invoke(Request $request): ViewResponse
     {
         // Marks the request, not the process: Ads and Counters read the flag from here to pick
         // what belongs on the home page. It used to be the _IS_HOMEPAGE constant, which cannot be
@@ -30,39 +30,39 @@ final readonly class HomepageController
         $this->navChain->showHomePage(false);
 
         $config = config('johncms');
-        $news_config = config('news');
-        $this->render->addData(
+        $newsConfig = config('news');
+
+        $news = [];
+        $newNewsCount = 0;
+        if ($newsConfig['homepage_show']) {
+            $query = (new NewsArticle())->withCount('comments')->withSum('votes', 'vote')->active();
+            if ($newsConfig['homepage_days'] > 0) {
+                $query->lastDays($newsConfig['homepage_days']);
+                $newNewsCount = $query->count();
+            }
+            $news = $query->limit($newsConfig['homepage_quantity'])
+                ->orderByDesc('active_from')
+                ->orderByDesc('id')
+                ->get();
+        }
+
+        return new ViewResponse(
+            '@homepage/public/index.twig',
             [
-                'canonical'   => (string) $config['homeurl'] . '/',
+                'canonical'   => $config['homeurl'] . '/',
                 'title'       => $config['meta_title'] ?? '',
                 'keywords'    => $config['meta_key'],
                 'description' => $config['meta_desc'],
+                'news'        => $news,
+                'counters'    => [
+                    'forum'     => $this->counters->forumCounters(),
+                    'guestbook' => $this->counters->guestbookCounters(),
+                    'downloads' => $this->counters->downloadsCounters(),
+                    'library'   => $this->counters->libraryCounters(),
+                    'users'     => $this->counters->usersCounters(),
+                    'news'      => ['new' => $newNewsCount],
+                ],
             ]
         );
-
-        $data = [];
-        if ($news_config['homepage_show']) {
-            $news = (new NewsArticle())->withCount('comments')->withSum('votes', 'vote')->active();
-            if ($news_config['homepage_days'] > 0) {
-                $news->lastDays($news_config['homepage_days']);
-                $news_new_count = $news->count();
-            }
-            $news = $news->limit($news_config['homepage_quantity'])->orderByDesc('active_from')->orderByDesc('id')->get();
-        }
-
-        $data['news'] = $news ?? [];
-        /** @var Counters $counters */
-        $counters = di('counters');
-        $count['forum'] = $counters->forumCounters();
-        $count['guestbook'] = $counters->guestbookCounters();
-        $count['downloads'] = $counters->downloadsCounters();
-        $count['library'] = $counters->libraryCounters();
-        $count['users'] = $counters->usersCounters();
-        $count['news'] = [
-            'new' => $news_new_count ?? 0,
-        ];
-        $data['counters'] = $count;
-
-        return $this->render->render('homepage::index', ['data' => $data]);
     }
 }

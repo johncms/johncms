@@ -1,0 +1,63 @@
+{#
+    The document every page of the site is built on: the head, the color scheme and the scripts
+    that belong to every page, with no chrome around the content.
+
+    The admin layouts extend this file too, so the head lives in one place and only the chrome and
+    the build entry point differ between the two areas.
+
+    @param string title       Page title, without the site name.
+    @param string keywords    Meta keywords.
+    @param string description Meta description.
+    @param string canonical   Canonical URL of the page.
+#}
+{% set site_name = config('johncms.copyright') %}
+{% set base_title = title|default('') ?: site_name %}
+{% set document_title = (not app.is_home_page and base_title != site_name) ? base_title ~ ' | ' ~ site_name : base_title %}
+<!DOCTYPE html>
+<html lang="{{ app.locale }}" dir="{{ app.locale == 'ar' ? 'rtl' : 'ltr' }}">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="MobileOptimized" content="width">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta name="Generator" content="JohnCMS, https://johncms.com">
+    {% block meta %}{% endblock %}
+    {% if keywords|default('') %}
+        <meta name="keywords" content="{{ keywords }}">
+    {% endif %}
+    {% if description|default('') %}
+        <meta name="description" content="{{ description }}">
+    {% endif %}
+    {% if canonical|default('') %}
+        <link rel="canonical" href="{{ canonical }}">
+    {% endif %}
+    <meta name="theme-color" content="#586776">
+    {% block vite %}{{ vite('public', app.locale == 'ar') }}{% endblock %}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700,700i&display=swap">
+    <link rel="icon" type="image/svg+xml" href="{{ asset('images/icon.svg') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favicon-16x16.png') }}">
+    <link rel="shortcut icon" href="{{ asset('images/favicon.ico') }}">
+    <link rel="apple-touch-icon" href="{{ asset('images/apple-touch-icon.png') }}">
+    <link rel="mask-icon" href="{{ asset('images/icon.svg') }}" color="#586776">
+    <link rel="manifest" href="{{ asset('site.webmanifest') }}">
+    {% block styles %}{% endblock %}
+    <title>{% block title %}{{ document_title }}{% endblock %}</title>
+</head>
+<body class="{{ app.color_scheme }}">
+{% block body %}{% endblock %}
+{% block scripts %}
+    {% if app.locale != 'en' and asset_exists('js/flatpickr/' ~ app.locale ~ '.js') %}
+        {# The bundle is a deferred module, so the locale has to wait for it to define flatpickr. #}
+        <script src="{{ asset('js/flatpickr/' ~ app.locale ~ '.js') }}" defer></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                flatpickr.localize(flatpickr.l10ns.{{ app.locale }});
+            });
+        </script>
+    {% endif %}
+{% endblock %}
+</body>
+</html>

@@ -15,6 +15,7 @@ final class FormatExtension extends AbstractExtension
         return [
             new TwigFilter('format_number', [FormatRuntime::class, 'formatNumber']),
             new TwigFilter('display_date', [FormatRuntime::class, 'displayDate']),
+            new TwigFilter('format_size', [FormatRuntime::class, 'formatSize']),
         ];
     }
 }

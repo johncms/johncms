@@ -1,0 +1,23 @@
+{# The navigation chain of the page, as the controllers have built it. #}
+{% set items = breadcrumbs() %}
+{% if items %}
+    {% set last = items|keys|last %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb" vocab="https://schema.org/" typeof="BreadcrumbList">
+            {% for key, item in items %}
+                {% set name = item.name|default('') %}
+                <li class="breadcrumb-item {{ item.active|default(false) ? 'active' }}" property="itemListElement" typeof="ListItem">
+                    {% if item.url|default('') %}
+                        <a {% if last != key %}property="item" typeof="WebPage"{% endif %} href="{{ item.url }}" title="{{ name }}">
+                            <span{% if last != key %} property="name"{% endif %}>{{ name }}</span>
+                        </a>
+                        {% if last == key %}<meta property="name" content="{{ name }}">{% endif %}
+                    {% else %}
+                        <span property="name">{{ name }}</span>
+                    {% endif %}
+                    <meta property="position" content="{{ key + 1 }}">
+                </li>
+            {% endfor %}
+        </ol>
+    </nav>
+{% endif %}

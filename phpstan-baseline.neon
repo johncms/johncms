@@ -1,13 +1,6 @@
 parameters:
 	ignoreErrors:
 		-
-			message: '#^If condition is always true\.$#'
-			identifier: if.alwaysTrue
-			count: 1
-			path: system/bootstrap.php
-
-
-		-
 			message: '#^Using nullsafe property access "\?\-\>type" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
 			identifier: nullsafe.neverNull
 			count: 3
@@ -2946,11 +2939,6 @@ parameters:
 			count: 1
 			path: system/src/Container/PSRContainerFactory.php
 
-		-
-			message: '#^If condition is always true\.$#'
-			identifier: if.alwaysTrue
-			count: 1
-			path: system/src/Database/PdoFactory.php
 
 		-
 			message: '#^Method Johncms\\Files\\File\:\:save\(\) should return Johncms\\Files\\Models\\File but returns Illuminate\\Database\\Eloquent\\Model\.$#'
@@ -2964,17 +2952,7 @@ parameters:
 			count: 1
 			path: system/src/Http/Middleware/TrimStringsMiddleware.php
 
-		-
-			message: '#^Negated boolean expression is always false\.$#'
-			identifier: booleanNot.alwaysFalse
-			count: 1
-			path: system/src/Logs/DebugDetailsPolicy.php
 
-		-
-			message: '#^Right side of \|\| is always false\.$#'
-			identifier: booleanOr.rightAlwaysFalse
-			count: 1
-			path: system/src/Logs/DebugDetailsPolicy.php
 
 		-
 			message: '#^Method Johncms\\Mail\\EmailMessage\:\:scopeUnsent\(\) should return Illuminate\\Database\\Eloquent\\Builder but returns Illuminate\\Database\\Query\\Builder\.$#'

@@ -1,0 +1,208 @@
+{#
+    The layout of the public site: sidebar, top bar, breadcrumbs, footer.
+
+    @param string page_title Heading printed above the content.
+#}
+{% extends '@theme/layouts/base.twig' %}
+
+{% block body %}
+    {% set notifications = notifications() %}
+    <div class="wrapper min-vh-100 d-flex flex-column justify-content-between" id="app">
+        <div class="page_layout justify-content-end d-flex w-100">
+            <div class="sidebar">
+                <div class="sidebar__inner">
+                    <div class="sidebar__logo">
+                        <a href="/">
+                            <span class="logo__image"><img src="{{ asset('images/logo.svg') }}" alt="logo" style="width: 70%;" class="img-fluid"></span>
+                        </a>
+                    </div>
+                    <div class="sidebar__wrapper d-flex flex-column">
+                        {% block sidebar_user %}
+                            {% include '@theme/components/sidebar-user-menu.twig' with {notifications: notifications} only %}
+                        {% endblock %}
+                        {% block sidebar_menu %}
+                            {% include '@theme/components/sidebar-main-menu.twig' only %}
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
+            <div class="content-container content-container-padding d-flex flex-column shadow">
+                <nav class="navbar navbar-expand-lg top_nav fixed-top border-bottom shadow">
+                    <div class="container-fluid">
+                        <div class="navbar-wrapper d-flex w-100 justify-content-between">
+                            <div class="navbar-toggle">
+                                <button type="button" class="navbar-toggler">
+                                    <span class="navbar-toggler-bar bar1"></span>
+                                    <span class="navbar-toggler-bar bar2"></span>
+                                    <span class="navbar-toggler-bar bar3"></span>
+                                </button>
+                            </div>
+                            <div class="logo">
+                                <a href="/">
+                                    <img src="{{ asset('images/logo_mobile.svg') }}" alt="logo" class="img-fluid" style="height: 30px; margin-bottom: -18px;">
+                                </a>
+                            </div>
+                            <div>
+                                {% if app.user.isValid %}
+                                    <a href="/notifications/" class="icon_with_badge me-2">
+                                        <svg class="icon icon_messages">
+                                            <use xlink:href="{{ asset('icons/sprite.svg') }}#messages"/>
+                                        </svg>
+                                        {% if notifications.all|default(0) %}
+                                            <span class="badge bg-danger rounded-pill">{{ notifications.all }}</span>
+                                        {% endif %}
+                                    </a>
+                                {% else %}
+                                    <a href="/login/" class="icon_with_badge">
+                                        <svg class="icon ms-n2">
+                                            <use xlink:href="{{ asset('icons/sprite.svg') }}#log-in"/>
+                                        </svg>
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+                <div class="container-fluid flex-grow-1">
+                    {% if page_title|default('') %}
+                        <h1 class="mb-0">{{ page_title }}</h1>
+                    {% endif %}
+                    {% block breadcrumbs %}
+                        {% include '@theme/components/breadcrumbs.twig' only %}
+                    {% endblock %}
+                    {% set header_ads = ads('content_header') %}
+                    {% if header_ads %}
+                        <div class="pb-3">
+                            {% for block in header_ads %}
+                                <div>{{ block }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    {% block content %}{% endblock %}
+
+                    <div class="to-top to-top_hidden">
+                        <button class="btn btn__top">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="icon">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18"/>
+                            </svg>
+                        </button>
+                    </div>
+                    {% set footer_ads = ads('content_footer') %}
+                    {% if footer_ads %}
+                        <div class="pb-3 pt-2">
+                            {% for block in footer_ads %}
+                                <div>{{ block }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="page_layout container">
+            {% block footer_content %}{% endblock %}
+        </div>
+        <div class="overlay"></div>
+        <div class="page_layout w-100">
+            {% set legal_links = {
+                (d__('system', 'Privacy Policy')): config('johncms.privacy_policy_url')|default(''),
+                (d__('system', 'Terms of Use')): config('johncms.terms_of_use_url')|default(''),
+                (d__('system', 'Personal Data Processing Policy')): config('johncms.personal_data_policy_url')|default(''),
+                (d__('system', 'Cookie Policy')): config('johncms.cookie_policy_url')|default('')
+            }|filter(url => url is not empty) %}
+            <div class="content-container-padding footer-padding">
+                <div class="row justify-content-between align-items-center border-top py-3 page-footer">
+                    {% if legal_links %}
+                        <div class="col-12 col-md-4 mb-2 mb-md-0">
+                            <div class="legal-footer-links">
+                                {% for label, url in legal_links %}
+                                    <a href="{{ url }}" class="me-3 small text-muted">{{ label }}</a> <br>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div class="col-6 col-md-4 {{ legal_links ? 'text-md-center' }}">
+                        <a href="https://twitter.com/johncms" title="Twitter" target="_blank" rel="nofollow" class="me-3 text-muted text-decoration-none">
+                            <svg class="icon">
+                                <use xlink:href="{{ asset('icons/sprite.svg') }}#twitter"/>
+                            </svg>
+                        </a>
+                        <a href="https://t.me/johncms_official" title="Telegram" target="_blank" rel="nofollow" class="me-3 text-muted text-decoration-none">
+                            <svg class="icon">
+                                <use xlink:href="{{ asset('icons/sprite.svg') }}#telegram"/>
+                            </svg>
+                        </a>
+                        <a href="https://www.youtube.com/channel/UCIzwmZMHJgnBPEicpU9Itsw" title="YouTube" target="_blank" rel="nofollow" class="me-2 text-muted text-decoration-none">
+                            <svg class="icon">
+                                <use xlink:href="{{ asset('icons/sprite.svg') }}#youtube2"/>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-4 justify-content-end text-end d-flex flex-wrap position-relative">
+                        {% set analytics_counters = analytics() %}
+                        {% if analytics_counters %}
+                            {# Counters #}
+                            <div class="me-2 d-flex">
+                                {% for counter in analytics_counters %}
+                                    <div>{{ counter }}</div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <div class="flex-grow-1 w-100 text-nowrap">
+                            &copy; {{ 'now'|date('Y') }}, <a href="https://johncms.com" target="_blank" rel="nofollow" class="text-info">JohnCMS</a>
+                        </div>
+                        {% include '@theme/components/debug.twig' only %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade ajax_modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content"></div>
+        </div>
+    </div>
+    {% set banner = cookie_banner() %}
+    {% if banner %}
+        <div id="cookie-consent-banner" class="cookie-consent-banner" style="display: none; position: fixed; left: 15px; right: 15px; bottom: 15px; max-width: 380px; z-index: 1000;">
+            <div class="cookie-consent-banner__text">
+                {% if banner.text %}
+                    {{ banner.text }}
+                {% else %}
+                    {# The link label lives inside the translatable string so each language can decline it. #}
+                    {% set privacy_url = config('johncms.privacy_policy_url')|default('') %}
+                    {% set open_tag = privacy_url ? '<a href="' ~ privacy_url|e('html_attr') ~ '">' : '' %}
+                    {% set close_tag = privacy_url ? '</a>' : '' %}
+                    {{ d__('system', 'We use cookies to improve the site. By continuing to use the site, you agree to our %sPrivacy Policy%s.', open_tag, close_tag)|raw }}
+                {% endif %}
+            </div>
+            <button type="button" id="cookie-consent-accept" class="btn btn-primary btn-sm cookie-consent-banner__accept">{{ d__('system', 'Accept') }}</button>
+        </div>
+        <script>
+            (function () {
+                var version = '{{ banner.version }}';
+                var banner = document.getElementById('cookie-consent-banner');
+                var button = document.getElementById('cookie-consent-accept');
+                if (!banner || !button) {
+                    return;
+                }
+                var accepted = null;
+                try {
+                    accepted = localStorage.getItem('cookie_consent_accepted');
+                } catch (e) {
+                    accepted = null;
+                }
+                if (accepted !== version) {
+                    banner.style.display = 'block';
+                }
+                button.addEventListener('click', function () {
+                    try {
+                        localStorage.setItem('cookie_consent_accepted', version);
+                    } catch (e) {
+                    }
+                    banner.style.display = 'none';
+                    document.dispatchEvent(new CustomEvent('cookie-consent-accepted'));
+                });
+            })();
+        </script>
+    {% endif %}
+{% endblock %}

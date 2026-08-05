@@ -1,0 +1,161 @@
+{#
+    @param array      counters Section counters shown on the tiles.
+    @param iterable   news     Latest published articles, empty when the news block is off.
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    <div class="pt-2 pb-4 bg-white mt-3 mobile_jumbotron border-bottom full-mobile-width">
+        <h1 class="display-4 fw-bold">JohnCMS {{ app.cms_version }}</h1>
+        <p class="lead">
+            {{ __('Free, Open Source content management system') }}
+        </p>
+        <hr class="my-sm-3 my-md-4 full-mobile-width">
+        <a class="btn btn-success btn-lg me-1" href="https://johncms.com/downloads/">
+            <svg class="icon">
+                <use xlink:href="{{ asset('icons/sprite.svg') }}#download"/>
+            </svg>
+            <span class="hide-xs">{{ __('Download') }}</span>
+        </a>
+        <a class="btn btn-primary btn-lg me-1" href="https://docs.johncms.com/">
+            <svg class="icon">
+                <use xlink:href="{{ asset('icons/sprite.svg') }}#book-open"/>
+            </svg>
+            <span class="hide-xs">{{ __('Documentation') }}</span>
+        </a>
+        <a href="https://github.com/johncms" title="GitHub" class="btn btn-primary btn-lg-icon me-1" target="_blank" rel="nofollow">
+            <svg class="icon">
+                <use xlink:href="{{ asset('icons/sprite.svg') }}#github"/>
+            </svg>
+        </a>
+        <a href="https://translate.johncms.com" title="Translate" class="btn btn-primary btn-lg-icon" target="_blank" rel="nofollow">
+            <svg class="icon">
+                <use xlink:href="{{ asset('icons/sprite.svg', true) }}#translate"/>
+            </svg>
+        </a>
+    </div>
+
+    <div class="d-block d-md-none mobile_tiles">
+        <div class="row">
+            {% for tile in [
+                {url: '/news/', icon: 'book', label: __('News'), count: counters.news.new},
+                {url: '/forum/', icon: 'forum', label: d__('system', 'Forum'), count: counters.forum.new_messages},
+                {url: '/guestbook/ga', icon: 'chat', label: d__('system', 'Guestbook'), count: counters.guestbook.guestbook},
+                {url: '/downloads/', icon: 'download', label: d__('system', 'Downloads'), count: counters.downloads.new},
+                {url: '/library/', icon: 'text', label: d__('system', 'Library'), count: counters.library.new},
+                {url: '/community/', icon: 'users', label: d__('system', 'Users'), count: counters.users.new}
+            ] %}
+                <div class="col-6 col-sm-4 mt-3 tile">
+                    <a href="{{ tile.url }}" class="card border text-center">
+                        <div class="card-body">
+                            <div class="icon_with_badge d-inline-block">
+                                <svg class="icon-40">
+                                    <use xlink:href="{{ asset('icons/sprite.svg') }}#{{ tile.icon }}"/>
+                                </svg>
+                                {% if tile.count > 0 %}
+                                    <span class="badge rounded-pill bg-danger ms-3 mt-1">{{ tile.count|format_number }}</span>
+                                {% endif %}
+                            </div>
+                            <div class="mt-2 tile_name">{{ tile.label }}</div>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    {% if news|length %}
+        <div class="mb-n3">
+            <h2 class="h1 fw-bold mt-4 mb-2">{{ __('News') }}</h2>
+            <div class="row row-cols-1">
+                {% for article in news %}
+                    <div class="col mb-3">
+                        <a class="h4 fw-bold" href="{{ article.url }}">{{ article.name }}</a>
+                        {% if article.preview_text_safe %}
+                            {# Already sanitized by the news module, so it stays markup. #}
+                            <div class="mb-n3 mt-1">{{ article.preview_text_safe|raw }}</div>
+                        {% endif %}
+                        <div class="text-muted small pt-1 link-no-underline">{{ article.display_date }},
+                            <svg class="icon ms-1" style="width: 13px; margin-top: -3px;">
+                                <use xlink:href="{{ asset('icons/sprite.svg') }}#rating"/>
+                            </svg> {{ article.votes_sum_vote|default(0) }},
+                            <a href="{{ article.url }}#article-comments">
+                                <svg class="icon ms-2" style="width: 13px;">
+                                    <use xlink:href="{{ asset('icons/sprite.svg') }}#forum"/>
+                                </svg> {{ article.comments_count }}
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+    <h2 class="h1 fw-bold mt-4 mb-4">{{ __('Features') }}</h2>
+    <dl class="ms-4">
+        <dt class="h3 fw-bold">
+            <svg class="icon">
+                <use xlink:href="{{ asset('icons/sprite.svg') }}#check"/>
+            </svg>
+            {{ __('Responsive Layout') }}
+        </dt>
+        <dd class="mb-3">
+            {{ __('Your site will appear equally well on both computers and mobile devices.') }}
+        </dd>
+
+        <dt class="h3 fw-bold">
+            <svg class="icon">
+                <use xlink:href="{{ asset('icons/sprite.svg') }}#check"/>
+            </svg>
+            {{ __('Template System') }}
+        </dt>
+        <dd class="mb-3">
+            {{ __('Using templates, you can completely change the style of your site so that it becomes unique and not like the others.') }}
+        </dd>
+
+        <dt class="h3 fw-bold">
+            <svg class="icon">
+                <use xlink:href="{{ asset('icons/sprite.svg') }}#check"/>
+            </svg>
+            {{ __('High Performance') }}
+        </dt>
+        <dd class="mb-3">
+            {# The line break is part of the translated string, so it is printed as markup. #}
+            {{ __('When developing JohnCMS we pay special attention to system performance.<br>Your website will not require a powerful server for as long as possible.')|raw }}
+        </dd>
+
+        <dt class="h3 fw-bold">
+            <svg class="icon">
+                <use xlink:href="{{ asset('icons/sprite.svg') }}#check"/>
+            </svg>
+            {{ __('Multilingual') }}
+        </dt>
+        <dd class="mb-3">
+            {{ __('Reach the maximum audience in different languages. Several languages have already been built into the system.<br>And if you don\'t have the desired language, you can easily add it using advanced translation tools that support johnCMS.')|raw }}
+        </dd>
+
+        <dt class="h3 fw-bold">
+            <svg class="icon">
+                <use xlink:href="{{ asset('icons/sprite.svg') }}#check"/>
+            </svg>
+            {{ __('Modularity') }}
+        </dt>
+        <dd>
+            {{ __('The most popular modules are built into the system.<br>You can install ready-made additional modules, create them yourself or order development of new modules from other developers.')|raw }}
+        </dd>
+    </dl>
+
+    <h2 class="h1 fw-bold mt-4 mb-4">{{ __('Free License') }}</h2>
+
+    <dl class="ms-4">
+        <dt class="h3 fw-bold">
+            <svg class="icon">
+                <use xlink:href="{{ asset('icons/sprite.svg') }}#check"/>
+            </svg>
+            GPL-3
+        </dt>
+        <dd class="mb-3">
+            {{ __('The GNU GPL-3 license gives you the right to distribute and modify JohnCMS.') }}
+        </dd>
+    </dl>
+{% endblock %}
