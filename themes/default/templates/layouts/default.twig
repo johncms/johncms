@@ -6,7 +6,7 @@
 {% extends '@theme/layouts/base.twig' %}
 
 {% block body %}
-    {% set notifications = notifications() %}
+    {% set layout_notifications = notifications() %}
     <div class="wrapper min-vh-100 d-flex flex-column justify-content-between" id="app">
         <div class="page_layout justify-content-end d-flex w-100">
             <div class="sidebar">
@@ -18,7 +18,7 @@
                     </div>
                     <div class="sidebar__wrapper d-flex flex-column">
                         {% block sidebar_user %}
-                            {% include '@theme/components/sidebar-user-menu.twig' with {notifications: notifications} only %}
+                            {% include '@theme/components/sidebar-user-menu.twig' with {notifications: layout_notifications} only %}
                         {% endblock %}
                         {% block sidebar_menu %}
                             {% include '@theme/components/sidebar-main-menu.twig' only %}
@@ -48,8 +48,8 @@
                                         <svg class="icon icon_messages">
                                             <use xlink:href="{{ asset('icons/sprite.svg') }}#messages"/>
                                         </svg>
-                                        {% if notifications.all|default(0) %}
-                                            <span class="badge bg-danger rounded-pill">{{ notifications.all }}</span>
+                                        {% if layout_notifications.all|default(0) %}
+                                            <span class="badge bg-danger rounded-pill">{{ layout_notifications.all }}</span>
                                         {% endif %}
                                     </a>
                                 {% else %}
@@ -70,10 +70,10 @@
                     {% block breadcrumbs %}
                         {% include '@theme/components/breadcrumbs.twig' only %}
                     {% endblock %}
-                    {% set header_ads = ads('content_header') %}
-                    {% if header_ads %}
+                    {% set layout_header_ads = ads('content_header') %}
+                    {% if layout_header_ads %}
                         <div class="pb-3">
-                            {% for block in header_ads %}
+                            {% for block in layout_header_ads %}
                                 <div>{{ block }}</div>
                             {% endfor %}
                         </div>
@@ -87,10 +87,10 @@
                             </svg>
                         </button>
                     </div>
-                    {% set footer_ads = ads('content_footer') %}
-                    {% if footer_ads %}
+                    {% set layout_footer_ads = ads('content_footer') %}
+                    {% if layout_footer_ads %}
                         <div class="pb-3 pt-2">
-                            {% for block in footer_ads %}
+                            {% for block in layout_footer_ads %}
                                 <div>{{ block }}</div>
                             {% endfor %}
                         </div>
@@ -103,7 +103,7 @@
         </div>
         <div class="overlay"></div>
         <div class="page_layout w-100">
-            {% set legal_links = {
+            {% set layout_legal_links = {
                 (d__('system', 'Privacy Policy')): config('johncms.privacy_policy_url')|default(''),
                 (d__('system', 'Terms of Use')): config('johncms.terms_of_use_url')|default(''),
                 (d__('system', 'Personal Data Processing Policy')): config('johncms.personal_data_policy_url')|default(''),
@@ -111,16 +111,16 @@
             }|filter(url => url is not empty) %}
             <div class="content-container-padding footer-padding">
                 <div class="row justify-content-between align-items-center border-top py-3 page-footer">
-                    {% if legal_links %}
+                    {% if layout_legal_links %}
                         <div class="col-12 col-md-4 mb-2 mb-md-0">
                             <div class="legal-footer-links">
-                                {% for label, url in legal_links %}
+                                {% for label, url in layout_legal_links %}
                                     <a href="{{ url }}" class="me-3 small text-muted">{{ label }}</a> <br>
                                 {% endfor %}
                             </div>
                         </div>
                     {% endif %}
-                    <div class="col-6 col-md-4 {{ legal_links ? 'text-md-center' }}">
+                    <div class="col-6 col-md-4 {{ layout_legal_links ? 'text-md-center' }}">
                         <a href="https://twitter.com/johncms" title="Twitter" target="_blank" rel="nofollow" class="me-3 text-muted text-decoration-none">
                             <svg class="icon">
                                 <use xlink:href="{{ asset('icons/sprite.svg') }}#twitter"/>
@@ -138,11 +138,11 @@
                         </a>
                     </div>
                     <div class="col-6 col-md-4 justify-content-end text-end d-flex flex-wrap position-relative">
-                        {% set analytics_counters = analytics() %}
-                        {% if analytics_counters %}
+                        {% set layout_analytics = analytics() %}
+                        {% if layout_analytics %}
                             {# Counters #}
                             <div class="me-2 d-flex">
-                                {% for counter in analytics_counters %}
+                                {% for counter in layout_analytics %}
                                     <div>{{ counter }}</div>
                                 {% endfor %}
                             </div>
@@ -161,25 +161,25 @@
             <div class="modal-content"></div>
         </div>
     </div>
-    {% set banner = cookie_banner() %}
-    {% if banner %}
+    {% set layout_cookie_banner = cookie_banner() %}
+    {% if layout_cookie_banner %}
         <div id="cookie-consent-banner" class="cookie-consent-banner" style="display: none; position: fixed; left: 15px; right: 15px; bottom: 15px; max-width: 380px; z-index: 1000;">
             <div class="cookie-consent-banner__text">
-                {% if banner.text %}
-                    {{ banner.text }}
+                {% if layout_cookie_banner.text %}
+                    {{ layout_cookie_banner.text }}
                 {% else %}
                     {# The link label lives inside the translatable string so each language can decline it. #}
-                    {% set privacy_url = config('johncms.privacy_policy_url')|default('') %}
-                    {% set open_tag = privacy_url ? '<a href="' ~ privacy_url|e('html_attr') ~ '">' : '' %}
-                    {% set close_tag = privacy_url ? '</a>' : '' %}
-                    {{ d__('system', 'We use cookies to improve the site. By continuing to use the site, you agree to our %sPrivacy Policy%s.', open_tag, close_tag)|raw }}
+                    {% set layout_privacy_url = config('johncms.privacy_policy_url')|default('') %}
+                    {% set layout_open_tag = layout_privacy_url ? '<a href="' ~ layout_privacy_url|e('html_attr') ~ '">' : '' %}
+                    {% set layout_close_tag = layout_privacy_url ? '</a>' : '' %}
+                    {{ d__('system', 'We use cookies to improve the site. By continuing to use the site, you agree to our %sPrivacy Policy%s.', layout_open_tag, layout_close_tag)|raw }}
                 {% endif %}
             </div>
             <button type="button" id="cookie-consent-accept" class="btn btn-primary btn-sm cookie-consent-banner__accept">{{ d__('system', 'Accept') }}</button>
         </div>
         <script>
             (function () {
-                var version = '{{ banner.version }}';
+                var version = '{{ layout_cookie_banner.version }}';
                 var banner = document.getElementById('cookie-consent-banner');
                 var button = document.getElementById('cookie-consent-accept');
                 if (!banner || !button) {

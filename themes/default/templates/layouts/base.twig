@@ -10,9 +10,14 @@
     @param string description Meta description.
     @param string canonical   Canonical URL of the page.
 #}
-{% set site_name = config('johncms.copyright') %}
-{% set base_title = title|default('') ?: site_name %}
-{% set document_title = (not app.is_home_page and base_title != site_name) ? base_title ~ ' | ' ~ site_name : base_title %}
+{#
+    Everything the layout keeps for itself is prefixed: a {% set %} here stays in the context the
+    blocks of the page are rendered in, so an unprefixed name would silently shadow a variable of
+    the page that happens to be called the same.
+#}
+{% set layout_site_name = config('johncms.copyright') %}
+{% set layout_base_title = title|default('') ?: layout_site_name %}
+{% set layout_document_title = (not app.is_home_page and layout_base_title != layout_site_name) ? layout_base_title ~ ' | ' ~ layout_site_name : layout_base_title %}
 <!DOCTYPE html>
 <html lang="{{ app.locale }}" dir="{{ app.locale == 'ar' ? 'rtl' : 'ltr' }}">
 <head>
@@ -44,7 +49,7 @@
     <link rel="mask-icon" href="{{ asset('images/icon.svg') }}" color="#586776">
     <link rel="manifest" href="{{ asset('site.webmanifest') }}">
     {% block styles %}{% endblock %}
-    <title>{% block title %}{{ document_title }}{% endblock %}</title>
+    <title>{% block title %}{{ layout_document_title }}{% endblock %}</title>
 </head>
 <body class="{{ app.color_scheme }}">
 {% block body %}{% endblock %}
