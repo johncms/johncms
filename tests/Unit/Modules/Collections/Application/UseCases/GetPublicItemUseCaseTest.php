@@ -84,8 +84,8 @@ final class GetPublicItemUseCaseTest extends TestCase
 
         self::assertNotNull($detail);
         self::assertSame('hello', $detail->name);
-        self::assertSame('Intro', $detail->previewText);
-        self::assertSame('Body', $detail->detailText);
+        self::assertSame('Intro', (string) $detail->previewText);
+        self::assertSame('Body', (string) $detail->detailText);
 
         self::assertSame(
             [

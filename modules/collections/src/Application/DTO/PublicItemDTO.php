@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\DTO;
 
+use Twig\Markup;
+
 /**
  * A public listing row. The detail URL is built in the controller from the
  * item's own section path (sectionId) and code, so it is correct even when the
@@ -14,7 +16,7 @@ final readonly class PublicItemDTO
     public function __construct(
         public string $code,
         public string $name,
-        public ?string $previewText,
+        public ?Markup $previewText,
         public ?int $sectionId,
     ) {
     }

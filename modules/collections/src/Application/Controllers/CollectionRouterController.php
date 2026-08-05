@@ -15,8 +15,8 @@ use Johncms\Modules\Collections\Application\UseCases\ListPublicItemsUseCase;
 use Johncms\Modules\Collections\Domain\Models\ContentCollection;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionSectionRepositoryInterface;
+use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
-use Johncms\System\View\Render;
 
 /**
  * Public URL resolver: the low-priority catch-all that maps root URLs to
@@ -27,7 +27,6 @@ final readonly class CollectionRouterController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private CollectionCodeCacheInterface $codeCache,
         private ContentCollectionRepositoryInterface $collectionRepository,
@@ -40,7 +39,7 @@ final readonly class CollectionRouterController
         $this->controllerContext->initModule('collections');
     }
 
-    public function __invoke(string $route): string
+    public function __invoke(string $route): ViewResponse
     {
         $segments = array_values(array_filter(explode('/', $route), static fn (string $s): bool => $s !== ''));
         if ($segments === []) {
@@ -112,7 +111,7 @@ final readonly class CollectionRouterController
         return $parent;
     }
 
-    private function renderListing(ContentCollection $collection, ?int $sectionId, string $basePath): string
+    private function renderListing(ContentCollection $collection, ?int $sectionId, string $basePath): ViewResponse
     {
         $perPage = isset($collection->settings['per_page']) ? (int) $collection->settings['per_page'] : null;
         $pagination = $this->paginationFactory->create($this->listItems->count($collection->id, $sectionId), $perPage);
@@ -126,27 +125,28 @@ final readonly class CollectionRouterController
         $title = $this->breadcrumbs($collection, $sectionId);
 
         $meta = new PageMeta($title . ' — ' . $collection->name, $pagination->getCurrentPage(), $collection->description ?? '');
-        $this->render->addData([
-            'title'       => $meta->title,
-            'page_title'  => $title,
-            'description' => $meta->description,
-        ]);
 
         // The root listing shows items from every section, so each URL must use the
         // item's own section path rather than the current listing path.
         $sectionPaths = $this->resolveSectionPaths($items);
 
-        return $this->render->render('collections::public/listing', [
-            'sections'   => $this->childSectionRows($collection->id, $sectionId, $basePath),
-            'items'      => array_map(fn (PublicItemDTO $item): array => [
-                'name'    => $item->name,
-                'preview' => $item->previewText,
-                'url'     => '/' . $collection->code
-                    . ($item->sectionId !== null ? $sectionPaths[$item->sectionId] : '')
-                    . '/' . $item->code . '.html',
-            ], $items),
-            'pagination' => $pagination->render(),
-        ]);
+        return new ViewResponse(
+            '@collections/public/listing.twig',
+            [
+                'title'       => $meta->title,
+                'page_title'  => $title,
+                'description' => $meta->description,
+                'sections'    => $this->childSectionRows($collection->id, $sectionId, $basePath),
+                'items'       => array_map(fn (PublicItemDTO $item): array => [
+                    'name'    => $item->name,
+                    'preview' => $item->previewText,
+                    'url'     => '/' . $collection->code
+                        . ($item->sectionId !== null ? $sectionPaths[$item->sectionId] : '')
+                        . '/' . $item->code . '.html',
+                ], $items),
+                'pagination'  => $pagination->hasPages() ? $pagination->render() : null,
+            ]
+        );
     }
 
     /**
@@ -174,7 +174,7 @@ final readonly class CollectionRouterController
         return $paths;
     }
 
-    private function renderDetail(ContentCollection $collection, ?int $sectionId, string $code): string
+    private function renderDetail(ContentCollection $collection, ?int $sectionId, string $code): ViewResponse
     {
         $detail = $this->getItem->execute($collection->id, $sectionId, $code);
         if ($detail === null) {
@@ -184,14 +184,17 @@ final readonly class CollectionRouterController
         $this->breadcrumbs($collection, $sectionId);
         $this->navChain->add($detail->name);
 
-        $meta = new PageMeta($detail->name . ' — ' . $collection->name, 1, $detail->previewText ?? '');
-        $this->render->addData([
-            'title'       => $meta->title,
-            'page_title'  => $detail->name,
-            'description' => $meta->description,
-        ]);
+        $meta = new PageMeta($detail->name . ' — ' . $collection->name, 1, (string) $detail->previewText);
 
-        return $this->render->render('collections::public/detail', ['item' => $detail]);
+        return new ViewResponse(
+            '@collections/public/detail.twig',
+            [
+                'title'       => $meta->title,
+                'page_title'  => $detail->name,
+                'description' => $meta->description,
+                'item'        => $detail,
+            ]
+        );
     }
 
     /**

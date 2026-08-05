@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\DTO;
 
+use Twig\Markup;
+
 /**
  * A public item detail view.
  */
@@ -14,8 +16,8 @@ final readonly class PublicItemDetailDTO
      */
     public function __construct(
         public string $name,
-        public ?string $previewText,
-        public ?string $detailText,
+        public ?Markup $previewText,
+        public ?Markup $detailText,
         public array $values,
     ) {
     }

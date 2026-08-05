@@ -1,0 +1,26 @@
+{#
+    One item of a collection.
+
+    @param PublicItemDetailDTO item
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    {# Both texts are sanitized by the content formatter of the module. #}
+    {% if item.previewText %}
+        <div class="lead mb-3">{{ item.previewText }}</div>
+    {% endif %}
+
+    {% if item.detailText %}
+        <div class="mb-3">{{ item.detailText }}</div>
+    {% endif %}
+
+    {% if item.values is not empty %}
+        <dl class="row">
+            {% for value in item.values %}
+                <dt class="col-sm-3">{{ value.label }}</dt>
+                <dd class="col-sm-9">{{ value.values|join(', ') }}</dd>
+            {% endfor %}
+        </dl>
+    {% endif %}
+{% endblock %}

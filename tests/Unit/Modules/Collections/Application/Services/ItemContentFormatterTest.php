@@ -23,7 +23,8 @@ final class ItemContentFormatterTest extends TestCase
 
     public function testStripsDangerousMarkupButKeepsSafeTags(): void
     {
-        $result = $this->formatter()->format('<p>Hello <b>world</b></p><script>alert(1)</script>');
+        // Markup by contract, so the assertions read it as the string it prints as.
+        $result = (string) $this->formatter()->format('<p>Hello <b>world</b></p><script>alert(1)</script>');
 
         self::assertStringContainsString('<b>world</b>', $result);
         self::assertStringNotContainsString('<script', $result);
@@ -32,7 +33,7 @@ final class ItemContentFormatterTest extends TestCase
 
     public function testRemovesEventHandlerAttributes(): void
     {
-        $result = $this->formatter()->format('<a href="https://example.test" onclick="evil()">link</a>');
+        $result = (string) $this->formatter()->format('<a href="https://example.test" onclick="evil()">link</a>');
 
         self::assertStringContainsString('href="https://example.test"', $result);
         self::assertStringNotContainsString('onclick', $result);

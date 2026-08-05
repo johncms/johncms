@@ -57,7 +57,8 @@ final class ListPublicItemsUseCaseTest extends TestCase
         self::assertInstanceOf(PublicItemDTO::class, $rows[0]);
         self::assertSame('hello', $rows[0]->code);
         self::assertSame('Hello', $rows[0]->name);
-        self::assertSame('Intro', $rows[0]->previewText);
+        // The formatter hands the sanitized text over as markup.
+        self::assertSame('Intro', (string) $rows[0]->previewText);
         self::assertSame(7, $rows[0]->sectionId);
     }
 }
