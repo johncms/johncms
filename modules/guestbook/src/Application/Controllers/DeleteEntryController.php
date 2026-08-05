@@ -11,8 +11,8 @@ use Johncms\Modules\Guestbook\Application\UseCases\DeleteGuestbookEntryUseCase;
 use Johncms\Modules\Guestbook\Application\UseCases\EnsureGuestbookEntryManageAccessUseCase;
 use Johncms\Modules\Guestbook\Application\UseCases\GetGuestbookEntryContextUseCase;
 use Johncms\Http\Request;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Http\Session;
-use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -20,7 +20,6 @@ final readonly class DeleteEntryController
 {
     public function __construct(
         private ControllerContext $context,
-        private Render $render,
         private Session $session,
         private GetGuestbookEntryContextUseCase $contextUseCase,
         private EnsureGuestbookEntryManageAccessUseCase $manageAccessUseCase,
@@ -29,13 +28,13 @@ final readonly class DeleteEntryController
         $this->context->initModule('guestbook');
     }
 
-    public function __invoke(Request $request): Response
+    public function __invoke(Request $request): ViewResponse
     {
         $baseUrl = '/guestbook/';
 
         if ($request->getMethod() !== 'POST') {
             $id = $request->queryInt('id');
-            return new Response($this->render->render('guestbook::confirm_delete', ['id' => $id]));
+            return new ViewResponse('@guestbook/public/confirm-delete.twig', ['id' => $id]);
         }
 
         $validator = new Validator(['csrf_token' => $request->body('csrf_token')], ['csrf_token' => ['Csrf']]);
@@ -50,28 +49,24 @@ final readonly class DeleteEntryController
             $entry = $this->contextUseCase->execute($id);
             $this->manageAccessUseCase->execute($entry);
         } catch (GuestbookEntryNotFoundException) {
-            return new Response(
-                $this->render->render(
-                    'system::pages/result',
-                    [
-                        'title'    => __('Delete message'),
-                        'message'  => __('Wrong data'),
-                        'type'     => 'alert-danger',
-                        'back_url' => $baseUrl,
-                    ]
-                )
+            return new ViewResponse(
+                '@theme/pages/result.twig',
+                [
+                    'title'    => __('Delete message'),
+                    'message'  => __('Wrong data'),
+                    'type'     => 'alert-danger',
+                    'back_url' => $baseUrl,
+                ]
             );
         } catch (GuestbookAccessDeniedException) {
-            return new Response(
-                $this->render->render(
-                    'system::pages/result',
-                    [
-                        'title'    => __('Delete message'),
-                        'message'  => __('Wrong data'),
-                        'type'     => 'alert-danger',
-                        'back_url' => $baseUrl,
-                    ]
-                ),
+            return new ViewResponse(
+                '@theme/pages/result.twig',
+                [
+                    'title'    => __('Delete message'),
+                    'message'  => __('Wrong data'),
+                    'type'     => 'alert-danger',
+                    'back_url' => $baseUrl,
+                ],
                 Response::HTTP_FORBIDDEN
             );
         }

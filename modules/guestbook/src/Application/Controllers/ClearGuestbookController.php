@@ -9,15 +9,14 @@ use Johncms\Modules\Guestbook\Application\Access\GuestbookMode;
 use Johncms\Modules\Guestbook\Application\UseCases\ClearGuestbookUseCase;
 use Johncms\Modules\Guestbook\Domain\Enums\ClearGuestbookPeriod;
 use Johncms\Http\Request;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Http\Session;
-use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 
 final readonly class ClearGuestbookController
 {
     public function __construct(
         private ControllerContext $context,
-        private Render $render,
         private Session $session,
         private GuestbookMode $mode,
         private ClearGuestbookUseCase $clearUseCase,
@@ -25,7 +24,7 @@ final readonly class ClearGuestbookController
         $this->context->initModule('guestbook');
     }
 
-    public function __invoke(Request $request): string
+    public function __invoke(Request $request): ViewResponse
     {
         $baseUrl = '/guestbook/';
 
@@ -50,6 +49,6 @@ final readonly class ClearGuestbookController
         }
 
         // Request cleaning options
-        return $this->render->render('guestbook::clear');
+        return new ViewResponse('@guestbook/public/clear.twig');
     }
 }

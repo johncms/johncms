@@ -1,0 +1,115 @@
+{#
+    @param list<GuestbookEntryDTO> posts
+    @param ?Markup                 pagination
+    @param bool                    can_write
+    @param bool                    is_closed
+    @param bool                    can_clear
+    @param array                   errors     Validation messages of the form.
+    @param array                   form_data  Values the visitor has entered.
+    @param string                  captcha    Image of the code, as a data URI.
+    @param string                  message    Flash message about the last action.
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    {% if is_closed %}
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: __('The guestbook is closed')} only %}
+    {% endif %}
+    {% if message|default('') %}
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-success', alert: message} only %}
+    {% endif %}
+
+    {% if can_write %}
+        <div class="row">
+            <div class="col-12">
+                {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: errors.csrf_token|default([])} only %}
+                <form name="form" action="/guestbook/" method="post">
+                    <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}"/>
+                    {% if not app.user.isValid %}
+                        <div class="form-group">
+                            <label for="name">{{ __('Name') }}</label>
+                            <input type="text"
+                                   class="form-control {{ errors.name is defined ? 'is-invalid' }}"
+                                   maxlength="25"
+                                   name="name"
+                                   id="name"
+                                   required
+                                   value="{{ form_data.name|default('') }}"
+                                   placeholder="{{ __('Name') }}"
+                            >
+                            {% include '@theme/components/field-errors.twig' with {errors: errors.name|default([])} only %}
+                        </div>
+                    {% endif %}
+
+                    {% include '@guestbook/public/components/editor.twig' with {
+                        label: __('Message'),
+                        errors: errors.message|default([])|join(', '),
+                        value: form_data.message|default('')
+                    } only %}
+
+                    {% if not app.user.isValid %}
+                        <img alt="{{ __('Verification code') }}" src="{{ captcha }}">
+                        <div class="form-group">
+                            <label for="code">{{ __('Symbols on the picture') }}</label>
+                            <input type="text"
+                                   class="form-control {{ errors.code is defined ? 'is-invalid' }}"
+                                   maxlength="6"
+                                   name="code"
+                                   id="code"
+                                   autocomplete="off"
+                                   required
+                                   placeholder="{{ __('Symbols on the picture') }}"
+                            >
+                            {% include '@theme/components/field-errors.twig' with {errors: errors.code|default([])} only %}
+                            <div class="text-muted small">
+                                {{ __('If you cannot see the image code, enable graphics in your browser and refresh this page') }}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <input type="submit" class="btn btn-primary" name="submit" value="{{ __('Write') }}"/>
+                </form>
+            </div>
+        </div>
+    {% elseif not app.user.isValid %}
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: __('For registered users only')} only %}
+    {% endif %}
+
+    <div class="mt-4 border-bottom full-mobile-width"></div>
+
+    {% if posts is empty %}
+        {# The emphasis is part of the translated string. #}
+        <div class="alert alert-info mt-3">{{ __('The guestbook is empty.<br><strong>Be the first! :)</strong>')|raw }}</div>
+    {% else %}
+        {% for post in posts %}
+            {% include '@guestbook/public/components/entry.twig' with {post: post, can_write: can_write} only %}
+        {% endfor %}
+
+        {% if pagination %}
+            <div class="mt-4">{{ pagination }}</div>
+        {% endif %}
+    {% endif %}
+
+    {% if can_clear %}
+        <div class="d-flex mt-4 pb-2">
+            <button type="button" class="btn btn-danger" data-url="/guestbook/clean" data-bs-toggle="modal" data-bs-target=".ajax_modal">{{ __('Clear') }}</button>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block scripts %}
+    {{ parent() }}
+    <script>
+        function reply_to_post(user_name)
+        {
+            event.preventDefault();
+            $('body,html').animate({scrollTop: 100}, 500);
+            editor.editing.view.focus();
+            editor.model.change(writer => {
+                const insertPosition = editor.model.document.selection.getFirstPosition();
+                writer.insertText(user_name + ', ', {}, insertPosition);
+                writer.setSelection(writer.createPositionAt(editor.model.document.getRoot(), 'end'));
+            });
+        }
+    </script>
+{% endblock %}

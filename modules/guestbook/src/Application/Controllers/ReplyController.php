@@ -12,9 +12,9 @@ use Johncms\Modules\Guestbook\Application\UseCases\EnsureGuestbookEntryManageAcc
 use Johncms\Modules\Guestbook\Application\UseCases\GetGuestbookEntryContextUseCase;
 use Johncms\Modules\Guestbook\Application\UseCases\ReplyToGuestbookEntryUseCase;
 use Johncms\Http\Request;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Http\Session;
 use Johncms\System\Utility\EditorContentNormalizer;
-use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -22,7 +22,6 @@ final readonly class ReplyController
 {
     public function __construct(
         private ControllerContext $context,
-        private Render $render,
         private Session $session,
         private EditorContentNormalizer $editorContentNormalizer,
         private GuestbookEntryTextFormatter $textFormatter,
@@ -33,30 +32,26 @@ final readonly class ReplyController
         $this->context->initModule('guestbook');
     }
 
-    public function __invoke(Request $request): Response
+    public function __invoke(Request $request): ViewResponse
     {
         $baseUrl = '/guestbook/';
 
         $id = $request->queryInt('id');
         $errors = [];
-        $this->render->addData(['title' => __('Reply'), 'page_title' => __('Reply')]);
-
         try {
             $entry = $this->contextUseCase->execute($id);
             $this->manageAccessUseCase->execute($entry);
         } catch (GuestbookEntryNotFoundException) {
             pageNotFound();
         } catch (GuestbookAccessDeniedException) {
-            return new Response(
-                $this->render->render(
-                    'system::pages/result',
-                    [
-                        'title'    => __('Reply'),
-                        'message'  => __('Wrong data'),
-                        'type'     => 'alert-danger',
-                        'back_url' => $baseUrl,
-                    ]
-                ),
+            return new ViewResponse(
+                '@theme/pages/result.twig',
+                [
+                    'title'    => __('Reply'),
+                    'message'  => __('Wrong data'),
+                    'type'     => 'alert-danger',
+                    'back_url' => $baseUrl,
+                ],
                 Response::HTTP_FORBIDDEN
             );
         }
@@ -93,17 +88,17 @@ final readonly class ReplyController
             $errors = $validator->getErrors();
         }
 
-        return new Response(
-            $this->render->render(
-                'guestbook::reply',
-                [
-                    'id'       => $id,
-                    'message'  => $entry,
-                    'postText' => $this->textFormatter->formatPost($entry),
-                    'text'     => $text,
-                    'errors'   => $errors,
-                ]
-            )
+        return new ViewResponse(
+            '@guestbook/public/reply.twig',
+            [
+                'title'      => __('Reply'),
+                'page_title' => __('Reply'),
+                'id'         => $id,
+                'author'     => $entry->name,
+                'post_text'  => $this->textFormatter->formatPost($entry),
+                'text'       => $text,
+                'errors'     => $errors,
+            ]
         );
     }
 }

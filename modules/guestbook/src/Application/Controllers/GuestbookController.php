@@ -18,8 +18,8 @@ use Johncms\Modules\Guestbook\Application\UseCases\ListGuestbookEntriesUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Environment;
 use Johncms\Http\Request;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Http\Session;
-use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
 
@@ -27,7 +27,6 @@ final readonly class GuestbookController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private Session $session,
         private Environment $environment,
@@ -44,15 +43,15 @@ final readonly class GuestbookController
         $this->controllerContext->initModule('guestbook');
     }
 
-    public function __invoke(Request $request): string
+    public function __invoke(Request $request): ViewResponse
     {
         $pageTitle = $this->mode->isGuestbook() ? __('Guestbook') : __('Admin Club');
         $baseUrl = '/guestbook/';
         $this->navChain->add($pageTitle, $baseUrl);
 
         if ($this->access->isClosed() && ! $this->access->canClear()) {
-            return $this->render->render(
-                'system::pages/result',
+            return new ViewResponse(
+                '@theme/pages/result.twig',
                 [
                     'title'    => $pageTitle,
                     'message'  => __('Guestbook is closed'),
@@ -95,27 +94,25 @@ final readonly class GuestbookController
         }
 
         $meta = new PageMeta($pageTitle, $pagination->getCurrentPage());
-        $this->render->addData([
-            'title'       => $meta->title,
-            'page_title'  => $pageTitle,
-            'description' => $meta->description,
-        ]);
 
         $posts = $this->guestbookEntries->getPage($pagination->getPerPage(), $pagination->getOffset());
         $showCaptcha = $this->access->canWrite() && ! $this->user->isValid();
 
-        return $this->render->render(
-            'guestbook::index',
+        return new ViewResponse(
+            '@guestbook/public/index.twig',
             [
-                'posts'      => $posts,
-                'pagination' => $pagination->render(),
-                'isClosed'   => $this->access->isClosed(),
-                'canWrite'   => $this->access->canWrite(),
-                'canClear'   => $this->access->canClear(),
-                'errors'     => $errors,
-                'formData'   => $this->form->getFormData($request),
-                'captcha'    => $showCaptcha ? $this->captchaService->generate() : '',
-                'message'    => $this->session->getFlash('message'),
+                'title'       => $meta->title,
+                'page_title'  => $pageTitle,
+                'description' => $meta->description,
+                'posts'       => $posts,
+                'pagination'  => $pagination->hasPages() ? $pagination->render() : null,
+                'is_closed'   => $this->access->isClosed(),
+                'can_write'   => $this->access->canWrite(),
+                'can_clear'   => $this->access->canClear(),
+                'errors'      => $errors,
+                'form_data'   => $this->form->getFormData($request),
+                'captcha'     => $showCaptcha ? $this->captchaService->generate() : '',
+                'message'     => $this->session->getFlash('message'),
             ]
         );
     }

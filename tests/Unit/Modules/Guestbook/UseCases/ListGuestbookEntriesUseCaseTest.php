@@ -77,8 +77,9 @@ final class ListGuestbookEntriesUseCaseTest extends TestCase
         self::assertSame(10, $dto->id);
         self::assertSame('Author', $dto->name);
         self::assertTrue($dto->isOnline);
-        self::assertSame('Hello', $dto->text);
-        self::assertSame('Reply', $dto->replyText);
+        // Both are markup: the formatter has sanitized them, and a template prints them as they are.
+        self::assertSame('Hello', (string) $dto->text);
+        self::assertSame('Reply', (string) $dto->replyText);
         self::assertSame(5, $dto->userId);
 
         self::assertNotNull($dto->user);

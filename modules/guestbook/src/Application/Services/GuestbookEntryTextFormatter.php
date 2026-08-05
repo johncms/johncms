@@ -8,6 +8,7 @@ use HTMLPurifier;
 use Johncms\Modules\Guestbook\Domain\Models\GuestbookEntry;
 use Johncms\Smilies\SmiliesRendererInterface;
 use Simba77\EmbedMedia\Embed;
+use Twig\Markup;
 
 final readonly class GuestbookEntryTextFormatter
 {
@@ -18,15 +19,32 @@ final readonly class GuestbookEntryTextFormatter
     ) {
     }
 
-    public function formatPost(GuestbookEntry $entry): string
+    /**
+     * The text of an entry: sanitized, with the media embedded and the smilies rendered. It is
+     * markup by contract — everything unsafe has been taken out of it by the purifier.
+     */
+    public function formatPost(GuestbookEntry $entry): Markup
     {
         $text = $this->media->embedMedia($this->purifier->purify($entry->text));
-        return $this->smiliesRenderer->render($text, $entry->user !== null && $entry->user->rights >= 1);
+
+        return new Markup(
+            $this->smiliesRenderer->render($text, $entry->user !== null && $entry->user->rights >= 1),
+            'UTF-8'
+        );
     }
 
-    public function formatReply(GuestbookEntry $entry): string
+    /**
+     * The reply of the staff to an entry, or null when there is none: markup is an object and an
+     * object is truthy however empty it is, so "no reply" has to be a value of its own.
+     */
+    public function formatReply(GuestbookEntry $entry): ?Markup
     {
+        if ((string) $entry->otvet === '') {
+            return null;
+        }
+
         $text = $this->media->embedMedia($this->purifier->purify($entry->otvet));
-        return $this->smiliesRenderer->render($text, true);
+
+        return new Markup($this->smiliesRenderer->render($text, true), 'UTF-8');
     }
 }

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Guestbook\Application\DTO;
 
+use Twig\Markup;
+
 final readonly class GuestbookEntryDTO
 {
     public function __construct(
@@ -14,8 +16,8 @@ final readonly class GuestbookEntryDTO
         public string $updateAt,
         public int $editCount,
         public string $updatedBy,
-        public string $text,
-        public string $replyText,
+        public Markup $text,
+        public ?Markup $replyText,
         public string $repliedBy,
         public string $repliedAt,
         public int $userId,

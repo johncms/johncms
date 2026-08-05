@@ -1,0 +1,27 @@
+{#
+    @param int    id
+    @param string author
+    @param string text   Raw text of the entry, for editing.
+    @param array  errors
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    <h4>{{ __('Edit message') }}</h4>
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: errors.csrf_token|default([])} only %}
+    <form action="/guestbook/edit?id={{ id }}" method="post">
+        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}"/>
+        <p>
+            <b>{{ __('Author') }}:</b> {{ author }}
+        </p>
+        {% include '@guestbook/public/components/editor.twig' with {
+            label: __('Message'),
+            errors: errors.message|default([])|join(', '),
+            value: text
+        } only %}
+        <div>
+            <button type="submit" name="submit" value="submit" class="btn btn-primary me-2">{{ __('Save') }}</button>
+            <a href="/guestbook/" class="btn btn-outline-primary">{{ __('Back') }}</a>
+        </div>
+    </form>
+{% endblock %}

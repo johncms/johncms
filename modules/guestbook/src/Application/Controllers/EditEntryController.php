@@ -11,9 +11,9 @@ use Johncms\Modules\Guestbook\Application\UseCases\EditGuestbookEntryUseCase;
 use Johncms\Modules\Guestbook\Application\UseCases\EnsureGuestbookEntryManageAccessUseCase;
 use Johncms\Modules\Guestbook\Application\UseCases\GetGuestbookEntryContextUseCase;
 use Johncms\Http\Request;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Http\Session;
 use Johncms\System\Utility\EditorContentNormalizer;
-use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -21,7 +21,6 @@ final readonly class EditEntryController
 {
     public function __construct(
         private ControllerContext $context,
-        private Render $render,
         private Session $session,
         private EditorContentNormalizer $editorContentNormalizer,
         private GetGuestbookEntryContextUseCase $contextUseCase,
@@ -31,30 +30,26 @@ final readonly class EditEntryController
         $this->context->initModule('guestbook');
     }
 
-    public function __invoke(Request $request): Response
+    public function __invoke(Request $request): ViewResponse
     {
         $baseUrl = '/guestbook/';
 
         $id = $request->queryInt('id');
         $errors = [];
-        $this->render->addData(['title' => __('Edit message'), 'page_title' => __('Edit message')]);
-
         try {
             $entry = $this->contextUseCase->execute($id);
             $this->manageAccessUseCase->execute($entry);
         } catch (GuestbookEntryNotFoundException) {
             pageNotFound();
         } catch (GuestbookAccessDeniedException) {
-            return new Response(
-                $this->render->render(
-                    'system::pages/result',
-                    [
-                        'title'    => __('Edit message'),
-                        'message'  => __('Wrong data'),
-                        'type'     => 'alert-danger',
-                        'back_url' => $baseUrl,
-                    ]
-                ),
+            return new ViewResponse(
+                '@theme/pages/result.twig',
+                [
+                    'title'    => __('Edit message'),
+                    'message'  => __('Wrong data'),
+                    'type'     => 'alert-danger',
+                    'back_url' => $baseUrl,
+                ],
                 Response::HTTP_FORBIDDEN
             );
         }
@@ -91,16 +86,16 @@ final readonly class EditEntryController
             $errors = $validator->getErrors();
         }
 
-        return new Response(
-            $this->render->render(
-                'guestbook::edit',
-                [
-                    'id'      => $id,
-                    'message' => $entry,
-                    'text'    => $text,
-                    'errors'  => $errors,
-                ]
-            )
+        return new ViewResponse(
+            '@guestbook/public/edit.twig',
+            [
+                'title'      => __('Edit message'),
+                'page_title' => __('Edit message'),
+                'id'         => $id,
+                'author'     => $entry->name,
+                'text'       => $text,
+                'errors'     => $errors,
+            ]
         );
     }
 }

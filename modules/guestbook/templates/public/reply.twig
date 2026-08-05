@@ -1,0 +1,29 @@
+{#
+    @param int     id
+    @param string  author
+    @param Markup  post_text Text of the entry being replied to.
+    @param string  text      Raw text of the reply, for editing.
+    @param array   errors
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    <h4>{{ __('Reply') }}</h4>
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: errors.csrf_token|default([])} only %}
+    <form action="/guestbook/otvet?id={{ id }}" method="post">
+        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}"/>
+        <p>
+            <b>{{ __('Author') }}:</b> {{ author }} <br>
+            {{ post_text }}
+        </p>
+        {% include '@guestbook/public/components/editor.twig' with {
+            label: __('Reply'),
+            errors: errors.message|default([])|join(', '),
+            value: text
+        } only %}
+        <div>
+            <button type="submit" name="submit" value="submit" class="btn btn-primary me-2">{{ __('Save') }}</button>
+            <a href="/guestbook/" class="btn btn-outline-primary">{{ __('Back') }}</a>
+        </div>
+    </form>
+{% endblock %}
