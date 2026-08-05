@@ -6,23 +6,25 @@ namespace Johncms\Modules\Language\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 
 final readonly class LanguageController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
     ) {
         $this->controllerContext->initModule('language');
     }
 
-    public function __invoke(Request $request): string
+    public function __invoke(Request $request): ViewResponse|string
     {
         if ($request->getMethod() === 'POST') {
             return '';
         }
 
-        return $this->render->render('language::index');
+        return new ViewResponse(
+            '@language/public/index.twig',
+            ['languages' => (array) config('johncms.lng_list', [])]
+        );
     }
 }

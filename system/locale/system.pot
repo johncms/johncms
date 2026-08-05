@@ -127,11 +127,11 @@ msgstr ""
 msgid "Who is online?"
 msgstr ""
 
-#: modules/language/templates/index.phtml:10
+#: modules/language/templates/public/index.twig:8
 msgid "Select language"
 msgstr ""
 
-#: modules/language/templates/index.phtml:28
+#: modules/language/templates/public/index.twig:26
 msgid "Apply"
 msgstr ""
 
