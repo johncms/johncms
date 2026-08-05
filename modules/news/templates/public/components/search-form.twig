@@ -1,0 +1,18 @@
+{#
+    The search box of the news, by words or by tag.
+
+    @param string action
+    @param string field       Name of the query field.
+    @param string placeholder
+    @param string value
+#}
+<form action="{{ action }}" method="get" class="search-in-nav news-search mb-3" style="max-width: 500px;">
+    <div class="input-with-inner-btn">
+        <input name="{{ field }}" type="text" minlength="4" placeholder="{{ placeholder }}" value="{{ value|default('') }}" class="form-control pe-5 border-radius-12">
+        <button type="submit" name="submit" value="1" class="btn icon-button">
+            <svg class="icon">
+                <use xlink:href="{{ asset('icons/sprite.svg') }}#search"></use>
+            </svg>
+        </button>
+    </div>
+</form>

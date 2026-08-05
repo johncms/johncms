@@ -6,13 +6,13 @@ namespace Johncms\Modules\News\Application\Controllers;
 
 use Illuminate\Database\Eloquent\Collection;
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\News\Application\Article;
 use Johncms\Modules\News\Application\MetaTagsManager;
 use Johncms\Modules\News\Application\Section;
 use Johncms\NavChain;
-use Johncms\System\View\Render;
 
 final readonly class SectionController
 {
@@ -20,7 +20,6 @@ final readonly class SectionController
         private ControllerContext $controllerContext,
         private NavChain $navChain,
         private MetaTagsManager $metaTagsManager,
-        private Render $render,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
     ) {
@@ -34,13 +33,11 @@ final readonly class SectionController
      * @param Article $article
      * @param Section $section
      * @param string $category
-     * @return string
      */
-    public function index(Article $article, Section $section, string $category = ''): string
+    public function index(Article $article, Section $section, string $category = ''): ViewResponse
     {
         $section->checkPath($category);
         $current_section = $section->getLastSection();
-        $this->render->addData($this->metaTagsManager->setForSection($current_section)->toArray());
 
         $sections = $section->getCachedSubsections($current_section);
 
@@ -55,12 +52,12 @@ final readonly class SectionController
             ? $article->getArticles($sections, $pagination->getPerPage(), $pagination->getOffset())
             : new Collection();
 
-        return $this->render->render(
-            'news::public/index',
-            [
+        return new ViewResponse(
+            '@news/public/index.twig',
+            $this->metaTagsManager->setForSection($current_section)->toArray() + [
                 'sections'        => $section->getSections($current_section->id ?? 0),
                 'articles'        => $articles,
-                'pagination'      => $pagination->render(),
+                'pagination'      => $pagination->hasPages() ? $pagination->render() : null,
                 'current_section' => $current_section,
             ]
         );

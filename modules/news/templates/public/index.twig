@@ -1,0 +1,46 @@
+{#
+    Articles of a section, or of the whole news archive.
+
+    @param iterable articles
+    @param iterable sections Child sections of the current one.
+    @param ?Markup  pagination
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    {% if app.user.isValid and app.user.rights >= 9 %}
+        <div class="mb-3 mt-n1">
+            <a href="/admin/news/" class="btn btn-outline-danger btn-sm">{{ __('Admin panel') }}</a>
+        </div>
+    {% endif %}
+
+    <div class="mb-3">
+        {% include '@news/public/components/search-form.twig' with {
+            action: '/news/search/',
+            field: 'query',
+            placeholder: __('Search query')
+        } only %}
+        {% if sections|length > 0 %}
+            <nav class="nav">
+                {% for section in sections %}
+                    <a class="nav-link ps-0" href="{{ section.url }}">{{ section.name }}</a>
+                {% endfor %}
+            </nav>
+        {% endif %}
+    </div>
+
+    <div>
+        {% if articles|length > 0 %}
+            {% for article in articles %}
+                {% include '@news/public/components/article-row.twig' with {article: article} only %}
+            {% endfor %}
+            {% if pagination %}
+                <div class="mt-3">
+                    {{ pagination }}
+                </div>
+            {% endif %}
+        {% else %}
+            <div class="alert alert-info">{{ __('The list is empty') }}</div>
+        {% endif %}
+    </div>
+{% endblock %}

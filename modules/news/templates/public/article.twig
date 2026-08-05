@@ -1,0 +1,87 @@
+{#
+    One article with its rating and comments.
+
+    @param NewsArticle  article
+    @param ?NewsSection current_section
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    <div id="blog">
+        <div class="p-no-margin overflow-hidden">
+            {# Sanitized by the model, with the media embedded, so it stays markup. #}
+            {{ article.text_safe }}
+        </div>
+        <div class="meta text-muted">
+            <div class="mt-3">{{ __('Published:') }} {{ article.display_date }}</div>
+            {% if article.author %}
+                <div class="mt-1">{{ __('Author:') }} <a href="{{ article.author.profile_url }}" rel="nofollow">{{ article.author.name }}</a></div>
+            {% endif %}
+            {% if article.tags is not empty %}
+                <div class="mt-1">
+                    {{ __('Tags:') }}
+                    {% for tag in article.tags %}
+                        <a href="/news/search_tags/?tag={{ tag|url_encode }}">{{ tag }}</a>{% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="article-stat border d-inline-flex align-items-center py-2 px-4 mt-3 border-radius-12">
+            <div class="d-flex align-items-center me-4 vue_app">
+                <div class="d-flex align-items-center me-2">{{ __('Rating:') }}</div>
+                <likes-component
+                    :article_id="{{ article.id }}"
+                    :rating="{{ article.rating }}"
+                    :can_vote="{{ app.user.isValid ? 'true' : 'false' }}"
+                    :voted="{{ article.current_vote }}"
+                ></likes-component>
+            </div>
+            {% if article.view_count %}
+                <div class="d-flex justify-content-end">
+                    <div class="text-muted forum-view-counter">
+                        <svg class="icon download-button-icon mt-n1 me-1">
+                            <use xlink:href="{{ asset('icons/sprite.svg') }}#eye"></use>
+                        </svg>
+                        {{ article.view_count }}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+        {% if app.locale != 'en' and asset_exists('ckeditor5/translations/' ~ app.locale ~ '.js') %}
+            <script src="{{ asset('ckeditor5/translations/' ~ app.locale ~ '.js', true) }}"></script>
+        {% endif %}
+        <script src="{{ asset('ckeditor5/ckeditor.js', true) }}"></script>
+        <div class="vue_app" id="article-comments">
+            <comments-component
+                upload_url="/news/comments/upload_file/"
+                :article_id="{{ article.id }}"
+                :can_write="{{ can_write ? 'true' : 'false' }}"
+                :i18n='{{ {
+                    write_comment: __('Write a comment'),
+                    send: __('Send'),
+                    delete: __('Delete'),
+                    quote: __('Quote'),
+                    reply: __('Reply'),
+                    comments: __('Comments'),
+                    empty_list: __('The list is empty')
+                }|json_encode }}'
+                language="{{ app.locale }}"
+            ></comments-component>
+        </div>
+
+        {% if not app.user.isValid %}
+            <div class="d-flex">
+                <div class="alert alert-warning">
+                    {# The link to the login page is part of the translated string. #}
+                    {{ __('You are not logged in. You must be <a href="/login/">logged in</a> to comment.')|raw }}
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="mt-3">
+            <a href="{{ current_section ? current_section.url : '/news/' }}">{{ __('Back') }}</a>
+        </div>
+    </div>
+{% endblock %}

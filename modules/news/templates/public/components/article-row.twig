@@ -1,0 +1,40 @@
+{#
+    One article in a list.
+
+    @param NewsArticle article
+#}
+<div class="new_post-item without_avatar">
+    <a href="{{ article.url }}" class="post-title">{{ article.name }}</a>
+    {% if article.preview_text_safe %}
+        {# Sanitized by the model, with the media embedded, so it stays markup. #}
+        <div class="post-body pt-2">{{ article.preview_text_safe }}</div>
+    {% endif %}
+    <div class="d-flex">
+        <div class="text-muted forum-view-counter">
+            <svg class="icon download-button-icon mt-n1 me-1">
+                <use xlink:href="{{ asset('icons/sprite.svg') }}#rating"/>
+            </svg>
+            {% if article.rating > 0 %}
+                <span class="text-success fw-bold">{{ article.rating }}</span>
+            {% elseif article.rating < 0 %}
+                <span class="text-danger fw-bold">{{ article.rating }}</span>
+            {% else %}
+                <span class="fw-bold">{{ article.rating }}</span>
+            {% endif %}
+        </div>
+        <div class="text-muted forum-view-counter ms-3">
+            <svg class="icon download-button-icon mt-n1 me-1">
+                <use xlink:href="{{ asset('icons/sprite.svg') }}#eye"/>
+            </svg>
+            {{ article.view_count }}
+        </div>
+        <div class="text-muted forum-view-counter ms-3 link-no-underline">
+            <a href="{{ article.url }}#article-comments">
+                <svg class="icon download-button-icon me-1">
+                    <use xlink:href="{{ asset('icons/sprite.svg') }}#forum"/>
+                </svg>
+                {{ article.comments_count }}
+            </a>
+        </div>
+    </div>
+</div>

@@ -11,7 +11,7 @@ use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\News\Domain\Models\NewsArticle;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 
 final class SearchController
 {
@@ -20,7 +20,6 @@ final class SearchController
     public function __construct(
         private readonly ControllerContext $controllerContext,
         private readonly NavChain $navChain,
-        private readonly Render $render,
         private readonly PaginationFactory $paginationFactory,
         private readonly PaginationGuard $paginationGuard,
     ) {
@@ -33,24 +32,15 @@ final class SearchController
      * The search page
      *
      * @param Request $request
-     * @return string
      */
-    public function index(Request $request): string
+    public function index(Request $request): ViewResponse
     {
         $page_title = __('Search');
         $this->navChain->add($page_title, '');
-        $this->render->addData(
-            [
-                'title'       => $page_title,
-                'page_title'  => $page_title,
-                'keywords'    => $this->config['meta_keywords'] ?? '',
-                'description' => $this->config['meta_description'] ?? '',
-            ]
-        );
 
         $query = $request->queryParam('query');
         $articles = null;
-        $pagination = '';
+        $pagination = null;
         if (! empty($query)) {
             $like = '%' . $query . '%';
             $pager = $this->paginationFactory->create($this->searchQuery($like)->count());
@@ -67,15 +57,22 @@ final class SearchController
                     ->limit($pager->getPerPage())
                     ->get();
             }
-            $pagination = $pager->render();
+            $pagination = $pager->hasPages() ? $pager->render() : null;
         }
 
-        return $this->render->render(
-            'news::public/search',
+        return new ViewResponse(
+            '@news/public/search.twig',
             [
-                'query'      => htmlspecialchars($query ?? ''),
-                'articles'   => $articles,
-                'pagination' => $pagination,
+                'title'            => $page_title,
+                'page_title'       => $page_title,
+                'keywords'         => $this->config['meta_keywords'] ?? '',
+                'description'      => $this->config['meta_description'] ?? '',
+                'query'            => (string) $query,
+                'articles'         => $articles,
+                'pagination'       => $pagination,
+                'form_action'      => '/news/search/',
+                'form_field'       => 'query',
+                'form_placeholder' => __('Search query'),
             ]
         );
     }
@@ -84,24 +81,15 @@ final class SearchController
      * The search by tags page
      *
      * @param Request $request
-     * @return string
      */
-    public function byTags(Request $request): string
+    public function byTags(Request $request): ViewResponse
     {
         $page_title = __('Search by tags');
         $this->navChain->add($page_title, '');
-        $this->render->addData(
-            [
-                'title'       => $page_title,
-                'page_title'  => $page_title,
-                'keywords'    => $this->config['meta_keywords'],
-                'description' => $this->config['meta_description'],
-            ]
-        );
 
         $query = $request->queryParam('tag');
         $articles = null;
-        $pagination = '';
+        $pagination = null;
         if (! empty($query)) {
             $like = '%' . $query . '%';
             $pager = $this->paginationFactory->create($this->tagsQuery($like)->count());
@@ -118,15 +106,22 @@ final class SearchController
                     ->limit($pager->getPerPage())
                     ->get();
             }
-            $pagination = $pager->render();
+            $pagination = $pager->hasPages() ? $pager->render() : null;
         }
 
-        return $this->render->render(
-            'news::public/search_by_tags',
+        return new ViewResponse(
+            '@news/public/search.twig',
             [
-                'query'      => htmlspecialchars($query ?? ''),
-                'articles'   => $articles,
-                'pagination' => $pagination,
+                'title'            => $page_title,
+                'page_title'       => $page_title,
+                'keywords'         => $this->config['meta_keywords'],
+                'description'      => $this->config['meta_description'],
+                'query'            => (string) $query,
+                'articles'         => $articles,
+                'pagination'       => $pagination,
+                'form_action'      => '/news/search_tags/',
+                'form_field'       => 'tag',
+                'form_placeholder' => __('Enter a tag'),
             ]
         );
     }

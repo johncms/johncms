@@ -2258,12 +2258,6 @@ parameters:
 			path: modules/news/src/Application/Controllers/CommentsController.php
 
 		-
-			message: '#^Variable \$query on left side of \?\? always exists and is not nullable\.$#'
-			identifier: nullCoalesce.variable
-			count: 2
-			path: modules/news/src/Application/Controllers/SearchController.php
-
-		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$current_vote\.$#'
 			identifier: property.notFound
 			count: 1

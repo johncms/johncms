@@ -3,6 +3,7 @@
 namespace Johncms\Modules\News\Domain\Models;
 
 use Carbon\Carbon;
+use Twig\Markup;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -184,25 +185,27 @@ class NewsArticle extends Model
     }
 
     /**
-     * Returns the url of the section page
-     *
-     * @return string
+     * The text of the article, sanitized and with the media embedded: markup by contract, null
+     * when there is nothing to show.
      */
-    public function getTextSafeAttribute(): string
+    public function getTextSafeAttribute(): ?Markup
     {
-        $text = Helpers::purifyHtml($this->text);
-        return $this->media->embedMedia($text);
+        return $this->markup($this->text);
     }
 
     /**
-     * Returns the url of the section page
-     *
-     * @return string
+     * The lead of the article, prepared the same way as the text.
      */
-    public function getPreviewTextSafeAttribute(): string
+    public function getPreviewTextSafeAttribute(): ?Markup
     {
-        $text = Helpers::purifyHtml($this->preview_text);
-        return $this->media->embedMedia($text);
+        return $this->markup($this->preview_text);
+    }
+
+    private function markup(?string $raw): ?Markup
+    {
+        $text = $this->media->embedMedia(Helpers::purifyHtml((string) $raw));
+
+        return $text === '' ? null : new Markup($text, 'UTF-8');
     }
 
     /**
@@ -270,7 +273,6 @@ class NewsArticle extends Model
         if (! empty($value)) {
             $tags = explode(',', $value);
             $tags = array_map('trim', $tags);
-            $tags = array_map('htmlspecialchars', $tags);
         }
         return $tags;
     }

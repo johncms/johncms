@@ -108,7 +108,7 @@
                maxlength="255"
                name="tags"
                id="tags"
-               value="<?= $data['fields']['tags'] ?>"
+               value="<?= $this->e($data['fields']['tags']) ?>"
                placeholder="<?= __('Tags') ?>"
         >
         <div class="small text-muted"><?= __('Enter words or phrases separated by commas') ?></div>
