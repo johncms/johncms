@@ -7,6 +7,7 @@ namespace Johncms\Http\Pagination;
 use Compolomus\Pagination\Pagination as PaginationCalculator;
 use Johncms\Http\QueryStringBuilder;
 use Johncms\System\View\Render;
+use Twig\Markup;
 
 final class Pagination
 {
@@ -117,9 +118,17 @@ final class Pagination
         return $items;
     }
 
-    public function render(): string
+    /**
+     * A finished block of navigation links. It is markup by contract, so a Twig template prints
+     * it with {{ pagination }} and needs no raw filter; a Plates template echoes it as before,
+     * since Markup is a string when used as one.
+     */
+    public function render(): Markup
     {
-        return $this->renderer->render('system::app/pagination', ['items' => $this->getItems()]);
+        return new Markup(
+            $this->renderer->render('system::app/pagination', ['items' => $this->getItems()]),
+            'UTF-8'
+        );
     }
 
     /**

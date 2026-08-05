@@ -1,0 +1,39 @@
+{#
+    @param string title            Heading of the card.
+    @param string message          Flash message about the last save, may be empty.
+    @param string form_action      Where the form posts to.
+    @param string back_url         Where the cancel button leads.
+    @param array  current_settings Settings of the visitor.
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="m-sm-auto m-md-auto m-lg-0 col-sm-12 col-md-8 col-lg-7 col-xl-7">
+            {% if message|default('') %}
+                {% include '@theme/components/alert.twig' with {alert_type: 'alert-success', alert: message} only %}
+            {% endif %}
+            <div class="card shadow border-0">
+                <form action="{{ form_action }}" method="post">
+                    <div class="card-body">
+                        <h3>{{ title }}</h3>
+                        <div class="custom-control custom-checkbox mb-3">
+                            <input type="checkbox"
+                                   class="custom-control-input"
+                                   name="show_forum_unread"
+                                   value="1"
+                                   id="show_forum_unread"{% if current_settings.show_forum_unread %} checked{% endif %}>
+                            <label class="custom-control-label" for="show_forum_unread">{{ __('Display the number of unread messages in the forum') }}</label>
+                        </div>
+                        <div class="d-flex flex-wrap justify-content-between">
+                            <div class="mb-1 me-1">
+                                <input type="submit" name="submit" value="{{ __('Save') }}" class="btn btn-primary"/>
+                                <a href="{{ back_url }}" class="btn btn-secondary">{{ __('Cancel') }}</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -8,15 +8,14 @@ use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Notifications\Application\UseCases\GetNotificationListUseCase;
 use Johncms\NavChain;
-use Johncms\System\View\Render;
 
 final readonly class IndexController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private GetNotificationListUseCase $getNotificationListUseCase,
         private PaginationFactory $paginationFactory,
@@ -25,7 +24,7 @@ final readonly class IndexController
         $this->controllerContext->initModule('notifications');
     }
 
-    public function __invoke(): string
+    public function __invoke(): ViewResponse
     {
         $this->navChain->add(__('Notifications'), '/notifications/');
 
@@ -39,19 +38,18 @@ final readonly class IndexController
         $result = $this->getNotificationListUseCase->getPage($pagination->getPerPage(), $pagination->getOffset());
 
         $meta = new PageMeta(__('Notifications'), $pagination->getCurrentPage());
-        $this->render->addData([
-            'title'       => $meta->title,
-            'page_title'  => __('Notifications'),
-            'description' => $meta->description,
-        ]);
 
-        return $this->render->render('notifications::index', [
-            'data' => [
+        return new ViewResponse(
+            '@notifications/public/index.twig',
+            [
+                'title'         => $meta->title,
+                'page_title'    => __('Notifications'),
+                'description'   => $meta->description,
                 'notifications' => $result->systemNotifications,
                 'items'         => $result->items,
                 'total'         => $pagination->getTotal(),
-                'pagination'    => $pagination->render(),
-            ],
-        ]);
+                'pagination'    => $pagination->hasPages() ? $pagination->render() : null,
+            ]
+        );
     }
 }

@@ -1,0 +1,73 @@
+{#
+    @param string   message       Flash message about the last action, may be empty.
+    @param array    notifications System notifications: moderation queues, unread mail, bans.
+    @param iterable items         Notification records of the visitor.
+    @param int      total         How many records there are in total.
+    @param ?Markup  pagination    Rendered navigation, null when everything fits on one page.
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    {% if message|default('') %}
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-success', alert: message} only %}
+    {% endif %}
+
+    {% if notifications is empty and total == 0 %}
+        <div class="alert alert-success">
+            {{ __('All notifications have already been read') }}
+        </div>
+    {% elseif notifications is not empty %}
+        <div class="small-full-width list-items overflow-hidden border-top">
+            {% for notification in notifications %}
+                <a href="{{ notification.url }}" class="list-item d-flex border-bottom ps-lg-0">
+                    <div class="flex-grow-1 item-content">
+                        <div class="item-name">{{ notification.name }}</div>
+                        {% if notification.description|default('') %}
+                            <div class="item-desc">{{ notification.description }}</div>
+                        {% endif %}
+                    </div>
+                    {% if notification.counter|default(0) %}
+                        <div class="icon-right d-flex align-items-center pe-0">
+                            <div class="badge bg-danger rounded-pill">{{ notification.counter }}</div>
+                        </div>
+                    {% endif %}
+                    <div class="icon-right">
+                        <svg class="icon">
+                            <use xlink:href="{{ asset('icons/sprite.svg') }}#chevron-right"/>
+                        </svg>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if total > 0 %}
+        <div class="list-items mb-3">
+            {% for item in items %}
+                <div class="new_post-item without_avatar">
+                    <div class="post-body">
+                        <div class="small text-muted">{{ item.created_at }}</div>
+                        <div>
+                            {# The text of an event is markup by contract, see Notification::getMessageAttribute(). #}
+                            {{ item.message }}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div>
+            <div>{{ __('Total') }}: {{ total }}</div>
+            {% if pagination %}
+                <div class="mt-1">{{ pagination }}</div>
+            {% endif %}
+        </div>
+        <div class="mb-2 mt-2">
+            <form action="/notifications/clear/" method="post">
+                <button type="submit" name="clear" value="1" class="btn btn-outline-primary">{{ __('Clear notifications') }}</button>
+            </form>
+        </div>
+    {% endif %}
+    <div>
+        <a href="/notifications/settings/">{{ __('Settings') }}</a>
+    </div>
+{% endblock %}

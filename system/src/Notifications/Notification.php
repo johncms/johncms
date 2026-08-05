@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Johncms\Casts\DateHuman;
 use Johncms\Users\User;
+use Twig\Markup;
 
 /**
  * Class Notification
@@ -30,7 +31,7 @@ use Johncms\Users\User;
  * @property int $entity_id - Идентификатор сущности к которой относится уведомление (например сообщение на форуме)
  * @property array $fields - Массив полей, который будет доступен для использования в шаблонах
  *
- * @property array $message - Вычисляемое свойство - сообщение
+ * @property Markup $message - Вычисляемое свойство - сообщение
  * @property array $read_at - Дата прочтения
  * @property array $created_at - Дата создания
  *
@@ -131,7 +132,12 @@ class Notification extends Model
     /**
      * Обработанное сообщение
      */
-    public function getMessageAttribute()
+    /**
+     * The text of the event, assembled from the template declared in the configuration of the
+     * module. Those templates carry markup — links to the entity the event is about — so the
+     * result is markup and says so.
+     */
+    public function getMessageAttribute(): Markup
     {
         $this->getTemplates();
         $message = 'Template is not defined';
@@ -148,6 +154,6 @@ class Notification extends Model
                 }
             }
         }
-        return $message;
+        return new Markup($message, 'UTF-8');
     }
 }

@@ -216,7 +216,7 @@ msgid "Are you sure you want to leave the site?"
 msgstr ""
 
 #: modules/login/templates/logout.phtml:12
-#: modules/notifications/templates/settings.phtml:36
+#: modules/notifications/templates/public/settings.twig:31
 #: themes/default/templates/system/pages/comments_delete.phtml:26
 msgid "Cancel"
 msgstr ""
@@ -225,21 +225,21 @@ msgstr ""
 msgid "Notifications are cleared!"
 msgstr ""
 
-#: modules/notifications/src/Application/Controllers/IndexController.php:30
-#: modules/notifications/src/Application/Controllers/IndexController.php:41
-#: modules/notifications/src/Application/Controllers/IndexController.php:44
-#: modules/notifications/src/Application/Controllers/SettingsController.php:34
+#: modules/notifications/src/Application/Controllers/IndexController.php:29
+#: modules/notifications/src/Application/Controllers/IndexController.php:40
+#: modules/notifications/src/Application/Controllers/IndexController.php:46
+#: modules/notifications/src/Application/Controllers/SettingsController.php:33
 #: themes/default/templates/components/sidebar-user-menu.twig:41
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:40
 msgid "Notifications"
 msgstr ""
 
-#: modules/notifications/src/Application/Controllers/SettingsController.php:32
-#: modules/notifications/templates/index.phtml:72
+#: modules/notifications/src/Application/Controllers/SettingsController.php:31
+#: modules/notifications/templates/public/index.twig:71
 msgid "Settings"
 msgstr ""
 
-#: modules/notifications/src/Application/Controllers/SettingsController.php:40
+#: modules/notifications/src/Application/Controllers/SettingsController.php:39
 msgid "Settings saved!"
 msgstr ""
 
@@ -271,23 +271,23 @@ msgstr ""
 msgid "Comments"
 msgstr ""
 
-#: modules/notifications/templates/index.phtml:20
+#: modules/notifications/templates/public/index.twig:17
 msgid "All notifications have already been read"
 msgstr ""
 
-#: modules/notifications/templates/index.phtml:60
+#: modules/notifications/templates/public/index.twig:59
 msgid "Total"
 msgstr ""
 
-#: modules/notifications/templates/index.phtml:67
+#: modules/notifications/templates/public/index.twig:66
 msgid "Clear notifications"
 msgstr ""
 
-#: modules/notifications/templates/settings.phtml:31
+#: modules/notifications/templates/public/settings.twig:26
 msgid "Display the number of unread messages in the forum"
 msgstr ""
 
-#: modules/notifications/templates/settings.phtml:35
+#: modules/notifications/templates/public/settings.twig:30
 msgid "Save"
 msgstr ""
 

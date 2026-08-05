@@ -7,6 +7,7 @@ namespace Tests\Unit\Http\Pagination;
 use Johncms\Http\Pagination\Pagination;
 use Johncms\Http\QueryStringBuilder;
 use Johncms\System\View\Render;
+use Twig\Markup;
 use PHPUnit\Framework\TestCase;
 
 final class PaginationTest extends TestCase
@@ -133,7 +134,12 @@ final class PaginationTest extends TestCase
             ->with('system::app/pagination', ['items' => $pagination->getItems()])
             ->willReturn('<nav></nav>');
 
-        self::assertSame('<nav></nav>', $pagination->render());
+        $rendered = $pagination->render();
+
+        // Markup, so a Twig template prints it without a raw filter; still a string wherever it
+        // is echoed, which is what the Plates templates keep doing.
+        self::assertInstanceOf(Markup::class, $rendered);
+        self::assertSame('<nav></nav>', (string) $rendered);
     }
 
     private function makePagination(

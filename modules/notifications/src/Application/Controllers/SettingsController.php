@@ -9,7 +9,7 @@ use Johncms\Modules\Notifications\Application\UseCases\SaveSettingsUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,7 +18,6 @@ final readonly class SettingsController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private Session $session,
         private NavChain $navChain,
         private User $currentUser,
@@ -27,7 +26,7 @@ final readonly class SettingsController
         $this->controllerContext->initModule('notifications');
     }
 
-    public function __invoke(Request $request): Response
+    public function __invoke(Request $request): Response|ViewResponse
     {
         $title = __('Settings');
 
@@ -46,20 +45,16 @@ final readonly class SettingsController
         $defaultSettings = ['show_forum_unread' => true];
         $currentSettings = array_merge($defaultSettings, ($this->currentUser->notification_settings ?? []));
 
-        $this->render->addData([
-            'title'      => $title,
-            'page_title' => $title,
-        ]);
-
-        return new Response($this->render->render('notifications::settings', [
-            'data' => [
+        return new ViewResponse(
+            '@notifications/public/settings.twig',
+            [
                 'title'            => $title,
                 'page_title'       => $title,
                 'back_url'         => '/notifications/',
                 'form_action'      => '/notifications/settings/',
                 'message'          => $message,
                 'current_settings' => $currentSettings,
-            ],
-        ]));
+            ]
+        );
     }
 }
