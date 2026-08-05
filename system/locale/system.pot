@@ -291,36 +291,35 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-#: modules/redirect/src/Application/Controllers/RedirectController.php:64
+#: modules/redirect/src/Application/Controllers/RedirectController.php:60
 msgid "Redirect to an external link"
 msgstr ""
 
-#: modules/redirect/templates/index.phtml:27
+#: modules/redirect/templates/public/index.twig:12
 msgid "External Link"
 msgstr ""
 
-#: modules/redirect/templates/index.phtml:28
+#: modules/redirect/templates/public/index.twig:13
 msgid "ATTENTION!"
 msgstr ""
 
-#: modules/redirect/templates/index.phtml:30
+#: modules/redirect/templates/public/index.twig:15
 msgid "You are going to leave our site and go to an external link"
 msgstr ""
 
-#: modules/redirect/templates/index.phtml:34
+#: modules/redirect/templates/public/index.twig:19
 msgid "Administration of our site is not responsible for the content of external sites"
 msgstr ""
 
-#: modules/redirect/templates/index.phtml:36
-#, php-format
+#: modules/redirect/templates/public/index.twig:21
 msgid "It is recommended not to specify your data, relating to %s (Login, Password), on third party sites"
 msgstr ""
 
-#: modules/redirect/templates/index.phtml:40
+#: modules/redirect/templates/public/index.twig:26
 msgid "Go to Link"
 msgstr ""
 
-#: modules/redirect/templates/index.phtml:44
+#: modules/redirect/templates/public/index.twig:30
 #: system/src/Comments.php:203
 #: system/src/Comments.php:239
 #: system/src/Comments.php:252

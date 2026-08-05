@@ -62,6 +62,7 @@ final class KernelSmokeTest extends FunctionalTestCase
             '/login',
             '/registration',
             '/contacts',
+            '/redirect?url=https%3A%2F%2Fexample.com%2F',
         ];
 
         return array_combine($routes, array_map(static fn (string $uri): array => [$uri], $routes));

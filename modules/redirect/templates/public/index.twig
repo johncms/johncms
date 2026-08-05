@@ -1,0 +1,32 @@
+{#
+    @param string redirect_url URL-encoded target, echoed back to the form.
+    @param string url          Target link as the visitor sees it.
+    @param string referer      Page the visitor came from.
+    @param string site_host    Host of this site, named in the warning.
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    <div class="alert alert-danger" style="padding-top: 16px; padding-bottom: 16px">
+        <form action="?url={{ redirect_url }}" method="post">
+            <h3>{{ __('External Link') }}</h3>
+            <strong>{{ __('ATTENTION!') }}</strong>
+            <p class="break-word">
+                {{ __('You are going to leave our site and go to an external link') }}:
+                <span class="fw-bold">{{ url }}</span>
+            </p>
+            <p>
+                {{ __('Administration of our site is not responsible for the content of external sites') }}<br>
+                {# The host is emphasised inside the sentence, so the formatted string is markup. #}
+                {{ __(
+                    'It is recommended not to specify your data, relating to %s (Login, Password), on third party sites',
+                    '<strong>' ~ site_host|e ~ '</strong>'
+                )|raw }}
+            </p>
+            <input type="submit" name="submit" value="{{ __('Go to Link') }}" class="btn btn-danger">
+        </form>
+    </div>
+    <div class="mt-2">
+        <a href="{{ referer }}">{{ __('Back') }}</a>
+    </div>
+{% endblock %}
