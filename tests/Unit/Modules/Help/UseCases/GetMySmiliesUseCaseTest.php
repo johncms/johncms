@@ -45,7 +45,8 @@ final class GetMySmiliesUseCaseTest extends TestCase
         self::assertTrue($items[0]['can_del']);
         self::assertSame('beta', $items[0]['lat_smile']);
         self::assertSame(':бета:', $items[0]['smile']);
-        self::assertSame('<img>', $items[0]['picture']);
+        // The rendered smiley is markup: the template prints the image tag as it is.
+        self::assertSame('<img>', (string) $items[0]['picture']);
         self::assertSame('gamma', $items[1]['lat_smile']);
     }
 

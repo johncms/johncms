@@ -1,0 +1,43 @@
+{#
+    @param string back_url
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    <ol>
+        <li><strong>{{ __('FORBIDDEN') }}</strong>
+            <ol>
+                <li>{{ __('Advertising messages') }}</li>
+                <li>{{ __('The messages containing direct propagation of racial, national and religious animosity') }}</li>
+                <li>{{ __('Any abusive, obscene, vulgar, slanderous, hateful, threatening and sexually-oriented messages or any other material that may violate any applicable laws') }}</li>
+                <li>{{ __('The messages obviously offending someone, espcially forum users') }}</li>
+                <li>{{ __('Purposely to deform a writing of nicknames of other users for the purpose of giving to the message an offensive shade') }}</li>
+                <li>{{ __('Publishing deleted by moderator messages repeatedly') }}</li>
+                <li>{{ __('Post messages not related to the topic') }}</li>
+                <li>{{ __('Continuing topics that have been closed by moderator') }}</li>
+            </ol>
+        </li>
+        <li><strong>{{ __('ABSOLUTELY FORBIDDEN') }}</strong>
+            <ol>
+                <li>{{ __('Writing in the public topics a discontent with inappropriate actions of other users and discussing about moderators working. Use private messages for this purpose') }}</li>
+                <li>{{ __('Register the nicknames having offensive tone for other users') }}</li>
+            </ol>
+        </li>
+        <li><strong>{{ __('UNACCEPTABLE') }}</strong>
+            <ol>
+                <li>{{ __('Quote full messages of the previous user and quote the messages already containing other quotes') }}</li>
+                <li>{{ __('Post messages only contains external link') }}</li>
+                <li>{{ __('Post messages written in translite') }}</li>
+                <li>{{ __('Posting of purposeless messages: consisting of smileys only or posts like "Ok", "What?", "Who is there?", etc.') }}</li>
+            </ol>
+        </li>
+    </ol>
+    <div>
+        {{ __('Message posted despite the above warnings will be changed or deleted.') }}<br/>
+        {{ __('This rule applies to all members and moderators, repeated actions will make you get ban or even lose your account.') }}
+    </div>
+
+    <div class="mt-3">
+        <a href="{{ back_url }}">{{ __('Back') }}</a>
+    </div>
+{% endblock %}

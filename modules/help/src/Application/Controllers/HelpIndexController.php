@@ -15,21 +15,20 @@ namespace Johncms\Modules\Help\Application\Controllers;
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\Request;
 use Johncms\Modules\Help\Application\HelpLegacyRedirectHandler;
+use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
-use Johncms\System\View\Render;
 
 final readonly class HelpIndexController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private HelpLegacyRedirectHandler $legacyRedirectHandler,
     ) {
         $this->controllerContext->initModule('help');
     }
 
-    public function __invoke(Request $request): string
+    public function __invoke(Request $request): ViewResponse
     {
         $this->legacyRedirectHandler->handle($request);
 
@@ -37,13 +36,13 @@ final readonly class HelpIndexController
 
         $this->navChain->add($title, '/help/');
 
-        $this->render->addData([
-            'title'      => $title,
-            'page_title' => $title,
-        ]);
-
-        return $this->render->render('help::index', [
-            'back_url' => '/',
-        ]);
+        return new ViewResponse(
+            '@help/public/index.twig',
+            [
+                'title'      => $title,
+                'page_title' => $title,
+                'back_url'   => '/',
+            ]
+        );
     }
 }

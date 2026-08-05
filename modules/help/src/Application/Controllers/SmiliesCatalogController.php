@@ -13,8 +13,8 @@ declare(strict_types=1);
 namespace Johncms\Modules\Help\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
-use Johncms\System\View\Render;
 use Johncms\Users\User;
 
 final readonly class SmiliesCatalogController
@@ -23,24 +23,18 @@ final readonly class SmiliesCatalogController
 
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private User $currentUser,
     ) {
         $this->controllerContext->initModule('help');
     }
 
-    public function __invoke(): string
+    public function __invoke(): ViewResponse
     {
         $title = __('Smiles');
 
         $this->navChain->add(__('Information, FAQ'), '/help/');
         $this->navChain->add($title, '/help/smilies/');
-
-        $this->render->addData([
-            'title'      => $title,
-            'page_title' => $title,
-        ]);
 
         $items = [];
 
@@ -73,17 +67,20 @@ final readonly class SmiliesCatalogController
         foreach ($categories as $cat => $name) {
             $items[] = [
                 'url'   => '/help/smilies/' . urlencode($cat) . '/',
-                'name'  => htmlspecialchars($name),
+                'name'  => $name,
                 'count' => count(glob(ASSETS_PATH . 'emoticons/user/' . $cat . '/*.{gif,jpg,png}', GLOB_BRACE) ?: []),
             ];
         }
 
-        return $this->render->render('help::smiles', [
-            'data' => [
-                'items'    => $items,
-                'back_url' => '/help/',
-            ],
-        ]);
+        return new ViewResponse(
+            '@help/public/catalog.twig',
+            [
+                'title'      => $title,
+                'page_title' => $title,
+                'items'      => $items,
+                'back_url'   => '/help/',
+            ]
+        );
     }
 
     private function smiliesCategories(): array

@@ -14,7 +14,7 @@ namespace Johncms\Modules\Help\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,22 +25,25 @@ final readonly class SetMySmiliesController
 
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private User $currentUser,
     ) {
         $this->controllerContext->initModule('help');
     }
 
-    public function __invoke(Request $request): Response
+    public function __invoke(Request $request): Response|ViewResponse
     {
         if (! $this->currentUser->isValid()) {
-            return new Response($this->render->render('system::pages/result', [
-                'title'         => __('Access denied'),
-                'type'          => 'alert-danger',
-                'message'       => __('You are not logged in'),
-                'back_url'      => '/help/smilies/',
-                'back_url_name' => __('Back'),
-            ]), Response::HTTP_FORBIDDEN);
+            return new ViewResponse(
+                '@theme/pages/result.twig',
+                [
+                    'title'         => __('Access denied'),
+                    'type'          => 'alert-danger',
+                    'message'       => __('You are not logged in'),
+                    'back_url'      => '/help/smilies/',
+                    'back_url_name' => __('Back'),
+                ],
+                Response::HTTP_FORBIDDEN
+            );
         }
 
         $adm = (bool) $request->queryParam('adm');

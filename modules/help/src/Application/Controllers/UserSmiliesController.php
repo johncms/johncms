@@ -17,8 +17,8 @@ use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Help\Application\UseCases\GetUserSmiliesUseCase;
+use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
-use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -26,7 +26,6 @@ final readonly class UserSmiliesController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private User $currentUser,
         private GetUserSmiliesUseCase $userSmilies,
@@ -36,16 +35,20 @@ final readonly class UserSmiliesController
         $this->controllerContext->initModule('help');
     }
 
-    public function __invoke(string $cat): Response
+    public function __invoke(string $cat): ViewResponse
     {
         if (! $this->userSmilies->isValidCategory($cat)) {
-            return new Response($this->render->render('system::pages/result', [
-                'title'         => __('Wrong data'),
-                'type'          => 'alert-danger',
-                'message'       => __('The directory does not exist'),
-                'back_url'      => '/help/smilies/',
-                'back_url_name' => __('Back'),
-            ]), Response::HTTP_NOT_FOUND);
+            return new ViewResponse(
+                '@theme/pages/result.twig',
+                [
+                    'title'         => __('Wrong data'),
+                    'type'          => 'alert-danger',
+                    'message'       => __('The directory does not exist'),
+                    'back_url'      => '/help/smilies/',
+                    'back_url_name' => __('Back'),
+                ],
+                Response::HTTP_NOT_FOUND
+            );
         }
 
         $title = $this->userSmilies->categoryTitle($cat);
@@ -62,30 +65,28 @@ final readonly class UserSmiliesController
         }
 
         $meta = new PageMeta($title . ' — ' . __('Smiles'), $pagination->getCurrentPage());
-        $this->render->addData([
-            'title'       => $meta->title,
-            'page_title'  => $title,
-            'description' => $meta->description,
-        ]);
 
         $total = $pagination->getTotal();
         $data = [
-            'items'    => [],
-            'total'    => $total,
-            'back_url' => '/help/smilies/',
+            'title'       => $meta->title,
+            'page_title'  => $title,
+            'description' => $meta->description,
+            'items'       => [],
+            'total'       => $total,
+            'back_url'    => '/help/smilies/',
         ];
 
         if ($total > 0) {
             if ($this->currentUser->isValid()) {
-                $data['user_smiles_current'] = $this->userSmilies->userSmiliesCount();
-                $data['user_smiles_max'] = GetUserSmiliesUseCase::USER_SMILIES_MAX;
+                $data['user_smilies_current'] = $this->userSmilies->userSmiliesCount();
+                $data['user_smilies_max'] = GetUserSmiliesUseCase::USER_SMILIES_MAX;
             }
 
             $data['items'] = $this->userSmilies->getPage($cat, $pagination->getPerPage(), $pagination->getOffset());
-            $data['pagination'] = $pagination->render();
+            $data['pagination'] = $pagination->hasPages() ? $pagination->render() : null;
             $data['form_action'] = '/help/smilies/set/?cat=' . urlencode($cat) . '&page=' . $pagination->getCurrentPage();
         }
 
-        return new Response($this->render->render('help::smiles_list', ['data' => $data]));
+        return new ViewResponse('@help/public/smilies-list.twig', $data);
     }
 }

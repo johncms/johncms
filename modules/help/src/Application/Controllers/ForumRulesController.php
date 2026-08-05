@@ -13,33 +13,32 @@ declare(strict_types=1);
 namespace Johncms\Modules\Help\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
-use Johncms\System\View\Render;
 
 final readonly class ForumRulesController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
     ) {
         $this->controllerContext->initModule('help');
     }
 
-    public function __invoke(): string
+    public function __invoke(): ViewResponse
     {
         $title = __('Forum rules');
 
         $this->navChain->add(__('Information, FAQ'), '/help/');
         $this->navChain->add($title);
 
-        $this->render->addData([
-            'title'      => $title,
-            'page_title' => $title,
-        ]);
-
-        return $this->render->render('help::forum_rules', [
-            'back_url' => '/help/',
-        ]);
+        return new ViewResponse(
+            '@help/public/forum-rules.twig',
+            [
+                'title'      => $title,
+                'page_title' => $title,
+                'back_url'   => '/help/',
+            ]
+        );
     }
 }

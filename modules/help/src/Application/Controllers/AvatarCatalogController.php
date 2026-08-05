@@ -13,30 +13,24 @@ declare(strict_types=1);
 namespace Johncms\Modules\Help\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
-use Johncms\System\View\Render;
 
 final readonly class AvatarCatalogController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
     ) {
         $this->controllerContext->initModule('help');
     }
 
-    public function __invoke(): string
+    public function __invoke(): ViewResponse
     {
         $title = __('Avatars');
 
         $this->navChain->add(__('Information, FAQ'), '/help/');
         $this->navChain->add($title, '/help/avatars/');
-
-        $this->render->addData([
-            'title'      => $title,
-            'page_title' => $title,
-        ]);
 
         $dirs = glob(ASSETS_PATH . 'avatars/*', GLOB_ONLYDIR) ?: [];
         $items = [];
@@ -44,16 +38,19 @@ final readonly class AvatarCatalogController
             $nameFile = $dir . '/name.txt';
             $items[] = [
                 'url'   => '/help/avatars/' . basename($dir) . '/',
-                'name'  => is_file($nameFile) ? htmlentities((string) file_get_contents($nameFile), ENT_QUOTES, 'utf-8') : basename($dir),
+                'name'  => is_file($nameFile) ? trim((string) file_get_contents($nameFile)) : basename($dir),
                 'count' => count(glob($dir . '/*.png') ?: []),
             ];
         }
 
-        return $this->render->render('help::avatars', [
-            'data' => [
-                'items'    => $items,
-                'back_url' => '/help/',
-            ],
-        ]);
+        return new ViewResponse(
+            '@help/public/catalog.twig',
+            [
+                'title'      => $title,
+                'page_title' => $title,
+                'items'      => $items,
+                'back_url'   => '/help/',
+            ]
+        );
     }
 }

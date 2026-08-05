@@ -17,8 +17,8 @@ use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Help\Application\UseCases\GetMySmiliesUseCase;
+use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
-use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -26,7 +26,6 @@ final readonly class MySmiliesController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private User $currentUser,
         private GetMySmiliesUseCase $mySmilies,
@@ -36,16 +35,20 @@ final readonly class MySmiliesController
         $this->controllerContext->initModule('help');
     }
 
-    public function __invoke(): Response
+    public function __invoke(): ViewResponse
     {
         if (! $this->currentUser->isValid()) {
-            return new Response($this->render->render('system::pages/result', [
-                'title'         => __('Access denied'),
-                'type'          => 'alert-danger',
-                'message'       => __('You are not logged in'),
-                'back_url'      => '/help/smilies/',
-                'back_url_name' => __('Back'),
-            ]), Response::HTTP_FORBIDDEN);
+            return new ViewResponse(
+                '@theme/pages/result.twig',
+                [
+                    'title'         => __('Access denied'),
+                    'type'          => 'alert-danger',
+                    'message'       => __('You are not logged in'),
+                    'back_url'      => '/help/smilies/',
+                    'back_url_name' => __('Back'),
+                ],
+                Response::HTTP_FORBIDDEN
+            );
         }
 
         $title = __('My smilies');
@@ -62,20 +65,19 @@ final readonly class MySmiliesController
         }
 
         $meta = new PageMeta($title . ' — ' . __('Smiles'), $pagination->getCurrentPage());
-        $this->render->addData([
-            'title'       => $meta->title,
-            'page_title'  => $title,
-            'description' => $meta->description,
-        ]);
 
-        return new Response($this->render->render('help::my_smiles_list', [
-            'data' => [
+        return new ViewResponse(
+            '@help/public/my-smilies-list.twig',
+            [
+                'title'       => $meta->title,
+                'page_title'  => $title,
+                'description' => $meta->description,
                 'items'       => $this->mySmilies->getPage($pagination->getPerPage(), $pagination->getOffset()),
                 'total'       => $pagination->getTotal(),
-                'pagination'  => $pagination->render(),
+                'pagination'  => $pagination->hasPages() ? $pagination->render() : null,
                 'form_action' => '/help/smilies/set/?page=' . $pagination->getCurrentPage(),
                 'back_url'    => '/help/smilies/',
-            ],
-        ]));
+            ]
+        );
     }
 }

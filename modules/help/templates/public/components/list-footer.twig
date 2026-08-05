@@ -1,0 +1,20 @@
+{#
+    Navigation, the total and the way back under a list.
+
+    @param ?Markup pagination Null when everything fits on one page.
+    @param int     total
+    @param string  back_url
+#}
+<div class="mt-4">
+    {% if pagination|default(null) %}
+        <div>
+            {{ pagination }}
+        </div>
+    {% endif %}
+    {% if total > 0 %}
+        <div>{{ __('Total:') }} {{ total }}</div>
+    {% endif %}
+</div>
+<div>
+    <a href="{{ back_url }}">{{ __('Back') }}</a>
+</div>

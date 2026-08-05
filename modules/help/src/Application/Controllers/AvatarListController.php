@@ -16,15 +16,14 @@ use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Help\Application\UseCases\GetAvatarsUseCase;
+use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
-use Johncms\System\View\Render;
 use Symfony\Component\HttpFoundation\Response;
 
 final readonly class AvatarListController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private GetAvatarsUseCase $avatars,
         private PaginationFactory $paginationFactory,
@@ -33,16 +32,20 @@ final readonly class AvatarListController
         $this->controllerContext->initModule('help');
     }
 
-    public function __invoke(string $id): Response
+    public function __invoke(string $id): ViewResponse
     {
         if (! $this->avatars->directoryExists($id)) {
-            return new Response($this->render->render('system::pages/result', [
-                'title'         => __('Wrong data'),
-                'type'          => 'alert-danger',
-                'message'       => __('The directory does not exist'),
-                'back_url'      => '/help/avatars/',
-                'back_url_name' => __('Back'),
-            ]), Response::HTTP_NOT_FOUND);
+            return new ViewResponse(
+                '@theme/pages/result.twig',
+                [
+                    'title'         => __('Wrong data'),
+                    'type'          => 'alert-danger',
+                    'message'       => __('The directory does not exist'),
+                    'back_url'      => '/help/avatars/',
+                    'back_url_name' => __('Back'),
+                ],
+                Response::HTTP_NOT_FOUND
+            );
         }
 
         $title = $this->avatars->directoryTitle($id);
@@ -51,11 +54,6 @@ final readonly class AvatarListController
         $this->navChain->add(__('Avatars'), '/help/avatars/');
         $this->navChain->add($title);
 
-        $this->render->addData([
-            'title'      => $title,
-            'page_title' => $title,
-        ]);
-
         $pagination = $this->paginationFactory->create($this->avatars->count($id), GetAvatarsUseCase::PER_PAGE);
 
         $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
@@ -63,14 +61,16 @@ final readonly class AvatarListController
             redirect($redirectUrl);
         }
 
-        return new Response($this->render->render('help::avatar_list', [
-            'data' => [
+        return new ViewResponse(
+            '@help/public/avatar-list.twig',
+            [
+                'title'      => $title,
+                'page_title' => $title,
                 'items'      => $this->avatars->getPage($id, $pagination->getPerPage(), $pagination->getOffset()),
                 'total'      => $pagination->getTotal(),
-                'per_page'   => GetAvatarsUseCase::PER_PAGE,
-                'pagination' => $pagination->render(),
+                'pagination' => $pagination->hasPages() ? $pagination->render() : null,
                 'back_url'   => '/help/avatars/',
-            ],
-        ]));
+            ]
+        );
     }
 }

@@ -1,0 +1,33 @@
+{#
+    Avatars of one set.
+
+    @param list<array{picture: string, set_url: ?string}> items
+    @param int      total
+    @param ?Markup  pagination
+    @param string   back_url
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    {% if items is empty %}
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-info', alert: __('The list is empty')} only %}
+    {% else %}
+        <div class="d-flex flex-wrap">
+            {% for item in items %}
+                <div class="flex-grow-0">
+                    <div style="width: 100px;" class="mb-2 me-2">
+                        {% if item.set_url|default('') %}
+                            <a href="{{ item.set_url }}">
+                                <img src="{{ item.picture }}" alt="." class="img-thumbnail">
+                            </a>
+                        {% else %}
+                            <img src="{{ item.picture }}" alt="." class="img-thumbnail">
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% include '@help/public/components/list-footer.twig' with {pagination: pagination, total: total, back_url: back_url} only %}
+{% endblock %}

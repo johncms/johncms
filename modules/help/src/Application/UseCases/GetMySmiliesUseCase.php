@@ -7,6 +7,7 @@ namespace Johncms\Modules\Help\Application\UseCases;
 use Johncms\Smilies\SmiliesRendererInterface;
 use Johncms\Users\User;
 use Johncms\Utils\Transliterator;
+use Twig\Markup;
 
 final readonly class GetMySmiliesUseCase
 {
@@ -22,7 +23,7 @@ final readonly class GetMySmiliesUseCase
     }
 
     /**
-     * @return list<array{can_del: bool, lat_smile: string, smile: string, picture: string}>
+     * @return list<array{can_del: bool, lat_smile: string, smile: string, picture: Markup}>
      */
     public function getPage(int $limit, int $offset): array
     {
@@ -33,7 +34,8 @@ final readonly class GetMySmiliesUseCase
                 'can_del'   => true,
                 'lat_smile' => $value,
                 'smile'     => Transliterator::toCyrillic($smile),
-                'picture'   => $this->smiliesRenderer->render($smile, $this->currentUser->rights >= 1),
+                // The renderer returns the image tag of the smiley, so it is markup by contract.
+                'picture'   => new Markup($this->smiliesRenderer->render($smile, $this->currentUser->rights >= 1), 'UTF-8'),
             ];
         }
 

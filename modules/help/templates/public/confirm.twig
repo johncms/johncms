@@ -1,0 +1,33 @@
+{#
+    Confirmation of an action, with a preview of what it applies to.
+
+    @param string form_action
+    @param string message
+    @param string img             URL of the preview, optional.
+    @param string back_url
+    @param string submit_btn_name
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="alert alert-danger">
+                <div class="pb-2">
+                    {{ message }}
+                </div>
+                <div>
+                    <form action="{{ form_action }}" method="post">
+                        {% if img|default('') %}
+                            <div class="mb-3">
+                                <img src="{{ img }}" alt="." class="img-thumbnail">
+                            </div>
+                        {% endif %}
+                        <button type="submit" name="submit" value="1" class="btn btn-danger btn-sm">{{ submit_btn_name }}</button>
+                        <a href="{{ back_url }}" class="btn btn-outline-secondary btn-sm">{{ __('Cancel') }}</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
