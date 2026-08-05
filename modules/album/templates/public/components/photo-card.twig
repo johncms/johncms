@@ -1,0 +1,46 @@
+{#
+    One photo in a grid of photos.
+
+    @param PhotoViewDTO photo
+#}
+<div class="col mb-4">
+    <div class="card py-0 h-100 overflow-hidden">
+        <a href="{{ photo.detailUrl }}">
+            <div class="album-photo" style="background: url('{{ photo.previewPicture }}');"></div>
+        </a>
+        <div class="card-body d-flex px-3 flex-column justify-content-between">
+            {% if photo.previewText %}
+                <p class="card-text">{{ photo.previewText }}</p>
+            {% endif %}
+            {% if photo.userName or photo.albumName %}
+                <div class="small">
+                    <span class="text-nowrap pe-2">
+                        {{ __('User:') }} <a href="{{ photo.userAlbumsUrl }}">{{ photo.userName }}</a>
+                    </span>
+                    <span class="text-nowrap">
+                        {{ __('Album:') }} <a href="{{ photo.userAlbumUrl }}">{{ photo.albumName }}</a>
+                    </span>
+                </div>
+            {% endif %}
+        </div>
+        <div class="card-footer d-flex justify-content-between">
+            <div>
+                {% include '@album/public/components/vote-buttons.twig' with {photo: photo} only %}
+                <a href="{{ photo.commentsUrl }}" class="text-decoration-none">
+                    <svg class="icon download-button-icon" style="margin-top: -2px;">
+                        <use xlink:href="{{ asset('icons/sprite.svg') }}#forum"></use>
+                    </svg>
+                    <span>{{ photo.commCount }}</span>
+                </a>
+            </div>
+            <div>
+                <div class="text-muted">
+                    <svg class="icon download-button-icon mt-n1">
+                        <use xlink:href="{{ asset('icons/sprite.svg') }}#eye"></use>
+                    </svg>
+                    <span>{{ photo.views }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

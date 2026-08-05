@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Album\Application\DTO;
 
+use Twig\Markup;
+
 final readonly class PhotoDetailDTO
 {
     public function __construct(
@@ -14,7 +16,7 @@ final readonly class PhotoDetailDTO
         public string $albumName,
         public string $picture,
         public string $previewPicture,
-        public string $formattedDescription,
+        public Markup $formattedDescription,
         public string $displayDate,
         public int $views,
         public int $downloads,

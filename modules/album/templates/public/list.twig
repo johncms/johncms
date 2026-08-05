@@ -1,0 +1,50 @@
+{#
+    Albums of one user.
+
+    @param array  owner      Row of the owner, as the user-row component takes it.
+    @param array  albums
+    @param string create_url Empty when the visitor may not create an album here.
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    <div class="mb-3">
+        {% include '@album/public/components/user-row.twig' with {item: owner} only %}
+    </div>
+
+    {% if create_url %}
+        <div class="mb-3">
+            <a href="{{ create_url }}" class="btn btn-primary">{{ __('Create Album') }}</a>
+        </div>
+    {% endif %}
+
+    {% for album in albums %}
+        <div class="forum-section mb-2">
+            <div class="section-header d-flex justify-content-between {{ album.description is empty ? 'border-0 pb-0' }}">
+                <div class="d-flex align-items-center">
+                    <a class="user-login me-2" href="{{ album.album_url }}">{{ album.name }}</a>
+                    <span class="badge rounded-pill text-bg-light border ms-3">{{ album.count_photos }}</span>
+                </div>
+            </div>
+            {% if album.description %}
+                <div class="small pt-1 text-muted">
+                    <div>{{ album.description }}</div>
+                </div>
+            {% endif %}
+            {% if album.has_edit|default(false) %}
+                <div class="pt-1 small">
+                    <form action="{{ album.up_url }}" method="post" class="d-inline">
+                        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                        <button type="submit" class="btn btn-link p-0 me-2 align-baseline">{{ __('Up') }}</button>
+                    </form>
+                    <form action="{{ album.down_url }}" method="post" class="d-inline">
+                        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                        <button type="submit" class="btn btn-link p-0 me-2 align-baseline">{{ __('Down') }}</button>
+                    </form>
+                    <a href="{{ album.edit_url }}" class="me-2">{{ __('Edit') }}</a>
+                    <a href="{{ album.delete_url }}" class="me-2">{{ __('Delete') }}</a>
+                </div>
+            {% endif %}
+        </div>
+    {% endfor %}
+{% endblock %}

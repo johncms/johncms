@@ -12,14 +12,13 @@ use Johncms\Modules\Album\Application\UseCases\GetVotePhotoContextUseCase;
 use Johncms\Modules\Album\Application\UseCases\VotePhotoUseCase;
 use Johncms\Modules\Album\Domain\Enums\VoteType;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Validator\Validator;
 
 final readonly class VotePhotoController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private GetVotePhotoContextUseCase $getContextUseCase,
         private EnsureVoteAccessUseCase $ensureAccessUseCase,
         private VotePhotoUseCase $votePhotoUseCase,
@@ -27,7 +26,7 @@ final readonly class VotePhotoController
         $this->controllerContext->initModule('album');
     }
 
-    public function __invoke(Request $request, int $img, string $type): string
+    public function __invoke(Request $request, int $img, string $type): ViewResponse
     {
         $voteType = VoteType::tryFrom($type);
         if ($voteType === null) {
@@ -62,10 +61,10 @@ final readonly class VotePhotoController
         return $validator->isValid();
     }
 
-    private function renderError(string $message): string
+    private function renderError(string $message): ViewResponse
     {
-        return $this->render->render(
-            'system::pages/result',
+        return new ViewResponse(
+            '@theme/pages/result.twig',
             [
                 'title'    => __('Albums'),
                 'type'     => 'alert-danger',

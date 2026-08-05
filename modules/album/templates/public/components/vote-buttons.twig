@@ -1,0 +1,38 @@
+{#
+    The two vote counters of a photo, as buttons when the visitor may vote.
+
+    @param PhotoViewDTO|PhotoDetailDTO photo
+#}
+{% if photo.canVote %}
+    <form action="{{ photo.likeUrl }}" method="post" class="d-inline">
+        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+        <button type="submit" class="btn btn-link text-decoration-none p-0 pe-2 align-baseline">
+            <svg class="icon download-button-icon mt-n2">
+                <use xlink:href="{{ asset('icons/sprite.svg') }}#like"></use>
+            </svg>
+            <span>{{ photo.votePlus }}</span>
+        </button>
+    </form>
+    <form action="{{ photo.dislikeUrl }}" method="post" class="d-inline">
+        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+        <button type="submit" class="btn btn-link text-decoration-none p-0 pe-2 align-baseline">
+            <svg class="icon download-button-icon me-1">
+                <use xlink:href="{{ asset('icons/sprite.svg') }}#dislike"></use>
+            </svg>
+            <span>{{ photo.voteMinus }}</span>
+        </button>
+    </form>
+{% else %}
+    <div class="d-inline pe-2 text-muted">
+        <svg class="icon download-button-icon mt-n2">
+            <use xlink:href="{{ asset('icons/sprite.svg') }}#like"></use>
+        </svg>
+        <span>{{ photo.votePlus }}</span>
+    </div>
+    <div class="d-inline pe-2 text-muted">
+        <svg class="icon download-button-icon me-1">
+            <use xlink:href="{{ asset('icons/sprite.svg') }}#dislike"></use>
+        </svg>
+        <span>{{ photo.voteMinus }}</span>
+    </div>
+{% endif %}

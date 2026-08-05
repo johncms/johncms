@@ -12,7 +12,7 @@ use Johncms\Modules\Album\Application\UseCases\GetEditPhotoContextUseCase;
 use Johncms\Modules\Album\Domain\Models\AlbumPhoto;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -20,7 +20,6 @@ final readonly class EditPhotoController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private User $currentUser,
         private GetEditPhotoContextUseCase $getContextUseCase,
@@ -29,40 +28,38 @@ final readonly class EditPhotoController
         $this->controllerContext->initModule('album');
     }
 
-    public function form(int $img): Response
+    public function form(int $img): ViewResponse
     {
         $photo = $this->resolveContext($img);
-        if ($photo instanceof Response) {
+        if ($photo instanceof ViewResponse) {
             return $photo;
         }
 
         return $this->renderForm($photo, $photo->description);
     }
 
-    public function save(Request $request, int $img): Response
+    public function save(Request $request, int $img): ViewResponse
     {
         $photo = $this->resolveContext($img);
-        if ($photo instanceof Response) {
+        if ($photo instanceof ViewResponse) {
             return $photo;
         }
 
         $this->editPhotoUseCase->execute($photo, $request->body('description', ''));
 
-        return new Response(
-            $this->render->render(
-                'system::pages/result',
-                [
-                    'title'         => __('Edit image'),
-                    'type'          => 'alert-success',
-                    'message'       => __('Image successfully changed'),
-                    'back_url'      => '/album/' . $photo->album_id,
-                    'back_url_name' => __('Continue'),
-                ]
-            )
+        return new ViewResponse(
+            '@theme/pages/result.twig',
+            [
+                'title'         => __('Edit image'),
+                'type'          => 'alert-success',
+                'message'       => __('Image successfully changed'),
+                'back_url'      => '/album/' . $photo->album_id,
+                'back_url_name' => __('Continue'),
+            ]
         );
     }
 
-    private function renderForm(AlbumPhoto $photo, string $description): Response
+    private function renderForm(AlbumPhoto $photo, string $description): ViewResponse
     {
         $title = __('Edit image');
 
@@ -73,32 +70,24 @@ final readonly class EditPhotoController
         $this->navChain->add(__('Photo'), '/album/photo/' . $photo->id);
         $this->navChain->add($title);
 
-        $this->render->addData([
-            'title'      => $title,
-            'page_title' => $title,
-        ]);
-
-        return new Response(
-            $this->render->render(
-                'album::edit_photo',
-                [
-                    'title'      => $title,
-                    'page_title' => $title,
-                    'data'       => [
-                        'action_url'  => '/album/photo/' . $photo->id . '/edit',
-                        'back_url'    => '/album/' . $photo->album_id,
-                        'image_url'   => pathToUrl(UPLOAD_PATH . 'users/album/' . $photo->user_id . '/' . $photo->tmb_name),
-                        'description' => $description,
-                    ],
-                ]
-            )
+        return new ViewResponse(
+            '@album/public/edit-photo.twig',
+            [
+                'title'        => $title,
+                'page_title'   => $title,
+                'action_url'   => '/album/photo/' . $photo->id . '/edit',
+                'back_url'     => '/album/' . $photo->album_id,
+                'image_url'    => pathToUrl(UPLOAD_PATH . 'users/album/' . $photo->user_id . '/' . $photo->tmb_name),
+                'description'  => $description,
+                'field_height' => $this->currentUser->config->fieldHeight,
+            ]
         );
     }
 
     /**
      * Resolve the photo with the access guard, or a rendered error page (with the proper HTTP status set).
      */
-    private function resolveContext(int $img): AlbumPhoto|Response
+    private function resolveContext(int $img): AlbumPhoto|ViewResponse
     {
         try {
             return $this->getContextUseCase->execute($img);
@@ -109,18 +98,16 @@ final readonly class EditPhotoController
         }
     }
 
-    private function renderError(string $message, int $status = 200): Response
+    private function renderError(string $message, int $status = 200): ViewResponse
     {
-        return new Response(
-            $this->render->render(
-                'system::pages/result',
-                [
-                    'title'    => __('Edit image'),
-                    'type'     => 'alert-danger',
-                    'message'  => $message,
-                    'back_url' => '/album',
-                ]
-            ),
+        return new ViewResponse(
+            '@theme/pages/result.twig',
+            [
+                'title'    => __('Edit image'),
+                'type'     => 'alert-danger',
+                'message'  => $message,
+                'back_url' => '/album',
+            ],
             $status
         );
     }

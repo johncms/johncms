@@ -15,7 +15,7 @@ use Johncms\Modules\Album\Application\UseCases\GetEditAlbumContextUseCase;
 use Johncms\Modules\Album\Application\UseCases\SaveAlbumUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -23,7 +23,6 @@ final readonly class EditAlbumController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private User $currentUser,
         private GetEditAlbumContextUseCase $getContextUseCase,
@@ -32,47 +31,47 @@ final readonly class EditAlbumController
         $this->controllerContext->initModule('album');
     }
 
-    public function createForm(int $id): Response
+    public function createForm(int $id): ViewResponse
     {
         $context = $this->resolveCreateContext($id);
-        if ($context instanceof Response) {
+        if ($context instanceof ViewResponse) {
             return $context;
         }
 
         return $this->renderForm($context, $this->emptyFormData(), []);
     }
 
-    public function createSave(Request $request, int $id): Response
+    public function createSave(Request $request, int $id): ViewResponse
     {
         $context = $this->resolveCreateContext($id);
-        if ($context instanceof Response) {
+        if ($context instanceof ViewResponse) {
             return $context;
         }
 
         return $this->handleSave($request, $context);
     }
 
-    public function editForm(int $al): Response
+    public function editForm(int $al): ViewResponse
     {
         $context = $this->resolveEditContext($al);
-        if ($context instanceof Response) {
+        if ($context instanceof ViewResponse) {
             return $context;
         }
 
         return $this->renderForm($context, $this->formDataFromAlbum($context), []);
     }
 
-    public function editSave(Request $request, int $al): Response
+    public function editSave(Request $request, int $al): ViewResponse
     {
         $context = $this->resolveEditContext($al);
-        if ($context instanceof Response) {
+        if ($context instanceof ViewResponse) {
             return $context;
         }
 
         return $this->handleSave($request, $context);
     }
 
-    private function handleSave(Request $request, EditAlbumContextDTO $context): Response
+    private function handleSave(Request $request, EditAlbumContextDTO $context): ViewResponse
     {
         $command = $this->buildCommand($request);
 
@@ -82,20 +81,18 @@ final readonly class EditAlbumController
             return $this->renderForm($context, $command->toFormData(), $e->getErrors());
         }
 
-        return new Response(
-            $this->render->render(
-                'system::pages/result',
-                [
-                    'title'    => $this->title($context),
-                    'type'     => 'alert-success',
-                    'message'  => $context->isEdit() ? __('Album successfully changed') : __('Album successfully created'),
-                    'back_url' => '/album/user/' . $context->ownerId,
-                ]
-            )
+        return new ViewResponse(
+            '@theme/pages/result.twig',
+            [
+                'title'    => $this->title($context),
+                'type'     => 'alert-success',
+                'message'  => $context->isEdit() ? __('Album successfully changed') : __('Album successfully created'),
+                'back_url' => '/album/user/' . $context->ownerId,
+            ]
         );
     }
 
-    private function resolveCreateContext(int $id): EditAlbumContextDTO|Response
+    private function resolveCreateContext(int $id): EditAlbumContextDTO|ViewResponse
     {
         try {
             return $this->getContextUseCase->forCreate($id);
@@ -106,7 +103,7 @@ final readonly class EditAlbumController
         }
     }
 
-    private function resolveEditContext(int $al): EditAlbumContextDTO|Response
+    private function resolveEditContext(int $al): EditAlbumContextDTO|ViewResponse
     {
         try {
             return $this->getContextUseCase->forEdit($al);
@@ -159,7 +156,7 @@ final readonly class EditAlbumController
      * @param array{name: string, description: string, password: string, access: int} $formData
      * @param list<string> $errors
      */
-    private function renderForm(EditAlbumContextDTO $context, array $formData, array $errors): Response
+    private function renderForm(EditAlbumContextDTO $context, array $formData, array $errors): ViewResponse
     {
         $title = $this->title($context);
         $actionUrl = $context->isEdit()
@@ -174,25 +171,17 @@ final readonly class EditAlbumController
         }
         $this->navChain->add($title);
 
-        $this->render->addData([
-            'title'      => $title,
-            'page_title' => $title,
-        ]);
-
-        return new Response(
-            $this->render->render(
-                'album::album_form',
-                [
-                    'title'      => $title,
-                    'page_title' => $title,
-                    'data'       => [
-                        'error_message' => $errors,
-                        'action_url'    => $actionUrl,
-                        'back_url'      => '/album/user/' . $context->ownerId,
-                        'form_data'     => $formData,
-                    ],
-                ]
-            )
+        return new ViewResponse(
+            '@album/public/album-form.twig',
+            [
+                'title'         => $title,
+                'page_title'    => $title,
+                'error_message' => $errors,
+                'action_url'    => $actionUrl,
+                'back_url'      => '/album/user/' . $context->ownerId,
+                'form_data'     => $formData,
+                'field_height'  => $this->currentUser->config->fieldHeight,
+            ]
         );
     }
 
@@ -201,17 +190,15 @@ final readonly class EditAlbumController
         return $context->isEdit() ? __('Edit Album') : __('Create Album');
     }
 
-    private function renderError(string $message, int $status = 200): Response
+    private function renderError(string $message, int $status = 200): ViewResponse
     {
-        return new Response(
-            $this->render->render(
-                'system::pages/result',
-                [
-                    'title'   => __('Albums'),
-                    'type'    => 'alert-danger',
-                    'message' => $message,
-                ]
-            ),
+        return new ViewResponse(
+            '@theme/pages/result.twig',
+            [
+                'title'   => __('Albums'),
+                'type'    => 'alert-danger',
+                'message' => $message,
+            ],
             $status
         );
     }

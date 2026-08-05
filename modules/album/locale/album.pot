@@ -2,235 +2,235 @@ msgid ""
 msgstr ""
 "X-Domain: album\n"
 
-#: modules/album/src/Application/Controllers/AlbumIndexController.php:29
-#: modules/album/src/Application/Controllers/DeleteAlbumController.php:43
-#: modules/album/src/Application/Controllers/DeleteAlbumController.php:127
-#: modules/album/src/Application/Controllers/DeletePhotoController.php:42
+#: modules/album/src/Application/Controllers/AlbumIndexController.php:28
+#: modules/album/src/Application/Controllers/DeleteAlbumController.php:42
+#: modules/album/src/Application/Controllers/DeleteAlbumController.php:115
+#: modules/album/src/Application/Controllers/DeletePhotoController.php:41
 #: modules/album/src/Application/Controllers/DownloadPhotoController.php:47
 #: modules/album/src/Application/Controllers/DownloadPhotoController.php:51
-#: modules/album/src/Application/Controllers/EditAlbumController.php:175
-#: modules/album/src/Application/Controllers/EditAlbumController.php:213
-#: modules/album/src/Application/Controllers/EditPhotoController.php:67
-#: modules/album/src/Application/Controllers/MovePhotoController.php:65
+#: modules/album/src/Application/Controllers/EditAlbumController.php:166
+#: modules/album/src/Application/Controllers/EditAlbumController.php:198
+#: modules/album/src/Application/Controllers/EditPhotoController.php:66
+#: modules/album/src/Application/Controllers/MovePhotoController.php:64
 #: modules/album/src/Application/Controllers/PhotoCommentsController.php:49
-#: modules/album/src/Application/Controllers/ShowAlbumController.php:66
-#: modules/album/src/Application/Controllers/ShowAlbumController.php:92
-#: modules/album/src/Application/Controllers/ShowAlbumController.php:113
-#: modules/album/src/Application/Controllers/ShowPhotoController.php:54
-#: modules/album/src/Application/Controllers/ShowPhotoController.php:86
-#: modules/album/src/Application/Controllers/SortAlbumController.php:91
-#: modules/album/src/Application/Controllers/TopController.php:34
-#: modules/album/src/Application/Controllers/UploadPhotoController.php:84
-#: modules/album/src/Application/Controllers/UserAlbumsController.php:37
-#: modules/album/src/Application/Controllers/UserAlbumsController.php:72
-#: modules/album/src/Application/Controllers/UsersListController.php:37
-#: modules/album/src/Application/Controllers/VotePhotoController.php:71
-#: modules/album/templates/index.phtml:30
+#: modules/album/src/Application/Controllers/ShowAlbumController.php:64
+#: modules/album/src/Application/Controllers/ShowAlbumController.php:86
+#: modules/album/src/Application/Controllers/ShowAlbumController.php:104
+#: modules/album/src/Application/Controllers/ShowPhotoController.php:51
+#: modules/album/src/Application/Controllers/ShowPhotoController.php:79
+#: modules/album/src/Application/Controllers/SortAlbumController.php:87
+#: modules/album/src/Application/Controllers/TopController.php:33
+#: modules/album/src/Application/Controllers/UploadPhotoController.php:83
+#: modules/album/src/Application/Controllers/UserAlbumsController.php:38
+#: modules/album/src/Application/Controllers/UserAlbumsController.php:73
+#: modules/album/src/Application/Controllers/UsersListController.php:36
+#: modules/album/src/Application/Controllers/VotePhotoController.php:69
+#: modules/album/templates/public/index.twig:20
 msgid "Albums"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/DeleteAlbumController.php:41
+#: modules/album/src/Application/Controllers/DeleteAlbumController.php:40
 msgid "Delete album:"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/DeleteAlbumController.php:44
-#: modules/album/src/Application/Controllers/DeletePhotoController.php:43
-#: modules/album/src/Application/Controllers/EditAlbumController.php:176
-#: modules/album/src/Application/Controllers/EditPhotoController.php:68
-#: modules/album/src/Application/Controllers/MovePhotoController.php:66
+#: modules/album/src/Application/Controllers/DeleteAlbumController.php:43
+#: modules/album/src/Application/Controllers/DeletePhotoController.php:42
+#: modules/album/src/Application/Controllers/EditAlbumController.php:167
+#: modules/album/src/Application/Controllers/EditPhotoController.php:67
+#: modules/album/src/Application/Controllers/MovePhotoController.php:65
 #: modules/album/src/Application/Controllers/PhotoCommentsController.php:50
-#: modules/album/src/Application/Controllers/ShowAlbumController.php:68
-#: modules/album/src/Application/Controllers/ShowPhotoController.php:55
-#: modules/album/src/Application/Controllers/UploadPhotoController.php:85
-#: modules/album/src/Application/Controllers/UserAlbumsController.php:70
-#: modules/album/src/Application/Controllers/UserAlbumsController.php:73
+#: modules/album/src/Application/Controllers/ShowAlbumController.php:66
+#: modules/album/src/Application/Controllers/ShowPhotoController.php:52
+#: modules/album/src/Application/Controllers/UploadPhotoController.php:84
+#: modules/album/src/Application/Controllers/UserAlbumsController.php:71
+#: modules/album/src/Application/Controllers/UserAlbumsController.php:74
 msgid "Your albums"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/DeleteAlbumController.php:44
-#: modules/album/src/Application/Controllers/DeletePhotoController.php:43
-#: modules/album/src/Application/Controllers/EditAlbumController.php:176
-#: modules/album/src/Application/Controllers/EditPhotoController.php:68
-#: modules/album/src/Application/Controllers/MovePhotoController.php:66
+#: modules/album/src/Application/Controllers/DeleteAlbumController.php:43
+#: modules/album/src/Application/Controllers/DeletePhotoController.php:42
+#: modules/album/src/Application/Controllers/EditAlbumController.php:167
+#: modules/album/src/Application/Controllers/EditPhotoController.php:67
+#: modules/album/src/Application/Controllers/MovePhotoController.php:65
 #: modules/album/src/Application/Controllers/PhotoCommentsController.php:50
-#: modules/album/src/Application/Controllers/ShowAlbumController.php:68
-#: modules/album/src/Application/Controllers/ShowPhotoController.php:55
-#: modules/album/src/Application/Controllers/UploadPhotoController.php:85
-#: modules/album/src/Application/Controllers/UserAlbumsController.php:73
+#: modules/album/src/Application/Controllers/ShowAlbumController.php:66
+#: modules/album/src/Application/Controllers/ShowPhotoController.php:52
+#: modules/album/src/Application/Controllers/UploadPhotoController.php:84
+#: modules/album/src/Application/Controllers/UserAlbumsController.php:74
 msgid "User albums"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/DeleteAlbumController.php:60
+#: modules/album/src/Application/Controllers/DeleteAlbumController.php:53
 msgid "Are you sure you want to delete this album? If it contains photos, they also will be deleted."
 msgstr ""
 
-#: modules/album/src/Application/Controllers/DeleteAlbumController.php:75
-#: modules/album/src/Application/Controllers/DeletePhotoController.php:75
-#: modules/album/src/Application/Controllers/DownloadPhotoController.php:30
+#: modules/album/src/Application/Controllers/DeleteAlbumController.php:67
+#: modules/album/src/Application/Controllers/DeletePhotoController.php:67
+#: modules/album/src/Application/Controllers/DownloadPhotoController.php:31
 #: modules/album/src/Application/Controllers/PhotoCommentsController.php:39
-#: modules/album/src/Application/Controllers/ShowAlbumController.php:55
-#: modules/album/src/Application/Controllers/ShowPhotoController.php:42
-#: modules/album/src/Application/Controllers/SortAlbumController.php:36
-#: modules/album/src/Application/Controllers/SortAlbumController.php:51
-#: modules/album/src/Application/Controllers/VotePhotoController.php:35
-#: modules/album/src/Application/Controllers/VotePhotoController.php:39
-#: modules/album/src/Application/Controllers/VotePhotoController.php:46
+#: modules/album/src/Application/Controllers/ShowAlbumController.php:53
+#: modules/album/src/Application/Controllers/ShowPhotoController.php:39
+#: modules/album/src/Application/Controllers/SortAlbumController.php:35
+#: modules/album/src/Application/Controllers/SortAlbumController.php:50
+#: modules/album/src/Application/Controllers/VotePhotoController.php:33
+#: modules/album/src/Application/Controllers/VotePhotoController.php:37
+#: modules/album/src/Application/Controllers/VotePhotoController.php:44
 #: modules/album/src/Application/UseCases/SaveAlbumUseCase.php:42
 msgid "Wrong data"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/DeleteAlbumController.php:86
+#: modules/album/src/Application/Controllers/DeleteAlbumController.php:78
 msgid "Delete album"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/DeleteAlbumController.php:88
+#: modules/album/src/Application/Controllers/DeleteAlbumController.php:80
 msgid "Album deleted"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/DeletePhotoController.php:40
-#: modules/album/src/Application/Controllers/DeletePhotoController.php:85
-#: modules/album/src/Application/Controllers/DeletePhotoController.php:126
+#: modules/album/src/Application/Controllers/DeletePhotoController.php:39
+#: modules/album/src/Application/Controllers/DeletePhotoController.php:77
+#: modules/album/src/Application/Controllers/DeletePhotoController.php:114
 msgid "Delete image"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/DeletePhotoController.php:46
-#: modules/album/src/Application/Controllers/EditPhotoController.php:71
-#: modules/album/src/Application/Controllers/MovePhotoController.php:69
+#: modules/album/src/Application/Controllers/DeletePhotoController.php:45
+#: modules/album/src/Application/Controllers/EditPhotoController.php:70
+#: modules/album/src/Application/Controllers/MovePhotoController.php:68
 #: modules/album/src/Application/Controllers/PhotoCommentsController.php:53
-#: modules/album/templates/show_one.phtml:45
+#: modules/album/templates/public/show-one.twig:24
 msgid "Photo"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/DeletePhotoController.php:60
+#: modules/album/src/Application/Controllers/DeletePhotoController.php:53
 msgid "Are you sure you want to delete this image?"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/DeletePhotoController.php:87
+#: modules/album/src/Application/Controllers/DeletePhotoController.php:79
 msgid "Image successfully deleted"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/DownloadPhotoController.php:32
+#: modules/album/src/Application/Controllers/DownloadPhotoController.php:33
 #: modules/album/src/Application/Controllers/PhotoCommentsController.php:41
 msgid "Access forbidden"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/DownloadPhotoController.php:34
+#: modules/album/src/Application/Controllers/DownloadPhotoController.php:35
 msgid "File does not exist"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/EditAlbumController.php:90
+#: modules/album/src/Application/Controllers/EditAlbumController.php:89
 msgid "Album successfully changed"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/EditAlbumController.php:90
+#: modules/album/src/Application/Controllers/EditAlbumController.php:89
 msgid "Album successfully created"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/EditAlbumController.php:205
+#: modules/album/src/Application/Controllers/EditAlbumController.php:190
 msgid "Edit Album"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/EditAlbumController.php:205
-#: modules/album/templates/list.phtml:27
+#: modules/album/src/Application/Controllers/EditAlbumController.php:190
+#: modules/album/templates/public/list.twig:17
 msgid "Create Album"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/EditPhotoController.php:54
-#: modules/album/src/Application/Controllers/EditPhotoController.php:65
-#: modules/album/src/Application/Controllers/EditPhotoController.php:116
+#: modules/album/src/Application/Controllers/EditPhotoController.php:53
+#: modules/album/src/Application/Controllers/EditPhotoController.php:64
+#: modules/album/src/Application/Controllers/EditPhotoController.php:106
 msgid "Edit image"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/EditPhotoController.php:56
+#: modules/album/src/Application/Controllers/EditPhotoController.php:55
 msgid "Image successfully changed"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/EditPhotoController.php:58
-#: modules/album/src/Application/Controllers/MovePhotoController.php:51
-#: modules/album/src/Application/Controllers/MovePhotoController.php:113
-#: modules/album/src/Application/Controllers/UploadPhotoController.php:72
+#: modules/album/src/Application/Controllers/EditPhotoController.php:57
+#: modules/album/src/Application/Controllers/MovePhotoController.php:50
+#: modules/album/src/Application/Controllers/MovePhotoController.php:105
+#: modules/album/src/Application/Controllers/UploadPhotoController.php:71
 msgid "Continue"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/MovePhotoController.php:47
-#: modules/album/src/Application/Controllers/MovePhotoController.php:64
-#: modules/album/src/Application/Controllers/MovePhotoController.php:109
-#: modules/album/src/Application/Controllers/MovePhotoController.php:140
+#: modules/album/src/Application/Controllers/MovePhotoController.php:46
+#: modules/album/src/Application/Controllers/MovePhotoController.php:63
+#: modules/album/src/Application/Controllers/MovePhotoController.php:101
+#: modules/album/src/Application/Controllers/MovePhotoController.php:129
 msgid "Move image"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/MovePhotoController.php:49
+#: modules/album/src/Application/Controllers/MovePhotoController.php:48
 msgid "You must create at least one additional album in order to move the image"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/MovePhotoController.php:111
+#: modules/album/src/Application/Controllers/MovePhotoController.php:103
 msgid "Image successfully moved to the selected album"
 msgstr ""
 
 #: modules/album/src/Application/Controllers/PhotoCommentsController.php:54
-#: modules/album/src/Application/Controllers/PhotoCommentsController.php:64
-#: modules/album/src/Application/Controllers/PhotoCommentsController.php:78
-#: modules/album/src/Application/Controllers/PhotoCommentsController.php:97
-#: modules/album/templates/show_one.phtml:119
+#: modules/album/src/Application/Controllers/PhotoCommentsController.php:63
+#: modules/album/src/Application/Controllers/PhotoCommentsController.php:79
+#: modules/album/src/Application/Controllers/PhotoCommentsController.php:98
+#: modules/album/templates/public/show-one.twig:65
 msgid "Comments"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/PhotoCommentsController.php:101
-#: modules/album/src/Application/Controllers/ShowAlbumController.php:60
-#: modules/album/src/Application/Controllers/ShowPhotoController.php:47
-#: modules/album/templates/show_one.phtml:157
+#: modules/album/src/Application/Controllers/PhotoCommentsController.php:102
+#: modules/album/src/Application/Controllers/ShowAlbumController.php:58
+#: modules/album/src/Application/Controllers/ShowPhotoController.php:44
+#: modules/album/templates/public/show-one.twig:102
 msgid "Album List"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/ShowAlbumController.php:58
-#: modules/album/src/Application/Controllers/ShowPhotoController.php:45
+#: modules/album/src/Application/Controllers/ShowAlbumController.php:56
+#: modules/album/src/Application/Controllers/ShowPhotoController.php:42
 msgid "Access denied"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/ShowAlbumController.php:103
-#: modules/album/src/Application/Controllers/ShowPhotoController.php:97
+#: modules/album/src/Application/Controllers/ShowAlbumController.php:94
+#: modules/album/src/Application/Controllers/ShowPhotoController.php:87
 msgid "Incorrect Password"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/ShowPhotoController.php:53
-#: modules/album/src/Application/Controllers/ShowPhotoController.php:107
+#: modules/album/src/Application/Controllers/ShowPhotoController.php:50
+#: modules/album/src/Application/Controllers/ShowPhotoController.php:97
 msgid "View photo"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/UploadPhotoController.php:58
+#: modules/album/src/Application/Controllers/UploadPhotoController.php:57
 #: modules/album/src/Application/UseCases/UploadPhotoUseCase.php:37
 msgid "An error occurred"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/UploadPhotoController.php:68
-#: modules/album/src/Application/Controllers/UploadPhotoController.php:82
-#: modules/album/src/Application/Controllers/UploadPhotoController.php:131
+#: modules/album/src/Application/Controllers/UploadPhotoController.php:67
+#: modules/album/src/Application/Controllers/UploadPhotoController.php:81
+#: modules/album/src/Application/Controllers/UploadPhotoController.php:122
 msgid "Upload image"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/UploadPhotoController.php:70
+#: modules/album/src/Application/Controllers/UploadPhotoController.php:69
 msgid "Image uploaded"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/UserAlbumsController.php:70
+#: modules/album/src/Application/Controllers/UserAlbumsController.php:71
 msgid "User albums:"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/UsersListController.php:36
+#: modules/album/src/Application/Controllers/UsersListController.php:35
 msgid "List of users"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/UsersListController.php:74
+#: modules/album/src/Application/Controllers/UsersListController.php:70
 msgid "All"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/UsersListController.php:75
-#: modules/album/templates/index.phtml:34
+#: modules/album/src/Application/Controllers/UsersListController.php:71
+#: modules/album/templates/public/index.twig:24
 msgid "Guys"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/UsersListController.php:76
-#: modules/album/templates/index.phtml:38
+#: modules/album/src/Application/Controllers/UsersListController.php:72
+#: modules/album/templates/public/index.twig:28
 msgid "Girls"
 msgstr ""
 
@@ -239,7 +239,7 @@ msgid "Photo added to the profile"
 msgstr ""
 
 #: modules/album/src/Application/UseCases/SaveAlbumUseCase.php:32
-#: modules/album/templates/album_form.phtml:32
+#: modules/album/templates/public/album-form.twig:17
 msgid "Title"
 msgstr ""
 
@@ -253,8 +253,8 @@ msgid "You have not entered password"
 msgstr ""
 
 #: modules/album/src/Application/UseCases/SaveAlbumUseCase.php:38
-#: modules/album/templates/album_form.phtml:40
-#: modules/album/templates/enter_password.phtml:33
+#: modules/album/templates/public/album-form.twig:25
+#: modules/album/templates/public/enter-password.twig:17
 msgid "Password"
 msgstr ""
 
@@ -275,27 +275,27 @@ msgid "Recent comments"
 msgstr ""
 
 #: modules/album/src/Domain/Enums/TopFilter.php:45
-#: modules/album/templates/index.phtml:51
+#: modules/album/templates/public/index.twig:41
 msgid "Top Views"
 msgstr ""
 
 #: modules/album/src/Domain/Enums/TopFilter.php:46
-#: modules/album/templates/index.phtml:50
+#: modules/album/templates/public/index.twig:40
 msgid "Top Downloads"
 msgstr ""
 
 #: modules/album/src/Domain/Enums/TopFilter.php:47
-#: modules/album/templates/index.phtml:52
+#: modules/album/templates/public/index.twig:42
 msgid "Top Comments"
 msgstr ""
 
 #: modules/album/src/Domain/Enums/TopFilter.php:48
-#: modules/album/templates/index.phtml:49
+#: modules/album/templates/public/index.twig:39
 msgid "Top Votes"
 msgstr ""
 
 #: modules/album/src/Domain/Enums/TopFilter.php:49
-#: modules/album/templates/index.phtml:53
+#: modules/album/templates/public/index.twig:43
 msgid "Top Worst"
 msgstr ""
 
@@ -391,178 +391,173 @@ msgstr ""
 msgid "A lovely butterfly."
 msgstr ""
 
-#: modules/album/templates/add_photo.phtml:33
+#: modules/album/templates/public/add-photo.twig:20
 msgid "Choose file"
 msgstr ""
 
-#: modules/album/templates/add_photo.phtml:36
-#, php-format
+#: modules/album/templates/public/add-photo.twig:24
 msgid "Allowed format image JPG, JPEG, PNG, GIF<br>File size should not exceed %d kb."
 msgstr ""
 
-#: modules/album/templates/add_photo.phtml:40
-#: modules/album/templates/album_form.phtml:36
-#: modules/album/templates/edit_photo.phtml:26
+#: modules/album/templates/public/add-photo.twig:28
+#: modules/album/templates/public/album-form.twig:21
+#: modules/album/templates/public/edit-photo.twig:19
 msgid "Description"
 msgstr ""
 
-#: modules/album/templates/add_photo.phtml:44
-#: modules/album/templates/album_form.phtml:60
-#: modules/album/templates/edit_photo.phtml:30
+#: modules/album/templates/public/add-photo.twig:32
+#: modules/album/templates/public/album-form.twig:46
+#: modules/album/templates/public/edit-photo.twig:23
 msgid "Save"
 msgstr ""
 
-#: modules/album/templates/add_photo.phtml:45
-#: modules/album/templates/album_form.phtml:61
-#: modules/album/templates/confirm_delete.phtml:29
-#: modules/album/templates/edit_photo.phtml:31
-#: modules/album/templates/enter_password.phtml:40
-#: modules/album/templates/move_photo.phtml:32
+#: modules/album/templates/public/add-photo.twig:33
+#: modules/album/templates/public/album-form.twig:47
+#: modules/album/templates/public/confirm-delete.twig:19
+#: modules/album/templates/public/edit-photo.twig:24
+#: modules/album/templates/public/enter-password.twig:24
+#: modules/album/templates/public/move-photo.twig:23
 msgid "Cancel"
 msgstr ""
 
-#: modules/album/templates/album_form.phtml:44
+#: modules/album/templates/public/album-form.twig:29
 msgid "Access"
 msgstr ""
 
-#: modules/album/templates/album_form.phtml:48
+#: modules/album/templates/public/album-form.twig:34
 msgid "Everyone"
 msgstr ""
 
-#: modules/album/templates/album_form.phtml:52
+#: modules/album/templates/public/album-form.twig:38
 msgid "With Password"
 msgstr ""
 
-#: modules/album/templates/album_form.phtml:56
+#: modules/album/templates/public/album-form.twig:42
 msgid "Only for me"
 msgstr ""
 
-#: modules/album/templates/confirm_delete.phtml:28
-#: modules/album/templates/list.phtml:55
-#: modules/album/templates/show_one.phtml:137
-msgid "Delete"
-msgstr ""
-
-#: modules/album/templates/enter_password.phtml:31
-msgid "You must type a password to view this album"
-msgstr ""
-
-#: modules/album/templates/enter_password.phtml:39
-msgid "Enter"
-msgstr ""
-
-#: modules/album/templates/index.phtml:22
-msgid "New Photos"
-msgstr ""
-
-#: modules/album/templates/index.phtml:26
-msgid "New Comments"
-msgstr ""
-
-#: modules/album/templates/index.phtml:42
-msgid "My Album"
-msgstr ""
-
-#: modules/album/templates/index.phtml:46
-#: modules/album/templates/show_one.phtml:67
-msgid "Rating"
-msgstr ""
-
-#: modules/album/templates/list.phtml:48
-msgid "Up"
-msgstr ""
-
-#: modules/album/templates/list.phtml:52
-msgid "Down"
-msgstr ""
-
-#: modules/album/templates/list.phtml:54
-#: modules/album/templates/show_one.phtml:135
-msgid "Edit"
-msgstr ""
-
-#: modules/album/templates/move_photo.phtml:22
-msgid "Select Album"
-msgstr ""
-
-#: modules/album/templates/move_photo.phtml:31
-#: modules/album/templates/show_one.phtml:136
-msgid "Move"
-msgstr ""
-
-#: modules/album/templates/show.phtml:28
-#: modules/album/templates/show_one.phtml:29
-#: modules/album/templates/top.phtml:26
-#: modules/album/templates/users.phtml:34
-msgid "The list is empty"
-msgstr ""
-
-#: modules/album/templates/show.phtml:35
-msgid "Add image"
-msgstr ""
-
-#: modules/album/templates/show.phtml:53
-#: modules/album/templates/top.phtml:42
+#: modules/album/templates/public/components/photo-card.twig:18
 msgid "User:"
 msgstr ""
 
-#: modules/album/templates/show.phtml:56
-#: modules/album/templates/top.phtml:45
+#: modules/album/templates/public/components/photo-card.twig:21
 msgid "Album:"
 msgstr ""
 
-#: modules/album/templates/show.phtml:126
-#: modules/album/templates/show_one.phtml:152
-#: modules/album/templates/top.phtml:115
+#: modules/album/templates/public/components/photo-grid.twig:9
+#: modules/album/templates/public/show-one.twig:15
+#: modules/album/templates/public/users.twig:19
+msgid "The list is empty"
+msgstr ""
+
+#: modules/album/templates/public/components/photo-grid.twig:25
+#: modules/album/templates/public/show-one.twig:97
 msgid "Total"
 msgstr ""
 
-#: modules/album/templates/show_one.phtml:57
-msgid "Views"
-msgstr ""
-
-#: modules/album/templates/show_one.phtml:58
-msgid "Downloads"
-msgstr ""
-
-#: modules/album/templates/show_one.phtml:59
-msgid "Date"
-msgstr ""
-
-#: modules/album/templates/show_one.phtml:61
-msgid "User"
-msgstr ""
-
-#: modules/album/templates/show_one.phtml:64
-msgid "Album"
-msgstr ""
-
-#: modules/album/templates/show_one.phtml:111
-msgid "Download"
-msgstr ""
-
-#: modules/album/templates/show_one.phtml:127
-msgid "Actions"
-msgstr ""
-
-#: modules/album/templates/show_one.phtml:132
-msgid "Add to Profile"
-msgstr ""
-
-#: modules/album/templates/show_one.phtml:156
-msgid "Back"
-msgstr ""
-
-#: modules/album/templates/user_row.phtml:33
+#: modules/album/templates/public/components/user-row.twig:23
 msgid "album"
 msgid_plural "albums"
 msgstr[0] ""
 
-#: modules/album/templates/user_row.phtml:34
+#: modules/album/templates/public/components/user-row.twig:24
 msgid "photo"
 msgid_plural "photos"
 msgstr[0] ""
 
-#: modules/album/templates/users.phtml:48
+#: modules/album/templates/public/confirm-delete.twig:18
+#: modules/album/templates/public/list.twig:45
+#: modules/album/templates/public/show-one.twig:83
+msgid "Delete"
+msgstr ""
+
+#: modules/album/templates/public/enter-password.twig:15
+msgid "You must type a password to view this album"
+msgstr ""
+
+#: modules/album/templates/public/enter-password.twig:23
+msgid "Enter"
+msgstr ""
+
+#: modules/album/templates/public/index.twig:12
+msgid "New Photos"
+msgstr ""
+
+#: modules/album/templates/public/index.twig:16
+msgid "New Comments"
+msgstr ""
+
+#: modules/album/templates/public/index.twig:32
+msgid "My Album"
+msgstr ""
+
+#: modules/album/templates/public/index.twig:36
+#: modules/album/templates/public/show-one.twig:47
+msgid "Rating"
+msgstr ""
+
+#: modules/album/templates/public/list.twig:38
+msgid "Up"
+msgstr ""
+
+#: modules/album/templates/public/list.twig:42
+msgid "Down"
+msgstr ""
+
+#: modules/album/templates/public/list.twig:44
+#: modules/album/templates/public/show-one.twig:81
+msgid "Edit"
+msgstr ""
+
+#: modules/album/templates/public/move-photo.twig:13
+msgid "Select Album"
+msgstr ""
+
+#: modules/album/templates/public/move-photo.twig:22
+#: modules/album/templates/public/show-one.twig:82
+msgid "Move"
+msgstr ""
+
+#: modules/album/templates/public/show-one.twig:37
+msgid "Views"
+msgstr ""
+
+#: modules/album/templates/public/show-one.twig:38
+msgid "Downloads"
+msgstr ""
+
+#: modules/album/templates/public/show-one.twig:39
+msgid "Date"
+msgstr ""
+
+#: modules/album/templates/public/show-one.twig:41
+msgid "User"
+msgstr ""
+
+#: modules/album/templates/public/show-one.twig:44
+msgid "Album"
+msgstr ""
+
+#: modules/album/templates/public/show-one.twig:57
+msgid "Download"
+msgstr ""
+
+#: modules/album/templates/public/show-one.twig:73
+msgid "Actions"
+msgstr ""
+
+#: modules/album/templates/public/show-one.twig:78
+msgid "Add to Profile"
+msgstr ""
+
+#: modules/album/templates/public/show-one.twig:101
+msgid "Back"
+msgstr ""
+
+#: modules/album/templates/public/show.twig:15
+msgid "Add image"
+msgstr ""
+
+#: modules/album/templates/public/users.twig:31
 msgid "Total:"
 msgstr ""

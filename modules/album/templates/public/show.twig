@@ -1,0 +1,20 @@
+{#
+    Photos of one album.
+
+    @param list<PhotoViewDTO> photos
+    @param int      total
+    @param ?Markup  pagination
+    @param bool     has_add_photo
+    @param string   upload_url
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    {% if has_add_photo %}
+        <div class="mb-3">
+            <a href="{{ upload_url }}" class="btn btn-primary">{{ __('Add image') }}</a>
+        </div>
+    {% endif %}
+
+    {% include '@album/public/components/photo-grid.twig' with {photos: photos, total: total, pagination: pagination} only %}
+{% endblock %}

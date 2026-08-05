@@ -1,0 +1,104 @@
+{#
+    One photo with its details.
+
+    @param ?PhotoDetailDTO photo           Null when the album has no photos.
+    @param int      total
+    @param ?Markup  pagination
+    @param string   success_message
+    @param string   album_url
+    @param string   album_list_url
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    {% if photo is null %}
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-info', alert: __('The list is empty')} only %}
+    {% endif %}
+    {% if success_message|default('') %}
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-success border-0', alert: success_message} only %}
+    {% endif %}
+
+    {% if photo is not null %}
+        <div class="row">
+            <div class="col-md-5">
+                <a href="{{ photo.picture }}" title="{{ __('Photo') }} "
+                   data-source="{{ photo.downloadUrl }}" class="image-preview">
+                    <img src="{{ photo.previewPicture }}" alt="." class="img-fluid">
+                </a>
+            </div>
+        </div>
+        {% if photo.formattedDescription %}
+            {# Escaped and turned into markup by the presenter of the module. #}
+            <div class="description mt-3 border-top pt-3">
+                {{ photo.formattedDescription }}
+            </div>
+        {% endif %}
+        <div class="text-muted mt-3 mb-3 border-top border-bottom pt-2 pb-2">
+            <div>{{ __('Views') }}: {{ photo.views }}</div>
+            <div>{{ __('Downloads') }}: {{ photo.downloads }}</div>
+            <div>{{ __('Date') }}: {{ photo.displayDate }}</div>
+            <div>
+                {{ __('User') }}: <a href="{{ photo.userAlbumsUrl }}">{{ photo.userName }}</a>
+            </div>
+            <div>
+                {{ __('Album') }}: <a href="{{ photo.userAlbumUrl }}">{{ photo.albumName }}</a>
+            </div>
+            <div>
+                <span>{{ __('Rating') }}:</span>
+                <span class="pe-2 fw-bold">{{ photo.rating }}</span>
+                {% include '@album/public/components/vote-buttons.twig' with {photo: photo} only %}
+            </div>
+        </div>
+
+        <div class="border-bottom pb-3">
+            <svg class="icon download-button-icon me-1 mt-n1">
+                <use xlink:href="{{ asset('icons/sprite.svg') }}#download"/>
+            </svg>
+            <a href="{{ photo.downloadUrl }}">{{ __('Download') }}</a>
+        </div>
+
+        {% if photo.canComment %}
+            <div class="mt-3 pb-3 border-bottom">
+                <svg class="icon download-button-icon me-1">
+                    <use xlink:href="{{ asset('icons/sprite.svg') }}#forum"/>
+                </svg>
+                <a href="{{ photo.commentsUrl }}">{{ __('Comments') }}</a> ({{ photo.commCount }})
+            </div>
+        {% endif %}
+
+        {% if photo.canManage %}
+            <div class="btn-group mt-3">
+                <div class="dropdown">
+                    <button class="btn btn-danger dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ __('Actions') }}
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        {% if photo.isOwner %}
+                            <a class="dropdown-item" href="{{ photo.addToProfileUrl }}">
+                                {{ __('Add to Profile') }}
+                            </a>
+                        {% endif %}
+                        <a class="dropdown-item" href="{{ photo.editUrl }}">{{ __('Edit') }}</a>
+                        <a class="dropdown-item" href="{{ photo.moveUrl }}">{{ __('Move') }}</a>
+                        <a class="dropdown-item" href="{{ photo.deleteUrl }}">{{ __('Delete') }}</a>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
+
+    {% if pagination %}
+        <div class="mt-4">
+            {{ pagination }}
+        </div>
+    {% endif %}
+
+    {% if total > 0 %}
+        <div>{{ __('Total') }}: {{ total }}</div>
+    {% endif %}
+
+    <div class="mt-2">
+        <a href="{{ album_url }}">{{ __('Back') }}</a><br>
+        <a href="{{ album_list_url }}">{{ __('Album List') }}</a>
+    </div>
+{% endblock %}

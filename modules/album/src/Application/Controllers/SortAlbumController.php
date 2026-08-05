@@ -11,7 +11,7 @@ use Johncms\Modules\Album\Application\UseCases\GetSortAlbumContextUseCase;
 use Johncms\Modules\Album\Application\UseCases\MoveAlbumUseCase;
 use Johncms\Modules\Album\Domain\Models\Album;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Validator\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -19,17 +19,16 @@ final readonly class SortAlbumController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private GetSortAlbumContextUseCase $getContextUseCase,
         private MoveAlbumUseCase $moveAlbumUseCase,
     ) {
         $this->controllerContext->initModule('album');
     }
 
-    public function moveUp(Request $request, int $al): Response
+    public function moveUp(Request $request, int $al): ViewResponse
     {
         $album = $this->resolveContext($al);
-        if ($album instanceof Response) {
+        if ($album instanceof ViewResponse) {
             return $album;
         }
         if (! $this->isCsrfValid($request)) {
@@ -41,10 +40,10 @@ final readonly class SortAlbumController
         redirect('/album/user/' . $album->user_id);
     }
 
-    public function moveDown(Request $request, int $al): Response
+    public function moveDown(Request $request, int $al): ViewResponse
     {
         $album = $this->resolveContext($al);
-        if ($album instanceof Response) {
+        if ($album instanceof ViewResponse) {
             return $album;
         }
         if (! $this->isCsrfValid($request)) {
@@ -59,7 +58,7 @@ final readonly class SortAlbumController
     /**
      * Resolve the album with the access guard, or a rendered error page (with the proper HTTP status set).
      */
-    private function resolveContext(int $al): Album|Response
+    private function resolveContext(int $al): Album|ViewResponse
     {
         try {
             return $this->getContextUseCase->execute($al);
@@ -80,17 +79,15 @@ final readonly class SortAlbumController
         return $validator->isValid();
     }
 
-    private function renderError(string $message, int $status = 200): Response
+    private function renderError(string $message, int $status = 200): ViewResponse
     {
-        return new Response(
-            $this->render->render(
-                'system::pages/result',
-                [
-                    'title'   => __('Albums'),
-                    'type'    => 'alert-danger',
-                    'message' => $message,
-                ]
-            ),
+        return new ViewResponse(
+            '@theme/pages/result.twig',
+            [
+                'title'   => __('Albums'),
+                'type'    => 'alert-danger',
+                'message' => $message,
+            ],
             $status
         );
     }

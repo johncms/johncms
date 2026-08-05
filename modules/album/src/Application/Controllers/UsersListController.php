@@ -6,17 +6,16 @@ namespace Johncms\Modules\Album\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\PageMeta;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Album\Application\UseCases\GetUsersListUseCase;
 use Johncms\NavChain;
-use Johncms\System\View\Render;
 
 final readonly class UsersListController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private GetUsersListUseCase $useCase,
         private PaginationFactory $paginationFactory,
@@ -25,7 +24,7 @@ final readonly class UsersListController
         $this->controllerContext->initModule('album');
     }
 
-    public function __invoke(?string $filter = null): string
+    public function __invoke(?string $filter = null): ViewResponse
     {
         $sex = match ($filter) {
             'boys'  => 'm',
@@ -62,14 +61,11 @@ final readonly class UsersListController
         }
 
         $meta = new PageMeta($title, $pagination->getCurrentPage());
-        $this->render->addData([
-            'title'      => $meta->title,
-            'page_title' => $title,
-        ]);
-
-        return $this->render->render(
-            'album::users',
+        return new ViewResponse(
+            '@album/public/users.twig',
             [
+                'title'      => $meta->title,
+                'page_title' => $title,
                 'filters'    => [
                     'all'   => ['name' => __('All'), 'url' => '/album/users', 'active' => $filter === null],
                     'boys'  => ['name' => __('Guys'), 'url' => '/album/users/boys', 'active' => $filter === 'boys'],
@@ -77,8 +73,7 @@ final readonly class UsersListController
                 ],
                 'users'      => $users,
                 'total'      => $total,
-                'per_page'   => $pagination->getPerPage(),
-                'pagination' => $pagination->render(),
+                'pagination' => $pagination->hasPages() ? $pagination->render() : null,
             ]
         );
     }

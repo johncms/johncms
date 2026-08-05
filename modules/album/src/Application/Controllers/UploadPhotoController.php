@@ -14,7 +14,7 @@ use Johncms\Modules\Album\Application\UseCases\UploadPhotoUseCase;
 use Johncms\Modules\Album\Domain\Models\Album;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,7 +23,6 @@ final readonly class UploadPhotoController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private User $currentUser,
         private GetUploadPhotoContextUseCase $getContextUseCase,
@@ -33,20 +32,20 @@ final readonly class UploadPhotoController
         $this->controllerContext->initModule('album');
     }
 
-    public function form(int $al): Response
+    public function form(int $al): ViewResponse
     {
         $album = $this->resolveContext($al);
-        if ($album instanceof Response) {
+        if ($album instanceof ViewResponse) {
             return $album;
         }
 
         return $this->renderForm($album, []);
     }
 
-    public function upload(Request $request, int $al): Response
+    public function upload(Request $request, int $al): ViewResponse
     {
         $album = $this->resolveContext($al);
-        if ($album instanceof Response) {
+        if ($album instanceof ViewResponse) {
             return $album;
         }
 
@@ -62,24 +61,22 @@ final readonly class UploadPhotoController
             return $this->renderForm($album, [$e->getMessage()]);
         }
 
-        return new Response(
-            $this->render->render(
-                'system::pages/result',
-                [
-                    'title'         => __('Upload image'),
-                    'type'          => 'alert-success',
-                    'message'       => __('Image uploaded'),
-                    'back_url'      => '/album/' . $album->id,
-                    'back_url_name' => __('Continue'),
-                ]
-            )
+        return new ViewResponse(
+            '@theme/pages/result.twig',
+            [
+                'title'         => __('Upload image'),
+                'type'          => 'alert-success',
+                'message'       => __('Image uploaded'),
+                'back_url'      => '/album/' . $album->id,
+                'back_url_name' => __('Continue'),
+            ]
         );
     }
 
     /**
      * @param list<string> $errors
      */
-    private function renderForm(Album $album, array $errors): Response
+    private function renderForm(Album $album, array $errors): ViewResponse
     {
         $title = __('Upload image');
 
@@ -89,31 +86,24 @@ final readonly class UploadPhotoController
         $this->navChain->add($album->name, '/album/' . $album->id);
         $this->navChain->add($title);
 
-        $this->render->addData([
-            'title'      => $title,
-            'page_title' => $title,
-        ]);
-
-        return new Response(
-            $this->render->render(
-                'album::add_photo',
-                [
-                    'title'      => $title,
-                    'page_title' => $title,
-                    'data'       => [
-                        'action_url'    => '/album/' . $album->id . '/upload',
-                        'back_url'      => '/album/' . $album->id,
-                        'error_message' => $errors,
-                    ],
-                ]
-            )
+        return new ViewResponse(
+            '@album/public/add-photo.twig',
+            [
+                'title'         => $title,
+                'page_title'    => $title,
+                'action_url'    => '/album/' . $album->id . '/upload',
+                'back_url'      => '/album/' . $album->id,
+                'error_message' => $errors,
+                'max_file_size' => (int) config('johncms.flsz'),
+                'field_height'  => $this->currentUser->config->fieldHeight,
+            ]
         );
     }
 
     /**
      * Resolve the album with the access guard, or a rendered error page (with the proper HTTP status set).
      */
-    private function resolveContext(int $al): Album|Response
+    private function resolveContext(int $al): Album|ViewResponse
     {
         try {
             return $this->getContextUseCase->execute($al);
@@ -124,18 +114,16 @@ final readonly class UploadPhotoController
         }
     }
 
-    private function renderError(string $message, int $status = 200): Response
+    private function renderError(string $message, int $status = 200): ViewResponse
     {
-        return new Response(
-            $this->render->render(
-                'system::pages/result',
-                [
-                    'title'    => __('Upload image'),
-                    'type'     => 'alert-danger',
-                    'message'  => $message,
-                    'back_url' => '/album',
-                ]
-            ),
+        return new ViewResponse(
+            '@theme/pages/result.twig',
+            [
+                'title'    => __('Upload image'),
+                'type'     => 'alert-danger',
+                'message'  => $message,
+                'back_url' => '/album',
+            ],
             $status
         );
     }

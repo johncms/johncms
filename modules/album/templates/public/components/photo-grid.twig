@@ -1,0 +1,26 @@
+{#
+    A grid of photos with the navigation and the total under it.
+
+    @param list<PhotoViewDTO> photos
+    @param int      total
+    @param ?Markup  pagination
+#}
+{% if photos is empty %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-info', alert: __('The list is empty')} only %}
+{% endif %}
+
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3">
+    {% for photo in photos %}
+        {% include '@album/public/components/photo-card.twig' with {photo: photo} only %}
+    {% endfor %}
+</div>
+
+{% if pagination %}
+    <div>
+        {{ pagination }}
+    </div>
+{% endif %}
+
+{% if total > 0 %}
+    <div>{{ __('Total') }}: {{ total }}</div>
+{% endif %}

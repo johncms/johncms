@@ -1,0 +1,12 @@
+{#
+    A rating of photos — newest, most voted, most viewed and so on.
+
+    @param list<PhotoViewDTO> photos
+    @param int      total
+    @param ?Markup  pagination
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    {% include '@album/public/components/photo-grid.twig' with {photos: photos, total: total, pagination: pagination} only %}
+{% endblock %}

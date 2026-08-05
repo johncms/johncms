@@ -12,7 +12,7 @@ use Johncms\Modules\Album\Application\UseCases\DeleteAlbumUseCase;
 use Johncms\Modules\Album\Application\UseCases\GetDeleteAlbumContextUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,7 +21,6 @@ final readonly class DeleteAlbumController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private User $currentUser,
         private GetDeleteAlbumContextUseCase $getContextUseCase,
@@ -30,10 +29,10 @@ final readonly class DeleteAlbumController
         $this->controllerContext->initModule('album');
     }
 
-    public function confirm(int $al): Response
+    public function confirm(int $al): ViewResponse
     {
         $context = $this->resolveContext($al);
-        if ($context instanceof Response) {
+        if ($context instanceof ViewResponse) {
             return $context;
         }
 
@@ -46,31 +45,22 @@ final readonly class DeleteAlbumController
         $this->navChain->add($album->name, '/album/' . $album->id);
         $this->navChain->add($title);
 
-        $this->render->addData([
-            'title'      => $title,
-            'page_title' => $title,
-        ]);
-
-        return new Response(
-            $this->render->render(
-                'album::confirm_delete',
-                [
-                    'title'      => $title,
-                    'page_title' => $title,
-                    'data'       => [
-                        'message'     => __('Are you sure you want to delete this album? If it contains photos, they also will be deleted.'),
-                        'form_action' => '/album/' . $album->id . '/delete',
-                        'back_url'    => '/album/user/' . $album->user_id,
-                    ],
-                ]
-            )
+        return new ViewResponse(
+            '@album/public/confirm-delete.twig',
+            [
+                'title'       => $title,
+                'page_title'  => $title,
+                'message'     => __('Are you sure you want to delete this album? If it contains photos, they also will be deleted.'),
+                'form_action' => '/album/' . $album->id . '/delete',
+                'back_url'    => '/album/user/' . $album->user_id,
+            ]
         );
     }
 
-    public function delete(Request $request, int $al): Response
+    public function delete(Request $request, int $al): ViewResponse
     {
         $context = $this->resolveContext($al);
-        if ($context instanceof Response) {
+        if ($context instanceof ViewResponse) {
             return $context;
         }
         if (! $this->isCsrfValid($request)) {
@@ -82,23 +72,21 @@ final readonly class DeleteAlbumController
 
         $this->deleteAlbumUseCase->execute($album);
 
-        return new Response(
-            $this->render->render(
-                'system::pages/result',
-                [
-                    'title'    => __('Delete album'),
-                    'type'     => 'alert-success',
-                    'message'  => __('Album deleted'),
-                    'back_url' => '/album/user/' . $ownerId,
-                ]
-            )
+        return new ViewResponse(
+            '@theme/pages/result.twig',
+            [
+                'title'    => __('Delete album'),
+                'type'     => 'alert-success',
+                'message'  => __('Album deleted'),
+                'back_url' => '/album/user/' . $ownerId,
+            ]
         );
     }
 
     /**
      * Resolve the delete context or, on failure, a rendered error page (with the proper HTTP status set).
      */
-    private function resolveContext(int $al): DeleteAlbumContextDTO|Response
+    private function resolveContext(int $al): DeleteAlbumContextDTO|ViewResponse
     {
         try {
             return $this->getContextUseCase->execute($al);
@@ -119,17 +107,15 @@ final readonly class DeleteAlbumController
         return $validator->isValid();
     }
 
-    private function renderError(string $message, int $status = 200): Response
+    private function renderError(string $message, int $status = 200): ViewResponse
     {
-        return new Response(
-            $this->render->render(
-                'system::pages/result',
-                [
-                    'title'   => __('Albums'),
-                    'type'    => 'alert-danger',
-                    'message' => $message,
-                ]
-            ),
+        return new ViewResponse(
+            '@theme/pages/result.twig',
+            [
+                'title'   => __('Albums'),
+                'type'    => 'alert-danger',
+                'message' => $message,
+            ],
             $status
         );
     }

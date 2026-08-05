@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Album\Application\Services;
 
 use Johncms\Modules\Album\Application\DTO\PhotoDetailDTO;
+use Twig\Markup;
 use Johncms\Modules\Album\Application\DTO\PhotoViewDTO;
 use Johncms\Modules\Album\Domain\Models\AlbumPhoto;
 use Johncms\Smilies\SmiliesRendererInterface;
@@ -61,7 +62,11 @@ final readonly class PhotoPresenter
             albumName: $photo->album->name ?? '',
             picture: $this->picture($photo->user_id, $photo->img_name),
             previewPicture: $this->picture($photo->user_id, $photo->tmb_name),
-            formattedDescription: $this->smiliesRenderer->render(PlainTextFormatter::toHtml((string) $photo->description)),
+            // Escaped by the plain text formatter and given the smiley images, so it is markup.
+            formattedDescription: new Markup(
+                $this->smiliesRenderer->render(PlainTextFormatter::toHtml((string) $photo->description)),
+                'UTF-8'
+            ),
             displayDate: $this->dateFormatter->format($photo->time),
             views: $photo->views,
             downloads: $photo->downloads,

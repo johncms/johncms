@@ -13,14 +13,13 @@ use Johncms\Modules\Album\Application\Exceptions\AlbumPasswordRequiredException;
 use Johncms\Modules\Album\Application\UseCases\GetAlbumViewUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Users\User;
 
 final readonly class ShowAlbumController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private User $currentUser,
         private GetAlbumViewUseCase $useCase,
@@ -30,7 +29,7 @@ final readonly class ShowAlbumController
         $this->controllerContext->initModule('album');
     }
 
-    public function __invoke(Request $request, int $al): string
+    public function __invoke(Request $request, int $al): ViewResponse
     {
         $submittedPassword = $request->body('password');
 
@@ -68,35 +67,28 @@ final readonly class ShowAlbumController
         $this->navChain->add($userAlbumsLabel, '/album/user/' . $result->ownerId);
         $this->navChain->add($result->albumName);
 
-        $this->render->addData([
-            'title'      => $title,
-            'page_title' => $title,
-        ]);
-
-        return $this->render->render(
-            'album::show',
+        return new ViewResponse(
+            '@album/public/show.twig',
             [
+                'title'         => $title,
+                'page_title'    => $title,
                 'photos'        => $result->photos,
                 'total'         => $pagination->getTotal(),
-                'per_page'      => $pagination->getPerPage(),
                 'has_add_photo' => $result->hasAddPhoto,
                 'upload_url'    => '/album/' . $result->albumId . '/upload',
-                'pagination'    => $pagination->render(),
+                'pagination'    => $pagination->hasPages() ? $pagination->render() : null,
             ]
         );
     }
 
-    private function renderPasswordForm(int $albumId, AlbumPasswordRequiredException $e): string
+    private function renderPasswordForm(int $albumId, AlbumPasswordRequiredException $e): ViewResponse
     {
         $title = __('Albums');
-        $this->render->addData([
-            'title'      => $title,
-            'page_title' => $title,
-        ]);
-
-        return $this->render->render(
-            'album::enter_password',
+        return new ViewResponse(
+            '@album/public/enter-password.twig',
             [
+                'title'         => $title,
+                'page_title'    => $title,
                 'action_url'    => '/album/' . $albumId,
                 'back_url'      => '/album/user/' . $e->ownerId,
                 'error_message' => $e->incorrectPassword ? __('Incorrect Password') : '',
@@ -104,10 +96,10 @@ final readonly class ShowAlbumController
         );
     }
 
-    private function renderResult(string $message, string $backUrl = '', string $backUrlName = ''): string
+    private function renderResult(string $message, string $backUrl = '', string $backUrlName = ''): ViewResponse
     {
-        return $this->render->render(
-            'system::pages/result',
+        return new ViewResponse(
+            '@theme/pages/result.twig',
             [
                 'title'         => __('Albums'),
                 'type'          => 'alert-danger',

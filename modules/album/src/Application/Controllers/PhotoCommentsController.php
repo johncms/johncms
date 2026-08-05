@@ -14,14 +14,13 @@ use Johncms\Modules\Album\Application\UseCases\GetPhotoCommentsContextUseCase;
 use Johncms\Modules\Album\Domain\Repository\AlbumPhotoRepositoryInterface;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Users\User;
 
 final readonly class PhotoCommentsController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private User $currentUser,
         private GetPhotoCommentsContextUseCase $useCase,
@@ -30,7 +29,9 @@ final readonly class PhotoCommentsController
         $this->controllerContext->initModule('album');
     }
 
-    public function __invoke(Request $request, int $img): string
+    // The legacy Comments class prints a whole page of its own, so this action still hands
+    // back a string; the error pages it may answer with instead are views.
+    public function __invoke(Request $request, int $img): ViewResponse|string
     {
         try {
             $context = $this->useCase->execute($img);
@@ -89,10 +90,10 @@ final readonly class PhotoCommentsController
         return $html;
     }
 
-    private function renderError(string $message, string $backUrl = ''): string
+    private function renderError(string $message, string $backUrl = ''): ViewResponse
     {
-        return $this->render->render(
-            'system::pages/result',
+        return new ViewResponse(
+            '@theme/pages/result.twig',
             [
                 'title'         => __('Comments'),
                 'type'          => 'alert-danger',

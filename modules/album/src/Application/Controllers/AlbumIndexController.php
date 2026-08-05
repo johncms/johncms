@@ -5,16 +5,15 @@ declare(strict_types=1);
 namespace Johncms\Modules\Album\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Album\Application\UseCases\GetAlbumIndexUseCase;
 use Johncms\NavChain;
-use Johncms\System\View\Render;
 use Johncms\Users\User;
 
 final readonly class AlbumIndexController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private User $currentUser,
         private GetAlbumIndexUseCase $getAlbumIndexUseCase,
@@ -22,23 +21,20 @@ final readonly class AlbumIndexController
         $this->controllerContext->initModule('album');
     }
 
-    public function __invoke(): string
+    public function __invoke(): ViewResponse
     {
         $data = $this->getAlbumIndexUseCase->execute();
 
         $title = __('Albums');
         $this->navChain->add($title, '/album');
 
-        $this->render->addData([
-            'title'      => $title,
-            'page_title' => $title,
-        ]);
-
-        return $this->render->render(
-            'album::index',
+        return new ViewResponse(
+            '@album/public/index.twig',
             [
-                'data'           => $data,
-                'my_albums_url'  => '/album/user/' . $this->currentUser->id,
+                'title'         => $title,
+                'page_title'    => $title,
+                'data'          => $data,
+                'my_albums_url' => '/album/user/' . $this->currentUser->id,
             ]
         );
     }

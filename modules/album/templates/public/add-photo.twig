@@ -1,0 +1,36 @@
+{#
+    Uploading a photo into an album.
+
+    @param string action_url
+    @param string back_url
+    @param string error_message
+    @param int    max_file_size In kilobytes.
+    @param int    field_height  Rows of the description field, from the settings of the visitor.
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    <form name="file_edit_form" action="{{ action_url }}" method="post" enctype="multipart/form-data">
+        {% if error_message|default('') %}
+            {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger border-0', alert: error_message} only %}
+        {% endif %}
+        <div class="form-group">
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="file" name="imagefile" aria-describedby="file_label" required>
+                <label class="custom-file-label" for="file">{{ __('Choose file') }}</label>
+            </div>
+            <div class="text-muted mb-3 small">
+                {# The line break is part of the translated string. #}
+                {{ __('Allowed format image JPG, JPEG, PNG, GIF<br>File size should not exceed %d kb.', max_file_size)|raw }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="description">{{ __('Description') }}</label>
+            <textarea id="description" name="description" class="form-control" rows="{{ field_height }}"></textarea>
+        </div>
+        <div class="mt-3">
+            <button type="submit" name="submit" value="1" class="btn btn-primary">{{ __('Save') }}</button>
+            <a href="{{ back_url }}" class="btn btn-secondary">{{ __('Cancel') }}</a>
+        </div>
+    </form>
+{% endblock %}

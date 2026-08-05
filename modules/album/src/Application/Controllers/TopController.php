@@ -6,18 +6,17 @@ namespace Johncms\Modules\Album\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\PageMeta;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Album\Application\UseCases\GetTopUseCase;
 use Johncms\Modules\Album\Domain\Enums\TopFilter;
 use Johncms\NavChain;
-use Johncms\System\View\Render;
 
 final readonly class TopController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private GetTopUseCase $useCase,
         private PaginationFactory $paginationFactory,
@@ -26,7 +25,7 @@ final readonly class TopController
         $this->controllerContext->initModule('album');
     }
 
-    public function __invoke(?string $filter = null): string
+    public function __invoke(?string $filter = null): ViewResponse
     {
         $topFilter = TopFilter::fromSlug($filter);
 
@@ -47,18 +46,14 @@ final readonly class TopController
             : [];
 
         $meta = new PageMeta($title, $pagination->getCurrentPage());
-        $this->render->addData([
-            'title'      => $meta->title,
-            'page_title' => $title,
-        ]);
-
-        return $this->render->render(
-            'album::top',
+        return new ViewResponse(
+            '@album/public/top.twig',
             [
+                'title'      => $meta->title,
+                'page_title' => $title,
                 'photos'     => $photos,
                 'total'      => $total,
-                'per_page'   => $pagination->getPerPage(),
-                'pagination' => $pagination->render(),
+                'pagination' => $pagination->hasPages() ? $pagination->render() : null,
             ]
         );
     }

@@ -5,18 +5,17 @@ declare(strict_types=1);
 namespace Johncms\Modules\Album\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Http\Session;
 use Johncms\Modules\Album\Application\Exceptions\AlbumOwnerNotFoundException;
 use Johncms\Modules\Album\Application\UseCases\GetUserAlbumsUseCase;
 use Johncms\NavChain;
-use Johncms\System\View\Render;
 use Johncms\Users\User;
 
 final readonly class UserAlbumsController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private Session $session,
         private NavChain $navChain,
         private User $currentUser,
@@ -25,7 +24,7 @@ final readonly class UserAlbumsController
         $this->controllerContext->initModule('album');
     }
 
-    public function __invoke(int $id): string
+    public function __invoke(int $id): ViewResponse
     {
         // Leaving the album list clears any unlocked password-protected album session.
         $this->session->remove('ap');
@@ -33,8 +32,8 @@ final readonly class UserAlbumsController
         try {
             $result = $this->useCase->execute($id);
         } catch (AlbumOwnerNotFoundException $e) {
-            return $this->render->render(
-                'system::pages/result',
+            return new ViewResponse(
+                '@theme/pages/result.twig',
                 [
                     'title'   => __('Albums'),
                     'type'    => 'alert-danger',
@@ -74,13 +73,8 @@ final readonly class UserAlbumsController
         $this->navChain->add(__('Albums'), '/album');
         $this->navChain->add($isSelf ? __('Your albums') : __('User albums'));
 
-        $this->render->addData([
-            'title'      => $title,
-            'page_title' => $title,
-        ]);
-
-        return $this->render->render(
-            'album::list',
+        return new ViewResponse(
+            '@album/public/list.twig',
             [
                 'owner'        => [
                     'id'             => $owner->id,
