@@ -1,0 +1,12 @@
+{#
+    Validation messages of one field, one per line.
+
+    @param list<string> errors
+#}
+{% if errors is not empty %}
+    <div class="invalid-feedback">
+        {% for error in errors %}
+            {{ error }}{% if not loop.last %}<br>{% endif %}
+        {% endfor %}
+    </div>
+{% endif %}

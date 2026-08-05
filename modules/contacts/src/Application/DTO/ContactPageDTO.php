@@ -23,6 +23,14 @@ final readonly class ContactPageDTO
     ) {
     }
 
+    /**
+     * The phone as a tel: link takes digits and the leading plus only.
+     */
+    public function phoneHref(): string
+    {
+        return (string) preg_replace('/[^\d+]/', '', $this->phone);
+    }
+
     public function hasContactInfo(): bool
     {
         return $this->email !== ''

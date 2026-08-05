@@ -11,6 +11,7 @@ use Johncms\Modules\Consent\Domain\Models\ConsentLog;
 use Johncms\Modules\Consent\Domain\Repository\ConsentLogRepositoryInterface;
 use Johncms\Modules\Consent\Domain\Repository\ConsentRepositoryInterface;
 use Johncms\System\i18n\Translator;
+use Twig\Markup;
 
 /**
  * Programmatic API for the consent subsystem.
@@ -46,7 +47,7 @@ final readonly class ConsentService
 
                 return new FormConsentDTO(
                     id: $consent->id,
-                    titleHtml: $titleHtml,
+                    titleHtml: new Markup($titleHtml, 'UTF-8'),
                     url: $consent->hasTextPage() && ! $hasOwnLinks ? '/consent/' . $consent->id : null,
                     isRequired: $consent->is_required,
                     version: $consent->version,

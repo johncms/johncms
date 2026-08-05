@@ -1,0 +1,147 @@
+{#
+    @param ContactPageDTO       contacts       Contact information for the current language.
+    @param string               form_action
+    @param array                form_data      Values the visitor has entered.
+    @param array                errors         Validation messages, keyed by field.
+    @param list<FormConsentDTO> consents       Consents the form asks for.
+    @param bool                 show_captcha
+    @param string               captcha        Image of the code, as a data URI.
+    @param string               honeypot_field Name of the field a bot is expected to fill.
+    @param string               message        Flash message about the last submission.
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    {% if message|default('') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endif %}
+
+    {% if contacts.text %}
+        <div class="mb-3">{{ contacts.text|nl2br }}</div>
+    {% endif %}
+
+    {% if contacts.hasContactInfo %}
+        <div class="card mb-3" itemscope itemtype="https://schema.org/Organization">
+            <div class="card-body">
+                <dl class="row mb-0">
+                    {% if contacts.email %}
+                        <dt class="col-sm-3">{{ __('E-mail') }}</dt>
+                        <dd class="col-sm-9">
+                            <a href="mailto:{{ contacts.email }}" itemprop="email">{{ contacts.email }}</a>
+                        </dd>
+                    {% endif %}
+
+                    {% if contacts.phone %}
+                        <dt class="col-sm-3">{{ __('Phone') }}</dt>
+                        <dd class="col-sm-9">
+                            <a href="tel:{{ contacts.phoneHref }}" itemprop="telephone">{{ contacts.phone }}</a>
+                        </dd>
+                    {% endif %}
+
+                    {% if contacts.address %}
+                        <dt class="col-sm-3">{{ __('Address') }}</dt>
+                        <dd class="col-sm-9" itemprop="address">{{ contacts.address|nl2br }}</dd>
+                    {% endif %}
+
+                    {% if contacts.workingHours %}
+                        <dt class="col-sm-3">{{ __('Working hours') }}</dt>
+                        <dd class="col-sm-9">{{ contacts.workingHours|nl2br }}</dd>
+                    {% endif %}
+
+                    {% if contacts.socials is not empty %}
+                        <dt class="col-sm-3">{{ __('We are on the web') }}</dt>
+                        <dd class="col-sm-9 mb-0">
+                            {% for social in contacts.socials %}
+                                <a href="{{ social.url }}" class="me-2" rel="noopener noreferrer nofollow" target="_blank" itemprop="sameAs">{{ social.title }}</a>
+                            {% endfor %}
+                        </dd>
+                    {% endif %}
+                </dl>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if contacts.formEnabled %}
+        <h4>{{ __('Feedback form') }}</h4>
+
+        <form method="post" action="{{ form_action }}">
+            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+
+            <div class="form-group">
+                <label for="name">{{ __('Your name') }}</label>
+                <input type="text"
+                       class="form-control {{ errors.name is defined ? 'is-invalid' }}"
+                       name="name"
+                       id="name"
+                       maxlength="50"
+                       required
+                       value="{{ form_data.name|default('') }}">
+                {% include '@theme/components/field-errors.twig' with {errors: errors.name|default([])} only %}
+            </div>
+
+            <div class="form-group">
+                <label for="email">{{ __('E-mail for reply') }}</label>
+                <input type="email"
+                       class="form-control {{ errors.email is defined ? 'is-invalid' }}"
+                       name="email"
+                       id="email"
+                       required
+                       value="{{ form_data.email|default('') }}">
+                {% include '@theme/components/field-errors.twig' with {errors: errors.email|default([])} only %}
+            </div>
+
+            <div class="form-group">
+                <label for="message">{{ __('Message') }}</label>
+                <textarea class="form-control {{ errors.message is defined ? 'is-invalid' }}"
+                          name="message"
+                          id="message"
+                          rows="6"
+                          required>{{ form_data.message|default('') }}</textarea>
+                {% include '@theme/components/field-errors.twig' with {errors: errors.message|default([])} only %}
+            </div>
+
+            <div style="position: absolute; left: -9999px;" aria-hidden="true">
+                <label for="{{ honeypot_field }}">{{ __('Leave this field empty') }}</label>
+                <input type="text" name="{{ honeypot_field }}" id="{{ honeypot_field }}" tabindex="-1" autocomplete="off" value="">
+            </div>
+
+            {% if show_captcha and captcha %}
+                <img alt="{{ __('Verification code') }}" src="{{ captcha }}">
+                <div class="form-group">
+                    <label for="code">{{ __('Enter verification code') }}</label>
+                    <input type="text"
+                           class="form-control {{ errors.code is defined ? 'is-invalid' }}"
+                           maxlength="6"
+                           name="code"
+                           id="code"
+                           autocomplete="off"
+                           required>
+                    {% include '@theme/components/field-errors.twig' with {errors: errors.code|default([])} only %}
+                </div>
+            {% endif %}
+
+            {% for consent in consents %}
+                {% set field = 'consent_' ~ consent.id %}
+                {% include '@theme/components/consent-checkbox.twig' with {
+                    consent: consent,
+                    field: field,
+                    checked: form_data[field]|default('') == '1',
+                    errors: errors[field]|default([])
+                } only %}
+            {% endfor %}
+
+            {% if errors.csrf_token is defined %}
+                <div class="alert alert-danger">
+                    {% for error in errors.csrf_token %}
+                        {{ error }}{% if not loop.last %}<br>{% endif %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% if errors[honeypot_field] is defined %}
+                <div class="alert alert-danger">{{ __('Wrong data') }}</div>
+            {% endif %}
+
+            <input type="submit" name="submit" class="btn btn-primary" value="{{ __('Send') }}">
+        </form>
+    {% endif %}
+{% endblock %}

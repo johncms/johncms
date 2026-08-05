@@ -1,0 +1,29 @@
+{#
+    Consent checkbox of a public form.
+
+    @param FormConsentDTO consent
+    @param string         field   Name of the form field.
+    @param bool           checked
+    @param list<string>   errors
+#}
+<div class="form-group">
+    <div class="form-check">
+        <input type="checkbox"
+               class="form-check-input {{ errors is not empty ? 'is-invalid' }}"
+               name="{{ field }}"
+               value="1"
+               id="{{ field }}"
+               {%- if consent.isRequired %} required{% endif %}
+               {%- if checked %} checked{% endif %}>
+        <label class="form-check-label" for="{{ field }}">
+            {# titleHtml is sanitized by the consent module, so it stays markup. #}
+            {% if consent.url is not null %}
+                <a href="{{ consent.url }}" target="_blank">{{ consent.titleHtml }}</a>
+            {% else %}
+                {{ consent.titleHtml }}
+            {% endif %}
+            {% if consent.isRequired %}<span class="text-danger">*</span>{% endif %}
+        </label>
+        {% include '@theme/components/field-errors.twig' with {errors: errors} only %}
+    </div>
+</div>

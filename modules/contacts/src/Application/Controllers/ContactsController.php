@@ -15,7 +15,7 @@ use Johncms\NavChain;
 use Johncms\Http\Environment;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
 use Laminas\Validator\Identical;
@@ -27,7 +27,6 @@ final readonly class ContactsController
 
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private Session $session,
         private NavChain $navChain,
         private Environment $environment,
@@ -41,7 +40,7 @@ final readonly class ContactsController
         $this->controllerContext->initModule('contacts');
     }
 
-    public function __invoke(Request $request): string
+    public function __invoke(Request $request): ViewResponse
     {
         $pageTitle = __('Contacts');
         $this->navChain->add($pageTitle, self::URL);
@@ -108,16 +107,11 @@ final readonly class ContactsController
             $errors = $validator->getErrors();
         }
 
-        $this->render->addData(
+        return new ViewResponse(
+            '@contacts/public/index.twig',
             [
-                'title'      => $pageTitle,
-                'page_title' => $pageTitle,
-            ]
-        );
-
-        return $this->render->render(
-            'contacts::index',
-            [
+                'title'          => $pageTitle,
+                'page_title'     => $pageTitle,
                 'contacts'       => $pageData,
                 'form_action'    => self::URL,
                 'form_data'      => $formData,
