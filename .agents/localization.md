@@ -5,7 +5,7 @@
 Source strings are **English msgids in code** (gettext-style):
 
 ```
-PHP/phtml sources → composer translate-scan → <domain>.pot → <lang>.po → composer translate → <lang>.lng.php
+PHP/phtml/twig sources → composer translate-scan → <domain>.pot → <lang>.po → composer translate → <lang>.lng.php
 ```
 
 Crowdin is synced **manually, via CLI commands only**. There is no automatic sync: nothing is pushed or pulled in the background, and no CI job updates the repo. The repository is the source of truth — a `.po` edited and committed here stays as-is until someone explicitly runs a Crowdin command.

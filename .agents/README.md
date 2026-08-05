@@ -18,6 +18,7 @@ automatically; `CLAUDE.md` is a symlink to it for Claude Code.
 | `localization.md` | translations, `.po`/`.pot`/`.lng.php`, `__()` strings |
 | `pagination.md` | paginated lists, page titles / meta description |
 | `new-module.md` | creating a new module |
+| `twig-migration.md` | moving a module from Plates to Twig |
 | `review/` | self-review protocol and checklists, run on demand (see below) |
 | `scripts/verify.sh` | the deterministic gate: `cs-check`, `phpstan`, `test` |
 

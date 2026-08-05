@@ -16,6 +16,7 @@ guide first:
 * User input handling, output escaping in templates → read `.agents/escaping.md`
 * Translations, `.po`/`.pot`/`.lng.php` files, `__()` strings → read `.agents/localization.md`
 * Creating a new module (structure, autoload, DI, routes, templates) → read `.agents/new-module.md`
+* Moving a module's templates from Plates (`.phtml`) to Twig → read `.agents/twig-migration.md`
 * Self-review, when the user asks for it (architecture, security, PHP quality, localization) → read `.agents/review/README.md`
 
 ## Self-Review
