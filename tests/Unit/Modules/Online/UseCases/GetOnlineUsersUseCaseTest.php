@@ -12,6 +12,7 @@ use Johncms\Users\UserPlaceFormatterInterface;
 use Johncms\Users\User;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Twig\Markup;
 
 final class GetOnlineUsersUseCaseTest extends TestCase
 {
@@ -47,7 +48,8 @@ final class GetOnlineUsersUseCaseTest extends TestCase
         $user = new User(['id' => 42, 'name' => 'Bob', 'place' => '/some/place', 'movings' => 5, 'sestime' => 100, 'browser' => 'UA']);
 
         $this->repository->method('getOnline')->willReturn(new Collection([$user]));
-        $this->placeFormatter->method('format')->willReturnArgument(0);
+        $this->placeFormatter->method('format')
+            ->willReturnCallback(static fn (?string $place): Markup => new Markup((string) $place, 'UTF-8'));
 
         $result = $this->makeUseCase()->getPage(10, 0, null);
 
@@ -55,7 +57,7 @@ final class GetOnlineUsersUseCaseTest extends TestCase
         self::assertSame(42, $result[0]->id);
         self::assertSame('Bob', $result[0]->name);
         self::assertSame('/profile/42', $result[0]->profileUrl);
-        self::assertSame('/some/place', $result[0]->placeName);
+        self::assertSame('/some/place', (string) $result[0]->placeName);
         self::assertStringStartsWith('5 - ', $result[0]->displayDate);
     }
 

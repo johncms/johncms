@@ -2,29 +2,29 @@ msgid ""
 msgstr ""
 "X-Domain: online\n"
 
-#: modules/online/src/Application/Controllers/GuestController.php:36
+#: modules/online/src/Application/Controllers/GuestController.php:35
 #: modules/online/src/Application/FiltersBuilder.php:23
 msgid "Guests"
 msgstr ""
 
-#: modules/online/src/Application/Controllers/GuestController.php:38
-#: modules/online/src/Application/Controllers/GuestController.php:60
-#: modules/online/src/Application/Controllers/HistoryController.php:38
-#: modules/online/src/Application/Controllers/HistoryController.php:60
-#: modules/online/src/Application/Controllers/IndexController.php:38
-#: modules/online/src/Application/Controllers/IndexController.php:60
+#: modules/online/src/Application/Controllers/GuestController.php:37
+#: modules/online/src/Application/Controllers/GuestController.php:59
+#: modules/online/src/Application/Controllers/HistoryController.php:37
+#: modules/online/src/Application/Controllers/HistoryController.php:59
+#: modules/online/src/Application/Controllers/IndexController.php:37
+#: modules/online/src/Application/Controllers/IndexController.php:59
 #: modules/online/src/Application/Controllers/IpController.php:34
 #: modules/online/src/Application/Controllers/IpController.php:45
-#: modules/online/src/Application/Middlewares/OnlineAdminMiddleware.php:25
+#: modules/online/src/Application/Middlewares/OnlineAdminMiddleware.php:26
 msgid "Online"
 msgstr ""
 
-#: modules/online/src/Application/Controllers/HistoryController.php:36
+#: modules/online/src/Application/Controllers/HistoryController.php:35
 #: modules/online/src/Application/FiltersBuilder.php:19
 msgid "History"
 msgstr ""
 
-#: modules/online/src/Application/Controllers/IndexController.php:36
+#: modules/online/src/Application/Controllers/IndexController.php:35
 msgid "Who is online?"
 msgstr ""
 
@@ -37,20 +37,20 @@ msgstr ""
 msgid "Users"
 msgstr ""
 
-#: modules/online/src/Application/Middlewares/OnlineAdminMiddleware.php:27
+#: modules/online/src/Application/Middlewares/OnlineAdminMiddleware.php:28
 msgid "Access denied"
 msgstr ""
 
-#: modules/online/src/Application/UseCases/GetOnlineGuestsUseCase.php:35
+#: modules/online/src/Application/UseCases/GetOnlineGuestsUseCase.php:36
 msgid "Guest"
 msgstr ""
 
-#: modules/online/templates/ip.phtml:43
-#: modules/online/templates/users.phtml:30
+#: modules/online/templates/public/ip.twig:34
+#: modules/online/templates/public/users.twig:21
 msgid "List is empty"
 msgstr ""
 
-#: modules/online/templates/ip.phtml:50
-#: modules/online/templates/users.phtml:37
+#: modules/online/templates/public/ip.twig:41
+#: modules/online/templates/public/users.twig:28
 msgid "Total"
 msgstr ""

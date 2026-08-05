@@ -11,14 +11,13 @@ use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Online\Application\FiltersBuilder;
 use Johncms\Modules\Online\Application\UseCases\GetIpActivityUseCase;
+use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
-use Johncms\System\View\Render;
 
 final readonly class IpController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private FiltersBuilder $filtersBuilder,
         private GetIpActivityUseCase $ipActivity,
@@ -28,7 +27,7 @@ final readonly class IpController
         $this->controllerContext->initModule('online');
     }
 
-    public function __invoke(Request $request): string
+    public function __invoke(Request $request): ViewResponse
     {
         $pageTitle = __('IP Activity');
 
@@ -44,12 +43,6 @@ final readonly class IpController
         }
 
         $meta = new PageMeta($pageTitle . ' — ' . __('Online'), $pagination->getCurrentPage());
-        $this->render->addData([
-            'title'       => $meta->title,
-            'page_title'  => $pageTitle,
-            'description' => $meta->description,
-        ]);
-
         $total = $pagination->getTotal();
         $items = $total > 0
             ? $this->ipActivity->getPage(
@@ -59,13 +52,17 @@ final readonly class IpController
             )
             : [];
 
-        return $this->render->render('online::ip', [
-            'data' => [
-                'filters'    => $filters,
-                'pagination' => $pagination->render(),
-                'total'      => $total,
-                'items'      => $items,
-            ],
-        ]);
+        return new ViewResponse(
+            '@online/public/ip.twig',
+            [
+                'title'       => $meta->title,
+                'page_title'  => $pageTitle,
+                'description' => $meta->description,
+                'filters'     => $filters,
+                'pagination'  => $pagination->render(),
+                'total'       => $total,
+                'items'       => $items,
+            ]
+        );
     }
 }

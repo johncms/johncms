@@ -8,6 +8,7 @@ use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumSectionRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
 use Johncms\Users\User;
+use Twig\Markup;
 
 final readonly class ForumVisitorPlaceFormatter
 {
@@ -21,10 +22,15 @@ final readonly class ForumVisitorPlaceFormatter
     ) {
     }
 
-    public function format(string $placeUrl): string
+    /**
+     * Where a visitor is inside the forum, as a link — markup by contract. Null when there is
+     * nothing to show, so that a caller can tell "no place" from an empty string of markup, which
+     * an object never is.
+     */
+    public function format(string $placeUrl): ?Markup
     {
         if ($placeUrl === '') {
-            return '';
+            return null;
         }
 
         $parsedUrl = parse_url($placeUrl);
@@ -83,7 +89,7 @@ final readonly class ForumVisitorPlaceFormatter
             $placeId = (int) $parsedQuery['id'];
         }
 
-        return match ($place) {
+        return new Markup(match ($place) {
             'forum' => '<a href="/forum/">' . d__('forum', 'In the forum Main') . '</a>',
             'who' => d__('forum', 'Here, in the List'),
             'files' => '<a href="/forum/files/">' . d__('forum', 'Looking forum files') . '</a>',
@@ -94,7 +100,7 @@ final readonly class ForumVisitorPlaceFormatter
             'say', 'topic' => $this->formatTopicPlace($place, $placeId, $actType),
             'show_post' => $this->formatShowPostPlace($placeId),
             default => '<a href="/forum/">' . d__('forum', 'In the forum Main') . '</a>',
-        };
+        }, 'UTF-8');
     }
 
     private function formatCategoryPlace(int $sectionId): string

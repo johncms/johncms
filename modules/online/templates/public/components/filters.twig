@@ -1,0 +1,10 @@
+{#
+    Tabs of the section.
+
+    @param array filters Each with a name, a url and whether it is the current one.
+#}
+<div class="mb-2">
+    {% for tab in filters %}
+        <a href="{{ tab.url }}" class="btn btn-outline-secondary mb-1 {{ tab.active ? 'active' }}">{{ tab.name }}</a>
+    {% endfor %}
+</div>

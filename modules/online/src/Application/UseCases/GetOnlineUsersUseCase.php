@@ -9,6 +9,7 @@ use Johncms\Modules\Online\Application\DTO\OnlineItemDTO;
 use Johncms\Modules\Online\Domain\Repository\OnlineUserRepositoryInterface;
 use Johncms\Users\User;
 use Johncms\Users\UserPlaceFormatterInterface;
+use Twig\Markup;
 use Johncms\Utils\DurationFormatter;
 
 final readonly class GetOnlineUsersUseCase
@@ -46,7 +47,7 @@ final readonly class GetOnlineUsersUseCase
         )->all();
     }
 
-    private function placeName(string $place, ?ForumVisitorPlaceFormatter $placeFormatter): string
+    private function placeName(string $place, ?ForumVisitorPlaceFormatter $placeFormatter): ?Markup
     {
         return $placeFormatter !== null && str_starts_with($place, '/forum')
             ? $placeFormatter->format($place)

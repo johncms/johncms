@@ -1,0 +1,45 @@
+{#
+    One visitor of the list: avatar, name, where they are and — for the staff — their IP and
+    browser.
+
+    @param OnlineItemDTO item
+#}
+<div class="user-row">
+    <div class="d-flex align-items-start">
+        <div class="user-avatar me-2 me-md-4">
+            <div class="avatar-image rounded-circle overflow-hidden">
+                <img src="{{ avatar(item.id) }}" class="img-fluid" alt=".">
+            </div>
+            <div class="user-status {{ item.isOnline ? 'online' : 'offline' }} shadow"></div>
+        </div>
+        <div class="overflow-auto flex-grow-1">
+            <div class="user-name">
+                {% if app.user.isValid and app.user.id == item.id %}
+                    <a class="user-login me-2">{{ item.name }}</a>
+                {% else %}
+                    <a href="{{ item.profileUrl }}" class="user-login me-2">{{ item.name }}</a>
+                {% endif %}
+                <span class="text-muted">{{ item.displayDate }}</span>
+            </div>
+            {% if item.placeName %}
+                <div>
+                    {# A link by contract, see UserPlaceFormatterInterface::format(). #}
+                    {{ item.placeName }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    {% if app.user.isValid and app.user.rights >= 3 %}
+        <div class="post-footer d-flex justify-content-between border-top pt-2 mt-2">
+            <div class="post-user-info d-flex overflow-hidden small align-items-center">
+                <div class="user-ip me-2">
+                    <a href="{{ item.searchIpUrl }}">{{ item.ip }}</a>
+                    {% if item.ipViaProxy %}
+                        / <a href="{{ item.searchIpViaProxyUrl }}">{{ item.ipViaProxy }}</a>
+                    {% endif %}
+                </div>
+                <div class="useragent">{{ item.browser }}</div>
+            </div>
+        </div>
+    {% endif %}
+</div>

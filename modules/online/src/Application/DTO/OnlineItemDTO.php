@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Online\Application\DTO;
 
+use Twig\Markup;
+
 final readonly class OnlineItemDTO
 {
     public function __construct(
@@ -12,7 +14,8 @@ final readonly class OnlineItemDTO
         public bool $isOnline,
         public string $profileUrl,
         public string $displayDate,
-        public string $placeName,
+        // A link to where the visitor is, markup by contract; null when there is nothing to show.
+        public ?Markup $placeName,
         public string $ip,
         public string $searchIpUrl,
         public string $ipViaProxy,

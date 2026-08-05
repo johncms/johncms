@@ -1,0 +1,32 @@
+{#
+    The list of visitors — online, history and guests all use this page.
+
+    @param array    filters    Tabs of the section, one of them active.
+    @param iterable items      Visitors of the current page.
+    @param int      total      How many there are in total.
+    @param Markup   pagination Rendered navigation.
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    {% include '@online/public/components/filters.twig' with {filters: filters} only %}
+
+    {% if total > 0 %}
+        {% for item in items %}
+            {% include '@online/public/components/user-row.twig' with {item: item} only %}
+        {% endfor %}
+    {% else %}
+        <div class="row">
+            <div class="col-md-6">
+                <div class="alert alert-info">{{ __('List is empty') }}</div>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if total > 0 %}
+        <div>
+            <div class="my-2">{{ __('Total') }}: {{ total }}</div>
+            {{ pagination }}
+        </div>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,45 @@
+{#
+    Addresses the visitors are coming from, with how many sessions each has.
+
+    @param array    filters    Tabs of the section, one of them active.
+    @param iterable items      Addresses of the current page.
+    @param int      total      How many there are in total.
+    @param Markup   pagination Rendered navigation.
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    {% include '@online/public/components/filters.twig' with {filters: filters} only %}
+
+    {% if total > 0 %}
+        <div class="row">
+            <div class="col-md-6">
+                <div class="list-group">
+                    {% for item in items %}
+                        <div class="list-group-item d-flex align-items-center {{ item.current_user_ip ? 'bg-yellow-light' }}">
+                            <div class="me-3">
+                                <a href="{{ item.search_ip }}">{{ item.ip }}</a> [<a href="{{ item.whois_ip }}"> ? </a>]
+                            </div>
+                            <div>
+                                ({{ item.count }})
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="row">
+            <div class="col-md-6">
+                <div class="alert alert-info">{{ __('List is empty') }}</div>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if total > 0 %}
+        <div>
+            <div class="my-2">{{ __('Total') }}: {{ total }}</div>
+            {{ pagination }}
+        </div>
+    {% endif %}
+{% endblock %}

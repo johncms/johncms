@@ -14,6 +14,7 @@ use Johncms\Users\UserPlaceFormatterInterface;
 use Johncms\Users\GuestSession;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Twig\Markup;
 
 final class GetOnlineGuestsUseCaseTest extends TestCase
 {
@@ -47,7 +48,8 @@ final class GetOnlineGuestsUseCaseTest extends TestCase
         ]);
 
         $this->repository->method('getOnline')->willReturn(new Collection([$guest]));
-        $this->placeFormatter->method('format')->willReturnArgument(0);
+        $this->placeFormatter->method('format')
+            ->willReturnCallback(static fn (?string $place): Markup => new Markup((string) $place, 'UTF-8'));
 
         $result = $this->makeUseCase()->getPage(10, 0, null);
 
@@ -55,7 +57,7 @@ final class GetOnlineGuestsUseCaseTest extends TestCase
         self::assertSame(0, $result[0]->id);
         self::assertSame('Guest', $result[0]->name);
         self::assertSame('', $result[0]->profileUrl);
-        self::assertSame('/some/place', $result[0]->placeName);
+        self::assertSame('/some/place', (string) $result[0]->placeName);
         self::assertStringStartsWith('2 - ', $result[0]->displayDate);
     }
 

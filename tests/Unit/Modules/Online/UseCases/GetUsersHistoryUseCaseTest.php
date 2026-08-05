@@ -13,6 +13,7 @@ use Johncms\Users\UserPlaceFormatterInterface;
 use Johncms\Users\User;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Twig\Markup;
 
 final class GetUsersHistoryUseCaseTest extends TestCase
 {
@@ -50,13 +51,14 @@ final class GetUsersHistoryUseCaseTest extends TestCase
         $user = new User(['id' => 7, 'name' => 'Bob', 'place' => '/some/place', 'sestime' => 100, 'browser' => 'UA']);
 
         $this->repository->method('getHistory')->willReturn(new Collection([$user]));
-        $this->placeFormatter->method('format')->willReturnArgument(0);
+        $this->placeFormatter->method('format')
+            ->willReturnCallback(static fn (?string $place): Markup => new Markup((string) $place, 'UTF-8'));
         $this->dateFormatter->expects(self::once())->method('format')->with(100)->willReturn('DD');
 
         $result = $this->makeUseCase()->getPage(10, 0, null);
 
         self::assertInstanceOf(OnlineItemDTO::class, $result[0]);
-        self::assertSame('/some/place', $result[0]->placeName);
+        self::assertSame('/some/place', (string) $result[0]->placeName);
         self::assertSame('DD', $result[0]->displayDate);
     }
 

@@ -11,16 +11,15 @@ use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Forum\Application\Services\ForumVisitorPlaceFormatter;
 use Johncms\Modules\Online\Application\FiltersBuilder;
 use Johncms\Modules\Online\Application\UseCases\GetUsersHistoryUseCase;
+use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
 use Johncms\System\i18n\Translator;
-use Johncms\System\View\Render;
 use Psr\Container\NotFoundExceptionInterface;
 
 final readonly class HistoryController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private Translator $translator,
         private FiltersBuilder $filtersBuilder,
@@ -31,7 +30,7 @@ final readonly class HistoryController
         $this->controllerContext->initModule('online');
     }
 
-    public function __invoke(): string
+    public function __invoke(): ViewResponse
     {
         $pageTitle = __('History');
 
@@ -58,24 +57,22 @@ final readonly class HistoryController
         }
 
         $meta = new PageMeta($pageTitle . ' — ' . __('Online'), $pagination->getCurrentPage());
-        $this->render->addData([
-            'title'       => $meta->title,
-            'page_title'  => $pageTitle,
-            'description' => $meta->description,
-        ]);
-
         $total = $pagination->getTotal();
         $items = $total > 0
             ? $this->usersHistory->getPage($pagination->getPerPage(), $pagination->getOffset(), $forumPlaceFormatter)
             : [];
 
-        return $this->render->render('online::users', [
-            'data' => [
-                'filters'    => $filters,
-                'pagination' => $pagination->render(),
-                'total'      => $total,
-                'items'      => $items,
-            ],
-        ]);
+        return new ViewResponse(
+            '@online/public/users.twig',
+            [
+                'title'       => $meta->title,
+                'page_title'  => $pageTitle,
+                'description' => $meta->description,
+                'filters'     => $filters,
+                'pagination'  => $pagination->render(),
+                'total'       => $total,
+                'items'       => $items,
+            ]
+        );
     }
 }

@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Johncms\Users;
 
 use Johncms\Utils\PlainTextFormatter;
+use Twig\Markup;
 
 /**
  * Renders a human readable link for the page a user is currently on.
@@ -27,7 +28,7 @@ final class UserPlaceFormatter implements UserPlaceFormatterInterface
     ) {
     }
 
-    public function format(?string $place): string
+    public function format(?string $place): Markup
     {
         $place = rtrim((string) $place, '/');
         if ($place === '') {
@@ -38,19 +39,26 @@ final class UserPlaceFormatter implements UserPlaceFormatterInterface
         $places = $this->getPlaces();
 
         if (array_key_exists($place, $places)) {
-            return str_replace('#home#', $homeUrl, $places[$place]);
+            return $this->markup(str_replace('#home#', $homeUrl, $places[$place]));
         }
 
         $pathWithoutQuery = explode('?', $place)[0];
         if (array_key_exists($pathWithoutQuery, $places)) {
-            return str_replace('#home#', $homeUrl, $places[$pathWithoutQuery]);
+            return $this->markup(str_replace('#home#', $homeUrl, $places[$pathWithoutQuery]));
         }
 
         $url = $homeUrl . ($this->currentUser->rights >= 6 ? $place : '') . '/';
 
-        return '<a href="' . PlainTextFormatter::escape($url) . '">'
+        return $this->markup(
+            '<a href="' . PlainTextFormatter::escape($url) . '">'
             . d__('system', 'Somewhere on the site')
-            . '</a>';
+            . '</a>'
+        );
+    }
+
+    private function markup(string $html): Markup
+    {
+        return new Markup($html, 'UTF-8');
     }
 
     /**
