@@ -1,0 +1,83 @@
+{#
+    One user of a community list.
+
+    @param User   item
+    @param string active_tab Which activity counter to show, empty on the plain lists.
+#}
+{% set is_self = app.user.isValid and app.user.id == item.id %}
+<div class="new_post-item">
+    <div class="new_post-header d-flex justify-content-between">
+        <div class="post-user">
+            {% if is_self %}
+                <div class="avatar">
+                    <img src="{{ avatar(item.id) }}" class="img-fluid" alt=".">
+                </div>
+            {% else %}
+                <a href="{{ item.profile_url }}">
+                    <div class="avatar">
+                        <img src="{{ avatar(item.id) }}" class="img-fluid" alt=".">
+                    </div>
+                </a>
+            {% endif %}
+            <span class="user-status {{ item.is_online ? 'online' : 'offline' }} shadow"></span>
+            {% if item.rights_name %}
+                <div class="post-of-user"
+                     data-bs-toggle="tooltip"
+                     data-bs-placement="top"
+                     data-bs-html="true"
+                     title="{{ item.rights_name }}">
+                    <svg class="icon-post">
+                        <use xlink:href="{{ asset('icons/sprite.svg') }}?4#check"/>
+                    </svg>
+                </div>
+            {% endif %}
+        </div>
+        <div class="flex-grow-1 post-user d-flex flex-wrap overflow-hidden d-flex align-items-center">
+            <div class="w-100">
+                {% if is_self %}
+                    <div class="user-name d-inline me-2">{{ item.name }}</div>
+                {% else %}
+                    <a href="{{ item.profile_url }}"><span class="user-name d-inline me-2">{{ item.name }}</span></a>
+                {% endif %}
+            </div>
+            {% if item.status %}
+                <div class="overflow-hidden text-nowrap text-dark-brown overflow-ellipsis small">
+                    <span class="fw-bold">{{ item.status }}</span>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    {% if active_tab|default('') %}
+        <div class="post-body">
+            {% if active_tab == 'guest' %}
+                {{ item.postguest }} {{ n__('post', 'posts', item.postguest) }}
+            {% elseif active_tab == 'comm' %}
+                {{ item.komm }} {{ n__('comment', 'comments', item.komm) }}
+            {% elseif active_tab == 'karma' %}
+                {# The karma column is a difference the query computes; from the two real ones it
+                   is the same number, and it is there whatever the row was loaded by. #}
+                {% set karma = item.karma_plus - item.karma_minus %}
+                {{ karma }} {{ n__('point', 'points', karma) }}
+            {% elseif active_tab == 'forum' %}
+                {{ item.postforum }} {{ n__('post', 'posts', item.postforum) }}
+            {% endif %}
+        </div>
+    {% endif %}
+    {% if app.user.isValid and app.user.rights %}
+        <div class="post-footer d-flex justify-content-between">
+            <div class="overflow-hidden">
+                <div class="post-meta d-flex">
+                    <div class="user-ip me-2">
+                        <a href="{{ item.search_ip_url }}">{{ item.ip }}</a>
+                        {% if item.ip_via_proxy %}
+                            / <a href="{{ item.search_ip_via_proxy_url }}">{{ item.ip_via_proxy }}</a>
+                        {% endif %}
+                    </div>
+                    <div class="useragent">
+                        <span>{{ item.browser }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>

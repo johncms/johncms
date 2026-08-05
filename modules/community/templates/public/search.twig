@@ -1,0 +1,43 @@
+{#
+    Search for a user by nickname.
+
+    @param string   search_query
+    @param array    errors       Messages about a query that cannot be run.
+    @param iterable list
+    @param int      total
+    @param ?Markup  pagination
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block meta %}
+    {{ parent() }}
+    <meta name="robots" content="noindex,follow">
+{% endblock %}
+
+{% block content %}
+    {% if errors is not empty %}
+        <div class="row">
+            <div class="col-md-6">
+                {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: errors} only %}
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="row">
+        <div class="col-md-6">
+            <form action="/community/search/" method="get" class="mb-3">
+                <label for="search">{{ __('Look for the User') }}</label>
+                <div class="input-group">
+                    <input type="text" name="search" id="search" class="form-control" placeholder="{{ __('Username') }}" value="{{ search_query }}">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="submit">{{ __('Search') }}</button>
+                    </div>
+                </div>
+                <div class="text-muted mb-2 small">{{ __('The search is performed by Nickname and are case-insensitive.') }}</div>
+            </form>
+        </div>
+    </div>
+
+    {% include '@community/public/components/user-list.twig' with {list: list, total: total, pagination: pagination} only %}
+    {% include '@community/public/components/back-links.twig' only %}
+{% endblock %}

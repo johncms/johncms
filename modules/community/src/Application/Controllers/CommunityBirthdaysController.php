@@ -9,15 +9,14 @@ use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Community\Application\UseCases\ViewBirthdaysUseCase;
+use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
-use Johncms\System\View\Render;
 use Johncms\Users\User;
 
 final readonly class CommunityBirthdaysController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private User $currentUser,
         private ViewBirthdaysUseCase $viewBirthdaysUseCase,
@@ -27,15 +26,15 @@ final readonly class CommunityBirthdaysController
         $this->controllerContext->initModule('community');
     }
 
-    public function __invoke(): string
+    public function __invoke(): ViewResponse
     {
         $communityTitle = __('Community');
         $this->navChain->add($communityTitle, '/community/');
 
         $config = config('johncms');
         if (! $config['active'] && ! $this->currentUser->isValid()) {
-            return $this->render->render(
-                'system::pages/result',
+            return new ViewResponse(
+                '@theme/pages/result.twig',
                 [
                     'title'   => $communityTitle,
                     'type'    => 'alert-danger',
@@ -61,10 +60,10 @@ final readonly class CommunityBirthdaysController
 
         $meta = new PageMeta($pageTitle, $pagination->getCurrentPage());
 
-        return $this->render->render(
-            'community::users',
+        return new ViewResponse(
+            '@community/public/users.twig',
             [
-                'pagination'  => $pagination->render(),
+                'pagination'  => $pagination->hasPages() ? $pagination->render() : null,
                 'title'       => $meta->title,
                 'page_title'  => $pageTitle,
                 'description' => $meta->description,

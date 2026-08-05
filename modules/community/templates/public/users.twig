@@ -1,0 +1,13 @@
+{#
+    A plain list of users — the whole community, the staff or today's birthdays.
+
+    @param iterable list
+    @param int      total
+    @param ?Markup  pagination
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    {% include '@community/public/components/user-list.twig' with {list: list, total: total, pagination: pagination} only %}
+    {% include '@community/public/components/back-links.twig' only %}
+{% endblock %}

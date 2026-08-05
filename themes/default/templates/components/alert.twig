@@ -3,6 +3,8 @@
 
     @param string|array alert      One message or several; several are printed one per line.
     @param string       alert_type Bootstrap modifier class, alert-danger by default.
+
+    Messages are printed as text. A caller that means markup passes Twig\Markup.
 #}
 {% if alert|default('') is not empty %}
     <div class="alert {{ alert_type|default('') }}">

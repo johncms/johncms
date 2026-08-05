@@ -1,0 +1,23 @@
+{#
+    The outcome of an action: a message and, optionally, a way back.
+
+    @param string|array message
+    @param string       type          Bootstrap modifier of the alert, e.g. alert-danger.
+    @param string       back_url      Omitted when there is nowhere to go back to.
+    @param string       back_url_name Label of that link, "Back" by default.
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{# The heading repeats the title unless the caller wants a different one. #}
+{% set page_title = page_title|default(title|default('')) %}
+
+{% block content %}
+    <div class="row">
+        <div class="m-sm-auto m-md-auto m-lg-0 col-sm-8 col-md-8 col-lg-7 col-xl-8">
+            {% include '@theme/components/alert.twig' with {alert_type: type|default(''), alert: message} only %}
+            {% if back_url|default('') %}
+                <a href="{{ back_url }}" class="btn btn-primary">{{ back_url_name|default(d__('system', 'Back')) }}</a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

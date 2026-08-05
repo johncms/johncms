@@ -9,16 +9,15 @@ use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Community\Application\UseCases\ViewSearchUseCase;
+use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
 use Johncms\Users\User;
 
 final readonly class CommunitySearchController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private User $currentUser,
         private ViewSearchUseCase $viewSearchUseCase,
@@ -28,15 +27,15 @@ final readonly class CommunitySearchController
         $this->controllerContext->initModule('community');
     }
 
-    public function __invoke(Request $request): string
+    public function __invoke(Request $request): ViewResponse
     {
         $communityTitle = __('Community');
         $this->navChain->add($communityTitle, '/community/');
 
         $config = config('johncms');
         if (! $config['active'] && ! $this->currentUser->isValid()) {
-            return $this->render->render(
-                'system::pages/result',
+            return new ViewResponse(
+                '@theme/pages/result.twig',
                 [
                     'title'   => $communityTitle,
                     'type'    => 'alert-danger',
@@ -66,19 +65,17 @@ final readonly class CommunitySearchController
 
         $meta = new PageMeta($pageTitle, $pagination->getCurrentPage());
 
-        return $this->render->render(
-            'community::search',
+        return new ViewResponse(
+            '@community/public/search.twig',
             [
-                'title'       => $meta->title,
-                'page_title'  => $pageTitle,
-                'description' => $meta->description,
-                'data'        => [
-                    'search_query' => $search,
-                    'errors'       => $errors,
-                    'total'        => $total,
-                    'list'         => $list,
-                    'pagination'   => $pagination->render(),
-                ],
+                'title'        => $meta->title,
+                'page_title'   => $pageTitle,
+                'description'  => $meta->description,
+                'search_query' => $search,
+                'errors'       => $errors,
+                'total'        => $total,
+                'list'         => $list,
+                'pagination'   => $pagination->hasPages() ? $pagination->render() : null,
             ]
         );
     }

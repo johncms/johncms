@@ -2,48 +2,46 @@ msgid ""
 msgstr ""
 "X-Domain: community\n"
 
-#: modules/community/src/Application/Controllers/AdministrationController.php:32
-#: modules/community/src/Application/Controllers/CommunityBirthdaysController.php:32
-#: modules/community/src/Application/Controllers/CommunityIndexController.php:27
-#: modules/community/src/Application/Controllers/CommunitySearchController.php:34
-#: modules/community/src/Application/Controllers/CommunityTopController.php:29
-#: modules/community/src/Application/Controllers/CommunityUsersController.php:32
+#: modules/community/src/Application/Controllers/AdministrationController.php:31
+#: modules/community/src/Application/Controllers/CommunityBirthdaysController.php:31
+#: modules/community/src/Application/Controllers/CommunityIndexController.php:26
+#: modules/community/src/Application/Controllers/CommunitySearchController.php:32
+#: modules/community/src/Application/Controllers/CommunityTopController.php:27
+#: modules/community/src/Application/Controllers/CommunityUsersController.php:31
 #: modules/community/src/Application/UseCases/ViewIndexUseCase.php:21
 msgid "Community"
 msgstr ""
 
-#: modules/community/src/Application/Controllers/AdministrationController.php:42
-#: modules/community/src/Application/Controllers/CommunityBirthdaysController.php:42
-#: modules/community/src/Application/Controllers/CommunityIndexController.php:37
-#: modules/community/src/Application/Controllers/CommunitySearchController.php:44
-#: modules/community/src/Application/Controllers/CommunityTopController.php:39
-#: modules/community/src/Application/Controllers/CommunityUsersController.php:42
+#: modules/community/src/Application/Controllers/AdministrationController.php:41
+#: modules/community/src/Application/Controllers/CommunityBirthdaysController.php:41
+#: modules/community/src/Application/Controllers/CommunityIndexController.php:36
+#: modules/community/src/Application/Controllers/CommunitySearchController.php:42
+#: modules/community/src/Application/Controllers/CommunityTopController.php:37
+#: modules/community/src/Application/Controllers/CommunityUsersController.php:41
 msgid "For registered users only"
 msgstr ""
 
-#: modules/community/src/Application/Controllers/AdministrationController.php:47
-#: modules/community/templates/index.phtml:45
+#: modules/community/src/Application/Controllers/AdministrationController.php:46
+#: modules/community/templates/public/index.twig:27
 msgid "Administration"
 msgstr ""
 
-#: modules/community/src/Application/Controllers/CommunityBirthdaysController.php:47
-#: modules/community/templates/index.phtml:50
+#: modules/community/src/Application/Controllers/CommunityBirthdaysController.php:46
+#: modules/community/templates/public/index.twig:32
 msgid "Birthdays"
 msgstr ""
 
-#: modules/community/src/Application/Controllers/CommunitySearchController.php:49
-#: modules/community/templates/administration.phtml:50
-#: modules/community/templates/search.phtml:84
-#: modules/community/templates/users.phtml:50
+#: modules/community/src/Application/Controllers/CommunitySearchController.php:47
+#: modules/community/templates/public/components/back-links.twig:4
 msgid "User Search"
 msgstr ""
 
-#: modules/community/src/Application/Controllers/CommunityUsersController.php:47
+#: modules/community/src/Application/Controllers/CommunityUsersController.php:46
 msgid "List of users"
 msgstr ""
 
 #: modules/community/src/Application/UseCases/ViewSearchUseCase.php:25
-#: modules/community/templates/index.phtml:32
+#: modules/community/templates/public/index.twig:14
 msgid "Nickname"
 msgstr ""
 
@@ -84,69 +82,58 @@ msgstr ""
 msgid "Most active in Forum"
 msgstr ""
 
-#: modules/community/templates/administration.phtml:33
-#: modules/community/templates/search.phtml:67
-#: modules/community/templates/top.phtml:40
-#: modules/community/templates/users.phtml:33
-msgid "List is empty"
-msgstr ""
-
-#: modules/community/templates/administration.phtml:40
-#: modules/community/templates/search.phtml:74
-#: modules/community/templates/users.phtml:40
-msgid "Total"
-msgstr ""
-
-#: modules/community/templates/administration.phtml:53
-#: modules/community/templates/search.phtml:87
-#: modules/community/templates/top.phtml:47
-#: modules/community/templates/users.phtml:53
+#: modules/community/templates/public/components/back-links.twig:7
+#: modules/community/templates/public/top.twig:22
 msgid "Back"
 msgstr ""
 
-#: modules/community/templates/index.phtml:30
-#: modules/community/templates/search.phtml:46
-msgid "Look for the User"
+#: modules/community/templates/public/components/user-list.twig:16
+msgid "List is empty"
 msgstr ""
 
-#: modules/community/templates/index.phtml:34
-#: modules/community/templates/search.phtml:50
-msgid "Search"
+#: modules/community/templates/public/components/user-list.twig:23
+msgid "Total"
 msgstr ""
 
-#: modules/community/templates/index.phtml:37
-#: modules/community/templates/search.phtml:53
-msgid "The search is performed by Nickname and are case-insensitive."
-msgstr ""
-
-#: modules/community/templates/index.phtml:41
-msgid "Users"
-msgstr ""
-
-#: modules/community/templates/index.phtml:55
-msgid "Top Activity"
-msgstr ""
-
-#: modules/community/templates/search.phtml:48
-msgid "Username"
-msgstr ""
-
-#: modules/community/templates/user_row.phtml:61
-#: modules/community/templates/user_row.phtml:67
+#: modules/community/templates/public/components/user-row.twig:53
+#: modules/community/templates/public/components/user-row.twig:62
 msgid "post"
 msgid_plural "posts"
 msgstr[0] ""
 
-#: modules/community/templates/user_row.phtml:63
+#: modules/community/templates/public/components/user-row.twig:55
 msgid "comment"
 msgid_plural "comments"
 msgstr[0] ""
 
-#: modules/community/templates/user_row.phtml:65
+#: modules/community/templates/public/components/user-row.twig:60
 msgid "point"
 msgid_plural "points"
 msgstr[0] ""
 
-#: modules/community/templates/user_row.phtml:89
-msgid "Delete"
+#: modules/community/templates/public/index.twig:12
+#: modules/community/templates/public/search.twig:29
+msgid "Look for the User"
+msgstr ""
+
+#: modules/community/templates/public/index.twig:16
+#: modules/community/templates/public/search.twig:33
+msgid "Search"
+msgstr ""
+
+#: modules/community/templates/public/index.twig:19
+#: modules/community/templates/public/search.twig:36
+msgid "The search is performed by Nickname and are case-insensitive."
+msgstr ""
+
+#: modules/community/templates/public/index.twig:23
+msgid "Users"
+msgstr ""
+
+#: modules/community/templates/public/index.twig:37
+msgid "Top Activity"
+msgstr ""
+
+#: modules/community/templates/public/search.twig:31
+msgid "Username"
 msgstr ""

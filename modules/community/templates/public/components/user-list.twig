@@ -1,0 +1,28 @@
+{#
+    The list itself, with the total and the navigation under it.
+
+    @param iterable list
+    @param int      total
+    @param ?Markup  pagination Null when everything fits on one page.
+    @param string   active_tab
+#}
+{% if total %}
+    {% for item in list %}
+        {% include '@community/public/components/user-row.twig' with {item: item, active_tab: active_tab|default('')} only %}
+    {% endfor %}
+{% else %}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="alert alert-info">{{ __('List is empty') }}</div>
+        </div>
+    </div>
+{% endif %}
+
+{% if total %}
+    <div class="mt-2">
+        <div>{{ __('Total') }}: {{ total }}</div>
+        {% if pagination|default(null) %}
+            <div class="mt-1">{{ pagination }}</div>
+        {% endif %}
+    </div>
+{% endif %}
