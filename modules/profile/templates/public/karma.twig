@@ -1,0 +1,59 @@
+{#
+    The karma votes a user has received.
+
+    @param array    filters
+    @param iterable items
+    @param int      total
+    @param ?Markup  pagination
+    @param string   reset_url Empty when the visitor may not reset the karma.
+    @param string   back_url
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    {% if filters is not empty %}
+        <div class="mb-2">
+            {% for filter in filters %}
+                <a href="{{ filter.url }}" class="btn btn-outline-secondary mb-1 {{ filter.active ? 'active' }}">{{ filter.name }}</a>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if items is empty %}
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-info', alert: __('The list is empty')} only %}
+    {% endif %}
+
+    {% for item in items %}
+        <div class="user-row">
+            <div class="post-header d-flex justify-content-between">
+                <div class="d-flex align-items-center">
+                    <div class="badge {{ item.type > 0 ? 'bg-success' : 'bg-danger' }} me-2">
+                        {{ item.type > 0 ? '+' : '-' }}{{ item.points }}
+                    </div>
+                    {% if item.user_id > 0 %}
+                        <a href="/profile/{{ item.user_id }}" class="user-login me-2">{{ item.name }}</a>
+                    {% else %}
+                        <b class="user-login me-2">{{ item.name }}</b>
+                    {% endif %}
+                    <span class="post-date">{{ item.display_date }}</span>
+                </div>
+            </div>
+            {% if item.text %}
+                <div class="pt-1">
+                    {{ item.text }}
+                </div>
+            {% endif %}
+            {% if item.delete_url|default('') %}
+                <a href="{{ item.delete_url }}" class="small">{{ __('Delete') }}</a>
+            {% endif %}
+        </div>
+    {% endfor %}
+
+    {% if reset_url|default('') %}
+        <div class="mt-3 mb-2">
+            <a href="{{ reset_url }}" class="btn btn-danger btn-sm">{{ __('Reset Karma') }}</a>
+        </div>
+    {% endif %}
+
+    {% include '@profile/public/components/list-footer.twig' with {pagination: pagination, total: total, back_url: back_url} only %}
+{% endblock %}

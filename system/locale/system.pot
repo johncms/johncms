@@ -328,6 +328,7 @@ msgstr ""
 #: system/src/Comments.php:339
 #: system/src/Comments.php:351
 #: system/src/Comments.php:371
+#: themes/default/templates/pages/result.twig:19
 #: themes/default/templates/system/pages/comments_list.phtml:156
 #: themes/default/templates/system/pages/result.phtml:33
 msgid "Back"
@@ -521,32 +522,32 @@ msgid "Home"
 msgstr ""
 
 #: system/src/UserProperties.php:68
-#: system/src/Users/UserMutators.php:62
+#: system/src/Users/UserMutators.php:61
 msgid "Forum moderator"
 msgstr ""
 
 #: system/src/UserProperties.php:69
-#: system/src/Users/UserMutators.php:63
+#: system/src/Users/UserMutators.php:62
 msgid "Download moderator"
 msgstr ""
 
 #: system/src/UserProperties.php:70
-#: system/src/Users/UserMutators.php:64
+#: system/src/Users/UserMutators.php:63
 msgid "Library moderator"
 msgstr ""
 
 #: system/src/UserProperties.php:71
-#: system/src/Users/UserMutators.php:65
+#: system/src/Users/UserMutators.php:64
 msgid "Super moderator"
 msgstr ""
 
 #: system/src/UserProperties.php:72
-#: system/src/Users/UserMutators.php:66
+#: system/src/Users/UserMutators.php:65
 msgid "Administrator"
 msgstr ""
 
 #: system/src/UserProperties.php:73
-#: system/src/Users/UserMutators.php:67
+#: system/src/Users/UserMutators.php:66
 msgid "Supervisor"
 msgstr ""
 

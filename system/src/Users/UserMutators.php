@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Johncms\Users;
 
 use Carbon\Carbon;
+use Twig\Markup;
 use Johncms\Security\HTMLPurifier;
 use Johncms\Smilies\SmiliesRendererInterface;
 use Johncms\System\i18n\Translator;
@@ -31,14 +32,12 @@ trait UserMutators
     private $active_bans = [];
 
     /**
-     * User agent
-     *
-     * @param string $value
-     * @return string
+     * User agent, as the client sent it. It is escaped where it is printed, like any other
+     * value that came from outside.
      */
     public function getBrowserAttribute(string $value): string
     {
-        return htmlspecialchars($value);
+        return $value;
     }
 
     /**
@@ -166,37 +165,37 @@ trait UserMutators
     }
 
     /**
-     * Местоположение пользователя
-     *
-     * @return string
+     * Where the user is on the site, as a link: markup by contract, like the formatter that
+     * builds it.
      */
-    public function getDisplayPlaceAttribute(): string
+    public function getDisplayPlaceAttribute(): Markup
     {
         return di(UserPlaceFormatterInterface::class)->format($this->place);
     }
 
     /**
-     * Обработанное поле О себе.
-     *
-     * @return string
+     * The "about" field, sanitized and with the smilies rendered: markup by contract, null when
+     * the user has written nothing.
      */
-    public function getFormattedAboutAttribute(): string
+    public function getFormattedAboutAttribute(): ?Markup
     {
         /** @var \HTMLPurifier $purifier */
         $purifier = di(HTMLPurifier::class);
-        return di(SmiliesRendererInterface::class)->render($purifier->purify((string) $this->about));
+        $about = di(SmiliesRendererInterface::class)->render($purifier->purify((string) $this->about));
+
+        return $about === '' ? null : new Markup($about, 'UTF-8');
     }
 
     /**
-     * Обработанное поле сайт
-     *
-     * @return string
+     * The website of the user, sanitized the same way.
      */
-    public function getWebsiteAttribute(): string
+    public function getWebsiteAttribute(): ?Markup
     {
         /** @var \HTMLPurifier $purifier */
         $purifier = di(HTMLPurifier::class);
-        return $purifier->purify((string) $this->www);
+        $website = $purifier->purify((string) $this->www);
+
+        return $website === '' ? null : new Markup($website, 'UTF-8');
     }
 
     /**

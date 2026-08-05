@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Profile\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
@@ -12,13 +13,11 @@ use Johncms\Modules\Profile\Application\Exceptions\ProfileNotFoundException;
 use Johncms\Modules\Profile\Application\UseCases\GetActivityUseCase;
 use Johncms\Modules\Profile\Domain\Enums\ActivityType;
 use Johncms\NavChain;
-use Johncms\System\View\Render;
 
 final readonly class ActivityController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private GetActivityUseCase $getActivityUseCase,
         private PaginationFactory $paginationFactory,
@@ -27,22 +26,22 @@ final readonly class ActivityController
         $this->controllerContext->initModule('profile');
     }
 
-    public function messages(int $id): string
+    public function messages(int $id): ViewResponse
     {
         return $this->renderActivity($id, ActivityType::Messages);
     }
 
-    public function topics(int $id): string
+    public function topics(int $id): ViewResponse
     {
         return $this->renderActivity($id, ActivityType::Topics);
     }
 
-    public function comments(int $id): string
+    public function comments(int $id): ViewResponse
     {
         return $this->renderActivity($id, ActivityType::Comments);
     }
 
-    private function renderActivity(int $id, ActivityType $type): string
+    private function renderActivity(int $id, ActivityType $type): ViewResponse
     {
         try {
             $pagination = $this->paginationFactory->create($this->getActivityUseCase->count($id, $type));
@@ -59,8 +58,8 @@ final readonly class ActivityController
                 $pagination->getOffset()
             );
         } catch (ProfileNotFoundException $e) {
-            return $this->render->render(
-                'system::pages/result',
+            return new ViewResponse(
+                '@theme/pages/result.twig',
                 [
                     'title'   => __('Activity'),
                     'type'    => 'alert-danger',
@@ -75,22 +74,17 @@ final readonly class ActivityController
         $this->navChain->add(__('Activity'));
 
         $meta = new PageMeta($pageTitle, $pagination->getCurrentPage());
-        $this->render->addData([
-            'title'       => $meta->title,
-            'page_title'  => $pageTitle,
-            'description' => $meta->description,
-        ]);
-
-        return $this->render->render(
-            'profile::activity',
+        return new ViewResponse(
+            '@profile/public/activity.twig',
             [
-                'data' => [
-                    'filters'    => $this->buildFilters($result->profileId, $type),
-                    'item_type'  => $result->itemType,
-                    'activity'   => $result->items,
-                    'total'      => $pagination->getTotal(),
-                    'pagination' => $pagination->render(),
-                ],
+                'title'       => $meta->title,
+                'page_title'  => $pageTitle,
+                'description' => $meta->description,
+                'filters'     => $this->buildFilters($result->profileId, $type),
+                'item_type'   => $result->itemType,
+                'activity'    => $result->items,
+                'total'       => $pagination->getTotal(),
+                'pagination'  => $pagination->hasPages() ? $pagination->render() : null,
             ]
         );
     }

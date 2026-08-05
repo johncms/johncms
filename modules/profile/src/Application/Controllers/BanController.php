@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Profile\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Http\Pagination\Pagination;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
@@ -21,7 +22,6 @@ use Johncms\Modules\Profile\Application\UseCases\GetBanFormContextUseCase;
 use Johncms\Modules\Profile\Application\UseCases\GetBanHistoryUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,7 +30,6 @@ final readonly class BanController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private User $currentUser,
         private GetBanHistoryUseCase $getBanHistoryUseCase,
@@ -45,7 +44,7 @@ final readonly class BanController
         $this->controllerContext->initModule('profile');
     }
 
-    public function history(int $id): Response
+    public function history(int $id): ViewResponse
     {
         try {
             $pagination = $this->paginationFactory->create($this->getBanHistoryUseCase->count($id));
@@ -63,7 +62,7 @@ final readonly class BanController
         return $this->renderHistory($id, $dto, $pagination);
     }
 
-    public function createForm(Request $request, int $id): Response
+    public function createForm(Request $request, int $id): ViewResponse
     {
         try {
             $target = $this->getBanFormContextUseCase->execute($id);
@@ -76,7 +75,7 @@ final readonly class BanController
         return $this->renderForm($request, $target);
     }
 
-    public function create(Request $request, int $id): Response
+    public function create(Request $request, int $id): ViewResponse
     {
         try {
             $target = $this->getBanFormContextUseCase->execute($id);
@@ -107,7 +106,7 @@ final readonly class BanController
         return $this->renderResult(__('User banned'), 'alert-success', '/profile/' . $id);
     }
 
-    public function cancelForm(int $id, int $banId): Response
+    public function cancelForm(int $id, int $banId): ViewResponse
     {
         if ($error = $this->staffGuard()) {
             return $error;
@@ -130,7 +129,7 @@ final readonly class BanController
         );
     }
 
-    public function cancel(Request $request, int $id, int $banId): Response
+    public function cancel(Request $request, int $id, int $banId): ViewResponse
     {
         if ($error = $this->staffGuard()) {
             return $error;
@@ -152,7 +151,7 @@ final readonly class BanController
         return $this->renderResult(__('Ban terminated'), 'alert-success', '/profile/' . $id . '/bans', __('Ban termination'));
     }
 
-    public function deleteForm(int $id, int $banId): Response
+    public function deleteForm(int $id, int $banId): ViewResponse
     {
         if ($error = $this->supervisorGuard()) {
             return $error;
@@ -173,7 +172,7 @@ final readonly class BanController
         );
     }
 
-    public function delete(Request $request, int $id, int $banId): Response
+    public function delete(Request $request, int $id, int $banId): ViewResponse
     {
         if ($error = $this->supervisorGuard()) {
             return $error;
@@ -193,7 +192,7 @@ final readonly class BanController
         return $this->renderResult(__('Ban deleted'), 'alert-success', '/profile/' . $id . '/bans', __('Delete ban'));
     }
 
-    public function clearForm(int $id): Response
+    public function clearForm(int $id): ViewResponse
     {
         if ($error = $this->supervisorGuard(__('Violations history can be cleared by Supervisor only'))) {
             return $error;
@@ -208,7 +207,7 @@ final readonly class BanController
         );
     }
 
-    public function clear(Request $request, int $id): Response
+    public function clear(Request $request, int $id): ViewResponse
     {
         if ($error = $this->supervisorGuard(__('Violations history can be cleared by Supervisor only'))) {
             return $error;
@@ -222,126 +221,93 @@ final readonly class BanController
         return $this->renderResult(__('Violations history cleared'), 'alert-success', '/profile/' . $id . '/bans', __('Violations history'));
     }
 
-    private function renderHistory(int $profileId, BanHistoryDTO $dto, Pagination $pagination): Response
+    private function renderHistory(int $profileId, BanHistoryDTO $dto, Pagination $pagination): ViewResponse
     {
         $title = __('Violations History');
 
         $this->navChain->add(__('User Profile'), '/profile/' . $profileId);
         $this->navChain->add($title);
 
-        $this->render->addData([
-            'title'      => $title,
-            'page_title' => $title,
-        ]);
-
-        $paginationHtml = $pagination->render();
-
-        return new Response(
-            $this->render->render(
-                'profile::ban_history',
-                [
-                    'title'      => $title,
-                    'page_title' => $title,
-                    'pagination' => $paginationHtml,
-                    'data'       => [
-                        'user_name'         => $dto->userName,
-                        'items'             => $dto->items,
-                        'total'             => $pagination->getTotal(),
-                        'pagination'        => $paginationHtml,
-                        'clear_history_url' => $dto->clearHistoryUrl,
-                        'back_url'          => $dto->backUrl,
-                    ],
-                ]
-            )
+        return new ViewResponse(
+            '@profile/public/ban-history.twig',
+            [
+                'title'             => $title,
+                'page_title'        => $title,
+                'user_name'         => $dto->userName,
+                'items'             => $dto->items,
+                'total'             => $pagination->getTotal(),
+                'pagination'        => $pagination->hasPages() ? $pagination->render() : null,
+                'clear_history_url' => $dto->clearHistoryUrl,
+                'back_url'          => $dto->backUrl,
+            ]
         );
     }
 
-    private function renderForm(Request $request, User $target): Response
+    private function renderForm(Request $request, User $target): ViewResponse
     {
         $title = __('Ban the User');
 
         $this->navChain->add(__('User Profile'), '/profile/' . $target->id);
         $this->navChain->add($title);
 
-        $this->render->addData([
-            'title'      => $title,
-            'page_title' => $title,
-        ]);
-
-        return new Response(
-            $this->render->render(
-                'profile::ban',
-                [
-                    'title'      => $title,
-                    'page_title' => $title,
-                    'data'       => [
-                        'form_action' => '/profile/' . $target->id . '/bans/new',
-                        'post_id'     => $request->queryInt('fid'),
-                        'back_url'    => '/profile/' . $target->id,
-                        'user_login'  => $target->name,
-                    ],
-                ]
-            )
+        return new ViewResponse(
+            '@profile/public/ban.twig',
+            [
+                'field_height' => $this->currentUser->config->fieldHeight,
+                'title'        => $title,
+                'page_title'   => $title,
+                'form_action'  => '/profile/' . $target->id . '/bans/new',
+                'post_id'      => $request->queryInt('fid'),
+                'back_url'     => '/profile/' . $target->id,
+                'user_login'   => $target->name,
+            ]
         );
     }
 
-    private function renderConfirm(string $title, string $message, string $submitName, string $formAction, string $backUrl): Response
+    private function renderConfirm(string $title, string $message, string $submitName, string $formAction, string $backUrl): ViewResponse
     {
         $this->navChain->add($title);
 
-        $this->render->addData([
-            'title'      => $title,
-            'page_title' => $title,
-        ]);
-
-        return new Response(
-            $this->render->render(
-                'profile::ban_cancel',
-                [
-                    'title'      => $title,
-                    'page_title' => $title,
-                    'data'       => [
-                        'message'     => $message,
-                        'submit_name' => $submitName,
-                        'form_action' => $formAction,
-                        'back_url'    => $backUrl,
-                    ],
-                ]
-            )
+        return new ViewResponse(
+            '@profile/public/ban-cancel.twig',
+            [
+                'title'       => $title,
+                'page_title'  => $title,
+                'message'     => $message,
+                'submit_name' => $submitName,
+                'form_action' => $formAction,
+                'back_url'    => $backUrl,
+            ]
         );
     }
 
-    private function renderResult(string $message, string $type, string $backUrl, ?string $title = null): Response
+    private function renderResult(string $message, string $type, string $backUrl, ?string $title = null): ViewResponse
     {
-        return new Response(
-            $this->render->render(
-                'system::pages/result',
-                [
-                    'title'    => $title ?? __('Ban the User'),
-                    'type'     => $type,
-                    'message'  => $message,
-                    'back_url' => $backUrl,
-                ]
-            )
+        return new ViewResponse(
+            '@theme/pages/result.twig',
+            [
+                'title'    => $title ?? __('Ban the User'),
+                'type'     => $type,
+                'message'  => $message,
+                'back_url' => $backUrl,
+            ]
         );
     }
 
-    private function renderError(string $message, int $statusCode = 200): Response
+    private function renderError(string $message, int $statusCode = 200): ViewResponse
     {
-        return new Response(
-            $this->render->render(
-                'system::pages/result',
-                [
-                    'title'   => __('Ban the User'),
-                    'type'    => 'alert-danger',
-                    'message' => $message,
-                ]
-            ),
+        return new ViewResponse(
+            '@theme/pages/result.twig',
+            [
+                'title'   => __('Ban the User'),
+                'type'    => 'alert-danger',
+                'message' => $message,
+            ],
             $statusCode
         );
     }
 
-    private function staffGuard(): ?Response
+    private function staffGuard(): ?ViewResponse
     {
         if ($this->currentUser->rights < 7) {
             return $this->renderError(__('Wrong data'), 403);
@@ -350,7 +316,7 @@ final readonly class BanController
         return null;
     }
 
-    private function supervisorGuard(?string $message = null): ?Response
+    private function supervisorGuard(?string $message = null): ?ViewResponse
     {
         if ($this->currentUser->rights !== 9) {
             return $this->renderError($message ?? __('Wrong data'), 403);

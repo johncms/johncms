@@ -1,0 +1,43 @@
+{#
+    Registration and activity figures of a user.
+
+    @param array profile_user
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    <h3>{{ __('Statistic') }}</h3>
+
+    <ul>
+        {% if app.user.isValid and app.user.rights >= 7 %}
+            <li>
+                {% if not profile_user.preg and not profile_user.regadm %}
+                    {{ __('Pending confirmation') }}
+                {% elseif profile_user.preg and profile_user.regadm %}
+                    {{ __('Registration confirmed') }}: {{ profile_user.regadm }}
+                {% else %}
+                    {{ __('Free registration') }}
+                {% endif %}
+            </li>
+        {% endif %}
+        <li>
+            {{ __('Registered') }}: {{ profile_user.datereg|date('d.m.Y') }}
+        </li>
+        {% if profile_user.last_visit %}
+            <li>
+                {{ __('Last visit') }}: {{ profile_user.last_visit }}
+            </li>
+        {% endif %}
+    </ul>
+
+    <h3>{{ __('Activity') }}</h3>
+    <ul>
+        <li><span class="gray">{{ __('Forum') }}:</span> <a href="/profile/{{ profile_user.id }}/activity">{{ profile_user.postforum }}</a></li>
+        <li><span class="gray">{{ __('Guestbook') }}:</span> <a href="/profile/{{ profile_user.id }}/activity/comments">{{ profile_user.postguest }}</a></li>
+        <li><span class="gray">{{ __('Comments') }}:</span> {{ profile_user.komm }}</li>
+    </ul>
+
+    <div class="mt-2">
+        <a href="/profile/{{ profile_user.id }}">{{ __('Back') }}</a>
+    </div>
+{% endblock %}

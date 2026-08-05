@@ -1,0 +1,23 @@
+{#
+    A forum topic in the activity list.
+
+    @param array item
+#}
+<div class="post-item border-bottom pb-2 pt-2">
+    <div class="post-header d-flex justify-content-between">
+        <div class="d-flex align-items-end">
+            <a href="{{ item.topic_url }}" class="user-login me-2">{{ item.topic_name }}</a>
+            <span class="post-date">{{ item.display_date }}</span>
+        </div>
+        <div class="post-actions"></div>
+    </div>
+    <div class="pt-1">
+        <div class="pb-1">
+            {{ item.text }}
+        </div>
+        <div>
+            <a href="{{ item.category_url }}">{{ item.category_name }}</a> /
+            <a href="{{ item.section_url }}">{{ item.section_name }}</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,10 @@
+{#
+    A guestbook comment in the activity list.
+
+    @param array item display_date, text
+#}
+<div class="user-row border-0 mb-2">
+    <div class="text-muted mb-2 small">{{ item.display_date }}</div>
+    {# Sanitized by the guestbook text formatter, so it stays markup. #}
+    {{ item.text }}
+</div>

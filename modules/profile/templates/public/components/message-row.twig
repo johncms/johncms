@@ -1,0 +1,26 @@
+{#
+    A forum message in the activity list.
+
+    @param array item
+#}
+<div class="post-item border-bottom mb-2 pb-2">
+    <div class="post-header d-flex justify-content-between pb-1">
+        <div class="d-flex align-items-end">
+            <a href="{{ item.topic_url }}" class="user-login me-2">{{ item.topic_name }}</a>
+            <span class="post-date">{{ item.display_date }}</span>
+        </div>
+        <div class="post-actions"></div>
+    </div>
+    <div>
+        <div>
+            <div>{{ item.text }}</div>
+            <div>
+                <a href="{{ item.message_url }}">{{ __('To message') }} &gt;&gt;</a>
+            </div>
+        </div>
+        <div>
+            <a href="{{ item.category_url }}">{{ item.category_name }}</a> /
+            <a href="{{ item.section_url }}">{{ item.section_name }}</a>
+        </div>
+    </div>
+</div>

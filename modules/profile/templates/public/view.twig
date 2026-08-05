@@ -1,0 +1,255 @@
+{#
+    The profile of a user.
+
+    @param array  user              Attributes of the user, as the profile use case built them.
+    @param bool   show_ip
+    @param bool   can_write
+    @param bool   blocked
+    @param array  notifications
+    @param bool   active_ban
+    @param string active_ban_reason
+    @param array  counters
+    @param array  buttons
+    @param bool   karma_enabled
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    {% set is_self = app.user.isValid and app.user.id == user.id %}
+
+    {% if notifications is not empty %}
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-info', alert: notifications} only %}
+    {% endif %}
+
+    <div class="row mb-3">
+        <div class="col-sm-12 col-md-6">
+            <div class="d-flex justify-content-center">
+                <div class="user-avatar profile-avatar">
+                    <div class="avatar-image rounded-circle overflow-hidden shadow">
+                        <img src="{{ avatar(user.id) }}" class="img-fluid" alt="">
+                    </div>
+                    <div class="user-status {{ user.is_online ? 'online' : 'offline' }} shadow"
+                         data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('Last visit') }}: {{ user.last_visit ?: __('Online') }}"></div>
+                </div>
+            </div>
+            <div class="text-center">
+                <div class="personal-info">
+                    <div class="text-muted small">{{ user.rights_name }}</div>
+                    <div class="fw-bold h2 mb-1">{{ user.imname ?: user.name }}</div>
+                    <div class="text-muted">{{ user.name }}</div>
+                    {% if active_ban %}
+                        <div class="mt-2 mb-1">
+                            <div>
+                                <div class="fw-bold h3 mb-0">
+                                    <a href="/profile/{{ user.id }}/bans" class="text-danger">{{ __('User is banned') }}</a>
+                                </div>
+                                <div class="text-muted">
+                                    {{ __('Reason:') }} {{ active_ban_reason }}
+                                </div>
+                            </div>
+                        </div>
+                    {% elseif counters.ban|default(0) %}
+                        <div class="mt-2 mb-1">
+                            <a href="/profile/{{ user.id }}/bans">{{ __('Violations') }} ({{ counters.ban }})</a>
+                        </div>
+                    {% endif %}
+                    {% if user.last_visit %}
+                        <div class="text-muted">{{ __('Last visit') }}: {{ user.last_visit }}</div>
+                    {% endif %}
+                </div>
+                {% if show_ip %}
+                    <div class="small">
+                        <div>{{ __('User Agent') }}: {{ user.browser }}</div>
+                        <div>
+                            {{ __('Ip') }}: <a href="{{ user.search_ip_url }}">{{ user.ip }}</a>
+                            &nbsp;[<a href="{{ user.whois_ip_url }}" title="{{ __('Whois') }}">&nbsp;?&nbsp;</a>]
+                            {% if user.ip_via_proxy %}
+                                - <a href="{{ user.search_ip_via_proxy_url }}">{{ user.ip_via_proxy }}</a>
+                                &nbsp;[<a href="{{ user.whois_ip_via_proxy_url }}" title="{{ __('Whois') }}">&nbsp;?&nbsp;</a>]
+                            {% endif %}
+                        </div>
+
+                        {% if user.ip_history_count %}
+                            <div>
+                                <a href="{{ user.ip_history_url }}" title="{{ __('IP History') }}">{{ __('IP History') }} ({{ user.ip_history_count }})</a>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endif %}
+
+                <div>
+                    {% if not is_self %}
+                        {% if can_write %}
+                            <a href="/mail/write/{{ user.id }}" class="btn btn-primary btn-sm mt-2">{{ __('Write') }}</a>
+                        {% endif %}
+                        {% if blocked %}
+                            <a href="/mail/unblock/{{ user.id }}" class="btn btn-secondary btn-sm mt-2">{{ __('Unblock') }}</a>
+                        {% else %}
+                            <a href="/mail/block/{{ user.id }}" class="btn btn-secondary btn-sm mt-2">{{ __('Block') }}</a>
+                        {% endif %}
+                        {% if buttons is not empty %}
+                            <button class="btn btn-danger dropdown-toggle btn-sm mt-2" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{ __('Actions') }}
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                {% for button in buttons %}
+                                    <a class="dropdown-item" href="{{ button.url }}">{{ button.name }}</a>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    {% else %}
+                        <a href="/profile/{{ user.id }}/edit" class="btn btn-primary btn-sm mt-2">{{ __('Edit profile') }}</a>
+                    {% endif %}
+                </div>
+            </div>
+            {% if karma_enabled %}
+                <div class="border-0 mt-4">
+                    <h2 class="h3 fw-bold text-center mb-4">{{ __('Karma') }}</h2>
+                    <div class="rounded-progress {{ user.karma_percent < 0 ? 'negative-progress' }} mx-auto" data-value='{{ user.karma_percent }}'>
+                        <span class="progress-left"><span class="progress-bar border-success"></span></span>
+                        <span class="progress-right"><span class="progress-bar border-success"></span></span>
+                        <div class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center flex-column" style="z-index: 10;">
+                            <div class="h2 fw-bold mb-0">{{ user.karma_points }}</div>
+                            {% if user.karma_new|default(0) %}
+                                <div><a href="{{ user.karma_new_url }}">+ {{ user.karma_new }} {{ n__('vote', 'votes', user.karma_new) }}</a></div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="row text-center mt-4">
+                        <div class="col-6 border-end">
+                            <a href="{{ user.positive_url }}">
+                                <div class="h4 fw-bold mb-0">{{ user.karma_plus }}</div>
+                                <span class="small text-gray">{{ __('Positive') }}</span>
+                            </a>
+                        </div>
+                        <div class="col-6">
+                            <a href="{{ user.negative_url }}">
+                                <div class="h4 fw-bold mb-0">{{ user.karma_minus }}</div>
+                                <span class="small text-gray">{{ __('Negative') }}</span>
+                            </a>
+                        </div>
+                    </div>
+                    {% if user.vote_url|default('') %}
+                        <div class="text-center mt-4">
+                            <a href="{{ user.vote_url }}" class="btn btn-primary btn-sm">{{ __('Vote') }}</a>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+        <div class="col-sm-12 col-md-6">
+            <div class="mt-4 mt-md-0">
+                <h2 class="h3 fw-bold text-center mb-2">{{ __('Information') }}</h2>
+                {% if user.photo is not empty %}
+                    <div class="mb-2">
+                        <a href="{{ user.photo.photo }}" title="{{ __('Photo') }} "
+                           data-source="{{ user.photo.photo }}" class="image-preview">
+                            <img src="{{ user.photo.photo_preview }}" class="img-thumbnail" alt=".">
+                        </a>
+                    </div>
+                {% endif %}
+                {% if user.status %}
+                    <div class="d-flex">
+                        <div class="text-muted pe-2">{{ __('Status') }}:</div>
+                        <div>{{ user.status }}</div>
+                    </div>
+                {% endif %}
+                {% if user.birthday_date %}
+                    <div class="d-flex">
+                        <div class="text-muted pe-2">{{ __('Birthday') }}:</div>
+                        <div>{{ user.birthday_date }}</div>
+                    </div>
+                {% endif %}
+                <div class="d-flex">
+                    <div class="text-muted pe-2">{{ __('Gender') }}:</div>
+                    <div>
+                        {% if user.sex == 'm' %}
+                            {{ __('Man') }}
+                        {% elseif user.sex == 'zh' %}
+                            {{ __('Woman') }}
+                        {% else %}
+                            {{ __('Not specified') }}
+                        {% endif %}
+                    </div>
+                </div>
+                {% if user.live %}
+                    <div class="d-flex">
+                        <div class="text-muted pe-2">{{ __('City, Country') }}:</div>
+                        <div>{{ user.live }}</div>
+                    </div>
+                {% endif %}
+                {% if user.formatted_about %}
+                    {# Sanitized by the model, with the smilies rendered, so it stays markup. #}
+                    <div class="mt-3">
+                        {{ user.formatted_about }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="mt-4">
+                <h2 class="h3 fw-bold text-center mb-2">{{ __('Contacts') }}</h2>
+                {% if user.mibile %}
+                    <div class="d-flex">
+                        <div class="text-muted pe-2">{{ __('Phone number') }}:</div>
+                        <div>{{ user.mibile }}</div>
+                    </div>
+                {% endif %}
+                {% if (user.mail and user.mailvis) or (app.user.isValid and app.user.rights >= 7) or is_self %}
+                    <div class="d-flex">
+                        <div class="text-muted pe-2">{{ __('E-mail') }}:</div>
+                        <div>
+                            {{ user.mail }}
+                            {% if not user.mailvis %}<span class="text-muted"> [{{ __('hidden') }}]</span>{% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+                {% if user.skype %}
+                    <div class="d-flex">
+                        <div class="text-muted pe-2">{{ __('Skype') }}:</div>
+                        <div>{{ user.skype }}</div>
+                    </div>
+                {% endif %}
+                {% if user.website %}
+                    {# Sanitized by the model, so it stays markup. #}
+                    <div class="d-flex">
+                        <div class="text-muted pe-2">{{ __('Site') }}:</div>
+                        <div>{{ user.website }}</div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    {% if user.admin_notes and app.user.isValid and app.user.rights > 0 %}
+        <div class="mt-4">
+            <div class="alert alert-warning">
+                <div class="fw-bold h4">{{ __('Admin Notes') }}</div>
+                <div>{{ user.admin_notes }}</div>
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="border-top mt-4"></div>
+
+    <div class="row mt-4 mb-3 ">
+        {% for tile in [
+            {url: '/profile/' ~ user.id ~ '/activity', icon: 'forum', name: __('Activity')},
+            {url: '/profile/' ~ user.id ~ '/statistics/', icon: 'pie-chart', name: __('Statistic')},
+            {url: '/album/user/' ~ user.id, icon: 'picasa', name: __('Photo Album')},
+            {url: '/profile/' ~ user.id ~ '/guestbook', icon: 'chat', name: __('Guestbook')}
+        ] %}
+            <div class="col-12 col-sm-3 mb-2">
+                <a href="{{ tile.url }}" class="card text-center">
+                    <div class="card-body">
+                        <div class="icon_with_badge d-inline-block">
+                            <svg class="icon-40">
+                                <use xlink:href="{{ asset('icons/sprite.svg') }}#{{ tile.icon }}"/>
+                            </svg>
+                        </div>
+                        <div class="mt-2 tile_name">{{ tile.name }}</div>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

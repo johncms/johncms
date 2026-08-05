@@ -1,0 +1,90 @@
+{#
+    Applying a ban to a user.
+
+    @param string form_action
+    @param int    post_id     Forum post the ban refers to, if any.
+    @param string user_login
+    @param string back_url
+    @param int    field_height
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    {% set rights = app.user.isValid ? app.user.rights : 0 %}
+    <form action="{{ form_action }}" method="post">
+        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+        {% if post_id|default(0) %}
+            <input type="hidden" value="{{ post_id }}" name="banref">
+        {% endif %}
+
+        <h3>{{ __('Ban:') }} {{ user_login }}</h3>
+
+        <h4>{{ __('Ban type') }}</h4>
+        {% if rights >= 6 %}
+            <div class="custom-control custom-radio">
+                <input type="radio" id="full" name="term" value="1" class="custom-control-input" checked="checked">
+                <label class="custom-control-label" for="full">{{ __('Full block') }}</label>
+            </div>
+            <div class="custom-control custom-radio">
+                <input type="radio" id="private" name="term" value="3" class="custom-control-input">
+                <label class="custom-control-label" for="private">{{ __('Private messages') }}</label>
+            </div>
+            <div class="custom-control custom-radio">
+                <input type="radio" id="comments" name="term" value="10" class="custom-control-input">
+                <label class="custom-control-label" for="comments">{{ __('Comments') }}</label>
+            </div>
+            <div class="custom-control custom-radio">
+                <input type="radio" id="guestbook" name="term" value="13" class="custom-control-input">
+                <label class="custom-control-label" for="guestbook">{{ __('Guestbook') }}</label>
+            </div>
+        {% endif %}
+        {% if rights == 3 or rights >= 6 %}
+            <div class="custom-control custom-radio">
+                <input type="radio" id="forum" name="term" value="11" class="custom-control-input"{% if rights == 3 %} checked="checked"{% endif %}>
+                <label class="custom-control-label" for="forum">{{ __('Forum') }}</label>
+            </div>
+        {% endif %}
+        {% if rights == 5 or rights >= 6 %}
+            <div class="custom-control custom-radio">
+                <input type="radio" id="library" name="term" value="15" class="custom-control-input">
+                <label class="custom-control-label" for="library">{{ __('Library') }}</label>
+            </div>
+        {% endif %}
+
+        <h3 class="mt-3">{{ __('Ban time') }}</h3>
+        <div class="form-group mt-2">
+            <label for="time">{{ __('Time') }}</label>
+            <input type="text" name="timeval" value="12" class="form-control" id="time">
+        </div>
+        <div class="custom-control custom-radio">
+            <input type="radio" id="minutes" name="time" value="1" class="custom-control-input">
+            <label class="custom-control-label" for="minutes">{{ __('Minutes (60 max.)') }}</label>
+        </div>
+        <div class="custom-control custom-radio">
+            <input type="radio" id="hours" name="time" value="2" class="custom-control-input" checked="checked">
+            <label class="custom-control-label" for="hours">{{ __('Hours (24 max.)') }}</label>
+        </div>
+        {% if rights >= 6 %}
+            <div class="custom-control custom-radio">
+                <input type="radio" id="days" name="time" value="3" class="custom-control-input" checked="checked">
+                <label class="custom-control-label" for="days">{{ __('Days (30 max.)') }}</label>
+            </div>
+        {% endif %}
+        {% if rights >= 7 %}
+            <div class="custom-control custom-radio">
+                <input type="radio" id="till_cancel" name="time" value="4" class="custom-control-input">
+                <label class="custom-control-label" for="till_cancel">{{ __('Till cancel') }}</label>
+            </div>
+        {% endif %}
+
+        <div class="form-group">
+            <label for="reason">{{ __('Reason') }}</label>
+            <textarea id="reason" rows="{{ field_height }}" class="form-control" name="reason"></textarea>
+        </div>
+
+        <div class="mt-3">
+            <input type="submit" name="submit" value="{{ __('Apply Ban') }}" class="btn btn-primary"/>
+            <a href="{{ back_url }}" class="btn btn-secondary">{{ __('Cancel') }}</a>
+        </div>
+    </form>
+{% endblock %}

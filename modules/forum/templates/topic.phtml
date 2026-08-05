@@ -343,7 +343,7 @@ $this->layout('system::layout/default');
                                 <?php endif; ?>
                             </div>
                             <div class="useragent">
-                                <span><?= $message->user_data->browser ?></span>
+                                <span><?= $this->e($message->user_data->browser) ?></span>
                             </div>
                         </div>
                     <?php endif; ?>

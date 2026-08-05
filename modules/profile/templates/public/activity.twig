@@ -1,0 +1,28 @@
+{#
+    What the user has posted lately: topics, messages or comments.
+
+    @param array    filters   Tabs of the section, one of them active.
+    @param string   item_type Which row component the entries are rendered with.
+    @param iterable activity
+    @param int      total
+    @param ?Markup  pagination
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    <div class="btn-group mb-3" role="group">
+        {% for filter in filters %}
+            <a href="{{ filter.url }}" class="btn btn-outline-secondary {{ filter.active ? 'active' }}">{{ filter.name }}</a>
+        {% endfor %}
+    </div>
+
+    {% if activity is empty %}
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-info', alert: __('The list is empty')} only %}
+    {% endif %}
+
+    {% for row in activity %}
+        {% include '@profile/public/components/' ~ item_type ~ '-row.twig' with {item: row} only %}
+    {% endfor %}
+
+    {% include '@profile/public/components/list-footer.twig' with {pagination: pagination, total: total} only %}
+{% endblock %}

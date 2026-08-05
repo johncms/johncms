@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Profile\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Http\Pagination\Pagination;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
@@ -21,7 +22,6 @@ use Johncms\Modules\Profile\Application\UseCases\GetVoteContextUseCase;
 use Johncms\Modules\Profile\Application\UseCases\VoteKarmaUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,7 +30,6 @@ final readonly class KarmaController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private User $currentUser,
         private GetKarmaListUseCase $getKarmaListUseCase,
@@ -45,7 +44,7 @@ final readonly class KarmaController
         $this->controllerContext->initModule('profile');
     }
 
-    public function index(Request $request, int $id): Response
+    public function index(Request $request, int $id): ViewResponse
     {
         $this->ensureKarmaEnabled();
 
@@ -67,7 +66,7 @@ final readonly class KarmaController
         return $this->renderList(__('Karma'), $id, $dto, $pagination);
     }
 
-    public function newResponses(int $id): Response
+    public function newResponses(int $id): ViewResponse
     {
         $this->ensureKarmaEnabled();
 
@@ -83,7 +82,7 @@ final readonly class KarmaController
         return $this->renderList(__('New responses'), $id, $dto, $pagination);
     }
 
-    public function voteForm(int $id): Response
+    public function voteForm(int $id): ViewResponse
     {
         $this->ensureKarmaEnabled();
 
@@ -98,7 +97,7 @@ final readonly class KarmaController
         return $this->renderVoteForm($context);
     }
 
-    public function vote(Request $request, int $id): Response
+    public function vote(Request $request, int $id): ViewResponse
     {
         $this->ensureKarmaEnabled();
 
@@ -117,21 +116,19 @@ final readonly class KarmaController
         );
         $this->voteKarmaUseCase->execute($command, $context);
 
-        return new Response(
-            $this->render->render(
-                'system::pages/result',
-                [
-                    'title'         => __('Karma'),
-                    'type'          => 'alert-success',
-                    'message'       => __('You have successfully voted'),
-                    'back_url'      => '/profile/' . $context->targetId,
-                    'back_url_name' => __('Continue'),
-                ]
-            )
+        return new ViewResponse(
+            '@theme/pages/result.twig',
+            [
+                'title'         => __('Karma'),
+                'type'          => 'alert-success',
+                'message'       => __('You have successfully voted'),
+                'back_url'      => '/profile/' . $context->targetId,
+                'back_url_name' => __('Continue'),
+            ]
         );
     }
 
-    public function deleteForm(Request $request, int $id, int $voteId): Response
+    public function deleteForm(Request $request, int $id, int $voteId): ViewResponse
     {
         $this->ensureKarmaEnabled();
         if ($error = $this->supervisorGuard()) {
@@ -153,7 +150,7 @@ final readonly class KarmaController
         );
     }
 
-    public function delete(Request $request, int $id, int $voteId): Response
+    public function delete(Request $request, int $id, int $voteId): ViewResponse
     {
         $this->ensureKarmaEnabled();
         if ($error = $this->supervisorGuard()) {
@@ -174,7 +171,7 @@ final readonly class KarmaController
         redirect('/profile/' . $id . '/karma?type=' . $this->resolveType($request));
     }
 
-    public function cleanForm(int $id): Response
+    public function cleanForm(int $id): ViewResponse
     {
         $this->ensureKarmaEnabled();
         if ($error = $this->supervisorGuard()) {
@@ -188,7 +185,7 @@ final readonly class KarmaController
         );
     }
 
-    public function clean(Request $request, int $id): Response
+    public function clean(Request $request, int $id): ViewResponse
     {
         $this->ensureKarmaEnabled();
         if ($error = $this->supervisorGuard()) {
@@ -203,124 +200,94 @@ final readonly class KarmaController
         redirect('/profile/' . $id);
     }
 
-    private function renderList(string $title, int $profileId, KarmaListDTO $dto, Pagination $pagination): Response
+    private function renderList(string $title, int $profileId, KarmaListDTO $dto, Pagination $pagination): ViewResponse
     {
         $this->navChain->add(__('User Profile'), '/profile/' . $profileId);
         $this->navChain->add(__('Karma'));
 
-        $this->render->addData([
-            'title'      => $title,
-            'page_title' => $title,
-        ]);
-
-        return new Response(
-            $this->render->render(
-                'profile::karma',
-                [
-                    'title'      => $title,
-                    'page_title' => $title,
-                    'data'       => [
-                        'filters'    => $dto->filters,
-                        'items'      => $dto->items,
-                        'total'      => $pagination->getTotal(),
-                        'pagination' => $pagination->render(),
-                        'reset_url'  => $dto->resetUrl,
-                        'back_url'   => $dto->backUrl,
-                    ],
-                ]
-            )
+        return new ViewResponse(
+            '@profile/public/karma.twig',
+            [
+                'title'      => $title,
+                'page_title' => $title,
+                'filters'    => $dto->filters,
+                'items'      => $dto->items,
+                'total'      => $pagination->getTotal(),
+                'pagination' => $pagination->hasPages() ? $pagination->render() : null,
+                'reset_url'  => $dto->resetUrl,
+                'back_url'   => $dto->backUrl,
+            ]
         );
     }
 
-    private function renderVoteForm(VoteContextDTO $context): Response
+    private function renderVoteForm(VoteContextDTO $context): ViewResponse
     {
         $title = __('Karma');
 
         $this->navChain->add(__('User Profile'), '/profile/' . $context->targetId);
         $this->navChain->add(__('Karma'));
 
-        $this->render->addData([
-            'title'      => $title,
-            'page_title' => $title,
-        ]);
-
-        return new Response(
-            $this->render->render(
-                'profile::karma_vote',
-                [
-                    'title'      => $title,
-                    'page_title' => $title,
-                    'data'       => [
-                        'options'     => range(1, $context->availablePoints),
-                        'vote_title'  => __('Vote for') . ': ' . $context->targetName,
-                        'form_action' => '/profile/' . $context->targetId . '/karma/vote',
-                        'back_url'    => '/profile/' . $context->targetId,
-                    ],
-                ]
-            )
+        return new ViewResponse(
+            '@profile/public/karma-vote.twig',
+            [
+                'field_height' => $this->currentUser->config->fieldHeight,
+                'title'        => $title,
+                'page_title'   => $title,
+                'options'      => range(1, $context->availablePoints),
+                'vote_title'   => __('Vote for') . ': ' . $context->targetName,
+                'form_action'  => '/profile/' . $context->targetId . '/karma/vote',
+                'back_url'     => '/profile/' . $context->targetId,
+            ]
         );
     }
 
-    private function renderConfirm(string $message, string $formAction, string $backUrl): Response
+    private function renderConfirm(string $message, string $formAction, string $backUrl): ViewResponse
     {
         $title = __('Karma');
 
         $this->navChain->add(__('User Profile'), $backUrl);
         $this->navChain->add(__('Karma'));
 
-        $this->render->addData([
-            'title'      => $title,
-            'page_title' => $title,
-        ]);
-
-        return new Response(
-            $this->render->render(
-                'profile::karma_delete',
-                [
-                    'title'      => $title,
-                    'page_title' => $title,
-                    'data'       => [
-                        'message'     => $message,
-                        'form_action' => $formAction,
-                        'back_url'    => $backUrl,
-                    ],
-                ]
-            )
+        return new ViewResponse(
+            '@profile/public/confirm-delete.twig',
+            [
+                'title'       => $title,
+                'page_title'  => $title,
+                'message'     => $message,
+                'form_action' => $formAction,
+                'back_url'    => $backUrl,
+            ]
         );
     }
 
-    private function renderVoteErrors(array $errors, int $profileId): Response
+    private function renderVoteErrors(array $errors, int $profileId): ViewResponse
     {
-        return new Response(
-            $this->render->render(
-                'system::pages/result',
-                [
-                    'title'         => __('Karma'),
-                    'type'          => 'alert-danger',
-                    'message'       => $errors,
-                    'back_url'      => '/profile/' . $profileId,
-                    'back_url_name' => __('Back'),
-                ]
-            )
+        return new ViewResponse(
+            '@theme/pages/result.twig',
+            [
+                'title'         => __('Karma'),
+                'type'          => 'alert-danger',
+                'message'       => $errors,
+                'back_url'      => '/profile/' . $profileId,
+                'back_url_name' => __('Back'),
+            ]
         );
     }
 
-    private function renderError(string $message, int $status = 200): Response
+    private function renderError(string $message, int $status = 200): ViewResponse
     {
-        return new Response(
-            $this->render->render(
-                'system::pages/result',
-                [
-                    'title'   => __('Karma'),
-                    'type'    => 'alert-danger',
-                    'message' => $message,
-                ]
-            ),
+        return new ViewResponse(
+            '@theme/pages/result.twig',
+            [
+                'title'   => __('Karma'),
+                'type'    => 'alert-danger',
+                'message' => $message,
+            ],
             $status
         );
     }
 
-    private function supervisorGuard(): ?Response
+    private function supervisorGuard(): ?ViewResponse
     {
         if ($this->currentUser->rights !== 9) {
             return $this->renderError(__('Access forbidden'), 403);

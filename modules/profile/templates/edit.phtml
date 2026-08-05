@@ -266,7 +266,7 @@ $errors = $data['errors'];
 
                 <div class="form-group">
                     <label for="admin_notes"><?= __('Admin notes') ?></label>
-                    <textarea id="admin_notes" rows="<?= $user->config->fieldHeight ?>" class="form-control" name="admin_notes"><?= $data['form_data']['admin_notes'] ?></textarea>
+                    <textarea id="admin_notes" rows="<?= $user->config->fieldHeight ?>" class="form-control" name="admin_notes"><?= $this->e($data['form_data']['admin_notes']) ?></textarea>
                 </div>
 
                 <div class="custom-control custom-checkbox">

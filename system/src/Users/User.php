@@ -13,10 +13,10 @@ declare(strict_types=1);
 namespace Johncms\Users;
 
 use Illuminate\Database\Eloquent\Builder;
+use Twig\Markup;
 use Illuminate\Database\Eloquent\Model;
 use Johncms\Casts\Ip;
 use Johncms\Casts\Serialize;
-use Johncms\Casts\SpecialChars;
 use Johncms\Casts\UserSettings;
 use Johncms\System\Users\UserConfig;
 
@@ -89,7 +89,7 @@ use Johncms\System\Users\UserConfig;
  * @property bool $is_valid - проверка валидности пользователя
  * @property bool $is_birthday - у пользователя день рождения?
  * @property string $birthday_date - дата рождения пользователя
- * @property string $display_place - местоположение
+ * @property Markup $display_place - местоположение
  * @property string $formatted_about - О себе в подготовленном для отображения виде
  * @property string $website - Сайт
  * @property string $last_visit - Последний визит
@@ -117,7 +117,6 @@ class User extends Model
         'smileys'      => Serialize::class,
         'ip'           => Ip::class,
         'ip_via_proxy' => Ip::class,
-        'admin_notes'  => SpecialChars::class,
 
         'notification_settings' => 'array',
         'email_confirmed'       => 'bool',

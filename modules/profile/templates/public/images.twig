@@ -1,0 +1,37 @@
+{#
+    Uploading an avatar or a photo.
+
+    @param string success_message
+    @param array  errors
+    @param string form_action
+    @param string back_url
+    @param int    max_file_size In kilobytes.
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    {% if success_message|default('') %}
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-success', alert: success_message} only %}
+    {% endif %}
+    {% if errors|default([]) is not empty %}
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: errors} only %}
+    {% endif %}
+    <form action="{{ form_action }}" method="post" enctype="multipart/form-data">
+        <h3>{{ page_title }}</h3>
+        <div class="form-group">
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="file" name="imagefile" aria-describedby="file_label" required>
+                <label class="custom-file-label" for="file">{{ __('Choose file') }}</label>
+            </div>
+            <div class="text-muted mb-3 small">
+                {# The line break is part of the translated string. #}
+                {{ __('Allowed image formats: JPG, PNG, GIF. File size should not exceed %d kb.<br>The new image will replace old (if was).', max_file_size)|raw }}
+            </div>
+        </div>
+
+        <div class="mt-3">
+            <input type="submit" name="submit" value="{{ __('Save') }}" class="btn btn-primary"/>
+            <a href="{{ back_url }}" class="btn btn-secondary">{{ __('Cancel') }}</a>
+        </div>
+    </form>
+{% endblock %}
