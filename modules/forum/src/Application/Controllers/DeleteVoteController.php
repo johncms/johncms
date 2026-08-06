@@ -12,14 +12,12 @@ use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Application\UseCases\DeleteVoteUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureDeleteVoteAccessUseCase;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
-use Symfony\Component\HttpFoundation\Response;
+use Johncms\Http\View\ViewResponse;
 
 final readonly class DeleteVoteController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private ForumErrorRenderer $forumErrorRenderer,
         private EnsureDeleteVoteAccessUseCase $accessUseCase,
         private DeleteVoteUseCase $deleteVoteUseCase,
@@ -28,13 +26,12 @@ final readonly class DeleteVoteController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(Request $request, int $id): Response
+    public function __invoke(Request $request, int $id): ViewResponse
     {
         try {
             $this->accessUseCase->execute($id);
         } catch (ForumAccessDeniedException $exception) {
-            return $this->forumErrorRenderer->render(
-                $this->render,
+            return $this->forumErrorRenderer->viewResponse(
                 $exception,
                 [
                     'back_url'      => '/forum/',
@@ -42,8 +39,7 @@ final readonly class DeleteVoteController
                 ]
             );
         } catch (ForumValidationException $exception) {
-            return $this->forumErrorRenderer->render(
-                $this->render,
+            return $this->forumErrorRenderer->viewResponse(
                 $exception,
                 [
                     'title'         => __('Delete Poll'),
@@ -56,31 +52,26 @@ final readonly class DeleteVoteController
 
         if ($request->query->has('yes')) {
             $this->deleteVoteUseCase->execute($id);
-            return new Response(
-                $this->render->render(
-                    'system::pages/result',
-                    [
-                        'title'         => __('Delete Poll'),
-                        'type'          => 'alert-success',
-                        'message'       => __('Poll deleted'),
-                        'back_url'      => $this->topicPathService->getTopicUrlById($id) ?? '/forum/',
-                        'back_url_name' => __('Back'),
-                    ]
-                )
+            return new ViewResponse(
+                '@theme/pages/result.twig',
+                [
+                    'title'         => __('Delete Poll'),
+                    'type'          => 'alert-success',
+                    'message'       => __('Poll deleted'),
+                    'back_url'      => $this->topicPathService->getTopicUrlById($id) ?? '/forum/',
+                    'back_url_name' => __('Back'),
+                ]
             );
         }
 
-        return new Response(
-            $this->render->render(
-                'forum::delete_poll',
-                [
-                    'title'      => __('Delete Poll'),
-                    'page_title' => __('Delete Poll'),
-                    'id'         => $id,
-                    'back_url'   => $this->topicPathService->getTopicUrlById($id) ?? '/forum/',
-                    'delete_url' => '/forum/delvote/' . $id . '/?yes',
-                ]
-            )
+        return new ViewResponse(
+            '@forum/public/delete-poll.twig',
+            [
+                'title'      => __('Delete Poll'),
+                'page_title' => __('Delete Poll'),
+                'back_url'   => $this->topicPathService->getTopicUrlById($id) ?? '/forum/',
+                'delete_url' => '/forum/delvote/' . $id . '/?yes',
+            ]
         );
     }
 }

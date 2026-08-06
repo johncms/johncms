@@ -12,15 +12,13 @@ use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\ViewForumSearchUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Users\User;
-use Symfony\Component\HttpFoundation\Response;
 
 final readonly class ForumSearchController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private User $currentUser,
         private ForumErrorRenderer $forumErrorRenderer,
@@ -30,7 +28,7 @@ final readonly class ForumSearchController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(Request $request): Response
+    public function __invoke(Request $request): ViewResponse
     {
         $search = rawurldecode(trim($request->queryParam('search', '')));
         $searchInTopicNames = $request->query->has('t');
@@ -46,8 +44,7 @@ final readonly class ForumSearchController
                 )
             );
         } catch (ForumValidationException $exception) {
-            return $this->forumErrorRenderer->render(
-                $this->render,
+            return $this->forumErrorRenderer->viewResponse(
                 $exception,
                 [
                     'title'         => __('Forum search'),
@@ -65,29 +62,22 @@ final readonly class ForumSearchController
             ? __('Search results for: %s', $result->query)
             : __('Forum search');
 
-        $this->render->addData(
-            [
-                'title'       => $this->buildSearchDocumentTitle($searchTitle, $page),
-                'page_title'  => $searchTitle,
-                'description' => $this->buildSearchDescription($searchTitle, $page),
-            ]
-        );
-
         $pagination = $this->paginationFactory->create($result->total, null, 'page', $page);
 
-        return new Response(
-            $this->render->render(
-                'forum::forum_search',
-                [
-                    'pagination'        => $pagination->render(),
-                    'query'             => $result->query,
-                    'search_t'          => $result->searchInTopicNames,
-                    'results'           => $result->results,
-                    'total'             => $result->total,
-                    'search_history'    => $result->historyTerms,
-                    'history_reset_url' => '/forum/search/history/clear/',
-                ]
-            )
+        return new ViewResponse(
+            '@forum/public/search.twig',
+            [
+                'title'             => $this->buildSearchDocumentTitle($searchTitle, $page),
+                'page_title'        => $searchTitle,
+                'description'       => $this->buildSearchDescription($searchTitle, $page),
+                'pagination'        => $pagination->hasPages() ? $pagination->render() : null,
+                'query'             => $result->query,
+                'search_t'          => $result->searchInTopicNames,
+                'results'           => $result->results,
+                'total'             => $result->total,
+                'search_history'    => $result->historyTerms,
+                'history_reset_url' => '/forum/search/history/clear/',
+            ]
         );
     }
 

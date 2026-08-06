@@ -15,15 +15,13 @@ use Johncms\Modules\Forum\Application\UseCases\AttachFileToPostUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetAttachFileContextUseCase;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\HttpFoundation\Response;
 
 final readonly class AddFileController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private ForumErrorRenderer $forumErrorRenderer,
         private GetAttachFileContextUseCase $contextUseCase,
         private AttachFileToPostUseCase $attachFileToPostUseCase,
@@ -33,7 +31,7 @@ final readonly class AddFileController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(Request $request, int $id): Response
+    public function __invoke(Request $request, int $id): ViewResponse
     {
         $config = config('johncms');
         $forumConfig = config('forum');
@@ -42,8 +40,7 @@ final readonly class AddFileController
         try {
             $context = $this->contextUseCase->execute($id, $page);
         } catch (ForumAccessDeniedException | ForumNotFoundException $exception) {
-            return $this->forumErrorRenderer->render(
-                $this->render,
+            return $this->forumErrorRenderer->viewResponse(
                 $exception,
                 [
                     'back_url'      => '/forum/',
@@ -51,8 +48,7 @@ final readonly class AddFileController
                 ]
             );
         } catch (UploadExpiredException $exception) {
-            return $this->forumErrorRenderer->render(
-                $this->render,
+            return $this->forumErrorRenderer->viewResponse(
                 $exception,
                 [
                     'title'         => __('Add file'),
@@ -81,8 +77,7 @@ final readonly class AddFileController
                     file: $file,
                 );
             } catch (ForumNotFoundException $exception) {
-                return $this->forumErrorRenderer->render(
-                    $this->render,
+                return $this->forumErrorRenderer->viewResponse(
                     $exception,
                     [
                         'back_url'      => '/forum/',
@@ -90,8 +85,7 @@ final readonly class AddFileController
                     ]
                 );
             } catch (UploadException $exception) {
-                return $this->forumErrorRenderer->render(
-                    $this->render,
+                return $this->forumErrorRenderer->viewResponse(
                     $exception,
                     [
                         'title'         => __('Add file'),
@@ -108,19 +102,16 @@ final readonly class AddFileController
             $topicId = $result->topicId;
         }
 
-        return new Response(
-            $this->render->render(
-                'forum::add_file',
-                [
-                    'title'         => __('Add File'),
-                    'page_title'    => __('Add File'),
-                    'id'            => $id,
-                    'file_attached' => $fileAttached,
-                    'topic_id'      => $topicId,
-                    'back_url'      => $this->getTopicUrl($topicId, $page),
-                    'config'        => $config,
-                ]
-            )
+        return new ViewResponse(
+            '@forum/public/add-file.twig',
+            [
+                'title'         => __('Add File'),
+                'page_title'    => __('Add File'),
+                'action_url'    => '/forum/addfile/' . $id . '/',
+                'file_attached' => $fileAttached,
+                'back_url'      => $this->getTopicUrl($topicId, $page),
+                'max_size'      => (int) $config['flsz'],
+            ]
         );
     }
 

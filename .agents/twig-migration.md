@@ -89,6 +89,12 @@ it, sees `__call()` on the model and calls it as a method — `app.user.rights` 
 up in `User::rights()` and throws. `|default` does not help, since Twig considers a method to
 exist. Guard it: `{% if app.user.isValid and app.user.rights >= 7 %}`.
 
+**A nullable column falls through the same way.** `isset($model->flag)` is false when the value
+is null, so `topic.deleted` lands on `Model::deleted()` and throws — and a `'boolean'` cast does
+not help, since a null stays null. Give the model an accessor that types the value
+(`getDeletedAttribute(mixed $value): bool { return (bool) $value; }`); the attribute then stays
+an attribute for every template.
+
 **`Markup` is an object, so it is always truthy.** `{% if x %}` on empty markup is true. A
 source that can have nothing to show returns `null`, not an empty `Markup`; where that is not
 possible, test it with `|length`.

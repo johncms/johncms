@@ -1,0 +1,46 @@
+{#
+    A category of the forum: the sections it holds.
+
+    @var sections     iterable
+    @var files_url    string
+    @var online       array    online_u, online_g
+    @var files_count  int
+    @var unread_count int
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    {% include '@forum/public/components/header.twig' with {
+        unread_count: unread_count,
+        files_count: files_count,
+        files_url: files_url,
+        files_name: __('Section Files')
+    } only %}
+
+    {% if sections is empty %}
+        {% include '@theme/components/alert.twig' with {
+            alert_type: 'alert-info',
+            alert: __('There are no sections in this category')
+        } only %}
+    {% endif %}
+
+    {% for section in sections %}
+        <div class="forum-section">
+            <div class="section-header">
+                <div class="d-flex align-items-center">
+                    <a href="{{ section.url }}" class="section-name">{{ section.name }}</a>
+                    <span class="badge rounded-pill counter-badge ms-3">{{ section.section_type == 1 ? section.topics_count : section.subsections_count }}</span>
+                </div>
+            </div>
+            {% if section.description %}
+                <div class="small pt-2 text-muted">{{ section.description }}</div>
+            {% endif %}
+        </div>
+    {% endfor %}
+
+    {% include '@forum/public/components/footer.twig' with {
+        online: online,
+        who_url: '/forum/visitors/',
+        who_name: __('Who in Forum')
+    } only %}
+{% endblock %}

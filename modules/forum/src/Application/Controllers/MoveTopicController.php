@@ -11,18 +11,14 @@ use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\EnsureMoveTopicAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetMoveTopicContextUseCase;
 use Johncms\Modules\Forum\Application\UseCases\MoveTopicUseCase;
-use Johncms\Security\Csrf;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Validator\Validator;
-use Symfony\Component\HttpFoundation\Response;
 
 final readonly class MoveTopicController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
-        private Csrf $csrf,
         private ForumErrorRenderer $forumErrorRenderer,
         private EnsureMoveTopicAccessUseCase $accessUseCase,
         private GetMoveTopicContextUseCase $contextUseCase,
@@ -31,7 +27,7 @@ final readonly class MoveTopicController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(Request $request, int $id): Response
+    public function __invoke(Request $request, int $id): ViewResponse
     {
         try {
             $this->accessUseCase->execute();
@@ -39,8 +35,7 @@ final readonly class MoveTopicController
             $otherCategoryId = $other !== null && $other > 0 ? $other : null;
             $context = $this->contextUseCase->execute($id, $otherCategoryId);
         } catch (ForumAccessDeniedException | ForumNotFoundException $exception) {
-            return $this->forumErrorRenderer->render(
-                $this->render,
+            return $this->forumErrorRenderer->viewResponse(
                 $exception,
                 [
                     'back_url'      => '/forum/',
@@ -58,25 +53,22 @@ final readonly class MoveTopicController
             );
 
             if (! $validator->isValid() || $targetSectionId <= 0) {
-                return new Response(
-                    $this->render->render(
-                        'system::pages/result',
-                        [
-                            'title'         => __('Wrong data'),
-                            'type'          => 'alert-danger',
-                            'message'       => __('Wrong data'),
-                            'back_url'      => '/forum/',
-                            'back_url_name' => __('Back'),
-                        ]
-                    )
+                return new ViewResponse(
+                    '@theme/pages/result.twig',
+                    [
+                        'title'         => __('Wrong data'),
+                        'type'          => 'alert-danger',
+                        'message'       => __('Wrong data'),
+                        'back_url'      => '/forum/',
+                        'back_url_name' => __('Back'),
+                    ]
                 );
             }
 
             try {
                 $this->moveTopicUseCase->execute($context->topic, $targetSectionId);
             } catch (ForumNotFoundException $exception) {
-                return $this->forumErrorRenderer->render(
-                    $this->render,
+                return $this->forumErrorRenderer->viewResponse(
                     $exception,
                     [
                         'title'         => __('Wrong data'),
@@ -91,21 +83,18 @@ final readonly class MoveTopicController
             redirect($context->topic->url);
         }
 
-        return new Response(
-            $this->render->render(
-                'forum::move_topic',
-                [
-                    'title'            => __('Move topic'),
-                    'page_title'       => __('Move topic'),
-                    'id'               => $id,
-                    'current_section'  => $context->currentSection,
-                    'current_sections' => $context->currentSections,
-                    'other_categories' => $context->otherCategories,
-                    'back_url'         => $context->topic->url,
-                    'form_action'      => '/forum/move-topic/' . $id . '/',
-                    'csrf_token'       => $this->csrf->getToken(),
-                ]
-            )
+        return new ViewResponse(
+            '@forum/public/move-topic.twig',
+            [
+                'title'                     => __('Move topic'),
+                'page_title'                => __('Move topic'),
+                'current_section'           => $context->currentSection,
+                'current_sections'          => $context->currentSections,
+                'other_categories'          => $context->otherCategories,
+                'other_category_url_prefix' => '/forum/move-topic/' . $id . '/?other=',
+                'back_url'                  => $context->topic->url,
+                'form_action'               => '/forum/move-topic/' . $id . '/',
+            ]
         );
     }
 }

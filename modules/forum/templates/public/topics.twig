@@ -1,0 +1,108 @@
+{#
+    A section of the forum: the topics it holds.
+
+    @var topics        iterable
+    @var total         int
+    @var pagination    \Twig\Markup Null when everything fits on one page.
+    @var create_access bool         The visitor may open a topic here.
+    @var new_topic_url string
+    @var files_url     string
+    @var online        array        online_u, online_g
+    @var files_count   int
+    @var unread_count  int
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    {% include '@forum/public/components/header.twig' with {
+        unread_count: unread_count,
+        files_count: files_count,
+        files_url: files_url,
+        files_name: __('Category Files')
+    } only %}
+
+    {% if total == 0 %}
+        {% include '@theme/components/alert.twig' with {
+            alert_type: 'alert-info',
+            alert: __('No topics in this section')
+        } only %}
+    {% endif %}
+
+    {% if create_access %}
+        <div class="mb-3">
+            <form action="{{ new_topic_url }}" method="post">
+                <button type="submit" class="btn btn-primary">{{ __('New Topic') }}</button>
+            </form>
+        </div>
+    {% endif %}
+
+    {% for topic in topics %}
+        <div class="forum-section">
+            <div class="section-header">
+                <div class="d-flex align-items-center w-100">
+                    {% if topic.has_icons %}
+                        <div class="topic-icons d-flex align-items-center">
+                            {% if topic.pinned %}
+                                <div class="me-1" title="{{ __('Pinned topic') }}">
+                                    <svg class="icon">
+                                        <use xlink:href="{{ asset('icons/sprite.svg') }}#pin"/>
+                                    </svg>
+                                </div>
+                            {% endif %}
+                            {% if topic.has_poll %}
+                                <div class="me-1" title="{{ __('Topic has poll') }}">
+                                    <svg class="icon">
+                                        <use xlink:href="{{ asset('icons/sprite.svg') }}#bar-chart"/>
+                                    </svg>
+                                </div>
+                            {% endif %}
+                            {% if topic.closed %}
+                                <div class="me-1" title="{{ __('Closed topic') }}">
+                                    <svg class="icon">
+                                        <use xlink:href="{{ asset('icons/sprite.svg') }}#lock"/>
+                                    </svg>
+                                </div>
+                            {% endif %}
+                            {% if topic.deleted %}
+                                <div class="me-1" title="{{ __('Deleted topic') }}">
+                                    <svg class="icon">
+                                        <use xlink:href="{{ asset('icons/sprite.svg') }}#x"/>
+                                    </svg>
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                    <a href="{{ topic.url }}" class="section-name flex-grow-1 flex-md-grow-0">{{ topic.name }}</a>
+                    {% if topic.deleted %}
+                        <div class="ms-3">
+                            <span class="badge bg-danger">{{ __('Deleted topic') }}</span>
+                        </div>
+                    {% elseif topic.last_page_url %}
+                        <a href="{{ topic.last_page_url }}" title="{{ __('Last page') }}">
+                            <span class="badge rounded-pill {{ topic.unread ? 'bg-danger' : 'counter-badge' }} ms-3">{{ topic.show_posts_count }}</span>
+                        </a>
+                    {% else %}
+                        <span class="badge rounded-pill {{ topic.unread ? 'bg-danger' : 'counter-badge' }} ms-3">{{ topic.show_posts_count }}</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="small pt-2 text-muted">
+                {{ __('Author') }}: {{ topic.user_name }},
+                {{ __('Last post') }}: {{ topic.show_last_post_date }}, {{ topic.show_last_author }}
+            </div>
+        </div>
+    {% endfor %}
+
+    <div class="pt-2">
+        <div>{{ __('Total') }}: {{ total }}</div>
+        {% if pagination %}
+            <div class="mt-2">{{ pagination }}</div>
+        {% endif %}
+    </div>
+
+    {% include '@forum/public/components/footer.twig' with {
+        online: online,
+        who_url: '/forum/visitors/',
+        who_name: __('Who in Forum')
+    } only %}
+{% endblock %}

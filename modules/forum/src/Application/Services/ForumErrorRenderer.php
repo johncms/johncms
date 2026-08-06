@@ -4,12 +4,28 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\Services;
 
+use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Forum\Application\Exceptions\ForumException;
 use Johncms\System\View\Render;
 use Symfony\Component\HttpFoundation\Response;
 
 final class ForumErrorRenderer
 {
+    /**
+     * The failure of an action as a page. Pages still on Plates use render() below; it goes away
+     * with the last of them.
+     *
+     * @param array<string, mixed> $overrides
+     */
+    public function viewResponse(ForumException $exception, array $overrides = []): ViewResponse
+    {
+        return new ViewResponse(
+            '@theme/pages/result.twig',
+            $this->forException($exception, $overrides),
+            $exception->getErrorCode()->httpStatus()
+        );
+    }
+
     /**
      * @param array<string, mixed> $overrides
      */

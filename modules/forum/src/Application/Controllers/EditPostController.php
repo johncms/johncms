@@ -12,21 +12,17 @@ use Johncms\Modules\Forum\Application\UseCases\AttachUploadedFilesToMessageUseCa
 use Johncms\Modules\Forum\Application\UseCases\EditPostUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureEditPostAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetEditPostContextUseCase;
-use Johncms\Security\Csrf;
 use Johncms\Http\Request;
+use Johncms\Http\View\ViewResponse;
 use Johncms\System\Utility\EditorContentNormalizer;
-use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
-use Symfony\Component\HttpFoundation\Response;
 
 final readonly class EditPostController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private EditorContentNormalizer $editorContentNormalizer,
-        private Csrf $csrf,
         private User $currentUser,
         private ForumErrorRenderer $forumErrorRenderer,
         private GetEditPostContextUseCase $contextUseCase,
@@ -37,7 +33,7 @@ final readonly class EditPostController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(Request $request, int $id): Response
+    public function __invoke(Request $request, int $id): ViewResponse
     {
         $page = max(1, $request->queryInt('page', 1));
 
@@ -45,8 +41,7 @@ final readonly class EditPostController
             $context = $this->contextUseCase->execute($id, $this->getForumSettings());
             $this->accessUseCase->execute($context);
         } catch (ForumNotFoundException $exception) {
-            return $this->forumErrorRenderer->render(
-                $this->render,
+            return $this->forumErrorRenderer->viewResponse(
                 $exception,
                 [
                     'title'         => __('Error'),
@@ -56,8 +51,7 @@ final readonly class EditPostController
                 ]
             );
         } catch (ForumAccessDeniedException $exception) {
-            return $this->forumErrorRenderer->render(
-                $this->render,
+            return $this->forumErrorRenderer->viewResponse(
                 $exception,
                 [
                     'title'         => __('Error'),
@@ -73,17 +67,15 @@ final readonly class EditPostController
             $msg = trim($msg);
             $attachedFiles = (array) $request->bodyInts('attached_files');
             if ($msg === '') {
-                return new Response(
-                    $this->render->render(
-                        'system::pages/result',
-                        [
-                            'title'         => __('Edit Message'),
-                            'type'          => 'alert-danger',
-                            'message'       => __('You have not entered the message'),
-                            'back_url'      => '/forum/edit-post/' . $id . '/' . ($page > 1 ? '?page=' . $page : ''),
-                            'back_url_name' => __('Repeat'),
-                        ]
-                    )
+                return new ViewResponse(
+                    '@theme/pages/result.twig',
+                    [
+                        'title'         => __('Edit Message'),
+                        'type'          => 'alert-danger',
+                        'message'       => __('You have not entered the message'),
+                        'back_url'      => '/forum/edit-post/' . $id . '/' . ($page > 1 ? '?page=' . $page : ''),
+                        'back_url_name' => __('Repeat'),
+                    ]
                 );
             }
 
@@ -92,17 +84,15 @@ final readonly class EditPostController
                 ['csrf_token' => ['Csrf']]
             );
             if (! $validator->isValid()) {
-                return new Response(
-                    $this->render->render(
-                        'system::pages/result',
-                        [
-                            'title'         => __('Edit Message'),
-                            'type'          => 'alert-danger',
-                            'message'       => __('Wrong data'),
-                            'back_url'      => '/forum/edit-post/' . $id . '/',
-                            'back_url_name' => __('Back'),
-                        ]
-                    )
+                return new ViewResponse(
+                    '@theme/pages/result.twig',
+                    [
+                        'title'         => __('Edit Message'),
+                        'type'          => 'alert-danger',
+                        'message'       => __('Wrong data'),
+                        'back_url'      => '/forum/edit-post/' . $id . '/',
+                        'back_url_name' => __('Back'),
+                    ]
                 );
             }
 
@@ -118,20 +108,16 @@ final readonly class EditPostController
             ? (string) $context->message->getRawOriginal('text')
             : $request->body('msg');
 
-        return new Response(
-            $this->render->render(
-                'forum::edit_post',
-                [
-                    'title'          => __('Edit Message'),
-                    'page_title'     => __('Edit Message'),
-                    'id'             => $id,
-                    'msg'            => $message,
-                    'page'           => $page,
-                    'back_url'       => $context->backUrl,
-                    'settings_forum' => $this->getForumSettings(),
-                    'csrf_token'     => $this->csrf->getToken(),
-                ]
-            )
+        return new ViewResponse(
+            '@forum/public/edit-post.twig',
+            [
+                'title'      => __('Edit Message'),
+                'page_title' => __('Edit Message'),
+                'action_url' => '/forum/edit-post/' . $id . '/' . ($page > 1 ? '?page=' . $page : ''),
+                'msg'        => $message,
+                'back_url'   => $context->backUrl,
+                'errors'     => [],
+            ]
         );
     }
 

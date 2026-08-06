@@ -1,0 +1,104 @@
+{#
+    A flat list of topics: the latest ones, the unread ones or the ones of a period.
+
+    @var topics               array        Rows of the listing, see the use case for the keys.
+    @var total                int
+    @var pagination           \Twig\Markup Null when everything fits on one page.
+    @var empty_message        string
+    @var show_period          bool         Show the form that asks for a period.
+    @var period_action        string
+    @var mark_as_read_action  string       Empty when there is nothing to mark.
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    {% if show_period %}
+        <div class="row">
+            <form action="{{ period_action }}" method="post" class="col-md-4">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" maxlength="3" name="vr" placeholder="{{ __('Period') }}" aria-label="{{ __('Period') }}">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="submit" name="submit" value="1">{{ __('Show period') }}</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    {% endif %}
+
+    {% if topics is empty %}
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-info', alert: empty_message} only %}
+    {% endif %}
+
+    {% for topic in topics %}
+        <div class="forum-section post-item{{ topic.deleted ? ' deleted-post' }}{{ topic.closed ? ' closed-topic' }}">
+            <div class="section-header">
+                <div class="d-flex align-items-center w-100">
+                    {% if topic.has_icons %}
+                        <div class="topic-icons me-1 d-flex align-items-center">
+                            {% if topic.pinned %}
+                                <div class="me-1" title="{{ __('Pinned topic') }}">
+                                    <svg class="icon">
+                                        <use xlink:href="{{ asset('icons/sprite.svg') }}#pin"/>
+                                    </svg>
+                                </div>
+                            {% endif %}
+                            {% if topic.has_poll %}
+                                <div class="me-1" title="{{ __('Topic has poll') }}">
+                                    <svg class="icon">
+                                        <use xlink:href="{{ asset('icons/sprite.svg') }}#bar-chart"/>
+                                    </svg>
+                                </div>
+                            {% endif %}
+                            {% if topic.closed %}
+                                <div class="me-1" title="{{ __('Closed topic') }}">
+                                    <svg class="icon">
+                                        <use xlink:href="{{ asset('icons/sprite.svg') }}#lock"/>
+                                    </svg>
+                                </div>
+                            {% endif %}
+                            {% if topic.deleted %}
+                                <div class="me-1" title="{{ __('Deleted topic') }}">
+                                    <svg class="icon">
+                                        <use xlink:href="{{ asset('icons/sprite.svg') }}#x"/>
+                                    </svg>
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                    <a href="{{ topic.last_page_url }}" class="text-dark-brown flex-grow-1 flex-md-grow-0">{{ topic.name }}</a>
+                    <span class="badge rounded-pill text-bg-light border ms-3">{{ topic.show_posts_count }}</span>
+                </div>
+            </div>
+            <div class="small pt-2 text-muted">
+                {{ __('Author') }}: {{ topic.user_name }},
+                {{ __('Last post') }}: {{ topic.show_last_post_date }}, {{ topic.show_last_author }}
+            </div>
+            {% if topic.forum_url and topic.section_url %}
+                <div class="small pt-1">
+                    <a href="{{ topic.forum_url }}">{{ topic.frm_name }}</a> / <a href="{{ topic.section_url }}">{{ topic.rzd_name }}</a>
+                </div>
+            {% endif %}
+        </div>
+    {% endfor %}
+
+    <div class="mt-3">
+        <div>{{ __('Total') }}: {{ total }}</div>
+        {% if pagination %}
+            <div class="mt-3">{{ pagination }}</div>
+        {% endif %}
+    </div>
+
+    <div class="mt-3">
+        {% if mark_as_read_action %}
+            <div>
+                <form action="{{ mark_as_read_action }}" method="post">
+                    <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                    <button type="submit" class="btn btn-link p-0">{{ __('Mark as read') }}</button>
+                </form>
+            </div>
+        {% endif %}
+        <div>
+            <a href="/forum/">{{ __('Forum') }}</a>
+        </div>
+    </div>
+{% endblock %}

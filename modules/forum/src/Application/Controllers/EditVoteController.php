@@ -13,14 +13,12 @@ use Johncms\Modules\Forum\Application\UseCases\DeleteVoteAnswerUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetEditVoteContextUseCase;
 use Johncms\Modules\Forum\Application\UseCases\UpdateVoteUseCase;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
-use Symfony\Component\HttpFoundation\Response;
+use Johncms\Http\View\ViewResponse;
 
 final readonly class EditVoteController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private ForumErrorRenderer $forumErrorRenderer,
         private GetEditVoteContextUseCase $contextUseCase,
         private UpdateVoteUseCase $updateVoteUseCase,
@@ -30,13 +28,12 @@ final readonly class EditVoteController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(Request $request, int $id): Response
+    public function __invoke(Request $request, int $id): ViewResponse
     {
         try {
             $context = $this->contextUseCase->execute($id);
         } catch (ForumAccessDeniedException $exception) {
-            return $this->forumErrorRenderer->render(
-                $this->render,
+            return $this->forumErrorRenderer->viewResponse(
                 $exception,
                 [
                     'back_url'      => '/forum/',
@@ -44,8 +41,7 @@ final readonly class EditVoteController
                 ]
             );
         } catch (ForumValidationException $exception) {
-            return $this->forumErrorRenderer->render(
-                $this->render,
+            return $this->forumErrorRenderer->viewResponse(
                 $exception,
                 [
                     'title'         => __('Edit Poll'),
@@ -65,17 +61,14 @@ final readonly class EditVoteController
                 redirect('/forum/editvote/' . $context->topicId . '/');
             }
 
-            return new Response(
-                $this->render->render(
-                    'forum::delete_answer',
-                    [
-                        'title'      => __('Delete Answer'),
-                        'page_title' => __('Delete Answer'),
-                        'id'         => $context->topicId,
-                        'delete_url' => '/forum/editvote/' . $context->topicId . '/?vote=' . $voteId . '&amp;delvote&amp;yes',
-                        'back_url'   => '/forum/editvote/' . $context->topicId . '/',
-                    ]
-                )
+            return new ViewResponse(
+                '@forum/public/delete-poll-answer.twig',
+                [
+                    'title'      => __('Delete Answer'),
+                    'page_title' => __('Delete Answer'),
+                    'delete_url' => '/forum/editvote/' . $context->topicId . '/?vote=' . $voteId . '&delvote&yes',
+                    'back_url'   => '/forum/editvote/' . $context->topicId . '/',
+                ]
             );
         }
 
@@ -99,18 +92,16 @@ final readonly class EditVoteController
 
             $this->updateVoteUseCase->execute($context->topicId, $pollName, $existingAnswers, $newAnswers);
 
-            return new Response(
-                $this->render->render(
-                    'system::pages/result',
-                    [
-                        'title'         => __('Edit Poll'),
-                        'page_title'    => __('Edit Poll'),
-                        'type'          => 'alert-success',
-                        'message'       => __('Poll changed'),
-                        'back_url'      => $this->topicPathService->getTopicUrlById($context->topicId) ?? '/forum/',
-                        'back_url_name' => __('Continue'),
-                    ]
-                )
+            return new ViewResponse(
+                '@theme/pages/result.twig',
+                [
+                    'title'         => __('Edit Poll'),
+                    'page_title'    => __('Edit Poll'),
+                    'type'          => 'alert-success',
+                    'message'       => __('Poll changed'),
+                    'back_url'      => $this->topicPathService->getTopicUrlById($context->topicId) ?? '/forum/',
+                    'back_url_name' => __('Continue'),
+                ]
             );
         }
 
@@ -139,9 +130,9 @@ final readonly class EditVoteController
             $votes[] = [
                 'input_name'  => $answer->id . 'vote',
                 'input_label' => __('Answer') . ' ' . ($i + 1),
-                'input_value' => htmlentities($answer->name, ENT_QUOTES, 'UTF-8'),
+                'input_value' => $answer->name,
                 'delete_url'  => $context->savedVote > 2
-                    ? '/forum/editvote/' . $context->topicId . '/?vote=' . $answer->id . '&amp;delvote'
+                    ? '/forum/editvote/' . $context->topicId . '/?vote=' . $answer->id . '&delvote'
                     : '',
             ];
             $i++;
@@ -151,24 +142,23 @@ final readonly class EditVoteController
             $votes[] = [
                 'input_name'  => $vote,
                 'input_label' => __('Answer') . ' ' . ($vote + 1),
-                'input_value' => htmlentities($request->body((string) $vote, ''), ENT_QUOTES, 'UTF-8'),
+                'input_value' => $request->body((string) $vote, ''),
+                'delete_url'  => '',
             ];
         }
 
-        return new Response(
-            $this->render->render(
-                'forum::edit_poll',
-                [
-                    'title'      => __('Edit Poll'),
-                    'page_title' => __('Edit Poll'),
-                    'id'         => $context->topicId,
-                    'back_url'   => $this->topicPathService->getTopicUrlById($context->topicId) ?? '/forum/',
-                    'saved_vote' => $context->savedVote,
-                    'count_vote' => $countVote,
-                    'poll_name'  => htmlentities($context->pollName, ENT_QUOTES, 'UTF-8'),
-                    'votes'      => $votes,
-                ]
-            )
+        return new ViewResponse(
+            '@forum/public/edit-poll.twig',
+            [
+                'title'      => __('Edit Poll'),
+                'page_title' => __('Edit Poll'),
+                'action_url' => '/forum/editvote/' . $context->topicId . '/',
+                'back_url'   => $this->topicPathService->getTopicUrlById($context->topicId) ?? '/forum/',
+                'saved_vote' => $context->savedVote,
+                'count_vote' => $countVote,
+                'poll_name'  => $context->pollName,
+                'votes'      => $votes,
+            ]
         );
     }
 }

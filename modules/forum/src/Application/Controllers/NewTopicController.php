@@ -20,18 +20,17 @@ use Johncms\Security\AntifloodCheckerInterface;
 use Johncms\Smilies\SmiliesRendererInterface;
 use Johncms\Http\Environment;
 use Johncms\Http\Request;
+use Johncms\Http\View\ViewResponse;
 use Johncms\System\Utility\EditorContentNormalizer;
-use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
 use Simba77\EmbedMedia\Embed;
-use Symfony\Component\HttpFoundation\Response;
+use Twig\Markup;
 
 final readonly class NewTopicController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private Environment $environment,
         private AntifloodCheckerInterface $antifloodChecker,
         private SmiliesRendererInterface $smiliesRenderer,
@@ -49,15 +48,14 @@ final readonly class NewTopicController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(Request $request, int $id): Response
+    public function __invoke(Request $request, int $id): ViewResponse
     {
         $page = max(1, $request->queryInt('page', 1));
 
         try {
             $section = $this->contextUseCase->execute($id);
         } catch (ForumAccessDeniedException $exception) {
-            return $this->forumErrorRenderer->render(
-                $this->render,
+            return $this->forumErrorRenderer->viewResponse(
                 $exception,
                 [
                     'back_url'      => $this->sectionPathService->getSectionUrlById($id) ?? '/forum/',
@@ -70,17 +68,18 @@ final readonly class NewTopicController
 
         $flood = $this->antifloodChecker->getRemainingSeconds();
         if ($flood) {
-            return new Response(
-                $this->render->render(
-                    'system::pages/result',
-                    [
-                        'title'         => __('New Topic'),
-                        'type'          => 'alert-danger',
-                        'message'       => sprintf(__('You cannot add the message so often<br>Please, wait %d sec.'), $flood),
-                        'back_url'      => $section->url . ($page > 1 ? '?page=' . $page : ''),
-                        'back_url_name' => __('Back'),
-                    ]
-                )
+            return new ViewResponse(
+                '@theme/pages/result.twig',
+                [
+                    'title'         => __('New Topic'),
+                    'type'          => 'alert-danger',
+                    'message'       => new Markup(
+                        sprintf(__('You cannot add the message so often<br>Please, wait %d sec.'), $flood),
+                        'UTF-8'
+                    ),
+                    'back_url'      => $section->url . ($page > 1 ? '?page=' . $page : ''),
+                    'back_url_name' => __('Back'),
+                ]
             );
         }
 
@@ -159,29 +158,24 @@ final readonly class NewTopicController
         ForumUtils::buildBreadcrumbs($section->parent, $section->name, $section->url);
         $this->navChain->add(__('New Topic'));
 
-        $this->render->addData(
+        return new ViewResponse(
+            '@forum/public/new-topic.twig',
             [
-                'title'      => __('New Topic'),
-                'page_title' => __('New Topic'),
+                'title'           => __('New Topic'),
+                'page_title'      => __('New Topic'),
+                'action_url'      => '/forum/new-topic/' . $section->id . '/',
+                'th'              => $data['name'],
+                'add_files'       => ($data['add_files'] === 1),
+                'msg'             => (string) $data['message'],
+                'back_url'        => $section->url,
+                'show_preview'    => ! empty($data['name']) && ! empty($data['message']) && ! $request->body('submit'),
+                'preview_message' => new Markup($msgPreview, 'UTF-8'),
+                'preview_time'    => time(),
+                'can_set_meta'    => $this->currentUser->rights > 0,
+                'preview_enabled' => ! empty($this->getForumSettings()['preview']),
+                'errors'          => $errors,
+                'data'            => $data,
             ]
-        );
-
-        return new Response(
-            $this->render->render(
-                'forum::new_topic',
-                [
-                    'settings_forum'    => $this->getForumSettings(),
-                    'id'                => $section->id,
-                    'th'                => $data['name'],
-                    'add_files'         => ($data['add_files'] === 1),
-                    'msg'               => (string) $data['message'],
-                    'back_url'          => $section->url,
-                    'show_post_preview' => ! empty($data['name']) && ! empty($data['message']) && ! $request->body('submit'),
-                    'preview_message'   => $msgPreview,
-                    'errors'            => $errors,
-                    'data'              => $data,
-                ]
-            )
         );
     }
 

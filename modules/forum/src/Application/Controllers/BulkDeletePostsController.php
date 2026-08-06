@@ -10,20 +10,16 @@ use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\BulkDeletePostsUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetBulkDeletePostsContextUseCase;
-use Johncms\Security\Csrf;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
-use Symfony\Component\HttpFoundation\Response;
 
 final readonly class BulkDeletePostsController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private User $currentUser,
-        private Csrf $csrf,
         private ForumErrorRenderer $forumErrorRenderer,
         private GetBulkDeletePostsContextUseCase $contextUseCase,
         private BulkDeletePostsUseCase $bulkDeletePostsUseCase,
@@ -31,13 +27,12 @@ final readonly class BulkDeletePostsController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(Request $request, int $id): Response
+    public function __invoke(Request $request, int $id): ViewResponse
     {
         try {
             $backUrl = $this->contextUseCase->execute($id);
         } catch (ForumAccessDeniedException | ForumNotFoundException $exception) {
-            return $this->forumErrorRenderer->render(
-                $this->render,
+            return $this->forumErrorRenderer->viewResponse(
                 $exception,
                 [
                     'back_url'      => '/forum/',
@@ -56,82 +51,46 @@ final readonly class BulkDeletePostsController
             );
 
             if (! $validator->isValid()) {
-                return new Response(
-                    $this->render->render(
-                        'system::pages/result',
-                        [
-                            'title'         => __('Delete posts'),
-                            'page_title'    => __('Delete posts'),
-                            'type'          => 'alert-danger',
-                            'message'       => __('Wrong data'),
-                            'back_url'      => $backUrl,
-                            'back_url_name' => __('Back'),
-                        ]
-                    )
-                );
+                return $this->result('alert-danger', __('Wrong data'), $backUrl);
             }
 
             if ($confirmIds === []) {
-                return new Response(
-                    $this->render->render(
-                        'system::pages/result',
-                        [
-                            'title'         => __('Delete posts'),
-                            'page_title'    => __('Delete posts'),
-                            'type'          => 'alert-danger',
-                            'message'       => __('You did not choose something to delete'),
-                            'back_url'      => $backUrl,
-                            'back_url_name' => __('Back'),
-                        ]
-                    )
-                );
+                return $this->result('alert-danger', __('You did not choose something to delete'), $backUrl);
             }
 
             $this->bulkDeletePostsUseCase->execute($id, $confirmIds, $this->currentUser->name);
 
-            return new Response(
-                $this->render->render(
-                    'system::pages/result',
-                    [
-                        'title'         => __('Delete posts'),
-                        'page_title'    => __('Delete posts'),
-                        'type'          => 'alert-success',
-                        'message'       => __('Marked posts are deleted'),
-                        'back_url'      => $backUrl,
-                        'back_url_name' => __('Back'),
-                    ]
-                )
-            );
+            return $this->result('alert-success', __('Marked posts are deleted'), $backUrl);
         }
 
         if ($ids === []) {
-            return new Response(
-                $this->render->render(
-                    'system::pages/result',
-                    [
-                        'title'         => __('Delete posts'),
-                        'page_title'    => __('Delete posts'),
-                        'type'          => 'alert-danger',
-                        'message'       => __('You did not choose something to delete'),
-                        'back_url'      => $backUrl,
-                        'back_url_name' => __('Back'),
-                    ]
-                )
-            );
+            return $this->result('alert-danger', __('You did not choose something to delete'), $backUrl);
         }
 
-        return new Response(
-            $this->render->render(
-                'forum::mass_delete',
-                [
-                    'title'       => __('Delete posts'),
-                    'page_title'  => __('Delete posts'),
-                    'back_url'    => $backUrl,
-                    'form_action' => '/forum/bulk-delete-posts/' . $id . '/',
-                    'csrf_token'  => $this->csrf->getToken(),
-                    'ids'         => $ids,
-                ]
-            )
+        return new ViewResponse(
+            '@forum/public/bulk-delete-posts.twig',
+            [
+                'title'       => __('Delete posts'),
+                'page_title'  => __('Delete posts'),
+                'back_url'    => $backUrl,
+                'form_action' => '/forum/bulk-delete-posts/' . $id . '/',
+                'ids'         => $ids,
+            ]
+        );
+    }
+
+    private function result(string $type, string $message, string $backUrl): ViewResponse
+    {
+        return new ViewResponse(
+            '@theme/pages/result.twig',
+            [
+                'title'         => __('Delete posts'),
+                'page_title'    => __('Delete posts'),
+                'type'          => $type,
+                'message'       => $message,
+                'back_url'      => $backUrl,
+                'back_url_name' => __('Back'),
+            ]
         );
     }
 

@@ -14,28 +14,22 @@ use Johncms\Modules\Forum\Application\UseCases\GetReplyMessageContextUseCase;
 use Johncms\Modules\Forum\Application\UseCases\ReplyMessageUseCase;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
 use Johncms\Security\AntifloodCheckerInterface;
-use Johncms\Smilies\SmiliesRendererInterface;
 use Johncms\Http\Environment;
 use Johncms\Http\Request;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Http\Session;
 use Johncms\System\Utility\EditorContentNormalizer;
-use Johncms\System\View\Render;
 use Johncms\Users\User;
-use Simba77\EmbedMedia\Embed;
-use Symfony\Component\HttpFoundation\Response;
+use Twig\Markup;
 
 final readonly class ReplyMessageController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private Environment $environment,
         private Session $session,
         private AntifloodCheckerInterface $antifloodChecker,
-        private SmiliesRendererInterface $smiliesRenderer,
         private EditorContentNormalizer $editorContentNormalizer,
-        private \HTMLPurifier $purifier,
-        private Embed $embed,
         private User $currentUser,
         private ForumMessageRepositoryInterface $messageRepository,
         private ForumErrorRenderer $forumErrorRenderer,
@@ -47,15 +41,14 @@ final readonly class ReplyMessageController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(Request $request, int $id): Response
+    public function __invoke(Request $request, int $id): ViewResponse
     {
         $page = max(1, $request->queryInt('page', 1));
 
         try {
             $context = $this->contextUseCase->execute($id);
         } catch (ForumAccessDeniedException $exception) {
-            return $this->forumErrorRenderer->render(
-                $this->render,
+            return $this->forumErrorRenderer->viewResponse(
                 $exception,
                 [
                     'title'         => __('New message'),
@@ -72,48 +65,45 @@ final readonly class ReplyMessageController
         $sourceMessage = $context->message;
 
         if (($topic->deleted || $topic->closed) && $this->currentUser->rights < 7) {
-            return new Response(
-                $this->render->render(
-                    'system::pages/result',
-                    [
-                        'title'         => __('New message'),
-                        'type'          => 'alert-danger',
-                        'message'       => __('You cannot write in a closed topic'),
-                        'back_url'      => $topic->url,
-                        'back_url_name' => __('Back'),
-                    ]
-                )
+            return new ViewResponse(
+                '@theme/pages/result.twig',
+                [
+                    'title'         => __('New message'),
+                    'type'          => 'alert-danger',
+                    'message'       => __('You cannot write in a closed topic'),
+                    'back_url'      => $topic->url,
+                    'back_url_name' => __('Back'),
+                ]
             );
         }
 
         if ($sourceMessage->user_id === $this->currentUser->id) {
-            return new Response(
-                $this->render->render(
-                    'system::pages/result',
-                    [
-                        'title'         => __('New message'),
-                        'type'          => 'alert-danger',
-                        'message'       => __('You can not reply to your own message'),
-                        'back_url'      => $topic->url,
-                        'back_url_name' => __('Back'),
-                    ]
-                )
+            return new ViewResponse(
+                '@theme/pages/result.twig',
+                [
+                    'title'         => __('New message'),
+                    'type'          => 'alert-danger',
+                    'message'       => __('You can not reply to your own message'),
+                    'back_url'      => $topic->url,
+                    'back_url_name' => __('Back'),
+                ]
             );
         }
 
         $flood = $this->antifloodChecker->getRemainingSeconds();
         if ($flood) {
-            return new Response(
-                $this->render->render(
-                    'system::pages/result',
-                    [
-                        'title'         => __('New message'),
-                        'type'          => 'alert-danger',
-                        'message'       => sprintf(__('You cannot add the message so often<br>Please, wait %d sec.'), $flood),
-                        'back_url'      => $this->buildTopicBackUrl($topic->url, $page),
-                        'back_url_name' => __('Back'),
-                    ]
-                )
+            return new ViewResponse(
+                '@theme/pages/result.twig',
+                [
+                    'title'         => __('New message'),
+                    'type'          => 'alert-danger',
+                    'message'       => new Markup(
+                        sprintf(__('You cannot add the message so often<br>Please, wait %d sec.'), $flood),
+                        'UTF-8'
+                    ),
+                    'back_url'      => $this->buildTopicBackUrl($topic->url, $page),
+                    'back_url_name' => __('Back'),
+                ]
             );
         }
 
@@ -127,48 +117,42 @@ final readonly class ReplyMessageController
             && $this->isValidToken($request)
         ) {
             if ($msg === '') {
-                return new Response(
-                    $this->render->render(
-                        'system::pages/result',
-                        [
-                            'title'         => __('New message'),
-                            'type'          => 'alert-danger',
-                            'message'       => __('You have not entered the message'),
-                            'back_url'      => $this->getReplyUrl($request, $id, $page),
-                            'back_url_name' => __('Repeat'),
-                        ]
-                    )
+                return new ViewResponse(
+                    '@theme/pages/result.twig',
+                    [
+                        'title'         => __('New message'),
+                        'type'          => 'alert-danger',
+                        'message'       => __('You have not entered the message'),
+                        'back_url'      => $this->getReplyUrl($request, $id, $page),
+                        'back_url_name' => __('Repeat'),
+                    ]
                 );
             }
 
             if (mb_strlen($msg) < 4) {
-                return new Response(
-                    $this->render->render(
-                        'system::pages/result',
-                        [
-                            'title'         => __('New message'),
-                            'type'          => 'alert-danger',
-                            'message'       => __('Text is too short'),
-                            'back_url'      => $topic->url,
-                            'back_url_name' => __('Back'),
-                        ]
-                    )
+                return new ViewResponse(
+                    '@theme/pages/result.twig',
+                    [
+                        'title'         => __('New message'),
+                        'type'          => 'alert-danger',
+                        'message'       => __('Text is too short'),
+                        'back_url'      => $topic->url,
+                        'back_url_name' => __('Back'),
+                    ]
                 );
             }
 
             $lastMessage = $this->messageRepository->findLastMessageByUser($this->currentUser->id);
             if ($lastMessage !== null && $msg === (string) $lastMessage->getRawOriginal('text')) {
-                return new Response(
-                    $this->render->render(
-                        'system::pages/result',
-                        [
-                            'title'         => __('New message'),
-                            'type'          => 'alert-danger',
-                            'message'       => __('Message already exists'),
-                            'back_url'      => $this->buildTopicBackUrl($topic->url, $page),
-                            'back_url_name' => __('Back'),
-                        ]
-                    )
+                return new ViewResponse(
+                    '@theme/pages/result.twig',
+                    [
+                        'title'         => __('New message'),
+                        'type'          => 'alert-danger',
+                        'message'       => __('Message already exists'),
+                        'back_url'      => $this->buildTopicBackUrl($topic->url, $page),
+                        'back_url_name' => __('Back'),
+                    ]
                 );
             }
 
@@ -209,31 +193,18 @@ final readonly class ReplyMessageController
             $msg = '<p>' . $sourceMessage->user_name . ',&nbsp;' . $msg . '</p>';
         }
 
-        $msgPreview = $this->purifier->purify($msg);
-        $msgPreview = $this->embed->embedMedia($msgPreview);
-        $msgPreview = $this->smiliesRenderer->render($msgPreview, $this->currentUser->rights > 0);
-
-        return new Response(
-            $this->render->render(
-                'forum::reply_message',
-                [
-                    'title'             => __('Reply to message'),
-                    'page_title'        => __('Reply to message'),
-                    'id'                => $sourceMessage->id,
-                    'token'             => $token,
-                    'topic'             => $topic,
-                    'form_action'       => $this->getReplyUrl($request, $sourceMessage->id, $page),
-                    'is_quote'          => $isQuote,
-                    'add_file'          => $addFiles,
-                    'msg'               => $msg,
-                    'message'           => $sourceMessage,
-                    'settings_forum'    => $this->getForumSettings(),
-                    'show_post_preview' => (! $request->hasBody('submit') && $request->hasBody('msg')),
-                    'back_url'          => $this->buildTopicBackUrl($topic->url, $page),
-                    'is_new_message'    => false,
-                    'preview_message'   => $msgPreview,
-                ]
-            )
+        return new ViewResponse(
+            '@forum/public/reply-message.twig',
+            [
+                'title'       => __('Reply to message'),
+                'page_title'  => __('Reply to message'),
+                'token'       => $token,
+                'topic_name'  => $topic->name,
+                'form_action' => $this->getReplyUrl($request, $sourceMessage->id, $page),
+                'add_file'    => $addFiles,
+                'msg'         => $msg,
+                'back_url'    => $this->buildTopicBackUrl($topic->url, $page),
+            ]
         );
     }
 

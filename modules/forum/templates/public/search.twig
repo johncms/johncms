@@ -1,0 +1,88 @@
+{#
+    Search over the topics and the posts of the forum.
+
+    @var query             string
+    @var search_t          bool         Search over the topic names instead of the posts.
+    @var results           array        name and formatted_text carry the highlight, so they are markup.
+    @var total             int
+    @var pagination        \Twig\Markup Null when everything fits on one page.
+    @var search_history    array        Previous queries of the visitor.
+    @var history_reset_url string
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block meta %}
+    {{ parent() }}
+    <meta name="robots" content="noindex,follow">
+{% endblock %}
+
+{% block content %}
+    <form action="/forum/search/" method="get">
+        <div class="form-group">
+            <label for="search_query">{{ __('Search query') }}</label>
+            <input type="text" class="form-control" id="search_query" placeholder="{{ __('Search query') }}"
+                   name="search" value="{{ query }}" maxlength="150" minlength="4" required>
+            <div class="small text-muted">{{ __('Length of query: 4min., 64maks.<br>Search is case insensitive <br>Results are sorted by relevance.')|raw }}</div>
+        </div>
+        <div class="form-group">
+            <div class="custom-control custom-checkbox mb-3">
+                <input type="checkbox" class="custom-control-input" name="t" value="1" id="search_t"{% if search_t %} checked="checked"{% endif %}>
+                <label class="custom-control-label" for="search_t">{{ __('Search in the topic names') }}</label>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">{{ __('Search') }}</button>
+    </form>
+
+    {% if query and not total %}
+        <div class="alert alert-info mt-3">
+            {{ __('Your search did not match any results') }}
+        </div>
+    {% endif %}
+
+    {% for result in results %}
+        <div class="forum-section">
+            <div class="section-header">
+                <div class="d-flex align-items-center w-100">
+                    <a href="{{ result.topic_url }}" class="section-name flex-grow-1 flex-md-grow-0">{{ result.name }}</a>
+                </div>
+            </div>
+            <div class="small pt-2 text-muted">
+                {{ __('Author') }}: <a href="/profile/{{ result.user_id }}" class="me-2">{{ result.user_name }}</a>
+                <span class="me-2">{{ result.formatted_date }}</span>
+                {% if result.post_url %}
+                    <a href="{{ result.post_url }}">{{ __('Go to Message') }}</a>
+                {% endif %}
+            </div>
+            {% if not search_t %}
+                <div class="post-body">
+                    {{ result.formatted_text }}
+                </div>
+            {% endif %}
+        </div>
+    {% endfor %}
+
+    {% if total > 0 %}
+        <div>
+            <div class="my-2">{{ __('Total') }}: {{ total }}</div>
+            {% if pagination %}
+                <div>{{ pagination }}</div>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    {% if search_history %}
+        <div class="forum-section mb-2">
+            <div class="h5 mb-2">{{ __('Search History') }}</div>
+            <div>
+                {% for search_term in search_history %}
+                    {% if not loop.first %} / {% endif %}
+                    <a href="/forum/search/?search={{ search_term|url_encode }}" class="text-reset">{{ search_term }}</a>
+                {% endfor %}
+            </div>
+            <div class="mt-1">
+                <a href="{{ history_reset_url }}" class="text-reset">{{ __('Clear history') }}</a>
+            </div>
+        </div>
+    {% endif %}
+    <a href="/forum/" class="mb-2">{{ __('Forum') }}</a>
+{% endblock %}

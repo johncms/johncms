@@ -9,27 +9,24 @@ use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\ForumUtils;
 use Johncms\Modules\Forum\Application\UseCases\ViewForumTopicUseCase;
 use Johncms\NavChain;
-use Johncms\Security\Csrf;
 use Johncms\Http\Request;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Http\Session;
-use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Utils\ShortNumberFormatter;
 
 final readonly class ForumTopicController
 {
     public function __construct(
-        private Render $render,
         private Session $session,
         private User $currentUser,
         private NavChain $navChain,
         private ViewForumTopicUseCase $viewForumTopicUseCase,
-        private Csrf $csrf,
         private PaginationFactory $paginationFactory,
     ) {
     }
 
-    public function __invoke(Request $request, string $path): string
+    public function __invoke(Request $request, string $path): ViewResponse
     {
         $setForum = $this->getForumSettings();
         $perPage = (int) $this->currentUser->config->kmess;
@@ -60,10 +57,9 @@ final readonly class ForumTopicController
                 filterTopicId: $filterTopicId,
                 filterByUsers: $filterByUsers,
             );
-        } catch (ForumNotFoundException $exception) {
+        } catch (ForumNotFoundException) {
             // ForumNotFoundException always maps to FORUM_NOT_FOUND (404), the same status
-            // pageNotFound() answers with, so no separate status assignment is needed here.
-            $this->render->addData(['error_code' => $exception->getErrorCode()->value]);
+            // pageNotFound() answers with.
             pageNotFound(
                 title: __('Forum'),
                 message: __('Topic has been deleted or does not exists'),
@@ -72,19 +68,6 @@ final readonly class ForumTopicController
 
         $this->navChain->add(__('Forum'), '/forum/');
         ForumUtils::buildBreadcrumbs($result->viewData['topic']->section_id, $result->title);
-
-        $this->render->addData(
-            [
-                'canonical'   => $result->canonical,
-                'title'       => $this->buildTopicDocumentTitle($result->title, $page),
-                'page_title'  => $result->title,
-                'keywords'    => $result->viewData['topic']->calculated_meta_keywords,
-                'description' => $this->buildTopicDescription(
-                    (string) $result->viewData['topic']->calculated_meta_description,
-                    $page
-                ),
-            ]
-        );
 
         /** @var \Johncms\Counters $counters */
         $counters = di('counters');
@@ -96,14 +79,31 @@ final readonly class ForumTopicController
             $page
         );
 
-        return $this->render->render(
-            'forum::topic',
+        $filterSuffix = $page > 1 ? '?page=' . $page : '';
+        $canModerate = $this->currentUser->rights === 3 || $this->currentUser->rights >= 6;
+
+        return new ViewResponse(
+            '@forum/public/topic.twig',
             array_merge(
                 $result->viewData,
                 [
-                    'pagination'   => $pagination->render(),
-                    'unread_count' => ShortNumberFormatter::format($counters->forumUnreadCount()),
-                    'csrf_token'   => $this->csrf->getToken(),
+                    'canonical'        => $result->canonical,
+                    'title'            => $this->buildTopicDocumentTitle($result->title, $page),
+                    'page_title'       => $result->title,
+                    'keywords'         => $result->viewData['topic']->calculated_meta_keywords,
+                    'description'      => $this->buildTopicDescription(
+                        (string) $result->viewData['topic']->calculated_meta_description,
+                        $page
+                    ),
+                    'pagination'       => $pagination->hasPages() ? $pagination->render() : null,
+                    'unread_count'     => ShortNumberFormatter::format($counters->forumUnreadCount()),
+                    'reply_url'        => '/forum/new-message/' . $result->viewData['id'] . '/' . $filterSuffix,
+                    'reply_above'      => ! empty($result->viewData['settings_forum']['upfp']),
+                    'quick_reply'      => ! empty($result->viewData['settings_forum']['farea']),
+                    'filter_url'       => '/forum/filter/' . $result->viewData['id'] . '/'
+                        . ($result->viewData['filter_by_author'] ? 'clear/' : '') . $filterSuffix,
+                    'can_moderate'     => $canModerate,
+                    'can_set_curators' => $this->currentUser->rights >= 7,
                 ]
             )
         );

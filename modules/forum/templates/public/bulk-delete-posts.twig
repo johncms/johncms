@@ -1,0 +1,27 @@
+{#
+    Confirmation of deleting the posts marked in a topic.
+
+    @var form_action string
+    @var back_url    string
+    @var ids         array  Identifiers of the marked posts, carried through the form.
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    <div class="alert alert-danger">
+        <div class="pb-2">
+            {{ __('Do you really want to delete?') }}
+        </div>
+        <div>
+            <form action="{{ form_action }}" method="post" class="d-inline">
+                <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                <input type="hidden" name="confirm" value="1">
+                {% for id in ids %}
+                    <input type="hidden" name="ids[]" value="{{ id }}">
+                {% endfor %}
+                <button type="submit" class="me-2 btn btn-danger btn-sm">{{ __('Delete') }}</button>
+                <a href="{{ back_url }}">{{ __('Cancel') }}</a>
+            </form>
+        </div>
+    </div>
+{% endblock %}

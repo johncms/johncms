@@ -1,0 +1,19 @@
+{#
+    Confirmation of deleting one answer of a poll.
+
+    @var delete_url string
+    @var back_url   string
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    <div class="alert alert-danger">
+        <div class="pb-2">
+            {{ __('Do you really want to delete the answer?') }}
+        </div>
+        <div>
+            <a href="{{ delete_url }}" class="btn btn-danger btn-sm me-2">{{ __('Delete') }}</a>
+            <a href="{{ back_url }}">{{ __('Cancel') }}</a>
+        </div>
+    </div>
+{% endblock %}

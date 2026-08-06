@@ -11,13 +11,12 @@ use Johncms\Modules\Forum\Application\UseCases\ViewForumSectionUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Utils\ShortNumberFormatter;
 
 final readonly class ForumSectionController
 {
     public function __construct(
-        private Render $render,
         private Session $session,
         private NavChain $navChain,
         private ViewForumSectionUseCase $viewForumSectionUseCase,
@@ -25,7 +24,7 @@ final readonly class ForumSectionController
     ) {
     }
 
-    public function __invoke(Request $request, string $sectionPath): string
+    public function __invoke(Request $request, string $sectionPath): ViewResponse
     {
         $this->session->remove('fsort_id');
         $this->session->remove('fsort_users');
@@ -34,30 +33,24 @@ final readonly class ForumSectionController
 
         try {
             $result = $this->viewForumSectionUseCase->execute($sectionPath, $page);
-        } catch (ForumNotFoundException $exception) {
+        } catch (ForumNotFoundException) {
             // ForumNotFoundException always maps to FORUM_NOT_FOUND (404), the same status
-            // pageNotFound() answers with, so no separate status assignment is needed here.
-            $this->render->addData(['error_code' => $exception->getErrorCode()->value]);
+            // pageNotFound() answers with.
             pageNotFound();
         }
 
         $this->navChain->add(__('Forum'), '/forum/');
         ForumUtils::buildBreadcrumbs($result->section->parent, $result->section->name, $result->section->url);
 
-        $this->render->addData(
-            [
-                'canonical'   => $result->canonical,
-                'keywords'    => $result->section->calculated_meta_keywords,
-                'description' => $result->section->calculated_meta_description,
-                'title'       => $result->section->name,
-                'page_title'  => $result->section->name,
-            ]
-        );
-
         /** @var \Johncms\Counters $counters */
         $counters = di('counters');
 
         $extra = [
+            'canonical'    => $result->canonical,
+            'keywords'     => $result->section->calculated_meta_keywords,
+            'description'  => $result->section->calculated_meta_description,
+            'title'        => $result->section->name,
+            'page_title'   => $result->section->name,
             'id'           => $result->section->id,
             'online'       => [
                 'online_u' => $result->onlineUsers,
@@ -69,14 +62,11 @@ final readonly class ForumSectionController
             'unread_count' => ShortNumberFormatter::format($counters->forumUnreadCount()),
         ];
 
-        if ($result->template === 'forum::topics') {
+        if ($result->template === '@forum/public/topics.twig') {
             $pagination = $this->paginationFactory->create((int) $result->viewData['total'], null, 'page', $page);
-            $extra['pagination'] = $pagination->render();
+            $extra['pagination'] = $pagination->hasPages() ? $pagination->render() : null;
         }
 
-        return $this->render->render(
-            $result->template,
-            array_merge($result->viewData, $extra)
-        );
+        return new ViewResponse($result->template, array_merge($result->viewData, $extra));
     }
 }

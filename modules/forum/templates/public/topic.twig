@@ -1,0 +1,297 @@
+{#
+    A topic: the poll, the first post, the posts of the page and the actions over them.
+
+    @var id               int
+    @var page             int
+    @var topic            \Johncms\Modules\Forum\Domain\Models\ForumTopic
+    @var messages         iterable
+    @var first_post       \Johncms\Modules\Forum\Domain\Models\ForumMessage Null when there is nothing to pin.
+    @var topic_vote       \Johncms\Modules\Forum\Domain\Models\ForumVote    Null when the topic has no poll.
+    @var poll_data        array        results, show_form, clip
+    @var curators_array   array
+    @var write_access     bool
+    @var quick_reply      bool         The visitor asked for the editor right on the page.
+    @var reply_above      bool         The reply form goes above the posts.
+    @var reply_url        string
+    @var filter_by_author bool
+    @var filter_url       string       Sets the filter, or clears it when one is on.
+    @var can_moderate     bool         The visitor may delete posts in bulk and act on the topic.
+    @var can_set_curators bool
+    @var token            string       One-time token of the reply form.
+    @var total            int
+    @var pagination       \Twig\Markup Null when everything fits on one page.
+    @var online           array        online_u, online_g
+    @var files_count      int
+    @var unread_count     int
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% macro reply_form(reply_url, quick_reply, token, css_class) %}
+    <form name="new_message" action="{{ reply_url }}" method="post" class="{{ css_class }}">
+        {% if quick_reply %}
+            <input type="hidden" name="token" value="{{ token }}"/>
+            <div class="form-group">
+                {% include '@forum/public/components/editor.twig' with {
+                    label: __('Message'),
+                    value: '',
+                    errors: ''
+                } only %}
+            </div>
+            <div class="custom-control custom-checkbox mb-3">
+                <input type="checkbox" class="custom-control-input" name="addfiles" value="1" id="addfiles">
+                <label class="custom-control-label" for="addfiles">{{ __('Add File') }}</label>
+            </div>
+            <div>
+                <button type="submit" name="submit" value="1" class="btn btn-primary">{{ __('Write') }}</button>
+            </div>
+        {% else %}
+            <button type="submit" name="submit" value="1" class="btn btn-primary">{{ __('Write') }}</button>
+        {% endif %}
+    </form>
+{% endmacro %}
+
+{% block content %}
+    {% import _self as forms %}
+
+    {% include '@forum/public/components/header.twig' with {
+        unread_count: unread_count,
+        files_count: files_count,
+        files_url: '/forum/files/?t=' ~ id,
+        files_name: __('Topic Files')
+    } only %}
+
+    {% if filter_by_author %}
+        <div class="alert alert-warning">
+            <div>
+                {{ __('Filter by author is activated') }}
+            </div>
+            <form action="{{ filter_url }}" method="post" class="mt-2">
+                <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                <button type="submit" class="btn btn-link p-0">{{ __('Cancel Filter') }}</button>
+            </form>
+        </div>
+    {% endif %}
+
+    {% if topic.closed %}
+        <div class="alert alert-danger">
+            {{ __('Topic closed') }}
+        </div>
+    {% endif %}
+
+    {% if topic.deleted %}
+        <div class="alert alert-danger">
+            {{ __('Topic deleted by') }} <b>{{ topic.deleted_by }}</b>
+        </div>
+    {% elseif topic.deleted_by and app.user.isValid and app.user.rights >= 7 %}
+        <div class="alert alert-success">
+            {{ __('Undelete topic') }} <b>{{ topic.deleted_by }}</b>
+        </div>
+    {% endif %}
+
+    {% if poll_data %}
+        <div class="h3">{{ topic_vote.name }}</div>
+        {% if poll_data.show_form %}
+            <form action="/forum/poll-vote/{{ id }}/" method="post" class="mb-3">
+                {% for item in poll_data.results %}
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="vote_{{ item.id }}" name="vote" value="{{ item.id }}" required class="custom-control-input">
+                        <label class="custom-control-label" for="vote_{{ item.id }}">{{ item.name }}</label>
+                    </div>
+                {% endfor %}
+                <div class="mt-2">
+                    <button type="submit" name="submit" value="1" class="btn btn-success btn-sm">{{ __('Vote') }}</button>
+                    <a class="btn btn-outline-secondary btn-sm" href="{{ topic.url }}?vote_result=1{{ poll_data.clip }}">{{ __('Results') }}</a>
+                </div>
+            </form>
+        {% else %}
+            <div class="row">
+                <div class="col-sm-6">
+                    {% for item in poll_data.results %}
+                        <div>
+                            {{ item.name }} ({{ item.count }})
+                        </div>
+                        <div class="progress mb-2 border">
+                            <div class="progress-bar {{ item.color_class|default('text-dark') }}" style="width: {{ item.vote_percent }}%">
+                                <span class="p-2">{{ item.vote_percent }}%</span>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="mb-3">
+                <div>
+                    {{ __('Total votes') }}:
+                    {% if app.user.isValid and app.user.rights > 6 %}
+                        <a href="/forum/poll-voters/{{ id }}/">{{ topic_vote.count }}</a>
+                    {% else %}
+                        {{ topic_vote.count }}
+                    {% endif %}
+                </div>
+                {% if topic_vote.vote_user != 1 and app.user.isValid %}
+                    <div>
+                        <a href="{{ topic.url }}?clip=1">{{ __('Vote') }}</a>
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
+    {% endif %}
+
+    {% if write_access and reply_above %}
+        {{ forms.reply_form(reply_url, quick_reply, token, 'mb-3') }}
+    {% endif %}
+
+    <div class="d-flex flex-wrap justify-content-between align-items-center mt-1 mb-3 pagination-no-padding">
+        {% if pagination %}
+            {{ pagination }}
+        {% endif %}
+        <div class="text-muted forum-view-counter">
+            <svg class="icon download-button-icon mt-n1">
+                <use xlink:href="{{ asset('icons/sprite.svg') }}#eye"></use>
+            </svg>
+            {{ topic.formatted_view_count }}
+        </div>
+    </div>
+
+    {% if first_post %}
+        <div class="post-item mb-2 first-post" id="first_post_block">
+            <div class="section-header post-header collapsed" data-bs-toggle="collapse" data-bs-target="#first_post" aria-expanded="false" aria-controls="first_post">
+                <div class="d-flex align-items-center">
+                    <div class="topic-icons d-flex align-items-center me-2">
+                        <svg class="icon">
+                            <use xlink:href="{{ asset('icons/sprite.svg') }}#pin"/>
+                        </svg>
+                    </div>
+                    {% if first_post.user_profile_link %}
+                        <a href="{{ first_post.user_profile_link }}" class="user-login me-2">{{ first_post.user_data.name }}</a>
+                    {% else %}
+                        <a class="user-login me-2">{{ first_post.user_data.name }}</a>
+                    {% endif %}
+                    <span class="post-date">{{ first_post.post_time }}</span>
+                </div>
+                {% if first_post.post_preview %}
+                    <div class="toggle d-flex align-items-center pe-2">
+                        <svg class="icon icon-chevron-bottom text-dark-brown">
+                            <use xlink:href="{{ asset('icons/sprite.svg') }}#chevron-bottom"/>
+                        </svg>
+                    </div>
+                {% endif %}
+            </div>
+            {% if first_post.post_preview %}
+                <div class="collapse" id="first_post">
+                    <div class="pt-2">
+                        {{ first_post.post_text }}
+                    </div>
+                </div>
+                <div class="post-preview pt-2">
+                    {{ first_post.post_preview }}
+                </div>
+            {% else %}
+                <div class="pt-2">
+                    {{ first_post.post_text }}
+                </div>
+            {% endif %}
+        </div>
+        <div class="border-bottom full-mobile-width mt-4 mb-3"></div>
+    {% endif %}
+
+    {% if can_moderate %}<form action="/forum/bulk-delete-posts/{{ id }}/" method="post">{% endif %}
+
+    {% for message in messages %}
+        {% include '@forum/public/components/message.twig' with {message: message, can_moderate: can_moderate} only %}
+    {% endfor %}
+
+    {% if can_moderate %}
+        <div class="d-flex align-items-center mt-3 mb-3">
+            <button type="submit" name="submit" value="submit" class="btn btn-danger btn-sm me-1">{{ __('Delete selected') }}</button>
+
+            <div class="dropdown">
+                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="actions" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{ __('Actions with topic') }}
+                </button>
+                <div class="dropdown-menu" aria-labelledby="actions">
+                    {% if topic_vote %}
+                        <a class="dropdown-item" href="/forum/editvote/{{ id }}/">{{ __('Edit Poll') }}</a>
+                        <a class="dropdown-item" href="/forum/delvote/{{ id }}/">{{ __('Delete Poll') }}</a>
+                    {% else %}
+                        <a class="dropdown-item" href="/forum/addvote/{{ id }}/">{{ __('Add Poll') }}</a>
+                    {% endif %}
+
+                    {% if can_set_curators %}
+                        <a class="dropdown-item" href="/forum/curators/{{ id }}/{{ page > 1 ? '?page=' ~ page : '' }}">{{ __('Curators of the Topic') }}</a>
+                    {% endif %}
+
+                    <a class="dropdown-item" href="/forum/change-topic/{{ id }}/">{{ __('Change the topic') }}</a>
+
+                    {% if topic.closed %}
+                        <a class="dropdown-item" href="/forum/close/{{ id }}/">{{ __('Open Topic') }}</a>
+                    {% else %}
+                        <a class="dropdown-item" href="/forum/close/{{ id }}/?closed">{{ __('Close Topic') }}</a>
+                    {% endif %}
+
+                    {% if topic.deleted %}
+                        <a class="dropdown-item" href="/forum/restore-topic/{{ id }}/">{{ __('Restore Topic') }}</a>
+                    {% endif %}
+
+                    <a class="dropdown-item" href="/forum/delete-topic/{{ id }}/">{{ __('Delete Topic') }}</a>
+
+                    {% if topic.pinned %}
+                        <a class="dropdown-item" href="/forum/pin-topic/{{ id }}/">{{ __('Unfix Topic') }}</a>
+                    {% else %}
+                        <a class="dropdown-item" href="/forum/pin-topic/{{ id }}/?pin">{{ __('Pin Topic') }}</a>
+                    {% endif %}
+
+                    <a class="dropdown-item" href="/forum/move-topic/{{ id }}/">{{ __('Move Topic') }}</a>
+                </div>
+            </div>
+        </div>
+        </form>
+    {% endif %}
+
+    {% if write_access and not reply_above %}
+        {{ forms.reply_form(reply_url, quick_reply, token, 'mt-1 mb-2') }}
+    {% endif %}
+
+    <div>
+        <div>{{ __('Total') }}: {{ total }}</div>
+        {% if pagination %}
+            <div class="mt-1">{{ pagination }}</div>
+        {% endif %}
+    </div>
+
+    {% if curators_array %}
+        <div class="alert alert-secondary">
+            {{ __('Curators') }}: {{ curators_array|join(', ') }}
+        </div>
+    {% endif %}
+
+    <div>
+        <div>
+            {% if filter_by_author %}
+                <form action="{{ filter_url }}" method="post">
+                    <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                    <button type="submit" class="btn btn-link p-0">{{ __('Cancel Filter') }}</button>
+                </form>
+            {% else %}
+                <a href="{{ filter_url }}">{{ __('Filter by author') }}</a>
+            {% endif %}
+        </div>
+    </div>
+
+    {% include '@forum/public/components/footer.twig' with {
+        online: online,
+        who_url: '/forum/topic-visitors/' ~ id ~ '/',
+        who_name: __('Who is here')
+    } only %}
+{% endblock %}
+
+{% block scripts %}
+    {{ parent() }}
+    <script>
+        if (window.location.hash !== '') {
+            var post = $(window.location.hash);
+            if (post.offset() !== undefined) {
+                $('body,html').animate({scrollTop: post.offset().top - 50}, 500);
+            }
+        }
+    </script>
+{% endblock %}

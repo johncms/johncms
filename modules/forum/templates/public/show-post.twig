@@ -1,0 +1,143 @@
+{#
+    One post out of its topic, the way a direct link to it opens.
+
+    @var post  \Johncms\Modules\Forum\Application\DTO\ViewPostDTO
+    @var topic \Johncms\Modules\Forum\Domain\Models\ForumTopic
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block meta %}
+    {{ parent() }}
+    <meta name="robots" content="noindex,follow">
+{% endblock %}
+
+{% block content %}
+    <div class="new_post-item border-bottom shadow mb-2 {{ post.isDeleted ? 'deleted-post' : '' }}">
+        <div class="new_post-header d-flex justify-content-between">
+            <div class="post-user">
+                {% if post.author.profileUrl %}
+                    <a href="{{ post.author.profileUrl }}">
+                        <div class="avatar">
+                            <img src="{{ avatar(post.author.id) }}" class="img-fluid" alt=".">
+                        </div>
+                    </a>
+                {% else %}
+                    <div class="avatar">
+                        <img src="{{ avatar(post.author.id) }}" class="img-fluid" alt=".">
+                    </div>
+                {% endif %}
+                <span class="user-status {{ post.author.isOnline ? 'online' : 'offline' }} shadow"></span>
+                {% if post.author.rightsName %}
+                    <div class="post-of-user"
+                         data-bs-toggle="tooltip"
+                         data-bs-placement="top"
+                         data-bs-html="true"
+                         title="{{ post.author.rightsName }}">
+                        <svg class="icon-post">
+                            <use xlink:href="{{ asset('icons/sprite.svg') }}?4#check"/>
+                        </svg>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="flex-grow-1 post-user d-flex flex-wrap overflow-hidden d-flex align-items-center">
+                <div class="w-100">
+                    {% if post.author.profileUrl %}
+                        <a href="{{ post.author.profileUrl }}"><span class="user-name d-inline me-2">{{ post.author.name }}</span></a>
+                    {% else %}
+                        <div class="user-name d-inline me-2">{{ post.author.name }}</div>
+                    {% endif %}
+                    <span class="post-meta d-inline me-2">{{ post.createdAt }}</span>
+                    {% if post.editInfo %}
+                        <div class="post-meta d-inline me-2"
+                             data-bs-toggle="tooltip"
+                             data-bs-placement="top"
+                             data-bs-html="true"
+                             title="{{ __('Edited:') }} {{ post.editInfo.editorName }} <br> ({{ post.editInfo.editedAt }}) [{{ post.editInfo.editCount }}]">
+                            {{ __('Edited') }}
+                        </div>
+                    {% endif %}
+                </div>
+                {% if post.author.status %}
+                    <div class="overflow-hidden text-nowrap text-dark-brown overflow-ellipsis small">
+                        <span class="fw-bold">{{ post.author.status }}</span>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="post-body mt-2 border-top pt-2 pb-2">
+            {{ post.body }}
+        </div>
+        {% if post.files %}
+            <div class="mt-3 pb-1">
+                <div class="fw-bold pb-1">{{ __('Attached files') }}:</div>
+                <div class="d-flex flex-wrap image-gallery">
+                    {% for file in post.files %}
+                        <div class="attached-file pe-3 d-flex flex-column justify-content-between">
+                            <div class="d-flex justify-content-center align-items-center">
+                                {% if file.previewUrl %}
+                                    <a href="{{ file.fileUrl }}" class="gallery-item" data-source="{{ file.fileUrl }}" title="{{ file.filename }}">
+                                        <img src="{{ file.previewUrl }}" class="img-thumbnail thumb-limit-height" alt="{{ file.filename }}">
+                                    </a>
+                                {% else %}
+                                    <a href="{{ file.fileUrl }}">
+                                        <svg class="icon attachment-icon">
+                                            <use xlink:href="{{ asset('icons/sprite.svg') }}#file"/>
+                                        </svg>
+                                    </a>
+                                {% endif %}
+                            </div>
+                            <div class="pt-1">
+                                <div class="text-muted small d-flex flex-wrap justify-content-center">
+                                    <div class="text-nowrap pe-1">
+                                        <svg class="icon downloads-icon">
+                                            <use xlink:href="{{ asset('icons/sprite.svg') }}#download"/>
+                                        </svg>
+                                        {{ file.downloadCount }}
+                                    </div>
+                                    <div>({{ file.fileSize }})</div>
+                                </div>
+                                <div class="file-name">
+                                    <a href="{{ file.fileUrl }}" title="{{ file.filename }}">{{ file.filename }}</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+        <div class="post-footer d-flex justify-content-between mt-2">
+            <div class="overflow-hidden">
+                {% if post.moderation %}
+                    <div class="post-meta d-flex">
+                        <div class="user-ip me-2">
+                            <a href="{{ post.moderation.searchIpUrl }}">{{ post.moderation.ip }}</a>
+                            {% if post.moderation.ipViaProxy %}
+                                / <a href="{{ post.moderation.searchIpViaProxyUrl }}">{{ post.moderation.ipViaProxy }}</a>
+                            {% endif %}
+                        </div>
+                        <div class="useragent">
+                            <span>{{ post.moderation.userAgent }}</span>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="d-flex">
+                {% if post.actions.replyUrl %}
+                    <div class="ms-3">
+                        <a href="{{ post.actions.replyUrl }}">{{ __('Reply') }}</a>
+                    </div>
+                {% endif %}
+                {% if post.actions.quoteUrl %}
+                    <div class="ms-3">
+                        <a href="{{ post.actions.quoteUrl }}">{{ __('Quote') }}</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-2">
+        <a href="{{ post.backToTopicUrl }}">{{ __('Back to topic') }}</a><br>
+        <a href="{{ post.forumUrl }}">{{ __('Forum') }}</a>
+    </div>
+{% endblock %}

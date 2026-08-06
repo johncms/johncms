@@ -57,10 +57,12 @@ final readonly class ViewForumSectionUseCase
 
             return new ForumSectionPageResultDTO(
                 section: $currentSection,
-                template: 'forum::topics',
+                template: '@forum/public/topics.twig',
                 viewData: [
                     'id'            => $currentSection->id,
                     'create_access' => $this->canCreateTopic(),
+                    'new_topic_url' => '/forum/new-topic/' . $currentSection->id . '/',
+                    'files_url'     => '/forum/files/?s=' . $currentSection->id,
                     'topics'        => $topics,
                     'total'         => $total,
                 ],
@@ -83,11 +85,12 @@ final readonly class ViewForumSectionUseCase
 
         return new ForumSectionPageResultDTO(
             section: $currentSection,
-            template: 'forum::section',
+            template: '@forum/public/section.twig',
             viewData: [
-                'id'       => $currentSection->id,
-                'sections' => $children,
-                'total'    => $children->count(),
+                'id'        => $currentSection->id,
+                'files_url' => '/forum/files/?c=' . $currentSection->id,
+                'sections'  => $children,
+                'total'     => $children->count(),
             ],
             filesCount: (int) ($currentSection->category_files_count ?? 0),
             onlineUsers: $this->whoRepository->countForumUsers(),

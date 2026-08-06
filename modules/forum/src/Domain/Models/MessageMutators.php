@@ -15,6 +15,7 @@ namespace Johncms\Modules\Forum\Domain\Models;
 use Johncms\Smilies\SmiliesRendererInterface;
 use Johncms\Users\User;
 use Johncms\Utils\DateFormatterInterface;
+use Twig\Markup;
 
 /**
  * Trait MessageMutators
@@ -27,6 +28,40 @@ use Johncms\Utils\DateFormatterInterface;
  */
 trait MessageMutators
 {
+    /**
+     * These columns are nullable in the database, and a template that reads a null attribute of a
+     * model falls through to a method of the same name. The accessors keep them typed instead.
+     */
+    public function getDeletedAttribute(mixed $value): bool
+    {
+        return (bool) $value;
+    }
+
+    public function getPinnedAttribute(mixed $value): bool
+    {
+        return (bool) $value;
+    }
+
+    public function getDeletedByAttribute(mixed $value): string
+    {
+        return (string) $value;
+    }
+
+    public function getEditorNameAttribute(mixed $value): string
+    {
+        return (string) $value;
+    }
+
+    public function getEditCountAttribute(mixed $value): int
+    {
+        return (int) $value;
+    }
+
+    public function getUserNameAttribute(mixed $value): string
+    {
+        return (string) $value;
+    }
+
     private $user_model;
 
     /**
@@ -83,16 +118,15 @@ trait MessageMutators
     }
 
     /**
-     * Formatted text
-     *
-     * @return string
+     * The text of the post, sanitized and with the media and the smilies rendered: markup by
+     * contract.
      */
-    public function getPostTextAttribute(): string
+    public function getPostTextAttribute(): Markup
     {
         $text = $this->purifier->purify($this->text);
         $text = $this->media->embedMedia($text);
-        $text = di(SmiliesRendererInterface::class)->render($text, (bool) $this->rights);
-        return $text;
+
+        return new Markup(di(SmiliesRendererInterface::class)->render($text, (bool) $this->rights), 'UTF-8');
     }
 
     /**

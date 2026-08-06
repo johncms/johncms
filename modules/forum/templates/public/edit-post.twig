@@ -1,0 +1,26 @@
+{#
+    Editing a post of a topic.
+
+    @var action_url string
+    @var back_url   string
+    @var msg        string Source of the post, as it is stored.
+    @var errors     array  Validation messages by field name.
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    <form name="edit_post" action="{{ action_url }}" method="post">
+        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+        {% include '@forum/public/components/editor.twig' with {
+            label: __('Message'),
+            value: msg,
+            errors: errors.message|default([])|join(', ')
+        } only %}
+        <div>
+            <button type="submit" name="submit" value="1" class="btn btn-primary">{{ __('Save') }}</button>
+        </div>
+        <div class="mt-3">
+            <a href="/help/?act=smileys" class="pe-2">{{ __('Smilies') }}</a> <a href="{{ back_url }}">{{ __('Back') }}</a>
+        </div>
+    </form>
+{% endblock %}

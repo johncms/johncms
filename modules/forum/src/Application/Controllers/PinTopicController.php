@@ -5,20 +5,18 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\GetPinTopicContextUseCase;
 use Johncms\Modules\Forum\Application\UseCases\PinTopicUseCase;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
-use Symfony\Component\HttpFoundation\Response;
 
 final readonly class PinTopicController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private ForumErrorRenderer $forumErrorRenderer,
         private GetPinTopicContextUseCase $contextUseCase,
         private PinTopicUseCase $pinTopicUseCase,
@@ -26,13 +24,12 @@ final readonly class PinTopicController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(Request $request, int $id): Response
+    public function __invoke(Request $request, int $id): ViewResponse
     {
         try {
             $topic = $this->contextUseCase->execute($id);
         } catch (ForumAccessDeniedException $exception) {
-            return $this->forumErrorRenderer->render(
-                $this->render,
+            return $this->forumErrorRenderer->viewResponse(
                 $exception,
                 [
                     'back_url'      => '/forum/',

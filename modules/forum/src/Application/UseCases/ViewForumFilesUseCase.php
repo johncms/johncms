@@ -18,6 +18,7 @@ use Johncms\Smilies\SmiliesRendererInterface;
 use Johncms\Users\User;
 use Johncms\Utils\DateFormatterInterface;
 use Simba77\EmbedMedia\Embed;
+use Twig\Markup;
 
 final readonly class ViewForumFilesUseCase
 {
@@ -172,7 +173,7 @@ final readonly class ViewForumFilesUseCase
             caption: $caption,
             contextName: $context['contextName'],
             contextUrl: $context['contextUrl'],
-            template: 'forum::files_list',
+            template: '@forum/public/files-list.twig',
             viewData: [
                 'title'         => $seoMeta['title'],
                 'page_title'    => $seoMeta['page_title'],
@@ -231,7 +232,7 @@ final readonly class ViewForumFilesUseCase
             caption: $context['caption'],
             contextName: $context['contextName'],
             contextUrl: $context['contextUrl'],
-            template: 'forum::files_sections',
+            template: '@forum/public/files-sections.twig',
             viewData: [
                 'title'       => $seoMeta['title'],
                 'page_title'  => $seoMeta['page_title'],
@@ -262,8 +263,9 @@ final readonly class ViewForumFilesUseCase
             $text = $this->smiliesRenderer->render($text, ! empty($row['rights']));
 
             $page = (int) ceil((int) ($row['page'] ?? 0) / $this->currentUser->config->kmess);
-            $row['post_text'] = $text;
+            $row['post_text'] = new Markup($text, 'UTF-8');
             $row['post_time'] = $this->dateFormatter->format((int) $row['time']);
+            $row['user_is_online'] = time() <= (int) ($row['lastdate'] ?? 0) + 300;
             $row['user_profile_link'] = '';
 
             if ($this->currentUser->isValid() && (int) $this->currentUser->id !== (int) $row['user_id']) {

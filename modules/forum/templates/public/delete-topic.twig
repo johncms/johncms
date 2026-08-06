@@ -1,0 +1,34 @@
+{#
+    Confirmation of deleting a topic: hidden for everyone, or removed for good.
+
+    @var delete_url      string
+    @var back_url        string
+    @var can_hard_delete bool   Only the owner of the site deletes a topic for good.
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    <form action="{{ delete_url }}" method="post">
+        <div class="alert alert-danger">
+            <div class="pb-2">
+                {{ __('Do you really want to delete?') }}
+            </div>
+            <div>
+                <div class="custom-control custom-radio">
+                    <input type="radio" id="hide_topic" name="del" checked="checked" value="1" class="custom-control-input">
+                    <label class="custom-control-label" for="hide_topic">{{ __('Hide') }}</label>
+                </div>
+                {% if can_hard_delete %}
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="del_topic" name="del" value="2" class="custom-control-input">
+                        <label class="custom-control-label" for="del_topic">{{ __('Delete') }}</label>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div>
+            <button type="submit" name="submit" value="1" class="btn btn-primary">{{ __('Perform') }}</button>
+            <a href="{{ back_url }}" class="btn btn-secondary">{{ __('Cancel') }}</a>
+        </div>
+    </form>
+{% endblock %}

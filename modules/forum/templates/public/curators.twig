@@ -1,0 +1,40 @@
+{#
+    Assigning the curators of a topic among the users who may be one.
+
+    @var action_url    string
+    @var back_url      string
+    @var topic_name    string
+    @var curators_list array  user_id, user_name, checked
+    @var saved         bool
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    <h3>{{ topic_name }}</h3>
+    {% if saved %}
+        <div class="alert alert-success">{{ __('Changes saved') }}</div>
+    {% endif %}
+    <form action="{{ action_url }}" method="post">
+        {% if curators_list is empty %}
+            <div class="alert alert-info">
+                {{ __('The list is empty') }}
+            </div>
+        {% else %}
+            {% for item in curators_list %}
+                <div class="form-group">
+                    <div class="custom-control custom-checkbox">
+                        <input class="custom-control-input" type="checkbox" name="users[{{ item.user_id }}]" value="{{ item.user_name }}"
+                               id="user_{{ item.user_id }}"{% if item.checked %} checked="checked"{% endif %}>
+                        <label class="custom-control-label" for="user_{{ item.user_id }}">{{ item.user_name }}</label>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+        <div>
+            {% if curators_list %}
+                <button type="submit" name="submit" value="1" class="btn btn-primary">{{ __('Assign') }}</button>
+            {% endif %}
+            <a href="{{ back_url }}" class="btn btn-secondary">{{ __('Back to topic') }}</a>
+        </div>
+    </form>
+{% endblock %}

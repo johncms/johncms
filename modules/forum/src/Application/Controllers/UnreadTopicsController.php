@@ -11,20 +11,16 @@ use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumUserAccessUseCase;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Modules\Forum\Application\UseCases\ViewUnreadTopicsUseCase;
+use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
-use Johncms\Security\Csrf;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
 use Johncms\Users\User;
-use Symfony\Component\HttpFoundation\Response;
 
 final readonly class UnreadTopicsController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
-        private Csrf $csrf,
         private User $currentUser,
         private EnsureForumUserAccessUseCase $forumUserAccessUseCase,
         private ForumErrorRenderer $forumErrorRenderer,
@@ -34,12 +30,12 @@ final readonly class UnreadTopicsController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(Request $request): Response
+    public function __invoke(Request $request): ViewResponse
     {
         try {
             $this->forumUserAccessUseCase->execute();
         } catch (ForumAccessDeniedException $exception) {
-            return $this->forumErrorRenderer->render($this->render, $exception);
+            return $this->forumErrorRenderer->viewResponse($exception);
         }
         $page = max(1, $request->queryInt('page', 1));
         $start = ($page - 1) * (int) $this->currentUser->config->kmess;
@@ -56,22 +52,19 @@ final readonly class UnreadTopicsController
 
         $pagination = $this->paginationFactory->create($result->total, null, 'page', $page);
 
-        return new Response(
-            $this->render->render(
-                'forum::new_topics',
-                [
-                    'pagination'           => $pagination->render(),
-                    'title'                => $caption,
-                    'page_title'           => $caption,
-                    'empty_message'        => __('The list is empty'),
-                    'topics'               => $result->topics,
-                    'total'                => $result->total,
-                    'show_period'          => false,
-                    'mark_as_read_action'  => '/forum/unread/mark-read/',
-                    'mark_as_read_enabled' => $result->total > 0,
-                    'csrf_token'           => $this->csrf->getToken(),
-                ]
-            )
+        return new ViewResponse(
+            '@forum/public/topic-list.twig',
+            [
+                'pagination'          => $pagination->hasPages() ? $pagination->render() : null,
+                'title'               => $caption,
+                'page_title'          => $caption,
+                'empty_message'       => __('The list is empty'),
+                'topics'              => $result->topics,
+                'total'               => $result->total,
+                'show_period'         => false,
+                'period_action'       => '/forum/topics-period/',
+                'mark_as_read_action' => $result->total > 0 ? '/forum/unread/mark-read/' : '',
+            ]
         );
     }
 }

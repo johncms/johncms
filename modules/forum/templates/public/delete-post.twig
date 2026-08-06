@@ -1,0 +1,35 @@
+{#
+    Confirmation of deleting one post.
+
+    @var delete_action   string
+    @var back_url        string
+    @var posts           int    Posts left in the topic; the last one takes the topic with it.
+    @var can_hard_delete bool   Only the owner of the site may hide instead of deleting.
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    <div class="alert alert-danger">
+        {% if posts == 1 %}
+            <div class="fw-bold">
+                {{ __('WARNING!<br>This is last post of topic. By deleting this post topic will be deleted (or hidden) too')|raw }}
+            </div>
+        {% endif %}
+        <div class="pb-2">
+            {{ __('Do you really want to delete?') }}
+        </div>
+        <div>
+            <form action="{{ delete_action }}" method="post" class="d-inline">
+                <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                <button type="submit" name="action" value="delete" class="me-2 btn btn-danger btn-sm">{{ __('Delete') }}</button>
+                {% if can_hard_delete %}
+                    <button type="submit" name="action" value="hide" class="me-2 btn btn-primary btn-sm">{{ __('Hide') }}</button>
+                {% endif %}
+                <a href="{{ back_url }}">{{ __('Cancel') }}</a>
+            </form>
+        </div>
+        <div class="mt-2 text-muted small">
+            {{ __('After deleting, one point will be subtracted from the counter of forum posts') }}
+        </div>
+    </div>
+{% endblock %}

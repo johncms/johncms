@@ -1,0 +1,22 @@
+{#
+    The line below every listing of the forum: who is here and the rules.
+
+    @var who_url  string
+    @var who_name string
+    @var online   array online_u, online_g
+#}
+<div class="d-flex mt-2 pt-3 pb-3 align-items-center">
+    {% if online %}
+        <div class="pe-3 d-flex align-items-center">
+            {% if app.user.isValid %}
+                <a href="{{ who_url }}" class="pe-1">{{ who_name }}</a>
+            {% else %}
+                <span class="pe-1">{{ who_name }}</span>
+            {% endif %}
+            <span class="badge rounded-pill counter-badge">{{ online.online_u }}&#160;/&#160;{{ online.online_g }}</span>
+        </div>
+    {% endif %}
+    <div>
+        <a href="/help/?act=forum">{{ __('Forum rules') }}</a>
+    </div>
+</div>

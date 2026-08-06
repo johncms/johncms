@@ -1,0 +1,42 @@
+{#
+    The message being written, shown the way it will look in the topic.
+
+    @var author  \Johncms\Users\User
+    @var date    string
+    @var message \Twig\Markup
+#}
+<div class="new_post-item mb-4">
+    <div class="new_post-header d-flex justify-content-between">
+        <div class="post-user">
+            <div class="avatar">
+                <img src="{{ avatar(author.id) }}" class="img-fluid" alt=".">
+            </div>
+            <span class="user-status {{ author.is_online ? 'online' : 'offline' }} shadow"></span>
+            {% if author.rights_name %}
+                <div class="post-of-user"
+                     data-bs-toggle="tooltip"
+                     data-bs-placement="top"
+                     data-bs-html="true"
+                     title="{{ author.rights_name }}">
+                    <svg class="icon-post">
+                        <use xlink:href="{{ asset('icons/sprite.svg') }}?4#check"/>
+                    </svg>
+                </div>
+            {% endif %}
+        </div>
+        <div class="flex-grow-1 post-user d-flex flex-wrap overflow-hidden d-flex align-items-center">
+            <div class="w-100">
+                <div class="user-name d-inline me-2">{{ author.name }}</div>
+                <div class="post-meta d-inline me-2">{{ date }}</div>
+            </div>
+            {% if author.status %}
+                <div class="overflow-hidden text-nowrap text-dark-brown overflow-ellipsis small">
+                    <span class="fw-bold">{{ author.status }}</span>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="post-body mt-2 pt-2 pb-2">
+        {{ message }}
+    </div>
+</div>

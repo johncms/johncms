@@ -13,15 +13,13 @@ use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Application\UseCases\DeleteTopicUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetDeleteTopicContextUseCase;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Users\User;
-use Symfony\Component\HttpFoundation\Response;
 
 final readonly class DeleteTopicController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private User $user,
         private ForumErrorRenderer $forumErrorRenderer,
         private GetDeleteTopicContextUseCase $contextUseCase,
@@ -35,13 +33,12 @@ final readonly class DeleteTopicController
     /**
      * @throws \Throwable
      */
-    public function __invoke(Request $request, int $id): Response
+    public function __invoke(Request $request, int $id): ViewResponse
     {
         try {
             $topic = $this->contextUseCase->execute($id);
         } catch (ForumAccessDeniedException $exception) {
-            return $this->forumErrorRenderer->render(
-                $this->render,
+            return $this->forumErrorRenderer->viewResponse(
                 $exception,
                 [
                     'back_url'      => '/forum/',
@@ -49,8 +46,7 @@ final readonly class DeleteTopicController
                 ]
             );
         } catch (ForumNotFoundException $exception) {
-            return $this->forumErrorRenderer->render(
-                $this->render,
+            return $this->forumErrorRenderer->viewResponse(
                 $exception,
                 [
                     'title'         => __('Curators'),
@@ -74,18 +70,15 @@ final readonly class DeleteTopicController
             redirect($this->sectionPathService->getSectionUrlById($topic->section_id) ?? '/forum/');
         }
 
-        return new Response(
-            $this->render->render(
-                'forum::delete_topic',
-                [
-                    'title'           => __('Delete Topic'),
-                    'page_title'      => __('Delete Topic'),
-                    'id'              => $topic->id,
-                    'back_url'        => $this->topicPathService->getTopicUrlById($topic->id) ?? '/forum/',
-                    'can_hard_delete' => $this->user->rights === 9,
-                    'delete_url'      => '/forum/delete-topic/' . $topic->id . '/',
-                ]
-            )
+        return new ViewResponse(
+            '@forum/public/delete-topic.twig',
+            [
+                'title'           => __('Delete Topic'),
+                'page_title'      => __('Delete Topic'),
+                'back_url'        => $this->topicPathService->getTopicUrlById($topic->id) ?? '/forum/',
+                'can_hard_delete' => $this->user->rights === 9,
+                'delete_url'      => '/forum/delete-topic/' . $topic->id . '/',
+            ]
         );
     }
 }

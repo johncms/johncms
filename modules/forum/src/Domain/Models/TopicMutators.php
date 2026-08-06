@@ -31,6 +31,41 @@ use Johncms\Utils\ShortNumberFormatter;
 trait TopicMutators
 {
     /**
+     * The flags of a topic are nullable in the database, and a template that reads a null
+     * attribute of a model falls through to a method of the same name. These four keep the
+     * attributes boolean, so `topic.deleted` stays an attribute everywhere.
+     */
+    public function getClosedAttribute(mixed $value): bool
+    {
+        return (bool) $value;
+    }
+
+    public function getDeletedAttribute(mixed $value): bool
+    {
+        return (bool) $value;
+    }
+
+    public function getPinnedAttribute(mixed $value): bool
+    {
+        return (bool) $value;
+    }
+
+    public function getHasPollAttribute(mixed $value): bool
+    {
+        return (bool) $value;
+    }
+
+    public function getDeletedByAttribute(mixed $value): string
+    {
+        return (string) $value;
+    }
+
+    public function getClosedByAttribute(mixed $value): string
+    {
+        return (string) $value;
+    }
+
+    /**
      * Ссылка на страницу просмотра топика
      *
      * @return string

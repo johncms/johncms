@@ -15,14 +15,12 @@ use Johncms\Modules\Forum\Application\UseCases\EnsurePollVotersAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\ViewPollVotersUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
-use Symfony\Component\HttpFoundation\Response;
+use Johncms\Http\View\ViewResponse;
 
 final readonly class PollVotersController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private ForumErrorRenderer $forumErrorRenderer,
         private EnsurePollVotersAccessUseCase $accessUseCase,
@@ -33,7 +31,7 @@ final readonly class PollVotersController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(Request $request, int $id): Response
+    public function __invoke(Request $request, int $id): ViewResponse
     {
         try {
             $this->accessUseCase->execute($id);
@@ -45,8 +43,7 @@ final readonly class PollVotersController
                 )
             );
         } catch (ForumAccessDeniedException $exception) {
-            return $this->forumErrorRenderer->render(
-                $this->render,
+            return $this->forumErrorRenderer->viewResponse(
                 $exception,
                 [
                     'back_url'      => '/forum/',
@@ -54,8 +51,7 @@ final readonly class PollVotersController
                 ]
             );
         } catch (ForumValidationException $exception) {
-            return $this->forumErrorRenderer->render(
-                $this->render,
+            return $this->forumErrorRenderer->viewResponse(
                 $exception,
                 [
                     'title'         => __('Who voted in the poll'),
@@ -72,21 +68,18 @@ final readonly class PollVotersController
 
         $pagination = $this->paginationFactory->create($result->total, null, 'page', $page);
 
-        return new Response(
-            $this->render->render(
-                'forum::voted_users',
-                [
-                    'title'         => $caption,
-                    'page_title'    => $caption,
-                    'empty_message' => __('No one has voted in this poll yet'),
-                    'poll_name'     => htmlentities($result->pollName, ENT_QUOTES, 'UTF-8'),
-                    'items'         => $result->items,
-                    'pagination'    => $pagination->render(),
-                    'total'         => $result->total,
-                    'id'            => $id,
-                    'topic_url'     => $this->topicPathService->getTopicUrlById($id) ?? '/forum/',
-                ]
-            )
+        return new ViewResponse(
+            '@forum/public/poll-voters.twig',
+            [
+                'title'         => $caption,
+                'page_title'    => $caption,
+                'empty_message' => __('No one has voted in this poll yet'),
+                'poll_name'     => $result->pollName,
+                'items'         => $result->items,
+                'pagination'    => $pagination->hasPages() ? $pagination->render() : null,
+                'total'         => $result->total,
+                'topic_url'     => $this->topicPathService->getTopicUrlById($id) ?? '/forum/',
+            ]
         );
     }
 }

@@ -6,21 +6,20 @@ namespace Johncms\Modules\Forum\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Forum\Application\UseCases\ViewLatestTopicsUseCase;
+use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
-use Johncms\System\View\Render;
 
 final readonly class LatestTopicsController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private ViewLatestTopicsUseCase $viewLatestTopicsUseCase,
     ) {
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(): string
+    public function __invoke(): ViewResponse
     {
         $result = $this->viewLatestTopicsUseCase->execute();
 
@@ -28,16 +27,18 @@ final readonly class LatestTopicsController
         $this->navChain->add(__('Forum'), '/forum/');
         $this->navChain->add($caption);
 
-        return $this->render->render(
-            'forum::new_topics',
+        return new ViewResponse(
+            '@forum/public/topic-list.twig',
             [
-                'pagination'    => '',
-                'title'         => $caption,
-                'page_title'    => $caption,
-                'empty_message' => __('The list is empty'),
-                'topics'        => $result->topics,
-                'total'         => $result->total,
-                'show_period'   => false,
+                'pagination'          => null,
+                'title'               => $caption,
+                'page_title'          => $caption,
+                'empty_message'       => __('The list is empty'),
+                'topics'              => $result->topics,
+                'total'               => $result->total,
+                'show_period'         => false,
+                'period_action'       => '/forum/topics-period/',
+                'mark_as_read_action' => '',
             ]
         );
     }

@@ -12,15 +12,13 @@ use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\ViewForumFilesUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Users\User;
-use Symfony\Component\HttpFoundation\Response;
 
 final readonly class ForumFilesController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private User $currentUser,
         private ForumErrorRenderer $forumErrorRenderer,
@@ -30,7 +28,7 @@ final readonly class ForumFilesController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(Request $request): Response
+    public function __invoke(Request $request): ViewResponse
     {
         $page = max(1, $request->queryInt('page', 1));
         $start = ($page - 1) * (int) $this->currentUser->config->kmess;
@@ -47,8 +45,7 @@ final readonly class ForumFilesController
         try {
             $result = $this->viewForumFilesUseCase->execute($query);
         } catch (ForumNotFoundException $exception) {
-            return $this->forumErrorRenderer->render(
-                $this->render,
+            return $this->forumErrorRenderer->viewResponse(
                 $exception,
                 [
                     'title'         => __('Forum Files'),
@@ -67,14 +64,12 @@ final readonly class ForumFilesController
         $this->navChain->add($result->caption);
 
         $viewData = $result->viewData;
-        if ($result->template === 'forum::files_list') {
+        if ($result->template === '@forum/public/files-list.twig') {
             $pagination = $this->paginationFactory->create((int) ($viewData['total'] ?? 0), null, 'page', $page);
-            $viewData['pagination'] = $pagination->render();
+            $viewData['pagination'] = $pagination->hasPages() ? $pagination->render() : null;
         }
 
-        return new Response(
-            $this->render->render($result->template, $viewData)
-        );
+        return new ViewResponse($result->template, $viewData);
     }
 
     private function normalizeFileType(int $fileType): int

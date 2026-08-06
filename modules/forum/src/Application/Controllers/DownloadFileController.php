@@ -5,21 +5,20 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Forum\Domain\Repository\ForumFileRepositoryInterface;
-use Johncms\System\View\Render;
 use Symfony\Component\HttpFoundation\Response;
 
 final readonly class DownloadFileController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private ForumFileRepositoryInterface $fileRepository,
     ) {
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(int $id): Response
+    public function __invoke(int $id): ViewResponse
     {
         $file = $this->fileRepository->findById($id);
         if ($file === null) {
@@ -37,19 +36,17 @@ final readonly class DownloadFileController
         redirect('/upload/forum/attach/' . $file->filename);
     }
 
-    private function renderNotFound(): Response
+    private function renderNotFound(): ViewResponse
     {
-        return new Response(
-            $this->render->render(
-                'system::pages/result',
-                [
-                    'title'         => __('Download file'),
-                    'type'          => 'alert-danger',
-                    'message'       => __('File does not exist'),
-                    'back_url'      => '/forum/',
-                    'back_url_name' => __('Forum'),
-                ]
-            ),
+        return new ViewResponse(
+            '@theme/pages/result.twig',
+            [
+                'title'         => __('Download file'),
+                'type'          => 'alert-danger',
+                'message'       => __('File does not exist'),
+                'back_url'      => '/forum/',
+                'back_url_name' => __('Forum'),
+            ],
             Response::HTTP_NOT_FOUND
         );
     }

@@ -1,0 +1,44 @@
+{#
+    Renaming a topic and editing its meta tags.
+
+    @var action_url string
+    @var back_url   string
+    @var form_data  array  name, meta_keywords, meta_description
+    @var errors     array  Validation messages by field name.
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    <form name="rename_topic" action="{{ action_url }}" method="post">
+        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}"/>
+        {% if errors.csrf_token|default([]) %}
+            <div class="alert alert-danger">{{ errors.csrf_token|join(', ') }}</div>
+        {% endif %}
+        <div class="form-group">
+            <label for="name">{{ __('Topic name') }}</label>
+            <input type="text" class="form-control {{ errors.name|default([]) ? 'is-invalid' : '' }}" id="name" placeholder="{{ __('Topic name') }}"
+                   name="name" value="{{ form_data.name }}" required>
+            {% if errors.name|default([]) %}
+                <div class="invalid-feedback d-block">{{ errors.name|join(', ') }}</div>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            <label for="meta_keywords">{{ __('Meta keywords') }}</label>
+            <textarea name="meta_keywords" class="form-control {{ errors.meta_keywords|default([]) ? 'is-invalid' : '' }}" id="meta_keywords" rows="1">{{ form_data.meta_keywords }}</textarea>
+            {% if errors.meta_keywords|default([]) %}
+                <div class="invalid-feedback d-block">{{ errors.meta_keywords|join(', ') }}</div>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            <label for="meta_description">{{ __('Meta description') }}</label>
+            <textarea name="meta_description" class="form-control {{ errors.meta_description|default([]) ? 'is-invalid' : '' }}" id="meta_description" rows="1">{{ form_data.meta_description }}</textarea>
+            {% if errors.meta_description|default([]) %}
+                <div class="invalid-feedback d-block">{{ errors.meta_description|join(', ') }}</div>
+            {% endif %}
+        </div>
+        <div>
+            <button type="submit" name="submit" value="1" class="btn btn-primary">{{ __('Save') }}</button>
+            <a href="{{ back_url }}" class="btn btn-secondary">{{ __('Back to topic') }}</a>
+        </div>
+    </form>
+{% endblock %}

@@ -1,0 +1,50 @@
+{#
+    Who is in the forum or in a topic right now: users or guests.
+
+    @var items           array        See the component of a user row for the keys.
+    @var total           int
+    @var pagination      \Twig\Markup Null when everything fits on one page.
+    @var users_list_url  string
+    @var guests_list_url string
+    @var is_users        bool         Users are shown, guests otherwise.
+    @var empty_message   string
+    @var topic_name      string       Set on the visitors of a topic.
+    @var topic_url       string       Set on the visitors of a topic.
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    {% if topic_name|default('') %}
+        <div class="pb-2">
+            <h4>{{ __('Who in Topic') }}: {{ topic_name }}</h4>
+        </div>
+    {% endif %}
+
+    {% if app.user.isValid and app.user.rights %}
+        <div class="d-flex mb-3">
+            <a href="{{ users_list_url }}" class="btn btn-outline-primary me-2 {{ is_users ? 'active' : '' }}">{{ __('Users') }}</a>
+            <a href="{{ guests_list_url }}" class="btn btn-outline-primary {{ is_users ? '' : 'active' }}">{{ __('Guests') }}</a>
+        </div>
+    {% endif %}
+
+    {% for item in items %}
+        {% include '@forum/public/components/user-row.twig' with {item: item} only %}
+    {% endfor %}
+
+    {% if not total %}
+        <div class="alert alert-info shadow border-0">{{ empty_message }}</div>
+    {% else %}
+        <div>
+            <div class="my-2">{{ __('Total') }}: {{ total }}</div>
+            {% if pagination %}
+                {{ pagination }}
+            {% endif %}
+        </div>
+    {% endif %}
+
+    {% if topic_url|default('') %}
+        <div>
+            <a href="{{ topic_url }}">{{ __('Go to Topic') }}</a>
+        </div>
+    {% endif %}
+{% endblock %}

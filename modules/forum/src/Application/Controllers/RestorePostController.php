@@ -11,19 +11,15 @@ use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\EnsureEditPostAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetEditPostContextUseCase;
 use Johncms\Modules\Forum\Application\UseCases\RestorePostUseCase;
-use Johncms\Security\Csrf;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
-use Symfony\Component\HttpFoundation\Response;
 
 final readonly class RestorePostController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
-        private Csrf $csrf,
         private User $currentUser,
         private ForumErrorRenderer $forumErrorRenderer,
         private GetEditPostContextUseCase $contextUseCase,
@@ -33,14 +29,13 @@ final readonly class RestorePostController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(Request $request, int $id): Response
+    public function __invoke(Request $request, int $id): ViewResponse
     {
         try {
             $context = $this->contextUseCase->execute($id, $this->getForumSettings());
             $this->accessUseCase->execute($context);
         } catch (ForumNotFoundException $exception) {
-            return $this->forumErrorRenderer->render(
-                $this->render,
+            return $this->forumErrorRenderer->viewResponse(
                 $exception,
                 [
                     'title'         => __('Error'),
@@ -50,8 +45,7 @@ final readonly class RestorePostController
                 ]
             );
         } catch (ForumAccessDeniedException $exception) {
-            return $this->forumErrorRenderer->render(
-                $this->render,
+            return $this->forumErrorRenderer->viewResponse(
                 $exception,
                 [
                     'title'         => __('Error'),
@@ -69,17 +63,15 @@ final readonly class RestorePostController
             );
 
             if (! $validator->isValid()) {
-                return new Response(
-                    $this->render->render(
-                        'system::pages/result',
-                        [
-                            'title'         => __('Restore Message'),
-                            'type'          => 'alert-danger',
-                            'message'       => __('Wrong data'),
-                            'back_url'      => '/forum/restore-post/' . $id . '/',
-                            'back_url_name' => __('Back'),
-                        ]
-                    )
+                return new ViewResponse(
+                    '@theme/pages/result.twig',
+                    [
+                        'title'         => __('Restore Message'),
+                        'type'          => 'alert-danger',
+                        'message'       => __('Wrong data'),
+                        'back_url'      => '/forum/restore-post/' . $id . '/',
+                        'back_url_name' => __('Back'),
+                    ]
                 );
             }
 
@@ -87,17 +79,14 @@ final readonly class RestorePostController
             redirect($context->backUrl);
         }
 
-        return new Response(
-            $this->render->render(
-                'forum::restore_post',
-                [
-                    'title'          => __('Restore Message'),
-                    'page_title'     => __('Restore Message'),
-                    'back_url'       => $context->backUrl,
-                    'restore_action' => '/forum/restore-post/' . $id . '/',
-                    'csrf_token'     => $this->csrf->getToken(),
-                ]
-            )
+        return new ViewResponse(
+            '@forum/public/restore-post.twig',
+            [
+                'title'          => __('Restore Message'),
+                'page_title'     => __('Restore Message'),
+                'back_url'       => $context->backUrl,
+                'restore_action' => '/forum/restore-post/' . $id . '/',
+            ]
         );
     }
 

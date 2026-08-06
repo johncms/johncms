@@ -10,14 +10,12 @@ use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\ClearForumSearchHistoryUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumUserAccessUseCase;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
-use Symfony\Component\HttpFoundation\Response;
+use Johncms\Http\View\ViewResponse;
 
 final readonly class ClearForumSearchHistoryController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private EnsureForumUserAccessUseCase $forumUserAccessUseCase,
         private ForumErrorRenderer $forumErrorRenderer,
         private ClearForumSearchHistoryUseCase $clearForumSearchHistoryUseCase,
@@ -25,12 +23,12 @@ final readonly class ClearForumSearchHistoryController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(Request $request): Response
+    public function __invoke(Request $request): ViewResponse
     {
         try {
             $this->forumUserAccessUseCase->execute();
         } catch (ForumAccessDeniedException $exception) {
-            return $this->forumErrorRenderer->render($this->render, $exception);
+            return $this->forumErrorRenderer->viewResponse($exception);
         }
 
         if ($request->hasBody('submit')) {
@@ -38,15 +36,14 @@ final readonly class ClearForumSearchHistoryController
             redirect('/forum/search/');
         }
 
-        return new Response(
-            $this->render->render(
-                'forum::clear_search_history',
-                [
-                    'title'      => __('Forum search'),
-                    'page_title' => __('Forum search'),
-                    'back_url'   => '/forum/search/',
-                ]
-            )
+        return new ViewResponse(
+            '@forum/public/clear-search-history.twig',
+            [
+                'title'      => __('Forum search'),
+                'page_title' => __('Forum search'),
+                'action_url' => '/forum/search/history/clear/',
+                'back_url'   => '/forum/search/',
+            ]
         );
     }
 }

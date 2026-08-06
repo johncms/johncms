@@ -5,20 +5,18 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Forum\Application\Exceptions\ForumValidationException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\ClearFilterByAuthorUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetFilterByAuthorContextUseCase;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
-use Symfony\Component\HttpFoundation\Response;
 
 final readonly class ClearFilterByAuthorController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private ForumErrorRenderer $forumErrorRenderer,
         private GetFilterByAuthorContextUseCase $contextUseCase,
         private ClearFilterByAuthorUseCase $clearFilterByAuthorUseCase,
@@ -26,7 +24,7 @@ final readonly class ClearFilterByAuthorController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(Request $request, int $id): Response
+    public function __invoke(Request $request, int $id): ViewResponse
     {
         $page = max(1, $request->queryInt('page', 1));
 
@@ -36,26 +34,23 @@ final readonly class ClearFilterByAuthorController
         );
 
         if (! $validator->isValid()) {
-            return new Response(
-                $this->render->render(
-                    'system::pages/result',
-                    [
-                        'title'         => __('Filter by author'),
-                        'page_title'    => __('Filter by author'),
-                        'type'          => 'alert-danger',
-                        'message'       => __('Wrong data'),
-                        'back_url'      => '/forum/filter/' . $id . '/' . ($page > 1 ? '?page=' . $page : ''),
-                        'back_url_name' => __('Back'),
-                    ]
-                )
+            return new ViewResponse(
+                '@theme/pages/result.twig',
+                [
+                    'title'         => __('Filter by author'),
+                    'page_title'    => __('Filter by author'),
+                    'type'          => 'alert-danger',
+                    'message'       => __('Wrong data'),
+                    'back_url'      => '/forum/filter/' . $id . '/' . ($page > 1 ? '?page=' . $page : ''),
+                    'back_url_name' => __('Back'),
+                ]
             );
         }
 
         try {
             $topic = $this->contextUseCase->execute($id);
         } catch (ForumValidationException $exception) {
-            return $this->forumErrorRenderer->render(
-                $this->render,
+            return $this->forumErrorRenderer->viewResponse(
                 $exception,
                 [
                     'title'         => __('Filter by author'),

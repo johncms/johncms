@@ -12,15 +12,13 @@ use Johncms\Modules\Forum\Application\UseCases\ChangeTopicUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetChangeTopicContextUseCase;
 use Johncms\Modules\Forum\Domain\Models\ForumTopic;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Validator\Validator;
-use Symfony\Component\HttpFoundation\Response;
 
 final readonly class ChangeTopicController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private ForumErrorRenderer $forumErrorRenderer,
         private GetChangeTopicContextUseCase $contextUseCase,
         private ChangeTopicUseCase $changeTopicUseCase,
@@ -28,13 +26,12 @@ final readonly class ChangeTopicController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(Request $request, int $id): Response
+    public function __invoke(Request $request, int $id): ViewResponse
     {
         try {
             $topic = $this->contextUseCase->execute($id);
         } catch (ForumAccessDeniedException | ForumNotFoundException $exception) {
-            return $this->forumErrorRenderer->render(
-                $this->render,
+            return $this->forumErrorRenderer->viewResponse(
                 $exception,
                 [
                     'title'         => __('Change the topic'),
@@ -92,19 +89,16 @@ final readonly class ChangeTopicController
             $errors = $validator->getErrors();
         }
 
-        return new Response(
-            $this->render->render(
-                'forum::change_topic',
-                [
-                    'title'      => __('Change the topic'),
-                    'page_title' => __('Change the topic'),
-                    'id'         => $topic->id,
-                    'topic'      => $topic,
-                    'form_data'  => $formData,
-                    'back_url'   => $topic->url,
-                    'errors'     => $errors,
-                ]
-            )
+        return new ViewResponse(
+            '@forum/public/change-topic.twig',
+            [
+                'title'      => __('Change the topic'),
+                'page_title' => __('Change the topic'),
+                'action_url' => '/forum/change-topic/' . $topic->id . '/',
+                'form_data'  => $formData,
+                'back_url'   => $topic->url,
+                'errors'     => $errors,
+            ]
         );
     }
 }

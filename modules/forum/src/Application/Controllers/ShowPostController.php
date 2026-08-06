@@ -10,16 +10,14 @@ use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\ViewPostUseCase;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\ForumUtils;
+use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
-use Johncms\System\View\Render;
 use Johncms\Users\User;
-use Symfony\Component\HttpFoundation\Response;
 
 final readonly class ShowPostController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private User $currentUser,
         private NavChain $navChain,
         private ForumErrorRenderer $forumErrorRenderer,
@@ -28,7 +26,7 @@ final readonly class ShowPostController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(int $id): Response
+    public function __invoke(int $id): ViewResponse
     {
         try {
             $result = $this->viewPostUseCase->execute(
@@ -37,8 +35,7 @@ final readonly class ShowPostController
                 homeUrl: (string) config('johncms.homeurl')
             );
         } catch (ForumNotFoundException | ForumAccessDeniedException $exception) {
-            return $this->forumErrorRenderer->render(
-                $this->render,
+            return $this->forumErrorRenderer->viewResponse(
                 $exception,
                 [
                     'title'         => __('Show post'),
@@ -50,18 +47,6 @@ final readonly class ShowPostController
             );
         }
 
-        $this->render->addData(
-            [
-                'canonical'  => $result['canonical'],
-                'title'      => $this->buildPostMetaTitle((int) $result['post']->id, (string) $result['topic']->name),
-                'page_title' => $this->buildPostMetaTitle((int) $result['post']->id, (string) $result['topic']->name),
-                'description' => $this->buildPostMetaDescription(
-                    (int) $result['post']->id,
-                    (string) $result['topic']->name,
-                    (string) ($result['topic']->calculated_meta_description ?? '')
-                ),
-            ]
-        );
         $this->navChain->add(__('Forum'), '/forum/');
         ForumUtils::buildBreadcrumbs(
             (int) $result['topic']->section_id,
@@ -69,14 +54,20 @@ final readonly class ShowPostController
             (string) $result['topic']->url
         );
 
-        return new Response(
-            $this->render->render(
-                'forum::show_post',
-                [
-                    'post'  => $result['post'],
-                    'topic' => $result['topic'],
-                ]
-            )
+        return new ViewResponse(
+            '@forum/public/show-post.twig',
+            [
+                'canonical'   => $result['canonical'],
+                'title'       => $this->buildPostMetaTitle((int) $result['post']->id, (string) $result['topic']->name),
+                'page_title'  => $this->buildPostMetaTitle((int) $result['post']->id, (string) $result['topic']->name),
+                'description' => $this->buildPostMetaDescription(
+                    (int) $result['post']->id,
+                    (string) $result['topic']->name,
+                    (string) ($result['topic']->calculated_meta_description ?? '')
+                ),
+                'post'        => $result['post'],
+                'topic'       => $result['topic'],
+            ]
         );
     }
 

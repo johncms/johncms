@@ -1,0 +1,38 @@
+{#
+    Kinds of the files attached in the forum, with the count of each.
+
+    @var sections  array  url, name, count
+    @var new_url   string
+    @var new_count int
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    {% if new_count %}
+        <div class="border-top border-bottom mb-3">
+            <div class="py-3">
+                <a href="{{ new_url }}">{{ __('New Files') }}</a>
+                <span class="badge rounded-pill bg-danger">{{ new_count }}</span>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if sections %}
+        <div>
+            {% for section in sections %}
+                <div class="shadow border-radius-12 forum-section post-item mb-2">
+                    <div class="section-header border-0 pb-0">
+                        <div class="d-flex align-items-center">
+                            <a href="{{ section.url }}" class="text-dark-brown">{{ section.name }}</a>
+                            <span class="badge rounded-pill text-bg-light border ms-3">{{ section.count }}</span>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            {{ __('The list is empty') }}
+        </div>
+    {% endif %}
+{% endblock %}

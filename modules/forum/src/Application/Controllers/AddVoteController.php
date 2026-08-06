@@ -12,14 +12,12 @@ use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Application\UseCases\CreateVoteUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetAddVoteContextUseCase;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
-use Symfony\Component\HttpFoundation\Response;
+use Johncms\Http\View\ViewResponse;
 
 final readonly class AddVoteController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private ForumErrorRenderer $forumErrorRenderer,
         private GetAddVoteContextUseCase $contextUseCase,
         private CreateVoteUseCase $createVoteUseCase,
@@ -28,13 +26,12 @@ final readonly class AddVoteController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(Request $request, int $id): Response
+    public function __invoke(Request $request, int $id): ViewResponse
     {
         try {
             $topicId = $this->contextUseCase->execute($id);
         } catch (ForumAccessDeniedException $exception) {
-            return $this->forumErrorRenderer->render(
-                $this->render,
+            return $this->forumErrorRenderer->viewResponse(
                 $exception,
                 [
                     'back_url'      => '/forum/',
@@ -42,8 +39,7 @@ final readonly class AddVoteController
                 ]
             );
         } catch (ForumValidationException $exception) {
-            return $this->forumErrorRenderer->render(
-                $this->render,
+            return $this->forumErrorRenderer->viewResponse(
                 $exception,
                 [
                     'title'         => __('Add Poll'),
@@ -81,33 +77,29 @@ final readonly class AddVoteController
 
                 $this->createVoteUseCase->execute($topicId, $voteName, $answers);
 
-                return new Response(
-                    $this->render->render(
-                        'system::pages/result',
-                        [
-                            'title'         => __('Add Poll'),
-                            'page_title'    => __('Add Poll'),
-                            'type'          => 'alert-success',
-                            'message'       => __('Poll added'),
-                            'back_url'      => $this->topicPathService->getTopicUrlById($topicId) ?? '/forum/',
-                            'back_url_name' => __('Continue'),
-                        ]
-                    )
-                );
-            }
-
-            return new Response(
-                $this->render->render(
-                    'system::pages/result',
+                return new ViewResponse(
+                    '@theme/pages/result.twig',
                     [
                         'title'         => __('Add Poll'),
                         'page_title'    => __('Add Poll'),
-                        'type'          => 'alert-danger',
-                        'message'       => __('The required fields are not filled'),
-                        'back_url'      => '/forum/addvote/' . $topicId . '/',
-                        'back_url_name' => __('Repeat'),
+                        'type'          => 'alert-success',
+                        'message'       => __('Poll added'),
+                        'back_url'      => $this->topicPathService->getTopicUrlById($topicId) ?? '/forum/',
+                        'back_url_name' => __('Continue'),
                     ]
-                )
+                );
+            }
+
+            return new ViewResponse(
+                '@theme/pages/result.twig',
+                [
+                    'title'         => __('Add Poll'),
+                    'page_title'    => __('Add Poll'),
+                    'type'          => 'alert-danger',
+                    'message'       => __('The required fields are not filled'),
+                    'back_url'      => '/forum/addvote/' . $topicId . '/',
+                    'back_url_name' => __('Repeat'),
+                ]
             );
         }
 
@@ -116,23 +108,21 @@ final readonly class AddVoteController
             $votes[] = [
                 'input_name'  => $vote,
                 'input_label' => __('Answer') . ' ' . ($vote + 1),
-                'input_value' => htmlentities($request->body((string) $vote, ''), ENT_QUOTES, 'UTF-8'),
+                'input_value' => $request->body((string) $vote, ''),
             ];
         }
 
-        return new Response(
-            $this->render->render(
-                'forum::add_poll',
-                [
-                    'title'      => __('Add File'),
-                    'page_title' => __('Add File'),
-                    'id'         => $topicId,
-                    'back_url'   => $this->topicPathService->getTopicUrlById($topicId) ?? '/forum/',
-                    'count_vote' => $countVote,
-                    'poll_name'  => htmlentities($request->body('name_vote', ''), ENT_QUOTES, 'UTF-8'),
-                    'votes'      => $votes,
-                ]
-            )
+        return new ViewResponse(
+            '@forum/public/add-poll.twig',
+            [
+                'title'      => __('Add Poll'),
+                'page_title' => __('Add Poll'),
+                'action_url' => '/forum/addvote/' . $topicId . '/',
+                'back_url'   => $this->topicPathService->getTopicUrlById($topicId) ?? '/forum/',
+                'count_vote' => $countVote,
+                'poll_name'  => $request->body('name_vote', ''),
+                'votes'      => $votes,
+            ]
         );
     }
 

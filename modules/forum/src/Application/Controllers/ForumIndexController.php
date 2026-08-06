@@ -9,14 +9,13 @@ use Johncms\Modules\Forum\Application\Services\ForumLegacyRedirectResolver;
 use Johncms\Modules\Forum\Application\UseCases\ViewForumIndexUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Utils\ShortNumberFormatter;
 
 final readonly class ForumIndexController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private ForumLegacyRedirectResolver $legacyRedirectResolver,
         private ViewForumIndexUseCase $viewForumIndexUseCase,
@@ -24,7 +23,7 @@ final readonly class ForumIndexController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(Request $request): string
+    public function __invoke(Request $request): ViewResponse
     {
         $legacyRedirectUrl = $this->legacyRedirectResolver->resolve($request->query->all());
         if ($legacyRedirectUrl !== null) {
@@ -37,17 +36,12 @@ final readonly class ForumIndexController
 
         $this->navChain->add(__('Forum'), '/forum/');
 
-        $this->render->addData(
+        return new ViewResponse(
+            '@forum/public/index.twig',
             [
-                'canonical'   => (string) config('johncms.homeurl') . '/forum/',
-                'keywords'    => $result->keywords,
-                'description' => $result->description,
-            ]
-        );
-
-        return $this->render->render(
-            'forum::index',
-            [
+                'canonical'    => (string) config('johncms.homeurl') . '/forum/',
+                'keywords'     => $result->keywords,
+                'description'  => $result->description,
                 'title'        => __('Forum'),
                 'page_title'   => __('Forum'),
                 'sections'     => $result->sections,

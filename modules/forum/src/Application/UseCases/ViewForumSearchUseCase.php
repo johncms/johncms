@@ -13,6 +13,7 @@ use Johncms\Modules\Forum\Domain\Repository\ForumSearchHistoryRepositoryInterfac
 use Johncms\Modules\Forum\Domain\Repository\ForumSearchRepositoryInterface;
 use Johncms\Users\User;
 use Johncms\Utils\DateFormatterInterface;
+use Twig\Markup;
 
 final readonly class ViewForumSearchUseCase
 {
@@ -78,18 +79,18 @@ final readonly class ViewForumSearchUseCase
         foreach ($rows as $row) {
             if ($searchInTopicNames) {
                 $safeTopicName = htmlspecialchars((string) ($row['name'] ?? ''), ENT_QUOTES, 'UTF-8');
-                $row['name'] = $this->highlightMany($safeTopicName, $searchParts);
+                $row['name'] = new Markup($this->highlightMany($safeTopicName, $searchParts), 'UTF-8');
                 $date = $includeDeleted ? (int) ($row['mod_last_post_date'] ?? 0) : (int) ($row['last_post_date'] ?? 0);
                 $row['post_url'] = '';
                 $row['read_more'] = '';
-                $row['formatted_text'] = '';
+                $row['formatted_text'] = null;
                 $row['topic_url'] = $this->topicPathService->getTopicUrlById((int) ($row['id'] ?? 0)) ?? '/forum/';
             } else {
                 $messageText = (string) ($row['text'] ?? '');
                 $plainMessageText = $this->extractPlainText($messageText);
                 $date = (int) ($row['date'] ?? 0);
-                $row['name'] = htmlspecialchars((string) ($row['topic_name'] ?? ''), ENT_QUOTES, 'UTF-8');
-                $row['formatted_text'] = $this->buildMessagePreview($plainMessageText, $searchParts);
+                $row['name'] = new Markup(htmlspecialchars((string) ($row['topic_name'] ?? ''), ENT_QUOTES, 'UTF-8'), 'UTF-8');
+                $row['formatted_text'] = new Markup($this->buildMessagePreview($plainMessageText, $searchParts), 'UTF-8');
                 $row['read_more'] = mb_strlen($plainMessageText) > 500 ? '/forum/post/' . (int) ($row['id'] ?? 0) . '/' : '';
                 $row['topic_url'] = $this->topicPathService->getTopicUrlById((int) ($row['topic_id'] ?? 0)) ?? '/forum/';
                 $row['post_url'] = '/forum/post/' . (int) ($row['id'] ?? 0) . '/';

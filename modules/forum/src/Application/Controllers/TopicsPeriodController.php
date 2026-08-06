@@ -11,17 +11,15 @@ use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumUserAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\ViewTopicsByPeriodUseCase;
+use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
 use Johncms\Users\User;
-use Symfony\Component\HttpFoundation\Response;
 
 final readonly class TopicsPeriodController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private User $currentUser,
         private EnsureForumUserAccessUseCase $forumUserAccessUseCase,
@@ -32,12 +30,12 @@ final readonly class TopicsPeriodController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(Request $request): Response
+    public function __invoke(Request $request): ViewResponse
     {
         try {
             $this->forumUserAccessUseCase->execute();
         } catch (ForumAccessDeniedException $exception) {
-            return $this->forumErrorRenderer->render($this->render, $exception);
+            return $this->forumErrorRenderer->viewResponse($exception);
         }
 
         $hours = $request->bodyInt('vr', $request->queryInt('vr', 24));
@@ -60,20 +58,19 @@ final readonly class TopicsPeriodController
 
         $pagination = $this->paginationFactory->create($result->total, null, 'page', $page);
 
-        return new Response(
-            $this->render->render(
-                'forum::new_topics',
-                [
-                    'pagination'    => $pagination->render(),
-                    'title'         => $caption,
-                    'page_title'    => $caption,
-                    'empty_message' => __('There is nothing new in this forum for selected period'),
-                    'topics'        => $result->topics,
-                    'total'         => $result->total,
-                    'show_period'   => true,
-                    'period_action' => '/forum/topics-period/',
-                ]
-            )
+        return new ViewResponse(
+            '@forum/public/topic-list.twig',
+            [
+                'pagination'          => $pagination->hasPages() ? $pagination->render() : null,
+                'title'               => $caption,
+                'page_title'          => $caption,
+                'empty_message'       => __('There is nothing new in this forum for selected period'),
+                'topics'              => $result->topics,
+                'total'               => $result->total,
+                'show_period'         => true,
+                'period_action'       => '/forum/topics-period/',
+                'mark_as_read_action' => '',
+            ]
         );
     }
 }

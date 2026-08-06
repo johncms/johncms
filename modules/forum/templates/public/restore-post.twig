@@ -1,0 +1,22 @@
+{#
+    Confirmation of restoring a post that was hidden.
+
+    @var restore_action string
+    @var back_url       string
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    <div class="alert alert-info">
+        <div class="pb-2">
+            {{ __('Do you really want to restore this post?') }}
+        </div>
+        <div>
+            <form action="{{ restore_action }}" method="post">
+                <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                <button type="submit" name="submit" value="1" class="btn btn-primary btn-sm">{{ __('Restore') }}</button>
+                <a href="{{ back_url }}" class="btn btn-outline-secondary btn-sm">{{ __('Cancel') }}</a>
+            </form>
+        </div>
+    </div>
+{% endblock %}

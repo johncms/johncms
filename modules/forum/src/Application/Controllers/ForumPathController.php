@@ -6,6 +6,7 @@ namespace Johncms\Modules\Forum\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\Request;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Forum\Application\Services\ForumSectionPathService;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 
@@ -21,7 +22,7 @@ final readonly class ForumPathController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(Request $request, string $sectionPath): string
+    public function __invoke(Request $request, string $sectionPath): ViewResponse
     {
         if ($this->sectionPathService->findSectionByPath($sectionPath) !== null) {
             return $this->forumSectionController->__invoke($request, $sectionPath);

@@ -12,19 +12,15 @@ use Johncms\Modules\Forum\Application\UseCases\DeletePostFileUseCase;
 use Johncms\Modules\Forum\Application\UseCases\EnsureEditPostAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetDeletePostFileContextUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetEditPostContextUseCase;
-use Johncms\Security\Csrf;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
-use Symfony\Component\HttpFoundation\Response;
 
 final readonly class DeletePostFileController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
-        private Csrf $csrf,
         private User $currentUser,
         private ForumErrorRenderer $forumErrorRenderer,
         private GetEditPostContextUseCase $contextUseCase,
@@ -35,15 +31,14 @@ final readonly class DeletePostFileController
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(Request $request, int $id, int $fid): Response
+    public function __invoke(Request $request, int $id, int $fid): ViewResponse
     {
         try {
             $context = $this->contextUseCase->execute($id, $this->getForumSettings());
             $this->accessUseCase->execute($context);
             $file = $this->fileContextUseCase->execute($id, $fid);
         } catch (ForumNotFoundException $exception) {
-            return $this->forumErrorRenderer->render(
-                $this->render,
+            return $this->forumErrorRenderer->viewResponse(
                 $exception,
                 [
                     'title'         => __('Error'),
@@ -53,8 +48,7 @@ final readonly class DeletePostFileController
                 ]
             );
         } catch (ForumAccessDeniedException $exception) {
-            return $this->forumErrorRenderer->render(
-                $this->render,
+            return $this->forumErrorRenderer->viewResponse(
                 $exception,
                 [
                     'title'         => __('Error'),
@@ -72,17 +66,15 @@ final readonly class DeletePostFileController
             );
 
             if (! $validator->isValid()) {
-                return new Response(
-                    $this->render->render(
-                        'system::pages/result',
-                        [
-                            'title'         => __('Delete file'),
-                            'type'          => 'alert-danger',
-                            'message'       => __('Wrong data'),
-                            'back_url'      => '/forum/delete-post-file/' . $id . '/' . $fid . '/',
-                            'back_url_name' => __('Back'),
-                        ]
-                    )
+                return new ViewResponse(
+                    '@theme/pages/result.twig',
+                    [
+                        'title'         => __('Delete file'),
+                        'type'          => 'alert-danger',
+                        'message'       => __('Wrong data'),
+                        'back_url'      => '/forum/delete-post-file/' . $id . '/' . $fid . '/',
+                        'back_url_name' => __('Back'),
+                    ]
                 );
             }
 
@@ -90,19 +82,14 @@ final readonly class DeletePostFileController
             redirect($context->backUrl);
         }
 
-        return new Response(
-            $this->render->render(
-                'forum::delete_file',
-                [
-                    'title'         => __('Delete file'),
-                    'page_title'    => __('Delete file'),
-                    'id'            => $id,
-                    'fid'           => $fid,
-                    'back_url'      => $context->backUrl,
-                    'csrf_token'    => $this->csrf->getToken(),
-                    'delete_action' => '/forum/delete-post-file/' . $id . '/' . $fid . '/',
-                ]
-            )
+        return new ViewResponse(
+            '@forum/public/delete-post-file.twig',
+            [
+                'title'         => __('Delete file'),
+                'page_title'    => __('Delete file'),
+                'back_url'      => $context->backUrl,
+                'delete_action' => '/forum/delete-post-file/' . $id . '/' . $fid . '/',
+            ]
         );
     }
 

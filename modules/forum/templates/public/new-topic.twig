@@ -1,0 +1,76 @@
+{#
+    Opening a topic in a section, with a preview of the first post.
+
+    @var action_url      string
+    @var back_url        string
+    @var th              string Title of the topic being opened.
+    @var msg             string
+    @var data            array  meta_description, meta_keywords
+    @var errors          array  Validation messages by field name.
+    @var add_files       bool   The author asked to attach a file after writing.
+    @var show_preview    bool   The author pressed "Preview".
+    @var preview_message \Twig\Markup
+    @var preview_time    int    Timestamp shown in the preview.
+    @var can_set_meta    bool   Meta tags are set by the staff only.
+    @var preview_enabled bool   The forum settings of the visitor allow a preview.
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    {% if show_preview %}
+        <h3>{{ th }}</h3>
+        {% include '@forum/public/components/post-preview.twig' with {
+            author: app.user,
+            date: preview_time|display_date,
+            message: preview_message
+        } only %}
+    {% endif %}
+
+    <form name="new_topic" action="{{ action_url }}" method="post">
+        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}"/>
+        {% if errors.csrf_token|default([]) %}
+            <div class="alert alert-danger">{{ errors.csrf_token|join(', ') }}</div>
+        {% endif %}
+        <div class="form-group">
+            <label for="th">{{ __('Title') }}</label>
+            <input type="text" class="form-control {{ errors.name|default([]) ? 'is-invalid' : '' }}" id="th" placeholder="" name="th" value="{{ th }}" maxlength="200" required>
+            {% if errors.name|default([]) %}
+                <div class="invalid-feedback d-block">{{ errors.name|join(', ') }}</div>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {% include '@forum/public/components/editor.twig' with {
+                label: __('Message'),
+                value: msg,
+                errors: errors.message|default([])|join(', ')
+            } only %}
+        </div>
+        {% if can_set_meta %}
+            <div class="form-group">
+                <label for="meta_description">{{ __('Meta description') }}</label>
+                <textarea name="meta_description" class="form-control" id="meta_description" rows="1">{{ data.meta_description }}</textarea>
+            </div>
+            <div class="form-group">
+                <label for="meta_keywords">{{ __('Meta keywords') }}</label>
+                <textarea name="meta_keywords" class="form-control" id="meta_keywords" rows="1">{{ data.meta_keywords }}</textarea>
+            </div>
+        {% endif %}
+        <div class="custom-control custom-checkbox mb-3">
+            <input type="checkbox" class="custom-control-input" name="addfiles" value="1" id="addfiles"{% if add_files %} checked{% endif %}>
+            <label class="custom-control-label" for="addfiles">{{ __('Add File') }}</label>
+        </div>
+        <div>
+            <button type="submit" name="submit" value="1" class="btn btn-primary">{{ __('Write') }}</button>
+            {% if preview_enabled %}
+                <button type="submit" class="btn btn-secondary">{{ __('Preview') }}</button>
+            {% endif %}
+        </div>
+        <div class="mt-3">
+            <a href="{{ back_url }}">{{ __('Back') }}</a>
+        </div>
+    </form>
+
+    <div class="mt-2">
+        <a href="/help/?act=smileys">{{ __('Smilies') }}</a>
+    </div>
+{% endblock %}

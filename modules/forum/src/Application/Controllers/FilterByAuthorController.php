@@ -9,35 +9,30 @@ use Johncms\Modules\Forum\Application\Exceptions\ForumValidationException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\ViewFilterByAuthorUseCase;
 use Johncms\NavChain;
-use Johncms\Security\Csrf;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
-use Johncms\System\View\Render;
-use Symfony\Component\HttpFoundation\Response;
+use Johncms\Http\View\ViewResponse;
 
 final readonly class FilterByAuthorController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private Session $session,
         private NavChain $navChain,
-        private Csrf $csrf,
         private ForumErrorRenderer $forumErrorRenderer,
         private ViewFilterByAuthorUseCase $viewFilterByAuthorUseCase,
     ) {
         $this->controllerContext->initModule('forum');
     }
 
-    public function __invoke(Request $request, int $id): Response
+    public function __invoke(Request $request, int $id): ViewResponse
     {
         $page = max(1, $request->queryInt('page', 1));
 
         try {
             $context = $this->viewFilterByAuthorUseCase->execute($id);
         } catch (ForumValidationException $exception) {
-            return $this->forumErrorRenderer->render(
-                $this->render,
+            return $this->forumErrorRenderer->viewResponse(
                 $exception,
                 [
                     'title'         => __('Filter by author'),
@@ -63,24 +58,18 @@ final readonly class FilterByAuthorController
         $this->navChain->add($context->topic->name, $context->topic->url);
         $this->navChain->add(__('Filter by author'));
 
-        return new Response(
-            $this->render->render(
-                'forum::filter_by_author',
-                [
-                    'title'               => __('Filter by author'),
-                    'page_title'          => __('Filter by author'),
-                    'id'                  => $context->topic->id,
-                    'back_url'            => $context->topic->url . ($page > 1 ? '?page=' . $page : ''),
-                    'total'               => count($context->authors),
-                    'list'                => $context->authors,
-                    'topic'               => $context->topic,
-                    'saved'               => false,
-                    'selected_user_ids'   => $selectedUsers,
-                    'set_filter_action'   => '/forum/filter/' . $context->topic->id . '/set/' . ($page > 1 ? '?page=' . $page : ''),
-                    'clear_filter_action' => '/forum/filter/' . $context->topic->id . '/clear/' . ($page > 1 ? '?page=' . $page : ''),
-                    'csrf_token'          => $this->csrf->getToken(),
-                ]
-            )
+        return new ViewResponse(
+            '@forum/public/filter-by-author.twig',
+            [
+                'title'               => __('Filter by author'),
+                'page_title'          => __('Filter by author'),
+                'back_url'            => $context->topic->url . ($page > 1 ? '?page=' . $page : ''),
+                'list'                => $context->authors,
+                'saved'               => false,
+                'selected_user_ids'   => $selectedUsers,
+                'set_filter_action'   => '/forum/filter/' . $context->topic->id . '/set/' . ($page > 1 ? '?page=' . $page : ''),
+                'clear_filter_action' => '/forum/filter/' . $context->topic->id . '/clear/' . ($page > 1 ? '?page=' . $page : ''),
+            ]
         );
     }
 }
