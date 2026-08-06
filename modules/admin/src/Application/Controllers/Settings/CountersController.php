@@ -11,7 +11,7 @@ use Johncms\Modules\Admin\Application\UseCases\SaveCounterUseCase;
 use Johncms\Modules\Admin\Domain\Models\Counter;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
 
@@ -21,7 +21,6 @@ final readonly class CountersController
 
     public function __construct(
         private AdminControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private User $currentUser,
         private GetCounterListUseCase $getList,
@@ -31,19 +30,18 @@ final readonly class CountersController
         $this->controllerContext->initModule('admin');
     }
 
-    public function index(): string
+    public function index(): ViewResponse
     {
         $title = __('Counters');
         $this->navChain->add($title, self::URL);
-        $this->render->addData($this->menu($title));
 
-        return $this->render->render('admin::counters', [
+        return new ViewResponse('@admin/counters.twig', $this->menu($title) + [
             'items'   => $this->getList->execute(),
             'add_url' => self::URL . '/new',
         ]);
     }
 
-    public function view(int $id): string
+    public function view(int $id): ViewResponse
     {
         $counter = $this->manageCounter->find($id);
         if ($counter === null) {
@@ -53,9 +51,8 @@ final readonly class CountersController
         $title = __('Viewing');
         $this->navChain->add(__('Counters'), self::URL);
         $this->navChain->add($title);
-        $this->render->addData($this->menu($title));
 
-        return $this->render->render('admin::counters_view', [
+        return new ViewResponse('@admin/counter-view.twig', $this->menu($title) + [
             'id'                     => $counter->id,
             'name'                   => $counter->name,
             'counter_1'              => $counter->link1,
@@ -67,12 +64,12 @@ final readonly class CountersController
         ]);
     }
 
-    public function newForm(): string
+    public function newForm(): ViewResponse
     {
         return $this->renderForm(null);
     }
 
-    public function editForm(int $id): string
+    public function editForm(int $id): ViewResponse
     {
         $counter = $this->manageCounter->find($id);
         if ($counter === null) {
@@ -82,7 +79,7 @@ final readonly class CountersController
         return $this->renderForm($counter);
     }
 
-    public function preview(Request $request): string
+    public function preview(Request $request): ViewResponse
     {
         if (! $this->isCsrfValid($request)) {
             return $this->error(__('Wrong data'));
@@ -102,9 +99,8 @@ final readonly class CountersController
 
         $title = __('Counters');
         $this->navChain->add($title, self::URL);
-        $this->render->addData($this->menu($title));
 
-        return $this->render->render('admin::counters_add_confirm', [
+        return new ViewResponse('@admin/counter-preview.twig', $this->menu($title) + [
             'form_action'            => self::URL,
             'name'                   => $name,
             'counter_1'              => $link1,
@@ -116,7 +112,7 @@ final readonly class CountersController
         ]);
     }
 
-    public function store(Request $request): string
+    public function store(Request $request): ViewResponse
     {
         if (! $this->isCsrfValid($request)) {
             return $this->error(__('Wrong data'));
@@ -139,7 +135,7 @@ final readonly class CountersController
         redirect(self::URL);
     }
 
-    public function toggle(Request $request, int $id): string
+    public function toggle(Request $request, int $id): ViewResponse
     {
         if ($this->isCsrfValid($request)) {
             $enabled = $request->bodyInt('enabled') === 1;
@@ -149,7 +145,7 @@ final readonly class CountersController
         redirect(self::URL . '/' . $id);
     }
 
-    public function up(Request $request, int $id): string
+    public function up(Request $request, int $id): ViewResponse
     {
         if ($this->isCsrfValid($request)) {
             $this->manageCounter->moveUp($id);
@@ -158,7 +154,7 @@ final readonly class CountersController
         redirect(self::URL);
     }
 
-    public function down(Request $request, int $id): string
+    public function down(Request $request, int $id): ViewResponse
     {
         if ($this->isCsrfValid($request)) {
             $this->manageCounter->moveDown($id);
@@ -167,7 +163,7 @@ final readonly class CountersController
         redirect(self::URL);
     }
 
-    public function deleteConfirm(int $id): string
+    public function deleteConfirm(int $id): ViewResponse
     {
         $counter = $this->manageCounter->find($id);
         if ($counter === null) {
@@ -177,16 +173,15 @@ final readonly class CountersController
         $title = __('Delete:') . ' ' . $counter->name;
         $this->navChain->add(__('Counters'), self::URL);
         $this->navChain->add($title);
-        $this->render->addData($this->menu($title));
 
-        return $this->render->render('admin::counters_confirm', [
+        return new ViewResponse('@admin/counter-delete-confirm.twig', $this->menu($title) + [
             'message'     => __('Do you really want to delete?'),
             'form_action' => self::URL . '/' . $id . '/delete',
             'back_url'    => self::URL,
         ]);
     }
 
-    public function delete(Request $request, int $id): string
+    public function delete(Request $request, int $id): ViewResponse
     {
         if ($this->isCsrfValid($request)) {
             $this->manageCounter->delete($id);
@@ -195,13 +190,12 @@ final readonly class CountersController
         redirect(self::URL);
     }
 
-    private function renderForm(?Counter $counter): string
+    private function renderForm(?Counter $counter): ViewResponse
     {
         $title = __('Counters');
         $this->navChain->add($title, self::URL);
-        $this->render->addData($this->menu($title));
 
-        return $this->render->render('admin::counters_form', [
+        return new ViewResponse('@admin/counter-form.twig', $this->menu($title) + [
             'form_action'            => self::URL . '/preview',
             'id'                     => $counter?->id,
             'name'                   => $counter?->name ?? '',
@@ -223,13 +217,9 @@ final readonly class CountersController
         };
     }
 
-    private function error(string $message): string
+    private function error(string $message): ViewResponse
     {
-        $title = __('Counters');
-        $this->render->addData($this->menu($title));
-
-        return $this->render->render('system::pages/result', [
-            'title'    => $title,
+        return new ViewResponse('@admin/pages/result.twig', $this->menu(__('Counters')) + [
             'type'     => 'alert-danger',
             'message'  => $message,
             'back_url' => self::URL,

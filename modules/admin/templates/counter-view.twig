@@ -1,0 +1,58 @@
+{#
+    One counter as it is saved. The snippets are printed as they are — the page is where an
+    administrator checks that the counter really works.
+
+    @var int    id
+    @var string name
+    @var string counter_1
+    @var string counter_2
+    @var string mode_name
+    @var bool   enabled
+    @var bool   require_cookie_consent
+    @var string base_url
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="m-sm-auto m-md-auto m-lg-0 col-sm-12 col-md-8 col-lg-7 col-xl-7">
+            <div class="card shadow border-0">
+                <div class="card-body">
+                    <h3 class="mb-0">{{ __('Title') }}</h3>
+                    <div>{{ name }}</div>
+                    <div>
+                        {{ __('Status:') }}
+                        {% if enabled %}
+                            <span class="badge bg-success rounded-pill">{{ __('Enabled') }}</span>
+                        {% else %}
+                            <span class="badge bg-danger rounded-pill">{{ __('Disabled') }}</span>
+                        {% endif %}
+                    </div>
+
+                    <h3 class="mb-0 mt-2">{{ __('Option 1') }}</h3>
+                    <div>{{ counter_1|raw }}</div>
+
+                    <h3 class="mb-0 mt-2">{{ __('Option 2') }}</h3>
+                    <div class="mb-2">{{ counter_2|raw }}</div>
+
+                    <h3 class="mb-0 mt-2">{{ __('Display mode:') }}</h3>
+                    <div>{{ mode_name }}</div>
+
+                    <h3 class="mb-0 mt-2">{{ __('Load only after cookie consent') }}</h3>
+                    <div>{{ require_cookie_consent ? __('Yes') : __('No') }}</div>
+
+                    <div class="mt-3 d-flex align-items-center">
+                        <form method="post" action="{{ base_url }}/{{ id }}/toggle" class="me-2">
+                            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                            <input type="hidden" name="enabled" value="{{ enabled ? 0 : 1 }}">
+                            <button type="submit" class="btn btn-danger">{{ enabled ? __('Disable') : __('Enable') }}</button>
+                        </form>
+                        <a href="{{ base_url }}/{{ id }}/edit" class="btn btn-primary me-2">{{ __('Edit') }}</a>
+                        <a href="{{ base_url }}/{{ id }}/delete" class="btn btn-primary me-2">{{ __('Delete') }}</a>
+                        <a href="{{ base_url }}" class="btn btn-secondary">{{ __('Back') }}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

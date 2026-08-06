@@ -132,12 +132,12 @@ msgid "Cookie banner"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:202
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:36
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:54
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:103
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:178
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:200
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:228
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:35
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:52
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:100
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:174
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:195
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:222
 #: modules/admin/templates/sidebar-admin-menu.phtml:183
 #: themes/admin/templates/system/app/sidebar-admin-menu.phtml:206
 msgid "Counters"
@@ -237,11 +237,11 @@ msgstr ""
 #: modules/admin/src/Application/Controllers/Settings/AdsController.php:91
 #: modules/admin/src/Application/Controllers/Settings/AdsController.php:132
 #: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:39
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:50
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:79
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:88
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:122
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:174
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:48
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:76
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:85
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:118
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:170
 #: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:39
 #: modules/admin/src/Application/Controllers/Settings/SystemSettingsController.php:41
 #: modules/admin/src/Application/Controllers/System/EmoticonsController.php:38
@@ -310,8 +310,8 @@ msgstr ""
 #: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:118
 #: modules/admin/templates/ads_add.phtml:38
 #: modules/admin/templates/ads_add.phtml:39
-#: modules/admin/templates/counters_add_confirm.phtml:25
-#: modules/admin/templates/counters_view.phtml:23
+#: modules/admin/templates/counter-preview.twig:23
+#: modules/admin/templates/counter-view.twig:21
 #: modules/admin/templates/forum/add.phtml:26
 #: modules/admin/templates/forum/add.phtml:27
 #: modules/admin/templates/forum/edit.phtml:25
@@ -437,7 +437,7 @@ msgstr ""
 
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:268
 #: modules/admin/templates/ads_index.phtml:49
-#: modules/admin/templates/counters_form.phtml:43
+#: modules/admin/templates/counter-form.twig:40
 msgid "Default"
 msgstr ""
 
@@ -502,9 +502,9 @@ msgstr ""
 #: modules/admin/src/Application/Controllers/Settings/AdsController.php:135
 #: modules/admin/templates/ads_confirm.phtml:21
 #: modules/admin/templates/ads_index.phtml:55
-#: modules/admin/templates/counters.phtml:38
-#: modules/admin/templates/counters_confirm.phtml:23
-#: modules/admin/templates/counters_view.phtml:53
+#: modules/admin/templates/counter-delete-confirm.twig:20
+#: modules/admin/templates/counter-view.twig:51
+#: modules/admin/templates/counters.twig:39
 #: modules/admin/templates/forum/del_confirm.phtml:20
 #: modules/admin/templates/forum/del_confirm_move_topics.phtml:49
 #: modules/admin/templates/forum/structure.phtml:35
@@ -524,8 +524,8 @@ msgid "Are you sure you want to delete all inactive links?"
 msgstr ""
 
 #: modules/admin/src/Application/Controllers/Settings/AdsController.php:197
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:100
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:134
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:97
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:130
 msgid "The required fields are not filled"
 msgstr ""
 
@@ -570,29 +570,29 @@ msgstr ""
 msgid "Antiflood Settings"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:53
-#: modules/admin/templates/counters_form.phtml:78
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:51
+#: modules/admin/templates/counter-form.twig:75
 msgid "Viewing"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:177
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:173
 msgid "Delete:"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:183
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:178
 #: modules/admin/templates/forum/del_confirm.phtml:15
 msgid "Do you really want to delete?"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:220
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:214
 msgid "On all pages showing option 1"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:221
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:215
 msgid "On all pages showing option 2"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:222
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:216
 msgid "On the main showing option 1, on the other pages option 2"
 msgstr ""
 
@@ -905,7 +905,7 @@ msgstr ""
 #: modules/admin/templates/ads_add.phtml:98
 #: modules/admin/templates/amnesty.phtml:36
 #: modules/admin/templates/antiflood.phtml:62
-#: modules/admin/templates/counters_add_confirm.phtml:53
+#: modules/admin/templates/counter-preview.twig:51
 #: modules/admin/templates/forum/edit.phtml:82
 #: modules/admin/templates/forum/settings.phtml:64
 #: modules/admin/templates/ipban_add.phtml:57
@@ -918,7 +918,7 @@ msgstr ""
 #: modules/admin/templates/admin_list.phtml:23
 #: modules/admin/templates/ads_index.phtml:61
 #: modules/admin/templates/ban_panel.phtml:26
-#: modules/admin/templates/counters.phtml:20
+#: modules/admin/templates/counters.twig:20
 #: modules/admin/templates/forum/hidden_posts.phtml:95
 #: modules/admin/templates/forum/hidden_topics.phtml:91
 #: modules/admin/templates/forum/structure.phtml:14
@@ -930,7 +930,7 @@ msgstr ""
 #: modules/admin/templates/admin_list.phtml:37
 #: modules/admin/templates/ads_index.phtml:68
 #: modules/admin/templates/ban_panel.phtml:38
-#: modules/admin/templates/counters.phtml:45
+#: modules/admin/templates/counters.twig:46
 #: modules/admin/templates/ipban.phtml:50
 #: modules/admin/templates/reg_list.phtml:49
 #: modules/admin/templates/search_ip.phtml:60
@@ -940,8 +940,8 @@ msgstr ""
 #: modules/admin/templates/admin_list.phtml:41
 #: modules/admin/templates/ads_index.phtml:77
 #: modules/admin/templates/ban_panel.phtml:47
-#: modules/admin/templates/counters.phtml:50
-#: modules/admin/templates/counters_view.phtml:54
+#: modules/admin/templates/counter-view.twig:52
+#: modules/admin/templates/counters.twig:51
 #: modules/admin/templates/file-integrity-scan-result.twig:25
 #: modules/admin/templates/forum/hidden_posts.phtml:118
 #: modules/admin/templates/forum/hidden_topics.phtml:114
@@ -1022,9 +1022,9 @@ msgstr ""
 #: modules/admin/templates/ads_confirm.phtml:23
 #: modules/admin/templates/amnesty.phtml:37
 #: modules/admin/templates/antiflood.phtml:63
-#: modules/admin/templates/counters_add_confirm.phtml:54
-#: modules/admin/templates/counters_confirm.phtml:25
-#: modules/admin/templates/counters_form.phtml:79
+#: modules/admin/templates/counter-delete-confirm.twig:22
+#: modules/admin/templates/counter-form.twig:76
+#: modules/admin/templates/counter-preview.twig:52
 #: modules/admin/templates/emoticons.phtml:27
 #: modules/admin/templates/file-integrity-snapshot-confirm.twig:22
 #: modules/admin/templates/forum/add.phtml:69
@@ -1046,12 +1046,12 @@ msgid "Cancel"
 msgstr ""
 
 #: modules/admin/templates/ads_index.phtml:36
-#: modules/admin/templates/counters.phtml:28
+#: modules/admin/templates/counters.twig:29
 msgid "On"
 msgstr ""
 
 #: modules/admin/templates/ads_index.phtml:38
-#: modules/admin/templates/counters.phtml:30
+#: modules/admin/templates/counters.twig:31
 msgid "Off"
 msgstr ""
 
@@ -1080,18 +1080,18 @@ msgid "Style settings"
 msgstr ""
 
 #: modules/admin/templates/ads_index.phtml:52
-#: modules/admin/templates/counters.phtml:35
+#: modules/admin/templates/counters.twig:36
 msgid "Up"
 msgstr ""
 
 #: modules/admin/templates/ads_index.phtml:53
-#: modules/admin/templates/counters.phtml:36
+#: modules/admin/templates/counters.twig:37
 msgid "Down"
 msgstr ""
 
 #: modules/admin/templates/ads_index.phtml:54
-#: modules/admin/templates/counters.phtml:37
-#: modules/admin/templates/counters_view.phtml:52
+#: modules/admin/templates/counter-view.twig:50
+#: modules/admin/templates/counters.twig:38
 #: modules/admin/templates/forum/structure.phtml:34
 msgid "Edit"
 msgstr ""
@@ -1167,104 +1167,104 @@ msgstr ""
 msgid "Sort"
 msgstr ""
 
-#: modules/admin/templates/counters.phtml:47
+#: modules/admin/templates/counter-form.twig:23
+#: modules/admin/templates/counter-form.twig:24
+msgid "Name"
+msgstr ""
+
+#: modules/admin/templates/counter-form.twig:27
+#: modules/admin/templates/counter-form.twig:48
+#: modules/admin/templates/counter-preview.twig:26
+#: modules/admin/templates/counter-view.twig:32
+msgid "Option 1"
+msgstr ""
+
+#: modules/admin/templates/counter-form.twig:29
+msgid "Code for main page"
+msgstr ""
+
+#: modules/admin/templates/counter-form.twig:32
+#: modules/admin/templates/counter-form.twig:52
+#: modules/admin/templates/counter-preview.twig:29
+#: modules/admin/templates/counter-view.twig:35
+msgid "Option 2"
+msgstr ""
+
+#: modules/admin/templates/counter-form.twig:34
+msgid "Code for other pages"
+msgstr ""
+
+#: modules/admin/templates/counter-form.twig:37
+msgid "Display mode"
+msgstr ""
+
+#: modules/admin/templates/counter-form.twig:43
+msgid "On the main showing option 1, on the other pages option 2.<br>If &quot;option 2&quot; not filled, counter would only appear on the main page."
+msgstr ""
+
+#: modules/admin/templates/counter-form.twig:57
+#: modules/admin/templates/counter-view.twig:26
+msgid "Enabled"
+msgstr ""
+
+#: modules/admin/templates/counter-form.twig:62
+#: modules/admin/templates/counter-view.twig:41
+msgid "Load only after cookie consent"
+msgstr ""
+
+#: modules/admin/templates/counter-form.twig:65
+msgid "If enabled, the counter code runs only after the visitor accepts the cookie banner. Requires the cookie banner to be enabled."
+msgstr ""
+
+#: modules/admin/templates/counter-form.twig:69
+msgid "WARNING!"
+msgstr ""
+
+#: modules/admin/templates/counter-form.twig:70
+msgid "Make sure you have correctly entered the code. It must meet the standard of XML"
+msgstr ""
+
+#: modules/admin/templates/counter-form.twig:71
+msgid "If you click &quot;View&quot; and XHTML errors occured, then click &quot;Back&quot; button in your browser, return to this form and correct the errors."
+msgstr ""
+
+#: modules/admin/templates/counter-preview.twig:47
+msgid "If the counter are displayed correctly and without errors, click &quot;Save&quot;.<br>Otherwise, click back button and correct errors."
+msgstr ""
+
+#: modules/admin/templates/counter-view.twig:24
+msgid "Status:"
+msgstr ""
+
+#: modules/admin/templates/counter-view.twig:28
+msgid "Disabled"
+msgstr ""
+
+#: modules/admin/templates/counter-view.twig:38
+msgid "Display mode:"
+msgstr ""
+
+#: modules/admin/templates/counter-view.twig:42
+msgid "Yes"
+msgstr ""
+
+#: modules/admin/templates/counter-view.twig:42
+msgid "No"
+msgstr ""
+
+#: modules/admin/templates/counter-view.twig:48
+msgid "Disable"
+msgstr ""
+
+#: modules/admin/templates/counter-view.twig:48
+msgid "Enable"
+msgstr ""
+
+#: modules/admin/templates/counters.twig:48
 #: modules/admin/templates/forum/add.phtml:68
 #: modules/admin/templates/forum/structure.phtml:40
 #: modules/admin/templates/ipban.phtml:57
 msgid "Add"
-msgstr ""
-
-#: modules/admin/templates/counters_add_confirm.phtml:28
-#: modules/admin/templates/counters_form.phtml:29
-#: modules/admin/templates/counters_form.phtml:51
-#: modules/admin/templates/counters_view.phtml:34
-msgid "Option 1"
-msgstr ""
-
-#: modules/admin/templates/counters_add_confirm.phtml:31
-#: modules/admin/templates/counters_form.phtml:34
-#: modules/admin/templates/counters_form.phtml:55
-#: modules/admin/templates/counters_view.phtml:37
-msgid "Option 2"
-msgstr ""
-
-#: modules/admin/templates/counters_add_confirm.phtml:49
-msgid "If the counter are displayed correctly and without errors, click &quot;Save&quot;.<br>Otherwise, click back button and correct errors."
-msgstr ""
-
-#: modules/admin/templates/counters_form.phtml:25
-#: modules/admin/templates/counters_form.phtml:26
-msgid "Name"
-msgstr ""
-
-#: modules/admin/templates/counters_form.phtml:31
-msgid "Code for main page"
-msgstr ""
-
-#: modules/admin/templates/counters_form.phtml:36
-msgid "Code for other pages"
-msgstr ""
-
-#: modules/admin/templates/counters_form.phtml:39
-msgid "Display mode"
-msgstr ""
-
-#: modules/admin/templates/counters_form.phtml:46
-msgid "On the main showing option 1, on the other pages option 2.<br>If &quot;option 2&quot; not filled, counter would only appear on the main page."
-msgstr ""
-
-#: modules/admin/templates/counters_form.phtml:60
-#: modules/admin/templates/counters_view.phtml:28
-msgid "Enabled"
-msgstr ""
-
-#: modules/admin/templates/counters_form.phtml:65
-#: modules/admin/templates/counters_view.phtml:43
-msgid "Load only after cookie consent"
-msgstr ""
-
-#: modules/admin/templates/counters_form.phtml:68
-msgid "If enabled, the counter code runs only after the visitor accepts the cookie banner. Requires the cookie banner to be enabled."
-msgstr ""
-
-#: modules/admin/templates/counters_form.phtml:72
-msgid "WARNING!"
-msgstr ""
-
-#: modules/admin/templates/counters_form.phtml:73
-msgid "Make sure you have correctly entered the code. It must meet the standard of XML"
-msgstr ""
-
-#: modules/admin/templates/counters_form.phtml:74
-msgid "If you click &quot;View&quot; and XHTML errors occured, then click &quot;Back&quot; button in your browser, return to this form and correct the errors."
-msgstr ""
-
-#: modules/admin/templates/counters_view.phtml:26
-msgid "Status:"
-msgstr ""
-
-#: modules/admin/templates/counters_view.phtml:30
-msgid "Disabled"
-msgstr ""
-
-#: modules/admin/templates/counters_view.phtml:40
-msgid "Display mode:"
-msgstr ""
-
-#: modules/admin/templates/counters_view.phtml:44
-msgid "Yes"
-msgstr ""
-
-#: modules/admin/templates/counters_view.phtml:44
-msgid "No"
-msgstr ""
-
-#: modules/admin/templates/counters_view.phtml:50
-msgid "Disable"
-msgstr ""
-
-#: modules/admin/templates/counters_view.phtml:50
-msgid "Enable"
 msgstr ""
 
 #: modules/admin/templates/emoticons.phtml:21

@@ -1,0 +1,53 @@
+{#
+    The list of the analytics counters.
+
+    @var iterable items   Counter models.
+    @var string   add_url
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% macro mini_form(action, label, csrf_token) %}
+    <form method="post" action="{{ action }}" class="d-inline me-2">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        <button type="submit" class="btn btn-link p-0">{{ label }}</button>
+    </form>
+{% endmacro %}
+
+{% block content %}
+    {% import _self as forms %}
+
+    {% if items is empty %}
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-info', alert: __('The list is empty')} only %}
+    {% endif %}
+
+    {% for item in items %}
+        <div class="new_post-item without_avatar">
+            <div class="d-flex justify-content-between align-items-center">
+                <a href="/admin/counters/{{ item.id }}" class="h3">{{ item.name }}</a>
+                <div>
+                    {% if item.switch == 1 %}
+                        <span class="badge rounded-pill bg-success">{{ __('On') }}</span>
+                    {% else %}
+                        <span class="badge rounded-pill bg-danger">{{ __('Off') }}</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="mt-2 d-flex align-items-center">
+                {{ forms.mini_form('/admin/counters/' ~ item.id ~ '/up', __('Up'), app.csrf_token) }}
+                {{ forms.mini_form('/admin/counters/' ~ item.id ~ '/down', __('Down'), app.csrf_token) }}
+                <a href="/admin/counters/{{ item.id }}/edit" class="me-2">{{ __('Edit') }}</a>
+                <a href="/admin/counters/{{ item.id }}/delete" class="me-2 text-danger">{{ __('Delete') }}</a>
+            </div>
+        </div>
+    {% endfor %}
+
+    <div class="mt-2">
+        {% if items is not empty %}
+            <div class="mb-2">{{ __('Total:') }} {{ items|length }}</div>
+        {% endif %}
+        <a href="{{ add_url }}" class="btn btn-primary">{{ __('Add') }}</a>
+    </div>
+    <div class="mt-2">
+        <a href="/admin/">{{ __('Back') }}</a>
+    </div>
+{% endblock %}

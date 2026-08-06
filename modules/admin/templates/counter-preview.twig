@@ -1,0 +1,59 @@
+{#
+    The counter as it was typed, before it is saved: the snippets run here so that the
+    administrator sees whether they work, and the form carries the values on to the save.
+
+    @var string form_action
+    @var string name
+    @var string counter_1
+    @var string counter_2
+    @var int    mode
+    @var bool   require_cookie_consent
+    @var bool   enabled
+    @var int    id                     Null when a new counter is being added.
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="m-sm-auto m-md-auto m-lg-0 col-sm-12 col-md-8 col-lg-7 col-xl-7">
+            <div class="card shadow border-0">
+                <form action="{{ form_action }}" method="post">
+                    <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                    <div class="card-body">
+                        <h3 class="mb-0">{{ __('Title') }}</h3>
+                        <div>{{ name }}</div>
+
+                        <h3 class="mb-0 mt-2">{{ __('Option 1') }}</h3>
+                        <div>{{ counter_1|raw }}</div>
+
+                        <h3 class="mb-0 mt-2">{{ __('Option 2') }}</h3>
+                        <div class="mb-2">{{ counter_2|raw }}</div>
+
+                        <input type="hidden" value="{{ name }}" name="name">
+                        <input type="hidden" value="{{ counter_1 }}" name="link1">
+                        <input type="hidden" value="{{ counter_2 }}" name="link2">
+                        <input type="hidden" value="{{ mode }}" name="mode">
+                        {% if enabled %}
+                            <input type="hidden" value="1" name="switch">
+                        {% endif %}
+                        {% if require_cookie_consent %}
+                            <input type="hidden" value="1" name="require_cookie_consent">
+                        {% endif %}
+                        {% if id %}
+                            <input type="hidden" value="{{ id }}" name="id">
+                        {% endif %}
+
+                        <div class="alert alert-info">
+                            {{ __('If the counter are displayed correctly and without errors, click &quot;Save&quot;.<br>Otherwise, click back button and correct errors.')|raw }}
+                        </div>
+
+                        <div class="mt-3">
+                            <input type="submit" value="{{ __('Save') }}" class="btn btn-danger"/>
+                            <a href="/admin/counters" class="btn btn-secondary">{{ __('Cancel') }}</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
