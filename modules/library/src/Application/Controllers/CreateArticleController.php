@@ -12,19 +12,19 @@ use Johncms\Modules\Library\Application\Services\LibrarySlugService;
 use Johncms\Modules\Library\Domain\Models\LibraryCategory;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Security\AntifloodCheckerInterface;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Modules\Library\Application\Services\Hashtags;
 use Johncms\Modules\Library\Application\Services\Utils;
 use Symfony\Component\HttpFoundation\Response;
+use Twig\Markup;
 
 final readonly class CreateArticleController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private AntifloodCheckerInterface $antifloodChecker,
         private User $currentUser,
@@ -35,7 +35,7 @@ final readonly class CreateArticleController
         $this->controllerContext->initModule('library');
     }
 
-    public function __invoke(Request $request): Response
+    public function __invoke(Request $request): ViewResponse
     {
         $catId = max(0, $request->queryInt('id', 0));
         $isAdmin = $this->currentUser->rights > 4;
@@ -43,22 +43,18 @@ final readonly class CreateArticleController
         $this->navChain->add(__('Library'), '/library/');
         $this->navChain->add(__('Write Article'));
 
-        $this->render->addData([
-            'title'      => __('Write Article'),
-            'page_title' => __('Write Article'),
-        ]);
-
         $category = LibraryCategory::query()->find($catId);
 
         if (! $isAdmin && (! $this->currentUser->isValid() || $category === null)) {
-            return new Response(
-                $this->render->render('system::pages/result', [
+            return new ViewResponse(
+                '@theme/pages/result.twig',
+                [
                     'title'         => __('Write Article'),
                     'type'          => 'alert-danger',
                     'message'       => __('Access denied'),
                     'back_url'      => '/library/',
                     'back_url_name' => __('Library'),
-                ]),
+                ],
                 Response::HTTP_NOT_FOUND
             );
         }
@@ -72,7 +68,7 @@ final readonly class CreateArticleController
         return $this->renderForm($catId, $formUrl, '', '', '', '', [], false, null, null);
     }
 
-    private function handlePost(Request $request, int $catId, bool $isAdmin, string $formUrl): Response
+    private function handlePost(Request $request, int $catId, bool $isAdmin, string $formUrl): ViewResponse
     {
         $post = $request->request->all();
         $name = mb_substr(trim((string) ($post['name'] ?? '')), 0, 100);
@@ -84,7 +80,8 @@ final readonly class CreateArticleController
 
         $flood = $this->antifloodChecker->getRemainingSeconds();
         if ($flood) {
-            $errors[] = sprintf(__('You cannot add the Article so often<br>Please, wait %d sec.'), $flood);
+            // The message breaks over two lines, so the markup is part of the translated string.
+            $errors[] = new Markup(__('You cannot add the Article so often<br>Please, wait %d sec.', $flood), 'UTF-8');
             return $this->renderForm($catId, $formUrl, $name, $announce, (string) ($post['text'] ?? ''), $tag, $errors, false, null, null);
         }
 
@@ -175,23 +172,24 @@ final readonly class CreateArticleController
         bool $approved,
         ?int $cid,
         ?string $articleUrl,
-    ): Response {
+    ): ViewResponse {
         $catUrl = $this->categoryPathService->getCategoryUrlById($catId) ?? '/library/';
 
-        return new Response($this->render->render('library::article_create', [
-            'form_url'    => $formUrl,
-            'cat_id'      => $catId,
-            'cat_url'     => $catUrl,
-            'name'        => $name,
-            'announce'    => $announce,
-            'text'        => $text,
-            'tag'         => $tag,
-            'errors'      => $errors,
-            'success'     => $cid !== null && empty($errors),
-            'approved'    => $approved,
-            'cid'         => $cid,
-            'article_url' => $articleUrl,
-        ]));
+        return new ViewResponse('@library/public/create-article.twig', [
+            'title'        => __('Write Article'),
+            'page_title'   => __('Write Article'),
+            'form_url'     => $formUrl,
+            'cat_url'      => $catUrl,
+            'name'         => $name,
+            'announce'     => $announce,
+            'text'         => $text,
+            'tags'         => $tag,
+            'errors'       => $errors,
+            'success'      => $cid !== null && empty($errors),
+            'approved'     => $approved,
+            'article_url'  => $articleUrl,
+            'field_height' => $this->currentUser->config->fieldHeight,
+        ]);
     }
 
     /**

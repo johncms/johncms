@@ -1,0 +1,35 @@
+{#
+    The most recent comment of every commented article.
+
+    @param int     total
+    @param array[] comments
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    {% if total %}
+        {% for comment in comments %}
+            <div class="new_post-item without_avatar">
+                <a href="/library/article/{{ comment.article_id }}/comments" class="card-title h3">{{ comment.article_name }}</a>
+                <div class="post-body">{{ comment.text }}</div>
+                <div class="me-2 post-meta">
+                    <span>{{ __('Author:') }}</span>
+                    {%- include '@library/public/components/uploader.twig' with {
+                        user_id: comment.user_id,
+                        name: comment.user_name,
+                        date: comment.date
+                    } only %}
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="row">
+            <div class="col-md-6">
+                <div class="alert alert-info">{{ __('The list is empty') }}</div>
+            </div>
+        </div>
+    {% endif %}
+    <div class="mt-3">
+        <a href="/library/">{{ __('Back') }}</a>
+    </div>
+{% endblock %}

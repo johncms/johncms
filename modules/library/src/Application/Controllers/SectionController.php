@@ -7,25 +7,21 @@ namespace Johncms\Modules\Library\Application\Controllers;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Library\Application\Services\LibraryCategoryPathService;
 use Johncms\Modules\Library\Domain\Models\LibraryCategory;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
-use Johncms\System\View\Render;
 use Johncms\Users\User;
-use Johncms\Modules\Library\Application\Services\Hashtags;
 use Johncms\Modules\Library\Application\Services\Rating;
 use Johncms\Modules\Library\Application\Services\Tree;
 use Johncms\Modules\Library\Application\Services\Utils;
-use Johncms\Modules\Library\Application\Services\ViewHelper;
 use Johncms\Utils\DateFormatterInterface;
-use Johncms\Utils\PlainTextFormatter;
 use Symfony\Component\HttpFoundation\Response;
 
 final readonly class SectionController
 {
     public function __construct(
-        private Render $render,
         private NavChain $navChain,
         private DateFormatterInterface $dateFormatter,
         private User $currentUser,
@@ -35,17 +31,18 @@ final readonly class SectionController
     ) {
     }
 
-    public function __invoke(string $categoryPath): Response
+    public function __invoke(string $categoryPath): ViewResponse
     {
         $category = $this->categoryPathService->findCategoryByPath($categoryPath);
 
         if ($category === null) {
-            return new Response(
-                $this->render->render('system::pages/result', [
+            return new ViewResponse(
+                '@theme/pages/result.twig',
+                [
                     'title'   => __('Library'),
                     'type'    => 'alert-danger',
                     'message' => __('Section does not exist'),
-                ]),
+                ],
                 Response::HTTP_NOT_FOUND
             );
         }
@@ -66,7 +63,7 @@ final readonly class SectionController
         return $this->renderBookList($category, $isAdmin);
     }
 
-    private function renderSectionsList(LibraryCategory $category, bool $isAdmin): Response
+    private function renderSectionsList(LibraryCategory $category, bool $isAdmin): ViewResponse
     {
         $id    = $category->id;
         $total = LibraryCategory::query()->where('parent', $id)->count();
@@ -78,10 +75,6 @@ final readonly class SectionController
         }
 
         $meta = new PageMeta($category->name . ' — ' . __('Library'), $pagination->getCurrentPage());
-        $this->render->addData([
-            'title'      => $meta->title,
-            'page_title' => $category->name,
-        ]);
 
         $offset   = $pagination->getOffset();
         $sections = LibraryCategory::query()
@@ -96,26 +89,27 @@ final readonly class SectionController
         foreach ($sections as $section) {
             $i++;
             $list[] = [
-                'id'                    => $section->id,
-                'url'                   => $section->url,
-                'name'                  => $section->name,
-                'description'           => $section->description,
-                'libCounter'            => Utils::libCounter($section->id, $section->dir),
-                'sectionListAdminPanel' => ViewHelper::sectionsListAdminPanel($id, $section->id, $i, $total),
+                'id'          => $section->id,
+                'url'         => $section->url,
+                'name'        => $section->name,
+                'description' => $section->description,
+                'counter'     => Utils::libCounter($section->id, $section->dir),
+                'position'    => $i,
             ];
         }
 
-        return new Response($this->render->render('library::sectionslist', [
-            'total'        => $total,
-            'admin'        => $isAdmin,
-            'id'           => $id,
-            'category_url' => $category->url,
-            'list'         => $list,
-            'pagination'   => $pagination->render(),
-        ]));
+        return new ViewResponse('@library/public/sections.twig', [
+            'title'      => $meta->title,
+            'page_title' => $category->name,
+            'total'      => $total,
+            'admin'      => $isAdmin,
+            'id'         => $id,
+            'sections'   => $list,
+            'pagination' => $pagination->hasPages() ? $pagination->render() : null,
+        ]);
     }
 
-    private function renderBookList(LibraryCategory $category, bool $isAdmin): Response
+    private function renderBookList(LibraryCategory $category, bool $isAdmin): ViewResponse
     {
         $id    = $category->id;
         $total = LibraryText::query()->where('cat_id', $id)->where('premod', 1)->count();
@@ -127,10 +121,6 @@ final readonly class SectionController
         }
 
         $meta = new PageMeta($category->name . ' — ' . __('Library'), $pagination->getCurrentPage());
-        $this->render->addData([
-            'title'      => $meta->title,
-            'page_title' => $category->name,
-        ]);
 
         $moderMenu = $isAdmin || ($this->currentUser->isValid() && (int) $category->user_add > 0);
         $offset    = $pagination->getOffset();
@@ -146,30 +136,29 @@ final readonly class SectionController
 
         $list = [];
         foreach ($articles as $article) {
-            $uploader = $article->uploader_id
-                ? '<a href="' . config('johncms')['homeurl'] . '/profile/' . $article->uploader_id . '">' . PlainTextFormatter::escape($article->uploader) . '</a>'
-                : PlainTextFormatter::escape($article->uploader);
-
-            $rate = new Rating($article->id);
+            $rate   = new Rating($article->id);
             $list[] = [
-                'id'         => $article->id,
-                'url'        => $article->url,
-                'name'       => $article->name,
-                'announce'   => $article->announce,
-                'who'        => $uploader . '&nbsp;(' . $this->dateFormatter->format($article->time) . ')',
-                'ratingView' => $rate->viewRate(1),
-                'tags'       => (new Hashtags($article->id))->getAllStatTags(1) ?: null,
+                'id'          => $article->id,
+                'url'         => $article->url,
+                'name'        => $article->name,
+                'announce'    => $article->announce,
+                'uploader_id' => $article->uploader_id,
+                'uploader'    => $article->uploader,
+                'date'        => $this->dateFormatter->format($article->time),
+                'rate'        => $rate->getRate(),
+                'votes'       => $rate->getVotesCount(),
             ];
         }
 
-        return new Response($this->render->render('library::booklist', [
-            'total'      => $total,
-            'admin'      => $isAdmin,
-            'moderMenu'  => $moderMenu,
-            'id'         => $id,
-            'category_url' => $category->url,
-            'list'       => $list,
-            'pagination' => $pagination->render(),
-        ]));
+        return new ViewResponse('@library/public/articles.twig', [
+            'title'       => $meta->title,
+            'page_title'  => $category->name,
+            'total'       => $total,
+            'admin'       => $isAdmin,
+            'moder_menu'  => $moderMenu,
+            'id'          => $id,
+            'articles'    => $list,
+            'pagination'  => $pagination->hasPages() ? $pagination->render() : null,
+        ]);
     }
 }

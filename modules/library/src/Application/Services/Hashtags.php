@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Library\Application\Services;
 
 use PDO;
+use Twig\Markup;
 
 class Hashtags
 {
@@ -39,21 +40,31 @@ class Hashtags
         return $res;
     }
 
-    public function getAllStatTags(int $tpl = 0): ?string
+    /**
+     * The tags of the article as links to the tag listing. Markup by contract.
+     */
+    public function getTagLinks(): ?Markup
+    {
+        $tags = $this->getTagNames();
+
+        if ($tags === []) {
+            return null;
+        }
+
+        return new Markup((new Links($tags))->proccess('tplTag')->linkSeparator()->result(), 'UTF-8');
+    }
+
+    /**
+     * The tags of the article as plain names, the way the edit form takes them.
+     *
+     * @return list<string>
+     */
+    public function getTagNames(): array
     {
         $stmt = $this->db->prepare('SELECT `tag_name` FROM `library_tags` WHERE `lib_text_id` = ?');
         $stmt->execute([$this->lib_id]);
-        if ($stmt->rowCount()) {
-            $res = $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
-            $obj = new Links($res);
-            if ($tpl === 1) {
-                return $obj->proccess('tplTag')->linkSeparator()->result();
-            }
 
-            return $obj->linkSeparator(', ')->result();
-        }
-
-        return null;
+        return $stmt->fetchAll(PDO::FETCH_COLUMN, 0);
     }
 
     public function addTags(array $tags): ?int

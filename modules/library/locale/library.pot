@@ -3,270 +3,263 @@ msgstr ""
 "X-Domain: library\n"
 
 #: modules/library/src/Application/Controllers/ArticleCommentsController.php:36
-#: modules/library/src/Application/Controllers/ArticleCommentsController.php:49
-#: modules/library/src/Application/Controllers/ArticleCommentsController.php:65
-#: modules/library/src/Application/Controllers/ArticleCommentsController.php:69
-#: modules/library/src/Application/Controllers/ArticleCommentsController.php:91
+#: modules/library/src/Application/Controllers/ArticleCommentsController.php:52
+#: modules/library/src/Application/Controllers/ArticleCommentsController.php:70
+#: modules/library/src/Application/Controllers/ArticleCommentsController.php:74
+#: modules/library/src/Application/Controllers/ArticleCommentsController.php:97
 msgid "Comments"
 msgstr ""
 
 #: modules/library/src/Application/Controllers/ArticleCommentsController.php:38
-#: modules/library/src/Application/Controllers/ArticleCommentsController.php:51
+#: modules/library/src/Application/Controllers/ArticleCommentsController.php:54
 #: modules/library/src/Application/Controllers/DeleteArticleController.php:35
 #: modules/library/src/Application/Controllers/DeleteArticleImageController.php:35
 #: modules/library/src/Application/Controllers/DeleteSectionController.php:35
-#: modules/library/src/Application/Controllers/EditArticleController.php:54
+#: modules/library/src/Application/Controllers/EditArticleController.php:60
 #: modules/library/src/Application/Controllers/EditSectionController.php:40
 #: modules/library/src/Application/Controllers/PremodController.php:42
-#: modules/library/src/Application/Middlewares/LibraryAccessMiddleware.php:28
+#: modules/library/src/Application/Middlewares/LibraryAccessMiddleware.php:29
 msgid "Access forbidden"
 msgstr ""
 
 #: modules/library/src/Application/Controllers/ArticleCommentsController.php:40
-#: modules/library/src/Application/Controllers/ArticleCommentsController.php:53
-#: modules/library/src/Application/Controllers/ArticleCommentsController.php:65
-#: modules/library/src/Application/Controllers/ArticleController.php:48
-#: modules/library/src/Application/Controllers/ArticleController.php:77
-#: modules/library/src/Application/Controllers/ArticleController.php:84
+#: modules/library/src/Application/Controllers/ArticleCommentsController.php:56
+#: modules/library/src/Application/Controllers/ArticleCommentsController.php:70
+#: modules/library/src/Application/Controllers/ArticleController.php:50
+#: modules/library/src/Application/Controllers/ArticleController.php:81
+#: modules/library/src/Application/Controllers/ArticleController.php:88
 #: modules/library/src/Application/Controllers/CreateArticleController.php:43
-#: modules/library/src/Application/Controllers/CreateArticleController.php:60
+#: modules/library/src/Application/Controllers/CreateArticleController.php:56
 #: modules/library/src/Application/Controllers/CreateSectionController.php:39
-#: modules/library/src/Application/Controllers/CreateSectionController.php:46
-#: modules/library/src/Application/Controllers/DeleteArticleController.php:49
-#: modules/library/src/Application/Controllers/DeleteArticleImageController.php:41
-#: modules/library/src/Application/Controllers/DeleteSectionController.php:49
-#: modules/library/src/Application/Controllers/EditArticleController.php:58
-#: modules/library/src/Application/Controllers/EditSectionController.php:55
-#: modules/library/src/Application/Controllers/LatestCommentsController.php:28
-#: modules/library/src/Application/Controllers/LibraryIndexController.php:34
-#: modules/library/src/Application/Controllers/LibraryIndexController.php:37
-#: modules/library/src/Application/Controllers/LibraryIndexController.php:38
-#: modules/library/src/Application/Controllers/NewArticlesController.php:46
-#: modules/library/src/Application/Controllers/NewArticlesController.php:48
-#: modules/library/src/Application/Controllers/PremodController.php:46
-#: modules/library/src/Application/Controllers/SearchController.php:36
-#: modules/library/src/Application/Controllers/SearchController.php:48
-#: modules/library/src/Application/Controllers/SearchController.php:75
-#: modules/library/src/Application/Controllers/SectionController.php:44
+#: modules/library/src/Application/Controllers/CreateSectionController.php:48
+#: modules/library/src/Application/Controllers/DeleteArticleController.php:51
+#: modules/library/src/Application/Controllers/DeleteArticleImageController.php:43
+#: modules/library/src/Application/Controllers/DeleteSectionController.php:51
+#: modules/library/src/Application/Controllers/EditArticleController.php:66
+#: modules/library/src/Application/Controllers/EditSectionController.php:60
+#: modules/library/src/Application/Controllers/LatestCommentsController.php:26
+#: modules/library/src/Application/Controllers/LibraryIndexController.php:32
+#: modules/library/src/Application/Controllers/LibraryIndexController.php:56
+#: modules/library/src/Application/Controllers/LibraryIndexController.php:57
+#: modules/library/src/Application/Controllers/NewArticlesController.php:42
+#: modules/library/src/Application/Controllers/NewArticlesController.php:44
+#: modules/library/src/Application/Controllers/PremodController.php:48
+#: modules/library/src/Application/Controllers/SearchController.php:35
+#: modules/library/src/Application/Controllers/SearchController.php:47
+#: modules/library/src/Application/Controllers/SearchController.php:73
+#: modules/library/src/Application/Controllers/SectionController.php:42
 #: modules/library/src/Application/Controllers/SectionController.php:52
 #: modules/library/src/Application/Controllers/SectionController.php:77
-#: modules/library/src/Application/Controllers/SectionController.php:126
-#: modules/library/src/Application/Controllers/TagsController.php:35
-#: modules/library/src/Application/Controllers/TagsController.php:70
-#: modules/library/src/Application/Controllers/TopController.php:39
-#: modules/library/src/Application/Controllers/TopController.php:41
-#: modules/library/src/Application/Middlewares/LibraryAccessMiddleware.php:34
-#: modules/library/templates/helpers/printNavPanel.phtml:2
-#: modules/library/templates/tagcloud.phtml:2
+#: modules/library/src/Application/Controllers/SectionController.php:123
+#: modules/library/src/Application/Controllers/TagsController.php:33
+#: modules/library/src/Application/Controllers/TagsController.php:71
+#: modules/library/src/Application/Controllers/TopController.php:34
+#: modules/library/src/Application/Controllers/TopController.php:36
+#: modules/library/src/Application/Middlewares/LibraryAccessMiddleware.php:35
 msgid "Library"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/ArticleController.php:50
-#: modules/library/src/Application/Controllers/DeleteArticleController.php:45
-#: modules/library/src/Application/Controllers/EditArticleController.php:41
+#: modules/library/src/Application/Controllers/ArticleController.php:52
+#: modules/library/src/Application/Controllers/DeleteArticleController.php:47
+#: modules/library/src/Application/Controllers/EditArticleController.php:44
 msgid "Articles do not exist"
 msgstr ""
 
 #: modules/library/src/Application/Controllers/CreateArticleController.php:44
-#: modules/library/src/Application/Controllers/CreateArticleController.php:47
-#: modules/library/src/Application/Controllers/CreateArticleController.php:48
-#: modules/library/src/Application/Controllers/CreateArticleController.php:56
-#: modules/library/templates/booklist.phtml:46
+#: modules/library/src/Application/Controllers/CreateArticleController.php:52
+#: modules/library/src/Application/Controllers/CreateArticleController.php:179
+#: modules/library/src/Application/Controllers/CreateArticleController.php:180
+#: modules/library/templates/public/articles.twig:49
 msgid "Write Article"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/CreateArticleController.php:58
+#: modules/library/src/Application/Controllers/CreateArticleController.php:54
 #: modules/library/src/Application/Controllers/CreateSectionController.php:37
 msgid "Access denied"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/CreateArticleController.php:85
+#: modules/library/src/Application/Controllers/CreateArticleController.php:84
 #, php-format
 msgid "You cannot add the Article so often<br>Please, wait %d sec."
 msgstr ""
 
-#: modules/library/src/Application/Controllers/CreateArticleController.php:90
-#: modules/library/src/Application/Controllers/CreateSectionController.php:70
+#: modules/library/src/Application/Controllers/CreateArticleController.php:89
+#: modules/library/src/Application/Controllers/CreateSectionController.php:67
 msgid "You have not entered the name"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/CreateArticleController.php:106
+#: modules/library/src/Application/Controllers/CreateArticleController.php:105
 msgid "The file is invalid encoding, preferably UTF-8"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/CreateArticleController.php:110
+#: modules/library/src/Application/Controllers/CreateArticleController.php:109
 msgid "Invalid file format allowed * .txt"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/CreateArticleController.php:115
+#: modules/library/src/Application/Controllers/CreateArticleController.php:114
 msgid "You have not entered text"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/CreateArticleController.php:145
+#: modules/library/src/Application/Controllers/CreateArticleController.php:144
 msgid "Photo uploading error"
 msgstr ""
 
 #: modules/library/src/Application/Controllers/CreateSectionController.php:35
-#: modules/library/src/Application/Controllers/CreateSectionController.php:47
-#: modules/library/src/Application/Controllers/CreateSectionController.php:50
-#: modules/library/src/Application/Controllers/CreateSectionController.php:51
-#: modules/library/src/Application/Controllers/CreateSectionController.php:68
-#: modules/library/templates/main.phtml:65
+#: modules/library/src/Application/Controllers/CreateSectionController.php:49
+#: modules/library/src/Application/Controllers/CreateSectionController.php:65
+#: modules/library/src/Application/Controllers/CreateSectionController.php:95
+#: modules/library/src/Application/Controllers/CreateSectionController.php:96
+#: modules/library/templates/public/index.twig:62
 msgid "Create Section"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/CreateSectionController.php:72
+#: modules/library/src/Application/Controllers/CreateSectionController.php:69
 msgid "Repeat"
 msgstr ""
 
 #: modules/library/src/Application/Controllers/DeleteArticleController.php:33
-#: modules/library/src/Application/Controllers/DeleteArticleController.php:43
+#: modules/library/src/Application/Controllers/DeleteArticleController.php:45
 #: modules/library/src/Application/Controllers/DeleteArticleImageController.php:33
 #: modules/library/src/Application/Controllers/DeleteSectionController.php:33
-#: modules/library/src/Application/Controllers/DeleteSectionController.php:43
-#: modules/library/templates/book.phtml:77
-#: modules/library/templates/booklist.phtml:49
-#: modules/library/templates/helpers/sectionListAdminPanel.phtml:8
-#: modules/library/templates/premod.phtml:35
-#: modules/library/templates/sectionslist.phtml:59
+#: modules/library/src/Application/Controllers/DeleteSectionController.php:45
+#: modules/library/templates/public/article.twig:88
+#: modules/library/templates/public/articles.twig:52
+#: modules/library/templates/public/components/section-admin-panel.twig:16
+#: modules/library/templates/public/premod.twig:38
+#: modules/library/templates/public/sections.twig:55
 msgid "Delete"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/DeleteArticleController.php:54
-#: modules/library/src/Application/Controllers/DeleteArticleController.php:57
-#: modules/library/src/Application/Controllers/DeleteArticleController.php:58
+#: modules/library/src/Application/Controllers/DeleteArticleController.php:56
+#: modules/library/src/Application/Controllers/DeleteArticleController.php:67
+#: modules/library/src/Application/Controllers/DeleteArticleController.php:68
 msgid "Delete Article"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/DeleteArticleImageController.php:48
-#: modules/library/src/Application/Controllers/DeleteArticleImageController.php:51
-#: modules/library/src/Application/Controllers/DeleteArticleImageController.php:52
-#: modules/library/templates/edit_article.phtml:24
+#: modules/library/src/Application/Controllers/DeleteArticleImageController.php:50
+#: modules/library/src/Application/Controllers/DeleteArticleImageController.php:60
+#: modules/library/src/Application/Controllers/DeleteArticleImageController.php:61
+#: modules/library/templates/public/edit-article.twig:32
 msgid "Delete Cover Image"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/DeleteSectionController.php:45
-#: modules/library/src/Application/Controllers/EditSectionController.php:51
-#: modules/library/src/Application/Controllers/SectionController.php:46
+#: modules/library/src/Application/Controllers/DeleteSectionController.php:47
+#: modules/library/src/Application/Controllers/EditSectionController.php:54
+#: modules/library/src/Application/Controllers/SectionController.php:44
 msgid "Section does not exist"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/DeleteSectionController.php:53
-#: modules/library/src/Application/Controllers/DeleteSectionController.php:56
-#: modules/library/src/Application/Controllers/DeleteSectionController.php:57
+#: modules/library/src/Application/Controllers/DeleteSectionController.php:55
+#: modules/library/src/Application/Controllers/DeleteSectionController.php:142
+#: modules/library/src/Application/Controllers/DeleteSectionController.php:143
 msgid "Delete Section"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/DeleteSectionController.php:130
-#, php-format
-msgid "Successfully deleted:<br>Directories: (%d)<br>Articles: (%d)<br>Tags: (%d)<br>Comments: (%d)<br>Images: (%d)"
-msgstr ""
-
-#: modules/library/src/Application/Controllers/DownloadArticleController.php:87
+#: modules/library/src/Application/Controllers/DownloadArticleController.php:90
 msgid "Author name"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/DownloadArticleController.php:87
+#: modules/library/src/Application/Controllers/DownloadArticleController.php:90
 msgid "Author last name"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/DownloadArticleController.php:89
+#: modules/library/src/Application/Controllers/DownloadArticleController.php:92
 msgid "Date"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/EditArticleController.php:39
-#: modules/library/src/Application/Controllers/EditArticleController.php:52
-#: modules/library/src/Application/Controllers/EditArticleController.php:63
-#: modules/library/src/Application/Controllers/EditArticleController.php:66
-#: modules/library/src/Application/Controllers/EditArticleController.php:67
+#: modules/library/src/Application/Controllers/EditArticleController.php:42
+#: modules/library/src/Application/Controllers/EditArticleController.php:58
+#: modules/library/src/Application/Controllers/EditArticleController.php:71
+#: modules/library/src/Application/Controllers/EditArticleController.php:74
+#: modules/library/src/Application/Controllers/EditArticleController.php:75
 msgid "Edit Article"
 msgstr ""
 
 #: modules/library/src/Application/Controllers/EditSectionController.php:38
-#: modules/library/src/Application/Controllers/EditSectionController.php:49
-#: modules/library/src/Application/Controllers/EditSectionController.php:59
-#: modules/library/src/Application/Controllers/EditSectionController.php:62
-#: modules/library/src/Application/Controllers/EditSectionController.php:63
+#: modules/library/src/Application/Controllers/EditSectionController.php:52
+#: modules/library/src/Application/Controllers/EditSectionController.php:64
+#: modules/library/src/Application/Controllers/EditSectionController.php:67
+#: modules/library/src/Application/Controllers/EditSectionController.php:68
 msgid "Edit Section"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/LatestCommentsController.php:29
-#: modules/library/src/Application/Controllers/LatestCommentsController.php:32
-#: modules/library/src/Application/Controllers/LatestCommentsController.php:33
-#: modules/library/templates/main.phtml:34
+#: modules/library/src/Application/Controllers/LatestCommentsController.php:27
+#: modules/library/src/Application/Controllers/LatestCommentsController.php:63
+#: modules/library/src/Application/Controllers/LatestCommentsController.php:64
+#: modules/library/templates/public/index.twig:27
 msgid "Latest comments"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/NewArticlesController.php:45
-#: modules/library/templates/main.phtml:28
+#: modules/library/src/Application/Controllers/NewArticlesController.php:41
+#: modules/library/templates/public/index.twig:22
 msgid "New Articles"
 msgstr ""
 
 #: modules/library/src/Application/Controllers/PremodController.php:40
-#: modules/library/src/Application/Controllers/PremodController.php:47
-#: modules/library/src/Application/Controllers/PremodController.php:50
-#: modules/library/src/Application/Controllers/PremodController.php:51
-#: modules/library/templates/main.phtml:68
+#: modules/library/src/Application/Controllers/PremodController.php:49
+#: modules/library/src/Application/Controllers/PremodController.php:100
+#: modules/library/src/Application/Controllers/PremodController.php:101
+#: modules/library/templates/public/index.twig:65
 msgid "Moderation Articles"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/SearchController.php:37
-#: modules/library/src/Application/Controllers/SearchController.php:48
+#: modules/library/src/Application/Controllers/SearchController.php:36
+#: modules/library/src/Application/Controllers/SearchController.php:47
 #: modules/library/src/Application/Controllers/SearchController.php:51
-#: modules/library/templates/main.phtml:31
-#: modules/library/templates/search.phtml:25
+#: modules/library/templates/public/index.twig:25
+#: modules/library/templates/public/search.twig:25
 msgid "Search"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/SearchController.php:74
+#: modules/library/src/Application/Controllers/SearchController.php:72
 #, php-format
 msgid "Search results for: %s"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/TagsController.php:36
-#: modules/library/src/Application/Controllers/TagsController.php:43
-#: modules/library/src/Application/Controllers/TagsController.php:54
-#: modules/library/templates/article_create.phtml:66
-#: modules/library/templates/edit_article.phtml:64
+#: modules/library/src/Application/Controllers/TagsController.php:34
+#: modules/library/src/Application/Controllers/TagsController.php:42
+#: modules/library/src/Application/Controllers/TagsController.php:55
+#: modules/library/templates/public/create-article.twig:61
+#: modules/library/templates/public/edit-article.twig:63
 msgid "Tags"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/TagsController.php:45
-#: modules/library/src/Application/Controllers/TagsController.php:56
-#: modules/library/src/Application/Services/Hashtags.php:171
-#: modules/library/templates/booklist.phtml:34
-#: modules/library/templates/lastcom.phtml:24
-#: modules/library/templates/main.phtml:60
-#: modules/library/templates/search.phtml:50
-#: modules/library/templates/sectionslist.phtml:45
-#: modules/library/templates/top.phtml:52
+#: modules/library/src/Application/Controllers/TagsController.php:44
+#: modules/library/src/Application/Controllers/TagsController.php:57
+#: modules/library/src/Application/Services/Hashtags.php:182
+#: modules/library/templates/public/articles.twig:38
+#: modules/library/templates/public/index.twig:57
+#: modules/library/templates/public/latest-comments.twig:28
+#: modules/library/templates/public/search.twig:55
+#: modules/library/templates/public/sections.twig:42
+#: modules/library/templates/public/top.twig:25
 msgid "The list is empty"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/TagsController.php:69
+#: modules/library/src/Application/Controllers/TagsController.php:70
 #, php-format
 msgid "Articles tagged: %s"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/TopController.php:38
-#: modules/library/templates/main.phtml:33
+#: modules/library/src/Application/Controllers/TopController.php:33
+#: modules/library/templates/public/index.twig:26
 msgid "Rating articles"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/TopController.php:51
+#: modules/library/src/Application/Controllers/TopController.php:40
 msgid "Most readings"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/TopController.php:52
+#: modules/library/src/Application/Controllers/TopController.php:41
 msgid "By rating"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/TopController.php:53
+#: modules/library/src/Application/Controllers/TopController.php:42
 msgid "By comments"
 msgstr ""
 
-#: modules/library/src/Application/Middlewares/LibraryAccessMiddleware.php:26
-#: modules/library/templates/main.phtml:22
+#: modules/library/src/Application/Middlewares/LibraryAccessMiddleware.php:27
+#: modules/library/templates/public/index.twig:16
 msgid "Library is closed"
 msgstr ""
 
@@ -374,392 +367,374 @@ msgstr ""
 msgid "<p>It is great that you can publish your own materials.</p>"
 msgstr ""
 
-#: modules/library/templates/article_create.phtml:14
-msgid "Article added"
-msgstr ""
-
-#: modules/library/templates/article_create.phtml:16
-msgid "To Article"
-msgstr ""
-
-#: modules/library/templates/article_create.phtml:18
-msgid "Thank you for what we have written. After checking moderated, your Article will be published in the library."
-msgstr ""
-
-#: modules/library/templates/article_create.phtml:19
-#: modules/library/templates/section_create.phtml:16
-msgid "To Section"
-msgstr ""
-
-#: modules/library/templates/article_create.phtml:27
-#: modules/library/templates/article_create.phtml:28
-#: modules/library/templates/edit_article.phtml:33
-#: modules/library/templates/edit_article.phtml:36
-#: modules/library/templates/edit_section.phtml:21
-#: modules/library/templates/edit_section.phtml:24
-#: modules/library/templates/section_create.phtml:21
-#: modules/library/templates/section_create.phtml:22
-msgid "Title"
-msgstr ""
-
-#: modules/library/templates/article_create.phtml:32
-#: modules/library/templates/edit_article.phtml:40
-msgid "Announce"
-msgstr ""
-
-#: modules/library/templates/article_create.phtml:40
-#: modules/library/templates/edit_article.phtml:50
-msgid "Text"
-msgstr ""
-
-#: modules/library/templates/article_create.phtml:51
-#: modules/library/templates/edit_article.phtml:91
-msgid "Commenting on the Article"
-msgstr ""
-
-#: modules/library/templates/article_create.phtml:56
-#: modules/library/templates/edit_article.phtml:28
-msgid "To upload a photo"
-msgstr ""
-
-#: modules/library/templates/article_create.phtml:61
-msgid "Select the text file"
-msgstr ""
-
-#: modules/library/templates/article_create.phtml:62
-msgid "Text entry field will be ignored"
-msgstr ""
-
-#: modules/library/templates/article_create.phtml:71
-#: modules/library/templates/edit_article.phtml:101
-#: modules/library/templates/edit_section.phtml:79
-#: modules/library/templates/section_create.phtml:41
-msgid "Save"
-msgstr ""
-
-#: modules/library/templates/article_create.phtml:72
-#: modules/library/templates/delete_article.phtml:22
-#: modules/library/templates/delete_article_image.phtml:22
-#: modules/library/templates/delete_section.phtml:30
-#: modules/library/templates/delete_section.phtml:46
-#: modules/library/templates/delete_section.phtml:87
-#: modules/library/templates/edit_article.phtml:102
-#: modules/library/templates/edit_section.phtml:80
-#: modules/library/templates/section_create.phtml:42
-msgid "Cancel"
-msgstr ""
-
-#: modules/library/templates/book.phtml:35
+#: modules/library/templates/public/article.twig:37
 msgid "Download file"
 msgstr ""
 
-#: modules/library/templates/book.phtml:44
+#: modules/library/templates/public/article.twig:45
 msgid "The Tags:"
 msgstr ""
 
-#: modules/library/templates/book.phtml:49
+#: modules/library/templates/public/article.twig:50
 msgid "Who added:"
 msgstr ""
 
-#: modules/library/templates/book.phtml:53
-#: modules/library/templates/booklist.phtml:27
-#: modules/library/templates/new.phtml:26
-#: modules/library/templates/top.phtml:38
+#: modules/library/templates/public/article.twig:60
+#: modules/library/templates/public/articles.twig:29
+#: modules/library/templates/public/components/article-row.twig:22
 msgid "Rating:"
 msgstr ""
 
-#: modules/library/templates/book.phtml:57
-#: modules/library/templates/search.phtml:37
-#: modules/library/templates/tags.phtml:26
+#: modules/library/templates/public/article.twig:66
+#: modules/library/templates/public/search.twig:42
+#: modules/library/templates/public/tags.twig:28
 msgid "Number of readings:"
 msgstr ""
 
-#: modules/library/templates/book.phtml:62
-#: modules/library/templates/new.phtml:30
-#: modules/library/templates/tags.phtml:30
-#: modules/library/templates/top.phtml:42
+#: modules/library/templates/public/article.twig:71
+#: modules/library/templates/public/components/article-row.twig:27
+#: modules/library/templates/public/tags.twig:32
 msgid "Comments:"
 msgstr ""
 
-#: modules/library/templates/book.phtml:76
-#: modules/library/templates/booklist.phtml:48
-#: modules/library/templates/helpers/sectionListAdminPanel.phtml:7
-#: modules/library/templates/sectionslist.phtml:58
+#: modules/library/templates/public/article.twig:87
+#: modules/library/templates/public/articles.twig:51
+#: modules/library/templates/public/components/section-admin-panel.twig:15
+#: modules/library/templates/public/sections.twig:54
 msgid "Edit"
 msgstr ""
 
-#: modules/library/templates/booklist.phtml:26
-#: modules/library/templates/lastcom.phtml:17
-#: modules/library/templates/new.phtml:23
-#: modules/library/templates/premod.phtml:30
-#: modules/library/templates/search.phtml:34
-#: modules/library/templates/tags.phtml:23
-#: modules/library/templates/top.phtml:35
+#: modules/library/templates/public/articles.twig:21
+#: modules/library/templates/public/components/article-row.twig:14
+#: modules/library/templates/public/latest-comments.twig:16
+#: modules/library/templates/public/premod.twig:28
+#: modules/library/templates/public/search.twig:34
+#: modules/library/templates/public/tags.twig:20
 msgid "Author:"
 msgstr ""
 
-#: modules/library/templates/booklist.phtml:38
-#: modules/library/templates/new.phtml:38
-#: modules/library/templates/premod.phtml:40
-#: modules/library/templates/search.phtml:42
-#: modules/library/templates/sectionslist.phtml:50
-#: modules/library/templates/tags.phtml:38
+#: modules/library/templates/public/articles.twig:42
+#: modules/library/templates/public/new.twig:14
+#: modules/library/templates/public/premod.twig:43
+#: modules/library/templates/public/search.twig:47
+#: modules/library/templates/public/sections.twig:47
+#: modules/library/templates/public/tags.twig:40
 msgid "Total"
 msgstr ""
 
-#: modules/library/templates/delete_article.phtml:13
-#, php-format
-msgid "Article \"%s\" has been deleted."
-msgstr ""
-
-#: modules/library/templates/delete_article.phtml:15
-#: modules/library/templates/delete_section.phtml:23
-#: modules/library/templates/delete_section.phtml:73
-#: modules/library/templates/delete_section.phtml:80
-msgid "Back to Library"
-msgstr ""
-
-#: modules/library/templates/delete_article.phtml:19
-#, php-format
-msgid "Are you sure you want to delete the article \"%s\"? This action cannot be undone."
-msgstr ""
-
-#: modules/library/templates/delete_article.phtml:21
-#: modules/library/templates/delete_article_image.phtml:21
-#: modules/library/templates/delete_section.phtml:29
-msgid "Yes, Delete"
-msgstr ""
-
-#: modules/library/templates/delete_article_image.phtml:13
-#, php-format
-msgid "Cover image for article \"%s\" has been deleted."
-msgstr ""
-
-#: modules/library/templates/delete_article_image.phtml:15
-#: modules/library/templates/edit_article.phtml:18
-msgid "Back to Article"
-msgstr ""
-
-#: modules/library/templates/delete_article_image.phtml:19
-#, php-format
-msgid "Are you sure you want to delete the cover image for article \"%s\"?"
-msgstr ""
-
-#: modules/library/templates/delete_section.phtml:21
-#, php-format
-msgid "Section \"%s\" has been deleted."
-msgstr ""
-
-#: modules/library/templates/delete_section.phtml:27
-#, php-format
-msgid "Are you sure you want to delete the section \"%s\"? This action cannot be undone."
-msgstr ""
-
-#: modules/library/templates/delete_section.phtml:37
-#, php-format
-msgid "Contents of section \"%s\" have been moved successfully."
-msgstr ""
-
-#: modules/library/templates/delete_section.phtml:39
-msgid "Go to Target Section"
-msgstr ""
-
-#: modules/library/templates/delete_section.phtml:43
-#, php-format
-msgid "Move all contents of section \"%s\" to the selected section and delete it?"
-msgstr ""
-
-#: modules/library/templates/delete_section.phtml:45
-msgid "Yes, Move and Delete"
-msgstr ""
-
-#: modules/library/templates/delete_section.phtml:55
-#, php-format
-msgid "Move contents of \"%s\" to:"
-msgstr ""
-
-#: modules/library/templates/delete_section.phtml:66
-#: modules/library/templates/premod.phtml:34
-msgid "Approve"
-msgstr ""
-
-#: modules/library/templates/delete_section.phtml:71
-#, php-format
-msgid "No sections available to move the contents of \"%s\" to."
-msgstr ""
-
-#: modules/library/templates/delete_section.phtml:84
-#, php-format
-msgid "Are you sure you want to delete section \"%s\" along with ALL its contents? This action cannot be undone."
-msgstr ""
-
-#: modules/library/templates/delete_section.phtml:86
-msgid "Yes, Delete Everything"
-msgstr ""
-
-#: modules/library/templates/delete_section.phtml:94
-#, php-format
-msgid "Section \"%s\" contains subsections or articles. Choose how to delete it:"
-msgstr ""
-
-#: modules/library/templates/delete_section.phtml:98
-msgid "Move contents to another section, then delete"
-msgstr ""
-
-#: modules/library/templates/delete_section.phtml:102
-msgid "Delete section and all its contents"
-msgstr ""
-
-#: modules/library/templates/delete_section.phtml:105
-msgid "Continue"
-msgstr ""
-
-#: modules/library/templates/edit_article.phtml:17
-#: modules/library/templates/edit_section.phtml:16
-msgid "Changes saved successfully."
-msgstr ""
-
-#: modules/library/templates/edit_article.phtml:59
-msgid "The text of the Article can not be edited, a large amount of data !!!"
-msgstr ""
-
-#: modules/library/templates/edit_article.phtml:71
-#: modules/library/templates/edit_section.phtml:63
-msgid "Move to Section"
-msgstr ""
-
-#: modules/library/templates/edit_article.phtml:86
-msgid "Verified"
-msgstr ""
-
-#: modules/library/templates/edit_article.phtml:94
-msgid "Number of readings"
-msgstr ""
-
-#: modules/library/templates/edit_section.phtml:17
-msgid "Back to Section"
-msgstr ""
-
-#: modules/library/templates/edit_section.phtml:28
-#: modules/library/templates/section_create.phtml:26
-msgid "Section description"
-msgstr ""
-
-#: modules/library/templates/edit_section.phtml:34
-#: modules/library/templates/section_create.phtml:30
-msgid "Section type"
-msgstr ""
-
-#: modules/library/templates/edit_section.phtml:38
-#: modules/library/templates/section_create.phtml:33
-msgid "Articles"
-msgstr ""
-
-#: modules/library/templates/edit_section.phtml:43
-#: modules/library/templates/section_create.phtml:37
-msgid "Sections"
-msgstr ""
-
-#: modules/library/templates/edit_section.phtml:48
-msgid "Allow users to add their Articles?"
-msgstr ""
-
-#: modules/library/templates/edit_section.phtml:52
-msgid "Yes"
-msgstr ""
-
-#: modules/library/templates/edit_section.phtml:57
-msgid "No"
-msgstr ""
-
-#: modules/library/templates/edit_section.phtml:66
-msgid "The ROOT"
-msgstr ""
-
-#: modules/library/templates/helpers/printvote.phtml:2
-msgid "Select a rating:"
-msgstr ""
-
-#: modules/library/templates/helpers/printvote.phtml:8
-msgid "Vote"
-msgstr ""
-
-#: modules/library/templates/helpers/sectionListAdminPanel.phtml:2
-msgid "Up"
-msgstr ""
-
-#: modules/library/templates/helpers/sectionListAdminPanel.phtml:5
-msgid "Down"
-msgstr ""
-
-#: modules/library/templates/lastcom.phtml:29
-#: modules/library/templates/top.phtml:56
-msgid "Back"
-msgstr ""
-
-#: modules/library/templates/new.phtml:20
-#: modules/library/templates/top.phtml:32
+#: modules/library/templates/public/components/article-row.twig:11
 msgid "Section:"
 msgstr ""
 
-#: modules/library/templates/new.phtml:43
-#: modules/library/templates/premod.phtml:48
-#: modules/library/templates/search.phtml:65
-#: modules/library/templates/tagcloud.phtml:6
-#: modules/library/templates/tags.phtml:42
-msgid "To Library"
+#: modules/library/templates/public/components/rating-vote.twig:8
+msgid "Select a rating:"
 msgstr ""
 
-#: modules/library/templates/premod.phtml:16
-msgid "All Articles added in database"
+#: modules/library/templates/public/components/rating-vote.twig:14
+msgid "Vote"
 msgstr ""
 
-#: modules/library/templates/premod.phtml:19
-msgid "Article"
+#: modules/library/templates/public/components/section-admin-panel.twig:10
+msgid "Up"
 msgstr ""
 
-#: modules/library/templates/premod.phtml:19
-msgid "Added to the database"
+#: modules/library/templates/public/components/section-admin-panel.twig:13
+msgid "Down"
 msgstr ""
 
-#: modules/library/templates/premod.phtml:44
-msgid "Approve all"
+#: modules/library/templates/public/create-article.twig:20
+msgid "Article added"
 msgstr ""
 
-#: modules/library/templates/premod.phtml:46
-msgid "No articles pending moderation."
+#: modules/library/templates/public/create-article.twig:22
+msgid "To Article"
 msgstr ""
 
-#: modules/library/templates/search.phtml:15
-#: modules/library/templates/search.phtml:16
-msgid "Search query"
+#: modules/library/templates/public/create-article.twig:24
+msgid "Thank you for what we have written. After checking moderated, your Article will be published in the library."
 msgstr ""
 
-#: modules/library/templates/search.phtml:22
-msgid "Search in titles Articles"
+#: modules/library/templates/public/create-article.twig:25
+#: modules/library/templates/public/create-section.twig:15
+msgid "To Section"
 msgstr ""
 
-#: modules/library/templates/search.phtml:56
-msgid "Length of query: 4 min 64 max<br>Search is case-insensitive letters<br>Results are sorted by relevance"
+#: modules/library/templates/public/create-article.twig:31
+#: modules/library/templates/public/create-article.twig:32
+#: modules/library/templates/public/create-section.twig:20
+#: modules/library/templates/public/create-section.twig:21
+#: modules/library/templates/public/edit-article.twig:41
+#: modules/library/templates/public/edit-article.twig:44
+#: modules/library/templates/public/edit-section.twig:25
+#: modules/library/templates/public/edit-section.twig:28
+msgid "Title"
 msgstr ""
 
-#: modules/library/templates/search.phtml:63
-msgid "New Search"
+#: modules/library/templates/public/create-article.twig:36
+#: modules/library/templates/public/edit-article.twig:48
+msgid "Announce"
 msgstr ""
 
-#: modules/library/templates/section_create.phtml:14
+#: modules/library/templates/public/create-article.twig:41
+#: modules/library/templates/public/edit-article.twig:55
+msgid "Text"
+msgstr ""
+
+#: modules/library/templates/public/create-article.twig:46
+#: modules/library/templates/public/edit-article.twig:87
+msgid "Commenting on the Article"
+msgstr ""
+
+#: modules/library/templates/public/create-article.twig:51
+#: modules/library/templates/public/edit-article.twig:36
+msgid "To upload a photo"
+msgstr ""
+
+#: modules/library/templates/public/create-article.twig:56
+msgid "Select the text file"
+msgstr ""
+
+#: modules/library/templates/public/create-article.twig:57
+msgid "Text entry field will be ignored"
+msgstr ""
+
+#: modules/library/templates/public/create-article.twig:66
+#: modules/library/templates/public/create-section.twig:40
+#: modules/library/templates/public/edit-article.twig:97
+#: modules/library/templates/public/edit-section.twig:78
+msgid "Save"
+msgstr ""
+
+#: modules/library/templates/public/create-article.twig:67
+#: modules/library/templates/public/create-section.twig:41
+#: modules/library/templates/public/delete-article-image.twig:21
+#: modules/library/templates/public/delete-article.twig:22
+#: modules/library/templates/public/delete-section.twig:30
+#: modules/library/templates/public/delete-section.twig:45
+#: modules/library/templates/public/delete-section.twig:96
+#: modules/library/templates/public/edit-article.twig:98
+#: modules/library/templates/public/edit-section.twig:79
+msgid "Cancel"
+msgstr ""
+
+#: modules/library/templates/public/create-section.twig:13
 msgid "Section created"
 msgstr ""
 
-#: modules/library/templates/sectionslist.phtml:57
+#: modules/library/templates/public/create-section.twig:25
+#: modules/library/templates/public/edit-section.twig:32
+msgid "Section description"
+msgstr ""
+
+#: modules/library/templates/public/create-section.twig:29
+#: modules/library/templates/public/edit-section.twig:38
+msgid "Section type"
+msgstr ""
+
+#: modules/library/templates/public/create-section.twig:32
+#: modules/library/templates/public/edit-section.twig:41
+msgid "Articles"
+msgstr ""
+
+#: modules/library/templates/public/create-section.twig:36
+#: modules/library/templates/public/edit-section.twig:45
+msgid "Sections"
+msgstr ""
+
+#: modules/library/templates/public/delete-article-image.twig:12
+msgid "Cover image for article \"%s\" has been deleted."
+msgstr ""
+
+#: modules/library/templates/public/delete-article-image.twig:14
+#: modules/library/templates/public/edit-article.twig:26
+msgid "Back to Article"
+msgstr ""
+
+#: modules/library/templates/public/delete-article-image.twig:18
+msgid "Are you sure you want to delete the cover image for article \"%s\"?"
+msgstr ""
+
+#: modules/library/templates/public/delete-article-image.twig:20
+#: modules/library/templates/public/delete-article.twig:21
+#: modules/library/templates/public/delete-section.twig:29
+msgid "Yes, Delete"
+msgstr ""
+
+#: modules/library/templates/public/delete-article.twig:13
+msgid "Article \"%s\" has been deleted."
+msgstr ""
+
+#: modules/library/templates/public/delete-article.twig:15
+#: modules/library/templates/public/delete-section.twig:23
+#: modules/library/templates/public/delete-section.twig:72
+#: modules/library/templates/public/delete-section.twig:89
+msgid "Back to Library"
+msgstr ""
+
+#: modules/library/templates/public/delete-article.twig:19
+msgid "Are you sure you want to delete the article \"%s\"? This action cannot be undone."
+msgstr ""
+
+#: modules/library/templates/public/delete-section.twig:21
+msgid "Section \"%s\" has been deleted."
+msgstr ""
+
+#: modules/library/templates/public/delete-section.twig:27
+msgid "Are you sure you want to delete the section \"%s\"? This action cannot be undone."
+msgstr ""
+
+#: modules/library/templates/public/delete-section.twig:36
+msgid "Contents of section \"%s\" have been moved successfully."
+msgstr ""
+
+#: modules/library/templates/public/delete-section.twig:38
+msgid "Go to Target Section"
+msgstr ""
+
+#: modules/library/templates/public/delete-section.twig:42
+msgid "Move all contents of section \"%s\" to the selected section and delete it?"
+msgstr ""
+
+#: modules/library/templates/public/delete-section.twig:44
+msgid "Yes, Move and Delete"
+msgstr ""
+
+#: modules/library/templates/public/delete-section.twig:54
+msgid "Move contents of \"%s\" to:"
+msgstr ""
+
+#: modules/library/templates/public/delete-section.twig:65
+#: modules/library/templates/public/premod.twig:37
+msgid "Approve"
+msgstr ""
+
+#: modules/library/templates/public/delete-section.twig:70
+msgid "No sections available to move the contents of \"%s\" to."
+msgstr ""
+
+#: modules/library/templates/public/delete-section.twig:79
+msgid "Successfully deleted:<br>Directories: (%d)<br>Articles: (%d)<br>Tags: (%d)<br>Comments: (%d)<br>Images: (%d)"
+msgstr ""
+
+#: modules/library/templates/public/delete-section.twig:93
+msgid "Are you sure you want to delete section \"%s\" along with ALL its contents? This action cannot be undone."
+msgstr ""
+
+#: modules/library/templates/public/delete-section.twig:95
+msgid "Yes, Delete Everything"
+msgstr ""
+
+#: modules/library/templates/public/delete-section.twig:103
+msgid "Section \"%s\" contains subsections or articles. Choose how to delete it:"
+msgstr ""
+
+#: modules/library/templates/public/delete-section.twig:107
+msgid "Move contents to another section, then delete"
+msgstr ""
+
+#: modules/library/templates/public/delete-section.twig:111
+msgid "Delete section and all its contents"
+msgstr ""
+
+#: modules/library/templates/public/delete-section.twig:114
+msgid "Continue"
+msgstr ""
+
+#: modules/library/templates/public/edit-article.twig:25
+#: modules/library/templates/public/edit-section.twig:20
+msgid "Changes saved successfully."
+msgstr ""
+
+#: modules/library/templates/public/edit-article.twig:58
+msgid "The text of the Article can not be edited, a large amount of data !!!"
+msgstr ""
+
+#: modules/library/templates/public/edit-article.twig:70
+#: modules/library/templates/public/edit-section.twig:63
+msgid "Move to Section"
+msgstr ""
+
+#: modules/library/templates/public/edit-article.twig:83
+msgid "Verified"
+msgstr ""
+
+#: modules/library/templates/public/edit-article.twig:90
+msgid "Number of readings"
+msgstr ""
+
+#: modules/library/templates/public/edit-section.twig:21
+msgid "Back to Section"
+msgstr ""
+
+#: modules/library/templates/public/edit-section.twig:50
+msgid "Allow users to add their Articles?"
+msgstr ""
+
+#: modules/library/templates/public/edit-section.twig:53
+msgid "Yes"
+msgstr ""
+
+#: modules/library/templates/public/edit-section.twig:57
+msgid "No"
+msgstr ""
+
+#: modules/library/templates/public/edit-section.twig:66
+msgid "The ROOT"
+msgstr ""
+
+#: modules/library/templates/public/latest-comments.twig:33
+#: modules/library/templates/public/top.twig:29
+msgid "Back"
+msgstr ""
+
+#: modules/library/templates/public/new.twig:19
+#: modules/library/templates/public/premod.twig:51
+#: modules/library/templates/public/search.twig:70
+#: modules/library/templates/public/tags.twig:44
+msgid "To Library"
+msgstr ""
+
+#: modules/library/templates/public/premod.twig:14
+msgid "All Articles added in database"
+msgstr ""
+
+#: modules/library/templates/public/premod.twig:17
+msgid "Article"
+msgstr ""
+
+#: modules/library/templates/public/premod.twig:17
+msgid "Added to the database"
+msgstr ""
+
+#: modules/library/templates/public/premod.twig:47
+msgid "Approve all"
+msgstr ""
+
+#: modules/library/templates/public/premod.twig:49
+msgid "No articles pending moderation."
+msgstr ""
+
+#: modules/library/templates/public/search.twig:15
+#: modules/library/templates/public/search.twig:16
+msgid "Search query"
+msgstr ""
+
+#: modules/library/templates/public/search.twig:22
+msgid "Search in titles Articles"
+msgstr ""
+
+#: modules/library/templates/public/search.twig:61
+msgid "Length of query: 4 min 64 max<br>Search is case-insensitive letters<br>Results are sorted by relevance"
+msgstr ""
+
+#: modules/library/templates/public/search.twig:68
+msgid "New Search"
+msgstr ""
+
+#: modules/library/templates/public/sections.twig:53
 msgid "Create"
 msgstr ""
 
-#: modules/library/templates/tagcloud.phtml:2
-msgid "Tag Cloud"
-msgstr ""
-
-#: modules/library/templates/tagcloud.phtml:4
-#: modules/library/templates/top.phtml:19
+#: modules/library/templates/public/top.twig:12
 msgid "Sort"
 msgstr ""

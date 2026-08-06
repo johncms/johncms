@@ -8,7 +8,7 @@ use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Users\User;
 use Johncms\Modules\Library\Application\Services\Tree;
 use Johncms\Modules\Library\Application\Services\Utils;
@@ -18,22 +18,22 @@ final readonly class DeleteArticleController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private User $currentUser,
     ) {
         $this->controllerContext->initModule('library');
     }
 
-    public function __invoke(Request $request, int $id): Response
+    public function __invoke(Request $request, int $id): ViewResponse
     {
         if (! ($this->currentUser->rights > 4)) {
-            return new Response(
-                $this->render->render('system::pages/result', [
+            return new ViewResponse(
+                '@theme/pages/result.twig',
+                [
                     'title'   => __('Delete'),
                     'type'    => 'alert-danger',
                     'message' => __('Access forbidden'),
-                ]),
+                ],
                 Response::HTTP_FORBIDDEN
             );
         }
@@ -41,11 +41,11 @@ final readonly class DeleteArticleController
         $article = LibraryText::query()->find($id);
 
         if ($article === null) {
-            return new Response($this->render->render('system::pages/result', [
+            return new ViewResponse('@theme/pages/result.twig', [
                 'title'   => __('Delete'),
                 'type'    => 'alert-danger',
                 'message' => __('Articles do not exist'),
-            ]));
+            ]);
         }
 
         $this->navChain->add(__('Library'), '/library/');
@@ -55,11 +55,6 @@ final readonly class DeleteArticleController
         $this->navChain->add($article->name, $article->url);
         $this->navChain->add(__('Delete Article'));
 
-        $this->render->addData([
-            'title'      => __('Delete Article'),
-            'page_title' => __('Delete Article'),
-        ]);
-
         $deleted = false;
 
         if ($request->query->has('yes')) {
@@ -68,11 +63,13 @@ final readonly class DeleteArticleController
             $deleted = true;
         }
 
-        return new Response($this->render->render('library::delete_article', [
+        return new ViewResponse('@library/public/delete-article.twig', [
+            'title'       => __('Delete Article'),
+            'page_title'  => __('Delete Article'),
             'id'          => $id,
             'article_url' => $article->url,
             'name'        => $article->name,
             'deleted'     => $deleted,
-        ]));
+        ]);
     }
 }

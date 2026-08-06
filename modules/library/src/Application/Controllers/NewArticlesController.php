@@ -8,20 +8,17 @@ use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Library\Domain\Models\LibraryCategory;
 use Johncms\Modules\Library\Domain\Repository\LibraryTextRepositoryInterface;
 use Johncms\NavChain;
-use Johncms\System\View\Render;
-use Johncms\Modules\Library\Application\Services\Hashtags;
 use Johncms\Modules\Library\Application\Services\Rating;
 use Johncms\Utils\DateFormatterInterface;
-use Johncms\Utils\PlainTextFormatter;
 
 final readonly class NewArticlesController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private DateFormatterInterface $dateFormatter,
         private LibraryTextRepositoryInterface $repository,
@@ -29,10 +26,9 @@ final readonly class NewArticlesController
         private PaginationGuard $paginationGuard,
     ) {
         $this->controllerContext->initModule('library');
-        $this->render->addFolder('libraryHelpers', MODULES_PATH . 'library/templates/helpers/');
     }
 
-    public function __invoke(): string
+    public function __invoke(): ViewResponse
     {
         $total = $this->repository->countNew();
 
@@ -48,45 +44,37 @@ final readonly class NewArticlesController
         $this->navChain->add(__('Library'), '/library/');
         $this->navChain->add($pageTitle);
 
-        $this->render->addData([
-            'title'       => $meta->title,
-            'page_title'  => $pageTitle,
-            'description' => $meta->description,
-        ]);
-
         $texts = $total ? $this->repository->getNew($pagination->getCurrentPage(), $pagination->getPerPage()) : collect();
 
         $items = [];
         foreach ($texts as $text) {
-            $obj = new Hashtags($text->id);
-            $rate = new Rating($text->id);
+            $rate     = new Rating($text->id);
             $category = LibraryCategory::query()->find($text->cat_id);
 
-            $uploader = $text->uploader_id
-                ? '<a href="' . config('johncms')['homeurl'] . '/profile/' . $text->uploader_id . '">' . PlainTextFormatter::escape($text->uploader) . '</a>'
-                : PlainTextFormatter::escape($text->uploader);
-
             $items[] = [
-                'id'           => $text->id,
-                'url'          => $text->url,
-                'name'         => $text->name,
-                'announce'     => $text->announce,
-                'cover'        => file_exists(UPLOAD_PATH . 'library/images/small/' . $text->id . '.png'),
-                'tags'         => $obj->getAllStatTags() ? $obj->getAllStatTags(1) : null,
-                'ratingView'   => $rate->viewRate(1),
-                'who'          => $uploader . ' (' . $this->dateFormatter->format($text->time) . ')',
-                'cat_id'       => $text->cat_id,
-                'cat_url'      => $category ? $category->url : '/library/',
-                'catalog_name' => $category?->name ?? '',
-                'comments'     => $text->comments,
-                'comm_count'   => $text->comm_count,
+                'id'          => $text->id,
+                'url'         => $text->url,
+                'name'        => $text->name,
+                'announce'    => $text->announce,
+                'cat_url'     => $category !== null ? $category->url : '/library/',
+                'cat_name'    => $category?->name ?? '',
+                'uploader_id' => $text->uploader_id,
+                'uploader'    => $text->uploader,
+                'date'        => $this->dateFormatter->format($text->time),
+                'rate'        => $rate->getRate(),
+                'votes'       => $rate->getVotesCount(),
+                'comments'    => (bool) $text->comments,
+                'comm_count'  => $text->comm_count,
             ];
         }
 
-        return $this->render->render('library::new', [
-            'total'      => $total,
-            'pagination' => $pagination->render(),
-            'items'      => $items,
+        return new ViewResponse('@library/public/new.twig', [
+            'title'       => $meta->title,
+            'page_title'  => $pageTitle,
+            'description' => $meta->description,
+            'total'       => $total,
+            'articles'    => $items,
+            'pagination'  => $pagination->hasPages() ? $pagination->render() : null,
         ]);
     }
 }

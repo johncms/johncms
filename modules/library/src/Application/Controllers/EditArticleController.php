@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Johncms\Modules\Library\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Library\Application\Services\LibrarySlugService;
 use Johncms\Modules\Library\Domain\Models\LibraryCategory;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Modules\Library\Application\Services\Hashtags;
 use Johncms\Modules\Library\Application\Services\Tree;
@@ -19,9 +19,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 final readonly class EditArticleController
 {
+    /** Longer texts are not offered to the editor: the browser does not cope with them. */
+    private const EDITABLE_TEXT_LENGTH = 500000;
+
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private User $currentUser,
         private LibrarySlugService $slugService,
@@ -29,17 +31,18 @@ final readonly class EditArticleController
         $this->controllerContext->initModule('library');
     }
 
-    public function __invoke(Request $request, int $id): Response
+    public function __invoke(Request $request, int $id): ViewResponse
     {
         $article = LibraryText::query()->find($id);
 
         if ($article === null) {
-            return new Response(
-                $this->render->render('system::pages/result', [
+            return new ViewResponse(
+                '@theme/pages/result.twig',
+                [
                     'title'   => __('Edit Article'),
                     'type'    => 'alert-danger',
                     'message' => __('Articles do not exist'),
-                ]),
+                ],
                 Response::HTTP_NOT_FOUND
             );
         }
@@ -49,12 +52,13 @@ final readonly class EditArticleController
             && (int) $article->uploader_id === (int) $this->currentUser->id;
 
         if (! $isAdmin && ! $isOwner) {
-            return new Response(
-                $this->render->render('system::pages/result', [
+            return new ViewResponse(
+                '@theme/pages/result.twig',
+                [
                     'title'   => __('Edit Article'),
                     'type'    => 'alert-danger',
                     'message' => __('Access forbidden'),
-                ]),
+                ],
                 Response::HTTP_FORBIDDEN
             );
         }
@@ -66,36 +70,46 @@ final readonly class EditArticleController
         $this->navChain->add($article->name, $article->url);
         $this->navChain->add(__('Edit Article'));
 
-        $this->render->addData([
+        $pageData = [
             'title'      => __('Edit Article'),
             'page_title' => __('Edit Article'),
-        ]);
+            'id'         => $id,
+        ];
 
         if ($request->getMethod() === 'POST') {
             $this->save($request, $id, $article, $isAdmin);
             $article->refresh();
-            return new Response($this->render->render('library::edit_article', [
-                'id'          => $id,
+
+            return new ViewResponse('@library/public/edit-article.twig', $pageData + [
                 'article_url' => $article->url,
                 'saved'       => true,
-            ]));
+            ]);
         }
 
-        $categories = $isAdmin
-            ? LibraryCategory::query()->where('dir', 0)->orderBy('name')->get(['id', 'name'])
-            : collect();
+        $categories = [];
+        if ($isAdmin) {
+            foreach (LibraryCategory::query()->where('dir', 0)->orderBy('name')->get(['id', 'name']) as $category) {
+                $categories[] = ['id' => (int) $category->id, 'name' => $category->name];
+            }
+        }
 
-        $tags = (new Hashtags($id))->getAllStatTags() ?: '';
-
-        return new Response($this->render->render('library::edit_article', [
-            'id'          => $id,
-            'article_url' => $article->url,
-            'article'     => $article,
-            'categories'  => $categories,
-            'tags'        => $tags,
-            'isAdmin'     => $isAdmin,
-            'saved'       => false,
-        ]));
+        return new ViewResponse('@library/public/edit-article.twig', $pageData + [
+            'article_url'   => $article->url,
+            'saved'         => false,
+            'name'          => $article->name,
+            'announce'      => (string) ($article->announce ?? ''),
+            'text'          => (string) ($article->text ?? ''),
+            'text_editable' => mb_strlen((string) $article->text) < self::EDITABLE_TEXT_LENGTH,
+            'tags'          => implode(', ', (new Hashtags($id))->getTagNames()),
+            'cover'         => file_exists(UPLOAD_PATH . 'library/images/small/' . $id . '.png'),
+            'is_admin'      => $isAdmin,
+            'categories'    => $categories,
+            'cat_id'        => (int) $article->cat_id,
+            'premod'        => $article->premod > 0,
+            'comments'      => $article->comments > 0,
+            'count_views'   => (int) $article->count_views,
+            'field_height'  => $this->currentUser->config->fieldHeight,
+        ]);
     }
 
     private function save(Request $request, int $id, LibraryText $article, bool $isAdmin): void

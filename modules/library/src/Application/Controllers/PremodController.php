@@ -7,14 +7,13 @@ namespace Johncms\Modules\Library\Application\Controllers;
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
-use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Utils\DateFormatterInterface;
-use Johncms\Utils\PlainTextFormatter;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -22,7 +21,6 @@ final readonly class PremodController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private Session $session,
         private DateFormatterInterface $dateFormatter,
@@ -33,26 +31,22 @@ final readonly class PremodController
         $this->controllerContext->initModule('library');
     }
 
-    public function __invoke(Request $request): Response
+    public function __invoke(Request $request): Response|ViewResponse
     {
         if (! ($this->currentUser->rights > 4)) {
-            return new Response(
-                $this->render->render('system::pages/result', [
+            return new ViewResponse(
+                '@theme/pages/result.twig',
+                [
                     'title'   => __('Moderation Articles'),
                     'type'    => 'alert-danger',
                     'message' => __('Access forbidden'),
-                ]),
+                ],
                 Response::HTTP_FORBIDDEN
             );
         }
 
         $this->navChain->add(__('Library'), '/library/');
         $this->navChain->add(__('Moderation Articles'));
-
-        $this->render->addData([
-            'title'      => __('Moderation Articles'),
-            'page_title' => __('Moderation Articles'),
-        ]);
 
         $approveId = $request->queryInt('approve', 0);
 
@@ -92,23 +86,24 @@ final readonly class PremodController
 
         $articleData = [];
         foreach ($articles as $article) {
-            $uploader = $article->uploader_id
-                ? '<a href="' . config('johncms')['homeurl'] . '/profile/' . $article->uploader_id . '">' . PlainTextFormatter::escape($article->uploader) . '</a>'
-                : PlainTextFormatter::escape($article->uploader);
             $articleData[] = [
-                'id'   => $article->id,
-                'url'  => $article->url,
-                'name' => $article->name,
-                'who'  => $uploader . ' (' . $this->dateFormatter->format($article->time) . ')',
+                'id'          => $article->id,
+                'url'         => $article->url,
+                'name'        => $article->name,
+                'uploader_id' => $article->uploader_id,
+                'uploader'    => $article->uploader,
+                'date'        => $this->dateFormatter->format($article->time),
             ];
         }
 
-        return new Response($this->render->render('library::premod', [
-            'approvedName' => $approvedName,
-            'approvedAll'  => $approvedAll,
-            'total'        => $total,
-            'articles'     => $articleData,
-            'pagination'   => $pagination->render(),
-        ]));
+        return new ViewResponse('@library/public/premod.twig', [
+            'title'         => __('Moderation Articles'),
+            'page_title'    => __('Moderation Articles'),
+            'approved_name' => $approvedName,
+            'approved_all'  => $approvedAll,
+            'total'         => $total,
+            'articles'      => $articleData,
+            'pagination'    => $pagination->hasPages() ? $pagination->render() : null,
+        ]);
     }
 }

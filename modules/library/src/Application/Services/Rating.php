@@ -13,13 +13,10 @@ declare(strict_types=1);
 namespace Johncms\Modules\Library\Application\Services;
 
 use Johncms\System\Users\User;
-use Johncms\System\View\Extension\Assets;
 use PDO;
 
 class Rating
 {
-    private Assets $asset;
-
     private PDO $db;
 
     private int $lib_id;
@@ -27,7 +24,6 @@ class Rating
     public function __construct(int $id)
     {
         $this->db     = di(PDO::class);
-        $this->asset  = di(Assets::class);
         $this->lib_id = $id;
         $this->check();
     }
@@ -87,30 +83,36 @@ class Rating
         return is_string($query) ? $path . '?' . $query : $path;
     }
 
-    private function getRate(): int
+    /**
+     * Average score, rounded down to a half point — the granularity of the star images.
+     */
+    public function getRate(): float
     {
         $stmt = $this->db->prepare('SELECT AVG(`point`) FROM `cms_library_rating` WHERE `st_id` = ?');
         $stmt->execute([$this->lib_id]);
 
-        return (int) (floor($stmt->fetchColumn() * 2) / 2);
+        return floor((float) $stmt->fetchColumn() * 2) / 2;
     }
 
-    public function viewRate(int $anchor = 0): string
+    public function getVotesCount(): int
     {
         $stmt = $this->db->prepare('SELECT COUNT(*) FROM `cms_library_rating` WHERE `st_id` = ?');
         $stmt->execute([$this->lib_id]);
-        $url = $this->asset->url('images/old/star.' . (str_replace('.', '-', (string) $this->getRate())) . '.gif');
 
-        return '<img src="' . $url . '" alt="">' . ' (' . $stmt->fetchColumn() . ')';
+        return (int) $stmt->fetchColumn();
     }
 
-    public function printVote(): string
+    /**
+     * The score the current user gave, or -1 when they have not voted yet.
+     */
+    public function getUserVote(): int
     {
         $user = di(User::class);
 
-        $stmt     = $this->db->prepare('SELECT `point` FROM `cms_library_rating` WHERE `user_id` = ? AND `st_id` = ? LIMIT 1');
-        $userVote = $stmt->execute([$user->id, $this->lib_id]) ? $stmt->fetchColumn() : -1;
+        $stmt = $this->db->prepare('SELECT `point` FROM `cms_library_rating` WHERE `user_id` = ? AND `st_id` = ? LIMIT 1');
+        $stmt->execute([$user->id, $this->lib_id]);
+        $point = $stmt->fetchColumn();
 
-        return ViewHelper::printVote($this->lib_id, $userVote);
+        return $point === false ? -1 : (int) $point;
     }
 }

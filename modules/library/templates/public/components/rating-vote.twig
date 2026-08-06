@@ -1,0 +1,16 @@
+{#
+    The form a signed in reader rates an article with.
+
+    @param string article_url Where the vote is posted, so the reader stays on the page.
+    @param int    user_vote   The score already given, or -1 when there is none yet.
+#}
+<form action="{{ article_url }}" method="post">
+    <label for="vote" class="pe-2">{{ __('Select a rating:') }}</label>
+    <div class="form-inline">
+        <select name="vote" id="vote" class="form-control me-2">
+            {% for point in 0..5 %}
+                <option value="{{ point }}"{% if point == user_vote %} selected{% endif %}>{{ point }}</option>
+            {% endfor %}
+        </select><input type="submit" name="rating_submit" class="btn btn-primary" value="{{ __('Vote') }}"/>
+    </div>
+</form>

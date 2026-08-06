@@ -1,0 +1,16 @@
+{#
+    Moderator controls under a section in a listing: reordering, editing, deleting.
+
+    @param int section_id      The section the listing belongs to, 0 at the root of the library.
+    @param int section_item_id The section this row shows.
+    @param int position        Its place in the listing, starting at 1.
+    @param int total           How many rows there are, so the ends drop the arrow they cannot use.
+#}
+{% if position != 1 %}
+    <a href="/library/section/{{ section_id }}/move/up/{{ position }}" class="me-2">{{ __('Up') }}</a>
+{% endif %}
+{% if position != total %}
+    <a href="/library/section/{{ section_id }}/move/down/{{ position }}" class="me-2">{{ __('Down') }}</a>
+{% endif %}
+<a href="/library/section/{{ section_item_id }}/edit" class="me-2">{{ __('Edit') }}</a>
+<a href="/library/section/{{ section_item_id }}/delete">{{ __('Delete') }}</a>

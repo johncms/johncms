@@ -8,23 +8,21 @@ use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Http\Session;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Library\Application\Services\LibraryArticlePathService;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
-use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Modules\Library\Application\Services\ArticleTextRenderer;
 use Johncms\Modules\Library\Application\Services\Hashtags;
 use Johncms\Modules\Library\Application\Services\Rating;
 use Johncms\Modules\Library\Application\Services\Tree;
 use Johncms\Utils\DateFormatterInterface;
-use Johncms\Utils\PlainTextFormatter;
 use Symfony\Component\HttpFoundation\Response;
 
 final readonly class ArticleController
 {
     public function __construct(
-        private Render $render,
         private Session $session,
         private NavChain $navChain,
         private DateFormatterInterface $dateFormatter,
@@ -35,7 +33,7 @@ final readonly class ArticleController
     ) {
     }
 
-    public function __invoke(string $libraryPath): Response
+    public function __invoke(string $libraryPath): ViewResponse
     {
         $parsed = $this->articlePathService->parseArticlePath('/library/' . ltrim($libraryPath, '/'));
         if ($parsed === null) {
@@ -46,12 +44,13 @@ final readonly class ArticleController
         $article = LibraryText::query()->find($id);
 
         if ($article === null || (! $article->premod && ! ($this->currentUser->rights > 4))) {
-            return new Response(
-                $this->render->render('system::pages/result', [
+            return new ViewResponse(
+                '@theme/pages/result.twig',
+                [
                     'title'   => __('Library'),
                     'type'    => 'alert-danger',
                     'message' => __('Articles do not exist'),
-                ]),
+                ],
                 Response::HTTP_NOT_FOUND
             );
         }
@@ -87,53 +86,48 @@ final readonly class ArticleController
 
         $pageTitle = $article->name;
         $meta      = new PageMeta($pageTitle . ' — ' . __('Library'), $page);
-        $this->render->addData([
-            'title'      => $meta->title,
-            'page_title' => $pageTitle,
-        ]);
 
-        $tags        = null;
-        $who         = null;
-        $ratingVote  = null;
-        $ratingView  = null;
-        $cover       = null;
+        $tags     = null;
+        $uploader = null;
+        $rating   = null;
+        $userVote = null;
+        $cover    = false;
 
+        // Everything about the article itself belongs on its first page only.
         if ($page === 1) {
-            $tags = (new Hashtags($id))->getAllStatTags(1) ?: null;
+            $tags = (new Hashtags($id))->getTagLinks();
 
-            $rate       = new Rating($id);
-            $ratingVote = $this->currentUser->isValid() ? $rate->printVote() : null;
-            $ratingView = $rate->viewRate(1);
+            $rate     = new Rating($id);
+            $userVote = $this->currentUser->isValid() ? $rate->getUserVote() : null;
+            $rating   = ['rate' => $rate->getRate(), 'votes' => $rate->getVotesCount()];
 
-            $uploader = $article->uploader_id
-                ? '<a href="' . config('johncms')['homeurl'] . '/profile/' . $article->uploader_id . '">' . PlainTextFormatter::escape($article->uploader) . '</a>'
-                : PlainTextFormatter::escape($article->uploader);
-            $who = $uploader . ' (' . $this->dateFormatter->format($article->time) . ')';
+            $uploader = [
+                'user_id' => $article->uploader_id,
+                'name'    => $article->uploader,
+                'date'    => $this->dateFormatter->format($article->time),
+            ];
 
             $cover = file_exists(UPLOAD_PATH . 'library/images/big/' . $id . '.png');
         }
 
-        $articleUrl = $article->url;
-
-        return new Response($this->render->render('library::book', [
-            'res'         => [
-                'id'          => $article->id,
-                'url'         => $articleUrl,
-                'text'        => $text,
-                'name'        => $pageTitle,
-                'count_views' => $article->count_views,
-                'comm_count'  => $article->comm_count,
-                'comments'    => $article->comments,
-            ],
+        return new ViewResponse('@library/public/article.twig', [
+            'title'       => $meta->title,
+            'page_title'  => $pageTitle,
+            'id'          => $article->id,
+            'url'         => $article->url,
+            'text'        => $text,
             'page'        => $page,
             'count_pages' => $countPages,
-            'tags'        => $tags,
-            'who'         => $who,
-            'ratingVote'  => $ratingVote,
-            'ratingView'  => $ratingView,
+            'count_views' => $article->count_views,
+            'comments'    => (bool) $article->comments,
+            'comm_count'  => $article->comm_count,
             'cover'       => $cover,
-            'moderMenu'   => $moderMenu,
-            'pagination'  => $pagination->render(),
-        ]));
+            'tags'        => $tags,
+            'uploader'    => $uploader,
+            'rating'      => $rating,
+            'user_vote'   => $userVote,
+            'moder_menu'  => $moderMenu,
+            'pagination'  => $pagination->hasPages() ? $pagination->render() : null,
+        ]);
     }
 }

@@ -1,0 +1,83 @@
+{#
+    The edit form of a section, and the confirmation that replaces it once the changes are saved.
+
+    @param int     id
+    @param bool    saved
+    @param string  category_url
+    @param string  name
+    @param string  description
+    @param int     dir           1 when the section holds other sections, 0 when it holds articles.
+    @param int     user_add      Whether readers may add their own articles here.
+    @param int     parent
+    @param bool    is_empty      An empty section may still change its type.
+    @param array[] parent_sections
+    @param int     field_height
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    {% if saved %}
+        <div class="alert alert-success">{{ __('Changes saved successfully.') }}</div>
+        <div class="mt-2"><a href="{{ category_url }}">{{ __('Back to Section') }}</a></div>
+    {% else %}
+        <form action="/library/section/{{ id }}/edit" method="post">
+            <div class="form-group">
+                <label for="name">{{ __('Title') }}</label>
+                <input type="text" name="name" class="form-control" id="name"
+                       value="{{ name }}"
+                       placeholder="{{ __('Title') }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="description">{{ __('Section description') }}</label>
+                <textarea class="form-control" rows="{{ field_height }}"
+                          name="description" id="description">{{ description }}</textarea>
+            </div>
+
+            {% if is_empty %}
+                <h3 class="mt-3">{{ __('Section type') }}</h3>
+                <div class="custom-control custom-radio">
+                    <input type="radio" id="section_type1" name="dir" value="0" class="custom-control-input"{% if dir == 0 %} checked{% endif %}>
+                    <label class="custom-control-label" for="section_type1">{{ __('Articles') }}</label>
+                </div>
+                <div class="custom-control custom-radio">
+                    <input type="radio" id="section_type2" name="dir" value="1" class="custom-control-input"{% if dir == 1 %} checked{% endif %}>
+                    <label class="custom-control-label" for="section_type2">{{ __('Sections') }}</label>
+                </div>
+            {% endif %}
+
+            {% if dir == 0 %}
+                <h3 class="mt-3">{{ __('Allow users to add their Articles?') }}</h3>
+                <div class="custom-control custom-radio">
+                    <input type="radio" id="user_add1" name="user_add" value="1" class="custom-control-input"{% if user_add == 1 %} checked{% endif %}>
+                    <label class="custom-control-label" for="user_add1">{{ __('Yes') }}</label>
+                </div>
+                <div class="custom-control custom-radio">
+                    <input type="radio" id="user_add2" name="user_add" value="0" class="custom-control-input"{% if user_add == 0 %} checked{% endif %}>
+                    <label class="custom-control-label" for="user_add2">{{ __('No') }}</label>
+                </div>
+            {% endif %}
+
+            {% if parent_sections %}
+                <div class="mt-2">
+                    <label for="move">{{ __('Move to Section') }}</label>
+                    <select name="move" class="form-control" id="move">
+                        <option value="0"{% if parent == 0 %} selected{% endif %}>
+                            {{ __('The ROOT') }}
+                        </option>
+                        {% for section in parent_sections %}
+                            <option value="{{ section.id }}"{% if parent == section.id %} selected{% endif %}>
+                                {{ section.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            {% endif %}
+
+            <div class="mt-3">
+                <input type="submit" name="submit" value="{{ __('Save') }}" class="btn btn-primary">
+                <a href="{{ category_url }}" class="btn btn-secondary">{{ __('Cancel') }}</a>
+            </div>
+        </form>
+    {% endif %}
+{% endblock %}

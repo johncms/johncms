@@ -6,30 +6,26 @@ namespace Johncms\Modules\Library\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\PageMeta;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Library\Domain\Models\LibraryCategory;
 use Johncms\Modules\Library\Domain\Repository\LibraryTextRepositoryInterface;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
-use Johncms\Modules\Library\Application\Services\Hashtags;
 use Johncms\Modules\Library\Application\Services\Rating;
 use Johncms\Utils\DateFormatterInterface;
-use Johncms\Utils\PlainTextFormatter;
 
 final readonly class TopController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private DateFormatterInterface $dateFormatter,
         private LibraryTextRepositoryInterface $repository,
     ) {
         $this->controllerContext->initModule('library');
-        $this->render->addFolder('libraryHelpers', MODULES_PATH . 'library/templates/helpers/');
     }
 
-    public function __invoke(Request $request): string
+    public function __invoke(Request $request): ViewResponse
     {
         $sort = $request->queryParam('sort', 'read');
         $sort = in_array($sort, ['read', 'rating', 'comm'], true) ? $sort : 'read';
@@ -40,16 +36,10 @@ final readonly class TopController
         $this->navChain->add(__('Library'), '/library/');
         $this->navChain->add($pageTitle);
 
-        $this->render->addData([
-            'title'       => $meta->title,
-            'page_title'  => $pageTitle,
-            'description' => $meta->description,
-        ]);
-
         $filters = [
-            'read'   => ['name' => __('Most readings'), 'url' => '/library/top',             'active' => $sort === 'read'],
-            'rating' => ['name' => __('By rating'),     'url' => '/library/top?sort=rating', 'active' => $sort === 'rating'],
-            'comm'   => ['name' => __('By comments'),   'url' => '/library/top?sort=comm',   'active' => $sort === 'comm'],
+            ['name' => __('Most readings'), 'url' => '/library/top',             'active' => $sort === 'read'],
+            ['name' => __('By rating'),     'url' => '/library/top?sort=rating', 'active' => $sort === 'rating'],
+            ['name' => __('By comments'),   'url' => '/library/top?sort=comm',   'active' => $sort === 'comm'],
         ];
 
         if ($sort === 'rating') {
@@ -63,35 +53,33 @@ final readonly class TopController
 
         $items = [];
         foreach ($texts as $text) {
-            $obj = new Hashtags($text->id);
-            $rate = new Rating($text->id);
+            $rate     = new Rating($text->id);
             $category = LibraryCategory::query()->find($text->cat_id);
-
-            $uploader = $text->uploader_id
-                ? '<a href="' . config('johncms')['homeurl'] . '/profile/' . $text->uploader_id . '">' . PlainTextFormatter::escape($text->uploader) . '</a>'
-                : PlainTextFormatter::escape($text->uploader);
 
             $items[] = [
                 'id'          => $text->id,
                 'url'         => $text->url,
                 'name'        => $text->name,
                 'announce'    => $text->announce,
-                'cover'       => file_exists(UPLOAD_PATH . 'library/images/small/' . $text->id . '.png'),
-                'tags'        => $obj->getAllStatTags() ? $obj->getAllStatTags(1) : null,
-                'ratingView'  => $rate->viewRate(1),
-                'who'         => $uploader . ' (' . $this->dateFormatter->format($text->time) . ')',
-                'cat_id'      => $text->cat_id,
-                'cat_url'     => $category ? $category->url : '/library/',
+                'cat_url'     => $category !== null ? $category->url : '/library/',
                 'cat_name'    => $category?->name ?? '',
-                'comments'    => $text->comments,
+                'uploader_id' => $text->uploader_id,
+                'uploader'    => $text->uploader,
+                'date'        => $this->dateFormatter->format($text->time),
+                'rate'        => $rate->getRate(),
+                'votes'       => $rate->getVotesCount(),
+                'comments'    => (bool) $text->comments,
                 'comm_count'  => $text->comm_count,
             ];
         }
 
-        return $this->render->render('library::top', [
-            'data'  => ['filters' => $filters],
-            'total' => $total,
-            'items' => $items,
+        return new ViewResponse('@library/public/top.twig', [
+            'title'       => $meta->title,
+            'page_title'  => $pageTitle,
+            'description' => $meta->description,
+            'filters'     => $filters,
+            'total'       => $total,
+            'articles'    => $items,
         ]);
     }
 }

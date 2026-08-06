@@ -1,0 +1,58 @@
+{#
+    A section that holds other sections.
+
+    @param int     id
+    @param int     total
+    @param array[] sections
+    @param bool    admin
+    @param ?Markup pagination
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    {% if total %}
+        {% for section in sections %}
+            <div class="shadow border-radius-12 forum-section post-item mb-2">
+                <div class="section-header d-flex justify-content-between border-0 pb-0">
+                    <div class="d-flex align-items-center">
+                        <a href="{{ section.url }}" class="text-dark-brown">{{ section.name }}</a>
+                        <span class="badge rounded-pill text-bg-light border ms-3">{{ section.counter }}</span>
+                    </div>
+                </div>
+                {% if section.description %}
+                    <div class="small pt-2 mt-1 border-top text-muted">
+                        <div>{{ section.description }}</div>
+                    </div>
+                {% endif %}
+                {% if admin %}
+                    <div class="border-top mt-2 pt-2">
+                        {% include '@library/public/components/section-admin-panel.twig' with {
+                            section_id: id,
+                            section_item_id: section.id,
+                            position: section.position,
+                            total: total
+                        } only %}
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="row">
+            <div class="col-md-5">
+                <div class="alert alert-info shadow border-0">{{ __('The list is empty') }}</div>
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="mt-3">{{ __('Total') }}: {{ total }}</div>
+    {% if pagination %}
+        <div>{{ pagination }}</div>
+    {% endif %}
+    {% if admin %}
+        <div class="mt-3">
+            <a href="/library/section/create?id={{ id }}" class="btn btn-primary">{{ __('Create') }}</a>
+            <a href="/library/section/{{ id }}/edit" class="btn btn-primary">{{ __('Edit') }}</a>
+            <a href="/library/section/{{ id }}/delete" class="btn btn-danger">{{ __('Delete') }}</a>
+        </div>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,30 @@
+{#
+    The rating listing, sorted by one of the three counters.
+
+    @param array[] filters  Sort buttons: name, url, active.
+    @param int     total
+    @param array[] articles
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    <div class="mb-3">
+        <div>{{ __('Sort') }}</div>
+        {% for filter in filters %}
+            <a href="{{ filter.url }}" class="btn btn-outline-secondary mt-1 btn-sm{{ filter.active ? ' active' }}">{{ filter.name }}</a>
+        {% endfor %}
+    </div>
+
+    {% if total %}
+        {% for article in articles %}
+            {% include '@library/public/components/article-row.twig' with {article: article} only %}
+        {% endfor %}
+    {% else %}
+        <div class="row">
+            <div class="col-md-5">
+                <div class="alert alert-info shadow border-0">{{ __('The list is empty') }}</div>
+            </div>
+        </div>
+    {% endif %}
+    <div class="phdr"><a href="/library/">{{ __('Back') }}</a></div>
+{% endblock %}

@@ -1,0 +1,12 @@
+{#
+    Who added an article and when.
+
+    @param ?int   user_id Null when the account is gone; then only the name is left.
+    @param string name
+    @param string date    Already formatted for the current locale.
+#}
+{%- if user_id -%}
+    <a href="/profile/{{ user_id }}">{{ name }}</a>
+{%- else -%}
+    {{ name }}
+{%- endif %} ({{ date }})

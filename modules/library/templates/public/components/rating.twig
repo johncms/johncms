@@ -1,0 +1,7 @@
+{#
+    Average rating of an article: a star image and the number of votes.
+
+    @param float rate  Average score, at half point granularity.
+    @param int   votes
+#}
+<img src="{{ asset('images/old/star.' ~ rate|replace({'.': '-'}) ~ '.gif') }}" alt=""> ({{ votes }})

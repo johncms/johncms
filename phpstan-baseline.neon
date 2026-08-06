@@ -1534,7 +1534,7 @@ parameters:
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$uploader\.$#'
 			identifier: property.notFound
-			count: 2
+			count: 1
 			path: modules/library/src/Application/Controllers/ArticleController.php
 
 		-
@@ -1636,13 +1636,37 @@ parameters:
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$cat_id\.$#'
 			identifier: property.notFound
-			count: 3
+			count: 4
+			path: modules/library/src/Application/Controllers/EditArticleController.php
+
+		-
+			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$comments\.$#'
+			identifier: property.notFound
+			count: 1
+			path: modules/library/src/Application/Controllers/EditArticleController.php
+
+		-
+			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$count_views\.$#'
+			identifier: property.notFound
+			count: 1
 			path: modules/library/src/Application/Controllers/EditArticleController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$name\.$#'
 			identifier: property.notFound
-			count: 2
+			count: 3
+			path: modules/library/src/Application/Controllers/EditArticleController.php
+
+		-
+			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$premod\.$#'
+			identifier: property.notFound
+			count: 1
+			path: modules/library/src/Application/Controllers/EditArticleController.php
+
+		-
+			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$text\.$#'
+			identifier: property.notFound
+			count: 1
 			path: modules/library/src/Application/Controllers/EditArticleController.php
 
 		-
@@ -1660,25 +1684,37 @@ parameters:
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryCategory\:\:\$dir\.$#'
 			identifier: property.notFound
+			count: 2
+			path: modules/library/src/Application/Controllers/EditSectionController.php
+
+		-
+			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryCategory\:\:\$id\.$#'
+			identifier: property.notFound
 			count: 1
 			path: modules/library/src/Application/Controllers/EditSectionController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryCategory\:\:\$name\.$#'
 			identifier: property.notFound
-			count: 1
+			count: 3
 			path: modules/library/src/Application/Controllers/EditSectionController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryCategory\:\:\$parent\.$#'
 			identifier: property.notFound
-			count: 2
+			count: 3
 			path: modules/library/src/Application/Controllers/EditSectionController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryCategory\:\:\$url\.$#'
 			identifier: property.notFound
 			count: 2
+			path: modules/library/src/Application/Controllers/EditSectionController.php
+
+		-
+			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryCategory\:\:\$user_add\.$#'
+			identifier: property.notFound
+			count: 1
 			path: modules/library/src/Application/Controllers/EditSectionController.php
 
 		-
@@ -1708,7 +1744,7 @@ parameters:
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$cat_id\.$#'
 			identifier: property.notFound
-			count: 2
+			count: 1
 			path: modules/library/src/Application/Controllers/NewArticlesController.php
 
 		-
@@ -1726,7 +1762,7 @@ parameters:
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$id\.$#'
 			identifier: property.notFound
-			count: 4
+			count: 2
 			path: modules/library/src/Application/Controllers/NewArticlesController.php
 
 		-
@@ -1744,7 +1780,7 @@ parameters:
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$uploader\.$#'
 			identifier: property.notFound
-			count: 2
+			count: 1
 			path: modules/library/src/Application/Controllers/NewArticlesController.php
 
 		-
@@ -1804,7 +1840,7 @@ parameters:
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$uploader\.$#'
 			identifier: property.notFound
-			count: 2
+			count: 1
 			path: modules/library/src/Application/Controllers/SearchController.php
 
 		-
@@ -1838,12 +1874,6 @@ parameters:
 			path: modules/library/src/Application/Controllers/SectionController.php
 
 		-
-			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryCategory\:\:\$url\.$#'
-			identifier: property.notFound
-			count: 2
-			path: modules/library/src/Application/Controllers/SectionController.php
-
-		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryCategory\:\:\$user_add\.$#'
 			identifier: property.notFound
 			count: 1
@@ -1870,7 +1900,7 @@ parameters:
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$cat_id\.$#'
 			identifier: property.notFound
-			count: 2
+			count: 1
 			path: modules/library/src/Application/Controllers/TopController.php
 
 		-
@@ -1888,7 +1918,7 @@ parameters:
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$id\.$#'
 			identifier: property.notFound
-			count: 4
+			count: 2
 			path: modules/library/src/Application/Controllers/TopController.php
 
 		-
@@ -1906,7 +1936,7 @@ parameters:
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$uploader\.$#'
 			identifier: property.notFound
-			count: 2
+			count: 1
 			path: modules/library/src/Application/Controllers/TopController.php
 
 		-

@@ -1,0 +1,25 @@
+{#
+    Confirmation of deleting the cover image of an article.
+
+    @param int    id
+    @param string name
+    @param bool   deleted
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    {% if deleted %}
+        <div class="alert alert-success">{{ __('Cover image for article "%s" has been deleted.', name) }}</div>
+        <div class="mt-3">
+            <a href="/library/article/{{ id }}/edit">{{ __('Back to Article') }}</a>
+        </div>
+    {% else %}
+        <div class="alert alert-danger">
+            <div>{{ __('Are you sure you want to delete the cover image for article "%s"?', name) }}</div>
+            <div class="mt-2">
+                <a href="/library/article/{{ id }}/image/delete?yes" class="btn btn-danger btn-sm">{{ __('Yes, Delete') }}</a>
+                <a href="/library/article/{{ id }}/edit" class="btn btn-secondary btn-sm">{{ __('Cancel') }}</a>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

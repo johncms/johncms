@@ -9,7 +9,7 @@ use Johncms\Modules\Library\Domain\Models\LibraryCategory;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Users\User;
 use Johncms\Modules\Library\Application\Services\Tree;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,22 +18,22 @@ final readonly class DeleteSectionController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private User $currentUser,
     ) {
         $this->controllerContext->initModule('library');
     }
 
-    public function __invoke(Request $request, int $id): Response
+    public function __invoke(Request $request, int $id): ViewResponse
     {
         if (! ($this->currentUser->rights > 4)) {
-            return new Response(
-                $this->render->render('system::pages/result', [
+            return new ViewResponse(
+                '@theme/pages/result.twig',
+                [
                     'title'   => __('Delete'),
                     'type'    => 'alert-danger',
                     'message' => __('Access forbidden'),
-                ]),
+                ],
                 Response::HTTP_FORBIDDEN
             );
         }
@@ -41,11 +41,11 @@ final readonly class DeleteSectionController
         $category = LibraryCategory::query()->find($id);
 
         if ($category === null) {
-            return new Response($this->render->render('system::pages/result', [
+            return new ViewResponse('@theme/pages/result.twig', [
                 'title'   => __('Delete'),
                 'type'    => 'alert-danger',
                 'message' => __('Section does not exist'),
-            ]));
+            ]);
         }
 
         $this->navChain->add(__('Library'), '/library/');
@@ -53,11 +53,6 @@ final readonly class DeleteSectionController
         $dirNav->processNavPanel();
         $dirNav->printNavPanel();
         $this->navChain->add(__('Delete Section'));
-
-        $this->render->addData([
-            'title'      => __('Delete Section'),
-            'page_title' => __('Delete Section'),
-        ]);
 
         $hasChildren = LibraryCategory::query()->where('parent', $id)->exists()
             || LibraryText::query()->where('cat_id', $id)->exists();
@@ -69,7 +64,7 @@ final readonly class DeleteSectionController
         return $this->handleNonEmptySection($request, $id, $category->name, (bool) $category->dir);
     }
 
-    private function handleEmptySection(Request $request, int $id, string $name): Response
+    private function handleEmptySection(Request $request, int $id, string $name): ViewResponse
     {
         $deleted = false;
 
@@ -78,30 +73,24 @@ final readonly class DeleteSectionController
             $deleted = true;
         }
 
-        return new Response($this->render->render('library::delete_section', [
-            'id'              => $id,
-            'name'            => $name,
-            'isEmpty'         => true,
-            'deleted'         => $deleted,
-            'mode'            => null,
-            'moving'          => false,
-            'moveTarget'      => null,
-            'moveSections'    => null,
-            'pendingMove'     => null,
-            'deleteAllResult' => null,
-        ]));
+        return new ViewResponse('@library/public/delete-section.twig', $this->pageData() + [
+            'id'       => $id,
+            'name'     => $name,
+            'is_empty' => true,
+            'deleted'  => $deleted,
+        ]);
     }
 
-    private function handleNonEmptySection(Request $request, int $id, string $name, bool $isDir): Response
+    private function handleNonEmptySection(Request $request, int $id, string $name, bool $isDir): ViewResponse
     {
         $post = $request->request->all();
         $mode = (string) ($post['mode'] ?? $request->queryParam('do', ''));
 
-        $moving = false;
+        $moved = false;
         $moveTarget = null;
         $moveSections = null;
         $pendingMove = null;
-        $deleteAllResult = null;
+        $deletedCounts = null;
 
         switch ($mode) {
             case 'moveaction':
@@ -113,7 +102,7 @@ final readonly class DeleteSectionController
                         LibraryText::query()->where('cat_id', $id)->update(['cat_id' => $move]);
                     }
                     LibraryCategory::query()->where('id', $id)->delete();
-                    $moving = true;
+                    $moved = true;
                     $moveTarget = $move;
                 } else {
                     $pendingMove = (int) ($post['move'] ?? 0);
@@ -127,31 +116,32 @@ final readonly class DeleteSectionController
             case 'delall':
                 if ($request->query->has('deldeny')) {
                     $childs = new Tree($id);
-                    $counts = $childs->getAllChildsId()->cleanDir();
-                    $deleteAllResult = sprintf(
-                        __('Successfully deleted:<br>Directories: (%d)<br>Articles: (%d)<br>Tags: (%d)<br>Comments: (%d)<br>Images: (%d)'),
-                        $counts['dirs'],
-                        $counts['texts'],
-                        $counts['tags'],
-                        $counts['comments'],
-                        $counts['images'],
-                    );
+                    $deletedCounts = $childs->getAllChildsId()->cleanDir();
                 }
                 break;
         }
 
-        return new Response($this->render->render('library::delete_section', [
-            'id'              => $id,
-            'name'            => $name,
-            'isEmpty'         => false,
-            'deleted'         => false,
-            'mode'            => $mode,
-            'moving'          => $moving,
-            'moveTarget'      => $moveTarget,
-            'moveSections'    => $moveSections,
-            'pendingMove'     => $pendingMove,
-            'deleteAllResult' => $deleteAllResult,
-        ]));
+        return new ViewResponse('@library/public/delete-section.twig', $this->pageData() + [
+            'id'             => $id,
+            'name'           => $name,
+            'is_empty'       => false,
+            'deleted'        => false,
+            'mode'           => $mode,
+            'moved'          => $moved,
+            'move_target'    => $moveTarget,
+            'move_sections'  => $moveSections,
+            'pending_move'   => $pendingMove,
+            'deleted_counts' => $deletedCounts,
+        ]);
+    }
+
+    /** @return array<string, string> */
+    private function pageData(): array
+    {
+        return [
+            'title'      => __('Delete Section'),
+            'page_title' => __('Delete Section'),
+        ];
     }
 
     /** @return array<int, string>|null */

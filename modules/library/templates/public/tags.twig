@@ -1,0 +1,45 @@
+{#
+    Articles carrying one tag.
+
+    @param int     total
+    @param array[] articles
+    @param ?Markup pagination
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    {% for article in articles %}
+        <div class="new_post-item without_avatar">
+            <a href="{{ article.url }}" class="card-title h3">{{ article.name }}</a>
+            <div class="post-body">{{ article.text }}</div>
+            {% if article.tags %}
+                <div class="mb-1">{{ article.tags }}</div>
+            {% endif %}
+            <div class="text-muted small d-flex align-items-center flex-wrap">
+                <div class="me-2">
+                    <span>{{ __('Author:') }}</span>
+                    {%- include '@library/public/components/uploader.twig' with {
+                        user_id: article.uploader_id,
+                        name: article.uploader,
+                        date: article.date
+                    } only %}
+                </div>
+                <div class="me-2">
+                    <span>{{ __('Number of readings:') }}</span>{{ article.count_views }}
+                </div>
+                {% if article.comments %}
+                    <div>
+                        <a href="/library/article/{{ article.id }}/comments">{{ __('Comments:') }}</a>
+                        ({{ article.comm_count }})
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+
+    <div class="mt-3">{{ __('Total') }}: {{ total }}</div>
+    {% if pagination %}
+        <div>{{ pagination }}</div>
+    {% endif %}
+    <p><a href="/library/">{{ __('To Library') }}</a></p>
+{% endblock %}

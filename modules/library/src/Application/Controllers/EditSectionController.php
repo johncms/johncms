@@ -12,7 +12,7 @@ use Johncms\Modules\Library\Domain\Models\LibraryCategory;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Users\User;
 use Johncms\Modules\Library\Application\Services\Tree;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,7 +21,6 @@ final readonly class EditSectionController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private User $currentUser,
         private LibrarySlugService $slugService,
@@ -30,15 +29,16 @@ final readonly class EditSectionController
         $this->controllerContext->initModule('library');
     }
 
-    public function __invoke(Request $request, int $id): Response
+    public function __invoke(Request $request, int $id): ViewResponse
     {
         if (! ($this->currentUser->rights > 4)) {
-            return new Response(
-                $this->render->render('system::pages/result', [
+            return new ViewResponse(
+                '@theme/pages/result.twig',
+                [
                     'title'   => __('Edit Section'),
                     'type'    => 'alert-danger',
                     'message' => __('Access forbidden'),
-                ]),
+                ],
                 Response::HTTP_FORBIDDEN
             );
         }
@@ -46,12 +46,13 @@ final readonly class EditSectionController
         $category = LibraryCategory::query()->find($id);
 
         if ($category === null) {
-            return new Response(
-                $this->render->render('system::pages/result', [
+            return new ViewResponse(
+                '@theme/pages/result.twig',
+                [
                     'title'   => __('Edit Section'),
                     'type'    => 'alert-danger',
                     'message' => __('Section does not exist'),
-                ]),
+                ],
                 Response::HTTP_NOT_FOUND
             );
         }
@@ -62,33 +63,41 @@ final readonly class EditSectionController
         $dirNav->printNavPanel();
         $this->navChain->add(__('Edit Section'));
 
-        $this->render->addData([
+        $pageData = [
             'title'      => __('Edit Section'),
             'page_title' => __('Edit Section'),
-        ]);
+            'id'         => $id,
+        ];
 
         if ($request->getMethod() === 'POST') {
             $this->save($request, $id, $category);
-            return new Response($this->render->render('library::edit_section', [
-                'id'           => $id,
+
+            return new ViewResponse('@library/public/edit-section.twig', $pageData + [
                 'category_url' => $category->url,
                 'saved'        => true,
-            ]));
+            ]);
         }
 
         $isEmpty = ! LibraryCategory::query()->where('parent', $id)->exists()
             && ! LibraryText::query()->where('cat_id', $id)->exists();
 
-        $parentSections = $this->getParentSections($id);
+        $parentSections = [];
+        foreach ($this->getParentSections($id) as $section) {
+            $parentSections[] = ['id' => (int) $section->id, 'name' => $section->name];
+        }
 
-        return new Response($this->render->render('library::edit_section', [
-            'id'             => $id,
-            'category_url'   => $category->url,
-            'category'       => $category,
-            'isEmpty'        => $isEmpty,
-            'parentSections' => $parentSections,
-            'saved'          => false,
-        ]));
+        return new ViewResponse('@library/public/edit-section.twig', $pageData + [
+            'category_url'    => $category->url,
+            'saved'           => false,
+            'name'            => $category->name,
+            'description'     => (string) ($category->description ?? ''),
+            'dir'             => (int) $category->dir,
+            'user_add'        => (int) $category->user_add,
+            'parent'          => (int) $category->parent,
+            'is_empty'        => $isEmpty,
+            'parent_sections' => $parentSections,
+            'field_height'    => $this->currentUser->config->fieldHeight,
+        ]);
     }
 
     private function save(Request $request, int $id, LibraryCategory $category): void

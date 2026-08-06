@@ -1,0 +1,56 @@
+{#
+    A section that holds articles.
+
+    @param int     id
+    @param int     total
+    @param array[] articles
+    @param bool    admin
+    @param bool    moder_menu Whether the reader may add an article here.
+    @param ?Markup pagination
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    {% if total %}
+        {% for article in articles %}
+            <div class="new_post-item without_avatar">
+                <a href="{{ article.url }}" class="post-title">{{ article.name }}</a>
+                <div class="post-body">{{ article.announce }}</div>
+                <div class="text-muted small d-flex align-items-center flex-wrap">
+                    <span class="pe-2">
+                        <span>{{ __('Author:') }}</span>&nbsp;
+                        {%- include '@library/public/components/uploader.twig' with {
+                            user_id: article.uploader_id,
+                            name: article.uploader,
+                            date: article.date
+                        } only -%},
+                    </span>
+                    <span class="d-flex align-items-center">
+                        <span class="pe-1">{{ __('Rating:') }}</span>
+                        {%- include '@library/public/components/rating.twig' with {rate: article.rate, votes: article.votes} only %}
+                    </span>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="row">
+            <div class="col-md-5">
+                <div class="alert alert-info shadow border-0">{{ __('The list is empty') }}</div>
+            </div>
+        </div>
+    {% endif %}
+    <div class="phdr">{{ __('Total') }}: {{ total }}</div>
+    {% if pagination %}
+        <div>{{ pagination }}</div>
+    {% endif %}
+
+    {% if moder_menu %}
+        <div class="mt-3">
+            <a href="/library/article/create?id={{ id }}" class="btn btn-primary">{{ __('Write Article') }}</a>
+            {% if admin %}
+                <a href="/library/section/{{ id }}/edit" class="btn btn-primary">{{ __('Edit') }}</a>
+                <a href="/library/section/{{ id }}/delete" class="btn btn-danger">{{ __('Delete') }}</a>
+            {% endif %}
+        </div>
+    {% endif %}
+{% endblock %}

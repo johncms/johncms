@@ -1,9 +1,0 @@
-<?php if ($positionId !== 1) : ?>
-    <a href="/library/section/<?= $sectionId ?>/move/up/<?= $positionId ?>" class="me-2"><?= __('Up') ?></a>
-<?php endif; ?>
-<?php if ($positionId !== $total) : ?>
-    <a href="/library/section/<?= $sectionId ?>/move/down/<?= $positionId ?>" class="me-2"><?= __('Down') ?></a>
-<?php endif; ?>
-<a href="/library/section/<?= $sectionItemId ?>/edit" class="me-2"><?= __('Edit') ?></a>
-<a href="/library/section/<?= $sectionItemId ?>/delete"><?= __('Delete') ?></a>
-

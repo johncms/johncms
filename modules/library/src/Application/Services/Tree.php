@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Library\Application\Services;
 
+use Johncms\NavChain;
 use PDO;
 
 class Tree
@@ -130,9 +131,17 @@ class Tree
         return $this;
     }
 
+    /**
+     * Puts the path collected by processNavPanel() into the breadcrumbs.
+     */
     public function printNavPanel(): void
     {
-        ViewHelper::printNavPanel($this->result());
+        $navChain    = di(NavChain::class);
+        $pathService = di(LibraryCategoryPathService::class);
+
+        foreach ($this->result() as $value) {
+            $navChain->add($value['name'], $pathService->getCategoryUrlById($value['id']) ?? '/library/');
+        }
     }
 
     public function result(): array

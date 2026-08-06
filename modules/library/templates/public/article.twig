@@ -1,0 +1,91 @@
+{#
+    One page of an article. Everything about the article itself is shown on the first page only.
+
+    @param int     id
+    @param string  url
+    @param Markup  text        Purified article HTML.
+    @param int     page
+    @param int     count_pages
+    @param int     count_views
+    @param bool    comments    Whether commenting is open.
+    @param int     comm_count
+    @param bool    cover
+    @param ?Markup tags
+    @param ?array  uploader    Author of the article, on the first page.
+    @param ?array  rating      Average score, on the first page.
+    @param ?int    user_vote   Set when the reader may vote.
+    @param bool    moder_menu
+    @param ?Markup pagination
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    {% if page == 1 and cover %}
+        <a href="/upload/library/images/orig/{{ id }}.png" class="float-lg-left pe-3">
+            <img src="/upload/library/images/big/{{ id }}.png" alt="screen" class="img-thumbnail">
+        </a>
+    {% endif %}
+    <div class="pb-3 pt-2">
+        {{ text }}
+        <div style="clear: both"></div>
+    </div>
+    {% if pagination %}
+        <div>{{ pagination }}</div>
+    {% endif %}
+
+    <div class="pt-3 border-top">
+        <span class="me-2">{{ __('Download file') }}</span>
+        <a href="/library/article/{{ id }}/download/txt" class="btn btn-outline-secondary btn-sm">txt</a>
+        <a href="/library/article/{{ id }}/download/fb2" class="btn btn-outline-secondary btn-sm">fb2</a>
+    </div>
+    {% if page == 1 %}
+        <div class="border-top border-bottom mt-3 mb-1 pb-2 pt-2 text-muted">
+            {% if tags %}
+                <div>
+                    {{ __('The Tags:') }}
+                    <span>{{ tags }}</span>
+                </div>
+            {% endif %}
+            <div>
+                {{ __('Who added:') }}
+                <span>
+                    {%- include '@library/public/components/uploader.twig' with {
+                        user_id: uploader.user_id,
+                        name: uploader.name,
+                        date: uploader.date
+                    } only -%}
+                </span>
+            </div>
+            <div>
+                {{ __('Rating:') }}
+                <span>
+                    {%- include '@library/public/components/rating.twig' with {rate: rating.rate, votes: rating.votes} only -%}
+                </span>
+            </div>
+            <div>
+                {{ __('Number of readings:') }}
+                <span>{{ count_views }}</span>
+            </div>
+            {% if comments %}
+                <div>
+                    <a href="/library/article/{{ id }}/comments">{{ __('Comments:') }}</a> ({{ comm_count }})
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
+    <div class="border-bottom mb-3">
+        <div class="row">
+            <div class="col-md-3 mb-3 mt-2">
+                {% if user_vote is not null %}
+                    {% include '@library/public/components/rating-vote.twig' with {article_url: url, user_vote: user_vote} only %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% if moder_menu %}
+        <div class="mt-2">
+            <a href="/library/article/{{ id }}/edit" class="btn btn-primary">{{ __('Edit') }}</a>
+            <a href="/library/article/{{ id }}/delete" class="btn btn-danger">{{ __('Delete') }}</a>
+        </div>
+    {% endif %}
+{% endblock %}

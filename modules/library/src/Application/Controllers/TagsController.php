@@ -8,20 +8,18 @@ use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
 use Johncms\Modules\Library\Application\Services\Hashtags;
 use Johncms\Utils\DateFormatterInterface;
-use Johncms\Utils\PlainTextFormatter;
 use Symfony\Component\HttpFoundation\Response;
 
 final readonly class TagsController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private DateFormatterInterface $dateFormatter,
         private PaginationFactory $paginationFactory,
@@ -30,7 +28,7 @@ final readonly class TagsController
         $this->controllerContext->initModule('library');
     }
 
-    public function __invoke(Request $request): Response
+    public function __invoke(Request $request): ViewResponse
     {
         $this->navChain->add(__('Library'), '/library/');
         $this->navChain->add(__('Tags'));
@@ -38,13 +36,14 @@ final readonly class TagsController
         $tag = trim($request->queryParam('tag', ''));
 
         if ($tag === '') {
-            return new Response(
-                $this->render->render('system::pages/result', [
+            return new ViewResponse(
+                '@theme/pages/result.twig',
+                [
                     'title'    => __('Tags'),
                     'type'     => 'alert-info',
                     'message'  => __('The list is empty'),
                     'back_url' => '/library/',
-                ]),
+                ],
                 Response::HTTP_NOT_FOUND
             );
         }
@@ -52,12 +51,12 @@ final readonly class TagsController
         $articleIds = (new Hashtags(0))->getAllTagStats($tag);
 
         if (! $articleIds) {
-            return new Response($this->render->render('system::pages/result', [
+            return new ViewResponse('@theme/pages/result.twig', [
                 'title'    => __('Tags'),
                 'type'     => 'alert-info',
                 'message'  => __('The list is empty'),
                 'back_url' => '/library/',
-            ]));
+            ]);
         }
 
         $total = count($articleIds);
@@ -68,14 +67,9 @@ final readonly class TagsController
             redirect($redirectUrl);
         }
 
-        $pageTitle     = __('Articles tagged: %s', htmlspecialchars($tag));
+        $pageTitle     = __('Articles tagged: %s', $tag);
         $documentTitle = $pageTitle . ' — ' . __('Library');
         $meta          = new PageMeta($documentTitle, $pagination->getCurrentPage());
-        $this->render->addData([
-            'title'       => $meta->title,
-            'page_title'  => $pageTitle,
-            'description' => $meta->description,
-        ]);
 
         $ids = array_slice($articleIds, $pagination->getOffset(), $pagination->getPerPage());
 
@@ -91,30 +85,29 @@ final readonly class TagsController
             if ($article === null) {
                 continue;
             }
-            $uploader = $article->uploader_id
-                ? '<a href="' . config('johncms')['homeurl'] . '/profile/' . $article->uploader_id . '">' . PlainTextFormatter::escape($article->uploader) . '</a>'
-                : PlainTextFormatter::escape($article->uploader);
 
-            $tags      = (new Hashtags($article->id))->getAllStatTags(1);
             $list[] = [
                 'id'          => $article->id,
                 'url'         => $article->url,
                 'name'        => $article->name,
                 'text'        => strip_tags((string) $article->text_preview),
-                'cover'       => file_exists(UPLOAD_PATH . 'library/images/small/' . $article->id . '.png'),
-                'who'         => $uploader . ' (' . $this->dateFormatter->format($article->time) . ')',
+                'uploader_id' => $article->uploader_id,
+                'uploader'    => $article->uploader,
+                'date'        => $this->dateFormatter->format($article->time),
                 'count_views' => $article->count_views,
                 'comm_count'  => $article->comm_count,
-                'comments'    => $article->comments,
-                'tags'        => $tags,
+                'comments'    => (bool) $article->comments,
+                'tags'        => (new Hashtags($article->id))->getTagLinks(),
             ];
         }
 
-        return new Response($this->render->render('library::tags', [
-            'total'      => $total,
-            'list'       => $list,
-            'tag'        => $tag,
-            'pagination' => $pagination->render(),
-        ]));
+        return new ViewResponse('@library/public/tags.twig', [
+            'title'       => $meta->title,
+            'page_title'  => $pageTitle,
+            'description' => $meta->description,
+            'total'       => $total,
+            'articles'    => $list,
+            'pagination'  => $pagination->hasPages() ? $pagination->render() : null,
+        ]);
     }
 }

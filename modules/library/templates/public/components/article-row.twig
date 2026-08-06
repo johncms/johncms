@@ -1,0 +1,32 @@
+{#
+    One article in the "new" and "top" listings.
+
+    @param array article See the listing controllers for the keys.
+#}
+<div class="new_post-item without_avatar">
+    <a href="{{ article.url }}" class="post-title">{{ article.name }}</a>
+    <div class="post-body">{{ article.announce }}</div>
+    <div class="text-muted small d-flex align-items-center flex-wrap">
+        <div class="me-2">
+            <span>{{ __('Section:') }}</span> <a href="{{ article.cat_url }}">{{ article.cat_name }}</a>
+        </div>
+        <div class="me-2">
+            <span>{{ __('Author:') }}</span>
+            {%- include '@library/public/components/uploader.twig' with {
+                user_id: article.uploader_id,
+                name: article.uploader,
+                date: article.date
+            } only %}
+        </div>
+        <div class="d-flex align-items-center me-1">
+            <span class="pe-1">{{ __('Rating:') }}</span>
+            {%- include '@library/public/components/rating.twig' with {rate: article.rate, votes: article.votes} only %}
+        </div>
+        {% if article.comments %}
+            <div>
+                <a href="/library/article/{{ article.id }}/comments">{{ __('Comments:') }}</a>
+                ({{ article.comm_count }})
+            </div>
+        {% endif %}
+    </div>
+</div>

@@ -1,0 +1,21 @@
+{#
+    Articles added recently.
+
+    @param int     total
+    @param array[] articles
+    @param ?Markup pagination
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    {% for article in articles %}
+        {% include '@library/public/components/article-row.twig' with {article: article} only %}
+    {% endfor %}
+    <div class="mt-2">{{ __('Total') }}: {{ total }}</div>
+    {% if pagination %}
+        <div>{{ pagination }}</div>
+    {% endif %}
+    <div class="mt-2">
+        <a href="/library/">{{ __('To Library') }}</a>
+    </div>
+{% endblock %}

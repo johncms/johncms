@@ -1,0 +1,45 @@
+{#
+    The form a new section is created in, and the confirmation that replaces it once it is saved.
+
+    @param bool   created
+    @param string form_url
+    @param string parent_url
+    @param int    field_height
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    {% if created %}
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-success', alert: __('Section created')} only %}
+        <div class="mt-3">
+            <a href="{{ parent_url }}">{{ __('To Section') }}</a>
+        </div>
+    {% else %}
+        <form action="{{ form_url }}" method="post">
+            <div class="form-group">
+                <label for="name">{{ __('Title') }}</label>
+                <input type="text" name="name" class="form-control" id="name" placeholder="{{ __('Title') }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="description">{{ __('Section description') }}</label>
+                <textarea class="form-control" rows="{{ field_height }}" name="description" id="description"></textarea>
+            </div>
+
+            <h3 class="mt-3">{{ __('Section type') }}</h3>
+            <div class="custom-control custom-radio">
+                <input type="radio" id="section_type1" name="type" value="0" class="custom-control-input" checked>
+                <label class="custom-control-label" for="section_type1">{{ __('Articles') }}</label>
+            </div>
+            <div class="custom-control custom-radio">
+                <input type="radio" id="section_type2" name="type" value="1" class="custom-control-input">
+                <label class="custom-control-label" for="section_type2">{{ __('Sections') }}</label>
+            </div>
+
+            <div class="mt-3">
+                <input type="submit" name="submit" value="{{ __('Save') }}" class="btn btn-primary">
+                <a href="/library/" class="btn btn-secondary">{{ __('Cancel') }}</a>
+            </div>
+        </form>
+    {% endif %}
+{% endblock %}

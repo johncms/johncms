@@ -10,6 +10,7 @@ use Johncms\Media\MediaEmbed;
 use Johncms\Security\HTMLPurifier;
 use Johncms\Smilies\SmiliesRendererInterface;
 use Simba77\EmbedMedia\Embed;
+use Twig\Markup;
 
 final class ArticleTextRenderer
 {
@@ -87,12 +88,14 @@ final class ArticleTextRenderer
     }
 
     /**
-     * Sanitizes and prepares a page fragment for output.
+     * Sanitizes and prepares a page fragment for output. The result is markup by contract: it has
+     * been through the purifier, so a template prints it as it is.
      */
-    public function renderPage(string $pageHtml, bool $isAdmin): string
+    public function renderPage(string $pageHtml, bool $isAdmin): Markup
     {
         $text = $this->purifier->purify($pageHtml);
         $text = $this->media->embedMedia($text);
-        return $this->smiliesRenderer->render($text, $isAdmin);
+
+        return new Markup($this->smiliesRenderer->render($text, $isAdmin), 'UTF-8');
     }
 }

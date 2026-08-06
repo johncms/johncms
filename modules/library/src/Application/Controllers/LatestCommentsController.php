@@ -5,17 +5,15 @@ declare(strict_types=1);
 namespace Johncms\Modules\Library\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
-use Johncms\System\View\Render;
 use Johncms\Utils\DateFormatterInterface;
-use Johncms\Utils\PlainTextFormatter;
 use PDO;
 
 final readonly class LatestCommentsController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private DateFormatterInterface $dateFormatter,
         private PDO $db,
@@ -23,15 +21,10 @@ final readonly class LatestCommentsController
         $this->controllerContext->initModule('library');
     }
 
-    public function __invoke(): string
+    public function __invoke(): ViewResponse
     {
         $this->navChain->add(__('Library'), '/library/');
         $this->navChain->add(__('Latest comments'));
-
-        $this->render->addData([
-            'title'      => __('Latest comments'),
-            'page_title' => __('Latest comments'),
-        ]);
 
         $stmt = $this->db->query('
             SELECT
@@ -57,17 +50,20 @@ final readonly class LatestCommentsController
         $list = [];
         while ($row = $stmt->fetch()) {
             $list[] = [
-                'id'    => $row['id'],
-                'name'  => $row['name'],
-                'text'  => mb_substr(trim(strip_tags((string) $row['text'])), 0, 500),
-                'who'   => PlainTextFormatter::escape($row['user_name']) . ' (' . $this->dateFormatter->format($row['time']) . ')',
-                'image' => file_exists(UPLOAD_PATH . 'library/images/small/' . $row['id'] . '.png'),
+                'article_id'   => $row['id'],
+                'article_name' => $row['name'],
+                'text'         => mb_substr(trim(strip_tags((string) $row['text'])), 0, 500),
+                'user_id'      => $row['user_id'],
+                'user_name'    => $row['user_name'],
+                'date'         => $this->dateFormatter->format($row['time']),
             ];
         }
 
-        return $this->render->render('library::lastcom', [
-            'total' => count($list),
-            'list'  => $list,
+        return new ViewResponse('@library/public/latest-comments.twig', [
+            'title'      => __('Latest comments'),
+            'page_title' => __('Latest comments'),
+            'total'      => count($list),
+            'comments'   => $list,
         ]);
     }
 }

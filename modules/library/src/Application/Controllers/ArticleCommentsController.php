@@ -11,7 +11,7 @@ use Johncms\Modules\Library\Application\Services\LibraryArticlePathService;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Users\User;
 use Johncms\Modules\Library\Application\Services\Tree;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,7 +20,6 @@ final readonly class ArticleCommentsController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private User $currentUser,
         private LibraryArticlePathService $articlePathService,
@@ -28,17 +27,18 @@ final readonly class ArticleCommentsController
         $this->controllerContext->initModule('library');
     }
 
-    public function __invoke(Request $request, int $id): Response
+    public function __invoke(Request $request, int $id): Response|ViewResponse
     {
         if (! $this->currentUser->isValid()) {
-            return new Response(
-                $this->render->render('system::pages/result', [
+            return new ViewResponse(
+                '@theme/pages/result.twig',
+                [
                     'title'         => __('Comments'),
                     'type'          => 'alert-danger',
                     'message'       => __('Access forbidden'),
                     'back_url'      => '/library/',
                     'back_url_name' => __('Library'),
-                ]),
+                ],
                 Response::HTTP_FORBIDDEN
             );
         }
@@ -46,14 +46,15 @@ final readonly class ArticleCommentsController
         $article = LibraryText::query()->find($id);
 
         if ($article === null) {
-            return new Response(
-                $this->render->render('system::pages/result', [
+            return new ViewResponse(
+                '@theme/pages/result.twig',
+                [
                     'title'         => __('Comments'),
                     'type'          => 'alert-danger',
                     'message'       => __('Access forbidden'),
                     'back_url'      => '/library/',
                     'back_url_name' => __('Library'),
-                ]),
+                ],
                 Response::HTTP_NOT_FOUND
             );
         }

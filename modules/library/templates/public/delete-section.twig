@@ -1,0 +1,120 @@
+{#
+    Deleting a section. An empty one is simply confirmed; one with contents first asks what to do
+    with them.
+
+    @param int          id
+    @param string       name
+    @param bool         is_empty
+    @param bool         deleted
+    @param ?string      mode          Which branch of the non-empty flow is being shown.
+    @param bool         moved
+    @param ?int         move_target
+    @param ?array       move_sections Where the contents may go, keyed by section id.
+    @param ?int         pending_move  The chosen target, still to be confirmed.
+    @param ?array       deleted_counts What the "delete everything" branch removed.
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    {% if is_empty %}
+        {% if deleted %}
+            <div class="alert alert-success">{{ __('Section "%s" has been deleted.', name) }}</div>
+            <div class="mt-3">
+                <a href="/library/">{{ __('Back to Library') }}</a>
+            </div>
+        {% else %}
+            <div class="alert alert-danger">
+                <div>{{ __('Are you sure you want to delete the section "%s"? This action cannot be undone.', name) }}</div>
+                <div class="mt-2">
+                    <a href="/library/section/{{ id }}/delete?yes" class="btn btn-danger btn-sm">{{ __('Yes, Delete') }}</a>
+                    <a href="/library/section/{{ id }}" class="btn btn-secondary btn-sm">{{ __('Cancel') }}</a>
+                </div>
+            </div>
+        {% endif %}
+    {% elseif mode == 'moveaction' %}
+        {% if moved %}
+            <div class="alert alert-success">{{ __('Contents of section "%s" have been moved successfully.', name) }}</div>
+            <div class="mt-3">
+                <a href="/library/section/{{ move_target }}">{{ __('Go to Target Section') }}</a>
+            </div>
+        {% else %}
+            <div class="alert alert-danger">
+                <div>{{ __('Move all contents of section "%s" to the selected section and delete it?', name) }}</div>
+                <div class="mt-2">
+                    <a href="/library/section/{{ id }}/delete?movedeny&amp;do=moveaction&amp;move={{ pending_move }}" class="btn btn-danger btn-sm">{{ __('Yes, Move and Delete') }}</a>
+                    <a href="/library/" class="btn btn-secondary btn-sm">{{ __('Cancel') }}</a>
+                </div>
+            </div>
+        {% endif %}
+    {% elseif mode == 'delmove' %}
+        {% if move_sections %}
+            <div class="menu">
+                <form action="/library/section/{{ id }}/delete" method="post">
+                    <div>
+                        <label for="move_select">{{ __('Move contents of "%s" to:', name) }}</label>
+                        <select id="move_select" name="move" class="form-control">
+                            {% for section_id, section_name in move_sections %}
+                                <option value="{{ section_id }}">{{ section_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div>
+                        <input type="hidden" name="mode" value="moveaction">
+                    </div>
+                    <div class="mt-3">
+                        <input type="submit" name="submit" value="{{ __('Approve') }}" class="btn btn-primary">
+                    </div>
+                </form>
+            </div>
+        {% else %}
+            <div class="alert alert-danger">{{ __('No sections available to move the contents of "%s" to.', name) }}</div>
+            <div class="mt-3">
+                <a href="/library/">{{ __('Back to Library') }}</a>
+            </div>
+        {% endif %}
+    {% elseif mode == 'delall' %}
+        {% if deleted_counts %}
+            {# The message lists the counters on separate lines, so the markup is part of the string. #}
+            <div class="alert alert-success">
+                {{ __(
+                    'Successfully deleted:<br>Directories: (%d)<br>Articles: (%d)<br>Tags: (%d)<br>Comments: (%d)<br>Images: (%d)',
+                    deleted_counts.dirs,
+                    deleted_counts.texts,
+                    deleted_counts.tags,
+                    deleted_counts.comments,
+                    deleted_counts.images
+                )|raw }}
+            </div>
+            <div class="mt-3">
+                <a href="/library/">{{ __('Back to Library') }}</a>
+            </div>
+        {% else %}
+            <div class="alert alert-danger">
+                <div>{{ __('Are you sure you want to delete section "%s" along with ALL its contents? This action cannot be undone.', name) }}</div>
+                <div class="mt-2">
+                    <a href="/library/section/{{ id }}/delete?deldeny&amp;do=delall" class="btn btn-danger btn-sm">{{ __('Yes, Delete Everything') }}</a>
+                    <a href="/library/" class="btn btn-secondary btn-sm">{{ __('Cancel') }}</a>
+                </div>
+            </div>
+        {% endif %}
+    {% else %}
+        <div class="card border-0 shadow">
+            <div class="card-body">
+                <p>{{ __('Section "%s" contains subsections or articles. Choose how to delete it:', name) }}</p>
+                <form action="/library/section/{{ id }}/delete" method="post">
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="type1" name="mode" value="delmove" class="custom-control-input" checked>
+                        <label class="custom-control-label" for="type1">{{ __('Move contents to another section, then delete') }}</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="type2" name="mode" value="delall" class="custom-control-input">
+                        <label class="custom-control-label" for="type2">{{ __('Delete section and all its contents') }}</label>
+                    </div>
+                    <div class="mt-2">
+                        <input type="submit" name="submit" value="{{ __('Continue') }}" class="btn btn-danger">
+                    </div>
+                </form>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
