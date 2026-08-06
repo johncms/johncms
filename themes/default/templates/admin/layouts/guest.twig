@@ -2,9 +2,10 @@
     The layout of a page shown before the visitor is let into the panel: no sidebar, no chrome,
     the content centred on an empty page.
 #}
-{% extends '@theme/layouts/base.twig' %}
+{% extends '@admin/layouts/base.twig' %}
 
-{% block vite %}{{ vite('admin', app.locale == 'ar') }}{% endblock %}
+{# The page is shown outside the panel, so it keeps the light background of the card. #}
+{% block body_class %}{% endblock %}
 
 {% block body %}
     <div class="wrapper bg-light">

@@ -1,14 +1,9 @@
 {#
     The layout of the admin panel: the admin sidebar, the top bar and the footer of the panel.
 
-    The head, the color scheme and the flatpickr locale come from the base layout of the theme —
-    only the chrome and the build entry point differ between the two areas.
-
     @var string page_title Heading printed above the content.
 #}
-{% extends '@theme/layouts/base.twig' %}
-
-{% block vite %}{{ vite('admin', app.locale == 'ar') }}{% endblock %}
+{% extends '@admin/layouts/base.twig' %}
 
 {% block body %}
     {% set layout_notifications = notifications() %}

@@ -1,20 +1,22 @@
 {#
-    The document every page of the site is built on: the head, the color scheme and the scripts
-    that belong to every page, with no chrome around the content.
+    The document every page of the admin panel is built on: the head, the color scheme and the
+    scripts that belong to every page, with no chrome around the content.
 
-    @param string title       Page title, without the site name.
-    @param string keywords    Meta keywords.
-    @param string description Meta description.
-    @param string canonical   Canonical URL of the page.
+    The panel has a base of its own rather than extending the one of the public site: it loads its
+    own bundle, carries only the icon it needs, and titles its pages the way a panel does — the
+    name of the site is not appended to them.
+
+    @var string title       Page title.
+    @var string keywords    Meta keywords.
+    @var string description Meta description.
+    @var string canonical   Canonical URL of the page.
 #}
 {#
     Everything the layout keeps for itself is prefixed: a {% set %} here stays in the context the
     blocks of the page are rendered in, so an unprefixed name would silently shadow a variable of
     the page that happens to be called the same.
 #}
-{% set layout_site_name = config('johncms.copyright') %}
-{% set layout_base_title = title|default('') ?: layout_site_name %}
-{% set layout_document_title = (not app.is_home_page and layout_base_title != layout_site_name) ? layout_base_title ~ ' | ' ~ layout_site_name : layout_base_title %}
+{% set layout_document_title = title|default('') ?: config('johncms.copyright') %}
 <!DOCTYPE html>
 <html lang="{{ app.locale }}" dir="{{ app.locale == 'ar' ? 'rtl' : 'ltr' }}">
 <head>
@@ -36,19 +38,13 @@
         <link rel="canonical" href="{{ canonical }}">
     {% endif %}
     <meta name="theme-color" content="#586776">
-    {% block vite %}{{ vite('public', app.locale == 'ar') }}{% endblock %}
+    {% block vite %}{{ vite('admin', app.locale == 'ar') }}{% endblock %}
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700,700i&display=swap">
-    <link rel="icon" type="image/svg+xml" href="{{ asset('images/icon.svg') }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/favicon-32x32.png') }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favicon-16x16.png') }}">
     <link rel="shortcut icon" href="{{ asset('images/favicon.ico') }}">
-    <link rel="apple-touch-icon" href="{{ asset('images/apple-touch-icon.png') }}">
-    <link rel="mask-icon" href="{{ asset('images/icon.svg') }}" color="#586776">
-    <link rel="manifest" href="{{ asset('site.webmanifest') }}">
     {% block styles %}{% endblock %}
     <title>{% block title %}{{ layout_document_title }}{% endblock %}</title>
 </head>
-<body class="{{ app.color_scheme }}">
+<body class="{% block body_class %}{{ app.color_scheme }}{% endblock %}">
 {% block body %}{% endblock %}
 {% block scripts %}
     {% if app.locale != 'en' and asset_exists('js/flatpickr/' ~ app.locale ~ '.js') %}
