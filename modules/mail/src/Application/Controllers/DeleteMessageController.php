@@ -5,17 +5,16 @@ declare(strict_types=1);
 namespace Johncms\Modules\Mail\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Mail\Application\Exceptions\MessageNotFoundException;
 use Johncms\Modules\Mail\Application\UseCases\DeleteMessageUseCase;
 use Johncms\Modules\Mail\Application\UseCases\GetDeleteMessageContextUseCase;
 use Johncms\NavChain;
-use Johncms\System\View\Render;
 
 final readonly class DeleteMessageController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private GetDeleteMessageContextUseCase $getDeleteMessageContextUseCase,
         private DeleteMessageUseCase $deleteMessageUseCase,
@@ -23,7 +22,7 @@ final readonly class DeleteMessageController
         $this->controllerContext->initModule('mail');
     }
 
-    public function confirm(int $id): string
+    public function confirm(int $id): ViewResponse
     {
         try {
             $context = $this->getDeleteMessageContextUseCase->execute($id);
@@ -42,8 +41,8 @@ final readonly class DeleteMessageController
             'submit_btn_name' => __('Delete'),
         ];
 
-        return $this->render->render(
-            'mail::confirm',
+        return new ViewResponse(
+            '@mail/public/confirm.twig',
             [
                 'title'      => __('Deleting messages'),
                 'page_title' => __('Deleting messages'),
@@ -52,7 +51,7 @@ final readonly class DeleteMessageController
         );
     }
 
-    public function delete(int $id): string
+    public function delete(int $id): ViewResponse
     {
         try {
             $this->deleteMessageUseCase->execute($id);
@@ -60,8 +59,8 @@ final readonly class DeleteMessageController
             return $this->renderError($e->getMessage());
         }
 
-        return $this->render->render(
-            'system::pages/result',
+        return new ViewResponse(
+            '@theme/pages/result.twig',
             [
                 'title'         => __('Deleting messages'),
                 'type'          => 'alert-success',
@@ -72,10 +71,10 @@ final readonly class DeleteMessageController
         );
     }
 
-    private function renderError(string $message): string
+    private function renderError(string $message): ViewResponse
     {
-        return $this->render->render(
-            'system::pages/result',
+        return new ViewResponse(
+            '@theme/pages/result.twig',
             [
                 'title'   => __('Deleting messages'),
                 'type'    => 'alert-danger',

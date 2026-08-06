@@ -1,0 +1,23 @@
+{#
+    The message editor of the mail, as a Vue component. A message carries a file, but the editor
+    itself does not upload: the form has its own file field.
+
+    @var label string
+    @var value string
+#}
+{% if app.locale != 'en' and asset_exists('ckeditor5/translations/' ~ app.locale ~ '.js') %}
+    <script src="{{ asset('ckeditor5/translations/' ~ app.locale ~ '.js', true) }}"></script>
+{% endif %}
+<script src="{{ asset('ckeditor5/ckeditor.js', true) }}"></script>
+<div class="vue_app">
+    <ckeditor-input-component
+        upload_url=""
+        name="text"
+        language="{{ app.locale }}"
+        errors=""
+        id="text"
+        label="{{ label }}"
+        value="{{ value|default('') }}"
+        :allow_upload="false"
+    ></ckeditor-input-component>
+</div>

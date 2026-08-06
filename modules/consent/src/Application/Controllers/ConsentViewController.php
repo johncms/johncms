@@ -8,14 +8,14 @@ use HTMLPurifier;
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Consent\Application\Services\ConsentService;
 use Johncms\Modules\Consent\Application\Services\ConsentTitleFormatter;
+use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
-use Johncms\System\View\Render;
+use Twig\Markup;
 
 final readonly class ConsentViewController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private ConsentService $consentService,
         private ConsentTitleFormatter $titleFormatter,
@@ -24,7 +24,7 @@ final readonly class ConsentViewController
         $this->controllerContext->initModule('consent');
     }
 
-    public function __invoke(int $id): string
+    public function __invoke(int $id): ViewResponse
     {
         $consent = $this->consentService->getConsent($id);
 
@@ -35,10 +35,10 @@ final readonly class ConsentViewController
         $title = $this->titleFormatter->toPlainText($consent->title);
         $this->navChain->add($title);
 
-        return $this->render->render('consent::view', [
+        return new ViewResponse('@consent/public/view.twig', [
             'title'      => $title,
             'page_title' => $title,
-            'text'       => $this->purifier->purify($consent->text),
+            'text'       => new Markup($this->purifier->purify($consent->text), 'UTF-8'),
         ]);
     }
 }

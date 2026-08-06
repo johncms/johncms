@@ -1,0 +1,17 @@
+{#
+    The tabs of the mail sections.
+
+    @var active string Key of the section being looked at.
+#}
+{% set tabs = {
+    incoming:  {name: __('Incoming messages'), url: '/mail/incoming'},
+    outgoing:  {name: __('Sent messages'),     url: '/mail/outgoing'},
+    files:     {name: __('Files'),             url: '/mail/files'},
+    contacts:  {name: __('Contacts'),          url: '/mail/contacts'},
+    blocklist: {name: __('Blacklist'),         url: '/mail/blocklist'}
+} %}
+<div class="mb-2">
+    {% for key, tab in tabs %}
+        <a href="{{ tab.url }}" class="btn btn-outline-secondary mb-1 {{ key == active|default('') ? 'active' : '' }}">{{ tab.name }}</a>
+    {% endfor %}
+</div>

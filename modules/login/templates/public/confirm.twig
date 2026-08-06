@@ -1,0 +1,20 @@
+{#
+    Why the account cannot be used yet.
+
+    @var confirm string email — the address is not confirmed, anything else — moderation is pending.
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    {% if confirm == 'email' %}
+        {% include '@theme/components/alert.twig' with {
+            alert_type: 'alert-info',
+            alert: __('You didn\'t confirm your email address. Please check your email and follow the instructions in it.')
+        } only %}
+    {% else %}
+        {% include '@theme/components/alert.twig' with {
+            alert_type: 'alert-info',
+            alert: __('Sorry, but your request for registration is not considered yet. Please, be patient.')
+        } only %}
+    {% endif %}
+{% endblock %}

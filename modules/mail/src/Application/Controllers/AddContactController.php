@@ -5,19 +5,18 @@ declare(strict_types=1);
 namespace Johncms\Modules\Mail\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Mail\Application\Exceptions\UserNotFoundException;
 use Johncms\Modules\Mail\Application\Exceptions\CannotAddYourselfException;
 use Johncms\Modules\Mail\Application\Exceptions\ContactAlreadyExistsException;
 use Johncms\Modules\Mail\Application\UseCases\AddContactUseCase;
 use Johncms\Modules\Mail\Application\UseCases\GetAddContactContextUseCase;
 use Johncms\NavChain;
-use Johncms\System\View\Render;
 
 final readonly class AddContactController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private GetAddContactContextUseCase $getAddContactContextUseCase,
         private AddContactUseCase $addContactUseCase,
@@ -25,7 +24,7 @@ final readonly class AddContactController
         $this->controllerContext->initModule('mail');
     }
 
-    public function confirm(int $id): string
+    public function confirm(int $id): ViewResponse
     {
         try {
             $contactUser = $this->getAddContactContextUseCase->execute($id);
@@ -45,8 +44,8 @@ final readonly class AddContactController
             'submit_btn_name' => __('Add'),
         ];
 
-        return $this->render->render(
-            'mail::confirm',
+        return new ViewResponse(
+            '@mail/public/confirm.twig',
             [
                 'title'      => __('Add Contact'),
                 'page_title' => __('Add Contact'),
@@ -55,7 +54,7 @@ final readonly class AddContactController
         );
     }
 
-    public function add(int $id): string
+    public function add(int $id): ViewResponse
     {
         try {
             $this->addContactUseCase->execute($id);
@@ -63,8 +62,8 @@ final readonly class AddContactController
             return $this->renderError($e->getMessage());
         }
 
-        return $this->render->render(
-            'system::pages/result',
+        return new ViewResponse(
+            '@theme/pages/result.twig',
             [
                 'title'         => __('Add Contact'),
                 'type'          => 'alert-success',
@@ -75,10 +74,10 @@ final readonly class AddContactController
         );
     }
 
-    private function renderError(string $message): string
+    private function renderError(string $message): ViewResponse
     {
-        return $this->render->render(
-            'system::pages/result',
+        return new ViewResponse(
+            '@theme/pages/result.twig',
             [
                 'title'   => __('Add Contact'),
                 'type'    => 'alert-danger',

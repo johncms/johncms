@@ -1,0 +1,130 @@
+{#
+    The registration form.
+
+    @var fields         array  name, password, email, sex, imname, about, consent_<id>
+    @var errors         array  Validation messages by field name.
+    @var captcha        string Data URL of the verification picture.
+    @var consents       array  Consents the visitor has to give, see FormConsentDTO.
+    @var needs_approval bool   The account is opened only after a moderator approves it.
+    @var email_required bool   The form asks for an email address.
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    <form method="post">
+        <h4>{{ __('Registration') }}</h4>
+
+        {% if needs_approval %}
+            <div class="alert alert-warning">{{ __('You can get authorized on the site after confirmation of your registration.') }}</div>
+        {% endif %}
+
+        {% if errors.name_lat|default([]) %}
+            <div class="alert alert-danger">{{ errors.name_lat|join(', ') }}</div>
+        {% endif %}
+
+        <div class="alert alert-info">
+            {{ __('Please, do not register names like 111, shhhh, uuuu, etc. They will be deleted. <br /> Also all the profiles registered via proxy servers will be deleted')|raw }}
+        </div>
+
+        <div class="form-group">
+            <label for="name">{{ __('Choose Nickname') }}</label>
+            <input type="text"
+                   class="form-control {{ errors.name|default([]) ? 'is-invalid' : '' }}"
+                   maxlength="20"
+                   minlength="2"
+                   name="name"
+                   id="name"
+                   required
+                   value="{{ fields.name }}"
+                   placeholder="{{ __('Username') }}"
+            >
+            {% include '@theme/components/field-errors.twig' with {errors: errors.name|default([])} only %}
+            <div class="text-muted small">
+                {{ __('Min. 2, Max. 20 characters.<br />Allowed letters of the russian and latin alphabets, numbers and symbols - = @ ! ? ~ _ ( ) [ ] . * (Except zero)')|raw }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="password">{{ __('Assign a password') }}</label>
+            <input type="password"
+                   class="form-control {{ errors.password|default([]) ? 'is-invalid' : '' }}"
+                   maxlength="20"
+                   minlength="2"
+                   name="password"
+                   id="password"
+                   required
+                   value="{{ fields.password }}"
+                   placeholder="{{ __('Assign a password') }}"
+            >
+            {% include '@theme/components/field-errors.twig' with {errors: errors.password|default([])} only %}
+        </div>
+        {% if email_required %}
+            <div class="form-group">
+                <label for="email">{{ __('E-mail') }}</label>
+                <input type="email"
+                       class="form-control {{ errors.email|default([]) ? 'is-invalid' : '' }}"
+                       name="email"
+                       id="email"
+                       required
+                       value="{{ fields.email }}"
+                       placeholder="{{ __('E-mail') }}"
+                >
+                {% include '@theme/components/field-errors.twig' with {errors: errors.email|default([])} only %}
+            </div>
+        {% endif %}
+        <div class="form-group">
+            <label for="gender">{{ __('Select Gender') }}</label>
+            <select id="gender" name="sex" class="form-control {{ errors.sex|default([]) ? 'is-invalid' : '' }}">
+                <option value="?">- ? -</option>
+                <option value="m"{% if fields.sex == 'm' %} selected="selected"{% endif %}>{{ __('Man') }}</option>
+                <option value="zh"{% if fields.sex == 'zh' %} selected="selected"{% endif %}>{{ __('Woman') }}</option>
+            </select>
+            {% include '@theme/components/field-errors.twig' with {errors: errors.sex|default([])} only %}
+        </div>
+        <div class="form-group">
+            <label for="imname">{{ __('Your name') }}</label>
+            <input type="text"
+                   class="form-control {{ errors.imname|default([]) ? 'is-invalid' : '' }}"
+                   maxlength="20"
+                   name="imname"
+                   id="imname"
+                   value="{{ fields.imname }}"
+                   placeholder="{{ __('Your name') }}"
+            >
+            {% include '@theme/components/field-errors.twig' with {errors: errors.imname|default([])} only %}
+        </div>
+        <div class="form-group">
+            <label for="about">{{ __('Tell us a little about yourself') }}</label>
+            <textarea class="form-control {{ errors.about|default([]) ? 'is-invalid' : '' }}" name="about" id="about" rows="3">{{ fields.about }}</textarea>
+            {% include '@theme/components/field-errors.twig' with {errors: errors.about|default([])} only %}
+        </div>
+
+        <img alt="{{ __('Verification code') }}" src="{{ captcha }}">
+        <div class="form-group">
+            <label for="captcha">{{ __('Enter verification code') }}</label>
+            <input type="text"
+                   class="form-control {{ errors.captcha|default([]) ? 'is-invalid' : '' }}"
+                   maxlength="6"
+                   name="captcha"
+                   id="captcha"
+                   autocomplete="off"
+                   required
+                   placeholder="{{ __('Verification code') }}"
+            >
+            {% include '@theme/components/field-errors.twig' with {errors: errors.captcha|default([])} only %}
+            <div class="text-muted small">
+                {{ __('If you cannot see the image code, enable graphics in your browser and refresh this page') }}
+            </div>
+        </div>
+
+        {% for consent in consents %}
+            {% include '@theme/components/consent-checkbox.twig' with {
+                consent: consent,
+                field: 'consent_' ~ consent.id,
+                checked: fields['consent_' ~ consent.id]|default('') == '1',
+                errors: errors['consent_' ~ consent.id]|default([])
+            } only %}
+        {% endfor %}
+
+        <input type="submit" name="submit" class="btn btn-primary" value="{{ __('Registration') }}">
+    </form>
+{% endblock %}

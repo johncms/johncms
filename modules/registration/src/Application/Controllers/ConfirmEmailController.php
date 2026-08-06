@@ -6,19 +6,18 @@ namespace Johncms\Modules\Registration\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Users\User;
 
 final readonly class ConfirmEmailController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
     ) {
         $this->controllerContext->initModule('registration');
     }
 
-    public function __invoke(Request $request): string
+    public function __invoke(Request $request): ViewResponse
     {
         $id = $request->queryInt('id');
         $code = $request->queryParam('code', '');
@@ -33,6 +32,13 @@ final readonly class ConfirmEmailController
             }
         }
 
-        return $this->render->render('registration::email_confirmed', ['confirm_user' => $confirmUser]);
+        return new ViewResponse(
+            '@registration/public/email-confirmed.twig',
+            [
+                'title'        => __('Email confirmation'),
+                'page_title'   => __('Email confirmation'),
+                'confirm_user' => $confirmUser,
+            ]
+        );
     }
 }

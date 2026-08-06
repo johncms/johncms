@@ -5,17 +5,16 @@ declare(strict_types=1);
 namespace Johncms\Modules\Mail\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Mail\Application\Exceptions\UserNotFoundException;
 use Johncms\Modules\Mail\Application\UseCases\ClearConversationUseCase;
 use Johncms\Modules\Mail\Application\UseCases\GetClearConversationContextUseCase;
 use Johncms\NavChain;
-use Johncms\System\View\Render;
 
 final readonly class ClearConversationController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private GetClearConversationContextUseCase $getClearConversationContextUseCase,
         private ClearConversationUseCase $clearConversationUseCase,
@@ -23,7 +22,7 @@ final readonly class ClearConversationController
         $this->controllerContext->initModule('mail');
     }
 
-    public function confirm(int $id): string
+    public function confirm(int $id): ViewResponse
     {
         try {
             $context = $this->getClearConversationContextUseCase->execute($id);
@@ -42,8 +41,8 @@ final readonly class ClearConversationController
             'submit_btn_name' => __('Delete'),
         ];
 
-        return $this->render->render(
-            'mail::confirm',
+        return new ViewResponse(
+            '@mail/public/confirm.twig',
             [
                 'title'      => __('Clear messages'),
                 'page_title' => __('Clear messages'),
@@ -52,7 +51,7 @@ final readonly class ClearConversationController
         );
     }
 
-    public function clear(int $id): string
+    public function clear(int $id): ViewResponse
     {
         try {
             $this->clearConversationUseCase->execute($id);
@@ -60,8 +59,8 @@ final readonly class ClearConversationController
             return $this->renderError();
         }
 
-        return $this->render->render(
-            'system::pages/result',
+        return new ViewResponse(
+            '@theme/pages/result.twig',
             [
                 'title'         => __('Clear messages'),
                 'type'          => 'alert-success',
@@ -72,10 +71,10 @@ final readonly class ClearConversationController
         );
     }
 
-    private function renderError(): string
+    private function renderError(): ViewResponse
     {
-        return $this->render->render(
-            'system::pages/result',
+        return new ViewResponse(
+            '@theme/pages/result.twig',
             [
                 'title'    => __('Clear messages'),
                 'type'     => 'alert-danger',

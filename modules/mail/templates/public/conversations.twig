@@ -1,0 +1,87 @@
+{#
+    The conversations of the visitor, incoming or sent.
+
+    @var data array nav_active, items, total, pagination, back_url
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    {% include '@mail/public/components/nav.twig' with {active: data.nav_active|default('')} only %}
+
+    {% if data.items is empty %}
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-info', alert: __('The list is empty')} only %}
+    {% endif %}
+
+    {% for item in data.items %}
+        <div class="new_post-item border-bottom shadow mb-2 {{ item.unread ? 'post-unread' : '' }}">
+            <div class="new_post-header d-flex justify-content-between">
+                <div class="post-user">
+                    <a href="{{ item.write_url }}">
+                        <div class="avatar">
+                            <img src="{{ avatar(item.id) }}" class="img-fluid" alt=".">
+                        </div>
+                    </a>
+                    <span class="user-status {{ item.user_is_online ? 'online' : 'offline' }} shadow"></span>
+                    {% if item.user_rights_name %}
+                        <div class="post-of-user"
+                             data-bs-toggle="tooltip"
+                             data-bs-placement="top"
+                             data-bs-html="true"
+                             title="{{ item.user_rights_name }}">
+                            <svg class="icon-post">
+                                <use xlink:href="{{ asset('icons/sprite.svg') }}?4#check"/>
+                            </svg>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="flex-grow-1 post-user d-flex flex-wrap overflow-hidden d-flex align-items-center">
+                    <div class="w-100">
+                        <a href="{{ item.write_url }}"><span class="user-name d-inline me-2">{{ item.name }}</span></a>
+                        <div class="post-meta d-inline me-2">
+                            {{ item.count_message }} {{ n__('message', 'messages', item.count_message) }},
+                        </div>
+                        <div class="post-meta d-inline text-nowrap">
+                            {{ __('Last:') }} {{ item.display_date }}
+                        </div>
+                    </div>
+                    {% if item.status %}
+                        <div class="overflow-hidden text-nowrap text-dark-brown overflow-ellipsis small">
+                            <span class="fw-bold">{{ item.status }}</span>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="post-body mt-2 border-top pt-2 pb-2">
+                {{ item.preview_text }}
+            </div>
+            {% if item.buttons %}
+                <div class="post-footer d-flex justify-content-between mt-2">
+                    <div class="overflow-hidden">
+                    </div>
+                    <div class="d-flex flex-wrap">
+                        {% for button in item.buttons %}
+                            <div class="ms-2">
+                                <a href="{{ button.url }}">{{ button.name }}</a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    {% endfor %}
+
+    <div class="mt-4">
+        {% if data.pagination %}
+            <div>
+                {{ data.pagination }}
+            </div>
+        {% endif %}
+
+        {% if data.total > 0 %}
+            <div>{{ __('Total:') }} {{ data.total }}</div>
+        {% endif %}
+    </div>
+    <div>
+        <a href="{{ data.back_url }}">{{ __('Back') }}</a>
+    </div>
+{% endblock %}

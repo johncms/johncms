@@ -5,17 +5,16 @@ declare(strict_types=1);
 namespace Johncms\Modules\Mail\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Mail\Application\Exceptions\ContactNotFoundException;
 use Johncms\Modules\Mail\Application\UseCases\DeleteContactUseCase;
 use Johncms\Modules\Mail\Application\UseCases\GetDeleteContactContextUseCase;
 use Johncms\NavChain;
-use Johncms\System\View\Render;
 
 final readonly class DeleteContactController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private GetDeleteContactContextUseCase $getDeleteContactContextUseCase,
         private DeleteContactUseCase $deleteContactUseCase,
@@ -23,7 +22,7 @@ final readonly class DeleteContactController
         $this->controllerContext->initModule('mail');
     }
 
-    public function confirm(int $id): string
+    public function confirm(int $id): ViewResponse
     {
         try {
             $context = $this->getDeleteContactContextUseCase->execute($id);
@@ -43,8 +42,8 @@ final readonly class DeleteContactController
             'submit_btn_name' => __('Delete'),
         ];
 
-        return $this->render->render(
-            'mail::confirm',
+        return new ViewResponse(
+            '@mail/public/confirm.twig',
             [
                 'title'      => __('Delete'),
                 'page_title' => __('Delete'),
@@ -53,7 +52,7 @@ final readonly class DeleteContactController
         );
     }
 
-    public function delete(int $id): string
+    public function delete(int $id): ViewResponse
     {
         try {
             $this->deleteContactUseCase->execute($id);
@@ -61,8 +60,8 @@ final readonly class DeleteContactController
             return $this->renderError($e->getMessage());
         }
 
-        return $this->render->render(
-            'system::pages/result',
+        return new ViewResponse(
+            '@theme/pages/result.twig',
             [
                 'title'         => __('Delete'),
                 'type'          => 'alert-success',
@@ -73,10 +72,10 @@ final readonly class DeleteContactController
         );
     }
 
-    private function renderError(string $message): string
+    private function renderError(string $message): ViewResponse
     {
-        return $this->render->render(
-            'system::pages/result',
+        return new ViewResponse(
+            '@theme/pages/result.twig',
             [
                 'title'   => __('Delete'),
                 'type'    => 'alert-danger',

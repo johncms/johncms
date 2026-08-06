@@ -1,0 +1,176 @@
+{#
+    One conversation: the form to write and the messages already exchanged.
+
+    @var data array errors, form_action, nick, text, items, total, pagination, clear_url, back_url
+    @var ask_recipient bool The form asks whom to write to.
+    @var can_see_meta  bool The IP and the user agent of the author are shown.
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    {% if data.errors|default([]) %}
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: data.errors} only %}
+    {% endif %}
+
+    {% if data.form_action|default('') %}
+        <div class="mb-3">
+            <form name="form" action="{{ data.form_action }}" method="post" enctype="multipart/form-data">
+                {% if ask_recipient %}
+                    <div class="form-group">
+                        <label for="nick">{{ __('To Whom') }}</label>
+                        <input type="text"
+                               class="form-control"
+                               maxlength="25"
+                               name="nick"
+                               id="nick"
+                               required
+                               value="{{ data.nick }}"
+                               placeholder="{{ __('To Whom') }}"
+                        >
+                    </div>
+                {% endif %}
+                <div class="form-group">
+                    {% include '@mail/public/components/editor.twig' with {
+                        label: __('Message'),
+                        value: data.text|default('')
+                    } only %}
+                </div>
+                <div class="input-group mb-3">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="fail" name="fail" aria-describedby="file_label">
+                        <label class="custom-file-label" for="fail">{{ __('Choose file') }}</label>
+                    </div>
+                </div>
+                <input type="submit" class="btn btn-primary" name="submit" value="{{ __('Send') }}"/>
+            </form>
+        </div>
+    {% endif %}
+
+    {% if data.items is empty %}
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-info', alert: __('The list is empty')} only %}
+    {% endif %}
+
+    {% for item in data.items %}
+        <div class="new_post-item border-bottom shadow mb-2 {{ item.read ? '' : 'post-unread' }}">
+            <div class="new_post-header d-flex justify-content-between">
+                <div class="post-user">
+                    {% if item.user_profile_link %}
+                        <a href="{{ item.user_profile_link }}">
+                            <div class="avatar">
+                                <img src="{{ avatar(item.user_id) }}" class="img-fluid" alt=".">
+                            </div>
+                        </a>
+                    {% else %}
+                        <div class="avatar">
+                            <img src="{{ avatar(item.user_id) }}" class="img-fluid" alt=".">
+                        </div>
+                    {% endif %}
+                    <span class="user-status {{ item.user_is_online ? 'online' : 'offline' }} shadow"></span>
+                    {% if item.user_rights_name %}
+                        <div class="post-of-user"
+                             data-bs-toggle="tooltip"
+                             data-bs-placement="top"
+                             data-bs-html="true"
+                             title="{{ item.user_rights_name }}">
+                            <svg class="icon-post">
+                                <use xlink:href="{{ asset('icons/sprite.svg') }}?4#check"/>
+                            </svg>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="flex-grow-1 post-user d-flex flex-wrap overflow-hidden d-flex align-items-center">
+                    <div class="w-100">
+                        {% if item.user_profile_link %}
+                            <a href="{{ item.user_profile_link }}"><span class="user-name d-inline me-2">{{ item.name }}</span></a>
+                        {% else %}
+                            <div class="user-name d-inline me-2">{{ item.name }}</div>
+                        {% endif %}
+                        <span class="post-meta d-inline me-2">{{ item.display_date }}</span>
+                    </div>
+                    {% if item.status %}
+                        <div class="overflow-hidden text-nowrap text-dark-brown overflow-ellipsis small">
+                            <span class="fw-bold">{{ item.status }}</span>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="post-body">
+                {{ item.text }}
+            </div>
+            {% if item.files %}
+                <div>
+                    <div class="fw-bold pb-1">{{ __('Attached files') }}:</div>
+                    <div class="d-flex flex-wrap">
+                        {% for file in item.files %}
+                            <div class="attached-file pe-3 d-flex flex-column justify-content-between">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <a href="{{ file.file_url }}">
+                                        <svg class="icon attachment-icon">
+                                            <use xlink:href="{{ asset('icons/sprite.svg') }}#file"/>
+                                        </svg>
+                                    </a>
+                                </div>
+                                <div class="pt-1">
+                                    <div class="text-muted small d-flex flex-wrap justify-content-center">
+                                        <div class="text-nowrap pe-1">
+                                            <svg class="icon downloads-icon">
+                                                <use xlink:href="{{ asset('icons/sprite.svg') }}#download"/>
+                                            </svg>
+                                            {{ file.dlcount }}
+                                        </div>
+                                        <div>({{ file.file_size }})</div>
+                                    </div>
+                                    <div class="file-name">
+                                        <a href="{{ file.file_url }}" title="{{ file.filename }}">{{ file.filename }}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+            <div class="post-footer d-flex justify-content-between mt-2">
+                <div class="overflow-hidden">
+                    {% if can_see_meta %}
+                        <div class="post-meta d-flex">
+                            <div class="user-ip me-2">
+                                <a href="{{ item.search_ip_url }}">{{ item.ip }}</a>
+                                {% if item.ip_via_proxy %}
+                                    / <a href="{{ item.search_ip_via_proxy_url }}">{{ item.ip_via_proxy }}</a>
+                                {% endif %}
+                            </div>
+                            <div class="useragent">
+                                <span>{{ item.browser }}</span>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="d-flex">
+                    {% if item.delete_url %}
+                        <a href="{{ item.delete_url }}">{{ __('Delete') }}</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+    {% if data.total > 0 %}
+        <div class="mt-3">
+            <a href="{{ data.clear_url }}" class="btn btn-danger btn-sm">{{ __('Clear messages') }}</a>
+        </div>
+    {% endif %}
+    <div class="mt-3">
+        {% if data.pagination %}
+            <div>
+                {{ data.pagination }}
+            </div>
+        {% endif %}
+
+        {% if data.total > 0 %}
+            <div>{{ __('Total:') }} {{ data.total }}</div>
+        {% endif %}
+    </div>
+    <div>
+        <a href="{{ data.back_url }}">{{ __('Back') }}</a>
+    </div>
+{% endblock %}

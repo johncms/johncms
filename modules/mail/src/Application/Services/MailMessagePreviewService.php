@@ -27,8 +27,6 @@ final readonly class MailMessagePreviewService
             return '';
         }
 
-        $smileMode = $authorIsAdmin ? 1 : 0;
-
         if (mb_strlen($rawText) > self::PREVIEW_LIMIT) {
             $plain = trim(
                 html_entity_decode(
@@ -38,7 +36,7 @@ final readonly class MailMessagePreviewService
                 )
             );
             $plain = mb_substr($plain, 0, self::PREVIEW_LIMIT);
-            $preview = $this->smiliesRenderer->render(htmlspecialchars($plain, ENT_QUOTES, 'UTF-8'), $smileMode);
+            $preview = $this->smiliesRenderer->render(htmlspecialchars($plain, ENT_QUOTES, 'UTF-8'), $authorIsAdmin);
 
             return $preview . '...<a href="/mail/write/' . $contactId . '">' . __('Continue') . ' &gt;&gt;</a>';
         }
@@ -46,6 +44,6 @@ final readonly class MailMessagePreviewService
         $html = $this->purifier->purify($rawText);
         $html = $this->media->embedMedia($html);
 
-        return $this->smiliesRenderer->render($html, $smileMode);
+        return $this->smiliesRenderer->render($html, $authorIsAdmin);
     }
 }

@@ -9,7 +9,7 @@ use Johncms\Modules\Login\Application\UseCases\PerformLoginUseCase;
 use Johncms\Modules\Login\Domain\Enums\LoginStatus;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,14 +18,13 @@ final readonly class LoginController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private PerformLoginUseCase $performLogin,
     ) {
         $this->controllerContext->initModule('login');
     }
 
-    public function __invoke(Request $request): Response
+    public function __invoke(Request $request): RedirectResponse|ViewResponse
     {
         $this->navChain->add(__('Login'));
 
@@ -48,31 +47,55 @@ final readonly class LoginController
 
                 return match ($result->status) {
                     LoginStatus::Success => $this->handleSuccess($result->userId, $result->passwordHash),
-                    LoginStatus::CaptchaRequired => new Response($this->render->render(
-                        'login::captcha',
+                    LoginStatus::CaptchaRequired => new ViewResponse(
+                        '@login/public/captcha.twig',
                         [
+                            'title'      => __('Login'),
+                            'page_title' => __('Login'),
                             'captcha'    => $result->captcha,
                             'user_login' => $userLogin,
                             'user_pass'  => $userPass,
                         ]
-                    )),
-                    LoginStatus::EmailNotConfirmed => new Response($this->render->render('login::confirm', ['confirm' => 'email'])),
-                    LoginStatus::ModerationPending => new Response($this->render->render('login::confirm', ['confirm' => 'moderation'])),
-                    LoginStatus::Error => new Response($this->render->render(
-                        'login::login',
-                        ['error' => $result->errors, 'user_login' => $userLogin]
-                    )),
+                    ),
+                    LoginStatus::EmailNotConfirmed => $this->confirmationRequired('email'),
+                    LoginStatus::ModerationPending => $this->confirmationRequired('moderation'),
+                    LoginStatus::Error => $this->loginForm($result->errors, $userLogin),
                 };
             }
         }
 
-        return new Response($this->render->render(
-            'login::login',
-            ['error' => $error, 'user_login' => $userLogin]
-        ));
+        return $this->loginForm($error, $userLogin);
     }
 
-    private function handleSuccess(?int $userId, ?string $passwordHash): Response
+    /**
+     * @param array<int, string> $errors
+     */
+    private function loginForm(array $errors, string $userLogin): ViewResponse
+    {
+        return new ViewResponse(
+            '@login/public/login.twig',
+            [
+                'title'      => __('Login'),
+                'page_title' => __('Login'),
+                'error'      => $errors,
+                'user_login' => $userLogin,
+            ]
+        );
+    }
+
+    private function confirmationRequired(string $type): ViewResponse
+    {
+        return new ViewResponse(
+            '@login/public/confirm.twig',
+            [
+                'title'      => __('Login'),
+                'page_title' => __('Login'),
+                'confirm'    => $type,
+            ]
+        );
+    }
+
+    private function handleSuccess(?int $userId, ?string $passwordHash): RedirectResponse
     {
         $response = new RedirectResponse('/');
         $expire = time() + 3600 * 24 * 365;

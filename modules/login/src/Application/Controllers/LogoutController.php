@@ -8,7 +8,7 @@ use Johncms\Http\Controller\ControllerContext;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -18,7 +18,6 @@ final readonly class LogoutController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private Session $session,
         private NavChain $navChain,
         private User $currentUser,
@@ -26,7 +25,7 @@ final readonly class LogoutController
         $this->controllerContext->initModule('login');
     }
 
-    public function __invoke(Request $request): Response
+    public function __invoke(Request $request): RedirectResponse|ViewResponse
     {
         if (! $this->currentUser->isValid()) {
             return new RedirectResponse('/login/');
@@ -41,12 +40,18 @@ final readonly class LogoutController
             return $response;
         }
 
-        $config = config('johncms');
-        $referer = $request->server->filter('HTTP_REFERER', $config['homeurl'], FILTER_SANITIZE_SPECIAL_CHARS);
+        $referer = $request->server->getString('HTTP_REFERER', (string) config('johncms.homeurl'));
 
         $this->navChain->add(__('Personal'), '/profile/account');
         $this->navChain->add(__('Logout'));
 
-        return new Response($this->render->render('login::logout', ['referer' => $referer]));
+        return new ViewResponse(
+            '@login/public/logout.twig',
+            [
+                'title'      => __('Logout'),
+                'page_title' => __('Logout'),
+                'referer'    => $referer,
+            ]
+        );
     }
 }

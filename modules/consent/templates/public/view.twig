@@ -1,0 +1,12 @@
+{#
+    The text of one consent, opened from the link next to its checkbox.
+
+    @var text \Twig\Markup Sanitized text of the consent.
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    <div class="content">
+        {{ text }}
+    </div>
+{% endblock %}

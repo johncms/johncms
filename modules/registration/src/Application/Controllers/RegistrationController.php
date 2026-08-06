@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Registration\Application\Controllers;
 
 use Illuminate\Support\Str;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Consent\Application\Services\ConsentService;
 use Johncms\Modules\Registration\Application\DTO\RegistrationFormDTO;
@@ -13,7 +14,6 @@ use Johncms\NavChain;
 use Johncms\Http\Environment;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
-use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
 use Laminas\Validator\Hostname;
@@ -21,13 +21,11 @@ use Laminas\Validator\Identical;
 use Mobicms\Captcha\Code;
 use Mobicms\Captcha\Image;
 use Symfony\Component\HttpFoundation\Cookie;
-use Symfony\Component\HttpFoundation\Response;
 
 final readonly class RegistrationController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private Session $session,
         private NavChain $navChain,
         private User $currentUser,
@@ -38,12 +36,18 @@ final readonly class RegistrationController
         $this->controllerContext->initModule('registration');
     }
 
-    public function __invoke(Request $request): Response
+    public function __invoke(Request $request): ViewResponse
     {
         $config = config('johncms');
 
         if (! $config['mod_reg'] || $this->currentUser->isValid()) {
-            return new Response($this->render->render('registration::registration_closed'));
+            return new ViewResponse(
+                '@registration/public/registration-closed.twig',
+                [
+                    'title'      => __('Registration'),
+                    'page_title' => __('Registration'),
+                ]
+            );
         }
 
         $this->navChain->add(__('Registration'));
@@ -134,24 +138,26 @@ final readonly class RegistrationController
                     }
                 }
 
-                $response = new Response(
-                    $this->render->render(
-                        'registration::registration_result',
-                        [
-                            'usid'     => $newUser->id,
-                            'reg_nick' => $fields['name'],
-                            'reg_pass' => $fields['password'],
-                        ]
-                    )
-                );
-
+                $cookies = [];
                 if ($config['mod_reg'] !== 1 && empty($config['user_email_confirmation'])) {
                     $expire = time() + 3600 * 24 * 365;
-                    $response->headers->setCookie(Cookie::create('cuid', (string) $newUser->id, $expire, '/', null, false, false, false, null));
-                    $response->headers->setCookie(Cookie::create('cups', md5($fields['password']), $expire, '/', null, false, false, false, null));
+                    $cookies[] = Cookie::create('cuid', (string) $newUser->id, $expire, '/', null, false, false, false, null);
+                    $cookies[] = Cookie::create('cups', md5($fields['password']), $expire, '/', null, false, false, false, null);
                 }
 
-                return $response;
+                return new ViewResponse(
+                    '@registration/public/registration-result.twig',
+                    [
+                        'title'          => __('Registration'),
+                        'page_title'     => __('Registration'),
+                        'usid'           => $newUser->id,
+                        'reg_nick'       => $fields['name'],
+                        'reg_pass'       => $fields['password'],
+                        'needs_email'    => ! empty($config['user_email_confirmation']),
+                        'needs_approval' => $config['mod_reg'] === 1,
+                    ],
+                    cookies: $cookies
+                );
             }
 
             $errors = $validator->getErrors();
@@ -161,16 +167,18 @@ final readonly class RegistrationController
         $code = (string) new Code();
         $this->session->set('code', $code);
 
-        return new Response(
-            $this->render->render(
-                'registration::index',
-                [
-                    'errors'   => $errors,
-                    'fields'   => $fields,
-                    'captcha'  => new Image($code),
-                    'consents' => $consents,
-                ]
-            )
+        return new ViewResponse(
+            '@registration/public/index.twig',
+            [
+                'title'          => __('Registration'),
+                'page_title'     => __('Registration'),
+                'errors'         => $errors,
+                'fields'         => $fields,
+                'captcha'        => (string) new Image($code),
+                'consents'       => $consents,
+                'needs_approval' => $config['mod_reg'] === 1,
+                'email_required' => ! empty($config['user_email_required']) || ! empty($config['user_email_confirmation']),
+            ]
         );
     }
 }

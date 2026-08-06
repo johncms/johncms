@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Mail\Application\DTO;
 
+use Twig\Markup;
+
 final readonly class MessageItemDTO
 {
     /**
@@ -14,7 +16,7 @@ final readonly class MessageItemDTO
         public int $userId,
         public string $name,
         public bool $read,
-        public string $text,
+        public Markup $text,
         public string $displayDate,
         public bool $userIsOnline,
         public string $userProfileLink,

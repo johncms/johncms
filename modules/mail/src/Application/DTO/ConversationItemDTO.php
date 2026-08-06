@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Mail\Application\DTO;
 
+use Twig\Markup;
+
 final readonly class ConversationItemDTO
 {
     public function __construct(
@@ -11,7 +13,7 @@ final readonly class ConversationItemDTO
         public string $name,
         public int $countMessage,
         public string $displayDate,
-        public string $previewText,
+        public Markup $previewText,
         public bool $unread,
         public string $writeUrl,
         public array $buttons,

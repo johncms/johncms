@@ -5,18 +5,17 @@ declare(strict_types=1);
 namespace Johncms\Modules\Mail\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Mail\Application\UseCases\GetContactListUseCase;
 use Johncms\NavChain;
-use Johncms\System\View\Render;
 
 final readonly class ContactController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private GetContactListUseCase $getContactListUseCase,
         private PaginationFactory $paginationFactory,
@@ -25,7 +24,7 @@ final readonly class ContactController
         $this->controllerContext->initModule('mail');
     }
 
-    public function __invoke(): string
+    public function __invoke(): ViewResponse
     {
         $pagination = $this->paginationFactory->create($this->getContactListUseCase->count());
 
@@ -42,15 +41,12 @@ final readonly class ContactController
 
         $pageTitle = __('Contacts');
         $meta = new PageMeta($pageTitle, $pagination->getCurrentPage());
-        $this->render->addData([
-            'title'       => $meta->title,
-            'page_title'  => $pageTitle,
-            'description' => $meta->description,
-        ]);
-
-        return $this->render->render(
-            'mail::contact_list',
+        return new ViewResponse(
+            '@mail/public/contacts.twig',
             [
+                'title'       => $meta->title,
+                'page_title'  => $pageTitle,
+                'description' => $meta->description,
                 'data' => [
                     'items' => $result->items,
                     'total' => $pagination->getTotal(),

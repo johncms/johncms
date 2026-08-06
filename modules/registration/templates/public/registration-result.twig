@@ -1,0 +1,29 @@
+{#
+    What the visitor got after registering.
+
+    @var usid           int
+    @var reg_nick       string
+    @var reg_pass       string
+    @var needs_email    bool The address has to be confirmed before the account works.
+    @var needs_approval bool A moderator has to approve the account.
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    <h4>{{ __('Your registration data') }}</h4>
+    <p>
+        {{ __('Congratulations! You have successfully registered on the site.') }}
+    </p>
+    <p>
+        {{ __('Your ID') }}: <b>{{ usid }}</b><br>
+        {{ __('Your Username') }}: <b>{{ reg_nick }}</b><br>
+        {{ __('Your Password') }}: <b>{{ reg_pass }}</b>
+    </p>
+    {% if needs_email %}
+        <div class="alert alert-warning">{{ __('Now you just need to confirm your email address.<br> Please check your email and follow the instructions in it.')|raw }}</div>
+    {% elseif needs_approval %}
+        <div class="alert alert-warning">{{ __('Please, wait until a moderator approves your registration') }}</div>
+    {% else %}
+        <a href="/" class="btn btn-primary">{{ __('Enter') }}</a>
+    {% endif %}
+{% endblock %}

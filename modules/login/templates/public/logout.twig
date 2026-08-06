@@ -1,0 +1,16 @@
+{#
+    Confirmation of leaving the site.
+
+    @var referer string Where to go back to when the visitor changes their mind.
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    <div class="alert alert-danger">
+        <p class="h4 pb-2">{{ __('Are you sure you want to leave the site?') }}</p>
+        <form method="post" action="/logout/">
+            <input type="submit" name="logout" value="{{ __('Logout') }}" class="btn btn-danger btn-sm">
+            <a class="btn btn-outline-secondary btn-sm" href="{{ referer }}">{{ __('Cancel') }}</a>
+        </form>
+    </div>
+{% endblock %}

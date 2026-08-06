@@ -1,0 +1,9 @@
+{# Registration is off, or the visitor is already logged in. #}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    {% include '@theme/components/alert.twig' with {
+        alert_type: 'alert-info',
+        alert: __('Registration is temporarily closed')
+    } only %}
+{% endblock %}

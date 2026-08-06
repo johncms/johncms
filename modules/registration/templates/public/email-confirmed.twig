@@ -1,0 +1,21 @@
+{#
+    The outcome of following the confirmation link from the email.
+
+    @var confirm_user \Johncms\Users\User Null when the link points at nobody.
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    {% if confirm_user is null %}
+        <div class="alert alert-danger">{{ __('User is not found') }}</div>
+    {% elseif confirm_user.email_confirmed %}
+        <div class="alert alert-success">{{ __('Thanks! Your e-mail has been successfully confirmed.') }}</div>
+        {% if not app.user.isValid %}
+            <div class="mt-2">
+                <a href="/login/" class="btn btn-primary">{{ d__('system', 'Log In') }}</a>
+            </div>
+        {% endif %}
+    {% else %}
+        <div class="alert alert-danger">{{ __('Error when confirming e-mail. Invalid confirmation code.') }}</div>
+    {% endif %}
+{% endblock %}

@@ -5,19 +5,17 @@ declare(strict_types=1);
 namespace Johncms\Modules\Mail\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Mail\Application\UseCases\BlockUserUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
-use Johncms\System\View\Render;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Response;
 
 final readonly class BlockUserController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private Session $session,
         private NavChain $navChain,
         private BlockUserUseCase $blockUserUseCase,
@@ -25,7 +23,7 @@ final readonly class BlockUserController
         $this->controllerContext->initModule('mail');
     }
 
-    public function __invoke(Request $request, int $userId): Response
+    public function __invoke(Request $request, int $userId): RedirectResponse|ViewResponse
     {
         if ($request->getMethod() === 'POST') {
             try {
@@ -46,11 +44,6 @@ final readonly class BlockUserController
         $this->navChain->add(__('Blacklist'), '/mail/blocklist');
         $this->navChain->add(__('Block user'));
 
-        $this->render->addData([
-            'title' => __('Block user'),
-            'page_title' => __('Block user'),
-        ]);
-
         $data = [
             'form_action'     => '/mail/block/' . $userId,
             'message'         => __('You really want to block contact?'),
@@ -58,11 +51,13 @@ final readonly class BlockUserController
             'submit_btn_name' => __('Block'),
         ];
 
-        return new Response($this->render->render(
-            'mail::confirm',
+        return new ViewResponse(
+            '@mail/public/confirm.twig',
             [
+                'title'      => __('Block user'),
+                'page_title' => __('Block user'),
                 'data'       => $data,
             ]
-        ));
+        );
     }
 }

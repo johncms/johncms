@@ -16,6 +16,7 @@ use Johncms\UserProperties;
 use Johncms\Users\User;
 use Johncms\Utils\DateFormatterInterface;
 use Simba77\EmbedMedia\Embed;
+use Twig\Markup;
 
 final readonly class GetConversationUseCase
 {
@@ -109,7 +110,7 @@ final readonly class GetConversationUseCase
                 userId: $message->user_id,
                 name: $author->name ?? '',
                 read: $message->read,
-                text: $text,
+                text: new Markup($text, 'UTF-8'),
                 displayDate: $this->dateFormatter->format($message->time),
                 userIsOnline: $userData['user_is_online'] ?? false,
                 userProfileLink: $userData['user_profile_link'] ?? '',

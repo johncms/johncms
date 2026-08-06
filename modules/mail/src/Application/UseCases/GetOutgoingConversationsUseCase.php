@@ -12,6 +12,7 @@ use Johncms\Modules\Mail\Domain\Repository\MailMessageRepositoryInterface;
 use Johncms\UserProperties;
 use Johncms\Users\User;
 use Johncms\Utils\DateFormatterInterface;
+use Twig\Markup;
 
 final readonly class GetOutgoingConversationsUseCase
 {
@@ -88,7 +89,7 @@ final readonly class GetOutgoingConversationsUseCase
                 name: $user->name,
                 countMessage: $countMessage,
                 displayDate: $displayDate,
-                previewText: $previewText,
+                previewText: new Markup($previewText, 'UTF-8'),
                 unread: $unread,
                 writeUrl: '/mail/write/' . $user->id,
                 buttons: $buttons,

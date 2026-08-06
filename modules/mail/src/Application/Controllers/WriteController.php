@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Mail\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
@@ -17,7 +18,6 @@ use Johncms\Modules\Mail\Application\UseCases\SendMessageUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\System\Utility\EditorContentNormalizer;
-use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -25,7 +25,6 @@ final readonly class WriteController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private User $currentUser,
         private EditorContentNormalizer $editorContentNormalizer,
@@ -38,7 +37,7 @@ final readonly class WriteController
         $this->controllerContext->initModule('mail');
     }
 
-    public function send(Request $request, int $id): string
+    public function send(Request $request, int $id): ViewResponse
     {
         $text = trim($this->editorContentNormalizer->trimEdgeEmptyBlocks($request->body('text', '')));
 
@@ -55,8 +54,8 @@ final readonly class WriteController
                 file: $file,
             ));
         } catch (SendMessageException $exception) {
-            return $this->render->render(
-                'system::pages/result',
+            return new ViewResponse(
+                '@theme/pages/result.twig',
                 [
                     'title'         => __('Mail'),
                     'type'          => 'alert-danger',
@@ -70,7 +69,7 @@ final readonly class WriteController
         redirect('/mail/write/' . $id);
     }
 
-    public function conversation(int $id): string
+    public function conversation(int $id): ViewResponse
     {
         try {
             $pagination = $this->paginationFactory->create($this->getConversationUseCase->count($id));
@@ -82,8 +81,8 @@ final readonly class WriteController
 
             $result = $this->getConversationUseCase->getPage($id, $pagination->getPerPage(), $pagination->getOffset());
         } catch (UserNotFoundException) {
-            return $this->render->render(
-                'system::pages/result',
+            return new ViewResponse(
+                '@theme/pages/result.twig',
                 [
                     'title'    => __('Mail'),
                     'type'     => 'alert-danger',
@@ -100,19 +99,17 @@ final readonly class WriteController
         $this->navChain->add($conversationTitle, '/mail/write/' . $id);
 
         $meta = new PageMeta($conversationTitle, $pagination->getCurrentPage());
-        $this->render->addData([
-            'title'       => $meta->title,
-            'page_title'  => $conversationTitle,
-            'description' => $meta->description,
-        ]);
-
-        return $this->render->render(
-            'mail::messages',
+        return new ViewResponse(
+            '@mail/public/messages.twig',
             [
+                'title'       => $meta->title,
+                'page_title'  => $conversationTitle,
+                'description' => $meta->description,
+                'ask_recipient' => $result->showNickInput,
+                'can_see_meta'  => $this->currentUser->isValid() && $this->currentUser->rights > 0,
                 'data' => [
                     'errors'          => [],
                     'form_action'     => $result->formAction,
-                    'show_nick_input' => $result->showNickInput,
                     'nick'            => $result->nick,
                     'items'           => $result->items->map(fn ($item) => $item->toArray())->all(),
                     'total'           => $pagination->getTotal(),

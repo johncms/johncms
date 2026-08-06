@@ -2,139 +2,139 @@ msgid ""
 msgstr ""
 "X-Domain: registration\n"
 
-#: modules/registration/src/Application/Controllers/RegistrationController.php:46
-#: modules/registration/templates/index.phtml:4
-#: modules/registration/templates/index.phtml:5
-#: modules/registration/templates/index.phtml:10
-#: modules/registration/templates/index.phtml:138
-#: modules/registration/templates/registration_closed.phtml:4
-#: modules/registration/templates/registration_closed.phtml:5
-#: modules/registration/templates/registration_result.phtml:4
-#: modules/registration/templates/registration_result.phtml:5
-msgid "Registration"
-msgstr ""
-
-#: modules/registration/src/Application/Controllers/RegistrationController.php:104
-msgid "You must accept the consent to continue"
-msgstr ""
-
-#: modules/registration/src/Application/UseCases/RegisterUserUseCase.php:62
-msgid "Registration on the website"
-msgstr ""
-
-#: modules/registration/templates/email_confirmed.phtml:11
-#: modules/registration/templates/email_confirmed.phtml:12
+#: modules/registration/src/Application/Controllers/ConfirmEmailController.php:38
+#: modules/registration/src/Application/Controllers/ConfirmEmailController.php:39
 msgid "Email confirmation"
 msgstr ""
 
-#: modules/registration/templates/email_confirmed.phtml:17
+#: modules/registration/src/Application/Controllers/RegistrationController.php:47
+#: modules/registration/src/Application/Controllers/RegistrationController.php:48
+#: modules/registration/src/Application/Controllers/RegistrationController.php:53
+#: modules/registration/src/Application/Controllers/RegistrationController.php:151
+#: modules/registration/src/Application/Controllers/RegistrationController.php:152
+#: modules/registration/src/Application/Controllers/RegistrationController.php:173
+#: modules/registration/src/Application/Controllers/RegistrationController.php:174
+#: modules/registration/templates/public/index.twig:15
+#: modules/registration/templates/public/index.twig:128
+msgid "Registration"
+msgstr ""
+
+#: modules/registration/src/Application/Controllers/RegistrationController.php:111
+msgid "You must accept the consent to continue"
+msgstr ""
+
+#: modules/registration/src/Application/UseCases/RegisterUserUseCase.php:61
+msgid "Registration on the website"
+msgstr ""
+
+#: modules/registration/templates/public/email-confirmed.twig:10
 msgid "User is not found"
 msgstr ""
 
-#: modules/registration/templates/email_confirmed.phtml:19
+#: modules/registration/templates/public/email-confirmed.twig:12
 msgid "Thanks! Your e-mail has been successfully confirmed."
 msgstr ""
 
-#: modules/registration/templates/email_confirmed.phtml:26
+#: modules/registration/templates/public/email-confirmed.twig:19
 msgid "Error when confirming e-mail. Invalid confirmation code."
 msgstr ""
 
-#: modules/registration/templates/index.phtml:13
+#: modules/registration/templates/public/index.twig:18
 msgid "You can get authorized on the site after confirmation of your registration."
 msgstr ""
 
-#: modules/registration/templates/index.phtml:21
+#: modules/registration/templates/public/index.twig:26
 msgid "Please, do not register names like 111, shhhh, uuuu, etc. They will be deleted. <br /> Also all the profiles registered via proxy servers will be deleted"
 msgstr ""
 
-#: modules/registration/templates/index.phtml:25
+#: modules/registration/templates/public/index.twig:30
 msgid "Choose Nickname"
 msgstr ""
 
-#: modules/registration/templates/index.phtml:34
+#: modules/registration/templates/public/index.twig:39
 msgid "Username"
 msgstr ""
 
-#: modules/registration/templates/index.phtml:40
+#: modules/registration/templates/public/index.twig:43
 msgid "Min. 2, Max. 20 characters.<br />Allowed letters of the russian and latin alphabets, numbers and symbols - = @ ! ? ~ _ ( ) [ ] . * (Except zero)"
 msgstr ""
 
-#: modules/registration/templates/index.phtml:44
-#: modules/registration/templates/index.phtml:53
+#: modules/registration/templates/public/index.twig:47
+#: modules/registration/templates/public/index.twig:56
 msgid "Assign a password"
 msgstr ""
 
-#: modules/registration/templates/index.phtml:61
-#: modules/registration/templates/index.phtml:68
+#: modules/registration/templates/public/index.twig:62
+#: modules/registration/templates/public/index.twig:69
 msgid "E-mail"
 msgstr ""
 
-#: modules/registration/templates/index.phtml:76
+#: modules/registration/templates/public/index.twig:75
 msgid "Select Gender"
 msgstr ""
 
-#: modules/registration/templates/index.phtml:79
+#: modules/registration/templates/public/index.twig:78
 msgid "Man"
 msgstr ""
 
-#: modules/registration/templates/index.phtml:80
+#: modules/registration/templates/public/index.twig:79
 msgid "Woman"
 msgstr ""
 
-#: modules/registration/templates/index.phtml:87
-#: modules/registration/templates/index.phtml:94
+#: modules/registration/templates/public/index.twig:84
+#: modules/registration/templates/public/index.twig:91
 msgid "Your name"
 msgstr ""
 
-#: modules/registration/templates/index.phtml:101
+#: modules/registration/templates/public/index.twig:96
 msgid "Tell us a little about yourself"
 msgstr ""
 
-#: modules/registration/templates/index.phtml:108
-#: modules/registration/templates/index.phtml:118
+#: modules/registration/templates/public/index.twig:101
+#: modules/registration/templates/public/index.twig:111
 msgid "Verification code"
 msgstr ""
 
-#: modules/registration/templates/index.phtml:110
+#: modules/registration/templates/public/index.twig:103
 msgid "Enter verification code"
 msgstr ""
 
-#: modules/registration/templates/index.phtml:124
+#: modules/registration/templates/public/index.twig:115
 msgid "If you cannot see the image code, enable graphics in your browser and refresh this page"
 msgstr ""
 
-#: modules/registration/templates/registration_closed.phtml:12
+#: modules/registration/templates/public/registration-closed.twig:7
 msgid "Registration is temporarily closed"
 msgstr ""
 
-#: modules/registration/templates/registration_result.phtml:9
+#: modules/registration/templates/public/registration-result.twig:13
 msgid "Your registration data"
 msgstr ""
 
-#: modules/registration/templates/registration_result.phtml:11
+#: modules/registration/templates/public/registration-result.twig:15
 msgid "Congratulations! You have successfully registered on the site."
 msgstr ""
 
-#: modules/registration/templates/registration_result.phtml:14
+#: modules/registration/templates/public/registration-result.twig:18
 msgid "Your ID"
 msgstr ""
 
-#: modules/registration/templates/registration_result.phtml:15
+#: modules/registration/templates/public/registration-result.twig:19
 msgid "Your Username"
 msgstr ""
 
-#: modules/registration/templates/registration_result.phtml:16
+#: modules/registration/templates/public/registration-result.twig:20
 msgid "Your Password"
 msgstr ""
 
-#: modules/registration/templates/registration_result.phtml:19
+#: modules/registration/templates/public/registration-result.twig:23
 msgid "Now you just need to confirm your email address.<br> Please check your email and follow the instructions in it."
 msgstr ""
 
-#: modules/registration/templates/registration_result.phtml:21
+#: modules/registration/templates/public/registration-result.twig:25
 msgid "Please, wait until a moderator approves your registration"
 msgstr ""
 
-#: modules/registration/templates/registration_result.phtml:23
+#: modules/registration/templates/public/registration-result.twig:27
 msgid "Enter"
 msgstr ""

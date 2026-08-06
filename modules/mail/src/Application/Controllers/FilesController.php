@@ -5,18 +5,17 @@ declare(strict_types=1);
 namespace Johncms\Modules\Mail\Application\Controllers;
 
 use Johncms\Http\Controller\ControllerContext;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Mail\Application\UseCases\GetAttachedFilesUseCase;
 use Johncms\NavChain;
-use Johncms\System\View\Render;
 
 final readonly class FilesController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private GetAttachedFilesUseCase $getAttachedFilesUseCase,
         private PaginationFactory $paginationFactory,
@@ -25,7 +24,7 @@ final readonly class FilesController
         $this->controllerContext->initModule('mail');
     }
 
-    public function __invoke(): string
+    public function __invoke(): ViewResponse
     {
         $pagination = $this->paginationFactory->create($this->getAttachedFilesUseCase->count());
 
@@ -42,15 +41,12 @@ final readonly class FilesController
 
         $pageTitle = __('Files');
         $meta = new PageMeta($pageTitle, $pagination->getCurrentPage());
-        $this->render->addData([
-            'title'       => $meta->title,
-            'page_title'  => $pageTitle,
-            'description' => $meta->description,
-        ]);
-
-        return $this->render->render(
-            'mail::files',
+        return new ViewResponse(
+            '@mail/public/files.twig',
             [
+                'title'       => $meta->title,
+                'page_title'  => $pageTitle,
+                'description' => $meta->description,
                 'data' => [
                     'items'      => $result->items->map(fn ($item) => $item->toArray())->all(),
                     'total'      => $pagination->getTotal(),
