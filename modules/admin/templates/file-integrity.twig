@@ -1,0 +1,25 @@
+{#
+    The two modes of the file integrity check.
+
+    @var string scan_url
+    @var string snapshot_url
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    <h3>{{ __('Scan mode') }}</h3>
+    <div class="list-group">
+        <a href="{{ scan_url }}" class="list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-between">
+                <h4 class="mb-1 fw-bold">{{ __('Snapshot scan') }}</h4>
+            </div>
+            <p class="mb-1">{{ __('Compare the list of files and checksums with pre-made way. Allows you to identify unknow files, and unauthorized changes.') }}</p>
+        </a>
+        <a href="{{ snapshot_url }}" class="list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-between">
+                <h4 class="mb-1 fw-bold">{{ __('Create snapshot') }}</h4>
+            </div>
+            <p class="mb-1">{{ __('Takes a snapshot of all script files from the site calculates their checksums and stored in the database.') }}</p>
+        </a>
+    </div>
+{% endblock %}

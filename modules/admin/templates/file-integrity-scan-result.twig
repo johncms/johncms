@@ -1,0 +1,27 @@
+{#
+    The files that do not match the snapshot.
+
+    @var array  bad_files
+    @var string back_url
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    <div class="alert alert-danger">
+        <div class="pb-2">
+            {{ __('Snapshot Inconsistency<br>Warning! You need to pay attention to all files from the list. They have been added or modified since the image created.')|raw }}
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <h3>{{ __('List of files') }}</h3>
+        <ul>
+            {% for file in bad_files %}
+                <li>{{ file }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div>
+        <a href="{{ back_url }}" class="btn btn-outline-secondary">{{ __('Back') }}</a>
+    </div>
+{% endblock %}

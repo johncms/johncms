@@ -15,8 +15,8 @@ msgstr ""
 #: modules/admin/templates/ads_add.phtml:68
 #: modules/admin/templates/sidebar-admin-menu.phtml:36
 #: modules/admin/templates/sidebar-admin-menu.phtml:75
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:36
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:75
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:27
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:66
 msgid "Users"
 msgstr ""
 
@@ -27,20 +27,20 @@ msgstr ""
 #: modules/admin/templates/ipban_search.phtml:26
 #: modules/admin/templates/search_ip.phtml:29
 #: modules/admin/templates/sidebar-admin-menu.phtml:56
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:56
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:47
 msgid "Search"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:54
 #: modules/admin/templates/sidebar-admin-menu.phtml:65
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:65
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:56
 msgid "On registration"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:73
 #: modules/admin/src/Application/Controllers/Users/StaffListController.php:27
 #: modules/admin/templates/sidebar-admin-menu.phtml:84
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:84
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:75
 msgid "Administration"
 msgstr ""
 
@@ -48,20 +48,20 @@ msgstr ""
 #: modules/admin/src/Application/Controllers/Users/AmnestyController.php:62
 #: modules/admin/src/Application/Controllers/Users/BanListController.php:47
 #: modules/admin/templates/sidebar-admin-menu.phtml:93
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:93
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:84
 msgid "Ban Panel"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:92
 #: modules/admin/src/Application/Controllers/Users/UserCleanupController.php:59
 #: modules/admin/templates/sidebar-admin-menu.phtml:103
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:103
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:94
 msgid "Database cleanup"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:100
 #: modules/admin/templates/sidebar-admin-menu.phtml:111
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:111
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:102
 msgid "Antiflood"
 msgstr ""
 
@@ -69,20 +69,20 @@ msgstr ""
 #: modules/admin/src/Application/Controllers/Users/KarmaController.php:63
 #: modules/admin/src/Application/Controllers/Users/KarmaController.php:103
 #: modules/admin/templates/sidebar-admin-menu.phtml:119
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:119
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:110
 msgid "Karma"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:121
 #: modules/admin/templates/sidebar-admin-menu.phtml:133
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:133
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:124
 msgid "Modules"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:137
 #: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:78
 #: modules/admin/templates/sidebar-admin-menu.phtml:150
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:150
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:141
 msgid "Permissions"
 msgstr ""
 
@@ -90,18 +90,18 @@ msgstr ""
 #: modules/admin/templates/access.phtml:24
 #: modules/admin/templates/sidebar-admin-menu.phtml:158
 #: modules/admin/templates/usr_del.phtml:36
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:158
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:149
 msgid "Forum"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:153
 #: modules/admin/templates/sidebar-admin-menu.phtml:166
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:166
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:157
 msgid "News"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:161
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:174
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:165
 msgid "Collections"
 msgstr ""
 
@@ -112,22 +112,22 @@ msgstr ""
 #: modules/admin/src/Application/Controllers/Settings/AdsController.php:304
 #: modules/admin/src/Application/Controllers/Settings/AdsController.php:336
 #: modules/admin/templates/sidebar-admin-menu.phtml:174
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:182
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:173
 msgid "Advertisement"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:177
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:190
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:181
 msgid "Consents"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:185
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:198
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:189
 msgid "Contacts"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:193
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:206
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:197
 msgid "Cookie banner"
 msgstr ""
 
@@ -139,13 +139,13 @@ msgstr ""
 #: modules/admin/src/Application/Controllers/Settings/CountersController.php:200
 #: modules/admin/src/Application/Controllers/Settings/CountersController.php:228
 #: modules/admin/templates/sidebar-admin-menu.phtml:183
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:215
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:206
 msgid "Counters"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:215
 #: modules/admin/templates/sidebar-admin-menu.phtml:197
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:229
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:220
 msgid "System"
 msgstr ""
 
@@ -153,19 +153,19 @@ msgstr ""
 #: modules/admin/src/Application/Controllers/Settings/SystemSettingsController.php:90
 #: modules/admin/templates/sidebar-admin-menu.phtml:214
 #: modules/admin/templates/smilies.phtml:8
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:246
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:237
 msgid "System Settings"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:239
 #: modules/admin/templates/sidebar-admin-menu.phtml:222
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:254
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:245
 msgid "Update Smilies"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:247
 #: modules/admin/templates/sidebar-admin-menu.phtml:230
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:262
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:253
 msgid "Language Settings"
 msgstr ""
 
@@ -174,28 +174,28 @@ msgstr ""
 #: modules/admin/src/Application/Controllers/System/SystemCheckController.php:27
 #: modules/admin/src/Application/Controllers/System/SystemCheckController.php:31
 #: modules/admin/templates/sidebar-admin-menu.phtml:238
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:270
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:261
 msgid "System check"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:263
 #: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:86
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:278
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:269
 msgid "Maintenance"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:275
 #: modules/admin/templates/sidebar-admin-menu.phtml:251
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:291
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:282
 msgid "Security"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:291
 #: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:33
-#: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:47
-#: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:79
+#: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:46
+#: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:75
 #: modules/admin/templates/sidebar-admin-menu.phtml:268
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:308
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:299
 msgid "Anti-Spyware"
 msgstr ""
 
@@ -209,7 +209,7 @@ msgstr ""
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:251
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:299
 #: modules/admin/templates/sidebar-admin-menu.phtml:276
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:316
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:307
 msgid "Ban by IP"
 msgstr ""
 
@@ -608,27 +608,27 @@ msgstr ""
 msgid "Smilies"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:46
-#: modules/admin/templates/antispy.phtml:16
+#: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:45
+#: modules/admin/templates/file-integrity.twig:14
 msgid "Snapshot scan"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:55
+#: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:52
 msgid "Snapshot is not created"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:57
-#: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:78
-#: modules/admin/templates/antispy.phtml:22
-#: modules/admin/templates/antispy_create_confirm.phtml:24
+#: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:54
+#: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:74
+#: modules/admin/templates/file-integrity-snapshot-confirm.twig:21
+#: modules/admin/templates/file-integrity.twig:20
 msgid "Create snapshot"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:65
+#: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:61
 msgid "Excellent!<br>All files are consistent with previously made image."
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:93
+#: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:88
 msgid "Snapshot successfully created"
 msgstr ""
 
@@ -939,10 +939,10 @@ msgstr ""
 
 #: modules/admin/templates/admin_list.phtml:41
 #: modules/admin/templates/ads_index.phtml:77
-#: modules/admin/templates/antispy_scan_result.phtml:27
 #: modules/admin/templates/ban_panel.phtml:47
 #: modules/admin/templates/counters.phtml:50
 #: modules/admin/templates/counters_view.phtml:54
+#: modules/admin/templates/file-integrity-scan-result.twig:25
 #: modules/admin/templates/forum/hidden_posts.phtml:118
 #: modules/admin/templates/forum/hidden_topics.phtml:114
 #: modules/admin/templates/forum/index.phtml:31
@@ -1022,11 +1022,11 @@ msgstr ""
 #: modules/admin/templates/ads_confirm.phtml:23
 #: modules/admin/templates/amnesty.phtml:37
 #: modules/admin/templates/antiflood.phtml:63
-#: modules/admin/templates/antispy_create_confirm.phtml:25
 #: modules/admin/templates/counters_add_confirm.phtml:54
 #: modules/admin/templates/counters_confirm.phtml:25
 #: modules/admin/templates/counters_form.phtml:79
 #: modules/admin/templates/emoticons.phtml:27
+#: modules/admin/templates/file-integrity-snapshot-confirm.twig:22
 #: modules/admin/templates/forum/add.phtml:69
 #: modules/admin/templates/forum/del_confirm.phtml:22
 #: modules/admin/templates/forum/del_confirm_move.phtml:36
@@ -1162,34 +1162,6 @@ msgstr ""
 msgid "End of day"
 msgstr ""
 
-#: modules/admin/templates/antispy.phtml:12
-msgid "Scan mode"
-msgstr ""
-
-#: modules/admin/templates/antispy.phtml:18
-msgid "Compare the list of files and checksums with pre-made way. Allows you to identify unknow files, and unauthorized changes."
-msgstr ""
-
-#: modules/admin/templates/antispy.phtml:24
-msgid "Takes a snapshot of all script files from the site calculates their checksums and stored in the database."
-msgstr ""
-
-#: modules/admin/templates/antispy_create_confirm.phtml:15
-msgid "WARNING!!!<br>Before continuing make sure that all the files have been identified in the scanning mode distribution reliable and contain no unauthorized modifications."
-msgstr ""
-
-#: modules/admin/templates/antispy_create_confirm.phtml:19
-msgid "This procedure creates a list of all script files to your site, calculates the checksums and writes to the database, for later comparison."
-msgstr ""
-
-#: modules/admin/templates/antispy_scan_result.phtml:14
-msgid "Snapshot Inconsistency<br>Warning! You need to pay attention to all files from the list. They have been added or modified since the image created."
-msgstr ""
-
-#: modules/admin/templates/antispy_scan_result.phtml:19
-msgid "List of files"
-msgstr ""
-
 #: modules/admin/templates/ban_panel.phtml:18
 #: modules/admin/templates/userlist.phtml:18
 msgid "Sort"
@@ -1301,6 +1273,34 @@ msgstr ""
 
 #: modules/admin/templates/emoticons.phtml:26
 msgid "Update cache"
+msgstr ""
+
+#: modules/admin/templates/file-integrity-scan-result.twig:12
+msgid "Snapshot Inconsistency<br>Warning! You need to pay attention to all files from the list. They have been added or modified since the image created."
+msgstr ""
+
+#: modules/admin/templates/file-integrity-scan-result.twig:17
+msgid "List of files"
+msgstr ""
+
+#: modules/admin/templates/file-integrity-snapshot-confirm.twig:12
+msgid "WARNING!!!<br>Before continuing make sure that all the files have been identified in the scanning mode distribution reliable and contain no unauthorized modifications."
+msgstr ""
+
+#: modules/admin/templates/file-integrity-snapshot-confirm.twig:16
+msgid "This procedure creates a list of all script files to your site, calculates the checksums and writes to the database, for later comparison."
+msgstr ""
+
+#: modules/admin/templates/file-integrity.twig:10
+msgid "Scan mode"
+msgstr ""
+
+#: modules/admin/templates/file-integrity.twig:16
+msgid "Compare the list of files and checksums with pre-made way. Allows you to identify unknow files, and unauthorized changes."
+msgstr ""
+
+#: modules/admin/templates/file-integrity.twig:22
+msgid "Takes a snapshot of all script files from the site calculates their checksums and stored in the database."
 msgstr ""
 
 #: modules/admin/templates/forum/add.phtml:23
