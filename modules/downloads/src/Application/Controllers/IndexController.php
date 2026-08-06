@@ -12,10 +12,10 @@ use Johncms\Modules\Downloads\Application\Services\DownloadCategoryPathService;
 use Johncms\Modules\Downloads\Application\Services\DownloadLegacyRedirectResolver;
 use Johncms\Modules\Downloads\Domain\Models\DownloadCategory;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
+use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
-use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,7 +24,6 @@ final readonly class IndexController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private User $currentUser,
         private FilePresenter $filePresenter,
@@ -37,7 +36,7 @@ final readonly class IndexController
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(Request $request): Response
+    public function __invoke(Request $request): RedirectResponse|ViewResponse
     {
         $redirect = $this->legacyRedirectResolver->resolve($request->query->all());
         if ($redirect !== null) {
@@ -47,10 +46,6 @@ final readonly class IndexController
         $this->navChain->add(__('Downloads'), '/downloads/');
 
         $title = __('Downloads');
-        $this->render->addData([
-            'title'      => $title,
-            'page_title' => $title,
-        ]);
 
         $old = time() - FilePresenter::NEW_FILE_PERIOD;
 
@@ -73,8 +68,8 @@ final readonly class IndexController
                 function (DownloadCategory $cat) use (&$categories, $hasEdit): void {
                     $categories[] = [
                         'id'         => $cat->id,
-                        'rus_name'   => htmlspecialchars($cat->rus_name),
-                        'desc'       => htmlspecialchars($cat->desc),
+                        'rus_name'   => $cat->rus_name,
+                        'desc'       => $cat->desc,
                         'field'      => $cat->field,
                         'text'       => $cat->text,
                         'total'      => $cat->total,
@@ -101,21 +96,22 @@ final readonly class IndexController
 
         $files = [];
 
-        if ($totalFiles > 0) {
-            if ($totalFiles > 1) {
-                if ($request->getMethod() === 'POST') {
-                    $post = $request->request->all();
-                    if (isset($post['sort_down'])) {
-                        $this->session->set('sort_down', $post['sort_down'] ? 1 : 0);
-                    }
-                    if (isset($post['sort_down2'])) {
-                        $this->session->set('sort_down2', $post['sort_down2'] ? 1 : 0);
-                    }
-                }
+        if ($totalFiles > 1 && $request->getMethod() === 'POST') {
+            $post = $request->request->all();
+            if (isset($post['sort_down'])) {
+                $this->session->set('sort_down', $post['sort_down'] ? 1 : 0);
             }
+            if (isset($post['sort_down2'])) {
+                $this->session->set('sort_down2', $post['sort_down2'] ? 1 : 0);
+            }
+        }
 
-            $sortColumn = ($this->session->get('sort_down', 0)) ? 'name' : 'time';
-            $sortDir = ($this->session->get('sort_down2', 0)) ? 'asc' : 'desc';
+        $sortByName = (bool) $this->session->get('sort_down', 0);
+        $sortAscending = (bool) $this->session->get('sort_down2', 0);
+
+        if ($totalFiles > 0) {
+            $sortColumn = $sortByName ? 'name' : 'time';
+            $sortDir = $sortAscending ? 'asc' : 'desc';
 
             $rows = DownloadFile::query()
                 ->where('refid', 0)
@@ -131,16 +127,25 @@ final readonly class IndexController
             }
         }
 
-        return new Response($this->render->render('downloads::index', [
-            'id'          => 0,
-            'urls'        => $urls,
-            'pagination'  => $pagination->render(),
-            'files'       => $files,
-            'total_files' => $totalFiles,
-            'total_new'   => $totalNew,
-            'categories'  => $categories,
-            'total_cat'   => $totalCat,
-            'can_upload'  => false,
-        ]));
+        $config = config('johncms');
+
+        return new ViewResponse('@downloads/public/index.twig', [
+            'title'          => $title,
+            'page_title'     => $title,
+            'id'             => 0,
+            'urls'           => $urls,
+            'pagination'     => $pagination->hasPages() ? $pagination->render() : null,
+            'files'          => $files,
+            'total_files'    => $totalFiles,
+            'total_new'      => $totalNew,
+            'categories'     => $categories,
+            'total_cat'      => $totalCat,
+            'can_upload'     => false,
+            'can_manage'     => $this->currentUser->rights === 4 || $this->currentUser->rights >= 6,
+            'can_review'     => $this->currentUser->rights >= 7 || ! empty($config['mod_down_comm']),
+            'sort_by_name'   => $sortByName,
+            'sort_ascending' => $sortAscending,
+            'downloads_open' => (bool) $config['mod_down'],
+        ]);
     }
 }

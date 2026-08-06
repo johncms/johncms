@@ -1,0 +1,23 @@
+{#
+    Confirmation of a deletion: of a file or of one of its attachments.
+
+    @var action_url   string
+    @var back_url     string
+    @var delete_token string One-time token of the form, checked against the session.
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    <div class="alert alert-danger">
+        <div class="pb-2">
+            {{ __('Do you really want to delete?') }}
+        </div>
+        <div>
+            <form action="{{ action_url }}" method="post">
+                <input type="hidden" name="delete_token" value="{{ delete_token }}">
+                <button type="submit" name="delete" value="1" class="btn btn-danger btn-sm">{{ __('Delete') }}</button>
+                <a href="{{ back_url }}" class="btn btn-outline-secondary btn-sm">{{ __('Cancel') }}</a>
+            </form>
+        </div>
+    </div>
+{% endblock %}

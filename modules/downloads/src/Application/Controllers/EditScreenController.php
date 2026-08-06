@@ -15,7 +15,7 @@ use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -23,7 +23,6 @@ final readonly class EditScreenController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private Session $session,
         private NavChain $navChain,
         private ImageManager $imageManager,
@@ -33,7 +32,7 @@ final readonly class EditScreenController
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(Request $request, int $id): Response
+    public function __invoke(Request $request, int $id): RedirectResponse|ViewResponse
     {
         $file = DownloadFile::query()
             ->where('id', $id)
@@ -56,27 +55,22 @@ final readonly class EditScreenController
         $deleteToken = uniqid('', true);
         $this->session->set('delete_token', $deleteToken);
 
-        $pageTitle = htmlspecialchars($file->rus_name);
-        $this->render->addData([
-            'title'      => $pageTitle,
-            'page_title' => $pageTitle,
-        ]);
-
         $this->navChain->add(__('Downloads'), '/downloads/');
         $this->categoryNavService->buildForFileDir($file->dir);
-        $this->navChain->add($pageTitle, $this->filePathService->getFileUrl($file));
+        $this->navChain->add($file->rus_name, $this->filePathService->getFileUrl($file));
         $this->navChain->add(__('Managing Screenshots'));
 
-        return new Response($this->render->render('downloads::edit_screen', [
-            'id'           => $id,
+        return new ViewResponse('@downloads/public/edit-screenshots.twig', [
+            'title'        => $file->rus_name,
+            'page_title'   => $file->rus_name,
             'screens'      => ScreenService::getScreens($id),
             'delete_token' => $deleteToken,
             'action_url'   => '/downloads/edit-screen/' . $id . '/',
             'file_url'     => $this->filePathService->getFileUrl($file),
-        ]));
+        ]);
     }
 
-    private function handleDelete(Request $request, int $id, string $filename): Response
+    private function handleDelete(Request $request, int $id, string $filename): RedirectResponse
     {
         $post = $request->request->all();
         $sessionToken = $this->session->get('delete_token');
@@ -96,7 +90,7 @@ final readonly class EditScreenController
         return new RedirectResponse('/downloads/edit-screen/' . $id . '/');
     }
 
-    private function handleUpload(Request $request, int $id): Response
+    private function handleUpload(Request $request, int $id): ViewResponse
     {
         $uploadUrl = '/downloads/edit-screen/' . $id . '/';
         $screensDir = \UPLOAD_PATH . 'downloads' . \DS . 'screen' . \DS . $id;
@@ -107,13 +101,13 @@ final readonly class EditScreenController
 
         $files = $request->files->all();
         if (empty($files) || empty($files['screen'])) {
-            return new Response($this->render->render('system::pages/result', [
+            return new ViewResponse('@theme/pages/result.twig', [
                 'title'         => __('Upload screenshot'),
                 'type'          => 'alert-danger',
                 'message'       => __('Screenshot not attached'),
                 'back_url'      => $uploadUrl,
                 'back_url_name' => __('Repeat'),
-            ]));
+            ]);
         }
 
         /** @var \Symfony\Component\HttpFoundation\File\UploadedFile $screenshot */
@@ -134,32 +128,32 @@ final readonly class EditScreenController
             // failure, and a template error must not be misreported as one (nor have its raw
             // message printed to the visitor).
         } catch (Exception $e) {
-            return new Response($this->render->render('system::pages/result', [
+            return new ViewResponse('@theme/pages/result.twig', [
                 'title'         => __('Upload screenshot'),
                 'type'          => 'alert-danger',
                 'message'       => __('Screenshot not attached') . ' ' . $e->getMessage(),
                 'back_url'      => $uploadUrl,
                 'back_url_name' => __('Repeat'),
-            ]));
+            ]);
         }
 
-        return new Response($this->render->render('system::pages/result', [
+        return new ViewResponse('@theme/pages/result.twig', [
             'title'         => __('Upload screenshot'),
             'type'          => 'alert-success',
             'message'       => __('Screenshot is attached'),
             'back_url'      => $uploadUrl,
             'back_url_name' => __('Back'),
-        ]));
+        ]);
     }
 
-    private function notFound(): Response
+    private function notFound(): ViewResponse
     {
-        return new Response($this->render->render('system::pages/result', [
+        return new ViewResponse('@theme/pages/result.twig', [
             'title'         => __('File not found'),
             'type'          => 'alert-danger',
             'message'       => __('File not found'),
             'back_url'      => '/downloads/',
             'back_url_name' => __('Downloads'),
-        ]), Response::HTTP_NOT_FOUND);
+        ], Response::HTTP_NOT_FOUND);
     }
 }

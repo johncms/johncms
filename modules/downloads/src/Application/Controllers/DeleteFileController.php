@@ -14,7 +14,7 @@ use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -22,7 +22,6 @@ final readonly class DeleteFileController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private Session $session,
         private NavChain $navChain,
         private DeleteFileUseCase $deleteFileUseCase,
@@ -33,7 +32,7 @@ final readonly class DeleteFileController
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(Request $request, int $id): Response
+    public function __invoke(Request $request, int $id): RedirectResponse|ViewResponse
     {
         if ($request->getMethod() === 'POST') {
             return $this->handleDelete($request, $id);
@@ -51,26 +50,21 @@ final readonly class DeleteFileController
         $deleteToken = uniqid('', true);
         $this->session->set('delete_token', $deleteToken);
 
-        $pageTitle = htmlspecialchars($file->rus_name);
-        $this->render->addData([
-            'title'      => $pageTitle,
-            'page_title' => $pageTitle,
-        ]);
-
         $this->navChain->add(__('Downloads'), '/downloads/');
         $this->categoryNavService->buildForFileDir($file->dir);
-        $this->navChain->add($pageTitle, $this->filePathService->getFileUrl($file));
+        $this->navChain->add($file->rus_name, $this->filePathService->getFileUrl($file));
         $this->navChain->add(__('Delete File'));
 
-        return new Response($this->render->render('downloads::delete_file', [
-            'id'           => $id,
+        return new ViewResponse('@downloads/public/confirm-delete.twig', [
+            'title'        => $file->rus_name,
+            'page_title'   => $file->rus_name,
             'delete_token' => $deleteToken,
             'action_url'   => '/downloads/delete-file/' . $id . '/',
             'back_url'     => $this->filePathService->getFileUrl($file),
-        ]));
+        ]);
     }
 
-    private function handleDelete(Request $request, int $id): Response
+    private function handleDelete(Request $request, int $id): RedirectResponse|ViewResponse
     {
         $post = $request->request->all();
         $sessionToken = $this->session->get('delete_token');
@@ -98,14 +92,14 @@ final readonly class DeleteFileController
         return new RedirectResponse($redirectUrl);
     }
 
-    private function notFound(): Response
+    private function notFound(): ViewResponse
     {
-        return new Response($this->render->render('system::pages/result', [
+        return new ViewResponse('@theme/pages/result.twig', [
             'title'         => __('File not found'),
             'type'          => 'alert-danger',
             'message'       => __('File not found'),
             'back_url'      => '/downloads/',
             'back_url_name' => __('Downloads'),
-        ]), Response::HTTP_NOT_FOUND);
+        ], Response::HTTP_NOT_FOUND);
     }
 }

@@ -12,7 +12,7 @@ use Johncms\Modules\Downloads\Domain\Models\DownloadCategory;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -20,7 +20,6 @@ final readonly class MoveFileController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private User $currentUser,
         private MoveFileUseCase $moveFileUseCase,
@@ -30,7 +29,7 @@ final readonly class MoveFileController
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(Request $request, int $id): Response
+    public function __invoke(Request $request, int $id): ViewResponse
     {
         if ($this->currentUser->rights <= 6) {
             return $this->notFound();
@@ -47,7 +46,7 @@ final readonly class MoveFileController
 
         $this->navChain->add(__('Downloads'), '/downloads/');
         $this->categoryNavService->buildForFileDir($file->dir);
-        $this->navChain->add(htmlspecialchars($file->rus_name), $this->filePathService->getFileUrl($file));
+        $this->navChain->add($file->rus_name, $this->filePathService->getFileUrl($file));
         $this->navChain->add(__('Move File'));
 
         $baseUrl = '/downloads/move-file/' . $id . '/';
@@ -66,14 +65,14 @@ final readonly class MoveFileController
         return $this->showBrowser($id, $file, $catId, $baseUrl);
     }
 
-    private function showBrowser(int $id, DownloadFile $file, int $catId, string $baseUrl): Response
+    private function showBrowser(int $id, DownloadFile $file, int $catId, string $baseUrl): ViewResponse
     {
         $sections = DownloadCategory::query()
             ->where('refid', $catId)
             ->get()
             ->map(function (DownloadCategory $cat) use ($id, $file, $baseUrl): array {
                 return [
-                    'rus_name'         => htmlspecialchars($cat->rus_name),
+                    'rus_name'         => $cat->rus_name,
                     'section_open_url' => $baseUrl . '?catId=' . $cat->id,
                     'section_move_url' => $cat->id !== (int) $file->refid
                         ? $baseUrl . '?catId=' . $cat->id . '&do=transfer'
@@ -86,64 +85,55 @@ final readonly class MoveFileController
             $moveToCurrentUrl = $baseUrl . '?catId=' . $catId . '&do=transfer';
         }
 
-        $this->render->addData([
+        return new ViewResponse('@downloads/public/move-file.twig', [
             'title'      => __('Move File'),
             'page_title' => __('Move File'),
+            'sections'   => $sections,
+            'back_url'   => $this->filePathService->getFileUrl($file),
+            'urls'       => ['move_to_current_url' => $moveToCurrentUrl],
         ]);
-
-        return new Response($this->render->render('downloads::move_file', [
-            'id'       => $id,
-            'sections' => $sections,
-            'back_url' => $this->filePathService->getFileUrl($file),
-            'urls'     => ['move_to_current_url' => $moveToCurrentUrl],
-        ]));
     }
 
-    private function handleTransfer(Request $request, int $id, DownloadFile $file, int $catId, DownloadCategory $category, string $baseUrl): Response
+    private function handleTransfer(Request $request, int $id, DownloadFile $file, int $catId, DownloadCategory $category, string $baseUrl): ViewResponse
     {
         if ($catId === (int) $file->refid) {
-            return new Response($this->render->render('system::pages/result', [
+            return new ViewResponse('@theme/pages/result.twig', [
                 'title'         => __('Move File'),
                 'type'          => 'alert-info',
                 'message'       => __('This is the current directory'),
                 'back_url'      => $baseUrl . '?catId=' . $catId,
                 'back_url_name' => __('Back'),
-            ]));
+            ]);
         }
 
         if ($request->query->has('yes')) {
             $this->moveFileUseCase->execute($file, $category);
 
-            return new Response($this->render->render('system::pages/result', [
+            return new ViewResponse('@theme/pages/result.twig', [
                 'title'         => __('Move File'),
                 'type'          => 'alert-success',
                 'message'       => __('The file has been moved'),
                 'back_url'      => '/downloads/recount',
                 'back_url_name' => __('Update counters'),
-            ]));
+            ]);
         }
 
-        $pageTitle = htmlspecialchars($file->rus_name);
-        $this->render->addData([
-            'title'      => $pageTitle,
-            'page_title' => $pageTitle,
-        ]);
-
-        return new Response($this->render->render('downloads::move_file_confirm', [
-            'id'         => $id,
+        return new ViewResponse('@downloads/public/move-file-confirm.twig', [
+            'title'      => $file->rus_name,
+            'page_title' => $file->rus_name,
             'action_url' => $baseUrl . '?catId=' . $catId . '&do=transfer&yes',
             'back_url'   => $this->filePathService->getFileUrl($file),
-        ]));
+        ]);
     }
 
-    private function notFound(): Response
+    private function notFound(): ViewResponse
     {
-        return new Response($this->render->render('system::pages/result', [
+        return new ViewResponse('@theme/pages/result.twig', [
             'title'         => __('File not found'),
             'type'          => 'alert-danger',
             'message'       => __('File not found'),
             'back_url'      => '/downloads/',
             'back_url_name' => __('Downloads'),
-        ]), Response::HTTP_NOT_FOUND);
+        ], Response::HTTP_NOT_FOUND);
     }
 }

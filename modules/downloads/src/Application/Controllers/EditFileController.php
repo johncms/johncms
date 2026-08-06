@@ -11,7 +11,7 @@ use Johncms\Modules\Downloads\Application\Services\DownloadSlugService;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -22,7 +22,6 @@ final readonly class EditFileController
 
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private CategoryNavService $categoryNavService,
         private DownloadFilePathService $filePathService,
@@ -31,7 +30,7 @@ final readonly class EditFileController
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(Request $request, int $id): Response
+    public function __invoke(Request $request, int $id): RedirectResponse|ViewResponse
     {
         $file = DownloadFile::query()
             ->where('id', $id)
@@ -48,44 +47,40 @@ final readonly class EditFileController
             return $this->handleSave($request, $id, $file, $audioTags);
         }
 
-        $this->render->addData([
-            'title'      => __('Edit File'),
-            'page_title' => __('Edit File'),
-        ]);
-
         $this->navChain->add(__('Downloads'), '/downloads/');
         $this->categoryNavService->buildForFileDir($file->dir);
-        $this->navChain->add(htmlspecialchars($file->rus_name), $this->filePathService->getFileUrl($file));
+        $this->navChain->add($file->rus_name, $this->filePathService->getFileUrl($file));
         $this->navChain->add(__('Edit File'));
 
-        return new Response($this->render->render('downloads::edit_file_form', [
-            'id'         => $id,
+        return new ViewResponse('@downloads/public/edit-file.twig', [
+            'title'      => __('Edit File'),
+            'page_title' => __('Edit File'),
             'file_data'  => [
-                'text'      => htmlspecialchars($file->rus_name),
-                'name_link' => htmlspecialchars($file->text),
+                'text'      => $file->rus_name,
+                'name_link' => $file->text,
                 'desc'      => $file->about,
             ],
-            'audio_tags'  => $audioTags,
-            'action_url'  => '/downloads/edit-file/' . $id . '/',
-            'file_url'    => $this->filePathService->getFileUrl($file),
-        ]));
+            'audio_tags' => $audioTags,
+            'action_url' => '/downloads/edit-file/' . $id . '/',
+            'file_url'   => $this->filePathService->getFileUrl($file),
+        ]);
     }
 
-    private function handleSave(Request $request, int $id, DownloadFile $file, array $audioTags): Response
+    private function handleSave(Request $request, int $id, DownloadFile $file, array $audioTags): RedirectResponse|ViewResponse
     {
         $post = $request->request->all();
         $name = isset($post['text']) ? trim($post['text']) : null;
-        $nameLink = isset($post['name_link']) ? htmlspecialchars(mb_substr($post['name_link'], 0, 200)) : null;
+        $nameLink = isset($post['name_link']) ? mb_substr($post['name_link'], 0, 200) : null;
         $desc = isset($post['desc']) ? trim($post['desc']) : null;
 
         if (! $name || ! $nameLink) {
-            return new Response($this->render->render('system::pages/result', [
+            return new ViewResponse('@theme/pages/result.twig', [
                 'title'         => __('Edit File'),
                 'type'          => 'alert-danger',
                 'message'       => __('The required fields are not filled'),
                 'back_url'      => '/downloads/edit-file/' . $id . '/',
                 'back_url_name' => __('Repeat'),
-            ]));
+            ]);
         }
 
         $slug = $this->slugService->generateUniqueFileSlug($name, (int) $file->refid, $id);
@@ -131,20 +126,20 @@ final readonly class EditFileController
 
         $tags = [];
         foreach (self::AUDIO_TAG_KEYS as $key) {
-            $tags[$key] = htmlspecialchars(iconv('windows-1251', 'UTF-8', $tagsArray[$key][0] ?? ''));
+            $tags[$key] = iconv('windows-1251', 'UTF-8', $tagsArray[$key][0] ?? '');
         }
 
         return $tags;
     }
 
-    private function notFound(): Response
+    private function notFound(): ViewResponse
     {
-        return new Response($this->render->render('system::pages/result', [
+        return new ViewResponse('@theme/pages/result.twig', [
             'title'         => __('File not found'),
             'type'          => 'alert-danger',
             'message'       => __('File not found'),
             'back_url'      => '/downloads/',
             'back_url_name' => __('Downloads'),
-        ]), Response::HTTP_NOT_FOUND);
+        ], Response::HTTP_NOT_FOUND);
     }
 }

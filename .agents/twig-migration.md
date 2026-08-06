@@ -31,21 +31,35 @@ namespaces come from the installed modules and the theme chain.
    description, canonical) into the same data array. A controller that also returns a
    `RedirectResponse` is typed `Response|ViewResponse`.
 
-2. **Template.** `$this->layout('system::layout/default')` becomes
+2. **Header of the template.** Every variable the template expects is declared in the opening
+   comment as `@var <name> <type>`, with the leading backslash and the full namespace for a
+   class — that is the form the IDE completes from:
+
+   ```twig
+   {#
+       Contents of a category.
+
+       @var files      array
+       @var pagination \Twig\Markup
+       @var show_user  \Johncms\Users\User
+   #}
+   ```
+
+3. **Template.** `$this->layout('system::layout/default')` becomes
    `{% extends '@theme/layouts/default.twig' %}` and the body goes into `{% block content %}`.
    A fragment loaded over AJAX extends nothing.
 
-3. **Every output reviewed one by one** — the table below. This is the part that cannot be
+4. **Every output reviewed one by one** — the table below. This is the part that cannot be
    done mechanically.
 
-4. **Facts, not services.** Anything the old template computed itself — `config(...)`,
+5. **Facts, not services.** Anything the old template computed itself — `config(...)`,
    `di(...)`, `$container->get(...)`, `parse_url()`, a query — moves to the controller and
    arrives as data. Facts about the request itself (`app.user`, `app.locale`,
    `app.color_scheme`) stay in the `app` global.
 
-5. **Delete the `.phtml`** in the same commit. Two copies of a page drift apart silently.
+6. **Delete the `.phtml`** in the same commit. Two copies of a page drift apart silently.
 
-6. **Verify** (see the last section).
+7. **Verify** (see the last section).
 
 ## Output review
 
@@ -66,7 +80,7 @@ more than once for values from the same source, fix the source instead.
 
 Services that already return `Markup`: `Pagination::render()`,
 `UserPlaceFormatterInterface::format()`, `ForumVisitorPlaceFormatter::format()`,
-`Notification::$message`, `vite()`.
+`Notification::$message`, `DownloadFile::$about_html`, `vite()`.
 
 ## Traps
 

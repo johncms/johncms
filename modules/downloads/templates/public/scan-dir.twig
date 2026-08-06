@@ -1,0 +1,56 @@
+{#
+    Scanning the directories of the downloads: first the choice of the scope, then what was added.
+
+    @var id             int   Category to scan, 0 for the whole downloads.
+    @var select_mode    bool  True while the scope has not been chosen yet.
+    @var updated_info   array categories, files, additional_files
+    @var urls           array downloads
+    @var downloads_open bool  Downloads are closed for everyone but the staff.
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    {% if not downloads_open %}
+        <div class="alert alert-danger border-0 shadow">
+            {{ __('Downloads are closed') }}
+        </div>
+    {% endif %}
+    {% if select_mode %}
+        <div>
+            {% if id %}
+                <div>
+                    <a href="/downloads/scan-dir?yes&amp;id={{ id }}&amp;mod=1" class="btn btn-outline-primary btn-sm mb-2">{{ __('Current folder') }}</a>
+                </div>
+                <div>
+                    <a href="/downloads/scan-dir?yes&amp;id={{ id }}" class="btn btn-outline-primary btn-sm mb-2">{{ __('Current folder and all subfolders') }}</a>
+                </div>
+            {% endif %}
+            <div>
+                <a href="/downloads/scan-dir?yes" class="btn btn-outline-primary btn-sm mb-2">{{ __('Entire Downloads') }}</a>
+            </div>
+        </div>
+    {% else %}
+        <div class="row">
+            <div class="col-md-5">
+                <div class="alert alert-info">
+                    <b>{{ __('Added') }}:</b><br>
+                    {{ __('Categories') }}: {{ updated_info.categories }}<br>
+                    {{ __('Files') }}: {{ updated_info.files }}<br>
+                    {{ __('Additional Files') }}: {{ updated_info.additional_files }}
+                </div>
+            </div>
+        </div>
+        <div>
+            <div>
+                <a href="/downloads/scan-dir?do=clean{{ id ? '&id=' ~ id : '' }}">{{ __('Remove missing files') }}</a>
+            </div>
+            <div>
+                <a href="/downloads/recount{{ id ? '?id=' ~ id : '' }}">{{ __('Update counters') }}</a>
+            </div>
+            <a href="/downloads/scan-dir?yes">{{ __('Entire Downloads') }}</a>
+            <div class="mt-2">
+                <a href="{{ urls.downloads }}">{{ __('Downloads') }}</a>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

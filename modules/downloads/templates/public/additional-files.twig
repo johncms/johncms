@@ -1,0 +1,69 @@
+{#
+    Files attached to a file besides the main one: the current ones and the form that adds one more.
+
+    @var additional_files array  id, name, rus_name, display_date, display_size, edit_url, delete_url
+    @var action_url       string
+    @var file_url         string  The page of the file the attachments belong to.
+    @var extensions       string  Allowed extensions, joined into one line.
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    {% if additional_files %}
+        <div class="h4 fw-bold">{{ __('Current files') }}</div>
+        <div class="mt-3 mb-4">
+            {% for file in additional_files %}
+                <div class="border-bottom pb-3 mb-3">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="fw-bold mb-1">{{ file.rus_name }}</h5>
+                        <small class="text-muted">{{ file.display_date }}</small>
+                    </div>
+                    <p class="mb-1">{{ file.name }} ({{ file.display_size }})</p>
+                    <div>
+                        <a href="{{ file.edit_url }}" class="btn btn-primary btn-sm">{{ __('Edit') }}</a>
+                        <a href="{{ file.delete_url }}" class="btn btn-danger btn-sm">{{ __('Delete') }}</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <div class="h4 fw-bold">{{ __('Add file') }}</div>
+    <form name="file_upload_form" action="{{ action_url }}" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="fail" name="fail" aria-describedby="file_label">
+                <label class="custom-file-label" for="fail">{{ __('Choose file') }}</label>
+            </div>
+            <div class="text-muted mb-3 small">
+                {{ __('Max. Size') }}: {{ config('johncms.flsz') }} kb.
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="link_file">{{ __('Or link to it') }}</label>
+            <input type="text" class="form-control" id="link_file" placeholder="{{ __('Link to file') }}"
+                   name="link_file" value="">
+        </div>
+        <div class="form-group">
+            <label for="new_file">{{ __('Save as') }}</label>
+            <input type="text" class="form-control" id="new_file" placeholder="{{ __('Save as') }}"
+                   name="new_file" value="" maxlength="100">
+            <div class="text-muted small">{{ __('max. 100 characters') }}</div>
+        </div>
+
+        <div class="form-group">
+            <label for="name_link">{{ __('Link to download file') }}</label>
+            <input type="text" class="form-control" id="name_link" placeholder="{{ __('Link to download file') }}"
+                   name="name_link" value="{{ __('Download the additional file') }}" maxlength="200" required>
+        </div>
+
+        <div class="alert alert-warning mt-3">
+            {{ __('Allowed extensions') }}: {{ extensions }}
+        </div>
+
+        <div>
+            <button type="submit" name="submit" value="1" class="btn btn-primary">{{ __('Save') }}</button>
+            <a href="{{ file_url }}" class="btn btn-secondary">{{ __('Cancel') }}</a>
+        </div>
+    </form>
+{% endblock %}

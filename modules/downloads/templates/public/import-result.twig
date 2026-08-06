@@ -1,0 +1,27 @@
+{#
+    What came out of importing a file: whether the screenshot made it and where to go next.
+
+    @var id                    int    Category the file went into.
+    @var urls                  array  view_file_url, category_url
+    @var screen_attached       bool   Null when no screenshot was sent at all.
+    @var screen_attached_error string Message of the image library, when there is one.
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    <div class="alert alert-success">
+        <div>{{ __('File attached') }}</div>
+        {% if screen_attached is same as(true) %}
+            <div>{{ __('Screenshot is attached') }}</div>
+        {% elseif screen_attached is same as(false) %}
+            <div>{{ __('Screenshot not attached') }} {{ screen_attached_error }}</div>
+        {% endif %}
+    </div>
+    <div class="mb-3">
+        <a href="{{ urls.view_file_url }}" class="btn btn-outline-primary btn-sm">{{ __('Continue') }}</a>
+    </div>
+    <div>
+        <a href="/downloads/import/{{ id }}/" class="btn btn-primary">{{ __('Import more') }}</a>
+        <a href="{{ urls.category_url }}" class="btn btn-secondary">{{ __('Back') }}</a>
+    </div>
+{% endblock %}

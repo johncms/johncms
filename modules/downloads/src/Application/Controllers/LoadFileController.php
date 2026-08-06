@@ -9,7 +9,7 @@ use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\Modules\Downloads\Domain\Models\DownloadMoreFile;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,14 +18,13 @@ final readonly class LoadFileController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private Session $session,
         private User $currentUser,
     ) {
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(Request $request, int $id): Response
+    public function __invoke(Request $request, int $id): RedirectResponse|ViewResponse
     {
         $file = DownloadFile::query()
             ->where('id', $id)
@@ -65,19 +64,17 @@ final readonly class LoadFileController
         return new RedirectResponse($link);
     }
 
-    private function notFound(): Response
+    private function notFound(): ViewResponse
     {
-        return new Response(
-            $this->render->render(
-                'system::pages/result',
-                [
-                    'title'         => __('File not found'),
-                    'type'          => 'alert-danger',
-                    'message'       => __('File not found'),
-                    'back_url'      => '/downloads/',
-                    'back_url_name' => __('Downloads'),
-                ]
-            ),
+        return new ViewResponse(
+            '@theme/pages/result.twig',
+            [
+                'title'         => __('File not found'),
+                'type'          => 'alert-danger',
+                'message'       => __('File not found'),
+                'back_url'      => '/downloads/',
+                'back_url_name' => __('Downloads'),
+            ],
             Response::HTTP_NOT_FOUND
         );
     }

@@ -1,0 +1,163 @@
+{#
+    The page of one file: the gallery, the description, the download links and the actions.
+
+    @var id               int
+    @var file_url         string       The page itself, the voting and the bookmarks link back to it.
+    @var file             array        Attributes of the file plus what the controller has built.
+    @var in_bookmarks     bool
+    @var urls             array        downloads, back
+    @var can_manage       bool         The visitor may edit, move and delete the file.
+    @var comments_enabled bool
+    @var downloads_open   bool         Downloads are closed for everyone but the staff.
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    {% if not downloads_open %}
+        <div class="alert alert-danger border-0 shadow">
+            {{ __('Downloads are closed') }}
+        </div>
+    {% endif %}
+
+    {% if file.vote_accepted %}
+        <div class="row">
+            <div class="col-md-6">
+                <div class="alert alert-success border-0 shadow">
+                    {{ __('Vote accepted') }}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if file.screenshots %}
+        <div class="{{ file.screenshots|length > 1 ? 'screenshots' : '' }} border-bottom mb-2 pb-3 swiper">
+            <div class="swiper-wrapper image-gallery">
+                {% for number, screenshot in file.screenshots %}
+                    <div class="swiper-slide {{ file.screenshots|length < 2 ? 'text-start' : '' }}">
+                        <a href="{{ screenshot.url }}"
+                           title="{{ __('Screenshot:') }} {{ number + 1 }}"
+                           data-source="{{ screenshot.url }}"
+                           class="gallery-item">
+                            <img src="{{ screenshot.preview }}" alt=".">
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    {% endif %}
+
+    {% if file.file_type == 'audio' %}
+        <div class="row">
+            <div class="col-xl-8">
+                <audio src="{{ file.main_file.source_url }}" controls></audio>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if file.file_type == 'video' %}
+        <div class="row">
+            <div class="col-xl-8">
+                <div class="ratio ratio-16x9">
+                    <video src="{{ file.main_file.source_url }}" controls></video>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if file.description %}
+        <div class="border-bottom pb-2">
+            {{ file.description }}
+        </div>
+    {% endif %}
+
+    {% if file.file_properties %}
+        <div class="mt-2 mb-3 border-bottom pb-2">
+            {% for property in file.file_properties %}
+                <div>{{ property.name }}: {{ property.value }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <div class="text-muted mt-2 mb-3 border-bottom pb-2">
+        <div>{{ __('File name:') }} {{ file.name }}</div>
+        <div>{{ __('Uploaded by:') }} {{ file.upload_user.name }}</div>
+        <div>{{ __('Downloads:') }} {{ file.field }}</div>
+        <div>{{ __('Rating:') }}
+            {% if file.can_vote %}
+                <a href="{{ file_url }}?plus" class="btn btn-sm btn-like">
+                    <svg class="icon download-button-icon me-1 mt-n1">
+                        <use xlink:href="{{ asset('icons/sprite.svg') }}#like"/>
+                    </svg>
+                </a>
+            {% endif %}
+            <span>{{ file.rate|join(' / ') }}</span>
+            {% if file.can_vote %}
+                <a href="{{ file_url }}?minus" class="btn btn-sm btn-dislike">
+                    <svg class="icon download-button-icon me-1 mt-n1">
+                        <use xlink:href="{{ asset('icons/sprite.svg') }}#dislike"/>
+                    </svg>
+                </a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="mb-1">
+        <svg class="icon download-button-icon me-1 mt-n1">
+            <use xlink:href="{{ asset('icons/sprite.svg') }}#download"/>
+        </svg>
+        <a href="{{ file.main_file.url }}">{{ file.main_file.name }}</a> ({{ file.main_file.size }})
+    </div>
+    {% for additional_file in file.additional_files %}
+        <div class="mb-1">
+            <svg class="icon download-button-icon me-1 mt-n1">
+                <use xlink:href="{{ asset('icons/sprite.svg') }}#download"/>
+            </svg>
+            <a href="{{ additional_file.url }}">{{ additional_file.name }}</a> ({{ additional_file.size }})
+        </div>
+    {% endfor %}
+    <div class="border-bottom mt-3"></div>
+    {% if comments_enabled %}
+        <div class="mt-3">
+            <svg class="icon download-button-icon me-1">
+                <use xlink:href="{{ asset('icons/sprite.svg') }}#forum"/>
+            </svg>
+            <a href="/downloads/comments/{{ id }}">{{ __('Comments') }}</a> ({{ file.comm_count }})
+        </div>
+    {% endif %}
+    <div class="mt-4">
+        {% if can_manage %}
+            <div class="btn-group">
+                <div class="dropdown">
+                    <button class="btn btn-danger dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ __('Actions') }}
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="/downloads/edit-file/{{ id }}/">{{ __('Edit File') }}</a>
+                        <a class="dropdown-item" href="/downloads/edit-screen/{{ id }}/">{{ __('Managing Screenshots') }}</a>
+                        <a class="dropdown-item" href="/downloads/additional-files/{{ id }}/">{{ __('Additional Files') }}</a>
+                        <a class="dropdown-item" href="/downloads/delete-file/{{ id }}/">{{ __('Delete File') }}</a>
+                        <a class="dropdown-item" href="/downloads/move-file/{{ id }}/">{{ __('Move File') }}</a>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        {% if app.user.isValid %}
+            <div class="mt-3">
+                {% if in_bookmarks %}
+                    <a href="{{ file_url }}?delBookmark">{{ __('Remove from Favorites') }}</a>
+                {% else %}
+                    <a href="{{ file_url }}?addBookmark">{{ __('Add to Favorites') }}</a>
+                {% endif %}
+            </div>
+        {% endif %}
+
+        <div class="mt-2">
+            <div>
+                <a href="{{ urls.back }}">{{ __('Back') }}</a>
+            </div>
+            <div>
+                <a href="{{ urls.downloads }}">{{ __('Downloads') }}</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

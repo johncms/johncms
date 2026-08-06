@@ -15,8 +15,9 @@ use Johncms\Modules\Downloads\Domain\Models\DownloadCategory;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Users\User;
+use Twig\Markup;
 
 final readonly class FilesUploadController
 {
@@ -29,7 +30,6 @@ final readonly class FilesUploadController
 
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private User $currentUser,
         private ImageManager $imageManager,
@@ -40,7 +40,7 @@ final readonly class FilesUploadController
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(Request $request, int $id): string
+    public function __invoke(Request $request, int $id): ViewResponse
     {
         $category = DownloadCategory::query()->find($id);
 
@@ -60,24 +60,21 @@ final readonly class FilesUploadController
             : self::DEFAULT_EXTENSIONS;
 
         $this->navChain->add(__('Downloads'), '/downloads/');
-        $this->render->addData([
-            'title'      => __('Upload File'),
-            'page_title' => __('Upload File'),
-        ]);
 
         if ($request->getMethod() === 'POST') {
             return $this->handleUpload($request, $id, $category->dir, $allowedExtensions, $isAdmin);
         }
 
-        return $this->render->render('downloads::file_upload', [
-            'id'         => $id,
+        return new ViewResponse('@downloads/public/upload.twig', [
+            'title'      => __('Upload File'),
+            'page_title' => __('Upload File'),
             'action_url' => '/downloads/upload/' . $id . '/',
             'cancel_url' => $this->categoryPathService->getCategoryUrl($category),
             'extensions' => implode(', ', $allowedExtensions),
         ]);
     }
 
-    private function handleUpload(Request $request, int $id, string $categoryDir, array $allowedExtensions, bool $isAdmin): string
+    private function handleUpload(Request $request, int $id, string $categoryDir, array $allowedExtensions, bool $isAdmin): ViewResponse
     {
         $uploadedFiles = $request->files->all();
         $uploadUrl = '/downloads/upload/' . $id . '/';
@@ -102,7 +99,7 @@ final readonly class FilesUploadController
 
         $fname = $fileInfo->getCleanName();
         $displayName = isset($post['text']) ? trim($post['text']) : null;
-        $linkText = isset($post['name_link']) ? htmlspecialchars(mb_substr($post['name_link'], 0, 200)) : null;
+        $linkText = isset($post['name_link']) ? mb_substr($post['name_link'], 0, 200) : null;
         $description = isset($post['opis']) ? trim($post['opis']) : null;
 
         if (empty($displayName)) {
@@ -120,11 +117,14 @@ final readonly class FilesUploadController
         }
 
         if (! in_array($ext, $allowedExtensions, true)) {
-            $errors[] = __('Prohibited file type!<br>To upload allowed files that have the following extensions') . ': ' . implode(', ', $allowedExtensions);
+            $errors[] = new Markup(
+                __('Prohibited file type!<br>To upload allowed files that have the following extensions') . ': ' . implode(', ', $allowedExtensions),
+                'UTF-8'
+            );
         }
 
         if ($errors) {
-            return $this->render->render('system::pages/result', [
+            return new ViewResponse('@theme/pages/result.twig', [
                 'title'         => __('Upload file'),
                 'type'          => 'alert-danger',
                 'message'       => $errors,
@@ -200,7 +200,9 @@ final readonly class FilesUploadController
             ? $this->categoryPathService->getCategoryUrl($category)
             : '/downloads/';
 
-        return $this->render->render('downloads::file_upload_result', [
+        return new ViewResponse('@downloads/public/upload-result.twig', [
+            'title'                 => __('Upload File'),
+            'page_title'            => __('Upload File'),
             'id'                    => $id,
             'urls'                  => ['view_file_url' => $viewFileUrl, 'category_url' => $categoryUrl],
             'moderation'            => $moderation,
@@ -227,9 +229,9 @@ final readonly class FilesUploadController
         }
     }
 
-    private function error(string $message, string $backUrl, ?string $backLabel = null): string
+    private function error(string $message, string $backUrl, ?string $backLabel = null): ViewResponse
     {
-        return $this->render->render('system::pages/result', [
+        return new ViewResponse('@theme/pages/result.twig', [
             'title'         => __('Upload file'),
             'type'          => 'alert-danger',
             'message'       => $message,

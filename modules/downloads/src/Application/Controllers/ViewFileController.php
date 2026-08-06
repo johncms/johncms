@@ -19,14 +19,13 @@ use Johncms\Modules\Downloads\Application\UseCases\VoteOnFileUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\Response;
 
 final readonly class ViewFileController
 {
     public function __construct(
-        private Render $render,
         private NavChain $navChain,
         private User $currentUser,
         private Session $session,
@@ -41,7 +40,7 @@ final readonly class ViewFileController
     ) {
     }
 
-    public function __invoke(Request $request, string $filePath): Response
+    public function __invoke(Request $request, string $filePath): ViewResponse
     {
         $parsed = $this->filePathService->parseFilePath('/downloads/' . ltrim($filePath, '/'));
         if ($parsed === null) {
@@ -53,19 +52,7 @@ final readonly class ViewFileController
         try {
             $result = $this->viewFileUseCase->execute($id);
         } catch (FileNotFoundException) {
-            return new Response(
-                $this->render->render(
-                    'system::pages/result',
-                    [
-                        'title'         => __('File not found'),
-                        'type'          => 'alert-danger',
-                        'message'       => __('File not found'),
-                        'back_url'      => '/downloads/',
-                        'back_url_name' => __('Downloads'),
-                    ]
-                ),
-                Response::HTTP_NOT_FOUND
-            );
+            return $this->fileNotFound();
         }
 
         $file = $result->file;
@@ -89,33 +76,19 @@ final readonly class ViewFileController
         }
 
         if (! is_file($file->dir . '/' . $file->name)) {
-            return new Response(
-                $this->render->render(
-                    'system::pages/result',
-                    [
-                        'title'         => __('File not found'),
-                        'type'          => 'alert-danger',
-                        'message'       => __('File not found'),
-                        'back_url'      => '/downloads/',
-                        'back_url_name' => __('Downloads'),
-                    ]
-                ),
-                Response::HTTP_NOT_FOUND
-            );
+            return $this->fileNotFound();
         }
 
         if ($file->type === 3 && $this->currentUser->rights < 6 && $this->currentUser->rights !== 4) {
-            return new Response(
-                $this->render->render(
-                    'system::pages/result',
-                    [
-                        'title'         => __('The file is awaiting moderation'),
-                        'type'          => 'alert-danger',
-                        'message'       => __('The file is awaiting moderation'),
-                        'back_url'      => '/downloads/',
-                        'back_url_name' => __('Downloads'),
-                    ]
-                ),
+            return new ViewResponse(
+                '@theme/pages/result.twig',
+                [
+                    'title'         => __('The file is awaiting moderation'),
+                    'type'          => 'alert-danger',
+                    'message'       => __('The file is awaiting moderation'),
+                    'back_url'      => '/downloads/',
+                    'back_url_name' => __('Downloads'),
+                ],
                 Response::HTTP_FORBIDDEN
             );
         }
@@ -193,31 +166,47 @@ final readonly class ViewFileController
             );
         }
 
-        $pageTitle = htmlspecialchars($file->rus_name);
+        $pageTitle = $file->rus_name;
         $meta = new PageMeta($pageTitle . ' — ' . __('Downloads'), 1);
-        $this->render->addData([
-            'title'       => $meta->title,
-            'page_title'  => $pageTitle,
-            'description' => $meta->description,
-        ]);
 
-        $fileUrl = $this->filePathService->getFileUrl($file);
+        $config = config('johncms');
 
-        return new Response($this->render->render(
-            'downloads::view',
+        return new ViewResponse(
+            '@downloads/public/view.twig',
             [
-                'id'           => $id,
-                'file_url'     => $fileUrl,
-                'file'         => $fileData,
-                'in_bookmarks' => $inBookmarks,
-                'urls'         => [
+                'title'            => $meta->title,
+                'page_title'       => $pageTitle,
+                'description'      => $meta->description,
+                'id'               => $id,
+                'file_url'         => $this->filePathService->getFileUrl($file),
+                'file'             => $fileData,
+                'in_bookmarks'     => (bool) $inBookmarks,
+                'urls'             => [
                     'downloads' => '/downloads/',
                     'back'      => $file->category !== null
                         ? $this->categoryPathService->getCategoryUrl($file->category)
                         : '/downloads/',
                 ],
+                'can_manage'       => $this->currentUser->rights === 4 || $this->currentUser->rights >= 6,
+                'comments_enabled' => ! empty($config['mod_down_comm']) || $this->currentUser->rights >= 7,
+                'downloads_open'   => (bool) $config['mod_down'],
             ]
-        ));
+        );
+    }
+
+    private function fileNotFound(): ViewResponse
+    {
+        return new ViewResponse(
+            '@theme/pages/result.twig',
+            [
+                'title'         => __('File not found'),
+                'type'          => 'alert-danger',
+                'message'       => __('File not found'),
+                'back_url'      => '/downloads/',
+                'back_url_name' => __('Downloads'),
+            ],
+            Response::HTTP_NOT_FOUND
+        );
     }
 
     private function buildCategoryNavChain(DownloadCategory $category): void
@@ -233,9 +222,9 @@ final readonly class ViewFileController
             $current = $parent;
         }
         foreach (array_reverse($ancestors) as $ancestor) {
-            $this->navChain->add(htmlspecialchars($ancestor->rus_name), $this->categoryPathService->getCategoryUrl($ancestor));
+            $this->navChain->add($ancestor->rus_name, $this->categoryPathService->getCategoryUrl($ancestor));
         }
-        $this->navChain->add(htmlspecialchars($category->rus_name), $this->categoryPathService->getCategoryUrl($category));
+        $this->navChain->add($category->rus_name, $this->categoryPathService->getCategoryUrl($category));
     }
 
     private function buildDownloadLink(

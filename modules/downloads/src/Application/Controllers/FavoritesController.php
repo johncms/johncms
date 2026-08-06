@@ -10,8 +10,8 @@ use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Downloads\Application\UseCases\ViewFavoritesUseCase;
+use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
-use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -19,7 +19,6 @@ final readonly class FavoritesController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private User $currentUser,
         private ViewFavoritesUseCase $useCase,
@@ -30,18 +29,16 @@ final readonly class FavoritesController
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(): Response
+    public function __invoke(): ViewResponse
     {
         if (! $this->currentUser->isValid()) {
-            return new Response(
-                $this->render->render(
-                    'system::pages/result',
-                    [
-                        'title'   => __('Downloads'),
-                        'type'    => 'alert-danger',
-                        'message' => __('For registered users only'),
-                    ]
-                ),
+            return new ViewResponse(
+                '@theme/pages/result.twig',
+                [
+                    'title'   => __('Downloads'),
+                    'type'    => 'alert-danger',
+                    'message' => __('For registered users only'),
+                ],
                 Response::HTTP_FORBIDDEN
             );
         }
@@ -67,20 +64,18 @@ final readonly class FavoritesController
         $this->navChain->add($pageTitle);
 
         $meta = new PageMeta($documentTitle, $pagination->getCurrentPage());
-        $this->render->addData([
-            'title'       => $meta->title,
-            'page_title'  => $pageTitle,
-            'description' => $meta->description,
-        ]);
 
-        return new Response($this->render->render(
-            'downloads::bookmarks',
+        return new ViewResponse(
+            '@downloads/public/favorites.twig',
             [
+                'title'       => $meta->title,
+                'page_title'  => $pageTitle,
+                'description' => $meta->description,
                 'files'       => $files,
                 'total_files' => $pagination->getTotal(),
-                'pagination'  => $pagination->render(),
+                'pagination'  => $pagination->hasPages() ? $pagination->render() : null,
                 'urls'        => ['downloads' => '/downloads/'],
             ]
-        ));
+        );
     }
 }

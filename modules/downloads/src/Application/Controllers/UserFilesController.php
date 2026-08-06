@@ -11,8 +11,8 @@ use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Downloads\Application\Exceptions\UserNotFoundException;
 use Johncms\Modules\Downloads\Application\UseCases\ViewUserFilesUseCase;
+use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
-use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -20,7 +20,6 @@ final readonly class UserFilesController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private User $currentUser,
         private ViewUserFilesUseCase $useCase,
@@ -31,7 +30,7 @@ final readonly class UserFilesController
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(int $id): Response
+    public function __invoke(int $id): ViewResponse
     {
         try {
             $pagination = $this->paginationFactory->create($this->useCase->count($id));
@@ -43,17 +42,15 @@ final readonly class UserFilesController
 
             $result = $this->useCase->getPage($id, $pagination->getPerPage(), $pagination->getOffset());
         } catch (UserNotFoundException) {
-            return new Response(
-                $this->render->render(
-                    'system::pages/result',
-                    [
-                        'title'         => __('Downloads'),
-                        'type'          => 'alert-danger',
-                        'message'       => __('User does not exists'),
-                        'back_url'      => '/downloads/',
-                        'back_url_name' => __('Downloads'),
-                    ]
-                ),
+            return new ViewResponse(
+                '@theme/pages/result.twig',
+                [
+                    'title'         => __('Downloads'),
+                    'type'          => 'alert-danger',
+                    'message'       => __('User does not exists'),
+                    'back_url'      => '/downloads/',
+                    'back_url_name' => __('Downloads'),
+                ],
                 Response::HTTP_NOT_FOUND
             );
         }
@@ -86,21 +83,19 @@ final readonly class UserFilesController
         $this->navChain->add($pageTitle);
 
         $meta = new PageMeta($documentTitle, $pagination->getCurrentPage());
-        $this->render->addData([
-            'title'       => $meta->title,
-            'page_title'  => $pageTitle,
-            'description' => $meta->description,
-        ]);
 
-        return new Response($this->render->render(
-            'downloads::files_user',
+        return new ViewResponse(
+            '@downloads/public/user-files.twig',
             [
-                'show_user'  => $showUser,
-                'files'      => $files,
-                'total'      => $pagination->getTotal(),
-                'pagination' => $pagination->render(),
-                'urls'       => ['downloads' => '/downloads/'],
+                'title'       => $meta->title,
+                'page_title'  => $pageTitle,
+                'description' => $meta->description,
+                'show_user'   => $showUser,
+                'files'       => $files,
+                'total'       => $pagination->getTotal(),
+                'pagination'  => $pagination->hasPages() ? $pagination->render() : null,
+                'urls'        => ['downloads' => '/downloads/'],
             ]
-        ));
+        );
     }
 }

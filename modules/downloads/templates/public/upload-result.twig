@@ -1,0 +1,36 @@
+{#
+    What came out of uploading a file: whether the screenshot made it and where to go next.
+
+    @var id                    int    Category the file went into.
+    @var urls                  array  view_file_url, category_url
+    @var moderation            bool   The file is waiting to be accepted, so there is nothing to open yet.
+    @var screen_attached       bool   Null when no screenshot was sent at all.
+    @var screen_attached_error string Message of the image library, when there is one.
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    <div class="alert alert-success">
+        <div>{{ __('File attached') }}</div>
+        {% if screen_attached is same as(true) %}
+            <div>{{ __('Screenshot is attached') }}</div>
+        {% elseif screen_attached is same as(false) %}
+            <div>{{ __('Screenshot not attached') }} {{ screen_attached_error }}</div>
+        {% endif %}
+    </div>
+
+    {% if moderation %}
+        <div class="alert alert-info">
+            {{ __('If you pass moderation, it will be added to the Downloads') }}
+        </div>
+    {% else %}
+        <div class="mb-3">
+            <a href="{{ urls.view_file_url }}" class="btn btn-outline-primary btn-sm">{{ __('Continue') }}</a>
+        </div>
+    {% endif %}
+
+    <div>
+        <a href="/downloads/upload/{{ id }}/" class="btn btn-primary">{{ __('Upload more') }}</a>
+        <a href="{{ urls.category_url }}" class="btn btn-secondary">{{ __('Cancel') }}</a>
+    </div>
+{% endblock %}

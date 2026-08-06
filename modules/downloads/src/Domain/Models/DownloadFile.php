@@ -10,6 +10,7 @@ use Johncms\Media\MediaEmbed;
 use Johncms\Security\HTMLPurifier;
 use Johncms\Smilies\SmiliesRendererInterface;
 use Simba77\EmbedMedia\Embed;
+use Twig\Markup;
 
 final class DownloadFile extends Model
 {
@@ -47,10 +48,15 @@ final class DownloadFile extends Model
         return $this->belongsTo(DownloadCategory::class, 'refid');
     }
 
-    public function getAboutHtmlAttribute(): string
+    /**
+     * The description of the file, sanitized and with the media and the smilies rendered: markup
+     * by contract, null when there is nothing to show.
+     */
+    public function getAboutHtmlAttribute(): ?Markup
     {
         $text = $this->purifier->purify((string) $this->about);
-        $text = $this->media->embedMedia($text);
-        return $this->smiliesRenderer->render($text);
+        $text = $this->smiliesRenderer->render($this->media->embedMedia($text));
+
+        return $text === '' ? null : new Markup($text, 'UTF-8');
     }
 }

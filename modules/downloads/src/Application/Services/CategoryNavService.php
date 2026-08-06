@@ -36,7 +36,7 @@ final class CategoryNavService
             ->whereIn('dir', $dirs)
             ->orderBy('id')
             ->each(function (DownloadCategory $cat): void {
-                $this->navChain->add(htmlspecialchars($cat->rus_name), $this->categoryPathService->getCategoryUrl($cat));
+                $this->navChain->add($cat->rus_name, $this->categoryPathService->getCategoryUrl($cat));
             });
     }
 }

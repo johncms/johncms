@@ -9,15 +9,14 @@ use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Downloads\Application\FilePresenter;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
+use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
 
 final readonly class FilesModerationController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private FilePresenter $filePresenter,
         private PaginationFactory $paginationFactory,
@@ -26,15 +25,10 @@ final readonly class FilesModerationController
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(Request $request): string
+    public function __invoke(Request $request): ViewResponse
     {
         $this->navChain->add(__('Downloads'), '/downloads/');
         $this->navChain->add(__('Files awaiting moderation'));
-
-        $this->render->addData([
-            'title'      => __('Files awaiting moderation'),
-            'page_title' => __('Files awaiting moderation'),
-        ]);
 
         $acceptId = $request->queryInt('accept', 0);
         if ($acceptId) {
@@ -51,11 +45,11 @@ final readonly class FilesModerationController
         return $this->showList();
     }
 
-    private function handleAcceptOne(int $id): string
+    private function handleAcceptOne(int $id): ViewResponse
     {
         DownloadFile::query()->where('id', $id)->where('type', 3)->update(['type' => 2]);
 
-        return $this->render->render('system::pages/result', [
+        return new ViewResponse('@theme/pages/result.twig', [
             'title'         => __('Files awaiting moderation'),
             'type'          => 'alert-success',
             'message'       => __('File accepted'),
@@ -64,11 +58,11 @@ final readonly class FilesModerationController
         ]);
     }
 
-    private function handleAcceptAll(): string
+    private function handleAcceptAll(): ViewResponse
     {
         DownloadFile::query()->where('type', 3)->update(['type' => 2]);
 
-        return $this->render->render('system::pages/result', [
+        return new ViewResponse('@theme/pages/result.twig', [
             'title'         => __('Files awaiting moderation'),
             'type'          => 'alert-success',
             'message'       => __('All files accepted'),
@@ -77,7 +71,7 @@ final readonly class FilesModerationController
         ]);
     }
 
-    private function showList(): string
+    private function showList(): ViewResponse
     {
         $total = DownloadFile::query()->where('type', 3)->count();
 
@@ -105,10 +99,12 @@ final readonly class FilesModerationController
             }
         }
 
-        return $this->render->render('downloads::files_moderation', [
+        return new ViewResponse('@downloads/public/moderation.twig', [
+            'title'      => __('Files awaiting moderation'),
+            'page_title' => __('Files awaiting moderation'),
             'files'      => $files,
             'total'      => $total,
-            'pagination' => $pagination->render(),
+            'pagination' => $pagination->hasPages() ? $pagination->render() : null,
             'urls'       => ['downloads' => '/downloads/'],
         ]);
     }

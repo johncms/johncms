@@ -48,7 +48,6 @@ final class FilePresenter
         $data = $file->toArray();
         $data['icon'] = $this->assets->url('images/old/system/' . $iconId . '.png');
         $data['detail_url'] = $this->filePathService->getFileUrl($file);
-        $data['filtered_name'] = htmlspecialchars($file->rus_name);
         $data['is_new'] = $file->time > $old;
 
         $data['rating'] = [];
@@ -61,7 +60,7 @@ final class FilePresenter
         $data['preview_text'] = '';
         if ($file->about) {
             $about = html_entity_decode(strip_tags((string) $file->about));
-            $data['preview_text'] = htmlentities(mb_strimwidth($about, 0, 94, '...'));
+            $data['preview_text'] = mb_strimwidth($about, 0, 94, '...');
         }
 
         $data['comments_url'] = '';

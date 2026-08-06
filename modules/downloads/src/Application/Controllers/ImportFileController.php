@@ -12,9 +12,10 @@ use Johncms\Modules\Downloads\Application\Services\DownloadFilePathService;
 use Johncms\Modules\Downloads\Domain\Models\DownloadCategory;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\Response;
+use Twig\Markup;
 
 final readonly class ImportFileController
 {
@@ -27,7 +28,6 @@ final readonly class ImportFileController
 
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private User $currentUser,
         private ImageManager $imageManager,
         private DownloadFilePathService $filePathService,
@@ -36,42 +36,38 @@ final readonly class ImportFileController
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(Request $request, int $id): Response
+    public function __invoke(Request $request, int $id): ViewResponse
     {
         $category = DownloadCategory::query()->find($id);
 
         if ($category === null || ! is_dir($category->dir)) {
-            return new Response($this->render->render('system::pages/result', [
+            return new ViewResponse('@theme/pages/result.twig', [
                 'title'         => __('Error'),
                 'type'          => 'alert-danger',
                 'message'       => __('The directory does not exist'),
                 'back_url'      => '/downloads/',
                 'back_url_name' => __('Downloads'),
-            ]), Response::HTTP_NOT_FOUND);
+            ], Response::HTTP_NOT_FOUND);
         }
 
         $allowedExtensions = $category->field ? explode(', ', $category->text) : self::DEFAULT_EXTENSIONS;
 
         $baseUrl = '/downloads/import/' . $id . '/';
 
-        $this->render->addData([
-            'title'      => __('File import'),
-            'page_title' => __('File import'),
-        ]);
-
         if ($request->getMethod() === 'POST') {
             return $this->handleImport($request, $id, $category, $allowedExtensions, $baseUrl);
         }
 
-        return new Response($this->render->render('downloads::import', [
-            'id'         => $id,
+        return new ViewResponse('@downloads/public/import.twig', [
+            'title'      => __('File import'),
+            'page_title' => __('File import'),
             'action_url' => $baseUrl,
             'cancel_url' => $this->categoryPathService->getCategoryUrl($category),
             'extensions' => implode(', ', $allowedExtensions),
-        ]));
+        ]);
     }
 
-    private function handleImport(Request $request, int $id, DownloadCategory $category, array $allowedExtensions, string $baseUrl): Response
+    private function handleImport(Request $request, int $id, DownloadCategory $category, array $allowedExtensions, string $baseUrl): ViewResponse
     {
         $post = $request->request->all();
         $errors = [];
@@ -95,7 +91,7 @@ final readonly class ImportFileController
         $filename = basename((string) parse_url($url, PHP_URL_PATH));
         $customFilename = isset($post['filename']) ? trim($post['filename']) : null;
         $displayName = isset($post['text']) ? trim($post['text']) : null;
-        $linkText = isset($post['link_text']) ? htmlspecialchars(mb_substr($post['link_text'], 0, 200)) : null;
+        $linkText = isset($post['link_text']) ? mb_substr($post['link_text'], 0, 200) : null;
         $description = isset($post['description']) ? trim($post['description']) : null;
 
         $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
@@ -113,7 +109,10 @@ final readonly class ImportFileController
         }
 
         if (! in_array($extension, $allowedExtensions, true)) {
-            $errors[] = __('Prohibited file type!<br>To upload allowed files that have the following extensions') . ': ' . implode(', ', $allowedExtensions);
+            $errors[] = new Markup(
+                __('Prohibited file type!<br>To upload allowed files that have the following extensions') . ': ' . implode(', ', $allowedExtensions),
+                'UTF-8'
+            );
         }
 
         if (strlen($filename) > 100) {
@@ -133,13 +132,13 @@ final readonly class ImportFileController
         }
 
         if (! copy($url, $category->dir . '/' . $filename)) {
-            return new Response($this->render->render('system::pages/result', [
+            return new ViewResponse('@theme/pages/result.twig', [
                 'title'         => __('File import'),
                 'type'          => 'alert-danger',
                 'message'       => __('File not attached'),
                 'back_url'      => $baseUrl,
                 'back_url_name' => __('Repeat'),
-            ]));
+            ]);
         }
 
         $file = DownloadFile::query()->create([
@@ -180,7 +179,9 @@ final readonly class ImportFileController
 
         $this->incrementCategoryCounters($id);
 
-        return new Response($this->render->render('downloads::file_import_result', [
+        return new ViewResponse('@downloads/public/import-result.twig', [
+            'title'                 => __('File import'),
+            'page_title'            => __('File import'),
             'id'                    => $id,
             'urls'                  => [
                 'view_file_url' => $this->filePathService->getFileUrl($file),
@@ -188,7 +189,7 @@ final readonly class ImportFileController
             ],
             'screen_attached'       => $screenAttached,
             'screen_attached_error' => $screenError,
-        ]));
+        ]);
     }
 
     private function incrementCategoryCounters(int $categoryId): void
@@ -209,14 +210,14 @@ final readonly class ImportFileController
         }
     }
 
-    private function renderErrors(array $errors, string $backUrl): Response
+    private function renderErrors(array $errors, string $backUrl): ViewResponse
     {
-        return new Response($this->render->render('system::pages/result', [
+        return new ViewResponse('@theme/pages/result.twig', [
             'title'         => __('File import'),
             'type'          => 'alert-danger',
             'message'       => $errors,
             'back_url'      => $backUrl,
             'back_url_name' => __('Repeat'),
-        ]));
+        ]);
     }
 }

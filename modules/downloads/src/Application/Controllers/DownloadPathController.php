@@ -8,7 +8,7 @@ use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\Request;
 use Johncms\Modules\Downloads\Application\Services\DownloadCategoryPathService;
 use Johncms\Modules\Downloads\Application\Services\DownloadFilePathService;
-use Symfony\Component\HttpFoundation\Response;
+use Johncms\Http\View\ViewResponse;
 
 final readonly class DownloadPathController
 {
@@ -22,10 +22,10 @@ final readonly class DownloadPathController
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(Request $request, string $categoryPath): Response
+    public function __invoke(Request $request, string $categoryPath): ViewResponse
     {
         if ($this->categoryPathService->findCategoryByPath($categoryPath) !== null) {
-            return new Response($this->categoryController->__invoke($request, $categoryPath));
+            return $this->categoryController->__invoke($request, $categoryPath);
         }
 
         if ($this->filePathService->parseFilePath('/downloads/' . ltrim($categoryPath, '/')) !== null) {

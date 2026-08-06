@@ -168,7 +168,6 @@ parameters:
 			count: 1
 			path: modules/admin/src/Infrastructure/Persistence/Repository/EloquentStaffRepository.php
 
-
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Album\\Domain\\Models\\Album\:\:\$photos_count\.$#'
 			identifier: property.notFound
@@ -358,7 +357,7 @@ parameters:
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$rus_name\.$#'
 			identifier: property.notFound
-			count: 3
+			count: 4
 			path: modules/downloads/src/Application/Controllers/AdditionalFilesController.php
 
 		-
@@ -410,6 +409,12 @@ parameters:
 			path: modules/downloads/src/Application/Controllers/AdditionalFilesController.php
 
 		-
+			message: '#^Parameter \#2 \$file of method Johncms\\Modules\\Downloads\\Application\\Controllers\\AdditionalFilesController\:\:showList\(\) expects Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile, stdClass given\.$#'
+			identifier: argument.type
+			count: 1
+			path: modules/downloads/src/Application/Controllers/AdditionalFilesController.php
+
+		-
 			message: '#^Parameter \#3 \$file of method Johncms\\Modules\\Downloads\\Application\\Controllers\\AdditionalFilesController\:\:handleDelete\(\) expects Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile, stdClass given\.$#'
 			identifier: argument.type
 			count: 1
@@ -423,12 +428,6 @@ parameters:
 
 		-
 			message: '#^Parameter \#3 \$file of method Johncms\\Modules\\Downloads\\Application\\Controllers\\AdditionalFilesController\:\:handleUpload\(\) expects Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile, stdClass given\.$#'
-			identifier: argument.type
-			count: 1
-			path: modules/downloads/src/Application/Controllers/AdditionalFilesController.php
-
-		-
-			message: '#^Parameter \#2 \$file of method Johncms\\Modules\\Downloads\\Application\\Controllers\\AdditionalFilesController\:\:showList\(\) expects Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile, stdClass given\.$#'
 			identifier: argument.type
 			count: 1
 			path: modules/downloads/src/Application/Controllers/AdditionalFilesController.php
@@ -778,7 +777,7 @@ parameters:
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$rus_name\.$#'
 			identifier: property.notFound
-			count: 1
+			count: 2
 			path: modules/downloads/src/Application/Controllers/MoveFileController.php
 
 		-
@@ -794,19 +793,25 @@ parameters:
 			path: modules/downloads/src/Application/Controllers/MoveFileController.php
 
 		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Database\\Eloquent\\Collection\<int,Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\>\:\:map\(\) contains unresolvable type\.$#'
+			identifier: argument.unresolvableType
+			count: 1
+			path: modules/downloads/src/Application/Controllers/MoveFileController.php
+
+		-
 			message: '#^Parameter \#1 \$file of method Johncms\\Modules\\Downloads\\Application\\Services\\DownloadFilePathService\:\:getFileUrl\(\) expects Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile, stdClass given\.$#'
 			identifier: argument.type
 			count: 1
 			path: modules/downloads/src/Application/Controllers/MoveFileController.php
 
 		-
-			message: '#^Parameter \#3 \$file of method Johncms\\Modules\\Downloads\\Application\\Controllers\\MoveFileController\:\:handleTransfer\(\) expects Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile, stdClass given\.$#'
+			message: '#^Parameter \#2 \$file of method Johncms\\Modules\\Downloads\\Application\\Controllers\\MoveFileController\:\:showBrowser\(\) expects Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile, stdClass given\.$#'
 			identifier: argument.type
 			count: 1
 			path: modules/downloads/src/Application/Controllers/MoveFileController.php
 
 		-
-			message: '#^Parameter \#2 \$file of method Johncms\\Modules\\Downloads\\Application\\Controllers\\MoveFileController\:\:showBrowser\(\) expects Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile, stdClass given\.$#'
+			message: '#^Parameter \#3 \$file of method Johncms\\Modules\\Downloads\\Application\\Controllers\\MoveFileController\:\:handleTransfer\(\) expects Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile, stdClass given\.$#'
 			identifier: argument.type
 			count: 1
 			path: modules/downloads/src/Application/Controllers/MoveFileController.php
@@ -999,12 +1004,6 @@ parameters:
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$rate\.$#'
-			identifier: property.notFound
-			count: 1
-			path: modules/downloads/src/Application/FilePresenter.php
-
-		-
-			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$rus_name\.$#'
 			identifier: property.notFound
 			count: 1
 			path: modules/downloads/src/Application/FilePresenter.php
@@ -2963,7 +2962,6 @@ parameters:
 			count: 1
 			path: system/src/Container/PSRContainerFactory.php
 
-
 		-
 			message: '#^Method Johncms\\Files\\File\:\:save\(\) should return Johncms\\Files\\Models\\File but returns Illuminate\\Database\\Eloquent\\Model\.$#'
 			identifier: return.type
@@ -2975,8 +2973,6 @@ parameters:
 			identifier: function.impossibleType
 			count: 1
 			path: system/src/Http/Middleware/TrimStringsMiddleware.php
-
-
 
 		-
 			message: '#^Method Johncms\\Mail\\EmailMessage\:\:scopeUnsent\(\) should return Illuminate\\Database\\Eloquent\\Builder but returns Illuminate\\Database\\Query\\Builder\.$#'

@@ -8,15 +8,14 @@ use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Downloads\Application\FilePresenter;
 use Johncms\Modules\Downloads\Application\UseCases\ViewTopFilesUseCase;
 use Johncms\Modules\Downloads\Domain\Enums\DownloadTopSort;
+use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
-use Johncms\System\View\Render;
 use Johncms\Users\User;
 
 final readonly class TopFilesController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private User $currentUser,
         private ViewTopFilesUseCase $useCase,
@@ -25,7 +24,7 @@ final readonly class TopFilesController
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(string $sort = 'popular'): string
+    public function __invoke(string $sort = 'popular'): ViewResponse
     {
         $downloadSort = $sort === 'popular' ? DownloadTopSort::Popular : DownloadTopSort::fromSlug($sort);
         $config = config('johncms');
@@ -47,20 +46,15 @@ final readonly class TopFilesController
         $this->navChain->add(__('Downloads'), '/downloads/');
         $this->navChain->add($pageTitle);
 
-        $this->render->addData(
+        return new ViewResponse(
+            '@downloads/public/top-files.twig',
             [
                 'title'       => $pageTitle . ' — ' . __('Downloads'),
                 'page_title'  => $pageTitle,
                 'description' => $pageTitle . ' — ' . __('Downloads'),
-            ]
-        );
-
-        return $this->render->render(
-            'downloads::top',
-            [
-                'files'   => $files,
-                'buttons' => $result->buttons,
-                'urls'    => ['downloads' => '/downloads/'],
+                'files'       => $files,
+                'buttons'     => $result->buttons,
+                'urls'        => ['downloads' => '/downloads/'],
             ]
         );
     }

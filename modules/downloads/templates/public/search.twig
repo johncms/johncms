@@ -1,0 +1,60 @@
+{#
+    The search form and its results.
+
+    @var files                 array        Presented files, see FilePresenter::present().
+    @var total                 int
+    @var pagination            \Twig\Markup Null when everything fits on one page.
+    @var search_query          string
+    @var search_in_description bool
+    @var show_empty_info       bool         False until something has been searched for.
+    @var urls                  array        downloads
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    <form action="/downloads/search/" method="get" class="mb-3">
+        <div class="form-group">
+            <label for="search_query">{{ __('Search query') }}</label>
+            <input type="text" class="form-control" id="search_query" placeholder="{{ __('Search query') }}"
+                   name="search" value="{{ search_query }}" maxlength="64" minlength="2" required>
+        </div>
+        <div class="form-group">
+            <div class="custom-control custom-checkbox mb-3">
+                <input type="checkbox" class="custom-control-input" name="id" value="1" id="search_t"{% if search_in_description %} checked="checked"{% endif %}>
+                <label class="custom-control-label" for="search_t">{{ __('Search in description') }}</label>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">{{ __('Search') }}</button>
+    </form>
+
+    {% if files is empty and show_empty_info %}
+        <div class="alert alert-info">{{ __('List is empty') }}</div>
+    {% endif %}
+
+    {% for file in files %}
+        {% include '@downloads/public/components/file-row.twig' with {file: file} only %}
+    {% endfor %}
+
+    {% if total %}
+        <div>
+            <div>{{ __('Total') }}: {{ total }}</div>
+            {% if pagination %}
+                <div class="mt-1">{{ pagination }}</div>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    {% if files is empty %}
+        <div class="alert alert-info">
+            {{ __('Search by file Name and is case insensitive.<br>The length of the request: 2 min. 64 max.')|raw }}
+        </div>
+    {% endif %}
+
+    <div class="mt-2">
+        <div class="pb-2">
+            <a href="/downloads/search/">{{ __('New Search') }}</a>
+        </div>
+
+        <a href="{{ urls.downloads }}">{{ __('Downloads') }}</a>
+    </div>
+{% endblock %}

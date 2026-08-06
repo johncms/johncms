@@ -1,0 +1,25 @@
+{#
+    One file in a listing.
+
+    @var file array Presented file, see FilePresenter::present().
+#}
+<div class="forum-section post-item mb-2">
+    <div class="section-header d-flex justify-content-between {{ file.preview_text ? '' : 'border-0 pb-0' }}">
+        <div class="d-flex align-items-center">
+            <span class="me-2"><img src="{{ file.icon }}" alt="icon"></span>
+            <a href="{{ file.detail_url }}" class="text-dark-brown">{{ file.rus_name }}</a>
+            <span class="badge rounded-pill counter-badge border ms-3">{{ file.field }}</span>
+        </div>
+    </div>
+    {% if file.preview_text %}
+        <div class="small pt-2 text-muted">
+            <div>{{ file.preview_text }}</div>
+        </div>
+    {% endif %}
+    {% if file.accept_url|default('') %}
+        <div class="mt-2">
+            <a href="{{ file.accept_url }}" class="btn btn-success btn-sm">{{ __('Accept') }}</a>
+            <a href="{{ file.delete_url }}" class="btn btn-danger btn-sm">{{ __('Delete') }}</a>
+        </div>
+    {% endif %}
+</div>

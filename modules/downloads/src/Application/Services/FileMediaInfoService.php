@@ -44,7 +44,7 @@ final class FileMediaInfoService
         if ($mp3info) {
             foreach (['artist' => __('Artist'), 'title' => __('Title'), 'album' => __('Album'), 'genre' => __('Genre'), 'year' => __('Year')] as $tag => $label) {
                 if (isset($tagsArray[$tag][0])) {
-                    $properties[] = ['name' => $label, 'value' => htmlspecialchars(iconv('windows-1251', 'UTF-8', $tagsArray[$tag][0]))];
+                    $properties[] = ['name' => $label, 'value' => iconv('windows-1251', 'UTF-8', $tagsArray[$tag][0])];
                 }
             }
         }

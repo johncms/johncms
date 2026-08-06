@@ -1,0 +1,32 @@
+{#
+    Files the visitor put into their favorites.
+
+    @var files       array        Presented files, see FilePresenter::present().
+    @var total_files int
+    @var pagination  \Twig\Markup Null when everything fits on one page.
+    @var urls        array        downloads
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    {% if files is empty %}
+        <div class="alert alert-info">{{ __('List is empty') }}</div>
+    {% endif %}
+
+    {% for file in files %}
+        {% include '@downloads/public/components/file-row.twig' with {file: file} only %}
+    {% endfor %}
+
+    {% if total_files %}
+        <div>
+            <div>{{ __('Total') }}: {{ total_files }}</div>
+            {% if pagination %}
+                <div class="mt-1">{{ pagination }}</div>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    <div class="mt-2">
+        <a href="{{ urls.downloads }}">{{ __('Downloads') }}</a>
+    </div>
+{% endblock %}

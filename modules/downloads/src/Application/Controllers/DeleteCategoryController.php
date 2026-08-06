@@ -10,7 +10,7 @@ use Johncms\Modules\Downloads\Application\UseCases\DeleteCategoryUseCase;
 use Johncms\Modules\Downloads\Domain\Models\DownloadCategory;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -18,7 +18,6 @@ final readonly class DeleteCategoryController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private DeleteCategoryUseCase $deleteCategoryUseCase,
         private DownloadCategoryPathService $categoryPathService,
@@ -26,7 +25,7 @@ final readonly class DeleteCategoryController
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(Request $request, int $id): Response
+    public function __invoke(Request $request, int $id): RedirectResponse|ViewResponse
     {
         $subcategoryCount = DownloadCategory::query()->where('refid', $id)->count();
         $category = DownloadCategory::query()->find($id);
@@ -34,29 +33,24 @@ final readonly class DeleteCategoryController
         $this->navChain->add(__('Downloads'), '/downloads/');
         $this->navChain->add(__('Delete Folder'));
 
-        $this->render->addData([
-            'title'      => __('Delete Folder'),
-            'page_title' => __('Delete Folder'),
-        ]);
-
         if ($subcategoryCount > 0) {
-            return new Response($this->render->render('system::pages/result', [
+            return new ViewResponse('@theme/pages/result.twig', [
                 'title'         => __('Delete Folder'),
                 'type'          => 'alert-danger',
                 'message'       => __('Before removing, delete subdirectories'),
                 'back_url'      => '/downloads/',
                 'back_url_name' => __('Downloads'),
-            ]));
+            ]);
         }
 
         if ($category === null) {
-            return new Response($this->render->render('system::pages/result', [
+            return new ViewResponse('@theme/pages/result.twig', [
                 'title'         => __('Delete Folder'),
                 'type'          => 'alert-danger',
                 'message'       => __('The directory does not exist'),
                 'back_url'      => '/downloads/',
                 'back_url_name' => __('Downloads'),
-            ]), Response::HTTP_NOT_FOUND);
+            ], Response::HTTP_NOT_FOUND);
         }
 
         if ($request->getMethod() === 'POST') {
@@ -69,10 +63,12 @@ final readonly class DeleteCategoryController
             return new RedirectResponse($redirectUrl);
         }
 
-        return new Response($this->render->render('downloads::folder_delete', [
-            'folder_name' => htmlspecialchars($category->rus_name),
+        return new ViewResponse('@downloads/public/delete-category.twig', [
+            'title'       => __('Delete Folder'),
+            'page_title'  => __('Delete Folder'),
+            'folder_name' => $category->rus_name,
             'action_url'  => '/downloads/categories/' . $id . '/delete',
             'back_url'    => $this->categoryPathService->getCategoryUrl($category),
-        ]));
+        ]);
     }
 }

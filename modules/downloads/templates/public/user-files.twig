@@ -1,0 +1,39 @@
+{#
+    Files uploaded by one user.
+
+    @var show_user  array        Author of the files, see the component of a user row.
+    @var files      array        Presented files, see FilePresenter::present().
+    @var total      int
+    @var pagination \Twig\Markup Null when everything fits on one page.
+    @var urls       array        downloads
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    {% include '@downloads/public/components/user-row.twig' with {item: show_user} only %}
+
+    {% if files is empty %}
+        <div class="row">
+            <div class="col-md-6">
+                <div class="alert alert-info">{{ __('The list is empty') }}</div>
+            </div>
+        </div>
+    {% else %}
+        {% for file in files %}
+            {% include '@downloads/public/components/file-row.twig' with {file: file} only %}
+        {% endfor %}
+    {% endif %}
+
+    {% if total %}
+        <div>
+            <div>{{ __('Total') }}: {{ total }}</div>
+            {% if pagination %}
+                <div class="mt-1">{{ pagination }}</div>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    <div class="mt-3">
+        <a href="{{ urls.downloads }}">{{ __('Downloads') }}</a>
+    </div>
+{% endblock %}

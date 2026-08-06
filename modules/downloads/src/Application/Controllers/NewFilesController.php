@@ -11,15 +11,14 @@ use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Downloads\Application\Exceptions\DownloadNotFoundException;
 use Johncms\Modules\Downloads\Application\UseCases\ViewNewFilesUseCase;
+use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
 
 final readonly class NewFilesController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private ViewNewFilesUseCase $useCase,
         private FilePresenter $filePresenter,
@@ -29,7 +28,7 @@ final readonly class NewFilesController
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(Request $request): string
+    public function __invoke(Request $request): ViewResponse
     {
         $categoryId = max(0, $request->queryInt('id', 0));
 
@@ -43,8 +42,8 @@ final readonly class NewFilesController
 
             $result = $this->useCase->getPage($pagination->getPerPage(), $pagination->getOffset(), $categoryId);
         } catch (DownloadNotFoundException) {
-            return $this->render->render(
-                'system::pages/result',
+            return new ViewResponse(
+                '@theme/pages/result.twig',
                 [
                     'title'         => __('New Files'),
                     'type'          => 'alert-danger',
@@ -67,21 +66,17 @@ final readonly class NewFilesController
         $documentTitle = $pageTitle . ' — ' . __('Downloads');
 
         $meta = new PageMeta($documentTitle, $pagination->getCurrentPage());
-        $this->render->addData(
+
+        return new ViewResponse(
+            '@downloads/public/new-files.twig',
             [
                 'title'       => $meta->title,
                 'page_title'  => $pageTitle,
                 'description' => $meta->description,
-            ]
-        );
-
-        return $this->render->render(
-            'downloads::new_files',
-            [
-                'pagination' => $pagination->render(),
-                'files'      => $files,
-                'total'      => $pagination->getTotal(),
-                'urls'       => ['downloads' => '/downloads/'],
+                'pagination'  => $pagination->hasPages() ? $pagination->render() : null,
+                'files'       => $files,
+                'total'       => $pagination->getTotal(),
+                'urls'        => ['downloads' => '/downloads/'],
             ]
         );
     }

@@ -1,0 +1,40 @@
+{#
+    Files waiting to be accepted by a moderator.
+
+    @var files      array        Presented files with accept_url and delete_url added.
+    @var total      int
+    @var pagination \Twig\Markup Null when everything fits on one page.
+    @var urls       array        downloads
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    {% if files is empty %}
+        <div class="row">
+            <div class="col-md-6">
+                <div class="alert alert-info">{{ __('The list is empty') }}</div>
+            </div>
+        </div>
+    {% else %}
+        {% for file in files %}
+            {% include '@downloads/public/components/file-row.twig' with {file: file} only %}
+        {% endfor %}
+    {% endif %}
+
+    <form action="/downloads/moderation" method="post" class="mb-2 mt-3">
+        <input type="submit" name="all_mod" class="btn btn-primary" value="{{ __('Accept all files') }}"/>
+    </form>
+
+    {% if total %}
+        <div>
+            <div>{{ __('Total') }}: {{ total }}</div>
+            {% if pagination %}
+                <div class="mt-1">{{ pagination }}</div>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    <div class="mt-3">
+        <a href="{{ urls.downloads }}">{{ __('Downloads') }}</a>
+    </div>
+{% endblock %}

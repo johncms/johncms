@@ -10,15 +10,14 @@ use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Downloads\Application\UseCases\SearchFilesUseCase;
+use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
 
 final readonly class SearchController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private SearchFilesUseCase $useCase,
         private FilePresenter $filePresenter,
@@ -28,7 +27,7 @@ final readonly class SearchController
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(Request $request): string
+    public function __invoke(Request $request): ViewResponse
     {
         $rawQuery = trim($request->queryParam('search', ''));
         $searchInDescription = (bool) $request->queryInt('id', 0);
@@ -37,8 +36,8 @@ final readonly class SearchController
         $this->navChain->add(__('Search'), '/downloads/search/');
 
         if (! empty($rawQuery) && mb_strlen($rawQuery) < 2 || mb_strlen($rawQuery) > 64) {
-            return $this->render->render(
-                'system::pages/result',
+            return new ViewResponse(
+                '@theme/pages/result.twig',
                 [
                     'title'         => __('Error'),
                     'type'          => 'alert-danger',
@@ -52,20 +51,16 @@ final readonly class SearchController
         if (empty($rawQuery)) {
             $pageTitle = __('Search');
             $documentTitle = $pageTitle . ' — ' . __('Downloads');
-            $this->render->addData(
-                [
-                    'title'       => $documentTitle,
-                    'page_title'  => $pageTitle,
-                    'description' => $documentTitle,
-                ]
-            );
 
-            return $this->render->render(
-                'downloads::search',
+            return new ViewResponse(
+                '@downloads/public/search.twig',
                 [
+                    'title'                 => $documentTitle,
+                    'page_title'            => $pageTitle,
+                    'description'           => $documentTitle,
                     'files'                 => [],
                     'total'                 => 0,
-                    'pagination'            => '',
+                    'pagination'            => null,
                     'search_query'          => '',
                     'search_in_description' => false,
                     'show_empty_info'       => false,
@@ -87,26 +82,22 @@ final readonly class SearchController
         $documentTitle = $pageTitle . ' — ' . __('Downloads');
 
         $meta = new PageMeta($documentTitle, $pagination->getCurrentPage());
-        $this->render->addData(
-            [
-                'title'       => $meta->title,
-                'page_title'  => $pageTitle,
-                'description' => $meta->description,
-            ]
-        );
 
         $files = [];
         foreach ($result->files as $file) {
             $files[] = $this->filePresenter->present($file);
         }
 
-        return $this->render->render(
-            'downloads::search',
+        return new ViewResponse(
+            '@downloads/public/search.twig',
             [
+                'title'                 => $meta->title,
+                'page_title'            => $pageTitle,
+                'description'           => $meta->description,
                 'files'                 => $files,
                 'total'                 => $pagination->getTotal(),
-                'pagination'            => $pagination->render(),
-                'search_query'          => htmlspecialchars($result->searchQuery),
+                'pagination'            => $pagination->hasPages() ? $pagination->render() : null,
+                'search_query'          => $result->searchQuery,
                 'search_in_description' => $result->searchInDescription,
                 'show_empty_info'       => true,
                 'urls'                  => ['downloads' => '/downloads/'],

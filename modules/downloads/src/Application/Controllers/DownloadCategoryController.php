@@ -11,16 +11,15 @@ use Johncms\Modules\Downloads\Application\FilePresenter;
 use Johncms\Modules\Downloads\Application\Services\DownloadCategoryPathService;
 use Johncms\Modules\Downloads\Domain\Models\DownloadCategory;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
+use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
-use Johncms\System\View\Render;
 use Johncms\Users\User;
 
 final readonly class DownloadCategoryController
 {
     public function __construct(
-        private Render $render,
         private NavChain $navChain,
         private User $currentUser,
         private FilePresenter $filePresenter,
@@ -31,7 +30,7 @@ final readonly class DownloadCategoryController
     ) {
     }
 
-    public function __invoke(Request $request, string $categoryPath): string
+    public function __invoke(Request $request, string $categoryPath): ViewResponse
     {
         $category = $this->categoryPathService->findCategoryByPath($categoryPath);
         if ($category === null) {
@@ -69,8 +68,8 @@ final readonly class DownloadCategoryController
                 function (DownloadCategory $cat) use (&$categories, $hasEdit): void {
                     $categories[] = [
                         'id'         => $cat->id,
-                        'rus_name'   => htmlspecialchars($cat->rus_name),
-                        'desc'       => htmlspecialchars($cat->desc),
+                        'rus_name'   => $cat->rus_name,
+                        'desc'       => $cat->desc,
                         'field'      => $cat->field,
                         'text'       => $cat->text,
                         'total'      => $cat->total,
@@ -96,29 +95,25 @@ final readonly class DownloadCategoryController
         }
 
         $meta = new PageMeta($title, $pagination->getCurrentPage());
-        $this->render->addData([
-            'title'       => $meta->title,
-            'page_title'  => $title,
-            'description' => $meta->description,
-        ]);
 
         $files = [];
 
-        if ($totalFiles > 0) {
-            if ($totalFiles > 1) {
-                if ($request->getMethod() === 'POST') {
-                    $post = $request->request->all();
-                    if (isset($post['sort_down'])) {
-                        $this->session->set('sort_down', $post['sort_down'] ? 1 : 0);
-                    }
-                    if (isset($post['sort_down2'])) {
-                        $this->session->set('sort_down2', $post['sort_down2'] ? 1 : 0);
-                    }
-                }
+        if ($totalFiles > 1 && $request->getMethod() === 'POST') {
+            $post = $request->request->all();
+            if (isset($post['sort_down'])) {
+                $this->session->set('sort_down', $post['sort_down'] ? 1 : 0);
             }
+            if (isset($post['sort_down2'])) {
+                $this->session->set('sort_down2', $post['sort_down2'] ? 1 : 0);
+            }
+        }
 
-            $sortColumn = ($this->session->get('sort_down', 0)) ? 'name' : 'time';
-            $sortDir = ($this->session->get('sort_down2', 0)) ? 'asc' : 'desc';
+        $sortByName = (bool) $this->session->get('sort_down', 0);
+        $sortAscending = (bool) $this->session->get('sort_down2', 0);
+
+        if ($totalFiles > 0) {
+            $sortColumn = $sortByName ? 'name' : 'time';
+            $sortDir = $sortAscending ? 'asc' : 'desc';
 
             $rows = DownloadFile::query()
                 ->where('refid', $category->id)
@@ -134,16 +129,26 @@ final readonly class DownloadCategoryController
             }
         }
 
-        return $this->render->render('downloads::index', [
-            'id'          => $category->id,
-            'urls'        => $urls,
-            'pagination'  => $pagination->render(),
-            'files'       => $files,
-            'total_files' => $totalFiles,
-            'total_new'   => $totalNew,
-            'categories'  => $categories,
-            'total_cat'   => $totalCat,
-            'can_upload'  => $canUpload,
+        $config = config('johncms');
+
+        return new ViewResponse('@downloads/public/index.twig', [
+            'title'          => $meta->title,
+            'page_title'     => $title,
+            'description'    => $meta->description,
+            'id'             => $category->id,
+            'urls'           => $urls,
+            'pagination'     => $pagination->hasPages() ? $pagination->render() : null,
+            'files'          => $files,
+            'total_files'    => $totalFiles,
+            'total_new'      => $totalNew,
+            'categories'     => $categories,
+            'total_cat'      => $totalCat,
+            'can_upload'     => $canUpload,
+            'can_manage'     => $this->currentUser->rights === 4 || $this->currentUser->rights >= 6,
+            'can_review'     => $this->currentUser->rights >= 7 || ! empty($config['mod_down_comm']),
+            'sort_by_name'   => $sortByName,
+            'sort_ascending' => $sortAscending,
+            'downloads_open' => (bool) $config['mod_down'],
         ]);
     }
 
@@ -160,8 +165,8 @@ final readonly class DownloadCategoryController
             $current = $parent;
         }
         foreach (array_reverse($ancestors) as $ancestor) {
-            $this->navChain->add(htmlspecialchars($ancestor->rus_name), $this->categoryPathService->getCategoryUrl($ancestor));
+            $this->navChain->add($ancestor->rus_name, $this->categoryPathService->getCategoryUrl($ancestor));
         }
-        $this->navChain->add(htmlspecialchars($category->rus_name));
+        $this->navChain->add($category->rus_name);
     }
 }

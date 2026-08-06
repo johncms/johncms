@@ -14,7 +14,7 @@ use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\Modules\Downloads\Domain\Models\DownloadMoreFile;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Users\User;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
@@ -24,7 +24,6 @@ final readonly class ScanDirectoryController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private User $currentUser,
         private DownloadCategoryPathService $categoryPathService,
@@ -32,7 +31,7 @@ final readonly class ScanDirectoryController
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(Request $request): Response
+    public function __invoke(Request $request): ViewResponse
     {
         set_time_limit(99999);
 
@@ -42,11 +41,6 @@ final readonly class ScanDirectoryController
         $this->navChain->add(__('Downloads'), '/downloads/');
         $this->navChain->add(__('Update'));
 
-        $this->render->addData([
-            'title'      => __('Update'),
-            'page_title' => __('Update'),
-        ]);
-
         if ($do === 'clean') {
             return $this->handleClean($id);
         }
@@ -54,7 +48,7 @@ final readonly class ScanDirectoryController
         return $this->handleScan($request, $id);
     }
 
-    private function handleClean(int $id): Response
+    private function handleClean(int $id): ViewResponse
     {
         $seenRealFiles = [];
         DownloadFile::query()->orderBy('id')->each(function (DownloadFile $file) use (&$seenRealFiles): void {
@@ -110,13 +104,13 @@ final readonly class ScanDirectoryController
             ? ($this->categoryPathService->getCategoryUrlById($id) ?? '/downloads/')
             : '/downloads/';
 
-        return new Response($this->render->render('system::pages/result', [
+        return new ViewResponse('@theme/pages/result.twig', [
             'title'         => __('Remove missing files'),
             'type'          => 'alert-success',
             'message'       => __('Database successfully updated'),
             'back_url'      => $backUrl,
             'back_url_name' => __('Back'),
-        ]));
+        ]);
     }
 
     private function deleteCategoryFiles(int $categoryId): void
@@ -130,7 +124,7 @@ final readonly class ScanDirectoryController
         DownloadFile::query()->where('refid', $categoryId)->delete();
     }
 
-    private function handleScan(Request $request, int $id): Response
+    private function handleScan(Request $request, int $id): ViewResponse
     {
         $yes = $request->query->has('yes');
         $mod = $request->queryInt('mod', 0);
@@ -138,13 +132,13 @@ final readonly class ScanDirectoryController
         if ($id > 0) {
             $category = DownloadCategory::query()->find($id);
             if ($category === null || ! is_dir($category->dir)) {
-                return new Response($this->render->render('system::pages/result', [
+                return new ViewResponse('@theme/pages/result.twig', [
                     'title'         => __('Error'),
                     'type'          => 'alert-danger',
                     'message'       => __('The directory does not exist'),
                     'back_url'      => '/downloads/',
                     'back_url_name' => __('Downloads'),
-                ]), Response::HTTP_NOT_FOUND);
+                ], Response::HTTP_NOT_FOUND);
             }
             $scanDir = $category->dir;
         } else {
@@ -163,14 +157,15 @@ final readonly class ScanDirectoryController
             ? $this->categoryPathService->getCategoryUrl($category)
             : '/downloads/';
 
-        return new Response($this->render->render('downloads::scan_dir', [
-            'id'           => $id,
-            'urls'         => ['downloads' => '/downloads/'],
-            'updated_info' => $updatedInfo,
-            'select_mode'  => $selectMode,
-            'back_url'     => $backUrl,
-            'back_name'    => __('Back'),
-        ]));
+        return new ViewResponse('@downloads/public/scan-dir.twig', [
+            'title'          => __('Update'),
+            'page_title'     => __('Update'),
+            'id'             => $id,
+            'urls'           => ['downloads' => '/downloads/'],
+            'updated_info'   => $updatedInfo,
+            'select_mode'    => $selectMode,
+            'downloads_open' => (bool) config('johncms.mod_down'),
+        ]);
     }
 
     private function scan(string $scanDir, int $mod): array
@@ -271,11 +266,11 @@ final readonly class ScanDirectoryController
                 if (preg_match('/^file(\d+)_/', $name)) {
                     if (! in_array($name, $knownMoreFiles, true)) {
                         $refid = (int) str_replace('file', '', explode('_', $name)[0]);
-                        $linkName = htmlspecialchars(mb_substr(
+                        $linkName = mb_substr(
                             str_replace('file' . $refid . '_', __('Download') . ' ', $name),
                             0,
                             200
-                        ));
+                        );
 
                         DownloadMoreFile::query()->create([
                             'refid'    => $refid,

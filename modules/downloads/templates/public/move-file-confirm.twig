@@ -1,0 +1,19 @@
+{#
+    Confirmation of moving a file into the chosen category.
+
+    @var action_url string
+    @var back_url   string
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    <div class="alert alert-danger">
+        <div class="pb-2">
+            {{ __('Are you sure you want to move the file?') }}
+        </div>
+        <div>
+            <a href="{{ action_url }}" class="btn btn-danger btn-sm">{{ __('Move file') }}</a>
+            <a href="{{ back_url }}" class="btn btn-outline-secondary btn-sm">{{ __('Cancel') }}</a>
+        </div>
+    </div>
+{% endblock %}

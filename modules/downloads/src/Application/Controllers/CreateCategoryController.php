@@ -10,7 +10,7 @@ use Johncms\Modules\Downloads\Application\Services\DownloadSlugService;
 use Johncms\Modules\Downloads\Domain\Models\DownloadCategory;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -25,7 +25,6 @@ final readonly class CreateCategoryController
 
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private User $currentUser,
         private DownloadSlugService $slugService,
@@ -34,29 +33,24 @@ final readonly class CreateCategoryController
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(Request $request): Response
+    public function __invoke(Request $request): ViewResponse
     {
         $refid = max(0, $request->queryInt('refid', 0));
 
         $this->navChain->add(__('Downloads'), '/downloads/');
         $this->navChain->add(__('Create Folder'));
 
-        $this->render->addData([
-            'title'      => __('Create Folder'),
-            'page_title' => __('Create Folder'),
-        ]);
-
         $parentCategory = null;
         if ($refid > 0) {
             $parentCategory = DownloadCategory::query()->find($refid);
             if ($parentCategory === null || ! is_dir($parentCategory->dir)) {
-                return new Response($this->render->render('system::pages/result', [
+                return new ViewResponse('@theme/pages/result.twig', [
                     'title'         => __('Create Folder'),
                     'type'          => 'alert-danger',
                     'message'       => __('The directory does not exist'),
                     'back_url'      => '/downloads/',
                     'back_url_name' => __('Downloads'),
-                ]), Response::HTTP_NOT_FOUND);
+                ], Response::HTTP_NOT_FOUND);
             }
             $baseDir = $parentCategory->dir;
         } else {
@@ -73,18 +67,19 @@ final readonly class CreateCategoryController
             return $this->handleCreate($request, $refid, $baseDir, $baseUrl);
         }
 
-        return new Response($this->render->render('downloads::folder_form', [
-            'id'            => $refid,
+        return new ViewResponse('@downloads/public/category-form.twig', [
+            'title'         => __('Create Folder'),
+            'page_title'    => __('Create Folder'),
             'action_url'    => $baseUrl,
             'cancel_url'    => $cancelUrl,
             'extensions'    => implode(', ', self::DEFAULT_EXTENSIONS),
             'edit_form'     => false,
-            'folder_params' => ['name' => '', 'rus_name' => '', 'desc' => '', 'user_down' => '', 'format' => ''],
-            'urls'          => ['downloads' => '/downloads/'],
-        ]));
+            'can_set_rules' => $this->currentUser->rights === 9,
+            'folder_params' => ['name' => '', 'rus_name' => '', 'desc' => '', 'user_down' => 0, 'format' => ''],
+        ]);
     }
 
-    private function handleCreate(Request $request, int $refid, string $baseDir, string $baseUrl): Response
+    private function handleCreate(Request $request, int $refid, string $baseDir, string $baseUrl): ViewResponse
     {
         $post = $request->request->all();
         $name = trim($post['name'] ?? '');
@@ -112,13 +107,13 @@ final readonly class CreateCategoryController
         }
 
         if ($errors) {
-            return new Response($this->render->render('system::pages/result', [
+            return new ViewResponse('@theme/pages/result.twig', [
                 'title'         => __('Create Folder'),
                 'type'          => 'alert-danger',
                 'message'       => $errors,
                 'back_url'      => $baseUrl,
                 'back_url_name' => __('Repeat'),
-            ]));
+            ]);
         }
 
         if (empty($rusName)) {
@@ -128,13 +123,13 @@ final readonly class CreateCategoryController
         $dir = $baseDir . \DS . $name;
 
         if (is_dir($dir) || ! mkdir($dir, 0777)) {
-            return new Response($this->render->render('system::pages/result', [
+            return new ViewResponse('@theme/pages/result.twig', [
                 'title'         => __('Create Folder'),
                 'type'          => 'alert-danger',
                 'message'       => __('Error creating categories'),
                 'back_url'      => $baseUrl,
                 'back_url_name' => __('Repeat'),
-            ]));
+            ]);
         }
 
         chmod($dir, 0777);
@@ -153,12 +148,12 @@ final readonly class CreateCategoryController
             'rus_name' => $rusName,
         ]);
 
-        return new Response($this->render->render('system::pages/result', [
+        return new ViewResponse('@theme/pages/result.twig', [
             'title'         => __('Create Folder'),
             'type'          => 'alert-success',
             'message'       => __('The Folder is created'),
             'back_url'      => $this->categoryPathService->getCategoryUrl($category),
             'back_url_name' => __('Continue'),
-        ]));
+        ]);
     }
 }

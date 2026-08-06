@@ -14,10 +14,11 @@ use Johncms\Modules\Downloads\Domain\Models\DownloadMoreFile;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Utils\DateFormatterInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Twig\Markup;
 
 final readonly class AdditionalFilesController
 {
@@ -30,7 +31,6 @@ final readonly class AdditionalFilesController
 
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
         private Session $session,
         private NavChain $navChain,
         private DateFormatterInterface $dateFormatter,
@@ -40,7 +40,7 @@ final readonly class AdditionalFilesController
         $this->controllerContext->initModule('downloads');
     }
 
-    public function __invoke(Request $request, int $id): Response
+    public function __invoke(Request $request, int $id): RedirectResponse|ViewResponse
     {
         $file = DownloadFile::query()
             ->where('id', $id)
@@ -53,7 +53,7 @@ final readonly class AdditionalFilesController
 
         $this->navChain->add(__('Downloads'), '/downloads/');
         $this->categoryNavService->buildForFileDir($file->dir);
-        $this->navChain->add(htmlspecialchars($file->rus_name), $this->filePathService->getFileUrl($file));
+        $this->navChain->add($file->rus_name, $this->filePathService->getFileUrl($file));
         $this->navChain->add(__('Additional files'));
 
         $baseUrl = '/downloads/additional-files/' . $id . '/';
@@ -76,19 +76,13 @@ final readonly class AdditionalFilesController
         return $this->showList($id, $file, $baseUrl);
     }
 
-    private function showList(int $id, DownloadFile $file, string $baseUrl): Response
+    private function showList(int $id, DownloadFile $file, string $baseUrl): ViewResponse
     {
-        $pageTitle = htmlspecialchars($file->rus_name);
-        $this->render->addData([
-            'title'      => $pageTitle,
-            'page_title' => $pageTitle,
-        ]);
-
         $additionalFiles = DownloadMoreFile::query()->where('refid', $id)->get()->map(function (DownloadMoreFile $more) use ($id, $baseUrl): array {
             return [
                 'id'           => $more->id,
                 'name'         => $more->name,
-                'rus_name'     => htmlspecialchars($more->rus_name),
+                'rus_name'     => $more->rus_name,
                 'display_date' => $this->dateFormatter->format($more->time),
                 'display_size' => FilePresenter::formatFileSize($more->size),
                 'edit_url'     => $baseUrl . '?edit=' . $more->id,
@@ -96,16 +90,17 @@ final readonly class AdditionalFilesController
             ];
         })->all();
 
-        return new Response($this->render->render('downloads::files_more', [
-            'id'               => $id,
+        return new ViewResponse('@downloads/public/additional-files.twig', [
+            'title'            => $file->rus_name,
+            'page_title'       => $file->rus_name,
             'additional_files' => $additionalFiles,
             'action_url'       => $baseUrl,
             'extensions'       => implode(', ', self::DEFAULT_EXTENSIONS),
             'file_url'         => $this->filePathService->getFileUrl($file),
-        ]));
+        ]);
     }
 
-    private function handleEdit(Request $request, int $id, DownloadFile $file, int $editId, string $baseUrl): Response
+    private function handleEdit(Request $request, int $id, DownloadFile $file, int $editId, string $baseUrl): RedirectResponse|ViewResponse
     {
         $moreFile = DownloadMoreFile::query()->find($editId);
 
@@ -115,7 +110,7 @@ final readonly class AdditionalFilesController
 
         if ($request->getMethod() === 'POST') {
             $post = $request->request->all();
-            $nameLink = isset($post['name_link']) ? htmlspecialchars(mb_substr($post['name_link'], 0, 200)) : null;
+            $nameLink = isset($post['name_link']) ? mb_substr($post['name_link'], 0, 200) : null;
 
             if ($nameLink) {
                 $moreFile->update(['rus_name' => $nameLink]);
@@ -124,21 +119,16 @@ final readonly class AdditionalFilesController
             }
         }
 
-        $pageTitle = htmlspecialchars($file->rus_name);
-        $this->render->addData([
+        return new ViewResponse('@downloads/public/edit-additional-file.twig', [
             'title'      => __('Edit File'),
-            'page_title' => $pageTitle,
-        ]);
-
-        return new Response($this->render->render('downloads::edit_additional_form', [
-            'id'         => $id,
-            'file_name'  => htmlspecialchars($moreFile->rus_name),
+            'page_title' => $file->rus_name,
+            'file_name'  => $moreFile->rus_name,
             'action_url' => $baseUrl . '?edit=' . $editId,
             'back_url'   => $baseUrl,
-        ]));
+        ]);
     }
 
-    private function handleDelete(Request $request, int $id, DownloadFile $file, int $delId, string $baseUrl): Response
+    private function handleDelete(Request $request, int $id, DownloadFile $file, int $delId, string $baseUrl): RedirectResponse|ViewResponse
     {
         $moreFile = DownloadMoreFile::query()->find($delId);
 
@@ -164,21 +154,16 @@ final readonly class AdditionalFilesController
         $deleteToken = uniqid('', true);
         $this->session->set('delete_token', $deleteToken);
 
-        $pageTitle = htmlspecialchars($file->rus_name);
-        $this->render->addData([
-            'title'      => __('Delete File'),
-            'page_title' => $pageTitle,
-        ]);
-
-        return new Response($this->render->render('downloads::delete_additional', [
-            'id'           => $id,
+        return new ViewResponse('@downloads/public/confirm-delete.twig', [
+            'title'        => __('Delete File'),
+            'page_title'   => $file->rus_name,
             'delete_token' => $deleteToken,
             'action_url'   => $baseUrl . '?del=' . $delId . '&yes',
             'back_url'     => $baseUrl,
-        ]));
+        ]);
     }
 
-    private function handleUpload(Request $request, int $id, DownloadFile $file, string $baseUrl): Response
+    private function handleUpload(Request $request, int $id, DownloadFile $file, string $baseUrl): ViewResponse
     {
         $config = config('johncms');
         $post = $request->request->all();
@@ -218,7 +203,7 @@ final readonly class AdditionalFilesController
 
         if ($doFile && empty($errors)) {
             $newFileName = isset($post['new_file']) ? trim($post['new_file']) : null;
-            $nameLink = isset($post['name_link']) ? htmlspecialchars(mb_substr($post['name_link'], 0, 200)) : null;
+            $nameLink = isset($post['name_link']) ? mb_substr($post['name_link'], 0, 200) : null;
 
             $fileInfo = new FileInfo($fname);
             $ext = strtolower($fileInfo->getExtension());
@@ -238,7 +223,10 @@ final readonly class AdditionalFilesController
             }
 
             if (! in_array($ext, self::DEFAULT_EXTENSIONS, true)) {
-                $errors[] = __('Prohibited file type!<br>To upload allowed files that have the following extensions') . ': ' . implode(', ', self::DEFAULT_EXTENSIONS);
+                $errors[] = new Markup(
+                    __('Prohibited file type!<br>To upload allowed files that have the following extensions') . ': ' . implode(', ', self::DEFAULT_EXTENSIONS),
+                    'UTF-8'
+                );
             }
 
             if (empty($errors)) {
@@ -269,36 +257,36 @@ final readonly class AdditionalFilesController
                         'size'     => (int) $fsize,
                     ]);
 
-                    return new Response($this->render->render('system::pages/result', [
+                    return new ViewResponse('@theme/pages/result.twig', [
                         'title'         => __('File attached'),
                         'type'          => 'alert-success',
                         'message'       => __('File attached'),
                         'back_url'      => $this->filePathService->getFileUrl($file),
                         'back_url_name' => __('Back'),
-                    ]));
+                    ]);
                 }
 
                 $errors[] = __('File not attached');
             }
         }
 
-        return new Response($this->render->render('system::pages/result', [
+        return new ViewResponse('@theme/pages/result.twig', [
             'title'         => __('Error'),
             'type'          => 'alert-danger',
             'message'       => $errors,
             'back_url'      => $baseUrl,
             'back_url_name' => __('Repeat'),
-        ]));
+        ]);
     }
 
-    private function notFound(): Response
+    private function notFound(): ViewResponse
     {
-        return new Response($this->render->render('system::pages/result', [
+        return new ViewResponse('@theme/pages/result.twig', [
             'title'         => __('File not found'),
             'type'          => 'alert-danger',
             'message'       => __('File not found'),
             'back_url'      => '/downloads/',
             'back_url_name' => __('Downloads'),
-        ]), Response::HTTP_NOT_FOUND);
+        ], Response::HTTP_NOT_FOUND);
     }
 }

@@ -1,0 +1,32 @@
+{#
+    The top of files: the most popular, downloaded or commented ones.
+
+    @var files   array Presented files, see FilePresenter::present().
+    @var buttons array Switches of the sorting: url, name, active.
+    @var urls    array downloads
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    <div class="mb-3 mt-n1">
+        {% for button in buttons %}
+            <a href="{{ button.url }}" class="btn btn-outline-primary btn-sm me-1 mt-1 {{ button.active ? 'active' : '' }}">{{ button.name }}</a>
+        {% endfor %}
+    </div>
+
+    {% if files is empty %}
+        <div class="row">
+            <div class="col-md-6">
+                <div class="alert alert-info">{{ __('List is empty') }}</div>
+            </div>
+        </div>
+    {% endif %}
+
+    {% for file in files %}
+        {% include '@downloads/public/components/file-row.twig' with {file: file} only %}
+    {% endfor %}
+
+    <div class="mt-3">
+        <a href="{{ urls.downloads }}">{{ __('Downloads') }}</a>
+    </div>
+{% endblock %}

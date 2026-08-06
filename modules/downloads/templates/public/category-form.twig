@@ -1,0 +1,50 @@
+{#
+    Creating and editing a category. The name of the directory on the disk is set once, when the
+    category is created, so the field is absent in the edit form.
+
+    @var folder_params array  name, rus_name, desc, user_down, format
+    @var action_url    string
+    @var cancel_url    string
+    @var extensions    string Allowed extensions, joined into one line.
+    @var edit_form     bool
+    @var can_set_rules bool   Only the owner of the site sets who may upload and what.
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    <form name="folder_form" action="{{ action_url }}" method="post">
+        {% if not edit_form %}
+            <div class="form-group">
+                <label for="name">{{ __('Folder name') }}</label>
+                <input type="text" class="form-control" id="name" placeholder="{{ __('Folder name') }}"
+                       name="name" value="{{ folder_params.name }}" required>
+                <div class="text-muted small">{{ __('Only latin characters and numbers') }}</div>
+            </div>
+        {% endif %}
+        <div class="form-group">
+            <label for="rus_name">{{ __('Title to display') }}</label>
+            <input type="text" class="form-control" id="rus_name" placeholder="{{ __('Title to display') }}"
+                   name="rus_name" value="{{ folder_params.rus_name }}" required>
+        </div>
+        <div class="form-group">
+            <label for="desc">{{ __('Description') }}</label>
+            <textarea id="desc" class="form-control" maxlength="500" name="desc" cols="24" rows="4">{{ folder_params.desc }}</textarea>
+        </div>
+        {% if can_set_rules %}
+            <div class="custom-control custom-checkbox mb-3">
+                <input type="checkbox" class="custom-control-input" name="user_down" value="1" id="user_down"{% if folder_params.user_down %} checked{% endif %}>
+                <label class="custom-control-label" for="user_down">{{ __('Allow users to upload files') }}</label>
+            </div>
+            <div class="form-group">
+                <label for="format">{{ __('Allowed extensions') }}</label>
+                <input type="text" class="form-control" id="format" placeholder="{{ __('Allowed extensions') }}"
+                       name="format" value="{{ folder_params.format }}">
+                <div class="text-muted small">{{ __('You can write only the following extensions') }}: {{ extensions }}</div>
+            </div>
+        {% endif %}
+        <div>
+            <button type="submit" name="submit" value="1" class="btn btn-primary">{{ __('Save') }}</button>
+            <a href="{{ cancel_url }}" class="btn btn-secondary">{{ __('Cancel') }}</a>
+        </div>
+    </form>
+{% endblock %}
