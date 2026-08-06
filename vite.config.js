@@ -35,7 +35,7 @@ export default defineConfig({
         laravel({
             input: [
                 'themes/default/src/js/app.js',
-                'themes/admin/src/js/app.js',
+                'themes/default/src/admin/js/app.js',
             ],
             publicDirectory: 'public',
             buildDirectory: 'build',

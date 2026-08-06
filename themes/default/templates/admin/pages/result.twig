@@ -1,0 +1,25 @@
+{#
+    The outcome of an action in the panel: a message and, optionally, a way back.
+
+    The public site has a file of its own; the two differ only in the layout they extend, and the
+    caller names the one it wants.
+
+    @var string|array message
+    @var string       type          Bootstrap modifier of the alert, e.g. alert-danger.
+    @var string       back_url      Omitted when there is nowhere to go back to.
+    @var string       back_url_name Label of that link, "Back" by default.
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% set page_title = page_title|default(title|default('')) %}
+
+{% block content %}
+    <div class="row">
+        <div class="m-sm-auto m-md-auto m-lg-0 col-sm-8 col-md-8 col-lg-7 col-xl-8">
+            {% include '@theme/components/alert.twig' with {alert_type: type|default(''), alert: message} only %}
+            {% if back_url|default('') %}
+                <a href="{{ back_url }}" class="btn btn-primary">{{ back_url_name|default(d__('system', 'Back')) }}</a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

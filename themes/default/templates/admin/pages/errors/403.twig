@@ -1,0 +1,25 @@
+{#
+    Access to the panel refused. It is shown to someone who is not in the panel yet, so it carries
+    no chrome — just the logo and the reason.
+
+    @var string title
+    @var string message
+#}
+{% extends '@admin/layouts/guest.twig' %}
+
+{% block content %}
+    <div class="min-vh-100 d-flex align-items-center">
+        <div class="card w-100 mx-auto py-4" style="max-width: 500px;">
+            <div class="card-body text-center">
+                <div class="text-center mb-3">
+                    <img src="{{ asset('images/logo.svg') }}" alt="logo" style="max-width: 200px;" class="img-fluid">
+                </div>
+                <div class="fw-bold h2">{{ title }}</div>
+                {% if message|default('') %}
+                    <p class="h4 text-muted">{{ message }}</p>
+                {% endif %}
+                <a href="/" class="btn btn-primary mt-3">{{ __('Home') }}</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

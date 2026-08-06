@@ -20,7 +20,7 @@ return [
     // bundle of its parent.
     'entries' => [
         'public' => 'themes/default/src/js/app.js',
-        'admin'  => 'themes/admin/src/js/app.js',
+        'admin'  => 'themes/default/src/admin/js/app.js',
     ],
 
     // Values a template may read as app.theme.settings.*

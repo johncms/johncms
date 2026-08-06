@@ -1,7 +1,12 @@
-{# Query count, memory and time of the page. Prints nothing unless debugging is on. #}
+{#
+    Query count, memory and time of the page. Prints nothing unless debugging is on.
+
+    @var string trigger_class Classes of the line that opens the query log.
+    @var string trigger_style The two areas place the line differently in their footer.
+#}
 {% set stats = debug_stats() %}
 {% if stats %}
-    <div class="small text-nowrap" style="margin-top: -5px;">
+    <div class="{{ trigger_class|default('small text-nowrap') }}" style="{{ trigger_style|default('margin-top: -5px;') }}">
         <a href="#" data-bs-toggle="modal" data-bs-target=".query_log_modal">SQL: {{ stats.queries|length }}</a>, {{ stats.memory }}, {{ stats.time }} sec.
     </div>
     {% if stats.queries %}
@@ -12,9 +17,7 @@
                         <h4 class="modal-title">
                             {{ d__('system', 'Sql query log') }}
                         </h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span class="icon">&times;</span>
-                        </button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="p-2">
                         <table class="table">

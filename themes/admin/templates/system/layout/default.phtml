@@ -38,7 +38,7 @@ $colorScheme = di(\Johncms\View\ColorScheme::class);
     <?php
     endif ?>
     <meta name="theme-color" content="#586776">
-    <?= $this->vite('themes/admin/src/js/app.js', $locale === 'ar') ?>
+    <?= $this->vite('themes/default/src/admin/js/app.js', $locale === 'ar') ?>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700,700i&display=swap">
     <link rel="shortcut icon" href="<?= $this->asset('images/favicon.ico') ?>">
     <?= $this->section('styles', '') ?>

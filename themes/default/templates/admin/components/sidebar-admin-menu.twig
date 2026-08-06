@@ -1,0 +1,351 @@
+{#
+    The menu of the admin panel. Every section is a collapsible group; the group holding the page
+    being looked at is open.
+
+    The counters come from admin_counters(), so a page that hides the sidebar runs no query.
+
+    @var array usr_menu    Set by the page: the key of the active item of the "Users" group.
+    @var array module_menu The same for the "Modules" group.
+    @var array sys_menu    The same for the "System" group.
+    @var array sec_menu    The same for the "Security" group.
+#}
+{% set counters = admin_counters() %}
+{% set rights = app.user.isValid ? app.user.rights : 0 %}
+{% set sprite = asset('icons/sprite.svg') %}
+{% set theme_sprite = asset('icons/sprite.svg', true) %}
+{% set is_dark = app.dark_scheme %}
+{% set theme_toggle_title = is_dark ? d__('system', 'Set Light Theme') : d__('system', 'Set Dark Theme') %}
+<div style="background-color: #bd0719; height: 5px">&nbsp;</div>
+
+<div class="accordion flex-grow-1" id="accordionAdmin">
+    <a class="nav-link user__link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseUsers" aria-expanded="false">
+        <div class="nav__vertical pt-2 pb-2 text-danger d-flex align-items-center">
+            <svg class="icon">
+                <use xlink:href="{{ sprite }}#users"/>
+            </svg>
+            <span class="flex-grow-1">{{ d__('admin', 'Users') }}</span>
+            {% if counters.registrations %}
+                <div class="badge bg-danger rounded-pill ms-2">+&nbsp;{{ counters.registrations }}</div>
+            {% endif %}
+        </div>
+        <div>
+            <svg class="icon icon-chevron-bottom">
+                <use xlink:href="{{ sprite }}#chevron-bottom"/>
+            </svg>
+        </div>
+    </a>
+    <div id="collapseUsers" class="collapse{{ usr_menu ? ' show' : '' }}" data-bs-parent="#accordionAdmin">
+        <div class="border-bottom"></div>
+        <ul class="nav nav__vertical">
+            <li class="{{ usr_menu.search_ip|default(false) ? 'active' : '' }}">
+                <a href="/admin/ip-search">
+                    <svg class="icon text-info">
+                        <use xlink:href="{{ sprite }}#search"/>
+                    </svg>
+                    <span class="flex-grow-1 text-info">{{ d__('admin', 'Search') }}</span>
+                </a>
+            </li>
+            {% if counters.registrations %}
+                <li class="{{ usr_menu.reg|default(false) ? 'active' : '' }}">
+                    <a href="/admin/registrations">
+                        <svg class="icon">
+                            <use xlink:href="{{ sprite }}#help-circle"/>
+                        </svg>
+                        <span class="flex-grow-1">{{ d__('admin', 'On registration') }}</span>
+                        <span class="badge rounded-pill bg-danger">{{ counters.registrations|format_number }}</span>
+                    </a>
+                </li>
+            {% endif %}
+            <li class="{{ usr_menu.userlist|default(false) ? 'active' : '' }}">
+                <a href="/admin/users">
+                    <svg class="icon">
+                        <use xlink:href="{{ sprite }}#users"/>
+                    </svg>
+                    <span class="flex-grow-1">{{ d__('admin', 'Users') }}</span>
+                    <span class="badge rounded-pill text-bg-light">{{ counters.users|format_number }}</span>
+                </a>
+            </li>
+            <li class="{{ usr_menu.adminlist|default(false) ? 'active' : '' }}">
+                <a href="/admin/staff">
+                    <svg class="icon">
+                        <use xlink:href="{{ sprite }}#user"/>
+                    </svg>
+                    <span class="flex-grow-1">{{ d__('admin', 'Administration') }}</span>
+                    <span class="badge rounded-pill text-bg-light">{{ counters.staff|format_number }}</span>
+                </a>
+            </li>
+            <li class="{{ usr_menu.ban_panel|default(false) ? 'active' : '' }}">
+                <a href="/admin/bans">
+                    <svg class="icon">
+                        <use xlink:href="{{ sprite }}#slash"/>
+                    </svg>
+                    <span class="flex-grow-1">{{ d__('admin', 'Ban Panel') }}</span>
+                    <span class="badge rounded-pill text-bg-light">{{ counters.bans|format_number }}</span>
+                </a>
+            </li>
+            {% if rights == 9 %}
+                <li class="{{ usr_menu.usr_clean|default(false) ? 'active' : '' }}">
+                    <a href="/admin/users/cleanup">
+                        <svg class="icon">
+                            <use xlink:href="{{ sprite }}#database"/>
+                        </svg>
+                        <span class="flex-grow-1">{{ d__('admin', 'Database cleanup') }}</span>
+                    </a>
+                </li>
+                <li class="{{ usr_menu.antiflood|default(false) ? 'active' : '' }}">
+                    <a href="/admin/antiflood">
+                        <svg class="icon">
+                            <use xlink:href="{{ sprite }}#bell-off"/>
+                        </svg>
+                        <span class="flex-grow-1">{{ d__('admin', 'Antiflood') }}</span>
+                    </a>
+                </li>
+                <li class="{{ usr_menu.karma|default(false) ? 'active' : '' }}">
+                    <a href="/admin/karma">
+                        <svg class="icon">
+                            <use xlink:href="{{ sprite }}#check"/>
+                        </svg>
+                        <span class="flex-grow-1">{{ d__('admin', 'Karma') }}</span>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+    <div class="border-bottom"></div>
+
+    <a class="nav-link user__link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseModules" aria-expanded="false">
+        <div class="nav__vertical pt-2 pb-2 text-danger">
+            <svg class="icon">
+                <use xlink:href="{{ sprite }}#shopping-cart"/>
+            </svg>
+            <span class="flex-grow-1">{{ d__('admin', 'Modules') }}</span>
+        </div>
+        <div>
+            <svg class="icon icon-chevron-bottom">
+                <use xlink:href="{{ sprite }}#chevron-bottom"/>
+            </svg>
+        </div>
+    </a>
+    <div id="collapseModules" class="collapse{{ module_menu ? ' show' : '' }}" data-bs-parent="#accordionAdmin">
+        <div class="border-bottom"></div>
+        <ul class="nav nav__vertical">
+            <li class="{{ module_menu.access|default(false) ? 'active' : '' }}">
+                <a href="/admin/modules-access">
+                    <svg class="icon">
+                        <use xlink:href="{{ sprite }}#shield"/>
+                    </svg>
+                    <span class="flex-grow-1">{{ d__('admin', 'Permissions') }}</span>
+                </a>
+            </li>
+            <li class="{{ module_menu.forum|default(false) ? 'active' : '' }}">
+                <a href="/admin/forum">
+                    <svg class="icon">
+                        <use xlink:href="{{ sprite }}#forum"/>
+                    </svg>
+                    <span class="flex-grow-1">{{ d__('admin', 'Forum') }}</span>
+                </a>
+            </li>
+            <li class="{{ module_menu.news|default(false) ? 'active' : '' }}">
+                <a href="/admin/news/">
+                    <svg class="icon">
+                        <use xlink:href="{{ sprite }}#book"/>
+                    </svg>
+                    <span class="flex-grow-1">{{ d__('admin', 'News') }}</span>
+                </a>
+            </li>
+            <li class="{{ module_menu.collections|default(false) ? 'active' : '' }}">
+                <a href="/admin/collections">
+                    <svg class="icon">
+                        <use xlink:href="{{ sprite }}#database"/>
+                    </svg>
+                    <span class="flex-grow-1">{{ d__('admin', 'Collections') }}</span>
+                </a>
+            </li>
+            <li class="{{ module_menu.ads|default(false) ? 'active' : '' }}">
+                <a href="/admin/ads">
+                    <svg class="icon">
+                        <use xlink:href="{{ sprite }}#shopping-cart"/>
+                    </svg>
+                    <span class="flex-grow-1">{{ d__('admin', 'Advertisement') }}</span>
+                </a>
+            </li>
+            <li class="{{ module_menu.consents|default(false) ? 'active' : '' }}">
+                <a href="/admin/consents">
+                    <svg class="icon">
+                        <use xlink:href="{{ sprite }}#check"/>
+                    </svg>
+                    <span class="flex-grow-1">{{ d__('admin', 'Consents') }}</span>
+                </a>
+            </li>
+            <li class="{{ module_menu.contacts|default(false) ? 'active' : '' }}">
+                <a href="/admin/contacts">
+                    <svg class="icon">
+                        <use xlink:href="{{ sprite }}#messages"/>
+                    </svg>
+                    <span class="flex-grow-1">{{ d__('admin', 'Contacts') }}</span>
+                </a>
+            </li>
+            <li class="{{ module_menu.cookie_banner|default(false) ? 'active' : '' }}">
+                <a href="/admin/cookie-banner">
+                    <svg class="icon">
+                        <use xlink:href="{{ sprite }}#shield"/>
+                    </svg>
+                    <span class="flex-grow-1">{{ d__('admin', 'Cookie banner') }}</span>
+                </a>
+            </li>
+            {% if rights == 9 %}
+                <li class="{{ module_menu.counters|default(false) ? 'active' : '' }}">
+                    <a href="/admin/counters">
+                        <svg class="icon">
+                            <use xlink:href="{{ sprite }}#pie-chart"/>
+                        </svg>
+                        <span class="flex-grow-1">{{ d__('admin', 'Counters') }}</span>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+    <div class="border-bottom"></div>
+
+    <a class="nav-link user__link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseSystem" aria-expanded="false">
+        <div class="nav__vertical pt-2 pb-2 text-danger">
+            <svg class="icon">
+                <use xlink:href="{{ sprite }}#settings"/>
+            </svg>
+            <span class="flex-grow-1">{{ d__('admin', 'System') }}</span>
+        </div>
+        <div>
+            <svg class="icon icon-chevron-bottom">
+                <use xlink:href="{{ sprite }}#chevron-bottom"/>
+            </svg>
+        </div>
+    </a>
+    <div id="collapseSystem" class="collapse{{ sys_menu ? ' show' : '' }}" data-bs-parent="#accordionAdmin">
+        <div class="border-bottom"></div>
+        <ul class="nav nav__vertical">
+            <li class="{{ sys_menu.settings|default(false) ? 'active' : '' }}">
+                <a href="/admin/settings">
+                    <svg class="icon">
+                        <use xlink:href="{{ sprite }}#settings"/>
+                    </svg>
+                    <span class="flex-grow-1">{{ d__('admin', 'System Settings') }}</span>
+                </a>
+            </li>
+            <li class="{{ sys_menu.emoticons|default(false) ? 'active' : '' }}">
+                <a href="/admin/emoticons">
+                    <svg class="icon">
+                        <use xlink:href="{{ sprite }}#smile"/>
+                    </svg>
+                    <span class="flex-grow-1">{{ d__('admin', 'Update Smilies') }}</span>
+                </a>
+            </li>
+            <li class="{{ sys_menu.languages|default(false) ? 'active' : '' }}">
+                <a href="/admin/languages">
+                    <svg class="icon">
+                        <use xlink:href="{{ sprite }}#forum"/>
+                    </svg>
+                    <span class="flex-grow-1">{{ d__('admin', 'Language Settings') }}</span>
+                </a>
+            </li>
+            <li class="{{ sys_menu.system_check|default(false) ? 'active' : '' }}">
+                <a href="/admin/system_check/">
+                    <svg class="icon">
+                        <use xlink:href="{{ sprite }}#check-circle"/>
+                    </svg>
+                    <span class="flex-grow-1">{{ d__('admin', 'System check') }}</span>
+                </a>
+            </li>
+            <li class="{{ sys_menu.maintenance|default(false) ? 'active' : '' }}">
+                <a href="/admin/maintenance">
+                    <svg class="icon">
+                        <use xlink:href="{{ sprite }}#tool"/>
+                    </svg>
+                    <span class="flex-grow-1">{{ d__('admin', 'Maintenance') }}</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="border-bottom"></div>
+
+    <a class="nav-link user__link" href="#" data-bs-toggle="collapse" data-bs-target="#collapseSecurity" aria-expanded="false">
+        <div class="nav__vertical pt-2 pb-2 text-danger">
+            <svg class="icon">
+                <use xlink:href="{{ sprite }}#shield"/>
+            </svg>
+            <span class="flex-grow-1">{{ d__('admin', 'Security') }}</span>
+        </div>
+        <div>
+            <svg class="icon icon-chevron-bottom">
+                <use xlink:href="{{ sprite }}#chevron-bottom"/>
+            </svg>
+        </div>
+    </a>
+    <div id="collapseSecurity" class="collapse{{ sec_menu ? ' show' : '' }}" data-bs-parent="#accordionAdmin">
+        <div class="border-bottom"></div>
+        <ul class="nav nav__vertical">
+            <li class="{{ sec_menu.antispy|default(false) ? 'active' : '' }}">
+                <a href="/admin/file-integrity">
+                    <svg class="icon">
+                        <use xlink:href="{{ sprite }}#check"/>
+                    </svg>
+                    <span class="flex-grow-1">{{ d__('admin', 'Anti-Spyware') }}</span>
+                </a>
+            </li>
+            <li class="{{ sec_menu.ipban|default(false) ? 'active' : '' }}">
+                <a href="/admin/ip-bans">
+                    <svg class="icon">
+                        <use xlink:href="{{ sprite }}#slash"/>
+                    </svg>
+                    <span class="flex-grow-1">{{ d__('admin', 'Ban by IP') }}</span>
+                </a>
+            </li>
+            <li class="{{ sec_menu.ip_whois|default(false) ? 'active' : '' }}">
+                <a href="/admin/ip-whois">
+                    <svg class="icon">
+                        <use xlink:href="{{ sprite }}#search"/>
+                    </svg>
+                    <span class="flex-grow-1">IP Whois</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="border-bottom"></div>
+</div>
+
+<div class="sidebar__footer">
+    <div>
+        <a href="/online/">
+            <svg class="icon sidebar_online">
+                <use xlink:href="{{ sprite }}#user"/>
+            </svg>
+            {{ online() }}
+        </a>
+    </div>
+
+    {% set languages = config('johncms.lng_list')|default({}) %}
+    {% if languages|length > 1 %}
+        <div class="mt-1">
+            <button class="btn btn-link ps-0" data-url="/language/" data-bs-toggle="modal" data-bs-target=".ajax_modal">
+                <img class="icon icon-flag" src="{{ asset('images/flags/' ~ app.locale|lower ~ '.svg') }}" alt="{{ app.locale }}">
+                {{ languages[app.locale].name }}
+            </button>
+        </div>
+    {% endif %}
+    <div class="mt-1">
+        <button
+            type="button"
+            class="btn btn-link p-0"
+            data-theme-toggle
+            data-current-theme="{{ app.color_scheme }}"
+            data-icon-sprite="{{ theme_sprite }}"
+            data-title-dark="{{ d__('system', 'Set Dark Theme') }}"
+            data-title-light="{{ d__('system', 'Set Light Theme') }}"
+            title="{{ theme_toggle_title }}"
+            aria-label="{{ theme_toggle_title }}"
+        >
+            <svg class="icon m-0">
+                <use xlink:href="{{ theme_sprite }}#{{ is_dark ? 'sun' : 'moon' }}"/>
+            </svg>
+        </button>
+    </div>
+</div>

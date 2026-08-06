@@ -1,0 +1,21 @@
+{#
+    A page of the panel that does not exist.
+
+    @var string title
+    @var string message
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-6 m-auto">
+            <div class="m-auto" style="max-width: 350px;">
+                <img src="{{ asset('icons/404-error.svg') }}" alt="" class="img-fluid">
+            </div>
+            <div class="text-center">
+                <div class="fw-bold h1">{{ title }}</div>
+                <p class="h2">{{ message|default('') }}</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

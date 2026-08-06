@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\View\Twig\Extension;
 
+use Johncms\View\Twig\Runtime\AdminRuntime;
 use Johncms\View\Twig\Runtime\DebugPanelRuntime;
 use Johncms\View\Twig\Runtime\SiteRuntime;
 use Twig\Extension\AbstractExtension;
@@ -24,6 +25,7 @@ final class SiteExtension extends AbstractExtension
             new TwigFunction('online', [SiteRuntime::class, 'online']),
             new TwigFunction('ads', [SiteRuntime::class, 'ads']),
             new TwigFunction('analytics', [SiteRuntime::class, 'analytics']),
+            new TwigFunction('admin_counters', [AdminRuntime::class, 'counters']),
             new TwigFunction('debug_stats', [DebugPanelRuntime::class, 'stats']),
         ];
     }

@@ -1,0 +1,18 @@
+{#
+    The layout of a page shown before the visitor is let into the panel: no sidebar, no chrome,
+    the content centred on an empty page.
+#}
+{% extends '@theme/layouts/base.twig' %}
+
+{% block vite %}{{ vite('admin', app.locale == 'ar') }}{% endblock %}
+
+{% block body %}
+    <div class="wrapper bg-light">
+        {% block content %}{% endblock %}
+    </div>
+    <div class="modal fade ajax_modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content"></div>
+        </div>
+    </div>
+{% endblock %}
