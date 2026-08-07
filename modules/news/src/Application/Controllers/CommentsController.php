@@ -20,7 +20,7 @@ use Johncms\Security\HTMLPurifier;
 use Johncms\Smilies\SmiliesRendererInterface;
 use Johncms\Http\Environment;
 use Johncms\Http\Request;
-use Johncms\System\View\Extension\Avatar;
+use Johncms\View\Twig\Runtime\AssetRuntime;
 use Johncms\Users\User;
 use League\Flysystem\FilesystemException;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -39,11 +39,11 @@ final readonly class CommentsController
      * The list of comments
      *
      * @param int $article_id
-     * @param Avatar $avatar
+     * @param AssetRuntime $assets
      * @param SmiliesRendererInterface $smiliesRenderer
      * @param User $current_user
      */
-    public function index(int $article_id, Avatar $avatar, SmiliesRendererInterface $smiliesRenderer, User $current_user): Response
+    public function index(int $article_id, AssetRuntime $assets, SmiliesRendererInterface $smiliesRenderer, User $current_user): Response
     {
         if ($article_id === 0) {
             return new JsonResponse(['error' => __('Bad Request')], Response::HTTP_BAD_REQUEST);
@@ -70,7 +70,7 @@ final readonly class CommentsController
         $array = [
             'current_page'   => $currentPage,
             'data'           => $comments->map(
-                static function (NewsComments $comment) use ($avatar, $smiliesRenderer, $current_user, $purifier, $embed) {
+                static function (NewsComments $comment) use ($assets, $smiliesRenderer, $current_user, $purifier, $embed) {
                     $user = $comment->user;
                     $user_data = [];
                     if ($user) {
@@ -81,7 +81,7 @@ final readonly class CommentsController
                             'is_online'   => $user->is_online,
                             'rights_name' => $user->rights_name,
                             'profile_url' => $user->profile_url,
-                            'avatar'      => $avatar->getUserAvatar($user->id),
+                            'avatar'      => $assets->avatar((int) $user->id),
                         ];
                     }
 

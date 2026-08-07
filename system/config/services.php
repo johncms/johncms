@@ -43,11 +43,6 @@ use Johncms\Http\SessionFactory;
 use Johncms\System\i18n\Translator;
 use Johncms\System\i18n\TranslatorServiceFactory;
 use Johncms\System\Users\UserFactory;
-use Johncms\System\View\Extension\Assets;
-use Johncms\System\View\Extension\Avatar;
-use Johncms\System\View\Extension\Formatter;
-use Johncms\System\View\Extension\Vite;
-use Johncms\System\View\Render;
 use Johncms\Console\Commands\I18nScanCommand;
 use Johncms\Console\Commands\TwigCompileCommand;
 use Johncms\Console\Commands\TwigLintCommand;
@@ -186,10 +181,6 @@ return static function (ContainerConfigurator $container): void {
     $services->set(HTMLPurifier::class)->factory([HTMLPurifier::class, 'create']);
     $services->set(\HTMLPurifier::class, \HTMLPurifier::class)->factory([HTMLPurifier::class, 'create']);
 
-    $services->set(Assets::class)->factory([Assets::class, 'create']);
-    $services->set(Avatar::class)->factory([Avatar::class, 'create']);
-    $services->set(Vite::class);
-    $services->set(Formatter::class)->autowire();
     $services->set(Environment::class)->autowire();
     $services->set(RouteCollection::class)->factory(service(RouteCollectorFactory::class));
     $services->set(RequestContext::class)->factory(service(RequestContextFactory::class));

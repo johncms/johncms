@@ -6,7 +6,7 @@ namespace Johncms\Modules\Downloads\Application;
 
 use Johncms\Modules\Downloads\Application\Services\DownloadFilePathService;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
-use Johncms\System\View\Extension\Assets;
+use Johncms\View\Asset\AssetResolver;
 use Johncms\Users\User;
 
 final class FilePresenter
@@ -32,7 +32,7 @@ final class FilePresenter
     ];
 
     public function __construct(
-        private Assets $assets,
+        private AssetResolver $assets,
         private User $currentUser,
         private DownloadFilePathService $filePathService,
     ) {

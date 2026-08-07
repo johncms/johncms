@@ -4,19 +4,14 @@ declare(strict_types=1);
 
 namespace Tests\Unit\View\Twig;
 
-use Johncms\System\View\Render;
-use Johncms\View\PlatesRenderer;
-use Johncms\View\Twig\Extension\PlatesBridgeExtension;
-use Johncms\View\Twig\Runtime\PlatesRuntime;
 use Johncms\View\Twig\TwigRenderer;
 use PHPUnit\Framework\TestCase;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
-use Twig\RuntimeLoader\FactoryRuntimeLoader;
 
 /**
  * What the environment guarantees to every template: output is escaped unless it is declared
- * markup, and a page can still pull in a partial that has not moved off Plates yet.
+ * markup.
  */
 final class TwigEnvironmentTest extends TestCase
 {
@@ -53,20 +48,6 @@ final class TwigEnvironmentTest extends TestCase
         );
     }
 
-    /**
-     * A Plates partial returns finished markup. Escaping it would print its tags, so the bridge
-     * hands it over as Markup and the template needs no raw filter.
-     */
-    public function testAPlatesPartialIsIncludedAsMarkup(): void
-    {
-        $this->writeTemplate('bridge.twig', "{{ plates('tests::hello', {name: 'World'}) }}");
-
-        self::assertSame(
-            "Hello, World!\n",
-            $this->renderer()->render('@tests/bridge.twig')
-        );
-    }
-
     public function testAMissingTemplateIsReportedByExists(): void
     {
         $this->writeTemplate('present.twig', 'here');
@@ -82,13 +63,6 @@ final class TwigEnvironmentTest extends TestCase
         $loader->addPath($this->root, 'tests');
 
         $twig = new Environment($loader, ['autoescape' => 'html', 'cache' => false, 'strict_variables' => true]);
-        $twig->addExtension(new PlatesBridgeExtension());
-
-        $plates = new Render();
-        $plates->addFolder('tests', __DIR__ . '/../../System/View/templates');
-        $twig->addRuntimeLoader(new FactoryRuntimeLoader([
-            PlatesRuntime::class => static fn (): PlatesRuntime => new PlatesRuntime(new PlatesRenderer($plates)),
-        ]));
 
         return new TwigRenderer($twig);
     }

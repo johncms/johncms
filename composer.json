@@ -54,7 +54,6 @@
         "laminas/laminas-validator": "^2.14",
         "league/flysystem": "^2.0",
         "mobicms/captcha": "^4.0",
-        "mobicms/render": "^2.0",
         "monolog/monolog": "^3.9",
         "simba77/ckeditor-media-embed": "^1.1",
         "symfony/config": "^7.4",
