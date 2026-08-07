@@ -232,7 +232,7 @@ msgstr ""
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:91
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:114
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:150
-#: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:45
+#: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:44
 #: modules/admin/src/Application/Controllers/Settings/AdsController.php:80
 #: modules/admin/src/Application/Controllers/Settings/AdsController.php:89
 #: modules/admin/src/Application/Controllers/Settings/AdsController.php:130
@@ -261,7 +261,7 @@ msgid "ERROR: Can not write file `forum.local.php`"
 msgstr ""
 
 #: modules/admin/src/Application/Controllers/Forum/ForumSettingsController.php:58
-#: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:62
+#: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:61
 #: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:48
 #: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:48
 #: modules/admin/src/Application/Controllers/Settings/SystemSettingsController.php:50
@@ -455,9 +455,9 @@ msgstr ""
 msgid "IP history"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:57
-#: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:110
-#: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:125
+#: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:56
+#: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:121
+#: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:136
 #: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:45
 #: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:45
 #: modules/admin/src/Application/Controllers/Settings/SystemSettingsController.php:47
@@ -465,29 +465,29 @@ msgstr ""
 msgid "ERROR: Can not write file `system.local.php`"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:61
+#: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:60
 msgid "Descriptions have been updated successfully"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:68
-#: modules/admin/templates/languages/index.phtml:40
+#: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:67
+#: modules/admin/templates/languages.twig:35
 msgid "Managing languages"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:69
-#: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:155
+#: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:68
+#: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:166
 msgid "Languages"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:94
+#: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:105
 msgid "The language was successfully installed"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:99
+#: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:110
 msgid "The language was successfully updated"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:108
+#: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:119
 msgid "The language was successfully deleted"
 msgstr ""
 
@@ -508,7 +508,7 @@ msgstr ""
 #: modules/admin/templates/forum/del_confirm.phtml:20
 #: modules/admin/templates/forum/del_confirm_move_topics.phtml:49
 #: modules/admin/templates/forum/structure.phtml:35
-#: modules/admin/templates/languages/manage.phtml:51
+#: modules/admin/templates/languages-manage.twig:51
 #: modules/admin/templates/reg_list.phtml:38
 #: modules/admin/templates/user_clean_confirm.phtml:31
 #: modules/admin/templates/usr_del.phtml:42
@@ -906,7 +906,7 @@ msgstr ""
 #: modules/admin/templates/forum/settings.phtml:64
 #: modules/admin/templates/ipban_add.phtml:57
 #: modules/admin/templates/karma.phtml:50
-#: modules/admin/templates/languages/index.phtml:36
+#: modules/admin/templates/languages.twig:31
 #: modules/admin/templates/settings.phtml:112
 msgid "Save"
 msgstr ""
@@ -1035,7 +1035,7 @@ msgstr ""
 #: modules/admin/templates/forum/structure.phtml:43
 #: modules/admin/templates/ipban.phtml:66
 #: modules/admin/templates/ipban_detail.phtml:55
-#: modules/admin/templates/languages/manage.phtml:63
+#: modules/admin/templates/languages-manage.twig:63
 #: modules/admin/templates/reg_list.phtml:57
 #: modules/admin/templates/search_ip.phtml:64
 msgid "Back"
@@ -1724,40 +1724,40 @@ msgstr ""
 msgid "Clear"
 msgstr ""
 
-#: modules/admin/templates/languages/index.phtml:25
-msgid "Default language"
-msgstr ""
-
-#: modules/admin/templates/languages/index.phtml:37
-msgid "Update List"
-msgstr ""
-
-#: modules/admin/templates/languages/manage.phtml:36
+#: modules/admin/templates/languages-manage.twig:36
 msgid "Version:"
 msgstr ""
 
-#: modules/admin/templates/languages/manage.phtml:38
+#: modules/admin/templates/languages-manage.twig:38
 msgid "New version:"
 msgstr ""
 
-#: modules/admin/templates/languages/manage.phtml:41
+#: modules/admin/templates/languages-manage.twig:41
 msgid "Installed"
 msgstr ""
 
-#: modules/admin/templates/languages/manage.phtml:43
+#: modules/admin/templates/languages-manage.twig:43
 msgid "Not installed"
 msgstr ""
 
-#: modules/admin/templates/languages/manage.phtml:48
+#: modules/admin/templates/languages-manage.twig:48
 msgid "The language files of this language are not writable! "
 msgstr ""
 
-#: modules/admin/templates/languages/manage.phtml:53
+#: modules/admin/templates/languages-manage.twig:53
 msgid "Install"
 msgstr ""
 
-#: modules/admin/templates/languages/manage.phtml:56
+#: modules/admin/templates/languages-manage.twig:56
 msgid "Update"
+msgstr ""
+
+#: modules/admin/templates/languages.twig:20
+msgid "Default language"
+msgstr ""
+
+#: modules/admin/templates/languages.twig:32
+msgid "Update List"
 msgstr ""
 
 #: modules/admin/templates/maintenance_tasks.phtml:15

@@ -1,0 +1,66 @@
+{#
+    Installing, updating and deleting the language packs.
+
+    @var array  languages Rows: code, name, flag, version, new_version, installed, need_update,
+                          access_problem.
+    @var string message   Empty unless an action has just been performed.
+    @var string manage_url
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% macro action_form(url, code, label, csrf_token) %}
+    <form method="post" action="{{ url }}" class="d-inline me-2">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        <input type="hidden" name="code" value="{{ code }}">
+        <button type="submit" class="btn btn-link p-0 align-baseline">{{ label }}</button>
+    </form>
+{% endmacro %}
+
+{% block content %}
+    {% import _self as forms %}
+
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success shadow border-0', alert: message} only %}
+
+    <div>
+        {% for language in languages %}
+            <div class="new_post-item without_avatar">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        {% if language.flag %}
+                            <img src="{{ language.flag }}" alt="." class="me-2 icon icon-flag">
+                        {% endif %}
+                        {{ language.name }}
+                    </div>
+                </div>
+                <div class="post-body">
+                    <span class="me-2">{{ __('Version:') }} {{ language.version|number_format(1) }}</span>
+                    {% if language.need_update %}
+                        <span class="me-2 fw-bold">{{ __('New version:') }} {{ language.new_version|number_format(1) }}</span>
+                    {% endif %}
+                    {% if language.installed %}
+                        <span class="text-success">{{ __('Installed') }}</span>
+                    {% else %}
+                        <span class="text-danger">{{ __('Not installed') }}</span>
+                    {% endif %}
+                </div>
+                <div class="post-meta d-flex align-items-baseline">
+                    {% if language.access_problem %}
+                        <div class="fw-bold text-danger">{{ __('The language files of this language are not writable! ') }}</div>
+                    {% else %}
+                        {% if language.installed %}
+                            {{ forms.action_form(manage_url ~ '/delete', language.code, __('Delete'), app.csrf_token) }}
+                        {% else %}
+                            {{ forms.action_form(manage_url ~ '/install', language.code, __('Install'), app.csrf_token) }}
+                        {% endif %}
+                        {% if language.need_update %}
+                            {{ forms.action_form(manage_url ~ '/update', language.code, __('Update'), app.csrf_token) }}
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+        <div class="mt-3">
+            <a href="/admin/languages">{{ __('Back') }}</a>
+        </div>
+    </div>
+{% endblock %}
