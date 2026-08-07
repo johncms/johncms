@@ -21,7 +21,7 @@
                    name="name_link" value="{{ file_data.name_link }}" maxlength="200" required>
         </div>
         <div class="form-group">
-            {% include '@downloads/public/components/editor.twig' with {
+            {% include '@theme/components/editor.twig' with {
                 label: __('Description'),
                 name: 'desc',
                 value: file_data.desc

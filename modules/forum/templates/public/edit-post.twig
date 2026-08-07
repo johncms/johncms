@@ -11,10 +11,13 @@
 {% block content %}
     <form name="edit_post" action="{{ action_url }}" method="post">
         <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
-        {% include '@forum/public/components/editor.twig' with {
+        {% include '@theme/components/editor.twig' with {
+            name: 'msg',
             label: __('Message'),
             value: msg,
-            errors: errors.message|default([])|join(', ')
+            errors: errors.message|default([])|join(', '),
+            upload_url: '/forum/upload_file/',
+            allow_upload: true
         } only %}
         <div>
             <button type="submit" name="submit" value="1" class="btn btn-primary">{{ __('Save') }}</button>

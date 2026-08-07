@@ -15,10 +15,12 @@
         <input type="hidden" name="token" value="{{ token }}">
         <div class="h4">{{ __('Topic') }}: {{ topic_name }}</div>
 
-        {% include '@forum/public/components/editor.twig' with {
+        {% include '@theme/components/editor.twig' with {
+            name: 'msg',
             label: __('Message'),
             value: msg,
-            errors: ''
+            upload_url: '/forum/upload_file/',
+            allow_upload: true
         } only %}
         <div class="custom-control custom-checkbox mb-3">
             <input type="checkbox" class="custom-control-input" name="addfiles" value="1" id="addfiles"{% if add_file %} checked="checked"{% endif %}>

@@ -1,0 +1,31 @@
+{#
+    The rich text editor, as a Vue component. Every form that edits formatted text uses this one;
+    what differs between them is the name of the field and whether the editor may upload.
+
+    The scripts are loaded here rather than in the layout: a page without an editor must not pay
+    for them.
+
+    @param string name         Name of the field in the form.
+    @param string label
+    @param string value
+    @param string id           Id of the field, the name by default.
+    @param string errors       Messages of the field, already joined into one line.
+    @param string upload_url   Where the editor uploads to; empty when it uploads nothing.
+    @param bool   allow_upload
+#}
+{% if app.locale != 'en' and asset_exists('ckeditor5/translations/' ~ app.locale ~ '.js') %}
+    <script src="{{ asset('ckeditor5/translations/' ~ app.locale ~ '.js', true) }}"></script>
+{% endif %}
+<script src="{{ asset('ckeditor5/ckeditor.js', true) }}"></script>
+<div class="vue_app">
+    <ckeditor-input-component
+        upload_url="{{ upload_url|default('') }}"
+        name="{{ name }}"
+        language="{{ app.locale }}"
+        errors="{{ errors|default('') }}"
+        id="{{ id|default(name) }}"
+        label="{{ label|default('') }}"
+        value="{{ value|default('') }}"
+        :allow_upload="{{ allow_upload|default(false) ? 'true' : 'false' }}"
+    ></ckeditor-input-component>
+</div>

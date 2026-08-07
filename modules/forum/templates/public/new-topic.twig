@@ -39,10 +39,13 @@
             {% endif %}
         </div>
         <div class="form-group">
-            {% include '@forum/public/components/editor.twig' with {
+            {% include '@theme/components/editor.twig' with {
+                name: 'msg',
                 label: __('Message'),
                 value: msg,
-                errors: errors.message|default([])|join(', ')
+                errors: errors.message|default([])|join(', '),
+                upload_url: '/forum/upload_file/',
+                allow_upload: true
             } only %}
         </div>
         {% if can_set_meta %}

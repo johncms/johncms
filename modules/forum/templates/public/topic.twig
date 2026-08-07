@@ -31,10 +31,11 @@
         {% if quick_reply %}
             <input type="hidden" name="token" value="{{ token }}"/>
             <div class="form-group">
-                {% include '@forum/public/components/editor.twig' with {
+                {% include '@theme/components/editor.twig' with {
+                    name: 'msg',
                     label: __('Message'),
-                    value: '',
-                    errors: ''
+                    upload_url: '/forum/upload_file/',
+                    allow_upload: true
                 } only %}
             </div>
             <div class="custom-control custom-checkbox mb-3">

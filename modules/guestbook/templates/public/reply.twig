@@ -16,10 +16,14 @@
             <b>{{ __('Author') }}:</b> {{ author }} <br>
             {{ post_text }}
         </p>
-        {% include '@guestbook/public/components/editor.twig' with {
+        {% include '@theme/components/editor.twig' with {
+            name: 'message',
+            id: 'message2',
             label: __('Reply'),
             errors: errors.message|default([])|join(', '),
-            value: text
+            value: text,
+            upload_url: '/guestbook/upload_file/',
+            allow_upload: true
         } only %}
         <div>
             <button type="submit" name="submit" value="submit" class="btn btn-primary me-2">{{ __('Save') }}</button>

@@ -41,10 +41,14 @@
                         </div>
                     {% endif %}
 
-                    {% include '@guestbook/public/components/editor.twig' with {
+                    {% include '@theme/components/editor.twig' with {
+                        name: 'message',
+                        id: 'message2',
                         label: __('Message'),
                         errors: errors.message|default([])|join(', '),
-                        value: form_data.message|default('')
+                        value: form_data.message|default(''),
+                        upload_url: '/guestbook/upload_file/',
+                        allow_upload: true
                     } only %}
 
                     {% if not app.user.isValid %}

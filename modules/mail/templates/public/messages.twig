@@ -30,7 +30,8 @@
                     </div>
                 {% endif %}
                 <div class="form-group">
-                    {% include '@mail/public/components/editor.twig' with {
+                    {% include '@theme/components/editor.twig' with {
+                        name: 'text',
                         label: __('Message'),
                         value: data.text|default('')
                     } only %}

@@ -52,7 +52,7 @@
 
             {% if text_editable %}
                 <div class="form-group">
-                    {% include '@library/public/components/editor.twig' with {label: __('Text'), value: text} only %}
+                    {% include '@theme/components/editor.twig' with {name: 'text', label: __('Text'), value: text} only %}
                 </div>
             {% else %}
                 <div class="alert alert-info">{{ __('The text of the Article can not be edited, a large amount of data !!!') }}</div>
