@@ -12,15 +12,14 @@ use Johncms\Modules\Admin\Application\Services\BanListRowMapper;
 use Johncms\Modules\Admin\Application\UseCases\GetBanListUseCase;
 use Johncms\Modules\Admin\Domain\Enums\BanListSort;
 use Johncms\Modules\Admin\Domain\Enums\UserRights;
+use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
-use Johncms\System\View\Render;
 use Johncms\Users\User;
 
 final readonly class BanListController
 {
     public function __construct(
         private AdminControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private User $currentUser,
         private GetBanListUseCase $getBanListUseCase,
@@ -31,7 +30,7 @@ final readonly class BanListController
         $this->controllerContext->initModule('admin');
     }
 
-    public function __invoke(?string $sort = null): string
+    public function __invoke(?string $sort = null): ViewResponse
     {
         $sortMode = $sort === 'by-violations' ? BanListSort::VIOLATIONS : BanListSort::TIME;
 
@@ -48,17 +47,13 @@ final readonly class BanListController
         $this->navChain->add($title);
 
         $meta = new PageMeta($title, $pagination->getCurrentPage());
-        $this->render->addData(
-            [
-                'title'      => $meta->title,
-                'page_title' => $title,
-                'usr_menu'   => ['ban_panel' => true],
-            ]
-        );
 
-        return $this->render->render(
-            'admin::ban_panel',
+        return new ViewResponse(
+            '@admin/banned-users.twig',
             [
+                'title'        => $meta->title,
+                'page_title'   => $title,
+                'usr_menu'     => ['ban_panel' => true],
                 'items'        => $this->rowMapper->mapMany($bans),
                 'total'        => $pagination->getTotal(),
                 'per_page'     => $pagination->getPerPage(),

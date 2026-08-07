@@ -40,8 +40,13 @@ final readonly class AdminUserRowMapper
             'user_profile_link'       => '',
             'ip'                      => $user->ip,
             'search_ip_url'           => '/admin/ip-search?ip=' . $user->ip,
-            'ip_via_proxy'            => $user->ip_via_proxy !== '' ? $user->ip_via_proxy : 0,
+            'ip_via_proxy'            => $user->ip_via_proxy !== '' ? $user->ip_via_proxy : '',
             'search_ip_via_proxy_url' => $user->ip_via_proxy !== '' ? '/admin/ip-search?ip=' . $user->ip_via_proxy : '',
+            // The address and the user agent of a visitor are for the staff only.
+            'show_origin'             => $this->currentUser->rights >= 3,
+            // Filled in by the mappers that decorate this row; the template reads them always.
+            'active'                  => false,
+            'buttons'                 => [],
         ];
 
         if ($this->currentUser->isValid() && $this->currentUser->id !== $user->id) {

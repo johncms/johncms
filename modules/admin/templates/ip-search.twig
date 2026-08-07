@@ -1,0 +1,63 @@
+{#
+    Looking visitors up by address, in the current addresses or in the history.
+
+    @var string       search
+    @var array        items      Rows prepared by AdminUserRowMapper.
+    @var array        errors     What is wrong with the query, empty when it is fine.
+    @var array        filters    Modes to switch between: name, url, active.
+    @var int          total
+    @var int          per_page
+    @var \Twig\Markup pagination
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    <div class="btn-group mb-3" role="group">
+        {% for filter in filters %}
+            <a href="{{ filter.url }}" class="btn btn-outline-secondary {{ filter.active ? 'active' : '' }}">{{ filter.name }}</a>
+        {% endfor %}
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <form action="/admin/ip-search" method="get" class="mb-3">
+                <label for="search">{{ __('Search IP') }}</label>
+                <div class="input-group">
+                    <input type="text" name="search" id="search" class="form-control" placeholder="{{ __('Search IP') }}" value="{{ search }}">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="submit">{{ __('Search') }}</button>
+                    </div>
+                </div>
+                <div class="text-muted mb-2 small">
+                    <b>{{ __('Sample queries:') }}</b><br>
+                    <div><span class="fw-bold">10.5.7.1</span> &mdash; {{ __('Search for a single address') }}</div>
+                    <div><span class="fw-bold">10.5.7.1-10.5.7.100</span> &mdash; {{ __('Search a range address (forbidden to use mask symbol *)') }}</div>
+                    <div><span class="fw-bold">10.5.*.*</span> &mdash; {{ __('Search mask. Will be found all subnet addresses starting with 0 and ending with 255') }}</div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: errors} only %}
+
+    {% if errors is empty and search and items is empty %}
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-info', alert: __('At your request, nothing found')} only %}
+    {% elseif items is not empty %}
+        <h2>{{ __('Search results') }}</h2>
+        {% for item in items %}
+            {% include '@admin/components/user-row.twig' with {item: item} only %}
+        {% endfor %}
+    {% endif %}
+
+    <div class="mt-4">
+        {% if total > per_page %}
+            <div>{{ pagination }}</div>
+        {% endif %}
+        {% if total > 0 %}
+            <div>{{ __('Total:') }} {{ total }}</div>
+        {% endif %}
+    </div>
+    <div>
+        <a href="/admin">{{ __('Back') }}</a>
+    </div>
+{% endblock %}

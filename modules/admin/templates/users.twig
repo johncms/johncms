@@ -1,0 +1,40 @@
+{#
+    Everyone registered on the site.
+
+    @var array        users      Rows prepared by AdminUserRowMapper.
+    @var array        sort_links Orders to switch between: name, url, active.
+    @var int          total
+    @var int          per_page
+    @var \Twig\Markup pagination
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    {% if total %}
+        <div class="btn-group btn-group-sm input-group-sm mb-3" role="group">
+            <div class="input-group-prepend">
+                <div class="input-group-text">{{ __('Sort') }}</div>
+            </div>
+            {% for link in sort_links %}
+                <a href="{{ link.url }}" class="btn btn-outline-secondary ps-3 pe-3{% if link.active %} active{% endif %}">{{ link.name }}</a>
+            {% endfor %}
+        </div>
+
+        {% for user in users %}
+            {% include '@admin/components/user-row.twig' with {item: user} only %}
+        {% endfor %}
+
+        <div>
+            <div>{{ __('Total') }}: {{ total }}</div>
+            {% if total > per_page %}
+                <div class="mt-1">{{ pagination }}</div>
+            {% endif %}
+        </div>
+    {% else %}
+        <div class="row">
+            <div class="col-md-6">
+                {% include '@theme/components/alert.twig' with {alert_type: 'alert-info', alert: __('List is empty')} only %}
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

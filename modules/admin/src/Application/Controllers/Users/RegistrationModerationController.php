@@ -12,10 +12,10 @@ use Johncms\Modules\Admin\Application\Services\RegistrationRowMapper;
 use Johncms\Modules\Admin\Application\UseCases\ApproveRegistrationUseCase;
 use Johncms\Modules\Admin\Application\UseCases\DeleteRegistrationUseCase;
 use Johncms\Modules\Admin\Application\UseCases\GetPendingRegistrationsUseCase;
+use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
-use Johncms\System\View\Render;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
 
@@ -25,7 +25,6 @@ final readonly class RegistrationModerationController
 
     public function __construct(
         private AdminControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private User $currentUser,
         private GetPendingRegistrationsUseCase $getPendingRegistrations,
@@ -39,7 +38,7 @@ final readonly class RegistrationModerationController
         $this->controllerContext->initModule('admin');
     }
 
-    public function index(): string
+    public function index(): ViewResponse
     {
         $pagination = $this->paginationFactory->create($this->getPendingRegistrations->count());
 
@@ -53,31 +52,25 @@ final readonly class RegistrationModerationController
         $title = __('Registration confirmation');
         $this->navChain->add($title);
 
-        $successMessage = $this->session->getFlash('success_message');
-
         $meta = new PageMeta($title, $pagination->getCurrentPage());
-        $this->render->addData(
-            [
-                'title'      => $meta->title,
-                'page_title' => $title,
-                'usr_menu'   => ['reg' => true],
-            ]
-        );
 
-        return $this->render->render(
-            'admin::reg_list',
+        return new ViewResponse(
+            '@admin/registrations.twig',
             [
+                'title'           => $meta->title,
+                'page_title'      => $title,
+                'usr_menu'        => ['reg' => true],
                 'items'           => $this->rowMapper->mapMany($registrations),
                 'total'           => $pagination->getTotal(),
                 'per_page'        => $pagination->getPerPage(),
                 'form_action'     => self::URL,
-                'success_message' => $successMessage,
+                'success_message' => (string) $this->session->getFlash('success_message'),
                 'pagination'      => $pagination->render(),
             ]
         );
     }
 
-    public function approve(Request $request): string
+    public function approve(Request $request): ViewResponse
     {
         if ($this->isCsrfValid($request) && ($id = $this->postedId($request)) > 0) {
             $this->approveRegistration->execute($id, $this->currentUser->name);
@@ -87,7 +80,7 @@ final readonly class RegistrationModerationController
         redirect(self::URL);
     }
 
-    public function approveAll(Request $request): string
+    public function approveAll(Request $request): ViewResponse
     {
         if ($this->isCsrfValid($request)) {
             $this->approveRegistration->executeAll($this->currentUser->name);
@@ -97,7 +90,7 @@ final readonly class RegistrationModerationController
         redirect(self::URL);
     }
 
-    public function delete(Request $request): string
+    public function delete(Request $request): ViewResponse
     {
         if ($this->isCsrfValid($request) && ($id = $this->postedId($request)) > 0) {
             $this->deleteRegistration->execute($id);
@@ -107,7 +100,7 @@ final readonly class RegistrationModerationController
         redirect(self::URL);
     }
 
-    public function deleteAll(Request $request): string
+    public function deleteAll(Request $request): ViewResponse
     {
         if ($this->isCsrfValid($request)) {
             $this->deleteRegistration->executeAll();
@@ -117,7 +110,7 @@ final readonly class RegistrationModerationController
         redirect(self::URL);
     }
 
-    public function deleteByIp(Request $request): string
+    public function deleteByIp(Request $request): ViewResponse
     {
         if ($this->isCsrfValid($request)) {
             $ip = $request->bodyInt('ip');

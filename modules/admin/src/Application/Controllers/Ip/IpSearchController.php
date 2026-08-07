@@ -13,13 +13,12 @@ use Johncms\Modules\Admin\Application\UseCases\SearchUsersByIpUseCase;
 use Johncms\Modules\Admin\Domain\Enums\IpSearchMode;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 
 final readonly class IpSearchController
 {
     public function __construct(
         private AdminControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private SearchUsersByIpUseCase $searchUsersByIpUseCase,
         private AdminUserRowMapper $rowMapper,
@@ -29,7 +28,7 @@ final readonly class IpSearchController
         $this->controllerContext->initModule('admin');
     }
 
-    public function __invoke(Request $request, ?string $mode = null): string
+    public function __invoke(Request $request, ?string $mode = null): ViewResponse
     {
         $searchMode = $mode === 'history' ? IpSearchMode::HISTORY : IpSearchMode::ACTUAL;
 
@@ -56,19 +55,15 @@ final readonly class IpSearchController
         $this->navChain->add($title);
 
         $meta = new PageMeta($title, $pagination->getCurrentPage());
-        $this->render->addData(
+
+        $encodedSearch = urlencode($search);
+
+        return new ViewResponse(
+            '@admin/ip-search.twig',
             [
                 'title'      => $meta->title,
                 'page_title' => $title,
                 'usr_menu'   => ['search_ip' => true],
-            ]
-        );
-
-        $encodedSearch = urlencode($search);
-
-        return $this->render->render(
-            'admin::search_ip',
-            [
                 'search'   => $search,
                 'items'    => $result->users !== null ? $this->rowMapper->mapMany($result->users) : [],
                 'errors'   => $result->errors,

@@ -1,0 +1,50 @@
+{#
+    One visitor in a list of the panel: avatar, name, the actions offered for them, and — for the
+    staff — where they came from.
+
+    @param array item Row prepared by AdminUserRowMapper: id, name, user_profile_link,
+                      user_is_online, active, buttons, show_origin, ip, search_ip_url,
+                      ip_via_proxy, search_ip_via_proxy_url, browser.
+#}
+<div class="user-row {{ item.active ? 'bg-yellow-light' : '' }}">
+    <div class="d-flex align-items-start">
+        <div class="user-avatar me-2 me-md-4">
+            <div class="avatar-image rounded-circle overflow-hidden">
+                <img src="{{ avatar(item.id) }}" class="img-fluid" alt=".">
+            </div>
+            <div class="user-status {{ item.user_is_online ? 'online' : 'offline' }} shadow"></div>
+        </div>
+        <div class="overflow-auto flex-grow-1">
+            <div class="user-name">
+                {% if item.user_profile_link %}
+                    <a href="{{ item.user_profile_link }}" class="user-login me-2">{{ item.name }}</a>
+                {% else %}
+                    <a class="user-login me-2">{{ item.name }}</a>
+                {% endif %}
+            </div>
+            {% if item.buttons is not empty %}
+                <div class="mt-3">
+                    {% for button in item.buttons %}
+                        <a href="{{ button.url }}">{{ button.name }}</a>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    {% if item.show_origin %}
+        <div class="post-footer d-flex justify-content-between border-top pt-2 mt-2">
+            <div class="post-user-info d-flex overflow-hidden small align-items-center">
+                <div class="user-ip me-2">
+                    <a href="{{ item.search_ip_url }}">{{ item.ip }}</a>
+                    {% if item.ip_via_proxy %}
+                        / <a href="{{ item.search_ip_via_proxy_url }}">{{ item.ip_via_proxy }}</a>
+                    {% endif %}
+                </div>
+                <div class="useragent">
+                    <span>User-Agent:</span>
+                    <span>{{ item.browser }}</span>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>

@@ -1,0 +1,29 @@
+{#
+    The staff of the site, grouped by what they may do.
+
+    @var array groups Groups: name, items (rows prepared by AdminUserRowMapper).
+    @var int   total
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    {% if groups is empty %}
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-info', alert: __('The list is empty')} only %}
+    {% endif %}
+
+    {% for group in groups %}
+        <h2>{{ group.name }}</h2>
+        {% for item in group.items %}
+            {% include '@admin/components/user-row.twig' with {item: item} only %}
+        {% endfor %}
+    {% endfor %}
+
+    <div class="mt-4">
+        {% if total > 0 %}
+            <div>{{ __('Total:') }} {{ total }}</div>
+        {% endif %}
+    </div>
+    <div>
+        <a href="/admin">{{ __('Back') }}</a>
+    </div>
+{% endblock %}

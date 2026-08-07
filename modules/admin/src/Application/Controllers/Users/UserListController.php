@@ -11,14 +11,13 @@ use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Admin\Application\Services\AdminUserRowMapper;
 use Johncms\Modules\Admin\Application\UseCases\GetUserListUseCase;
 use Johncms\Modules\Admin\Domain\Enums\UserListSort;
+use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
-use Johncms\System\View\Render;
 
 final readonly class UserListController
 {
     public function __construct(
         private AdminControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private GetUserListUseCase $getUserListUseCase,
         private AdminUserRowMapper $rowMapper,
@@ -28,7 +27,7 @@ final readonly class UserListController
         $this->controllerContext->initModule('admin');
     }
 
-    public function __invoke(?string $sort = null): string
+    public function __invoke(?string $sort = null): ViewResponse
     {
         $sortMode = match ($sort) {
             'by-nick' => UserListSort::NICK,
@@ -49,17 +48,13 @@ final readonly class UserListController
         $this->navChain->add($title);
 
         $meta = new PageMeta($title, $pagination->getCurrentPage());
-        $this->render->addData(
+
+        return new ViewResponse(
+            '@admin/users.twig',
             [
                 'title'      => $meta->title,
                 'page_title' => $title,
                 'usr_menu'   => ['userlist' => true],
-            ]
-        );
-
-        return $this->render->render(
-            'admin::userlist',
-            [
                 'users'      => $this->rowMapper->mapMany($result->users),
                 'total'      => $pagination->getTotal(),
                 'per_page'   => $pagination->getPerPage(),

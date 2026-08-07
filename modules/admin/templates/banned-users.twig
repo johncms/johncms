@@ -1,0 +1,48 @@
+{#
+    The visitors carrying a ban.
+
+    @var array        items        Rows prepared by BanListRowMapper.
+    @var array        filters      Orders to switch between: name, url, active.
+    @var int          total
+    @var int          per_page
+    @var bool         show_amnesty
+    @var string       amnesty_url
+    @var \Twig\Markup pagination
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    <div class="btn-group btn-group-sm input-group-sm mb-3" role="group">
+        <div class="input-group-prepend">
+            <div class="input-group-text">{{ __('Sort') }}</div>
+        </div>
+        {% for filter in filters %}
+            <a href="{{ filter.url }}" class="btn btn-outline-secondary {{ filter.active ? 'active' : '' }}">{{ filter.name }}</a>
+        {% endfor %}
+    </div>
+
+    {% if items is empty %}
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-info', alert: __('The list is empty')} only %}
+    {% endif %}
+
+    {% for item in items %}
+        {% include '@admin/components/user-row.twig' with {item: item} only %}
+    {% endfor %}
+
+    <div class="mt-4">
+        {% if total > per_page %}
+            <div>{{ pagination }}</div>
+        {% endif %}
+        {% if total > 0 %}
+            <div>{{ __('Total:') }} {{ total }}</div>
+            {% if show_amnesty %}
+                <div class="mt-2 mb-3">
+                    <a href="{{ amnesty_url }}" class="btn btn-primary">{{ __('Amnesty') }}</a>
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+    <div>
+        <a href="/admin">{{ __('Back') }}</a>
+    </div>
+{% endblock %}

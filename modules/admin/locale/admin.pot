@@ -24,8 +24,8 @@ msgstr ""
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:137
 #: modules/admin/templates/ip-ban-search.twig:23
 #: modules/admin/templates/ip-bans.twig:57
+#: modules/admin/templates/ip-search.twig:28
 #: modules/admin/templates/ip-whois.twig:17
-#: modules/admin/templates/search_ip.phtml:29
 #: modules/admin/templates/sidebar-admin-menu.phtml:56
 #: themes/admin/templates/system/app/sidebar-admin-menu.phtml:47
 msgid "Search"
@@ -38,7 +38,7 @@ msgid "On registration"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:73
-#: modules/admin/src/Application/Controllers/Users/StaffListController.php:27
+#: modules/admin/src/Application/Controllers/Users/StaffListController.php:26
 #: modules/admin/templates/sidebar-admin-menu.phtml:84
 #: themes/admin/templates/system/app/sidebar-admin-menu.phtml:75
 msgid "Administration"
@@ -46,7 +46,7 @@ msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:82
 #: modules/admin/src/Application/Controllers/Users/AmnestyController.php:62
-#: modules/admin/src/Application/Controllers/Users/BanListController.php:47
+#: modules/admin/src/Application/Controllers/Users/BanListController.php:46
 #: modules/admin/templates/sidebar-admin-menu.phtml:93
 #: themes/admin/templates/system/app/sidebar-admin-menu.phtml:84
 msgid "Ban Panel"
@@ -467,17 +467,17 @@ msgstr ""
 msgid "Default"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Ip/IpSearchController.php:55
-#: modules/admin/templates/search_ip.phtml:25
-#: modules/admin/templates/search_ip.phtml:27
+#: modules/admin/src/Application/Controllers/Ip/IpSearchController.php:54
+#: modules/admin/templates/ip-search.twig:24
+#: modules/admin/templates/ip-search.twig:26
 msgid "Search IP"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Ip/IpSearchController.php:80
+#: modules/admin/src/Application/Controllers/Ip/IpSearchController.php:75
 msgid "Actual IP"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Ip/IpSearchController.php:85
+#: modules/admin/src/Application/Controllers/Ip/IpSearchController.php:80
 msgid "IP history"
 msgstr ""
 
@@ -535,7 +535,7 @@ msgstr ""
 #: modules/admin/templates/forum-section-move-topics.twig:46
 #: modules/admin/templates/forum-structure.twig:35
 #: modules/admin/templates/languages-manage.twig:51
-#: modules/admin/templates/reg_list.phtml:38
+#: modules/admin/templates/registrations.twig:36
 #: modules/admin/templates/user_clean_confirm.phtml:31
 #: modules/admin/templates/usr_del.phtml:42
 msgid "Delete"
@@ -705,15 +705,15 @@ msgstr ""
 
 #: modules/admin/src/Application/Controllers/Users/AmnestyController.php:61
 #: modules/admin/src/Application/UseCases/ApplyAmnestyUseCase.php:28
-#: modules/admin/templates/ban_panel.phtml:41
+#: modules/admin/templates/banned-users.twig:40
 msgid "Amnesty"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/BanListController.php:66
+#: modules/admin/src/Application/Controllers/Users/BanListController.php:61
 msgid "Term"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/BanListController.php:67
+#: modules/admin/src/Application/Controllers/Users/BanListController.php:62
 msgid "Violations"
 msgstr ""
 
@@ -723,7 +723,7 @@ msgid "Delete user"
 msgstr ""
 
 #: modules/admin/src/Application/Controllers/Users/DeleteUserController.php:83
-#: modules/admin/src/Application/Controllers/Users/RegistrationModerationController.php:104
+#: modules/admin/src/Application/Controllers/Users/RegistrationModerationController.php:97
 msgid "User deleted"
 msgstr ""
 
@@ -743,20 +743,20 @@ msgstr ""
 msgid "Karma is cleared"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/RegistrationModerationController.php:53
+#: modules/admin/src/Application/Controllers/Users/RegistrationModerationController.php:52
 msgid "Registration confirmation"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/RegistrationModerationController.php:84
-#: modules/admin/src/Application/Controllers/Users/RegistrationModerationController.php:94
+#: modules/admin/src/Application/Controllers/Users/RegistrationModerationController.php:77
+#: modules/admin/src/Application/Controllers/Users/RegistrationModerationController.php:87
 msgid "Registration is confirmed"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/RegistrationModerationController.php:114
+#: modules/admin/src/Application/Controllers/Users/RegistrationModerationController.php:107
 msgid "All unconfirmed registrations were removed"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/RegistrationModerationController.php:126
+#: modules/admin/src/Application/Controllers/Users/RegistrationModerationController.php:119
 msgid "All unconfirmed registrations with selected IP were deleted"
 msgstr ""
 
@@ -764,11 +764,11 @@ msgstr ""
 msgid "Inactive profiles deleted"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/UserListController.php:48
+#: modules/admin/src/Application/Controllers/Users/UserListController.php:47
 msgid "List of Users"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/UserListController.php:69
+#: modules/admin/src/Application/Controllers/Users/UserListController.php:64
 msgid "Nickname"
 msgstr ""
 
@@ -1027,44 +1027,16 @@ msgstr ""
 msgid "Styling links"
 msgstr ""
 
-#: modules/admin/templates/admin_list.phtml:23
 #: modules/admin/templates/ads.twig:31
-#: modules/admin/templates/ban_panel.phtml:26
+#: modules/admin/templates/banned-users.twig:25
 #: modules/admin/templates/counters.twig:20
 #: modules/admin/templates/forum-hidden-posts.twig:25
 #: modules/admin/templates/forum-hidden-topics.twig:25
 #: modules/admin/templates/forum-structure.twig:13
 #: modules/admin/templates/ip-bans.twig:29
-#: modules/admin/templates/reg_list.phtml:31
+#: modules/admin/templates/registrations.twig:29
+#: modules/admin/templates/staff.twig:11
 msgid "The list is empty"
-msgstr ""
-
-#: modules/admin/templates/admin_list.phtml:37
-#: modules/admin/templates/ads.twig:75
-#: modules/admin/templates/ban_panel.phtml:38
-#: modules/admin/templates/counters.twig:46
-#: modules/admin/templates/ip-bans.twig:46
-#: modules/admin/templates/reg_list.phtml:49
-#: modules/admin/templates/search_ip.phtml:60
-msgid "Total:"
-msgstr ""
-
-#: modules/admin/templates/admin_list.phtml:41
-#: modules/admin/templates/ads.twig:84
-#: modules/admin/templates/ban_panel.phtml:47
-#: modules/admin/templates/counter-view.twig:52
-#: modules/admin/templates/counters.twig:51
-#: modules/admin/templates/file-integrity-scan-result.twig:25
-#: modules/admin/templates/forum-hidden-posts.twig:111
-#: modules/admin/templates/forum-hidden-topics.twig:107
-#: modules/admin/templates/forum-structure.twig:44
-#: modules/admin/templates/forum.twig:29
-#: modules/admin/templates/ip-ban-detail.twig:52
-#: modules/admin/templates/ip-bans.twig:63
-#: modules/admin/templates/languages-manage.twig:63
-#: modules/admin/templates/reg_list.phtml:57
-#: modules/admin/templates/search_ip.phtml:64
-msgid "Back"
 msgstr ""
 
 #: modules/admin/templates/ads.twig:40
@@ -1122,8 +1094,36 @@ msgstr ""
 msgid "Hide"
 msgstr ""
 
+#: modules/admin/templates/ads.twig:75
+#: modules/admin/templates/banned-users.twig:37
+#: modules/admin/templates/counters.twig:46
+#: modules/admin/templates/ip-bans.twig:46
+#: modules/admin/templates/ip-search.twig:57
+#: modules/admin/templates/registrations.twig:47
+#: modules/admin/templates/staff.twig:23
+msgid "Total:"
+msgstr ""
+
 #: modules/admin/templates/ads.twig:81
 msgid "Delete inactive links"
+msgstr ""
+
+#: modules/admin/templates/ads.twig:84
+#: modules/admin/templates/banned-users.twig:46
+#: modules/admin/templates/counter-view.twig:52
+#: modules/admin/templates/counters.twig:51
+#: modules/admin/templates/file-integrity-scan-result.twig:25
+#: modules/admin/templates/forum-hidden-posts.twig:111
+#: modules/admin/templates/forum-hidden-topics.twig:107
+#: modules/admin/templates/forum-structure.twig:44
+#: modules/admin/templates/forum.twig:29
+#: modules/admin/templates/ip-ban-detail.twig:52
+#: modules/admin/templates/ip-bans.twig:63
+#: modules/admin/templates/ip-search.twig:61
+#: modules/admin/templates/languages-manage.twig:63
+#: modules/admin/templates/registrations.twig:55
+#: modules/admin/templates/staff.twig:27
+msgid "Back"
 msgstr ""
 
 #: modules/admin/templates/amnesty.phtml:24
@@ -1184,8 +1184,8 @@ msgstr ""
 msgid "End of day"
 msgstr ""
 
-#: modules/admin/templates/ban_panel.phtml:18
-#: modules/admin/templates/userlist.phtml:18
+#: modules/admin/templates/banned-users.twig:17
+#: modules/admin/templates/users.twig:16
 msgid "Sort"
 msgstr ""
 
@@ -1358,14 +1358,14 @@ msgstr ""
 
 #: modules/admin/templates/forum-hidden-posts.twig:97
 #: modules/admin/templates/forum-hidden-topics.twig:93
-#: modules/admin/templates/reg_list.phtml:52
+#: modules/admin/templates/registrations.twig:50
 msgid "Delete all"
 msgstr ""
 
 #: modules/admin/templates/forum-hidden-posts.twig:104
 #: modules/admin/templates/forum-hidden-topics.twig:100
 #: modules/admin/templates/user_clean_confirm.phtml:25
-#: modules/admin/templates/userlist.phtml:36
+#: modules/admin/templates/users.twig:28
 msgid "Total"
 msgstr ""
 
@@ -1677,13 +1677,33 @@ msgstr ""
 msgid "Unban all IP"
 msgstr ""
 
-#: modules/admin/templates/ip-whois.twig:13
-msgid "IP Address"
+#: modules/admin/templates/ip-search.twig:32
+msgid "Sample queries:"
 msgstr ""
 
+#: modules/admin/templates/ip-search.twig:33
+msgid "Search for a single address"
+msgstr ""
+
+#: modules/admin/templates/ip-search.twig:34
+msgid "Search a range address (forbidden to use mask symbol *)"
+msgstr ""
+
+#: modules/admin/templates/ip-search.twig:35
+msgid "Search mask. Will be found all subnet addresses starting with 0 and ending with 255"
+msgstr ""
+
+#: modules/admin/templates/ip-search.twig:44
+msgid "At your request, nothing found"
+msgstr ""
+
+#: modules/admin/templates/ip-search.twig:46
 #: modules/admin/templates/ip-whois.twig:23
-#: modules/admin/templates/search_ip.phtml:49
 msgid "Search results"
+msgstr ""
+
+#: modules/admin/templates/ip-whois.twig:13
+msgid "IP Address"
 msgstr ""
 
 #: modules/admin/templates/karma.phtml:26
@@ -1798,36 +1818,16 @@ msgstr ""
 msgid "There are no available tasks"
 msgstr ""
 
-#: modules/admin/templates/reg_list.phtml:37
+#: modules/admin/templates/registrations.twig:35
 msgid "Approve"
 msgstr ""
 
-#: modules/admin/templates/reg_list.phtml:39
+#: modules/admin/templates/registrations.twig:37
 msgid "Remove IP"
 msgstr ""
 
-#: modules/admin/templates/reg_list.phtml:51
+#: modules/admin/templates/registrations.twig:49
 msgid "Confirm all"
-msgstr ""
-
-#: modules/admin/templates/search_ip.phtml:33
-msgid "Sample queries:"
-msgstr ""
-
-#: modules/admin/templates/search_ip.phtml:34
-msgid "Search for a single address"
-msgstr ""
-
-#: modules/admin/templates/search_ip.phtml:35
-msgid "Search a range address (forbidden to use mask symbol *)"
-msgstr ""
-
-#: modules/admin/templates/search_ip.phtml:36
-msgid "Search mask. Will be found all subnet addresses starting with 0 and ending with 255"
-msgstr ""
-
-#: modules/admin/templates/search_ip.phtml:47
-msgid "At your request, nothing found"
 msgstr ""
 
 #: modules/admin/templates/settings.phtml:27
@@ -1937,7 +1937,7 @@ msgstr ""
 msgid "This category includes profiles, recorded more than 6 months ago, with the date of last visit for more than 5 months ago and with zero activity.<br>Can safely remove them."
 msgstr ""
 
-#: modules/admin/templates/userlist.phtml:30
+#: modules/admin/templates/users.twig:36
 msgid "List is empty"
 msgstr ""
 

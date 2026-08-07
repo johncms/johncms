@@ -1,0 +1,57 @@
+{#
+    Registrations waiting to be confirmed.
+
+    @var array        items           Rows prepared by RegistrationRowMapper.
+    @var int          total
+    @var int          per_page
+    @var string       form_action     Prefix of the action URLs.
+    @var string       success_message Empty unless an action has just been performed.
+    @var \Twig\Markup pagination
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% macro post_button(action, fields, label, csrf_token, class) %}
+    <form method="post" action="{{ action }}" class="d-inline">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        {% for name, value in fields %}
+            <input type="hidden" name="{{ name }}" value="{{ value }}">
+        {% endfor %}
+        <button type="submit" class="{{ class|default('btn btn-link p-0 me-3 align-baseline') }}">{{ label }}</button>
+    </form>
+{% endmacro %}
+
+{% block content %}
+    {% import _self as forms %}
+
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success shadow border-0', alert: success_message} only %}
+
+    {% if items is empty %}
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-info', alert: __('The list is empty')} only %}
+    {% endif %}
+
+    {% for item in items %}
+        {% include '@admin/components/user-row.twig' with {item: item} only %}
+        <div class="mt-2 mb-4 d-flex flex-wrap">
+            {{ forms.post_button(form_action ~ '/approve', {id: item.id}, __('Approve'), app.csrf_token) }}
+            {{ forms.post_button(form_action ~ '/delete', {id: item.id}, __('Delete'), app.csrf_token) }}
+            {{ forms.post_button(form_action ~ '/delete-by-ip', {ip: item.ip_int}, __('Remove IP'), app.csrf_token) }}
+        </div>
+    {% endfor %}
+
+    <div class="mt-4">
+        {% if total > per_page %}
+            <div>{{ pagination }}</div>
+        {% endif %}
+
+        {% if total > 0 %}
+            <div>{{ __('Total:') }} {{ total }}</div>
+            <div class="mt-2 mb-3 d-flex">
+                {{ forms.post_button(form_action ~ '/approve-all', {}, __('Confirm all'), app.csrf_token, 'btn btn-primary me-2') }}
+                {{ forms.post_button(form_action ~ '/delete-all', {}, __('Delete all'), app.csrf_token, 'btn btn-danger') }}
+            </div>
+        {% endif %}
+    </div>
+    <div>
+        <a href="/admin/">{{ __('Back') }}</a>
+    </div>
+{% endblock %}
