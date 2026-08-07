@@ -1,0 +1,70 @@
+{#
+    One message from the contact form.
+
+    @var object message         The message model: name, email, message, ip_address, user_agent.
+    @var bool   is_processed
+    @var string created_at
+    @var string processed_at    Empty unless the message has been processed.
+    @var string back_url
+    @var string process_url
+    @var string delete_url
+    @var string success_message Empty unless an action has just been performed.
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success shadow border-0', alert: success_message} only %}
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <dl class="row mb-0">
+                <dt class="col-sm-3">{{ __('Date') }}</dt>
+                <dd class="col-sm-9">{{ created_at }}</dd>
+
+                <dt class="col-sm-3">{{ __('Sender') }}</dt>
+                <dd class="col-sm-9">{{ message.name }}</dd>
+
+                <dt class="col-sm-3">{{ __('E-mail') }}</dt>
+                <dd class="col-sm-9">
+                    <a href="mailto:{{ message.email }}">{{ message.email }}</a>
+                </dd>
+
+                <dt class="col-sm-3">{{ __('Status') }}</dt>
+                <dd class="col-sm-9">
+                    {% if is_processed %}
+                        <span class="badge text-bg-success">{{ __('Processed') }}</span>
+                        {% if processed_at %}
+                            <span class="text-muted small">{{ processed_at }}</span>
+                        {% endif %}
+                    {% else %}
+                        <span class="badge text-bg-danger">{{ __('New') }}</span>
+                    {% endif %}
+                </dd>
+
+                <dt class="col-sm-3">{{ __('IP address') }}</dt>
+                <dd class="col-sm-9">
+                    {{ message.ip_address }}
+                    {% if message.user_agent %}
+                        <div class="text-muted small">{{ message.user_agent }}</div>
+                    {% endif %}
+                </dd>
+
+                <dt class="col-sm-3">{{ __('Message') }}</dt>
+                <dd class="col-sm-9 mb-0">{{ message.message|nl2br }}</dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="d-flex gap-2">
+        <a href="{{ back_url }}" class="btn btn-secondary">{{ __('Back') }}</a>
+
+        {% if not is_processed %}
+            <form method="post" action="{{ process_url }}">
+                <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                <button type="submit" class="btn btn-primary">{{ __('Mark as processed') }}</button>
+            </form>
+        {% endif %}
+
+        <a href="{{ delete_url }}" class="btn btn-danger">{{ __('Delete') }}</a>
+    </div>
+{% endblock %}

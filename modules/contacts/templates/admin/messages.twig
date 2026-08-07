@@ -1,0 +1,72 @@
+{#
+    The messages sent through the contact form.
+
+    @var array        items           Rows (ContactMessageListItemDTO): id, name, email, preview,
+                                      status, createdAt.
+    @var array        filters         Statuses to switch between: value, title.
+    @var string       current_status  Empty when everything is shown.
+    @var string       base_url
+    @var int          new_count
+    @var \Twig\Markup pagination
+    @var string       success_message Empty unless an action has just been performed.
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success shadow border-0', alert: success_message} only %}
+
+    <div class="mb-3">
+        {% for filter in filters %}
+            <a href="{{ base_url }}{% if filter.value %}?status={{ filter.value }}{% endif %}"
+               class="btn btn-sm {{ current_status == filter.value ? 'btn-primary' : 'btn-outline-primary' }}">
+                {{ filter.title }}
+                {% if filter.value == 'new' and new_count > 0 %}
+                    <span class="badge text-bg-danger">{{ new_count }}</span>
+                {% endif %}
+            </a>
+        {% endfor %}
+    </div>
+
+    {% if items is empty %}
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-info', alert: __('The list is empty')} only %}
+    {% else %}
+        <div class="table-responsive">
+            <table class="table table-sm align-middle">
+                <thead>
+                <tr>
+                    <th>{{ __('Date') }}</th>
+                    <th>{{ __('Sender') }}</th>
+                    <th>{{ __('Message') }}</th>
+                    <th>{{ __('Status') }}</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in items %}
+                    <tr>
+                        <td class="text-nowrap">{{ item.createdAt }}</td>
+                        <td>
+                            {{ item.name }}
+                            <div class="text-muted small">{{ item.email }}</div>
+                        </td>
+                        <td>
+                            <a href="{{ base_url }}/{{ item.id }}">{{ item.preview }}</a>
+                        </td>
+                        <td>
+                            {% if item.status.value == 'new' %}
+                                <span class="badge text-bg-danger">{{ __('New') }}</span>
+                            {% else %}
+                                <span class="badge text-bg-success">{{ __('Processed') }}</span>
+                            {% endif %}
+                        </td>
+                        <td class="text-nowrap">
+                            <a href="{{ base_url }}/{{ item.id }}/delete" class="text-danger">{{ __('Delete') }}</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {{ pagination }}
+    {% endif %}
+{% endblock %}

@@ -10,8 +10,8 @@ use Johncms\Modules\Contacts\Domain\Enums\ContactMessageStatus;
 use Johncms\Modules\Contacts\Domain\Repository\ContactMessageRepositoryInterface;
 use Johncms\NavChain;
 use Johncms\Http\Request;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Http\Session;
-use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 
 final readonly class ContactMessageViewController
@@ -20,7 +20,6 @@ final readonly class ContactMessageViewController
 
     public function __construct(
         private AdminControllerContext $controllerContext,
-        private Render $render,
         private Session $session,
         private NavChain $navChain,
         private ContactMessageRepositoryInterface $repository,
@@ -29,7 +28,7 @@ final readonly class ContactMessageViewController
         $this->controllerContext->initModule('contacts');
     }
 
-    public function __invoke(Request $request, int $id): string
+    public function __invoke(Request $request, int $id): ViewResponse
     {
         $message = $this->repository->findById($id);
         if ($message === null) {
@@ -49,17 +48,14 @@ final readonly class ContactMessageViewController
 
         $successMessage = $this->session->getFlash('success_message');
 
-        $this->render->addData(
+
+        return new ViewResponse(
+            '@contacts/admin/message.twig',
             [
                 'title'       => $title,
                 'page_title'  => $title,
                 'module_menu' => ['contacts' => true],
-            ]
-        );
-
-        return $this->render->render(
-            'contacts::admin/messages/view',
-            [
+            ] + [
                 'message'         => $message,
                 'is_processed'    => $message->status === ContactMessageStatus::Processed,
                 'created_at'      => $message->created_at?->format('d.m.Y H:i') ?? '',

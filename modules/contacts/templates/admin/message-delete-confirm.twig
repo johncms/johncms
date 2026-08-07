@@ -1,0 +1,22 @@
+{#
+    Confirmation of deleting a message.
+
+    @var object message     The message model: name, email, message.
+    @var string form_action
+    @var string back_url
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    <div class="alert alert-danger">
+        {{ __('Are you sure you want to delete this message?') }}
+        <div class="text-muted small mt-2">{{ message.name }} &lt;{{ message.email }}&gt;</div>
+        <div class="mt-2">{{ message.message|nl2br }}</div>
+    </div>
+
+    <form method="post" action="{{ form_action }}">
+        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+        <button type="submit" class="btn btn-danger">{{ __('Delete') }}</button>
+        <a href="{{ back_url }}" class="btn btn-secondary">{{ __('Cancel') }}</a>
+    </form>
+{% endblock %}

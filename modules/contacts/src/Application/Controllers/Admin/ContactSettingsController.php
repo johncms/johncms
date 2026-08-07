@@ -12,8 +12,8 @@ use Johncms\Modules\Contacts\Application\Services\ContactSettingsProvider;
 use Johncms\Modules\Contacts\Application\UseCases\UpdateContactSettingsUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Http\Session;
-use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 
 final readonly class ContactSettingsController
@@ -22,7 +22,6 @@ final readonly class ContactSettingsController
 
     public function __construct(
         private AdminControllerContext $controllerContext,
-        private Render $render,
         private Session $session,
         private NavChain $navChain,
         private ContactSettingsProvider $settingsProvider,
@@ -31,12 +30,12 @@ final readonly class ContactSettingsController
         $this->controllerContext->initModule('contacts');
     }
 
-    public function form(): string
+    public function form(): ViewResponse
     {
         return $this->renderForm($this->settingsProvider->getSettings());
     }
 
-    public function save(Request $request): string
+    public function save(Request $request): ViewResponse
     {
         $settings = $this->buildDto($request);
 
@@ -130,7 +129,7 @@ final readonly class ContactSettingsController
         return $validator->isValid();
     }
 
-    private function renderForm(ContactSettingsDTO $settings, ?string $errorMessage = null): string
+    private function renderForm(ContactSettingsDTO $settings, ?string $errorMessage = null): ViewResponse
     {
         $title = __('Contacts');
         $this->navChain->add($title, self::URL);
@@ -147,21 +146,23 @@ final readonly class ContactSettingsController
             array_map(static fn(SocialLinkDTO $link): string => $link->title . '|' . $link->url, $settings->socials)
         );
 
-        $this->render->addData(
+
+        return new ViewResponse(
+            '@contacts/admin/settings.twig',
             [
                 'title'       => $title,
                 'page_title'  => $title,
                 'module_menu' => ['contacts' => true],
-            ]
-        );
-
-        return $this->render->render(
-            'contacts::admin/settings',
-            [
+            ] + [
                 'form_action'     => self::URL,
                 'messages_url'    => self::URL . '/messages',
                 'languages'       => $languages,
                 'settings'        => $settings,
+                'multilingual_fields' => [
+                    ['name' => 'contacts_address', 'label' => __('Address'), 'values' => $settings->addresses],
+                    ['name' => 'contacts_working_hours', 'label' => __('Working hours'), 'values' => $settings->workingHours],
+                    ['name' => 'contacts_text', 'label' => __('Text above the contact information'), 'values' => $settings->texts],
+                ],
                 'socials'         => $socials,
                 'error_message'   => $errorMessage,
                 'success_message' => $successMessage,

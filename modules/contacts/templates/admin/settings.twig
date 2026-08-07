@@ -1,0 +1,104 @@
+{#
+    The contact details of the site and the feedback form.
+
+    @var string form_action
+    @var string messages_url
+    @var array  languages           Languages the texts may be written in: code, name.
+    @var object settings            ContactSettingsDTO.
+    @var array  multilingual_fields Fields kept per language: name, label, values.
+    @var string socials             One link per line.
+    @var string error_message       Empty unless the last save failed.
+    @var string success_message     Empty unless a save has just succeeded.
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    <div style="max-width: 720px">
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger shadow border-0', alert: error_message} only %}
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-success shadow border-0', alert: success_message} only %}
+
+        <div class="mb-3">
+            <a href="{{ messages_url }}" class="btn btn-secondary">{{ __('Contact messages') }}</a>
+        </div>
+
+        <form method="post" action="{{ form_action }}">
+            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+
+            <div class="form-check mb-3">
+                <input type="checkbox"
+                       class="form-check-input"
+                       name="contacts_form_enabled"
+                       value="1"
+                       id="contacts_form_enabled"
+                       {% if settings.formEnabled %}checked="checked"{% endif %}>
+                <label class="form-check-label" for="contacts_form_enabled">{{ __('Enable feedback form') }}</label>
+            </div>
+
+            <div class="form-group">
+                <label for="contacts_notify_email">{{ __('E-mail for notifications') }}</label>
+                <div class="text-muted small mb-2">{{ __('Leave empty to use the site e-mail from the system settings.') }}</div>
+                <input type="email"
+                       class="form-control"
+                       name="contacts_notify_email"
+                       id="contacts_notify_email"
+                       value="{{ settings.notifyEmail }}">
+            </div>
+
+            <div class="form-group">
+                <label for="contacts_email">{{ __('Public e-mail') }}</label>
+                <input type="email"
+                       class="form-control"
+                       name="contacts_email"
+                       id="contacts_email"
+                       value="{{ settings.email }}">
+            </div>
+
+            <div class="form-group">
+                <label for="contacts_phone">{{ __('Phone') }}</label>
+                <input type="text"
+                       class="form-control"
+                       name="contacts_phone"
+                       id="contacts_phone"
+                       value="{{ settings.phone }}">
+            </div>
+
+            <div class="form-group">
+                <label for="contacts_socials">{{ __('Social networks and messengers') }}</label>
+                <div class="text-muted small mb-2">{{ __('One link per line in the format: Title|https://example.com') }}</div>
+                <textarea rows="4"
+                          class="form-control"
+                          name="contacts_socials"
+                          id="contacts_socials">{{ socials }}</textarea>
+            </div>
+
+            {% for field in multilingual_fields %}
+                <div class="form-group">
+                    <label>{{ field.label }}</label>
+                    <ul class="nav nav-tabs" role="tablist">
+                        {% for language in languages %}
+                            <li class="nav-item">
+                                <a class="nav-link {% if loop.first %}active{% endif %}"
+                                   data-bs-toggle="tab"
+                                   href="#{{ field.name }}_{{ language.code }}"
+                                   role="tab">{{ language.name }} ({{ language.code }})</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <div class="tab-content border border-top-0 p-3">
+                        {% for language in languages %}
+                            <div class="tab-pane fade {% if loop.first %}show active{% endif %}"
+                                 id="{{ field.name }}_{{ language.code }}"
+                                 role="tabpanel">
+                                <textarea rows="3"
+                                          class="form-control"
+                                          name="{{ field.name }}[{{ language.code }}]">{{ field.values[language.code]|default('') }}</textarea>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+
+            <input type="submit" class="btn btn-primary btn-lg mt-2 mb-2" name="submit" value="{{ __('Save') }}">
+        </form>
+    </div>
+{% endblock %}

@@ -9,8 +9,8 @@ use Johncms\Modules\Contacts\Application\UseCases\DeleteContactMessageUseCase;
 use Johncms\Modules\Contacts\Domain\Repository\ContactMessageRepositoryInterface;
 use Johncms\NavChain;
 use Johncms\Http\Request;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Http\Session;
-use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 
 final readonly class ContactMessageDeleteController
@@ -19,7 +19,6 @@ final readonly class ContactMessageDeleteController
 
     public function __construct(
         private AdminControllerContext $controllerContext,
-        private Render $render,
         private Session $session,
         private NavChain $navChain,
         private ContactMessageRepositoryInterface $repository,
@@ -28,7 +27,7 @@ final readonly class ContactMessageDeleteController
         $this->controllerContext->initModule('contacts');
     }
 
-    public function __invoke(Request $request, int $id): string
+    public function __invoke(Request $request, int $id): ViewResponse
     {
         $message = $this->repository->findById($id);
         if ($message === null) {
@@ -53,17 +52,14 @@ final readonly class ContactMessageDeleteController
         $this->navChain->add(__('Contact messages'), self::URL);
         $this->navChain->add($title);
 
-        $this->render->addData(
+
+        return new ViewResponse(
+            '@contacts/admin/message-delete-confirm.twig',
             [
                 'title'       => $title,
                 'page_title'  => $title,
                 'module_menu' => ['contacts' => true],
-            ]
-        );
-
-        return $this->render->render(
-            'contacts::admin/messages/delete',
-            [
+            ] + [
                 'message'    => $message,
                 'form_action' => self::URL . '/' . $message->id . '/delete',
                 'back_url'   => self::URL . '/' . $message->id,
