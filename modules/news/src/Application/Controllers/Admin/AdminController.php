@@ -14,7 +14,7 @@ use Johncms\Modules\News\Domain\Models\NewsSection;
 use Johncms\Http\Session;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -22,7 +22,6 @@ final readonly class AdminController
 {
     public function __construct(
         private AdminControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
@@ -30,28 +29,18 @@ final readonly class AdminController
     ) {
         $this->controllerContext->initModule('news');
 
-        $this->render->addData(
-            [
-                'title'       => __('News'),
-                'page_title'  => __('News'),
-                'module_menu' => ['news' => true],
-            ]
-        );
         $this->navChain->add(__('News'), '/admin/news/');
     }
 
-    public function index(): Response
+    public function index(): ViewResponse
     {
-        return new Response($this->render->render('news::admin/index'));
+        return new ViewResponse('@news/admin/index.twig', $this->menu(__('News')));
     }
 
     /**
      * List of sections and articles
-     *
-     * @param int $section_id
-     * @return string
      */
-    public function section(int $section_id = 0): string
+    public function section(int $section_id = 0): ViewResponse
     {
         $title = __('Section list');
         $this->navChain->add($title, '/admin/news/content/');
@@ -68,10 +57,10 @@ final readonly class AdminController
             }
         }
 
-        $data = [];
+        $data = ['messages' => ''];
         $flashMessage = $this->session->getFlash('success_message');
         if (! empty($flashMessage)) {
-            $data['messages'] = htmlspecialchars($flashMessage);
+            $data['messages'] = $flashMessage;
         }
 
         $data['sections'] = (new NewsSection())->where('parent', $section_id)->get();
@@ -94,13 +83,7 @@ final readonly class AdminController
         $data['pagination'] = $pagination->render();
         $data['current_section'] = $section_id;
 
-        $this->render->addData(
-            [
-                'title'      => $title,
-                'page_title' => $title,
-            ]
-        );
-        return $this->render->render('news::admin/sections', ['data' => $data]);
+        return new ViewResponse('@news/admin/content.twig', $this->menu($title) + $data);
     }
 
     /**
@@ -109,7 +92,7 @@ final readonly class AdminController
      * @param Request $request
      * @return Response
      */
-    public function settings(Request $request): Response
+    public function settings(Request $request): Response | ViewResponse
     {
         $data = [
             'title'       => __('Settings'),
@@ -118,12 +101,6 @@ final readonly class AdminController
             'form_action' => '/admin/news/settings/',
             'message'     => '',
         ];
-        $this->render->addData(
-            [
-                'title'      => $data['title'],
-                'page_title' => $data['page_title'],
-            ]
-        );
         $this->navChain->add($data['page_title']);
 
         if ($request->getMethod() === 'POST') {
@@ -159,7 +136,7 @@ final readonly class AdminController
 
         $flashMessage = $this->session->getFlash('message');
         if (! empty($flashMessage)) {
-            $data['message'] = htmlspecialchars($flashMessage);
+            $data['message'] = $flashMessage;
         }
 
         // Стандартные настройки
@@ -180,7 +157,18 @@ final readonly class AdminController
         $config = config('news') ?? [];
         $data['current_settings'] = array_merge($default_settings, $config);
 
-        // Выводим шаблон настроек уведомлений
-        return new Response($this->render->render('news::admin/settings', ['data' => $data]));
+        return new ViewResponse('@news/admin/settings.twig', $this->menu(__('Settings')) + $data);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function menu(string $title): array
+    {
+        return [
+            'title'       => $title,
+            'page_title'  => $title,
+            'module_menu' => ['news' => true],
+        ];
     }
 }

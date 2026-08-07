@@ -1,0 +1,31 @@
+{#
+    Confirmation of deleting a section or an article. A fragment shown in a modal, so it extends
+    no layout.
+
+    @var string action_url
+    @var string delete_token
+    @var object section Null unless a section is being deleted.
+    @var object article Null unless an article is being deleted.
+#}
+<form action="{{ action_url }}" method="post">
+    <div class="modal-header align-items-center">
+        <h4 class="modal-title">
+            {{ __('Confirm the action') }}
+        </h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+        <input type="hidden" name="delete_token" value="{{ delete_token }}">
+        {% if section %}
+            <div>{{ __('Section:') }} <b>{{ section.name }}</b></div>
+        {% endif %}
+        {% if article %}
+            <div>{{ __('Article:') }} <b>{{ article.name }}</b></div>
+        {% endif %}
+        {{ __('Do you really want to delete?') }}
+    </div>
+    <div class="modal-footer">
+        <button type="submit" name="delete" value="1" class="btn btn-danger">{{ __('Delete') }}</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('Cancel') }}</button>
+    </div>
+</form>

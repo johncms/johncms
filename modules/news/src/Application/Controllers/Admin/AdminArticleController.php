@@ -21,8 +21,8 @@ use Johncms\Modules\News\Domain\Models\NewsSection;
 use Johncms\Http\Session;
 use Johncms\NavChain;
 use Johncms\Http\Request;
+use Johncms\Http\View\ViewResponse;
 use Johncms\System\Utility\EditorContentNormalizer;
-use Johncms\System\View\Render;
 use Johncms\Users\User;
 use League\Flysystem\FilesystemException;
 use Psr\Log\LoggerInterface;
@@ -34,7 +34,6 @@ final readonly class AdminArticleController
 {
     public function __construct(
         private AdminControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private EditorContentNormalizer $editorContentNormalizer,
         private ExceptionResponseFactory $exceptionResponses,
@@ -44,13 +43,6 @@ final readonly class AdminArticleController
     ) {
         $this->controllerContext->initModule('news');
         $this->navChain->add(__('News'), '/admin/news/');
-        $this->render->addData(
-            [
-                'title'       => __('News'),
-                'page_title'  => __('News'),
-                'module_menu' => ['news' => true],
-            ]
-        );
         $this->navChain->add(__('Section list'), '/admin/news/content/');
     }
 
@@ -62,14 +54,9 @@ final readonly class AdminArticleController
      * @param int $section_id
      * @return Response
      */
-    public function add(Request $request, User $user, int $section_id = 0): Response
+    public function add(Request $request, User $user, int $section_id = 0): Response | ViewResponse
     {
-        $this->render->addData(
-            [
-                'title'      => __('Add article'),
-                'page_title' => __('Add article'),
-            ]
-        );
+        $pageTitle = __('Add article');
 
         if (! empty($section_id)) {
             try {
@@ -155,7 +142,7 @@ final readonly class AdminArticleController
 
         $data['errors'] = $errors;
 
-        return new Response($this->render->render('news::admin/add_article', ['data' => $data]));
+        return new ViewResponse('@news/admin/article-form.twig', $this->menu($pageTitle) + $data);
     }
 
     /**
@@ -166,14 +153,9 @@ final readonly class AdminArticleController
      * @param User $user
      * @return Response
      */
-    public function edit(int $article_id, Request $request, User $user): Response
+    public function edit(int $article_id, Request $request, User $user): Response | ViewResponse
     {
-        $this->render->addData(
-            [
-                'title'      => __('Edit article'),
-                'page_title' => __('Edit article'),
-            ]
-        );
+        $pageTitle = __('Edit article');
 
         try {
             $article = (new NewsArticle())->findOrFail($article_id);
@@ -256,7 +238,7 @@ final readonly class AdminArticleController
 
         $data['errors'] = $errors;
 
-        return new Response($this->render->render('news::admin/add_article', ['data' => $data]));
+        return new ViewResponse('@news/admin/article-form.twig', $this->menu($pageTitle) + $data);
     }
 
     /**
@@ -266,7 +248,7 @@ final readonly class AdminArticleController
      * @param Request $request
      * @param FileStorage $storage
      */
-    public function del(int $article_id, Request $request, FileStorage $storage): Response
+    public function del(int $article_id, Request $request, FileStorage $storage): Response | ViewResponse
     {
         $data = [];
         // Get the section to delete
@@ -314,7 +296,10 @@ final readonly class AdminArticleController
 
         $data['action_url'] = '/admin/news/del_article/' . $article_id;
 
-        return new Response($this->render->render('news::admin/del', ['data' => $data]));
+        return new ViewResponse(
+            '@news/admin/delete-confirm.twig',
+            $data + $this->menu(__('News')) + ['section' => null, 'article' => null]
+        );
     }
 
     public function loadFile(Request $request): JsonResponse
@@ -344,5 +329,17 @@ final readonly class AdminArticleController
         } catch (FilesystemException | Exception $e) {
             return new JsonResponse(['errors' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function menu(string $title): array
+    {
+        return [
+            'title'       => $title,
+            'page_title'  => $title,
+            'module_menu' => ['news' => true],
+        ];
     }
 }

@@ -1,0 +1,91 @@
+{#
+    The sections and the articles of one level.
+
+    @var iterable     sections
+    @var iterable     articles
+    @var int          current_section Id of the level being shown, 0 at the root.
+    @var array        messages        Empty unless an action has just been performed.
+    @var \Twig\Markup pagination
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% macro row_menu(edit_url, delete_url) %}
+    <div class="dropdown">
+        <button class="btn btn-sm" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <svg class="menu-icon">
+                <use xlink:href="{{ asset('icons/sprite.svg') }}#menu"/>
+            </svg>
+        </button>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" href="{{ edit_url }}">{{ __('Edit') }}</a>
+            <a class="dropdown-item" data-url="{{ delete_url }}" data-bs-toggle="modal" data-bs-target=".ajax_modal">{{ __('Delete') }}</a>
+        </div>
+    </div>
+{% endmacro %}
+
+{% block content %}
+    {% import _self as menus %}
+
+    {% if messages is not empty %}
+        <div>
+            {% include '@theme/components/alert.twig' with {alert_type: 'alert-success', alert: messages} only %}
+        </div>
+    {% endif %}
+
+    <div class="mb-3">
+        <a href="/admin/news/add_article/{{ current_section }}" class="btn btn-primary">{{ __('Add article') }}</a>
+        <a href="/admin/news/add_section/{{ current_section }}" class="btn btn-primary">{{ __('Add section') }}</a>
+    </div>
+
+    <table class="table table-bordered responsive-table">
+        <thead>
+        <tr>
+            <th scope="col" style="width: 58px;" class="border-end-0"></th>
+            <th scope="col" class="border-start-0">#</th>
+            <th scope="col">{{ __('Name') }}</th>
+            <th scope="col">{{ __('Code') }}</th>
+            <th scope="col">{{ __('Type') }}</th>
+            <th scope="col" style="width: 170px;">{{ __('Created at') }}</th>
+            <th scope="col" style="width: 170px;">{{ __('Updated at') }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if sections is empty and articles is empty %}
+            <tr>
+                <td colspan="7" class="text-center fw-bold">{{ __('The list is empty') }}</td>
+            </tr>
+        {% endif %}
+
+        {% for section in sections %}
+            <tr>
+                <th scope="row" style="width: 58px;" class="border-end-0">
+                    {{ menus.row_menu('/admin/news/edit_section/' ~ section.id ~ '/', '/admin/news/del_section/' ~ section.id ~ '/') }}
+                </th>
+                <th scope="row" class="border-start-0">
+                    <a href="/admin/news/content/{{ section.id }}/">{{ section.id }}</a>
+                </th>
+                <th scope="row"><a href="/admin/news/content/{{ section.id }}/">{{ section.name }}</a></th>
+                <td data-title="{{ __('Code') }}"><a href="/admin/news/content/{{ section.id }}/">{{ section.code }}</a></td>
+                <td data-title="{{ __('Type') }}">{{ __('Section') }}</td>
+                <td data-title="{{ __('Created at') }}">{{ section.created_at }}</td>
+                <td data-title="{{ __('Updated at') }}">{{ section.updated_at }}</td>
+            </tr>
+        {% endfor %}
+
+        {% for article in articles %}
+            <tr>
+                <th scope="row" style="width: 40px;" class="border-end-0">
+                    {{ menus.row_menu('/admin/news/edit_article/' ~ article.id ~ '/', '/admin/news/del_article/' ~ article.id ~ '/') }}
+                </th>
+                <th scope="row" class="border-start-0"><a href="/admin/news/edit_article/{{ article.id }}/">{{ article.id }}</a></th>
+                <td data-title="{{ __('Name') }}"><a href="/admin/news/edit_article/{{ article.id }}/">{{ article.name }}</a></td>
+                <td data-title="{{ __('Code') }}"><a href="/admin/news/edit_article/{{ article.id }}/">{{ article.code }}</a></td>
+                <td data-title="{{ __('Type') }}">{{ __('Article') }}</td>
+                <td data-title="{{ __('Created at') }}">{{ article.created_at }}</td>
+                <td data-title="{{ __('Updated at') }}">{{ article.updated_at }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {{ pagination }}
+{% endblock %}

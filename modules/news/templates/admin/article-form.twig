@@ -1,0 +1,138 @@
+{#
+    An article, new or existing.
+
+    @var string page_title
+    @var string action_url
+    @var string back_url
+    @var array  fields Values of the form, keyed by field name.
+    @var array  errors Validation messages, empty on the first render.
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    {% if errors is not empty %}
+        <div>
+            {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: errors} only %}
+        </div>
+    {% endif %}
+
+    <h4 class="card-title">{{ page_title }}</h4>
+    <form action="{{ action_url }}" method="post">
+        <div class="form-group">
+            <input type="hidden" name="active" value="0">
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" name="active" value="1" id="active"{% if fields.active %} checked{% endif %}>
+                <label class="form-check-label" for="active">{{ __('Active') }}</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="name">{{ __('Article name') }}</label>
+            <input type="text"
+                   class="form-control"
+                   maxlength="255"
+                   name="name"
+                   id="name"
+                   required
+                   value="{{ fields.name }}"
+                   placeholder="{{ __('Article name') }}"
+            >
+        </div>
+        <div class="form-group">
+            <label for="page_title">{{ __('Page title') }}</label>
+            <input type="text"
+                   class="form-control"
+                   maxlength="255"
+                   name="page_title"
+                   id="page_title"
+                   required
+                   value="{{ fields.page_title }}"
+                   placeholder="{{ __('Page title') }}"
+            >
+        </div>
+        <div class="form-group">
+            <label for="date_active_from">{{ __('Active from') }}</label>
+            <input type="text"
+                   class="form-control flatpickr_time"
+                   name="active_from"
+                   id="active_from"
+                   required
+                   value="{{ fields.active_from }}"
+                   placeholder="{{ __('Active from') }}"
+            >
+        </div>
+        <div class="form-group">
+            <label for="date_active_to">{{ __('Active to') }}</label>
+            <input type="text"
+                   class="form-control flatpickr_time"
+                   name="active_to"
+                   id="active_to"
+                   required
+                   value="{{ fields.active_to }}"
+                   placeholder="{{ __('Active to') }}"
+            >
+        </div>
+        <div class="form-group">
+            <label for="code">{{ __('Article code') }}</label>
+            <input type="text"
+                   class="form-control"
+                   maxlength="255"
+                   name="code"
+                   id="code"
+                   value="{{ fields.code }}"
+                   placeholder="{{ __('Article code') }}"
+            >
+            <div class="small text-muted">{{ __('Leave it empty for automatic generation') }}</div>
+        </div>
+        <div class="form-group">
+            <label for="keywords">{{ __('Keywords') }}</label>
+            <input type="text"
+                   class="form-control"
+                   maxlength="255"
+                   name="keywords"
+                   id="keywords"
+                   value="{{ fields.keywords }}"
+                   placeholder="{{ __('Keywords') }}"
+            >
+        </div>
+        <div class="form-group">
+            <label for="description">{{ __('Description') }}</label>
+            <input type="text"
+                   class="form-control"
+                   maxlength="255"
+                   name="description"
+                   id="description"
+                   value="{{ fields.description }}"
+                   placeholder="{{ __('Description') }}"
+            >
+        </div>
+        <div class="form-group">
+            <label for="tags">{{ __('Tags') }}</label>
+            <input type="text"
+                   class="form-control"
+                   maxlength="255"
+                   name="tags"
+                   id="tags"
+                   value="{{ fields.tags }}"
+                   placeholder="{{ __('Tags') }}"
+            >
+            <div class="small text-muted">{{ __('Enter words or phrases separated by commas') }}</div>
+        </div>
+
+        {% include '@theme/components/editor.twig' with {
+            name: 'preview_text',
+            label: __('Preview text'),
+            value: fields.preview_text
+        } only %}
+
+        {% include '@theme/components/editor.twig' with {
+            name: 'text',
+            label: __('Text'),
+            value: fields.text
+        } only %}
+
+        <div>
+            <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
+            <a href="{{ back_url }}" class="btn btn-outline-primary ms-2">{{ __('Back') }}</a>
+        </div>
+    </form>
+{% endblock %}

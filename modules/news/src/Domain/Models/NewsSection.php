@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Johncms\Casts\FormattedDate;
-use Johncms\Casts\SpecialChars;
 use Johncms\Modules\News\Application\Section;
 
 /**
@@ -43,9 +42,6 @@ class NewsSection extends Model
 
     protected $casts = [
         'parent'      => 'integer',
-        'name'        => SpecialChars::class,
-        'keywords'    => SpecialChars::class,
-        'description' => SpecialChars::class,
         'created_at'  => FormattedDate::class,
         'updated_at'  => FormattedDate::class,
     ];

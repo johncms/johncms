@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Johncms\Casts\FormattedDate;
-use Johncms\Casts\SpecialChars;
 use Johncms\Media\MediaEmbed;
 use Johncms\Modules\News\Application\Section;
 use Johncms\Modules\News\Application\Utils\Helpers;
@@ -88,11 +87,6 @@ class NewsArticle extends Model
         'active_to'      => FormattedDate::class,
         'section_id'     => 'integer',
         'view_count'     => 'integer',
-        'name'           => SpecialChars::class,
-        'page_title'     => SpecialChars::class,
-        'keywords'       => SpecialChars::class,
-        'description'    => SpecialChars::class,
-        'tags'           => SpecialChars::class,
         'created_at'     => FormattedDate::class,
         'updated_at'     => FormattedDate::class,
         'attached_files' => 'array',

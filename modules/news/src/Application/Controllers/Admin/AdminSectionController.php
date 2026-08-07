@@ -17,7 +17,7 @@ use Johncms\Modules\News\Domain\Models\NewsSection;
 use Johncms\Http\Session;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,7 +26,6 @@ final readonly class AdminSectionController
 {
     public function __construct(
         private AdminControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private ExceptionResponseFactory $exceptionResponses,
         private DebugDetailsPolicy $debugDetailsPolicy,
@@ -35,13 +34,6 @@ final readonly class AdminSectionController
     ) {
         $this->controllerContext->initModule('news');
         $this->navChain->add(__('News'), '/admin/news/');
-        $this->render->addData(
-            [
-                'title'       => __('News'),
-                'page_title'  => __('News'),
-                'module_menu' => ['news' => true],
-            ]
-        );
         $this->navChain->add(__('Section list'), '/admin/news/content/');
     }
 
@@ -53,14 +45,9 @@ final readonly class AdminSectionController
      * @param int $section_id
      * @return Response
      */
-    public function add(Request $request, Section $section_service, int $section_id = 0): Response
+    public function add(Request $request, Section $section_service, int $section_id = 0): Response | ViewResponse
     {
-        $this->render->addData(
-            [
-                'title'      => __('Create section'),
-                'page_title' => __('Create section'),
-            ]
-        );
+        $pageTitle = __('Create section');
 
         if (! empty($section_id)) {
             try {
@@ -132,7 +119,7 @@ final readonly class AdminSectionController
 
         $data['errors'] = $errors;
 
-        return new Response($this->render->render('news::admin/add_section', ['data' => $data]));
+        return new ViewResponse('@news/admin/section-form.twig', $this->menu($pageTitle) + $data);
     }
 
     /**
@@ -142,15 +129,10 @@ final readonly class AdminSectionController
      * @param Request $request
      * @return Response
      */
-    public function edit(int $section_id, Request $request): Response
+    public function edit(int $section_id, Request $request): Response | ViewResponse
     {
         $this->navChain->add(__('Edit section'));
-        $this->render->addData(
-            [
-                'title'      => __('Edit section'),
-                'page_title' => __('Edit section'),
-            ]
-        );
+        $pageTitle = __('Edit section');
 
         try {
             $section = (new NewsSection())->findOrFail($section_id);
@@ -206,7 +188,7 @@ final readonly class AdminSectionController
 
         $data['errors'] = $errors;
 
-        return new Response($this->render->render('news::admin/add_section', ['data' => $data]));
+        return new ViewResponse('@news/admin/section-form.twig', $this->menu($pageTitle) + $data);
     }
 
     /**
@@ -218,7 +200,7 @@ final readonly class AdminSectionController
      * @return Response
      * @throws Exception
      */
-    public function del(int $section_id, Request $request, Section $section_service): Response
+    public function del(int $section_id, Request $request, Section $section_service): Response | ViewResponse
     {
         $data = [];
         // Get the section to delete
@@ -259,6 +241,21 @@ final readonly class AdminSectionController
 
         $data['action_url'] = '/admin/news/del_section/' . $section_id;
 
-        return new Response($this->render->render('news::admin/del', ['data' => $data]));
+        return new ViewResponse(
+            '@news/admin/delete-confirm.twig',
+            $data + $this->menu(__('News')) + ['section' => null, 'article' => null]
+        );
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function menu(string $title): array
+    {
+        return [
+            'title'       => $title,
+            'page_title'  => $title,
+            'module_menu' => ['news' => true],
+        ];
     }
 }
