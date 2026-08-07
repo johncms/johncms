@@ -1342,7 +1342,7 @@ msgstr "Басқа санат"
 
 #: modules/admin/templates/forum/del_confirm_move_topics.phtml:39
 msgid "All the topics and files will be moved to selected section. Old section will be deleted."
-msgstr "Барлық тақырыптар мен файлдар таңдалған бөлімге ауыстырылады <br> Ескі бөлім жойылады"
+msgstr "Барлық тақырыптар мен файлдар таңдалған бөлімге ауыстырылады. Ескі бөлім жойылады"
 
 #: modules/admin/templates/forum/del_confirm_move_topics.phtml:47
 msgid "WARNING! All the information will be deleted"

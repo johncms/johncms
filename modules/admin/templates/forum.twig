@@ -1,0 +1,31 @@
+{#
+    What the forum holds, and the ways to manage it.
+
+    @var array counters      Totals, keyed by what they count.
+    @var bool  can_configure The settings are for the site owner only.
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    <h3>{{ __('Statistic') }}</h3>
+    <ul>
+        <li>{{ __('Categories') }}:&#160;{{ counters.total_cat }}</li>
+        <li>{{ __('Sections') }}:&#160;{{ counters.total_sub }}</li>
+        <li>{{ __('Topics') }}:&#160;{{ counters.total_thm }}&#160;/&#160;<span class="text-danger">{{ counters.total_thm_del }}</span></li>
+        <li>{{ __('Messages') }}:&#160;{{ counters.total_msg }}&#160;/&#160;<span class="text-danger">{{ counters.total_msg_del }}</span></li>
+        <li>{{ __('Files') }}:&#160;{{ counters.total_files }}</li>
+        <li>{{ __('Votes') }}:&#160;{{ counters.total_votes }}</li>
+    </ul>
+    <h3>{{ __('Settings') }}</h3>
+    <ul>
+        {% if can_configure %}
+            <li><a href="/admin/forum/settings">{{ __('Settings') }}</a></li>
+        {% endif %}
+        <li><a href="/admin/forum/structure"><b>{{ __('Forum structure') }}</b></a></li>
+        <li><a href="/admin/forum/hidden-posts">{{ __('Hidden posts') }}</a> ({{ counters.total_msg_del }})</li>
+        <li><a href="/admin/forum/hidden-topics">{{ __('Hidden topics') }}</a> ({{ counters.total_thm_del }})</li>
+    </ul>
+    <div class="mt-2">
+        <a href="/admin/">{{ __('Back') }}</a>
+    </div>
+{% endblock %}

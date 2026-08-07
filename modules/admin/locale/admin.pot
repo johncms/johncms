@@ -217,7 +217,7 @@ msgstr ""
 msgid "Dashboard"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumDashboardController.php:27
+#: modules/admin/src/Application/Controllers/Forum/ForumDashboardController.php:26
 #: modules/admin/src/Application/Controllers/Forum/ForumSettingsController.php:75
 #: modules/admin/src/Application/Controllers/Forum/HiddenPostsController.php:51
 #: modules/admin/src/Application/Controllers/Forum/HiddenTopicsController.php:51
@@ -225,10 +225,10 @@ msgid "Forum Management"
 msgstr ""
 
 #: modules/admin/src/Application/Controllers/Forum/ForumSettingsController.php:39
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:107
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:225
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:247
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:266
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:109
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:226
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:248
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:267
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:91
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:114
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:149
@@ -273,74 +273,74 @@ msgstr ""
 msgid "Forum Settings"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:47
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:46
 msgid "List of sections"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:51
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:50
 msgid "List of categories"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:56
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:90
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:189
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:275
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:346
-#: modules/admin/templates/forum/index.phtml:26
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:55
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:91
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:191
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:276
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:384
+#: modules/admin/templates/forum.twig:24
 msgid "Forum structure"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:84
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:142
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:85
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:144
 msgid "Invalid ID"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:89
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:90
 msgid "Add Section"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:89
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:90
 msgid "Add Category"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:116
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:118
 msgid "You have not entered Title"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:118
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:120
 #: modules/admin/templates/ad-form.twig:38
 #: modules/admin/templates/ad-form.twig:39
 #: modules/admin/templates/counter-preview.twig:23
 #: modules/admin/templates/counter-view.twig:21
-#: modules/admin/templates/forum/add.phtml:26
-#: modules/admin/templates/forum/add.phtml:27
-#: modules/admin/templates/forum/edit.phtml:25
-#: modules/admin/templates/forum/edit.phtml:26
+#: modules/admin/templates/forum-section-edit.twig:21
+#: modules/admin/templates/forum-section-edit.twig:22
+#: modules/admin/templates/forum-section-form.twig:24
+#: modules/admin/templates/forum-section-form.twig:25
 #: modules/admin/templates/settings.phtml:72
 msgid "Title"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:118
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:120
 msgid "Invalid length"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:121
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:123
 msgid "Description should be at least 2 characters in length"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:170
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:172
 msgid "Please select a valid parent"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:188
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:190
 msgid "Delete section"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:188
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:190
 msgid "Delete category"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:255
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:256
 #: modules/admin/src/Application/Middlewares/AdminAccessMiddleware.php:52
 #: modules/admin/src/Application/Middlewares/SuperAdminAccessMiddleware.php:51
 #: modules/admin/templates/access.phtml:40
@@ -351,12 +351,38 @@ msgstr ""
 msgid "Access denied"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:274
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:275
 msgid "Edit Section"
 msgstr ""
 
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:352
+#: modules/admin/templates/forum-section-edit.twig:50
+#: modules/admin/templates/forum-section-form.twig:36
+msgid "Common access"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:353
+msgid "Assign the newly created authors as curators"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:354
+msgid "Allow authors to edit the 1st post"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:355
+msgid "Only for reading"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:365
+msgid "For subsections"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:366
+msgid "For topics"
+msgstr ""
+
 #: modules/admin/src/Application/Controllers/Forum/HiddenPostsController.php:50
-#: modules/admin/templates/forum/index.phtml:27
+#: modules/admin/templates/forum.twig:25
 msgid "Hidden posts"
 msgstr ""
 
@@ -373,7 +399,7 @@ msgid "by author"
 msgstr ""
 
 #: modules/admin/src/Application/Controllers/Forum/HiddenTopicsController.php:50
-#: modules/admin/templates/forum/index.phtml:28
+#: modules/admin/templates/forum.twig:26
 msgid "Hidden topics"
 msgstr ""
 
@@ -505,9 +531,9 @@ msgstr ""
 #: modules/admin/templates/counter-delete-confirm.twig:20
 #: modules/admin/templates/counter-view.twig:51
 #: modules/admin/templates/counters.twig:39
-#: modules/admin/templates/forum/del_confirm.phtml:20
-#: modules/admin/templates/forum/del_confirm_move_topics.phtml:49
-#: modules/admin/templates/forum/structure.phtml:35
+#: modules/admin/templates/forum-section-delete-confirm.twig:17
+#: modules/admin/templates/forum-section-move-topics.twig:46
+#: modules/admin/templates/forum-structure.twig:35
 #: modules/admin/templates/languages-manage.twig:51
 #: modules/admin/templates/reg_list.phtml:38
 #: modules/admin/templates/user_clean_confirm.phtml:31
@@ -601,7 +627,7 @@ msgid "Delete:"
 msgstr ""
 
 #: modules/admin/src/Application/Controllers/Settings/CountersController.php:178
-#: modules/admin/templates/forum/del_confirm.phtml:15
+#: modules/admin/templates/forum-section-delete-confirm.twig:12
 msgid "Do you really want to delete?"
 msgstr ""
 
@@ -902,7 +928,7 @@ msgstr ""
 #: modules/admin/templates/amnesty.phtml:36
 #: modules/admin/templates/antiflood.phtml:62
 #: modules/admin/templates/counter-preview.twig:51
-#: modules/admin/templates/forum/edit.phtml:82
+#: modules/admin/templates/forum-section-edit.twig:76
 #: modules/admin/templates/forum/settings.phtml:64
 #: modules/admin/templates/ip-ban-form.twig:53
 #: modules/admin/templates/karma.phtml:50
@@ -920,11 +946,11 @@ msgstr ""
 #: modules/admin/templates/counter-preview.twig:52
 #: modules/admin/templates/emoticons.phtml:27
 #: modules/admin/templates/file-integrity-snapshot-confirm.twig:22
-#: modules/admin/templates/forum/add.phtml:69
-#: modules/admin/templates/forum/del_confirm.phtml:22
-#: modules/admin/templates/forum/del_confirm_move.phtml:36
-#: modules/admin/templates/forum/del_confirm_move_topics.phtml:51
-#: modules/admin/templates/forum/edit.phtml:83
+#: modules/admin/templates/forum-section-delete-confirm.twig:19
+#: modules/admin/templates/forum-section-edit.twig:77
+#: modules/admin/templates/forum-section-form.twig:55
+#: modules/admin/templates/forum-section-move-sections.twig:33
+#: modules/admin/templates/forum-section-move-topics.twig:48
 #: modules/admin/templates/forum/hidden_posts.phtml:21
 #: modules/admin/templates/forum/hidden_topics.phtml:21
 #: modules/admin/templates/ip-ban-clear-confirm.twig:21
@@ -1005,9 +1031,9 @@ msgstr ""
 #: modules/admin/templates/ads.twig:31
 #: modules/admin/templates/ban_panel.phtml:26
 #: modules/admin/templates/counters.twig:20
+#: modules/admin/templates/forum-structure.twig:13
 #: modules/admin/templates/forum/hidden_posts.phtml:95
 #: modules/admin/templates/forum/hidden_topics.phtml:91
-#: modules/admin/templates/forum/structure.phtml:14
 #: modules/admin/templates/ip-bans.twig:29
 #: modules/admin/templates/reg_list.phtml:31
 msgid "The list is empty"
@@ -1029,10 +1055,10 @@ msgstr ""
 #: modules/admin/templates/counter-view.twig:52
 #: modules/admin/templates/counters.twig:51
 #: modules/admin/templates/file-integrity-scan-result.twig:25
+#: modules/admin/templates/forum-structure.twig:44
+#: modules/admin/templates/forum.twig:29
 #: modules/admin/templates/forum/hidden_posts.phtml:118
 #: modules/admin/templates/forum/hidden_topics.phtml:114
-#: modules/admin/templates/forum/index.phtml:31
-#: modules/admin/templates/forum/structure.phtml:43
 #: modules/admin/templates/ip-ban-detail.twig:52
 #: modules/admin/templates/ip-bans.twig:63
 #: modules/admin/templates/languages-manage.twig:63
@@ -1088,7 +1114,7 @@ msgstr ""
 #: modules/admin/templates/ads.twig:58
 #: modules/admin/templates/counter-view.twig:50
 #: modules/admin/templates/counters.twig:38
-#: modules/admin/templates/forum/structure.phtml:34
+#: modules/admin/templates/forum-structure.twig:34
 msgid "Edit"
 msgstr ""
 
@@ -1257,8 +1283,8 @@ msgid "Enable"
 msgstr ""
 
 #: modules/admin/templates/counters.twig:48
-#: modules/admin/templates/forum/add.phtml:68
-#: modules/admin/templates/forum/structure.phtml:40
+#: modules/admin/templates/forum-section-form.twig:54
+#: modules/admin/templates/forum-structure.twig:41
 #: modules/admin/templates/ip-bans.twig:54
 msgid "Add"
 msgstr ""
@@ -1299,16 +1325,21 @@ msgstr ""
 msgid "Takes a snapshot of all script files from the site calculates their checksums and stored in the database."
 msgstr ""
 
-#: modules/admin/templates/forum/add.phtml:23
-msgid "Parent section:"
+#: modules/admin/templates/forum-section-edit.twig:26
+msgid "Min. 2, Max. 150 characters"
 msgstr ""
 
-#: modules/admin/templates/forum/add.phtml:28
-msgid "Min. 2, Max. 30 characters"
+#: modules/admin/templates/forum-section-edit.twig:30
+#: modules/admin/templates/forum-section-edit.twig:31
+msgid "Order"
 msgstr ""
 
-#: modules/admin/templates/forum/add.phtml:32
-#: modules/admin/templates/forum/edit.phtml:40
+#: modules/admin/templates/forum-section-edit.twig:32
+msgid "Only numbers"
+msgstr ""
+
+#: modules/admin/templates/forum-section-edit.twig:36
+#: modules/admin/templates/forum-section-form.twig:30
 #: modules/admin/templates/settings.phtml:80
 #: modules/admin/templates/system/system_check.phtml:9
 #: modules/admin/templates/system/system_check.phtml:17
@@ -1319,123 +1350,125 @@ msgstr ""
 msgid "Description"
 msgstr ""
 
-#: modules/admin/templates/forum/add.phtml:34
-#: modules/admin/templates/forum/edit.phtml:42
+#: modules/admin/templates/forum-section-edit.twig:38
+#: modules/admin/templates/forum-section-form.twig:32
 msgid "Optional field"
 msgstr ""
 
-#: modules/admin/templates/forum/add.phtml:34
-#: modules/admin/templates/forum/edit.phtml:42
+#: modules/admin/templates/forum-section-edit.twig:38
+#: modules/admin/templates/forum-section-form.twig:32
 msgid "Min. 2, Max. 500 characters"
 msgstr ""
 
-#: modules/admin/templates/forum/add.phtml:38
-#: modules/admin/templates/forum/add.phtml:41
-#: modules/admin/templates/forum/edit.phtml:54
-#: modules/admin/templates/forum/edit.phtml:55
-msgid "Common access"
-msgstr ""
-
-#: modules/admin/templates/forum/add.phtml:45
-#: modules/admin/templates/forum/edit.phtml:55
-msgid "Assign the newly created authors as curators"
-msgstr ""
-
-#: modules/admin/templates/forum/add.phtml:49
-#: modules/admin/templates/forum/edit.phtml:55
-msgid "Allow authors to edit the 1st post"
-msgstr ""
-
-#: modules/admin/templates/forum/add.phtml:53
-#: modules/admin/templates/forum/edit.phtml:55
-msgid "Only for reading"
-msgstr ""
-
-#: modules/admin/templates/forum/add.phtml:57
-#: modules/admin/templates/forum/edit.phtml:62
-msgid "Section type"
-msgstr ""
-
-#: modules/admin/templates/forum/add.phtml:60
-#: modules/admin/templates/forum/edit.phtml:65
-msgid "For subsections"
-msgstr ""
-
-#: modules/admin/templates/forum/add.phtml:64
-#: modules/admin/templates/forum/edit.phtml:69
-msgid "For topics"
-msgstr ""
-
-#: modules/admin/templates/forum/del_confirm_move.phtml:18
-msgid "<h3>WARNING!</h3>There are subsections. Move them to another category."
-msgstr ""
-
-#: modules/admin/templates/forum/del_confirm_move.phtml:25
-#: modules/admin/templates/forum/edit.phtml:73
-msgid "Category"
-msgstr ""
-
-#: modules/admin/templates/forum/del_confirm_move.phtml:32
-msgid "All categories, topics, and files will be moved into selected category. Old category will be removed."
-msgstr ""
-
-#: modules/admin/templates/forum/del_confirm_move.phtml:35
-#: modules/admin/templates/forum/del_confirm_move_topics.phtml:42
-msgid "Move"
-msgstr ""
-
-#: modules/admin/templates/forum/del_confirm_move.phtml:41
-#: modules/admin/templates/forum/del_confirm_move_topics.phtml:46
-msgid "Complete removal"
-msgstr ""
-
-#: modules/admin/templates/forum/del_confirm_move.phtml:43
-msgid "If you want to destroy all the information, first remove"
-msgstr ""
-
-#: modules/admin/templates/forum/del_confirm_move.phtml:44
-msgid "subsections"
-msgstr ""
-
-#: modules/admin/templates/forum/del_confirm_move_topics.phtml:19
-msgid "<h3>WARNING!</h3>There are topics in the section. You must move them to another section."
-msgstr ""
-
-#: modules/admin/templates/forum/del_confirm_move_topics.phtml:25
-msgid "Select section"
-msgstr ""
-
-#: modules/admin/templates/forum/del_confirm_move_topics.phtml:32
-msgid "Other category"
-msgstr ""
-
-#: modules/admin/templates/forum/del_confirm_move_topics.phtml:39
-msgid "All the topics and files will be moved to selected section. Old section will be deleted."
-msgstr ""
-
-#: modules/admin/templates/forum/del_confirm_move_topics.phtml:47
-msgid "WARNING! All the information will be deleted"
-msgstr ""
-
-#: modules/admin/templates/forum/edit.phtml:30
-msgid "Min. 2, Max. 150 characters"
-msgstr ""
-
-#: modules/admin/templates/forum/edit.phtml:34
-#: modules/admin/templates/forum/edit.phtml:35
-msgid "Order"
-msgstr ""
-
-#: modules/admin/templates/forum/edit.phtml:36
-msgid "Only numbers"
-msgstr ""
-
-#: modules/admin/templates/forum/edit.phtml:46
+#: modules/admin/templates/forum-section-edit.twig:42
 msgid "Meta description"
 msgstr ""
 
-#: modules/admin/templates/forum/edit.phtml:50
+#: modules/admin/templates/forum-section-edit.twig:46
 msgid "Meta keywords"
+msgstr ""
+
+#: modules/admin/templates/forum-section-edit.twig:58
+#: modules/admin/templates/forum-section-form.twig:45
+msgid "Section type"
+msgstr ""
+
+#: modules/admin/templates/forum-section-edit.twig:67
+#: modules/admin/templates/forum-section-move-sections.twig:22
+msgid "Category"
+msgstr ""
+
+#: modules/admin/templates/forum-section-form.twig:21
+msgid "Parent section:"
+msgstr ""
+
+#: modules/admin/templates/forum-section-form.twig:26
+msgid "Min. 2, Max. 30 characters"
+msgstr ""
+
+#: modules/admin/templates/forum-section-move-sections.twig:15
+msgid "<h3>WARNING!</h3>There are subsections. Move them to another category."
+msgstr ""
+
+#: modules/admin/templates/forum-section-move-sections.twig:29
+msgid "All categories, topics, and files will be moved into selected category. Old category will be removed."
+msgstr ""
+
+#: modules/admin/templates/forum-section-move-sections.twig:32
+#: modules/admin/templates/forum-section-move-topics.twig:39
+msgid "Move"
+msgstr ""
+
+#: modules/admin/templates/forum-section-move-sections.twig:38
+#: modules/admin/templates/forum-section-move-topics.twig:43
+msgid "Complete removal"
+msgstr ""
+
+#: modules/admin/templates/forum-section-move-sections.twig:40
+msgid "If you want to destroy all the information, first remove"
+msgstr ""
+
+#: modules/admin/templates/forum-section-move-sections.twig:41
+msgid "subsections"
+msgstr ""
+
+#: modules/admin/templates/forum-section-move-topics.twig:16
+msgid "<h3>WARNING!</h3>There are topics in the section. You must move them to another section."
+msgstr ""
+
+#: modules/admin/templates/forum-section-move-topics.twig:22
+msgid "Select section"
+msgstr ""
+
+#: modules/admin/templates/forum-section-move-topics.twig:29
+msgid "Other category"
+msgstr ""
+
+#: modules/admin/templates/forum-section-move-topics.twig:36
+msgid "All the topics and files will be moved to selected section. Old section will be deleted."
+msgstr ""
+
+#: modules/admin/templates/forum-section-move-topics.twig:44
+msgid "WARNING! All the information will be deleted"
+msgstr ""
+
+#: modules/admin/templates/forum-structure.twig:27
+msgid "View"
+msgstr ""
+
+#: modules/admin/templates/forum.twig:10
+msgid "Statistic"
+msgstr ""
+
+#: modules/admin/templates/forum.twig:12
+msgid "Categories"
+msgstr ""
+
+#: modules/admin/templates/forum.twig:13
+#: modules/admin/templates/forum/settings.phtml:41
+msgid "Sections"
+msgstr ""
+
+#: modules/admin/templates/forum.twig:14
+#: modules/admin/templates/forum/settings.phtml:52
+msgid "Topics"
+msgstr ""
+
+#: modules/admin/templates/forum.twig:15
+msgid "Messages"
+msgstr ""
+
+#: modules/admin/templates/forum.twig:16
+msgid "Files"
+msgstr ""
+
+#: modules/admin/templates/forum.twig:17
+msgid "Votes"
+msgstr ""
+
+#: modules/admin/templates/forum.twig:19
+#: modules/admin/templates/forum.twig:22
+msgid "Settings"
 msgstr ""
 
 #: modules/admin/templates/forum/hidden_posts.phtml:20
@@ -1490,41 +1523,6 @@ msgstr ""
 msgid "Topic deleted:"
 msgstr ""
 
-#: modules/admin/templates/forum/index.phtml:12
-msgid "Statistic"
-msgstr ""
-
-#: modules/admin/templates/forum/index.phtml:14
-msgid "Categories"
-msgstr ""
-
-#: modules/admin/templates/forum/index.phtml:15
-#: modules/admin/templates/forum/settings.phtml:41
-msgid "Sections"
-msgstr ""
-
-#: modules/admin/templates/forum/index.phtml:16
-#: modules/admin/templates/forum/settings.phtml:52
-msgid "Topics"
-msgstr ""
-
-#: modules/admin/templates/forum/index.phtml:17
-msgid "Messages"
-msgstr ""
-
-#: modules/admin/templates/forum/index.phtml:18
-msgid "Files"
-msgstr ""
-
-#: modules/admin/templates/forum/index.phtml:19
-msgid "Votes"
-msgstr ""
-
-#: modules/admin/templates/forum/index.phtml:21
-#: modules/admin/templates/forum/index.phtml:24
-msgid "Settings"
-msgstr ""
-
 #: modules/admin/templates/forum/settings.phtml:25
 msgid "Common settings"
 msgstr ""
@@ -1569,10 +1567,6 @@ msgstr ""
 
 #: modules/admin/templates/forum/settings.phtml:59
 msgid "Topic description"
-msgstr ""
-
-#: modules/admin/templates/forum/structure.phtml:27
-msgid "View"
 msgstr ""
 
 #: modules/admin/templates/index.twig:10

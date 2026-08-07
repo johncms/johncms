@@ -7,14 +7,13 @@ namespace Johncms\Modules\Admin\Application\Controllers\Forum;
 use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Modules\Admin\Application\UseCases\GetForumDashboardUseCase;
 use Johncms\NavChain;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Users\User;
 
 final readonly class ForumDashboardController
 {
     public function __construct(
         private AdminControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private User $currentUser,
         private GetForumDashboardUseCase $getDashboard,
@@ -22,18 +21,15 @@ final readonly class ForumDashboardController
         $this->controllerContext->initModule('admin');
     }
 
-    public function __invoke(): string
+    public function __invoke(): ViewResponse
     {
         $title = __('Forum Management');
         $this->navChain->add($title, '/admin/forum');
 
-        $this->render->addData([
-            'title'       => $title,
-            'page_title'  => $title,
-            'module_menu' => ['forum' => true],
-        ]);
-
-        return $this->render->render('admin::forum/index', [
+        return new ViewResponse('@admin/forum.twig', [
+            'title'         => $title,
+            'page_title'    => $title,
+            'module_menu'   => ['forum' => true],
             'counters'      => $this->getDashboard->execute(),
             'can_configure' => $this->currentUser->rights >= 9,
         ]);

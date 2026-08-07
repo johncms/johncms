@@ -1,0 +1,51 @@
+{#
+    A section still holding topics: they go somewhere else before it can be deleted.
+
+    @var int    id
+    @var array  sections    Sections of the current category to move the topics into: id, name.
+    @var array  categories  Other categories to look in: id, name.
+    @var string form_action
+    @var string back_url
+    @var bool   can_destroy Deleting the content outright is for the site owner only.
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    <div class="alert alert-danger">
+        <div class="pb-2">
+            {{ __('<h3>WARNING!</h3>There are topics in the section. You must move them to another section.')|raw }}
+        </div>
+    </div>
+    <div>
+        <form action="{{ form_action }}" method="post">
+            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+            <h3>{{ __('Select section') }}</h3>
+            {% for section in sections %}
+                <div class="form-check">
+                    <input type="radio" id="sect_{{ section.id }}" name="subcat" value="{{ section.id }}" class="form-check-input">
+                    <label class="form-check-label" for="sect_{{ section.id }}">{{ section.name }}</label>
+                </div>
+            {% endfor %}
+            <h3 class="mt-3">{{ __('Other category') }}</h3>
+            <ul>
+                {% for category in categories %}
+                    <li><a href="/admin/forum/structure/{{ id }}/delete?cat={{ category.id }}">{{ category.name }}</a></li>
+                {% endfor %}
+            </ul>
+            <div class="alert alert-info">
+                {{ __('All the topics and files will be moved to selected section. Old section will be deleted.') }}
+            </div>
+            <div class="mb-3">
+                <button type="submit" name="submit" value="1" class="btn btn-danger">{{ __('Move') }}</button>
+            </div>
+            {% if can_destroy %}
+                <div class="mb-2">
+                    <h3>{{ __('Complete removal') }}</h3>
+                    {{ __('WARNING! All the information will be deleted') }}
+                </div>
+                <button type="submit" name="delete" value="1" class="btn btn-danger">{{ __('Delete') }}</button>
+            {% endif %}
+            <a href="{{ back_url }}" class="btn btn-outline-secondary">{{ __('Cancel') }}</a>
+        </form>
+    </div>
+{% endblock %}

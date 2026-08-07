@@ -226,7 +226,7 @@
       'subsections' => 'бағынысты бөлімдер',
       'Select section' => 'Бөлімін таңдаңыз',
       'Other category' => 'Басқа санат',
-      'All the topics and files will be moved to selected section. Old section will be deleted.' => 'Барлық тақырыптар мен файлдар таңдалған бөлімге ауыстырылады <br> Ескі бөлім жойылады',
+      'All the topics and files will be moved to selected section. Old section will be deleted.' => 'Барлық тақырыптар мен файлдар таңдалған бөлімге ауыстырылады. Ескі бөлім жойылады',
       'WARNING! All the information will be deleted' => 'Ескерту! Барлық ақпарат жойылады',
       'Order' => 'Тәртібі',
       'Only numbers' => 'Тек сандар',

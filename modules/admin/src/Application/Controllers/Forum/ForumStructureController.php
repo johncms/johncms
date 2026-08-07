@@ -13,7 +13,7 @@ use Johncms\Modules\Forum\Application\Services\ForumSectionTreeService;
 use Johncms\Modules\Forum\Domain\Models\ForumSection;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
 
@@ -23,7 +23,6 @@ final readonly class ForumStructureController
 
     public function __construct(
         private AdminControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private ForumSectionTreeService $sectionTree,
         private User $currentUser,
@@ -35,7 +34,7 @@ final readonly class ForumStructureController
         $this->controllerContext->initModule('admin');
     }
 
-    public function structure(Request $request): string
+    public function structure(Request $request): ViewResponse
     {
         $parentId = $request->queryInt('id');
 
@@ -54,7 +53,6 @@ final readonly class ForumStructureController
         }
 
         $this->navChain->add(__('Forum structure'), self::URL);
-        $this->render->addData($this->menu($title));
 
         $items = $sections->map(fn (ForumSection $section): array => [
             'sort'        => $section->sort,
@@ -67,14 +65,17 @@ final readonly class ForumStructureController
             'delete_url'  => self::URL . '/' . $section->id . '/delete',
         ])->all();
 
-        return $this->render->render('admin::forum/structure', [
+        return new ViewResponse('@admin/forum-structure.twig', $this->menu($title) + [
             'items'        => $items,
             'add_form_url' => self::URL . '/new' . ($parentId ? '?parent=' . $parentId : ''),
             'back_url'     => $backUrl,
         ]);
     }
 
-    public function addForm(Request $request, ?string $error = null): string
+    /**
+     * @param list<string> $errors
+     */
+    public function addForm(Request $request, array $errors = []): ViewResponse
     {
         $parentId = $request->queryInt('parent');
         $parentName = '';
@@ -89,22 +90,23 @@ final readonly class ForumStructureController
         $title = $parentId ? __('Add Section') : __('Add Category');
         $this->navChain->add(__('Forum structure'), self::URL);
         $this->navChain->add($title);
-        $this->render->addData($this->menu($title));
 
-        return $this->render->render('admin::forum/add', [
+        return new ViewResponse('@admin/forum-section-form.twig', $this->menu($title) + [
             'parent_id'           => $parentId ?: null,
             'parent_section_name' => $parentName,
             'form_action'         => self::URL . '/new' . ($parentId ? '?parent=' . $parentId : ''),
             'back_url'            => self::URL . ($parentId ? '?id=' . $parentId : ''),
             'field_height'        => $this->currentUser->config->fieldHeight,
-            'error_message'       => $error,
+            'errors'              => $errors,
+            'access_options'      => $this->accessOptions(),
+            'type_options'        => $this->sectionTypeOptions(),
         ]);
     }
 
-    public function add(Request $request): string
+    public function add(Request $request): ViewResponse
     {
         if (! $this->isCsrfValid($request)) {
-            return $this->addForm($request, __('Wrong data'));
+            return $this->addForm($request, [__('Wrong data')]);
         }
 
         $parentId = $request->queryInt('parent');
@@ -121,7 +123,7 @@ final readonly class ForumStructureController
             $errors[] = __('Description should be at least 2 characters in length');
         }
         if ($errors !== []) {
-            return $this->addForm($request, implode('<br>', $errors));
+            return $this->addForm($request, $errors);
         }
 
         $this->addSection->execute(
@@ -135,7 +137,7 @@ final readonly class ForumStructureController
         redirect(self::URL . ($parentId ? '?id=' . $parentId : ''));
     }
 
-    public function editForm(int $id): string
+    public function editForm(int $id): ViewResponse
     {
         $section = $this->repository->find($id);
         if ($section === null) {
@@ -145,7 +147,7 @@ final readonly class ForumStructureController
         return $this->renderEditForm($section, $this->fieldsFromSection($section), []);
     }
 
-    public function edit(Request $request, int $id): string
+    public function edit(Request $request, int $id): ViewResponse
     {
         $section = $this->repository->find($id);
         if ($section === null) {
@@ -173,7 +175,7 @@ final readonly class ForumStructureController
         return $this->renderEditForm($section, $fields, $errors);
     }
 
-    public function deleteConfirm(Request $request, int $id): string
+    public function deleteConfirm(Request $request, int $id): ViewResponse
     {
         $section = $this->repository->find($id);
         if ($section === null) {
@@ -188,17 +190,16 @@ final readonly class ForumStructureController
         $title = ($isTopicSection ? __('Delete section') : __('Delete category')) . ': ' . $section->name;
         $this->navChain->add(__('Forum structure'), self::URL);
         $this->navChain->add($title);
-        $this->render->addData($this->menu($title));
 
         if (! $hasChildren) {
-            return $this->render->render('admin::forum/del_confirm', [
+            return new ViewResponse('@admin/forum-section-delete-confirm.twig', $this->menu($title) + [
                 'form_action' => self::URL . '/' . $id . '/delete',
                 'back_url'    => self::URL,
             ]);
         }
 
         if (! $isTopicSection) {
-            return $this->render->render('admin::forum/del_confirm_move', [
+            return new ViewResponse('@admin/forum-section-move-sections.twig', $this->menu($title) + [
                 'id'          => $id,
                 'categories'  => $this->moveOptions($this->repository->categoriesForMove($id), $section->parent),
                 'form_action' => self::URL . '/' . $id . '/delete',
@@ -209,17 +210,17 @@ final readonly class ForumStructureController
 
         $ref = $request->queryInt('cat') ?: (int) $section->parent;
 
-        return $this->render->render('admin::forum/del_confirm_move_topics', [
+        return new ViewResponse('@admin/forum-section-move-topics.twig', $this->menu($title) + [
             'id'          => $id,
-            'sections'    => $this->repository->sectionsForMove($ref, $id),
-            'categories'  => $this->repository->topLevelExcept($ref),
+            'sections'    => $this->sectionRows($this->repository->sectionsForMove($ref, $id)),
+            'categories'  => $this->sectionRows($this->repository->topLevelExcept($ref)),
             'form_action' => self::URL . '/' . $id . '/delete',
             'back_url'    => self::URL,
             'can_destroy' => $this->currentUser->rights === 9,
         ]);
     }
 
-    public function delete(Request $request, int $id): string
+    public function delete(Request $request, int $id): ViewResponse
     {
         if (! $this->isCsrfValid($request)) {
             return $this->error(__('Wrong data'));
@@ -269,12 +270,11 @@ final readonly class ForumStructureController
         redirect(self::URL);
     }
 
-    private function renderEditForm(ForumSection $section, array $fields, array $errors): string
+    private function renderEditForm(ForumSection $section, array $fields, array $errors): ViewResponse
     {
         $title = __('Edit Section');
         $this->navChain->add(__('Forum structure'), self::URL);
         $this->navChain->add($title);
-        $this->render->addData($this->menu($title));
 
         $categories = [['id' => 0, 'name' => ' - ', 'selected' => empty($section->parent)]];
         foreach ($this->sectionTree->getFlatTree() as $item) {
@@ -285,12 +285,14 @@ final readonly class ForumStructureController
             ];
         }
 
-        return $this->render->render('admin::forum/edit', [
-            'item'        => $fields,
-            'errors'      => $errors,
-            'categories'  => $categories,
-            'form_action' => self::URL . '/' . $section->id . '/edit',
-            'back_url'    => self::URL . ($section->parent ? '?id=' . $section->parent : ''),
+        return new ViewResponse('@admin/forum-section-edit.twig', $this->menu($title) + [
+            'item'           => $fields,
+            'errors'         => $errors,
+            'categories'     => $categories,
+            'access_options' => $this->accessOptions(),
+            'type_options'   => $this->sectionTypeOptions(),
+            'form_action'    => self::URL . '/' . $section->id . '/edit',
+            'back_url'       => self::URL . ($section->parent ? '?id=' . $section->parent : ''),
         ]);
     }
 
@@ -341,13 +343,47 @@ final readonly class ForumStructureController
         ])->all();
     }
 
-    private function error(string $message): string
+    /**
+     * @return list<array{value: int, label: string}>
+     */
+    private function accessOptions(): array
+    {
+        return [
+            ['value' => 0, 'label' => __('Common access')],
+            ['value' => 1, 'label' => __('Assign the newly created authors as curators')],
+            ['value' => 2, 'label' => __('Allow authors to edit the 1st post')],
+            ['value' => 4, 'label' => __('Only for reading')],
+        ];
+    }
+
+    /**
+     * @return list<array{value: int, label: string}>
+     */
+    private function sectionTypeOptions(): array
+    {
+        return [
+            ['value' => 0, 'label' => __('For subsections')],
+            ['value' => 1, 'label' => __('For topics')],
+        ];
+    }
+
+    /**
+     * @param \Illuminate\Support\Collection<int, ForumSection> $sections
+     * @return list<array{id: int, name: string}>
+     */
+    private function sectionRows(\Illuminate\Support\Collection $sections): array
+    {
+        return $sections->map(fn (ForumSection $section): array => [
+            'id'   => $section->id,
+            'name' => $section->name,
+        ])->all();
+    }
+
+    private function error(string $message): ViewResponse
     {
         $title = __('Forum structure');
-        $this->render->addData($this->menu($title));
 
-        return $this->render->render('system::pages/result', [
-            'title'    => $title,
+        return new ViewResponse('@admin/pages/result.twig', $this->menu($title) + [
             'type'     => 'alert-danger',
             'message'  => $message,
             'back_url' => self::URL,

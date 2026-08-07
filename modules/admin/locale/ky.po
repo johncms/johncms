@@ -1319,7 +1319,7 @@ msgstr "Бөлүмдөр"
 
 #: modules/admin/templates/forum/del_confirm_move.phtml:32
 msgid "All categories, topics, and files will be moved into selected category. Old category will be removed."
-msgstr "Бардык бөлүктөр, темалар жана файлдар тандалган бөлүмдөргө өткөрүлүп берилет. <br> Эски бөлүмдөр өчүрүлөт"
+msgstr "Бардык бөлүктөр, темалар жана файлдар тандалган бөлүмдөргө өткөрүлүп берилет. Эски бөлүмдөр өчүрүлөт"
 
 #: modules/admin/templates/forum/del_confirm_move.phtml:35
 #: modules/admin/templates/forum/del_confirm_move_topics.phtml:42
@@ -1353,11 +1353,11 @@ msgstr "Башка бөлүмдөрү"
 
 #: modules/admin/templates/forum/del_confirm_move_topics.phtml:39
 msgid "All the topics and files will be moved to selected section. Old section will be deleted."
-msgstr "Бардык темалар жана файлдар тандалган бөлүккө жылдырылат <br> Эски бөлүк өчүрүлөт"
+msgstr "Бардык темалар жана файлдар тандалган бөлүккө жылдырылат. Эски бөлүк өчүрүлөт"
 
 #: modules/admin/templates/forum/del_confirm_move_topics.phtml:47
 msgid "WARNING! All the information will be deleted"
-msgstr "<h3>ЭСКЕРТҮҮ!</h3> Бардык маалыматтар өчүрүлдү"
+msgstr "ЭСКЕРТҮҮ! Бардык маалыматтар өчүрүлдү"
 
 #: modules/admin/templates/forum/edit.phtml:30
 msgid "Min. 2, Max. 150 characters"

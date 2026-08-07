@@ -1,0 +1,45 @@
+{#
+    A category still holding subsections: they go somewhere else before it can be deleted.
+
+    @var int    id
+    @var array  categories  Options of the target select: id, name, selected.
+    @var string form_action
+    @var string back_url
+    @var bool   can_destroy Deleting the content outright is for the site owner only.
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    <div class="alert alert-danger">
+        <div class="pb-2">
+            {{ __('<h3>WARNING!</h3>There are subsections. Move them to another category.')|raw }}
+        </div>
+    </div>
+    <div>
+        <form action="{{ form_action }}" method="post">
+            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+            <div class="form-group">
+                <label for="category" class="h3 mt-3">{{ __('Category') }}</label>
+                <select name="category" id="category" class="form-control">
+                    {% for category in categories %}
+                        <option value="{{ category.id }}"{% if category.selected %} selected="selected"{% endif %}>{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+                <div class="text-muted">
+                    {{ __('All categories, topics, and files will be moved into selected category. Old category will be removed.') }}
+                </div>
+            </div>
+            <button type="submit" class="btn btn-danger">{{ __('Move') }}</button>
+            <a href="{{ back_url }}" class="btn btn-outline-secondary">{{ __('Cancel') }}</a>
+        </form>
+    </div>
+    {% if can_destroy %}
+        <div class="alert alert-info mt-3">
+            <h3>{{ __('Complete removal') }}</h3>
+            <div>
+                {{ __('If you want to destroy all the information, first remove') }}
+                <a href="/admin/forum/structure?id={{ id }}">{{ __('subsections') }}</a>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

@@ -1308,7 +1308,7 @@ msgstr "Категория"
 
 #: modules/admin/templates/forum/del_confirm_move.phtml:32
 msgid "All categories, topics, and files will be moved into selected category. Old category will be removed."
-msgstr "Все разделы, темы и файлы будут перемещены в выбранную категорию.<br>Старая категория будет удалена"
+msgstr "Все разделы, темы и файлы будут перемещены в выбранную категорию. Старая категория будет удалена"
 
 #: modules/admin/templates/forum/del_confirm_move.phtml:35
 #: modules/admin/templates/forum/del_confirm_move_topics.phtml:42
@@ -1342,7 +1342,7 @@ msgstr "Другая категория"
 
 #: modules/admin/templates/forum/del_confirm_move_topics.phtml:39
 msgid "All the topics and files will be moved to selected section. Old section will be deleted."
-msgstr "Все темы и файлы будут перемещены в выбранный раздел<br>Старый раздел будет удален"
+msgstr "Все темы и файлы будут перемещены в выбранный раздел. Старый раздел будет удален"
 
 #: modules/admin/templates/forum/del_confirm_move_topics.phtml:47
 msgid "WARNING! All the information will be deleted"
