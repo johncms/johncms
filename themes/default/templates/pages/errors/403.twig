@@ -1,0 +1,19 @@
+{#
+    A page the visitor may not open.
+
+    @var string title
+    @var string message Empty when the reason is not explained.
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-6 m-auto text-center">
+            <div class="fw-bold h1">{{ title }}</div>
+            {% if message %}
+                <p class="h2">{{ message }}</p>
+            {% endif %}
+            <a href="/" class="btn btn-primary mt-3">{{ __('Home') }}</a>
+        </div>
+    </div>
+{% endblock %}

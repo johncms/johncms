@@ -23,7 +23,6 @@
         <name>admin</name>
         <target>modules/admin/locale</target>
         <sourceDir>modules/admin</sourceDir>
-        <sourceFile>themes/admin/templates/system/app/sidebar-admin-menu.phtml</sourceFile>
     </domain>
 
     <!-- Album module -->

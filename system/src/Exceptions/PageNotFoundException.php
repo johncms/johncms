@@ -22,7 +22,7 @@ class PageNotFoundException extends RuntimeException
      */
     protected string $title = '';
 
-    protected string $template = 'system::error/404';
+    protected string $template = '@theme/pages/errors/404.twig';
 
     public function setTitle(string $title): PageNotFoundException
     {

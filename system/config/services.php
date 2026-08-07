@@ -48,13 +48,10 @@ use Johncms\System\View\Extension\Avatar;
 use Johncms\System\View\Extension\Formatter;
 use Johncms\System\View\Extension\Vite;
 use Johncms\System\View\Render;
-use Johncms\System\View\RenderEngineFactory;
 use Johncms\Console\Commands\I18nScanCommand;
 use Johncms\Console\Commands\TwigCompileCommand;
 use Johncms\Console\Commands\TwigLintCommand;
 use Johncms\View\ColorScheme;
-use Johncms\View\DelegatingRenderer;
-use Johncms\View\PlatesRenderer;
 use Johncms\View\RendererInterface;
 use Johncms\View\Theme\FilesystemThemeRepository;
 use Johncms\View\Theme\ThemeRepositoryInterface;
@@ -64,7 +61,6 @@ use Johncms\View\Twig\Extension\AssetExtension;
 use Johncms\View\Twig\Extension\FormatExtension;
 use Johncms\View\Twig\Extension\MailExtension;
 use Johncms\View\Twig\Extension\I18nExtension;
-use Johncms\View\Twig\Extension\PlatesBridgeExtension;
 use Johncms\View\Twig\Extension\SiteExtension;
 use Johncms\View\Twig\TemplatePathRegistry;
 use Johncms\View\Twig\TwigEnvironmentFactory;
@@ -202,14 +198,8 @@ return static function (ContainerConfigurator $container): void {
         ->arg('$context', service(RequestContext::class));
     $services->alias(UrlMatcherInterface::class, UrlMatcher::class);
     $services->set(SymfonyRouteMatcher::class);
-    $services->set(Render::class)->factory(service(RenderEngineFactory::class));
-    // Templates are dispatched by the shape of their name — @namespace/file.twig to Twig,
-    // namespace::file to Plates — so a page moves to Twig on its own, without its module or
-    // any configuration moving with it.
-    $services->set(PlatesRenderer::class)->arg('$engine', service(Render::class));
-    $services->set(RendererInterface::class, DelegatingRenderer::class)
-        ->arg('$platesRenderer', service(PlatesRenderer::class))
-        ->arg('$twigRenderer', service(TwigRenderer::class));
+    // Every page of the site is a Twig template now; the installer builds an engine of its own.
+    $services->alias(RendererInterface::class, TwigRenderer::class);
 
     $services->set(ThemeRepositoryInterface::class, FilesystemThemeRepository::class);
     $services->set(TemplatePathRegistry::class)
@@ -256,7 +246,6 @@ return static function (ContainerConfigurator $container): void {
     $services->set(FormatExtension::class)
         ->tag('johncms.twig_extension')
         ->tag('johncms.twig_extension.mail');
-    $services->set(PlatesBridgeExtension::class)->tag('johncms.twig_extension');
     $services->set(SiteExtension::class)->tag('johncms.twig_extension');
     // The renderer is handed over as a closure: a controller that returns a string or a Response
     // of its own must not have the template environment assembled behind it.

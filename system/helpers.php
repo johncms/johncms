@@ -58,7 +58,7 @@ function pathToUrl(string $path): string
  * @throws HttpRedirectException if the current URI is listed in config/redirects.php
  */
 function pageNotFound(
-    string $template = 'system::error/404',
+    string $template = '@theme/pages/errors/404.twig',
     string $title = '',
     string $message = ''
 ): never {

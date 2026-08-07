@@ -1,0 +1,45 @@
+{#
+    The page navigation.
+
+    Item shape (Johncms\Http\Pagination\Pagination):
+      {type: prev|page|ellipsis|next, page: int|null, url: string|null, active: bool}
+
+    @param array items
+#}
+{% if items is not empty %}
+    <nav>
+        <ul class="pagination">
+            {% for item in items %}
+                {# The arrows are written as entities, so they are literals of the template and
+                   the escaper leaves them alone. #}
+                {% if item.type == 'prev' %}
+                    {% if item.url %}
+                        <li class="page-item">
+                            <a class="page-link" href="{{ item.url }}" rel="prev" aria-label="Previous page">&laquo;</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled" aria-disabled="true" aria-label="Previous">
+                            <span class="page-link" aria-hidden="true">&laquo;</span>
+                        </li>
+                    {% endif %}
+                {% elseif item.type == 'next' %}
+                    {% if item.url %}
+                        <li class="page-item">
+                            <a class="page-link" href="{{ item.url }}" rel="next" aria-label="Next page">&raquo;</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled" aria-disabled="true" aria-label="Next">
+                            <span class="page-link" aria-hidden="true">&raquo;</span>
+                        </li>
+                    {% endif %}
+                {% elseif item.type == 'ellipsis' %}
+                    <li class="page-item disabled" aria-disabled="true"><span class="page-link">...</span></li>
+                {% elseif item.active %}
+                    <li class="page-item active" aria-current="page"><span class="page-link">{{ item.page }}</span></li>
+                {% else %}
+                    <li class="page-item"><a class="page-link" href="{{ item.url }}">{{ item.page }}</a></li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </nav>
+{% endif %}

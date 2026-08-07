@@ -6,7 +6,7 @@ namespace Tests\Unit\Http\Pagination;
 
 use Johncms\Http\Pagination\Pagination;
 use Johncms\Http\QueryStringBuilder;
-use Johncms\System\View\Render;
+use Johncms\View\RendererInterface;
 use Twig\Markup;
 use PHPUnit\Framework\TestCase;
 
@@ -125,13 +125,13 @@ final class PaginationTest extends TestCase
 
     public function testRenderUsesPaginationTemplate(): void
     {
-        $renderer = $this->createMock(Render::class);
+        $renderer = $this->createMock(RendererInterface::class);
         $pagination = $this->makePagination(total: 50, currentPage: 2, renderer: $renderer);
 
         $renderer
             ->expects(self::once())
             ->method('render')
-            ->with('system::app/pagination', ['items' => $pagination->getItems()])
+            ->with('@theme/components/pagination.twig', ['items' => $pagination->getItems()])
             ->willReturn('<nav></nav>');
 
         $rendered = $pagination->render();
@@ -146,11 +146,11 @@ final class PaginationTest extends TestCase
         int $total,
         int $perPage = 10,
         int $currentPage = 1,
-        ?Render $renderer = null,
+        ?RendererInterface $renderer = null,
     ): Pagination {
         return new Pagination(
             queryStringBuilder: new QueryStringBuilder(),
-            renderer:           $renderer ?? $this->createMock(Render::class),
+            renderer:           $renderer ?? $this->createMock(RendererInterface::class),
             currentPath:        '/guestbook/',
             currentQuery:       [],
             total:              $total,

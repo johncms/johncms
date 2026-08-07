@@ -15,7 +15,7 @@ namespace Johncms\Http;
 use Johncms\Exceptions\HttpRedirectException;
 use Johncms\Exceptions\MethodNotAllowedException;
 use Johncms\Exceptions\PageNotFoundException;
-use Johncms\System\View\Render;
+use Johncms\View\RendererInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
@@ -27,7 +27,7 @@ use Throwable;
  */
 final readonly class ExceptionResponseFactory
 {
-    public function __construct(private Render $render)
+    public function __construct(private RendererInterface $renderer)
     {
     }
 
@@ -60,7 +60,7 @@ final readonly class ExceptionResponseFactory
         // The default translation domain is the one of the module that is handling the request,
         // so the system domain has to be named explicitly here.
         return new Response(
-            $this->render->render(
+            $this->renderer->render(
                 $exception->getTemplate(),
                 [
                     'title'   => $title !== ''

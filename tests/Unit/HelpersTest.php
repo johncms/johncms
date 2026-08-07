@@ -95,7 +95,7 @@ final class HelpersTest extends TestCase
         }
 
         self::assertInstanceOf(PageNotFoundException::class, $caught);
-        self::assertSame('system::error/404', $caught->getTemplate());
+        self::assertSame('@theme/pages/errors/404.twig', $caught->getTemplate());
         // Empty texts mean "use the translated defaults", which the HTTP layer applies.
         self::assertSame('', $caught->getTitle());
         self::assertSame('', $caught->getMessage());

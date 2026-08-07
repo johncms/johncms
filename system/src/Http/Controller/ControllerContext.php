@@ -5,14 +5,15 @@ declare(strict_types=1);
 namespace Johncms\Http\Controller;
 
 use Johncms\System\i18n\Translator;
-use Johncms\System\View\Render;
 
+/**
+ * What a page of a module needs before it runs: the translations of that module. Templates are
+ * found by convention, so nothing about them is registered here.
+ */
 final readonly class ControllerContext
 {
-    public function __construct(
-        private Render $render,
-        private Translator $translator,
-    ) {
+    public function __construct(private Translator $translator)
+    {
     }
 
     public function initModule(string $moduleName): void
@@ -20,11 +21,6 @@ final readonly class ControllerContext
         if ($moduleName === '') {
             return;
         }
-
-        $this->render->addFolder(
-            $moduleName,
-            MODULES_PATH . $moduleName . '/templates/'
-        );
 
         $this->translator->addTranslationDomain(
             $moduleName,

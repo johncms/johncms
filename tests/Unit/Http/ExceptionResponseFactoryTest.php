@@ -10,7 +10,7 @@ use Johncms\Exceptions\HttpRedirectException;
 use Johncms\Exceptions\MethodNotAllowedException;
 use Johncms\Exceptions\PageNotFoundException;
 use Johncms\Http\ExceptionResponseFactory;
-use Johncms\System\View\Render;
+use Johncms\View\RendererInterface;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,7 +28,7 @@ final class ExceptionResponseFactoryTest extends TestCase
 
     public function testRedirectExceptionBecomesARedirectResponse(): void
     {
-        $factory = new ExceptionResponseFactory($this->createMock(Render::class));
+        $factory = new ExceptionResponseFactory($this->createMock(RendererInterface::class));
 
         $response = $factory->fromRedirect(new HttpRedirectException('/forum/', 301));
 
@@ -39,7 +39,7 @@ final class ExceptionResponseFactoryTest extends TestCase
 
     public function testMethodNotAllowedExceptionBecomesA405WithAnAllowHeader(): void
     {
-        $factory = new ExceptionResponseFactory($this->createMock(Render::class));
+        $factory = new ExceptionResponseFactory($this->createMock(RendererInterface::class));
 
         $response = $factory->fromMethodNotAllowed(new MethodNotAllowedException(['GET', 'HEAD']));
 
@@ -51,7 +51,7 @@ final class ExceptionResponseFactoryTest extends TestCase
 
     public function testMethodNotAllowedWithoutKnownMethodsSendsNoAllowHeader(): void
     {
-        $factory = new ExceptionResponseFactory($this->createMock(Render::class));
+        $factory = new ExceptionResponseFactory($this->createMock(RendererInterface::class));
 
         $response = $factory->fromMethodNotAllowed(new MethodNotAllowedException());
 
@@ -61,7 +61,7 @@ final class ExceptionResponseFactoryTest extends TestCase
 
     public function testBadRequestResponse(): void
     {
-        $factory = new ExceptionResponseFactory($this->createMock(Render::class));
+        $factory = new ExceptionResponseFactory($this->createMock(RendererInterface::class));
 
         $response = $factory->badRequest();
 
@@ -71,7 +71,7 @@ final class ExceptionResponseFactoryTest extends TestCase
 
     public function testInternalServerErrorHidesTheDetailsUnlessTheyAreAllowed(): void
     {
-        $factory = new ExceptionResponseFactory($this->createMock(Render::class));
+        $factory = new ExceptionResponseFactory($this->createMock(RendererInterface::class));
 
         $response = $factory->internalServerError(new RuntimeException('secret failure'), false);
 
@@ -82,7 +82,7 @@ final class ExceptionResponseFactoryTest extends TestCase
 
     public function testInternalServerErrorEscapesTheDetailsWhenTheyAreAllowed(): void
     {
-        $factory = new ExceptionResponseFactory($this->createMock(Render::class));
+        $factory = new ExceptionResponseFactory($this->createMock(RendererInterface::class));
 
         $response = $factory->internalServerError(new RuntimeException('<script>alert(1)</script>'), true);
 
@@ -93,10 +93,10 @@ final class ExceptionResponseFactoryTest extends TestCase
 
     public function testPageNotFoundExceptionIsRenderedWithStatus404(): void
     {
-        $render = $this->createMock(Render::class);
+        $render = $this->createMock(RendererInterface::class);
         $render->expects(self::once())
             ->method('render')
-            ->with('system::error/404', ['title' => 'Custom title', 'message' => 'Custom message'])
+            ->with('@theme/pages/errors/404.twig', ['title' => 'Custom title', 'message' => 'Custom message'])
             ->willReturn('rendered 404');
 
         $factory = new ExceptionResponseFactory($render);
@@ -111,11 +111,11 @@ final class ExceptionResponseFactoryTest extends TestCase
 
     public function testEmptyTitleAndMessageAreReplacedWithDefaults(): void
     {
-        $render = $this->createMock(Render::class);
+        $render = $this->createMock(RendererInterface::class);
         $render->expects(self::once())
             ->method('render')
             ->with(
-                'system::error/404',
+                '@theme/pages/errors/404.twig',
                 [
                     'title'   => 'ERROR: 404 Not Found',
                     'message' => 'You are looking for something that doesn\'t exist or may have moved',
@@ -132,16 +132,16 @@ final class ExceptionResponseFactoryTest extends TestCase
 
     public function testCustomTemplateIsUsed(): void
     {
-        $render = $this->createMock(Render::class);
+        $render = $this->createMock(RendererInterface::class);
         $render->expects(self::once())
             ->method('render')
-            ->with('system::pages/result', self::anything())
+            ->with('@theme/pages/result.twig', self::anything())
             ->willReturn('rendered page');
 
         $factory = new ExceptionResponseFactory($render);
 
         $response = $factory->fromPageNotFound(
-            (new PageNotFoundException())->setTemplate('system::pages/result')
+            (new PageNotFoundException())->setTemplate('@theme/pages/result.twig')
         );
 
         self::assertSame('rendered page', $response->getContent());

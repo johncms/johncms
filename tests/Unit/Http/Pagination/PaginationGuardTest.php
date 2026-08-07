@@ -8,7 +8,7 @@ use Johncms\Http\Pagination\Pagination;
 use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Http\QueryStringBuilder;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
+use Johncms\View\RendererInterface;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -95,7 +95,7 @@ final class PaginationGuardTest extends TestCase
     {
         return new Pagination(
             queryStringBuilder: new QueryStringBuilder(),
-            renderer:           $this->createMock(Render::class),
+            renderer:           $this->createMock(RendererInterface::class),
             currentPath:        '/guestbook/',
             currentQuery:       $request->query->all(),
             total:              $total,
