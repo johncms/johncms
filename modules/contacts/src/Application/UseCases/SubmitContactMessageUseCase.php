@@ -60,7 +60,7 @@ final readonly class SubmitContactMessageUseCase
             [
                 'priority' => 2,
                 'locale'   => $this->translator->getLocale(),
-                'template' => 'system::mail/templates/contact_message',
+                'template' => '@theme/emails/contact-message.twig',
                 'fields'   => [
                     'email_to'     => $notifyEmail,
                     'name_to'      => (string) ($config['copyright'] ?? ''),

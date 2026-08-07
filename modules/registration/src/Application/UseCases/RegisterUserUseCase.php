@@ -54,7 +54,7 @@ final readonly class RegisterUserUseCase
                 [
                     'priority' => 1,
                     'locale'   => $this->translator->getLocale(),
-                    'template' => 'system::mail/templates/registration',
+                    'template' => '@theme/emails/registration.twig',
                     'fields'   => [
                         'email_to'        => $newUser->mail,
                         'name_to'         => $name,

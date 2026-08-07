@@ -116,7 +116,7 @@ final readonly class UpdateProfileUseCase
             [
                 'priority' => 1,
                 'locale'   => $this->translator->getLocale(),
-                'template' => 'system::mail/templates/confirm_email_change',
+                'template' => '@theme/emails/confirm-email-change.twig',
                 'fields'   => [
                     'email_to'        => $newEmail,
                     'name_to'         => $profileUser->name,
@@ -133,7 +133,7 @@ final readonly class UpdateProfileUseCase
                 [
                     'priority' => 1,
                     'locale'   => $this->translator->getLocale(),
-                    'template' => 'system::mail/templates/changed_email_notification',
+                    'template' => '@theme/emails/changed-email-notification.twig',
                     'fields'   => [
                         'email_to'  => $profileUser->mail,
                         'name_to'   => $profileUser->name,

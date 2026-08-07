@@ -25,6 +25,7 @@ final class TwigCompileCommand extends Command
 {
     public function __construct(
         private readonly Environment $twig,
+        private readonly Environment $mailTwig,
         private readonly TemplateFinder $templates,
     ) {
         parent::__construct();
@@ -37,8 +38,12 @@ final class TwigCompileCommand extends Command
         $compiled = 0;
 
         foreach ($this->templates->names() as $name) {
+            // A template of an email is compiled by the environment that renders it: it is
+            // written against the functions of that one.
+            $twig = str_starts_with($name, '@theme/emails/') ? $this->mailTwig : $this->twig;
+
             try {
-                $this->twig->load($name);
+                $twig->load($name);
                 $compiled++;
             } catch (Error $error) {
                 $errors[] = sprintf('%s: %s', $name, $error->getRawMessage());

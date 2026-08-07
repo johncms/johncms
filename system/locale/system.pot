@@ -783,6 +783,135 @@ msgstr ""
 msgid "Exit"
 msgstr ""
 
+#: themes/default/templates/emails/changed-email-notification.twig:9
+msgid "Changing email address"
+msgstr ""
+
+#: themes/default/templates/emails/changed-email-notification.twig:12
+#: themes/default/templates/emails/confirm-email-change.twig:12
+#: themes/default/templates/emails/registration.twig:13
+#: themes/default/templates/emails/restore-password-complete.twig:13
+#: themes/default/templates/emails/restore-password.twig:12
+msgid "Hello, %s!"
+msgstr ""
+
+#: themes/default/templates/emails/changed-email-notification.twig:14
+#: themes/default/templates/emails/confirm-email-change.twig:14
+msgid "You have started the process of changing the email address on the <a href=\"%s\">%s</a> website"
+msgstr ""
+
+#: themes/default/templates/emails/changed-email-notification.twig:17
+msgid "The new email address is:"
+msgstr ""
+
+#: themes/default/templates/emails/changed-email-notification.twig:20
+msgid "If you have not started the procedure for changing email, please contact us in any way convenient for you."
+msgstr ""
+
+#: themes/default/templates/emails/confirm-email-change.twig:9
+msgid "Confirm email change"
+msgstr ""
+
+#: themes/default/templates/emails/confirm-email-change.twig:17
+msgid "To continue please click the confirm button"
+msgstr ""
+
+#: themes/default/templates/emails/confirm-email-change.twig:22
+#: themes/default/templates/emails/registration.twig:27
+msgid "Confirm"
+msgstr ""
+
+#: themes/default/templates/emails/confirm-email-change.twig:26
+msgid "If you have not registered on our site, please ignore this email."
+msgstr ""
+
+#: themes/default/templates/emails/contact-message.twig:11
+msgid "New message from the contact form"
+msgstr ""
+
+#: themes/default/templates/emails/contact-message.twig:15
+msgid "A new message has been sent through the contact form on the <a href=\"%s\">%s</a> website"
+msgstr ""
+
+#: themes/default/templates/emails/contact-message.twig:18
+msgid "Sender:"
+msgstr ""
+
+#: themes/default/templates/emails/contact-message.twig:19
+msgid "E-mail:"
+msgstr ""
+
+#: themes/default/templates/emails/contact-message.twig:31
+msgid "Open in admin panel"
+msgstr ""
+
+#: themes/default/templates/emails/layout.twig:122
+msgid "The email is generated automatically. Please don't answer it. <br> To contact us, use the contact information on our website."
+msgstr ""
+
+#: themes/default/templates/emails/registration.twig:10
+msgid "Registration on the website"
+msgstr ""
+
+#: themes/default/templates/emails/registration.twig:15
+msgid "You have successfully registered on the <a href=\"%s\">%s</a> website"
+msgstr ""
+
+#: themes/default/templates/emails/registration.twig:18
+#: themes/default/templates/emails/restore-password-complete.twig:18
+msgid "Your login:"
+msgstr ""
+
+#: themes/default/templates/emails/registration.twig:19
+#: themes/default/templates/emails/restore-password-complete.twig:19
+msgid "Your password:"
+msgstr ""
+
+#: themes/default/templates/emails/registration.twig:19
+msgid "The one you specified when registering"
+msgstr ""
+
+#: themes/default/templates/emails/registration.twig:22
+msgid "To activate your account, please confirm your registration on the %s website."
+msgstr ""
+
+#: themes/default/templates/emails/registration.twig:31
+msgid "If you have not registered on our site, please ignore this email. In this case, the account will not be activated and will be automatically deleted."
+msgstr ""
+
+#: themes/default/templates/emails/restore-password-complete.twig:10
+#: themes/default/templates/emails/restore-password.twig:9
+msgid "Password recovery"
+msgstr ""
+
+#: themes/default/templates/emails/restore-password-complete.twig:15
+msgid "You have changed your password on the <a href=\"%s\">%s</a> website"
+msgstr ""
+
+#: themes/default/templates/emails/restore-password-complete.twig:22
+msgid "After logging in, you can change your password to new one."
+msgstr ""
+
+#: themes/default/templates/emails/restore-password.twig:14
+msgid "You start process of password recovery on the <a href=\"%s\">%s</a> website"
+msgstr ""
+
+#: themes/default/templates/emails/restore-password.twig:17
+msgid "In order to recover your password, you must click on the link:"
+msgstr ""
+
+#: themes/default/templates/emails/restore-password.twig:22
+msgid "Restore"
+msgstr ""
+
+#: themes/default/templates/emails/restore-password.twig:25
+msgid "Link valid for 1 hour"
+msgstr ""
+
+#: themes/default/templates/emails/restore-password.twig:27
+msgid "If you receive this mail by mistake, just ignore this letter"
+msgstr ""
+
 #: themes/default/templates/layouts/default.twig:107
 #: themes/default/templates/system/layout/default.phtml:149
 msgid "Privacy Policy"
@@ -832,140 +961,4 @@ msgstr ""
 
 #: themes/default/templates/pages/comments-list.twig:67
 msgid "Edited"
-msgstr ""
-
-#: themes/default/templates/system/mail/layouts/default.phtml:115
-msgid "The email is generated automatically. Please don't answer it. <br> To contact us, use the contact information on our website."
-msgstr ""
-
-#: themes/default/templates/system/mail/templates/changed_email_notification.phtml:10
-msgid "Changing email address"
-msgstr ""
-
-#: themes/default/templates/system/mail/templates/changed_email_notification.phtml:13
-#: themes/default/templates/system/mail/templates/confirm_email_change.phtml:13
-#: themes/default/templates/system/mail/templates/registration.phtml:13
-#: themes/default/templates/system/mail/templates/restore_password.phtml:12
-#: themes/default/templates/system/mail/templates/restore_password_complete.phtml:13
-#, php-format
-msgid "Hello, %s!"
-msgstr ""
-
-#: themes/default/templates/system/mail/templates/changed_email_notification.phtml:15
-#: themes/default/templates/system/mail/templates/confirm_email_change.phtml:15
-#, php-format
-msgid "You have started the process of changing the email address on the <a href=\"%s\">%s</a> website"
-msgstr ""
-
-#: themes/default/templates/system/mail/templates/changed_email_notification.phtml:18
-msgid "The new email address is:"
-msgstr ""
-
-#: themes/default/templates/system/mail/templates/changed_email_notification.phtml:21
-msgid "If you have not started the procedure for changing email, please contact us in any way convenient for you."
-msgstr ""
-
-#: themes/default/templates/system/mail/templates/confirm_email_change.phtml:10
-msgid "Confirm email change"
-msgstr ""
-
-#: themes/default/templates/system/mail/templates/confirm_email_change.phtml:18
-msgid "To continue please click the confirm button"
-msgstr ""
-
-#: themes/default/templates/system/mail/templates/confirm_email_change.phtml:23
-#: themes/default/templates/system/mail/templates/registration.phtml:27
-msgid "Confirm"
-msgstr ""
-
-#: themes/default/templates/system/mail/templates/confirm_email_change.phtml:27
-msgid "If you have not registered on our site, please ignore this email."
-msgstr ""
-
-#: themes/default/templates/system/mail/templates/contact_message.phtml:11
-msgid "New message from the contact form"
-msgstr ""
-
-#: themes/default/templates/system/mail/templates/contact_message.phtml:15
-#, php-format
-msgid "A new message has been sent through the contact form on the <a href=\"%s\">%s</a> website"
-msgstr ""
-
-#: themes/default/templates/system/mail/templates/contact_message.phtml:18
-msgid "Sender:"
-msgstr ""
-
-#: themes/default/templates/system/mail/templates/contact_message.phtml:19
-msgid "E-mail:"
-msgstr ""
-
-#: themes/default/templates/system/mail/templates/contact_message.phtml:32
-msgid "Open in admin panel"
-msgstr ""
-
-#: themes/default/templates/system/mail/templates/registration.phtml:10
-msgid "Registration on the website"
-msgstr ""
-
-#: themes/default/templates/system/mail/templates/registration.phtml:15
-#, php-format
-msgid "You have successfully registered on the <a href=\"%s\">%s</a> website"
-msgstr ""
-
-#: themes/default/templates/system/mail/templates/registration.phtml:18
-#: themes/default/templates/system/mail/templates/restore_password_complete.phtml:18
-msgid "Your login:"
-msgstr ""
-
-#: themes/default/templates/system/mail/templates/registration.phtml:19
-#: themes/default/templates/system/mail/templates/restore_password_complete.phtml:19
-msgid "Your password:"
-msgstr ""
-
-#: themes/default/templates/system/mail/templates/registration.phtml:19
-msgid "The one you specified when registering"
-msgstr ""
-
-#: themes/default/templates/system/mail/templates/registration.phtml:22
-#, php-format
-msgid "To activate your account, please confirm your registration on the %s website."
-msgstr ""
-
-#: themes/default/templates/system/mail/templates/registration.phtml:31
-msgid "If you have not registered on our site, please ignore this email. In this case, the account will not be activated and will be automatically deleted."
-msgstr ""
-
-#: themes/default/templates/system/mail/templates/restore_password.phtml:9
-#: themes/default/templates/system/mail/templates/restore_password_complete.phtml:10
-msgid "Password recovery"
-msgstr ""
-
-#: themes/default/templates/system/mail/templates/restore_password.phtml:14
-#, php-format
-msgid "You start process of password recovery on the <a href=\"%s\">%s</a> website"
-msgstr ""
-
-#: themes/default/templates/system/mail/templates/restore_password.phtml:17
-msgid "In order to recover your password, you must click on the link:"
-msgstr ""
-
-#: themes/default/templates/system/mail/templates/restore_password.phtml:22
-msgid "Restore"
-msgstr ""
-
-#: themes/default/templates/system/mail/templates/restore_password.phtml:25
-msgid "Link valid for 1 hour"
-msgstr ""
-
-#: themes/default/templates/system/mail/templates/restore_password.phtml:27
-msgid "If you receive this mail by mistake, just ignore this letter"
-msgstr ""
-
-#: themes/default/templates/system/mail/templates/restore_password_complete.phtml:15
-#, php-format
-msgid "You have changed your password on the <a href=\"%s\">%s</a> website"
-msgstr ""
-
-#: themes/default/templates/system/mail/templates/restore_password_complete.phtml:22
-msgid "After logging in, you can change your password to new one."
 msgstr ""

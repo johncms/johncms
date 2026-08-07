@@ -62,6 +62,7 @@ use Johncms\View\Twig\AppVariable;
 use Johncms\View\Twig\Extension\AppExtension;
 use Johncms\View\Twig\Extension\AssetExtension;
 use Johncms\View\Twig\Extension\FormatExtension;
+use Johncms\View\Twig\Extension\MailExtension;
 use Johncms\View\Twig\Extension\I18nExtension;
 use Johncms\View\Twig\Extension\PlatesBridgeExtension;
 use Johncms\View\Twig\Extension\SiteExtension;
@@ -215,15 +216,31 @@ return static function (ContainerConfigurator $container): void {
         ->arg('$providers', tagged_iterator('johncms.template_paths'));
     // One environment serves the whole of HTTP: the admin panel and the public site differ by
     // their namespaces, not by what a template can do, so they share the cache and the compiled
-    // components. Mail and the installer get their own once they move.
+    // components. Mail has its own, because a message has no request behind it; the installer
+    // gets one once it moves.
     $services->set('johncms.twig.web', TwigEnvironment::class)
         ->factory([service(TwigEnvironmentFactory::class), 'create'])
         ->arg('$environment', ViewEnvironment::Web)
         ->arg('$extensions', tagged_iterator('johncms.twig_extension'));
     $services->set(TwigRenderer::class)->arg('$twig', service('johncms.twig.web'));
-    $services->set(TwigLintCommand::class)->arg('$twig', service('johncms.twig.web'));
-    $services->set(I18nScanCommand::class)->arg('$twig', service('johncms.twig.web'));
-    $services->set(TwigCompileCommand::class)->arg('$twig', service('johncms.twig.web'));
+    $services->set(TwigLintCommand::class)
+        ->arg('$twig', service('johncms.twig.web'))
+        ->arg('$mailTwig', service('johncms.twig.mail'));
+    $services->set(I18nScanCommand::class)
+        ->arg('$twig', service('johncms.twig.web'))
+        ->arg('$mailTwig', service('johncms.twig.mail'));
+    $services->set(TwigCompileCommand::class)
+        ->arg('$twig', service('johncms.twig.web'))
+        ->arg('$mailTwig', service('johncms.twig.mail'));
+
+    // The mail environment: no request, so no visitor, no csrf token and no build assets; the
+    // addresses it prints are absolute, since a message is read outside the site.
+    $services->set('johncms.twig.mail', TwigEnvironment::class)
+        ->factory([service(TwigEnvironmentFactory::class), 'create'])
+        ->arg('$environment', ViewEnvironment::Mail)
+        ->arg('$extensions', tagged_iterator('johncms.twig_extension.mail'));
+    $services->set(MailExtension::class)->tag('johncms.twig_extension.mail');
+    $services->set(\Johncms\Mail\MailRenderer::class)->arg('$twig', service('johncms.twig.mail'));
 
     $services->set(AppVariable::class)
         ->arg('$environment', ViewEnvironment::Web)
@@ -232,9 +249,13 @@ return static function (ContainerConfigurator $container): void {
     $services->set(AppExtension::class)
         ->arg('$app', service_closure(AppVariable::class))
         ->tag('johncms.twig_extension');
-    $services->set(I18nExtension::class)->tag('johncms.twig_extension');
+    $services->set(I18nExtension::class)
+        ->tag('johncms.twig_extension')
+        ->tag('johncms.twig_extension.mail');
     $services->set(AssetExtension::class)->tag('johncms.twig_extension');
-    $services->set(FormatExtension::class)->tag('johncms.twig_extension');
+    $services->set(FormatExtension::class)
+        ->tag('johncms.twig_extension')
+        ->tag('johncms.twig_extension.mail');
     $services->set(PlatesBridgeExtension::class)->tag('johncms.twig_extension');
     $services->set(SiteExtension::class)->tag('johncms.twig_extension');
     // The renderer is handed over as a closure: a controller that returns a string or a Response

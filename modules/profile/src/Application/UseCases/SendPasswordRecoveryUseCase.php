@@ -51,7 +51,7 @@ final readonly class SendPasswordRecoveryUseCase
             [
                 'priority' => 1,
                 'locale'   => $this->translator->getLocale(),
-                'template' => 'system::mail/templates/restore_password',
+                'template' => '@theme/emails/restore-password.twig',
                 'fields'   => [
                     'email_to'        => $user->mail,
                     'name_to'         => $name,

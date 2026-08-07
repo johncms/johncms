@@ -28,6 +28,7 @@ final class TwigLintCommand extends Command
 {
     public function __construct(
         private readonly Environment $twig,
+        private readonly Environment $mailTwig,
         private readonly TemplateFinder $templates,
     ) {
         parent::__construct();
@@ -43,8 +44,12 @@ final class TwigLintCommand extends Command
             $checked++;
             $code = (string) file_get_contents($file);
 
+            // A template of an email is written against the mail environment and knows nothing
+            // of the request, so it is parsed by the environment that will render it.
+            $twig = str_contains(str_replace(DS, '/', $file), '/templates/emails/') ? $this->mailTwig : $this->twig;
+
             try {
-                $this->twig->parse($this->twig->tokenize(new Source($code, $file, $file)));
+                $twig->parse($twig->tokenize(new Source($code, $file, $file)));
             } catch (Error $error) {
                 $errors[] = sprintf('%s:%d %s', $file, $error->getLine(), $error->getRawMessage());
             }

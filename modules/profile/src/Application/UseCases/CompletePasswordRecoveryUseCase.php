@@ -28,7 +28,7 @@ final readonly class CompletePasswordRecoveryUseCase
             [
                 'priority' => 1,
                 'locale'   => $this->translator->getLocale(),
-                'template' => 'system::mail/templates/restore_password_complete',
+                'template' => '@theme/emails/restore-password-complete.twig',
                 'fields'   => [
                     'email_to'      => $user->mail,
                     'name_to'       => $name,

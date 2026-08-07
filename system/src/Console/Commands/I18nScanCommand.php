@@ -25,8 +25,10 @@ use Twig\Environment;
 )]
 final class I18nScanCommand extends Command
 {
-    public function __construct(private readonly Environment $twig)
-    {
+    public function __construct(
+        private readonly Environment $twig,
+        private readonly Environment $mailTwig,
+    ) {
         parent::__construct();
     }
 
@@ -60,7 +62,7 @@ final class I18nScanCommand extends Command
             return self::FAILURE;
         }
 
-        $twigScanner = new TwigScanner($this->twig, $translationsByDomain);
+        $twigScanner = new TwigScanner($this->twig, $translationsByDomain, $this->mailTwig);
         $scanner = new PhpScanner(...$translations);
         $scanner->setFunctions(
             [

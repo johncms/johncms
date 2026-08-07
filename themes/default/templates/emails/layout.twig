@@ -1,7 +1,14 @@
+{#
+    The layout of every email the site sends. A message is read outside the site, in a mail
+    client, so it carries its own stylesheet and every address in it is absolute.
+
+    @var string email_title Shown in the subject line area and as the heading.
+    @var string locale      Language of the recipient.
+#}
 <!DOCTYPE html>
-<html lang="<?= $locale ?>">
+<html lang="{{ locale }}">
 <head>
-        <title><?= $email_title ?></title>
+        <title>{{ email_title }}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -91,29 +98,29 @@
     </style>
 </head>
 <body style="margin: 0 !important; padding: 0 !important;">
-<div role="article" aria-label="<?= $config['copyright'] ?>" lang="<?= $locale ?>"
+<div role="article" aria-label="{{ copyright() }}" lang="{{ locale }}"
      style="background-color: white; color: #2b2b2b; font-family: 'Avenir Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; font-size: 18px; font-weight: 400; line-height: 28px; margin: 0 auto; max-width: 720px; padding: 40px 20px 40px 20px;">
     <header>
-        <a href="<?= $config['homeurl'] ?>">
-            <center><img src="<?= $config['homeurl'] ?><?= $this->asset('images/logo.png') ?>" alt="" height="55" width="55"></center>
+        <a href="{{ home_url() }}">
+            <center><img src="{{ asset('images/logo.png') }}" alt="" height="55" width="55"></center>
         </a>
         <h1 style="color: #000000; font-size: 32px; font-weight: 800; line-height: 32px; margin: 48px 0; text-align: center;">
-            <?= $email_title ?>
+            {{ email_title }}
         </h1>
     </header>
 
     <!-- Main content section. Main is a useful landmark element. -->
     <main>
         <div style="background-color: ghostwhite; border-radius: 4px; padding: 24px 48px;">
-            <?= $this->section('content') ?>
+            {% block content %}{% endblock %}
         </div>
     </main>
 
     <!-- Footer information. Footer is a useful landmark element. -->
     <footer>
         <p style="font-size: 14px; font-weight: 400; line-height: 24px; margin-top: 48px; text-align: center;">
-            <?= __('The email is generated automatically. Please don\'t answer it. <br> To contact us, use the contact information on our website.') ?><br>
-            <a href="<?= $config['homeurl'] ?>"><?= $config['copyright'] ?></a>
+            {{ __('The email is generated automatically. Please don\'t answer it. <br> To contact us, use the contact information on our website.')|raw }}<br>
+            <a href="{{ home_url() }}">{{ copyright() }}</a>
         </p>
     </footer>
 </div>

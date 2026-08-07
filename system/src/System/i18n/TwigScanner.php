@@ -43,6 +43,7 @@ final class TwigScanner
     public function __construct(
         private readonly Environment $twig,
         private readonly array $translations,
+        private readonly ?Environment $mailTwig = null,
     ) {
     }
 
@@ -58,8 +59,14 @@ final class TwigScanner
             return;
         }
 
+        // A template of an email is written against the mail environment; parsing it with the
+        // web one would fail on the functions only mail has.
+        $twig = $this->mailTwig !== null && str_contains(str_replace(DS, '/', $file), '/templates/emails/')
+            ? $this->mailTwig
+            : $this->twig;
+
         $this->walk(
-            $this->twig->parse($this->twig->tokenize(new Source($code, $file, $file))),
+            $twig->parse($twig->tokenize(new Source($code, $file, $file))),
             $file
         );
     }

@@ -13,9 +13,6 @@ declare(strict_types=1);
 namespace Johncms\Mail;
 
 use Carbon\Carbon;
-use Gettext\TranslatorFunctions;
-use Johncms\System\i18n\Translator;
-use Johncms\System\View\Render;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Throwable;
@@ -24,8 +21,8 @@ class EmailSender
 {
     public static function send(int $message_count = 5): void
     {
-        /** @var Render $view */
-        $view = di(Render::class);
+        /** @var MailRenderer $renderer */
+        $renderer = di(MailRenderer::class);
 
         /** @var MailFactory $mailFactory */
         $mailFactory = di(MailFactory::class);
@@ -44,12 +41,6 @@ class EmailSender
                 continue;
             }
 
-            $translator = new Translator();
-            $translator->setLocale($item->locale);
-            $translator->addTranslationDomain('system', ROOT_PATH . 'system/locale');
-            TranslatorFunctions::register($translator);
-            $view->addData(['locale' => $item->locale]);
-
             // Per-message isolation. Render failures used to be swallowed by Render itself and
             // the exception message was mailed out as the message body; now they propagate, and
             // without this guard one unrenderable row would abort the batch on every run and
@@ -57,7 +48,7 @@ class EmailSender
             // undeliverable row is treated above — so a template that cannot render is not
             // retried forever.
             try {
-                $message_body = $view->render($item->template, $item->fields);
+                $message_body = $renderer->render(self::template($item->template), $item->fields, (string) $item->locale);
             } catch (Throwable $exception) {
                 $logger->error(
                     'Unable to render the email template',
@@ -101,5 +92,20 @@ class EmailSender
 
             $item->update(['sent_at' => Carbon::now()]);
         }
+    }
+
+    /**
+     * A row queued before the templates moved to Twig still names a Plates template; it is sent
+     * with the Twig one of the same name.
+     */
+    private static function template(string $template): string
+    {
+        if (! str_starts_with($template, 'system::mail/templates/')) {
+            return $template;
+        }
+
+        $name = substr($template, strlen('system::mail/templates/'));
+
+        return '@theme/emails/' . str_replace('_', '-', $name) . '.twig';
     }
 }
