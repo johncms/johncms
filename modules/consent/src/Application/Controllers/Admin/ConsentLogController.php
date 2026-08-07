@@ -10,8 +10,8 @@ use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Consent\Application\Services\ConsentTitleFormatter;
 use Johncms\Modules\Consent\Domain\Models\ConsentLog;
 use Johncms\Modules\Consent\Domain\Repository\ConsentLogRepositoryInterface;
+use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
-use Johncms\System\View\Render;
 
 final readonly class ConsentLogController
 {
@@ -19,7 +19,6 @@ final readonly class ConsentLogController
 
     public function __construct(
         private AdminControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private ConsentLogRepositoryInterface $repository,
         private ConsentTitleFormatter $titleFormatter,
@@ -29,16 +28,11 @@ final readonly class ConsentLogController
         $this->controllerContext->initModule('consent');
     }
 
-    public function __invoke(): string
+    public function __invoke(): ViewResponse
     {
         $title = __('Consent log');
         $this->navChain->add(__('Consents'), '/admin/consents');
         $this->navChain->add($title, self::URL);
-        $this->render->addData([
-            'title'       => $title,
-            'page_title'  => $title,
-            'module_menu' => ['consents' => true],
-        ]);
 
         $total = $this->repository->count();
         $pagination = $this->paginationFactory->create($total);
@@ -60,7 +54,11 @@ final readonly class ConsentLogController
             'accepted_at'   => $entry->accepted_at?->format('Y-m-d H:i:s'),
         ])->all();
 
-        return $this->render->render('consent::admin/log', [
+        return new ViewResponse('@consent/admin/log.twig', [
+            'title'       => $title,
+            'page_title'  => $title,
+            'module_menu' => ['consents' => true],
+        ] + [
             'items'      => $items,
             'back_url'   => '/admin/consents',
             'pagination' => $pagination->render(),

@@ -1,0 +1,99 @@
+{#
+    A consent, new or existing.
+
+    @var string form_action
+    @var string back_url
+    @var array  fields    Values of the form, keyed by field name.
+    @var array  errors    Validation messages, keyed by field name.
+    @var array  contexts  Forms a consent may belong to: code, name.
+    @var array  languages Languages a consent may be written in: code, name.
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    <div style="max-width: 720px">
+        <form method="post" action="{{ form_action }}">
+            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+
+            <div class="form-group">
+                <label for="context">{{ __('Context') }}</label>
+                <input type="text"
+                       id="context"
+                       name="context"
+                       list="context_list"
+                       class="form-control {% if errors.context|default([]) is not empty %}is-invalid{% endif %}"
+                       value="{{ fields.context }}">
+                <datalist id="context_list">
+                    {% for context in contexts %}
+                        <option value="{{ context.code }}" label="{{ context.name }}"></option>
+                    {% endfor %}
+                </datalist>
+                {% include '@theme/components/field-errors.twig' with {errors: errors.context|default([])} only %}
+                <div class="text-muted small">{{ __('The form where the consent is shown. Pick one of the suggestions or type the context of your own form.') }}</div>
+            </div>
+
+            <div class="form-group">
+                <label for="language">{{ __('Language') }}</label>
+                <select id="language"
+                        name="language"
+                        class="form-control col-sm-3 {% if errors.language|default([]) is not empty %}is-invalid{% endif %}">
+                    {% for language in languages %}
+                        <option value="{{ language.code }}"{% if fields.language == language.code %} selected{% endif %}>
+                            {{ language.name }} ({{ language.code }})
+                        </option>
+                    {% endfor %}
+                </select>
+                {% if errors.language|default([]) is not empty %}
+                    <div class="invalid-feedback d-block">{{ errors.language|join(', ') }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="title">{{ __('Title') }}</label>
+                <textarea rows="3"
+                          id="title"
+                          name="title"
+                          class="form-control {% if errors.title|default([]) is not empty %}is-invalid{% endif %}">{{ fields.title }}</textarea>
+                {% include '@theme/components/field-errors.twig' with {errors: errors.title|default([])} only %}
+                <div class="text-muted small">
+                    {{ __('Shown next to the checkbox in the form. HTML is allowed, for example links to other pages:') }}
+                    <code>{{ 'I have read the <a href="/offer/">Public offer</a>'|e }}</code>
+                </div>
+            </div>
+
+            {% include '@theme/components/editor.twig' with {
+                name: 'text',
+                label: __('Text'),
+                value: fields.text,
+                errors: errors.text|default([])|join(', ')
+            } only %}
+
+            <div class="text-muted small mb-3">
+                {{ __('Full text of the consent, shown on a separate page. Leave it empty if the consent has no page of its own: then the checkbox shows only the title, without a link to the text.') }}
+            </div>
+
+            <div class="form-group">
+                <label for="version">{{ __('Version') }}</label>
+                <input type="text"
+                       id="version"
+                       name="version"
+                       class="form-control col-sm-3 {% if errors.version|default([]) is not empty %}is-invalid{% endif %}"
+                       value="{{ fields.version }}">
+                {% include '@theme/components/field-errors.twig' with {errors: errors.version|default([])} only %}
+            </div>
+
+            <div class="form-check mb-2">
+                <input type="checkbox" class="form-check-input" name="is_required" value="1" id="is_required"{% if fields.is_required %} checked{% endif %}>
+                <label class="form-check-label" for="is_required">{{ __('Required (blocks the form without the checkbox)') }}</label>
+            </div>
+
+            <div class="form-check mb-3">
+                <input type="checkbox" class="form-check-input" name="is_active" value="1" id="is_active"{% if fields.is_active %} checked{% endif %}>
+                <label class="form-check-label" for="is_active">{{ __('Active') }}</label>
+            </div>
+
+            <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
+            <a href="{{ back_url }}" class="btn btn-secondary">{{ __('Cancel') }}</a>
+        </form>
+    </div>
+{% endblock %}

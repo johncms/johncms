@@ -10,8 +10,8 @@ use Johncms\Modules\Consent\Application\DTO\CookieBannerSettingsDTO;
 use Johncms\Modules\Consent\Application\UseCases\UpdateCookieBannerSettingsUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Http\Session;
-use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 
 final readonly class CookieBannerController
@@ -20,7 +20,6 @@ final readonly class CookieBannerController
 
     public function __construct(
         private AdminControllerContext $controllerContext,
-        private Render $render,
         private Session $session,
         private NavChain $navChain,
         private UpdateCookieBannerSettingsUseCase $updateCookieBannerSettings,
@@ -28,12 +27,12 @@ final readonly class CookieBannerController
         $this->controllerContext->initModule('consent');
     }
 
-    public function form(): string
+    public function form(): ViewResponse
     {
         return $this->renderForm();
     }
 
-    public function save(Request $request): string
+    public function save(Request $request): ViewResponse
     {
         if (! $this->isCsrfValid($request)) {
             return $this->renderForm(__('Wrong data'));
@@ -76,7 +75,7 @@ final readonly class CookieBannerController
         return $validator->isValid();
     }
 
-    private function renderForm(?string $errorMessage = null): string
+    private function renderForm(?string $errorMessage = null): ViewResponse
     {
         $title = __('Cookie banner');
         $this->navChain->add($title);
@@ -89,13 +88,12 @@ final readonly class CookieBannerController
             $languages[] = ['code' => $code, 'name' => $data['name'] ?? $code];
         }
 
-        $this->render->addData([
+
+        return new ViewResponse('@consent/admin/cookie-banner.twig', [
             'title'       => $title,
             'page_title'  => $title,
             'module_menu' => ['cookie_banner' => true],
-        ]);
-
-        return $this->render->render('consent::admin/cookie-banner', [
+        ] + [
             'form_action'     => self::URL,
             'languages'       => $languages,
             'enabled'         => ! empty($config['cookie_banner_enabled']),

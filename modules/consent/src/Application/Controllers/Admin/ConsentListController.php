@@ -11,8 +11,8 @@ use Johncms\Http\Session;
 use Johncms\Modules\Consent\Application\Services\ConsentTitleFormatter;
 use Johncms\Modules\Consent\Domain\Models\Consent;
 use Johncms\Modules\Consent\Domain\Repository\ConsentRepositoryInterface;
+use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
-use Johncms\System\View\Render;
 
 final readonly class ConsentListController
 {
@@ -20,7 +20,6 @@ final readonly class ConsentListController
 
     public function __construct(
         private AdminControllerContext $controllerContext,
-        private Render $render,
         private Session $session,
         private NavChain $navChain,
         private ConsentRepositoryInterface $repository,
@@ -31,15 +30,10 @@ final readonly class ConsentListController
         $this->controllerContext->initModule('consent');
     }
 
-    public function __invoke(): string
+    public function __invoke(): ViewResponse
     {
         $title = __('Consents');
         $this->navChain->add($title, self::URL);
-        $this->render->addData([
-            'title'       => $title,
-            'page_title'  => $title,
-            'module_menu' => ['consents' => true],
-        ]);
 
         $total = $this->repository->count();
         $pagination = $this->paginationFactory->create($total);
@@ -73,7 +67,11 @@ final readonly class ConsentListController
             ];
         })->all();
 
-        return $this->render->render('consent::admin/list', [
+        return new ViewResponse('@consent/admin/list.twig', [
+            'title'       => $title,
+            'page_title'  => $title,
+            'module_menu' => ['consents' => true],
+        ] + [
             'items'           => $items,
             'create_url'      => self::URL . '/create',
             'log_url'         => self::URL . '/log',

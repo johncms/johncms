@@ -1,0 +1,71 @@
+{#
+    The cookie banner and its text in every installed language.
+
+    @var string form_action
+    @var array  languages       Languages the text may be written in: code, name.
+    @var bool   enabled
+    @var int    version
+    @var array  texts           Text of the banner, keyed by language code.
+    @var string error_message   Empty unless the last save failed.
+    @var string success_message Empty unless a save has just succeeded.
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    <div style="max-width: 720px">
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger shadow border-0', alert: error_message} only %}
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-success shadow border-0', alert: success_message} only %}
+
+        <form method="post" action="{{ form_action }}">
+            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+
+            <div class="form-check mb-3">
+                <input type="checkbox" class="form-check-input" name="cookie_banner_enabled" value="1" id="cookie_banner_enabled"{% if enabled %} checked="checked"{% endif %}>
+                <label class="form-check-label" for="cookie_banner_enabled">{{ __('Enable banner') }}</label>
+            </div>
+
+            <div class="form-group">
+                <label>{{ __('Banner text') }}</label>
+                <div class="text-muted small mb-2">{{ __('Leave empty to use the default text with a link to the Privacy Policy.') }}</div>
+                <div class="text-muted small mb-2">
+                    {{ __('You can use simple HTML tags in the text, for example links:') }}
+                    <code>{{ '<a href="/consent/cookie-policy/">Cookie Policy</a>'|e }}</code>
+                </div>
+                <ul class="nav nav-tabs" role="tablist">
+                    {% for language in languages %}
+                        <li class="nav-item">
+                            <a class="nav-link {% if loop.first %}active{% endif %}"
+                               data-bs-toggle="tab"
+                               href="#cookie_text_{{ language.code }}"
+                               role="tab">{{ language.name }} ({{ language.code }})</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <div class="tab-content border border-top-0 p-3">
+                    {% for language in languages %}
+                        <div class="tab-pane fade {% if loop.first %}show active{% endif %}"
+                             id="cookie_text_{{ language.code }}"
+                             role="tabpanel">
+                            <textarea rows="4"
+                                      class="form-control"
+                                      name="cookie_banner_text[{{ language.code }}]">{{ texts[language.code]|default('') }}</textarea>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="cookie_banner_version">{{ __('Version') }}</label>
+                <div class="text-muted small mb-2">{{ __('Increase the version to show the banner again to everyone.') }}</div>
+                <input type="number"
+                       min="1"
+                       id="cookie_banner_version"
+                       name="cookie_banner_version"
+                       class="form-control col-sm-3"
+                       value="{{ version }}">
+            </div>
+
+            <input type="submit" class="btn btn-primary btn-lg mt-2 mb-2" name="submit" value="{{ __('Save') }}">
+        </form>
+    </div>
+{% endblock %}

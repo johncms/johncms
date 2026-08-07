@@ -1,0 +1,53 @@
+{#
+    Who accepted which consent and when.
+
+    @var array        items     Rows: id, user_id, consent_id, consent_title, version, ip_address,
+                                accepted_at.
+    @var string       back_url
+    @var \Twig\Markup pagination
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    {% if items is empty %}
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-info', alert: __('The list is empty')} only %}
+    {% else %}
+        <div class="table-responsive">
+            <table class="table table-sm align-middle">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>{{ __('User') }}</th>
+                    <th>{{ __('Consent') }}</th>
+                    <th>{{ __('Version') }}</th>
+                    <th>{{ __('IP address') }}</th>
+                    <th>{{ __('Date') }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in items %}
+                    <tr>
+                        <td>{{ item.id }}</td>
+                        <td>
+                            {% if item.user_id %}
+                                <a href="/profile/{{ item.user_id }}">{{ item.user_id }}</a>
+                            {% else %}
+                                <span class="text-muted">{{ __('Guest') }}</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ item.consent_title ?? '#' ~ item.consent_id }}</td>
+                        <td>{{ item.version }}</td>
+                        <td>{{ item.ip_address }}</td>
+                        <td>{{ item.accepted_at }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {{ pagination }}
+    {% endif %}
+
+    <div class="mt-2">
+        <a href="{{ back_url }}">{{ __('Back') }}</a>
+    </div>
+{% endblock %}
