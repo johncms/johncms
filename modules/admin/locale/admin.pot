@@ -168,9 +168,7 @@ msgid "Language Settings"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:255
-#: modules/admin/src/Application/Controllers/System/SystemCheckController.php:26
-#: modules/admin/src/Application/Controllers/System/SystemCheckController.php:27
-#: modules/admin/src/Application/Controllers/System/SystemCheckController.php:31
+#: modules/admin/src/Application/Controllers/System/SystemCheckController.php:24
 #: modules/admin/templates/sidebar-admin-menu.phtml:238
 #: themes/admin/templates/system/app/sidebar-admin-menu.phtml:261
 msgid "System check"
@@ -753,6 +751,34 @@ msgstr ""
 
 #: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:68
 msgid "The task is already running"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:110
+msgid "Queued"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:111
+msgid "Running"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:112
+msgid "Completed"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:113
+msgid "Failed"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/System/SystemCheckController.php:34
+msgid "Required parameters"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/System/SystemCheckController.php:35
+msgid "Database"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/System/SystemCheckController.php:36
+msgid "Recommended parameters"
 msgstr ""
 
 #: modules/admin/src/Application/Controllers/Users/AmnestyController.php:43
@@ -1358,12 +1384,8 @@ msgstr ""
 #: modules/admin/templates/forum-section-edit.twig:36
 #: modules/admin/templates/forum-section-form.twig:30
 #: modules/admin/templates/settings.twig:75
-#: modules/admin/templates/system/system_check.phtml:9
-#: modules/admin/templates/system/system_check.phtml:17
-#: modules/admin/templates/system/system_check.phtml:29
-#: modules/admin/templates/system/system_check.phtml:37
-#: modules/admin/templates/system/system_check.phtml:49
-#: modules/admin/templates/system/system_check.phtml:57
+#: modules/admin/templates/system-check.twig:16
+#: modules/admin/templates/system-check.twig:24
 msgid "Description"
 msgstr ""
 
@@ -1766,47 +1788,31 @@ msgstr ""
 msgid "Password"
 msgstr ""
 
-#: modules/admin/templates/maintenance_tasks.phtml:15
-msgid "Queued"
-msgstr ""
-
-#: modules/admin/templates/maintenance_tasks.phtml:16
-msgid "Running"
-msgstr ""
-
-#: modules/admin/templates/maintenance_tasks.phtml:17
-msgid "Completed"
-msgstr ""
-
-#: modules/admin/templates/maintenance_tasks.phtml:18
-msgid "Failed"
-msgstr ""
-
-#: modules/admin/templates/maintenance_tasks.phtml:35
+#: modules/admin/templates/maintenance.twig:17
 msgid "Background tasks are started by the scheduler within a minute (a configured cron for \"schedule:run\" is required). Refresh the page to update the status."
 msgstr ""
 
-#: modules/admin/templates/maintenance_tasks.phtml:44
+#: modules/admin/templates/maintenance.twig:26
 msgid "Background"
 msgstr ""
 
-#: modules/admin/templates/maintenance_tasks.phtml:58
+#: modules/admin/templates/maintenance.twig:40
 msgid "Last run"
 msgstr ""
 
-#: modules/admin/templates/maintenance_tasks.phtml:63
+#: modules/admin/templates/maintenance.twig:45
 msgid "Last output"
 msgstr ""
 
-#: modules/admin/templates/maintenance_tasks.phtml:71
+#: modules/admin/templates/maintenance.twig:53
 msgid "Queue the task"
 msgstr ""
 
-#: modules/admin/templates/maintenance_tasks.phtml:71
+#: modules/admin/templates/maintenance.twig:53
 msgid "Run"
 msgstr ""
 
-#: modules/admin/templates/maintenance_tasks.phtml:79
+#: modules/admin/templates/maintenance.twig:61
 msgid "There are no available tasks"
 msgstr ""
 
@@ -1915,31 +1921,13 @@ msgstr ""
 msgid "Update cache"
 msgstr ""
 
-#: modules/admin/templates/system/system_check.phtml:3
-msgid "Required parameters"
-msgstr ""
-
-#: modules/admin/templates/system/system_check.phtml:7
-#: modules/admin/templates/system/system_check.phtml:27
-#: modules/admin/templates/system/system_check.phtml:47
+#: modules/admin/templates/system-check.twig:14
 msgid "Check name"
 msgstr ""
 
-#: modules/admin/templates/system/system_check.phtml:8
-#: modules/admin/templates/system/system_check.phtml:16
-#: modules/admin/templates/system/system_check.phtml:28
-#: modules/admin/templates/system/system_check.phtml:36
-#: modules/admin/templates/system/system_check.phtml:48
-#: modules/admin/templates/system/system_check.phtml:56
+#: modules/admin/templates/system-check.twig:15
+#: modules/admin/templates/system-check.twig:23
 msgid "Value"
-msgstr ""
-
-#: modules/admin/templates/system/system_check.phtml:23
-msgid "Database"
-msgstr ""
-
-#: modules/admin/templates/system/system_check.phtml:43
-msgid "Recommended parameters"
 msgstr ""
 
 #: modules/admin/templates/user-delete-confirm.twig:19
