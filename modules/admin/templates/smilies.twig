@@ -1,0 +1,23 @@
+{#
+    Rebuilding the cache of the smilies.
+
+    @var string form_action
+    @var string error_message   Empty unless the last run failed.
+    @var string success_message Empty unless a run has just succeeded.
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger shadow border-0', alert: error_message} only %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success shadow border-0', alert: success_message} only %}
+
+    <div class="alert alert-info">
+        {{ __('Rebuild the smilies cache after adding or removing smilies in the assets/emoticons directory') }}
+    </div>
+
+    <form method="post" action="{{ form_action }}">
+        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+        <input type="submit" value="{{ __('Update cache') }}" class="btn btn-primary">
+        <a href="/admin/" class="btn btn-secondary">{{ __('Cancel') }}</a>
+    </form>
+{% endblock %}

@@ -5,7 +5,6 @@ msgstr ""
 #: system/src/Http/Controller/AdminControllerContext.php:50
 #: modules/admin/src/Application/Controllers/DashboardController.php:25
 #: modules/admin/src/Application/Controllers/Ip/IpWhoisController.php:40
-#: modules/admin/templates/smilies.phtml:8
 msgid "Admin Panel"
 msgstr ""
 
@@ -152,7 +151,6 @@ msgstr ""
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:231
 #: modules/admin/src/Application/Controllers/Settings/SystemSettingsController.php:89
 #: modules/admin/templates/sidebar-admin-menu.phtml:214
-#: modules/admin/templates/smilies.phtml:8
 #: themes/admin/templates/system/app/sidebar-admin-menu.phtml:237
 msgid "System Settings"
 msgstr ""
@@ -244,7 +242,7 @@ msgstr ""
 #: modules/admin/src/Application/Controllers/Settings/CountersController.php:170
 #: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:38
 #: modules/admin/src/Application/Controllers/Settings/SystemSettingsController.php:40
-#: modules/admin/src/Application/Controllers/System/EmoticonsController.php:38
+#: modules/admin/src/Application/Controllers/System/EmoticonsController.php:37
 #: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:46
 #: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:52
 #: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:66
@@ -705,15 +703,15 @@ msgstr ""
 msgid "With moderation"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/System/EmoticonsController.php:44
+#: modules/admin/src/Application/Controllers/System/EmoticonsController.php:43
 msgid "Error updating cache"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/System/EmoticonsController.php:47
+#: modules/admin/src/Application/Controllers/System/EmoticonsController.php:46
 msgid "Smilie cache updated successfully"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/System/EmoticonsController.php:63
+#: modules/admin/src/Application/Controllers/System/EmoticonsController.php:62
 msgid "Smilies"
 msgstr ""
 
@@ -935,7 +933,6 @@ msgstr ""
 #: modules/admin/templates/counter-delete-confirm.twig:22
 #: modules/admin/templates/counter-form.twig:76
 #: modules/admin/templates/counter-preview.twig:52
-#: modules/admin/templates/emoticons.phtml:27
 #: modules/admin/templates/file-integrity-snapshot-confirm.twig:22
 #: modules/admin/templates/forum-hidden-posts.twig:18
 #: modules/admin/templates/forum-hidden-topics.twig:18
@@ -950,6 +947,7 @@ msgstr ""
 #: modules/admin/templates/ip-ban-search.twig:24
 #: modules/admin/templates/karma-clear-confirm.twig:22
 #: modules/admin/templates/karma.twig:44
+#: modules/admin/templates/smilies.twig:21
 #: modules/admin/templates/user-delete-confirm.twig:40
 #: modules/admin/templates/users-cleanup.twig:26
 msgid "Cancel"
@@ -1266,14 +1264,6 @@ msgstr ""
 #: modules/admin/templates/forum-structure.twig:41
 #: modules/admin/templates/ip-bans.twig:54
 msgid "Add"
-msgstr ""
-
-#: modules/admin/templates/emoticons.phtml:21
-msgid "Rebuild the smilies cache after adding or removing smilies in the assets/emoticons directory"
-msgstr ""
-
-#: modules/admin/templates/emoticons.phtml:26
-msgid "Update cache"
 msgstr ""
 
 #: modules/admin/templates/file-integrity-scan-result.twig:12
@@ -1892,6 +1882,14 @@ msgstr ""
 
 #: modules/admin/templates/settings.twig:100
 msgid "Themes"
+msgstr ""
+
+#: modules/admin/templates/smilies.twig:15
+msgid "Rebuild the smilies cache after adding or removing smilies in the assets/emoticons directory"
+msgstr ""
+
+#: modules/admin/templates/smilies.twig:20
+msgid "Update cache"
 msgstr ""
 
 #: modules/admin/templates/system/system_check.phtml:3

@@ -8,9 +8,9 @@ use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Http\Session;
 use Johncms\Modules\Admin\Application\UseCases\RebuildSmiliesCacheUseCase;
 use Johncms\Modules\Admin\Domain\Exceptions\SmiliesCacheWriteException;
+use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 
 final readonly class EmoticonsController
@@ -19,7 +19,6 @@ final readonly class EmoticonsController
 
     public function __construct(
         private AdminControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private RebuildSmiliesCacheUseCase $rebuildSmiliesCacheUseCase,
         private Session $session,
@@ -27,12 +26,12 @@ final readonly class EmoticonsController
         $this->controllerContext->initModule('admin');
     }
 
-    public function index(): string
+    public function index(): ViewResponse
     {
         return $this->renderPage();
     }
 
-    public function rebuild(Request $request): string
+    public function rebuild(Request $request): ViewResponse
     {
         if (! $this->isCsrfValid($request)) {
             return $this->renderPage(__('Wrong data'));
@@ -58,27 +57,20 @@ final readonly class EmoticonsController
         return $validator->isValid();
     }
 
-    private function renderPage(?string $errorMessage = null): string
+    private function renderPage(string $errorMessage = ''): ViewResponse
     {
         $title = __('Smilies');
         $this->navChain->add($title);
 
-        $successMessage = $this->session->getFlash('success_message');
-
-        $this->render->addData(
+        return new ViewResponse(
+            '@admin/smilies.twig',
             [
-                'title'      => $title,
-                'page_title' => $title,
-                'sys_menu'   => ['emoticons' => true],
-            ]
-        );
-
-        return $this->render->render(
-            'admin::emoticons',
-            [
+                'title'           => $title,
+                'page_title'      => $title,
+                'sys_menu'        => ['emoticons' => true],
                 'form_action'     => self::URL,
                 'error_message'   => $errorMessage,
-                'success_message' => $successMessage,
+                'success_message' => (string) $this->session->getFlash('success_message'),
             ]
         );
     }
