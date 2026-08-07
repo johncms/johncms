@@ -1,0 +1,24 @@
+{#
+    Confirmation of lifting every ban at once.
+
+    @var string message
+    @var string form_action
+    @var string confirm_name Label of the button that performs the action.
+    @var string back_url
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    <div class="alert alert-danger">
+        <div class="pb-2">
+            {{ message }}
+        </div>
+        <div class="d-flex">
+            <form action="{{ form_action }}" method="post" class="me-2">
+                <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                <button type="submit" class="btn btn-danger">{{ confirm_name }}</button>
+            </form>
+            <a href="{{ back_url }}" class="btn btn-primary">{{ __('Cancel') }}</a>
+        </div>
+    </div>
+{% endblock %}

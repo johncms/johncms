@@ -1,0 +1,33 @@
+{#
+    The whois answers about one address.
+
+    @var string ip       The address asked about, empty until something is asked.
+    @var array  answers  Server name to the highlighted answer (\Twig\Markup).
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    <form method="get">
+        <div class="input-group mb-3" style="max-width: 20rem">
+            <div class="input-group-prepend">
+                <span class="input-group-text">{{ __('IP Address') }}</span>
+            </div>
+            <input type="text" name="ip" class="form-control" value="{{ ip }}">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="submit">{{ __('Search') }}</button>
+            </div>
+        </div>
+    </form>
+
+    {% if ip %}
+        <div class="h3">{{ __('Search results') }}</div>
+        <p>RESULTS FOUND: {{ answers|length }}</p>
+        {% for server, answer in answers %}
+            <p>
+                ------------- <br>
+                Lookup results for {{ ip }} from {{ server }} server:
+            </p>
+            <p>{{ answer }}</p>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

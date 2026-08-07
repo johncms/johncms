@@ -4,7 +4,7 @@ msgstr ""
 
 #: system/src/Http/Controller/AdminControllerContext.php:50
 #: modules/admin/src/Application/Controllers/DashboardController.php:25
-#: modules/admin/src/Application/Controllers/Ip/IpWhoisController.php:36
+#: modules/admin/src/Application/Controllers/Ip/IpWhoisController.php:40
 #: modules/admin/templates/smilies.phtml:8
 msgid "Admin Panel"
 msgstr ""
@@ -22,9 +22,9 @@ msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:45
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:137
-#: modules/admin/templates/ip_whois.phtml:54
-#: modules/admin/templates/ipban.phtml:60
-#: modules/admin/templates/ipban_search.phtml:26
+#: modules/admin/templates/ip-ban-search.twig:23
+#: modules/admin/templates/ip-bans.twig:57
+#: modules/admin/templates/ip-whois.twig:17
 #: modules/admin/templates/search_ip.phtml:29
 #: modules/admin/templates/sidebar-admin-menu.phtml:56
 #: themes/admin/templates/system/app/sidebar-admin-menu.phtml:47
@@ -200,14 +200,14 @@ msgid "Anti-Spyware"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:299
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:55
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:77
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:54
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:78
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:138
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:174
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:204
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:231
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:251
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:299
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:173
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:202
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:228
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:247
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:294
 #: modules/admin/templates/sidebar-admin-menu.phtml:276
 #: themes/admin/templates/system/app/sidebar-admin-menu.phtml:307
 msgid "Ban by IP"
@@ -231,7 +231,7 @@ msgstr ""
 #: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:266
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:91
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:114
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:150
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:149
 #: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:44
 #: modules/admin/src/Application/Controllers/Settings/AdsController.php:80
 #: modules/admin/src/Application/Controllers/Settings/AdsController.php:89
@@ -382,60 +382,60 @@ msgstr ""
 msgid "by section"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:76
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:230
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:250
-#: modules/admin/templates/ipban_add_confirm.phtml:46
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:77
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:227
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:246
+#: modules/admin/templates/ip-ban-confirm.twig:43
 msgid "Add Ban"
 msgstr ""
 
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:120
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:155
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:154
 #: modules/admin/src/Application/Services/IpRangeParser.php:32
 #: modules/admin/src/Application/Services/IpRangeParser.php:79
 #: modules/admin/src/Application/UseCases/PrepareIpBanUseCase.php:24
 msgid "Invalid IP"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:160
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:170
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:159
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:169
 msgid "This address not in the database"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:173
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:172
 msgid "Ban details"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:184
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:269
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:182
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:264
 msgid "Not specified"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:209
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:206
 msgid "Are you sure you wan to unban all IP?"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:211
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:208
 msgid "Perform"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:240
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:236
 msgid "Address you entered conflicts with other who in the database"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:256
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:251
 msgid "Ban range address"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:257
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:252
 msgid "Ban on the subnet mask"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:258
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:253
 msgid "Ban IP address"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:268
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:263
 #: modules/admin/templates/ads.twig:53
 #: modules/admin/templates/counter-form.twig:40
 msgid "Default"
@@ -831,18 +831,18 @@ msgstr ""
 
 #: modules/admin/src/Domain/Enums/IpBanType.php:21
 #: modules/admin/templates/ads.twig:52
-#: modules/admin/templates/ipban_add.phtml:35
+#: modules/admin/templates/ip-ban-form.twig:31
 msgid "Redirect"
 msgstr ""
 
 #: modules/admin/src/Domain/Enums/IpBanType.php:22
 #: modules/admin/templates/access.phtml:124
-#: modules/admin/templates/ipban_add.phtml:31
+#: modules/admin/templates/ip-ban-form.twig:27
 msgid "Registration"
 msgstr ""
 
 #: modules/admin/src/Domain/Enums/IpBanType.php:23
-#: modules/admin/templates/ipban_add.phtml:27
+#: modules/admin/templates/ip-ban-form.twig:23
 msgid "Block"
 msgstr ""
 
@@ -904,7 +904,7 @@ msgstr ""
 #: modules/admin/templates/counter-preview.twig:51
 #: modules/admin/templates/forum/edit.phtml:82
 #: modules/admin/templates/forum/settings.phtml:64
-#: modules/admin/templates/ipban_add.phtml:57
+#: modules/admin/templates/ip-ban-form.twig:53
 #: modules/admin/templates/karma.phtml:50
 #: modules/admin/templates/languages.twig:31
 #: modules/admin/templates/settings.phtml:112
@@ -927,10 +927,10 @@ msgstr ""
 #: modules/admin/templates/forum/edit.phtml:83
 #: modules/admin/templates/forum/hidden_posts.phtml:21
 #: modules/admin/templates/forum/hidden_topics.phtml:21
-#: modules/admin/templates/ipban_add.phtml:58
-#: modules/admin/templates/ipban_add_confirm.phtml:47
-#: modules/admin/templates/ipban_confirm.phtml:24
-#: modules/admin/templates/ipban_search.phtml:27
+#: modules/admin/templates/ip-ban-clear-confirm.twig:21
+#: modules/admin/templates/ip-ban-confirm.twig:44
+#: modules/admin/templates/ip-ban-form.twig:54
+#: modules/admin/templates/ip-ban-search.twig:24
 #: modules/admin/templates/karma.phtml:51
 #: modules/admin/templates/karma_clean_confirm.phtml:25
 #: modules/admin/templates/user_clean_confirm.phtml:32
@@ -1008,7 +1008,7 @@ msgstr ""
 #: modules/admin/templates/forum/hidden_posts.phtml:95
 #: modules/admin/templates/forum/hidden_topics.phtml:91
 #: modules/admin/templates/forum/structure.phtml:14
-#: modules/admin/templates/ipban.phtml:33
+#: modules/admin/templates/ip-bans.twig:29
 #: modules/admin/templates/reg_list.phtml:31
 msgid "The list is empty"
 msgstr ""
@@ -1017,7 +1017,7 @@ msgstr ""
 #: modules/admin/templates/ads.twig:75
 #: modules/admin/templates/ban_panel.phtml:38
 #: modules/admin/templates/counters.twig:46
-#: modules/admin/templates/ipban.phtml:50
+#: modules/admin/templates/ip-bans.twig:46
 #: modules/admin/templates/reg_list.phtml:49
 #: modules/admin/templates/search_ip.phtml:60
 msgid "Total:"
@@ -1033,8 +1033,8 @@ msgstr ""
 #: modules/admin/templates/forum/hidden_topics.phtml:114
 #: modules/admin/templates/forum/index.phtml:31
 #: modules/admin/templates/forum/structure.phtml:43
-#: modules/admin/templates/ipban.phtml:66
-#: modules/admin/templates/ipban_detail.phtml:55
+#: modules/admin/templates/ip-ban-detail.twig:52
+#: modules/admin/templates/ip-bans.twig:63
 #: modules/admin/templates/languages-manage.twig:63
 #: modules/admin/templates/reg_list.phtml:57
 #: modules/admin/templates/search_ip.phtml:64
@@ -1259,7 +1259,7 @@ msgstr ""
 #: modules/admin/templates/counters.twig:48
 #: modules/admin/templates/forum/add.phtml:68
 #: modules/admin/templates/forum/structure.phtml:40
-#: modules/admin/templates/ipban.phtml:57
+#: modules/admin/templates/ip-bans.twig:54
 msgid "Add"
 msgstr ""
 
@@ -1591,105 +1591,105 @@ msgstr ""
 msgid "posts on the forum today"
 msgstr ""
 
-#: modules/admin/templates/ip_whois.phtml:50
-msgid "IP Address"
-msgstr ""
-
-#: modules/admin/templates/ip_whois.phtml:60
-#: modules/admin/templates/search_ip.phtml:49
-msgid "Search results"
-msgstr ""
-
-#: modules/admin/templates/ipban.phtml:26
-#: modules/admin/templates/ipban_add.phtml:20
-#: modules/admin/templates/ipban_add.phtml:21
-#: modules/admin/templates/ipban_search.phtml:19
-#: modules/admin/templates/ipban_search.phtml:20
-msgid "IP address"
-msgstr ""
-
-#: modules/admin/templates/ipban.phtml:27
-#: modules/admin/templates/ipban_add.phtml:45
-#: modules/admin/templates/ipban_add_confirm.phtml:32
-msgid "Reason"
-msgstr ""
-
-#: modules/admin/templates/ipban.phtml:61
-msgid "Unban all IP"
-msgstr ""
-
-#: modules/admin/templates/ipban_add.phtml:24
-#: modules/admin/templates/ipban_add_confirm.phtml:27
-msgid "Ban type"
-msgstr ""
-
-#: modules/admin/templates/ipban_add.phtml:39
-#: modules/admin/templates/ipban_add.phtml:40
-msgid "Redirect URL"
-msgstr ""
-
-#: modules/admin/templates/ipban_add.phtml:41
-msgid "If the ban on Redirect, then specify the URL"
-msgstr ""
-
-#: modules/admin/templates/ipban_add.phtml:50
-msgid "Example:"
-msgstr ""
-
-#: modules/admin/templates/ipban_add.phtml:51
-msgid "Ban one address"
-msgstr ""
-
-#: modules/admin/templates/ipban_add.phtml:52
-msgid "Ban range of address"
-msgstr ""
-
-#: modules/admin/templates/ipban_add.phtml:53
-msgid "Ban on a mask. There will banned from the entrie subnet, begining with address 0 and ending with 255"
-msgstr ""
-
-#: modules/admin/templates/ipban_add_confirm.phtml:24
+#: modules/admin/templates/ip-ban-confirm.twig:21
 msgid "Ban mode"
 msgstr ""
 
-#: modules/admin/templates/ipban_add_confirm.phtml:30
+#: modules/admin/templates/ip-ban-confirm.twig:24
+#: modules/admin/templates/ip-ban-form.twig:20
+msgid "Ban type"
+msgstr ""
+
+#: modules/admin/templates/ip-ban-confirm.twig:27
 msgid "Redirect URL:"
 msgstr ""
 
-#: modules/admin/templates/ipban_add_confirm.phtml:42
+#: modules/admin/templates/ip-ban-confirm.twig:29
+#: modules/admin/templates/ip-ban-form.twig:41
+#: modules/admin/templates/ip-bans.twig:23
+msgid "Reason"
+msgstr ""
+
+#: modules/admin/templates/ip-ban-confirm.twig:39
 msgid "Please, check up correctness of the input data"
 msgstr ""
 
-#: modules/admin/templates/ipban_detail.phtml:26
+#: modules/admin/templates/ip-ban-detail.twig:23
 msgid "Ban type:"
 msgstr ""
 
-#: modules/admin/templates/ipban_detail.phtml:30
+#: modules/admin/templates/ip-ban-detail.twig:27
 msgid "Redirect to:"
 msgstr ""
 
-#: modules/admin/templates/ipban_detail.phtml:34
+#: modules/admin/templates/ip-ban-detail.twig:31
 msgid "Reason:"
 msgstr ""
 
-#: modules/admin/templates/ipban_detail.phtml:37
+#: modules/admin/templates/ip-ban-detail.twig:34
 msgid "Banned by:"
 msgstr ""
 
-#: modules/admin/templates/ipban_detail.phtml:40
+#: modules/admin/templates/ip-ban-detail.twig:37
 msgid "Date:"
 msgstr ""
 
-#: modules/admin/templates/ipban_detail.phtml:43
+#: modules/admin/templates/ip-ban-detail.twig:40
 msgid "Time:"
 msgstr ""
 
-#: modules/admin/templates/ipban_detail.phtml:48
+#: modules/admin/templates/ip-ban-detail.twig:45
 msgid "Delete Ban"
 msgstr ""
 
-#: modules/admin/templates/ipban_search.phtml:23
+#: modules/admin/templates/ip-ban-form.twig:16
+#: modules/admin/templates/ip-ban-form.twig:17
+#: modules/admin/templates/ip-ban-search.twig:16
+#: modules/admin/templates/ip-ban-search.twig:17
+#: modules/admin/templates/ip-bans.twig:22
+msgid "IP address"
+msgstr ""
+
+#: modules/admin/templates/ip-ban-form.twig:35
+#: modules/admin/templates/ip-ban-form.twig:36
+msgid "Redirect URL"
+msgstr ""
+
+#: modules/admin/templates/ip-ban-form.twig:37
+msgid "If the ban on Redirect, then specify the URL"
+msgstr ""
+
+#: modules/admin/templates/ip-ban-form.twig:46
+msgid "Example:"
+msgstr ""
+
+#: modules/admin/templates/ip-ban-form.twig:47
+msgid "Ban one address"
+msgstr ""
+
+#: modules/admin/templates/ip-ban-form.twig:48
+msgid "Ban range of address"
+msgstr ""
+
+#: modules/admin/templates/ip-ban-form.twig:49
+msgid "Ban on a mask. There will banned from the entrie subnet, begining with address 0 and ending with 255"
+msgstr ""
+
+#: modules/admin/templates/ip-ban-search.twig:20
 msgid "Enter a single address, mask and range are not allowed"
+msgstr ""
+
+#: modules/admin/templates/ip-bans.twig:58
+msgid "Unban all IP"
+msgstr ""
+
+#: modules/admin/templates/ip-whois.twig:13
+msgid "IP Address"
+msgstr ""
+
+#: modules/admin/templates/ip-whois.twig:23
+#: modules/admin/templates/search_ip.phtml:49
+msgid "Search results"
 msgstr ""
 
 #: modules/admin/templates/karma.phtml:26

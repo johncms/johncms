@@ -1,0 +1,31 @@
+{#
+    Looking a single address up among the bans.
+
+    @var string form_action
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="m-sm-auto m-md-auto m-lg-0 col-sm-12 col-md-8 col-lg-7 col-xl-7">
+            <div class="card shadow border-0">
+                <form action="{{ form_action }}" method="post">
+                    <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="ip">{{ __('IP address') }}</label>
+                            <input type="text" name="ip" class="form-control" id="ip" placeholder="{{ __('IP address') }}">
+                        </div>
+                        <div class="alert alert-info">
+                            {{ __('Enter a single address, mask and range are not allowed') }}
+                        </div>
+                        <div class="mt-3">
+                            <input type="submit" value="{{ __('Search') }}" class="btn btn-primary"/>
+                            <a href="/admin/ip-bans" class="btn btn-secondary">{{ __('Cancel') }}</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

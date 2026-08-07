@@ -1,0 +1,65 @@
+{#
+    The banned addresses: the whole list, or the ones a new ban would conflict with.
+
+    @var array             items        Rows: detail_url, ips, reason_label.
+    @var int               total
+    @var int               per_page
+    @var bool              show_actions False on the list of conflicts, which is read-only.
+    @var string            message      Empty on the plain list.
+    @var string            add_url
+    @var string            search_url
+    @var string            clear_url
+    @var \Twig\Markup|null pagination   Null when the list is not paginated.
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-info', alert: message} only %}
+
+    <table class="table table-striped">
+        <thead>
+        <tr class="bg-secondary text-white">
+            <th>{{ __('IP address') }}</th>
+            <th>{{ __('Reason') }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if items is empty %}
+            <tr>
+                <td colspan="2" class="text-center">{{ __('The list is empty') }}</td>
+            </tr>
+        {% endif %}
+        {% for item in items %}
+            <tr>
+                <td><a href="{{ item.detail_url }}">{{ item.ips }}</a></td>
+                <td>{{ item.reason_label }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="mt-2">
+        {% if total > per_page and pagination %}
+            <div>{{ pagination }}</div>
+        {% endif %}
+        {% if total > 0 %}
+            <div>{{ __('Total:') }} {{ total }}</div>
+        {% endif %}
+    </div>
+
+    {% if show_actions %}
+        <div class="mt-2 mb-3 d-flex">
+            <form action="{{ add_url }}" method="post" class="me-2">
+                <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                <input class="btn btn-danger" type="submit" value="{{ __('Add') }}">
+            </form>
+            {% if total > 0 %}
+                <a href="{{ search_url }}" class="btn btn-primary me-2">{{ __('Search') }}</a>
+                <a href="{{ clear_url }}" class="btn btn-primary">{{ __('Unban all IP') }}</a>
+            {% endif %}
+        </div>
+    {% endif %}
+    <div>
+        <a href="/admin/">{{ __('Back') }}</a>
+    </div>
+{% endblock %}

@@ -1,0 +1,56 @@
+{#
+    One ban, with the way to lift it.
+
+    @var string ips
+    @var string ban_type
+    @var string link         Empty unless the ban redirects.
+    @var string reason
+    @var string who
+    @var string display_date
+    @var string display_time
+    @var string delete_url
+    @var string back_url
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card border-0 shadow">
+                <div class="card-body">
+                    <h3 class="mb-3">{{ ips }}</h3>
+                    <div>
+                        <span class="text-muted">{{ __('Ban type:') }}</span> <b>{{ ban_type }}</b>
+                    </div>
+                    {% if link %}
+                        <div>
+                            <span class="text-muted">{{ __('Redirect to:') }}</span> {{ link }}
+                        </div>
+                    {% endif %}
+                    <div>
+                        <span class="text-muted">{{ __('Reason:') }}</span> {{ reason }}
+                    </div>
+                    <div>
+                        <span class="text-muted">{{ __('Banned by:') }}</span> {{ who }}
+                    </div>
+                    <div>
+                        <span class="text-muted">{{ __('Date:') }}</span> {{ display_date }}
+                    </div>
+                    <div>
+                        <span class="text-muted">{{ __('Time:') }}</span> {{ display_time }}
+                    </div>
+                    <div class="mt-3">
+                        <form action="{{ delete_url }}" method="post">
+                            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                            <button type="submit" class="btn btn-danger">{{ __('Delete Ban') }}</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-3">
+                <a href="{{ back_url }}">{{ __('Back') }}</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

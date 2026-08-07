@@ -17,7 +17,7 @@ use Johncms\Modules\Admin\Domain\Models\BanIp;
 use Johncms\NavChain;
 use Johncms\Http\Environment;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
 
@@ -27,7 +27,6 @@ final readonly class IpBanController
 
     public function __construct(
         private AdminControllerContext $controllerContext,
-        private Render $render,
         private Environment $environment,
         private NavChain $navChain,
         private User $currentUser,
@@ -41,7 +40,7 @@ final readonly class IpBanController
         $this->controllerContext->initModule('admin');
     }
 
-    public function index(): string
+    public function index(): ViewResponse
     {
         $pagination = $this->paginationFactory->create($this->getList->count());
 
@@ -56,39 +55,40 @@ final readonly class IpBanController
         $this->navChain->add($title, self::URL);
 
         $meta = new PageMeta($title, $pagination->getCurrentPage());
-        $this->render->addData($this->menuData($meta->title, $title));
 
-        return $this->render->render('admin::ipban', [
-            'items'      => array_map(fn (BanIp $ban): array => $this->listRow($ban), $bans->all()),
-            'total'      => $pagination->getTotal(),
-            'per_page'   => $pagination->getPerPage(),
-            'no_buttons' => false,
-            'message'    => null,
-            'add_url'    => self::URL . '/new',
-            'search_url' => self::URL . '/search',
-            'clear_url'  => self::URL . '/clear',
-            'pagination' => $pagination->render(),
+        return new ViewResponse('@admin/ip-bans.twig', $this->menuData($meta->title, $title) + [
+            'items'        => array_map(fn (BanIp $ban): array => $this->listRow($ban), $bans->all()),
+            'total'        => $pagination->getTotal(),
+            'per_page'     => $pagination->getPerPage(),
+            'show_actions' => true,
+            'message'      => '',
+            'add_url'      => self::URL . '/new',
+            'search_url'   => self::URL . '/search',
+            'clear_url'    => self::URL . '/clear',
+            'pagination'   => $pagination->render(),
         ]);
     }
 
-    public function newForm(?string $error = null): string
+    /**
+     * @param list<string> $errors
+     */
+    public function newForm(array $errors = []): ViewResponse
     {
         $title = __('Add Ban');
         $this->navChain->add(__('Ban by IP'), self::URL);
         $this->navChain->add($title);
-        $this->render->addData($this->menuData($title, $title));
 
-        return $this->render->render('admin::ipban_add', [
-            'form_action'   => self::URL . '/new',
-            'error_message' => $error,
-            'field_height'  => $this->currentUser->config->fieldHeight,
+        return new ViewResponse('@admin/ip-ban-form.twig', $this->menuData($title, $title) + [
+            'form_action'  => self::URL . '/new',
+            'errors'       => $errors,
+            'field_height' => $this->currentUser->config->fieldHeight,
         ]);
     }
 
-    public function prepare(Request $request): string
+    public function prepare(Request $request): ViewResponse
     {
         if (! $this->isCsrfValid($request)) {
-            return $this->newForm(__('Wrong data'));
+            return $this->newForm([__('Wrong data')]);
         }
 
         $term = $request->bodyInt('term', 1);
@@ -98,7 +98,7 @@ final readonly class IpBanController
         $result = $this->prepareIpBan->execute($request->body('ip', ''), $this->environment->getClientInfo());
 
         if ($result->hasErrors()) {
-            return $this->newForm(implode('<br>', $result->errors));
+            return $this->newForm($result->errors);
         }
 
         if ($result->hasConflicts()) {
@@ -108,16 +108,16 @@ final readonly class IpBanController
         return $this->renderConfirm($result->ip1, $result->ip2, $result->mode, $term, $url, $reason);
     }
 
-    public function store(Request $request): string
+    public function store(Request $request): ViewResponse
     {
         if (! $this->isCsrfValid($request)) {
-            return $this->newForm(__('Wrong data'));
+            return $this->newForm([__('Wrong data')]);
         }
 
         $ip1 = $request->bodyInt('ip1');
         $ip2 = $request->bodyInt('ip2');
         if ($ip1 <= 0 || $ip2 <= 0) {
-            return $this->newForm(__('Invalid IP'));
+            return $this->newForm([__('Invalid IP')]);
         }
 
         $this->storeIpBan->execute(
@@ -132,19 +132,18 @@ final readonly class IpBanController
         redirect(self::URL);
     }
 
-    public function searchForm(): string
+    public function searchForm(): ViewResponse
     {
         $title = __('Search');
         $this->navChain->add(__('Ban by IP'), self::URL);
         $this->navChain->add($title);
-        $this->render->addData($this->menuData($title, $title));
 
-        return $this->render->render('admin::ipban_search', [
+        return new ViewResponse('@admin/ip-ban-search.twig', $this->menuData($title, $title) + [
             'form_action' => self::URL . '/search',
         ]);
     }
 
-    public function search(Request $request): string
+    public function search(Request $request): ViewResponse
     {
         if (! $this->isCsrfValid($request)) {
             return $this->error(__('Wrong data'));
@@ -163,7 +162,7 @@ final readonly class IpBanController
         redirect(self::URL . '/' . $ban->id);
     }
 
-    public function detail(int $id): string
+    public function detail(int $id): ViewResponse
     {
         $ban = $this->manageIpBan->findById($id);
         if ($ban === null) {
@@ -173,11 +172,10 @@ final readonly class IpBanController
         $title = __('Ban details');
         $this->navChain->add(__('Ban by IP'), self::URL);
         $this->navChain->add($title);
-        $this->render->addData($this->menuData($title, $title));
 
         $type = IpBanType::fromValueOrBlock($ban->ban_type);
 
-        return $this->render->render('admin::ipban_detail', [
+        return new ViewResponse('@admin/ip-ban-detail.twig', $this->menuData($title, $title) + [
             'ips'          => $this->formatIps($ban),
             'ban_type'     => $type->label(),
             'link'         => $type === IpBanType::REDIRECT ? $ban->link : '',
@@ -190,7 +188,7 @@ final readonly class IpBanController
         ]);
     }
 
-    public function delete(Request $request, int $id): string
+    public function delete(Request $request, int $id): ViewResponse
     {
         if ($this->isCsrfValid($request)) {
             $this->manageIpBan->delete($id);
@@ -199,13 +197,12 @@ final readonly class IpBanController
         redirect(self::URL);
     }
 
-    public function clearConfirm(): string
+    public function clearConfirm(): ViewResponse
     {
         $title = __('Ban by IP');
         $this->navChain->add($title, self::URL);
-        $this->render->addData($this->menuData($title, $title));
 
-        return $this->render->render('admin::ipban_confirm', [
+        return new ViewResponse('@admin/ip-ban-clear-confirm.twig', $this->menuData($title, $title) + [
             'message'      => __('Are you sure you wan to unban all IP?'),
             'form_action'  => self::URL . '/clear',
             'confirm_name' => __('Perform'),
@@ -213,7 +210,7 @@ final readonly class IpBanController
         ]);
     }
 
-    public function clear(Request $request): string
+    public function clear(Request $request): ViewResponse
     {
         if ($this->isCsrfValid($request)) {
             $this->manageIpBan->clearAll();
@@ -225,32 +222,30 @@ final readonly class IpBanController
     /**
      * @param \Illuminate\Support\Collection<int, BanIp> $conflicts
      */
-    private function renderConflicts(\Illuminate\Support\Collection $conflicts): string
+    private function renderConflicts(\Illuminate\Support\Collection $conflicts): ViewResponse
     {
         $title = __('Add Ban');
         $this->navChain->add(__('Ban by IP'), self::URL);
         $this->navChain->add($title);
-        $this->render->addData($this->menuData($title, $title));
 
-        return $this->render->render('admin::ipban', [
-            'items'      => $conflicts->map(fn (BanIp $ban): array => $this->listRow($ban))->all(),
-            'total'      => $conflicts->count(),
-            'per_page'   => $this->currentUser->config->kmess,
-            'no_buttons' => true,
-            'message'    => __('Address you entered conflicts with other who in the database'),
-            'add_url'    => self::URL . '/new',
-            'search_url' => self::URL . '/search',
-            'clear_url'  => self::URL . '/clear',
-            'pagination' => '',
+        return new ViewResponse('@admin/ip-bans.twig', $this->menuData($title, $title) + [
+            'items'        => $conflicts->map(fn (BanIp $ban): array => $this->listRow($ban))->all(),
+            'total'        => $conflicts->count(),
+            'per_page'     => $this->currentUser->config->kmess,
+            'show_actions' => false,
+            'message'      => __('Address you entered conflicts with other who in the database'),
+            'add_url'      => self::URL . '/new',
+            'search_url'   => self::URL . '/search',
+            'clear_url'    => self::URL . '/clear',
+            'pagination'   => null,
         ]);
     }
 
-    private function renderConfirm(int $ip1, int $ip2, string $mode, int $term, string $url, string $reason): string
+    private function renderConfirm(int $ip1, int $ip2, string $mode, int $term, string $url, string $reason): ViewResponse
     {
         $title = __('Add Ban');
         $this->navChain->add(__('Ban by IP'), self::URL);
         $this->navChain->add($title);
-        $this->render->addData($this->menuData($title, $title));
 
         [$modeName, $modeValue] = match ($mode) {
             'range' => [__('Ban range address'), long2ip($ip1) . ' - ' . long2ip($ip2)],
@@ -260,7 +255,7 @@ final readonly class IpBanController
 
         $type = IpBanType::fromValueOrBlock($term);
 
-        return $this->render->render('admin::ipban_add_confirm', [
+        return new ViewResponse('@admin/ip-ban-confirm.twig', $this->menuData($title, $title) + [
             'form_action'    => self::URL,
             'mode_name'      => $modeName,
             'mode_value'     => $modeValue,
@@ -294,13 +289,11 @@ final readonly class IpBanController
             : long2ip($ban->ip1) . ' - ' . long2ip($ban->ip2);
     }
 
-    private function error(string $message, string $type = 'alert-danger'): string
+    private function error(string $message, string $type = 'alert-danger'): ViewResponse
     {
         $title = __('Ban by IP');
-        $this->render->addData($this->menuData($title, $title));
 
-        return $this->render->render('system::pages/result', [
-            'title'    => $title,
+        return new ViewResponse('@admin/pages/result.twig', $this->menuData($title, $title) + [
             'type'     => $type,
             'message'  => $message,
             'back_url' => self::URL,
