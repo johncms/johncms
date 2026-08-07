@@ -1,0 +1,47 @@
+{#
+    Who may open which module.
+
+    @var array  groups          Modules: title, name, value, options (value, label) and an
+                                optional comments toggle (name, value).
+    @var string form_action
+    @var string error_message   Empty unless the last save failed.
+    @var string success_message Empty unless a save has just succeeded.
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger shadow border-0', alert: error_message} only %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success shadow border-0', alert: success_message} only %}
+
+    <form method="post" action="{{ form_action }}">
+        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+
+        {% for group in groups %}
+            <div{% if not loop.first %} class="mt-3"{% endif %}>
+                <h3>{{ group.title }}</h3>
+                <div>
+                    {% for option in group.options %}
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" name="{{ group.name }}" value="{{ option.value }}" id="{{ group.name }}{{ option.value }}"{% if group.value == option.value %} checked{% endif %}>
+                            <label class="form-check-label" for="{{ group.name }}{{ option.value }}">{{ option.label }}</label>
+                        </div>
+                    {% endfor %}
+
+                    {% if group.comments is not empty %}
+                        <div class="form-check mt-2">
+                            <input type="checkbox" class="form-check-input" name="{{ group.comments.name }}" value="1" id="{{ group.comments.name }}"{% if group.comments.value %} checked{% endif %}>
+                            <label class="form-check-label" for="{{ group.comments.name }}">{{ __('Comments') }}</label>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+
+        <div class="mt-3">
+            <div class="alert alert-info">
+                {{ __('Administrators always have access to all closed modules and comments') }}
+            </div>
+            <input type="submit" name="submit" id="button" value="{{ __('Save') }}" class="btn btn-primary">
+        </div>
+    </form>
+{% endblock %}

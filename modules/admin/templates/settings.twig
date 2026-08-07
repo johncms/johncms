@@ -1,0 +1,110 @@
+{#
+    The settings of the site.
+
+    @var array  settings        Current values, keyed by field name.
+    @var array  themes          Names of the installed themes.
+    @var string system_time      Current time with the shift applied.
+    @var string utc_time
+    @var string form_action
+    @var string error_message   Empty unless the last save failed.
+    @var string success_message Empty unless a save has just succeeded.
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    <div style="max-width: 640px">
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger shadow border-0', alert: error_message} only %}
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-success shadow border-0', alert: success_message} only %}
+
+        <form method="post" action="{{ form_action }}">
+            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+            <fieldset>
+                <legend>{{ __('Common Settings') }}</legend>
+                <div class="form-group">
+                    <label for="homeurl">{{ __('Web site address without the slash at the end') }}</label>
+                    <input type="text" id="homeurl" name="homeurl" class="form-control" value="{{ settings.homeurl }}"/>
+                </div>
+                <div class="form-group">
+                    <label for="copyright">{{ __('Site copyright') }}</label>
+                    <input type="text" id="copyright" name="copyright" class="form-control" value="{{ settings.copyright }}"/>
+                </div>
+                <div class="form-group">
+                    <label for="madm">{{ __('Site Email') }}</label>
+                    <input type="text" id="madm" name="madm" maxlength="50" class="form-control" value="{{ settings.email }}"/>
+                </div>
+                <div class="form-group">
+                    <label for="flsz">{{ __('Max. file size') }} (kb)</label>
+                    <input type="text" id="flsz" name="flsz" class="form-control  col-sm-2" value="{{ settings.flsz }}"/>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" name="gz" value="1" id="gz"{% if settings.gzip %} checked="checked"{% endif %}>
+                    <label class="form-check-label" for="gz">{{ __('Gzip compression') }}</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" name="user_email_required" value="1"
+                           id="user_email_required"{% if settings.user_email_required %} checked="checked"{% endif %}>
+                    <label class="form-check-label" for="user_email_required">{{ __('E-mail is required for registration') }}</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" name="user_email_confirmation" value="1" id="user_email_confirmation"{% if settings.user_email_confirmation %} checked="checked"{% endif %}>
+                    <label class="form-check-label" for="user_email_confirmation">{{ __('Request a confirmation email to activate the user\'s account.') }}</label>
+                </div>
+            </fieldset>
+            <fieldset class="mt-3">
+                <legend>{{ __('Time shift') }}</legend>
+                <div class="form-group">
+                    <label for="timeshift">+ - 12 Hour</label>
+                    <input type="text" id="timeshift" name="timeshift" class="form-control  col-sm-2" value="{{ settings.timeshift }}"/>
+                </div>
+                <div class="form-group">
+                    <span style="font-weight:bold; background-color:#C0FFC0"> {{ system_time }} </span>&nbsp;{{ __('System Time') }}<br>
+                    <span style="font-weight:bold; background-color:#FFC0C0"> {{ utc_time }} </span>&nbsp;UTC
+                </div>
+            </fieldset>
+            <fieldset class="mt-3">
+                <legend>{{ __('META tags') }}</legend>
+                <div class="form-group">
+                    <label for="meta_title">{{ __('Title') }}</label>
+                    <textarea rows="2" id="meta_title" name="meta_title" class="form-control">{{ settings.meta_title }}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="meta_key">{{ __('Keywords') }}</label>
+                    <textarea rows="3" id="meta_key" name="meta_key" class="form-control">{{ settings.meta_key }}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="meta_desc">{{ __('Description') }}</label>
+                    <textarea rows="3" id="meta_desc" name="meta_desc" class="form-control">{{ settings.meta_desc }}</textarea>
+                </div>
+            </fieldset>
+            <fieldset class="mt-3">
+                <legend>{{ __('Legal documents') }}</legend>
+                <div class="small text-muted mb-2">{{ __('If the link is filled in, it will be displayed in the site footer.') }}</div>
+                <div class="form-group">
+                    <label for="privacy_policy_url">{{ __('Privacy Policy') }}</label>
+                    <input type="text" id="privacy_policy_url" name="privacy_policy_url" class="form-control" value="{{ settings.privacy_policy_url }}"/>
+                </div>
+                <div class="form-group">
+                    <label for="terms_of_use_url">{{ __('Terms of Use') }}</label>
+                    <input type="text" id="terms_of_use_url" name="terms_of_use_url" class="form-control" value="{{ settings.terms_of_use_url }}"/>
+                </div>
+                <div class="form-group">
+                    <label for="personal_data_policy_url">{{ __('Personal Data Processing Policy') }}</label>
+                    <input type="text" id="personal_data_policy_url" name="personal_data_policy_url" class="form-control" value="{{ settings.personal_data_policy_url }}"/>
+                </div>
+                <div class="form-group">
+                    <label for="cookie_policy_url">{{ __('Cookie Policy') }}</label>
+                    <input type="text" id="cookie_policy_url" name="cookie_policy_url" class="form-control" value="{{ settings.cookie_policy_url }}"/>
+                </div>
+            </fieldset>
+            <fieldset class="mt-3">
+                <legend>{{ __('Themes') }}</legend>
+                <select id="skindef" name="skindef" class="form-control">
+                    {% for theme in themes %}
+                        <option{% if settings.skindef == theme %} selected="selected"{% endif %}>{{ theme }}</option>
+                    {% endfor %}
+                </select>
+            </fieldset>
+            <input type="submit" class="btn btn-primary btn-lg mt-4 mb-2" name="submit" value="{{ __('Save') }}"/>
+        </form>
+    </div>
+{% endblock %}

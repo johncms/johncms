@@ -12,7 +12,7 @@ use Johncms\Modules\Admin\Domain\Exceptions\ConfigWriteException;
 use Johncms\Modules\Admin\Domain\Services\ThemeListProviderInterface;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Validator\Validator;
 
 final readonly class SystemSettingsController
@@ -21,7 +21,6 @@ final readonly class SystemSettingsController
 
     public function __construct(
         private AdminControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private UpdateSystemSettingsUseCase $updateSystemSettingsUseCase,
         private ThemeListProviderInterface $themeListProvider,
@@ -30,12 +29,12 @@ final readonly class SystemSettingsController
         $this->controllerContext->initModule('admin');
     }
 
-    public function form(): string
+    public function form(): ViewResponse
     {
         return $this->renderForm();
     }
 
-    public function save(Request $request): string
+    public function save(Request $request): ViewResponse
     {
         if (! $this->isCsrfValid($request)) {
             return $this->renderForm(__('Wrong data'));
@@ -85,30 +84,55 @@ final readonly class SystemSettingsController
         return $validator->isValid();
     }
 
-    private function renderForm(?string $errorMessage = null): string
+    private function renderForm(string $errorMessage = ''): ViewResponse
     {
         $title = __('System Settings');
         $this->navChain->add($title);
 
-        $successMessage = $this->session->getFlash('success_message');
+        $timeShift = (int) config('johncms.timeshift', 0);
 
-        $this->render->addData(
+        return new ViewResponse(
+            '@admin/settings.twig',
             [
-                'title'      => $title,
-                'page_title' => $title,
-                'sys_menu'   => ['settings' => true],
-            ]
-        );
-
-        return $this->render->render(
-            'admin::settings',
-            [
-                'sysconf'         => config('johncms'),
-                'themelist'       => $this->themeListProvider->getAvailable(),
+                'title'           => $title,
+                'page_title'      => $title,
+                'sys_menu'        => ['settings' => true],
+                'settings'        => $this->settings($timeShift),
+                'themes'          => $this->themeListProvider->getAvailable(),
+                'system_time'     => date('H:i', time() + $timeShift * 3600),
+                'utc_time'        => date('H:i'),
                 'form_action'     => self::URL,
                 'error_message'   => $errorMessage,
-                'success_message' => $successMessage,
+                'success_message' => (string) $this->session->getFlash('success_message'),
             ]
         );
+    }
+
+    /**
+     * The form reads a fixed set of values, so it gets that set and not the configuration of the
+     * whole site.
+     *
+     * @return array<string, mixed>
+     */
+    private function settings(int $timeShift): array
+    {
+        return [
+            'homeurl'                 => (string) config('johncms.homeurl', ''),
+            'copyright'               => (string) config('johncms.copyright', ''),
+            'email'                   => (string) config('johncms.email', ''),
+            'flsz'                    => (int) config('johncms.flsz', 0),
+            'gzip'                    => (bool) config('johncms.gzip', false),
+            'user_email_required'     => (bool) config('johncms.user_email_required', false),
+            'user_email_confirmation' => (bool) config('johncms.user_email_confirmation', false),
+            'timeshift'               => $timeShift,
+            'meta_title'              => (string) config('johncms.meta_title', ''),
+            'meta_key'                => (string) config('johncms.meta_key', ''),
+            'meta_desc'               => (string) config('johncms.meta_desc', ''),
+            'privacy_policy_url'      => (string) config('johncms.privacy_policy_url', ''),
+            'terms_of_use_url'        => (string) config('johncms.terms_of_use_url', ''),
+            'personal_data_policy_url' => (string) config('johncms.personal_data_policy_url', ''),
+            'cookie_policy_url'       => (string) config('johncms.cookie_policy_url', ''),
+            'skindef'                 => (string) config('johncms.skindef', 'default'),
+        ];
     }
 }

@@ -8,10 +8,10 @@ use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Modules\Admin\Application\DTO\AntifloodSettingsDTO;
 use Johncms\Modules\Admin\Application\UseCases\UpdateAntifloodSettingsUseCase;
 use Johncms\Modules\Admin\Domain\Exceptions\ConfigWriteException;
+use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
-use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 
 final readonly class AntifloodSettingsController
@@ -20,7 +20,6 @@ final readonly class AntifloodSettingsController
 
     public function __construct(
         private AdminControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private UpdateAntifloodSettingsUseCase $updateAntifloodSettingsUseCase,
         private Session $session,
@@ -28,12 +27,12 @@ final readonly class AntifloodSettingsController
         $this->controllerContext->initModule('admin');
     }
 
-    public function form(): string
+    public function form(): ViewResponse
     {
         return $this->renderForm();
     }
 
-    public function save(Request $request): string
+    public function save(Request $request): ViewResponse
     {
         if (! $this->isCsrfValid($request)) {
             return $this->renderForm(__('Wrong data'));
@@ -70,29 +69,44 @@ final readonly class AntifloodSettingsController
         return $validator->isValid();
     }
 
-    private function renderForm(?string $errorMessage = null): string
+    private function renderForm(string $errorMessage = ''): ViewResponse
     {
         $title = __('Antiflood Settings');
         $this->navChain->add($title);
 
-        $successMessage = $this->session->getFlash('success_message');
-
-        $this->render->addData(
+        return new ViewResponse(
+            '@admin/antiflood.twig',
             [
-                'title'      => $title,
-                'page_title' => $title,
-                'usr_menu'   => ['antiflood' => true],
-            ]
-        );
-
-        return $this->render->render(
-            'admin::antiflood',
-            [
-                'set_af'          => config('johncms')['antiflood'],
+                'title'           => $title,
+                'page_title'      => $title,
+                'usr_menu'        => ['antiflood' => true],
+                'settings'        => (array) config('johncms.antiflood', []),
+                'mode_options'    => $this->modeOptions(),
                 'form_action'     => self::URL,
                 'error_message'   => $errorMessage,
-                'success_message' => $successMessage,
+                'success_message' => (string) $this->session->getFlash('success_message'),
             ]
         );
+    }
+
+    /**
+     * @return list<array{value: int, label: string, hint: string}>
+     */
+    private function modeOptions(): array
+    {
+        return [
+            ['value' => 3, 'label' => __('Day'), 'hint' => ''],
+            ['value' => 4, 'label' => __('Night'), 'hint' => ''],
+            [
+                'value' => 2,
+                'label' => __('Day / Night'),
+                'hint'  => __('Automatic change from day to night mode, according to specified time set'),
+            ],
+            [
+                'value' => 1,
+                'label' => __('Adaptive'),
+                'hint'  => __('If one of administration is online (on the site), the system work in &quot;day&quot; mode, if administration is offline, it switch to &quot;night&quot;'),
+            ],
+        ];
     }
 }

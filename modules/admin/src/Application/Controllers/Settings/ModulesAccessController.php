@@ -9,9 +9,9 @@ use Johncms\Http\Session;
 use Johncms\Modules\Admin\Application\DTO\ModulesAccessDTO;
 use Johncms\Modules\Admin\Application\UseCases\UpdateModulesAccessUseCase;
 use Johncms\Modules\Admin\Domain\Exceptions\ConfigWriteException;
+use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 
 final readonly class ModulesAccessController
@@ -20,7 +20,6 @@ final readonly class ModulesAccessController
 
     public function __construct(
         private AdminControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private UpdateModulesAccessUseCase $updateModulesAccessUseCase,
         private Session $session,
@@ -28,12 +27,12 @@ final readonly class ModulesAccessController
         $this->controllerContext->initModule('admin');
     }
 
-    public function form(): string
+    public function form(): ViewResponse
     {
         return $this->renderForm();
     }
 
-    public function save(Request $request): string
+    public function save(Request $request): ViewResponse
     {
         if (! $this->isCsrfValid($request)) {
             return $this->renderForm(__('Wrong data'));
@@ -73,29 +72,83 @@ final readonly class ModulesAccessController
         return $validator->isValid();
     }
 
-    private function renderForm(?string $errorMessage = null): string
+    private function renderForm(string $errorMessage = ''): ViewResponse
     {
         $title = __('Permissions');
         $this->navChain->add($title);
 
-        $successMessage = $this->session->getFlash('success_message');
-
-        $this->render->addData(
+        return new ViewResponse(
+            '@admin/modules-access.twig',
             [
-                'title'       => $title,
-                'page_title'  => $title,
-                'module_menu' => ['access' => true],
-            ]
-        );
-
-        return $this->render->render(
-            'admin::access',
-            [
-                'conf'            => config('johncms'),
+                'title'           => $title,
+                'page_title'      => $title,
+                'module_menu'     => ['access' => true],
+                'groups'          => $this->groups(),
                 'form_action'     => self::URL,
                 'error_message'   => $errorMessage,
-                'success_message' => $successMessage,
+                'success_message' => (string) $this->session->getFlash('success_message'),
             ]
         );
+    }
+
+    /**
+     * The modules whose access is managed here, each with the modes it offers and the mode it is
+     * in. A module that also has comments carries the toggle for them.
+     *
+     * @return list<array<string, mixed>>
+     */
+    private function groups(): array
+    {
+        $allowed = ['value' => 2, 'label' => __('Access is allowed')];
+        $authorized = ['value' => 1, 'label' => __('Only for authorized')];
+        $denied = ['value' => 0, 'label' => __('Access denied')];
+
+        return [
+            [
+                'title'    => __('Forum'),
+                'name'     => 'forum',
+                'value'    => (int) config('johncms.mod_forum', 0),
+                'options'  => [$allowed, $authorized, ['value' => 3, 'label' => __('Read only')], $denied],
+                'comments' => null,
+            ],
+            [
+                'title'    => __('Guestbook'),
+                'name'     => 'guest',
+                'value'    => (int) config('johncms.mod_guest', 0),
+                'options'  => [$allowed, $authorized, $denied],
+                'comments' => null,
+            ],
+            [
+                'title'    => __('Library'),
+                'name'     => 'lib',
+                'value'    => (int) config('johncms.mod_lib', 0),
+                'options'  => [$allowed, $authorized, $denied],
+                'comments' => ['name' => 'libcomm', 'value' => (bool) config('johncms.mod_lib_comm', false)],
+            ],
+            [
+                'title'    => __('Downloads'),
+                'name'     => 'down',
+                'value'    => (int) config('johncms.mod_down', 0),
+                'options'  => [$allowed, $authorized, $denied],
+                'comments' => ['name' => 'downcomm', 'value' => (bool) config('johncms.mod_down_comm', false)],
+            ],
+            [
+                'title'    => __('Community'),
+                'name'     => 'active',
+                'value'    => (int) config('johncms.active', 0),
+                'options'  => [
+                    ['value' => 1, 'label' => __('Access is allowed')],
+                    ['value' => 0, 'label' => __('Only for authorized')],
+                ],
+                'comments' => null,
+            ],
+            [
+                'title'    => __('Registration'),
+                'name'     => 'reg',
+                'value'    => (int) config('johncms.mod_reg', 0),
+                'options'  => [$allowed, ['value' => 1, 'label' => __('With moderation')], $denied],
+                'comments' => null,
+            ],
+        ];
     }
 }

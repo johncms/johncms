@@ -80,14 +80,14 @@ msgid "Modules"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:137
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:78
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:77
 #: modules/admin/templates/sidebar-admin-menu.phtml:150
 #: themes/admin/templates/system/app/sidebar-admin-menu.phtml:141
 msgid "Permissions"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:145
-#: modules/admin/templates/access.phtml:24
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:108
 #: modules/admin/templates/sidebar-admin-menu.phtml:158
 #: modules/admin/templates/user-delete-confirm.twig:33
 #: themes/admin/templates/system/app/sidebar-admin-menu.phtml:149
@@ -150,7 +150,7 @@ msgid "System"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:231
-#: modules/admin/src/Application/Controllers/Settings/SystemSettingsController.php:90
+#: modules/admin/src/Application/Controllers/Settings/SystemSettingsController.php:89
 #: modules/admin/templates/sidebar-admin-menu.phtml:214
 #: modules/admin/templates/smilies.phtml:8
 #: themes/admin/templates/system/app/sidebar-admin-menu.phtml:237
@@ -236,14 +236,14 @@ msgstr ""
 #: modules/admin/src/Application/Controllers/Settings/AdsController.php:80
 #: modules/admin/src/Application/Controllers/Settings/AdsController.php:89
 #: modules/admin/src/Application/Controllers/Settings/AdsController.php:130
-#: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:39
+#: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:38
 #: modules/admin/src/Application/Controllers/Settings/CountersController.php:48
 #: modules/admin/src/Application/Controllers/Settings/CountersController.php:76
 #: modules/admin/src/Application/Controllers/Settings/CountersController.php:85
 #: modules/admin/src/Application/Controllers/Settings/CountersController.php:118
 #: modules/admin/src/Application/Controllers/Settings/CountersController.php:170
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:39
-#: modules/admin/src/Application/Controllers/Settings/SystemSettingsController.php:41
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:38
+#: modules/admin/src/Application/Controllers/Settings/SystemSettingsController.php:40
 #: modules/admin/src/Application/Controllers/System/EmoticonsController.php:38
 #: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:46
 #: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:52
@@ -262,9 +262,9 @@ msgstr ""
 
 #: modules/admin/src/Application/Controllers/Forum/ForumSettingsController.php:57
 #: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:61
-#: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:48
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:48
-#: modules/admin/src/Application/Controllers/Settings/SystemSettingsController.php:50
+#: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:47
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:47
+#: modules/admin/src/Application/Controllers/Settings/SystemSettingsController.php:49
 #: modules/admin/src/Application/Controllers/Users/KarmaController.php:56
 msgid "Settings are saved successfully"
 msgstr ""
@@ -316,7 +316,7 @@ msgstr ""
 #: modules/admin/templates/forum-section-edit.twig:22
 #: modules/admin/templates/forum-section-form.twig:24
 #: modules/admin/templates/forum-section-form.twig:25
-#: modules/admin/templates/settings.phtml:72
+#: modules/admin/templates/settings.twig:67
 msgid "Title"
 msgstr ""
 
@@ -341,13 +341,9 @@ msgid "Delete category"
 msgstr ""
 
 #: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:256
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:104
 #: modules/admin/src/Application/Middlewares/AdminAccessMiddleware.php:52
 #: modules/admin/src/Application/Middlewares/SuperAdminAccessMiddleware.php:51
-#: modules/admin/templates/access.phtml:40
-#: modules/admin/templates/access.phtml:58
-#: modules/admin/templates/access.phtml:76
-#: modules/admin/templates/access.phtml:99
-#: modules/admin/templates/access.phtml:136
 msgid "Access denied"
 msgstr ""
 
@@ -484,9 +480,9 @@ msgstr ""
 #: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:56
 #: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:121
 #: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:136
-#: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:45
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:45
-#: modules/admin/src/Application/Controllers/Settings/SystemSettingsController.php:47
+#: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:44
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:44
+#: modules/admin/src/Application/Controllers/Settings/SystemSettingsController.php:46
 #: modules/admin/src/Application/Controllers/Users/KarmaController.php:53
 msgid "ERROR: Can not write file `system.local.php`"
 msgstr ""
@@ -613,8 +609,34 @@ msgstr ""
 msgid "On all, except Homepage"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:75
+#: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:74
 msgid "Antiflood Settings"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:98
+#: modules/admin/templates/antiflood.twig:32
+msgid "Day"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:99
+#: modules/admin/templates/antiflood.twig:36
+msgid "Night"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:102
+msgid "Day / Night"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:103
+msgid "Automatic change from day to night mode, according to specified time set"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:107
+msgid "Adaptive"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:108
+msgid "If one of administration is online (on the site), the system work in &quot;day&quot; mode, if administration is offline, it switch to &quot;night&quot;"
 msgstr ""
 
 #: modules/admin/src/Application/Controllers/Settings/CountersController.php:51
@@ -641,6 +663,46 @@ msgstr ""
 
 #: modules/admin/src/Application/Controllers/Settings/CountersController.php:216
 msgid "On the main showing option 1, on the other pages option 2"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:102
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:140
+msgid "Access is allowed"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:103
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:141
+msgid "Only for authorized"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:111
+msgid "Read only"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:115
+msgid "Guestbook"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:122
+msgid "Library"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:129
+msgid "Downloads"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:136
+msgid "Community"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:146
+#: modules/admin/src/Domain/Enums/IpBanType.php:22
+#: modules/admin/templates/ip-ban-form.twig:27
+msgid "Registration"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:149
+msgid "With moderation"
 msgstr ""
 
 #: modules/admin/src/Application/Controllers/System/EmoticonsController.php:44
@@ -861,86 +923,15 @@ msgstr ""
 msgid "Redirect"
 msgstr ""
 
-#: modules/admin/src/Domain/Enums/IpBanType.php:22
-#: modules/admin/templates/access.phtml:124
-#: modules/admin/templates/ip-ban-form.twig:27
-msgid "Registration"
-msgstr ""
-
 #: modules/admin/src/Domain/Enums/IpBanType.php:23
 #: modules/admin/templates/ip-ban-form.twig:23
 msgid "Block"
 msgstr ""
 
-#: modules/admin/templates/access.phtml:28
-#: modules/admin/templates/access.phtml:50
-#: modules/admin/templates/access.phtml:68
-#: modules/admin/templates/access.phtml:91
-#: modules/admin/templates/access.phtml:114
-#: modules/admin/templates/access.phtml:128
-msgid "Access is allowed"
-msgstr ""
-
-#: modules/admin/templates/access.phtml:32
-#: modules/admin/templates/access.phtml:54
-#: modules/admin/templates/access.phtml:72
-#: modules/admin/templates/access.phtml:95
-#: modules/admin/templates/access.phtml:118
-msgid "Only for authorized"
-msgstr ""
-
-#: modules/admin/templates/access.phtml:36
-msgid "Read only"
-msgstr ""
-
-#: modules/admin/templates/access.phtml:46
-msgid "Guestbook"
-msgstr ""
-
-#: modules/admin/templates/access.phtml:64
-msgid "Library"
-msgstr ""
-
-#: modules/admin/templates/access.phtml:81
-#: modules/admin/templates/access.phtml:104
-#: modules/admin/templates/user-delete-confirm.twig:28
-msgid "Comments"
-msgstr ""
-
-#: modules/admin/templates/access.phtml:87
-msgid "Downloads"
-msgstr ""
-
-#: modules/admin/templates/access.phtml:110
-msgid "Community"
-msgstr ""
-
-#: modules/admin/templates/access.phtml:132
-msgid "With moderation"
-msgstr ""
-
-#: modules/admin/templates/access.phtml:142
-msgid "Administrators always have access to all closed modules and comments"
-msgstr ""
-
-#: modules/admin/templates/access.phtml:144
-#: modules/admin/templates/ad-form.twig:97
-#: modules/admin/templates/amnesty.twig:32
-#: modules/admin/templates/antiflood.phtml:62
-#: modules/admin/templates/counter-preview.twig:51
-#: modules/admin/templates/forum-section-edit.twig:76
-#: modules/admin/templates/forum-settings.twig:58
-#: modules/admin/templates/ip-ban-form.twig:53
-#: modules/admin/templates/karma.twig:43
-#: modules/admin/templates/languages.twig:31
-#: modules/admin/templates/settings.phtml:112
-msgid "Save"
-msgstr ""
-
 #: modules/admin/templates/ad-confirm.twig:20
 #: modules/admin/templates/ad-form.twig:98
 #: modules/admin/templates/amnesty.twig:33
-#: modules/admin/templates/antiflood.phtml:63
+#: modules/admin/templates/antiflood.twig:50
 #: modules/admin/templates/counter-delete-confirm.twig:22
 #: modules/admin/templates/counter-form.twig:76
 #: modules/admin/templates/counter-preview.twig:52
@@ -1025,6 +1016,20 @@ msgstr ""
 
 #: modules/admin/templates/ad-form.twig:82
 msgid "Styling links"
+msgstr ""
+
+#: modules/admin/templates/ad-form.twig:97
+#: modules/admin/templates/amnesty.twig:32
+#: modules/admin/templates/antiflood.twig:49
+#: modules/admin/templates/counter-preview.twig:51
+#: modules/admin/templates/forum-section-edit.twig:76
+#: modules/admin/templates/forum-settings.twig:58
+#: modules/admin/templates/ip-ban-form.twig:53
+#: modules/admin/templates/karma.twig:43
+#: modules/admin/templates/languages.twig:31
+#: modules/admin/templates/modules-access.twig:44
+#: modules/admin/templates/settings.twig:107
+msgid "Save"
 msgstr ""
 
 #: modules/admin/templates/ads.twig:31
@@ -1138,49 +1143,23 @@ msgstr ""
 msgid "&quot;Unban All&quot; - terminating all active bans<br>&quot;Clear Database&quot; - terminates all bans and clears an offenses history"
 msgstr ""
 
-#: modules/admin/templates/antiflood.phtml:22
+#: modules/admin/templates/antiflood.twig:18
 msgid "Operation mode"
 msgstr ""
 
-#: modules/admin/templates/antiflood.phtml:26
-#: modules/admin/templates/antiflood.phtml:45
-msgid "Day"
-msgstr ""
-
-#: modules/admin/templates/antiflood.phtml:30
-#: modules/admin/templates/antiflood.phtml:49
-msgid "Night"
-msgstr ""
-
-#: modules/admin/templates/antiflood.phtml:34
-msgid "Day / Night"
-msgstr ""
-
-#: modules/admin/templates/antiflood.phtml:35
-msgid "Automatic change from day to night mode, according to specified time set"
-msgstr ""
-
-#: modules/admin/templates/antiflood.phtml:39
-msgid "Adaptive"
-msgstr ""
-
-#: modules/admin/templates/antiflood.phtml:40
-msgid "If one of administration is online (on the site), the system work in &quot;day&quot; mode, if administration is offline, it switch to &quot;night&quot;"
-msgstr ""
-
-#: modules/admin/templates/antiflood.phtml:43
+#: modules/admin/templates/antiflood.twig:30
 msgid "Time limit"
 msgstr ""
 
-#: modules/admin/templates/antiflood.phtml:52
+#: modules/admin/templates/antiflood.twig:39
 msgid "Day mode"
 msgstr ""
 
-#: modules/admin/templates/antiflood.phtml:54
+#: modules/admin/templates/antiflood.twig:41
 msgid "Beginning of day"
 msgstr ""
 
-#: modules/admin/templates/antiflood.phtml:58
+#: modules/admin/templates/antiflood.twig:45
 msgid "End of day"
 msgstr ""
 
@@ -1392,7 +1371,7 @@ msgstr ""
 
 #: modules/admin/templates/forum-section-edit.twig:36
 #: modules/admin/templates/forum-section-form.twig:30
-#: modules/admin/templates/settings.phtml:80
+#: modules/admin/templates/settings.twig:75
 #: modules/admin/templates/system/system_check.phtml:9
 #: modules/admin/templates/system/system_check.phtml:17
 #: modules/admin/templates/system/system_check.phtml:29
@@ -1818,6 +1797,15 @@ msgstr ""
 msgid "There are no available tasks"
 msgstr ""
 
+#: modules/admin/templates/modules-access.twig:33
+#: modules/admin/templates/user-delete-confirm.twig:28
+msgid "Comments"
+msgstr ""
+
+#: modules/admin/templates/modules-access.twig:42
+msgid "Administrators always have access to all closed modules and comments"
+msgstr ""
+
 #: modules/admin/templates/registrations.twig:35
 msgid "Approve"
 msgstr ""
@@ -1830,79 +1818,79 @@ msgstr ""
 msgid "Confirm all"
 msgstr ""
 
-#: modules/admin/templates/settings.phtml:27
+#: modules/admin/templates/settings.twig:22
 msgid "Common Settings"
 msgstr ""
 
-#: modules/admin/templates/settings.phtml:29
+#: modules/admin/templates/settings.twig:24
 msgid "Web site address without the slash at the end"
 msgstr ""
 
-#: modules/admin/templates/settings.phtml:33
+#: modules/admin/templates/settings.twig:28
 msgid "Site copyright"
 msgstr ""
 
-#: modules/admin/templates/settings.phtml:37
+#: modules/admin/templates/settings.twig:32
 msgid "Site Email"
 msgstr ""
 
-#: modules/admin/templates/settings.phtml:41
+#: modules/admin/templates/settings.twig:36
 msgid "Max. file size"
 msgstr ""
 
-#: modules/admin/templates/settings.phtml:46
+#: modules/admin/templates/settings.twig:41
 msgid "Gzip compression"
 msgstr ""
 
-#: modules/admin/templates/settings.phtml:51
+#: modules/admin/templates/settings.twig:46
 msgid "E-mail is required for registration"
 msgstr ""
 
-#: modules/admin/templates/settings.phtml:55
+#: modules/admin/templates/settings.twig:50
 msgid "Request a confirmation email to activate the user's account."
 msgstr ""
 
-#: modules/admin/templates/settings.phtml:59
+#: modules/admin/templates/settings.twig:54
 msgid "Time shift"
 msgstr ""
 
-#: modules/admin/templates/settings.phtml:65
+#: modules/admin/templates/settings.twig:60
 msgid "System Time"
 msgstr ""
 
-#: modules/admin/templates/settings.phtml:70
+#: modules/admin/templates/settings.twig:65
 msgid "META tags"
 msgstr ""
 
-#: modules/admin/templates/settings.phtml:76
+#: modules/admin/templates/settings.twig:71
 msgid "Keywords"
 msgstr ""
 
-#: modules/admin/templates/settings.phtml:85
+#: modules/admin/templates/settings.twig:80
 msgid "Legal documents"
 msgstr ""
 
-#: modules/admin/templates/settings.phtml:86
+#: modules/admin/templates/settings.twig:81
 msgid "If the link is filled in, it will be displayed in the site footer."
 msgstr ""
 
-#: modules/admin/templates/settings.phtml:88
+#: modules/admin/templates/settings.twig:83
 msgid "Privacy Policy"
 msgstr ""
 
-#: modules/admin/templates/settings.phtml:92
+#: modules/admin/templates/settings.twig:87
 msgid "Terms of Use"
 msgstr ""
 
-#: modules/admin/templates/settings.phtml:96
+#: modules/admin/templates/settings.twig:91
 msgid "Personal Data Processing Policy"
 msgstr ""
 
-#: modules/admin/templates/settings.phtml:100
+#: modules/admin/templates/settings.twig:95
 msgid "Cookie Policy"
 msgstr ""
 
-#: modules/admin/templates/settings.phtml:105
+#: modules/admin/templates/settings.twig:100
 msgid "Themes"
 msgstr ""
 
