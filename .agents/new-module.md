@@ -119,6 +119,19 @@ docker exec $(docker ps -q -f name=johncms9.php-fpm) composer translate
 
 Add a `<lang>.po` in `modules/<module>/locale/` for each language you were asked to translate. For the full pipeline and Crowdin commands, read `.agents/localization.md`.
 
+## IDE Template Navigation
+
+A module listed in `config/autoload/modules.global.php` gets the Twig namespace `@<module>`
+without registering anything. The IDE cannot infer that convention, so regenerate the file it
+reads after adding the module:
+
+```bash
+docker exec $(docker ps -q -f name=johncms9.php-fpm) php system/bin/console twig:ide-config
+```
+
+Commit the resulting `ide-twig.json`. The verification gate runs the command with `--check` and
+fails while the file is stale.
+
 ## Template Notes
 
 * Templates call `$this->layout('system::layout/default')` without arguments.

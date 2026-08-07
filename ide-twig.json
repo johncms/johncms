@@ -1,0 +1,96 @@
+{
+    "namespaces": [
+        {
+            "namespace": "theme",
+            "path": "themes/default/templates"
+        },
+        {
+            "namespace": "admin",
+            "path": "themes/default/templates/admin"
+        },
+        {
+            "namespace": "admin",
+            "path": "modules/admin/templates"
+        },
+        {
+            "namespace": "album",
+            "path": "modules/album/templates"
+        },
+        {
+            "namespace": "collections",
+            "path": "modules/collections/templates"
+        },
+        {
+            "namespace": "community",
+            "path": "modules/community/templates"
+        },
+        {
+            "namespace": "consent",
+            "path": "modules/consent/templates"
+        },
+        {
+            "namespace": "contacts",
+            "path": "modules/contacts/templates"
+        },
+        {
+            "namespace": "downloads",
+            "path": "modules/downloads/templates"
+        },
+        {
+            "namespace": "forum",
+            "path": "modules/forum/templates"
+        },
+        {
+            "namespace": "guestbook",
+            "path": "modules/guestbook/templates"
+        },
+        {
+            "namespace": "help",
+            "path": "modules/help/templates"
+        },
+        {
+            "namespace": "homepage",
+            "path": "modules/homepage/templates"
+        },
+        {
+            "namespace": "language",
+            "path": "modules/language/templates"
+        },
+        {
+            "namespace": "library",
+            "path": "modules/library/templates"
+        },
+        {
+            "namespace": "login",
+            "path": "modules/login/templates"
+        },
+        {
+            "namespace": "mail",
+            "path": "modules/mail/templates"
+        },
+        {
+            "namespace": "news",
+            "path": "modules/news/templates"
+        },
+        {
+            "namespace": "notifications",
+            "path": "modules/notifications/templates"
+        },
+        {
+            "namespace": "online",
+            "path": "modules/online/templates"
+        },
+        {
+            "namespace": "profile",
+            "path": "modules/profile/templates"
+        },
+        {
+            "namespace": "redirect",
+            "path": "modules/redirect/templates"
+        },
+        {
+            "namespace": "registration",
+            "path": "modules/registration/templates"
+        }
+    ]
+}

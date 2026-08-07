@@ -37,4 +37,12 @@ docker exec "$CONTAINER" composer test
 echo "==> twig:lint"
 docker exec "$CONTAINER" php system/bin/console twig:lint
 
+# ide-twig.json tells the IDE which directory a @namespace template name resolves to. It is
+# generated from the same registry the loader uses, and a module added to the configuration
+# leaves it stale — with template navigation quietly broken and nothing else to report it.
+# Regenerate with:
+#   docker exec $(docker ps -q -f name=johncms9.php-fpm) php system/bin/console twig:ide-config
+echo "==> twig:ide-config --check"
+docker exec "$CONTAINER" php system/bin/console twig:ide-config --check
+
 echo "==> verification gate passed"

@@ -19,6 +19,14 @@ A theme overrides any of them by mirroring the path:
 `themes/<theme>/templates/<module>/public/<page>.twig`. Nothing is registered anywhere — the
 namespaces come from the installed modules and the theme chain.
 
+The IDE resolves `@<module>/...` through `ide-twig.json` in the project root, generated from the
+same registry the loader uses. A new directory the registry picks up — a theme override of a
+module, for one — leaves it stale, so regenerate and commit it:
+
+```bash
+docker exec $(docker ps -q -f name=johncms9.php-fpm) php system/bin/console twig:ide-config
+```
+
 ## Steps
 
 1. **Controller.** Return `Johncms\Http\View\ViewResponse` instead of a rendered string:
@@ -115,7 +123,7 @@ The other direction is allowed.
 ## Verification
 
 ```bash
-sh .agents/scripts/verify.sh                    # cs-check, phpstan, tests, twig:lint
+sh .agents/scripts/verify.sh                    # cs-check, phpstan, tests, twig:lint, twig:ide-config --check
 docker exec $(docker ps -q -f name=johncms9.php-fpm) composer translate-scan
 git diff -- '*.pot' | grep -E '^[+-]msgid'      # must print nothing
 ```
