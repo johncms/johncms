@@ -24,15 +24,14 @@ use Johncms\Modules\Collections\Domain\Repository\ContentCollectionSectionReposi
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
 use Johncms\NavChain;
 use Johncms\Http\Request;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Http\Session;
-use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 
 final readonly class CollectionItemsAdminController
 {
     public function __construct(
         private AdminControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private ContentCollectionRepositoryInterface $collectionRepository,
         private ContentCollectionSectionRepositoryInterface $sectionRepository,
@@ -48,7 +47,7 @@ final readonly class CollectionItemsAdminController
         $this->controllerContext->initModule('collections');
     }
 
-    public function index(Request $request, int $collection_id): string
+    public function index(Request $request, int $collection_id): ViewResponse
     {
         $collection = $this->collectionRepository->findById($collection_id);
         if ($collection === null) {
@@ -68,9 +67,8 @@ final readonly class CollectionItemsAdminController
 
         $this->breadcrumbs($collection);
         $title = __('Items');
-        $this->render->addData($this->menu($this->pageTitle($title, $pagination->getCurrentPage()), $collection->name));
 
-        return $this->render->render('collections::admin/items/index', [
+        return new ViewResponse('@collections/admin/items.twig', $this->menu($this->pageTitle($title, $pagination->getCurrentPage()), $collection->name) + [
             'collection_name' => $collection->name,
             'items'           => $this->mapRows($collection_id, $items),
             'add_url'         => $this->baseUrl($collection_id) . '/new',
@@ -80,7 +78,7 @@ final readonly class CollectionItemsAdminController
         ]);
     }
 
-    public function newForm(Request $request, int $collection_id): string
+    public function newForm(Request $request, int $collection_id): ViewResponse
     {
         $collection = $this->collectionRepository->findById($collection_id);
         if ($collection === null) {
@@ -90,7 +88,7 @@ final readonly class CollectionItemsAdminController
         return $this->renderForm($collection, null, $this->defaultFields($this->querySection($request)), []);
     }
 
-    public function editForm(int $collection_id, int $id): string
+    public function editForm(int $collection_id, int $id): ViewResponse
     {
         $collection = $this->collectionRepository->findById($collection_id);
         if ($collection === null) {
@@ -105,7 +103,7 @@ final readonly class CollectionItemsAdminController
         return $this->renderForm($collection, $id, $this->fieldsFromItem($item), $item->getValuesMap());
     }
 
-    public function store(Request $request, int $collection_id): string
+    public function store(Request $request, int $collection_id): ViewResponse
     {
         $collection = $this->collectionRepository->findById($collection_id);
         if ($collection === null) {
@@ -140,7 +138,7 @@ final readonly class CollectionItemsAdminController
         redirect($this->baseUrl($collection_id));
     }
 
-    public function deleteConfirm(int $collection_id, int $id): string
+    public function deleteConfirm(int $collection_id, int $id): ViewResponse
     {
         $collection = $this->collectionRepository->findById($collection_id);
         if ($collection === null) {
@@ -155,9 +153,8 @@ final readonly class CollectionItemsAdminController
         $this->breadcrumbs($collection);
         $title = __('Delete');
         $this->navChain->add($title);
-        $this->render->addData($this->menu($title, $collection->name));
 
-        return $this->render->render('collections::admin/delete_confirm', [
+        return new ViewResponse('@collections/admin/delete-confirm.twig', $this->menu($title, $collection->name) + [
             'message'     => __('Are you sure you want to delete the item?'),
             'name'        => $item->name,
             'form_action' => $this->baseUrl($collection_id) . '/' . $id . '/delete',
@@ -165,7 +162,7 @@ final readonly class CollectionItemsAdminController
         ]);
     }
 
-    public function delete(Request $request, int $collection_id, int $id): string
+    public function delete(Request $request, int $collection_id, int $id): ViewResponse
     {
         if ($this->collectionRepository->findById($collection_id) === null) {
             return $this->collectionNotFound();
@@ -213,16 +210,15 @@ final readonly class CollectionItemsAdminController
      * @param array<string, mixed> $valueMap field code => cast value(s)
      * @param list<string> $errors
      */
-    private function renderForm(ContentCollection $collection, ?int $id, array $fields, array $valueMap, array $errors = []): string
+    private function renderForm(ContentCollection $collection, ?int $id, array $fields, array $valueMap, array $errors = []): ViewResponse
     {
         $this->breadcrumbs($collection);
         $title = $id !== null ? __('Edit item') : __('New item');
         $this->navChain->add($title);
-        $this->render->addData($this->menu($title, $collection->name));
 
         $hasSections = $this->hasSections($collection);
 
-        return $this->render->render('collections::admin/items/form', [
+        return new ViewResponse('@collections/admin/item-form.twig', $this->menu($title, $collection->name) + [
             'form_action'     => $this->baseUrl($collection->id),
             'back_url'        => $this->baseUrl($collection->id),
             'id'              => $id,
@@ -241,7 +237,7 @@ final readonly class CollectionItemsAdminController
      * @param array<string, mixed> $fields
      * @param list<string> $errors
      */
-    private function renderFormWithFields(ContentCollection $collection, ?int $id, array $fields, array $errors): string
+    private function renderFormWithFields(ContentCollection $collection, ?int $id, array $fields, array $errors): ViewResponse
     {
         return $this->renderForm($collection, $id, $fields, $this->valueMapFromSubmitted($fields), $errors);
     }
@@ -475,23 +471,20 @@ final readonly class CollectionItemsAdminController
         ];
     }
 
-    private function collectionNotFound(): string
+    private function collectionNotFound(): ViewResponse
     {
-        $this->render->addData($this->menu(__('Collections'), __('Collections')));
 
-        return $this->render->render('system::pages/result', [
-            'title'    => __('Collections'),
+        return new ViewResponse('@admin/pages/result.twig', $this->menu(__('Collections'), __('Collections')) + [
             'type'     => 'alert-danger',
             'message'  => __('Wrong data'),
             'back_url' => '/admin/collections',
         ]);
     }
 
-    private function wrongData(int $collectionId): string
+    private function wrongData(int $collectionId): ViewResponse
     {
-        $this->render->addData($this->menu(__('Items'), __('Items')));
 
-        return $this->render->render('system::pages/result', [
+        return new ViewResponse('@admin/pages/result.twig', $this->menu(__('Items'), __('Items')) + [
             'title'    => __('Items'),
             'type'     => 'alert-danger',
             'message'  => __('Wrong data'),

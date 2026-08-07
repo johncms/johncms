@@ -1,0 +1,21 @@
+{#
+    Confirmation of deleting a collection, a section, a field or an item.
+
+    @var string message
+    @var string name        Name of what is about to be deleted.
+    @var string form_action
+    @var string back_url
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    <div class="alert alert-warning shadow border-0">
+        {{ message }} «{{ name }}»
+    </div>
+
+    <form action="{{ form_action }}" method="post">
+        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+        <button type="submit" class="btn btn-danger">{{ __('Delete') }}</button>
+        <a href="{{ back_url }}" class="btn btn-secondary">{{ __('Cancel') }}</a>
+    </form>
+{% endblock %}

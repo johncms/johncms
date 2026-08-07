@@ -1,0 +1,61 @@
+{#
+    The collections of the site.
+
+    @var array        items           Rows: sort, name, code, active, has_sections and the urls.
+    @var int          total
+    @var string       add_url
+    @var \Twig\Markup pagination
+    @var string       success_message Empty unless an action has just been performed.
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success', alert: success_message} only %}
+
+    <div class="mb-3">
+        <a href="{{ add_url }}" class="btn btn-primary btn-sm">{{ __('New collection') }}</a>
+    </div>
+
+    {% if items is empty %}
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-info', alert: __('The list is empty')} only %}
+    {% endif %}
+
+    {% for item in items %}
+        <div class="new_post-item without_avatar">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center">
+                    <span class="text-muted me-1">[{{ item.sort }}]</span>
+                    <a href="{{ item.edit_url }}" class="h3 mb-0">{{ item.name }}</a>
+                    <span class="badge rounded-pill text-bg-light border ms-2">{{ item.code }}</span>
+                </div>
+                <div>
+                    {% if item.active %}
+                        <span class="badge rounded-pill bg-success">{{ __('On') }}</span>
+                    {% else %}
+                        <span class="badge rounded-pill bg-danger">{{ __('Off') }}</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="mt-2">
+                <a href="{{ item.items_url }}">{{ __('Items') }}</a>
+                <a href="{{ item.fields_url }}" class="ms-2">{{ __('Fields') }}</a>
+                {% if item.has_sections %}
+                    <a href="{{ item.sections_url }}" class="ms-2">{{ __('Sections') }}</a>
+                {% endif %}
+                <a href="{{ item.edit_url }}" class="ms-2">{{ __('Edit') }}</a>
+                <a href="{{ item.delete_url }}" class="text-danger ms-2">{{ __('Delete') }}</a>
+            </div>
+        </div>
+    {% endfor %}
+
+    <div class="mt-4">
+        <div>{{ pagination }}</div>
+        {% if total > 0 %}
+            <div>{{ __('Total:') }} {{ total }}</div>
+        {% endif %}
+    </div>
+
+    <div class="mt-2">
+        <a href="/admin/">{{ __('Back') }}</a>
+    </div>
+{% endblock %}

@@ -19,8 +19,8 @@ use Johncms\Modules\Collections\Domain\Models\ContentCollection;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
 use Johncms\NavChain;
 use Johncms\Http\Request;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Http\Session;
-use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 
 final readonly class CollectionsAdminController
@@ -29,7 +29,6 @@ final readonly class CollectionsAdminController
 
     public function __construct(
         private AdminControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private ContentCollectionRepositoryInterface $repository,
         private ListCollectionsUseCase $listCollections,
@@ -42,7 +41,7 @@ final readonly class CollectionsAdminController
         $this->controllerContext->initModule('collections');
     }
 
-    public function index(): string
+    public function index(): ViewResponse
     {
         $pagination = $this->paginationFactory->create($this->listCollections->count());
 
@@ -57,9 +56,7 @@ final readonly class CollectionsAdminController
         $this->navChain->add($title, self::URL);
 
         $meta = new PageMeta($title, $pagination->getCurrentPage());
-        $this->render->addData($this->menu($meta->title, $title));
-
-        return $this->render->render('collections::admin/index', [
+        return new ViewResponse('@collections/admin/collections.twig', $this->menu($meta->title, $title) + [
             'items'           => array_map($this->mapRow(...), $collections),
             'total'           => $pagination->getTotal(),
             'add_url'         => self::URL . '/new',
@@ -68,12 +65,12 @@ final readonly class CollectionsAdminController
         ]);
     }
 
-    public function newForm(): string
+    public function newForm(): ViewResponse
     {
         return $this->renderForm(null, $this->defaultFields());
     }
 
-    public function editForm(int $id): string
+    public function editForm(int $id): ViewResponse
     {
         $collection = $this->repository->findById($id);
         if ($collection === null) {
@@ -83,7 +80,7 @@ final readonly class CollectionsAdminController
         return $this->renderForm($id, $this->fieldsFromCollection($collection));
     }
 
-    public function store(Request $request): string
+    public function store(Request $request): ViewResponse
     {
         if (! $this->isCsrfValid($request)) {
             return $this->error(__('Wrong data'));
@@ -109,7 +106,7 @@ final readonly class CollectionsAdminController
         redirect(self::URL);
     }
 
-    public function deleteConfirm(int $id): string
+    public function deleteConfirm(int $id): ViewResponse
     {
         $collection = $this->repository->findById($id);
         if ($collection === null) {
@@ -119,9 +116,7 @@ final readonly class CollectionsAdminController
         $title = __('Delete');
         $this->navChain->add(__('Collections'), self::URL);
         $this->navChain->add($title);
-        $this->render->addData($this->menu($title, $title));
-
-        return $this->render->render('collections::admin/delete_confirm', [
+        return new ViewResponse('@collections/admin/delete-confirm.twig', $this->menu($title, $title) + [
             'message'     => __('Are you sure you want to delete the collection?'),
             'name'        => $collection->name,
             'form_action' => self::URL . '/' . $id . '/delete',
@@ -129,7 +124,7 @@ final readonly class CollectionsAdminController
         ]);
     }
 
-    public function delete(Request $request, int $id): string
+    public function delete(Request $request, int $id): ViewResponse
     {
         if ($this->isCsrfValid($request)) {
             $this->deleteCollection->execute($id);
@@ -159,14 +154,12 @@ final readonly class CollectionsAdminController
      * @param array<string, mixed> $fields
      * @param list<string> $errors
      */
-    private function renderForm(?int $id, array $fields, array $errors = []): string
+    private function renderForm(?int $id, array $fields, array $errors = []): ViewResponse
     {
         $title = $id !== null ? __('Edit collection') : __('New collection');
         $this->navChain->add(__('Collections'), self::URL);
         $this->navChain->add($title);
-        $this->render->addData($this->menu($title, $title));
-
-        return $this->render->render('collections::admin/form', [
+        return new ViewResponse('@collections/admin/collection-form.twig', $this->menu($title, $title) + [
             'form_action' => self::URL,
             'id'          => $id,
             'fields'      => $fields,
@@ -274,13 +267,10 @@ final readonly class CollectionsAdminController
         ];
     }
 
-    private function error(string $message): string
+    private function error(string $message): ViewResponse
     {
         $title = __('Collections');
-        $this->render->addData($this->menu($title, $title));
-
-        return $this->render->render('system::pages/result', [
-            'title'    => $title,
+        return new ViewResponse('@admin/pages/result.twig', $this->menu($title, $title) + [
             'type'     => 'alert-danger',
             'message'  => $message,
             'back_url' => self::URL,
