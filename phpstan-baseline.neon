@@ -49,12 +49,6 @@ parameters:
 			path: modules/admin/src/Application/Controllers/Users/UsersController.php
 
 		-
-			message: '#^Variable \$user_login on left side of \?\? always exists and is not nullable\.$#'
-			identifier: nullCoalesce.variable
-			count: 1
-			path: modules/admin/src/Application/Controllers/Users/UsersController.php
-
-		-
 			message: '#^Access to an undefined property Johncms\\Users\\User\:\:\$bancount\.$#'
 			identifier: property.notFound
 			count: 1

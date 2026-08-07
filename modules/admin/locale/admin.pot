@@ -832,31 +832,27 @@ msgstr ""
 msgid "Nickname"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/UsersController.php:37
-#: modules/admin/src/Application/Controllers/Users/UsersController.php:38
-#: modules/admin/templates/users/captcha.phtml:4
-#: modules/admin/templates/users/captcha.phtml:5
-#: modules/admin/templates/users/login.phtml:4
-#: modules/admin/templates/users/login.phtml:5
-#: modules/admin/templates/users/login.phtml:45
-msgid "Login"
-msgstr ""
-
-#: modules/admin/src/Application/Controllers/Users/UsersController.php:53
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:45
 msgid "You have not entered login"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/UsersController.php:57
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:49
 msgid "You have not entered password"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/UsersController.php:76
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:68
 msgid "The security code is not correct"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/UsersController.php:128
-#: modules/admin/src/Application/Controllers/Users/UsersController.php:132
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:119
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:123
 msgid "Authorization failed"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:146
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:147
+#: modules/admin/templates/login.twig:45
+msgid "Login"
 msgstr ""
 
 #: modules/admin/src/Application/Services/AdRowMapper.php:61
@@ -1743,6 +1739,33 @@ msgstr ""
 msgid "Update List"
 msgstr ""
 
+#: modules/admin/templates/login-captcha.twig:21
+#: modules/admin/templates/login-captcha.twig:30
+msgid "Verification code"
+msgstr ""
+
+#: modules/admin/templates/login-captcha.twig:23
+msgid "Enter verification code"
+msgstr ""
+
+#: modules/admin/templates/login-captcha.twig:39
+msgid "Continue"
+msgstr ""
+
+#: modules/admin/templates/login.twig:18
+msgid "Authorization"
+msgstr ""
+
+#: modules/admin/templates/login.twig:22
+#: modules/admin/templates/login.twig:30
+msgid "Username"
+msgstr ""
+
+#: modules/admin/templates/login.twig:34
+#: modules/admin/templates/login.twig:42
+msgid "Password"
+msgstr ""
+
 #: modules/admin/templates/maintenance_tasks.phtml:15
 msgid "Queued"
 msgstr ""
@@ -1937,31 +1960,4 @@ msgstr ""
 
 #: modules/admin/templates/users.twig:36
 msgid "List is empty"
-msgstr ""
-
-#: modules/admin/templates/users/captcha.phtml:16
-#: modules/admin/templates/users/captcha.phtml:25
-msgid "Verification code"
-msgstr ""
-
-#: modules/admin/templates/users/captcha.phtml:18
-msgid "Enter verification code"
-msgstr ""
-
-#: modules/admin/templates/users/captcha.phtml:34
-msgid "Continue"
-msgstr ""
-
-#: modules/admin/templates/users/login.phtml:17
-msgid "Authorization"
-msgstr ""
-
-#: modules/admin/templates/users/login.phtml:22
-#: modules/admin/templates/users/login.phtml:30
-msgid "Username"
-msgstr ""
-
-#: modules/admin/templates/users/login.phtml:34
-#: modules/admin/templates/users/login.phtml:42
-msgid "Password"
 msgstr ""

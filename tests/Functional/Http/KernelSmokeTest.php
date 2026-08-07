@@ -81,18 +81,27 @@ final class KernelSmokeTest extends FunctionalTestCase
     }
 
     /**
-     * The admin panel is laid out by its own theme, and which theme serves a page is decided per
-     * request rather than once per process. Two requests in one process, one of each area: the
-     * theme the assets come from tells them apart, and it covers both the templates and the
-     * asset URLs.
+     * The panel is laid out by its own namespace and built from its own entry point, and which
+     * one serves a page is decided per request rather than once per process. Two requests in one
+     * process, one of each area: the bundle they load tells them apart.
      */
-    public function testTheAdminAreaAndThePublicAreaAreServedByTheirOwnThemes(): void
+    public function testTheAdminAreaAndThePublicAreaAreServedByTheirOwnAssets(): void
     {
         $adminContent = (string) $this->handleRequest('/admin/login')->getContent();
         $publicContent = (string) $this->handleRequest('/')->getContent();
 
-        self::assertStringContainsString('/themes/admin/assets/', $adminContent);
-        self::assertStringNotContainsString('/themes/admin/assets/', $publicContent);
+        self::assertNotSame($this->stylesheet($publicContent), $this->stylesheet($adminContent));
+    }
+
+    private function stylesheet(string $html): string
+    {
+        self::assertSame(
+            1,
+            preg_match('#<link rel="stylesheet" href="(/build/assets/[^"]+)"#', $html, $matches),
+            'The page carries no built stylesheet.'
+        );
+
+        return $matches[1];
     }
 
     /**

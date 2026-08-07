@@ -8,8 +8,8 @@ use Illuminate\Support\Str;
 use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
+use Johncms\Http\View\ViewResponse;
 use Johncms\System\Users\User;
-use Johncms\System\View\Render;
 use Mobicms\Captcha\Code;
 use Mobicms\Captcha\Image;
 use Symfony\Component\HttpFoundation\Cookie;
@@ -20,24 +20,16 @@ final readonly class UsersController
 {
     public function __construct(
         private AdminControllerContext $controllerContext,
-        private Render $render,
         private Session $session,
     ) {
         $this->controllerContext->initModule('admin');
     }
 
-    public function login(Request $request, User $user): Response
+    public function login(Request $request, User $user): Response | ViewResponse
     {
         if ($user->isValid()) {
             redirect('/admin/');
         }
-
-        $this->render->addData(
-            [
-                'title'      => __('Login'),
-                'page_title' => __('Login'),
-            ]
-        );
 
         $config = config('johncms');
         $db = di(\PDO::class);
@@ -81,16 +73,15 @@ final readonly class UsersController
                         // Показываем CAPTCHA
                         $code = (string) new Code();
                         $this->session->set('code', $code);
-                        return new Response(
-                            $this->render->render(
-                                'admin::users/captcha',
-                                [
-                                    'captcha'    => new Image($code),
-                                    'user_login' => $user_login,
-                                    'user_pass'  => $user_pass,
-                                    'id'         => $loginUser->id,
-                                ]
-                            )
+                        return new ViewResponse(
+                            '@admin/login-captcha.twig',
+                            $this->pageMeta() + [
+                                'captcha'    => (string) new Image($code),
+                                'user_login' => $user_login,
+                                'user_pass'  => $user_pass,
+                                'id'         => $loginUser->id,
+                                'remember'   => $request->body('mem', ''),
+                            ]
                         );
                     }
                 }
@@ -134,19 +125,26 @@ final readonly class UsersController
         }
 
         if ($display_form) {
-            return new Response(
-                $this->render->render(
-                    'admin::users/login',
-                    [
-                        'data' => [
-                            'error'      => isset($_POST['login']) ? $error : [],
-                            'user_login' => $user_login ?? '',
-                        ],
-                    ]
-                )
+            return new ViewResponse(
+                '@admin/login.twig',
+                $this->pageMeta() + [
+                    'errors'     => $request->hasBody('login') ? $error : [],
+                    'user_login' => $user_login,
+                ]
             );
         }
 
         return new Response('');
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    private function pageMeta(): array
+    {
+        return [
+            'title'      => __('Login'),
+            'page_title' => __('Login'),
+        ];
     }
 }
