@@ -1,0 +1,45 @@
+{#
+    Step two: what the hosting supports and whether the directories are writable.
+
+    @var array data check_extensions, folder_right_errors, next_step_disabled.
+#}
+{% extends '@install/layout.twig' %}
+
+{% block content %}
+    <h4 class="mb-2 mt-3 font-weight-bold">{{ __('Checking extensions') }}</h4>
+    <div>
+        {% for extension in data.check_extensions %}
+            <div class="row border-bottom py-2">
+                <div class="col-9 col-md-8 font-weight-bold">{{ extension.name }}</div>
+                <div class="col-3 col-md-4 font-weight-bold {{ extension.error ? 'text-danger' : 'text-success' }}">
+                    {{ extension.value }}
+                </div>
+                {% if extension.error %}
+                    <div class="col-12 text-muted mt-1">
+                        {{ extension.description|raw }}
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+
+    <h4 class="mb-2 mt-4 font-weight-bold">{{ __('Permissions check (chmod)') }}</h4>
+    {% if data.folder_right_errors is empty %}
+        <div class="alert alert-success">{{ __('Everything is good') }}</div>
+    {% else %}
+        <div class="alert alert-danger">
+            {% for folder in data.folder_right_errors %}
+                <div class="font-weight-bold">{{ folder }}</div>
+            {% endfor %}
+        </div>
+        <div>{{ __('For the specified directories, you must set the permissions to allow writing (777).') }}</div>
+    {% endif %}
+
+    <div class="mt-4 mb-2">
+        {% if data.next_step_disabled %}
+            <button type="button" class="btn btn-primary" disabled>{{ __('Continue') }}</button>
+        {% else %}
+            <a href="/install/?step=3" class="btn btn-primary">{{ __('Continue') }}</a>
+        {% endif %}
+    </div>
+{% endblock %}

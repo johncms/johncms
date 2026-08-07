@@ -2,270 +2,256 @@ msgid ""
 msgstr ""
 "X-Domain: install\n"
 
-#: public/install/index.php:83
-#: public/install/steps/step_1.php:24
+#: public/install/index.php:78
+#: public/install/steps/step_1.php:21
 msgid "Preparing for installation"
 msgstr ""
 
-#: public/install/index.php:88
-#: public/install/steps/step_2.php:20
-#: public/install/steps/step_2.php:21
+#: public/install/index.php:83
+#: public/install/steps/step_2.php:17
 msgid "Checking parameters"
 msgstr ""
 
-#: public/install/index.php:93
-#: public/install/steps/step_3.php:25
-#: public/install/steps/step_3.php:26
+#: public/install/index.php:88
+#: public/install/steps/step_3.php:22
 msgid "Database"
 msgstr ""
 
-#: public/install/index.php:98
-#: public/install/steps/step_4.php:31
-#: public/install/steps/step_4.php:32
+#: public/install/index.php:93
+#: public/install/steps/step_4.php:28
 msgid "Setting"
 msgstr ""
 
-#: public/install/index.php:103
+#: public/install/index.php:98
 msgid "Completion"
 msgstr ""
 
-#: public/install/steps/step_2.php:27
+#: public/install/steps/step_2.php:21
 msgid "PHP version"
 msgstr ""
 
-#: public/install/steps/step_2.php:30
+#: public/install/steps/step_2.php:24
 #, php-format
 msgid "The PHP version must be at least %s"
 msgstr ""
 
+#: public/install/steps/step_2.php:28
 #: public/install/steps/step_2.php:34
 #: public/install/steps/step_2.php:40
 #: public/install/steps/step_2.php:46
 #: public/install/steps/step_2.php:52
-#: public/install/steps/step_2.php:58
 msgid "Yes"
 msgstr ""
 
+#: public/install/steps/step_2.php:28
 #: public/install/steps/step_2.php:34
 #: public/install/steps/step_2.php:40
 #: public/install/steps/step_2.php:46
 #: public/install/steps/step_2.php:52
-#: public/install/steps/step_2.php:58
 msgid "No"
 msgstr ""
 
-#: public/install/steps/step_2.php:36
+#: public/install/steps/step_2.php:30
 msgid "PHP extension PDO must be installed"
 msgstr ""
 
-#: public/install/steps/step_2.php:39
+#: public/install/steps/step_2.php:33
 msgid "Imagick or GD extension"
 msgstr ""
 
-#: public/install/steps/step_2.php:42
+#: public/install/steps/step_2.php:36
 msgid "You must install the php extension Imagick or GD"
 msgstr ""
 
-#: public/install/steps/step_2.php:45
+#: public/install/steps/step_2.php:39
 msgid "zlib extension"
 msgstr ""
 
-#: public/install/steps/step_2.php:48
+#: public/install/steps/step_2.php:42
 msgid "PHP extension zlib must be installed"
 msgstr ""
 
-#: public/install/steps/step_2.php:51
+#: public/install/steps/step_2.php:45
 msgid "mbstring extension"
 msgstr ""
 
-#: public/install/steps/step_2.php:54
+#: public/install/steps/step_2.php:48
 msgid "PHP extension mbstring must be installed"
 msgstr ""
 
-#: public/install/steps/step_2.php:57
+#: public/install/steps/step_2.php:51
 msgid "fileinfo extension"
 msgstr ""
 
-#: public/install/steps/step_2.php:60
+#: public/install/steps/step_2.php:54
 msgid "PHP extension fileinfo must be installed"
 msgstr ""
 
-#: public/install/steps/step_3.php:124
+#: public/install/steps/step_3.php:118
 msgid "Correct work of JohnCMS is not guaranteed on your version of mysql server.<br>You can ignore this warning at your own risk."
 msgstr ""
 
-#: public/install/steps/step_3.php:125
+#: public/install/steps/step_3.php:119
 #, php-format
 msgid "Server name: <b>%s</b>. <br>Your mysql server version is <b>%s</b>. But <b>%s</b> is required."
 msgstr ""
 
-#: public/install/steps/step_3.php:129
+#: public/install/steps/step_3.php:123
 msgid "The system requires a properly configured <a href='https://www.php.net/manual/en/intro.mysqlnd.php' target='_blank'>MySQL Native Driver (mysqlnd)</a>."
 msgstr ""
 
-#: public/install/steps/step_3.php:130
+#: public/install/steps/step_3.php:124
 msgid "Please contact your hosting provider's technical support to resolve this issue."
 msgstr ""
 
-#: public/install/steps/step_3.php:134
+#: public/install/steps/step_3.php:128
 msgid "ERROR: Can't write database.local.php"
 msgstr ""
 
-#: public/install/steps/step_3.php:140
+#: public/install/steps/step_3.php:134
 msgid "Invalid database host name"
 msgstr ""
 
-#: public/install/steps/step_3.php:142
+#: public/install/steps/step_3.php:136
 msgid "Invalid database user or password"
 msgstr ""
 
-#: public/install/steps/step_3.php:144
+#: public/install/steps/step_3.php:138
 msgid "Database does not exist"
 msgstr ""
 
-#: public/install/steps/step_4.php:173
+#: public/install/steps/step_4.php:167
 msgid "ERROR: Can't write system.local.php"
 msgstr ""
 
-#: public/install/steps/step_5.php:15
-#: public/install/steps/step_5.php:16
+#: public/install/steps/step_5.php:13
 msgid "Complete the installation"
 msgstr ""
 
-#: public/install/templates/step_1.phtml:3
+#: public/install/templates/step-1.twig:10
 msgid "Welcome to JohnCMS installation wizard"
 msgstr ""
 
-#: public/install/templates/step_1.phtml:6
+#: public/install/templates/step-1.twig:13
 msgid "During the installation process, a basic check of the hosting will be performed for compliance with the CMS requirements."
 msgstr ""
 
-#: public/install/templates/step_1.phtml:7
+#: public/install/templates/step-1.twig:14
 msgid "If errors occurred during the installation stage and you do not know how to solve them, you can ask for help on <a href=\"https://johncms.com/forum/\" class=\"text-underline\" rel=\"nofollow\" target=\"_blank\">our forum.</a>"
 msgstr ""
 
-#: public/install/templates/step_1.phtml:11
+#: public/install/templates/step-1.twig:17
 msgid "Choose language"
 msgstr ""
 
-#: public/install/templates/step_1.phtml:28
-#: public/install/templates/step_2.phtml:34
-#: public/install/templates/step_2.phtml:36
-#: public/install/templates/step_3.phtml:92
-#: public/install/templates/step_4.phtml:81
+#: public/install/templates/step-1.twig:34
+#: public/install/templates/step-2.twig:40
+#: public/install/templates/step-2.twig:42
+#: public/install/templates/step-3.twig:45
+#: public/install/templates/step-4.twig:47
 msgid "Continue"
 msgstr ""
 
-#: public/install/templates/step_2.phtml:3
+#: public/install/templates/step-2.twig:9
 msgid "Checking extensions"
 msgstr ""
 
-#: public/install/templates/step_2.phtml:20
+#: public/install/templates/step-2.twig:26
 msgid "Permissions check (chmod)"
 msgstr ""
 
-#: public/install/templates/step_2.phtml:22
+#: public/install/templates/step-2.twig:28
 msgid "Everything is good"
 msgstr ""
 
-#: public/install/templates/step_2.phtml:29
+#: public/install/templates/step-2.twig:35
 msgid "For the specified directories, you must set the permissions to allow writing (777)."
 msgstr ""
 
-#: public/install/templates/step_3.phtml:10
+#: public/install/templates/step-3.twig:25
 msgid "Database connection settings"
 msgstr ""
 
-#: public/install/templates/step_3.phtml:21
-#: public/install/templates/step_3.phtml:28
+#: public/install/templates/step-3.twig:37
 msgid "DB Host"
 msgstr ""
 
-#: public/install/templates/step_3.phtml:35
-#: public/install/templates/step_3.phtml:42
+#: public/install/templates/step-3.twig:38
 msgid "Port"
 msgstr ""
 
-#: public/install/templates/step_3.phtml:49
-#: public/install/templates/step_3.phtml:56
+#: public/install/templates/step-3.twig:39
 msgid "DB Name"
 msgstr ""
 
-#: public/install/templates/step_3.phtml:63
-#: public/install/templates/step_3.phtml:70
+#: public/install/templates/step-3.twig:40
 msgid "DB User"
 msgstr ""
 
-#: public/install/templates/step_3.phtml:77
-#: public/install/templates/step_3.phtml:83
+#: public/install/templates/step-3.twig:41
 msgid "DB Password"
 msgstr ""
 
-#: public/install/templates/step_3.phtml:92
+#: public/install/templates/step-3.twig:45
 msgid "Continue anyway"
 msgstr ""
 
-#: public/install/templates/step_4.phtml:10
+#: public/install/templates/step-4.twig:25
 msgid "Website settings"
 msgstr ""
 
-#: public/install/templates/step_4.phtml:18
-#: public/install/templates/step_4.phtml:25
+#: public/install/templates/step-4.twig:33
 msgid "Site address"
 msgstr ""
 
-#: public/install/templates/step_4.phtml:32
-#: public/install/templates/step_4.phtml:39
+#: public/install/templates/step-4.twig:34
 msgid "E-mail"
 msgstr ""
 
-#: public/install/templates/step_4.phtml:46
+#: public/install/templates/step-4.twig:36
 msgid "Administrator data"
 msgstr ""
 
-#: public/install/templates/step_4.phtml:48
-#: public/install/templates/step_4.phtml:55
+#: public/install/templates/step-4.twig:37
 msgid "Admin login"
 msgstr ""
 
-#: public/install/templates/step_4.phtml:62
-#: public/install/templates/step_4.phtml:68
+#: public/install/templates/step-4.twig:38
 msgid "Admin password"
 msgstr ""
 
-#: public/install/templates/step_4.phtml:74
+#: public/install/templates/step-4.twig:40
 msgid "Additionally"
 msgstr ""
 
-#: public/install/templates/step_4.phtml:77
+#: public/install/templates/step-4.twig:43
 msgid "Install demo data"
 msgstr ""
 
-#: public/install/templates/step_5.phtml:3
+#: public/install/templates/step-5.twig:10
 msgid "Congratulations!"
 msgstr ""
 
-#: public/install/templates/step_5.phtml:4
-#, php-format
+#: public/install/templates/step-5.twig:11
 msgid "JohnCMS %s installation completed successfully."
 msgstr ""
 
-#: public/install/templates/step_5.phtml:7
+#: public/install/templates/step-5.twig:14
 msgid "ATTENTION!"
 msgstr ""
 
-#: public/install/templates/step_5.phtml:8
+#: public/install/templates/step-5.twig:15
 msgid "Now you need to delete the folder <b>/install/</b>"
 msgstr ""
 
-#: public/install/templates/step_5.phtml:11
+#: public/install/templates/step-5.twig:18
 msgid "If you need help, you can visit <a href=\"https://johncms.com/forum/\" class=\"text-underline\">our forum</a>."
 msgstr ""
 
-#: public/install/templates/step_5.phtml:12
+#: public/install/templates/step-5.twig:19
 msgid "Also, if necessary, you can familiarize yourself with <a href=\"https://docs.johncms.com/\" class=\"text-underline\">the documentation</a>"
 msgstr ""
 
-#: public/install/templates/step_5.phtml:15
+#: public/install/templates/step-5.twig:22
 msgid "Go to website"
 msgstr ""

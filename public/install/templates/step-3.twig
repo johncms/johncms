@@ -1,0 +1,49 @@
+{#
+    Step three: how to reach the database.
+
+    @var array data fields, errors, db_version_error, next_step_disabled.
+#}
+{% extends '@install/layout.twig' %}
+
+{% macro field(name, label, value, errors, type) %}
+    <div class="form-group">
+        <label for="{{ name }}">{{ label }}</label>
+        <input type="{{ type|default('text') }}"
+               class="form-control {{ errors is not empty ? 'is-invalid' : '' }}"
+               name="{{ name }}"
+               id="{{ name }}"{% if type|default('text') != 'password' %} required{% endif %}
+               value="{{ value }}"
+               placeholder="{{ label }}"
+        >
+        {% include '@theme/components/field-errors.twig' with {errors: errors} only %}
+    </div>
+{% endmacro %}
+
+{% block content %}
+    {% import _self as form %}
+
+    <h4 class="mb-2 mt-3 font-weight-bold">{{ __('Database connection settings') }}</h4>
+
+    {% include '@theme/components/alert.twig' with {
+        alert_type: 'alert-danger',
+        alert: data.errors.unknown|default([])
+    } only %}
+
+    <form action="/install/?step=3" method="post" class="mb-3">
+        {% if data.db_version_error %}
+            <input type="hidden" name="anyway_continue" value="yes">
+        {% endif %}
+
+        {{ form.field('db_host', __('DB Host'), data.fields.db_host, data.errors.db_host|default([])) }}
+        {{ form.field('db_port', __('Port'), data.fields.db_port, data.errors.db_port|default([])) }}
+        {{ form.field('db_name', __('DB Name'), data.fields.db_name, data.errors.db_name|default([])) }}
+        {{ form.field('db_user', __('DB User'), data.fields.db_user, data.errors.db_user|default([])) }}
+        {{ form.field('db_password', __('DB Password'), data.fields.db_password, data.errors.db_password|default([]), 'password') }}
+
+        <div class="mt-3">
+            <button type="submit" name="submit" value="submit" class="btn btn-primary"{% if data.next_step_disabled %} disabled{% endif %}>
+                {{ data.db_version_error ? __('Continue anyway') : __('Continue') }}
+            </button>
+        </div>
+    </form>
+{% endblock %}

@@ -2833,7 +2833,13 @@ parameters:
 		-
 			message: '#^Variable \$view might not be defined\.$#'
 			identifier: variable.undefined
-			count: 2
+			count: 1
+			path: public/install/steps/step_1.php
+
+		-
+			message: '#^Variable \$viewData might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
 			path: public/install/steps/step_1.php
 
 		-
@@ -2845,13 +2851,25 @@ parameters:
 		-
 			message: '#^Variable \$view might not be defined\.$#'
 			identifier: variable.undefined
-			count: 2
+			count: 1
+			path: public/install/steps/step_2.php
+
+		-
+			message: '#^Variable \$viewData might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
 			path: public/install/steps/step_2.php
 
 		-
 			message: '#^Variable \$view might not be defined\.$#'
 			identifier: variable.undefined
-			count: 2
+			count: 1
+			path: public/install/steps/step_3.php
+
+		-
+			message: '#^Variable \$viewData might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
 			path: public/install/steps/step_3.php
 
 		-
@@ -2869,13 +2887,25 @@ parameters:
 		-
 			message: '#^Variable \$view might not be defined\.$#'
 			identifier: variable.undefined
-			count: 2
+			count: 1
+			path: public/install/steps/step_4.php
+
+		-
+			message: '#^Variable \$viewData might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
 			path: public/install/steps/step_4.php
 
 		-
 			message: '#^Variable \$view might not be defined\.$#'
 			identifier: variable.undefined
-			count: 2
+			count: 1
+			path: public/install/steps/step_5.php
+
+		-
+			message: '#^Variable \$viewData might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
 			path: public/install/steps/step_5.php
 
 		-

@@ -204,6 +204,7 @@ return static function (ContainerConfigurator $container): void {
     $services->set(ThemeRepositoryInterface::class, FilesystemThemeRepository::class);
     $services->set(TemplatePathRegistry::class)
         ->arg('$providers', tagged_iterator('johncms.template_paths'));
+    $services->set(\Johncms\View\Twig\InstallTemplatePaths::class)->tag('johncms.template_paths');
     // One environment serves the whole of HTTP: the admin panel and the public site differ by
     // their namespaces, not by what a template can do, so they share the cache and the compiled
     // components. Mail has its own, because a message has no request behind it; the installer
@@ -230,6 +231,13 @@ return static function (ContainerConfigurator $container): void {
         ->arg('$environment', ViewEnvironment::Mail)
         ->arg('$extensions', tagged_iterator('johncms.twig_extension.mail'));
     $services->set(MailExtension::class)->tag('johncms.twig_extension.mail');
+
+    // The installer environment: it runs before there is a site, so it has no request and no
+    // modules either — only the theme it ships with.
+    $services->set('johncms.twig.install', TwigEnvironment::class)
+        ->factory([service(TwigEnvironmentFactory::class), 'create'])
+        ->arg('$environment', ViewEnvironment::Install)
+        ->arg('$extensions', tagged_iterator('johncms.twig_extension.install'));
     $services->set(\Johncms\Mail\MailRenderer::class)->arg('$twig', service('johncms.twig.mail'));
 
     $services->set(AppVariable::class)
@@ -241,8 +249,11 @@ return static function (ContainerConfigurator $container): void {
         ->tag('johncms.twig_extension');
     $services->set(I18nExtension::class)
         ->tag('johncms.twig_extension')
-        ->tag('johncms.twig_extension.mail');
-    $services->set(AssetExtension::class)->tag('johncms.twig_extension');
+        ->tag('johncms.twig_extension.mail')
+        ->tag('johncms.twig_extension.install');
+    $services->set(AssetExtension::class)
+        ->tag('johncms.twig_extension')
+        ->tag('johncms.twig_extension.install');
     $services->set(FormatExtension::class)
         ->tag('johncms.twig_extension')
         ->tag('johncms.twig_extension.mail');

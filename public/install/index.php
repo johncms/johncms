@@ -14,9 +14,7 @@ use Gettext\TranslatorFunctions;
 use Johncms\Http\Request;
 use Johncms\Http\RequestFactory;
 use Johncms\System\i18n\Translator;
-use Johncms\System\View\Extension\Assets;
-use Johncms\System\View\Extension\Vite;
-use Johncms\System\View\Render;
+use Johncms\View\Twig\TwigRenderer;
 
 // Check the current PHP version
 if (PHP_VERSION_ID < 80200) {
@@ -54,17 +52,12 @@ $translator->addTranslationDomain('install', __DIR__ . '/locale');
 $translator->defaultDomain('install');
 TranslatorFunctions::register($translator);
 
-// Подключаем шаблонизатор
-$view = new Render('phtml');
-$view->addFolder('system', realpath(THEMES_PATH . 'default/templates/system'));
-$view->loadExtension(di(Assets::class));
-$view->loadExtension(di(Vite::class));
-$view->addData(
-    [
-        'locale' => $translator->getLocale(),
-    ]
-);
-$view->addFolder('install', __DIR__ . '/templates/');
+// The installer has an environment of its own: there is no site yet, so nothing of a visitor,
+// a csrf token or the installed modules is available to its templates.
+$view = new TwigRenderer($container->get('johncms.twig.install'));
+
+// Shared by every step; a step adds its own title and data to this.
+$viewData = ['locale' => $translator->getLocale()];
 
 $loader = new Aura\Autoload\Loader();
 $loader->register();
@@ -108,7 +101,7 @@ $steps = [
     ],
 ];
 
-$view->addData(['current_step' => $current_step, 'steps' => $steps]);
+$viewData += ['current_step' => $current_step, 'steps' => $steps, 'cms_version' => CMS_VERSION];
 
 switch ($current_step) {
     case 5:

@@ -19,12 +19,7 @@ use Johncms\Http\Request;
 
 /** @var Request $request Built by the installer entry point, which includes this file. */
 
-$view->addData(
-    [
-        'title'      => __('Database'),
-        'page_title' => __('Database'),
-    ]
-);
+$viewData += ['title' => __('Database'), 'page_title' => __('Database')];
 
 $defaultHost = 'localhost';
 $defaultUser = '';
@@ -157,4 +152,4 @@ $data = [
     'db_version_error'   => $db_version_error ?? false,
 ];
 
-echo $view->render('install::step_3', ['data' => $data]);
+echo $view->render('@install/step-3.twig', $viewData + ['data' => $data]);

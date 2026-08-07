@@ -1,0 +1,50 @@
+{#
+    Step four: the address of the site and the account of its owner.
+
+    @var array data fields, errors, next_step_disabled.
+#}
+{% extends '@install/layout.twig' %}
+
+{% macro field(name, label, value, errors, type) %}
+    <div class="form-group">
+        <label for="{{ name }}">{{ label }}</label>
+        <input type="{{ type|default('text') }}"
+               class="form-control {{ errors is not empty ? 'is-invalid' : '' }}"
+               name="{{ name }}"
+               id="{{ name }}"{% if type|default('text') != 'password' %} required{% endif %}
+               value="{{ value }}"
+               placeholder="{{ label }}"
+        >
+        {% include '@theme/components/field-errors.twig' with {errors: errors} only %}
+    </div>
+{% endmacro %}
+
+{% block content %}
+    {% import _self as form %}
+
+    <h4 class="mb-2 mt-3 font-weight-bold">{{ __('Website settings') }}</h4>
+
+    {% include '@theme/components/alert.twig' with {
+        alert_type: 'alert-danger',
+        alert: data.errors.unknown|default([])
+    } only %}
+
+    <form action="/install/?step=4" method="post" class="mb-3">
+        {{ form.field('homeurl', __('Site address'), data.fields.homeurl, data.errors.homeurl|default([])) }}
+        {{ form.field('email', __('E-mail'), data.fields.email, data.errors.email|default([]), 'email') }}
+
+        <h4 class="mb-2 mt-4 font-weight-bold">{{ __('Administrator data') }}</h4>
+        {{ form.field('admin_login', __('Admin login'), data.fields.admin_login, data.errors.admin_login|default([])) }}
+        {{ form.field('admin_password', __('Admin password'), data.fields.admin_password, data.errors.admin_password|default([]), 'password') }}
+
+        <h4 class="mb-2 mt-4 font-weight-bold">{{ __('Additionally') }}</h4>
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" name="install_demo" value="1" id="install_demo"{% if data.fields.install_demo|default(false) %} checked="checked"{% endif %}>
+            <label class="form-check-label" for="install_demo">{{ __('Install demo data') }}</label>
+        </div>
+
+        <div class="mt-3">
+            <button type="submit" name="submit" value="submit" class="btn btn-primary"{% if data.next_step_disabled %} disabled{% endif %}>{{ __('Continue') }}</button>
+        </div>
+    </form>
+{% endblock %}

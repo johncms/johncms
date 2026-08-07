@@ -18,12 +18,7 @@ use Johncms\Http\Request;
 /** @var LanguageFilesManagerInterface $languageFilesManager */
 $languageFilesManager = di(LanguageFilesManagerInterface::class);
 
-$view->addData(
-    [
-        'title'      => __('Preparing for installation'),
-        'page_title' => 'JohnCMS ' . CMS_VERSION,
-    ]
-);
+$viewData += ['title' => __('Preparing for installation'), 'page_title' => 'JohnCMS ' . CMS_VERSION];
 
 $request_locale = $request->queryParam('set_locale');
 
@@ -40,4 +35,4 @@ $data = [
     'lng_list' => $lng_list,
 ];
 
-echo $view->render('install::step_1', ['data' => $data]);
+echo $view->render('@install/step-1.twig', $viewData + ['data' => $data]);

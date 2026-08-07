@@ -14,12 +14,7 @@ use Johncms\Http\Request;
 
 /** @var Request $request Built by the installer entry point, which includes this file. */
 
-$view->addData(
-    [
-        'title'      => __('Checking parameters'),
-        'page_title' => __('Checking parameters'),
-    ]
-);
+$viewData += ['title' => __('Checking parameters'), 'page_title' => __('Checking parameters')];
 
 $check_extensions = [
     [
@@ -103,4 +98,4 @@ $data = [
     'folder_right_errors' => $folder_right_errors,
 ];
 
-echo $view->render('install::step_2', ['data' => $data]);
+echo $view->render('@install/step-2.twig', $viewData + ['data' => $data]);

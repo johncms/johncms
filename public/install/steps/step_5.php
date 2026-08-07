@@ -10,11 +10,6 @@
 
 declare(strict_types=1);
 
-$view->addData(
-    [
-        'title'      => __('Complete the installation'),
-        'page_title' => __('Complete the installation'),
-    ]
-);
+$viewData += ['title' => __('Complete the installation'), 'page_title' => __('Complete the installation')];
 
-echo $view->render('install::step_5');
+echo $view->render('@install/step-5.twig', $viewData);

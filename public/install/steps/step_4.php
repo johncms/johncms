@@ -25,12 +25,7 @@ use Symfony\Component\Console\Output\NullOutput;
 
 di(PDO::class);
 
-$view->addData(
-    [
-        'title'      => __('Setting'),
-        'page_title' => __('Setting'),
-    ]
-);
+$viewData += ['title' => __('Setting'), 'page_title' => __('Setting')];
 
 $fields = [
     // getSchemeAndHttpHost() replaces the former isHttps() + SERVER_NAME pair and additionally
@@ -181,4 +176,4 @@ $data = [
     'next_step_disabled' => false,
 ];
 
-echo $view->render('install::step_4', ['data' => $data]);
+echo $view->render('@install/step-4.twig', $viewData + ['data' => $data]);

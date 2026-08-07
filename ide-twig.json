@@ -91,6 +91,10 @@
         {
             "namespace": "registration",
             "path": "modules/registration/templates"
+        },
+        {
+            "namespace": "install",
+            "path": "public/install/templates"
         }
     ]
 }

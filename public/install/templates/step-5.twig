@@ -1,0 +1,24 @@
+{#
+    Step five: the site is installed.
+
+    @var string cms_version
+#}
+{% extends '@install/layout.twig' %}
+
+{% block content %}
+    <p>
+        {{ __('Congratulations!') }}<br>
+        {{ __('JohnCMS %s installation completed successfully.', cms_version) }}<br>
+    </p>
+    <div class="alert alert-danger d-inline-block">
+        <b>{{ __('ATTENTION!') }}</b>
+        <div>{{ __('Now you need to delete the folder <b>/install/</b>')|raw }}</div>
+    </div>
+    <p>
+        {{ __('If you need help, you can visit <a href="https://johncms.com/forum/" class="text-underline">our forum</a>.')|raw }}<br>
+        {{ __('Also, if necessary, you can familiarize yourself with <a href="https://docs.johncms.com/" class="text-underline">the documentation</a>')|raw }}
+    </p>
+    <p>
+        <a href="/" class="btn btn-primary">{{ __('Go to website') }}</a>
+    </p>
+{% endblock %}
