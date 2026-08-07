@@ -1,0 +1,87 @@
+{#
+    The list of the advertising links of one place.
+
+    @var array        items      Rows prepared by AdRowMapper.
+    @var int          total
+    @var int          per_page
+    @var array        filters    Places to switch between: url, name, active.
+    @var string       add_url
+    @var string       clear_url
+    @var \Twig\Markup pagination
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% macro mini_form(action, label, class, csrf_token) %}
+    <form method="post" action="{{ action }}" class="d-inline me-2">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        <button type="submit" class="{{ class }}">{{ label }}</button>
+    </form>
+{% endmacro %}
+
+{% block content %}
+    {% import _self as forms %}
+
+    <div class="mb-3">
+        {% for filter in filters %}
+            <a href="{{ filter.url }}" class="btn btn-outline-secondary mt-1{% if filter.active %} active{% endif %}">{{ filter.name }}</a>
+        {% endfor %}
+    </div>
+
+    {% if items is empty %}
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-info', alert: __('The list is empty')} only %}
+    {% endif %}
+
+    {% for item in items %}
+        <div class="new_post-item without_avatar">
+            <div class="d-flex justify-content-between align-items-center">
+                <a href="{{ item.link }}" class="h3" target="_blank" rel="noopener noreferrer">{{ item.name }}</a>
+                <div>
+                    {% if item.active %}
+                        <span class="badge rounded-pill bg-success">{{ __('On') }}</span>
+                    {% else %}
+                        <span class="badge rounded-pill bg-danger">{{ __('Off') }}</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="post-body small">
+                <div>{{ __('Start date') }}: {{ item.display_time }}</div>
+                <div>{{ __('Disposition') }}: {{ item.place }}</div>
+                <div>{{ __('Show') }}: {{ item.show_for }}</div>
+                <div>{{ __('Agreement') }}: {{ item.agreement }}</div>
+                <div>{{ __('Remains') }}: {{ item.remains }}</div>
+                <div>{{ __('Link type') }}: {{ item.direct_link ? __('Direct Link') : __('Redirect') }}</div>
+                <div>{{ __('Style settings') }}: {{ item.styles is empty ? __('Default') : item.styles }}</div>
+            </div>
+            <div class="d-flex align-items-center mt-1">
+                {{ forms.mini_form('/admin/ads/' ~ item.id ~ '/up', __('Up'), 'btn btn-link p-0', app.csrf_token) }}
+                {{ forms.mini_form('/admin/ads/' ~ item.id ~ '/down', __('Down'), 'btn btn-link p-0', app.csrf_token) }}
+                <a href="/admin/ads/{{ item.id }}/edit" class="me-2">{{ __('Edit') }}</a>
+                <a href="/admin/ads/{{ item.id }}/delete" class="text-danger me-2">{{ __('Delete') }}</a>
+                {{ forms.mini_form(
+                    '/admin/ads/' ~ item.id ~ '/toggle',
+                    item.active ? __('Hide') : __('Show'),
+                    'btn btn-link p-0 text-danger',
+                    app.csrf_token
+                ) }}
+            </div>
+        </div>
+    {% endfor %}
+
+    <div class="mt-4">
+        {% if total > per_page %}
+            <div>{{ pagination }}</div>
+        {% endif %}
+        {% if total > 0 %}
+            <div>{{ __('Total:') }} {{ total }}</div>
+        {% endif %}
+    </div>
+    <div>
+        <div class="mb-3 mt-2">
+            <a href="{{ add_url }}" class="btn btn-primary btn-sm">{{ __('Add link') }}</a>
+            <a href="{{ clear_url }}" class="btn btn-danger btn-sm">{{ __('Delete inactive links') }}</a>
+        </div>
+        <div>
+            <a href="/admin/">{{ __('Back') }}</a>
+        </div>
+    </div>
+{% endblock %}

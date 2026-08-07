@@ -17,7 +17,7 @@ use Johncms\Modules\Admin\Domain\Models\Ad;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Validator\Validator;
 
 final readonly class AdsController
@@ -26,7 +26,6 @@ final readonly class AdsController
 
     public function __construct(
         private AdminControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private GetAdListUseCase $getList,
         private SaveAdUseCase $saveAd,
@@ -39,7 +38,7 @@ final readonly class AdsController
         $this->controllerContext->initModule('admin');
     }
 
-    public function index(Request $request): string
+    public function index(Request $request): ViewResponse
     {
         $type = $this->clampType($request->queryInt('type'));
 
@@ -56,9 +55,8 @@ final readonly class AdsController
         $this->navChain->add($title, self::URL);
 
         $meta = new PageMeta($title, $pagination->getCurrentPage());
-        $this->render->addData($this->menu($meta->title, $title));
 
-        return $this->render->render('admin::ads_index', [
+        return new ViewResponse('@admin/ads.twig', $this->menu($meta->title, $title) + [
             'items'      => $this->rowMapper->mapMany($ads),
             'total'      => $pagination->getTotal(),
             'per_page'   => $pagination->getPerPage(),
@@ -70,12 +68,12 @@ final readonly class AdsController
         ]);
     }
 
-    public function newForm(): string
+    public function newForm(): ViewResponse
     {
         return $this->renderForm(null, $this->defaultFields());
     }
 
-    public function editForm(int $id): string
+    public function editForm(int $id): ViewResponse
     {
         $ad = $this->manageAd->find($id);
         if ($ad === null) {
@@ -85,7 +83,7 @@ final readonly class AdsController
         return $this->renderForm($id, $this->fieldsFromAd($ad));
     }
 
-    public function store(Request $request): string
+    public function store(Request $request): ViewResponse
     {
         if (! $this->isCsrfValid($request)) {
             return $this->error(__('Wrong data'));
@@ -105,17 +103,17 @@ final readonly class AdsController
         redirect(self::URL . '?type=' . $fields['type']);
     }
 
-    public function up(Request $request, int $id): string
+    public function up(Request $request, int $id): ViewResponse
     {
         return $this->reorder($request, $id, 'up');
     }
 
-    public function down(Request $request, int $id): string
+    public function down(Request $request, int $id): ViewResponse
     {
         return $this->reorder($request, $id, 'down');
     }
 
-    public function toggle(Request $request, int $id): string
+    public function toggle(Request $request, int $id): ViewResponse
     {
         $type = $this->manageAd->find($id)?->type ?? 0;
         if ($this->isCsrfValid($request)) {
@@ -125,7 +123,7 @@ final readonly class AdsController
         redirect(self::URL . '?type=' . $type);
     }
 
-    public function deleteConfirm(int $id): string
+    public function deleteConfirm(int $id): ViewResponse
     {
         $ad = $this->manageAd->find($id);
         if ($ad === null) {
@@ -135,16 +133,15 @@ final readonly class AdsController
         $title = __('Delete');
         $this->navChain->add(__('Advertisement'), self::URL);
         $this->navChain->add($title);
-        $this->render->addData($this->menu($title, $title));
 
-        return $this->render->render('admin::ads_confirm', [
+        return new ViewResponse('@admin/ad-confirm.twig', $this->menu($title, $title) + [
             'message'     => __('Are you sure want to delete link?'),
             'form_action' => self::URL . '/' . $id . '/delete',
             'back_url'    => self::URL . '?type=' . $ad->type,
         ]);
     }
 
-    public function delete(Request $request, int $id): string
+    public function delete(Request $request, int $id): ViewResponse
     {
         $type = $this->manageAd->find($id)?->type ?? 0;
         if ($this->isCsrfValid($request)) {
@@ -154,20 +151,19 @@ final readonly class AdsController
         redirect(self::URL . '?type=' . $type);
     }
 
-    public function clearConfirm(): string
+    public function clearConfirm(): ViewResponse
     {
         $title = __('Advertisement');
         $this->navChain->add($title, self::URL);
-        $this->render->addData($this->menu($title, $title));
 
-        return $this->render->render('admin::ads_confirm', [
+        return new ViewResponse('@admin/ad-confirm.twig', $this->menu($title, $title) + [
             'message'     => __('Are you sure you want to delete all inactive links?'),
             'form_action' => self::URL . '/clear',
             'back_url'    => self::URL,
         ]);
     }
 
-    public function clear(Request $request): string
+    public function clear(Request $request): ViewResponse
     {
         if ($this->isCsrfValid($request)) {
             $this->manageAd->deleteInactive();
@@ -176,7 +172,7 @@ final readonly class AdsController
         redirect(self::URL);
     }
 
-    private function reorder(Request $request, int $id, string $direction): string
+    private function reorder(Request $request, int $id, string $direction): ViewResponse
     {
         $type = $this->manageAd->find($id)?->type ?? 0;
         if ($this->isCsrfValid($request)) {
@@ -298,19 +294,58 @@ final readonly class AdsController
      * @param array<string, mixed> $fields
      * @param list<string> $errors
      */
-    private function renderForm(?int $id, array $fields, array $errors = []): string
+    private function renderForm(?int $id, array $fields, array $errors = []): ViewResponse
     {
         $title = $id ? __('Edit link') : __('Add link');
         $this->navChain->add(__('Advertisement'), self::URL);
         $this->navChain->add($title);
-        $this->render->addData($this->menu($title, $title));
 
-        return $this->render->render('admin::ads_add', [
-            'form_action' => self::URL,
-            'id'          => $id,
-            'fields'      => $fields,
-            'errors'      => $errors,
+        return new ViewResponse('@admin/ad-form.twig', $this->menu($title, $title) + [
+            'form_action'      => self::URL,
+            'id'               => $id,
+            'fields'           => $fields,
+            'errors'           => $errors,
+            'audience_options' => $this->audienceOptions(),
+            'place_options'    => $this->placeOptions(),
+            'layout_options'   => $this->layoutOptions(),
         ]);
+    }
+
+    /**
+     * @return list<array{value: int, label: string}>
+     */
+    private function audienceOptions(): array
+    {
+        return [
+            ['value' => 0, 'label' => __('Everyone')],
+            ['value' => 1, 'label' => __('Guests')],
+            ['value' => 2, 'label' => __('Users')],
+        ];
+    }
+
+    /**
+     * @return list<array{value: int, label: string}>
+     */
+    private function placeOptions(): array
+    {
+        return [
+            ['value' => 0, 'label' => __('Before the menu')],
+            ['value' => 1, 'label' => __('After the menu')],
+            ['value' => 2, 'label' => __('At the top of the page')],
+            ['value' => 3, 'label' => __('At the bottom of the page')],
+        ];
+    }
+
+    /**
+     * @return list<array{value: int, label: string}>
+     */
+    private function layoutOptions(): array
+    {
+        return [
+            ['value' => 0, 'label' => __('All pages')],
+            ['value' => 1, 'label' => __('Only on Homepage')],
+            ['value' => 2, 'label' => __('On all, except Homepage')],
+        ];
     }
 
     /**
@@ -318,12 +353,16 @@ final readonly class AdsController
      */
     private function filters(int $type): array
     {
-        return [
-            ['url' => self::URL, 'name' => __('Before the menu'), 'active' => $type === 0],
-            ['url' => self::URL . '?type=1', 'name' => __('After the menu'), 'active' => $type === 1],
-            ['url' => self::URL . '?type=2', 'name' => __('At the top of the page'), 'active' => $type === 2],
-            ['url' => self::URL . '?type=3', 'name' => __('At the bottom of the page'), 'active' => $type === 3],
-        ];
+        $filters = [];
+        foreach ($this->placeOptions() as $option) {
+            $filters[] = [
+                'url'    => $option['value'] === 0 ? self::URL : self::URL . '?type=' . $option['value'],
+                'name'   => $option['label'],
+                'active' => $type === $option['value'],
+            ];
+        }
+
+        return $filters;
     }
 
     private function clampType(int $type): int
@@ -331,13 +370,11 @@ final readonly class AdsController
         return $type >= 0 && $type <= 3 ? $type : 0;
     }
 
-    private function error(string $message): string
+    private function error(string $message): ViewResponse
     {
         $title = __('Advertisement');
-        $this->render->addData($this->menu($title, $title));
 
-        return $this->render->render('system::pages/result', [
-            'title'    => $title,
+        return new ViewResponse('@admin/pages/result.twig', $this->menu($title, $title) + [
             'type'     => 'alert-danger',
             'message'  => $message,
             'back_url' => self::URL,

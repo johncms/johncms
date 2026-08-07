@@ -1,0 +1,101 @@
+{#
+    The form of an advertising link, for a new one and for an existing one.
+
+    @var string     form_action
+    @var int        id               Null when a new link is being added.
+    @var array      fields           Values of the form, keyed by field name.
+    @var array      errors           Validation messages, empty on the first render.
+    @var array      audience_options Visitors the link is shown to: value, label.
+    @var array      place_options    Place on the page: value, label.
+    @var array      layout_options   Pages the link appears on: value, label.
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    {% if errors is not empty %}
+        <div class="alert alert-danger shadow border-0">
+            {% for error in errors %}
+                <div>{{ error }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <form action="{{ form_action }}" method="post">
+        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+        {% if id %}
+            <input type="hidden" name="id" value="{{ id }}">
+        {% endif %}
+        <div class="form-group">
+            <label for="link">{{ __('Link') }}</label>
+            <input type="text" name="link" class="form-control" id="link" placeholder="{{ __('Link') }}" value="{{ fields.link }}">
+        </div>
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" name="show" value="1" id="show"{% if fields.show %} checked="checked"{% endif %}>
+            <label class="form-check-label" for="show">{{ __('Direct Link') }}</label>
+            <div class="text-muted small">{{ __('Click statistics won\'t be counted, If the direct link is turned on') }}</div>
+        </div>
+        <div class="form-group mt-2">
+            <label for="name">{{ __('Title') }}</label>
+            <input type="text" name="name" class="form-control" id="name" placeholder="{{ __('Title') }}" value="{{ fields.name }}">
+            <div class="text-muted small">{{ __('To change the name when updating pages, you must wtite names trought the symbol |') }}</div>
+        </div>
+        <div class="form-group">
+            <label for="color">{{ __('Color') }}</label>
+            <input type="text" name="color" class="form-control" id="color" placeholder="{{ __('Color') }}" value="{{ fields.color }}">
+            <div class="text-muted small">{{ __('In the format FFFFFF, if you do not want to use link color, simply do not fill this field') }}</div>
+        </div>
+        <div class="form-group">
+            <label for="count">{{ __('Hits') }}</label>
+            <input type="text" name="count" class="form-control" id="count" placeholder="{{ __('Hits') }}" value="{{ fields.count_link }}">
+            <div class="text-muted small">{{ __('Number of hits for link existence which will be automatically removed from the page<br>0 - Unlimited')|raw }}</div>
+        </div>
+        <div class="form-group">
+            <label for="day">{{ __('Days') }}</label>
+            <input type="text" name="day" class="form-control" id="day" placeholder="{{ __('Days') }}" value="{{ fields.day }}">
+            <div class="text-muted small">{{ __('Number of days for link existence which will be automatically removed from the page<br>0 - Unlimited')|raw }}</div>
+        </div>
+
+        <h3>{{ __('Show') }}</h3>
+        {% for option in audience_options %}
+            <div class="form-check">
+                <input type="radio" id="view{{ option.value }}" name="view" value="{{ option.value }}" class="form-check-input"{% if fields.view == option.value %} checked="checked"{% endif %}>
+                <label class="form-check-label" for="view{{ option.value }}">{{ option.label }}</label>
+            </div>
+        {% endfor %}
+
+        <h3 class="mt-3">{{ __('Place') }}</h3>
+        {% for option in place_options %}
+            <div class="form-check">
+                <input type="radio" id="type{{ option.value }}" name="type" value="{{ option.value }}" class="form-check-input"{% if fields.type == option.value %} checked="checked"{% endif %}>
+                <label class="form-check-label" for="type{{ option.value }}">{{ option.label }}</label>
+            </div>
+        {% endfor %}
+
+        <h3 class="mt-3">{{ __('Layout') }}</h3>
+        {% for option in layout_options %}
+            <div class="form-check">
+                <input type="radio" id="layout{{ option.value }}" name="layout" value="{{ option.value }}" class="form-check-input"{% if fields.layout == option.value %} checked="checked"{% endif %}>
+                <label class="form-check-label" for="layout{{ option.value }}">{{ option.label }}</label>
+            </div>
+        {% endfor %}
+
+        <h3 class="mt-3">{{ __('Styling links') }}</h3>
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" name="bold" value="1" id="bold"{% if fields.bold %} checked="checked"{% endif %}>
+            <label class="form-check-label" for="bold">{{ __('Bold') }}</label>
+        </div>
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" name="italic" value="1" id="italic"{% if fields.italic %} checked="checked"{% endif %}>
+            <label class="form-check-label" for="italic">{{ __('Italic') }}</label>
+        </div>
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" name="underline" value="1" id="underline"{% if fields.underline %} checked="checked"{% endif %}>
+            <label class="form-check-label" for="underline">{{ __('Underline') }}</label>
+        </div>
+
+        <div class="mt-3">
+            <input type="submit" value="{{ __('Save') }}" class="btn btn-primary"/>
+            <a href="/admin/ads" class="btn btn-secondary">{{ __('Cancel') }}</a>
+        </div>
+    </form>
+{% endblock %}
