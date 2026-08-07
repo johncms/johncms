@@ -9,10 +9,10 @@ use Johncms\Modules\Admin\Application\DTO\KarmaSettingsDTO;
 use Johncms\Modules\Admin\Application\UseCases\ResetKarmaUseCase;
 use Johncms\Modules\Admin\Application\UseCases\UpdateKarmaSettingsUseCase;
 use Johncms\Modules\Admin\Domain\Exceptions\ConfigWriteException;
+use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
-use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 
 final readonly class KarmaController
@@ -21,7 +21,6 @@ final readonly class KarmaController
 
     public function __construct(
         private AdminControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private UpdateKarmaSettingsUseCase $updateKarmaSettings,
         private ResetKarmaUseCase $resetKarma,
@@ -30,12 +29,12 @@ final readonly class KarmaController
         $this->controllerContext->initModule('admin');
     }
 
-    public function index(): string
+    public function index(): ViewResponse
     {
         return $this->renderForm();
     }
 
-    public function save(Request $request): string
+    public function save(Request $request): ViewResponse
     {
         if (! $this->isCsrfValid($request)) {
             return $this->renderForm(__('Wrong data'));
@@ -58,27 +57,22 @@ final readonly class KarmaController
         redirect(self::URL);
     }
 
-    public function clearConfirm(): string
+    public function clearConfirm(): ViewResponse
     {
         $title = __('Karma');
         $this->navChain->add($title, self::URL);
 
-        $this->render->addData(
-            [
-                'title'      => $title,
-                'page_title' => $title,
-                'usr_menu'   => ['karma' => true],
-            ]
-        );
-
-        return $this->render->render('admin::karma_clean_confirm', [
+        return new ViewResponse('@admin/karma-clear-confirm.twig', [
+            'title'       => $title,
+            'page_title'  => $title,
+            'usr_menu'    => ['karma' => true],
             'message'     => __('You really want to clear the Karma?'),
             'form_action' => self::URL . '/reset',
             'back_url'    => self::URL,
         ]);
     }
 
-    public function reset(Request $request): string
+    public function reset(Request $request): ViewResponse
     {
         if ($this->isCsrfValid($request)) {
             $this->resetKarma->execute();
@@ -98,27 +92,20 @@ final readonly class KarmaController
         return $validator->isValid();
     }
 
-    private function renderForm(?string $errorMessage = null): string
+    private function renderForm(?string $errorMessage = null): ViewResponse
     {
         $title = __('Karma');
         $this->navChain->add($title);
 
-        $successMessage = $this->session->getFlash('success_message');
-
-        $this->render->addData(
-            [
-                'title'      => $title,
-                'page_title' => $title,
-                'usr_menu'   => ['karma' => true],
-            ]
-        );
-
-        return $this->render->render('admin::karma', [
-            'settings'        => config('johncms')['karma'],
+        return new ViewResponse('@admin/karma.twig', [
+            'title'           => $title,
+            'page_title'      => $title,
+            'usr_menu'        => ['karma' => true],
+            'settings'        => (array) config('johncms.karma', []),
             'form_action'     => self::URL,
             'clear_url'       => self::URL . '/clear',
             'error_message'   => $errorMessage,
-            'success_message' => $successMessage,
+            'success_message' => (string) $this->session->getFlash('success_message'),
         ]);
     }
 }

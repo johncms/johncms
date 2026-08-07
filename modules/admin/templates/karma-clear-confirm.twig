@@ -1,0 +1,27 @@
+{#
+    Confirmation of clearing the karma of everyone.
+
+    @var string message
+    @var string form_action
+    @var string back_url
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="alert alert-danger">
+                <div class="pb-2">
+                    {{ message }}
+                </div>
+                <div class="d-flex">
+                    <form action="{{ form_action }}" method="post" class="me-2">
+                        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                        <button type="submit" class="btn btn-danger">{{ __('Clear') }}</button>
+                    </form>
+                    <a href="{{ back_url }}" class="btn btn-outline-secondary">{{ __('Cancel') }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -10,16 +10,15 @@ use Johncms\Modules\Admin\Application\Exceptions\UserNotFoundException;
 use Johncms\Modules\Admin\Application\Exceptions\WrongUserDataException;
 use Johncms\Modules\Admin\Application\UseCases\DeleteUserUseCase;
 use Johncms\Modules\Admin\Application\UseCases\GetUserDeletionContextUseCase;
+use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 
 final readonly class DeleteUserController
 {
     public function __construct(
         private AdminControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private GetUserDeletionContextUseCase $getContext,
         private DeleteUserUseCase $deleteUser,
@@ -27,7 +26,7 @@ final readonly class DeleteUserController
         $this->controllerContext->initModule('admin');
     }
 
-    public function index(int $id): string
+    public function index(int $id): ViewResponse
     {
         $title = __('Delete user');
         $this->navChain->add($title);
@@ -38,8 +37,8 @@ final readonly class DeleteUserController
             return $this->renderError($title, $this->errorMessage($e));
         }
 
-        return $this->render->render(
-            'admin::usr_del',
+        return new ViewResponse(
+            '@admin/user-delete-confirm.twig',
             [
                 'title'            => $title,
                 'page_title'       => $title,
@@ -54,7 +53,7 @@ final readonly class DeleteUserController
         );
     }
 
-    public function delete(Request $request, int $id): string
+    public function delete(Request $request, int $id): ViewResponse
     {
         $title = __('Delete user');
         $this->navChain->add($title);
@@ -75,10 +74,11 @@ final readonly class DeleteUserController
             $request->hasBody('forum'),
         );
 
-        return $this->render->render(
-            'system::pages/result',
+        return new ViewResponse(
+            '@admin/pages/result.twig',
             [
                 'title'    => $title,
+                'page_title' => $title,
                 'type'     => 'alert-success',
                 'message'  => __('User deleted'),
                 'back_url' => '/admin/users',
@@ -105,12 +105,13 @@ final readonly class DeleteUserController
         return $validator->isValid();
     }
 
-    private function renderError(string $title, string $message): string
+    private function renderError(string $title, string $message): ViewResponse
     {
-        return $this->render->render(
-            'system::pages/result',
+        return new ViewResponse(
+            '@admin/pages/result.twig',
             [
                 'title'    => $title,
+                'page_title' => $title,
                 'type'     => 'alert-danger',
                 'message'  => $message,
                 'back_url' => '/admin/users',

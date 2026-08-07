@@ -1,0 +1,30 @@
+{#
+    Removing the profiles that were registered long ago and never used.
+
+    @var int    total
+    @var string form_action
+    @var string error_message   Empty unless the last run failed.
+    @var string success_message Empty unless a run has just succeeded.
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger shadow border-0', alert: error_message} only %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success shadow border-0', alert: success_message} only %}
+
+    <div class="alert alert-danger">
+        <div class="pb-2">
+            {{ __('This category includes profiles, recorded more than 6 months ago, with the date of last visit for more than 5 months ago and with zero activity.<br>Can safely remove them.')|raw }}
+            <div>
+                {{ __('Total') }}: <b>{{ total }}</b>
+            </div>
+        </div>
+        <div>
+            <form action="{{ form_action }}" method="post">
+                <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                <button type="submit" class="btn btn-danger"{% if total == 0 %} disabled{% endif %}>{{ __('Delete') }}</button>
+                <a href="/admin/" class="btn btn-outline-secondary">{{ __('Cancel') }}</a>
+            </form>
+        </div>
+    </div>
+{% endblock %}

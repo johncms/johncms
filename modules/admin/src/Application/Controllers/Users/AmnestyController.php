@@ -6,10 +6,10 @@ namespace Johncms\Modules\Admin\Application\Controllers\Users;
 
 use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Modules\Admin\Application\UseCases\ApplyAmnestyUseCase;
+use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
-use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 
 final readonly class AmnestyController
@@ -18,7 +18,6 @@ final readonly class AmnestyController
 
     public function __construct(
         private AdminControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private ApplyAmnestyUseCase $applyAmnesty,
         private Session $session,
@@ -26,12 +25,12 @@ final readonly class AmnestyController
         $this->controllerContext->initModule('admin');
     }
 
-    public function form(): string
+    public function form(): ViewResponse
     {
         return $this->renderForm();
     }
 
-    public function apply(Request $request): string
+    public function apply(Request $request): ViewResponse
     {
         if (! $this->isCsrfValid($request)) {
             return $this->renderForm(__('Wrong data'));
@@ -56,23 +55,18 @@ final readonly class AmnestyController
         return $validator->isValid();
     }
 
-    private function renderForm(?string $errorMessage = null): string
+    private function renderForm(?string $errorMessage = null): ViewResponse
     {
         $title = __('Amnesty');
         $this->navChain->add(__('Ban Panel'), '/admin/bans');
         $this->navChain->add($title);
 
-        $this->render->addData(
+        return new ViewResponse(
+            '@admin/amnesty.twig',
             [
-                'title'      => $title,
-                'page_title' => $title,
-                'usr_menu'   => ['ban_panel' => true],
-            ]
-        );
-
-        return $this->render->render(
-            'admin::amnesty',
-            [
+                'title'         => $title,
+                'page_title'    => $title,
+                'usr_menu'      => ['ban_panel' => true],
                 'form_action'   => self::URL,
                 'error_message' => $errorMessage,
             ]

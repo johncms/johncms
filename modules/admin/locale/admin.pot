@@ -45,7 +45,7 @@ msgid "Administration"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:82
-#: modules/admin/src/Application/Controllers/Users/AmnestyController.php:62
+#: modules/admin/src/Application/Controllers/Users/AmnestyController.php:61
 #: modules/admin/src/Application/Controllers/Users/BanListController.php:46
 #: modules/admin/templates/sidebar-admin-menu.phtml:93
 #: themes/admin/templates/system/app/sidebar-admin-menu.phtml:84
@@ -53,7 +53,7 @@ msgid "Ban Panel"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:92
-#: modules/admin/src/Application/Controllers/Users/UserCleanupController.php:59
+#: modules/admin/src/Application/Controllers/Users/UserCleanupController.php:58
 #: modules/admin/templates/sidebar-admin-menu.phtml:103
 #: themes/admin/templates/system/app/sidebar-admin-menu.phtml:94
 msgid "Database cleanup"
@@ -66,8 +66,8 @@ msgid "Antiflood"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:108
-#: modules/admin/src/Application/Controllers/Users/KarmaController.php:63
-#: modules/admin/src/Application/Controllers/Users/KarmaController.php:103
+#: modules/admin/src/Application/Controllers/Users/KarmaController.php:62
+#: modules/admin/src/Application/Controllers/Users/KarmaController.php:97
 #: modules/admin/templates/sidebar-admin-menu.phtml:119
 #: themes/admin/templates/system/app/sidebar-admin-menu.phtml:110
 msgid "Karma"
@@ -89,7 +89,7 @@ msgstr ""
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:145
 #: modules/admin/templates/access.phtml:24
 #: modules/admin/templates/sidebar-admin-menu.phtml:158
-#: modules/admin/templates/usr_del.phtml:36
+#: modules/admin/templates/user-delete-confirm.twig:33
 #: themes/admin/templates/system/app/sidebar-admin-menu.phtml:149
 msgid "Forum"
 msgstr ""
@@ -248,11 +248,11 @@ msgstr ""
 #: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:46
 #: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:52
 #: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:66
-#: modules/admin/src/Application/Controllers/Users/AmnestyController.php:37
-#: modules/admin/src/Application/Controllers/Users/DeleteUserController.php:63
+#: modules/admin/src/Application/Controllers/Users/AmnestyController.php:36
+#: modules/admin/src/Application/Controllers/Users/DeleteUserController.php:62
 #: modules/admin/src/Application/Controllers/Users/DeleteUserController.php:94
-#: modules/admin/src/Application/Controllers/Users/KarmaController.php:41
-#: modules/admin/src/Application/Controllers/Users/UserCleanupController.php:39
+#: modules/admin/src/Application/Controllers/Users/KarmaController.php:40
+#: modules/admin/src/Application/Controllers/Users/UserCleanupController.php:38
 msgid "Wrong data"
 msgstr ""
 
@@ -265,7 +265,7 @@ msgstr ""
 #: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:48
 #: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:48
 #: modules/admin/src/Application/Controllers/Settings/SystemSettingsController.php:50
-#: modules/admin/src/Application/Controllers/Users/KarmaController.php:57
+#: modules/admin/src/Application/Controllers/Users/KarmaController.php:56
 msgid "Settings are saved successfully"
 msgstr ""
 
@@ -487,7 +487,7 @@ msgstr ""
 #: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:45
 #: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:45
 #: modules/admin/src/Application/Controllers/Settings/SystemSettingsController.php:47
-#: modules/admin/src/Application/Controllers/Users/KarmaController.php:54
+#: modules/admin/src/Application/Controllers/Users/KarmaController.php:53
 msgid "ERROR: Can not write file `system.local.php`"
 msgstr ""
 
@@ -536,8 +536,8 @@ msgstr ""
 #: modules/admin/templates/forum-structure.twig:35
 #: modules/admin/templates/languages-manage.twig:51
 #: modules/admin/templates/registrations.twig:36
-#: modules/admin/templates/user_clean_confirm.phtml:31
-#: modules/admin/templates/usr_del.phtml:42
+#: modules/admin/templates/user-delete-confirm.twig:39
+#: modules/admin/templates/users-cleanup.twig:25
 msgid "Delete"
 msgstr ""
 
@@ -695,15 +695,15 @@ msgstr ""
 msgid "The task is already running"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/AmnestyController.php:44
+#: modules/admin/src/Application/Controllers/Users/AmnestyController.php:43
 msgid "Amnesty has been successful"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/AmnestyController.php:45
+#: modules/admin/src/Application/Controllers/Users/AmnestyController.php:44
 msgid "All the users with active bans were unbanned (Except for bans &quot;till cancel&quot;)"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/AmnestyController.php:61
+#: modules/admin/src/Application/Controllers/Users/AmnestyController.php:60
 #: modules/admin/src/Application/UseCases/ApplyAmnestyUseCase.php:28
 #: modules/admin/templates/banned-users.twig:40
 msgid "Amnesty"
@@ -717,8 +717,8 @@ msgstr ""
 msgid "Violations"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/DeleteUserController.php:32
-#: modules/admin/src/Application/Controllers/Users/DeleteUserController.php:59
+#: modules/admin/src/Application/Controllers/Users/DeleteUserController.php:31
+#: modules/admin/src/Application/Controllers/Users/DeleteUserController.php:58
 msgid "Delete user"
 msgstr ""
 
@@ -735,11 +735,11 @@ msgstr ""
 msgid "You cannot delete higher administration"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/KarmaController.php:75
+#: modules/admin/src/Application/Controllers/Users/KarmaController.php:69
 msgid "You really want to clear the Karma?"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/KarmaController.php:85
+#: modules/admin/src/Application/Controllers/Users/KarmaController.php:79
 msgid "Karma is cleared"
 msgstr ""
 
@@ -760,7 +760,7 @@ msgstr ""
 msgid "All unconfirmed registrations with selected IP were deleted"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/UserCleanupController.php:43
+#: modules/admin/src/Application/Controllers/Users/UserCleanupController.php:42
 msgid "Inactive profiles deleted"
 msgstr ""
 
@@ -903,7 +903,7 @@ msgstr ""
 
 #: modules/admin/templates/access.phtml:81
 #: modules/admin/templates/access.phtml:104
-#: modules/admin/templates/usr_del.phtml:31
+#: modules/admin/templates/user-delete-confirm.twig:28
 msgid "Comments"
 msgstr ""
 
@@ -925,13 +925,13 @@ msgstr ""
 
 #: modules/admin/templates/access.phtml:144
 #: modules/admin/templates/ad-form.twig:97
-#: modules/admin/templates/amnesty.phtml:36
+#: modules/admin/templates/amnesty.twig:32
 #: modules/admin/templates/antiflood.phtml:62
 #: modules/admin/templates/counter-preview.twig:51
 #: modules/admin/templates/forum-section-edit.twig:76
 #: modules/admin/templates/forum-settings.twig:58
 #: modules/admin/templates/ip-ban-form.twig:53
-#: modules/admin/templates/karma.phtml:50
+#: modules/admin/templates/karma.twig:43
 #: modules/admin/templates/languages.twig:31
 #: modules/admin/templates/settings.phtml:112
 msgid "Save"
@@ -939,7 +939,7 @@ msgstr ""
 
 #: modules/admin/templates/ad-confirm.twig:20
 #: modules/admin/templates/ad-form.twig:98
-#: modules/admin/templates/amnesty.phtml:37
+#: modules/admin/templates/amnesty.twig:33
 #: modules/admin/templates/antiflood.phtml:63
 #: modules/admin/templates/counter-delete-confirm.twig:22
 #: modules/admin/templates/counter-form.twig:76
@@ -957,10 +957,10 @@ msgstr ""
 #: modules/admin/templates/ip-ban-confirm.twig:44
 #: modules/admin/templates/ip-ban-form.twig:54
 #: modules/admin/templates/ip-ban-search.twig:24
-#: modules/admin/templates/karma.phtml:51
-#: modules/admin/templates/karma_clean_confirm.phtml:25
-#: modules/admin/templates/user_clean_confirm.phtml:32
-#: modules/admin/templates/usr_del.phtml:43
+#: modules/admin/templates/karma-clear-confirm.twig:22
+#: modules/admin/templates/karma.twig:44
+#: modules/admin/templates/user-delete-confirm.twig:40
+#: modules/admin/templates/users-cleanup.twig:26
 msgid "Cancel"
 msgstr ""
 
@@ -1126,15 +1126,15 @@ msgstr ""
 msgid "Back"
 msgstr ""
 
-#: modules/admin/templates/amnesty.phtml:24
+#: modules/admin/templates/amnesty.twig:20
 msgid "Unban all"
 msgstr ""
 
-#: modules/admin/templates/amnesty.phtml:28
+#: modules/admin/templates/amnesty.twig:24
 msgid "Clear Ban database"
 msgstr ""
 
-#: modules/admin/templates/amnesty.phtml:32
+#: modules/admin/templates/amnesty.twig:28
 msgid "&quot;Unban All&quot; - terminating all active bans<br>&quot;Clear Database&quot; - terminates all bans and clears an offenses history"
 msgstr ""
 
@@ -1364,7 +1364,7 @@ msgstr ""
 
 #: modules/admin/templates/forum-hidden-posts.twig:104
 #: modules/admin/templates/forum-hidden-topics.twig:100
-#: modules/admin/templates/user_clean_confirm.phtml:25
+#: modules/admin/templates/users-cleanup.twig:19
 #: modules/admin/templates/users.twig:28
 msgid "Total"
 msgstr ""
@@ -1706,36 +1706,36 @@ msgstr ""
 msgid "IP Address"
 msgstr ""
 
-#: modules/admin/templates/karma.phtml:26
+#: modules/admin/templates/karma-clear-confirm.twig:20
+msgid "Clear"
+msgstr ""
+
+#: modules/admin/templates/karma.twig:19
 msgid "Voices per day"
 msgstr ""
 
-#: modules/admin/templates/karma.phtml:30
+#: modules/admin/templates/karma.twig:23
 msgid "Restriction for vote"
 msgstr ""
 
-#: modules/admin/templates/karma.phtml:33
+#: modules/admin/templates/karma.twig:26
 msgid "Forum posts"
 msgstr ""
 
-#: modules/admin/templates/karma.phtml:37
+#: modules/admin/templates/karma.twig:30
 msgid "General Settings"
 msgstr ""
 
-#: modules/admin/templates/karma.phtml:41
+#: modules/admin/templates/karma.twig:34
 msgid "Switch module ON"
 msgstr ""
 
-#: modules/admin/templates/karma.phtml:46
+#: modules/admin/templates/karma.twig:39
 msgid "Forbid to vote for the administration"
 msgstr ""
 
-#: modules/admin/templates/karma.phtml:52
+#: modules/admin/templates/karma.twig:45
 msgid "Clear Karma"
-msgstr ""
-
-#: modules/admin/templates/karma_clean_confirm.phtml:23
-msgid "Clear"
 msgstr ""
 
 #: modules/admin/templates/languages-manage.twig:36
@@ -1933,7 +1933,19 @@ msgstr ""
 msgid "Recommended parameters"
 msgstr ""
 
-#: modules/admin/templates/user_clean_confirm.phtml:23
+#: modules/admin/templates/user-delete-confirm.twig:19
+msgid "Delete user:"
+msgstr ""
+
+#: modules/admin/templates/user-delete-confirm.twig:20
+msgid "Are you sure that you want to delete this user?"
+msgstr ""
+
+#: modules/admin/templates/user-delete-confirm.twig:36
+msgid "All threads and posts created by the user go in the hidden state"
+msgstr ""
+
+#: modules/admin/templates/users-cleanup.twig:17
 msgid "This category includes profiles, recorded more than 6 months ago, with the date of last visit for more than 5 months ago and with zero activity.<br>Can safely remove them."
 msgstr ""
 
@@ -1966,16 +1978,4 @@ msgstr ""
 #: modules/admin/templates/users/login.phtml:34
 #: modules/admin/templates/users/login.phtml:42
 msgid "Password"
-msgstr ""
-
-#: modules/admin/templates/usr_del.phtml:22
-msgid "Delete user:"
-msgstr ""
-
-#: modules/admin/templates/usr_del.phtml:23
-msgid "Are you sure that you want to delete this user?"
-msgstr ""
-
-#: modules/admin/templates/usr_del.phtml:39
-msgid "All threads and posts created by the user go in the hidden state"
 msgstr ""

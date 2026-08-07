@@ -8,9 +8,9 @@ use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Http\Session;
 use Johncms\Modules\Admin\Application\UseCases\CleanupInactiveUsersUseCase;
 use Johncms\Modules\Admin\Domain\Repository\InactiveUsersRepositoryInterface;
+use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
 use Johncms\Validator\Validator;
 
 final readonly class UserCleanupController
@@ -19,7 +19,6 @@ final readonly class UserCleanupController
 
     public function __construct(
         private AdminControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private InactiveUsersRepositoryInterface $inactiveUsers,
         private CleanupInactiveUsersUseCase $cleanupInactiveUsers,
@@ -28,12 +27,12 @@ final readonly class UserCleanupController
         $this->controllerContext->initModule('admin');
     }
 
-    public function index(): string
+    public function index(): ViewResponse
     {
         return $this->renderConfirm();
     }
 
-    public function clean(Request $request): string
+    public function clean(Request $request): ViewResponse
     {
         if (! $this->isCsrfValid($request)) {
             return $this->renderConfirm(__('Wrong data'));
@@ -54,28 +53,21 @@ final readonly class UserCleanupController
         return $validator->isValid();
     }
 
-    private function renderConfirm(?string $errorMessage = null): string
+    private function renderConfirm(?string $errorMessage = null): ViewResponse
     {
         $title = __('Database cleanup');
         $this->navChain->add($title);
 
-        $successMessage = $this->session->getFlash('success_message');
-
-        $this->render->addData(
+        return new ViewResponse(
+            '@admin/users-cleanup.twig',
             [
-                'title'      => $title,
-                'page_title' => $title,
-                'usr_menu'   => ['usr_clean' => true],
-            ]
-        );
-
-        return $this->render->render(
-            'admin::user_clean_confirm',
-            [
+                'title'           => $title,
+                'page_title'      => $title,
+                'usr_menu'        => ['usr_clean' => true],
                 'total'           => $this->inactiveUsers->countInactive(),
                 'form_action'     => self::URL,
                 'error_message'   => $errorMessage,
-                'success_message' => $successMessage,
+                'success_message' => (string) $this->session->getFlash('success_message'),
             ]
         );
     }
