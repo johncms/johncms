@@ -10,14 +10,14 @@ use Johncms\Modules\Downloads\Application\UseCases\EnsureDownloadsAccessUseCase;
 use Johncms\Router\MiddlewareInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
+use Johncms\View\RendererInterface;
 
 final readonly class DownloadsAccessMiddleware implements MiddlewareInterface
 {
     public function __construct(
         private EnsureDownloadsAccessUseCase $ensureDownloadsAccessUseCase,
         private DownloadsErrorRenderer $downloadsErrorRenderer,
-        private Render $render,
+        private RendererInterface $renderer,
     ) {
     }
 
@@ -26,7 +26,7 @@ final readonly class DownloadsAccessMiddleware implements MiddlewareInterface
         try {
             $this->ensureDownloadsAccessUseCase->execute();
         } catch (DownloadsAccessDeniedException $exception) {
-            return $this->downloadsErrorRenderer->render($this->render, $exception);
+            return $this->downloadsErrorRenderer->response($this->renderer, $exception);
         }
 
         return $next($request);

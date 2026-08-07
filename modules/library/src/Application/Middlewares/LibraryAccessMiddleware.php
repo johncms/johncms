@@ -6,7 +6,7 @@ namespace Johncms\Modules\Library\Application\Middlewares;
 
 use Johncms\Router\MiddlewareInterface;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
+use Johncms\View\RendererInterface;
 use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -14,7 +14,7 @@ final readonly class LibraryAccessMiddleware implements MiddlewareInterface
 {
     public function __construct(
         private User $currentUser,
-        private Render $render,
+        private RendererInterface $renderer,
     ) {
     }
 
@@ -31,7 +31,7 @@ final readonly class LibraryAccessMiddleware implements MiddlewareInterface
 
         if ($error) {
             return new Response(
-                $this->render->render('system::pages/result', [
+                $this->renderer->render('@theme/pages/result.twig', [
                     'title'   => __('Library'),
                     'type'    => 'alert-danger',
                     'message' => $error,

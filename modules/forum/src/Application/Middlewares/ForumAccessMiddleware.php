@@ -10,14 +10,14 @@ use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
 use Johncms\Router\MiddlewareInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
+use Johncms\View\RendererInterface;
 
 final readonly class ForumAccessMiddleware implements MiddlewareInterface
 {
     public function __construct(
         private EnsureForumAccessUseCase $ensureForumAccessUseCase,
         private ForumErrorRenderer $forumErrorRenderer,
-        private Render $render,
+        private RendererInterface $renderer,
     ) {
     }
 
@@ -26,7 +26,7 @@ final readonly class ForumAccessMiddleware implements MiddlewareInterface
         try {
             $this->ensureForumAccessUseCase->execute();
         } catch (ForumAccessDeniedException $exception) {
-            return $this->forumErrorRenderer->render($this->render, $exception);
+            return $this->forumErrorRenderer->response($this->renderer, $exception);
         }
 
         return $next($request);

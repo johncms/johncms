@@ -6,7 +6,7 @@ namespace Johncms\Modules\Online\Application\Middlewares;
 
 use Johncms\Router\MiddlewareInterface;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
+use Johncms\View\RendererInterface;
 use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -14,7 +14,7 @@ final readonly class OnlineAdminMiddleware implements MiddlewareInterface
 {
     public function __construct(
         private User $currentUser,
-        private Render $render,
+        private RendererInterface $renderer,
     ) {
     }
 
@@ -22,7 +22,7 @@ final readonly class OnlineAdminMiddleware implements MiddlewareInterface
     {
         if (! $this->currentUser->rights) {
             return new Response(
-                $this->render->render('system::pages/result', [
+                $this->renderer->render('@theme/pages/result.twig', [
                     'title'   => __('Online'),
                     'type'    => 'alert-danger',
                     'message' => __('Access denied'),

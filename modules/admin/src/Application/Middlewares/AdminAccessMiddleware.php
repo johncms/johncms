@@ -8,7 +8,7 @@ use Johncms\Modules\Admin\Domain\Enums\UserRights;
 use Johncms\Router\MiddlewareInterface;
 use Johncms\Http\Request;
 use Johncms\System\i18n\Translator;
-use Johncms\System\View\Render;
+use Johncms\View\RendererInterface;
 use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -23,7 +23,7 @@ final readonly class AdminAccessMiddleware implements MiddlewareInterface
 {
     public function __construct(
         private User $user,
-        private Render $render,
+        private RendererInterface $renderer,
         private Translator $translator,
     ) {
     }
@@ -46,8 +46,8 @@ final readonly class AdminAccessMiddleware implements MiddlewareInterface
         $this->translator->addTranslationDomain('admin', MODULES_PATH . 'admin/locale', false);
 
         return new Response(
-            $this->render->render(
-                'system::error/403',
+            $this->renderer->render(
+                '@admin/pages/errors/403.twig',
                 [
                     'title'   => d__('admin', 'Access denied'),
                     'message' => '',

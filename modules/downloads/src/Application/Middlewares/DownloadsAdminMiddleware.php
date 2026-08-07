@@ -6,7 +6,7 @@ namespace Johncms\Modules\Downloads\Application\Middlewares;
 
 use Johncms\Router\MiddlewareInterface;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
+use Johncms\View\RendererInterface;
 use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -14,7 +14,7 @@ final readonly class DownloadsAdminMiddleware implements MiddlewareInterface
 {
     public function __construct(
         private User $currentUser,
-        private Render $render,
+        private RendererInterface $renderer,
     ) {
     }
 
@@ -22,7 +22,7 @@ final readonly class DownloadsAdminMiddleware implements MiddlewareInterface
     {
         if ($this->currentUser->rights < 6 && $this->currentUser->rights !== 4) {
             return new Response(
-                $this->render->render('system::pages/result', [
+                $this->renderer->render('@theme/pages/result.twig', [
                     'title'         => __('Downloads'),
                     'type'          => 'alert-danger',
                     'message'       => __('Not found'),

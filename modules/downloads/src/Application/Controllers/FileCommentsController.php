@@ -13,7 +13,7 @@ use Johncms\Modules\Downloads\Application\Exceptions\FileNotFoundException;
 use Johncms\Modules\Downloads\Domain\Repository\DownloadFileRepositoryInterface;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
+use Johncms\View\RendererInterface;
 use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -21,7 +21,7 @@ final readonly class FileCommentsController
 {
     public function __construct(
         private ControllerContext $controllerContext,
-        private Render $render,
+        private RendererInterface $renderer,
         private NavChain $navChain,
         private User $currentUser,
         private DownloadFileRepositoryInterface $fileRepository,
@@ -37,8 +37,8 @@ final readonly class FileCommentsController
 
         if (! $config['mod_down_comm'] && $this->currentUser->rights < 7) {
             return new Response(
-                $this->render->render(
-                    'system::pages/result',
+                $this->renderer->render(
+                    '@theme/pages/result.twig',
                     [
                         'title'         => __('Comments'),
                         'type'          => 'alert-danger',
@@ -58,8 +58,8 @@ final readonly class FileCommentsController
             }
         } catch (FileNotFoundException) {
             return new Response(
-                $this->render->render(
-                    'system::pages/result',
+                $this->renderer->render(
+                    '@theme/pages/result.twig',
                     [
                         'title'         => __('File not found'),
                         'type'          => 'alert-danger',
@@ -74,8 +74,8 @@ final readonly class FileCommentsController
 
         if (! is_file($file->dir . '/' . $file->name)) {
             return new Response(
-                $this->render->render(
-                    'system::pages/result',
+                $this->renderer->render(
+                    '@theme/pages/result.twig',
                     [
                         'title'         => __('File not found'),
                         'type'          => 'alert-danger',
@@ -90,8 +90,8 @@ final readonly class FileCommentsController
 
         if ($file->type === 3 && $this->currentUser->rights < 6 && $this->currentUser->rights !== 4) {
             return new Response(
-                $this->render->render(
-                    'system::pages/result',
+                $this->renderer->render(
+                    '@theme/pages/result.twig',
                     [
                         'title'         => __('The file is awaiting moderation'),
                         'type'          => 'alert-danger',
