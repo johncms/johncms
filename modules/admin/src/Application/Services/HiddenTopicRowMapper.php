@@ -63,7 +63,9 @@ final readonly class HiddenTopicRowMapper
             'topic_name'              => $topic->name,
             'topic_url'               => $this->topicPath->getTopicUrlById((int) $topic->id) ?? '/forum/',
             'path'                    => $path,
-            'rights'                  => $author->rights ?? 0,
+            // The address and the user agent of an author with more rights than the visitor has
+            // are not theirs to see.
+            'show_origin'             => $this->currentUser->rights >= ($author->rights ?? 0),
             'browser'                 => $author->browser ?? '',
             'user_is_online'          => $author !== null && time() <= $author->lastdate + 300,
             'ip'                      => long2ip($ip),

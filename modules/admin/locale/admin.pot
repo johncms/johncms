@@ -218,13 +218,13 @@ msgid "Dashboard"
 msgstr ""
 
 #: modules/admin/src/Application/Controllers/Forum/ForumDashboardController.php:26
-#: modules/admin/src/Application/Controllers/Forum/ForumSettingsController.php:75
-#: modules/admin/src/Application/Controllers/Forum/HiddenPostsController.php:51
-#: modules/admin/src/Application/Controllers/Forum/HiddenTopicsController.php:51
+#: modules/admin/src/Application/Controllers/Forum/ForumSettingsController.php:74
+#: modules/admin/src/Application/Controllers/Forum/HiddenPostsController.php:50
+#: modules/admin/src/Application/Controllers/Forum/HiddenTopicsController.php:50
 msgid "Forum Management"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumSettingsController.php:39
+#: modules/admin/src/Application/Controllers/Forum/ForumSettingsController.php:38
 #: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:109
 #: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:226
 #: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:248
@@ -256,11 +256,11 @@ msgstr ""
 msgid "Wrong data"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumSettingsController.php:55
+#: modules/admin/src/Application/Controllers/Forum/ForumSettingsController.php:54
 msgid "ERROR: Can not write file `forum.local.php`"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumSettingsController.php:58
+#: modules/admin/src/Application/Controllers/Forum/ForumSettingsController.php:57
 #: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:61
 #: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:48
 #: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:48
@@ -269,7 +269,7 @@ msgstr ""
 msgid "Settings are saved successfully"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumSettingsController.php:74
+#: modules/admin/src/Application/Controllers/Forum/ForumSettingsController.php:73
 msgid "Forum Settings"
 msgstr ""
 
@@ -381,30 +381,30 @@ msgstr ""
 msgid "For topics"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/HiddenPostsController.php:50
+#: modules/admin/src/Application/Controllers/Forum/HiddenPostsController.php:49
 #: modules/admin/templates/forum.twig:25
 msgid "Hidden posts"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/HiddenPostsController.php:91
-#: modules/admin/src/Application/Services/HiddenPostRowMapper.php:71
+#: modules/admin/src/Application/Controllers/Forum/HiddenPostsController.php:88
+#: modules/admin/src/Application/Services/HiddenPostRowMapper.php:74
 msgid "by topic"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/HiddenPostsController.php:96
-#: modules/admin/src/Application/Controllers/Forum/HiddenTopicsController.php:91
-#: modules/admin/src/Application/Services/HiddenPostRowMapper.php:72
-#: modules/admin/src/Application/Services/HiddenTopicRowMapper.php:76
+#: modules/admin/src/Application/Controllers/Forum/HiddenPostsController.php:93
+#: modules/admin/src/Application/Controllers/Forum/HiddenTopicsController.php:88
+#: modules/admin/src/Application/Services/HiddenPostRowMapper.php:75
+#: modules/admin/src/Application/Services/HiddenTopicRowMapper.php:78
 msgid "by author"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/HiddenTopicsController.php:50
+#: modules/admin/src/Application/Controllers/Forum/HiddenTopicsController.php:49
 #: modules/admin/templates/forum.twig:26
 msgid "Hidden topics"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/HiddenTopicsController.php:96
-#: modules/admin/src/Application/Services/HiddenTopicRowMapper.php:77
+#: modules/admin/src/Application/Controllers/Forum/HiddenTopicsController.php:93
+#: modules/admin/src/Application/Services/HiddenTopicRowMapper.php:79
 msgid "by section"
 msgstr ""
 
@@ -929,7 +929,7 @@ msgstr ""
 #: modules/admin/templates/antiflood.phtml:62
 #: modules/admin/templates/counter-preview.twig:51
 #: modules/admin/templates/forum-section-edit.twig:76
-#: modules/admin/templates/forum/settings.phtml:64
+#: modules/admin/templates/forum-settings.twig:58
 #: modules/admin/templates/ip-ban-form.twig:53
 #: modules/admin/templates/karma.phtml:50
 #: modules/admin/templates/languages.twig:31
@@ -946,13 +946,13 @@ msgstr ""
 #: modules/admin/templates/counter-preview.twig:52
 #: modules/admin/templates/emoticons.phtml:27
 #: modules/admin/templates/file-integrity-snapshot-confirm.twig:22
+#: modules/admin/templates/forum-hidden-posts.twig:18
+#: modules/admin/templates/forum-hidden-topics.twig:18
 #: modules/admin/templates/forum-section-delete-confirm.twig:19
 #: modules/admin/templates/forum-section-edit.twig:77
 #: modules/admin/templates/forum-section-form.twig:55
 #: modules/admin/templates/forum-section-move-sections.twig:33
 #: modules/admin/templates/forum-section-move-topics.twig:48
-#: modules/admin/templates/forum/hidden_posts.phtml:21
-#: modules/admin/templates/forum/hidden_topics.phtml:21
 #: modules/admin/templates/ip-ban-clear-confirm.twig:21
 #: modules/admin/templates/ip-ban-confirm.twig:44
 #: modules/admin/templates/ip-ban-form.twig:54
@@ -1031,9 +1031,9 @@ msgstr ""
 #: modules/admin/templates/ads.twig:31
 #: modules/admin/templates/ban_panel.phtml:26
 #: modules/admin/templates/counters.twig:20
+#: modules/admin/templates/forum-hidden-posts.twig:25
+#: modules/admin/templates/forum-hidden-topics.twig:25
 #: modules/admin/templates/forum-structure.twig:13
-#: modules/admin/templates/forum/hidden_posts.phtml:95
-#: modules/admin/templates/forum/hidden_topics.phtml:91
 #: modules/admin/templates/ip-bans.twig:29
 #: modules/admin/templates/reg_list.phtml:31
 msgid "The list is empty"
@@ -1055,10 +1055,10 @@ msgstr ""
 #: modules/admin/templates/counter-view.twig:52
 #: modules/admin/templates/counters.twig:51
 #: modules/admin/templates/file-integrity-scan-result.twig:25
+#: modules/admin/templates/forum-hidden-posts.twig:111
+#: modules/admin/templates/forum-hidden-topics.twig:107
 #: modules/admin/templates/forum-structure.twig:44
 #: modules/admin/templates/forum.twig:29
-#: modules/admin/templates/forum/hidden_posts.phtml:118
-#: modules/admin/templates/forum/hidden_topics.phtml:114
 #: modules/admin/templates/ip-ban-detail.twig:52
 #: modules/admin/templates/ip-bans.twig:63
 #: modules/admin/templates/languages-manage.twig:63
@@ -1325,6 +1325,58 @@ msgstr ""
 msgid "Takes a snapshot of all script files from the site calculates their checksums and stored in the database."
 msgstr ""
 
+#: modules/admin/templates/forum-hidden-posts.twig:17
+#: modules/admin/templates/forum-hidden-topics.twig:17
+msgid "Filtered:"
+msgstr ""
+
+#: modules/admin/templates/forum-hidden-posts.twig:43
+msgid "Go to page"
+msgstr ""
+
+#: modules/admin/templates/forum-hidden-posts.twig:56
+#: modules/admin/templates/forum-hidden-topics.twig:51
+msgid "Topic:"
+msgstr ""
+
+#: modules/admin/templates/forum-hidden-posts.twig:76
+msgid "Edited:"
+msgstr ""
+
+#: modules/admin/templates/forum-hidden-posts.twig:79
+msgid "Post deleted:"
+msgstr ""
+
+#: modules/admin/templates/forum-hidden-posts.twig:81
+msgid "Post restored by:"
+msgstr ""
+
+#: modules/admin/templates/forum-hidden-posts.twig:84
+#: modules/admin/templates/forum-hidden-topics.twig:80
+msgid "Filter:"
+msgstr ""
+
+#: modules/admin/templates/forum-hidden-posts.twig:97
+#: modules/admin/templates/forum-hidden-topics.twig:93
+#: modules/admin/templates/reg_list.phtml:52
+msgid "Delete all"
+msgstr ""
+
+#: modules/admin/templates/forum-hidden-posts.twig:104
+#: modules/admin/templates/forum-hidden-topics.twig:100
+#: modules/admin/templates/user_clean_confirm.phtml:25
+#: modules/admin/templates/userlist.phtml:36
+msgid "Total"
+msgstr ""
+
+#: modules/admin/templates/forum-hidden-topics.twig:55
+msgid "Path:"
+msgstr ""
+
+#: modules/admin/templates/forum-hidden-topics.twig:77
+msgid "Topic deleted:"
+msgstr ""
+
 #: modules/admin/templates/forum-section-edit.twig:26
 msgid "Min. 2, Max. 150 characters"
 msgstr ""
@@ -1432,6 +1484,62 @@ msgstr ""
 msgid "WARNING! All the information will be deleted"
 msgstr ""
 
+#: modules/admin/templates/forum-settings.twig:19
+msgid "Common settings"
+msgstr ""
+
+#: modules/admin/templates/forum-settings.twig:22
+msgid "Show file counters"
+msgstr ""
+
+#: modules/admin/templates/forum-settings.twig:26
+msgid "SEO settings"
+msgstr ""
+
+#: modules/admin/templates/forum-settings.twig:28
+msgid "Forum keywords"
+msgstr ""
+
+#: modules/admin/templates/forum-settings.twig:32
+msgid "Forum description"
+msgstr ""
+
+#: modules/admin/templates/forum-settings.twig:35
+#: modules/admin/templates/forum.twig:13
+msgid "Sections"
+msgstr ""
+
+#: modules/admin/templates/forum-settings.twig:37
+msgid "Section keywords"
+msgstr ""
+
+#: modules/admin/templates/forum-settings.twig:39
+#: modules/admin/templates/forum-settings.twig:44
+msgid "Macros available: #name#, #description#"
+msgstr ""
+
+#: modules/admin/templates/forum-settings.twig:42
+msgid "Section description"
+msgstr ""
+
+#: modules/admin/templates/forum-settings.twig:46
+#: modules/admin/templates/forum.twig:14
+msgid "Topics"
+msgstr ""
+
+#: modules/admin/templates/forum-settings.twig:48
+msgid "Topic keywords"
+msgstr ""
+
+#: modules/admin/templates/forum-settings.twig:50
+#: modules/admin/templates/forum-settings.twig:55
+msgid "Macros available: #name#"
+msgstr ""
+
+#: modules/admin/templates/forum-settings.twig:53
+msgid "Topic description"
+msgstr ""
+
 #: modules/admin/templates/forum-structure.twig:27
 msgid "View"
 msgstr ""
@@ -1442,16 +1550,6 @@ msgstr ""
 
 #: modules/admin/templates/forum.twig:12
 msgid "Categories"
-msgstr ""
-
-#: modules/admin/templates/forum.twig:13
-#: modules/admin/templates/forum/settings.phtml:41
-msgid "Sections"
-msgstr ""
-
-#: modules/admin/templates/forum.twig:14
-#: modules/admin/templates/forum/settings.phtml:52
-msgid "Topics"
 msgstr ""
 
 #: modules/admin/templates/forum.twig:15
@@ -1469,104 +1567,6 @@ msgstr ""
 #: modules/admin/templates/forum.twig:19
 #: modules/admin/templates/forum.twig:22
 msgid "Settings"
-msgstr ""
-
-#: modules/admin/templates/forum/hidden_posts.phtml:20
-#: modules/admin/templates/forum/hidden_topics.phtml:20
-msgid "Filtered:"
-msgstr ""
-
-#: modules/admin/templates/forum/hidden_posts.phtml:39
-msgid "Go to page"
-msgstr ""
-
-#: modules/admin/templates/forum/hidden_posts.phtml:52
-#: modules/admin/templates/forum/hidden_topics.phtml:47
-msgid "Topic:"
-msgstr ""
-
-#: modules/admin/templates/forum/hidden_posts.phtml:76
-msgid "Edited:"
-msgstr ""
-
-#: modules/admin/templates/forum/hidden_posts.phtml:79
-msgid "Post deleted:"
-msgstr ""
-
-#: modules/admin/templates/forum/hidden_posts.phtml:81
-msgid "Post restored by:"
-msgstr ""
-
-#: modules/admin/templates/forum/hidden_posts.phtml:84
-#: modules/admin/templates/forum/hidden_topics.phtml:80
-msgid "Filter:"
-msgstr ""
-
-#: modules/admin/templates/forum/hidden_posts.phtml:104
-#: modules/admin/templates/forum/hidden_topics.phtml:100
-#: modules/admin/templates/reg_list.phtml:52
-msgid "Delete all"
-msgstr ""
-
-#: modules/admin/templates/forum/hidden_posts.phtml:111
-#: modules/admin/templates/forum/hidden_topics.phtml:107
-#: modules/admin/templates/user_clean_confirm.phtml:25
-#: modules/admin/templates/userlist.phtml:36
-msgid "Total"
-msgstr ""
-
-#: modules/admin/templates/forum/hidden_topics.phtml:51
-msgid "Path:"
-msgstr ""
-
-#: modules/admin/templates/forum/hidden_topics.phtml:77
-msgid "Topic deleted:"
-msgstr ""
-
-#: modules/admin/templates/forum/settings.phtml:25
-msgid "Common settings"
-msgstr ""
-
-#: modules/admin/templates/forum/settings.phtml:28
-msgid "Show file counters"
-msgstr ""
-
-#: modules/admin/templates/forum/settings.phtml:32
-msgid "SEO settings"
-msgstr ""
-
-#: modules/admin/templates/forum/settings.phtml:34
-msgid "Forum keywords"
-msgstr ""
-
-#: modules/admin/templates/forum/settings.phtml:38
-msgid "Forum description"
-msgstr ""
-
-#: modules/admin/templates/forum/settings.phtml:43
-msgid "Section keywords"
-msgstr ""
-
-#: modules/admin/templates/forum/settings.phtml:45
-#: modules/admin/templates/forum/settings.phtml:50
-msgid "Macros available: #name#, #description#"
-msgstr ""
-
-#: modules/admin/templates/forum/settings.phtml:48
-msgid "Section description"
-msgstr ""
-
-#: modules/admin/templates/forum/settings.phtml:54
-msgid "Topic keywords"
-msgstr ""
-
-#: modules/admin/templates/forum/settings.phtml:56
-#: modules/admin/templates/forum/settings.phtml:61
-msgid "Macros available: #name#"
-msgstr ""
-
-#: modules/admin/templates/forum/settings.phtml:59
-msgid "Topic description"
 msgstr ""
 
 #: modules/admin/templates/index.twig:10

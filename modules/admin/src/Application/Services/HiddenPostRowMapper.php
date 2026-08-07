@@ -10,6 +10,7 @@ use Johncms\Modules\Forum\Domain\Models\ForumTopic;
 use Johncms\Users\User;
 use Johncms\Utils\DateFormatterInterface;
 use Johncms\Utils\PlainTextFormatter;
+use Twig\Markup;
 
 final readonly class HiddenPostRowMapper
 {
@@ -54,8 +55,10 @@ final readonly class HiddenPostRowMapper
             'display_date'            => $this->dateFormatter->format($message->date),
             'topic_name'              => $topic->name ?? '',
             'topic_url'               => $topic !== null ? ($this->topicPath->getTopicUrlById((int) $topic->id) ?? '/forum/') : '/forum/',
-            'formatted_text'          => $text,
-            'rights'                  => $author->rights ?? 0,
+            'formatted_text'          => new Markup((string) $text, 'UTF-8'),
+            // The address and the user agent of an author with more rights than the visitor has
+            // are not theirs to see.
+            'show_origin'             => $this->currentUser->rights >= ($author->rights ?? 0),
             'browser'                 => $message->user_agent,
             'user_is_online'          => $author !== null && time() <= $author->lastdate + 300,
             'ip'                      => long2ip((int) $message->ip),

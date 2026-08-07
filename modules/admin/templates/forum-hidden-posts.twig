@@ -1,0 +1,112 @@
+{#
+    Posts hidden from the forum, with the filters that narrow the list.
+
+    @var array             items        Rows prepared by HiddenPostRowMapper.
+    @var int               total
+    @var int               per_page
+    @var string            filtered_by  Empty when the whole list is shown.
+    @var string            reset_filter
+    @var string            del_all_url  Empty unless the visitor may purge the list.
+    @var \Twig\Markup      pagination
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    {% if filtered_by %}
+        <div class="alert alert-warning">
+            {{ __('Filtered:') }} {{ filtered_by }}<br>
+            <a href="{{ reset_filter }}">{{ __('Cancel') }}</a>
+        </div>
+    {% endif %}
+
+    {% if items is empty %}
+        <div class="row">
+            <div class="col-md-6">
+                {% include '@theme/components/alert.twig' with {alert_type: 'alert-info', alert: __('The list is empty')} only %}
+            </div>
+        </div>
+    {% endif %}
+
+    {% for item in items %}
+        <div class="shadow post-item mb-2">
+            <div class="post-header d-flex justify-content-between border-bottom pb-1">
+                <div class="d-flex align-items-end">
+                    {% if item.user_profile_link %}
+                        <a href="{{ item.user_profile_link }}" class="user-login me-2">{{ item.user_name }}</a>
+                    {% else %}
+                        <a class="user-login me-2">{{ item.user_name }}</a>
+                    {% endif %}
+                    <span class="post-date">{{ item.display_date }}</span>
+                </div>
+                <div class="post-actions">
+                    {% if item.topic_url %}
+                        <a href="{{ item.topic_url }}" class="btn btn-sm btn-secondary">{{ __('Go to page') }}</a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="post-body d-flex align-items-start pt-3 pb-3">
+                <div class="user-avatar me-2 me-md-4">
+                    <div class="avatar-image rounded-circle overflow-hidden">
+                        <img src="{{ avatar(item.id) }}" class="img-fluid" alt=".">
+                    </div>
+                    <div class="user-status {{ item.user_is_online ? 'online' : 'offline' }} shadow"></div>
+                </div>
+                <div class="overflow-auto flex-grow-1">
+                    <div class="mb-2 d-flex align-items-center">
+                        <span class="me-1">{{ __('Topic:') }}</span>
+                        <a href="{{ item.topic_url }}">{{ item.topic_name }}</a>
+                    </div>
+                    {{ item.formatted_text }}
+                </div>
+            </div>
+            <div class="post-footer d-flex justify-content-between border-top pt-2">
+                <div class="post-user-info d-flex overflow-hidden small align-items-center">
+                    {% include '@admin/components/hidden-item-origin.twig' with {
+                        show: item.show_origin,
+                        ip: item.ip,
+                        search_ip_url: item.search_ip_url,
+                        ip_via_proxy: item.ip_via_proxy,
+                        search_ip_via_proxy_url: item.search_ip_via_proxy_url,
+                        browser: item.browser
+                    } only %}
+                </div>
+                <div class="text-nowrap post-actions">
+                    <span class="text-muted pe-2 flex-grow-1">
+                        {% if item.edit_count %}
+                            {{ __('Edited:') }} {{ item.editor_name }} ({{ item.edit_time }}) [{{ item.edit_count }}]
+                        {% endif %}
+                        {% if item.deleted %}
+                            {{ __('Post deleted:') }} {{ item.deleted_by }}
+                        {% elseif item.deleted_by %}
+                            {{ __('Post restored by:') }} {{ item.deleted_by }}
+                        {% endif %}
+                    </span>
+                    <span class="pe-1">{{ __('Filter:') }}</span>
+                    {% for button in item.buttons %}
+                        <a href="{{ button.url }}" class="btn btn-secondary btn-sm me-1">{{ button.name }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+    {% if del_all_url %}
+        <div class="mt-3 mb-2">
+            <form action="{{ del_all_url }}" method="post">
+                <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                <input type="submit" value="{{ __('Delete all') }}" class="btn btn-danger">
+            </form>
+        </div>
+    {% endif %}
+
+    {% if total %}
+        <div class="mb-1">
+            <div>{{ __('Total') }}: {{ total }}</div>
+            {% if total > per_page %}
+                <div class="mt-1">{{ pagination }}</div>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    <a href="/admin/forum">{{ __('Back') }}</a>
+{% endblock %}

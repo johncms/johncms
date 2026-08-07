@@ -11,7 +11,7 @@ use Johncms\Modules\Admin\Domain\Exceptions\ConfigWriteException;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Validator\Validator;
 
 final readonly class ForumSettingsController
@@ -20,7 +20,6 @@ final readonly class ForumSettingsController
 
     public function __construct(
         private AdminControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private UpdateForumSettingsUseCase $updateForumSettings,
         private Session $session,
@@ -28,12 +27,12 @@ final readonly class ForumSettingsController
         $this->controllerContext->initModule('admin');
     }
 
-    public function form(): string
+    public function form(): ViewResponse
     {
         return $this->renderForm();
     }
 
-    public function save(Request $request): string
+    public function save(Request $request): ViewResponse
     {
         if (! $this->isCsrfValid($request)) {
             return $this->renderForm(__('Wrong data'));
@@ -69,25 +68,20 @@ final readonly class ForumSettingsController
         return $validator->isValid();
     }
 
-    private function renderForm(?string $errorMessage = null): string
+    private function renderForm(string $errorMessage = ''): ViewResponse
     {
         $title = __('Forum Settings');
         $this->navChain->add(__('Forum Management'), '/admin/forum');
         $this->navChain->add($title);
 
-        $successMessage = $this->session->getFlash('success_message');
-
-        $this->render->addData([
-            'title'       => $title,
-            'page_title'  => $title,
-            'module_menu' => ['forum' => true],
-        ]);
-
-        return $this->render->render('admin::forum/settings', [
-            'forum_config'    => config('forum')['settings'],
+        return new ViewResponse('@admin/forum-settings.twig', [
+            'title'           => $title,
+            'page_title'      => $title,
+            'module_menu'     => ['forum' => true],
+            'settings'        => (array) config('forum.settings', []),
             'form_action'     => self::URL,
             'error_message'   => $errorMessage,
-            'success_message' => $successMessage,
+            'success_message' => (string) $this->session->getFlash('success_message'),
         ]);
     }
 }

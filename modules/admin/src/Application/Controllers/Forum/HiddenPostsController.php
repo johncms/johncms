@@ -12,7 +12,7 @@ use Johncms\Modules\Admin\Application\Services\HiddenPostRowMapper;
 use Johncms\Modules\Admin\Application\UseCases\ManageHiddenForumUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\System\View\Render;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Users\User;
 use Johncms\Validator\Validator;
 
@@ -22,7 +22,6 @@ final readonly class HiddenPostsController
 
     public function __construct(
         private AdminControllerContext $controllerContext,
-        private Render $render,
         private NavChain $navChain,
         private User $currentUser,
         private ManageHiddenForumUseCase $manageHidden,
@@ -33,7 +32,7 @@ final readonly class HiddenPostsController
         $this->controllerContext->initModule('admin');
     }
 
-    public function index(Request $request): string
+    public function index(Request $request): ViewResponse
     {
         [$topicId, $userId, $filterLink, $filteredBy] = $this->filters($request);
 
@@ -52,24 +51,22 @@ final readonly class HiddenPostsController
         $this->navChain->add($title);
 
         $meta = new PageMeta($title, $pagination->getCurrentPage());
-        $this->render->addData([
-            'title'       => $meta->title,
-            'page_title'  => $title,
-            'module_menu' => ['forum' => true],
-        ]);
 
-        return $this->render->render('admin::forum/hidden_posts', [
+        return new ViewResponse('@admin/forum-hidden-posts.twig', [
+            'title'        => $meta->title,
+            'page_title'   => $title,
+            'module_menu'  => ['forum' => true],
             'items'        => $this->rowMapper->mapMany($posts),
             'total'        => $total,
             'per_page'     => $pagination->getPerPage(),
-            'filtered_by'  => $filteredBy,
+            'filtered_by'  => (string) $filteredBy,
             'reset_filter' => self::URL,
-            'del_all_url'  => $this->currentUser->rights === 9 && $total > 0 ? self::URL . '/delete' . $filterLink : null,
+            'del_all_url'  => $this->currentUser->rights === 9 && $total > 0 ? self::URL . '/delete' . $filterLink : '',
             'pagination'   => $pagination->render(),
         ]);
     }
 
-    public function deleteAll(Request $request): string
+    public function deleteAll(Request $request): ViewResponse
     {
         if (! $this->isCsrfValid($request) || $this->currentUser->rights !== 9) {
             redirect(self::URL);

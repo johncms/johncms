@@ -1,0 +1,61 @@
+{#
+    The settings of the forum.
+
+    @var array  settings        Current values, keyed by setting name.
+    @var string form_action
+    @var string error_message   Empty unless the last save failed.
+    @var string success_message Empty unless a save has just succeeded.
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    <div style="max-width: 640px">
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger shadow border-0', alert: error_message} only %}
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-success shadow border-0', alert: success_message} only %}
+
+        <form method="post" action="{{ form_action }}">
+            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+            <fieldset>
+                <legend>{{ __('Common settings') }}</legend>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" name="file_counters" value="1" id="file_counters"{% if settings.file_counters %} checked="checked"{% endif %}>
+                    <label class="form-check-label" for="file_counters">{{ __('Show file counters') }}</label>
+                </div>
+            </fieldset>
+            <fieldset class="mt-3">
+                <legend>{{ __('SEO settings') }}</legend>
+                <div class="form-group">
+                    <label for="forum_keywords">{{ __('Forum keywords') }}</label>
+                    <textarea name="forum_keywords" class="form-control" id="forum_keywords" cols="30" rows="2">{{ settings.forum_keywords }}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="forum_description">{{ __('Forum description') }}</label>
+                    <textarea name="forum_description" class="form-control" id="forum_description" cols="30" rows="2">{{ settings.forum_description }}</textarea>
+                </div>
+                <h3>{{ __('Sections') }}</h3>
+                <div class="form-group">
+                    <label for="section_keywords">{{ __('Section keywords') }}</label>
+                    <textarea name="section_keywords" class="form-control" id="section_keywords" cols="30" rows="2">{{ settings.section_keywords }}</textarea>
+                    <div class="small text-muted">{{ __('Macros available: #name#, #description#') }}</div>
+                </div>
+                <div class="form-group">
+                    <label for="section_description">{{ __('Section description') }}</label>
+                    <textarea name="section_description" class="form-control" id="section_description" cols="30" rows="2">{{ settings.section_description }}</textarea>
+                    <div class="small text-muted">{{ __('Macros available: #name#, #description#') }}</div>
+                </div>
+                <h3>{{ __('Topics') }}</h3>
+                <div class="form-group">
+                    <label for="topic_keywords">{{ __('Topic keywords') }}</label>
+                    <textarea name="topic_keywords" class="form-control" id="topic_keywords" cols="30" rows="2">{{ settings.topic_keywords }}</textarea>
+                    <div class="small text-muted">{{ __('Macros available: #name#') }}</div>
+                </div>
+                <div class="form-group">
+                    <label for="topic_description">{{ __('Topic description') }}</label>
+                    <textarea name="topic_description" class="form-control" id="topic_description" cols="30" rows="2">{{ settings.topic_description }}</textarea>
+                    <div class="small text-muted">{{ __('Macros available: #name#') }}</div>
+                </div>
+            </fieldset>
+            <input type="submit" class="btn btn-primary mb-2" value="{{ __('Save') }}"/>
+        </form>
+    </div>
+{% endblock %}

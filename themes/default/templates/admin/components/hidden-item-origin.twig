@@ -1,0 +1,24 @@
+{#
+    Where a hidden post or topic came from: the addresses of its author and their browser.
+
+    Shown only when the visitor outranks the author; the caller decides that and passes the flag.
+
+    @param bool   show
+    @param string ip
+    @param string search_ip_url
+    @param string ip_via_proxy           Empty when the author came without a proxy.
+    @param string search_ip_via_proxy_url
+    @param string browser
+#}
+{% if show %}
+    <div class="user-ip me-2">
+        <a href="{{ search_ip_url }}">{{ ip }}</a>
+        {% if ip_via_proxy %}
+            / <a href="{{ search_ip_via_proxy_url }}">{{ ip_via_proxy }}</a>
+        {% endif %}
+    </div>
+    <div class="useragent">
+        <span>User-Agent:</span>
+        <span>{{ browser }}</span>
+    </div>
+{% endif %}
