@@ -51,12 +51,12 @@ msgid "Users List"
 msgstr ""
 
 #: config/places.global.php:16
-#: system/src/Comments.php:199
-#: system/src/Comments.php:235
-#: system/src/Comments.php:268
-#: system/src/Comments.php:294
-#: system/src/Comments.php:335
-#: system/src/Comments.php:367
+#: system/src/Comments.php:196
+#: system/src/Comments.php:232
+#: system/src/Comments.php:261
+#: system/src/Comments.php:287
+#: system/src/Comments.php:328
+#: system/src/Comments.php:355
 #: themes/default/templates/components/sidebar-main-menu.twig:60
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:80
 #: modules/homepage/templates/public/index.twig:44
@@ -83,14 +83,14 @@ msgid "Library"
 msgstr ""
 
 #: config/places.global.php:21
-#: modules/login/src/Application/Controllers/LoginController.php:30
-#: modules/login/templates/captcha.phtml:4
-#: modules/login/templates/captcha.phtml:5
-#: modules/login/templates/confirm.phtml:10
-#: modules/login/templates/confirm.phtml:11
-#: modules/login/templates/login.phtml:4
-#: modules/login/templates/login.phtml:5
-#: modules/login/templates/login.phtml:38
+#: modules/login/src/Application/Controllers/LoginController.php:29
+#: modules/login/src/Application/Controllers/LoginController.php:53
+#: modules/login/src/Application/Controllers/LoginController.php:54
+#: modules/login/src/Application/Controllers/LoginController.php:78
+#: modules/login/src/Application/Controllers/LoginController.php:79
+#: modules/login/src/Application/Controllers/LoginController.php:91
+#: modules/login/src/Application/Controllers/LoginController.php:92
+#: modules/login/templates/public/login.twig:39
 #: themes/default/templates/components/sidebar-user-menu.twig:69
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:70
 msgid "Login"
@@ -135,24 +135,24 @@ msgstr ""
 msgid "Apply"
 msgstr ""
 
-#: modules/login/src/Application/Controllers/LoginController.php:38
+#: modules/login/src/Application/Controllers/LoginController.php:37
 msgid "You have not entered login"
 msgstr ""
 
-#: modules/login/src/Application/Controllers/LoginController.php:42
+#: modules/login/src/Application/Controllers/LoginController.php:41
 msgid "You have not entered password"
 msgstr ""
 
-#: modules/login/src/Application/Controllers/LogoutController.php:47
+#: modules/login/src/Application/Controllers/LogoutController.php:45
 #: themes/default/templates/components/sidebar-user-menu.twig:52
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:52
 msgid "Personal"
 msgstr ""
 
-#: modules/login/src/Application/Controllers/LogoutController.php:48
-#: modules/login/templates/logout.phtml:4
-#: modules/login/templates/logout.phtml:5
-#: modules/login/templates/logout.phtml:11
+#: modules/login/src/Application/Controllers/LogoutController.php:46
+#: modules/login/src/Application/Controllers/LogoutController.php:51
+#: modules/login/src/Application/Controllers/LogoutController.php:52
+#: modules/login/templates/public/logout.twig:12
 msgid "Logout"
 msgstr ""
 
@@ -166,58 +166,58 @@ msgstr ""
 msgid "The security code is not correct"
 msgstr ""
 
-#: modules/login/templates/captcha.phtml:10
-#: modules/login/templates/captcha.phtml:19
+#: modules/login/templates/public/captcha.twig:12
+#: modules/login/templates/public/captcha.twig:21
 msgid "Verification code"
 msgstr ""
 
-#: modules/login/templates/captcha.phtml:12
+#: modules/login/templates/public/captcha.twig:14
 msgid "Enter verification code"
 msgstr ""
 
-#: modules/login/templates/captcha.phtml:24
+#: modules/login/templates/public/captcha.twig:26
 msgid "Continue"
 msgstr ""
 
-#: modules/login/templates/confirm.phtml:20
+#: modules/login/templates/public/confirm.twig:12
 msgid "You didn't confirm your email address. Please check your email and follow the instructions in it."
 msgstr ""
 
-#: modules/login/templates/confirm.phtml:28
+#: modules/login/templates/public/confirm.twig:17
 msgid "Sorry, but your request for registration is not considered yet. Please, be patient."
 msgstr ""
 
-#: modules/login/templates/login.phtml:10
+#: modules/login/templates/public/login.twig:11
 msgid "Authorization"
 msgstr ""
 
-#: modules/login/templates/login.phtml:15
-#: modules/login/templates/login.phtml:23
+#: modules/login/templates/public/login.twig:16
+#: modules/login/templates/public/login.twig:24
 msgid "Username"
 msgstr ""
 
-#: modules/login/templates/login.phtml:27
-#: modules/login/templates/login.phtml:35
+#: modules/login/templates/public/login.twig:28
+#: modules/login/templates/public/login.twig:36
 msgid "Password"
 msgstr ""
 
-#: modules/login/templates/login.phtml:39
+#: modules/login/templates/public/login.twig:40
 msgid "Forgot password?"
 msgstr ""
 
-#: modules/login/templates/login.phtml:41
+#: modules/login/templates/public/login.twig:42
 #: themes/default/templates/components/sidebar-user-menu.twig:77
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:78
 msgid "Registration"
 msgstr ""
 
-#: modules/login/templates/logout.phtml:9
+#: modules/login/templates/public/logout.twig:10
 msgid "Are you sure you want to leave the site?"
 msgstr ""
 
-#: modules/login/templates/logout.phtml:12
+#: modules/login/templates/public/logout.twig:13
 #: modules/notifications/templates/public/settings.twig:31
-#: themes/default/templates/system/pages/comments_delete.phtml:26
+#: themes/default/templates/pages/comments-delete.twig:18
 msgid "Cancel"
 msgstr ""
 
@@ -320,16 +320,17 @@ msgid "Go to Link"
 msgstr ""
 
 #: modules/redirect/templates/public/index.twig:30
-#: system/src/Comments.php:203
-#: system/src/Comments.php:239
-#: system/src/Comments.php:252
-#: system/src/Comments.php:272
-#: system/src/Comments.php:298
-#: system/src/Comments.php:339
-#: system/src/Comments.php:351
-#: system/src/Comments.php:371
+#: system/src/Comments.php:200
+#: system/src/Comments.php:236
+#: system/src/Comments.php:253
+#: system/src/Comments.php:265
+#: system/src/Comments.php:291
+#: system/src/Comments.php:332
+#: system/src/Comments.php:347
+#: system/src/Comments.php:359
+#: themes/default/templates/admin/pages/result.twig:21
+#: themes/default/templates/pages/comments-list.twig:138
 #: themes/default/templates/pages/result.twig:19
-#: themes/default/templates/system/pages/comments_list.phtml:156
 #: themes/default/templates/system/pages/result.phtml:33
 msgid "Back"
 msgstr ""
@@ -432,54 +433,54 @@ msgid ""
 "PHP should work with the default driver: <a href=\"https://www.php.net/manual/en/intro.mysqlnd.php\" target=\"_blank\">MySQL Native Driver (mysqlnd)</a>."
 msgstr ""
 
-#: system/src/Comments.php:188
-#: system/src/Comments.php:257
-#: system/src/Comments.php:258
-#: themes/default/templates/system/pages/comments_list.phtml:124
+#: system/src/Comments.php:185
+#: system/src/Comments.php:249
+#: system/src/Comments.php:250
+#: themes/default/templates/pages/comments-list.twig:106
 msgid "Reply"
 msgstr ""
 
-#: system/src/Comments.php:201
+#: system/src/Comments.php:198
 msgid "Administrator already replied to this message"
 msgstr ""
 
-#: system/src/Comments.php:270
-#: system/src/Comments.php:369
+#: system/src/Comments.php:263
+#: system/src/Comments.php:357
 msgid "Wrong data"
 msgstr ""
 
-#: system/src/Comments.php:282
-#: system/src/Comments.php:356
-#: system/src/Comments.php:357
-#: themes/default/templates/system/pages/comments_list.phtml:136
+#: system/src/Comments.php:275
+#: system/src/Comments.php:343
+#: system/src/Comments.php:344
+#: themes/default/templates/pages/comments-list.twig:118
 msgid "Edit"
 msgstr ""
 
-#: system/src/Comments.php:296
+#: system/src/Comments.php:289
 msgid "You cannot edit posts of higher administration"
 msgstr ""
 
-#: system/src/Comments.php:381
-#: system/src/Comments.php:421
-#: system/src/Comments.php:422
-#: themes/default/templates/system/pages/comments_delete.phtml:24
-#: themes/default/templates/system/pages/comments_list.phtml:139
+#: system/src/Comments.php:369
+#: system/src/Comments.php:403
+#: system/src/Comments.php:404
+#: themes/default/templates/pages/comments-delete.twig:16
+#: themes/default/templates/pages/comments-list.twig:121
 msgid "Delete"
 msgstr ""
 
-#: system/src/Comments.php:631
+#: system/src/Comments.php:621
 msgid "Text is too short"
 msgstr ""
 
-#: system/src/Comments.php:637
+#: system/src/Comments.php:627
 msgid "You cannot add the message so often<br>Please, wait"
 msgstr ""
 
-#: system/src/Comments.php:637
+#: system/src/Comments.php:627
 msgid "seconds"
 msgstr ""
 
-#: system/src/Comments.php:645
+#: system/src/Comments.php:635
 msgid "Message already exists"
 msgstr ""
 
@@ -508,15 +509,16 @@ msgid "Bad Request"
 msgstr ""
 
 #: system/src/Http/PageMeta.php:18
-#: modules/forum/src/Application/Controllers/ForumSearchController.php:100
-#: modules/forum/src/Application/Controllers/ForumSearchController.php:109
+#: modules/forum/src/Application/Controllers/ForumSearchController.php:90
+#: modules/forum/src/Application/Controllers/ForumSearchController.php:99
 #: modules/forum/src/Application/Controllers/ForumTopicController.php:152
 #: modules/forum/src/Application/Controllers/ForumTopicController.php:161
-#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:416
+#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:418
 msgid "Page"
 msgstr ""
 
 #: system/src/NavChain.php:76
+#: themes/default/templates/admin/pages/errors/403.twig:21
 #: themes/default/templates/system/error/403.phtml:36
 msgid "Home"
 msgstr ""
@@ -686,46 +688,58 @@ msgstr ""
 msgid "Invalid type given. String, integer, float, boolean or array expected"
 msgstr ""
 
-#: themes/default/templates/components/debug.twig:13
-#: themes/default/templates/system/app/debug.phtml:15
-msgid "Sql query log"
-msgstr ""
-
-#: themes/default/templates/components/debug.twig:24
-#: themes/default/templates/system/app/debug.phtml:26
-msgid "Query"
-msgstr ""
-
-#: themes/default/templates/components/debug.twig:25
-#: themes/default/templates/system/app/debug.phtml:27
-msgid "Bindings"
-msgstr ""
-
-#: themes/default/templates/components/debug.twig:26
-#: themes/default/templates/system/app/debug.phtml:28
-msgid "Time"
-msgstr ""
-
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:17
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:342
 #: themes/default/templates/components/sidebar-main-menu.twig:6
 #: themes/default/templates/components/sidebar-main-menu.twig:179
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:22
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:201
 #: modules/admin/templates/sidebar-admin-menu.phtml:23
 #: modules/admin/templates/sidebar-admin-menu.phtml:320
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:23
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:359
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:14
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:350
 msgid "Set Light Theme"
 msgstr ""
 
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:17
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:341
 #: themes/default/templates/components/sidebar-main-menu.twig:6
 #: themes/default/templates/components/sidebar-main-menu.twig:178
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:22
 #: themes/default/templates/system/app/sidebar-main-menu.phtml:200
 #: modules/admin/templates/sidebar-admin-menu.phtml:23
 #: modules/admin/templates/sidebar-admin-menu.phtml:319
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:23
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:358
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:14
+#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:349
 msgid "Set Dark Theme"
+msgstr ""
+
+#: themes/default/templates/components/comments-form.twig:20
+msgid "Message"
+msgstr ""
+
+#: themes/default/templates/components/comments-form.twig:24
+msgid "Send"
+msgstr ""
+
+#: themes/default/templates/components/debug.twig:18
+#: themes/default/templates/system/app/debug.phtml:15
+msgid "Sql query log"
+msgstr ""
+
+#: themes/default/templates/components/debug.twig:27
+#: themes/default/templates/system/app/debug.phtml:26
+msgid "Query"
+msgstr ""
+
+#: themes/default/templates/components/debug.twig:28
+#: themes/default/templates/system/app/debug.phtml:27
+msgid "Bindings"
+msgstr ""
+
+#: themes/default/templates/components/debug.twig:29
+#: themes/default/templates/system/app/debug.phtml:28
+msgid "Time"
 msgstr ""
 
 #: themes/default/templates/components/sidebar-main-menu.twig:22
@@ -760,7 +774,7 @@ msgstr ""
 
 #: themes/default/templates/components/sidebar-user-menu.twig:24
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:22
-#: modules/registration/templates/email_confirmed.phtml:22
+#: modules/registration/templates/public/email-confirmed.twig:15
 msgid "Log In"
 msgstr ""
 
@@ -798,6 +812,26 @@ msgstr ""
 #: themes/default/templates/layouts/default.twig:178
 #: themes/default/templates/system/layout/default.phtml:228
 msgid "Accept"
+msgstr ""
+
+#: themes/default/templates/pages/comments-delete.twig:13
+msgid "Do you really want to delete?"
+msgstr ""
+
+#: themes/default/templates/pages/comments-delete.twig:17
+msgid "Clear"
+msgstr ""
+
+#: themes/default/templates/pages/comments-list.twig:21
+msgid "The list is empty"
+msgstr ""
+
+#: themes/default/templates/pages/comments-list.twig:66
+msgid "Edited:"
+msgstr ""
+
+#: themes/default/templates/pages/comments-list.twig:67
+msgid "Edited"
 msgstr ""
 
 #: themes/default/templates/system/mail/layouts/default.phtml:115
@@ -934,32 +968,4 @@ msgstr ""
 
 #: themes/default/templates/system/mail/templates/restore_password_complete.phtml:22
 msgid "After logging in, you can change your password to new one."
-msgstr ""
-
-#: themes/default/templates/system/pages/comments_delete.phtml:21
-msgid "Do you really want to delete?"
-msgstr ""
-
-#: themes/default/templates/system/pages/comments_delete.phtml:25
-msgid "Clear"
-msgstr ""
-
-#: themes/default/templates/system/pages/comments_form.phtml:23
-msgid "Message"
-msgstr ""
-
-#: themes/default/templates/system/pages/comments_form.phtml:31
-msgid "Send"
-msgstr ""
-
-#: themes/default/templates/system/pages/comments_list.phtml:39
-msgid "The list is empty"
-msgstr ""
-
-#: themes/default/templates/system/pages/comments_list.phtml:84
-msgid "Edited:"
-msgstr ""
-
-#: themes/default/templates/system/pages/comments_list.phtml:85
-msgid "Edited"
 msgstr ""

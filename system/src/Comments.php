@@ -24,7 +24,8 @@ use Johncms\Users\IgnoreListCheckerInterface;
 use Johncms\Users\User as UserModel;
 use Johncms\System\Utility\EditorContentNormalizer;
 use Johncms\Utils\DateFormatterInterface;
-use Johncms\System\View\Render;
+use Johncms\View\RendererInterface;
+use Twig\Markup;
 use PDO;
 
 class Comments
@@ -34,9 +35,6 @@ class Comments
 
     /** @var string Таблица с комментариями */
     private $comments_table;
-
-    /** @var string Namespace для шаблонов */
-    private $templates_namespace;
 
     /** @var bool|mixed Идентификатор комментируемого объекта */
     private $sub_id = false;
@@ -53,7 +51,7 @@ class Comments
     /** @var string URL формируемых ссылок */
     private $url;
 
-    /** @var Render */
+    /** @var RendererInterface */
     private $view;
 
     /** @var PDO */
@@ -134,7 +132,7 @@ class Comments
         $this->ignoreListChecker = $container->get(IgnoreListCheckerInterface::class);
         $this->db = $container->get(PDO::class);
         $this->systemUser = $container->get(User::class);
-        $this->view = di(Render::class);
+        $this->view = di(RendererInterface::class);
         $this->nav_chain = di(NavChain::class);
         $this->purifier = di(HTMLPurifier::class);
         $this->embed = di(MediaEmbed::class);
@@ -145,7 +143,6 @@ class Comments
         $this->comments_table = $arg['comments_table'];
         $this->object_table = ! empty($arg['object_table']) ? $arg['object_table'] : false;
         $this->back_url = ! empty($arg['back_url']) ? $arg['back_url'] : '';
-        $this->templates_namespace = ! empty($arg['templates_namespace']) ? $arg['templates_namespace'] : 'system';
         $homeurl = config('johncms.homeurl', '');
 
         if (! empty($arg['sub_id'])) {
@@ -153,7 +150,7 @@ class Comments
         }
 
         if (! empty($arg['sub_id_name']) && ! empty($arg['sub_id'])) {
-            $this->url = $arg['script'] . '&amp;' . $arg['sub_id_name'] . '=' . $arg['sub_id'];
+            $this->url = $arg['script'] . '&' . $arg['sub_id_name'] . '=' . $arg['sub_id'];
         } else {
             $this->url = $arg['script'] ?? '';
         }
@@ -194,7 +191,7 @@ class Comments
 
                         if (! empty($res['reply']) && $attributes['reply_rights'] > $this->systemUser->rights) {
                             echo $this->view->render(
-                                'system::pages/result',
+                                '@theme/pages/result.twig',
                                 [
                                     'title'         => d__('system', 'Downloads'),
                                     'type'          => 'alert-danger',
@@ -227,15 +224,15 @@ class Comments
                                     ]
                                 );
 
-                                redirect(str_replace('&amp;', '&', $this->url));
+                                redirect($this->url);
                             } else {
                                 echo $this->view->render(
-                                    'system::pages/result',
+                                    '@theme/pages/result.twig',
                                     [
                                         'title'         => d__('system', 'Downloads'),
                                         'type'          => 'alert-danger',
                                         'message'       => $message['error'],
-                                        'back_url'      => $this->buildUrl('&amp;mod=reply&amp;item=' . $this->item),
+                                        'back_url'      => $this->buildUrl('&mod=reply&item=' . $this->item),
                                         'back_url_name' => d__('system', 'Back'),
                                     ]
                                 );
@@ -246,24 +243,20 @@ class Comments
                                 ' (' . $this->dateFormatter->format($res['time']) . ')<br />' .
                                 $this->purifier->purify($res['text']);
                             $reply = $res['reply'];
-                            $data['message_form'] = $this->msgForm('&amp;mod=reply&amp;item=' . $this->item, $text, $reply);
-
-                            $data['back_url'] = $this->url;
-                            $data['back_url_name'] = d__('system', 'Back');
-
                             echo $this->view->render(
-                                $this->templates_namespace . '::pages/comments_reply',
+                                '@theme/pages/comments-reply.twig',
                                 [
-                                    'title'      => d__('system', 'Reply'),
-                                    'page_title' => d__('system', 'Reply'),
-                                    'data'       => $data,
-
+                                    'title'         => d__('system', 'Reply'),
+                                    'page_title'    => d__('system', 'Reply'),
+                                    'message_form'  => $this->msgForm('&mod=reply&item=' . $this->item, $text, $reply),
+                                    'back_url'      => $this->url,
+                                    'back_url_name' => d__('system', 'Back'),
                                 ]
                             );
                         }
                     } else {
                         echo $this->view->render(
-                            'system::pages/result',
+                            '@theme/pages/result.twig',
                             [
                                 'title'         => d__('system', 'Downloads'),
                                 'type'          => 'alert-danger',
@@ -289,7 +282,7 @@ class Comments
 
                         if (($user->rights ?? 0) > $this->systemUser->rights) {
                             echo $this->view->render(
-                                'system::pages/result',
+                                '@theme/pages/result.twig',
                                 [
                                     'title'         => d__('system', 'Downloads'),
                                     'type'          => 'alert-danger',
@@ -327,15 +320,15 @@ class Comments
                                     ]
                                 );
 
-                                redirect(str_replace('&amp;', '&', $this->url));
+                                redirect($this->url);
                             } else {
                                 echo $this->view->render(
-                                    'system::pages/result',
+                                    '@theme/pages/result.twig',
                                     [
                                         'title'         => d__('system', 'Downloads'),
                                         'type'          => 'alert-danger',
                                         'message'       => $message['error'],
-                                        'back_url'      => $this->buildUrl('&amp;mod=edit&amp;item=' . $this->item),
+                                        'back_url'      => $this->buildUrl('&mod=edit&item=' . $this->item),
                                         'back_url_name' => d__('system', 'Back'),
                                     ]
                                 );
@@ -344,25 +337,20 @@ class Comments
                             $author = '<a href="' . $homeurl . '/profile/' . $res['user_id'] . '"><b>' . $attributes['author_name'] . '</b></a>';
                             $author .= ' (' . $this->dateFormatter->format($res['time']) . ')<br />';
                             $author .= $this->purifier->purify($res['text']);
-                            $text = $res['text'];
-                            $data = [];
-                            $data['message_form'] = $this->msgForm('&amp;mod=edit&amp;item=' . $this->item, $author, $text);
-                            $data['back_url'] = $this->url;
-                            $data['back_url_name'] = d__('system', 'Back');
-
                             echo $this->view->render(
-                                $this->templates_namespace . '::pages/comments_reply',
+                                '@theme/pages/comments-reply.twig',
                                 [
-                                    'title'      => d__('system', 'Edit'),
-                                    'page_title' => d__('system', 'Edit'),
-                                    'data'       => $data,
-
+                                    'title'         => d__('system', 'Edit'),
+                                    'page_title'    => d__('system', 'Edit'),
+                                    'message_form'  => $this->msgForm('&mod=edit&item=' . $this->item, $author, $res['text']),
+                                    'back_url'      => $this->url,
+                                    'back_url_name' => d__('system', 'Back'),
                                 ]
                             );
                         }
                     } else {
                         echo $this->view->render(
-                            'system::pages/result',
+                            '@theme/pages/result.twig',
                             [
                                 'title'         => d__('system', 'Downloads'),
                                 'type'          => 'alert-danger',
@@ -407,21 +395,16 @@ class Comments
                             // Обновляем счетчик комментариев
                             $this->msgTotal(1);
                         }
-                        redirect(str_replace('&amp;', '&', $this->url));
+                        redirect($this->url);
                     } else {
-                        $data = [
-                            'delete_url' => $this->buildUrl('&amp;mod=del&amp;item=' . $this->item . '&amp;yes'),
-                            'back_url'   => $this->url,
-                            'clear_url'  => $this->buildUrl('&amp;mod=del&amp;item=' . $this->item . '&amp;yes&amp;all'),
-                        ];
-
                         echo $this->view->render(
-                            $this->templates_namespace . '::pages/comments_delete',
+                            '@theme/pages/comments-delete.twig',
                             [
                                 'title'      => d__('system', 'Delete'),
                                 'page_title' => d__('system', 'Delete'),
-                                'data'       => $data,
-
+                                'delete_url' => $this->buildUrl('&mod=del&item=' . $this->item . '&yes'),
+                                'clear_url'  => $this->buildUrl('&mod=del&item=' . $this->item . '&yes&all'),
+                                'back_url'   => $this->url,
                             ]
                         );
                     }
@@ -472,13 +455,13 @@ class Comments
                         $res['edit_url'] = '';
                         $res['delete_url'] = '';
                         if ($this->access_reply) {
-                            $res['reply_url'] = $this->buildUrl('&amp;mod=reply&amp;item=' . $res['subid']);
+                            $res['reply_url'] = $this->buildUrl('&mod=reply&item=' . $res['subid']);
                         }
                         if ($this->access_edit) {
-                            $res['edit_url'] = $this->buildUrl('&amp;mod=edit&amp;item=' . $res['subid']);
+                            $res['edit_url'] = $this->buildUrl('&mod=edit&item=' . $res['subid']);
                         }
                         if ($this->access_delete) {
-                            $res['delete_url'] = $this->buildUrl('&amp;mod=del&amp;item=' . $res['subid']);
+                            $res['delete_url'] = $this->buildUrl('&mod=del&item=' . $res['subid']);
                         }
 
                         $res['has_edit'] = ($this->access_edit || $this->access_delete);
@@ -487,7 +470,7 @@ class Comments
                         $text = $this->embed->embedMedia($text);
                         $text = $this->smiliesRenderer->render($text, $res['rights'] >= 1);
 
-                        $res['post_text'] = $text;
+                        $res['post_text'] = new Markup($text, 'UTF-8');
                         $res['edit_count'] = $attributes['edit_count'] ?? 0;
                         $res['editor_name'] = $attributes['edit_name'] ?? '';
                         $res['edit_time'] = ! empty($attributes['edit_time']) ? $this->dateFormatter->format($attributes['edit_time']) : '';
@@ -501,7 +484,7 @@ class Comments
                             $reply = $this->purifier->purify($res['reply']);
                             $reply = $this->embed->embedMedia($reply);
                             $reply = $this->smiliesRenderer->render($reply, $attributes['reply_rights'] >= 1);
-                            $res['reply_text'] = $reply;
+                            $res['reply_text'] = new Markup($reply, 'UTF-8');
                             $res['reply_time'] = $this->dateFormatter->format($attributes['reply_time']);
                             $res['reply_author_url'] = '/profile/' . $attributes['reply_id'];
                             $res['reply_author_name'] = $attributes['reply_name'];
@@ -530,13 +513,17 @@ class Comments
                 }
 
                 echo $this->view->render(
-                    $this->templates_namespace . '::pages/comments_list',
+                    '@theme/pages/comments-list.twig',
                     [
-                        'title'      => $arg['title'],
-                        'page_title' => $arg['page_title'] ?? $arg['title'],
-                        'data'       => $data,
-                        'back_url'   => $this->back_url,
-
+                        'title'        => $arg['title'],
+                        'page_title'   => $arg['page_title'] ?? $arg['title'],
+                        'items'        => $data['items'],
+                        'error'        => $data['error'] ?? [],
+                        'message_form' => $data['message_form'] ?? '',
+                        'pagination'   => $data['pagination'] ?? '',
+                        // The address and the browser of an author are for the staff only.
+                        'show_origin'  => (bool) $this->systemUser->rights,
+                        'back_url'     => $this->back_url,
                     ]
                 );
         }
@@ -594,16 +581,19 @@ class Comments
     }
 
     // Форма ввода комментария
-    private function msgForm(string $submit_link = '', string $text = '', string $reply = ''): string
+    private function msgForm(string $submit_link = '', string $text = '', string $reply = ''): Markup
     {
-        return $this->view->render(
-            $this->templates_namespace . '::pages/comments_form',
-            [
-                'action_url' => $this->buildUrl($submit_link),
-                'text'       => $text,
-                'reply'      => $reply,
-                'code'       => rand(1000, 9999),
-            ]
+        return new Markup(
+            $this->view->render(
+                '@theme/components/comments-form.twig',
+                [
+                    'action_url' => $this->buildUrl($submit_link),
+                    'text'       => new Markup($text, 'UTF-8'),
+                    'reply'      => $reply,
+                    'code'       => rand(1000, 9999),
+                ]
+            ),
+            'UTF-8'
         );
     }
 
@@ -672,13 +662,13 @@ class Comments
         return (int) $total;
     }
 
-    /** Builds a URL with query params appended, using '?' or '&amp;' as the separator. */
+    /** Builds a URL with query params appended. The separator is raw: the template escapes it. */
     private function buildUrl(string $extra = ''): string
     {
         if ($extra === '') {
             return $this->url;
         }
-        $sep = str_contains($this->url, '?') ? '&amp;' : '?';
-        return $this->url . $sep . preg_replace('/^&amp;/', '', $extra);
+        $sep = str_contains($this->url, '?') ? '&' : '?';
+        return $this->url . $sep . ltrim($extra, '&');
     }
 }

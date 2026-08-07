@@ -1,0 +1,25 @@
+{#
+    The form that adds a comment or answers one.
+
+    @param string       action_url
+    @param int          code    Guard against a double submit, checked against the session.
+    @param \Twig\Markup text    The comment being answered, empty when a new one is written.
+    @param string       reply   Text already entered, kept across a failed attempt.
+#}
+<form name="form" action="{{ action_url }}" method="post">
+    <input type="hidden" name="code" value="{{ code }}"/>
+
+    {% if text %}
+        <div class="card mb-3">
+            <div class="card-body">{{ text }}</div>
+        </div>
+    {% endif %}
+
+    {% include '@theme/components/editor.twig' with {
+        name: 'message',
+        label: d__('system', 'Message'),
+        value: reply|default('')
+    } only %}
+
+    <input type="submit" class="btn btn-primary mt-3" name="submit" value="{{ d__('system', 'Send') }}"/>
+</form>

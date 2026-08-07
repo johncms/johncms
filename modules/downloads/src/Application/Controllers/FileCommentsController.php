@@ -139,7 +139,6 @@ final readonly class FileCommentsController
             'owner_edit'          => false,
             'title'               => $meta->title,
             'page_title'          => __('Comments'),
-            'templates_namespace' => 'system',
             'back_url'            => $this->filePathService->getFileUrl($file),
         ]);
         return new Response((string) ob_get_clean());

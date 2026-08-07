@@ -75,7 +75,6 @@ final readonly class GuestbookController
             'owner_reply'         => true,
             'title'               => $meta->title,
             'page_title'          => __('Guestbook'),
-            'templates_namespace' => 'system',
             'back_url'            => '/profile/' . $profileUser->id,
         ]);
         return (string) ob_get_clean();

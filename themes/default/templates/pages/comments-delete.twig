@@ -1,0 +1,21 @@
+{#
+    Confirmation of removing a comment: it can be deleted outright or emptied.
+
+    @var string delete_url
+    @var string clear_url
+    @var string back_url
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    <div class="alert alert-danger">
+        <div class="pb-2">
+            {{ d__('system', 'Do you really want to delete?') }}
+        </div>
+        <div>
+            <a href="{{ delete_url }}" class="btn btn-danger btn-sm">{{ d__('system', 'Delete') }}</a>
+            <a href="{{ clear_url }}" class="btn btn-danger btn-sm">{{ d__('system', 'Clear') }}</a>
+            <a href="{{ back_url }}" class="btn btn-primary btn-sm">{{ d__('system', 'Cancel') }}</a>
+        </div>
+    </div>
+{% endblock %}

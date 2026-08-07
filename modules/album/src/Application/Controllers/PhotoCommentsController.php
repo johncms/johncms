@@ -77,7 +77,6 @@ final readonly class PhotoCommentsController
             'owner_edit'          => false,
             'title'               => $meta->title,
             'page_title'          => __('Comments'),
-            'templates_namespace' => 'system',
             'back_url'            => '/album/' . $context->albumId,
         ]);
         $html = (string) ob_get_clean();

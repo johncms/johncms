@@ -1,0 +1,20 @@
+{#
+    Answering one comment.
+
+    @var \Twig\Markup message_form
+    @var string       back_url
+    @var string       back_url_name
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    {% if message_form %}
+        <div class="mb-3">{{ message_form }}</div>
+    {% endif %}
+
+    {% if back_url %}
+        <div>
+            <a href="{{ back_url }}">{{ back_url_name }}</a>
+        </div>
+    {% endif %}
+{% endblock %}
