@@ -1,7 +1,56 @@
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import laravel from 'laravel-vite-plugin';
 import rtlcss from 'rtlcss';
+
+/**
+ * Collects the build entry points of every installed theme.
+ *
+ * A theme declares them in its manifest (themes/<name>/theme.php, the "entries" key), which is
+ * also what the application reads to decide which bundle a page loads. Listing them here as well
+ * would mean two lists to keep in sync, so this one is derived from the manifests: a new theme
+ * is built as soon as it is added, without touching the build configuration.
+ */
+function themeEntries() {
+    const themesDir = 'themes';
+    const entries = [];
+
+    if (! existsSync(themesDir)) {
+        return entries;
+    }
+
+    for (const theme of readdirSync(themesDir, { withFileTypes: true })) {
+        if (! theme.isDirectory()) {
+            continue;
+        }
+
+        const manifest = `${themesDir}/${theme.name}/theme.php`;
+
+        if (! existsSync(manifest)) {
+            continue;
+        }
+
+        // The manifest is PHP, so the paths are read from its "entries" block rather than
+        // evaluated. A theme that builds its entries some other way declares nothing here and
+        // is expected to be added to this config by hand.
+        const block = readFileSync(manifest, 'utf8').match(/'entries'\s*=>\s*\[([\s\S]*?)\]/);
+
+        if (block === null) {
+            continue;
+        }
+
+        for (const [, path] of block[1].matchAll(/=>\s*'([^']+)'/g)) {
+            if (! existsSync(path)) {
+                throw new Error(`${manifest}: the entry point "${path}" does not exist.`);
+            }
+
+            entries.push(path);
+        }
+    }
+
+    return entries;
+}
 
 /**
  * Emits a right-to-left variant next to every generated stylesheet.
@@ -33,10 +82,7 @@ function emitRtlCss() {
 export default defineConfig({
     plugins: [
         laravel({
-            input: [
-                'themes/default/src/js/app.js',
-                'themes/default/src/admin/js/app.js',
-            ],
+            input: themeEntries(),
             publicDirectory: 'public',
             buildDirectory: 'build',
             // Templates are rendered by PHP, so there is nothing for Vite to watch here.

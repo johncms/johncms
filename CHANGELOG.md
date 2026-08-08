@@ -8,6 +8,26 @@ Detailed change can see in the [repository log](https://github.com/johncms/johnc
 ## 10.0 - Unreleased
 
 #### Breaking changes
+- **Шаблоны переведены на Twig, движок Plates удалён.** Файлы `.phtml` больше не рендерятся, пакет `mobicms/render` исключён из зависимостей, вместе с ним удалены `Johncms\System\View\Render`, его расширения (`Assets`, `Avatar`, `Vite`, `Formatter`) и переменные шаблонов `$this->e()`, `$this->layout()`, `$this->fetch()`, `$user`, `$config`, `$tools`.
+
+  Своя тема потребует переписывания. Что меняется:
+
+  | Было (Plates) | Стало (Twig) |
+  |---|---|
+  | `$this->layout('system::layout/default')` | `{% extends '@theme/layouts/default.twig' %}` + `{% block content %}` |
+  | `$this->fetch('ns::partial', [...])` | `{% include '@ns/partial.twig' with {...} only %}` |
+  | `<?= $this->e($value) ?>` | `{{ value }}` — Twig экранирует всё, что печатает |
+  | `<?= $value ?>` (готовая разметка) | `{{ value }}`, если источник отдаёт `Twig\Markup`; иначе `{{ value|raw }}` |
+  | `$this->asset(...)`, `$this->avatar(...)`, `$this->formatNumber(...)` | функции `asset()`, `avatar()`, фильтр `|format_number` |
+  | `$user`, `$config`, `$csrf_token` | `app.user`, `config('johncms.…')`, `app.csrf_token` |
+  | `модуль::файл` | `@модуль/public/файл.twig` |
+
+  Шаблоны модулей разложены по областям: публичные — в `templates/public`, админские — в `templates/admin`, поэтому и путь переопределения в теме стал длиннее (`themes/<тема>/templates/homepage/public/index.twig`). В теме: макеты — в `templates/layouts`, общие блоки — в `templates/components`, системные страницы (результат действия, 403, 404) — в `templates/pages`, письма — в `templates/emails`, вёрстка админ-панели — в `templates/admin`.
+
+  Тема получила манифест `theme.php`: имя, родительская тема (`parent`), точки входа сборки (`entries`) и настройки. Тема без манифеста считается наследницей `default`, а цепочка наследования теперь произвольной длины — тема может состоять из одного файла. Пример такой темы — `themes/example`.
+
+  Письма и инсталлятор отрисовываются в отдельных окружениях: у письма нет запроса, csrf и сборки, адреса в нём абсолютные, а язык — язык получателя; инсталлятор работает до появления конфигурации. Прежняя тема `themes/admin` удалена: админ-панель — это пространство имён `@admin` внутри темы сайта.
+
 - **Отправка почты выполняется только планировщиком.** Отправка «на хитах» удалена вместе с константой `USE_CRON`: очередь писем больше не разбирается после ответа посетителю. Настройте cron-задачу планировщика с периодичностью раз в минуту, иначе письма не будут уходить:
 
   ```bash
@@ -24,7 +44,7 @@ Detailed change can see in the [repository log](https://github.com/johncms/johnc
   При обновлении переведите document root сайта на `<каталог сайта>/public` (в nginx — директива `root`, в панели хостинга — «корневая директория сайта») и перезапустите php-fpm: кэш realpath держит старые пути. Если сменить document root нельзя, на Apache сработает `.htaccess` в корне: он перенаправит запросы в `public/` и закроет доступ к коду. На nginx такой запасной вариант невозможен — там смена root обязательна.
 
   Исходники тем (`themes/<тема>/src`, `templates`) остались в корне; собранные ассеты авторам тем нужно класть в `public/themes/<тема>/assets/`.
-- **Класс `Johncms\System\View\Theme` переименован в `Johncms\View\ColorScheme`.** Он отвечает за цветовую схему страницы (dark/light/auto из куки `siteTheme`), а не за тему оформления, и имя понадобилось под тему сайта. Методы тоже переименованы: `getCurrentTheme()` → `getCurrentScheme()`, `isDarkTheme()` → `isDarkScheme()`. Авторам тем: строку `di(\Johncms\System\View\Theme::class)` в шаблонах нужно заменить на `di(\Johncms\View\ColorScheme::class)`. Имя куки и набор значений не изменились.
+- **Класс `Johncms\System\View\Theme` переименован в `Johncms\View\ColorScheme`.** Он отвечает за цветовую схему страницы (dark/light/auto из куки `siteTheme`), а не за тему оформления, и имя понадобилось под тему сайта. Методы тоже переименованы: `getCurrentTheme()` → `getCurrentScheme()`, `isDarkTheme()` → `isDarkScheme()`. Авторам тем: в шаблонах цветовая схема доступна как `app.color_scheme`. Имя куки и набор значений не изменились.
 - Composer: зависимости переехали из `system/vendor` в стандартный `vendor/`. При обновлении удалите каталог `system/vendor` и выполните `composer install`.
 - Из каталога `install/` удалены разовые скрипты обновления с версий ниже 9.9, конвертеры и скрипты доустановки модулей 9.9. Обновляйтесь по пути 9.8 → 9.9 → 10.0: скрипты и инструкции к ним остались в ветке `9.x`. Каталог `install/` теперь содержит только веб-инсталлятор.
 - **Удалён легаси-класс `Johncms\System\Legacy\Tools`.** Вместе с ним удалены каталог `system/src-legacy/` и весь namespace `Johncms\System\Legacy\`. Методы разнесены по подходящим местам:
@@ -49,8 +69,8 @@ Detailed change can see in the [repository log](https://github.com/johncms/johnc
 
   Отдельно про изменения контрактов:
 
-  * **Переменная `$tools` больше не передаётся в шаблоны.** Авторам тем нужно перейти на функции шаблонов `$this->formatNumber(...)` и `$this->displayDate(...)`, которые регистрирует новое расширение `Johncms\System\View\Extension\Formatter`.
-  * `Tools::checkout()` (`htmlentities` на этапе подготовки данных) удалён: по правилу «escape on output» экранирование теперь выполняется в шаблонах через `$this->e()`. Для HTML-фрагментов, которые собираются в PHP, добавлен `Johncms\Utils\PlainTextFormatter` (`escape()` и `toHtml()` — экранирование с `nl2br`).
+  * **Переменная `$tools` больше не передаётся в шаблоны.** В Twig те же операции доступны фильтрами `|format_number` и `|display_date`.
+  * `Tools::checkout()` (`htmlentities` на этапе подготовки данных) удалён: по правилу «escape on output» экранированием занимается шаблонизатор. Для HTML-фрагментов, которые собираются в PHP, добавлен `Johncms\Utils\PlainTextFormatter` (`escape()` и `toHtml()` — экранирование с `nl2br`).
   * `antiflood()` возвращал `int|false`, новый `getRemainingSeconds()` возвращает `int` (0 — флуда нет).
   * `smilies($str, $adm)` принимал `int|bool` вторым аргументом, новый `render(string $text, bool $withAdminSmilies)` — строго `bool`.
 
