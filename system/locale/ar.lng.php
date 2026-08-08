@@ -38,7 +38,7 @@
       'Verification code' => 'رمز التحقق',
       'Enter verification code' => 'أدخل رمز التحقق',
       'Continue' => 'متابعه',
-      'You didn\'t confirm your email address. Please check your email and follow the instructions in it.' => 'الآن تحتاج فقط إلى تأكيد عنوان البريد الإلكتروني الخاص بك.<br> يرجى التحقق من البريد الإلكتروني الخاص بك واتبع التعليمات في ذلك.',
+      'You didn\'t confirm your email address. Please check your email and follow the instructions in it.' => 'الآن تحتاج فقط إلى تأكيد عنوان البريد الإلكتروني الخاص بك. يرجى التحقق من البريد الإلكتروني الخاص بك واتبع التعليمات في ذلك.',
       'Sorry, but your request for registration is not considered yet. Please, be patient.' => 'عذراً، لكن طلبك للتسجيل لم ينظر فيه بعد. يرجى التحلي بالصبر.',
       'Authorization' => 'التصريح',
       'Username' => 'اسم المستخدم',

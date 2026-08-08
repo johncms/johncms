@@ -270,7 +270,7 @@ msgstr "O'zingiz uchun xatlar yuborish mumkin emas"
 #: modules/mail/src/Application/UseCases/SendMessageUseCase.php:54
 #, php-format
 msgid "You cannot add the message so often. Please, wait %d sec."
-msgstr "Siz xatlarni tez-tez jo'nata olmaysiz <br> Iltimos,%d s kuting..."
+msgstr "Siz xatlarni tez-tez jo'nata olmaysiz. Iltimos,%d s kuting..."
 
 #: modules/mail/src/Application/UseCases/SendMessageUseCase.php:61
 msgid "The user at your ignore list. Sending the message is impossible."

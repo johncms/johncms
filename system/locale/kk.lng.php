@@ -38,7 +38,7 @@
       'Verification code' => 'Тексеру коды',
       'Enter verification code' => 'Растау кодын енгізіңіз',
       'Continue' => 'Жалғастыру',
-      'You didn\'t confirm your email address. Please check your email and follow the instructions in it.' => 'Енді сізге электрондық поштаны растау керек.<br> Өтініш, электрондық поштаңызды тексеріп, келген хаттағы нұсқауларды орындаңыз.',
+      'You didn\'t confirm your email address. Please check your email and follow the instructions in it.' => 'Енді сізге электрондық поштаны растау керек. Өтініш, электрондық поштаңызды тексеріп, келген хаттағы нұсқауларды орындаңыз.',
       'Sorry, but your request for registration is not considered yet. Please, be patient.' => 'Кешіріңіз, бірақ сіздің тіркеуге арналған өтінім әлі қаралған жоқ. Өтінеміз, шыдамды болыңыз.',
       'Authorization' => 'Авторизация',
       'Username' => 'Қолданушы есімі',

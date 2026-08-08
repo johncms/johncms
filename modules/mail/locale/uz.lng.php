@@ -38,7 +38,7 @@
       'Block User' => 'To\'sib qo\'yish',
       'Message cannot be empty' => 'Xat bo\'sh bo\'lishi mumkin emas',
       'You cannot send messages to yourself' => 'O\'zingiz uchun xatlar yuborish mumkin emas',
-      'You cannot add the message so often. Please, wait %d sec.' => 'Siz xatlarni tez-tez jo\'nata olmaysiz <br> Iltimos,%d s kuting...',
+      'You cannot add the message so often. Please, wait %d sec.' => 'Siz xatlarni tez-tez jo\'nata olmaysiz. Iltimos,%d s kuting...',
       'The user at your ignore list. Sending the message is impossible.' => 'Sizning qora ro\'yxatingizdagi foydalanuvchi. Xabarni yuborish mumkin emas.',
       'The user added you in the ignore list. Sending the message isn\'t possible.' => 'Foydalanuvchi sizni qora ro\'yxatiga qo\'shdi. Xabarni yuborish mumkin emas.',
       'Message already exists' => 'Xabar allaqachon mavjud',

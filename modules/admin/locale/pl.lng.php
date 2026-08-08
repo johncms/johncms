@@ -181,7 +181,7 @@
       'Beginning of day' => 'Początek dnia',
       'End of day' => 'Koniec dnia',
       'Scan mode' => 'Tryb skanowania',
-      'Compare the list of files and checksums with pre-made way. Allows you to identify unknow files, and unauthorized changes.' => 'Porównaj listę plików z listą kontrolną <br> Pozwala zidentyfikować nieznane pliki i nieautoryzowane zmiany.',
+      'Compare the list of files and checksums with pre-made way. Allows you to identify unknow files, and unauthorized changes.' => 'Porównaj listę plików z listą kontrolną. Pozwala zidentyfikować nieznane pliki i nieautoryzowane zmiany.',
       'Takes a snapshot of all script files from the site calculates their checksums and stored in the database.' => 'Pozwala zarejestrować wszystkie pliki skryptu ze strony, oblicza ich sumy kontrolne i przechowuje w bazie danych.',
       'WARNING!!!<br>Before continuing make sure that all the files have been identified in the scanning mode distribution reliable and contain no unauthorized modifications.' => '<b>OSTRZEŻENIE!!!</b><br>Przed kontynuowaniem upewnij się, że wszystkie pliki zostały zidentyfikowane w dystrybucji, zostały uznane za wiarygodne i nie zawierają żadnych nieautoryzowanych modyfikacji.',
       'This procedure creates a list of all script files to your site, calculates the checksums and writes to the database, for later comparison.' => 'Procedura ta tworzy listę wszystkich plików skryptu do witryny, oblicza sumy kontrolne i zapisuje do bazy danych, w celu późniejszego porównania.',

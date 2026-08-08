@@ -38,7 +38,7 @@
       'Verification code' => 'Коопсуздук коду',
       'Enter verification code' => 'Коопсуздук кодун териңиз',
       'Continue' => 'Улантуу',
-      'You didn\'t confirm your email address. Please check your email and follow the instructions in it.' => 'Эми сиз электрондук почта дарегиңизди ырасташыңыз керек. <br>Сураныч, электрондук почтаңызды текшерип, алынган каттагы көрсөтмөлөрдү аткарыңыз.
+      'You didn\'t confirm your email address. Please check your email and follow the instructions in it.' => 'Эми сиз электрондук почта дарегиңизди ырасташыңыз керек. Сураныч, электрондук почтаңызды текшерип, алынган каттагы көрсөтмөлөрдү аткарыңыз.
 Вы не подтвердили ваш адрес электронной почты.',
       'Sorry, but your request for registration is not considered yet. Please, be patient.' => 'Кечиресиз, сиздин каттоодон өткөнүңүз дагы да каралбай жатканы үчүн. Кичипейилдикке, күтө туруңуз.',
       'Authorization' => 'Сайтка кирүү',

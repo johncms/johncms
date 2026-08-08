@@ -38,7 +38,7 @@
       'Block User' => 'Blokuj użytkownika',
       'Message cannot be empty' => 'Wiadomość nie może być pusta',
       'You cannot send messages to yourself' => 'Nie możesz wysyłać wiadomości do siebie',
-      'You cannot add the message so often. Please, wait %d sec.' => 'Nie wolno pisać wiadomość tak szybko!<br>Proszę, odczekać %d sek.',
+      'You cannot add the message so often. Please, wait %d sec.' => 'Nie wolno pisać wiadomość tak szybko! Proszę, odczekać %d sek.',
       'The user at your ignore list. Sending the message is impossible.' => 'Użytkownik dodał Cię do czarnej listy. Wysyłanie wiadomości jest niemożliwe.',
       'The user added you in the ignore list. Sending the message isn\'t possible.' => 'Użytkownik dodał Cię do czarnej listy. Wysyłanie wiadomości jest niemożliwe.',
       'Message already exists' => 'Taka wiadomość już istnieje',

@@ -185,7 +185,7 @@ msgstr "Жалғастыру"
 
 #: modules/login/templates/confirm.phtml:20
 msgid "You didn't confirm your email address. Please check your email and follow the instructions in it."
-msgstr "Енді сізге электрондық поштаны растау керек.<br> Өтініш, электрондық поштаңызды тексеріп, келген хаттағы нұсқауларды орындаңыз."
+msgstr "Енді сізге электрондық поштаны растау керек. Өтініш, электрондық поштаңызды тексеріп, келген хаттағы нұсқауларды орындаңыз."
 
 #: modules/login/templates/confirm.phtml:28
 msgid "Sorry, but your request for registration is not considered yet. Please, be patient."

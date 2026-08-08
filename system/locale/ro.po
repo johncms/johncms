@@ -185,7 +185,7 @@ msgstr "Continua"
 
 #: modules/login/templates/confirm.phtml:20
 msgid "You didn't confirm your email address. Please check your email and follow the instructions in it."
-msgstr "Acum trebuie doar sa confirmati adresa dvs. de e-mail.<br> Va rugam sa va verificati e-mailul si sa urmati instructiunile din acesta."
+msgstr "Acum trebuie doar sa confirmati adresa dvs. de e-mail. Va rugam sa va verificati e-mailul si sa urmati instructiunile din acesta."
 
 #: modules/login/templates/confirm.phtml:28
 msgid "Sorry, but your request for registration is not considered yet. Please, be patient."

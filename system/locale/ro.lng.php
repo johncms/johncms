@@ -34,7 +34,7 @@
       'Verification code' => 'Cod de verificare',
       'Enter verification code' => 'Introduceți codul de verificare',
       'Continue' => 'Continua',
-      'You didn\'t confirm your email address. Please check your email and follow the instructions in it.' => 'Acum trebuie doar sa confirmati adresa dvs. de e-mail.<br> Va rugam sa va verificati e-mailul si sa urmati instructiunile din acesta.',
+      'You didn\'t confirm your email address. Please check your email and follow the instructions in it.' => 'Acum trebuie doar sa confirmati adresa dvs. de e-mail. Va rugam sa va verificati e-mailul si sa urmati instructiunile din acesta.',
       'Sorry, but your request for registration is not considered yet. Please, be patient.' => 'Ne pare rău, dar solicitarea dvs. de înregistrare nu este încă luată în considerare. Vă rugăm să aveți răbdare.',
       'Authorization' => 'Autorizare',
       'Username' => 'Nume',

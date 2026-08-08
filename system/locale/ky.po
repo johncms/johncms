@@ -185,7 +185,7 @@ msgstr "Улантуу"
 
 #: modules/login/templates/confirm.phtml:20
 msgid "You didn't confirm your email address. Please check your email and follow the instructions in it."
-msgstr "Эми сиз электрондук почта дарегиңизди ырасташыңыз керек. <br>Сураныч, электрондук почтаңызды текшерип, алынган каттагы көрсөтмөлөрдү аткарыңыз.\n"
+msgstr "Эми сиз электрондук почта дарегиңизди ырасташыңыз керек. Сураныч, электрондук почтаңызды текшерип, алынган каттагы көрсөтмөлөрдү аткарыңыз.\n"
 "Вы не подтвердили ваш адрес электронной почты."
 
 #: modules/login/templates/confirm.phtml:28

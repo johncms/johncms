@@ -190,7 +190,7 @@
       'Beginning of day' => 'Bắt đầu của ngày',
       'End of day' => 'Cuối của ngày',
       'Scan mode' => 'Chế độ quét',
-      'Compare the list of files and checksums with pre-made way. Allows you to identify unknow files, and unauthorized changes.' => 'So sánh danh sách các tập tin và tổng kiểm tra với cách làm trước <br> Cho phép bạn để nhận file unknow, và những thay đổi trái phép.',
+      'Compare the list of files and checksums with pre-made way. Allows you to identify unknow files, and unauthorized changes.' => 'So sánh danh sách các tập tin và tổng kiểm tra với cách làm trước. Cho phép bạn để nhận file unknow, và những thay đổi trái phép.',
       'Takes a snapshot of all script files from the site calculates their checksums and stored in the database.' => 'Có một bản chụp của tất cả các tập tin kịch bản từ trang web của các tính toán tổng kiểm tra và lưu trữ trong cơ sở dữ liệu',
       'WARNING!!!<br>Before continuing make sure that all the files have been identified in the scanning mode distribution reliable and contain no unauthorized modifications.' => '<b>Lỗi!!!</b><br>Trước khi tiếp tục hãy đảm bảo rằng tất cả các tập tin đã được xác định trong chế độ phân phối quét đáng tin cậy và không chứa sửa đổi trái phép.',
       'This procedure creates a list of all script files to your site, calculates the checksums and writes to the database, for later comparison.' => 'Thủ tục này tạo ra một danh sách tất cả các tập tin kịch bản để trang web của bạn, tính toán tổng kiểm tra và ghi vào cơ sở dữ liệu, để đối chiếu sau này.',
