@@ -110,5 +110,32 @@
             <code>content</code>, <code>breadcrumbs</code>, <code>sidebar_user</code>, <code>sidebar_menu</code>,
             <code>footer_content</code>, <code>styles</code> и <code>scripts</code>.
         </p>
+
+        <h3>Что ещё можно переопределить</h3>
+        <p>
+            Тем же способом — положив файл по такому же пути — можно заменить не только страницу модуля:
+        </p>
+        <ul>
+            <li><code>templates/layouts/</code> — макеты страниц сайта;</li>
+            <li><code>templates/components/</code> — общие блоки: алерты, пагинация, редактор, строка пользователя;</li>
+            <li><code>templates/pages/</code> — системные страницы: результат действия, ошибки 403 и 404;</li>
+            <li><code>templates/admin/</code> — вёрстка админ-панели;</li>
+            <li><code>templates/emails/</code> — письма, которые отправляет сайт.</li>
+        </ul>
+        <p>
+            Всё, чего в теме нет, берётся из родительской темы, затем из <strong>default</strong> и из самого модуля,
+            поэтому копировать в свою тему нужно только то, что вы действительно меняете.
+        </p>
+
+        <h3>Свои стили</h3>
+        <p>
+            Если теме нужны собственные стили и скрипты, положите исходники в <code>/themes/имя_темы/src</code>,
+            добавьте точку входа в <code>vite.config.js</code> и укажите её в манифесте темы:
+        </p>
+        <pre class="p-3 bg-light border rounded"><code>{{ "'entries' => [\n    'public' => 'themes/имя_темы/src/js/app.js',\n],"|e }}</code></pre>
+        <p>
+            Тогда макет, унаследованный от темы <strong>default</strong>, загрузит именно вашу сборку.
+            Собирается всё командой <code>npm run build</code>, а во время работы удобнее <code>npm run dev</code>.
+        </p>
     </div>
 {% endblock %}
