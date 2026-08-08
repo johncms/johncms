@@ -12,15 +12,15 @@ Detailed change can see in the [repository log](https://github.com/johncms/johnc
 
   Своя тема потребует переписывания. Что меняется:
 
-  | Было (Plates) | Стало (Twig) |
-  |---|---|
-  | `$this->layout('system::layout/default')` | `{% extends '@theme/layouts/default.twig' %}` + `{% block content %}` |
-  | `$this->fetch('ns::partial', [...])` | `{% include '@ns/partial.twig' with {...} only %}` |
-  | `<?= $this->e($value) ?>` | `{{ value }}` — Twig экранирует всё, что печатает |
-  | `<?= $value ?>` (готовая разметка) | `{{ value }}`, если источник отдаёт `Twig\Markup`; иначе `{{ value|raw }}` |
-  | `$this->asset(...)`, `$this->avatar(...)`, `$this->formatNumber(...)` | функции `asset()`, `avatar()`, фильтр `|format_number` |
-  | `$user`, `$config`, `$csrf_token` | `app.user`, `config('johncms.…')`, `app.csrf_token` |
-  | `модуль::файл` | `@модуль/public/файл.twig` |
+  | Было (Plates)                                                         | Стало (Twig)                                                          |
+  |-----------------------------------------------------------------------|-----------------------------------------------------------------------|
+  | `$this->layout('system::layout/default')`                             | `{% extends '@theme/layouts/default.twig' %}` + `{% block content %}` |
+  | `$this->fetch('ns::partial', [...])`                                  | `{% include '@ns/partial.twig' with {...} only %}`                    |
+  | `<?= $this->e($value) ?>`                                             | `{{ value }}` — Twig экранирует всё, что печатает                     |
+  | `<?= $value ?>` (готовая разметка)                                    | `{{ value }}`, если источник отдаёт `Twig\Markup`; иначе `{{ value    |raw }}` |
+  | `$this->asset(...)`, `$this->avatar(...)`, `$this->formatNumber(...)` | функции `asset()`, `avatar()`, фильтр `                               |format_number` |
+  | `$user`, `$config`, `$csrf_token`                                     | `app.user`, `config('johncms.…')`, `app.csrf_token`                   |
+  | `модуль::файл`                                                        | `@модуль/public/файл.twig`                                            |
 
   Шаблоны модулей разложены по областям: публичные — в `templates/public`, админские — в `templates/admin`, поэтому и путь переопределения в теме стал длиннее (`themes/<тема>/templates/homepage/public/index.twig`). В теме: макеты — в `templates/layouts`, общие блоки — в `templates/components`, системные страницы (результат действия, 403, 404) — в `templates/pages`, письма — в `templates/emails`, вёрстка админ-панели — в `templates/admin`.
 
@@ -49,23 +49,23 @@ Detailed change can see in the [repository log](https://github.com/johncms/johnc
 - Из каталога `install/` удалены разовые скрипты обновления с версий ниже 9.9, конвертеры и скрипты доустановки модулей 9.9. Обновляйтесь по пути 9.8 → 9.9 → 10.0: скрипты и инструкции к ним остались в ветке `9.x`. Каталог `install/` теперь содержит только веб-инсталлятор.
 - **Удалён легаси-класс `Johncms\System\Legacy\Tools`.** Вместе с ним удалены каталог `system/src-legacy/` и весь namespace `Johncms\System\Legacy\`. Методы разнесены по подходящим местам:
 
-  | Было | Стало |
-  |---|---|
-  | `Tools::antiflood()` | `Johncms\Security\AntifloodCheckerInterface::getRemainingSeconds()` |
-  | `Tools::checkout()` | удалён без прямой замены, см. ниже |
-  | `Tools::displayDate()` | `Johncms\Utils\DateFormatterInterface::format()` |
-  | `Tools::displayError()` | удалён без замены (не использовался) |
-  | `Tools::displayPlace()` | `Johncms\Users\UserPlaceFormatterInterface::format()` |
-  | `Tools::formatNumber()` | `Johncms\Utils\ShortNumberFormatter::format()` |
-  | `Tools::getSections()` | `Johncms\Modules\Forum\Application\Services\ForumSectionTreeService::getAncestors()` |
-  | `Tools::getSectionsTree()` | `Johncms\Modules\Forum\Application\Services\ForumSectionTreeService::getFlatTree()` |
-  | `Tools::getUser()` | модель `Johncms\Users\User` |
-  | `Tools::isIgnor()` | `Johncms\Users\IgnoreListCheckerInterface::isBlockedBy()` |
+  | Было                         | Стало                                                                                   |
+  |------------------------------|-----------------------------------------------------------------------------------------|
+  | `Tools::antiflood()`         | `Johncms\Security\AntifloodCheckerInterface::getRemainingSeconds()`                     |
+  | `Tools::checkout()`          | удалён без прямой замены, см. ниже                                                      |
+  | `Tools::displayDate()`       | `Johncms\Utils\DateFormatterInterface::format()`                                        |
+  | `Tools::displayError()`      | удалён без замены (не использовался)                                                    |
+  | `Tools::displayPlace()`      | `Johncms\Users\UserPlaceFormatterInterface::format()`                                   |
+  | `Tools::formatNumber()`      | `Johncms\Utils\ShortNumberFormatter::format()`                                          |
+  | `Tools::getSections()`       | `Johncms\Modules\Forum\Application\Services\ForumSectionTreeService::getAncestors()`    |
+  | `Tools::getSectionsTree()`   | `Johncms\Modules\Forum\Application\Services\ForumSectionTreeService::getFlatTree()`     |
+  | `Tools::getUser()`           | модель `Johncms\Users\User`                                                             |
+  | `Tools::isIgnor()`           | `Johncms\Users\IgnoreListCheckerInterface::isBlockedBy()`                               |
   | `Tools::recountForumTopic()` | `Johncms\Modules\Forum\Application\Services\ForumTopicStatsRecalculator::recalculate()` |
-  | `Tools::rusLat()` | `Johncms\Utils\Transliterator::toLatin()` |
-  | `Tools::smilies()` | `Johncms\Smilies\SmiliesRendererInterface::render()` |
-  | `Tools::timecount()` | `Johncms\Utils\DurationFormatter::format()` |
-  | `Tools::trans()` | `Johncms\Utils\Transliterator::toCyrillic()` |
+  | `Tools::rusLat()`            | `Johncms\Utils\Transliterator::toLatin()`                                               |
+  | `Tools::smilies()`           | `Johncms\Smilies\SmiliesRendererInterface::render()`                                    |
+  | `Tools::timecount()`         | `Johncms\Utils\DurationFormatter::format()`                                             |
+  | `Tools::trans()`             | `Johncms\Utils\Transliterator::toCyrillic()`                                            |
 
   Отдельно про изменения контрактов:
 
