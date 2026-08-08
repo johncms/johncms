@@ -5,21 +5,26 @@ Read `.agents/escaping.md` first — it defines the escaping contract. Follow th
 
 ## Escape on Output, Not on Input
 
-* No `htmlspecialchars()` / `$this->e()` applied to data on its way **into** the database.
+* No `htmlspecialchars()` applied to data on its way **into** the database, and no
+  `SpecialChars` cast on a model — a cast that escapes on read escapes the value twice.
 * Input is validated (length, required, format, allowed values) but stored in its original
   form.
-* Escaping happens exactly once, at the final output boundary — check for double escaping
-  (`&amp;lt;` in rendered output, `e()` applied to already-escaped data).
+* Escaping happens exactly once, at the final output boundary — check the rendered page for
+  `&amp;lt;`, and the data for HTML escaping baked in (a URL carrying `&amp;`, for instance).
 
 ## Templates
 
-* Every user-controlled value in a text node goes through `$this->e(...)`.
-* Every user-controlled value in an attribute (`href`, `title`, `value`, `alt`, …) goes
-  through `$this->e(...)`.
+Twig escapes what it prints, so the review is about the places that opt out of it:
+
+* Every `|raw` is justified: the value is markup by contract, and there is no source to fix.
+  Repeated `|raw` on values from one source means the source should return `Twig\Markup`.
+* Every service returning `Twig\Markup` sanitizes what it wraps — user HTML goes through the
+  purifier before it becomes `Markup`.
 * URLs built from user data have their scheme validated/allowlisted (`http`, `https`, or a
   local path) before output.
-* No user data interpolated into inline `<script>` or event-handler attributes.
-* Rich content (BBCode/HTML) passes through the dedicated sanitizer/allowlist before render.
+* No user data interpolated into inline `<script>` or event-handler attributes;
+  `|e('js')` for a JS literal, `|json_encode|raw` for a structure.
+* An unquoted attribute uses `|e('html_attr')`.
 * JSON is produced with `json_encode`, never assembled by string concatenation.
 
 ## Data Access

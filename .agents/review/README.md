@@ -41,7 +41,7 @@ code are not findings — mention them at most as a one-line note.
 | Reviewer | Checklist | Run when the diff touches |
 | --- | --- | --- |
 | Architecture | `.agents/review/architecture.md` | any PHP under `modules/`, `system/src/` |
-| Security | `.agents/review/security.md` | any PHP, `.phtml`, `.twig`, or template file |
+| Security | `.agents/review/security.md` | any PHP or `.twig` file |
 | PHP quality | `.agents/review/php-quality.md` | any PHP file |
 | Localization | `.agents/review/localization.md` | `*.po`, `*.pot`, `*.lng.php`, `translate.xml*`, `crowdin.yml`, or new/changed `__()` / `d__()` / `n__()` / `dn__()` strings |
 
@@ -64,7 +64,7 @@ Example:
 
 ```
 BLOCKER | ./modules/forum/src/Infrastructure/TopicRepository.php:57 | access check inside repository | .agents/architecture.md — Repository Rules
-MAJOR   | ./modules/forum/templates/topic.phtml:18 | user data printed without $this->e() | .agents/escaping.md
+MAJOR   | ./modules/forum/templates/public/topic.twig:18 | user data printed with |raw | .agents/escaping.md
 ```
 
 Always cite the rule source. A finding that cannot be traced to a rule in `.agents/` or

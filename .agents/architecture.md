@@ -58,16 +58,17 @@ to: in a worker runtime every later cycle would be answered with the first reque
 * **The request does not exist as a service** — `di(Request::class)` and
   `$container->get(Request::class)` throw. The only ways to it are the action argument and the
   stack below.
-* **A template gets facts, not the request.** A thin service over `RequestStack` answers the
-  question the template actually asks (`CurrentPage::isHomePage()`, `Theme`), and the template
-  resolves that service. A template must not reach for the request itself.
+* **A template gets facts, not the request.** Facts about the visitor and the page arrive in the
+  `app` global (`app.user`, `app.locale`, `app.is_home_page`, `app.csrf_token`), which is a thin
+  object over `RequestStack`; everything else comes from the controller as data. A template
+  reaches neither for the request nor for the container.
 * **A service that outlives the request** and needs a fact about it has three options, in order of
   preference: take the fact as a parameter (a string address, a host — see `ClientInfoDTO`); take
   the `Request` as a parameter of the method that reads it, when a whole set of fields is needed;
   or read it from `Symfony\Component\HttpFoundation\RequestStack`. The stack is the last resort and
   is allowed **only in `system/src/`** — in a module's Application layer it is the same hidden
   capture in a different shape. It earns its place when the callers number in the dozens and their
-  actions have no request to pass (`PaginationFactory`, `Theme`, `Environment`).
+  actions have no request to pass (`PaginationFactory`, `ColorScheme`, `Environment`).
 * A shared service that caches anything per request implements
   `Symfony\Contracts\Service\ResetInterface`; the container tags it and the kernel resets it at the
   start of every cycle.

@@ -134,9 +134,10 @@ fails while the file is stale.
 
 ## Template Notes
 
-* Templates call `$this->layout('system::layout/default')` without arguments.
-* Global Plates variables (e.g. `$user`) are not passed explicitly; IDE won't see them — add a `@var` annotation with the FQCN. Note: `use` statements do not work in `.phtml` files, so use the fully-qualified class name:
+Templates live in `modules/<module>/templates/{public,admin}/` and are reachable as
+`@<module>/public/<page>.twig`. A controller returns `ViewResponse` with the template name and
+the data; the page extends `@theme/layouts/default.twig` (or `@admin/layouts/default.twig` in
+the panel) and fills `{% block content %}`.
 
-  ```php
-  /** @var \Johncms\Users\User $user */
-  ```
+The full set of rules — namespaces, environments, components, the traps — is in
+`.agents/templates.md`.

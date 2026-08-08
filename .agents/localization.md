@@ -5,7 +5,7 @@
 Source strings are **English msgids in code** (gettext-style):
 
 ```
-PHP/phtml/twig sources → composer translate-scan → <domain>.pot → <lang>.po → composer translate → <lang>.lng.php
+PHP/twig sources → composer translate-scan → <domain>.pot → <lang>.po → composer translate → <lang>.lng.php
 ```
 
 Crowdin is synced **manually, via CLI commands only**. There is no automatic sync: nothing is pushed or pulled in the background, and no CI job updates the repo. The repository is the source of truth — a `.po` edited and committed here stays as-is until someone explicitly runs a Crowdin command.
@@ -60,6 +60,16 @@ Rules:
 * Write msgids in **English** — they are both the key and the fallback text.
 * Use `sprintf`-style placeholders (`%s`, `%d`) instead of string concatenation, so translators can reorder words.
 * Do not build sentences from fragments; a msgid should be a complete phrase.
+
+## Markup inside a string
+
+* A msgid may carry a tag when the sentence needs it (`'… <br> …'`, a link inside the text). The
+  template prints such a string with `|raw` — that is what the filter is for.
+* The opposite case is a bug: a **translation** that carries a tag its msgid does not have. With
+  autoescape the tag reaches the page as text, and `|raw` is not the fix — the `msgstr` is. Find
+  them with a scan for a tag in `msgstr` whose `msgid` has none.
+* A translated string is never assembled from fragments around markup; keep the tag inside the
+  msgid or pass the markup as a `%s` placeholder.
 
 ## Domains
 

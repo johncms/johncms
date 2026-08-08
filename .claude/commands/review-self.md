@@ -31,7 +31,7 @@ Match the change set against the trigger table in `.agents/review/README.md`:
 | Reviewer | Run when the diff touches |
 | --- | --- |
 | `reviewer-architecture` | PHP under `modules/`, `system/src/`, `system/src-legacy/` |
-| `reviewer-security` | any PHP, `.phtml`, or template file |
+| `reviewer-security` | any PHP or `.twig` file |
 | `reviewer-php-quality` | any PHP file |
 | `reviewer-localization` | `*.po`, `*.pot`, `*.lng.php`, `translate.xml*`, `crowdin.yml`, or new/changed `__()` / `d__()` / `n__()` / `dn__()` strings |
 

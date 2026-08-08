@@ -83,6 +83,9 @@ Repositories take explicit `limit`/`offset` and return `Collection`; never call 
 ### Rules
 
 * Page 1 is canonical without a `page` query parameter; `getUrl(1)` strips the parameter (handled by `PaginationGuard`: `?page=1`, junk, or `page < 1` → URL without `page`; `page > totalPages` → last page).
-* Escape on output: `Pagination` items carry raw `type`/`page`/`url`/`active`; the `system::app/pagination` template (`themes/default` and `themes/admin`) escapes URLs with `$this->e(...)`. Do not pre-escape in PHP.
-* Render in the controller/template via `$pagination->render()` (or `$pagination->getItems()` for custom markup / JSON endpoints), not inside the use case.
+* Escape on output: `Pagination` items carry raw `type`/`page`/`url`/`active`, and
+  `@theme/components/pagination.twig` prints them — autoescape does the rest. Do not pre-escape in PHP.
+* `render()` returns `Twig\Markup`, so a template prints it with `{{ pagination }}` and needs no
+  `|raw`. Render in the controller/template (or use `getItems()` for custom markup / JSON
+  endpoints), never inside the use case.
 * Redirect statuses are 302 for now (matching the old fork); the canonical strip may become 301 later if `redirect()` gains a status parameter.

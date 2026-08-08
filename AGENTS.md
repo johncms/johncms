@@ -16,7 +16,7 @@ guide first:
 * User input handling, output escaping in templates → read `.agents/escaping.md`
 * Translations, `.po`/`.pot`/`.lng.php` files, `__()` strings → read `.agents/localization.md`
 * Creating a new module (structure, autoload, DI, routes, templates) → read `.agents/new-module.md`
-* Moving a module's templates from Plates (`.phtml`) to Twig → read `.agents/twig-migration.md`
+* Writing or changing a template (namespaces, environments, components) → read `.agents/templates.md`
 * Self-review, when the user asks for it (architecture, security, PHP quality, localization) → read `.agents/review/README.md`
 
 ## Self-Review
@@ -49,19 +49,18 @@ Tech stack:
 * MySQL
 * Bootstrap
 * selective Vue components
-* Webpack
-* Plates templates
+* Vite
+* Twig templates
 
 ## Project Structure
 
 * `modules/` — application modules
 * `system/src/` — primary application code
-* `themes/` — admin and public templates
-* `assets/` — shared static assets
+* `themes/` — themes: templates and asset sources
 * `config/` — configuration files
 * `data/` — cache, logs, temporary files
-* `install/` — installer assets
-* `upload/` — user uploads
+* `public/` — the document root: `index.php`, `assets/`, `build/`, `themes/`, `upload/`
+* `public/install/` — the installer, deleted after the site is up
 
 ## Core Principles
 
