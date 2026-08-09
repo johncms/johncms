@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Application\Controllers\Ip;
 
-use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
@@ -26,7 +25,6 @@ final readonly class IpBanController
     private const URL = '/admin/ip-bans';
 
     public function __construct(
-        private AdminControllerContext $controllerContext,
         private Environment $environment,
         private NavChain $navChain,
         private User $currentUser,
@@ -37,7 +35,6 @@ final readonly class IpBanController
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
     ) {
-        $this->controllerContext->initModule('admin');
     }
 
     public function index(): ViewResponse

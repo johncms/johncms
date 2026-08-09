@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Guestbook\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Guestbook\Application\Exceptions\GuestbookAccessDeniedException;
 use Johncms\Modules\Guestbook\Application\Exceptions\GuestbookEntryNotFoundException;
 use Johncms\Modules\Guestbook\Application\UseCases\EditGuestbookEntryUseCase;
@@ -20,14 +19,12 @@ use Symfony\Component\HttpFoundation\Response;
 final readonly class EditEntryController
 {
     public function __construct(
-        private ControllerContext $context,
         private Session $session,
         private EditorContentNormalizer $editorContentNormalizer,
         private GetGuestbookEntryContextUseCase $contextUseCase,
         private EnsureGuestbookEntryManageAccessUseCase $manageAccessUseCase,
         private EditGuestbookEntryUseCase $editUseCase,
     ) {
-        $this->context->initModule('guestbook');
     }
 
     public function __invoke(Request $request): ViewResponse

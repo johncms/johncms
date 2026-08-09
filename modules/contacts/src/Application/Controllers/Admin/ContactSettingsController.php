@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Contacts\Application\Controllers\Admin;
 
-use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Modules\Admin\Domain\Exceptions\ConfigWriteException;
 use Johncms\Modules\Contacts\Application\DTO\ContactSettingsDTO;
 use Johncms\Modules\Contacts\Application\DTO\SocialLinkDTO;
@@ -21,13 +20,11 @@ final readonly class ContactSettingsController
     private const URL = '/admin/contacts';
 
     public function __construct(
-        private AdminControllerContext $controllerContext,
         private Session $session,
         private NavChain $navChain,
         private ContactSettingsProvider $settingsProvider,
         private UpdateContactSettingsUseCase $updateSettings,
     ) {
-        $this->controllerContext->initModule('contacts');
     }
 
     public function form(): ViewResponse

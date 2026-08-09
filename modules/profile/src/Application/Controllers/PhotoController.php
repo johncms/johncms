@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Profile\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Http\UploadedFileMapper;
 use Johncms\Modules\Profile\Application\DTO\EditProfileContextDTO;
@@ -21,13 +20,11 @@ use Symfony\Component\HttpFoundation\Response;
 final readonly class PhotoController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private NavChain $navChain,
         private GetEditContextUseCase $getEditContextUseCase,
         private UploadPhotoUseCase $uploadPhotoUseCase,
         private UploadedFileMapper $uploadedFileMapper,
     ) {
-        $this->controllerContext->initModule('profile');
     }
 
     public function form(int $id): ViewResponse

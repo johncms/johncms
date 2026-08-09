@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Mail\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Mail\Application\Exceptions\MessageNotFoundException;
 use Johncms\Modules\Mail\Application\UseCases\DownloadFileUseCase;
@@ -13,10 +12,8 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 final readonly class DownloadFileController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private DownloadFileUseCase $downloadFileUseCase,
     ) {
-        $this->controllerContext->initModule('mail');
     }
 
     public function __invoke(int $id): RedirectResponse|ViewResponse

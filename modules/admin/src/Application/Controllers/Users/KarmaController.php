@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Application\Controllers\Users;
 
-use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Modules\Admin\Application\DTO\KarmaSettingsDTO;
 use Johncms\Modules\Admin\Application\UseCases\ResetKarmaUseCase;
 use Johncms\Modules\Admin\Application\UseCases\UpdateKarmaSettingsUseCase;
@@ -20,13 +19,11 @@ final readonly class KarmaController
     private const URL = '/admin/karma';
 
     public function __construct(
-        private AdminControllerContext $controllerContext,
         private NavChain $navChain,
         private UpdateKarmaSettingsUseCase $updateKarmaSettings,
         private ResetKarmaUseCase $resetKarma,
         private Session $session,
     ) {
-        $this->controllerContext->initModule('admin');
     }
 
     public function index(): ViewResponse

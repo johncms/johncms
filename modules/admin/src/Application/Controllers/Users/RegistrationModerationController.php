@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Application\Controllers\Users;
 
-use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
@@ -24,7 +23,6 @@ final readonly class RegistrationModerationController
     private const URL = '/admin/registrations';
 
     public function __construct(
-        private AdminControllerContext $controllerContext,
         private NavChain $navChain,
         private User $currentUser,
         private GetPendingRegistrationsUseCase $getPendingRegistrations,
@@ -35,7 +33,6 @@ final readonly class RegistrationModerationController
         private PaginationGuard $paginationGuard,
         private Session $session,
     ) {
-        $this->controllerContext->initModule('admin');
     }
 
     public function index(): ViewResponse

@@ -12,7 +12,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Help\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\Request;
 use Johncms\Modules\Help\Application\HelpLegacyRedirectHandler;
 use Johncms\Http\View\ViewResponse;
@@ -21,11 +20,9 @@ use Johncms\NavChain;
 final readonly class HelpIndexController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private NavChain $navChain,
         private HelpLegacyRedirectHandler $legacyRedirectHandler,
     ) {
-        $this->controllerContext->initModule('help');
     }
 
     public function __invoke(Request $request): ViewResponse

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
 use Johncms\Comments;
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\PageMeta;
 use Johncms\Modules\Downloads\Application\Services\CategoryNavService;
 use Johncms\Modules\Downloads\Application\Services\DownloadFilePathService;
@@ -20,7 +19,6 @@ use Symfony\Component\HttpFoundation\Response;
 final readonly class FileCommentsController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private RendererInterface $renderer,
         private NavChain $navChain,
         private User $currentUser,
@@ -28,7 +26,6 @@ final readonly class FileCommentsController
         private CategoryNavService $categoryNavService,
         private DownloadFilePathService $filePathService,
     ) {
-        $this->controllerContext->initModule('downloads');
     }
 
     public function __invoke(Request $request, int $id): Response

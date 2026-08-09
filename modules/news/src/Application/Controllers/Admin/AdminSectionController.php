@@ -7,7 +7,6 @@ namespace Johncms\Modules\News\Application\Controllers\Admin;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
-use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Http\ExceptionResponseFactory;
 use Johncms\Logs\DebugDetailsPolicy;
 use Johncms\Modules\News\Application\Section;
@@ -25,14 +24,20 @@ use Symfony\Component\HttpFoundation\Response;
 final readonly class AdminSectionController
 {
     public function __construct(
-        private AdminControllerContext $controllerContext,
         private NavChain $navChain,
         private ExceptionResponseFactory $exceptionResponses,
         private DebugDetailsPolicy $debugDetailsPolicy,
         private LoggerInterface $logger,
         private Session $session,
     ) {
-        $this->controllerContext->initModule('news');
+    }
+
+    /**
+     * The links every page of the news section sits under. Added by the page rather than by
+     * the constructor: the chain belongs to the request being served.
+     */
+    private function addSectionBreadcrumbs(): void
+    {
         $this->navChain->add(__('News'), '/admin/news/');
         $this->navChain->add(__('Section list'), '/admin/news/content/');
     }
@@ -47,6 +52,8 @@ final readonly class AdminSectionController
      */
     public function add(Request $request, Section $section_service, int $section_id = 0): Response | ViewResponse
     {
+        $this->addSectionBreadcrumbs();
+
         $pageTitle = __('Create section');
 
         if (! empty($section_id)) {
@@ -131,6 +138,8 @@ final readonly class AdminSectionController
      */
     public function edit(int $section_id, Request $request): Response | ViewResponse
     {
+        $this->addSectionBreadcrumbs();
+
         $this->navChain->add(__('Edit section'));
         $pageTitle = __('Edit section');
 
@@ -202,6 +211,8 @@ final readonly class AdminSectionController
      */
     public function del(int $section_id, Request $request, Section $section_service): Response | ViewResponse
     {
+        $this->addSectionBreadcrumbs();
+
         $data = [];
         // Get the section to delete
         try {

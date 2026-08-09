@@ -8,6 +8,8 @@ use Symfony\Component\Routing\Route as SymfonyRoute;
 
 final class Route
 {
+    public const MODULE_ATTRIBUTE = '_module';
+
     private ?string $name = null;
     private int $priority = 0;
 
@@ -37,6 +39,16 @@ final class Route
     public function setName(string $name): self
     {
         return $this->name($name);
+    }
+
+    /**
+     * The module this route belongs to. Travels to the request as the _module attribute, where
+     * ModuleContextMiddleware turns it into the translation domain of the page.
+     */
+    public function module(string $module): self
+    {
+        $this->defaults[Route::MODULE_ATTRIBUTE] = $module;
+        return $this;
     }
 
     public function priority(int $priority): self

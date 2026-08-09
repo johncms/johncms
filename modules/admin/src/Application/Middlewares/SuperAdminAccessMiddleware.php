@@ -6,6 +6,7 @@ namespace Johncms\Modules\Admin\Application\Middlewares;
 
 use Johncms\Modules\Admin\Domain\Enums\UserRights;
 use Johncms\Router\MiddlewareInterface;
+use Johncms\Http\AdminAreaContext;
 use Johncms\Http\Request;
 use Johncms\System\i18n\Translator;
 use Johncms\View\RendererInterface;
@@ -24,6 +25,7 @@ final readonly class SuperAdminAccessMiddleware implements MiddlewareInterface
         private User $user,
         private RendererInterface $renderer,
         private Translator $translator,
+        private AdminAreaContext $adminArea,
     ) {
     }
 
@@ -36,6 +38,8 @@ final readonly class SuperAdminAccessMiddleware implements MiddlewareInterface
         if ($this->user->rights < UserRights::SUPER_ADMIN->value) {
             return $this->renderForbidden();
         }
+
+        $this->adminArea->enter();
 
         return $next($request);
     }

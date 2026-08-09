@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Profile\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
@@ -18,13 +17,11 @@ use Symfony\Component\HttpFoundation\Response;
 final readonly class IpHistoryController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private NavChain $navChain,
         private GetIpHistoryUseCase $getIpHistoryUseCase,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
     ) {
-        $this->controllerContext->initModule('profile');
     }
 
     public function __invoke(int $id): ViewResponse

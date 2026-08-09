@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Album\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\UploadedFileMapper;
 use Johncms\Modules\Album\Application\Exceptions\AlbumEditForbiddenException;
 use Johncms\Modules\Album\Application\Exceptions\AlbumNotFoundException;
@@ -22,14 +21,12 @@ use Symfony\Component\HttpFoundation\Response;
 final readonly class UploadPhotoController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private NavChain $navChain,
         private User $currentUser,
         private GetUploadPhotoContextUseCase $getContextUseCase,
         private UploadPhotoUseCase $uploadPhotoUseCase,
         private UploadedFileMapper $uploadedFileMapper,
     ) {
-        $this->controllerContext->initModule('album');
     }
 
     public function form(int $al): ViewResponse

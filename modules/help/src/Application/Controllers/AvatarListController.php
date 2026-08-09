@@ -12,7 +12,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Help\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Help\Application\UseCases\GetAvatarsUseCase;
@@ -23,13 +22,11 @@ use Symfony\Component\HttpFoundation\Response;
 final readonly class AvatarListController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private NavChain $navChain,
         private GetAvatarsUseCase $avatars,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
     ) {
-        $this->controllerContext->initModule('help');
     }
 
     public function __invoke(string $id): ViewResponse

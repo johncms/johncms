@@ -7,7 +7,6 @@ namespace Johncms\Modules\Guestbook\Application\Controllers;
 use Exception;
 use Johncms\FileInfo;
 use Johncms\Files\FileStorage;
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\UploadedFileMapper;
 use Johncms\Http\Request;
 use League\Flysystem\FilesystemException;
@@ -17,11 +16,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 final readonly class UploadFileController
 {
     public function __construct(
-        private ControllerContext $context,
         private FileStorage $fileStorage,
         private UploadedFileMapper $uploadedFileMapper,
     ) {
-        $this->context->initModule('guestbook');
     }
 
     public function __invoke(Request $request): JsonResponse

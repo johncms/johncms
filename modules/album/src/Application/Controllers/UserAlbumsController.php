@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Album\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Http\Session;
 use Johncms\Modules\Album\Application\Exceptions\AlbumOwnerNotFoundException;
@@ -15,13 +14,11 @@ use Johncms\Users\User;
 final readonly class UserAlbumsController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private Session $session,
         private NavChain $navChain,
         private User $currentUser,
         private GetUserAlbumsUseCase $useCase,
     ) {
-        $this->controllerContext->initModule('album');
     }
 
     public function __invoke(int $id): ViewResponse

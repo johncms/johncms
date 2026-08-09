@@ -46,6 +46,38 @@ final class SymfonyRouteMatcherTest extends TestCase
         self::assertSame(['auth', 'forum_access'], $result->middlewares);
     }
 
+    /**
+     * The module travels as a route default, and the kernel reads it from the match. It must not
+     * stay among the parameters, which are what the action is called with.
+     */
+    public function testTheModuleOfTheRouteIsReportedApartFromTheParameters(): void
+    {
+        $routes = new RouteCollection();
+        $routes->add(
+            'help.index',
+            new Route('/help', ['_handler' => 'help_handler', '_module' => 'help'], [], [], '', [], ['GET']),
+        );
+
+        $context = new RequestContext();
+        $matcher = new SymfonyRouteMatcher(new UrlMatcher($routes, $context), $context, new RequestPathNormalizer());
+
+        $result = $matcher->dispatch('GET', '/help');
+
+        self::assertSame('help', $result->module);
+        self::assertSame([], $result->params);
+    }
+
+    public function testARouteWithoutAModuleReportsNone(): void
+    {
+        $routes = new RouteCollection();
+        $routes->add('home', new Route('/', ['_handler' => 'home_handler'], [], [], '', [], ['GET']));
+
+        $context = new RequestContext();
+        $matcher = new SymfonyRouteMatcher(new UrlMatcher($routes, $context), $context, new RequestPathNormalizer());
+
+        self::assertNull($matcher->dispatch('GET', '/')->module);
+    }
+
     public function testDispatchReturnsMethodNotAllowedResult(): void
     {
         $routes = new RouteCollection();

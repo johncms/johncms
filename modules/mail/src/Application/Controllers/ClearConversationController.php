@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Mail\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Mail\Application\Exceptions\UserNotFoundException;
 use Johncms\Modules\Mail\Application\UseCases\ClearConversationUseCase;
@@ -14,12 +13,10 @@ use Johncms\NavChain;
 final readonly class ClearConversationController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private NavChain $navChain,
         private GetClearConversationContextUseCase $getClearConversationContextUseCase,
         private ClearConversationUseCase $clearConversationUseCase,
     ) {
-        $this->controllerContext->initModule('mail');
     }
 
     public function confirm(int $id): ViewResponse

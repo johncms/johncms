@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Profile\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Profile\Application\DTO\SendRecoveryCommand;
 use Johncms\Modules\Profile\Application\Exceptions\PasswordRecoveryException;
@@ -21,14 +20,12 @@ use Mobicms\Captcha\Image;
 final readonly class RestorePasswordController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private NavChain $navChain,
         private SendPasswordRecoveryUseCase $sendPasswordRecovery,
         private GetRecoveryContextUseCase $getRecoveryContext,
         private CompletePasswordRecoveryUseCase $completePasswordRecovery,
         private Session $session,
     ) {
-        $this->controllerContext->initModule('profile');
     }
 
     public function form(): ViewResponse

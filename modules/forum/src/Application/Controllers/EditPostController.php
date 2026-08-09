@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
@@ -21,7 +20,6 @@ use Johncms\Validator\Validator;
 final readonly class EditPostController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private EditorContentNormalizer $editorContentNormalizer,
         private User $currentUser,
         private ForumErrorRenderer $forumErrorRenderer,
@@ -30,7 +28,6 @@ final readonly class EditPostController
         private EditPostUseCase $editPostUseCase,
         private AttachUploadedFilesToMessageUseCase $attachUploadedFilesUseCase,
     ) {
-        $this->controllerContext->initModule('forum');
     }
 
     public function __invoke(Request $request, int $id): ViewResponse

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Contacts\Application\Controllers\Admin;
 
-use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
@@ -20,14 +19,12 @@ final readonly class ContactMessageListController
     private const URL = '/admin/contacts/messages';
 
     public function __construct(
-        private AdminControllerContext $controllerContext,
         private Session $session,
         private NavChain $navChain,
         private ListContactMessagesUseCase $messages,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
     ) {
-        $this->controllerContext->initModule('contacts');
     }
 
     public function __invoke(Request $request): ViewResponse

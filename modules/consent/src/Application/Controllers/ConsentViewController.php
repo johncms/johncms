@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Johncms\Modules\Consent\Application\Controllers;
 
 use HTMLPurifier;
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Consent\Application\Services\ConsentService;
 use Johncms\Modules\Consent\Application\Services\ConsentTitleFormatter;
 use Johncms\Http\View\ViewResponse;
@@ -15,13 +14,11 @@ use Twig\Markup;
 final readonly class ConsentViewController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private NavChain $navChain,
         private ConsentService $consentService,
         private ConsentTitleFormatter $titleFormatter,
         private HTMLPurifier $purifier,
     ) {
-        $this->controllerContext->initModule('consent');
     }
 
     public function __invoke(int $id): ViewResponse

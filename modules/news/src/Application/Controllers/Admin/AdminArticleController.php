@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
 use Johncms\FileInfo;
 use Johncms\Files\FileStorage;
-use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Http\ExceptionResponseFactory;
 use Johncms\Logs\DebugDetailsPolicy;
 use Johncms\Modules\News\Application\Utils\Helpers;
@@ -33,7 +32,6 @@ use Symfony\Component\HttpFoundation\Response;
 final readonly class AdminArticleController
 {
     public function __construct(
-        private AdminControllerContext $controllerContext,
         private NavChain $navChain,
         private EditorContentNormalizer $editorContentNormalizer,
         private ExceptionResponseFactory $exceptionResponses,
@@ -41,7 +39,14 @@ final readonly class AdminArticleController
         private LoggerInterface $logger,
         private Session $session,
     ) {
-        $this->controllerContext->initModule('news');
+    }
+
+    /**
+     * The links every page of the news section sits under. Added by the page rather than by
+     * the constructor: the chain belongs to the request being served.
+     */
+    private function addSectionBreadcrumbs(): void
+    {
         $this->navChain->add(__('News'), '/admin/news/');
         $this->navChain->add(__('Section list'), '/admin/news/content/');
     }
@@ -56,6 +61,8 @@ final readonly class AdminArticleController
      */
     public function add(Request $request, User $user, int $section_id = 0): Response | ViewResponse
     {
+        $this->addSectionBreadcrumbs();
+
         $pageTitle = __('Add article');
 
         if (! empty($section_id)) {
@@ -155,6 +162,8 @@ final readonly class AdminArticleController
      */
     public function edit(int $article_id, Request $request, User $user): Response | ViewResponse
     {
+        $this->addSectionBreadcrumbs();
+
         $pageTitle = __('Edit article');
 
         try {
@@ -250,6 +259,8 @@ final readonly class AdminArticleController
      */
     public function del(int $article_id, Request $request, FileStorage $storage): Response | ViewResponse
     {
+        $this->addSectionBreadcrumbs();
+
         $data = [];
         // Get the section to delete
         try {

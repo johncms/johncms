@@ -7,7 +7,6 @@ namespace Johncms\Modules\Admin\Application\Controllers\System;
 use Johncms\AdminTasks\AdminTaskBusyException;
 use Johncms\AdminTasks\AdminTaskRegistry;
 use Johncms\AdminTasks\AdminTaskStatus;
-use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Modules\Admin\Application\DTO\MaintenanceTaskDTO;
 use Johncms\Http\Session;
 use Johncms\Modules\Admin\Application\Exceptions\MaintenanceTaskNotFoundException;
@@ -24,7 +23,6 @@ final readonly class MaintenanceTasksController
     private const URL = '/admin/maintenance';
 
     public function __construct(
-        private AdminControllerContext $controllerContext,
         private NavChain $navChain,
         private AdminTaskRegistry $registry,
         private GetMaintenanceTasksUseCase $getTasks,
@@ -32,7 +30,6 @@ final readonly class MaintenanceTasksController
         private QueueMaintenanceTaskUseCase $queueTask,
         private Session $session,
     ) {
-        $this->controllerContext->initModule('admin');
     }
 
     public function index(): ViewResponse

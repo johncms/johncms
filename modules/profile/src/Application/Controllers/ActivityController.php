@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Profile\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
@@ -17,13 +16,11 @@ use Johncms\NavChain;
 final readonly class ActivityController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private NavChain $navChain,
         private GetActivityUseCase $getActivityUseCase,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
     ) {
-        $this->controllerContext->initModule('profile');
     }
 
     public function messages(int $id): ViewResponse

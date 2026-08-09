@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Application\Controllers\Forum;
 
-use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Modules\Admin\Application\DTO\ForumSettingsDTO;
 use Johncms\Modules\Admin\Application\UseCases\UpdateForumSettingsUseCase;
 use Johncms\Modules\Admin\Domain\Exceptions\ConfigWriteException;
@@ -19,12 +18,10 @@ final readonly class ForumSettingsController
     private const URL = '/admin/forum/settings';
 
     public function __construct(
-        private AdminControllerContext $controllerContext,
         private NavChain $navChain,
         private UpdateForumSettingsUseCase $updateForumSettings,
         private Session $session,
     ) {
-        $this->controllerContext->initModule('admin');
     }
 
     public function form(): ViewResponse

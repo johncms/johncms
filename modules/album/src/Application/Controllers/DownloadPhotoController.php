@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Album\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Album\Application\Exceptions\AlbumAccessDeniedException;
 use Johncms\Modules\Album\Application\Exceptions\AlbumPasswordRequiredException;
@@ -17,10 +16,8 @@ use Symfony\Component\HttpFoundation\Response;
 final readonly class DownloadPhotoController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private DownloadPhotoUseCase $useCase,
     ) {
-        $this->controllerContext->initModule('album');
     }
 
     public function __invoke(int $img): Response|ViewResponse

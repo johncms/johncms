@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Online\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
@@ -19,7 +18,6 @@ use Psr\Container\NotFoundExceptionInterface;
 final readonly class IndexController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private NavChain $navChain,
         private Translator $translator,
         private FiltersBuilder $filtersBuilder,
@@ -27,7 +25,6 @@ final readonly class IndexController
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
     ) {
-        $this->controllerContext->initModule('online');
     }
 
     public function __invoke(): ViewResponse

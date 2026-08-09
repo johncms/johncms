@@ -2,63 +2,63 @@ msgid ""
 msgstr ""
 "X-Domain: help\n"
 
-#: modules/help/src/Application/Controllers/AdminSmiliesController.php:44
-#: modules/help/src/Application/Controllers/AdminSmiliesController.php:52
-#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:54
+#: modules/help/src/Application/Controllers/AdminSmiliesController.php:41
+#: modules/help/src/Application/Controllers/AdminSmiliesController.php:49
+#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:51
 msgid "For administration"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/AdminSmiliesController.php:46
+#: modules/help/src/Application/Controllers/AdminSmiliesController.php:43
 msgid "Access forbidden"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/AdminSmiliesController.php:54
-#: modules/help/src/Application/Controllers/AvatarCatalogController.php:32
-#: modules/help/src/Application/Controllers/AvatarListController.php:53
-#: modules/help/src/Application/Controllers/ForumRulesController.php:32
-#: modules/help/src/Application/Controllers/HelpIndexController.php:35
-#: modules/help/src/Application/Controllers/MySmiliesController.php:56
-#: modules/help/src/Application/Controllers/SetAvatarController.php:66
-#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:36
-#: modules/help/src/Application/Controllers/UserSmiliesController.php:56
+#: modules/help/src/Application/Controllers/AdminSmiliesController.php:51
+#: modules/help/src/Application/Controllers/AvatarCatalogController.php:29
+#: modules/help/src/Application/Controllers/AvatarListController.php:50
+#: modules/help/src/Application/Controllers/ForumRulesController.php:29
+#: modules/help/src/Application/Controllers/HelpIndexController.php:32
+#: modules/help/src/Application/Controllers/MySmiliesController.php:53
+#: modules/help/src/Application/Controllers/SetAvatarController.php:63
+#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:33
+#: modules/help/src/Application/Controllers/UserSmiliesController.php:53
 msgid "Information, FAQ"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/AdminSmiliesController.php:55
-#: modules/help/src/Application/Controllers/AdminSmiliesController.php:65
-#: modules/help/src/Application/Controllers/MySmiliesController.php:57
-#: modules/help/src/Application/Controllers/MySmiliesController.php:67
-#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:34
-#: modules/help/src/Application/Controllers/UserSmiliesController.php:57
-#: modules/help/src/Application/Controllers/UserSmiliesController.php:67
+#: modules/help/src/Application/Controllers/AdminSmiliesController.php:52
+#: modules/help/src/Application/Controllers/AdminSmiliesController.php:62
+#: modules/help/src/Application/Controllers/MySmiliesController.php:54
+#: modules/help/src/Application/Controllers/MySmiliesController.php:64
+#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:31
+#: modules/help/src/Application/Controllers/UserSmiliesController.php:54
+#: modules/help/src/Application/Controllers/UserSmiliesController.php:64
 msgid "Smiles"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/AvatarCatalogController.php:30
-#: modules/help/src/Application/Controllers/AvatarListController.php:54
-#: modules/help/src/Application/Controllers/SetAvatarController.php:67
+#: modules/help/src/Application/Controllers/AvatarCatalogController.php:27
+#: modules/help/src/Application/Controllers/AvatarListController.php:51
+#: modules/help/src/Application/Controllers/SetAvatarController.php:64
 #: modules/help/templates/public/index.twig:11
 msgid "Avatars"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/AvatarListController.php:41
-#: modules/help/src/Application/Controllers/SetAvatarController.php:54
-#: modules/help/src/Application/Controllers/UserSmiliesController.php:44
+#: modules/help/src/Application/Controllers/AvatarListController.php:38
+#: modules/help/src/Application/Controllers/SetAvatarController.php:51
+#: modules/help/src/Application/Controllers/UserSmiliesController.php:41
 msgid "Wrong data"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/AvatarListController.php:43
-#: modules/help/src/Application/Controllers/UserSmiliesController.php:46
+#: modules/help/src/Application/Controllers/AvatarListController.php:40
+#: modules/help/src/Application/Controllers/UserSmiliesController.php:43
 msgid "The directory does not exist"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/AvatarListController.php:45
-#: modules/help/src/Application/Controllers/MySmiliesController.php:48
-#: modules/help/src/Application/Controllers/SetAvatarController.php:42
-#: modules/help/src/Application/Controllers/SetAvatarController.php:58
-#: modules/help/src/Application/Controllers/SetAvatarController.php:92
-#: modules/help/src/Application/Controllers/SetMySmiliesController.php:43
-#: modules/help/src/Application/Controllers/UserSmiliesController.php:48
+#: modules/help/src/Application/Controllers/AvatarListController.php:42
+#: modules/help/src/Application/Controllers/MySmiliesController.php:45
+#: modules/help/src/Application/Controllers/SetAvatarController.php:39
+#: modules/help/src/Application/Controllers/SetAvatarController.php:55
+#: modules/help/src/Application/Controllers/SetAvatarController.php:89
+#: modules/help/src/Application/Controllers/SetMySmiliesController.php:40
+#: modules/help/src/Application/Controllers/UserSmiliesController.php:45
 #: modules/help/templates/public/catalog.twig:25
 #: modules/help/templates/public/components/list-footer.twig:19
 #: modules/help/templates/public/forum-rules.twig:41
@@ -66,113 +66,113 @@ msgstr ""
 msgid "Back"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/ForumRulesController.php:30
+#: modules/help/src/Application/Controllers/ForumRulesController.php:27
 #: modules/help/templates/public/index.twig:10
 msgid "Forum rules"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/MySmiliesController.php:44
-#: modules/help/src/Application/Controllers/SetAvatarController.php:38
-#: modules/help/src/Application/Controllers/SetMySmiliesController.php:39
+#: modules/help/src/Application/Controllers/MySmiliesController.php:41
+#: modules/help/src/Application/Controllers/SetAvatarController.php:35
+#: modules/help/src/Application/Controllers/SetMySmiliesController.php:36
 msgid "Access denied"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/MySmiliesController.php:46
-#: modules/help/src/Application/Controllers/SetAvatarController.php:40
-#: modules/help/src/Application/Controllers/SetMySmiliesController.php:41
+#: modules/help/src/Application/Controllers/MySmiliesController.php:43
+#: modules/help/src/Application/Controllers/SetAvatarController.php:37
+#: modules/help/src/Application/Controllers/SetMySmiliesController.php:38
 msgid "You are not logged in"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/MySmiliesController.php:54
-#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:46
+#: modules/help/src/Application/Controllers/MySmiliesController.php:51
+#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:43
 #: modules/help/templates/public/smilies-list.twig:23
 msgid "My smilies"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/SetAvatarController.php:56
+#: modules/help/src/Application/Controllers/SetAvatarController.php:53
 msgid "File does not exist"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/SetAvatarController.php:64
+#: modules/help/src/Application/Controllers/SetAvatarController.php:61
 msgid "Set to Profile"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/SetAvatarController.php:78
+#: modules/help/src/Application/Controllers/SetAvatarController.php:75
 msgid "Avatar has been successfully applied"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/SetAvatarController.php:80
+#: modules/help/src/Application/Controllers/SetAvatarController.php:77
 msgid "Continue"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/SetAvatarController.php:90
+#: modules/help/src/Application/Controllers/SetAvatarController.php:87
 msgid "An error occurred"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/SetAvatarController.php:103
+#: modules/help/src/Application/Controllers/SetAvatarController.php:100
 msgid "Are you sure you want to set yourself this avatar?"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/SetAvatarController.php:106
+#: modules/help/src/Application/Controllers/SetAvatarController.php:103
 msgid "Save"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:89
+#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:86
 #: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:84
 msgid "Animals"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:90
+#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:87
 #: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:85
 msgid "Brawl, Weapons"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:91
+#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:88
 #: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:86
 msgid "Emotions"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:92
+#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:89
 #: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:87
 msgid "Flowers"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:93
+#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:90
 #: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:88
 msgid "Food, Alcohol"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:94
+#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:91
 #: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:89
 msgid "Gestures"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:95
+#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:92
 #: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:90
 msgid "Holidays"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:96
+#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:93
 #: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:91
 msgid "Love"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:97
+#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:94
 #: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:92
 msgid "Miscellaneous"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:98
+#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:95
 #: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:93
 msgid "Music, Dancing"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:99
+#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:96
 #: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:94
 msgid "Sports"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:100
+#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:97
 #: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:95
 msgid "Technology"
 msgstr ""

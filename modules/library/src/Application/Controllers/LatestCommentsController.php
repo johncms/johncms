@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Library\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
 use Johncms\Utils\DateFormatterInterface;
@@ -13,12 +12,10 @@ use PDO;
 final readonly class LatestCommentsController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private NavChain $navChain,
         private DateFormatterInterface $dateFormatter,
         private PDO $db,
     ) {
-        $this->controllerContext->initModule('library');
     }
 
     public function __invoke(): ViewResponse

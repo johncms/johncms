@@ -2,57 +2,57 @@ msgid ""
 msgstr ""
 "X-Domain: consent\n"
 
-#: modules/consent/src/Application/Controllers/Admin/ConsentDeleteController.php:45
+#: modules/consent/src/Application/Controllers/Admin/ConsentDeleteController.php:42
 msgid "Record deleted"
 msgstr ""
 
-#: modules/consent/src/Application/Controllers/Admin/ConsentDeleteController.php:50
+#: modules/consent/src/Application/Controllers/Admin/ConsentDeleteController.php:47
 msgid "Delete consent"
 msgstr ""
 
-#: modules/consent/src/Application/Controllers/Admin/ConsentDeleteController.php:51
-#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:110
-#: modules/consent/src/Application/Controllers/Admin/ConsentListController.php:35
-#: modules/consent/src/Application/Controllers/Admin/ConsentLogController.php:34
+#: modules/consent/src/Application/Controllers/Admin/ConsentDeleteController.php:48
+#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:107
+#: modules/consent/src/Application/Controllers/Admin/ConsentListController.php:32
+#: modules/consent/src/Application/Controllers/Admin/ConsentLogController.php:31
 msgid "Consents"
 msgstr ""
 
-#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:100
-#: modules/consent/src/Application/Controllers/Admin/CookieBannerController.php:47
+#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:97
+#: modules/consent/src/Application/Controllers/Admin/CookieBannerController.php:44
 msgid "Changes saved successfully"
 msgstr ""
 
-#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:108
+#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:105
 msgid "Edit consent"
 msgstr ""
 
-#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:108
+#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:105
 #: modules/consent/templates/admin/list.twig:17
 msgid "Add consent"
 msgstr ""
 
-#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:140
+#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:137
 msgid "Registration form"
 msgstr ""
 
-#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:141
+#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:138
 msgid "Contacts form"
 msgstr ""
 
-#: modules/consent/src/Application/Controllers/Admin/ConsentLogController.php:33
+#: modules/consent/src/Application/Controllers/Admin/ConsentLogController.php:30
 #: modules/consent/templates/admin/list.twig:18
 msgid "Consent log"
 msgstr ""
 
-#: modules/consent/src/Application/Controllers/Admin/CookieBannerController.php:38
+#: modules/consent/src/Application/Controllers/Admin/CookieBannerController.php:35
 msgid "Wrong data"
 msgstr ""
 
-#: modules/consent/src/Application/Controllers/Admin/CookieBannerController.php:44
+#: modules/consent/src/Application/Controllers/Admin/CookieBannerController.php:41
 msgid "ERROR: Can not write file `system.local.php`"
 msgstr ""
 
-#: modules/consent/src/Application/Controllers/Admin/CookieBannerController.php:80
+#: modules/consent/src/Application/Controllers/Admin/CookieBannerController.php:77
 msgid "Cookie banner"
 msgstr ""
 

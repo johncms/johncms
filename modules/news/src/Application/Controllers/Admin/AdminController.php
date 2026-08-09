@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Johncms\Modules\News\Application\Controllers\Admin;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\News\Application\Utils\Helpers;
@@ -21,19 +20,17 @@ use Symfony\Component\HttpFoundation\Response;
 final readonly class AdminController
 {
     public function __construct(
-        private AdminControllerContext $controllerContext,
         private NavChain $navChain,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
         private Session $session,
     ) {
-        $this->controllerContext->initModule('news');
-
-        $this->navChain->add(__('News'), '/admin/news/');
     }
 
     public function index(): ViewResponse
     {
+        $this->navChain->add(__('News'), '/admin/news/');
+
         return new ViewResponse('@news/admin/index.twig', $this->menu(__('News')));
     }
 
@@ -42,6 +39,8 @@ final readonly class AdminController
      */
     public function section(int $section_id = 0): ViewResponse
     {
+        $this->navChain->add(__('News'), '/admin/news/');
+
         $title = __('Section list');
         $this->navChain->add($title, '/admin/news/content/');
 
@@ -94,6 +93,8 @@ final readonly class AdminController
      */
     public function settings(Request $request): Response | ViewResponse
     {
+        $this->navChain->add(__('News'), '/admin/news/');
+
         $data = [
             'title'       => __('Settings'),
             'page_title'  => __('Settings'),

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Johncms\Modules\Admin\Application\Controllers\Users;
 
 use Illuminate\Support\Str;
-use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
 use Johncms\Http\View\ViewResponse;
@@ -19,10 +18,8 @@ use Symfony\Component\HttpFoundation\Response;
 final readonly class UsersController
 {
     public function __construct(
-        private AdminControllerContext $controllerContext,
         private Session $session,
     ) {
-        $this->controllerContext->initModule('admin');
     }
 
     public function login(Request $request, User $user): Response | ViewResponse

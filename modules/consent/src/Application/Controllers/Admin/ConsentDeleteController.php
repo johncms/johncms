@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Consent\Application\Controllers\Admin;
 
-use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Modules\Consent\Application\UseCases\DeleteConsentUseCase;
 use Johncms\Modules\Consent\Domain\Repository\ConsentRepositoryInterface;
 use Johncms\NavChain;
@@ -18,13 +17,11 @@ final readonly class ConsentDeleteController
     private const URL = '/admin/consents';
 
     public function __construct(
-        private AdminControllerContext $controllerContext,
         private Session $session,
         private NavChain $navChain,
         private ConsentRepositoryInterface $repository,
         private DeleteConsentUseCase $deleteConsent,
     ) {
-        $this->controllerContext->initModule('consent');
     }
 
     public function __invoke(Request $request, int $id): ViewResponse

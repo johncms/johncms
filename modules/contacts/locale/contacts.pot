@@ -2,86 +2,86 @@ msgid ""
 msgstr ""
 "X-Domain: contacts\n"
 
-#: modules/contacts/src/Application/Controllers/Admin/ContactMessageDeleteController.php:45
+#: modules/contacts/src/Application/Controllers/Admin/ContactMessageDeleteController.php:42
 msgid "Record deleted"
 msgstr ""
 
-#: modules/contacts/src/Application/Controllers/Admin/ContactMessageDeleteController.php:50
+#: modules/contacts/src/Application/Controllers/Admin/ContactMessageDeleteController.php:47
 msgid "Delete message"
 msgstr ""
 
-#: modules/contacts/src/Application/Controllers/Admin/ContactMessageDeleteController.php:51
-#: modules/contacts/src/Application/Controllers/Admin/ContactMessageListController.php:45
-#: modules/contacts/src/Application/Controllers/Admin/ContactMessageViewController.php:45
-#: modules/contacts/src/Application/Controllers/Admin/ContactSettingsController.php:134
-#: modules/contacts/src/Application/Controllers/ContactsController.php:45
+#: modules/contacts/src/Application/Controllers/Admin/ContactMessageDeleteController.php:48
+#: modules/contacts/src/Application/Controllers/Admin/ContactMessageListController.php:42
+#: modules/contacts/src/Application/Controllers/Admin/ContactMessageViewController.php:42
+#: modules/contacts/src/Application/Controllers/Admin/ContactSettingsController.php:131
+#: modules/contacts/src/Application/Controllers/ContactsController.php:42
 msgid "Contacts"
 msgstr ""
 
-#: modules/contacts/src/Application/Controllers/Admin/ContactMessageDeleteController.php:52
-#: modules/contacts/src/Application/Controllers/Admin/ContactMessageListController.php:44
-#: modules/contacts/src/Application/Controllers/Admin/ContactMessageViewController.php:46
+#: modules/contacts/src/Application/Controllers/Admin/ContactMessageDeleteController.php:49
+#: modules/contacts/src/Application/Controllers/Admin/ContactMessageListController.php:41
+#: modules/contacts/src/Application/Controllers/Admin/ContactMessageViewController.php:43
 #: modules/contacts/templates/admin/settings.twig:21
 msgid "Contact messages"
 msgstr ""
 
-#: modules/contacts/src/Application/Controllers/Admin/ContactMessageListController.php:76
+#: modules/contacts/src/Application/Controllers/Admin/ContactMessageListController.php:73
 msgid "All"
 msgstr ""
 
-#: modules/contacts/src/Application/Controllers/Admin/ContactMessageListController.php:77
+#: modules/contacts/src/Application/Controllers/Admin/ContactMessageListController.php:74
 #: modules/contacts/templates/admin/message.twig:40
 #: modules/contacts/templates/admin/messages.twig:57
 msgid "New"
 msgstr ""
 
-#: modules/contacts/src/Application/Controllers/Admin/ContactMessageListController.php:78
+#: modules/contacts/src/Application/Controllers/Admin/ContactMessageListController.php:75
 #: modules/contacts/templates/admin/message.twig:35
 #: modules/contacts/templates/admin/messages.twig:59
 msgid "Processed"
 msgstr ""
 
-#: modules/contacts/src/Application/Controllers/Admin/ContactMessageViewController.php:40
+#: modules/contacts/src/Application/Controllers/Admin/ContactMessageViewController.php:37
 msgid "The message is marked as processed"
 msgstr ""
 
-#: modules/contacts/src/Application/Controllers/Admin/ContactMessageViewController.php:44
+#: modules/contacts/src/Application/Controllers/Admin/ContactMessageViewController.php:41
 #, php-format
 msgid "Message from %s"
 msgstr ""
 
-#: modules/contacts/src/Application/Controllers/Admin/ContactSettingsController.php:43
+#: modules/contacts/src/Application/Controllers/Admin/ContactSettingsController.php:40
 #: modules/contacts/templates/public/index.twig:141
 msgid "Wrong data"
 msgstr ""
 
-#: modules/contacts/src/Application/Controllers/Admin/ContactSettingsController.php:49
+#: modules/contacts/src/Application/Controllers/Admin/ContactSettingsController.php:46
 msgid "ERROR: Can not write file `system.local.php`"
 msgstr ""
 
-#: modules/contacts/src/Application/Controllers/Admin/ContactSettingsController.php:52
+#: modules/contacts/src/Application/Controllers/Admin/ContactSettingsController.php:49
 msgid "Changes saved successfully"
 msgstr ""
 
-#: modules/contacts/src/Application/Controllers/Admin/ContactSettingsController.php:162
+#: modules/contacts/src/Application/Controllers/Admin/ContactSettingsController.php:159
 #: modules/contacts/templates/public/index.twig:42
 msgid "Address"
 msgstr ""
 
-#: modules/contacts/src/Application/Controllers/Admin/ContactSettingsController.php:163
+#: modules/contacts/src/Application/Controllers/Admin/ContactSettingsController.php:160
 #: modules/contacts/templates/public/index.twig:47
 msgid "Working hours"
 msgstr ""
 
-#: modules/contacts/src/Application/Controllers/Admin/ContactSettingsController.php:164
+#: modules/contacts/src/Application/Controllers/Admin/ContactSettingsController.php:161
 msgid "Text above the contact information"
 msgstr ""
 
-#: modules/contacts/src/Application/Controllers/ContactsController.php:67
+#: modules/contacts/src/Application/Controllers/ContactsController.php:64
 msgid "You must accept the consent to continue"
 msgstr ""
 
-#: modules/contacts/src/Application/Controllers/ContactsController.php:103
+#: modules/contacts/src/Application/Controllers/ContactsController.php:100
 msgid "Your message has been sent. We will reply as soon as possible."
 msgstr ""
 

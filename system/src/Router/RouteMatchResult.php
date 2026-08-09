@@ -21,6 +21,8 @@ final class RouteMatchResult
         public readonly array $params = [],
         public readonly array $allowedMethods = [],
         public readonly array $middlewares = [],
+        /** The module owning the matched route; null for the routes of the core. */
+        public readonly ?string $module = null,
     ) {
     }
 }

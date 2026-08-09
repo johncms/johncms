@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
@@ -25,7 +24,6 @@ use Twig\Markup;
 final readonly class NewMessageController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private Environment $environment,
         private Session $session,
         private AntifloodCheckerInterface $antifloodChecker,
@@ -38,7 +36,6 @@ final readonly class NewMessageController
         private AttachUploadedFilesToMessageUseCase $attachUploadedFilesUseCase,
         private ForumTopicPathService $topicPathService,
     ) {
-        $this->controllerContext->initModule('forum');
     }
 
     public function __invoke(Request $request, int $id): ViewResponse

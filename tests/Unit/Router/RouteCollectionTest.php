@@ -55,6 +55,32 @@ final class RouteCollectionTest extends TestCase
         self::assertSame(['group_middleware', 'route_middleware'], $compiledRoute->getDefault('_middlewares'));
     }
 
+    /**
+     * The module of a route is what the kernel enters the module context from, so it has to reach
+     * routes declared directly and routes declared inside a group alike.
+     */
+    public function testRoutesCarryTheModuleTheyWereDeclaredFor(): void
+    {
+        $collection = (new RouteCollection())->setModule('forum');
+        $collection->get('/forum', 'handler')->setName('forum.index');
+        $collection->group('/forum', static function (RouteCollection $group): void {
+            $group->get('/rules', 'rules_handler')->setName('forum.rules');
+        });
+
+        $compiled = $collection->compile();
+
+        self::assertSame('forum', $compiled->get('forum.index')?->getDefault('_module'));
+        self::assertSame('forum', $compiled->get('forum.rules')?->getDefault('_module'));
+    }
+
+    public function testRoutesOfTheCoreCarryNoModule(): void
+    {
+        $collection = new RouteCollection();
+        $collection->get('/', 'handler')->setName('home');
+
+        self::assertNull($collection->compile()->get('home')?->getDefault('_module'));
+    }
+
     public function testNestedGroupAppliesOwnMiddlewaresToRoutes(): void
     {
         $collection = (new RouteCollection())

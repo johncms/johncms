@@ -6,7 +6,6 @@ namespace Johncms\Modules\Registration\Application\Controllers;
 
 use Illuminate\Support\Str;
 use Johncms\Http\View\ViewResponse;
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Consent\Application\Services\ConsentService;
 use Johncms\Modules\Registration\Application\DTO\RegistrationFormDTO;
 use Johncms\Modules\Registration\Application\UseCases\RegisterUserUseCase;
@@ -25,7 +24,6 @@ use Symfony\Component\HttpFoundation\Cookie;
 final readonly class RegistrationController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private Session $session,
         private NavChain $navChain,
         private User $currentUser,
@@ -33,7 +31,6 @@ final readonly class RegistrationController
         private ConsentService $consentService,
         private Environment $env,
     ) {
-        $this->controllerContext->initModule('registration');
     }
 
     public function __invoke(Request $request): ViewResponse

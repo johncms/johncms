@@ -10,7 +10,6 @@ use Johncms\Modules\Downloads\Application\Services\DownloadFilePathService;
 use Johncms\Modules\Downloads\Domain\Services\ScreenService;
 use Intervention\Image\ImageManager;
 use Johncms\FileInfo;
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\NavChain;
 use Johncms\Http\Request;
@@ -22,14 +21,12 @@ use Symfony\Component\HttpFoundation\Response;
 final readonly class EditScreenController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private Session $session,
         private NavChain $navChain,
         private ImageManager $imageManager,
         private CategoryNavService $categoryNavService,
         private DownloadFilePathService $filePathService,
     ) {
-        $this->controllerContext->initModule('downloads');
     }
 
     public function __invoke(Request $request, int $id): RedirectResponse|ViewResponse

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Forum\Application\Services\ForumLegacyRedirectResolver;
 use Johncms\Modules\Forum\Application\UseCases\ViewForumIndexUseCase;
 use Johncms\NavChain;
@@ -15,12 +14,10 @@ use Johncms\Utils\ShortNumberFormatter;
 final readonly class ForumIndexController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private NavChain $navChain,
         private ForumLegacyRedirectResolver $legacyRedirectResolver,
         private ViewForumIndexUseCase $viewForumIndexUseCase,
     ) {
-        $this->controllerContext->initModule('forum');
     }
 
     public function __invoke(Request $request): ViewResponse

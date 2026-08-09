@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\Controllers\Admin;
 
-use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Modules\Collections\Application\DTO\CollectionFieldFormDTO;
 use Johncms\Modules\Collections\Application\DTO\CollectionFieldListItemDTO;
 use Johncms\Modules\Collections\Application\Exceptions\CollectionFieldCodeAlreadyExistsException;
@@ -25,7 +24,6 @@ use Johncms\Validator\Validator;
 final readonly class CollectionFieldsAdminController
 {
     public function __construct(
-        private AdminControllerContext $controllerContext,
         private NavChain $navChain,
         private ContentCollectionRepositoryInterface $collectionRepository,
         private ContentCollectionFieldRepositoryInterface $fieldRepository,
@@ -34,7 +32,6 @@ final readonly class CollectionFieldsAdminController
         private DeleteCollectionFieldUseCase $deleteField,
         private Session $session,
     ) {
-        $this->controllerContext->initModule('collections');
     }
 
     public function index(int $collection_id): ViewResponse

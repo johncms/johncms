@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Library\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Library\Domain\Models\LibraryCategory;
 use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -13,10 +12,8 @@ use Symfony\Component\HttpFoundation\Response;
 final readonly class MoveSectionController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private User $currentUser,
     ) {
-        $this->controllerContext->initModule('library');
     }
 
     public function __invoke(int $parentId, string $direction, int $positionIndex): Response

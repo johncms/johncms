@@ -12,7 +12,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Help\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
 use Johncms\Http\Request;
@@ -22,11 +21,9 @@ use Symfony\Component\HttpFoundation\Response;
 final readonly class SetAvatarController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private NavChain $navChain,
         private User $currentUser,
     ) {
-        $this->controllerContext->initModule('help');
     }
 
     public function __invoke(Request $request, string $id, int $avatar): ViewResponse

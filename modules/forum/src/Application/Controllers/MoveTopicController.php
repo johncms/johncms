@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
@@ -18,13 +17,11 @@ use Johncms\Validator\Validator;
 final readonly class MoveTopicController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private ForumErrorRenderer $forumErrorRenderer,
         private EnsureMoveTopicAccessUseCase $accessUseCase,
         private GetMoveTopicContextUseCase $contextUseCase,
         private MoveTopicUseCase $moveTopicUseCase,
     ) {
-        $this->controllerContext->initModule('forum');
     }
 
     public function __invoke(Request $request, int $id): ViewResponse

@@ -6,7 +6,6 @@ namespace Johncms\Modules\Forum\Application\Controllers;
 
 use Johncms\FileInfo;
 use Johncms\Files\FileStorage;
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\UploadedFileMapper;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
@@ -20,14 +19,12 @@ use Throwable;
 final readonly class UploadFileController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private FileStorage $fileStorage,
         private EnsureForumAccessUseCase $forumAccessUseCase,
         private User $currentUser,
         private LoggerInterface $logger,
         private UploadedFileMapper $uploadedFileMapper,
     ) {
-        $this->controllerContext->initModule('forum');
     }
 
     public function __invoke(Request $request): JsonResponse

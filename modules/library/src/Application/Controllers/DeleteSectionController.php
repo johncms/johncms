@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Library\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Library\Domain\Models\LibraryCategory;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
@@ -17,11 +16,9 @@ use Symfony\Component\HttpFoundation\Response;
 final readonly class DeleteSectionController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private NavChain $navChain,
         private User $currentUser,
     ) {
-        $this->controllerContext->initModule('library');
     }
 
     public function __invoke(Request $request, int $id): ViewResponse

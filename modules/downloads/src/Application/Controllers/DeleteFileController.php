@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Downloads\Application\Services\CategoryNavService;
 use Johncms\Modules\Downloads\Application\Services\DownloadCategoryPathService;
 use Johncms\Modules\Downloads\Application\Services\DownloadFilePathService;
@@ -21,7 +20,6 @@ use Symfony\Component\HttpFoundation\Response;
 final readonly class DeleteFileController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private Session $session,
         private NavChain $navChain,
         private DeleteFileUseCase $deleteFileUseCase,
@@ -29,7 +27,6 @@ final readonly class DeleteFileController
         private DownloadFilePathService $filePathService,
         private DownloadCategoryPathService $categoryPathService,
     ) {
-        $this->controllerContext->initModule('downloads');
     }
 
     public function __invoke(Request $request, int $id): RedirectResponse|ViewResponse

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Consent\Application\Controllers\Admin;
 
-use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Modules\Consent\Application\DTO\ConsentDTO;
 use Johncms\Modules\Consent\Application\UseCases\CreateConsentUseCase;
 use Johncms\Modules\Consent\Application\UseCases\UpdateConsentUseCase;
@@ -30,7 +29,6 @@ final readonly class ConsentEditController
     private const TITLE_MAX_LENGTH = 16383;
 
     public function __construct(
-        private AdminControllerContext $controllerContext,
         private Session $session,
         private NavChain $navChain,
         private Translator $translator,
@@ -38,7 +36,6 @@ final readonly class ConsentEditController
         private CreateConsentUseCase $createConsent,
         private UpdateConsentUseCase $updateConsent,
     ) {
-        $this->controllerContext->initModule('consent');
     }
 
     public function __invoke(Request $request, ?int $id = null): ViewResponse

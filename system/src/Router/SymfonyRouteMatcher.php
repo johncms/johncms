@@ -45,13 +45,23 @@ final class SymfonyRouteMatcher
             $middlewares = isset($attributes['_middlewares']) && is_array($attributes['_middlewares'])
                 ? $attributes['_middlewares']
                 : [];
-            unset($attributes['_handler'], $attributes['_middlewares'], $attributes['_route'], $attributes['_route_mapping']);
+            $module = isset($attributes[Route::MODULE_ATTRIBUTE]) && is_string($attributes[Route::MODULE_ATTRIBUTE])
+                ? $attributes[Route::MODULE_ATTRIBUTE]
+                : null;
+            unset(
+                $attributes['_handler'],
+                $attributes['_middlewares'],
+                $attributes['_route'],
+                $attributes['_route_mapping'],
+                $attributes[Route::MODULE_ATTRIBUTE],
+            );
 
             return new RouteMatchResult(
                 status: RouteMatchResult::FOUND,
                 handler: $handler,
                 params: $attributes,
                 middlewares: $middlewares,
+                module: $module,
             );
         } catch (MethodNotAllowedException $exception) {
             return new RouteMatchResult(

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Modules\Forum\Application\DTO\PollVotersQueryDTO;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
@@ -20,7 +19,6 @@ use Johncms\Http\View\ViewResponse;
 final readonly class PollVotersController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private NavChain $navChain,
         private ForumErrorRenderer $forumErrorRenderer,
         private EnsurePollVotersAccessUseCase $accessUseCase,
@@ -28,7 +26,6 @@ final readonly class PollVotersController
         private ForumTopicPathService $topicPathService,
         private PaginationFactory $paginationFactory,
     ) {
-        $this->controllerContext->initModule('forum');
     }
 
     public function __invoke(Request $request, int $id): ViewResponse

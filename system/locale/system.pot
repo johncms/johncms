@@ -5,7 +5,6 @@ msgstr ""
 #: config/notifications.global.php:20
 #: config/places.global.php:17
 #: themes/default/templates/components/sidebar-main-menu.twig:34
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:54
 #: modules/homepage/templates/public/index.twig:42
 msgid "Forum"
 msgstr ""
@@ -41,7 +40,6 @@ msgstr ""
 
 #: config/places.global.php:14
 #: themes/default/templates/components/sidebar-main-menu.twig:85
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:105
 #: modules/homepage/templates/public/index.twig:46
 msgid "Users"
 msgstr ""
@@ -58,7 +56,6 @@ msgstr ""
 #: system/src/Comments.php:328
 #: system/src/Comments.php:355
 #: themes/default/templates/components/sidebar-main-menu.twig:60
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:80
 #: modules/homepage/templates/public/index.twig:44
 msgid "Downloads"
 msgstr ""
@@ -66,7 +63,6 @@ msgstr ""
 #: config/places.global.php:18
 #: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:102
 #: themes/default/templates/components/sidebar-main-menu.twig:47
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:67
 #: modules/homepage/templates/public/index.twig:43
 msgid "Guestbook"
 msgstr ""
@@ -77,22 +73,20 @@ msgstr ""
 
 #: config/places.global.php:20
 #: themes/default/templates/components/sidebar-main-menu.twig:73
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:93
 #: modules/homepage/templates/public/index.twig:45
 msgid "Library"
 msgstr ""
 
 #: config/places.global.php:21
-#: modules/login/src/Application/Controllers/LoginController.php:29
-#: modules/login/src/Application/Controllers/LoginController.php:53
-#: modules/login/src/Application/Controllers/LoginController.php:54
-#: modules/login/src/Application/Controllers/LoginController.php:78
-#: modules/login/src/Application/Controllers/LoginController.php:79
-#: modules/login/src/Application/Controllers/LoginController.php:91
-#: modules/login/src/Application/Controllers/LoginController.php:92
+#: modules/login/src/Application/Controllers/LoginController.php:26
+#: modules/login/src/Application/Controllers/LoginController.php:50
+#: modules/login/src/Application/Controllers/LoginController.php:51
+#: modules/login/src/Application/Controllers/LoginController.php:75
+#: modules/login/src/Application/Controllers/LoginController.php:76
+#: modules/login/src/Application/Controllers/LoginController.php:88
+#: modules/login/src/Application/Controllers/LoginController.php:89
 #: modules/login/templates/public/login.twig:39
 #: themes/default/templates/components/sidebar-user-menu.twig:69
-#: themes/default/templates/system/app/sidebar-user-menu.phtml:70
 msgid "Login"
 msgstr ""
 
@@ -135,23 +129,22 @@ msgstr ""
 msgid "Apply"
 msgstr ""
 
-#: modules/login/src/Application/Controllers/LoginController.php:37
+#: modules/login/src/Application/Controllers/LoginController.php:34
 msgid "You have not entered login"
 msgstr ""
 
-#: modules/login/src/Application/Controllers/LoginController.php:41
+#: modules/login/src/Application/Controllers/LoginController.php:38
 msgid "You have not entered password"
 msgstr ""
 
-#: modules/login/src/Application/Controllers/LogoutController.php:45
+#: modules/login/src/Application/Controllers/LogoutController.php:42
 #: themes/default/templates/components/sidebar-user-menu.twig:52
-#: themes/default/templates/system/app/sidebar-user-menu.phtml:52
 msgid "Personal"
 msgstr ""
 
-#: modules/login/src/Application/Controllers/LogoutController.php:46
-#: modules/login/src/Application/Controllers/LogoutController.php:51
-#: modules/login/src/Application/Controllers/LogoutController.php:52
+#: modules/login/src/Application/Controllers/LogoutController.php:43
+#: modules/login/src/Application/Controllers/LogoutController.php:48
+#: modules/login/src/Application/Controllers/LogoutController.php:49
 #: modules/login/templates/public/logout.twig:12
 msgid "Logout"
 msgstr ""
@@ -207,7 +200,6 @@ msgstr ""
 
 #: modules/login/templates/public/login.twig:42
 #: themes/default/templates/components/sidebar-user-menu.twig:77
-#: themes/default/templates/system/app/sidebar-user-menu.phtml:78
 msgid "Registration"
 msgstr ""
 
@@ -221,25 +213,24 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: modules/notifications/src/Application/Controllers/ClearController.php:25
+#: modules/notifications/src/Application/Controllers/ClearController.php:22
 msgid "Notifications are cleared!"
 msgstr ""
 
-#: modules/notifications/src/Application/Controllers/IndexController.php:29
-#: modules/notifications/src/Application/Controllers/IndexController.php:40
-#: modules/notifications/src/Application/Controllers/IndexController.php:46
-#: modules/notifications/src/Application/Controllers/SettingsController.php:33
+#: modules/notifications/src/Application/Controllers/IndexController.php:26
+#: modules/notifications/src/Application/Controllers/IndexController.php:37
+#: modules/notifications/src/Application/Controllers/IndexController.php:43
+#: modules/notifications/src/Application/Controllers/SettingsController.php:30
 #: themes/default/templates/components/sidebar-user-menu.twig:41
-#: themes/default/templates/system/app/sidebar-user-menu.phtml:40
 msgid "Notifications"
 msgstr ""
 
-#: modules/notifications/src/Application/Controllers/SettingsController.php:31
+#: modules/notifications/src/Application/Controllers/SettingsController.php:28
 #: modules/notifications/templates/public/index.twig:71
 msgid "Settings"
 msgstr ""
 
-#: modules/notifications/src/Application/Controllers/SettingsController.php:39
+#: modules/notifications/src/Application/Controllers/SettingsController.php:36
 msgid "Settings saved!"
 msgstr ""
 
@@ -291,7 +282,7 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-#: modules/redirect/src/Application/Controllers/RedirectController.php:60
+#: modules/redirect/src/Application/Controllers/RedirectController.php:57
 msgid "Redirect to an external link"
 msgstr ""
 
@@ -331,7 +322,6 @@ msgstr ""
 #: themes/default/templates/admin/pages/result.twig:21
 #: themes/default/templates/pages/comments-list.twig:138
 #: themes/default/templates/pages/result.twig:19
-#: themes/default/templates/system/pages/result.phtml:33
 msgid "Back"
 msgstr ""
 
@@ -492,25 +482,25 @@ msgstr ""
 msgid "Last activity"
 msgstr ""
 
-#: system/src/Http/ExceptionResponseFactory.php:44
+#: system/src/Http/ExceptionResponseFactory.php:47
 msgid "Method Not Allowed"
 msgstr ""
 
-#: system/src/Http/ExceptionResponseFactory.php:68
+#: system/src/Http/ExceptionResponseFactory.php:65
 msgid "ERROR: 404 Not Found"
 msgstr ""
 
-#: system/src/Http/ExceptionResponseFactory.php:71
+#: system/src/Http/ExceptionResponseFactory.php:68
 msgid "You are looking for something that doesn't exist or may have moved"
 msgstr ""
 
-#: system/src/Http/ExceptionResponseFactory.php:87
+#: system/src/Http/ExceptionResponseFactory.php:107
 msgid "Bad Request"
 msgstr ""
 
 #: system/src/Http/PageMeta.php:18
-#: modules/forum/src/Application/Controllers/ForumSearchController.php:90
-#: modules/forum/src/Application/Controllers/ForumSearchController.php:99
+#: modules/forum/src/Application/Controllers/ForumSearchController.php:87
+#: modules/forum/src/Application/Controllers/ForumSearchController.php:96
 #: modules/forum/src/Application/Controllers/ForumTopicController.php:152
 #: modules/forum/src/Application/Controllers/ForumTopicController.php:161
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:418
@@ -519,7 +509,7 @@ msgstr ""
 
 #: system/src/NavChain.php:76
 #: themes/default/templates/admin/pages/errors/403.twig:21
-#: themes/default/templates/system/error/403.phtml:36
+#: themes/default/templates/pages/errors/403.twig:16
 msgid "Home"
 msgstr ""
 
@@ -692,12 +682,6 @@ msgstr ""
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:342
 #: themes/default/templates/components/sidebar-main-menu.twig:6
 #: themes/default/templates/components/sidebar-main-menu.twig:179
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:22
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:201
-#: modules/admin/templates/sidebar-admin-menu.phtml:23
-#: modules/admin/templates/sidebar-admin-menu.phtml:320
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:14
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:350
 msgid "Set Light Theme"
 msgstr ""
 
@@ -705,12 +689,6 @@ msgstr ""
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:341
 #: themes/default/templates/components/sidebar-main-menu.twig:6
 #: themes/default/templates/components/sidebar-main-menu.twig:178
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:22
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:200
-#: modules/admin/templates/sidebar-admin-menu.phtml:23
-#: modules/admin/templates/sidebar-admin-menu.phtml:319
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:14
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:349
 msgid "Set Dark Theme"
 msgstr ""
 
@@ -723,63 +701,51 @@ msgid "Send"
 msgstr ""
 
 #: themes/default/templates/components/debug.twig:18
-#: themes/default/templates/system/app/debug.phtml:15
 msgid "Sql query log"
 msgstr ""
 
 #: themes/default/templates/components/debug.twig:27
-#: themes/default/templates/system/app/debug.phtml:26
 msgid "Query"
 msgstr ""
 
 #: themes/default/templates/components/debug.twig:28
-#: themes/default/templates/system/app/debug.phtml:27
 msgid "Bindings"
 msgstr ""
 
 #: themes/default/templates/components/debug.twig:29
-#: themes/default/templates/system/app/debug.phtml:28
 msgid "Time"
 msgstr ""
 
 #: themes/default/templates/components/sidebar-main-menu.twig:22
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:42
 msgid "News archive"
 msgstr ""
 
 #: themes/default/templates/components/sidebar-main-menu.twig:96
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:116
 msgid "Photo Albums"
 msgstr ""
 
 #: themes/default/templates/components/sidebar-main-menu.twig:107
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:127
 msgid "Information, FAQ"
 msgstr ""
 
 #: themes/default/templates/components/sidebar-main-menu.twig:115
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:135
 msgid "Contacts"
 msgstr ""
 
 #: themes/default/templates/components/sidebar-main-menu.twig:126
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:146
 msgid "Admin Panel"
 msgstr ""
 
 #: themes/default/templates/components/sidebar-main-menu.twig:135
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:155
 msgid "Admin Chat"
 msgstr ""
 
 #: themes/default/templates/components/sidebar-user-menu.twig:24
-#: themes/default/templates/system/app/sidebar-user-menu.phtml:22
 #: modules/registration/templates/public/email-confirmed.twig:15
 msgid "Log In"
 msgstr ""
 
 #: themes/default/templates/components/sidebar-user-menu.twig:60
-#: themes/default/templates/system/app/sidebar-user-menu.phtml:60
 msgid "Exit"
 msgstr ""
 
@@ -913,33 +879,26 @@ msgid "If you receive this mail by mistake, just ignore this letter"
 msgstr ""
 
 #: themes/default/templates/layouts/default.twig:107
-#: themes/default/templates/system/layout/default.phtml:149
 msgid "Privacy Policy"
 msgstr ""
 
 #: themes/default/templates/layouts/default.twig:108
-#: themes/default/templates/system/layout/default.phtml:150
 msgid "Terms of Use"
 msgstr ""
 
 #: themes/default/templates/layouts/default.twig:109
-#: themes/default/templates/system/layout/default.phtml:151
 msgid "Personal Data Processing Policy"
 msgstr ""
 
 #: themes/default/templates/layouts/default.twig:110
-#: themes/default/templates/system/layout/default.phtml:152
 msgid "Cookie Policy"
 msgstr ""
 
 #: themes/default/templates/layouts/default.twig:175
-#: themes/default/templates/system/layout/default.phtml:225
-#, php-format
 msgid "We use cookies to improve the site. By continuing to use the site, you agree to our %sPrivacy Policy%s."
 msgstr ""
 
 #: themes/default/templates/layouts/default.twig:178
-#: themes/default/templates/system/layout/default.phtml:228
 msgid "Accept"
 msgstr ""
 

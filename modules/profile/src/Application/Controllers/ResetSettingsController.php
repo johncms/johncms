@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Profile\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Profile\Application\Exceptions\ProfileAccessForbiddenException;
 use Johncms\Modules\Profile\Application\Exceptions\ProfileNotFoundException;
@@ -16,12 +15,10 @@ use Symfony\Component\HttpFoundation\Response;
 final readonly class ResetSettingsController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private NavChain $navChain,
         private GetResetSettingsContextUseCase $getResetSettingsContextUseCase,
         private ResetUserSettingsUseCase $resetUserSettingsUseCase,
     ) {
-        $this->controllerContext->initModule('profile');
     }
 
     public function __invoke(int $id): ViewResponse

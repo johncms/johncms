@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Application\Controllers\Settings;
 
-use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Modules\Admin\Application\UseCases\GetCounterListUseCase;
 use Johncms\Modules\Admin\Application\UseCases\ManageCounterUseCase;
 use Johncms\Modules\Admin\Application\UseCases\SaveCounterUseCase;
@@ -20,14 +19,12 @@ final readonly class CountersController
     private const URL = '/admin/counters';
 
     public function __construct(
-        private AdminControllerContext $controllerContext,
         private NavChain $navChain,
         private User $currentUser,
         private GetCounterListUseCase $getList,
         private SaveCounterUseCase $saveCounter,
         private ManageCounterUseCase $manageCounter,
     ) {
-        $this->controllerContext->initModule('admin');
     }
 
     public function index(): ViewResponse

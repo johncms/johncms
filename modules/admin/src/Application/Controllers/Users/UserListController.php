@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Application\Controllers\Users;
 
-use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
@@ -17,14 +16,12 @@ use Johncms\NavChain;
 final readonly class UserListController
 {
     public function __construct(
-        private AdminControllerContext $controllerContext,
         private NavChain $navChain,
         private GetUserListUseCase $getUserListUseCase,
         private AdminUserRowMapper $rowMapper,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
     ) {
-        $this->controllerContext->initModule('admin');
     }
 
     public function __invoke(?string $sort = null): ViewResponse

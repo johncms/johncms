@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Mail\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Mail\Application\Exceptions\ContactNotFoundException;
 use Johncms\Modules\Mail\Application\UseCases\DeleteContactUseCase;
@@ -14,12 +13,10 @@ use Johncms\NavChain;
 final readonly class DeleteContactController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private NavChain $navChain,
         private GetDeleteContactContextUseCase $getDeleteContactContextUseCase,
         private DeleteContactUseCase $deleteContactUseCase,
     ) {
-        $this->controllerContext->initModule('mail');
     }
 
     public function confirm(int $id): ViewResponse

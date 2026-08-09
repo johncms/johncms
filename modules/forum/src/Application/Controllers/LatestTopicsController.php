@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Forum\Application\UseCases\ViewLatestTopicsUseCase;
 use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
@@ -12,11 +11,9 @@ use Johncms\NavChain;
 final readonly class LatestTopicsController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private NavChain $navChain,
         private ViewLatestTopicsUseCase $viewLatestTopicsUseCase,
     ) {
-        $this->controllerContext->initModule('forum');
     }
 
     public function __invoke(): ViewResponse

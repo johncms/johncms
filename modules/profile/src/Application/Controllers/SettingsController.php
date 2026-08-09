@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Profile\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Profile\Application\DTO\UpdateForumSettingsCommand;
 use Johncms\Modules\Profile\Application\DTO\UpdateMailSettingsCommand;
 use Johncms\Modules\Profile\Application\DTO\UpdateUserSettingsCommand;
@@ -20,7 +19,6 @@ use Johncms\Users\User;
 final readonly class SettingsController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private NavChain $navChain,
         private User $currentUser,
         private UserSettingsUseCase $userSettingsUseCase,
@@ -28,7 +26,6 @@ final readonly class SettingsController
         private MailSettingsUseCase $mailSettingsUseCase,
         private Session $session,
     ) {
-        $this->controllerContext->initModule('profile');
     }
 
     public function general(): ViewResponse

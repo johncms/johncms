@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\News\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\News\Application\Article;
 use Johncms\Modules\News\Application\MetaTagsManager;
@@ -15,13 +14,10 @@ use Johncms\Users\User;
 final readonly class ArticleController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private NavChain $navChain,
         private MetaTagsManager $metaTagsManager,
         private User $currentUser,
     ) {
-        $this->controllerContext->initModule('news');
-        $this->navChain->add(__('News'), '/news/');
     }
 
     /**
@@ -34,6 +30,8 @@ final readonly class ArticleController
      */
     public function index(Section $section, Article $article, string $article_code, string $category = ''): ViewResponse
     {
+        $this->navChain->add(__('News'), '/news/');
+
         $section->checkPath($category);
         $current_article = $article->getArticle($article_code);
 

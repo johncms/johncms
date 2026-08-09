@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Application\Controllers\Ip;
 
-use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Modules\Admin\Application\Services\IpWhoisHighlighter;
 use Johncms\Modules\Admin\Application\UseCases\GetIpWhoisUseCase;
 use Johncms\NavChain;
@@ -14,12 +13,10 @@ use Johncms\Http\View\ViewResponse;
 final readonly class IpWhoisController
 {
     public function __construct(
-        private AdminControllerContext $controllerContext,
         private NavChain $navChain,
         private GetIpWhoisUseCase $getIpWhoisUseCase,
         private IpWhoisHighlighter $highlighter,
     ) {
-        $this->controllerContext->initModule('admin');
     }
 
     public function __invoke(Request $request): ViewResponse

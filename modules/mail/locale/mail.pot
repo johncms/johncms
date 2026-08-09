@@ -2,220 +2,220 @@ msgid ""
 msgstr ""
 "X-Domain: mail\n"
 
-#: modules/mail/src/Application/Controllers/AddContactController.php:35
-#: modules/mail/src/Application/Controllers/BlockUserController.php:42
-#: modules/mail/src/Application/Controllers/BlocklistIndexController.php:26
-#: modules/mail/src/Application/Controllers/ClearConversationController.php:33
-#: modules/mail/src/Application/Controllers/ContactController.php:38
-#: modules/mail/src/Application/Controllers/DeleteContactController.php:33
-#: modules/mail/src/Application/Controllers/DeleteMessageController.php:33
-#: modules/mail/src/Application/Controllers/FilesController.php:38
-#: modules/mail/src/Application/Controllers/IncomingConversationsController.php:38
-#: modules/mail/src/Application/Controllers/OutgoingConversationsController.php:38
-#: modules/mail/src/Application/Controllers/UnblockUserController.php:37
-#: modules/mail/src/Application/Controllers/WriteController.php:97
+#: modules/mail/src/Application/Controllers/AddContactController.php:32
+#: modules/mail/src/Application/Controllers/BlockUserController.php:39
+#: modules/mail/src/Application/Controllers/BlocklistIndexController.php:23
+#: modules/mail/src/Application/Controllers/ClearConversationController.php:30
+#: modules/mail/src/Application/Controllers/ContactController.php:35
+#: modules/mail/src/Application/Controllers/DeleteContactController.php:30
+#: modules/mail/src/Application/Controllers/DeleteMessageController.php:30
+#: modules/mail/src/Application/Controllers/FilesController.php:35
+#: modules/mail/src/Application/Controllers/IncomingConversationsController.php:35
+#: modules/mail/src/Application/Controllers/OutgoingConversationsController.php:35
+#: modules/mail/src/Application/Controllers/UnblockUserController.php:34
+#: modules/mail/src/Application/Controllers/WriteController.php:94
 msgid "My Account"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/AddContactController.php:36
-#: modules/mail/src/Application/Controllers/BlockUserController.php:43
-#: modules/mail/src/Application/Controllers/BlocklistIndexController.php:27
-#: modules/mail/src/Application/Controllers/ClearConversationController.php:34
-#: modules/mail/src/Application/Controllers/ContactController.php:39
-#: modules/mail/src/Application/Controllers/DeleteContactController.php:34
-#: modules/mail/src/Application/Controllers/DeleteMessageController.php:34
-#: modules/mail/src/Application/Controllers/DownloadFileController.php:30
-#: modules/mail/src/Application/Controllers/FilesController.php:39
-#: modules/mail/src/Application/Controllers/IncomingConversationsController.php:39
-#: modules/mail/src/Application/Controllers/OutgoingConversationsController.php:39
-#: modules/mail/src/Application/Controllers/UnblockUserController.php:38
-#: modules/mail/src/Application/Controllers/WriteController.php:60
-#: modules/mail/src/Application/Controllers/WriteController.php:87
-#: modules/mail/src/Application/Controllers/WriteController.php:98
+#: modules/mail/src/Application/Controllers/AddContactController.php:33
+#: modules/mail/src/Application/Controllers/BlockUserController.php:40
+#: modules/mail/src/Application/Controllers/BlocklistIndexController.php:24
+#: modules/mail/src/Application/Controllers/ClearConversationController.php:31
+#: modules/mail/src/Application/Controllers/ContactController.php:36
+#: modules/mail/src/Application/Controllers/DeleteContactController.php:31
+#: modules/mail/src/Application/Controllers/DeleteMessageController.php:31
+#: modules/mail/src/Application/Controllers/DownloadFileController.php:27
+#: modules/mail/src/Application/Controllers/FilesController.php:36
+#: modules/mail/src/Application/Controllers/IncomingConversationsController.php:36
+#: modules/mail/src/Application/Controllers/OutgoingConversationsController.php:36
+#: modules/mail/src/Application/Controllers/UnblockUserController.php:35
+#: modules/mail/src/Application/Controllers/WriteController.php:57
+#: modules/mail/src/Application/Controllers/WriteController.php:84
+#: modules/mail/src/Application/Controllers/WriteController.php:95
 msgid "Mail"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/AddContactController.php:37
-#: modules/mail/src/Application/Controllers/ContactController.php:40
-#: modules/mail/src/Application/Controllers/ContactController.php:42
-#: modules/mail/src/Application/Controllers/DeleteContactController.php:35
+#: modules/mail/src/Application/Controllers/AddContactController.php:34
+#: modules/mail/src/Application/Controllers/ContactController.php:37
+#: modules/mail/src/Application/Controllers/ContactController.php:39
+#: modules/mail/src/Application/Controllers/DeleteContactController.php:32
 #: modules/mail/templates/public/components/nav.twig:10
 msgid "Contacts"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/AddContactController.php:38
-#: modules/mail/src/Application/Controllers/AddContactController.php:50
-#: modules/mail/src/Application/Controllers/AddContactController.php:51
-#: modules/mail/src/Application/Controllers/AddContactController.php:68
-#: modules/mail/src/Application/Controllers/AddContactController.php:82
+#: modules/mail/src/Application/Controllers/AddContactController.php:35
+#: modules/mail/src/Application/Controllers/AddContactController.php:47
+#: modules/mail/src/Application/Controllers/AddContactController.php:48
+#: modules/mail/src/Application/Controllers/AddContactController.php:65
+#: modules/mail/src/Application/Controllers/AddContactController.php:79
 msgid "Add Contact"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/AddContactController.php:42
+#: modules/mail/src/Application/Controllers/AddContactController.php:39
 msgid "You really want to add contact?"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/AddContactController.php:44
+#: modules/mail/src/Application/Controllers/AddContactController.php:41
 msgid "Add"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/AddContactController.php:70
+#: modules/mail/src/Application/Controllers/AddContactController.php:67
 msgid "User has been added to your contact list"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/AddContactController.php:72
-#: modules/mail/src/Application/Services/MailMessagePreviewService.php:43
+#: modules/mail/src/Application/Controllers/AddContactController.php:69
+#: modules/mail/src/Application/Services/MailMessagePreviewService.php:41
 msgid "Continue"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/BlockUserController.php:31
+#: modules/mail/src/Application/Controllers/BlockUserController.php:28
 msgid "User blocked successfully"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/BlockUserController.php:44
-#: modules/mail/src/Application/Controllers/BlocklistIndexController.php:28
-#: modules/mail/src/Application/Controllers/BlocklistIndexController.php:33
-#: modules/mail/src/Application/Controllers/BlocklistIndexController.php:34
-#: modules/mail/src/Application/Controllers/UnblockUserController.php:39
+#: modules/mail/src/Application/Controllers/BlockUserController.php:41
+#: modules/mail/src/Application/Controllers/BlocklistIndexController.php:25
+#: modules/mail/src/Application/Controllers/BlocklistIndexController.php:30
+#: modules/mail/src/Application/Controllers/BlocklistIndexController.php:31
+#: modules/mail/src/Application/Controllers/UnblockUserController.php:36
 #: modules/mail/templates/public/components/nav.twig:11
 msgid "Blacklist"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/BlockUserController.php:45
-#: modules/mail/src/Application/Controllers/BlockUserController.php:57
-#: modules/mail/src/Application/Controllers/BlockUserController.php:58
+#: modules/mail/src/Application/Controllers/BlockUserController.php:42
+#: modules/mail/src/Application/Controllers/BlockUserController.php:54
+#: modules/mail/src/Application/Controllers/BlockUserController.php:55
 msgid "Block user"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/BlockUserController.php:49
+#: modules/mail/src/Application/Controllers/BlockUserController.php:46
 msgid "You really want to block contact?"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/BlockUserController.php:51
+#: modules/mail/src/Application/Controllers/BlockUserController.php:48
 msgid "Block"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/ClearConversationController.php:35
-#: modules/mail/src/Application/Controllers/ClearConversationController.php:47
-#: modules/mail/src/Application/Controllers/ClearConversationController.php:48
-#: modules/mail/src/Application/Controllers/ClearConversationController.php:65
-#: modules/mail/src/Application/Controllers/ClearConversationController.php:79
-#: modules/mail/templates/public/messages.twig:159
+#: modules/mail/src/Application/Controllers/ClearConversationController.php:32
+#: modules/mail/src/Application/Controllers/ClearConversationController.php:44
+#: modules/mail/src/Application/Controllers/ClearConversationController.php:45
+#: modules/mail/src/Application/Controllers/ClearConversationController.php:62
+#: modules/mail/src/Application/Controllers/ClearConversationController.php:76
+#: modules/mail/templates/public/messages.twig:160
 msgid "Clear messages"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/ClearConversationController.php:39
+#: modules/mail/src/Application/Controllers/ClearConversationController.php:36
 msgid "Confirm the deletion of messages"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/ClearConversationController.php:41
-#: modules/mail/src/Application/Controllers/DeleteContactController.php:42
-#: modules/mail/src/Application/Controllers/DeleteContactController.php:48
-#: modules/mail/src/Application/Controllers/DeleteContactController.php:49
-#: modules/mail/src/Application/Controllers/DeleteContactController.php:66
-#: modules/mail/src/Application/Controllers/DeleteContactController.php:80
-#: modules/mail/src/Application/Controllers/DeleteMessageController.php:41
+#: modules/mail/src/Application/Controllers/ClearConversationController.php:38
+#: modules/mail/src/Application/Controllers/DeleteContactController.php:39
+#: modules/mail/src/Application/Controllers/DeleteContactController.php:45
+#: modules/mail/src/Application/Controllers/DeleteContactController.php:46
+#: modules/mail/src/Application/Controllers/DeleteContactController.php:63
+#: modules/mail/src/Application/Controllers/DeleteContactController.php:77
+#: modules/mail/src/Application/Controllers/DeleteMessageController.php:38
 #: modules/mail/src/Application/UseCases/GetContactListUseCase.php:91
 #: modules/mail/src/Application/UseCases/GetIncomingConversationsUseCase.php:79
 #: modules/mail/src/Application/UseCases/GetOutgoingConversationsUseCase.php:79
 #: modules/mail/templates/public/blocklist.twig:42
-#: modules/mail/templates/public/messages.twig:150
+#: modules/mail/templates/public/messages.twig:151
 msgid "Delete"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/ClearConversationController.php:67
+#: modules/mail/src/Application/Controllers/ClearConversationController.php:64
 msgid "Messages are deleted"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/ClearConversationController.php:69
-#: modules/mail/src/Application/Controllers/DeleteContactController.php:70
-#: modules/mail/src/Application/Controllers/DeleteMessageController.php:69
-#: modules/mail/src/Application/Controllers/WriteController.php:64
+#: modules/mail/src/Application/Controllers/ClearConversationController.php:66
+#: modules/mail/src/Application/Controllers/DeleteContactController.php:67
+#: modules/mail/src/Application/Controllers/DeleteMessageController.php:66
+#: modules/mail/src/Application/Controllers/WriteController.php:61
 #: modules/mail/templates/public/contacts.twig:65
 #: modules/mail/templates/public/conversations.twig:85
 #: modules/mail/templates/public/files.twig:55
-#: modules/mail/templates/public/messages.twig:174
+#: modules/mail/templates/public/messages.twig:175
 msgid "Back"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/ClearConversationController.php:81
-#: modules/mail/src/Application/Controllers/WriteController.php:89
+#: modules/mail/src/Application/Controllers/ClearConversationController.php:78
+#: modules/mail/src/Application/Controllers/WriteController.php:86
 #: modules/mail/src/Application/UseCases/SendMessageUseCase.php:39
 msgid "User does not exists"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/DeleteContactController.php:36
+#: modules/mail/src/Application/Controllers/DeleteContactController.php:33
 msgid "Delete contact"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/DeleteContactController.php:40
+#: modules/mail/src/Application/Controllers/DeleteContactController.php:37
 msgid "When you delete a contact is deleted and all correspondence with him.<br>Are you sure you want to delete?"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/DeleteContactController.php:68
+#: modules/mail/src/Application/Controllers/DeleteContactController.php:65
 msgid "Contact deleted"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/DeleteMessageController.php:35
+#: modules/mail/src/Application/Controllers/DeleteMessageController.php:32
 msgid "Delete message"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/DeleteMessageController.php:39
+#: modules/mail/src/Application/Controllers/DeleteMessageController.php:36
 msgid "You really want to remove the message?"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/DeleteMessageController.php:47
-#: modules/mail/src/Application/Controllers/DeleteMessageController.php:48
-#: modules/mail/src/Application/Controllers/DeleteMessageController.php:65
-#: modules/mail/src/Application/Controllers/DeleteMessageController.php:79
+#: modules/mail/src/Application/Controllers/DeleteMessageController.php:44
+#: modules/mail/src/Application/Controllers/DeleteMessageController.php:45
+#: modules/mail/src/Application/Controllers/DeleteMessageController.php:62
+#: modules/mail/src/Application/Controllers/DeleteMessageController.php:76
 msgid "Deleting messages"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/DeleteMessageController.php:67
+#: modules/mail/src/Application/Controllers/DeleteMessageController.php:64
 msgid "Message deleted"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/DownloadFileController.php:32
+#: modules/mail/src/Application/Controllers/DownloadFileController.php:29
 msgid "Such file does not exist"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/FilesController.php:40
-#: modules/mail/src/Application/Controllers/FilesController.php:42
+#: modules/mail/src/Application/Controllers/FilesController.php:37
+#: modules/mail/src/Application/Controllers/FilesController.php:39
 #: modules/mail/templates/public/components/nav.twig:9
 msgid "Files"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/IncomingConversationsController.php:41
+#: modules/mail/src/Application/Controllers/IncomingConversationsController.php:38
 #: modules/mail/templates/public/components/nav.twig:7
 msgid "Incoming messages"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/OutgoingConversationsController.php:40
-#: modules/mail/src/Application/Controllers/OutgoingConversationsController.php:42
+#: modules/mail/src/Application/Controllers/OutgoingConversationsController.php:37
+#: modules/mail/src/Application/Controllers/OutgoingConversationsController.php:39
 #: modules/mail/templates/public/components/nav.twig:8
 msgid "Sent messages"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/UnblockUserController.php:30
+#: modules/mail/src/Application/Controllers/UnblockUserController.php:27
 msgid "User unblocked successfully"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/UnblockUserController.php:40
-#: modules/mail/src/Application/Controllers/UnblockUserController.php:52
-#: modules/mail/src/Application/Controllers/UnblockUserController.php:53
+#: modules/mail/src/Application/Controllers/UnblockUserController.php:37
+#: modules/mail/src/Application/Controllers/UnblockUserController.php:49
+#: modules/mail/src/Application/Controllers/UnblockUserController.php:50
 msgid "Unblock user"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/UnblockUserController.php:44
+#: modules/mail/src/Application/Controllers/UnblockUserController.php:41
 msgid "You really want to unblock contact?"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/UnblockUserController.php:46
+#: modules/mail/src/Application/Controllers/UnblockUserController.php:43
 #: modules/mail/templates/public/blocklist.twig:43
 msgid "Unblock"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/WriteController.php:95
+#: modules/mail/src/Application/Controllers/WriteController.php:92
 msgid "New message"
 msgstr ""
 
@@ -310,7 +310,7 @@ msgstr ""
 #: modules/mail/templates/public/contacts.twig:12
 #: modules/mail/templates/public/conversations.twig:12
 #: modules/mail/templates/public/files.twig:12
-#: modules/mail/templates/public/messages.twig:50
+#: modules/mail/templates/public/messages.twig:51
 msgid "The list is empty"
 msgstr ""
 
@@ -336,7 +336,7 @@ msgstr[0] ""
 #: modules/mail/templates/public/contacts.twig:61
 #: modules/mail/templates/public/conversations.twig:81
 #: modules/mail/templates/public/files.twig:51
-#: modules/mail/templates/public/messages.twig:170
+#: modules/mail/templates/public/messages.twig:171
 msgid "Total:"
 msgstr ""
 
@@ -349,18 +349,18 @@ msgstr ""
 msgid "To Whom"
 msgstr ""
 
-#: modules/mail/templates/public/messages.twig:34
+#: modules/mail/templates/public/messages.twig:35
 msgid "Message"
 msgstr ""
 
-#: modules/mail/templates/public/messages.twig:41
+#: modules/mail/templates/public/messages.twig:42
 msgid "Choose file"
 msgstr ""
 
-#: modules/mail/templates/public/messages.twig:44
+#: modules/mail/templates/public/messages.twig:45
 msgid "Send"
 msgstr ""
 
-#: modules/mail/templates/public/messages.twig:102
+#: modules/mail/templates/public/messages.twig:103
 msgid "Attached files"
 msgstr ""

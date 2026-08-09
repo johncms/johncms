@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Profile\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Profile\Application\DTO\ChangePasswordCommand;
 use Johncms\Modules\Profile\Application\DTO\ChangePasswordContextDTO;
@@ -22,13 +21,11 @@ use Symfony\Component\HttpFoundation\Response;
 final readonly class ChangePasswordController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private NavChain $navChain,
         private User $currentUser,
         private GetChangePasswordContextUseCase $getChangePasswordContextUseCase,
         private ChangePasswordUseCase $changePasswordUseCase,
     ) {
-        $this->controllerContext->initModule('profile');
     }
 
     public function form(int $id): ViewResponse

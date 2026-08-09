@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Johncms\Modules\News\Application\Controllers;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\News\Domain\Models\NewsArticle;
 use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -13,12 +12,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 final readonly class VoteController
 {
-    public function __construct(
-        private ControllerContext $controllerContext,
-    ) {
-        $this->controllerContext->initModule('news');
-    }
-
     /**
      * Add vote
      *

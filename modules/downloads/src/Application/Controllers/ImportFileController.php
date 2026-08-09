@@ -6,7 +6,6 @@ namespace Johncms\Modules\Downloads\Application\Controllers;
 
 use Exception;
 use Intervention\Image\ImageManager;
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Downloads\Application\Services\DownloadCategoryPathService;
 use Johncms\Modules\Downloads\Application\Services\DownloadFilePathService;
 use Johncms\Modules\Downloads\Domain\Models\DownloadCategory;
@@ -27,13 +26,11 @@ final readonly class ImportFileController
     ];
 
     public function __construct(
-        private ControllerContext $controllerContext,
         private User $currentUser,
         private ImageManager $imageManager,
         private DownloadFilePathService $filePathService,
         private DownloadCategoryPathService $categoryPathService,
     ) {
-        $this->controllerContext->initModule('downloads');
     }
 
     public function __invoke(Request $request, int $id): ViewResponse

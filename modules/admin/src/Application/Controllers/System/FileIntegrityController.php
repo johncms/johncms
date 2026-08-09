@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Application\Controllers\System;
 
-use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Http\Session;
 use Johncms\Modules\Admin\Application\UseCases\CreateFileIntegritySnapshotUseCase;
 use Johncms\Modules\Admin\Application\UseCases\ScanFileIntegrityUseCase;
@@ -19,13 +18,11 @@ final readonly class FileIntegrityController
     private const URL = '/admin/file-integrity';
 
     public function __construct(
-        private AdminControllerContext $controllerContext,
         private NavChain $navChain,
         private ScanFileIntegrityUseCase $scanFileIntegrity,
         private CreateFileIntegritySnapshotUseCase $createSnapshotUseCase,
         private Session $session,
     ) {
-        $this->controllerContext->initModule('admin');
     }
 
     public function index(): ViewResponse

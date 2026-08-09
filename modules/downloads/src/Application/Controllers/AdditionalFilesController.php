@@ -8,7 +8,6 @@ use Johncms\FileInfo;
 use Johncms\Modules\Downloads\Application\FilePresenter;
 use Johncms\Modules\Downloads\Application\Services\CategoryNavService;
 use Johncms\Modules\Downloads\Application\Services\DownloadFilePathService;
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\Modules\Downloads\Domain\Models\DownloadMoreFile;
 use Johncms\NavChain;
@@ -30,14 +29,12 @@ final readonly class AdditionalFilesController
     ];
 
     public function __construct(
-        private ControllerContext $controllerContext,
         private Session $session,
         private NavChain $navChain,
         private DateFormatterInterface $dateFormatter,
         private CategoryNavService $categoryNavService,
         private DownloadFilePathService $filePathService,
     ) {
-        $this->controllerContext->initModule('downloads');
     }
 
     public function __invoke(Request $request, int $id): RedirectResponse|ViewResponse

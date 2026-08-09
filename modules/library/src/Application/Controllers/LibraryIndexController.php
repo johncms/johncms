@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Library\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Library\Application\LegacyRedirectHandler;
@@ -17,12 +16,10 @@ use Johncms\Modules\Library\Application\Services\Utils;
 final readonly class LibraryIndexController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private NavChain $navChain,
         private LegacyRedirectHandler $legacyRedirectHandler,
         private User $currentUser,
     ) {
-        $this->controllerContext->initModule('library');
     }
 
     public function __invoke(Request $request): ViewResponse

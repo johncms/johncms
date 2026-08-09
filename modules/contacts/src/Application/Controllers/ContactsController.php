@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Contacts\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Consent\Application\Services\ConsentService;
 use Johncms\Modules\Contacts\Application\DTO\CreateContactMessageDTO;
 use Johncms\Modules\Contacts\Application\Forms\ContactForm;
@@ -26,7 +25,6 @@ final readonly class ContactsController
     private const CONSENT_CONTEXT = 'contacts';
 
     public function __construct(
-        private ControllerContext $controllerContext,
         private Session $session,
         private NavChain $navChain,
         private Environment $environment,
@@ -37,7 +35,6 @@ final readonly class ContactsController
         private ConsentService $consentService,
         private SubmitContactMessageUseCase $submitMessage,
     ) {
-        $this->controllerContext->initModule('contacts');
     }
 
     public function __invoke(Request $request): ViewResponse

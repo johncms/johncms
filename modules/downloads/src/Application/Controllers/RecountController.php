@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Downloads\Domain\Models\DownloadCategory;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\Http\Request;
@@ -12,12 +11,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 final readonly class RecountController
 {
-    public function __construct(
-        private ControllerContext $controllerContext,
-    ) {
-        $this->controllerContext->initModule('downloads');
-    }
-
     public function __invoke(Request $request): RedirectResponse
     {
         $id = max(0, $request->queryInt('id', 0));

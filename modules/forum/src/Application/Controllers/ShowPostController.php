@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\ViewPostUseCase;
@@ -17,13 +16,11 @@ use Johncms\Users\User;
 final readonly class ShowPostController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private User $currentUser,
         private NavChain $navChain,
         private ForumErrorRenderer $forumErrorRenderer,
         private ViewPostUseCase $viewPostUseCase,
     ) {
-        $this->controllerContext->initModule('forum');
     }
 
     public function __invoke(int $id): ViewResponse

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Library\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\PageMeta;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Library\Domain\Models\LibraryCategory;
@@ -17,12 +16,10 @@ use Johncms\Utils\DateFormatterInterface;
 final readonly class TopController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private NavChain $navChain,
         private DateFormatterInterface $dateFormatter,
         private LibraryTextRepositoryInterface $repository,
     ) {
-        $this->controllerContext->initModule('library');
     }
 
     public function __invoke(Request $request): ViewResponse

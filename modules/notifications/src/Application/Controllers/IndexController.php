@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Notifications\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
@@ -15,13 +14,11 @@ use Johncms\NavChain;
 final readonly class IndexController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private NavChain $navChain,
         private GetNotificationListUseCase $getNotificationListUseCase,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
     ) {
-        $this->controllerContext->initModule('notifications');
     }
 
     public function __invoke(): ViewResponse

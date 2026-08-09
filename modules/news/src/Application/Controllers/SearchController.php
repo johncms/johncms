@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Johncms\Modules\News\Application\Controllers;
 
 use Illuminate\Database\Eloquent\Builder;
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\News\Domain\Models\NewsArticle;
@@ -18,14 +17,11 @@ final class SearchController
     protected array $config;
 
     public function __construct(
-        private readonly ControllerContext $controllerContext,
         private readonly NavChain $navChain,
         private readonly PaginationFactory $paginationFactory,
         private readonly PaginationGuard $paginationGuard,
     ) {
-        $this->controllerContext->initModule('news');
         $this->config = config('news') ?? [];
-        $this->navChain->add(__('News'), '/news/');
     }
 
     /**
@@ -35,6 +31,8 @@ final class SearchController
      */
     public function index(Request $request): ViewResponse
     {
+        $this->navChain->add(__('News'), '/news/');
+
         $page_title = __('Search');
         $this->navChain->add($page_title, '');
 

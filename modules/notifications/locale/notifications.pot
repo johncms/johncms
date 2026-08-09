@@ -2,23 +2,23 @@ msgid ""
 msgstr ""
 "X-Domain: notifications\n"
 
-#: modules/notifications/src/Application/Controllers/ClearController.php:25
+#: modules/notifications/src/Application/Controllers/ClearController.php:22
 msgid "Notifications are cleared!"
 msgstr ""
 
-#: modules/notifications/src/Application/Controllers/IndexController.php:29
-#: modules/notifications/src/Application/Controllers/IndexController.php:40
-#: modules/notifications/src/Application/Controllers/IndexController.php:46
-#: modules/notifications/src/Application/Controllers/SettingsController.php:33
+#: modules/notifications/src/Application/Controllers/IndexController.php:26
+#: modules/notifications/src/Application/Controllers/IndexController.php:37
+#: modules/notifications/src/Application/Controllers/IndexController.php:43
+#: modules/notifications/src/Application/Controllers/SettingsController.php:30
 msgid "Notifications"
 msgstr ""
 
-#: modules/notifications/src/Application/Controllers/SettingsController.php:31
+#: modules/notifications/src/Application/Controllers/SettingsController.php:28
 #: modules/notifications/templates/public/index.twig:71
 msgid "Settings"
 msgstr ""
 
-#: modules/notifications/src/Application/Controllers/SettingsController.php:39
+#: modules/notifications/src/Application/Controllers/SettingsController.php:36
 msgid "Settings saved!"
 msgstr ""
 

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\Modules\Downloads\Domain\Models\DownloadMoreFile;
 use Johncms\Http\Request;
@@ -17,11 +16,9 @@ use Symfony\Component\HttpFoundation\Response;
 final readonly class LoadFileController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private Session $session,
         private User $currentUser,
     ) {
-        $this->controllerContext->initModule('downloads');
     }
 
     public function __invoke(Request $request, int $id): RedirectResponse|ViewResponse

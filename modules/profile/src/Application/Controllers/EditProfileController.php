@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Profile\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Profile\Application\DTO\EditProfileContextDTO;
 use Johncms\Modules\Profile\Application\DTO\UpdateProfileCommand;
@@ -25,7 +24,6 @@ use Symfony\Component\HttpFoundation\Response;
 final readonly class EditProfileController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private NavChain $navChain,
         private GetEditContextUseCase $getEditContextUseCase,
         private UpdateProfileUseCase $updateProfileUseCase,
@@ -34,7 +32,6 @@ final readonly class EditProfileController
         private Session $session,
         private User $currentUser,
     ) {
-        $this->controllerContext->initModule('profile');
     }
 
     public function form(int $id): ViewResponse

@@ -2,61 +2,61 @@ msgid ""
 msgstr ""
 "X-Domain: downloads\n"
 
-#: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:54
-#: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:289
-#: modules/downloads/src/Application/Controllers/CommentsReviewController.php:50
-#: modules/downloads/src/Application/Controllers/CommentsReviewController.php:110
-#: modules/downloads/src/Application/Controllers/CommentsReviewController.php:112
-#: modules/downloads/src/Application/Controllers/CreateCategoryController.php:40
-#: modules/downloads/src/Application/Controllers/CreateCategoryController.php:52
-#: modules/downloads/src/Application/Controllers/DeleteCategoryController.php:33
-#: modules/downloads/src/Application/Controllers/DeleteCategoryController.php:42
-#: modules/downloads/src/Application/Controllers/DeleteCategoryController.php:52
-#: modules/downloads/src/Application/Controllers/DeleteFileController.php:53
-#: modules/downloads/src/Application/Controllers/DeleteFileController.php:102
+#: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:51
+#: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:286
+#: modules/downloads/src/Application/Controllers/CommentsReviewController.php:47
+#: modules/downloads/src/Application/Controllers/CommentsReviewController.php:107
+#: modules/downloads/src/Application/Controllers/CommentsReviewController.php:109
+#: modules/downloads/src/Application/Controllers/CreateCategoryController.php:37
+#: modules/downloads/src/Application/Controllers/CreateCategoryController.php:49
+#: modules/downloads/src/Application/Controllers/DeleteCategoryController.php:30
+#: modules/downloads/src/Application/Controllers/DeleteCategoryController.php:39
+#: modules/downloads/src/Application/Controllers/DeleteCategoryController.php:49
+#: modules/downloads/src/Application/Controllers/DeleteFileController.php:50
+#: modules/downloads/src/Application/Controllers/DeleteFileController.php:99
 #: modules/downloads/src/Application/Controllers/DownloadCategoryController.php:40
-#: modules/downloads/src/Application/Controllers/EditCategoryController.php:47
-#: modules/downloads/src/Application/Controllers/EditCategoryController.php:51
-#: modules/downloads/src/Application/Controllers/EditFileController.php:50
-#: modules/downloads/src/Application/Controllers/EditFileController.php:142
-#: modules/downloads/src/Application/Controllers/EditScreenController.php:58
-#: modules/downloads/src/Application/Controllers/EditScreenController.php:156
-#: modules/downloads/src/Application/Controllers/FavoritesController.php:38
-#: modules/downloads/src/Application/Controllers/FavoritesController.php:61
-#: modules/downloads/src/Application/Controllers/FavoritesController.php:63
-#: modules/downloads/src/Application/Controllers/FileCommentsController.php:47
-#: modules/downloads/src/Application/Controllers/FileCommentsController.php:68
-#: modules/downloads/src/Application/Controllers/FileCommentsController.php:84
-#: modules/downloads/src/Application/Controllers/FileCommentsController.php:100
-#: modules/downloads/src/Application/Controllers/FileCommentsController.php:108
-#: modules/downloads/src/Application/Controllers/FileCommentsController.php:116
-#: modules/downloads/src/Application/Controllers/FilesModerationController.php:30
-#: modules/downloads/src/Application/Controllers/FilesModerationController.php:70
-#: modules/downloads/src/Application/Controllers/FilesUploadController.php:62
-#: modules/downloads/src/Application/Controllers/ImportFileController.php:49
-#: modules/downloads/src/Application/Controllers/IndexController.php:46
-#: modules/downloads/src/Application/Controllers/IndexController.php:48
-#: modules/downloads/src/Application/Controllers/LoadFileController.php:76
-#: modules/downloads/src/Application/Controllers/MoveFileController.php:47
-#: modules/downloads/src/Application/Controllers/MoveFileController.php:136
-#: modules/downloads/src/Application/Controllers/NewFilesController.php:52
-#: modules/downloads/src/Application/Controllers/NewFilesController.php:62
-#: modules/downloads/src/Application/Controllers/NewFilesController.php:66
-#: modules/downloads/src/Application/Controllers/ScanDirectoryController.php:41
-#: modules/downloads/src/Application/Controllers/ScanDirectoryController.php:140
-#: modules/downloads/src/Application/Controllers/SearchController.php:35
-#: modules/downloads/src/Application/Controllers/SearchController.php:46
-#: modules/downloads/src/Application/Controllers/SearchController.php:53
-#: modules/downloads/src/Application/Controllers/SearchController.php:82
-#: modules/downloads/src/Application/Controllers/TopFilesController.php:46
-#: modules/downloads/src/Application/Controllers/TopFilesController.php:52
-#: modules/downloads/src/Application/Controllers/TopFilesController.php:54
-#: modules/downloads/src/Application/Controllers/TopUsersController.php:58
-#: modules/downloads/src/Application/Controllers/TopUsersController.php:60
-#: modules/downloads/src/Application/Controllers/UserFilesController.php:48
-#: modules/downloads/src/Application/Controllers/UserFilesController.php:52
-#: modules/downloads/src/Application/Controllers/UserFilesController.php:80
-#: modules/downloads/src/Application/Controllers/UserFilesController.php:82
+#: modules/downloads/src/Application/Controllers/EditCategoryController.php:44
+#: modules/downloads/src/Application/Controllers/EditCategoryController.php:48
+#: modules/downloads/src/Application/Controllers/EditFileController.php:47
+#: modules/downloads/src/Application/Controllers/EditFileController.php:139
+#: modules/downloads/src/Application/Controllers/EditScreenController.php:55
+#: modules/downloads/src/Application/Controllers/EditScreenController.php:153
+#: modules/downloads/src/Application/Controllers/FavoritesController.php:35
+#: modules/downloads/src/Application/Controllers/FavoritesController.php:58
+#: modules/downloads/src/Application/Controllers/FavoritesController.php:60
+#: modules/downloads/src/Application/Controllers/FileCommentsController.php:44
+#: modules/downloads/src/Application/Controllers/FileCommentsController.php:65
+#: modules/downloads/src/Application/Controllers/FileCommentsController.php:81
+#: modules/downloads/src/Application/Controllers/FileCommentsController.php:97
+#: modules/downloads/src/Application/Controllers/FileCommentsController.php:105
+#: modules/downloads/src/Application/Controllers/FileCommentsController.php:113
+#: modules/downloads/src/Application/Controllers/FilesModerationController.php:27
+#: modules/downloads/src/Application/Controllers/FilesModerationController.php:67
+#: modules/downloads/src/Application/Controllers/FilesUploadController.php:59
+#: modules/downloads/src/Application/Controllers/ImportFileController.php:46
+#: modules/downloads/src/Application/Controllers/IndexController.php:43
+#: modules/downloads/src/Application/Controllers/IndexController.php:45
+#: modules/downloads/src/Application/Controllers/LoadFileController.php:73
+#: modules/downloads/src/Application/Controllers/MoveFileController.php:44
+#: modules/downloads/src/Application/Controllers/MoveFileController.php:133
+#: modules/downloads/src/Application/Controllers/NewFilesController.php:49
+#: modules/downloads/src/Application/Controllers/NewFilesController.php:59
+#: modules/downloads/src/Application/Controllers/NewFilesController.php:63
+#: modules/downloads/src/Application/Controllers/ScanDirectoryController.php:38
+#: modules/downloads/src/Application/Controllers/ScanDirectoryController.php:137
+#: modules/downloads/src/Application/Controllers/SearchController.php:32
+#: modules/downloads/src/Application/Controllers/SearchController.php:43
+#: modules/downloads/src/Application/Controllers/SearchController.php:50
+#: modules/downloads/src/Application/Controllers/SearchController.php:79
+#: modules/downloads/src/Application/Controllers/TopFilesController.php:43
+#: modules/downloads/src/Application/Controllers/TopFilesController.php:49
+#: modules/downloads/src/Application/Controllers/TopFilesController.php:51
+#: modules/downloads/src/Application/Controllers/TopUsersController.php:55
+#: modules/downloads/src/Application/Controllers/TopUsersController.php:57
+#: modules/downloads/src/Application/Controllers/UserFilesController.php:45
+#: modules/downloads/src/Application/Controllers/UserFilesController.php:49
+#: modules/downloads/src/Application/Controllers/UserFilesController.php:77
+#: modules/downloads/src/Application/Controllers/UserFilesController.php:79
 #: modules/downloads/src/Application/Controllers/ViewFileController.php:90
 #: modules/downloads/src/Application/Controllers/ViewFileController.php:126
 #: modules/downloads/src/Application/Controllers/ViewFileController.php:170
@@ -78,392 +78,392 @@ msgstr ""
 msgid "Downloads"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:57
+#: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:54
 msgid "Additional files"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:123
+#: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:120
+#: modules/downloads/src/Application/Controllers/EditFileController.php:50
 #: modules/downloads/src/Application/Controllers/EditFileController.php:53
-#: modules/downloads/src/Application/Controllers/EditFileController.php:56
-#: modules/downloads/src/Application/Controllers/EditFileController.php:57
-#: modules/downloads/src/Application/Controllers/EditFileController.php:78
+#: modules/downloads/src/Application/Controllers/EditFileController.php:54
+#: modules/downloads/src/Application/Controllers/EditFileController.php:75
 #: modules/downloads/templates/public/view.twig:135
 msgid "Edit File"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:158
-#: modules/downloads/src/Application/Controllers/DeleteFileController.php:56
+#: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:155
+#: modules/downloads/src/Application/Controllers/DeleteFileController.php:53
 #: modules/downloads/templates/public/view.twig:138
 msgid "Delete File"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:184
-#: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:191
-#: modules/downloads/src/Application/Controllers/ImportFileController.php:79
-#: modules/downloads/src/Application/Controllers/ImportFileController.php:83
+#: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:181
+#: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:188
+#: modules/downloads/src/Application/Controllers/ImportFileController.php:76
+#: modules/downloads/src/Application/Controllers/ImportFileController.php:80
 msgid "Invalid Link"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:201
-#: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:269
-#: modules/downloads/src/Application/Controllers/FilesUploadController.php:83
-#: modules/downloads/src/Application/Controllers/FilesUploadController.php:143
-#: modules/downloads/src/Application/Controllers/ImportFileController.php:138
+#: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:198
+#: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:266
+#: modules/downloads/src/Application/Controllers/FilesUploadController.php:80
+#: modules/downloads/src/Application/Controllers/FilesUploadController.php:140
+#: modules/downloads/src/Application/Controllers/ImportFileController.php:135
 msgid "File not attached"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:218
-#: modules/downloads/src/Application/Controllers/CreateCategoryController.php:93
-#: modules/downloads/src/Application/Controllers/EditCategoryController.php:96
-#: modules/downloads/src/Application/Controllers/EditFileController.php:80
-#: modules/downloads/src/Application/Controllers/FilesUploadController.php:112
-#: modules/downloads/src/Application/Controllers/ImportFileController.php:108
+#: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:215
+#: modules/downloads/src/Application/Controllers/CreateCategoryController.php:90
+#: modules/downloads/src/Application/Controllers/EditCategoryController.php:93
+#: modules/downloads/src/Application/Controllers/EditFileController.php:77
+#: modules/downloads/src/Application/Controllers/FilesUploadController.php:109
+#: modules/downloads/src/Application/Controllers/ImportFileController.php:105
 msgid "The required fields are not filled"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:222
-#: modules/downloads/src/Application/Controllers/FilesUploadController.php:116
+#: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:219
+#: modules/downloads/src/Application/Controllers/FilesUploadController.php:113
 msgid "The weight of the file exceeds"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:227
-#: modules/downloads/src/Application/Controllers/FilesUploadController.php:121
-#: modules/downloads/src/Application/Controllers/ImportFileController.php:113
+#: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:224
+#: modules/downloads/src/Application/Controllers/FilesUploadController.php:118
+#: modules/downloads/src/Application/Controllers/ImportFileController.php:110
 msgid "Prohibited file type!<br>To upload allowed files that have the following extensions"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:261
-#: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:263
+#: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:258
+#: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:260
 #: modules/downloads/templates/public/import-result.twig:13
 #: modules/downloads/templates/public/upload-result.twig:14
 msgid "File attached"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:265
-#: modules/downloads/src/Application/Controllers/EditScreenController.php:145
-#: modules/downloads/src/Application/Controllers/FilesUploadController.php:239
-#: modules/downloads/src/Application/Controllers/MoveFileController.php:105
-#: modules/downloads/src/Application/Controllers/ScanDirectoryController.php:112
+#: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:262
+#: modules/downloads/src/Application/Controllers/EditScreenController.php:142
+#: modules/downloads/src/Application/Controllers/FilesUploadController.php:236
+#: modules/downloads/src/Application/Controllers/MoveFileController.php:102
+#: modules/downloads/src/Application/Controllers/ScanDirectoryController.php:109
 #: modules/downloads/templates/public/import-result.twig:25
 #: modules/downloads/templates/public/view.twig:156
 msgid "Back"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:274
-#: modules/downloads/src/Application/Controllers/ImportFileController.php:45
-#: modules/downloads/src/Application/Controllers/ScanDirectoryController.php:136
-#: modules/downloads/src/Application/Controllers/SearchController.php:42
+#: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:271
+#: modules/downloads/src/Application/Controllers/ImportFileController.php:42
+#: modules/downloads/src/Application/Controllers/ScanDirectoryController.php:133
+#: modules/downloads/src/Application/Controllers/SearchController.php:39
 msgid "Error"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:278
-#: modules/downloads/src/Application/Controllers/CreateCategoryController.php:115
-#: modules/downloads/src/Application/Controllers/CreateCategoryController.php:131
-#: modules/downloads/src/Application/Controllers/EditCategoryController.php:119
-#: modules/downloads/src/Application/Controllers/EditFileController.php:82
-#: modules/downloads/src/Application/Controllers/EditScreenController.php:109
-#: modules/downloads/src/Application/Controllers/EditScreenController.php:136
-#: modules/downloads/src/Application/Controllers/FilesUploadController.php:83
-#: modules/downloads/src/Application/Controllers/FilesUploadController.php:132
-#: modules/downloads/src/Application/Controllers/FilesUploadController.php:143
-#: modules/downloads/src/Application/Controllers/ImportFileController.php:140
-#: modules/downloads/src/Application/Controllers/ImportFileController.php:220
+#: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:275
+#: modules/downloads/src/Application/Controllers/CreateCategoryController.php:112
+#: modules/downloads/src/Application/Controllers/CreateCategoryController.php:128
+#: modules/downloads/src/Application/Controllers/EditCategoryController.php:116
+#: modules/downloads/src/Application/Controllers/EditFileController.php:79
+#: modules/downloads/src/Application/Controllers/EditScreenController.php:106
+#: modules/downloads/src/Application/Controllers/EditScreenController.php:133
+#: modules/downloads/src/Application/Controllers/FilesUploadController.php:80
+#: modules/downloads/src/Application/Controllers/FilesUploadController.php:129
+#: modules/downloads/src/Application/Controllers/FilesUploadController.php:140
+#: modules/downloads/src/Application/Controllers/ImportFileController.php:137
+#: modules/downloads/src/Application/Controllers/ImportFileController.php:217
 msgid "Repeat"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:285
-#: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:287
-#: modules/downloads/src/Application/Controllers/DeleteFileController.php:98
-#: modules/downloads/src/Application/Controllers/DeleteFileController.php:100
-#: modules/downloads/src/Application/Controllers/EditFileController.php:138
-#: modules/downloads/src/Application/Controllers/EditFileController.php:140
-#: modules/downloads/src/Application/Controllers/EditScreenController.php:152
-#: modules/downloads/src/Application/Controllers/EditScreenController.php:154
-#: modules/downloads/src/Application/Controllers/FileCommentsController.php:64
-#: modules/downloads/src/Application/Controllers/FileCommentsController.php:66
-#: modules/downloads/src/Application/Controllers/FileCommentsController.php:80
-#: modules/downloads/src/Application/Controllers/FileCommentsController.php:82
-#: modules/downloads/src/Application/Controllers/LoadFileController.php:72
-#: modules/downloads/src/Application/Controllers/LoadFileController.php:74
-#: modules/downloads/src/Application/Controllers/MoveFileController.php:132
-#: modules/downloads/src/Application/Controllers/MoveFileController.php:134
+#: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:282
+#: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:284
+#: modules/downloads/src/Application/Controllers/DeleteFileController.php:95
+#: modules/downloads/src/Application/Controllers/DeleteFileController.php:97
+#: modules/downloads/src/Application/Controllers/EditFileController.php:135
+#: modules/downloads/src/Application/Controllers/EditFileController.php:137
+#: modules/downloads/src/Application/Controllers/EditScreenController.php:149
+#: modules/downloads/src/Application/Controllers/EditScreenController.php:151
+#: modules/downloads/src/Application/Controllers/FileCommentsController.php:61
+#: modules/downloads/src/Application/Controllers/FileCommentsController.php:63
+#: modules/downloads/src/Application/Controllers/FileCommentsController.php:77
+#: modules/downloads/src/Application/Controllers/FileCommentsController.php:79
+#: modules/downloads/src/Application/Controllers/LoadFileController.php:69
+#: modules/downloads/src/Application/Controllers/LoadFileController.php:71
+#: modules/downloads/src/Application/Controllers/MoveFileController.php:129
+#: modules/downloads/src/Application/Controllers/MoveFileController.php:131
 #: modules/downloads/src/Application/Controllers/ViewFileController.php:202
 #: modules/downloads/src/Application/Controllers/ViewFileController.php:204
 msgid "File not found"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/CommentsReviewController.php:46
-#: modules/downloads/src/Application/Controllers/CommentsReviewController.php:48
-#: modules/downloads/src/Application/Controllers/FileCommentsController.php:45
+#: modules/downloads/src/Application/Controllers/CommentsReviewController.php:43
+#: modules/downloads/src/Application/Controllers/CommentsReviewController.php:45
+#: modules/downloads/src/Application/Controllers/FileCommentsController.php:42
 msgid "Comments are disabled"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/CommentsReviewController.php:109
+#: modules/downloads/src/Application/Controllers/CommentsReviewController.php:106
 #: modules/downloads/templates/public/index.twig:153
 msgid "Review comments"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/CreateCategoryController.php:41
-#: modules/downloads/src/Application/Controllers/CreateCategoryController.php:48
-#: modules/downloads/src/Application/Controllers/CreateCategoryController.php:71
-#: modules/downloads/src/Application/Controllers/CreateCategoryController.php:72
-#: modules/downloads/src/Application/Controllers/CreateCategoryController.php:111
-#: modules/downloads/src/Application/Controllers/CreateCategoryController.php:127
-#: modules/downloads/src/Application/Controllers/CreateCategoryController.php:152
+#: modules/downloads/src/Application/Controllers/CreateCategoryController.php:38
+#: modules/downloads/src/Application/Controllers/CreateCategoryController.php:45
+#: modules/downloads/src/Application/Controllers/CreateCategoryController.php:68
+#: modules/downloads/src/Application/Controllers/CreateCategoryController.php:69
+#: modules/downloads/src/Application/Controllers/CreateCategoryController.php:108
+#: modules/downloads/src/Application/Controllers/CreateCategoryController.php:124
+#: modules/downloads/src/Application/Controllers/CreateCategoryController.php:149
 #: modules/downloads/templates/public/index.twig:133
 msgid "Create Folder"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/CreateCategoryController.php:50
-#: modules/downloads/src/Application/Controllers/DeleteCategoryController.php:50
-#: modules/downloads/src/Application/Controllers/EditCategoryController.php:45
-#: modules/downloads/src/Application/Controllers/FilesUploadController.php:48
-#: modules/downloads/src/Application/Controllers/ImportFileController.php:47
-#: modules/downloads/src/Application/Controllers/NewFilesController.php:50
-#: modules/downloads/src/Application/Controllers/ScanDirectoryController.php:138
+#: modules/downloads/src/Application/Controllers/CreateCategoryController.php:47
+#: modules/downloads/src/Application/Controllers/DeleteCategoryController.php:47
+#: modules/downloads/src/Application/Controllers/EditCategoryController.php:42
+#: modules/downloads/src/Application/Controllers/FilesUploadController.php:45
+#: modules/downloads/src/Application/Controllers/ImportFileController.php:44
+#: modules/downloads/src/Application/Controllers/NewFilesController.php:47
+#: modules/downloads/src/Application/Controllers/ScanDirectoryController.php:135
 msgid "The directory does not exist"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/CreateCategoryController.php:97
+#: modules/downloads/src/Application/Controllers/CreateCategoryController.php:94
 msgid "Invalid characters"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/CreateCategoryController.php:103
-#: modules/downloads/src/Application/Controllers/EditCategoryController.php:107
+#: modules/downloads/src/Application/Controllers/CreateCategoryController.php:100
+#: modules/downloads/src/Application/Controllers/EditCategoryController.php:104
 #: modules/downloads/templates/public/category-form.twig:42
 msgid "You can write only the following extensions"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/CreateCategoryController.php:129
+#: modules/downloads/src/Application/Controllers/CreateCategoryController.php:126
 msgid "Error creating categories"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/CreateCategoryController.php:154
+#: modules/downloads/src/Application/Controllers/CreateCategoryController.php:151
 msgid "The Folder is created"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/CreateCategoryController.php:156
+#: modules/downloads/src/Application/Controllers/CreateCategoryController.php:153
 #: modules/downloads/templates/public/import-result.twig:21
 #: modules/downloads/templates/public/upload-result.twig:28
 msgid "Continue"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/DeleteCategoryController.php:34
-#: modules/downloads/src/Application/Controllers/DeleteCategoryController.php:38
-#: modules/downloads/src/Application/Controllers/DeleteCategoryController.php:48
-#: modules/downloads/src/Application/Controllers/DeleteCategoryController.php:67
-#: modules/downloads/src/Application/Controllers/DeleteCategoryController.php:68
+#: modules/downloads/src/Application/Controllers/DeleteCategoryController.php:31
+#: modules/downloads/src/Application/Controllers/DeleteCategoryController.php:35
+#: modules/downloads/src/Application/Controllers/DeleteCategoryController.php:45
+#: modules/downloads/src/Application/Controllers/DeleteCategoryController.php:64
+#: modules/downloads/src/Application/Controllers/DeleteCategoryController.php:65
 #: modules/downloads/templates/public/index.twig:137
 msgid "Delete Folder"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/DeleteCategoryController.php:40
+#: modules/downloads/src/Application/Controllers/DeleteCategoryController.php:37
 msgid "Before removing, delete subdirectories"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/EditCategoryController.php:43
-#: modules/downloads/src/Application/Controllers/EditCategoryController.php:52
-#: modules/downloads/src/Application/Controllers/EditCategoryController.php:115
-#: modules/downloads/src/Application/Controllers/EditCategoryController.php:139
-#: modules/downloads/src/Application/Controllers/EditCategoryController.php:140
+#: modules/downloads/src/Application/Controllers/EditCategoryController.php:40
+#: modules/downloads/src/Application/Controllers/EditCategoryController.php:49
+#: modules/downloads/src/Application/Controllers/EditCategoryController.php:112
+#: modules/downloads/src/Application/Controllers/EditCategoryController.php:136
+#: modules/downloads/src/Application/Controllers/EditCategoryController.php:137
 msgid "Edit Folder"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/EditScreenController.php:61
+#: modules/downloads/src/Application/Controllers/EditScreenController.php:58
 #: modules/downloads/templates/public/view.twig:136
 msgid "Managing Screenshots"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/EditScreenController.php:105
-#: modules/downloads/src/Application/Controllers/EditScreenController.php:132
-#: modules/downloads/src/Application/Controllers/EditScreenController.php:141
+#: modules/downloads/src/Application/Controllers/EditScreenController.php:102
+#: modules/downloads/src/Application/Controllers/EditScreenController.php:129
+#: modules/downloads/src/Application/Controllers/EditScreenController.php:138
 msgid "Upload screenshot"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/EditScreenController.php:107
-#: modules/downloads/src/Application/Controllers/EditScreenController.php:134
+#: modules/downloads/src/Application/Controllers/EditScreenController.php:104
+#: modules/downloads/src/Application/Controllers/EditScreenController.php:131
 #: modules/downloads/templates/public/import-result.twig:17
 #: modules/downloads/templates/public/upload-result.twig:18
 msgid "Screenshot not attached"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/EditScreenController.php:143
+#: modules/downloads/src/Application/Controllers/EditScreenController.php:140
 #: modules/downloads/templates/public/import-result.twig:15
 #: modules/downloads/templates/public/upload-result.twig:16
 msgid "Screenshot is attached"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/FavoritesController.php:40
+#: modules/downloads/src/Application/Controllers/FavoritesController.php:37
 #: modules/downloads/src/Application/Exceptions/DownloadsErrorCode.php:26
 msgid "For registered users only"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/FavoritesController.php:60
+#: modules/downloads/src/Application/Controllers/FavoritesController.php:57
 #: modules/downloads/templates/public/index.twig:155
 msgid "Favorites"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/FileCommentsController.php:43
-#: modules/downloads/src/Application/Controllers/FileCommentsController.php:111
-#: modules/downloads/src/Application/Controllers/FileCommentsController.php:116
-#: modules/downloads/src/Application/Controllers/FileCommentsController.php:141
+#: modules/downloads/src/Application/Controllers/FileCommentsController.php:40
+#: modules/downloads/src/Application/Controllers/FileCommentsController.php:108
+#: modules/downloads/src/Application/Controllers/FileCommentsController.php:113
+#: modules/downloads/src/Application/Controllers/FileCommentsController.php:138
 #: modules/downloads/templates/public/comments-review.twig:54
 #: modules/downloads/templates/public/view.twig:124
 msgid "Comments"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/FileCommentsController.php:96
-#: modules/downloads/src/Application/Controllers/FileCommentsController.php:98
+#: modules/downloads/src/Application/Controllers/FileCommentsController.php:93
+#: modules/downloads/src/Application/Controllers/FileCommentsController.php:95
 #: modules/downloads/src/Application/Controllers/ViewFileController.php:86
 #: modules/downloads/src/Application/Controllers/ViewFileController.php:88
 msgid "The file is awaiting moderation"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/FilesModerationController.php:31
-#: modules/downloads/src/Application/Controllers/FilesModerationController.php:53
-#: modules/downloads/src/Application/Controllers/FilesModerationController.php:57
-#: modules/downloads/src/Application/Controllers/FilesModerationController.php:66
-#: modules/downloads/src/Application/Controllers/FilesModerationController.php:103
-#: modules/downloads/src/Application/Controllers/FilesModerationController.php:104
+#: modules/downloads/src/Application/Controllers/FilesModerationController.php:28
+#: modules/downloads/src/Application/Controllers/FilesModerationController.php:50
+#: modules/downloads/src/Application/Controllers/FilesModerationController.php:54
+#: modules/downloads/src/Application/Controllers/FilesModerationController.php:63
+#: modules/downloads/src/Application/Controllers/FilesModerationController.php:100
+#: modules/downloads/src/Application/Controllers/FilesModerationController.php:101
 msgid "Files awaiting moderation"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/FilesModerationController.php:55
+#: modules/downloads/src/Application/Controllers/FilesModerationController.php:52
 msgid "File accepted"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/FilesModerationController.php:68
+#: modules/downloads/src/Application/Controllers/FilesModerationController.php:65
 msgid "All files accepted"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/FilesUploadController.php:55
+#: modules/downloads/src/Application/Controllers/FilesUploadController.php:52
 msgid "Access forbidden"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/FilesUploadController.php:69
-#: modules/downloads/src/Application/Controllers/FilesUploadController.php:70
-#: modules/downloads/src/Application/Controllers/FilesUploadController.php:204
-#: modules/downloads/src/Application/Controllers/FilesUploadController.php:205
+#: modules/downloads/src/Application/Controllers/FilesUploadController.php:66
+#: modules/downloads/src/Application/Controllers/FilesUploadController.php:67
+#: modules/downloads/src/Application/Controllers/FilesUploadController.php:201
+#: modules/downloads/src/Application/Controllers/FilesUploadController.php:202
 #: modules/downloads/templates/public/index.twig:123
 #: modules/downloads/templates/public/index.twig:145
 msgid "Upload File"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/FilesUploadController.php:128
-#: modules/downloads/src/Application/Controllers/FilesUploadController.php:235
+#: modules/downloads/src/Application/Controllers/FilesUploadController.php:125
+#: modules/downloads/src/Application/Controllers/FilesUploadController.php:232
 msgid "Upload file"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/ImportFileController.php:62
-#: modules/downloads/src/Application/Controllers/ImportFileController.php:63
-#: modules/downloads/src/Application/Controllers/ImportFileController.php:136
-#: modules/downloads/src/Application/Controllers/ImportFileController.php:183
-#: modules/downloads/src/Application/Controllers/ImportFileController.php:184
-#: modules/downloads/src/Application/Controllers/ImportFileController.php:216
+#: modules/downloads/src/Application/Controllers/ImportFileController.php:59
+#: modules/downloads/src/Application/Controllers/ImportFileController.php:60
+#: modules/downloads/src/Application/Controllers/ImportFileController.php:133
+#: modules/downloads/src/Application/Controllers/ImportFileController.php:180
+#: modules/downloads/src/Application/Controllers/ImportFileController.php:181
+#: modules/downloads/src/Application/Controllers/ImportFileController.php:213
 msgid "File import"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/ImportFileController.php:119
+#: modules/downloads/src/Application/Controllers/ImportFileController.php:116
 msgid "The file name length must not exceed 100 characters"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/ImportFileController.php:123
+#: modules/downloads/src/Application/Controllers/ImportFileController.php:120
 msgid "The file name contains invalid characters"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/MoveFileController.php:50
-#: modules/downloads/src/Application/Controllers/MoveFileController.php:89
-#: modules/downloads/src/Application/Controllers/MoveFileController.php:90
-#: modules/downloads/src/Application/Controllers/MoveFileController.php:101
-#: modules/downloads/src/Application/Controllers/MoveFileController.php:113
+#: modules/downloads/src/Application/Controllers/MoveFileController.php:47
+#: modules/downloads/src/Application/Controllers/MoveFileController.php:86
+#: modules/downloads/src/Application/Controllers/MoveFileController.php:87
+#: modules/downloads/src/Application/Controllers/MoveFileController.php:98
+#: modules/downloads/src/Application/Controllers/MoveFileController.php:110
 #: modules/downloads/templates/public/view.twig:139
 msgid "Move File"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/MoveFileController.php:103
+#: modules/downloads/src/Application/Controllers/MoveFileController.php:100
 msgid "This is the current directory"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/MoveFileController.php:115
+#: modules/downloads/src/Application/Controllers/MoveFileController.php:112
 msgid "The file has been moved"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/MoveFileController.php:117
+#: modules/downloads/src/Application/Controllers/MoveFileController.php:114
 #: modules/downloads/templates/public/index.twig:139
 #: modules/downloads/templates/public/scan-dir.twig:48
 msgid "Update counters"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/NewFilesController.php:48
-#: modules/downloads/src/Application/Controllers/NewFilesController.php:63
-#: modules/downloads/src/Application/Controllers/NewFilesController.php:65
+#: modules/downloads/src/Application/Controllers/NewFilesController.php:45
+#: modules/downloads/src/Application/Controllers/NewFilesController.php:60
+#: modules/downloads/src/Application/Controllers/NewFilesController.php:62
 #: modules/downloads/templates/public/index.twig:33
 msgid "New Files"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/ScanDirectoryController.php:42
-#: modules/downloads/src/Application/Controllers/ScanDirectoryController.php:161
-#: modules/downloads/src/Application/Controllers/ScanDirectoryController.php:162
+#: modules/downloads/src/Application/Controllers/ScanDirectoryController.php:39
+#: modules/downloads/src/Application/Controllers/ScanDirectoryController.php:158
+#: modules/downloads/src/Application/Controllers/ScanDirectoryController.php:159
 msgid "Update"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/ScanDirectoryController.php:108
+#: modules/downloads/src/Application/Controllers/ScanDirectoryController.php:105
 #: modules/downloads/templates/public/index.twig:138
 #: modules/downloads/templates/public/scan-dir.twig:45
 msgid "Remove missing files"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/ScanDirectoryController.php:110
+#: modules/downloads/src/Application/Controllers/ScanDirectoryController.php:107
 msgid "Database successfully updated"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/ScanDirectoryController.php:270
+#: modules/downloads/src/Application/Controllers/ScanDirectoryController.php:267
 #: modules/downloads/templates/public/import.twig:35
 #: modules/downloads/templates/public/upload.twig:39
 msgid "Download"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/SearchController.php:36
-#: modules/downloads/src/Application/Controllers/SearchController.php:52
+#: modules/downloads/src/Application/Controllers/SearchController.php:33
+#: modules/downloads/src/Application/Controllers/SearchController.php:49
 #: modules/downloads/templates/public/index.twig:36
 #: modules/downloads/templates/public/search.twig:27
 msgid "Search"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/SearchController.php:44
+#: modules/downloads/src/Application/Controllers/SearchController.php:41
 msgid "Invalid file name length. Allowed a minimum of 3 and a maximum of 64 characters."
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/SearchController.php:81
+#: modules/downloads/src/Application/Controllers/SearchController.php:78
 #, php-format
 msgid "Search results for: %s"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/TopFilesController.php:41
+#: modules/downloads/src/Application/Controllers/TopFilesController.php:38
 #: modules/downloads/src/Application/UseCases/ViewTopFilesUseCase.php:39
 msgid "Most Commented"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/TopFilesController.php:42
+#: modules/downloads/src/Application/Controllers/TopFilesController.php:39
 #: modules/downloads/src/Application/UseCases/ViewTopFilesUseCase.php:31
 msgid "Most Downloaded"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/TopFilesController.php:43
+#: modules/downloads/src/Application/Controllers/TopFilesController.php:40
 #: modules/downloads/src/Application/UseCases/ViewTopFilesUseCase.php:26
 msgid "Popular Files"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/TopUsersController.php:57
+#: modules/downloads/src/Application/Controllers/TopUsersController.php:54
 #: modules/downloads/templates/public/index.twig:38
 msgid "Top Users"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/UserFilesController.php:50
+#: modules/downloads/src/Application/Controllers/UserFilesController.php:47
 msgid "User does not exists"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/UserFilesController.php:79
+#: modules/downloads/src/Application/Controllers/UserFilesController.php:76
 #: modules/downloads/templates/public/components/user-row.twig:26
 msgid "User Files"
 msgstr ""

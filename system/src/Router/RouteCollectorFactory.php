@@ -36,11 +36,20 @@ class RouteCollectorFactory
         $registerRoutes($router, $user);
     }
 
+    /**
+     * Every route a module declares is stamped with the name of that module, taken from the path
+     * of the file declaring it. That is what lets the request pipeline set up the module context
+     * of the page, instead of each controller naming its own module.
+     */
     private function addModuleRoutes(RouteCollection $router, User $user): void
     {
         foreach (glob(MODULES_PATH . '*/config/routes.php') as $file) {
+            $router->setModule(basename(dirname($file, 2)));
+
             $registerRoutes = require $file;
             $registerRoutes($router, $user);
         }
+
+        $router->setModule(null);
     }
 }

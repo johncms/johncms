@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Downloads\Application\Services\CategoryNavService;
 use Johncms\Modules\Downloads\Application\Services\DownloadFilePathService;
 use Johncms\Modules\Downloads\Application\UseCases\MoveFileUseCase;
@@ -19,14 +18,12 @@ use Symfony\Component\HttpFoundation\Response;
 final readonly class MoveFileController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private NavChain $navChain,
         private User $currentUser,
         private MoveFileUseCase $moveFileUseCase,
         private CategoryNavService $categoryNavService,
         private DownloadFilePathService $filePathService,
     ) {
-        $this->controllerContext->initModule('downloads');
     }
 
     public function __invoke(Request $request, int $id): ViewResponse

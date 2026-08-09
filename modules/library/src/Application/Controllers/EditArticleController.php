@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Library\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Library\Application\Services\LibrarySlugService;
 use Johncms\Modules\Library\Domain\Models\LibraryCategory;
@@ -23,12 +22,10 @@ final readonly class EditArticleController
     private const EDITABLE_TEXT_LENGTH = 500000;
 
     public function __construct(
-        private ControllerContext $controllerContext,
         private NavChain $navChain,
         private User $currentUser,
         private LibrarySlugService $slugService,
     ) {
-        $this->controllerContext->initModule('library');
     }
 
     public function __invoke(Request $request, int $id): ViewResponse

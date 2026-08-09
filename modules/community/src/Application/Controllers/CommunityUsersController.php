@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Community\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
@@ -16,14 +15,12 @@ use Johncms\Users\User;
 final readonly class CommunityUsersController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private NavChain $navChain,
         private User $currentUser,
         private ViewUsersUseCase $viewUsersUseCase,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
     ) {
-        $this->controllerContext->initModule('community');
     }
 
     public function __invoke(): ViewResponse

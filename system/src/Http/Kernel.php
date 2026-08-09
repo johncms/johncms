@@ -67,6 +67,7 @@ final readonly class Kernel implements HttpKernelInterface, TerminableInterface
         private CurrentUserAuthenticator $currentUserAuthenticator,
         private LocaleResolver $localeResolver,
         private Translator $translator,
+        private ModuleContext $moduleContext,
         /** @var iterable<ResetInterface> Shared services caching something that belongs to one request. */
         private iterable $resettableServices,
     ) {
@@ -203,6 +204,11 @@ final readonly class Kernel implements HttpKernelInterface, TerminableInterface
         }
 
         $request->attributes->add($match->params);
+
+        // The translations of the module owning the route, before anything renders. Belongs to the
+        // cycle rather than to the controller: controllers are built per request only because of
+        // work like this, and a guard rejecting the request must answer in the right language too.
+        $this->moduleContext->enter($match->module);
 
         // The handler passed to the pipeline already returns a Response: normalizing here, before
         // the middleware stack runs, is what lets MiddlewareInterface::handle() be typed to

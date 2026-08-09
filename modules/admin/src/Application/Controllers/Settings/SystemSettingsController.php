@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Application\Controllers\Settings;
 
-use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Http\Session;
 use Johncms\Modules\Admin\Application\DTO\SystemSettingsDTO;
 use Johncms\Modules\Admin\Application\UseCases\UpdateSystemSettingsUseCase;
@@ -20,13 +19,11 @@ final readonly class SystemSettingsController
     private const URL = '/admin/settings';
 
     public function __construct(
-        private AdminControllerContext $controllerContext,
         private NavChain $navChain,
         private UpdateSystemSettingsUseCase $updateSystemSettingsUseCase,
         private ThemeListProviderInterface $themeListProvider,
         private Session $session,
     ) {
-        $this->controllerContext->initModule('admin');
     }
 
     public function form(): ViewResponse

@@ -2,308 +2,257 @@ msgid ""
 msgstr ""
 "X-Domain: admin\n"
 
-#: system/src/Http/Controller/AdminControllerContext.php:50
-#: modules/admin/src/Application/Controllers/DashboardController.php:25
-#: modules/admin/src/Application/Controllers/Ip/IpWhoisController.php:40
+#: system/src/Http/AdminAreaContext.php:33
+#: modules/admin/src/Application/Controllers/DashboardController.php:22
+#: modules/admin/src/Application/Controllers/Ip/IpWhoisController.php:37
 msgid "Admin Panel"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:26
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:64
-#: modules/admin/src/Application/Controllers/Settings/AdsController.php:322
+#: modules/admin/src/Application/Controllers/Settings/AdsController.php:319
 #: modules/admin/src/Application/Services/AdRowMapper.php:121
-#: modules/admin/templates/sidebar-admin-menu.phtml:36
-#: modules/admin/templates/sidebar-admin-menu.phtml:75
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:27
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:66
 msgid "Users"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:45
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:137
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:134
 #: modules/admin/templates/ip-ban-search.twig:23
 #: modules/admin/templates/ip-bans.twig:57
 #: modules/admin/templates/ip-search.twig:28
 #: modules/admin/templates/ip-whois.twig:17
-#: modules/admin/templates/sidebar-admin-menu.phtml:56
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:47
 msgid "Search"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:54
-#: modules/admin/templates/sidebar-admin-menu.phtml:65
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:56
 msgid "On registration"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:73
-#: modules/admin/src/Application/Controllers/Users/StaffListController.php:26
-#: modules/admin/templates/sidebar-admin-menu.phtml:84
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:75
+#: modules/admin/src/Application/Controllers/Users/StaffListController.php:23
 msgid "Administration"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:82
-#: modules/admin/src/Application/Controllers/Users/AmnestyController.php:61
-#: modules/admin/src/Application/Controllers/Users/BanListController.php:46
-#: modules/admin/templates/sidebar-admin-menu.phtml:93
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:84
+#: modules/admin/src/Application/Controllers/Users/AmnestyController.php:58
+#: modules/admin/src/Application/Controllers/Users/BanListController.php:43
 msgid "Ban Panel"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:92
-#: modules/admin/src/Application/Controllers/Users/UserCleanupController.php:58
-#: modules/admin/templates/sidebar-admin-menu.phtml:103
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:94
+#: modules/admin/src/Application/Controllers/Users/UserCleanupController.php:55
 msgid "Database cleanup"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:100
-#: modules/admin/templates/sidebar-admin-menu.phtml:111
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:102
 msgid "Antiflood"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:108
-#: modules/admin/src/Application/Controllers/Users/KarmaController.php:62
-#: modules/admin/src/Application/Controllers/Users/KarmaController.php:97
-#: modules/admin/templates/sidebar-admin-menu.phtml:119
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:110
+#: modules/admin/src/Application/Controllers/Users/KarmaController.php:59
+#: modules/admin/src/Application/Controllers/Users/KarmaController.php:94
 msgid "Karma"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:121
-#: modules/admin/templates/sidebar-admin-menu.phtml:133
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:124
 msgid "Modules"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:137
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:77
-#: modules/admin/templates/sidebar-admin-menu.phtml:150
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:141
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:74
 msgid "Permissions"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:145
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:108
-#: modules/admin/templates/sidebar-admin-menu.phtml:158
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:105
 #: modules/admin/templates/user-delete-confirm.twig:33
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:149
 msgid "Forum"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:153
-#: modules/admin/templates/sidebar-admin-menu.phtml:166
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:157
 msgid "News"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:161
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:165
 msgid "Collections"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:169
-#: modules/admin/src/Application/Controllers/Settings/AdsController.php:54
-#: modules/admin/src/Application/Controllers/Settings/AdsController.php:134
-#: modules/admin/src/Application/Controllers/Settings/AdsController.php:156
-#: modules/admin/src/Application/Controllers/Settings/AdsController.php:300
-#: modules/admin/src/Application/Controllers/Settings/AdsController.php:375
-#: modules/admin/templates/sidebar-admin-menu.phtml:174
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:173
+#: modules/admin/src/Application/Controllers/Settings/AdsController.php:51
+#: modules/admin/src/Application/Controllers/Settings/AdsController.php:131
+#: modules/admin/src/Application/Controllers/Settings/AdsController.php:153
+#: modules/admin/src/Application/Controllers/Settings/AdsController.php:297
+#: modules/admin/src/Application/Controllers/Settings/AdsController.php:372
 msgid "Advertisement"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:177
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:181
 msgid "Consents"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:185
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:189
 msgid "Contacts"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:193
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:197
 msgid "Cookie banner"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:202
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:35
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:52
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:100
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:174
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:195
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:222
-#: modules/admin/templates/sidebar-admin-menu.phtml:183
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:206
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:32
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:49
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:97
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:171
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:192
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:219
 msgid "Counters"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:215
-#: modules/admin/templates/sidebar-admin-menu.phtml:197
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:220
 msgid "System"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:231
-#: modules/admin/src/Application/Controllers/Settings/SystemSettingsController.php:89
-#: modules/admin/templates/sidebar-admin-menu.phtml:214
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:237
+#: modules/admin/src/Application/Controllers/Settings/SystemSettingsController.php:86
 msgid "System Settings"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:239
-#: modules/admin/templates/sidebar-admin-menu.phtml:222
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:245
 msgid "Update Smilies"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:247
-#: modules/admin/templates/sidebar-admin-menu.phtml:230
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:253
 msgid "Language Settings"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:255
-#: modules/admin/src/Application/Controllers/System/SystemCheckController.php:24
-#: modules/admin/templates/sidebar-admin-menu.phtml:238
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:261
+#: modules/admin/src/Application/Controllers/System/SystemCheckController.php:27
 msgid "System check"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:263
-#: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:86
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:269
+#: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:83
 msgid "Maintenance"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:275
-#: modules/admin/templates/sidebar-admin-menu.phtml:251
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:282
 msgid "Security"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:291
-#: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:33
-#: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:46
-#: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:75
-#: modules/admin/templates/sidebar-admin-menu.phtml:268
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:299
+#: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:30
+#: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:43
+#: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:72
 msgid "Anti-Spyware"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:299
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:54
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:78
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:138
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:173
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:202
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:228
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:247
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:294
-#: modules/admin/templates/sidebar-admin-menu.phtml:276
-#: themes/admin/templates/system/app/sidebar-admin-menu.phtml:307
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:51
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:75
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:135
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:170
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:199
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:225
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:244
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:291
 msgid "Ban by IP"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/DashboardController.php:26
+#: modules/admin/src/Application/Controllers/DashboardController.php:23
 msgid "Dashboard"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumDashboardController.php:26
-#: modules/admin/src/Application/Controllers/Forum/ForumSettingsController.php:74
-#: modules/admin/src/Application/Controllers/Forum/HiddenPostsController.php:50
-#: modules/admin/src/Application/Controllers/Forum/HiddenTopicsController.php:50
+#: modules/admin/src/Application/Controllers/Forum/ForumDashboardController.php:23
+#: modules/admin/src/Application/Controllers/Forum/ForumSettingsController.php:71
+#: modules/admin/src/Application/Controllers/Forum/HiddenPostsController.php:47
+#: modules/admin/src/Application/Controllers/Forum/HiddenTopicsController.php:47
 msgid "Forum Management"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumSettingsController.php:38
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:109
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:226
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:248
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:267
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:91
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:114
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:149
-#: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:44
-#: modules/admin/src/Application/Controllers/Settings/AdsController.php:80
-#: modules/admin/src/Application/Controllers/Settings/AdsController.php:89
-#: modules/admin/src/Application/Controllers/Settings/AdsController.php:130
-#: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:38
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:48
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:76
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:85
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:118
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:170
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:38
-#: modules/admin/src/Application/Controllers/Settings/SystemSettingsController.php:40
-#: modules/admin/src/Application/Controllers/System/EmoticonsController.php:37
-#: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:46
-#: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:52
-#: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:66
-#: modules/admin/src/Application/Controllers/Users/AmnestyController.php:36
-#: modules/admin/src/Application/Controllers/Users/DeleteUserController.php:62
-#: modules/admin/src/Application/Controllers/Users/DeleteUserController.php:94
-#: modules/admin/src/Application/Controllers/Users/KarmaController.php:40
-#: modules/admin/src/Application/Controllers/Users/UserCleanupController.php:38
+#: modules/admin/src/Application/Controllers/Forum/ForumSettingsController.php:35
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:106
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:223
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:245
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:264
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:88
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:111
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:146
+#: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:41
+#: modules/admin/src/Application/Controllers/Settings/AdsController.php:77
+#: modules/admin/src/Application/Controllers/Settings/AdsController.php:86
+#: modules/admin/src/Application/Controllers/Settings/AdsController.php:127
+#: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:35
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:45
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:73
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:82
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:115
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:167
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:35
+#: modules/admin/src/Application/Controllers/Settings/SystemSettingsController.php:37
+#: modules/admin/src/Application/Controllers/System/EmoticonsController.php:34
+#: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:43
+#: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:49
+#: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:63
+#: modules/admin/src/Application/Controllers/Users/AmnestyController.php:33
+#: modules/admin/src/Application/Controllers/Users/DeleteUserController.php:59
+#: modules/admin/src/Application/Controllers/Users/DeleteUserController.php:91
+#: modules/admin/src/Application/Controllers/Users/KarmaController.php:37
+#: modules/admin/src/Application/Controllers/Users/UserCleanupController.php:35
 msgid "Wrong data"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumSettingsController.php:54
+#: modules/admin/src/Application/Controllers/Forum/ForumSettingsController.php:51
 msgid "ERROR: Can not write file `forum.local.php`"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumSettingsController.php:57
-#: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:61
-#: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:47
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:47
-#: modules/admin/src/Application/Controllers/Settings/SystemSettingsController.php:49
-#: modules/admin/src/Application/Controllers/Users/KarmaController.php:56
+#: modules/admin/src/Application/Controllers/Forum/ForumSettingsController.php:54
+#: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:58
+#: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:44
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:44
+#: modules/admin/src/Application/Controllers/Settings/SystemSettingsController.php:46
+#: modules/admin/src/Application/Controllers/Users/KarmaController.php:53
 msgid "Settings are saved successfully"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumSettingsController.php:73
+#: modules/admin/src/Application/Controllers/Forum/ForumSettingsController.php:70
 msgid "Forum Settings"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:46
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:43
 msgid "List of sections"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:50
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:47
 msgid "List of categories"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:55
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:91
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:191
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:276
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:384
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:52
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:88
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:188
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:273
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:381
 #: modules/admin/templates/forum.twig:24
 msgid "Forum structure"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:85
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:144
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:82
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:141
 msgid "Invalid ID"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:90
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:87
 msgid "Add Section"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:90
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:87
 msgid "Add Category"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:118
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:115
 msgid "You have not entered Title"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:120
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:117
 #: modules/admin/templates/ad-form.twig:38
 #: modules/admin/templates/ad-form.twig:39
 #: modules/admin/templates/counter-preview.twig:23
@@ -316,208 +265,208 @@ msgstr ""
 msgid "Title"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:120
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:117
 msgid "Invalid length"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:123
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:120
 msgid "Description should be at least 2 characters in length"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:172
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:169
 msgid "Please select a valid parent"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:190
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:187
 msgid "Delete section"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:190
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:187
 msgid "Delete category"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:256
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:104
-#: modules/admin/src/Application/Middlewares/AdminAccessMiddleware.php:52
-#: modules/admin/src/Application/Middlewares/SuperAdminAccessMiddleware.php:51
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:253
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:101
+#: modules/admin/src/Application/Middlewares/AdminAccessMiddleware.php:56
+#: modules/admin/src/Application/Middlewares/SuperAdminAccessMiddleware.php:55
 msgid "Access denied"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:275
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:272
 msgid "Edit Section"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:352
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:349
 #: modules/admin/templates/forum-section-edit.twig:50
 #: modules/admin/templates/forum-section-form.twig:36
 msgid "Common access"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:353
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:350
 msgid "Assign the newly created authors as curators"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:354
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:351
 msgid "Allow authors to edit the 1st post"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:355
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:352
 msgid "Only for reading"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:365
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:362
 msgid "For subsections"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:366
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:363
 msgid "For topics"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/HiddenPostsController.php:49
+#: modules/admin/src/Application/Controllers/Forum/HiddenPostsController.php:46
 #: modules/admin/templates/forum.twig:25
 msgid "Hidden posts"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/HiddenPostsController.php:88
+#: modules/admin/src/Application/Controllers/Forum/HiddenPostsController.php:85
 #: modules/admin/src/Application/Services/HiddenPostRowMapper.php:74
 msgid "by topic"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/HiddenPostsController.php:93
-#: modules/admin/src/Application/Controllers/Forum/HiddenTopicsController.php:88
+#: modules/admin/src/Application/Controllers/Forum/HiddenPostsController.php:90
+#: modules/admin/src/Application/Controllers/Forum/HiddenTopicsController.php:85
 #: modules/admin/src/Application/Services/HiddenPostRowMapper.php:75
 #: modules/admin/src/Application/Services/HiddenTopicRowMapper.php:78
 msgid "by author"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/HiddenTopicsController.php:49
+#: modules/admin/src/Application/Controllers/Forum/HiddenTopicsController.php:46
 #: modules/admin/templates/forum.twig:26
 msgid "Hidden topics"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/HiddenTopicsController.php:93
+#: modules/admin/src/Application/Controllers/Forum/HiddenTopicsController.php:90
 #: modules/admin/src/Application/Services/HiddenTopicRowMapper.php:79
 msgid "by section"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:77
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:227
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:246
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:74
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:224
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:243
 #: modules/admin/templates/ip-ban-confirm.twig:43
 msgid "Add Ban"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:120
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:154
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:117
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:151
 #: modules/admin/src/Application/Services/IpRangeParser.php:32
 #: modules/admin/src/Application/Services/IpRangeParser.php:79
 #: modules/admin/src/Application/UseCases/PrepareIpBanUseCase.php:24
 msgid "Invalid IP"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:159
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:169
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:156
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:166
 msgid "This address not in the database"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:172
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:169
 msgid "Ban details"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:182
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:264
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:179
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:261
 msgid "Not specified"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:206
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:203
 msgid "Are you sure you wan to unban all IP?"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:208
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:205
 msgid "Perform"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:236
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:233
 msgid "Address you entered conflicts with other who in the database"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:251
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:248
 msgid "Ban range address"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:252
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:249
 msgid "Ban on the subnet mask"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:253
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:250
 msgid "Ban IP address"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:263
+#: modules/admin/src/Application/Controllers/Ip/IpBanController.php:260
 #: modules/admin/templates/ads.twig:53
 #: modules/admin/templates/counter-form.twig:40
 msgid "Default"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Ip/IpSearchController.php:54
+#: modules/admin/src/Application/Controllers/Ip/IpSearchController.php:51
 #: modules/admin/templates/ip-search.twig:24
 #: modules/admin/templates/ip-search.twig:26
 msgid "Search IP"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Ip/IpSearchController.php:75
+#: modules/admin/src/Application/Controllers/Ip/IpSearchController.php:72
 msgid "Actual IP"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Ip/IpSearchController.php:80
+#: modules/admin/src/Application/Controllers/Ip/IpSearchController.php:77
 msgid "IP history"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:56
-#: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:121
-#: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:136
-#: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:44
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:44
-#: modules/admin/src/Application/Controllers/Settings/SystemSettingsController.php:46
-#: modules/admin/src/Application/Controllers/Users/KarmaController.php:53
+#: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:53
+#: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:118
+#: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:133
+#: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:41
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:41
+#: modules/admin/src/Application/Controllers/Settings/SystemSettingsController.php:43
+#: modules/admin/src/Application/Controllers/Users/KarmaController.php:50
 msgid "ERROR: Can not write file `system.local.php`"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:60
+#: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:57
 msgid "Descriptions have been updated successfully"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:67
+#: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:64
 #: modules/admin/templates/languages.twig:35
 msgid "Managing languages"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:68
-#: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:166
+#: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:65
+#: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:163
 msgid "Languages"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:105
+#: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:102
 msgid "The language was successfully installed"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:110
+#: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:107
 msgid "The language was successfully updated"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:119
+#: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:116
 msgid "The language was successfully deleted"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/AdsController.php:102
+#: modules/admin/src/Application/Controllers/Settings/AdsController.php:99
 msgid "Link successfully changed"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/AdsController.php:102
+#: modules/admin/src/Application/Controllers/Settings/AdsController.php:99
 msgid "Link successfully added"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/AdsController.php:133
+#: modules/admin/src/Application/Controllers/Settings/AdsController.php:130
 #: modules/admin/templates/ad-confirm.twig:18
 #: modules/admin/templates/ads.twig:59
 #: modules/admin/templates/counter-delete-confirm.twig:20
@@ -533,350 +482,350 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/AdsController.php:138
+#: modules/admin/src/Application/Controllers/Settings/AdsController.php:135
 msgid "Are you sure want to delete link?"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/AdsController.php:160
+#: modules/admin/src/Application/Controllers/Settings/AdsController.php:157
 msgid "Are you sure you want to delete all inactive links?"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/AdsController.php:193
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:97
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:130
+#: modules/admin/src/Application/Controllers/Settings/AdsController.php:190
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:94
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:127
 msgid "The required fields are not filled"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/AdsController.php:199
+#: modules/admin/src/Application/Controllers/Settings/AdsController.php:196
 msgid "Invalid characters"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/AdsController.php:202
+#: modules/admin/src/Application/Controllers/Settings/AdsController.php:199
 msgid "Color is specified incorrectly"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/AdsController.php:299
+#: modules/admin/src/Application/Controllers/Settings/AdsController.php:296
 msgid "Edit link"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/AdsController.php:299
+#: modules/admin/src/Application/Controllers/Settings/AdsController.php:296
 #: modules/admin/templates/ads.twig:80
 msgid "Add link"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/AdsController.php:320
+#: modules/admin/src/Application/Controllers/Settings/AdsController.php:317
 #: modules/admin/src/Application/Services/AdRowMapper.php:121
 msgid "Everyone"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/AdsController.php:321
+#: modules/admin/src/Application/Controllers/Settings/AdsController.php:318
 #: modules/admin/src/Application/Services/AdRowMapper.php:121
 msgid "Guests"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/AdsController.php:332
+#: modules/admin/src/Application/Controllers/Settings/AdsController.php:329
 msgid "Before the menu"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/AdsController.php:333
+#: modules/admin/src/Application/Controllers/Settings/AdsController.php:330
 msgid "After the menu"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/AdsController.php:334
+#: modules/admin/src/Application/Controllers/Settings/AdsController.php:331
 msgid "At the top of the page"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/AdsController.php:335
+#: modules/admin/src/Application/Controllers/Settings/AdsController.php:332
 msgid "At the bottom of the page"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/AdsController.php:345
+#: modules/admin/src/Application/Controllers/Settings/AdsController.php:342
 #: modules/admin/src/Application/Services/AdRowMapper.php:113
 msgid "All pages"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/AdsController.php:346
+#: modules/admin/src/Application/Controllers/Settings/AdsController.php:343
 #: modules/admin/src/Application/Services/AdRowMapper.php:113
 msgid "Only on Homepage"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/AdsController.php:347
+#: modules/admin/src/Application/Controllers/Settings/AdsController.php:344
 #: modules/admin/src/Application/Services/AdRowMapper.php:113
 msgid "On all, except Homepage"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:74
+#: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:71
 msgid "Antiflood Settings"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:98
+#: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:95
 #: modules/admin/templates/antiflood.twig:32
 msgid "Day"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:99
+#: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:96
 #: modules/admin/templates/antiflood.twig:36
 msgid "Night"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:102
+#: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:99
 msgid "Day / Night"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:103
+#: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:100
 msgid "Automatic change from day to night mode, according to specified time set"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:107
+#: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:104
 msgid "Adaptive"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:108
+#: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:105
 msgid "If one of administration is online (on the site), the system work in &quot;day&quot; mode, if administration is offline, it switch to &quot;night&quot;"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:51
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:48
 #: modules/admin/templates/counter-form.twig:75
 msgid "Viewing"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:173
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:170
 msgid "Delete:"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:178
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:175
 #: modules/admin/templates/forum-section-delete-confirm.twig:12
 msgid "Do you really want to delete?"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:214
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:211
 msgid "On all pages showing option 1"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:215
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:212
 msgid "On all pages showing option 2"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:216
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:213
 msgid "On the main showing option 1, on the other pages option 2"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:102
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:140
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:99
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:137
 msgid "Access is allowed"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:103
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:141
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:100
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:138
 msgid "Only for authorized"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:111
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:108
 msgid "Read only"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:115
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:112
 msgid "Guestbook"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:122
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:119
 msgid "Library"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:129
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:126
 msgid "Downloads"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:136
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:133
 msgid "Community"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:146
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:143
 #: modules/admin/src/Domain/Enums/IpBanType.php:22
 #: modules/admin/templates/ip-ban-form.twig:27
 msgid "Registration"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:149
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:146
 msgid "With moderation"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/System/EmoticonsController.php:43
+#: modules/admin/src/Application/Controllers/System/EmoticonsController.php:40
 msgid "Error updating cache"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/System/EmoticonsController.php:46
+#: modules/admin/src/Application/Controllers/System/EmoticonsController.php:43
 msgid "Smilie cache updated successfully"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/System/EmoticonsController.php:62
+#: modules/admin/src/Application/Controllers/System/EmoticonsController.php:59
 msgid "Smilies"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:45
+#: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:42
 #: modules/admin/templates/file-integrity.twig:14
 msgid "Snapshot scan"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:52
+#: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:49
 msgid "Snapshot is not created"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:54
-#: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:74
+#: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:51
+#: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:71
 #: modules/admin/templates/file-integrity-snapshot-confirm.twig:21
 #: modules/admin/templates/file-integrity.twig:20
 msgid "Create snapshot"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:61
+#: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:58
 msgid "Excellent!<br>All files are consistent with previously made image."
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:88
+#: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:85
 msgid "Snapshot successfully created"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:58
+#: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:55
 msgid "The task has been queued and will start within a minute"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:62
+#: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:59
 msgid "The task has been completed"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:63
+#: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:60
 msgid "The task has failed"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:68
+#: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:65
 msgid "The task is already running"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:110
+#: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:107
 msgid "Queued"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:111
+#: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:108
 msgid "Running"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:112
+#: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:109
 msgid "Completed"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:113
+#: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:110
 msgid "Failed"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/System/SystemCheckController.php:34
+#: modules/admin/src/Application/Controllers/System/SystemCheckController.php:37
 msgid "Required parameters"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/System/SystemCheckController.php:35
+#: modules/admin/src/Application/Controllers/System/SystemCheckController.php:38
 msgid "Database"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/System/SystemCheckController.php:36
+#: modules/admin/src/Application/Controllers/System/SystemCheckController.php:39
 msgid "Recommended parameters"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/AmnestyController.php:43
+#: modules/admin/src/Application/Controllers/Users/AmnestyController.php:40
 msgid "Amnesty has been successful"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/AmnestyController.php:44
+#: modules/admin/src/Application/Controllers/Users/AmnestyController.php:41
 msgid "All the users with active bans were unbanned (Except for bans &quot;till cancel&quot;)"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/AmnestyController.php:60
+#: modules/admin/src/Application/Controllers/Users/AmnestyController.php:57
 #: modules/admin/src/Application/UseCases/ApplyAmnestyUseCase.php:28
 #: modules/admin/templates/banned-users.twig:40
 msgid "Amnesty"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/BanListController.php:61
+#: modules/admin/src/Application/Controllers/Users/BanListController.php:58
 msgid "Term"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/BanListController.php:62
+#: modules/admin/src/Application/Controllers/Users/BanListController.php:59
 msgid "Violations"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/DeleteUserController.php:31
-#: modules/admin/src/Application/Controllers/Users/DeleteUserController.php:58
+#: modules/admin/src/Application/Controllers/Users/DeleteUserController.php:28
+#: modules/admin/src/Application/Controllers/Users/DeleteUserController.php:55
 msgid "Delete user"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/DeleteUserController.php:83
-#: modules/admin/src/Application/Controllers/Users/RegistrationModerationController.php:97
+#: modules/admin/src/Application/Controllers/Users/DeleteUserController.php:80
+#: modules/admin/src/Application/Controllers/Users/RegistrationModerationController.php:94
 msgid "User deleted"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/DeleteUserController.php:92
+#: modules/admin/src/Application/Controllers/Users/DeleteUserController.php:89
 msgid "User does not exists"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/DeleteUserController.php:93
+#: modules/admin/src/Application/Controllers/Users/DeleteUserController.php:90
 msgid "You cannot delete higher administration"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/KarmaController.php:69
+#: modules/admin/src/Application/Controllers/Users/KarmaController.php:66
 msgid "You really want to clear the Karma?"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/KarmaController.php:79
+#: modules/admin/src/Application/Controllers/Users/KarmaController.php:76
 msgid "Karma is cleared"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/RegistrationModerationController.php:52
+#: modules/admin/src/Application/Controllers/Users/RegistrationModerationController.php:49
 msgid "Registration confirmation"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/RegistrationModerationController.php:77
-#: modules/admin/src/Application/Controllers/Users/RegistrationModerationController.php:87
+#: modules/admin/src/Application/Controllers/Users/RegistrationModerationController.php:74
+#: modules/admin/src/Application/Controllers/Users/RegistrationModerationController.php:84
 msgid "Registration is confirmed"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/RegistrationModerationController.php:107
+#: modules/admin/src/Application/Controllers/Users/RegistrationModerationController.php:104
 msgid "All unconfirmed registrations were removed"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/RegistrationModerationController.php:119
+#: modules/admin/src/Application/Controllers/Users/RegistrationModerationController.php:116
 msgid "All unconfirmed registrations with selected IP were deleted"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/UserCleanupController.php:42
+#: modules/admin/src/Application/Controllers/Users/UserCleanupController.php:39
 msgid "Inactive profiles deleted"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/UserListController.php:47
+#: modules/admin/src/Application/Controllers/Users/UserListController.php:44
 msgid "List of Users"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/UserListController.php:64
+#: modules/admin/src/Application/Controllers/Users/UserListController.php:61
 msgid "Nickname"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/UsersController.php:45
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:42
 msgid "You have not entered login"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/UsersController.php:49
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:46
 msgid "You have not entered password"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/UsersController.php:68
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:65
 msgid "The security code is not correct"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/UsersController.php:119
-#: modules/admin/src/Application/Controllers/Users/UsersController.php:123
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:116
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:120
 msgid "Authorization failed"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/UsersController.php:146
-#: modules/admin/src/Application/Controllers/Users/UsersController.php:147
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:143
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:144
 #: modules/admin/templates/login.twig:45
 msgid "Login"
 msgstr ""

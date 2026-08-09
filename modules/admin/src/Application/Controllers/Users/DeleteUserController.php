@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Application\Controllers\Users;
 
-use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Modules\Admin\Application\Exceptions\CannotDeleteHigherRightsException;
 use Johncms\Modules\Admin\Application\Exceptions\UserNotFoundException;
 use Johncms\Modules\Admin\Application\Exceptions\WrongUserDataException;
@@ -18,12 +17,10 @@ use Johncms\Validator\Validator;
 final readonly class DeleteUserController
 {
     public function __construct(
-        private AdminControllerContext $controllerContext,
         private NavChain $navChain,
         private GetUserDeletionContextUseCase $getContext,
         private DeleteUserUseCase $deleteUser,
     ) {
-        $this->controllerContext->initModule('admin');
     }
 
     public function index(int $id): ViewResponse

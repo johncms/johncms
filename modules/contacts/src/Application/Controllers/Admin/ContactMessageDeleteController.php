@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Contacts\Application\Controllers\Admin;
 
-use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Modules\Contacts\Application\UseCases\DeleteContactMessageUseCase;
 use Johncms\Modules\Contacts\Domain\Repository\ContactMessageRepositoryInterface;
 use Johncms\NavChain;
@@ -18,13 +17,11 @@ final readonly class ContactMessageDeleteController
     private const URL = '/admin/contacts/messages';
 
     public function __construct(
-        private AdminControllerContext $controllerContext,
         private Session $session,
         private NavChain $navChain,
         private ContactMessageRepositoryInterface $repository,
         private DeleteContactMessageUseCase $deleteMessage,
     ) {
-        $this->controllerContext->initModule('contacts');
     }
 
     public function __invoke(Request $request, int $id): ViewResponse

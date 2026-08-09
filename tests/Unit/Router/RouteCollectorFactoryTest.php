@@ -40,6 +40,24 @@ final class RouteCollectorFactoryTest extends TestCase
         );
     }
 
+    /**
+     * Every route a module declares is stamped with that module, taken from the path of the file
+     * declaring it — that is what the kernel enters the module context from.
+     */
+    public function testModuleRoutesAreStampedWithTheirModule(): void
+    {
+        $routes = (new RouteCollectorFactory())($this->container);
+
+        self::assertSame(
+            'forum',
+            $this->findRouteByPath($routes, '/forum/download-file/{id}')?->getDefault('_module')
+        );
+        self::assertSame(
+            'guestbook',
+            $this->findRouteByPath($routes, '/guestbook/clean')?->getDefault('_module')
+        );
+    }
+
     private function findRouteByPath(RouteCollection $routes, string $path): ?\Symfony\Component\Routing\Route
     {
         foreach ($routes->all() as $route) {

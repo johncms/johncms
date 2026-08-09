@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Login\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
@@ -17,12 +16,10 @@ use Symfony\Component\HttpFoundation\Response;
 final readonly class LogoutController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private Session $session,
         private NavChain $navChain,
         private User $currentUser,
     ) {
-        $this->controllerContext->initModule('login');
     }
 
     public function __invoke(Request $request): RedirectResponse|ViewResponse

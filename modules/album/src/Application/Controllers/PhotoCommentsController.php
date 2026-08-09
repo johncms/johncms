@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Johncms\Modules\Album\Application\Controllers;
 
 use Johncms\Comments;
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\PageMeta;
 use Johncms\Modules\Album\Application\Exceptions\AlbumAccessDeniedException;
 use Johncms\Modules\Album\Application\Exceptions\AlbumPasswordRequiredException;
@@ -20,13 +19,11 @@ use Johncms\Users\User;
 final readonly class PhotoCommentsController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private NavChain $navChain,
         private User $currentUser,
         private GetPhotoCommentsContextUseCase $useCase,
         private AlbumPhotoRepositoryInterface $photoRepository,
     ) {
-        $this->controllerContext->initModule('album');
     }
 
     // The legacy Comments class prints a whole page of its own, so this action still hands

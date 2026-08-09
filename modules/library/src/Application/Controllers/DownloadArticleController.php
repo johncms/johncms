@@ -4,19 +4,12 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Library\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 final readonly class DownloadArticleController
 {
-    public function __construct(
-        private ControllerContext $controllerContext,
-    ) {
-        $this->controllerContext->initModule('library');
-    }
-
     public function __invoke(int $id, string $type): Response
     {
         if (! in_array($type, ['txt', 'fb2'], true)) {

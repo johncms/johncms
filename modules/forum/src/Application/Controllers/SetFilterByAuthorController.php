@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Forum\Application\Exceptions\ForumValidationException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
@@ -16,12 +15,10 @@ use Johncms\Validator\Validator;
 final readonly class SetFilterByAuthorController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private ForumErrorRenderer $forumErrorRenderer,
         private GetFilterByAuthorContextUseCase $contextUseCase,
         private SetFilterByAuthorUseCase $setFilterByAuthorUseCase,
     ) {
-        $this->controllerContext->initModule('forum');
     }
 
     public function __invoke(Request $request, int $id): ViewResponse

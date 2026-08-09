@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Application\Controllers\Settings;
 
-use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Http\Session;
 use Johncms\Modules\Admin\Application\DTO\ModulesAccessDTO;
 use Johncms\Modules\Admin\Application\UseCases\UpdateModulesAccessUseCase;
@@ -19,12 +18,10 @@ final readonly class ModulesAccessController
     private const URL = '/admin/modules-access';
 
     public function __construct(
-        private AdminControllerContext $controllerContext,
         private NavChain $navChain,
         private UpdateModulesAccessUseCase $updateModulesAccessUseCase,
         private Session $session,
     ) {
-        $this->controllerContext->initModule('admin');
     }
 
     public function form(): ViewResponse

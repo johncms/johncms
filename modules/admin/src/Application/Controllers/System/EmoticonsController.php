@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Application\Controllers\System;
 
-use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Http\Session;
 use Johncms\Modules\Admin\Application\UseCases\RebuildSmiliesCacheUseCase;
 use Johncms\Modules\Admin\Domain\Exceptions\SmiliesCacheWriteException;
@@ -18,12 +17,10 @@ final readonly class EmoticonsController
     private const URL = '/admin/emoticons';
 
     public function __construct(
-        private AdminControllerContext $controllerContext,
         private NavChain $navChain,
         private RebuildSmiliesCacheUseCase $rebuildSmiliesCacheUseCase,
         private Session $session,
     ) {
-        $this->controllerContext->initModule('admin');
     }
 
     public function index(): ViewResponse

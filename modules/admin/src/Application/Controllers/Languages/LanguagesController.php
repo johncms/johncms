@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Application\Controllers\Languages;
 
-use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Modules\Admin\Application\UseCases\GetManagedLanguagesUseCase;
 use Johncms\Modules\Admin\Application\UseCases\InstallLanguageUseCase;
 use Johncms\Modules\Admin\Application\UseCases\RemoveLanguageUseCase;
@@ -22,7 +21,6 @@ final readonly class LanguagesController
     private const MANAGE_URL = '/admin/languages/manage';
 
     public function __construct(
-        private AdminControllerContext $controllerContext,
         private NavChain $navChain,
         private SaveLanguageSettingsUseCase $saveLanguageSettings,
         private GetManagedLanguagesUseCase $getManagedLanguages,
@@ -30,7 +28,6 @@ final readonly class LanguagesController
         private RemoveLanguageUseCase $removeLanguage,
         private Session $session,
     ) {
-        $this->controllerContext->initModule('admin');
     }
 
     public function index(): ViewResponse

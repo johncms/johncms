@@ -12,17 +12,14 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Help\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
 
 final readonly class AvatarCatalogController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private NavChain $navChain,
     ) {
-        $this->controllerContext->initModule('help');
     }
 
     public function __invoke(): ViewResponse

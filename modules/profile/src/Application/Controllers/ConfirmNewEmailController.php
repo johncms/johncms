@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Profile\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Profile\Application\UseCases\ConfirmNewEmailUseCase;
 use Johncms\NavChain;
@@ -12,11 +11,9 @@ use Johncms\NavChain;
 final readonly class ConfirmNewEmailController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private NavChain $navChain,
         private ConfirmNewEmailUseCase $confirmNewEmailUseCase,
     ) {
-        $this->controllerContext->initModule('profile');
     }
 
     public function __invoke(int $id, string $code): ViewResponse

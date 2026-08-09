@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Mail\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Mail\Application\UseCases\BlockUserUseCase;
 use Johncms\NavChain;
@@ -15,12 +14,10 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 final readonly class BlockUserController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private Session $session,
         private NavChain $navChain,
         private BlockUserUseCase $blockUserUseCase,
     ) {
-        $this->controllerContext->initModule('mail');
     }
 
     public function __invoke(Request $request, int $userId): RedirectResponse|ViewResponse

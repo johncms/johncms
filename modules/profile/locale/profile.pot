@@ -2,132 +2,132 @@ msgid ""
 msgstr ""
 "X-Domain: profile\n"
 
-#: modules/profile/src/Application/Controllers/AccountController.php:26
-#: modules/profile/src/Application/Controllers/SettingsController.php:163
+#: modules/profile/src/Application/Controllers/AccountController.php:23
+#: modules/profile/src/Application/Controllers/SettingsController.php:160
 msgid "My Account"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/ActivityController.php:64
+#: modules/profile/src/Application/Controllers/ActivityController.php:61
+#: modules/profile/src/Application/Controllers/ActivityController.php:68
 #: modules/profile/src/Application/Controllers/ActivityController.php:71
-#: modules/profile/src/Application/Controllers/ActivityController.php:74
 #: modules/profile/templates/public/statistics.twig:33
 #: modules/profile/templates/public/view.twig:236
 msgid "Activity"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/ActivityController.php:101
+#: modules/profile/src/Application/Controllers/ActivityController.php:98
 msgid "Messages"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/ActivityController.php:106
+#: modules/profile/src/Application/Controllers/ActivityController.php:103
 msgid "Themes"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/ActivityController.php:111
+#: modules/profile/src/Application/Controllers/ActivityController.php:108
 #: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:41
 #: modules/profile/templates/public/ban.twig:34
 #: modules/profile/templates/public/statistics.twig:37
 msgid "Comments"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/AvatarController.php:54
-#: modules/profile/src/Application/Controllers/PhotoController.php:54
+#: modules/profile/src/Application/Controllers/AvatarController.php:51
+#: modules/profile/src/Application/Controllers/PhotoController.php:51
 msgid "An error occurred"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/AvatarController.php:61
-#: modules/profile/src/Application/Controllers/AvatarController.php:73
-#: modules/profile/src/Application/Controllers/AvatarController.php:84
-#: modules/profile/src/Application/Controllers/AvatarController.php:117
+#: modules/profile/src/Application/Controllers/AvatarController.php:58
+#: modules/profile/src/Application/Controllers/AvatarController.php:70
+#: modules/profile/src/Application/Controllers/AvatarController.php:81
+#: modules/profile/src/Application/Controllers/AvatarController.php:114
 msgid "Upload Avatar"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/AvatarController.php:65
-#: modules/profile/src/Application/Controllers/ChangePasswordController.php:88
-#: modules/profile/src/Application/Controllers/PhotoController.php:65
+#: modules/profile/src/Application/Controllers/AvatarController.php:62
+#: modules/profile/src/Application/Controllers/ChangePasswordController.php:85
+#: modules/profile/src/Application/Controllers/PhotoController.php:62
 msgid "Repeat"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/AvatarController.php:75
+#: modules/profile/src/Application/Controllers/AvatarController.php:72
 msgid "The avatar is successfully uploaded"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/AvatarController.php:77
-#: modules/profile/src/Application/Controllers/ChangePasswordController.php:121
-#: modules/profile/src/Application/Controllers/KarmaController.php:126
-#: modules/profile/src/Application/Controllers/PhotoController.php:77
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:121
+#: modules/profile/src/Application/Controllers/AvatarController.php:74
+#: modules/profile/src/Application/Controllers/ChangePasswordController.php:118
+#: modules/profile/src/Application/Controllers/KarmaController.php:123
+#: modules/profile/src/Application/Controllers/PhotoController.php:74
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:118
 #: modules/profile/templates/public/restore-password-set.twig:13
 #: modules/profile/templates/public/restore-password.twig:43
 msgid "Continue"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/AvatarController.php:86
-#: modules/profile/src/Application/Controllers/EditProfileController.php:185
-#: modules/profile/src/Application/Controllers/PhotoController.php:86
+#: modules/profile/src/Application/Controllers/AvatarController.php:83
+#: modules/profile/src/Application/Controllers/EditProfileController.php:182
+#: modules/profile/src/Application/Controllers/PhotoController.php:83
 #: modules/profile/src/Application/UseCases/GetProfileViewUseCase.php:76
 msgid "My Profile"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/AvatarController.php:86
-#: modules/profile/src/Application/Controllers/EditProfileController.php:185
-#: modules/profile/src/Application/Controllers/GuestbookController.php:47
-#: modules/profile/src/Application/Controllers/PhotoController.php:86
+#: modules/profile/src/Application/Controllers/AvatarController.php:83
+#: modules/profile/src/Application/Controllers/EditProfileController.php:182
+#: modules/profile/src/Application/Controllers/GuestbookController.php:44
+#: modules/profile/src/Application/Controllers/PhotoController.php:83
 #: modules/profile/templates/public/account.twig:13
 msgid "Profile"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:89
-#: modules/profile/src/Application/Controllers/BanController.php:118
-#: modules/profile/src/Application/Controllers/BanController.php:138
-#: modules/profile/src/Application/Controllers/BanController.php:144
-#: modules/profile/src/Application/Controllers/BanController.php:163
-#: modules/profile/src/Application/Controllers/BanController.php:181
-#: modules/profile/src/Application/Controllers/BanController.php:187
-#: modules/profile/src/Application/Controllers/BanController.php:216
-#: modules/profile/src/Application/Controllers/BanController.php:313
-#: modules/profile/src/Application/Controllers/BanController.php:322
-#: modules/profile/src/Application/Controllers/EditProfileController.php:78
-#: modules/profile/src/Application/Controllers/EditProfileController.php:93
-#: modules/profile/src/Application/Controllers/KarmaController.php:141
-#: modules/profile/src/Application/Controllers/KarmaController.php:160
-#: modules/profile/src/Application/Controllers/KarmaController.php:166
-#: modules/profile/src/Application/Controllers/KarmaController.php:195
+#: modules/profile/src/Application/Controllers/BanController.php:86
+#: modules/profile/src/Application/Controllers/BanController.php:115
+#: modules/profile/src/Application/Controllers/BanController.php:135
+#: modules/profile/src/Application/Controllers/BanController.php:141
+#: modules/profile/src/Application/Controllers/BanController.php:160
+#: modules/profile/src/Application/Controllers/BanController.php:178
+#: modules/profile/src/Application/Controllers/BanController.php:184
+#: modules/profile/src/Application/Controllers/BanController.php:213
+#: modules/profile/src/Application/Controllers/BanController.php:310
+#: modules/profile/src/Application/Controllers/BanController.php:319
+#: modules/profile/src/Application/Controllers/EditProfileController.php:75
+#: modules/profile/src/Application/Controllers/EditProfileController.php:90
+#: modules/profile/src/Application/Controllers/KarmaController.php:138
+#: modules/profile/src/Application/Controllers/KarmaController.php:157
+#: modules/profile/src/Application/Controllers/KarmaController.php:163
+#: modules/profile/src/Application/Controllers/KarmaController.php:192
 #: modules/profile/src/Application/UseCases/GetRecoveryContextUseCase.php:23
 msgid "Wrong data"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:106
+#: modules/profile/src/Application/Controllers/BanController.php:103
 msgid "User banned"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:124
-#: modules/profile/src/Application/Controllers/BanController.php:151
+#: modules/profile/src/Application/Controllers/BanController.php:121
+#: modules/profile/src/Application/Controllers/BanController.php:148
 msgid "Ban termination"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:125
+#: modules/profile/src/Application/Controllers/BanController.php:122
 msgid "Ban time is going to the end. Infrigement will be saved in the bans history"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:126
+#: modules/profile/src/Application/Controllers/BanController.php:123
 msgid "Terminate Ban"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:151
+#: modules/profile/src/Application/Controllers/BanController.php:148
 msgid "Ban terminated"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:167
-#: modules/profile/src/Application/Controllers/BanController.php:192
+#: modules/profile/src/Application/Controllers/BanController.php:164
+#: modules/profile/src/Application/Controllers/BanController.php:189
 msgid "Delete ban"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:168
+#: modules/profile/src/Application/Controllers/BanController.php:165
 msgid "Removing ban along with a record in the bans history"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:169
+#: modules/profile/src/Application/Controllers/BanController.php:166
 #: modules/profile/src/Application/UseCases/GetProfileViewUseCase.php:182
 #: modules/profile/templates/public/confirm-delete.twig:18
 #: modules/profile/templates/public/edit.twig:83
@@ -136,93 +136,93 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:192
+#: modules/profile/src/Application/Controllers/BanController.php:189
 msgid "Ban deleted"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:197
-#: modules/profile/src/Application/Controllers/BanController.php:212
+#: modules/profile/src/Application/Controllers/BanController.php:194
+#: modules/profile/src/Application/Controllers/BanController.php:209
 msgid "Violations history can be cleared by Supervisor only"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:202
-#: modules/profile/src/Application/Controllers/BanController.php:221
+#: modules/profile/src/Application/Controllers/BanController.php:199
+#: modules/profile/src/Application/Controllers/BanController.php:218
 msgid "Violations history"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:203
+#: modules/profile/src/Application/Controllers/BanController.php:200
 msgid "Are you sure want to clean entire history of user violations?"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:204
+#: modules/profile/src/Application/Controllers/BanController.php:201
 msgid "Clear"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:221
+#: modules/profile/src/Application/Controllers/BanController.php:218
 msgid "Violations history cleared"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:226
+#: modules/profile/src/Application/Controllers/BanController.php:223
 msgid "Violations History"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:228
-#: modules/profile/src/Application/Controllers/BanController.php:250
-#: modules/profile/src/Application/Controllers/KarmaController.php:205
-#: modules/profile/src/Application/Controllers/KarmaController.php:227
-#: modules/profile/src/Application/Controllers/KarmaController.php:248
-#: modules/profile/src/Application/Controllers/ProfileController.php:31
+#: modules/profile/src/Application/Controllers/BanController.php:225
+#: modules/profile/src/Application/Controllers/BanController.php:247
+#: modules/profile/src/Application/Controllers/KarmaController.php:202
+#: modules/profile/src/Application/Controllers/KarmaController.php:224
+#: modules/profile/src/Application/Controllers/KarmaController.php:245
+#: modules/profile/src/Application/Controllers/ProfileController.php:28
 #: modules/profile/src/Application/UseCases/GetProfileViewUseCase.php:76
 msgid "User Profile"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:248
-#: modules/profile/src/Application/Controllers/BanController.php:289
-#: modules/profile/src/Application/Controllers/BanController.php:302
+#: modules/profile/src/Application/Controllers/BanController.php:245
+#: modules/profile/src/Application/Controllers/BanController.php:286
+#: modules/profile/src/Application/Controllers/BanController.php:299
 msgid "Ban the User"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/ChangePasswordController.php:39
-#: modules/profile/src/Application/Controllers/ChangePasswordController.php:41
-#: modules/profile/src/Application/Controllers/ChangePasswordController.php:46
-#: modules/profile/src/Application/Controllers/ChangePasswordController.php:65
-#: modules/profile/src/Application/Controllers/ChangePasswordController.php:67
-#: modules/profile/src/Application/Controllers/ChangePasswordController.php:129
+#: modules/profile/src/Application/Controllers/ChangePasswordController.php:36
+#: modules/profile/src/Application/Controllers/ChangePasswordController.php:38
+#: modules/profile/src/Application/Controllers/ChangePasswordController.php:43
+#: modules/profile/src/Application/Controllers/ChangePasswordController.php:62
+#: modules/profile/src/Application/Controllers/ChangePasswordController.php:64
+#: modules/profile/src/Application/Controllers/ChangePasswordController.php:126
 #: modules/profile/templates/public/account.twig:68
 #: modules/profile/templates/public/edit.twig:235
 msgid "Change Password"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/ChangePasswordController.php:119
+#: modules/profile/src/Application/Controllers/ChangePasswordController.php:116
 msgid "Password successfully changed"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/ConfirmNewEmailController.php:26
+#: modules/profile/src/Application/Controllers/ConfirmNewEmailController.php:23
 msgid "Email confirmation"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/EditProfileController.php:67
+#: modules/profile/src/Application/Controllers/EditProfileController.php:64
 msgid "Data saved"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/EditProfileController.php:82
+#: modules/profile/src/Application/Controllers/EditProfileController.php:79
 msgid "Avatar is successfully removed"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/EditProfileController.php:97
+#: modules/profile/src/Application/Controllers/EditProfileController.php:94
 msgid "Photo is successfully removed"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/EditProfileController.php:183
-#: modules/profile/src/Application/Controllers/EditProfileController.php:219
+#: modules/profile/src/Application/Controllers/EditProfileController.php:180
+#: modules/profile/src/Application/Controllers/EditProfileController.php:216
 #: modules/profile/templates/public/account.twig:67
 msgid "Edit Profile"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/GuestbookController.php:40
-#: modules/profile/src/Application/Controllers/GuestbookController.php:48
-#: modules/profile/src/Application/Controllers/GuestbookController.php:62
-#: modules/profile/src/Application/Controllers/GuestbookController.php:77
+#: modules/profile/src/Application/Controllers/GuestbookController.php:37
+#: modules/profile/src/Application/Controllers/GuestbookController.php:45
+#: modules/profile/src/Application/Controllers/GuestbookController.php:59
+#: modules/profile/src/Application/Controllers/GuestbookController.php:74
 #: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:43
 #: modules/profile/templates/public/account.twig:23
 #: modules/profile/templates/public/ban.twig:38
@@ -231,136 +231,136 @@ msgstr ""
 msgid "Guestbook"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/IpHistoryController.php:32
+#: modules/profile/src/Application/Controllers/IpHistoryController.php:29
 #: modules/profile/templates/public/view.twig:74
 msgid "IP History"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/KarmaController.php:66
-#: modules/profile/src/Application/Controllers/KarmaController.php:122
-#: modules/profile/src/Application/Controllers/KarmaController.php:206
+#: modules/profile/src/Application/Controllers/KarmaController.php:63
+#: modules/profile/src/Application/Controllers/KarmaController.php:119
+#: modules/profile/src/Application/Controllers/KarmaController.php:203
+#: modules/profile/src/Application/Controllers/KarmaController.php:222
 #: modules/profile/src/Application/Controllers/KarmaController.php:225
-#: modules/profile/src/Application/Controllers/KarmaController.php:228
+#: modules/profile/src/Application/Controllers/KarmaController.php:243
 #: modules/profile/src/Application/Controllers/KarmaController.php:246
-#: modules/profile/src/Application/Controllers/KarmaController.php:249
-#: modules/profile/src/Application/Controllers/KarmaController.php:268
-#: modules/profile/src/Application/Controllers/KarmaController.php:282
+#: modules/profile/src/Application/Controllers/KarmaController.php:265
+#: modules/profile/src/Application/Controllers/KarmaController.php:279
 #: modules/profile/templates/public/view.twig:107
 msgid "Karma"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/KarmaController.php:82
+#: modules/profile/src/Application/Controllers/KarmaController.php:79
 msgid "New responses"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/KarmaController.php:124
+#: modules/profile/src/Application/Controllers/KarmaController.php:121
 msgid "You have successfully voted"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/KarmaController.php:147
+#: modules/profile/src/Application/Controllers/KarmaController.php:144
 msgid "Do you really want to delete comment?"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/KarmaController.php:182
+#: modules/profile/src/Application/Controllers/KarmaController.php:179
 msgid "Do you really want to delete all reviews about user?"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/KarmaController.php:237
+#: modules/profile/src/Application/Controllers/KarmaController.php:234
 msgid "Vote for"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/KarmaController.php:272
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:135
+#: modules/profile/src/Application/Controllers/KarmaController.php:269
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:132
 #: modules/profile/templates/public/ban-history.twig:81
 #: modules/profile/templates/public/components/list-footer.twig:18
 #: modules/profile/templates/public/statistics.twig:41
 msgid "Back"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/KarmaController.php:293
+#: modules/profile/src/Application/Controllers/KarmaController.php:290
 msgid "Access forbidden"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/PhotoController.php:61
-#: modules/profile/src/Application/Controllers/PhotoController.php:73
-#: modules/profile/src/Application/Controllers/PhotoController.php:84
-#: modules/profile/src/Application/Controllers/PhotoController.php:117
+#: modules/profile/src/Application/Controllers/PhotoController.php:58
+#: modules/profile/src/Application/Controllers/PhotoController.php:70
+#: modules/profile/src/Application/Controllers/PhotoController.php:81
+#: modules/profile/src/Application/Controllers/PhotoController.php:114
 msgid "Upload Photo"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/PhotoController.php:75
+#: modules/profile/src/Application/Controllers/PhotoController.php:72
 msgid "The photo is successfully uploaded"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/ResetSettingsController.php:29
+#: modules/profile/src/Application/Controllers/ResetSettingsController.php:26
 msgid "Reset user settings"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/ResetSettingsController.php:49
+#: modules/profile/src/Application/Controllers/ResetSettingsController.php:46
 #, php-format
 msgid "For user %s default settings were set."
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:36
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:51
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:78
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:87
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:105
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:117
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:131
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:33
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:48
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:75
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:84
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:102
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:114
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:128
 #: modules/profile/templates/public/restore-password.twig:10
 msgid "Restore password"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:60
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:57
 msgid "Incorrect code"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:80
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:77
 msgid "Check your e-mail for further information"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:119
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:116
 msgid "Password successfully changed.<br>New password sent to your E-mail address."
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/SettingsController.php:54
-#: modules/profile/src/Application/Controllers/SettingsController.php:184
+#: modules/profile/src/Application/Controllers/SettingsController.php:51
+#: modules/profile/src/Application/Controllers/SettingsController.php:181
 msgid "General setting"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/SettingsController.php:100
-#: modules/profile/src/Application/Controllers/SettingsController.php:121
-#: modules/profile/src/Application/Controllers/SettingsController.php:203
+#: modules/profile/src/Application/Controllers/SettingsController.php:97
+#: modules/profile/src/Application/Controllers/SettingsController.php:118
+#: modules/profile/src/Application/Controllers/SettingsController.php:200
 msgid "Settings saved successfully"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/SettingsController.php:105
-#: modules/profile/src/Application/Controllers/SettingsController.php:207
+#: modules/profile/src/Application/Controllers/SettingsController.php:102
+#: modules/profile/src/Application/Controllers/SettingsController.php:204
 msgid "Default settings are set"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/SettingsController.php:131
-#: modules/profile/src/Application/Controllers/SettingsController.php:189
+#: modules/profile/src/Application/Controllers/SettingsController.php:128
+#: modules/profile/src/Application/Controllers/SettingsController.php:186
 #: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:42
 #: modules/profile/templates/public/ban.twig:44
 #: modules/profile/templates/public/statistics.twig:35
 msgid "Forum"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/SettingsController.php:148
-#: modules/profile/src/Application/Controllers/SettingsController.php:194
+#: modules/profile/src/Application/Controllers/SettingsController.php:145
+#: modules/profile/src/Application/Controllers/SettingsController.php:191
 msgid "Mail"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/SettingsController.php:164
+#: modules/profile/src/Application/Controllers/SettingsController.php:161
 #: modules/profile/templates/public/account.twig:64
 msgid "Settings"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/StatisticsController.php:31
+#: modules/profile/src/Application/Controllers/StatisticsController.php:28
+#: modules/profile/src/Application/Controllers/StatisticsController.php:35
 #: modules/profile/src/Application/Controllers/StatisticsController.php:38
-#: modules/profile/src/Application/Controllers/StatisticsController.php:41
 #: modules/profile/templates/public/statistics.twig:9
 #: modules/profile/templates/public/view.twig:237
 msgid "Statistic"

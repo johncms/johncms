@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Mail\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Mail\Application\Exceptions\UserNotFoundException;
 use Johncms\Modules\Mail\Application\Exceptions\CannotAddYourselfException;
@@ -16,12 +15,10 @@ use Johncms\NavChain;
 final readonly class AddContactController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private NavChain $navChain,
         private GetAddContactContextUseCase $getAddContactContextUseCase,
         private AddContactUseCase $addContactUseCase,
     ) {
-        $this->controllerContext->initModule('mail');
     }
 
     public function confirm(int $id): ViewResponse

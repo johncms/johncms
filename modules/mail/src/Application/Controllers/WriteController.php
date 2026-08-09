@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Mail\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
@@ -24,7 +23,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 final readonly class WriteController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private NavChain $navChain,
         private User $currentUser,
         private EditorContentNormalizer $editorContentNormalizer,
@@ -34,7 +32,6 @@ final readonly class WriteController
         private PaginationGuard $paginationGuard,
         private UploadedFileMapper $uploadedFileMapper,
     ) {
-        $this->controllerContext->initModule('mail');
     }
 
     public function send(Request $request, int $id): ViewResponse

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Library\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Library\Application\Services\LibraryCategoryPathService;
 use Johncms\Modules\Library\Application\Services\LibrarySlugService;
 use Johncms\Modules\Library\Domain\Models\LibraryCategory;
@@ -17,13 +16,11 @@ use Symfony\Component\HttpFoundation\Response;
 final readonly class CreateSectionController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private NavChain $navChain,
         private User $currentUser,
         private LibrarySlugService $slugService,
         private LibraryCategoryPathService $categoryPathService,
     ) {
-        $this->controllerContext->initModule('library');
     }
 
     public function __invoke(Request $request): ViewResponse

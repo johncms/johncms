@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Profile\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Profile\Application\Exceptions\ProfileNotFoundException;
 use Johncms\Modules\Profile\Application\UseCases\GetProfileStatisticsUseCase;
@@ -13,11 +12,9 @@ use Johncms\NavChain;
 final readonly class StatisticsController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private NavChain $navChain,
         private GetProfileStatisticsUseCase $getProfileStatisticsUseCase,
     ) {
-        $this->controllerContext->initModule('profile');
     }
 
     public function __invoke(int $id): ViewResponse

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Library\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
@@ -18,14 +17,12 @@ use Johncms\Utils\DateFormatterInterface;
 final readonly class NewArticlesController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private NavChain $navChain,
         private DateFormatterInterface $dateFormatter,
         private LibraryTextRepositoryInterface $repository,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
     ) {
-        $this->controllerContext->initModule('library');
     }
 
     public function __invoke(): ViewResponse

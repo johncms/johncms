@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Online\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Request;
 use Johncms\Http\Pagination\PaginationFactory;
@@ -17,14 +16,12 @@ use Johncms\NavChain;
 final readonly class IpController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private NavChain $navChain,
         private FiltersBuilder $filtersBuilder,
         private GetIpActivityUseCase $ipActivity,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
     ) {
-        $this->controllerContext->initModule('online');
     }
 
     public function __invoke(Request $request): ViewResponse

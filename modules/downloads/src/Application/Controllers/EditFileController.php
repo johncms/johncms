@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Downloads\Application\Services\CategoryNavService;
 use Johncms\Modules\Downloads\Application\Services\DownloadFilePathService;
 use Johncms\Modules\Downloads\Application\Services\DownloadSlugService;
@@ -21,13 +20,11 @@ final readonly class EditFileController
     private const AUDIO_TAG_KEYS = ['artist', 'title', 'album', 'genre', 'year'];
 
     public function __construct(
-        private ControllerContext $controllerContext,
         private NavChain $navChain,
         private CategoryNavService $categoryNavService,
         private DownloadFilePathService $filePathService,
         private DownloadSlugService $slugService,
     ) {
-        $this->controllerContext->initModule('downloads');
     }
 
     public function __invoke(Request $request, int $id): RedirectResponse|ViewResponse

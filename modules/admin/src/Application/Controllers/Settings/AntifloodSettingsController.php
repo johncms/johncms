@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Application\Controllers\Settings;
 
-use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Modules\Admin\Application\DTO\AntifloodSettingsDTO;
 use Johncms\Modules\Admin\Application\UseCases\UpdateAntifloodSettingsUseCase;
 use Johncms\Modules\Admin\Domain\Exceptions\ConfigWriteException;
@@ -19,12 +18,10 @@ final readonly class AntifloodSettingsController
     private const URL = '/admin/antiflood';
 
     public function __construct(
-        private AdminControllerContext $controllerContext,
         private NavChain $navChain,
         private UpdateAntifloodSettingsUseCase $updateAntifloodSettingsUseCase,
         private Session $session,
     ) {
-        $this->controllerContext->initModule('admin');
     }
 
     public function form(): ViewResponse

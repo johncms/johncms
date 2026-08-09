@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Consent\Application\Controllers\Admin;
 
-use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Consent\Application\Services\ConsentTitleFormatter;
@@ -18,14 +17,12 @@ final readonly class ConsentLogController
     private const URL = '/admin/consents/log';
 
     public function __construct(
-        private AdminControllerContext $controllerContext,
         private NavChain $navChain,
         private ConsentLogRepositoryInterface $repository,
         private ConsentTitleFormatter $titleFormatter,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
     ) {
-        $this->controllerContext->initModule('consent');
     }
 
     public function __invoke(): ViewResponse

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Album\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\PageMeta;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Http\Pagination\PaginationFactory;
@@ -15,13 +14,11 @@ use Johncms\NavChain;
 final readonly class UsersListController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private NavChain $navChain,
         private GetUsersListUseCase $useCase,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
     ) {
-        $this->controllerContext->initModule('album');
     }
 
     public function __invoke(?string $filter = null): ViewResponse

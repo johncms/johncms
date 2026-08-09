@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Johncms\Modules\Collections\Application\Controllers\Admin;
 
 use Illuminate\Database\Eloquent\Collection;
-use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
@@ -31,7 +30,6 @@ use Johncms\Validator\Validator;
 final readonly class CollectionItemsAdminController
 {
     public function __construct(
-        private AdminControllerContext $controllerContext,
         private NavChain $navChain,
         private ContentCollectionRepositoryInterface $collectionRepository,
         private ContentCollectionSectionRepositoryInterface $sectionRepository,
@@ -44,7 +42,6 @@ final readonly class CollectionItemsAdminController
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
     ) {
-        $this->controllerContext->initModule('collections');
     }
 
     public function index(Request $request, int $collection_id): ViewResponse

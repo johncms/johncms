@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Modules\Forum\Application\DTO\ForumFilesQueryDTO;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
@@ -18,14 +17,12 @@ use Johncms\Users\User;
 final readonly class ForumFilesController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private NavChain $navChain,
         private User $currentUser,
         private ForumErrorRenderer $forumErrorRenderer,
         private ViewForumFilesUseCase $viewForumFilesUseCase,
         private PaginationFactory $paginationFactory,
     ) {
-        $this->controllerContext->initModule('forum');
     }
 
     public function __invoke(Request $request): ViewResponse

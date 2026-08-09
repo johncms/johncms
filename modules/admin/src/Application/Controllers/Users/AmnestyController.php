@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Application\Controllers\Users;
 
-use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Modules\Admin\Application\UseCases\ApplyAmnestyUseCase;
 use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
@@ -17,12 +16,10 @@ final readonly class AmnestyController
     private const URL = '/admin/bans/amnesty';
 
     public function __construct(
-        private AdminControllerContext $controllerContext,
         private NavChain $navChain,
         private ApplyAmnestyUseCase $applyAmnesty,
         private Session $session,
     ) {
-        $this->controllerContext->initModule('admin');
     }
 
     public function form(): ViewResponse

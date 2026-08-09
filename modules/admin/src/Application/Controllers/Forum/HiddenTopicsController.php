@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Application\Controllers\Forum;
 
-use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
@@ -21,7 +20,6 @@ final readonly class HiddenTopicsController
     private const URL = '/admin/forum/hidden-topics';
 
     public function __construct(
-        private AdminControllerContext $controllerContext,
         private NavChain $navChain,
         private User $currentUser,
         private ManageHiddenForumUseCase $manageHidden,
@@ -29,7 +27,6 @@ final readonly class HiddenTopicsController
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
     ) {
-        $this->controllerContext->initModule('admin');
     }
 
     public function index(Request $request): ViewResponse

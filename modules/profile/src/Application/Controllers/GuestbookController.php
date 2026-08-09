@@ -6,7 +6,6 @@ namespace Johncms\Modules\Profile\Application\Controllers;
 
 use Johncms\Comments;
 use Johncms\Http\View\ViewResponse;
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\PageMeta;
 use Johncms\Modules\Profile\Application\Exceptions\ProfileNotFoundException;
 use Johncms\Modules\Profile\Application\UseCases\GetGuestbookContextUseCase;
@@ -18,13 +17,11 @@ use Johncms\Users\User;
 final readonly class GuestbookController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private NavChain $navChain,
         private User $currentUser,
         private GetGuestbookContextUseCase $getGuestbookContextUseCase,
         private MarkGuestbookReadUseCase $markGuestbookReadUseCase,
     ) {
-        $this->controllerContext->initModule('profile');
     }
 
     // The legacy Comments class prints a whole page of its own, so this action still hands back a

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\Controllers\Admin;
 
-use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
@@ -28,7 +27,6 @@ final readonly class CollectionsAdminController
     private const URL = '/admin/collections';
 
     public function __construct(
-        private AdminControllerContext $controllerContext,
         private NavChain $navChain,
         private ContentCollectionRepositoryInterface $repository,
         private ListCollectionsUseCase $listCollections,
@@ -38,7 +36,6 @@ final readonly class CollectionsAdminController
         private PaginationGuard $paginationGuard,
         private Session $session,
     ) {
-        $this->controllerContext->initModule('collections');
     }
 
     public function index(): ViewResponse

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Downloads\Application\FilePresenter;
@@ -23,7 +22,6 @@ use Symfony\Component\HttpFoundation\Response;
 final readonly class IndexController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private NavChain $navChain,
         private User $currentUser,
         private FilePresenter $filePresenter,
@@ -33,7 +31,6 @@ final readonly class IndexController
         private PaginationGuard $paginationGuard,
         private Session $session,
     ) {
-        $this->controllerContext->initModule('downloads');
     }
 
     public function __invoke(Request $request): RedirectResponse|ViewResponse

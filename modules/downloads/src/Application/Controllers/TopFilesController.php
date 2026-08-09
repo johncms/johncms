@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Downloads\Application\FilePresenter;
 use Johncms\Modules\Downloads\Application\UseCases\ViewTopFilesUseCase;
 use Johncms\Modules\Downloads\Domain\Enums\DownloadTopSort;
@@ -15,13 +14,11 @@ use Johncms\Users\User;
 final readonly class TopFilesController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private NavChain $navChain,
         private User $currentUser,
         private ViewTopFilesUseCase $useCase,
         private FilePresenter $filePresenter,
     ) {
-        $this->controllerContext->initModule('downloads');
     }
 
     public function __invoke(string $sort = 'popular'): ViewResponse

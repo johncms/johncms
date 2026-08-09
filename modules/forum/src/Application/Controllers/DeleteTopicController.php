@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
@@ -19,7 +18,6 @@ use Johncms\Users\User;
 final readonly class DeleteTopicController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private User $user,
         private ForumErrorRenderer $forumErrorRenderer,
         private GetDeleteTopicContextUseCase $contextUseCase,
@@ -27,7 +25,6 @@ final readonly class DeleteTopicController
         private ForumSectionPathService $sectionPathService,
         private ForumTopicPathService $topicPathService,
     ) {
-        $this->controllerContext->initModule('forum');
     }
 
     /**

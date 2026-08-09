@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Johncms\Modules\Library\Application\Controllers;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Library\Application\Services\LibraryArticlePathService;
 use Johncms\Modules\Library\Application\Services\LibraryCategoryPathService;
 use Johncms\Modules\Library\Application\Services\LibrarySlugService;
@@ -24,7 +23,6 @@ use Twig\Markup;
 final readonly class CreateArticleController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private NavChain $navChain,
         private AntifloodCheckerInterface $antifloodChecker,
         private User $currentUser,
@@ -32,7 +30,6 @@ final readonly class CreateArticleController
         private LibraryArticlePathService $articlePathService,
         private LibraryCategoryPathService $categoryPathService,
     ) {
-        $this->controllerContext->initModule('library');
     }
 
     public function __invoke(Request $request): ViewResponse

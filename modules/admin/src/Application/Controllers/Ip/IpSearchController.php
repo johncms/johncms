@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Application\Controllers\Ip;
 
-use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
@@ -18,14 +17,12 @@ use Johncms\Http\View\ViewResponse;
 final readonly class IpSearchController
 {
     public function __construct(
-        private AdminControllerContext $controllerContext,
         private NavChain $navChain,
         private SearchUsersByIpUseCase $searchUsersByIpUseCase,
         private AdminUserRowMapper $rowMapper,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
     ) {
-        $this->controllerContext->initModule('admin');
     }
 
     public function __invoke(Request $request, ?string $mode = null): ViewResponse

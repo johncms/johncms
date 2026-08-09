@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Admin\Application\Controllers\System;
 
 use Johncms\Checker\SystemChecker;
-use Johncms\Http\Controller\AdminControllerContext;
+use Johncms\Http\AdminAreaContext;
 use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
 use Twig\Markup;
@@ -13,14 +13,17 @@ use Twig\Markup;
 final readonly class SystemCheckController
 {
     public function __construct(
-        private AdminControllerContext $controllerContext,
+        private AdminAreaContext $adminArea,
         private NavChain $navChain,
     ) {
-        $this->controllerContext->initModule('admin');
     }
 
     public function index(SystemChecker $checker): ViewResponse
     {
+        // This route is registered outside the guarded admin group (it answers before the panel is
+        // usable), so nothing else enters the area context its layout is rendered in.
+        $this->adminArea->enter();
+
         $title = __('System check');
         $this->navChain->add($title);
 

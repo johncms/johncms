@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Johncms\Modules\Library\Application\Controllers;
 
 use Johncms\Comments;
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\PageMeta;
 use Johncms\Modules\Library\Application\Services\LibraryArticlePathService;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
@@ -19,12 +18,10 @@ use Symfony\Component\HttpFoundation\Response;
 final readonly class ArticleCommentsController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private NavChain $navChain,
         private User $currentUser,
         private LibraryArticlePathService $articlePathService,
     ) {
-        $this->controllerContext->initModule('library');
     }
 
     public function __invoke(Request $request, int $id): Response|ViewResponse

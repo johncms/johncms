@@ -17,16 +17,13 @@ use Tests\Functional\FunctionalTestCase;
  * into each other.
  *
  * Under FPM none of this can be observed — the process ends with the request. It is the worker
- * runtime this guards, and every assertion here corresponds to a leak that was real before the
- * stage: controllers held the first request of the process in their constructor, breadcrumbs kept
+ * runtime this guards, and every assertion here corresponds to a leak that was real once:
+ * controllers held the first request of the process in their constructor, breadcrumbs kept
  * growing, Environment cached the address of whoever came first.
  *
- * Deliberately not asserted: anything Render owns. Its data is process state — controllers call
- * addData() without a template list, which in mobicms/render is shareWithAll(), so the title,
- * canonical, keywords and description of one page stay in the engine for every page after it
- * (HomepageController and ForumIndexController are two of the 208 such calls). That is fixed
- * together with the rewrite of Render rather than here, so the comparisons below take the body of
- * the page and leave the head out: pinning it would leave a red test this stage cannot reach.
+ * The comparisons take the whole response, head included: the title, canonical, keywords and
+ * description of a page are data handed to a template for that render, so they must not differ
+ * between two identical requests either.
  */
 final class RequestIsolationTest extends FunctionalTestCase
 {
@@ -180,16 +177,14 @@ final class RequestIsolationTest extends FunctionalTestCase
     }
 
     /**
-     * The body of the page, without the head: everything that leaks there belongs to Render and is
-     * out of the scope of this stage (see the class docblock).
+     * The rendered page as it goes to the visitor, head included.
      */
     private function body(Response $response): string
     {
         $content = (string) $response->getContent();
-        $start = strpos($content, '<body');
 
-        self::assertNotFalse($start, 'The response is not a rendered page.');
+        self::assertNotFalse(strpos($content, '<body'), 'The response is not a rendered page.');
 
-        return substr($content, $start);
+        return $content;
     }
 }

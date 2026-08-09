@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Arr;
 use Johncms\FileInfo;
 use Johncms\Files\FileStorage;
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Media\MediaEmbed;
 use Johncms\Modules\News\Domain\Models\NewsArticle;
@@ -29,10 +28,8 @@ use Symfony\Component\HttpFoundation\Response;
 final readonly class CommentsController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private PaginationFactory $paginationFactory,
     ) {
-        $this->controllerContext->initModule('news');
     }
 
     /**

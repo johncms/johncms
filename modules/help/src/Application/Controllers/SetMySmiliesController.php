@@ -12,7 +12,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Help\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Users\User;
@@ -24,10 +23,8 @@ final readonly class SetMySmiliesController
     private const USER_SMILIES_MAX = 20;
 
     public function __construct(
-        private ControllerContext $controllerContext,
         private User $currentUser,
     ) {
-        $this->controllerContext->initModule('help');
     }
 
     public function __invoke(Request $request): Response|ViewResponse

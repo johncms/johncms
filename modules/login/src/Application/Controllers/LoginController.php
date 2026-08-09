@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Login\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Login\Application\UseCases\PerformLoginUseCase;
 use Johncms\Modules\Login\Domain\Enums\LoginStatus;
 use Johncms\NavChain;
@@ -17,11 +16,9 @@ use Symfony\Component\HttpFoundation\Response;
 final readonly class LoginController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private NavChain $navChain,
         private PerformLoginUseCase $performLogin,
     ) {
-        $this->controllerContext->initModule('login');
     }
 
     public function __invoke(Request $request): RedirectResponse|ViewResponse

@@ -12,6 +12,13 @@ final class RouteCollection
     private ?string $prefix = null;
     private ?string $namePrefix = null;
 
+    /**
+     * The module the routes declared from here belong to. Stamped on every route so the request
+     * pipeline can set up the module context — its translation domain — without the controller
+     * naming its own module. Null for the routes of the core, which own no module.
+     */
+    private ?string $module = null;
+
     /** @var list<mixed> */
     private array $middlewares = [];
 
@@ -28,8 +35,19 @@ final class RouteCollection
     public function map(string|array $method, string $path, mixed $handler): Route
     {
         $route = new Route($method, $path, $handler, $this->routeRequirements);
+
+        if ($this->module !== null) {
+            $route->module($this->module);
+        }
+
         $this->routeCollection[] = $route;
         return $route;
+    }
+
+    public function setModule(?string $module): self
+    {
+        $this->module = $module;
+        return $this;
     }
 
     public function get(string $path, mixed $handler): Route
@@ -88,6 +106,7 @@ final class RouteCollection
     public function group(string $prefix, callable $group): RouteCollection
     {
         $collection = new self($this->routeRequirements);
+        $collection->setModule($this->module);
         $group($collection);
         $collection->setPrefix($prefix);
         $this->groups[] = $collection;

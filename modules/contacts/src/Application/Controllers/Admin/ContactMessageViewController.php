@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Contacts\Application\Controllers\Admin;
 
-use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Modules\Contacts\Application\UseCases\MarkContactMessageProcessedUseCase;
 use Johncms\Modules\Contacts\Domain\Enums\ContactMessageStatus;
 use Johncms\Modules\Contacts\Domain\Repository\ContactMessageRepositoryInterface;
@@ -19,13 +18,11 @@ final readonly class ContactMessageViewController
     private const URL = '/admin/contacts/messages';
 
     public function __construct(
-        private AdminControllerContext $controllerContext,
         private Session $session,
         private NavChain $navChain,
         private ContactMessageRepositoryInterface $repository,
         private MarkContactMessageProcessedUseCase $markProcessed,
     ) {
-        $this->controllerContext->initModule('contacts');
     }
 
     public function __invoke(Request $request, int $id): ViewResponse

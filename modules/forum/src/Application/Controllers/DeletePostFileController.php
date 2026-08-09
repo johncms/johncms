@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
@@ -20,7 +19,6 @@ use Johncms\Validator\Validator;
 final readonly class DeletePostFileController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private User $currentUser,
         private ForumErrorRenderer $forumErrorRenderer,
         private GetEditPostContextUseCase $contextUseCase,
@@ -28,7 +26,6 @@ final readonly class DeletePostFileController
         private GetDeletePostFileContextUseCase $fileContextUseCase,
         private DeletePostFileUseCase $deletePostFileUseCase,
     ) {
-        $this->controllerContext->initModule('forum');
     }
 
     public function __invoke(Request $request, int $id, int $fid): ViewResponse

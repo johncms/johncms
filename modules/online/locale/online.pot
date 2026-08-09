@@ -2,33 +2,33 @@ msgid ""
 msgstr ""
 "X-Domain: online\n"
 
-#: modules/online/src/Application/Controllers/GuestController.php:35
+#: modules/online/src/Application/Controllers/GuestController.php:32
 #: modules/online/src/Application/FiltersBuilder.php:23
 msgid "Guests"
 msgstr ""
 
-#: modules/online/src/Application/Controllers/GuestController.php:37
-#: modules/online/src/Application/Controllers/GuestController.php:59
-#: modules/online/src/Application/Controllers/HistoryController.php:37
-#: modules/online/src/Application/Controllers/HistoryController.php:59
-#: modules/online/src/Application/Controllers/IndexController.php:37
-#: modules/online/src/Application/Controllers/IndexController.php:59
-#: modules/online/src/Application/Controllers/IpController.php:34
-#: modules/online/src/Application/Controllers/IpController.php:45
+#: modules/online/src/Application/Controllers/GuestController.php:34
+#: modules/online/src/Application/Controllers/GuestController.php:56
+#: modules/online/src/Application/Controllers/HistoryController.php:34
+#: modules/online/src/Application/Controllers/HistoryController.php:56
+#: modules/online/src/Application/Controllers/IndexController.php:34
+#: modules/online/src/Application/Controllers/IndexController.php:56
+#: modules/online/src/Application/Controllers/IpController.php:31
+#: modules/online/src/Application/Controllers/IpController.php:42
 #: modules/online/src/Application/Middlewares/OnlineAdminMiddleware.php:26
 msgid "Online"
 msgstr ""
 
-#: modules/online/src/Application/Controllers/HistoryController.php:35
+#: modules/online/src/Application/Controllers/HistoryController.php:32
 #: modules/online/src/Application/FiltersBuilder.php:19
 msgid "History"
 msgstr ""
 
-#: modules/online/src/Application/Controllers/IndexController.php:35
+#: modules/online/src/Application/Controllers/IndexController.php:32
 msgid "Who is online?"
 msgstr ""
 
-#: modules/online/src/Application/Controllers/IpController.php:32
+#: modules/online/src/Application/Controllers/IpController.php:29
 #: modules/online/src/Application/FiltersBuilder.php:24
 msgid "IP Activity"
 msgstr ""

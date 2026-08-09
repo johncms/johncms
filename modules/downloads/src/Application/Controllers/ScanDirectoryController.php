@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
 use Johncms\FileInfo;
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Downloads\Application\Services\DownloadCategoryPathService;
 use Johncms\Modules\Downloads\Domain\Models\DownloadBookmark;
 use Johncms\Modules\Downloads\Domain\Models\DownloadCategory;
@@ -23,12 +22,10 @@ use Symfony\Component\HttpFoundation\Response;
 final readonly class ScanDirectoryController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private NavChain $navChain,
         private User $currentUser,
         private DownloadCategoryPathService $categoryPathService,
     ) {
-        $this->controllerContext->initModule('downloads');
     }
 
     public function __invoke(Request $request): ViewResponse

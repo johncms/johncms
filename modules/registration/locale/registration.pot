@@ -2,24 +2,24 @@ msgid ""
 msgstr ""
 "X-Domain: registration\n"
 
-#: modules/registration/src/Application/Controllers/ConfirmEmailController.php:38
-#: modules/registration/src/Application/Controllers/ConfirmEmailController.php:39
+#: modules/registration/src/Application/Controllers/ConfirmEmailController.php:31
+#: modules/registration/src/Application/Controllers/ConfirmEmailController.php:32
 msgid "Email confirmation"
 msgstr ""
 
-#: modules/registration/src/Application/Controllers/RegistrationController.php:47
-#: modules/registration/src/Application/Controllers/RegistrationController.php:48
-#: modules/registration/src/Application/Controllers/RegistrationController.php:53
-#: modules/registration/src/Application/Controllers/RegistrationController.php:151
-#: modules/registration/src/Application/Controllers/RegistrationController.php:152
-#: modules/registration/src/Application/Controllers/RegistrationController.php:173
-#: modules/registration/src/Application/Controllers/RegistrationController.php:174
+#: modules/registration/src/Application/Controllers/RegistrationController.php:44
+#: modules/registration/src/Application/Controllers/RegistrationController.php:45
+#: modules/registration/src/Application/Controllers/RegistrationController.php:50
+#: modules/registration/src/Application/Controllers/RegistrationController.php:148
+#: modules/registration/src/Application/Controllers/RegistrationController.php:149
+#: modules/registration/src/Application/Controllers/RegistrationController.php:170
+#: modules/registration/src/Application/Controllers/RegistrationController.php:171
 #: modules/registration/templates/public/index.twig:15
 #: modules/registration/templates/public/index.twig:128
 msgid "Registration"
 msgstr ""
 
-#: modules/registration/src/Application/Controllers/RegistrationController.php:111
+#: modules/registration/src/Application/Controllers/RegistrationController.php:108
 msgid "You must accept the consent to continue"
 msgstr ""
 

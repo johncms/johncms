@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Consent\Application\Controllers\Admin;
 
-use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Modules\Admin\Domain\Exceptions\ConfigWriteException;
 use Johncms\Modules\Consent\Application\DTO\CookieBannerSettingsDTO;
 use Johncms\Modules\Consent\Application\UseCases\UpdateCookieBannerSettingsUseCase;
@@ -19,12 +18,10 @@ final readonly class CookieBannerController
     private const URL = '/admin/cookie-banner';
 
     public function __construct(
-        private AdminControllerContext $controllerContext,
         private Session $session,
         private NavChain $navChain,
         private UpdateCookieBannerSettingsUseCase $updateCookieBannerSettings,
     ) {
-        $this->controllerContext->initModule('consent');
     }
 
     public function form(): ViewResponse

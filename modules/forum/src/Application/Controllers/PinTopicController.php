@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
@@ -16,12 +15,10 @@ use Johncms\Http\Request;
 final readonly class PinTopicController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private ForumErrorRenderer $forumErrorRenderer,
         private GetPinTopicContextUseCase $contextUseCase,
         private PinTopicUseCase $pinTopicUseCase,
     ) {
-        $this->controllerContext->initModule('forum');
     }
 
     public function __invoke(Request $request, int $id): ViewResponse

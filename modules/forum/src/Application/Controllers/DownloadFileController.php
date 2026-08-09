@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Forum\Domain\Repository\ForumFileRepositoryInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,10 +11,8 @@ use Symfony\Component\HttpFoundation\Response;
 final readonly class DownloadFileController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private ForumFileRepositoryInterface $fileRepository,
     ) {
-        $this->controllerContext->initModule('forum');
     }
 
     public function __invoke(int $id): ViewResponse

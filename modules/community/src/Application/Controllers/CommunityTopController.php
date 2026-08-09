@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Community\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Community\Application\UseCases\ViewTopUseCase;
 use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
@@ -14,12 +13,10 @@ use Johncms\Users\User;
 final readonly class CommunityTopController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private NavChain $navChain,
         private User $currentUser,
         private ViewTopUseCase $viewTopUseCase,
     ) {
-        $this->controllerContext->initModule('community');
     }
 
     public function __invoke(Request $request): ViewResponse

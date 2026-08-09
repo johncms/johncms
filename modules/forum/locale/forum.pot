@@ -2,277 +2,277 @@ msgid ""
 msgstr ""
 "X-Domain: forum\n"
 
-#: modules/forum/src/Application/Controllers/AddFileController.php:47
-#: modules/forum/src/Application/Controllers/AddFileController.php:57
-#: modules/forum/src/Application/Controllers/AddFileController.php:84
-#: modules/forum/src/Application/Controllers/AddVoteController.php:38
-#: modules/forum/src/Application/Controllers/AddVoteController.php:49
-#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:39
-#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:92
-#: modules/forum/src/Application/Controllers/ChangeTopicController.php:41
-#: modules/forum/src/Application/Controllers/ClearFilterByAuthorController.php:45
-#: modules/forum/src/Application/Controllers/ClearFilterByAuthorController.php:60
-#: modules/forum/src/Application/Controllers/CloseTopicController.php:38
-#: modules/forum/src/Application/Controllers/CuratorsController.php:36
-#: modules/forum/src/Application/Controllers/CuratorsController.php:47
-#: modules/forum/src/Application/Controllers/DeletePostController.php:54
-#: modules/forum/src/Application/Controllers/DeletePostController.php:73
-#: modules/forum/src/Application/Controllers/DeletePostFileController.php:57
-#: modules/forum/src/Application/Controllers/DeletePostFileController.php:76
-#: modules/forum/src/Application/Controllers/DeleteTopicController.php:45
-#: modules/forum/src/Application/Controllers/DeleteTopicController.php:56
-#: modules/forum/src/Application/Controllers/DeleteVoteController.php:38
-#: modules/forum/src/Application/Controllers/DeleteVoteController.php:48
-#: modules/forum/src/Application/Controllers/DeleteVoteController.php:62
-#: modules/forum/src/Application/Controllers/EditPostController.php:60
-#: modules/forum/src/Application/Controllers/EditPostController.php:94
-#: modules/forum/src/Application/Controllers/EditVoteController.php:40
-#: modules/forum/src/Application/Controllers/EditVoteController.php:51
-#: modules/forum/src/Application/Controllers/FilterByAuthorController.php:42
-#: modules/forum/src/Application/Controllers/ForumFilesController.php:55
-#: modules/forum/src/Application/Controllers/MarkAllTopicsReadController.php:49
-#: modules/forum/src/Application/Controllers/MoveTopicController.php:42
-#: modules/forum/src/Application/Controllers/MoveTopicController.php:63
-#: modules/forum/src/Application/Controllers/MoveTopicController.php:78
-#: modules/forum/src/Application/Controllers/NewMessageController.php:57
-#: modules/forum/src/Application/Controllers/NewMessageController.php:72
-#: modules/forum/src/Application/Controllers/NewMessageController.php:89
-#: modules/forum/src/Application/Controllers/NewMessageController.php:112
-#: modules/forum/src/Application/Controllers/NewMessageController.php:126
-#: modules/forum/src/Application/Controllers/NewTopicController.php:81
-#: modules/forum/src/Application/Controllers/PinTopicController.php:36
-#: modules/forum/src/Application/Controllers/PollVotersController.php:50
-#: modules/forum/src/Application/Controllers/ReplyMessageController.php:57
-#: modules/forum/src/Application/Controllers/ReplyMessageController.php:75
-#: modules/forum/src/Application/Controllers/ReplyMessageController.php:88
-#: modules/forum/src/Application/Controllers/ReplyMessageController.php:105
-#: modules/forum/src/Application/Controllers/ReplyMessageController.php:140
-#: modules/forum/src/Application/Controllers/ReplyMessageController.php:154
-#: modules/forum/src/Application/Controllers/RestorePostController.php:54
-#: modules/forum/src/Application/Controllers/RestorePostController.php:73
-#: modules/forum/src/Application/Controllers/RestoreTopicController.php:37
-#: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:45
-#: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:60
-#: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:75
-#: modules/forum/src/Application/Controllers/SubmitVoteController.php:39
-#: modules/forum/src/Application/Controllers/SubmitVoteController.php:55
-#: modules/forum/templates/public/edit-post.twig:23
-#: modules/forum/templates/public/new-topic.twig:69
-#: modules/forum/templates/public/reply-message.twig:31
+#: modules/forum/src/Application/Controllers/AddFileController.php:44
+#: modules/forum/src/Application/Controllers/AddFileController.php:54
+#: modules/forum/src/Application/Controllers/AddFileController.php:81
+#: modules/forum/src/Application/Controllers/AddVoteController.php:35
+#: modules/forum/src/Application/Controllers/AddVoteController.php:46
+#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:36
+#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:89
+#: modules/forum/src/Application/Controllers/ChangeTopicController.php:38
+#: modules/forum/src/Application/Controllers/ClearFilterByAuthorController.php:42
+#: modules/forum/src/Application/Controllers/ClearFilterByAuthorController.php:57
+#: modules/forum/src/Application/Controllers/CloseTopicController.php:35
+#: modules/forum/src/Application/Controllers/CuratorsController.php:33
+#: modules/forum/src/Application/Controllers/CuratorsController.php:44
+#: modules/forum/src/Application/Controllers/DeletePostController.php:51
+#: modules/forum/src/Application/Controllers/DeletePostController.php:70
+#: modules/forum/src/Application/Controllers/DeletePostFileController.php:54
+#: modules/forum/src/Application/Controllers/DeletePostFileController.php:73
+#: modules/forum/src/Application/Controllers/DeleteTopicController.php:42
+#: modules/forum/src/Application/Controllers/DeleteTopicController.php:53
+#: modules/forum/src/Application/Controllers/DeleteVoteController.php:35
+#: modules/forum/src/Application/Controllers/DeleteVoteController.php:45
+#: modules/forum/src/Application/Controllers/DeleteVoteController.php:59
+#: modules/forum/src/Application/Controllers/EditPostController.php:57
+#: modules/forum/src/Application/Controllers/EditPostController.php:91
+#: modules/forum/src/Application/Controllers/EditVoteController.php:37
+#: modules/forum/src/Application/Controllers/EditVoteController.php:48
+#: modules/forum/src/Application/Controllers/FilterByAuthorController.php:39
+#: modules/forum/src/Application/Controllers/ForumFilesController.php:52
+#: modules/forum/src/Application/Controllers/MarkAllTopicsReadController.php:46
+#: modules/forum/src/Application/Controllers/MoveTopicController.php:39
+#: modules/forum/src/Application/Controllers/MoveTopicController.php:60
+#: modules/forum/src/Application/Controllers/MoveTopicController.php:75
+#: modules/forum/src/Application/Controllers/NewMessageController.php:54
+#: modules/forum/src/Application/Controllers/NewMessageController.php:69
+#: modules/forum/src/Application/Controllers/NewMessageController.php:86
+#: modules/forum/src/Application/Controllers/NewMessageController.php:109
+#: modules/forum/src/Application/Controllers/NewMessageController.php:123
+#: modules/forum/src/Application/Controllers/NewTopicController.php:78
+#: modules/forum/src/Application/Controllers/PinTopicController.php:33
+#: modules/forum/src/Application/Controllers/PollVotersController.php:47
+#: modules/forum/src/Application/Controllers/ReplyMessageController.php:54
+#: modules/forum/src/Application/Controllers/ReplyMessageController.php:72
+#: modules/forum/src/Application/Controllers/ReplyMessageController.php:85
+#: modules/forum/src/Application/Controllers/ReplyMessageController.php:102
+#: modules/forum/src/Application/Controllers/ReplyMessageController.php:137
+#: modules/forum/src/Application/Controllers/ReplyMessageController.php:151
+#: modules/forum/src/Application/Controllers/RestorePostController.php:51
+#: modules/forum/src/Application/Controllers/RestorePostController.php:70
+#: modules/forum/src/Application/Controllers/RestoreTopicController.php:34
+#: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:42
+#: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:57
+#: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:72
+#: modules/forum/src/Application/Controllers/SubmitVoteController.php:36
+#: modules/forum/src/Application/Controllers/SubmitVoteController.php:52
+#: modules/forum/templates/public/edit-post.twig:26
+#: modules/forum/templates/public/new-topic.twig:72
+#: modules/forum/templates/public/reply-message.twig:33
 msgid "Back"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/AddFileController.php:54
-#: modules/forum/src/Application/Controllers/AddFileController.php:91
+#: modules/forum/src/Application/Controllers/AddFileController.php:51
+#: modules/forum/src/Application/Controllers/AddFileController.php:88
 msgid "Add file"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/AddFileController.php:55
+#: modules/forum/src/Application/Controllers/AddFileController.php:52
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:56
 msgid "The time allotted for the file upload has expired"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/AddFileController.php:92
-#: modules/forum/src/Application/Controllers/AddFileController.php:93
-#: modules/forum/src/Application/Controllers/UploadFileController.php:54
-#: modules/forum/src/Application/Controllers/UploadFileController.php:85
+#: modules/forum/src/Application/Controllers/AddFileController.php:89
+#: modules/forum/src/Application/Controllers/AddFileController.php:90
+#: modules/forum/src/Application/Controllers/UploadFileController.php:51
+#: modules/forum/src/Application/Controllers/UploadFileController.php:82
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:55
 #: modules/forum/src/Application/UseCases/AttachFileToPostUseCase.php:46
 #: modules/forum/src/Application/UseCases/AttachFileToPostUseCase.php:72
 msgid "Error uploading file"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/AddFileController.php:95
-#: modules/forum/src/Application/Controllers/AddVoteController.php:101
-#: modules/forum/src/Application/Controllers/EditPostController.php:77
-#: modules/forum/src/Application/Controllers/ForumSearchController.php:53
-#: modules/forum/src/Application/Controllers/ReplyMessageController.php:127
+#: modules/forum/src/Application/Controllers/AddFileController.php:92
+#: modules/forum/src/Application/Controllers/AddVoteController.php:98
+#: modules/forum/src/Application/Controllers/EditPostController.php:74
+#: modules/forum/src/Application/Controllers/ForumSearchController.php:50
+#: modules/forum/src/Application/Controllers/ReplyMessageController.php:124
 msgid "Repeat"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/AddFileController.php:108
-#: modules/forum/src/Application/Controllers/AddFileController.php:109
-#: modules/forum/templates/public/new-topic.twig:60
-#: modules/forum/templates/public/reply-message.twig:25
-#: modules/forum/templates/public/topic.twig:42
+#: modules/forum/src/Application/Controllers/AddFileController.php:105
+#: modules/forum/src/Application/Controllers/AddFileController.php:106
+#: modules/forum/templates/public/new-topic.twig:63
+#: modules/forum/templates/public/reply-message.twig:27
+#: modules/forum/templates/public/topic.twig:43
 msgid "Add File"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/AddVoteController.php:45
-#: modules/forum/src/Application/Controllers/AddVoteController.php:46
-#: modules/forum/src/Application/Controllers/AddVoteController.php:83
-#: modules/forum/src/Application/Controllers/AddVoteController.php:84
-#: modules/forum/src/Application/Controllers/AddVoteController.php:96
-#: modules/forum/src/Application/Controllers/AddVoteController.php:97
-#: modules/forum/src/Application/Controllers/AddVoteController.php:118
-#: modules/forum/src/Application/Controllers/AddVoteController.php:119
-#: modules/forum/templates/public/topic.twig:216
+#: modules/forum/src/Application/Controllers/AddVoteController.php:42
+#: modules/forum/src/Application/Controllers/AddVoteController.php:43
+#: modules/forum/src/Application/Controllers/AddVoteController.php:80
+#: modules/forum/src/Application/Controllers/AddVoteController.php:81
+#: modules/forum/src/Application/Controllers/AddVoteController.php:93
+#: modules/forum/src/Application/Controllers/AddVoteController.php:94
+#: modules/forum/src/Application/Controllers/AddVoteController.php:115
+#: modules/forum/src/Application/Controllers/AddVoteController.php:116
+#: modules/forum/templates/public/topic.twig:217
 msgid "Add Poll"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/AddVoteController.php:47
-#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:54
-#: modules/forum/src/Application/Controllers/ChangeTopicController.php:39
-#: modules/forum/src/Application/Controllers/ClearFilterByAuthorController.php:43
-#: modules/forum/src/Application/Controllers/ClearFilterByAuthorController.php:58
-#: modules/forum/src/Application/Controllers/DeletePostController.php:71
-#: modules/forum/src/Application/Controllers/DeletePostFileController.php:74
-#: modules/forum/src/Application/Controllers/DeleteVoteController.php:46
-#: modules/forum/src/Application/Controllers/EditPostController.php:92
-#: modules/forum/src/Application/Controllers/EditVoteController.php:49
-#: modules/forum/src/Application/Controllers/FilterByAuthorController.php:40
-#: modules/forum/src/Application/Controllers/ForumFilesController.php:53
-#: modules/forum/src/Application/Controllers/MarkAllTopicsReadController.php:47
-#: modules/forum/src/Application/Controllers/MoveTopicController.php:59
-#: modules/forum/src/Application/Controllers/MoveTopicController.php:61
-#: modules/forum/src/Application/Controllers/MoveTopicController.php:74
-#: modules/forum/src/Application/Controllers/MoveTopicController.php:76
-#: modules/forum/src/Application/Controllers/PollVotersController.php:58
-#: modules/forum/src/Application/Controllers/RestorePostController.php:71
-#: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:43
-#: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:58
-#: modules/forum/src/Application/Controllers/ShowPostController.php:43
-#: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:48
-#: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:73
+#: modules/forum/src/Application/Controllers/AddVoteController.php:44
+#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:51
+#: modules/forum/src/Application/Controllers/ChangeTopicController.php:36
+#: modules/forum/src/Application/Controllers/ClearFilterByAuthorController.php:40
+#: modules/forum/src/Application/Controllers/ClearFilterByAuthorController.php:55
+#: modules/forum/src/Application/Controllers/DeletePostController.php:68
+#: modules/forum/src/Application/Controllers/DeletePostFileController.php:71
+#: modules/forum/src/Application/Controllers/DeleteVoteController.php:43
+#: modules/forum/src/Application/Controllers/EditPostController.php:89
+#: modules/forum/src/Application/Controllers/EditVoteController.php:46
+#: modules/forum/src/Application/Controllers/FilterByAuthorController.php:37
+#: modules/forum/src/Application/Controllers/ForumFilesController.php:50
+#: modules/forum/src/Application/Controllers/MarkAllTopicsReadController.php:44
+#: modules/forum/src/Application/Controllers/MoveTopicController.php:56
+#: modules/forum/src/Application/Controllers/MoveTopicController.php:58
+#: modules/forum/src/Application/Controllers/MoveTopicController.php:71
+#: modules/forum/src/Application/Controllers/MoveTopicController.php:73
+#: modules/forum/src/Application/Controllers/PollVotersController.php:55
+#: modules/forum/src/Application/Controllers/RestorePostController.php:68
+#: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:40
+#: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:55
+#: modules/forum/src/Application/Controllers/ShowPostController.php:40
+#: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:45
+#: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:70
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:42
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:52
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:53
 msgid "Wrong data"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/AddVoteController.php:86
+#: modules/forum/src/Application/Controllers/AddVoteController.php:83
 msgid "Poll added"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/AddVoteController.php:88
-#: modules/forum/src/Application/Controllers/EditVoteController.php:103
+#: modules/forum/src/Application/Controllers/AddVoteController.php:85
+#: modules/forum/src/Application/Controllers/EditVoteController.php:100
 msgid "Continue"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/AddVoteController.php:99
+#: modules/forum/src/Application/Controllers/AddVoteController.php:96
 msgid "The required fields are not filled"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/AddVoteController.php:110
-#: modules/forum/src/Application/Controllers/EditVoteController.php:132
-#: modules/forum/src/Application/Controllers/EditVoteController.php:144
+#: modules/forum/src/Application/Controllers/AddVoteController.php:107
+#: modules/forum/src/Application/Controllers/EditVoteController.php:129
+#: modules/forum/src/Application/Controllers/EditVoteController.php:141
 msgid "Answer"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:58
-#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:67
+#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:55
+#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:64
 msgid "You did not choose something to delete"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:63
+#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:60
 msgid "Marked posts are deleted"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:73
-#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:74
-#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:87
-#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:88
+#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:70
+#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:71
+#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:84
+#: modules/forum/src/Application/Controllers/BulkDeletePostsController.php:85
 msgid "Delete posts"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/ChangeTopicController.php:37
-#: modules/forum/src/Application/Controllers/ChangeTopicController.php:38
-#: modules/forum/src/Application/Controllers/ChangeTopicController.php:95
-#: modules/forum/src/Application/Controllers/ChangeTopicController.php:96
-#: modules/forum/templates/public/topic.twig:223
+#: modules/forum/src/Application/Controllers/ChangeTopicController.php:34
+#: modules/forum/src/Application/Controllers/ChangeTopicController.php:35
+#: modules/forum/src/Application/Controllers/ChangeTopicController.php:92
+#: modules/forum/src/Application/Controllers/ChangeTopicController.php:93
+#: modules/forum/templates/public/topic.twig:224
 msgid "Change the topic"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/ClearFilterByAuthorController.php:40
-#: modules/forum/src/Application/Controllers/ClearFilterByAuthorController.php:41
-#: modules/forum/src/Application/Controllers/ClearFilterByAuthorController.php:56
-#: modules/forum/src/Application/Controllers/ClearFilterByAuthorController.php:57
-#: modules/forum/src/Application/Controllers/FilterByAuthorController.php:38
-#: modules/forum/src/Application/Controllers/FilterByAuthorController.php:39
-#: modules/forum/src/Application/Controllers/FilterByAuthorController.php:59
-#: modules/forum/src/Application/Controllers/FilterByAuthorController.php:64
-#: modules/forum/src/Application/Controllers/FilterByAuthorController.php:65
-#: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:40
-#: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:41
-#: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:56
-#: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:57
-#: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:70
-#: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:71
-#: modules/forum/templates/public/topic.twig:275
+#: modules/forum/src/Application/Controllers/ClearFilterByAuthorController.php:37
+#: modules/forum/src/Application/Controllers/ClearFilterByAuthorController.php:38
+#: modules/forum/src/Application/Controllers/ClearFilterByAuthorController.php:53
+#: modules/forum/src/Application/Controllers/ClearFilterByAuthorController.php:54
+#: modules/forum/src/Application/Controllers/FilterByAuthorController.php:35
+#: modules/forum/src/Application/Controllers/FilterByAuthorController.php:36
+#: modules/forum/src/Application/Controllers/FilterByAuthorController.php:56
+#: modules/forum/src/Application/Controllers/FilterByAuthorController.php:61
+#: modules/forum/src/Application/Controllers/FilterByAuthorController.php:62
+#: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:37
+#: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:38
+#: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:53
+#: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:54
+#: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:67
+#: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:68
+#: modules/forum/templates/public/topic.twig:276
 msgid "Filter by author"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/ClearForumSearchHistoryController.php:42
-#: modules/forum/src/Application/Controllers/ClearForumSearchHistoryController.php:43
-#: modules/forum/src/Application/Controllers/ForumSearchController.php:50
-#: modules/forum/src/Application/Controllers/ForumSearchController.php:59
-#: modules/forum/src/Application/Controllers/ForumSearchController.php:63
+#: modules/forum/src/Application/Controllers/ClearForumSearchHistoryController.php:39
+#: modules/forum/src/Application/Controllers/ClearForumSearchHistoryController.php:40
+#: modules/forum/src/Application/Controllers/ForumSearchController.php:47
+#: modules/forum/src/Application/Controllers/ForumSearchController.php:56
+#: modules/forum/src/Application/Controllers/ForumSearchController.php:60
 #: modules/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:97
 msgid "Forum search"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/CuratorsController.php:43
-#: modules/forum/src/Application/Controllers/CuratorsController.php:44
-#: modules/forum/src/Application/Controllers/CuratorsController.php:89
-#: modules/forum/src/Application/Controllers/CuratorsController.php:90
-#: modules/forum/src/Application/Controllers/DeleteTopicController.php:52
-#: modules/forum/src/Application/Controllers/DeleteTopicController.php:53
-#: modules/forum/templates/public/topic.twig:263
+#: modules/forum/src/Application/Controllers/CuratorsController.php:40
+#: modules/forum/src/Application/Controllers/CuratorsController.php:41
+#: modules/forum/src/Application/Controllers/CuratorsController.php:86
+#: modules/forum/src/Application/Controllers/CuratorsController.php:87
+#: modules/forum/src/Application/Controllers/DeleteTopicController.php:49
+#: modules/forum/src/Application/Controllers/DeleteTopicController.php:50
+#: modules/forum/templates/public/topic.twig:264
 msgid "Curators"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/CuratorsController.php:45
-#: modules/forum/src/Application/Controllers/DeleteTopicController.php:54
+#: modules/forum/src/Application/Controllers/CuratorsController.php:42
+#: modules/forum/src/Application/Controllers/DeleteTopicController.php:51
 #: modules/forum/src/Application/Controllers/ForumTopicController.php:65
 msgid "Topic has been deleted or does not exists"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/DeletePostController.php:41
-#: modules/forum/src/Application/Controllers/DeletePostController.php:51
-#: modules/forum/src/Application/Controllers/DeletePostFileController.php:44
-#: modules/forum/src/Application/Controllers/DeletePostFileController.php:54
-#: modules/forum/src/Application/Controllers/EditPostController.php:47
-#: modules/forum/src/Application/Controllers/EditPostController.php:57
-#: modules/forum/src/Application/Controllers/RestorePostController.php:41
-#: modules/forum/src/Application/Controllers/RestorePostController.php:51
+#: modules/forum/src/Application/Controllers/DeletePostController.php:38
+#: modules/forum/src/Application/Controllers/DeletePostController.php:48
+#: modules/forum/src/Application/Controllers/DeletePostFileController.php:41
+#: modules/forum/src/Application/Controllers/DeletePostFileController.php:51
+#: modules/forum/src/Application/Controllers/EditPostController.php:44
+#: modules/forum/src/Application/Controllers/EditPostController.php:54
+#: modules/forum/src/Application/Controllers/RestorePostController.php:38
+#: modules/forum/src/Application/Controllers/RestorePostController.php:48
 msgid "Error"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/DeletePostController.php:42
-#: modules/forum/src/Application/Controllers/DeletePostFileController.php:45
-#: modules/forum/src/Application/Controllers/EditPostController.php:48
-#: modules/forum/src/Application/Controllers/RestorePostController.php:42
+#: modules/forum/src/Application/Controllers/DeletePostController.php:39
+#: modules/forum/src/Application/Controllers/DeletePostFileController.php:42
+#: modules/forum/src/Application/Controllers/EditPostController.php:45
+#: modules/forum/src/Application/Controllers/RestorePostController.php:39
 msgid "Message does not exists or has been deleted"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/DeletePostController.php:44
-#: modules/forum/src/Application/Controllers/DeletePostFileController.php:47
-#: modules/forum/src/Application/Controllers/DownloadFileController.php:48
-#: modules/forum/src/Application/Controllers/EditPostController.php:50
-#: modules/forum/src/Application/Controllers/FilterByAuthorController.php:57
-#: modules/forum/src/Application/Controllers/ForumFilesController.php:60
-#: modules/forum/src/Application/Controllers/ForumIndexController.php:37
-#: modules/forum/src/Application/Controllers/ForumIndexController.php:45
-#: modules/forum/src/Application/Controllers/ForumIndexController.php:46
-#: modules/forum/src/Application/Controllers/ForumSearchController.php:58
+#: modules/forum/src/Application/Controllers/DeletePostController.php:41
+#: modules/forum/src/Application/Controllers/DeletePostFileController.php:44
+#: modules/forum/src/Application/Controllers/DownloadFileController.php:45
+#: modules/forum/src/Application/Controllers/EditPostController.php:47
+#: modules/forum/src/Application/Controllers/FilterByAuthorController.php:54
+#: modules/forum/src/Application/Controllers/ForumFilesController.php:57
+#: modules/forum/src/Application/Controllers/ForumIndexController.php:34
+#: modules/forum/src/Application/Controllers/ForumIndexController.php:42
+#: modules/forum/src/Application/Controllers/ForumIndexController.php:43
+#: modules/forum/src/Application/Controllers/ForumSearchController.php:55
 #: modules/forum/src/Application/Controllers/ForumSectionController.php:42
 #: modules/forum/src/Application/Controllers/ForumTopicController.php:64
 #: modules/forum/src/Application/Controllers/ForumTopicController.php:69
-#: modules/forum/src/Application/Controllers/LatestTopicsController.php:27
-#: modules/forum/src/Application/Controllers/MarkAllTopicsReadController.php:64
-#: modules/forum/src/Application/Controllers/PollVotersController.php:60
-#: modules/forum/src/Application/Controllers/PollVotersController.php:66
-#: modules/forum/src/Application/Controllers/RestorePostController.php:44
-#: modules/forum/src/Application/Controllers/ShowPostController.php:45
-#: modules/forum/src/Application/Controllers/ShowPostController.php:50
-#: modules/forum/src/Application/Controllers/SubmitVoteController.php:50
-#: modules/forum/src/Application/Controllers/SubmitVoteController.php:51
-#: modules/forum/src/Application/Controllers/TopicsPeriodController.php:56
-#: modules/forum/src/Application/Controllers/UnreadTopicsController.php:50
-#: modules/forum/src/Application/Controllers/ViewForumVisitorsController.php:52
-#: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:50
-#: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:75
-#: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:82
+#: modules/forum/src/Application/Controllers/LatestTopicsController.php:24
+#: modules/forum/src/Application/Controllers/MarkAllTopicsReadController.php:61
+#: modules/forum/src/Application/Controllers/PollVotersController.php:57
+#: modules/forum/src/Application/Controllers/PollVotersController.php:63
+#: modules/forum/src/Application/Controllers/RestorePostController.php:41
+#: modules/forum/src/Application/Controllers/ShowPostController.php:42
+#: modules/forum/src/Application/Controllers/ShowPostController.php:47
+#: modules/forum/src/Application/Controllers/SubmitVoteController.php:47
+#: modules/forum/src/Application/Controllers/SubmitVoteController.php:48
+#: modules/forum/src/Application/Controllers/TopicsPeriodController.php:53
+#: modules/forum/src/Application/Controllers/UnreadTopicsController.php:47
+#: modules/forum/src/Application/Controllers/ViewForumVisitorsController.php:49
+#: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:47
+#: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:72
+#: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:79
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:36
 #: modules/forum/templates/public/files-list.twig:143
 #: modules/forum/templates/public/search.twig:87
@@ -281,98 +281,98 @@ msgstr ""
 msgid "Forum"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/DeletePostController.php:69
-#: modules/forum/src/Application/Controllers/DeletePostController.php:87
-#: modules/forum/src/Application/Controllers/DeletePostController.php:88
+#: modules/forum/src/Application/Controllers/DeletePostController.php:66
+#: modules/forum/src/Application/Controllers/DeletePostController.php:84
+#: modules/forum/src/Application/Controllers/DeletePostController.php:85
 msgid "Delete Message"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/DeletePostFileController.php:72
-#: modules/forum/src/Application/Controllers/DeletePostFileController.php:88
-#: modules/forum/src/Application/Controllers/DeletePostFileController.php:89
+#: modules/forum/src/Application/Controllers/DeletePostFileController.php:69
+#: modules/forum/src/Application/Controllers/DeletePostFileController.php:85
+#: modules/forum/src/Application/Controllers/DeletePostFileController.php:86
 msgid "Delete file"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/DeleteTopicController.php:76
-#: modules/forum/src/Application/Controllers/DeleteTopicController.php:77
-#: modules/forum/templates/public/topic.twig:235
+#: modules/forum/src/Application/Controllers/DeleteTopicController.php:73
+#: modules/forum/src/Application/Controllers/DeleteTopicController.php:74
+#: modules/forum/templates/public/topic.twig:236
 msgid "Delete Topic"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/DeleteVoteController.php:45
-#: modules/forum/src/Application/Controllers/DeleteVoteController.php:58
-#: modules/forum/src/Application/Controllers/DeleteVoteController.php:70
-#: modules/forum/src/Application/Controllers/DeleteVoteController.php:71
-#: modules/forum/templates/public/topic.twig:214
+#: modules/forum/src/Application/Controllers/DeleteVoteController.php:42
+#: modules/forum/src/Application/Controllers/DeleteVoteController.php:55
+#: modules/forum/src/Application/Controllers/DeleteVoteController.php:67
+#: modules/forum/src/Application/Controllers/DeleteVoteController.php:68
+#: modules/forum/templates/public/topic.twig:215
 msgid "Delete Poll"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/DeleteVoteController.php:60
+#: modules/forum/src/Application/Controllers/DeleteVoteController.php:57
 msgid "Poll deleted"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/DownloadFileController.php:44
+#: modules/forum/src/Application/Controllers/DownloadFileController.php:41
 msgid "Download file"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/DownloadFileController.php:46
+#: modules/forum/src/Application/Controllers/DownloadFileController.php:43
 msgid "File does not exist"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/EditPostController.php:73
-#: modules/forum/src/Application/Controllers/EditPostController.php:90
-#: modules/forum/src/Application/Controllers/EditPostController.php:114
-#: modules/forum/src/Application/Controllers/EditPostController.php:115
+#: modules/forum/src/Application/Controllers/EditPostController.php:70
+#: modules/forum/src/Application/Controllers/EditPostController.php:87
+#: modules/forum/src/Application/Controllers/EditPostController.php:111
+#: modules/forum/src/Application/Controllers/EditPostController.php:112
 msgid "Edit Message"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/EditPostController.php:75
-#: modules/forum/src/Application/Controllers/ReplyMessageController.php:125
+#: modules/forum/src/Application/Controllers/EditPostController.php:72
+#: modules/forum/src/Application/Controllers/ReplyMessageController.php:122
 msgid "You have not entered the message"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/EditVoteController.php:47
-#: modules/forum/src/Application/Controllers/EditVoteController.php:48
-#: modules/forum/src/Application/Controllers/EditVoteController.php:98
-#: modules/forum/src/Application/Controllers/EditVoteController.php:99
-#: modules/forum/src/Application/Controllers/EditVoteController.php:153
-#: modules/forum/src/Application/Controllers/EditVoteController.php:154
-#: modules/forum/templates/public/topic.twig:213
+#: modules/forum/src/Application/Controllers/EditVoteController.php:44
+#: modules/forum/src/Application/Controllers/EditVoteController.php:45
+#: modules/forum/src/Application/Controllers/EditVoteController.php:95
+#: modules/forum/src/Application/Controllers/EditVoteController.php:96
+#: modules/forum/src/Application/Controllers/EditVoteController.php:150
+#: modules/forum/src/Application/Controllers/EditVoteController.php:151
+#: modules/forum/templates/public/topic.twig:214
 msgid "Edit Poll"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/EditVoteController.php:67
-#: modules/forum/src/Application/Controllers/EditVoteController.php:68
+#: modules/forum/src/Application/Controllers/EditVoteController.php:64
+#: modules/forum/src/Application/Controllers/EditVoteController.php:65
 msgid "Delete Answer"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/EditVoteController.php:101
+#: modules/forum/src/Application/Controllers/EditVoteController.php:98
 msgid "Poll changed"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/ForumFilesController.php:51
-#: modules/forum/src/Application/Controllers/ForumFilesController.php:52
+#: modules/forum/src/Application/Controllers/ForumFilesController.php:48
+#: modules/forum/src/Application/Controllers/ForumFilesController.php:49
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:120
 msgid "Forum Files"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/ForumSearchController.php:51
+#: modules/forum/src/Application/Controllers/ForumSearchController.php:48
 msgid "Invalid length"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/ForumSearchController.php:62
+#: modules/forum/src/Application/Controllers/ForumSearchController.php:59
 #, php-format
 msgid "Search results for: %s"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/LatestTopicsController.php:26
+#: modules/forum/src/Application/Controllers/LatestTopicsController.php:23
 msgid "Last 10"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/LatestTopicsController.php:36
-#: modules/forum/src/Application/Controllers/UnreadTopicsController.php:61
-#: modules/forum/src/Application/Controllers/ViewForumVisitorsController.php:62
-#: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:92
+#: modules/forum/src/Application/Controllers/LatestTopicsController.php:33
+#: modules/forum/src/Application/Controllers/UnreadTopicsController.php:58
+#: modules/forum/src/Application/Controllers/ViewForumVisitorsController.php:59
+#: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:89
 #: modules/forum/templates/public/curators.twig:20
 #: modules/forum/templates/public/files-list.twig:26
 #: modules/forum/templates/public/files-sections.twig:35
@@ -380,148 +380,148 @@ msgstr ""
 msgid "The list is empty"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/MarkAllTopicsReadController.php:44
-#: modules/forum/src/Application/Controllers/MarkAllTopicsReadController.php:45
-#: modules/forum/src/Application/Controllers/MarkAllTopicsReadController.php:59
-#: modules/forum/src/Application/Controllers/MarkAllTopicsReadController.php:60
-#: modules/forum/src/Application/Controllers/UnreadTopicsController.php:49
+#: modules/forum/src/Application/Controllers/MarkAllTopicsReadController.php:41
+#: modules/forum/src/Application/Controllers/MarkAllTopicsReadController.php:42
+#: modules/forum/src/Application/Controllers/MarkAllTopicsReadController.php:56
+#: modules/forum/src/Application/Controllers/MarkAllTopicsReadController.php:57
+#: modules/forum/src/Application/Controllers/UnreadTopicsController.php:46
 #: modules/forum/templates/public/components/header.twig:21
 msgid "Unread"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/MarkAllTopicsReadController.php:62
+#: modules/forum/src/Application/Controllers/MarkAllTopicsReadController.php:59
 msgid "All topics marked as read"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/MoveTopicController.php:89
-#: modules/forum/src/Application/Controllers/MoveTopicController.php:90
+#: modules/forum/src/Application/Controllers/MoveTopicController.php:86
+#: modules/forum/src/Application/Controllers/MoveTopicController.php:87
 msgid "Move topic"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/NewMessageController.php:54
-#: modules/forum/src/Application/Controllers/NewMessageController.php:68
-#: modules/forum/src/Application/Controllers/NewMessageController.php:82
-#: modules/forum/src/Application/Controllers/NewMessageController.php:108
-#: modules/forum/src/Application/Controllers/NewMessageController.php:122
-#: modules/forum/src/Application/Controllers/NewMessageController.php:161
-#: modules/forum/src/Application/Controllers/NewMessageController.php:162
-#: modules/forum/src/Application/Controllers/ReplyMessageController.php:54
-#: modules/forum/src/Application/Controllers/ReplyMessageController.php:71
-#: modules/forum/src/Application/Controllers/ReplyMessageController.php:84
-#: modules/forum/src/Application/Controllers/ReplyMessageController.php:98
-#: modules/forum/src/Application/Controllers/ReplyMessageController.php:123
-#: modules/forum/src/Application/Controllers/ReplyMessageController.php:136
-#: modules/forum/src/Application/Controllers/ReplyMessageController.php:150
+#: modules/forum/src/Application/Controllers/NewMessageController.php:51
+#: modules/forum/src/Application/Controllers/NewMessageController.php:65
+#: modules/forum/src/Application/Controllers/NewMessageController.php:79
+#: modules/forum/src/Application/Controllers/NewMessageController.php:105
+#: modules/forum/src/Application/Controllers/NewMessageController.php:119
+#: modules/forum/src/Application/Controllers/NewMessageController.php:158
+#: modules/forum/src/Application/Controllers/NewMessageController.php:159
+#: modules/forum/src/Application/Controllers/ReplyMessageController.php:51
+#: modules/forum/src/Application/Controllers/ReplyMessageController.php:68
+#: modules/forum/src/Application/Controllers/ReplyMessageController.php:81
+#: modules/forum/src/Application/Controllers/ReplyMessageController.php:95
+#: modules/forum/src/Application/Controllers/ReplyMessageController.php:120
+#: modules/forum/src/Application/Controllers/ReplyMessageController.php:133
+#: modules/forum/src/Application/Controllers/ReplyMessageController.php:147
 msgid "New message"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/NewMessageController.php:55
-#: modules/forum/src/Application/Controllers/ReplyMessageController.php:55
+#: modules/forum/src/Application/Controllers/NewMessageController.php:52
+#: modules/forum/src/Application/Controllers/ReplyMessageController.php:52
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:37
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:51
 msgid "Access forbidden"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/NewMessageController.php:70
-#: modules/forum/src/Application/Controllers/ReplyMessageController.php:73
+#: modules/forum/src/Application/Controllers/NewMessageController.php:67
+#: modules/forum/src/Application/Controllers/ReplyMessageController.php:70
 msgid "You cannot write in a closed topic"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/NewMessageController.php:85
-#: modules/forum/src/Application/Controllers/NewTopicController.php:77
-#: modules/forum/src/Application/Controllers/ReplyMessageController.php:101
+#: modules/forum/src/Application/Controllers/NewMessageController.php:82
+#: modules/forum/src/Application/Controllers/NewTopicController.php:74
+#: modules/forum/src/Application/Controllers/ReplyMessageController.php:98
 #, php-format
 msgid "You cannot add the message so often<br>Please, wait %d sec."
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/NewMessageController.php:110
-#: modules/forum/src/Application/Controllers/ReplyMessageController.php:138
+#: modules/forum/src/Application/Controllers/NewMessageController.php:107
+#: modules/forum/src/Application/Controllers/ReplyMessageController.php:135
 msgid "Text is too short"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/NewMessageController.php:124
-#: modules/forum/src/Application/Controllers/ReplyMessageController.php:152
+#: modules/forum/src/Application/Controllers/NewMessageController.php:121
+#: modules/forum/src/Application/Controllers/ReplyMessageController.php:149
 msgid "Message already exists"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/NewTopicController.php:62
+#: modules/forum/src/Application/Controllers/NewTopicController.php:59
 msgid "Go to Section"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/NewTopicController.php:74
-#: modules/forum/src/Application/Controllers/NewTopicController.php:159
-#: modules/forum/src/Application/Controllers/NewTopicController.php:164
-#: modules/forum/src/Application/Controllers/NewTopicController.php:165
+#: modules/forum/src/Application/Controllers/NewTopicController.php:71
+#: modules/forum/src/Application/Controllers/NewTopicController.php:156
+#: modules/forum/src/Application/Controllers/NewTopicController.php:161
+#: modules/forum/src/Application/Controllers/NewTopicController.php:162
 #: modules/forum/templates/public/topics.twig:34
 msgid "New Topic"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/PollVotersController.php:57
-#: modules/forum/src/Application/Controllers/PollVotersController.php:65
+#: modules/forum/src/Application/Controllers/PollVotersController.php:54
+#: modules/forum/src/Application/Controllers/PollVotersController.php:62
 msgid "Who voted in the poll"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/PollVotersController.php:76
+#: modules/forum/src/Application/Controllers/PollVotersController.php:73
 msgid "No one has voted in this poll yet"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/ReplyMessageController.php:86
+#: modules/forum/src/Application/Controllers/ReplyMessageController.php:83
 msgid "You can not reply to your own message"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/ReplyMessageController.php:199
-#: modules/forum/src/Application/Controllers/ReplyMessageController.php:200
+#: modules/forum/src/Application/Controllers/ReplyMessageController.php:196
+#: modules/forum/src/Application/Controllers/ReplyMessageController.php:197
 msgid "Reply to message"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/RestorePostController.php:69
-#: modules/forum/src/Application/Controllers/RestorePostController.php:85
-#: modules/forum/src/Application/Controllers/RestorePostController.php:86
+#: modules/forum/src/Application/Controllers/RestorePostController.php:66
+#: modules/forum/src/Application/Controllers/RestorePostController.php:82
+#: modules/forum/src/Application/Controllers/RestorePostController.php:83
 msgid "Restore Message"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:73
+#: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php:70
 msgid "You have not selected any author"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/ShowPostController.php:41
-#: modules/forum/src/Application/Controllers/ShowPostController.php:94
-#: modules/forum/src/Application/Controllers/ShowPostController.php:99
+#: modules/forum/src/Application/Controllers/ShowPostController.php:38
+#: modules/forum/src/Application/Controllers/ShowPostController.php:91
+#: modules/forum/src/Application/Controllers/ShowPostController.php:96
 msgid "Show post"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/SubmitVoteController.php:53
+#: modules/forum/src/Application/Controllers/SubmitVoteController.php:50
 msgid "Vote accepted"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/TopicsPeriodController.php:55
+#: modules/forum/src/Application/Controllers/TopicsPeriodController.php:52
 #, php-format
 msgid "All for period %d hours"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/TopicsPeriodController.php:67
+#: modules/forum/src/Application/Controllers/TopicsPeriodController.php:64
 msgid "There is nothing new in this forum for selected period"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/UploadFileController.php:38
-#: modules/forum/src/Application/Controllers/UploadFileController.php:48
+#: modules/forum/src/Application/Controllers/UploadFileController.php:35
+#: modules/forum/src/Application/Controllers/UploadFileController.php:45
 msgid "Access denied"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/UploadFileController.php:59
+#: modules/forum/src/Application/Controllers/UploadFileController.php:56
 msgid "Only images are allowed"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/ViewForumVisitorsController.php:51
+#: modules/forum/src/Application/Controllers/ViewForumVisitorsController.php:48
 #: modules/forum/templates/public/index.twig:53
 #: modules/forum/templates/public/section.twig:44
 #: modules/forum/templates/public/topics.twig:106
 msgid "Who in Forum"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:46
-#: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:71
-#: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:81
+#: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:43
+#: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:68
+#: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:78
 #: modules/forum/templates/public/visitors.twig:19
 msgid "Who in Topic"
 msgstr ""
@@ -656,7 +656,7 @@ msgid "Section files"
 msgstr ""
 
 #: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:108
-#: modules/forum/templates/public/topic.twig:60
+#: modules/forum/templates/public/topic.twig:61
 msgid "Topic Files"
 msgstr ""
 
@@ -813,7 +813,7 @@ msgstr ""
 #: modules/forum/templates/public/add-poll.twig:41
 #: modules/forum/templates/public/change-topic.twig:40
 #: modules/forum/templates/public/edit-poll.twig:52
-#: modules/forum/templates/public/edit-post.twig:20
+#: modules/forum/templates/public/edit-post.twig:23
 msgid "Save"
 msgstr ""
 
@@ -852,12 +852,12 @@ msgid "Topic name"
 msgstr ""
 
 #: modules/forum/templates/public/change-topic.twig:26
-#: modules/forum/templates/public/new-topic.twig:54
+#: modules/forum/templates/public/new-topic.twig:57
 msgid "Meta keywords"
 msgstr ""
 
 #: modules/forum/templates/public/change-topic.twig:33
-#: modules/forum/templates/public/new-topic.twig:50
+#: modules/forum/templates/public/new-topic.twig:53
 msgid "Meta description"
 msgstr ""
 
@@ -980,16 +980,16 @@ msgstr ""
 msgid "Perform"
 msgstr ""
 
-#: modules/forum/templates/public/edit-post.twig:15
-#: modules/forum/templates/public/new-topic.twig:43
-#: modules/forum/templates/public/reply-message.twig:19
-#: modules/forum/templates/public/topic.twig:35
+#: modules/forum/templates/public/edit-post.twig:16
+#: modules/forum/templates/public/new-topic.twig:44
+#: modules/forum/templates/public/reply-message.twig:20
+#: modules/forum/templates/public/topic.twig:36
 msgid "Message"
 msgstr ""
 
-#: modules/forum/templates/public/edit-post.twig:23
-#: modules/forum/templates/public/new-topic.twig:74
-#: modules/forum/templates/public/reply-message.twig:31
+#: modules/forum/templates/public/edit-post.twig:26
+#: modules/forum/templates/public/new-topic.twig:77
+#: modules/forum/templates/public/reply-message.twig:33
 msgid "Smilies"
 msgstr ""
 
@@ -1005,7 +1005,7 @@ msgstr ""
 #: modules/forum/templates/public/poll-voters.twig:24
 #: modules/forum/templates/public/search.twig:66
 #: modules/forum/templates/public/topic-list.twig:85
-#: modules/forum/templates/public/topic.twig:255
+#: modules/forum/templates/public/topic.twig:256
 #: modules/forum/templates/public/topics.twig:97
 #: modules/forum/templates/public/visitors.twig:38
 msgid "Total"
@@ -1020,8 +1020,8 @@ msgid "Filter"
 msgstr ""
 
 #: modules/forum/templates/public/filter-by-author.twig:46
-#: modules/forum/templates/public/topic.twig:70
-#: modules/forum/templates/public/topic.twig:272
+#: modules/forum/templates/public/topic.twig:71
+#: modules/forum/templates/public/topic.twig:273
 msgid "Cancel Filter"
 msgstr ""
 
@@ -1053,14 +1053,14 @@ msgstr ""
 msgid "Title"
 msgstr ""
 
-#: modules/forum/templates/public/new-topic.twig:63
-#: modules/forum/templates/public/reply-message.twig:28
-#: modules/forum/templates/public/topic.twig:45
-#: modules/forum/templates/public/topic.twig:48
+#: modules/forum/templates/public/new-topic.twig:66
+#: modules/forum/templates/public/reply-message.twig:30
+#: modules/forum/templates/public/topic.twig:46
+#: modules/forum/templates/public/topic.twig:49
 msgid "Write"
 msgstr ""
 
-#: modules/forum/templates/public/new-topic.twig:65
+#: modules/forum/templates/public/new-topic.twig:68
 msgid "Preview"
 msgstr ""
 
@@ -1158,72 +1158,72 @@ msgstr ""
 msgid "Mark as read"
 msgstr ""
 
-#: modules/forum/templates/public/topic.twig:66
+#: modules/forum/templates/public/topic.twig:67
 msgid "Filter by author is activated"
 msgstr ""
 
-#: modules/forum/templates/public/topic.twig:77
+#: modules/forum/templates/public/topic.twig:78
 msgid "Topic closed"
 msgstr ""
 
-#: modules/forum/templates/public/topic.twig:83
+#: modules/forum/templates/public/topic.twig:84
 msgid "Topic deleted by"
 msgstr ""
 
-#: modules/forum/templates/public/topic.twig:87
+#: modules/forum/templates/public/topic.twig:88
 msgid "Undelete topic"
 msgstr ""
 
-#: modules/forum/templates/public/topic.twig:102
-#: modules/forum/templates/public/topic.twig:132
+#: modules/forum/templates/public/topic.twig:103
+#: modules/forum/templates/public/topic.twig:133
 msgid "Vote"
 msgstr ""
 
-#: modules/forum/templates/public/topic.twig:103
+#: modules/forum/templates/public/topic.twig:104
 msgid "Results"
 msgstr ""
 
-#: modules/forum/templates/public/topic.twig:123
+#: modules/forum/templates/public/topic.twig:124
 msgid "Total votes"
 msgstr ""
 
-#: modules/forum/templates/public/topic.twig:205
+#: modules/forum/templates/public/topic.twig:206
 msgid "Delete selected"
 msgstr ""
 
-#: modules/forum/templates/public/topic.twig:209
+#: modules/forum/templates/public/topic.twig:210
 msgid "Actions with topic"
 msgstr ""
 
-#: modules/forum/templates/public/topic.twig:220
+#: modules/forum/templates/public/topic.twig:221
 msgid "Curators of the Topic"
 msgstr ""
 
-#: modules/forum/templates/public/topic.twig:226
+#: modules/forum/templates/public/topic.twig:227
 msgid "Open Topic"
 msgstr ""
 
-#: modules/forum/templates/public/topic.twig:228
+#: modules/forum/templates/public/topic.twig:229
 msgid "Close Topic"
 msgstr ""
 
-#: modules/forum/templates/public/topic.twig:232
+#: modules/forum/templates/public/topic.twig:233
 msgid "Restore Topic"
 msgstr ""
 
-#: modules/forum/templates/public/topic.twig:238
+#: modules/forum/templates/public/topic.twig:239
 msgid "Unfix Topic"
 msgstr ""
 
-#: modules/forum/templates/public/topic.twig:240
+#: modules/forum/templates/public/topic.twig:241
 msgid "Pin Topic"
 msgstr ""
 
-#: modules/forum/templates/public/topic.twig:243
+#: modules/forum/templates/public/topic.twig:244
 msgid "Move Topic"
 msgstr ""
 
-#: modules/forum/templates/public/topic.twig:283
+#: modules/forum/templates/public/topic.twig:284
 msgid "Who is here"
 msgstr ""
 

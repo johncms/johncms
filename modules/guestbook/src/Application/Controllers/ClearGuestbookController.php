@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Guestbook\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Guestbook\Application\Access\GuestbookMode;
 use Johncms\Modules\Guestbook\Application\UseCases\ClearGuestbookUseCase;
 use Johncms\Modules\Guestbook\Domain\Enums\ClearGuestbookPeriod;
@@ -16,12 +15,10 @@ use Johncms\Validator\Validator;
 final readonly class ClearGuestbookController
 {
     public function __construct(
-        private ControllerContext $context,
         private Session $session,
         private GuestbookMode $mode,
         private ClearGuestbookUseCase $clearUseCase,
     ) {
-        $this->context->initModule('guestbook');
     }
 
     public function __invoke(Request $request): ViewResponse

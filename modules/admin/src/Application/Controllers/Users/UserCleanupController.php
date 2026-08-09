@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Application\Controllers\Users;
 
-use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Http\Session;
 use Johncms\Modules\Admin\Application\UseCases\CleanupInactiveUsersUseCase;
 use Johncms\Modules\Admin\Domain\Repository\InactiveUsersRepositoryInterface;
@@ -18,13 +17,11 @@ final readonly class UserCleanupController
     private const URL = '/admin/users/cleanup';
 
     public function __construct(
-        private AdminControllerContext $controllerContext,
         private NavChain $navChain,
         private InactiveUsersRepositoryInterface $inactiveUsers,
         private CleanupInactiveUsersUseCase $cleanupInactiveUsers,
         private Session $session,
     ) {
-        $this->controllerContext->initModule('admin');
     }
 
     public function index(): ViewResponse

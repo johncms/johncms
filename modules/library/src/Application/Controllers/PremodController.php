@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Library\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Http\View\ViewResponse;
@@ -20,7 +19,6 @@ use Symfony\Component\HttpFoundation\Response;
 final readonly class PremodController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private NavChain $navChain,
         private Session $session,
         private DateFormatterInterface $dateFormatter,
@@ -28,7 +26,6 @@ final readonly class PremodController
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
     ) {
-        $this->controllerContext->initModule('library');
     }
 
     public function __invoke(Request $request): Response|ViewResponse

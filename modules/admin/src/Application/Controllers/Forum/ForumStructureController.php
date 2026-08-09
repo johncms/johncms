@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Application\Controllers\Forum;
 
-use Johncms\Http\Controller\AdminControllerContext;
 use Johncms\Modules\Admin\Application\UseCases\AddForumSectionUseCase;
 use Johncms\Modules\Admin\Application\UseCases\DeleteForumSectionUseCase;
 use Johncms\Modules\Admin\Application\UseCases\EditForumSectionUseCase;
@@ -22,7 +21,6 @@ final readonly class ForumStructureController
     private const URL = '/admin/forum/structure';
 
     public function __construct(
-        private AdminControllerContext $controllerContext,
         private NavChain $navChain,
         private ForumSectionTreeService $sectionTree,
         private User $currentUser,
@@ -31,7 +29,6 @@ final readonly class ForumStructureController
         private EditForumSectionUseCase $editSection,
         private DeleteForumSectionUseCase $deleteSection,
     ) {
-        $this->controllerContext->initModule('admin');
     }
 
     public function structure(Request $request): ViewResponse

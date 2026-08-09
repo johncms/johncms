@@ -4,19 +4,12 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Registration\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Users\User;
 
 final readonly class ConfirmEmailController
 {
-    public function __construct(
-        private ControllerContext $controllerContext,
-    ) {
-        $this->controllerContext->initModule('registration');
-    }
-
     public function __invoke(Request $request): ViewResponse
     {
         $id = $request->queryInt('id');

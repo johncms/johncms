@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Notifications\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Notifications\Application\UseCases\SaveSettingsUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
@@ -17,13 +16,11 @@ use Symfony\Component\HttpFoundation\Response;
 final readonly class SettingsController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private Session $session,
         private NavChain $navChain,
         private User $currentUser,
         private SaveSettingsUseCase $saveSettingsUseCase,
     ) {
-        $this->controllerContext->initModule('notifications');
     }
 
     public function __invoke(Request $request): Response|ViewResponse

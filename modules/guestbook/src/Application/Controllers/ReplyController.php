@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Guestbook\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Guestbook\Application\Exceptions\GuestbookAccessDeniedException;
 use Johncms\Modules\Guestbook\Application\Exceptions\GuestbookEntryNotFoundException;
 use Johncms\Modules\Guestbook\Application\Services\GuestbookEntryTextFormatter;
@@ -21,7 +20,6 @@ use Symfony\Component\HttpFoundation\Response;
 final readonly class ReplyController
 {
     public function __construct(
-        private ControllerContext $context,
         private Session $session,
         private EditorContentNormalizer $editorContentNormalizer,
         private GuestbookEntryTextFormatter $textFormatter,
@@ -29,7 +27,6 @@ final readonly class ReplyController
         private EnsureGuestbookEntryManageAccessUseCase $manageAccessUseCase,
         private ReplyToGuestbookEntryUseCase $replyUseCase,
     ) {
-        $this->context->initModule('guestbook');
     }
 
     public function __invoke(Request $request): ViewResponse

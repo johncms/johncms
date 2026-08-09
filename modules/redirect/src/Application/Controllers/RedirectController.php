@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Redirect\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Redirect\Application\UseCases\RedirectByIdUseCase;
@@ -15,11 +14,9 @@ use Symfony\Component\HttpFoundation\Response;
 final readonly class RedirectController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private NavChain $navChain,
         private RedirectByIdUseCase $redirectByIdUseCase,
     ) {
-        $this->controllerContext->initModule('redirect');
     }
 
     public function __invoke(Request $request): Response|ViewResponse

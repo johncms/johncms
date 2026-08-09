@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Album\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Album\Application\DTO\EditAlbumContextDTO;
 use Johncms\Modules\Album\Application\DTO\SaveAlbumCommand;
 use Johncms\Modules\Album\Application\Exceptions\AlbumEditForbiddenException;
@@ -22,13 +21,11 @@ use Symfony\Component\HttpFoundation\Response;
 final readonly class EditAlbumController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private NavChain $navChain,
         private User $currentUser,
         private GetEditAlbumContextUseCase $getContextUseCase,
         private SaveAlbumUseCase $saveAlbumUseCase,
     ) {
-        $this->controllerContext->initModule('album');
     }
 
     public function createForm(int $id): ViewResponse

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Album\Application\Controllers;
 
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Modules\Album\Application\Exceptions\AlbumPhotoNotFoundException;
 use Johncms\Modules\Album\Application\Exceptions\VoteNotAllowedException;
 use Johncms\Modules\Album\Application\UseCases\EnsureVoteAccessUseCase;
@@ -18,12 +17,10 @@ use Johncms\Validator\Validator;
 final readonly class VotePhotoController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private GetVotePhotoContextUseCase $getContextUseCase,
         private EnsureVoteAccessUseCase $ensureAccessUseCase,
         private VotePhotoUseCase $votePhotoUseCase,
     ) {
-        $this->controllerContext->initModule('album');
     }
 
     public function __invoke(Request $request, int $img, string $type): ViewResponse

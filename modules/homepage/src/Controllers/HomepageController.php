@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Johncms\Modules\Homepage\Controllers;
 
 use Johncms\Counters;
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\News\Domain\Models\NewsArticle;
@@ -14,11 +13,9 @@ use Johncms\NavChain;
 final readonly class HomepageController
 {
     public function __construct(
-        private ControllerContext $context,
         private NavChain $navChain,
         private Counters $counters,
     ) {
-        $this->context->initModule('homepage');
     }
 
     public function __invoke(Request $request): ViewResponse

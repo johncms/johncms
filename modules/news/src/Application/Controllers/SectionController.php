@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Johncms\Modules\News\Application\Controllers;
 
 use Illuminate\Database\Eloquent\Collection;
-use Johncms\Http\Controller\ControllerContext;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
@@ -17,14 +16,11 @@ use Johncms\NavChain;
 final readonly class SectionController
 {
     public function __construct(
-        private ControllerContext $controllerContext,
         private NavChain $navChain,
         private MetaTagsManager $metaTagsManager,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
     ) {
-        $this->controllerContext->initModule('news');
-        $this->navChain->add(__('News'), '/news/');
     }
 
     /**
@@ -36,6 +32,8 @@ final readonly class SectionController
      */
     public function index(Article $article, Section $section, string $category = ''): ViewResponse
     {
+        $this->navChain->add(__('News'), '/news/');
+
         $section->checkPath($category);
         $current_section = $section->getLastSection();
 
