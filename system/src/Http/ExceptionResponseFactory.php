@@ -16,6 +16,7 @@ use Johncms\Exceptions\HttpRedirectException;
 use Johncms\Exceptions\MethodNotAllowedException;
 use Johncms\Exceptions\PageNotFoundException;
 use Johncms\View\RendererInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
@@ -27,8 +28,10 @@ use Throwable;
  */
 final readonly class ExceptionResponseFactory
 {
-    public function __construct(private RendererInterface $renderer)
-    {
+    public function __construct(
+        private RendererInterface $renderer,
+        private LoggerInterface $logger,
+    ) {
     }
 
     public function fromRedirect(HttpRedirectException $exception): RedirectResponse
@@ -59,19 +62,36 @@ final readonly class ExceptionResponseFactory
 
         // The default translation domain is the one of the module that is handling the request,
         // so the system domain has to be named explicitly here.
-        return new Response(
-            $this->renderer->render(
-                $exception->getTemplate(),
-                [
-                    'title'   => $title !== ''
-                        ? $title
-                        : d__('system', 'ERROR: 404 Not Found'),
-                    'message' => $message !== ''
-                        ? $message
-                        : d__('system', 'You are looking for something that doesn\'t exist or may have moved'),
-                ]
-            ),
-            Response::HTTP_NOT_FOUND
+        $title = $title !== '' ? $title : d__('system', 'ERROR: 404 Not Found');
+        $message = $message !== ''
+            ? $message
+            : d__('system', 'You are looking for something that doesn\'t exist or may have moved');
+
+        try {
+            $body = $this->renderer->render($exception->getTemplate(), ['title' => $title, 'message' => $message]);
+        } catch (Throwable $throwable) {
+            // A theme is free to override the error page, and a broken override would otherwise
+            // turn every 404 into a 500 — the status a crawler and a browser act on is the one
+            // worth keeping, so the page degrades to text instead of losing it.
+            $this->logger->error(
+                sprintf('The 404 template "%s" failed to render', $exception->getTemplate()),
+                ['exception' => $throwable]
+            );
+
+            $body = $this->plainTextPage($title, $message);
+        }
+
+        return new Response($body, Response::HTTP_NOT_FOUND);
+    }
+
+    private function plainTextPage(string $title, string $message): string
+    {
+        return sprintf(
+            "<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"><title>%s</title></head>"
+            . "<body><h1>%s</h1><p>%s</p></body></html>",
+            htmlspecialchars($title),
+            htmlspecialchars($title),
+            htmlspecialchars($message)
         );
     }
 
