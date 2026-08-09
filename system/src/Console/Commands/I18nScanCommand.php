@@ -159,7 +159,7 @@ final class I18nScanCommand extends Command
             }
 
             $path = str_replace('\\', '/', $file->getPathname());
-            if (preg_match('/^.+\.(?:twig|phtml|php)$/i', $path) === 1) {
+            if (preg_match('/^.+\.(?:twig|php)$/i', $path) === 1) {
                 $fileList[] = $path;
             }
         }

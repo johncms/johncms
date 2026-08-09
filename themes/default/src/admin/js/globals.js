@@ -7,7 +7,7 @@
  */
 
 /**
- * Legacy scripts, Plates templates and Vue components reference these libraries as
+ * Legacy scripts, templates and Vue components reference these libraries as
  * bare globals. They live in a module of their own because the imports of a module
  * are all evaluated before its body: libraries that look for window.jQuery while
  * they load, such as Bootstrap and flatpickr, must be imported after this one.

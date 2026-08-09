@@ -8,7 +8,7 @@ namespace Johncms\View;
  * The way the application renders a template, whichever engine is behind it.
  *
  * Callers name a template and hand over data; nothing else about the engine is part of the
- * contract. That is what lets Twig and Plates serve pages side by side while the migration runs.
+ * contract, so a caller never depends on Twig itself.
  */
 interface RendererInterface
 {

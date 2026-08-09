@@ -136,8 +136,8 @@ final class PaginationTest extends TestCase
 
         $rendered = $pagination->render();
 
-        // Markup, so a Twig template prints it without a raw filter; still a string wherever it
-        // is echoed, which is what the Plates templates keep doing.
+        // Markup, so a template prints it without a raw filter; still a string wherever the block
+        // is echoed or concatenated.
         self::assertInstanceOf(Markup::class, $rendered);
         self::assertSame('<nav></nav>', (string) $rendered);
     }
