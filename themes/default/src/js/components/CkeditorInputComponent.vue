@@ -19,6 +19,7 @@
 </template>
 <script setup>
 import { ref, onMounted } from 'vue';
+import { csrfHeaders } from '../csrf';
 
 const props = defineProps({
   label: { type: String, default: 'Message' },
@@ -59,6 +60,8 @@ onMounted(() => {
     config.simpleUpload = {
       uploadUrl: props.upload_url,
       withCredentials: false,
+      // The adapter sends its own XHR, so the axios defaults do not apply to it.
+      headers: csrfHeaders(),
       savedCallback: (file) => {
         attached_files.value.push(file);
       },

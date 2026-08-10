@@ -94,6 +94,8 @@
 </template>
 
 <script>
+import { csrfHeaders } from '../csrf';
+
 export default {
   name: "CommentsComponent",
   props: {
@@ -145,6 +147,8 @@ export default {
       simpleUpload: {
         uploadUrl: this.upload_url,
         withCredentials: false,
+        // The adapter sends its own XHR, so the axios defaults do not apply to it.
+        headers: csrfHeaders(),
         savedCallback: function (file) {
           self.attached_files.push(file.id);
         },

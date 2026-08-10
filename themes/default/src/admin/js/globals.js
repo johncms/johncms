@@ -15,6 +15,7 @@
 import jquery from 'jquery';
 import axios from 'axios';
 import lodash from 'lodash';
+import { csrfToken } from './csrf';
 
 window.$ = window.jQuery = jquery;
 window.axios = axios;
@@ -30,12 +31,8 @@ window.Prism = { manual: true };
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /**
- * The CSRF middleware accepts the token either as a csrf_token body field or as this
- * header. Requests with a JSON body have no form field to carry it, so every axios
- * call sends the token from the meta tag of the layout.
+ * The CSRF middleware accepts the token either as a csrf_token body field or as this header.
+ * Requests with a JSON body have no form field to carry it, so every axios call sends the
+ * token from the meta tag of the layout.
  */
-const csrfToken = document.querySelector('meta[name="csrf-token"]');
-
-if (csrfToken) {
-    axios.defaults.headers.common['X-CSRF-Token'] = csrfToken.content;
-}
+axios.defaults.headers.common['X-CSRF-Token'] = csrfToken();
