@@ -39,6 +39,22 @@ final class RouteTest extends TestCase
         self::assertSame(50, $route->getPriority());
     }
 
+    public function testWithoutCsrfMarksTheCompiledRouteAsExempt(): void
+    {
+        $route = new Route(method: 'POST', path: '/webhook', handler: 'WebhookController');
+
+        $compiled = $route->withoutCsrf()->compile();
+
+        self::assertTrue($compiled->getDefault(Route::CSRF_EXEMPT_ATTRIBUTE));
+    }
+
+    public function testARouteIsProtectedByDefault(): void
+    {
+        $route = new Route(method: 'POST', path: '/guestbook', handler: 'GuestbookController');
+
+        self::assertArrayNotHasKey(Route::CSRF_EXEMPT_ATTRIBUTE, $route->compile()->getDefaults());
+    }
+
     public function testCompileDoesNotAddMiddlewaresDefaultWhenNoMiddlewareDefined(): void
     {
         $route = new Route(

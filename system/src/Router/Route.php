@@ -9,6 +9,7 @@ use Symfony\Component\Routing\Route as SymfonyRoute;
 final class Route
 {
     public const MODULE_ATTRIBUTE = '_module';
+    public const CSRF_EXEMPT_ATTRIBUTE = '_csrf_exempt';
 
     private ?string $name = null;
     private int $priority = 0;
@@ -48,6 +49,17 @@ final class Route
     public function module(string $module): self
     {
         $this->defaults[Route::MODULE_ATTRIBUTE] = $module;
+        return $this;
+    }
+
+    /**
+     * Exempts the route from the CSRF check of the global pipeline. Kept next to the route
+     * declaration on purpose: an exemption is a security decision, and this is the one place
+     * where it can be read without knowing which middleware is in play.
+     */
+    public function withoutCsrf(): self
+    {
+        $this->defaults[Route::CSRF_EXEMPT_ATTRIBUTE] = true;
         return $this;
     }
 

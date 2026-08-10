@@ -67,6 +67,41 @@ final class SymfonyRouteMatcherTest extends TestCase
         self::assertSame([], $result->params);
     }
 
+    /**
+     * Like the module, the exemption travels as a route default and is reported apart from the
+     * parameters the action is called with.
+     */
+    public function testTheCsrfExemptionOfTheRouteIsReportedApartFromTheParameters(): void
+    {
+        $routes = new RouteCollection();
+        $routes->add(
+            'api.items',
+            new Route('/api/items', ['_handler' => 'items_handler', '_csrf_exempt' => true], [], [], '', [], ['POST']),
+        );
+
+        $context = new RequestContext();
+        $matcher = new SymfonyRouteMatcher(new UrlMatcher($routes, $context), $context, new RequestPathNormalizer());
+
+        $result = $matcher->dispatch('POST', '/api/items');
+
+        self::assertTrue($result->csrfExempt);
+        self::assertSame([], $result->params);
+    }
+
+    public function testARouteIsReportedAsProtectedWhenItDeclaresNoExemption(): void
+    {
+        $routes = new RouteCollection();
+        $routes->add(
+            'guestbook.post',
+            new Route('/guestbook', ['_handler' => 'guestbook_handler'], [], [], '', [], ['POST']),
+        );
+
+        $context = new RequestContext();
+        $matcher = new SymfonyRouteMatcher(new UrlMatcher($routes, $context), $context, new RequestPathNormalizer());
+
+        self::assertFalse($matcher->dispatch('POST', '/guestbook')->csrfExempt);
+    }
+
     public function testARouteWithoutAModuleReportsNone(): void
     {
         $routes = new RouteCollection();

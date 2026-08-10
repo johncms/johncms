@@ -22,6 +22,9 @@ final class RouteCollection
     /** @var list<mixed> */
     private array $middlewares = [];
 
+    /** Whether every route declared from here is exempt from the CSRF check. */
+    private bool $csrfExempt = false;
+
     /** @var list<RouteCollection> */
     private array $groups = [];
 
@@ -103,10 +106,25 @@ final class RouteCollection
         return $this;
     }
 
+    /**
+     * Exempts every route of this collection, and of the groups declared inside it, from the
+     * CSRF check of the global pipeline.
+     */
+    public function withoutCsrf(): self
+    {
+        $this->csrfExempt = true;
+        return $this;
+    }
+
     public function group(string $prefix, callable $group): RouteCollection
     {
         $collection = new self($this->routeRequirements);
         $collection->setModule($this->module);
+
+        if ($this->csrfExempt) {
+            $collection->withoutCsrf();
+        }
+
         $group($collection);
         $collection->setPrefix($prefix);
         $this->groups[] = $collection;
@@ -120,6 +138,10 @@ final class RouteCollection
         foreach ($this->routeCollection as $route) {
             foreach ($this->middlewares as $middleware) {
                 $route->prependMiddleware($middleware);
+            }
+
+            if ($this->csrfExempt) {
+                $route->withoutCsrf();
             }
 
             $name = $route->getName() ?? 'legacy_route_' . ++$this->autoRouteIndex;

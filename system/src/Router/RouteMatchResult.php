@@ -23,6 +23,8 @@ final class RouteMatchResult
         public readonly array $middlewares = [],
         /** The module owning the matched route; null for the routes of the core. */
         public readonly ?string $module = null,
+        /** Whether the matched route opted out of the CSRF check via Route::withoutCsrf(). */
+        public readonly bool $csrfExempt = false,
     ) {
     }
 }

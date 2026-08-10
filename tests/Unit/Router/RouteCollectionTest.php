@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Router;
 
+use Johncms\Router\Route;
 use Johncms\Router\RouteCollection;
 use Johncms\Router\RouteRequirements;
 use PHPUnit\Framework\TestCase;
@@ -79,6 +80,34 @@ final class RouteCollectionTest extends TestCase
         $collection->get('/', 'handler')->setName('home');
 
         self::assertNull($collection->compile()->get('home')?->getDefault('_module'));
+    }
+
+    /**
+     * Unlike the middlewares, the exemption reaches the groups declared inside the collection: an
+     * exempt /api prefix that silently protected its nested groups again would be a trap.
+     */
+    public function testWithoutCsrfAppliesToOwnRoutesAndNestedGroups(): void
+    {
+        $collection = (new RouteCollection())->withoutCsrf();
+        $collection->post('/api/items', 'items_handler')->setName('api.items');
+        $collection->group('/api/v2', static function (RouteCollection $group): void {
+            $group->post('/items', 'v2_items_handler')->setName('api.v2.items');
+        });
+
+        $compiled = $collection->compile();
+
+        self::assertTrue($compiled->get('api.items')?->getDefault(Route::CSRF_EXEMPT_ATTRIBUTE));
+        self::assertTrue($compiled->get('api.v2.items')?->getDefault(Route::CSRF_EXEMPT_ATTRIBUTE));
+    }
+
+    public function testRoutesOfACollectionAreProtectedByDefault(): void
+    {
+        $collection = new RouteCollection();
+        $collection->post('/guestbook', 'handler')->setName('guestbook.post');
+
+        $defaults = $collection->compile()->get('guestbook.post')?->getDefaults() ?? [];
+
+        self::assertArrayNotHasKey(Route::CSRF_EXEMPT_ATTRIBUTE, $defaults);
     }
 
     public function testNestedGroupAppliesOwnMiddlewaresToRoutes(): void

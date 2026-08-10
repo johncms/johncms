@@ -48,12 +48,14 @@ final class SymfonyRouteMatcher
             $module = isset($attributes[Route::MODULE_ATTRIBUTE]) && is_string($attributes[Route::MODULE_ATTRIBUTE])
                 ? $attributes[Route::MODULE_ATTRIBUTE]
                 : null;
+            $csrfExempt = ($attributes[Route::CSRF_EXEMPT_ATTRIBUTE] ?? false) === true;
             unset(
                 $attributes['_handler'],
                 $attributes['_middlewares'],
                 $attributes['_route'],
                 $attributes['_route_mapping'],
                 $attributes[Route::MODULE_ATTRIBUTE],
+                $attributes[Route::CSRF_EXEMPT_ATTRIBUTE],
             );
 
             return new RouteMatchResult(
@@ -62,6 +64,7 @@ final class SymfonyRouteMatcher
                 params: $attributes,
                 middlewares: $middlewares,
                 module: $module,
+                csrfExempt: $csrfExempt,
             );
         } catch (MethodNotAllowedException $exception) {
             return new RouteMatchResult(
