@@ -104,6 +104,11 @@ return static function (ContainerConfigurator $container): void {
     // the kernel clears every one of them before it starts serving the next request.
     $services->instanceof(ResetInterface::class)->tag('johncms.resettable');
 
+    // A module adds a validation rule of its own by registering a factory with this tag — the
+    // core is not touched, the way the addRule() of the previous validator allowed. Declared
+    // before the directory load below, since an instanceof rule only applies to what follows it.
+    $services->instanceof(RuleConstraintFactoryInterface::class)->tag('johncms.validator.rule_factory');
+
     $services->load(
         'Johncms\\',
         ROOT_PATH . 'system/src'
@@ -198,9 +203,6 @@ return static function (ContainerConfigurator $container): void {
     $services->set(HTMLPurifier::class)->factory([HTMLPurifier::class, 'create']);
     $services->set(\HTMLPurifier::class, \HTMLPurifier::class)->factory([HTMLPurifier::class, 'create']);
 
-    // A module adds a rule of its own by registering a factory with this tag — the core is not
-    // touched, the way the addRule() of the previous validator allowed.
-    $services->instanceof(RuleConstraintFactoryInterface::class)->tag('johncms.validator.rule_factory');
     $services->set(RuleCompiler::class)
         ->arg('$factories', tagged_iterator('johncms.validator.rule_factory'));
     // The engine itself, registered under the Symfony interface so SymfonyValidator is autowired

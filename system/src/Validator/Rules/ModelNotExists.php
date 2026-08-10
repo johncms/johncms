@@ -1,88 +1,54 @@
 <?php
 
-/**
- * This file is part of JohnCMS Content Management System.
- *
- * @copyright JohnCMS Community
- * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
- * @link      https://johncms.com JohnCMS Project
- */
+declare(strict_types=1);
 
 namespace Johncms\Validator\Rules;
 
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Laminas\Validator\AbstractValidator;
+use Closure;
+use Johncms\Validator\RuleValidators\ModelNotExistsValidator;
+use Symfony\Component\Validator\Constraint;
 
-class ModelNotExists extends AbstractValidator
+/**
+ * No row of the model matches the value — a duplicate message, a name already taken.
+ */
+final class ModelNotExists extends Constraint implements RequiresValueInterface
 {
-    public const ERROR_RECORD_FOUND = 'modelExists';
+    public string $message = 'A record matching the input was found';
 
-    protected $messageTemplates = [
-        self::ERROR_RECORD_FOUND => "A record matching the input was found",
-    ];
+    private readonly ?string $ruleMessage;
 
-    private $model;
+    /**
+     * @param class-string $model
+     * @param Closure|array<string, mixed>|null $exclude A query modifier narrowing the lookup.
+     */
+    public function __construct(
+        public string $model,
+        public string $field,
+        public Closure|array|null $exclude = null,
+        private readonly bool $allowEmpty = false,
+        ?string $message = null,
+    ) {
+        parent::__construct([]);
 
-    private $field;
+        $this->ruleMessage = $message;
 
-    private $exclude;
-
-    public function isValid($value): bool
-    {
-        $this->setValue($value);
-
-        try {
-            $model = (new $this->model());
-
-            if (is_callable($this->exclude)) {
-                $model = $model->where($this->exclude);
-            } elseif (is_array($this->exclude) && ! empty($this->exclude['field'])) {
-                $model = $model->where($this->exclude['field'], '!=', $this->exclude['value']);
-            }
-
-            $model->where($this->field, $value)->firstOrFail();
-            $this->error(self::ERROR_RECORD_FOUND);
-            $isValid = false;
-        } catch (ModelNotFoundException $exception) {
-            $isValid = true;
+        if ($message !== null) {
+            $this->message = $message;
         }
-
-        return $isValid;
     }
 
-    /**
-     * Set exclude parameter
-     *
-     * @param $value
-     * @return ModelNotExists
-     */
-    public function setExclude($value): ModelNotExists
+    public function allowEmpty(): bool
     {
-        $this->exclude = $value;
-        return $this;
+        return $this->allowEmpty;
     }
 
-    /**
-     * Set model parameter
-     *
-     * @param $value
-     * @return ModelNotExists
-     */
-    public function setModel($value): ModelNotExists
+    public function message(): ?string
     {
-        $this->model = $value;
-        return $this;
+        return $this->ruleMessage;
     }
 
-    /**
-     * Set field parameter
-     *
-     * @param $value
-     * @return ModelNotExists
-     */
-    public function setField($value): ModelNotExists
+    public function validatedBy(): string
     {
-        $this->field = $value;
-        return $this;
+        return ModelNotExistsValidator::class;
     }
 }

@@ -517,6 +517,7 @@ msgstr ""
 
 #: system/src/NavChain.php:76
 #: themes/default/templates/admin/pages/errors/403.twig:21
+#: themes/default/templates/pages/errors/403.twig:16
 msgid "Home"
 msgstr ""
 
@@ -559,6 +560,44 @@ msgid "Day"
 msgid_plural "Days"
 msgstr[0] ""
 
+#: system/src/Validator/RuleCompiler.php:76
+#: system/src/Validator/RuleFactories/NotEmptyRuleFactory.php:24
+#: system/src/Validator/messages.php:37
+#: system/src/Validator/messages.php:74
+msgid "Value is required and can't be empty"
+msgstr ""
+
+#: system/src/Validator/RuleFactories/BetweenRuleFactory.php:29
+msgid "The input is not between '%min%' and '%max%', inclusively"
+msgstr ""
+
+#: system/src/Validator/RuleFactories/EmailAddressRuleFactory.php:32
+#: system/src/Validator/messages.php:51
+msgid "The input is not a valid email address. Use the basic format local-part@hostname"
+msgstr ""
+
+#: system/src/Validator/RuleFactories/IdenticalRuleFactory.php:28
+msgid "The two given tokens do not match"
+msgstr ""
+
+#: system/src/Validator/RuleFactories/StringLengthRuleFactory.php:33
+#: system/src/Validator/messages.php:50
+#: system/src/Validator/messages.php:61
+msgid "Invalid type given. String expected"
+msgstr ""
+
+#: system/src/Validator/RuleFactories/StringLengthRuleFactory.php:37
+#: system/src/Validator/messages.php:41
+#, php-format
+msgid "The input is less than %min% characters long"
+msgstr ""
+
+#: system/src/Validator/RuleFactories/StringLengthRuleFactory.php:38
+#: system/src/Validator/messages.php:42
+#, php-format
+msgid "The input is more than %max% characters long"
+msgstr ""
+
 #: system/src/Validator/messages.php:13
 msgid "You have a ban"
 msgstr ""
@@ -580,32 +619,8 @@ msgstr ""
 msgid "No record matching the input was found"
 msgstr ""
 
-#: system/src/Validator/messages.php:37
-#: system/src/Validator/messages.php:74
-msgid "Value is required and can't be empty"
-msgstr ""
-
-#: system/src/Validator/messages.php:41
-#, php-format
-msgid "The input is less than %min% characters long"
-msgstr ""
-
-#: system/src/Validator/messages.php:42
-#, php-format
-msgid "The input is more than %max% characters long"
-msgstr ""
-
 #: system/src/Validator/messages.php:46
 msgid "The input was not found in the haystack"
-msgstr ""
-
-#: system/src/Validator/messages.php:50
-#: system/src/Validator/messages.php:61
-msgid "Invalid type given. String expected"
-msgstr ""
-
-#: system/src/Validator/messages.php:51
-msgid "The input is not a valid email address. Use the basic format local-part@hostname"
 msgstr ""
 
 #: system/src/Validator/messages.php:52

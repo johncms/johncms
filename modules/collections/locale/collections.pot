@@ -2,36 +2,36 @@ msgid ""
 msgstr ""
 "X-Domain: collections\n"
 
-#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:45
-#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:353
-#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:354
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:44
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:346
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:347
 #: modules/collections/templates/admin/collections.twig:41
 #: modules/collections/templates/admin/item-form.twig:85
 msgid "Fields"
 msgstr ""
 
-#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:107
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:102
 msgid "A field with this code already exists"
 msgstr ""
 
-#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:110
-#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:134
-#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:149
-#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:102
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:105
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:129
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:144
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:97
 msgid "Changes saved"
 msgstr ""
 
-#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:110
-#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:134
-#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:149
-#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:102
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:105
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:129
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:144
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:97
 msgid "Created successfully"
 msgstr ""
 
-#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:127
-#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:151
-#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:166
-#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:113
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:122
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:146
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:161
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:108
 #: modules/collections/templates/admin/collections.twig:46
 #: modules/collections/templates/admin/delete-confirm.twig:18
 #: modules/collections/templates/admin/fields.twig:41
@@ -40,185 +40,184 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:131
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:126
 msgid "Are you sure you want to delete the field?"
 msgstr ""
 
-#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:146
-#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:170
-#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:189
-#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:128
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:141
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:165
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:184
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:122
 msgid "Deleted successfully"
 msgstr ""
 
-#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:191
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:186
 msgid "Edit field"
 msgstr ""
 
-#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:191
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:186
 #: modules/collections/templates/admin/fields.twig:18
 msgid "New field"
 msgstr ""
 
-#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:273
-#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:368
-#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:342
-#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:245
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:268
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:363
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:337
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:238
 msgid "The required fields are not filled"
 msgstr ""
 
-#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:277
-#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:372
-#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:346
-#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:249
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:272
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:367
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:341
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:242
 msgid "The code may contain only lowercase latin letters, digits, hyphen and underscore"
 msgstr ""
 
-#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:281
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:276
 msgid "Unknown field type"
 msgstr ""
 
-#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:303
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:298
 msgid "String"
 msgstr ""
 
-#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:304
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:299
 msgid "Text"
 msgstr ""
 
-#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:305
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:300
 msgid "HTML"
 msgstr ""
 
-#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:306
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:301
 msgid "Integer"
 msgstr ""
 
-#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:307
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:302
 msgid "Number (fractional)"
 msgstr ""
 
-#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:308
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:303
 msgid "Boolean"
 msgstr ""
 
-#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:309
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:304
 msgid "Date"
 msgstr ""
 
-#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:310
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:305
 msgid "Date and time"
 msgstr ""
 
-#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:311
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:306
 msgid "File"
 msgstr ""
 
-#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:312
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:307
 msgid "Select"
 msgstr ""
 
-#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:313
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:308
 msgid "Relation"
 msgstr ""
 
-#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:324
-#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:343
-#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:455
-#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:474
-#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:388
-#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:407
-#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:52
-#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:114
-#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:157
-#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:269
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:319
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:337
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:450
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:468
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:383
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:401
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:51
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:109
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:150
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:262
 msgid "Collections"
 msgstr ""
 
-#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:345
-#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:356
-#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:379
-#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:476
-#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:487
-#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:409
-#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:420
-#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:74
-#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:83
-#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:110
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:339
+#: modules/collections/src/Application/Controllers/Admin/CollectionFieldsAdminController.php:349
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:374
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:470
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:480
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:403
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:413
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:73
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:105
 msgid "Wrong data"
 msgstr ""
 
-#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:66
-#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:466
-#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:484
-#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:485
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:65
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:461
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:477
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:478
 #: modules/collections/templates/admin/collections.twig:40
 msgid "Items"
 msgstr ""
 
-#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:130
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:125
 msgid "An item with this code already exists"
 msgstr ""
 
-#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:155
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:150
 msgid "Are you sure you want to delete the item?"
 msgstr ""
 
-#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:213
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:208
 msgid "Edit item"
 msgstr ""
 
-#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:213
+#: modules/collections/src/Application/Controllers/Admin/CollectionItemsAdminController.php:208
 #: modules/collections/templates/admin/items.twig:19
 msgid "New item"
 msgstr ""
 
-#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:64
-#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:399
-#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:417
-#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:418
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:63
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:394
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:410
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:411
 #: modules/collections/templates/admin/collections.twig:43
 msgid "Sections"
 msgstr ""
 
-#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:146
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:141
 msgid "A section with this code already exists"
 msgstr ""
 
-#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:170
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:165
 msgid "Are you sure you want to delete the section?"
 msgstr ""
 
-#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:171
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:166
 msgid "Nested sections will be deleted too."
 msgstr ""
 
-#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:259
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:254
 msgid "Edit section"
 msgstr ""
 
-#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:259
+#: modules/collections/src/Application/Controllers/Admin/CollectionSectionsAdminController.php:254
 #: modules/collections/templates/admin/sections.twig:28
 msgid "New section"
 msgstr ""
 
-#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:97
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:92
 msgid "A collection with this code already exists"
 msgstr ""
 
-#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:99
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:94
 msgid "This code is reserved and cannot be used"
 msgstr ""
 
-#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:117
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:112
 msgid "Are you sure you want to delete the collection?"
 msgstr ""
 
-#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:156
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:149
 msgid "Edit collection"
 msgstr ""
 
-#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:156
+#: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:149
 #: modules/collections/templates/admin/collections.twig:16
 msgid "New collection"
 msgstr ""

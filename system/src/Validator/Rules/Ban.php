@@ -1,58 +1,46 @@
 <?php
 
-/**
- * This file is part of JohnCMS Content Management System.
- *
- * @copyright JohnCMS Community
- * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
- * @link      https://johncms.com JohnCMS Project
- */
+declare(strict_types=1);
 
 namespace Johncms\Validator\Rules;
 
-use Johncms\Users\User;
-use Laminas\Validator\AbstractValidator;
+use Johncms\Validator\RuleValidators\BanValidator;
+use Symfony\Component\Validator\Constraint;
 
-class Ban extends AbstractValidator
+/**
+ * The visitor carries none of the listed bans.
+ *
+ * Like Flood, it says nothing about a value and belongs under ValidationResult::FORM_KEY.
+ */
+final class Ban extends Constraint implements RuleInterface
 {
-    public const BAN = 'ban';
+    public string $message = 'You have a ban';
 
-    protected $messageTemplates = [
-        self::BAN => "You have a ban",
-    ];
+    private readonly ?string $ruleMessage;
 
     /**
-     * @var array
+     * @param list<int> $bans The ban types to look for.
      */
-    private $bans = [1];
+    public function __construct(
+        public array $bans = [1],
+        ?string $message = null,
+    ) {
+        parent::__construct([]);
 
-    public function isValid($value): bool
-    {
-        $this->setValue($value);
-        $isValid = true;
+        $this->ruleMessage = $message;
 
-        /** @var User $user */
-        $user = di(User::class);
-
-        foreach ($this->bans as $ban) {
-            if (array_key_exists($ban, $user->ban)) {
-                $this->error(self::BAN);
-                $isValid = false;
-            }
+        if ($message !== null) {
+            $this->message = $message;
         }
-
-        return $isValid;
     }
 
-    /**
-     * Set bans to check
-     *
-     * @param $value
-     * @return $this
-     */
-    public function setBans(array $value): Ban
+    public function message(): ?string
     {
-        $this->bans = $value;
-        return $this;
+        return $this->ruleMessage;
+    }
+
+    public function validatedBy(): string
+    {
+        return BanValidator::class;
     }
 }

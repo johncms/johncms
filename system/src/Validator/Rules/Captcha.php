@@ -1,58 +1,47 @@
 <?php
 
-/**
- * This file is part of JohnCMS Content Management System.
- *
- * @copyright JohnCMS Community
- * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
- * @link      https://johncms.com JohnCMS Project
- */
+declare(strict_types=1);
 
 namespace Johncms\Validator\Rules;
 
-use Johncms\Http\Session;
-use Laminas\Validator\AbstractValidator;
+use Johncms\Validator\RuleValidators\CaptchaValidator;
+use Symfony\Component\Validator\Constraint;
 
-class Captcha extends AbstractValidator
+/**
+ * The value matches the security code the session holds, compared case-insensitively.
+ */
+final class Captcha extends Constraint implements RequiresValueInterface
 {
-    public const CAPTCHA = 'captcha';
+    public string $message = 'The security code is not correct';
 
-    protected $messageTemplates = [
-        self::CAPTCHA => "The security code is not correct",
-    ];
+    private readonly ?string $ruleMessage;
 
-    /**
-     * @var string
-     */
-    private $sessionField = 'code';
+    public function __construct(
+        public string $sessionField = 'code',
+        private readonly bool $allowEmpty = false,
+        ?string $message = null,
+    ) {
+        parent::__construct([]);
 
-    public function isValid($value): bool
-    {
-        $this->setValue($value);
-        $isValid = true;
-        $session = \di(Session::class);
+        $this->ruleMessage = $message;
 
-        if (
-            ! $session->has($this->sessionField) ||
-            empty($session->get($this->sessionField)) ||
-            strtolower($session->get($this->sessionField)) !== strtolower($value)
-        ) {
-            $this->error(self::CAPTCHA);
-            $isValid = false;
+        if ($message !== null) {
+            $this->message = $message;
         }
-
-        return $isValid;
     }
 
-    /**
-     * Set the session field name
-     *
-     * @param $value
-     * @return $this
-     */
-    public function setSessionField($value): Captcha
+    public function allowEmpty(): bool
     {
-        $this->sessionField = $value;
-        return $this;
+        return $this->allowEmpty;
+    }
+
+    public function message(): ?string
+    {
+        return $this->ruleMessage;
+    }
+
+    public function validatedBy(): string
+    {
+        return CaptchaValidator::class;
     }
 }

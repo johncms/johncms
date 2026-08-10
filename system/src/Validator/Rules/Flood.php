@@ -1,37 +1,43 @@
 <?php
 
-/**
- * This file is part of JohnCMS Content Management System.
- *
- * @copyright JohnCMS Community
- * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
- * @link      https://johncms.com JohnCMS Project
- */
+declare(strict_types=1);
 
 namespace Johncms\Validator\Rules;
 
-use Johncms\Security\AntifloodCheckerInterface;
-use Laminas\Validator\AbstractValidator;
+use Johncms\Validator\RuleValidators\FloodValidator;
+use Symfony\Component\Validator\Constraint;
 
-class Flood extends AbstractValidator
+/**
+ * The visitor is not posting too often.
+ *
+ * A statement about the visitor rather than about a value, so it belongs to the form and not to
+ * a field: it goes under ValidationResult::FORM_KEY, where the previous rulesets hung it on the
+ * csrf_token field for want of anywhere better.
+ */
+final class Flood extends Constraint implements RuleInterface
 {
-    public const FLOOD = 'flood';
+    public string $message = 'You cannot add the message so often. Please, wait %value% seconds.';
 
-    protected $messageTemplates = [
-        self::FLOOD => "You cannot add the message so often. Please, wait %value% seconds.",
-    ];
+    private readonly ?string $ruleMessage;
 
-    public function isValid($value): bool
+    public function __construct(?string $message = null)
     {
-        $this->setValue($value);
-        $isValid = true;
+        parent::__construct([]);
 
-        $flood_check = di(AntifloodCheckerInterface::class)->getRemainingSeconds();
-        if ($flood_check > 0) {
-            $this->error(self::FLOOD, $flood_check);
-            $isValid = false;
+        $this->ruleMessage = $message;
+
+        if ($message !== null) {
+            $this->message = $message;
         }
+    }
 
-        return $isValid;
+    public function message(): ?string
+    {
+        return $this->ruleMessage;
+    }
+
+    public function validatedBy(): string
+    {
+        return FloodValidator::class;
     }
 }

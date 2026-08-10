@@ -72,7 +72,10 @@ final readonly class RuleCompiler
         if ($rule instanceof RequiresValueInterface && ! $rule->allowEmpty()) {
             // Trimming here as well as in TrimStringsMiddleware: the middleware only reaches the
             // request bags, while a form may hand the validator data assembled in code.
-            $constraints[] = $this->withMessage(new NotBlank(normalizer: 'trim'), $rule->message());
+            $constraints[] = new NotBlank(
+                message: $rule->message() ?? d__('system', 'Value is required and can\'t be empty'),
+                normalizer: 'trim',
+            );
         }
 
         foreach ($this->ruleConstraints($rule) as $constraint) {

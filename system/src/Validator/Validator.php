@@ -13,12 +13,12 @@ declare(strict_types=1);
 namespace Johncms\Validator;
 
 use Illuminate\Support\Arr;
-use Johncms\Validator\Rules\Ban;
-use Johncms\Validator\Rules\Captcha;
-use Johncms\Validator\Rules\Csrf;
-use Johncms\Validator\Rules\Flood;
-use Johncms\Validator\Rules\ModelExists;
-use Johncms\Validator\Rules\ModelNotExists;
+use Johncms\Validator\Rules\Legacy\Ban;
+use Johncms\Validator\Rules\Legacy\Captcha;
+use Johncms\Validator\Rules\Legacy\Csrf;
+use Johncms\Validator\Rules\Legacy\Flood;
+use Johncms\Validator\Rules\Legacy\ModelExists;
+use Johncms\Validator\Rules\Legacy\ModelNotExists;
 use Laminas\Validator\AbstractValidator;
 use Laminas\Validator\Barcode;
 use Laminas\Validator\Between;

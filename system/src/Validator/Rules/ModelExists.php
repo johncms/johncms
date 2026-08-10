@@ -1,67 +1,54 @@
 <?php
 
-/**
- * This file is part of JohnCMS Content Management System.
- *
- * @copyright JohnCMS Community
- * @license   https://opensource.org/licenses/GPL-3.0 GPL-3.0
- * @link      https://johncms.com JohnCMS Project
- */
+declare(strict_types=1);
 
 namespace Johncms\Validator\Rules;
 
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Laminas\Validator\AbstractValidator;
+use Closure;
+use Johncms\Validator\RuleValidators\ModelExistsValidator;
+use Symfony\Component\Validator\Constraint;
 
-class ModelExists extends AbstractValidator
+/**
+ * A row of the model matches the value.
+ */
+final class ModelExists extends Constraint implements RequiresValueInterface
 {
-    public const NOT_FOUND = 'modelNotFound';
+    public string $message = 'No record matching the input was found';
 
-    protected $messageTemplates = [
-        self::NOT_FOUND => "No record matching the input was found",
-    ];
+    private readonly ?string $ruleMessage;
 
-    private $model;
+    /**
+     * @param class-string $model
+     * @param Closure|array<string, mixed>|null $exclude A query modifier narrowing the lookup.
+     */
+    public function __construct(
+        public string $model,
+        public string $field,
+        public Closure|array|null $exclude = null,
+        private readonly bool $allowEmpty = false,
+        ?string $message = null,
+    ) {
+        parent::__construct([]);
 
-    private $field;
+        $this->ruleMessage = $message;
 
-    public function isValid($value): bool
-    {
-        $this->setValue($value);
-        $isValid = true;
-
-        try {
-            $model = (new $this->model());
-            $model->where($this->field, $value)->firstOrFail();
-        } catch (ModelNotFoundException $exception) {
-            $this->error(self::NOT_FOUND);
-            $isValid = false;
+        if ($message !== null) {
+            $this->message = $message;
         }
-
-        return $isValid;
     }
 
-    /**
-     * Set model parameter
-     *
-     * @param $value
-     * @return $this
-     */
-    public function setModel($value): ModelExists
+    public function allowEmpty(): bool
     {
-        $this->model = $value;
-        return $this;
+        return $this->allowEmpty;
     }
 
-    /**
-     * Set field parameter
-     *
-     * @param $value
-     * @return $this
-     */
-    public function setField($value): ModelExists
+    public function message(): ?string
     {
-        $this->field = $value;
-        return $this;
+        return $this->ruleMessage;
+    }
+
+    public function validatedBy(): string
+    {
+        return ModelExistsValidator::class;
     }
 }

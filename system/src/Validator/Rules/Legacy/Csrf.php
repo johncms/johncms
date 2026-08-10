@@ -8,7 +8,7 @@
  * @link      https://johncms.com JohnCMS Project
  */
 
-namespace Johncms\Validator\Rules;
+namespace Johncms\Validator\Rules\Legacy;
 
 use Laminas\Validator\AbstractValidator;
 

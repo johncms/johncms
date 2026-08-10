@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Validator\Translation;
 
+use Gettext\TranslatorFunctions;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -26,7 +27,12 @@ final readonly class GettextTranslator implements TranslatorInterface
      */
     public function trans(string $id, array $parameters = [], ?string $domain = null, ?string $locale = null): string
     {
-        return strtr(d__($domain ?? self::DOMAIN, $id), $this->placeholders($parameters));
+        // The translator API rather than d__(): the msgid is a variable here, and the scanner
+        // rejects a gettext call whose arguments it cannot read literally. The msgids themselves
+        // are registered by the literal d__() calls in the rules and their factories.
+        $message = TranslatorFunctions::getTranslator()->dgettext($domain ?? self::DOMAIN, $id);
+
+        return strtr($message, $this->placeholders($parameters));
     }
 
     public function getLocale(): string
