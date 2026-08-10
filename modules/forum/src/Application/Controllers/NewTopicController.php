@@ -22,7 +22,9 @@ use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
 use Johncms\System\Utility\EditorContentNormalizer;
 use Johncms\Users\User;
-use Johncms\Validator\Validator;
+use Johncms\Validator\Rules\ModelNotExists;
+use Johncms\Validator\Rules\StringLength;
+use Johncms\Validator\ValidatorInterface;
 use Simba77\EmbedMedia\Embed;
 use Twig\Markup;
 
@@ -42,6 +44,7 @@ final readonly class NewTopicController
         private CreateTopicUseCase $createTopicUseCase,
         private AttachUploadedFilesToMessageUseCase $attachUploadedFilesUseCase,
         private ForumSectionPathService $sectionPathService,
+        private ValidatorInterface $validator,
     ) {
     }
 
@@ -97,32 +100,33 @@ final readonly class NewTopicController
         $errors = [];
         if ($request->body('submit')) {
             $rules = [
-                'name'       => [
-                    'NotEmpty',
-                    'StringLength'   => ['min' => 3, 'max' => 200],
-                    'ModelNotExists' => [
-                        'model'   => ForumTopic::class,
-                        'field'   => 'name',
-                        'exclude' => static function ($query) use ($id) {
+                'name'    => [
+                    new StringLength(min: 3, max: 200),
+                    new ModelNotExists(
+                        model: ForumTopic::class,
+                        field: 'name',
+                        // A topic of this name may exist elsewhere, just not in this section.
+                        exclude: static function ($query) use ($id): void {
                             $query->where('section_id', $id);
                         },
-                    ],
+                    ),
                 ],
-                'message'    => [
-                    'NotEmpty',
-                    'StringLength'   => ['min' => 4],
-                    'ModelNotExists' => [
-                        'model'   => ForumMessage::class,
-                        'field'   => 'text',
-                        'exclude' => function ($query) {
+                'message' => [
+                    new StringLength(min: 4),
+                    new ModelNotExists(
+                        model: ForumMessage::class,
+                        field: 'text',
+                        // The same text from the same author is a double post; from somebody
+                        // else it is a coincidence.
+                        exclude: function ($query): void {
                             $query->where('user_id', $this->currentUser->id);
                         },
-                    ],
+                    ),
                 ],
             ];
 
-            $validator = new Validator($data, $rules);
-            if ($validator->isValid()) {
+            $validationResult = $this->validator->validate($data, $rules);
+            if ($validationResult->isValid()) {
                 $result = $this->createTopicUseCase->execute(
                     section: $section,
                     topicName: (string) $data['name'],
@@ -143,7 +147,7 @@ final readonly class NewTopicController
                 redirect($result->topicUrl);
             }
 
-            $errors = $validator->getErrors();
+            $errors = $validationResult->getErrors();
         }
 
         $msgPreview = $this->purifier->purify((string) $data['message']);

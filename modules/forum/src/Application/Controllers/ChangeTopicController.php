@@ -12,7 +12,9 @@ use Johncms\Modules\Forum\Application\UseCases\GetChangeTopicContextUseCase;
 use Johncms\Modules\Forum\Domain\Models\ForumTopic;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
-use Johncms\Validator\Validator;
+use Johncms\Validator\Rules\ModelNotExists;
+use Johncms\Validator\Rules\StringLength;
+use Johncms\Validator\ValidatorInterface;
 
 final readonly class ChangeTopicController
 {
@@ -20,6 +22,7 @@ final readonly class ChangeTopicController
         private ForumErrorRenderer $forumErrorRenderer,
         private GetChangeTopicContextUseCase $contextUseCase,
         private ChangeTopicUseCase $changeTopicUseCase,
+        private ValidatorInterface $validator,
     ) {
     }
 
@@ -49,28 +52,26 @@ final readonly class ChangeTopicController
         $errors = [];
         if ($request->getMethod() === 'POST') {
             $rules = [
-                'name'          => [
-                    'NotEmpty',
-                    'StringLength'   => ['min' => 3, 'max' => 200],
-                    'ModelNotExists' => [
-                        'model'   => ForumTopic::class,
-                        'field'   => 'name',
-                        'exclude' => static function ($query) use ($topic, $id) {
+                'name'             => [
+                    new StringLength(min: 3, max: 200),
+                    new ModelNotExists(
+                        model: ForumTopic::class,
+                        field: 'name',
+                        // Another topic of the same section may not carry this name; the topic
+                        // being edited is allowed to keep its own.
+                        exclude: static function ($query) use ($topic, $id): void {
                             $query->where('section_id', $topic->section_id)
                                 ->where('id', '!=', $id);
                         },
-                    ],
+                    ),
                 ],
-                'meta_keywords' => [
-                    'StringLength' => ['max' => 250],
-                ],
-                'meta_description' => [
-                    'StringLength' => ['max' => 65000],
-                ],
+                // The meta fields are optional: only their length is capped.
+                'meta_keywords'    => [new StringLength(max: 250, allowEmpty: true)],
+                'meta_description' => [new StringLength(max: 65000, allowEmpty: true)],
             ];
 
-            $validator = new Validator($formData, $rules);
-            if ($validator->isValid()) {
+            $result = $this->validator->validate($formData, $rules);
+            if ($result->isValid()) {
                 $this->changeTopicUseCase->execute(
                     topic:           $topic,
                     name:            $formData['name'],
@@ -81,7 +82,7 @@ final readonly class ChangeTopicController
                 redirect($topic->url);
             }
 
-            $errors = $validator->getErrors();
+            $errors = $result->getErrors();
         }
 
         return new ViewResponse(
