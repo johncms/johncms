@@ -10,8 +10,12 @@ use Johncms\Modules\Profile\Application\Exceptions\EditProfileException;
 use Johncms\Modules\Profile\Domain\Repository\ProfileUserRepositoryInterface;
 use Johncms\System\i18n\Translator;
 use Johncms\Users\User;
-use Johncms\Validator\Validator;
-use Laminas\Validator\Hostname;
+use Johncms\Validator\Rules\Between;
+use Johncms\Validator\Rules\EmailAddress;
+use Johncms\Validator\Rules\InArray;
+use Johncms\Validator\Rules\ModelNotExists;
+use Johncms\Validator\Rules\StringLength;
+use Johncms\Validator\ValidatorInterface;
 
 final readonly class UpdateProfileUseCase
 {
@@ -19,6 +23,7 @@ final readonly class UpdateProfileUseCase
         private ProfileUserRepositoryInterface $profileUserRepository,
         private Translator $translator,
         private User $currentUser,
+        private ValidatorInterface $validator,
     ) {
     }
 
@@ -29,39 +34,36 @@ final readonly class UpdateProfileUseCase
 
         $formData = $command->toFormData();
 
+        // Everything a visitor may leave blank says so explicitly: under the new null policy a
+        // field carrying a rule is required unless the rule allows an empty value.
         $validationRules = [
-            'imname'      => [
-                'NotEmpty',
-                'StringLength' => ['max' => 100],
-            ],
-            'live'        => ['StringLength' => ['max' => 100]],
-            'dayb'        => ['Between' => ['min' => 1, 'max' => 31]],
-            'monthb'      => ['Between' => ['min' => 1, 'max' => 12]],
-            'yearofbirth' => ['Between' => ['min' => 1900, 'max' => 3000]],
-            'mibile'      => ['StringLength' => ['max' => 50]],
-            'skype'       => ['StringLength' => ['max' => 50]],
-            'jabber'      => ['StringLength' => ['max' => 50]],
-            'www'         => ['StringLength' => ['max' => 50]],
+            'imname'      => [new StringLength(max: 100)],
+            'live'        => [new StringLength(max: 100, allowEmpty: true)],
+            'dayb'        => [new Between(min: 1, max: 31)],
+            'monthb'      => [new Between(min: 1, max: 12)],
+            'yearofbirth' => [new Between(min: 1900, max: 3000)],
+            'mibile'      => [new StringLength(max: 50, allowEmpty: true)],
+            'skype'       => [new StringLength(max: 50, allowEmpty: true)],
+            'jabber'      => [new StringLength(max: 50, allowEmpty: true)],
+            'www'         => [new StringLength(max: 50, allowEmpty: true)],
             'mail'        => [
-                'ModelNotExists' => [
-                    'model'   => User::class,
-                    'field'   => 'mail',
-                    'exclude' => static function ($query) use ($profileUser) {
+                new ModelNotExists(
+                    model: User::class,
+                    field: 'mail',
+                    // Somebody else's address is taken; an empty one belongs to nobody.
+                    exclude: static function ($query) use ($profileUser) {
                         return $query->where('mail', '!=', '')->where('id', '!=', $profileUser->id);
                     },
-                ],
+                    allowEmpty: true,
+                ),
             ],
-            'sex'         => ['InArray' => ['haystack' => ['m', 'zh']]],
+            'sex'         => [new InArray(haystack: ['m', 'zh'])],
         ];
 
-        // When email confirmation is enabled, the email becomes mandatory and is validated against DNS
+        // When email confirmation is enabled, the address becomes mandatory and its host has to
+        // resolve — the DNS check Symfony has no equivalent for.
         if (! empty($config['user_email_confirmation'])) {
-            $validationRules['mail'][] = 'NotEmpty';
-            $validationRules['mail']['EmailAddress'] = [
-                'allow'          => Hostname::ALLOW_DNS,
-                'useMxCheck'     => true,
-                'useDeepMxCheck' => true,
-            ];
+            $validationRules['mail'][] = new EmailAddress(checkMxRecord: true);
         }
 
         // Clamp the requested rights to what the editor is allowed to assign
@@ -70,13 +72,12 @@ final readonly class UpdateProfileUseCase
         }
 
         if ($isAdmin) {
-            $validationRules['name'] = ['StringLength' => ['min' => 2, 'max' => 25]];
+            $validationRules['name'] = [new StringLength(min: 2, max: 25)];
         }
 
-        $validator = new Validator($formData, $validationRules);
-        if (! $validator->isValid()) {
-            throw new EditProfileException($validator->getErrors());
-        }
+        $this->validator->validate($formData, $validationRules)->throwIfInvalid(
+            static fn (array $errors): EditProfileException => new EditProfileException($errors)
+        );
 
         // Regular users cannot change administrative fields
         if (! $isAdmin) {

@@ -14,9 +14,13 @@ use Johncms\Http\Environment;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
 use Johncms\Users\User;
-use Johncms\Validator\Validator;
-use Laminas\Validator\Hostname;
-use Laminas\Validator\Identical;
+use Johncms\Validator\Rules\Captcha;
+use Johncms\Validator\Rules\EmailAddress;
+use Johncms\Validator\Rules\Identical;
+use Johncms\Validator\Rules\InArray;
+use Johncms\Validator\Rules\ModelNotExists;
+use Johncms\Validator\Rules\StringLength;
+use Johncms\Validator\ValidatorInterface;
 use Mobicms\Captcha\Code;
 use Mobicms\Captcha\Image;
 use Symfony\Component\HttpFoundation\Cookie;
@@ -30,6 +34,7 @@ final readonly class RegistrationController
         private RegisterUserUseCase $registerUser,
         private ConsentService $consentService,
         private Environment $env,
+        private ValidatorInterface $validator,
     ) {
     }
 
@@ -71,50 +76,35 @@ final readonly class RegistrationController
         if ($request->getMethod() === 'POST') {
             $rules = [
                 'name'     => [
-                    'NotEmpty',
-                    'StringLength'   => ['min' => 2, 'max' => 20],
-                    'ModelNotExists' => ['model' => User::class, 'field' => 'name'],
+                    new StringLength(min: 2, max: 20),
+                    new ModelNotExists(model: User::class, field: 'name'),
                 ],
-                'name_lat' => [
-                    'ModelNotExists' => ['model' => User::class, 'field' => 'name_lat'],
-                ],
-                'password' => [
-                    'NotEmpty',
-                    'StringLength' => ['min' => 6],
-                ],
-                'sex'      => [
-                    'InArray' => ['haystack' => ['m', 'zh']],
-                ],
-                'captcha'  => ['Captcha'],
+                // Derived from the name, so it is only checked for being taken.
+                'name_lat' => [new ModelNotExists(model: User::class, field: 'name_lat', allowEmpty: true)],
+                'password' => [new StringLength(min: 6)],
+                'sex'      => [new InArray(haystack: ['m', 'zh'])],
+                'captcha'  => [new Captcha()],
             ];
 
             if (! empty($config['user_email_required']) || ! empty($config['user_email_confirmation'])) {
                 $rules['email'] = [
-                    'EmailAddress'   => [
-                        'allow'          => Hostname::ALLOW_DNS,
-                        'useMxCheck'     => true,
-                        'useDeepMxCheck' => true,
-                    ],
-                    'ModelNotExists' => ['model' => User::class, 'field' => 'mail'],
+                    new EmailAddress(checkMxRecord: true),
+                    new ModelNotExists(model: User::class, field: 'mail'),
                 ];
             }
 
             foreach ($consents as $consent) {
                 if ($consent->isRequired) {
-                    $rules['consent_' . $consent->id] = ['Identical' => ['token' => '1']];
+                    // The message belongs to this rule alone: the previous API applied an
+                    // override to every Identical of the form at once.
+                    $rules['consent_' . $consent->id] = [
+                        new Identical(token: '1', message: __('You must accept the consent to continue')),
+                    ];
                 }
             }
 
-            $consentMessage = __('You must accept the consent to continue');
-            $messages = [
-                'Identical' => [
-                    Identical::NOT_SAME      => $consentMessage,
-                    Identical::MISSING_TOKEN => $consentMessage,
-                ],
-            ];
-
-            $validator = new Validator($fields, $rules, $messages);
-            if ($validator->isValid()) {
+            $result = $this->validator->validate($fields, $rules);
+            if ($result->isValid()) {
                 $dto = new RegistrationFormDTO(
                     name: $fields['name'],
                     nameLat: $fields['name_lat'],
@@ -157,7 +147,7 @@ final readonly class RegistrationController
                 );
             }
 
-            $errors = $validator->getErrors();
+            $errors = $result->getErrors();
             $this->session->remove('code');
         }
 
