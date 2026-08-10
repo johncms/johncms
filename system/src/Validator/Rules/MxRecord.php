@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraint;
  */
 final class MxRecord extends Constraint implements RuleInterface
 {
-    public string $message = '\'%hostname%\' does not appear to have any valid MX or A records for the email address';
+    public string $message;
 
     private readonly ?string $ruleMessage;
 
@@ -26,10 +26,7 @@ final class MxRecord extends Constraint implements RuleInterface
         parent::__construct([]);
 
         $this->ruleMessage = $message;
-
-        if ($message !== null) {
-            $this->message = $message;
-        }
+        $this->message = $message ?? d__('system', '\'%hostname%\' does not appear to have any valid MX or A records for the email address');
     }
 
     public function message(): ?string

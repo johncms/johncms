@@ -155,7 +155,7 @@ msgid "Authorization failed"
 msgstr ""
 
 #: modules/login/src/Application/UseCases/PerformLoginUseCase.php:43
-#: system/src/Validator/messages.php:17
+#: system/src/Validator/Rules/Captcha.php:27
 msgid "The security code is not correct"
 msgstr ""
 
@@ -562,8 +562,6 @@ msgstr[0] ""
 
 #: system/src/Validator/RuleCompiler.php:76
 #: system/src/Validator/RuleFactories/NotEmptyRuleFactory.php:24
-#: system/src/Validator/messages.php:37
-#: system/src/Validator/messages.php:74
 msgid "Value is required and can't be empty"
 msgstr ""
 
@@ -572,7 +570,6 @@ msgid "The input is not between '%min%' and '%max%', inclusively"
 msgstr ""
 
 #: system/src/Validator/RuleFactories/EmailAddressRuleFactory.php:32
-#: system/src/Validator/messages.php:51
 msgid "The input is not a valid email address. Use the basic format local-part@hostname"
 msgstr ""
 
@@ -581,123 +578,43 @@ msgid "The two given tokens do not match"
 msgstr ""
 
 #: system/src/Validator/RuleFactories/StringLengthRuleFactory.php:33
-#: system/src/Validator/messages.php:50
-#: system/src/Validator/messages.php:61
 msgid "Invalid type given. String expected"
 msgstr ""
 
 #: system/src/Validator/RuleFactories/StringLengthRuleFactory.php:37
-#: system/src/Validator/messages.php:41
 #, php-format
 msgid "The input is less than %min% characters long"
 msgstr ""
 
 #: system/src/Validator/RuleFactories/StringLengthRuleFactory.php:38
-#: system/src/Validator/messages.php:42
 #, php-format
 msgid "The input is more than %max% characters long"
 msgstr ""
 
-#: system/src/Validator/messages.php:13
+#: system/src/Validator/Rules/Ban.php:31
 msgid "You have a ban"
 msgstr ""
 
-#: system/src/Validator/messages.php:21
-msgid "The form submitted did not originate from the expected site"
-msgstr ""
-
-#: system/src/Validator/messages.php:25
+#: system/src/Validator/Rules/Flood.php:28
 #, php-format
 msgid "You cannot add the message so often. Please, wait %value% seconds."
 msgstr ""
 
-#: system/src/Validator/messages.php:29
-msgid "A record matching the input was found"
-msgstr ""
-
-#: system/src/Validator/messages.php:33
-msgid "No record matching the input was found"
-msgstr ""
-
-#: system/src/Validator/messages.php:46
+#: system/src/Validator/Rules/InArray.php:36
 msgid "The input was not found in the haystack"
 msgstr ""
 
-#: system/src/Validator/messages.php:52
-#, php-format
-msgid "'%hostname%' is not a valid hostname for the email address"
+#: system/src/Validator/Rules/ModelExists.php:34
+msgid "No record matching the input was found"
 msgstr ""
 
-#: system/src/Validator/messages.php:53
+#: system/src/Validator/Rules/ModelNotExists.php:34
+msgid "A record matching the input was found"
+msgstr ""
+
+#: system/src/Validator/Rules/MxRecord.php:29
 #, php-format
 msgid "'%hostname%' does not appear to have any valid MX or A records for the email address"
-msgstr ""
-
-#: system/src/Validator/messages.php:54
-#, php-format
-msgid "'%hostname%' is not in a routable network segment. The email address should not be resolved from public network"
-msgstr ""
-
-#: system/src/Validator/messages.php:55
-#, php-format
-msgid "'%localPart%' can not be matched against dot-atom format"
-msgstr ""
-
-#: system/src/Validator/messages.php:56
-#, php-format
-msgid "'%localPart%' can not be matched against quoted-string format"
-msgstr ""
-
-#: system/src/Validator/messages.php:57
-msgid "'%localPart%' is not a valid local part for the email address"
-msgstr ""
-
-#: system/src/Validator/messages.php:58
-msgid "The input exceeds the allowed length"
-msgstr ""
-
-#: system/src/Validator/messages.php:60
-msgid "The input appears to be a DNS hostname but the given punycode notation cannot be decoded"
-msgstr ""
-
-#: system/src/Validator/messages.php:62
-msgid "The input appears to be a DNS hostname but contains a dash in an invalid position"
-msgstr ""
-
-#: system/src/Validator/messages.php:63
-msgid "The input does not match the expected structure for a DNS hostname"
-msgstr ""
-
-#: system/src/Validator/messages.php:64
-msgid "The input appears to be a DNS hostname but cannot match against hostname schema for TLD '%tld%'"
-msgstr ""
-
-#: system/src/Validator/messages.php:65
-msgid "The input does not appear to be a valid local network name"
-msgstr ""
-
-#: system/src/Validator/messages.php:66
-msgid "The input does not appear to be a valid URI hostname"
-msgstr ""
-
-#: system/src/Validator/messages.php:67
-msgid "The input appears to be an IP address, but IP addresses are not allowed"
-msgstr ""
-
-#: system/src/Validator/messages.php:68
-msgid "The input appears to be a local network name but local network names are not allowed"
-msgstr ""
-
-#: system/src/Validator/messages.php:69
-msgid "The input appears to be a DNS hostname but cannot extract TLD part"
-msgstr ""
-
-#: system/src/Validator/messages.php:70
-msgid "The input appears to be a DNS hostname but cannot match TLD against known list"
-msgstr ""
-
-#: system/src/Validator/messages.php:75
-msgid "Invalid type given. String, integer, float, boolean or array expected"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:17

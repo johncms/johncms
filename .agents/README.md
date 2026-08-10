@@ -19,6 +19,7 @@ automatically; `CLAUDE.md` is a symlink to it for Claude Code.
 | `pagination.md` | paginated lists, page titles / meta description |
 | `new-module.md` | creating a new module |
 | `templates.md` | Twig templates: namespaces, environments, components, traps |
+| `validation.md` | form validation: rules, the null policy, messages, adding a rule |
 | `review/` | self-review protocol and checklists, run on demand (see below) |
 | `scripts/verify.sh` | the deterministic gate: `cs-check`, `phpstan`, `test` |
 

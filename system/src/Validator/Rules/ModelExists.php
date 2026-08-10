@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraint;
  */
 final class ModelExists extends Constraint implements RequiresValueInterface
 {
-    public string $message = 'No record matching the input was found';
+    public string $message;
 
     private readonly ?string $ruleMessage;
 
@@ -31,10 +31,7 @@ final class ModelExists extends Constraint implements RequiresValueInterface
         parent::__construct([]);
 
         $this->ruleMessage = $message;
-
-        if ($message !== null) {
-            $this->message = $message;
-        }
+        $this->message = $message ?? d__('system', 'No record matching the input was found');
     }
 
     public function allowEmpty(): bool

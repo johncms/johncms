@@ -56,7 +56,7 @@ msgstr ""
 #: modules/profile/src/Application/Controllers/ChangePasswordController.php:118
 #: modules/profile/src/Application/Controllers/KarmaController.php:122
 #: modules/profile/src/Application/Controllers/PhotoController.php:74
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:118
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:119
 #: modules/profile/templates/public/restore-password-set.twig:14
 #: modules/profile/templates/public/restore-password.twig:44
 msgid "Continue"
@@ -262,7 +262,7 @@ msgid "Vote for"
 msgstr ""
 
 #: modules/profile/src/Application/Controllers/KarmaController.php:262
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:132
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:133
 #: modules/profile/templates/public/ban-history.twig:81
 #: modules/profile/templates/public/components/list-footer.twig:18
 #: modules/profile/templates/public/statistics.twig:41
@@ -293,26 +293,26 @@ msgstr ""
 msgid "For user %s default settings were set."
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:33
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:48
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:75
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:84
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:102
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:114
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:128
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:35
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:50
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:76
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:85
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:103
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:115
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:129
 #: modules/profile/templates/public/restore-password.twig:11
 msgid "Restore password"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:57
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:58
 msgid "Incorrect code"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:77
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:78
 msgid "Check your e-mail for further information"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:116
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:117
 msgid "Password successfully changed.<br>New password sent to your E-mail address."
 msgstr ""
 
@@ -541,11 +541,11 @@ msgstr ""
 msgid "Password recovery"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/UpdateProfileUseCase.php:119
+#: modules/profile/src/Application/UseCases/UpdateProfileUseCase.php:120
 msgid "Confirm email change"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/UpdateProfileUseCase.php:136
+#: modules/profile/src/Application/UseCases/UpdateProfileUseCase.php:137
 msgid "The procedure for changing the email address was started"
 msgstr ""
 

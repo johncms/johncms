@@ -2,66 +2,66 @@ msgid ""
 msgstr ""
 "X-Domain: guestbook\n"
 
-#: modules/guestbook/src/Application/Controllers/ClearGuestbookController.php:35
+#: modules/guestbook/src/Application/Controllers/ClearGuestbookController.php:34
 msgid "All messages older than 1 week were deleted"
 msgstr ""
 
-#: modules/guestbook/src/Application/Controllers/ClearGuestbookController.php:36
+#: modules/guestbook/src/Application/Controllers/ClearGuestbookController.php:35
 msgid "All messages older than 1 day were deleted"
 msgstr ""
 
-#: modules/guestbook/src/Application/Controllers/ClearGuestbookController.php:37
+#: modules/guestbook/src/Application/Controllers/ClearGuestbookController.php:36
 msgid "Full clearing is finished"
 msgstr ""
 
-#: modules/guestbook/src/Application/Controllers/DeleteEntryController.php:46
-#: modules/guestbook/src/Application/Controllers/DeleteEntryController.php:56
+#: modules/guestbook/src/Application/Controllers/DeleteEntryController.php:45
+#: modules/guestbook/src/Application/Controllers/DeleteEntryController.php:55
 #: modules/guestbook/templates/public/confirm-delete.twig:11
 msgid "Delete message"
 msgstr ""
 
-#: modules/guestbook/src/Application/Controllers/DeleteEntryController.php:47
-#: modules/guestbook/src/Application/Controllers/DeleteEntryController.php:57
-#: modules/guestbook/src/Application/Controllers/EditEntryController.php:46
-#: modules/guestbook/src/Application/Controllers/ReplyController.php:48
+#: modules/guestbook/src/Application/Controllers/DeleteEntryController.php:46
+#: modules/guestbook/src/Application/Controllers/DeleteEntryController.php:56
+#: modules/guestbook/src/Application/Controllers/EditEntryController.php:48
+#: modules/guestbook/src/Application/Controllers/ReplyController.php:50
 #: modules/guestbook/src/Application/Controllers/UploadFileController.php:32
 msgid "Wrong data"
 msgstr ""
 
-#: modules/guestbook/src/Application/Controllers/DeleteEntryController.php:66
+#: modules/guestbook/src/Application/Controllers/DeleteEntryController.php:65
 msgid "The message was deleted"
 msgstr ""
 
-#: modules/guestbook/src/Application/Controllers/EditEntryController.php:45
-#: modules/guestbook/src/Application/Controllers/EditEntryController.php:85
-#: modules/guestbook/src/Application/Controllers/EditEntryController.php:86
+#: modules/guestbook/src/Application/Controllers/EditEntryController.php:47
+#: modules/guestbook/src/Application/Controllers/EditEntryController.php:78
+#: modules/guestbook/src/Application/Controllers/EditEntryController.php:79
 #: modules/guestbook/templates/public/edit.twig:10
 msgid "Edit message"
 msgstr ""
 
-#: modules/guestbook/src/Application/Controllers/EditEntryController.php:75
+#: modules/guestbook/src/Application/Controllers/EditEntryController.php:68
 msgid "The message was saved"
 msgstr ""
 
-#: modules/guestbook/src/Application/Controllers/GuestbookController.php:45
+#: modules/guestbook/src/Application/Controllers/GuestbookController.php:46
 msgid "Guestbook"
 msgstr ""
 
-#: modules/guestbook/src/Application/Controllers/GuestbookController.php:45
+#: modules/guestbook/src/Application/Controllers/GuestbookController.php:46
 msgid "Admin Club"
 msgstr ""
 
-#: modules/guestbook/src/Application/Controllers/GuestbookController.php:54
+#: modules/guestbook/src/Application/Controllers/GuestbookController.php:55
 msgid "Guestbook is closed"
 msgstr ""
 
-#: modules/guestbook/src/Application/Controllers/GuestbookController.php:78
+#: modules/guestbook/src/Application/Controllers/GuestbookController.php:79
 msgid "Your message was added successfully"
 msgstr ""
 
-#: modules/guestbook/src/Application/Controllers/ReplyController.php:47
-#: modules/guestbook/src/Application/Controllers/ReplyController.php:87
-#: modules/guestbook/src/Application/Controllers/ReplyController.php:88
+#: modules/guestbook/src/Application/Controllers/ReplyController.php:49
+#: modules/guestbook/src/Application/Controllers/ReplyController.php:80
+#: modules/guestbook/src/Application/Controllers/ReplyController.php:81
 #: modules/guestbook/templates/public/components/entry.twig:87
 #: modules/guestbook/templates/public/components/entry.twig:99
 #: modules/guestbook/templates/public/reply.twig:11
@@ -69,7 +69,7 @@ msgstr ""
 msgid "Reply"
 msgstr ""
 
-#: modules/guestbook/src/Application/Controllers/ReplyController.php:77
+#: modules/guestbook/src/Application/Controllers/ReplyController.php:70
 msgid "Your reply to the message was saved"
 msgstr ""
 

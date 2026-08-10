@@ -127,14 +127,9 @@ return static function (ContainerConfigurator $container): void {
                 ROOT_PATH . 'system/src/Router/RouteCollection.php',
                 ROOT_PATH . 'system/src/Router/RouteRequirements.php',
                 ROOT_PATH . 'system/src/Router/RouteMatchResult.php',
-                // The rules are value objects with scalar constructor arguments, and the legacy
-                // validator takes its data and its ruleset the same way: autowiring either of
+                // The rules are value objects carrying scalar constructor arguments: autowiring
                 // them breaks the compilation of the whole container.
                 ROOT_PATH . 'system/src/Validator/Rules',
-                ROOT_PATH . 'system/src/Validator/Validator.php',
-                // Not a class at all: a message map the loader would execute while scanning,
-                // outside any request, where the translation functions do not exist yet.
-                ROOT_PATH . 'system/src/Validator/messages.php',
                 ROOT_PATH . 'system/src/Validator/ValidationResult.php',
                 ROOT_PATH . 'system/src/Ads.php',
                 ROOT_PATH . 'system/src/Sitemap/SitemapUrlEntry.php',

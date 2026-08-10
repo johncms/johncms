@@ -17,6 +17,7 @@ guide first:
 * Translations, `.po`/`.pot`/`.lng.php` files, `__()` strings → read `.agents/localization.md`
 * Creating a new module (structure, autoload, DI, routes, templates) → read `.agents/new-module.md`
 * Writing or changing a template (namespaces, environments, components) → read `.agents/templates.md`
+* Validating a form, adding a validation rule, messages of a rule → read `.agents/validation.md`
 * Self-review, when the user asks for it (architecture, security, PHP quality, localization) → read `.agents/review/README.md`
 
 ## Self-Review

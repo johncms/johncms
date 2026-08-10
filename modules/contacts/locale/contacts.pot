@@ -2,23 +2,23 @@ msgid ""
 msgstr ""
 "X-Domain: contacts\n"
 
-#: modules/contacts/src/Application/Controllers/Admin/ContactMessageDeleteController.php:36
+#: modules/contacts/src/Application/Controllers/Admin/ContactMessageDeleteController.php:35
 msgid "Record deleted"
 msgstr ""
 
-#: modules/contacts/src/Application/Controllers/Admin/ContactMessageDeleteController.php:40
+#: modules/contacts/src/Application/Controllers/Admin/ContactMessageDeleteController.php:39
 msgid "Delete message"
 msgstr ""
 
-#: modules/contacts/src/Application/Controllers/Admin/ContactMessageDeleteController.php:41
+#: modules/contacts/src/Application/Controllers/Admin/ContactMessageDeleteController.php:40
 #: modules/contacts/src/Application/Controllers/Admin/ContactMessageListController.php:42
 #: modules/contacts/src/Application/Controllers/Admin/ContactMessageViewController.php:41
 #: modules/contacts/src/Application/Controllers/Admin/ContactSettingsController.php:116
-#: modules/contacts/src/Application/Controllers/ContactsController.php:42
+#: modules/contacts/src/Application/Controllers/ContactsController.php:43
 msgid "Contacts"
 msgstr ""
 
-#: modules/contacts/src/Application/Controllers/Admin/ContactMessageDeleteController.php:42
+#: modules/contacts/src/Application/Controllers/Admin/ContactMessageDeleteController.php:41
 #: modules/contacts/src/Application/Controllers/Admin/ContactMessageListController.php:41
 #: modules/contacts/src/Application/Controllers/Admin/ContactMessageViewController.php:42
 #: modules/contacts/templates/admin/settings.twig:21
@@ -76,7 +76,7 @@ msgstr ""
 msgid "You must accept the consent to continue"
 msgstr ""
 
-#: modules/contacts/src/Application/Controllers/ContactsController.php:100
+#: modules/contacts/src/Application/Controllers/ContactsController.php:99
 msgid "Your message has been sent. We will reply as soon as possible."
 msgstr ""
 

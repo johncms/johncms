@@ -2,40 +2,40 @@ msgid ""
 msgstr ""
 "X-Domain: consent\n"
 
-#: modules/consent/src/Application/Controllers/Admin/ConsentDeleteController.php:36
+#: modules/consent/src/Application/Controllers/Admin/ConsentDeleteController.php:35
 msgid "Record deleted"
 msgstr ""
 
-#: modules/consent/src/Application/Controllers/Admin/ConsentDeleteController.php:40
+#: modules/consent/src/Application/Controllers/Admin/ConsentDeleteController.php:39
 msgid "Delete consent"
 msgstr ""
 
-#: modules/consent/src/Application/Controllers/Admin/ConsentDeleteController.php:41
-#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:105
+#: modules/consent/src/Application/Controllers/Admin/ConsentDeleteController.php:40
+#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:108
 #: modules/consent/src/Application/Controllers/Admin/ConsentListController.php:32
 #: modules/consent/src/Application/Controllers/Admin/ConsentLogController.php:31
 msgid "Consents"
 msgstr ""
 
-#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:95
+#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:98
 #: modules/consent/src/Application/Controllers/Admin/CookieBannerController.php:39
 msgid "Changes saved successfully"
 msgstr ""
 
-#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:103
+#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:106
 msgid "Edit consent"
 msgstr ""
 
-#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:103
+#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:106
 #: modules/consent/templates/admin/list.twig:17
 msgid "Add consent"
 msgstr ""
 
-#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:135
+#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:138
 msgid "Registration form"
 msgstr ""
 
-#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:136
+#: modules/consent/src/Application/Controllers/Admin/ConsentEditController.php:139
 msgid "Contacts form"
 msgstr ""
 

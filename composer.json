@@ -49,7 +49,6 @@
         "imangazaliev/didom": "^2.0.1",
         "intervention/image": "^2.5",
         "james-heinrich/getid3": "^1.9",
-        "laminas/laminas-validator": "^2.14",
         "league/flysystem": "^2.0",
         "mobicms/captcha": "^4.0",
         "monolog/monolog": "^3.9",

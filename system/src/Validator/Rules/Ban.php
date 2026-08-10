@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraint;
  */
 final class Ban extends Constraint implements RuleInterface
 {
-    public string $message = 'You have a ban';
+    public string $message;
 
     private readonly ?string $ruleMessage;
 
@@ -28,10 +28,7 @@ final class Ban extends Constraint implements RuleInterface
         parent::__construct([]);
 
         $this->ruleMessage = $message;
-
-        if ($message !== null) {
-            $this->message = $message;
-        }
+        $this->message = $message ?? d__('system', 'You have a ban');
     }
 
     public function message(): ?string

@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraint;
  */
 final class InArray extends Constraint implements RequiresValueInterface
 {
-    public string $message = 'The input was not found in the haystack';
+    public string $message;
 
     private readonly ?string $ruleMessage;
 
@@ -33,10 +33,7 @@ final class InArray extends Constraint implements RequiresValueInterface
         parent::__construct([]);
 
         $this->ruleMessage = $message;
-
-        if ($message !== null) {
-            $this->message = $message;
-        }
+        $this->message = $message ?? d__('system', 'The input was not found in the haystack');
     }
 
     public function allowEmpty(): bool

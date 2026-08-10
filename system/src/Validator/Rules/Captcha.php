@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraint;
  */
 final class Captcha extends Constraint implements RequiresValueInterface
 {
-    public string $message = 'The security code is not correct';
+    public string $message;
 
     private readonly ?string $ruleMessage;
 
@@ -24,10 +24,7 @@ final class Captcha extends Constraint implements RequiresValueInterface
         parent::__construct([]);
 
         $this->ruleMessage = $message;
-
-        if ($message !== null) {
-            $this->message = $message;
-        }
+        $this->message = $message ?? d__('system', 'The security code is not correct');
     }
 
     public function allowEmpty(): bool

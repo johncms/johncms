@@ -7,19 +7,19 @@ msgstr ""
 msgid "Email confirmation"
 msgstr ""
 
-#: modules/registration/src/Application/Controllers/RegistrationController.php:44
-#: modules/registration/src/Application/Controllers/RegistrationController.php:45
+#: modules/registration/src/Application/Controllers/RegistrationController.php:49
 #: modules/registration/src/Application/Controllers/RegistrationController.php:50
-#: modules/registration/src/Application/Controllers/RegistrationController.php:148
-#: modules/registration/src/Application/Controllers/RegistrationController.php:149
-#: modules/registration/src/Application/Controllers/RegistrationController.php:170
-#: modules/registration/src/Application/Controllers/RegistrationController.php:171
+#: modules/registration/src/Application/Controllers/RegistrationController.php:55
+#: modules/registration/src/Application/Controllers/RegistrationController.php:138
+#: modules/registration/src/Application/Controllers/RegistrationController.php:139
+#: modules/registration/src/Application/Controllers/RegistrationController.php:160
+#: modules/registration/src/Application/Controllers/RegistrationController.php:161
 #: modules/registration/templates/public/index.twig:16
 #: modules/registration/templates/public/index.twig:129
 msgid "Registration"
 msgstr ""
 
-#: modules/registration/src/Application/Controllers/RegistrationController.php:108
+#: modules/registration/src/Application/Controllers/RegistrationController.php:101
 msgid "You must accept the consent to continue"
 msgstr ""
 

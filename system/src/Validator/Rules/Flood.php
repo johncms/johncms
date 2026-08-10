@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraint;
  */
 final class Flood extends Constraint implements RuleInterface
 {
-    public string $message = 'You cannot add the message so often. Please, wait %value% seconds.';
+    public string $message;
 
     private readonly ?string $ruleMessage;
 
@@ -25,10 +25,7 @@ final class Flood extends Constraint implements RuleInterface
         parent::__construct([]);
 
         $this->ruleMessage = $message;
-
-        if ($message !== null) {
-            $this->message = $message;
-        }
+        $this->message = $message ?? d__('system', 'You cannot add the message so often. Please, wait %value% seconds.');
     }
 
     public function message(): ?string
