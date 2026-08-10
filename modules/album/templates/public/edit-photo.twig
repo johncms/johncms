@@ -11,6 +11,7 @@
 
 {% block content %}
     <form name="file_edit_form" action="{{ action_url }}" method="post">
+        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
         <div class="mb-3">
             <img src="{{ image_url }}" alt=".">
         </div>

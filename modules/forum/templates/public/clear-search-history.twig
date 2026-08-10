@@ -8,6 +8,7 @@
 
 {% block content %}
     <form action="{{ action_url }}" method="post">
+        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
         <div class="alert alert-danger">
             {{ __('Do you really want to clear the search history?') }}
         </div>

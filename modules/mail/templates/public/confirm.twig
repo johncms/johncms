@@ -14,6 +14,7 @@
                 </div>
                 <div>
                     <form action="{{ data.form_action }}" method="post">
+                        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
                         {% for hidden_input in data.hidden_inputs|default([]) %}
                             <input type="hidden" name="{{ hidden_input.name }}" value="{{ hidden_input.value }}">
                         {% endfor %}

@@ -9,6 +9,7 @@
 
 {% block content %}
     <form method="post">
+        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
         <img alt="{{ __('Verification code') }}" src="{{ captcha }}">
         <div class="form-group">
             <label for="code">{{ __('Enter verification code') }}</label>

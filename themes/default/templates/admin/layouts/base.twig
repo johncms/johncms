@@ -27,6 +27,7 @@
     <meta name="MobileOptimized" content="width">
     <meta content="yes" name="apple-mobile-web-app-capable">
     <meta name="Generator" content="JohnCMS, https://johncms.com">
+    <meta name="csrf-token" content="{{ app.csrf_token }}">
     {% block meta %}{% endblock %}
     {% if keywords|default('') %}
         <meta name="keywords" content="{{ keywords }}">

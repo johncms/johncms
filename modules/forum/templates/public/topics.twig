@@ -31,6 +31,7 @@
     {% if create_access %}
         <div class="mb-3">
             <form action="{{ new_topic_url }}" method="post">
+                <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
                 <button type="submit" class="btn btn-primary">{{ __('New Topic') }}</button>
             </form>
         </div>

@@ -9,6 +9,7 @@
 
 {% block content %}
     <form action="{{ delete_url }}" method="post">
+        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
         <div class="alert alert-danger">
             <div class="pb-2">
                 {{ __('Do you really want to delete?') }}

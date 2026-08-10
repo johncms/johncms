@@ -12,6 +12,7 @@
 
 {% block content %}
     <form method="post">
+        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
         <h4>{{ __('Registration') }}</h4>
 
         {% if needs_approval %}

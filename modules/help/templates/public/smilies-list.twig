@@ -15,7 +15,8 @@
     {% if items is empty %}
         {% include '@theme/components/alert.twig' with {alert_type: 'alert-info', alert: __('The list is empty')} only %}
     {% else %}
-        {% if app.user.isValid %}<form action="{{ form_action }}" method="post">{% endif %}
+        {% if app.user.isValid %}<form action="{{ form_action }}" method="post">
+            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">{% endif %}
         <div class="row">
             <div class="col-md-6">
                 {% if user_smilies_current|default(0) %}

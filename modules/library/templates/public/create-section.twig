@@ -16,6 +16,7 @@
         </div>
     {% else %}
         <form action="{{ form_url }}" method="post">
+            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
             <div class="form-group">
                 <label for="name">{{ __('Title') }}</label>
                 <input type="text" name="name" class="form-control" id="name" placeholder="{{ __('Title') }}" required>

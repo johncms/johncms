@@ -26,6 +26,7 @@
         <div class="mt-2"><a href="{{ article_url }}">{{ __('Back to Article') }}</a></div>
     {% else %}
         <form action="/library/article/{{ id }}/edit" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
             <div class="mb-3">
                 {% if cover %}
                     <div><img src="/upload/library/images/big/{{ id }}.png" alt="cover"/></div>

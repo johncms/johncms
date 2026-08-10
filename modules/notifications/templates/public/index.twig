@@ -63,6 +63,7 @@
         </div>
         <div class="mb-2 mt-2">
             <form action="/notifications/clear/" method="post">
+                <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
                 <button type="submit" name="clear" value="1" class="btn btn-outline-primary">{{ __('Clear notifications') }}</button>
             </form>
         </div>

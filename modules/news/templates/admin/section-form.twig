@@ -18,6 +18,7 @@
 
     <h4 class="card-title">{{ page_title }}</h4>
     <form action="{{ action_url }}" method="post">
+        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
         <div class="form-group">
             <label for="title">{{ __('Section name') }}</label>
             <input type="text"

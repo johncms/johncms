@@ -9,6 +9,7 @@
 
 {% block content %}
     <form name="file_import_form" action="{{ action_url }}" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
         <div class="form-group">
             <label for="url">{{ __('Link to file') }}</label>
             <input type="text" class="form-control" id="url" placeholder="{{ __('Link to file') }}"

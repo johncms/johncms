@@ -17,6 +17,7 @@
         {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: errors} only %}
     {% endif %}
     <form action="{{ form_action }}" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
         <h3>{{ page_title }}</h3>
         <div class="form-group">
             <div class="custom-file">

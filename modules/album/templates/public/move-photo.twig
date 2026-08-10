@@ -9,6 +9,7 @@
 
 {% block content %}
     <form name="file_edit_form" action="{{ action_url }}" method="post">
+        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
         <div class="form-group">
             <label for="al">{{ __('Select Album') }}</label>
             <select name="al" id="al" class="form-control">

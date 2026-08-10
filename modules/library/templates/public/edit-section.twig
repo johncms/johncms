@@ -21,6 +21,7 @@
         <div class="mt-2"><a href="{{ category_url }}">{{ __('Back to Section') }}</a></div>
     {% else %}
         <form action="/library/section/{{ id }}/edit" method="post">
+            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
             <div class="form-group">
                 <label for="name">{{ __('Title') }}</label>
                 <input type="text" name="name" class="form-control" id="name"

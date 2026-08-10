@@ -18,6 +18,7 @@
 
     <h4 class="card-title">{{ page_title }}</h4>
     <form action="{{ action_url }}" method="post">
+        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
         <div class="form-group">
             <input type="hidden" name="active" value="0">
             <div class="form-check">

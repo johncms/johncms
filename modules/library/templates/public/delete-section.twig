@@ -50,6 +50,7 @@
         {% if move_sections %}
             <div class="menu">
                 <form action="/library/section/{{ id }}/delete" method="post">
+                    <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
                     <div>
                         <label for="move_select">{{ __('Move contents of "%s" to:', name) }}</label>
                         <select id="move_select" name="move" class="form-control">
@@ -102,6 +103,7 @@
             <div class="card-body">
                 <p>{{ __('Section "%s" contains subsections or articles. Choose how to delete it:', name) }}</p>
                 <form action="/library/section/{{ id }}/delete" method="post">
+                    <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
                     <div class="custom-control custom-radio">
                         <input type="radio" id="type1" name="mode" value="delmove" class="custom-control-input" checked>
                         <label class="custom-control-label" for="type1">{{ __('Move contents to another section, then delete') }}</label>

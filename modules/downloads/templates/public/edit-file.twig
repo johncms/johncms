@@ -10,6 +10,7 @@
 
 {% block content %}
     <form name="file_edit_form" action="{{ action_url }}" method="post">
+        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
         <div class="form-group">
             <label for="text">{{ __('Name for display') }}</label>
             <input type="text" class="form-control" id="text" placeholder="{{ __('Name for display') }}"

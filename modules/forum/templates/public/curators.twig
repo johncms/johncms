@@ -15,6 +15,7 @@
         <div class="alert alert-success">{{ __('Changes saved') }}</div>
     {% endif %}
     <form action="{{ action_url }}" method="post">
+        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
         {% if curators_list is empty %}
             <div class="alert alert-info">
                 {{ __('The list is empty') }}

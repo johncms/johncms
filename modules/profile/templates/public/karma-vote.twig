@@ -15,6 +15,7 @@
         {% include '@theme/components/alert.twig' with {alert_type: 'alert-success', alert: success_message} only %}
     {% endif %}
     <form action="{{ form_action }}" method="post">
+        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
         <h3>{{ vote_title }}</h3>
 
         <h4>{{ __('Type of vote') }}</h4>

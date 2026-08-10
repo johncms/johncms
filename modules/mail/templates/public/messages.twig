@@ -15,6 +15,7 @@
     {% if data.form_action|default('') %}
         <div class="mb-3">
             <form name="form" action="{{ data.form_action }}" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
                 {% if ask_recipient %}
                     <div class="form-group">
                         <label for="nick">{{ __('To Whom') }}</label>

@@ -9,6 +9,7 @@
 {% block content %}
     <div class="alert alert-danger" style="padding-top: 16px; padding-bottom: 16px">
         <form action="?url={{ redirect_url }}" method="post">
+            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
             <h3>{{ __('External Link') }}</h3>
             <strong>{{ __('ATTENTION!') }}</strong>
             <p class="break-word">

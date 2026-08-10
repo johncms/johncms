@@ -76,6 +76,7 @@
 
     {% if urls.sort_action %}
         <form class="form-inline mb-2" method="post" action="{{ urls.sort_action }}">
+            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
             <label class="my-1 me-2" for="sort_down">{{ __('Sorting') }}</label>
             <select class="form-control d-inline w-auto my-1 me-sm-2" name="sort_down" id="sort_down">
                 <option value="0"{% if not sort_by_name %} selected="selected"{% endif %}>{{ __('by time') }}</option>

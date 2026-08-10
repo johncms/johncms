@@ -9,6 +9,7 @@
 
 {% block content %}
     <form name="file_upload_form" action="{{ action_url }}" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
         <div class="form-group">
             <div class="custom-file">
                 <input type="file" class="custom-file-input" id="fail" name="fail" aria-describedby="file_label" required>

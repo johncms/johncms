@@ -12,6 +12,7 @@
 
 {% block content %}
     <form name="message_form" action="{{ form_action }}" method="post">
+        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
         <input type="hidden" name="token" value="{{ token }}">
         <div class="h4">{{ __('Topic') }}: {{ topic_name }}</div>
 

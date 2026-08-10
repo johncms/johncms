@@ -22,6 +22,7 @@
     {% endif %}
 
     <form action="/downloads/moderation" method="post" class="mb-2 mt-3">
+        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
         <input type="submit" name="all_mod" class="btn btn-primary" value="{{ __('Accept all files') }}"/>
     </form>
 

@@ -11,6 +11,7 @@
         <div class="card w-100 mx-auto" style="max-width: 500px;">
             <div class="card-body">
                 <form method="post">
+                    <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
                     <div class="text-center mb-2">
                         <img src="{{ asset('images/logo.svg') }}" alt="logo" style="max-width: 200px;" class="img-fluid">
                     </div>

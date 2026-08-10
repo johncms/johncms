@@ -15,6 +15,7 @@
             {% endif %}
             <div class="card shadow border-0">
                 <form action="{{ form_action }}" method="post">
+                    <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
                     <div class="card-body">
                         <h3>{{ title }}</h3>
                         <div class="custom-control custom-checkbox mb-3">

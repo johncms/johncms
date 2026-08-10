@@ -8,6 +8,7 @@
 
 {% block content %}
     <form method="post">
+        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
         <h4>{{ __('Authorization') }}</h4>
         {% if error %}
             {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: error} only %}

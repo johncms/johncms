@@ -18,6 +18,7 @@
                 </div>
                 <div>
                     <form action="{{ form_action }}" method="post">
+                        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
                         {% if img|default('') %}
                             <div class="mb-3">
                                 <img src="{{ img }}" alt="." class="img-thumbnail">

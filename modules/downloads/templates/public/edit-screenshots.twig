@@ -20,6 +20,7 @@
                     <div class="media-body">
                         <h5 class="fw-bold mt-0">{{ screen.file_name }}</h5>
                         <form action="{{ action_url }}?do={{ screen.file_name|url_encode }}" method="post">
+                            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
                             <input type="hidden" name="delete_token" value="{{ delete_token }}">
                             <button type="submit" class="btn btn-danger btn-sm">{{ __('Delete') }}</button>
                         </form>
@@ -31,6 +32,7 @@
 
     <div class="h4 fw-bold">{{ __('Add screenshot') }}</div>
     <form name="file_upload_form" action="{{ action_url }}" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
         <div class="form-group">
             <div class="custom-file">
                 <input type="file" class="custom-file-input" id="fail" name="screen" aria-describedby="file_label">

@@ -19,6 +19,7 @@
         {% include '@theme/components/alert.twig' with {alert_type: 'alert-success', alert: success_message} only %}
     {% endif %}
     <form action="{{ form_action }}" method="post">
+        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
         <h3>{{ __('Time settings') }}</h3>
         <div class="form-group">
             <label for="timeshift">{{ __('Shift of time') }} (+-12)</label>

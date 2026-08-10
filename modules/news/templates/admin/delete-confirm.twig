@@ -8,6 +8,7 @@
     @var object article Null unless an article is being deleted.
 #}
 <form action="{{ action_url }}" method="post">
+    <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
     <div class="modal-header align-items-center">
         <h4 class="modal-title">
             {{ __('Confirm the action') }}

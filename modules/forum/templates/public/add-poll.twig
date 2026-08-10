@@ -11,6 +11,7 @@
 
 {% block content %}
     <form name="new_topic" action="{{ action_url }}" method="post">
+        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
         <input type="hidden" name="count_vote" value="{{ count_vote }}">
         <div class="form-group">
             <label for="name_vote">{{ __('Poll') }}</label>

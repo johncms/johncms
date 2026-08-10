@@ -7,6 +7,7 @@
     @param string       reply   Text already entered, kept across a failed attempt.
 #}
 <form name="form" action="{{ action_url }}" method="post">
+    <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
     <input type="hidden" name="code" value="{{ code }}"/>
 
     {% if text %}

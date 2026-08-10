@@ -11,6 +11,7 @@
 </div>
 <div class="modal-body">
     <form action="/language/" method="post" name="select_language">
+        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
         {% for code, language in languages %}
             <div class="custom-control custom-radio mb-2">
                 <input type="radio" id="lang_{{ code }}" name="setlng" class="form-check-input custom-control-input" value="{{ code }}"{% if code == app.locale %} checked{% endif %}>

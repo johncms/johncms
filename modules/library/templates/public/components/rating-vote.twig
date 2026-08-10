@@ -5,6 +5,7 @@
     @param int    user_vote   The score already given, or -1 when there is none yet.
 #}
 <form action="{{ article_url }}" method="post">
+    <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
     <label for="vote" class="pe-2">{{ __('Select a rating:') }}</label>
     <div class="form-inline">
         <select name="vote" id="vote" class="form-control me-2">
