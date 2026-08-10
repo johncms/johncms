@@ -17,7 +17,9 @@ use Johncms\Modules\ModuleInstaller;
 use Johncms\Modules\Modules;
 use Johncms\Http\Request;
 use Johncms\Users\User;
-use Johncms\Validator\Validator;
+use Johncms\Validator\Rules\EmailAddress;
+use Johncms\Validator\Rules\NotEmpty;
+use Johncms\Validator\ValidatorInterface;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
 
@@ -44,28 +46,17 @@ $fields = [
 $errors = [];
 
 if ($request->getMethod() === 'POST') {
-    // Настройки валидатора
     $rules = [
-        'homeurl'        => [
-            'NotEmpty',
-        ],
-        'email'          => [
-            'EmailAddress' => [
-                'allow'          => Laminas\Validator\Hostname::ALLOW_DNS,
-                'useMxCheck'     => true,
-                'useDeepMxCheck' => true,
-            ],
-        ],
-        'admin_login'    => [
-            'NotEmpty',
-        ],
-        'admin_password' => [
-            'NotEmpty',
-        ],
+        'homeurl'        => [new NotEmpty()],
+        // Required, and its host has to resolve: the site cannot mail its administrator at an
+        // address that does not exist.
+        'email'          => [new EmailAddress(checkMxRecord: true)],
+        'admin_login'    => [new NotEmpty()],
+        'admin_password' => [new NotEmpty()],
     ];
-    // Валидация
-    $validator = new Validator($fields, $rules);
-    if ($validator->isValid()) {
+
+    $result = di(ValidatorInterface::class)->validate($fields, $rules);
+    if ($result->isValid()) {
         // Получаем конфиг по умолчанию
         $config = config('johncms');
 
@@ -166,7 +157,7 @@ if ($request->getMethod() === 'POST') {
 
         $errors['unknown'][] = __("ERROR: Can't write system.local.php");
     } else {
-        $errors = $validator->getErrors();
+        $errors = $result->getErrors();
     }
 }
 
