@@ -14,7 +14,8 @@ use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Users\User;
-use Johncms\Validator\Validator;
+use Johncms\Validator\Rules\StringLength;
+use Johncms\Validator\ValidatorInterface;
 
 final readonly class ForumStructureController
 {
@@ -28,6 +29,7 @@ final readonly class ForumStructureController
         private AddForumSectionUseCase $addSection,
         private EditForumSectionUseCase $editSection,
         private DeleteForumSectionUseCase $deleteSection,
+        private ValidatorInterface $validator,
     ) {
     }
 
@@ -148,24 +150,25 @@ final readonly class ForumStructureController
         }
 
         $fields = $this->fieldsFromRequest($request, $section);
-        $validator = new Validator(
+        $result = $this->validator->validate(
             ['name' => $fields['name']],
-            ['name' => ['NotEmpty', 'StringLength' => ['min' => 2, 'max' => 150]]]
+            ['name' => [new StringLength(min: 2, max: 150)]]
         );
 
         $cycle = $this->editSection->wouldCreateCycle($section->id, (int) $fields['parent']);
 
-        if (! $cycle && $validator->isValid()) {
+        if (! $cycle && $result->isValid()) {
             $this->editSection->execute($section, $fields);
             redirect(self::URL . ($section->parent ? '?id=' . $section->parent : ''));
         }
 
-        $errors = $validator->getErrors();
+        // A cycle is a domain failure discovered outside the ruleset, and it joins the result
+        // rather than turning it back into a plain array.
         if ($cycle) {
-            $errors['parent'][] = __('Please select a valid parent');
+            $result = $result->withError('parent', __('Please select a valid parent'));
         }
 
-        return $this->renderEditForm($section, $fields, $errors);
+        return $this->renderEditForm($section, $fields, $result->getErrors());
     }
 
     public function deleteConfirm(Request $request, int $id): ViewResponse

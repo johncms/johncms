@@ -14,7 +14,9 @@ use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Http\Session;
 use Johncms\System\i18n\Translator;
-use Johncms\Validator\Validator;
+use Johncms\Validator\Rules\InArray;
+use Johncms\Validator\Rules\StringLength;
+use Johncms\Validator\ValidatorInterface;
 
 final readonly class ConsentEditController
 {
@@ -35,6 +37,7 @@ final readonly class ConsentEditController
         private ConsentRepositoryInterface $repository,
         private CreateConsentUseCase $createConsent,
         private UpdateConsentUseCase $updateConsent,
+        private ValidatorInterface $validator,
     ) {
     }
 
@@ -60,22 +63,22 @@ final readonly class ConsentEditController
 
         if ($request->getMethod() === 'POST') {
             $fields = $this->fieldsFromRequest($request);
-            $validator = new Validator(
+            $result = $this->validator->validate(
                 [
-                    'context'    => $fields['context'],
-                    'language'   => $fields['language'],
-                    'title'      => $fields['title'],
-                    'version'    => $fields['version'],
+                    'context'  => $fields['context'],
+                    'language' => $fields['language'],
+                    'title'    => $fields['title'],
+                    'version'  => $fields['version'],
                 ],
                 [
-                    'context'    => ['NotEmpty', 'StringLength' => ['max' => 100]],
-                    'language'   => ['InArray' => ['haystack' => $languageCodes]],
-                    'title'      => ['NotEmpty', 'StringLength' => ['max' => self::TITLE_MAX_LENGTH]],
-                    'version'    => ['NotEmpty', 'StringLength' => ['max' => 50]],
+                    'context'  => [new StringLength(max: 100)],
+                    'language' => [new InArray(haystack: $languageCodes)],
+                    'title'    => [new StringLength(max: self::TITLE_MAX_LENGTH)],
+                    'version'  => [new StringLength(max: 50)],
                 ]
             );
 
-            if ($validator->isValid()) {
+            if ($result->isValid()) {
                 $dto = new ConsentDTO(
                     context: $fields['context'],
                     language: $fields['language'],
@@ -96,7 +99,7 @@ final readonly class ConsentEditController
                 redirect(self::URL);
             }
 
-            $errors = $validator->getErrors();
+            $errors = $result->getErrors();
         }
 
         $isEdit = $consent instanceof Consent;
