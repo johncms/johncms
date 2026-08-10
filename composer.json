@@ -61,6 +61,7 @@
         "symfony/http-kernel": "^7.4",
         "symfony/mailer": "^v7.4.0",
         "symfony/routing": "^7.4",
+        "symfony/validator": "^7.4",
         "twig/twig": "^3.0"
     },
     "require-dev": {

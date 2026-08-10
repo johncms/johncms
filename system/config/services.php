@@ -31,6 +31,12 @@ use Johncms\Security\HTMLPurifier;
 use Johncms\Smilies\SmiliesRenderer;
 use Johncms\Smilies\SmiliesRendererInterface;
 use Johncms\Utils\DateFormatter;
+use Johncms\Validator\RuleCompiler;
+use Johncms\Validator\RuleConstraintFactoryInterface;
+use Johncms\Validator\SymfonyValidator;
+use Johncms\Validator\SymfonyValidatorFactory;
+use Johncms\Validator\ValidatorInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface as SymfonyValidatorEngine;
 use Johncms\Utils\DateFormatterInterface;
 use Johncms\Users\IgnoreListChecker;
 use Johncms\Users\IgnoreListCheckerInterface;
@@ -116,7 +122,15 @@ return static function (ContainerConfigurator $container): void {
                 ROOT_PATH . 'system/src/Router/RouteCollection.php',
                 ROOT_PATH . 'system/src/Router/RouteRequirements.php',
                 ROOT_PATH . 'system/src/Router/RouteMatchResult.php',
-                ROOT_PATH . 'system/src/Validator',
+                // The rules are value objects with scalar constructor arguments, and the legacy
+                // validator takes its data and its ruleset the same way: autowiring either of
+                // them breaks the compilation of the whole container.
+                ROOT_PATH . 'system/src/Validator/Rules',
+                ROOT_PATH . 'system/src/Validator/Validator.php',
+                // Not a class at all: a message map the loader would execute while scanning,
+                // outside any request, where the translation functions do not exist yet.
+                ROOT_PATH . 'system/src/Validator/messages.php',
+                ROOT_PATH . 'system/src/Validator/ValidationResult.php',
                 ROOT_PATH . 'system/src/Ads.php',
                 ROOT_PATH . 'system/src/Sitemap/SitemapUrlEntry.php',
                 ROOT_PATH . 'system/src/AdminTasks/AsAdminTask.php',
@@ -183,6 +197,16 @@ return static function (ContainerConfigurator $container): void {
     $services->set(MailFactory::class)->factory([MailFactory::class, 'create']);
     $services->set(HTMLPurifier::class)->factory([HTMLPurifier::class, 'create']);
     $services->set(\HTMLPurifier::class, \HTMLPurifier::class)->factory([HTMLPurifier::class, 'create']);
+
+    // A module adds a rule of its own by registering a factory with this tag — the core is not
+    // touched, the way the addRule() of the previous validator allowed.
+    $services->instanceof(RuleConstraintFactoryInterface::class)->tag('johncms.validator.rule_factory');
+    $services->set(RuleCompiler::class)
+        ->arg('$factories', tagged_iterator('johncms.validator.rule_factory'));
+    // The engine itself, registered under the Symfony interface so SymfonyValidator is autowired
+    // with it; the application only ever asks for our own ValidatorInterface.
+    $services->set(SymfonyValidatorEngine::class)->factory(service(SymfonyValidatorFactory::class));
+    $services->alias(ValidatorInterface::class, SymfonyValidator::class);
 
     $services->set(Environment::class)->autowire();
     $services->set(RouteCollection::class)->factory(service(RouteCollectorFactory::class));
