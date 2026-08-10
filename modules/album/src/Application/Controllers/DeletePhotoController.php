@@ -13,7 +13,6 @@ use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Users\User;
-use Johncms\Validator\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
 final readonly class DeletePhotoController
@@ -54,14 +53,11 @@ final readonly class DeletePhotoController
         );
     }
 
-    public function delete(Request $request, int $img): ViewResponse
+    public function delete(int $img): ViewResponse
     {
         $photo = $this->resolveContext($img);
         if ($photo instanceof ViewResponse) {
             return $photo;
-        }
-        if (! $this->isCsrfValid($request)) {
-            return $this->renderError(__('Wrong data'));
         }
 
         $albumId = $photo->album_id;
@@ -91,16 +87,6 @@ final readonly class DeletePhotoController
         } catch (AlbumEditForbiddenException $e) {
             return $this->renderError($e->getMessage(), 403);
         }
-    }
-
-    private function isCsrfValid(Request $request): bool
-    {
-        $validator = new Validator(
-            ['csrf_token' => $request->body('csrf_token', '')],
-            ['csrf_token' => ['Csrf']]
-        );
-
-        return $validator->isValid();
     }
 
     private function renderError(string $message, int $status = 200): ViewResponse

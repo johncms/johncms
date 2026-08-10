@@ -18,7 +18,6 @@ use Johncms\Http\Environment;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Users\User;
-use Johncms\Validator\Validator;
 
 final readonly class IpBanController
 {
@@ -84,10 +83,6 @@ final readonly class IpBanController
 
     public function prepare(Request $request): ViewResponse
     {
-        if (! $this->isCsrfValid($request)) {
-            return $this->newForm([__('Wrong data')]);
-        }
-
         $term = $request->bodyInt('term', 1);
         $url = trim($request->body('url', ''));
         $reason = trim($request->body('reason', ''));
@@ -107,10 +102,6 @@ final readonly class IpBanController
 
     public function store(Request $request): ViewResponse
     {
-        if (! $this->isCsrfValid($request)) {
-            return $this->newForm([__('Wrong data')]);
-        }
-
         $ip1 = $request->bodyInt('ip1');
         $ip2 = $request->bodyInt('ip2');
         if ($ip1 <= 0 || $ip2 <= 0) {
@@ -142,10 +133,6 @@ final readonly class IpBanController
 
     public function search(Request $request): ViewResponse
     {
-        if (! $this->isCsrfValid($request)) {
-            return $this->error(__('Wrong data'));
-        }
-
         $ip = ip2long(trim($request->body('ip', '')));
         if ($ip === false) {
             return $this->error(__('Invalid IP'));
@@ -185,11 +172,9 @@ final readonly class IpBanController
         ]);
     }
 
-    public function delete(Request $request, int $id): ViewResponse
+    public function delete(int $id): ViewResponse
     {
-        if ($this->isCsrfValid($request)) {
-            $this->manageIpBan->delete($id);
-        }
+        $this->manageIpBan->delete($id);
 
         redirect(self::URL);
     }
@@ -207,11 +192,9 @@ final readonly class IpBanController
         ]);
     }
 
-    public function clear(Request $request): ViewResponse
+    public function clear(): ViewResponse
     {
-        if ($this->isCsrfValid($request)) {
-            $this->manageIpBan->clearAll();
-        }
+        $this->manageIpBan->clearAll();
 
         redirect(self::URL);
     }
@@ -307,15 +290,5 @@ final readonly class IpBanController
             'page_title' => $pageTitle,
             'sec_menu'   => ['ipban' => true],
         ];
-    }
-
-    private function isCsrfValid(Request $request): bool
-    {
-        $validator = new Validator(
-            ['csrf_token' => $request->body('csrf_token', '')],
-            ['csrf_token' => ['Csrf']]
-        );
-
-        return $validator->isValid();
     }
 }

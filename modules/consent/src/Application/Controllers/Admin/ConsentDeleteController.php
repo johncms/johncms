@@ -32,16 +32,9 @@ final readonly class ConsentDeleteController
         }
 
         if ($request->getMethod() === 'POST') {
-            $validator = new Validator(
-                ['csrf_token' => $request->body('csrf_token', '')],
-                ['csrf_token' => ['Csrf']]
-            );
-
-            if ($validator->isValid()) {
-                $this->deleteConsent->execute($consent);
-                $this->session->flash('success_message', __('Record deleted'));
-                redirect(self::URL);
-            }
+            $this->deleteConsent->execute($consent);
+            $this->session->flash('success_message', __('Record deleted'));
+            redirect(self::URL);
         }
 
         $title = __('Delete consent') . ': ' . $consent->title;

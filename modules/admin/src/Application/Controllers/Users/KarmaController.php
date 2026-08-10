@@ -12,7 +12,6 @@ use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
-use Johncms\Validator\Validator;
 
 final readonly class KarmaController
 {
@@ -33,10 +32,6 @@ final readonly class KarmaController
 
     public function save(Request $request): ViewResponse
     {
-        if (! $this->isCsrfValid($request)) {
-            return $this->renderForm(__('Wrong data'));
-        }
-
         $dto = new KarmaSettingsDTO(
             karmaPoints: abs($request->bodyInt('karma_points')),
             forumPosts: abs($request->bodyInt('forum')),
@@ -69,24 +64,12 @@ final readonly class KarmaController
         ]);
     }
 
-    public function reset(Request $request): ViewResponse
+    public function reset(): ViewResponse
     {
-        if ($this->isCsrfValid($request)) {
-            $this->resetKarma->execute();
-            $this->session->flash('success_message', __('Karma is cleared'));
-        }
+        $this->resetKarma->execute();
+        $this->session->flash('success_message', __('Karma is cleared'));
 
         redirect(self::URL);
-    }
-
-    private function isCsrfValid(Request $request): bool
-    {
-        $validator = new Validator(
-            ['csrf_token' => $request->body('csrf_token', '')],
-            ['csrf_token' => ['Csrf']]
-        );
-
-        return $validator->isValid();
     }
 
     private function renderForm(?string $errorMessage = null): ViewResponse

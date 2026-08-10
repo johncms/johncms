@@ -20,7 +20,6 @@ final readonly class UpdateProfileCommand
         public string $jabber,
         public string $www,
         public string $status,
-        public string $csrfToken,
         // Admin-only fields (applied only when the editor has rights >= 7)
         public string $name,
         public int $karmaOff,
@@ -31,7 +30,7 @@ final readonly class UpdateProfileCommand
     }
 
     /**
-     * The editable profile attributes (without the CSRF token).
+     * The editable profile attributes.
      *
      * @return array<string, mixed>
      */

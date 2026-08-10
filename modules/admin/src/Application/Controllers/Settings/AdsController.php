@@ -17,7 +17,6 @@ use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
 use Johncms\Http\View\ViewResponse;
-use Johncms\Validator\Validator;
 
 final readonly class AdsController
 {
@@ -82,10 +81,6 @@ final readonly class AdsController
 
     public function store(Request $request): ViewResponse
     {
-        if (! $this->isCsrfValid($request)) {
-            return $this->error(__('Wrong data'));
-        }
-
         $id = $request->bodyInt('id') ?: null;
         $fields = $this->fieldsFromRequest($request);
         $errors = $this->validate($fields);
@@ -100,22 +95,20 @@ final readonly class AdsController
         redirect(self::URL . '?type=' . $fields['type']);
     }
 
-    public function up(Request $request, int $id): ViewResponse
+    public function up(int $id): ViewResponse
     {
-        return $this->reorder($request, $id, 'up');
+        return $this->reorder($id, 'up');
     }
 
-    public function down(Request $request, int $id): ViewResponse
+    public function down(int $id): ViewResponse
     {
-        return $this->reorder($request, $id, 'down');
+        return $this->reorder($id, 'down');
     }
 
-    public function toggle(Request $request, int $id): ViewResponse
+    public function toggle(int $id): ViewResponse
     {
         $type = $this->manageAd->find($id)?->type ?? 0;
-        if ($this->isCsrfValid($request)) {
-            $this->manageAd->toggle($id);
-        }
+        $this->manageAd->toggle($id);
 
         redirect(self::URL . '?type=' . $type);
     }
@@ -138,12 +131,10 @@ final readonly class AdsController
         ]);
     }
 
-    public function delete(Request $request, int $id): ViewResponse
+    public function delete(int $id): ViewResponse
     {
         $type = $this->manageAd->find($id)?->type ?? 0;
-        if ($this->isCsrfValid($request)) {
-            $this->manageAd->delete($id);
-        }
+        $this->manageAd->delete($id);
 
         redirect(self::URL . '?type=' . $type);
     }
@@ -160,21 +151,17 @@ final readonly class AdsController
         ]);
     }
 
-    public function clear(Request $request): ViewResponse
+    public function clear(): ViewResponse
     {
-        if ($this->isCsrfValid($request)) {
-            $this->manageAd->deleteInactive();
-        }
+        $this->manageAd->deleteInactive();
 
         redirect(self::URL);
     }
 
-    private function reorder(Request $request, int $id, string $direction): ViewResponse
+    private function reorder(int $id, string $direction): ViewResponse
     {
         $type = $this->manageAd->find($id)?->type ?? 0;
-        if ($this->isCsrfValid($request)) {
-            $direction === 'up' ? $this->manageAd->moveUp($id) : $this->manageAd->moveDown($id);
-        }
+        $direction === 'up' ? $this->manageAd->moveUp($id) : $this->manageAd->moveDown($id);
 
         redirect(self::URL . '?type=' . $type);
     }
@@ -388,15 +375,5 @@ final readonly class AdsController
             'page_title'  => $pageTitle,
             'module_menu' => ['ads' => true],
         ];
-    }
-
-    private function isCsrfValid(Request $request): bool
-    {
-        $validator = new Validator(
-            ['csrf_token' => $request->body('csrf_token', '')],
-            ['csrf_token' => ['Csrf']]
-        );
-
-        return $validator->isValid();
     }
 }

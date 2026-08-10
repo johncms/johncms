@@ -11,7 +11,6 @@ use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Http\Session;
-use Johncms\Validator\Validator;
 
 final readonly class CookieBannerController
 {
@@ -31,10 +30,6 @@ final readonly class CookieBannerController
 
     public function save(Request $request): ViewResponse
     {
-        if (! $this->isCsrfValid($request)) {
-            return $this->renderForm(__('Wrong data'));
-        }
-
         try {
             $this->updateCookieBannerSettings->execute($this->buildDto($request));
         } catch (ConfigWriteException) {
@@ -62,16 +57,6 @@ final readonly class CookieBannerController
         );
     }
 
-    private function isCsrfValid(Request $request): bool
-    {
-        $validator = new Validator(
-            ['csrf_token' => $request->body('csrf_token', '')],
-            ['csrf_token' => ['Csrf']]
-        );
-
-        return $validator->isValid();
-    }
-
     private function renderForm(?string $errorMessage = null): ViewResponse
     {
         $title = __('Cookie banner');
@@ -84,7 +69,6 @@ final readonly class CookieBannerController
         foreach ($config['lng_list'] ?? [] as $code => $data) {
             $languages[] = ['code' => $code, 'name' => $data['name'] ?? $code];
         }
-
 
         return new ViewResponse('@consent/admin/cookie-banner.twig', [
             'title'       => $title,

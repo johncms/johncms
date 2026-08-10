@@ -11,7 +11,6 @@ use Johncms\Modules\Admin\Domain\Exceptions\ConfigWriteException;
 use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\Validator\Validator;
 
 final readonly class ModulesAccessController
 {
@@ -31,10 +30,6 @@ final readonly class ModulesAccessController
 
     public function save(Request $request): ViewResponse
     {
-        if (! $this->isCsrfValid($request)) {
-            return $this->renderForm(__('Wrong data'));
-        }
-
         try {
             $this->updateModulesAccessUseCase->execute($this->buildDto($request));
         } catch (ConfigWriteException) {
@@ -57,16 +52,6 @@ final readonly class ModulesAccessController
             downloadsComments: (bool) $request->bodyInt('downcomm'),
             community: $request->bodyInt('active'),
         );
-    }
-
-    private function isCsrfValid(Request $request): bool
-    {
-        $validator = new Validator(
-            ['csrf_token' => $request->body('csrf_token', '')],
-            ['csrf_token' => ['Csrf']]
-        );
-
-        return $validator->isValid();
     }
 
     private function renderForm(string $errorMessage = ''): ViewResponse

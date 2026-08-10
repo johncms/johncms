@@ -24,7 +24,6 @@ final class GuestbookFormTest extends TestCase
         $request = new Request([], [
             'name'           => '  John  ',
             'message'        => '<p>&nbsp;</p> Hello world ',
-            'csrf_token'     => ' token ',
             'code'           => ' 123 ',
             'attached_files' => ['3', 7],
         ]);
@@ -34,7 +33,6 @@ final class GuestbookFormTest extends TestCase
 
         self::assertSame('John', $formData['name']);
         self::assertSame('Hello world', $formData['message']);
-        self::assertSame('token', $formData['csrf_token']);
         self::assertSame('123', $formData['code']);
         self::assertSame([3, 7], $formData['attached_files']);
     }
@@ -44,7 +42,8 @@ final class GuestbookFormTest extends TestCase
         $rules = $this->makeForm(UserFactory::make())->getValidationRules();
 
         self::assertArrayHasKey('message', $rules);
-        self::assertArrayHasKey('csrf_token', $rules);
+        // Flood and Ban are form-level rules: they belong to no field of the form.
+        self::assertArrayHasKey('_form', $rules);
         self::assertArrayNotHasKey('name', $rules);
         self::assertArrayNotHasKey('code', $rules);
     }

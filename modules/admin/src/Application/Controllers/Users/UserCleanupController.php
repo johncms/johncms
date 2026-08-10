@@ -10,7 +10,6 @@ use Johncms\Modules\Admin\Domain\Repository\InactiveUsersRepositoryInterface;
 use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\Validator\Validator;
 
 final readonly class UserCleanupController
 {
@@ -29,25 +28,11 @@ final readonly class UserCleanupController
         return $this->renderConfirm();
     }
 
-    public function clean(Request $request): ViewResponse
+    public function clean(): ViewResponse
     {
-        if (! $this->isCsrfValid($request)) {
-            return $this->renderConfirm(__('Wrong data'));
-        }
-
         $deleted = $this->cleanupInactiveUsers->execute();
         $this->session->flash('success_message', __('Inactive profiles deleted') . ': ' . $deleted);
         redirect(self::URL);
-    }
-
-    private function isCsrfValid(Request $request): bool
-    {
-        $validator = new Validator(
-            ['csrf_token' => $request->body('csrf_token', '')],
-            ['csrf_token' => ['Csrf']]
-        );
-
-        return $validator->isValid();
     }
 
     private function renderConfirm(?string $errorMessage = null): ViewResponse

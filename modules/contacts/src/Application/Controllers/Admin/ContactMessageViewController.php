@@ -11,7 +11,6 @@ use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Http\Session;
-use Johncms\Validator\Validator;
 
 final readonly class ContactMessageViewController
 {
@@ -32,7 +31,7 @@ final readonly class ContactMessageViewController
             redirect(self::URL);
         }
 
-        if ($request->getMethod() === 'POST' && $this->isCsrfValid($request)) {
+        if ($request->getMethod() === 'POST') {
             $this->markProcessed->execute($message);
             $this->session->flash('success_message', __('The message is marked as processed'));
             redirect(self::URL . '/' . $message->id);
@@ -44,7 +43,6 @@ final readonly class ContactMessageViewController
         $this->navChain->add($title);
 
         $successMessage = $this->session->getFlash('success_message');
-
 
         return new ViewResponse(
             '@contacts/admin/message.twig',
@@ -63,15 +61,5 @@ final readonly class ContactMessageViewController
                 'success_message' => $successMessage,
             ]
         );
-    }
-
-    private function isCsrfValid(Request $request): bool
-    {
-        $validator = new Validator(
-            ['csrf_token' => $request->body('csrf_token', '')],
-            ['csrf_token' => ['Csrf']]
-        );
-
-        return $validator->isValid();
     }
 }

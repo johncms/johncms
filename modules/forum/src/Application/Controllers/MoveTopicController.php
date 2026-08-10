@@ -44,12 +44,7 @@ final readonly class MoveTopicController
         if ($request->hasBody('submit')) {
             $targetSectionId = $request->bodyInt('razd');
 
-            $validator = new Validator(
-                ['csrf_token' => $request->body('csrf_token', '')],
-                ['csrf_token' => ['Csrf']]
-            );
-
-            if (! $validator->isValid() || $targetSectionId <= 0) {
+            if ($targetSectionId <= 0) {
                 return new ViewResponse(
                     '@theme/pages/result.twig',
                     [

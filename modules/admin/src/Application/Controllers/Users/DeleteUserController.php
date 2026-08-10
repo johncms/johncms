@@ -12,7 +12,6 @@ use Johncms\Modules\Admin\Application\UseCases\GetUserDeletionContextUseCase;
 use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\Validator\Validator;
 
 final readonly class DeleteUserController
 {
@@ -55,10 +54,6 @@ final readonly class DeleteUserController
         $title = __('Delete user');
         $this->navChain->add($title);
 
-        if (! $this->isCsrfValid($request)) {
-            return $this->renderError($title, __('Wrong data'));
-        }
-
         try {
             $this->getContext->execute($id);
         } catch (WrongUserDataException | UserNotFoundException | CannotDeleteHigherRightsException $e) {
@@ -90,16 +85,6 @@ final readonly class DeleteUserController
             $e instanceof CannotDeleteHigherRightsException => __('You cannot delete higher administration'),
             default                                         => __('Wrong data'),
         };
-    }
-
-    private function isCsrfValid(Request $request): bool
-    {
-        $validator = new Validator(
-            ['csrf_token' => $request->body('csrf_token', '')],
-            ['csrf_token' => ['Csrf']]
-        );
-
-        return $validator->isValid();
     }
 
     private function renderError(string $title, string $message): ViewResponse

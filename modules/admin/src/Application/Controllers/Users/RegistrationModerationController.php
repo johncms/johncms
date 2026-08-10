@@ -16,7 +16,6 @@ use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
 use Johncms\Users\User;
-use Johncms\Validator\Validator;
 
 final readonly class RegistrationModerationController
 {
@@ -69,7 +68,7 @@ final readonly class RegistrationModerationController
 
     public function approve(Request $request): ViewResponse
     {
-        if ($this->isCsrfValid($request) && ($id = $this->postedId($request)) > 0) {
+        if (($id = $this->postedId($request)) > 0) {
             $this->approveRegistration->execute($id, $this->currentUser->name);
             $this->session->flash('success_message', __('Registration is confirmed'));
         }
@@ -77,19 +76,17 @@ final readonly class RegistrationModerationController
         redirect(self::URL);
     }
 
-    public function approveAll(Request $request): ViewResponse
+    public function approveAll(): ViewResponse
     {
-        if ($this->isCsrfValid($request)) {
-            $this->approveRegistration->executeAll($this->currentUser->name);
-            $this->session->flash('success_message', __('Registration is confirmed'));
-        }
+        $this->approveRegistration->executeAll($this->currentUser->name);
+        $this->session->flash('success_message', __('Registration is confirmed'));
 
         redirect(self::URL);
     }
 
     public function delete(Request $request): ViewResponse
     {
-        if ($this->isCsrfValid($request) && ($id = $this->postedId($request)) > 0) {
+        if (($id = $this->postedId($request)) > 0) {
             $this->deleteRegistration->execute($id);
             $this->session->flash('success_message', __('User deleted'));
         }
@@ -97,24 +94,20 @@ final readonly class RegistrationModerationController
         redirect(self::URL);
     }
 
-    public function deleteAll(Request $request): ViewResponse
+    public function deleteAll(): ViewResponse
     {
-        if ($this->isCsrfValid($request)) {
-            $this->deleteRegistration->executeAll();
-            $this->session->flash('success_message', __('All unconfirmed registrations were removed'));
-        }
+        $this->deleteRegistration->executeAll();
+        $this->session->flash('success_message', __('All unconfirmed registrations were removed'));
 
         redirect(self::URL);
     }
 
     public function deleteByIp(Request $request): ViewResponse
     {
-        if ($this->isCsrfValid($request)) {
-            $ip = $request->bodyInt('ip');
-            if ($ip > 0) {
-                $this->deleteRegistration->executeByIp($ip);
-                $this->session->flash('success_message', __('All unconfirmed registrations with selected IP were deleted'));
-            }
+        $ip = $request->bodyInt('ip');
+        if ($ip > 0) {
+            $this->deleteRegistration->executeByIp($ip);
+            $this->session->flash('success_message', __('All unconfirmed registrations with selected IP were deleted'));
         }
 
         redirect(self::URL);
@@ -123,15 +116,5 @@ final readonly class RegistrationModerationController
     private function postedId(Request $request): int
     {
         return $request->bodyInt('id');
-    }
-
-    private function isCsrfValid(Request $request): bool
-    {
-        $validator = new Validator(
-            ['csrf_token' => $request->body('csrf_token', '')],
-            ['csrf_token' => ['Csrf']]
-        );
-
-        return $validator->isValid();
     }
 }

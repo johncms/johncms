@@ -130,9 +130,9 @@
                 } only %}
             {% endfor %}
 
-            {% if errors.csrf_token is defined %}
+            {% if errors._form is defined %}
                 <div class="alert alert-danger">
-                    {% for error in errors.csrf_token %}
+                    {% for error in errors._form %}
                         {{ error }}{% if not loop.last %}<br>{% endif %}
                     {% endfor %}
                 </div>

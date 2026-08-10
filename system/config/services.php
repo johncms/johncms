@@ -38,7 +38,6 @@ use Johncms\Users\UserPlaceFormatter;
 use Johncms\Users\UserPlaceFormatterInterface;
 use Johncms\Sitemap\SitemapGenerator;
 use Johncms\Http\Environment;
-use Johncms\Http\Middleware\CsrfMiddleware;
 use Johncms\Http\ResponseNormalizer;
 use Johncms\Http\Session;
 use Johncms\Http\SessionFactory;
@@ -175,9 +174,8 @@ return static function (ContainerConfigurator $container): void {
     $services->set(ImageManager::class)->factory(service(ImageManagerFactory::class));
     $services->set(Ads::class)->factory(service(AdsFactory::class));
     $services->set(Csrf::class)->factory([Csrf::class, 'create']);
-    // Both read config/csrf.php: scalar and array arguments the container cannot autowire.
+    // Reads config/csrf.php: an array argument the container cannot autowire.
     $services->set(CsrfExemptions::class)->factory([CsrfExemptions::class, 'create']);
-    $services->set(CsrfMiddleware::class)->factory([CsrfMiddleware::class, 'create']);
     $services->set('counters', Counters::class)->factory(service(CountersFactory::class));
     // The counters are built by a factory under a string id; the alias is what lets a service or
     // a controller ask for them by type.

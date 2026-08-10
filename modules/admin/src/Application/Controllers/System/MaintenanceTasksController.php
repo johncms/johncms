@@ -16,7 +16,6 @@ use Johncms\Modules\Admin\Application\UseCases\RunMaintenanceTaskUseCase;
 use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\Validator\Validator;
 
 final readonly class MaintenanceTasksController
 {
@@ -39,10 +38,6 @@ final readonly class MaintenanceTasksController
 
     public function run(Request $request): ViewResponse
     {
-        if (! $this->isCsrfValid($request)) {
-            return $this->renderList(__('Wrong data'));
-        }
-
         $commandName = $request->body('command', '');
         $task = $this->registry->find($commandName);
         if ($task === null) {
@@ -66,16 +61,6 @@ final readonly class MaintenanceTasksController
         }
 
         redirect(self::URL);
-    }
-
-    private function isCsrfValid(Request $request): bool
-    {
-        $validator = new Validator(
-            ['csrf_token' => $request->body('csrf_token', '')],
-            ['csrf_token' => ['Csrf']]
-        );
-
-        return $validator->isValid();
     }
 
     private function renderList(string $errorMessage = ''): ViewResponse

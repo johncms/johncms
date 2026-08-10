@@ -12,7 +12,6 @@ use Johncms\Modules\Admin\Domain\Services\ThemeListProviderInterface;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
-use Johncms\Validator\Validator;
 
 final readonly class SystemSettingsController
 {
@@ -33,10 +32,6 @@ final readonly class SystemSettingsController
 
     public function save(Request $request): ViewResponse
     {
-        if (! $this->isCsrfValid($request)) {
-            return $this->renderForm(__('Wrong data'));
-        }
-
         try {
             $this->updateSystemSettingsUseCase->execute($this->buildDto($request));
         } catch (ConfigWriteException) {
@@ -69,16 +64,6 @@ final readonly class SystemSettingsController
             personalDataPolicyUrl: trim($request->body('personal_data_policy_url', '')),
             cookiePolicyUrl: trim($request->body('cookie_policy_url', '')),
         );
-    }
-
-    private function isCsrfValid(Request $request): bool
-    {
-        $validator = new Validator(
-            ['csrf_token' => $request->body('csrf_token', '')],
-            ['csrf_token' => ['Csrf']]
-        );
-
-        return $validator->isValid();
     }
 
     private function renderForm(string $errorMessage = ''): ViewResponse

@@ -32,7 +32,6 @@ final readonly class ContactForm
             'email'                => $request->body('email', ''),
             'message'              => $request->body('message', ''),
             'code'                 => $request->body('code', ''),
-            'csrf_token'           => $request->body('csrf_token', ''),
             self::HONEYPOT_FIELD   => $request->body(self::HONEYPOT_FIELD, ''),
         ];
 
@@ -79,8 +78,7 @@ final readonly class ContactForm
             self::HONEYPOT_FIELD => [
                 'Identical' => ['token' => ''],
             ],
-            'csrf_token'         => [
-                'Csrf',
+            '_form'              => [
                 'Flood',
                 'Ban' => [
                     'bans' => [1, 13],

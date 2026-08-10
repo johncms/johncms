@@ -66,14 +66,12 @@ final readonly class ConsentEditController
                     'language'   => $fields['language'],
                     'title'      => $fields['title'],
                     'version'    => $fields['version'],
-                    'csrf_token' => $request->body('csrf_token', ''),
                 ],
                 [
                     'context'    => ['NotEmpty', 'StringLength' => ['max' => 100]],
                     'language'   => ['InArray' => ['haystack' => $languageCodes]],
                     'title'      => ['NotEmpty', 'StringLength' => ['max' => self::TITLE_MAX_LENGTH]],
                     'version'    => ['NotEmpty', 'StringLength' => ['max' => 50]],
-                    'csrf_token' => ['Csrf'],
                 ]
             );
 

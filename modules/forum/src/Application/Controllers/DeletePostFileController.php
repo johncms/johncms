@@ -57,24 +57,6 @@ final readonly class DeletePostFileController
         }
 
         if ($request->getMethod() === 'POST' && $request->hasBody('delfile')) {
-            $validator = new Validator(
-                ['csrf_token' => $request->body('csrf_token', '')],
-                ['csrf_token' => ['Csrf']]
-            );
-
-            if (! $validator->isValid()) {
-                return new ViewResponse(
-                    '@theme/pages/result.twig',
-                    [
-                        'title'         => __('Delete file'),
-                        'type'          => 'alert-danger',
-                        'message'       => __('Wrong data'),
-                        'back_url'      => '/forum/delete-post-file/' . $id . '/' . $fid . '/',
-                        'back_url_name' => __('Back'),
-                    ]
-                );
-            }
-
             $this->deletePostFileUseCase->execute($file->id, $file->filename);
             redirect($context->backUrl);
         }

@@ -18,7 +18,6 @@ use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
 use Johncms\Users\User;
-use Johncms\Validator\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
 final readonly class EditProfileController
@@ -65,14 +64,11 @@ final readonly class EditProfileController
         redirect('/profile/' . $context->profileUser->id . '/edit');
     }
 
-    public function deleteAvatar(Request $request, int $id): ViewResponse
+    public function deleteAvatar(int $id): ViewResponse
     {
         $context = $this->resolveContext($id);
         if ($context instanceof ViewResponse) {
             return $context;
-        }
-        if (! $this->isCsrfValid($request)) {
-            return $this->renderError(__('Wrong data'));
         }
 
         $this->deleteAvatarUseCase->execute($context->profileUser->id);
@@ -80,14 +76,11 @@ final readonly class EditProfileController
         redirect('/profile/' . $context->profileUser->id . '/edit');
     }
 
-    public function deletePhoto(Request $request, int $id): ViewResponse
+    public function deletePhoto(int $id): ViewResponse
     {
         $context = $this->resolveContext($id);
         if ($context instanceof ViewResponse) {
             return $context;
-        }
-        if (! $this->isCsrfValid($request)) {
-            return $this->renderError(__('Wrong data'));
         }
 
         $this->deletePhotoUseCase->execute($context->profileUser->id);
@@ -109,16 +102,6 @@ final readonly class EditProfileController
         }
     }
 
-    private function isCsrfValid(Request $request): bool
-    {
-        $validator = new Validator(
-            ['csrf_token' => $request->body('csrf_token', '')],
-            ['csrf_token' => ['Csrf']]
-        );
-
-        return $validator->isValid();
-    }
-
     private function buildCommand(Request $request): UpdateProfileCommand
     {
         return new UpdateProfileCommand(
@@ -135,7 +118,6 @@ final readonly class EditProfileController
             jabber: (string) $request->request->filter('jabber', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
             www: (string) $request->request->filter('www', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
             status: (string) $request->request->filter('status', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
-            csrfToken: $request->body('csrf_token', ''),
             name: (string) $request->request->filter('name', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
             karmaOff: $request->bodyInt('karma_off'),
             sex: (string) $request->request->filter('sex', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),

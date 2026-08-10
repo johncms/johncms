@@ -21,31 +21,12 @@ final readonly class MarkAllTopicsReadController
     ) {
     }
 
-    public function __invoke(Request $request): ViewResponse
+    public function __invoke(): ViewResponse
     {
         try {
             $this->forumUserAccessUseCase->execute();
         } catch (ForumAccessDeniedException $exception) {
             return $this->forumErrorRenderer->viewResponse($exception);
-        }
-
-        $validator = new Validator(
-            ['csrf_token' => $request->body('csrf_token', '')],
-            ['csrf_token' => ['Csrf']]
-        );
-
-        if (! $validator->isValid()) {
-            return new ViewResponse(
-                '@theme/pages/result.twig',
-                [
-                    'title'         => __('Unread'),
-                    'page_title'    => __('Unread'),
-                    'type'          => 'alert-danger',
-                    'message'       => __('Wrong data'),
-                    'back_url'      => '/forum/unread/',
-                    'back_url_name' => __('Back'),
-                ]
-            );
         }
 
         $this->markAllTopicsReadUseCase->execute();

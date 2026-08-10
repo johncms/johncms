@@ -32,23 +32,15 @@ final readonly class ContactMessageDeleteController
         }
 
         if ($request->getMethod() === 'POST') {
-            $validator = new Validator(
-                ['csrf_token' => $request->body('csrf_token', '')],
-                ['csrf_token' => ['Csrf']]
-            );
-
-            if ($validator->isValid()) {
-                $this->deleteMessage->execute($message);
-                $this->session->flash('success_message', __('Record deleted'));
-                redirect(self::URL);
-            }
+            $this->deleteMessage->execute($message);
+            $this->session->flash('success_message', __('Record deleted'));
+            redirect(self::URL);
         }
 
         $title = __('Delete message');
         $this->navChain->add(__('Contacts'), '/admin/contacts');
         $this->navChain->add(__('Contact messages'), self::URL);
         $this->navChain->add($title);
-
 
         return new ViewResponse(
             '@contacts/admin/message-delete-confirm.twig',

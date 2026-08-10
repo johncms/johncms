@@ -26,12 +26,6 @@ final readonly class ClearGuestbookController
         $baseUrl = '/guestbook/';
 
         if ($request->getMethod() === 'POST') {
-            $validator = new Validator(['csrf_token' => $request->body('csrf_token')], ['csrf_token' => ['Csrf']]);
-            if (! $validator->isValid()) {
-                $this->session->flash('errors', $validator->getErrors());
-                redirect($baseUrl);
-            }
-
             $period = ClearGuestbookPeriod::tryFrom($request->bodyInt('cl'))
                 ?? ClearGuestbookPeriod::OlderThanWeek;
 

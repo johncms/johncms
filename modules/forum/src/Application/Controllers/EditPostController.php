@@ -76,23 +76,6 @@ final readonly class EditPostController
                 );
             }
 
-            $validator = new Validator(
-                ['csrf_token' => $request->body('csrf_token', '')],
-                ['csrf_token' => ['Csrf']]
-            );
-            if (! $validator->isValid()) {
-                return new ViewResponse(
-                    '@theme/pages/result.twig',
-                    [
-                        'title'         => __('Edit Message'),
-                        'type'          => 'alert-danger',
-                        'message'       => __('Wrong data'),
-                        'back_url'      => '/forum/edit-post/' . $id . '/',
-                        'back_url_name' => __('Back'),
-                    ]
-                );
-            }
-
             $this->editPostUseCase->execute($context, $msg);
             $this->attachUploadedFilesUseCase->execute(
                 messageId: $context->message->id,

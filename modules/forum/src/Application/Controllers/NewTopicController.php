@@ -85,7 +85,6 @@ final readonly class NewTopicController
             'message'    => $this->editorContentNormalizer->trimEdgeEmptyBlocks(
                 ForumUtils::topicLink($request->body('msg', ''), $request->server->getString('HTTP_HOST', ''))
             ),
-            'csrf_token' => $request->body('csrf_token', ''),
             'add_files'  => $request->bodyInt('addfiles', 0),
             'attached_files' => (array) $request->bodyInts('attached_files'),
         ];
@@ -120,7 +119,6 @@ final readonly class NewTopicController
                         },
                     ],
                 ],
-                'csrf_token' => ['Csrf'],
             ];
 
             $validator = new Validator($data, $rules);

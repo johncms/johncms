@@ -25,25 +25,6 @@ final readonly class SetFilterByAuthorController
     {
         $page = max(1, $request->queryInt('page', 1));
 
-        $validator = new Validator(
-            ['csrf_token' => $request->body('csrf_token', '')],
-            ['csrf_token' => ['Csrf']]
-        );
-
-        if (! $validator->isValid()) {
-            return new ViewResponse(
-                '@theme/pages/result.twig',
-                [
-                    'title'         => __('Filter by author'),
-                    'page_title'    => __('Filter by author'),
-                    'type'          => 'alert-danger',
-                    'message'       => __('Wrong data'),
-                    'back_url'      => '/forum/filter/' . $id . '/' . ($page > 1 ? '?page=' . $page : ''),
-                    'back_url_name' => __('Back'),
-                ]
-            );
-        }
-
         try {
             $topic = $this->contextUseCase->execute($id);
         } catch (ForumValidationException $exception) {

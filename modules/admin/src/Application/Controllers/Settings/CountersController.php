@@ -12,7 +12,6 @@ use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Users\User;
-use Johncms\Validator\Validator;
 
 final readonly class CountersController
 {
@@ -78,10 +77,6 @@ final readonly class CountersController
 
     public function preview(Request $request): ViewResponse
     {
-        if (! $this->isCsrfValid($request)) {
-            return $this->error(__('Wrong data'));
-        }
-
         $id = $request->bodyInt('id');
         $name = mb_substr(trim($request->body('name', '')), 0, 25);
         $link1 = trim($request->body('link1', ''));
@@ -111,10 +106,6 @@ final readonly class CountersController
 
     public function store(Request $request): ViewResponse
     {
-        if (! $this->isCsrfValid($request)) {
-            return $this->error(__('Wrong data'));
-        }
-
         $id = $request->bodyInt('id');
         $name = mb_substr(trim($request->body('name', '')), 0, 25);
         $link1 = trim($request->body('link1', ''));
@@ -134,28 +125,22 @@ final readonly class CountersController
 
     public function toggle(Request $request, int $id): ViewResponse
     {
-        if ($this->isCsrfValid($request)) {
-            $enabled = $request->bodyInt('enabled') === 1;
-            $this->manageCounter->toggle($id, $enabled);
-        }
+        $enabled = $request->bodyInt('enabled') === 1;
+        $this->manageCounter->toggle($id, $enabled);
 
         redirect(self::URL . '/' . $id);
     }
 
-    public function up(Request $request, int $id): ViewResponse
+    public function up(int $id): ViewResponse
     {
-        if ($this->isCsrfValid($request)) {
-            $this->manageCounter->moveUp($id);
-        }
+        $this->manageCounter->moveUp($id);
 
         redirect(self::URL);
     }
 
-    public function down(Request $request, int $id): ViewResponse
+    public function down(int $id): ViewResponse
     {
-        if ($this->isCsrfValid($request)) {
-            $this->manageCounter->moveDown($id);
-        }
+        $this->manageCounter->moveDown($id);
 
         redirect(self::URL);
     }
@@ -178,11 +163,9 @@ final readonly class CountersController
         ]);
     }
 
-    public function delete(Request $request, int $id): ViewResponse
+    public function delete(int $id): ViewResponse
     {
-        if ($this->isCsrfValid($request)) {
-            $this->manageCounter->delete($id);
-        }
+        $this->manageCounter->delete($id);
 
         redirect(self::URL);
     }
@@ -233,15 +216,5 @@ final readonly class CountersController
             'page_title'  => $title,
             'module_menu' => ['counters' => true],
         ];
-    }
-
-    private function isCsrfValid(Request $request): bool
-    {
-        $validator = new Validator(
-            ['csrf_token' => $request->body('csrf_token', '')],
-            ['csrf_token' => ['Csrf']]
-        );
-
-        return $validator->isValid();
     }
 }

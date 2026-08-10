@@ -22,7 +22,7 @@
     {% if can_write %}
         <div class="row">
             <div class="col-12">
-                {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: errors.csrf_token|default([])} only %}
+                {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: errors._form|default([])} only %}
                 <form name="form" action="/guestbook/" method="post">
                     <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}"/>
                     {% if not app.user.isValid %}

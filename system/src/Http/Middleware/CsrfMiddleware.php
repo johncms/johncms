@@ -11,7 +11,6 @@ use Johncms\Router\MiddlewareInterface;
 use Johncms\Security\Csrf;
 use Johncms\Security\CsrfExemptions;
 use Psr\Log\LoggerInterface;
-use RuntimeException;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -40,36 +39,7 @@ final readonly class CsrfMiddleware implements MiddlewareInterface
         private RequestPathNormalizer $pathNormalizer,
         private ExceptionResponseFactory $exceptionResponses,
         private LoggerInterface $logger,
-        /**
-         * Whether a failed check rejects the request. False only during the observation
-         * deployment, where a failure is logged and let through so a form that still misses
-         * the token surfaces in the log instead of in support.
-         */
-        private bool $enforce,
     ) {
-    }
-
-    public static function create(
-        Csrf $csrf,
-        CsrfExemptions $exemptions,
-        RequestPathNormalizer $pathNormalizer,
-        ExceptionResponseFactory $exceptionResponses,
-        LoggerInterface $logger,
-    ): self {
-        $config = require CONFIG_PATH . 'csrf.php';
-
-        if (! is_array($config)) {
-            throw new RuntimeException('config/csrf.php must return an array.');
-        }
-
-        return new self(
-            $csrf,
-            $exemptions,
-            $pathNormalizer,
-            $exceptionResponses,
-            $logger,
-            ($config['enforce'] ?? true) === true,
-        );
     }
 
     public function handle(Request $request, callable $next): Response
@@ -83,15 +53,10 @@ final readonly class CsrfMiddleware implements MiddlewareInterface
         }
 
         $this->logger->warning('The CSRF token of the request is missing or invalid', [
-            'url'      => $request->getRequestUri(),
-            'method'   => $request->getMethod(),
-            'referer'  => $request->headers->get('Referer'),
-            'enforced' => $this->enforce,
+            'url'     => $request->getRequestUri(),
+            'method'  => $request->getMethod(),
+            'referer' => $request->headers->get('Referer'),
         ]);
-
-        if (! $this->enforce) {
-            return $next($request);
-        }
 
         return $this->exceptionResponses->csrfTokenMismatch($this->wantsJson($request));
     }

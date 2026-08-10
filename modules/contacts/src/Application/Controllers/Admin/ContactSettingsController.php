@@ -13,7 +13,6 @@ use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Http\Session;
-use Johncms\Validator\Validator;
 
 final readonly class ContactSettingsController
 {
@@ -35,10 +34,6 @@ final readonly class ContactSettingsController
     public function save(Request $request): ViewResponse
     {
         $settings = $this->buildDto($request);
-
-        if (! $this->isCsrfValid($request)) {
-            return $this->renderForm($settings, __('Wrong data'));
-        }
 
         try {
             $this->updateSettings->execute($settings);
@@ -116,16 +111,6 @@ final readonly class ContactSettingsController
         return array_keys(config('johncms')['lng_list'] ?? []);
     }
 
-    private function isCsrfValid(Request $request): bool
-    {
-        $validator = new Validator(
-            ['csrf_token' => $request->body('csrf_token', '')],
-            ['csrf_token' => ['Csrf']]
-        );
-
-        return $validator->isValid();
-    }
-
     private function renderForm(ContactSettingsDTO $settings, ?string $errorMessage = null): ViewResponse
     {
         $title = __('Contacts');
@@ -142,7 +127,6 @@ final readonly class ContactSettingsController
             "\n",
             array_map(static fn(SocialLinkDTO $link): string => $link->title . '|' . $link->url, $settings->socials)
         );
-
 
         return new ViewResponse(
             '@contacts/admin/settings.twig',

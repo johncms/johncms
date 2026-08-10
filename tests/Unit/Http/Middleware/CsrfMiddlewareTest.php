@@ -93,21 +93,7 @@ final class CsrfMiddlewareTest extends TestCase
         );
     }
 
-    /**
-     * The observation deployment: a failure is recorded but the request is served, so a form that
-     * still misses the token surfaces in the log rather than in support.
-     */
-    public function testInObservationModeAFailureIsLoggedAndTheRequestIsServed(): void
-    {
-        $logger = $this->createMock(LoggerInterface::class);
-        $logger->expects(self::once())->method('warning');
-
-        $response = $this->handle($this->postRequest(), enforce: false, logger: $logger);
-
-        self::assertSame(self::PASSED, $response->getContent());
-    }
-
-    public function testAFailureIsLoggedWhenTheCheckIsEnforced(): void
+    public function testAFailureIsLogged(): void
     {
         $logger = $this->createMock(LoggerInterface::class);
         $logger->expects(self::once())->method('warning');
@@ -125,7 +111,6 @@ final class CsrfMiddlewareTest extends TestCase
 
     private function handle(
         Request $request,
-        bool $enforce = true,
         ?CsrfExemptions $exemptions = null,
         ?LoggerInterface $logger = null,
     ): Response {
@@ -139,7 +124,6 @@ final class CsrfMiddlewareTest extends TestCase
             new RequestPathNormalizer(),
             new ExceptionResponseFactory($renderer, new NullLogger()),
             $logger ?? new NullLogger(),
-            $enforce,
         );
 
         return $middleware->handle($request, static fn (): Response => new Response(self::PASSED));

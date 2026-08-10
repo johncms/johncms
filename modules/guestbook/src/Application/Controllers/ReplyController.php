@@ -60,19 +60,15 @@ final readonly class ReplyController
 
         if ($request->getMethod() === 'POST') {
             $rules = [
-                'message'    => [
+                'message' => [
                     'NotEmpty',
                     'StringLength' => ['min' => 4, 'max' => 16000],
-                ],
-                'csrf_token' => [
-                    'Csrf',
                 ],
             ];
 
             $validator = new Validator(
                 [
-                    'message'    => $text,
-                    'csrf_token' => $request->body('csrf_token', ''),
+                    'message' => $text,
                 ],
                 $rules
             );

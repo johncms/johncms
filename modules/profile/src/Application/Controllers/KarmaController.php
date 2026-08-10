@@ -22,7 +22,6 @@ use Johncms\Modules\Profile\Application\UseCases\VoteKarmaUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Users\User;
-use Johncms\Validator\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
 final readonly class KarmaController
@@ -153,9 +152,6 @@ final readonly class KarmaController
         if ($error = $this->supervisorGuard()) {
             return $error;
         }
-        if (! $this->isCsrfValid($request)) {
-            return $this->renderError(__('Wrong data'));
-        }
 
         try {
             $vote = $this->deleteKarmaVoteUseCase->getVote($id, $voteId);
@@ -182,14 +178,11 @@ final readonly class KarmaController
         );
     }
 
-    public function clean(Request $request, int $id): ViewResponse
+    public function clean(int $id): ViewResponse
     {
         $this->ensureKarmaEnabled();
         if ($error = $this->supervisorGuard()) {
             return $error;
-        }
-        if (! $this->isCsrfValid($request)) {
-            return $this->renderError(__('Wrong data'));
         }
 
         $this->cleanKarmaUseCase->execute($id);
@@ -298,16 +291,6 @@ final readonly class KarmaController
         if (empty(config('johncms')['karma']['on'])) {
             pageNotFound();
         }
-    }
-
-    private function isCsrfValid(Request $request): bool
-    {
-        $validator = new Validator(
-            ['csrf_token' => $request->body('csrf_token', '')],
-            ['csrf_token' => ['Csrf']]
-        );
-
-        return $validator->isValid();
     }
 
     private function resolveType(Request $request): int

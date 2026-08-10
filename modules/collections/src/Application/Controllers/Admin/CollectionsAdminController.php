@@ -20,7 +20,6 @@ use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Http\Session;
-use Johncms\Validator\Validator;
 
 final readonly class CollectionsAdminController
 {
@@ -79,10 +78,6 @@ final readonly class CollectionsAdminController
 
     public function store(Request $request): ViewResponse
     {
-        if (! $this->isCsrfValid($request)) {
-            return $this->error(__('Wrong data'));
-        }
-
         $id = $request->bodyInt('id') ?: null;
         $fields = $this->fieldsFromRequest($request);
         $errors = $this->validate($fields);
@@ -121,12 +116,10 @@ final readonly class CollectionsAdminController
         ]);
     }
 
-    public function delete(Request $request, int $id): ViewResponse
+    public function delete(int $id): ViewResponse
     {
-        if ($this->isCsrfValid($request)) {
-            $this->deleteCollection->execute($id);
-            $this->session->flash('success_message', __('Deleted successfully'));
-        }
+        $this->deleteCollection->execute($id);
+        $this->session->flash('success_message', __('Deleted successfully'));
 
         redirect(self::URL);
     }
@@ -272,15 +265,5 @@ final readonly class CollectionsAdminController
             'message'  => $message,
             'back_url' => self::URL,
         ]);
-    }
-
-    private function isCsrfValid(Request $request): bool
-    {
-        $validator = new Validator(
-            ['csrf_token' => $request->body('csrf_token', '')],
-            ['csrf_token' => ['Csrf']]
-        );
-
-        return $validator->isValid();
     }
 }

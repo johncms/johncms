@@ -22,7 +22,6 @@ class GuestbookForm
         $form_data = [
             'name'       => $request->body('name', ''),
             'message'    => $this->editorContentNormalizer->trimEdgeEmptyBlocks($request->body('message', '')),
-            'csrf_token' => $request->body('csrf_token', ''),
             'code'       => $request->body('code', ''),
         ];
         $form_data = array_map('trim', $form_data);
@@ -49,8 +48,7 @@ class GuestbookForm
                     },
                 ],
             ],
-            'csrf_token' => [
-                'Csrf',
+            '_form'      => [
                 'Flood',
                 'Ban' => [
                     'bans' => [1, 13],

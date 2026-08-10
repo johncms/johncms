@@ -13,7 +13,6 @@ use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Users\User;
-use Johncms\Validator\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
 final readonly class DeleteAlbumController
@@ -54,14 +53,11 @@ final readonly class DeleteAlbumController
         );
     }
 
-    public function delete(Request $request, int $al): ViewResponse
+    public function delete(int $al): ViewResponse
     {
         $context = $this->resolveContext($al);
         if ($context instanceof ViewResponse) {
             return $context;
-        }
-        if (! $this->isCsrfValid($request)) {
-            return $this->renderError(__('Wrong data'));
         }
 
         $album = $context->album;
@@ -92,16 +88,6 @@ final readonly class DeleteAlbumController
         } catch (AlbumEditForbiddenException $e) {
             return $this->renderError($e->getMessage(), 403);
         }
-    }
-
-    private function isCsrfValid(Request $request): bool
-    {
-        $validator = new Validator(
-            ['csrf_token' => $request->body('csrf_token', '')],
-            ['csrf_token' => ['Csrf']]
-        );
-
-        return $validator->isValid();
     }
 
     private function renderError(string $message, int $status = 200): ViewResponse

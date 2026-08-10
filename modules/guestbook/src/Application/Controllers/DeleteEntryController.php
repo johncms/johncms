@@ -34,12 +34,6 @@ final readonly class DeleteEntryController
             return new ViewResponse('@guestbook/public/confirm-delete.twig', ['id' => $id]);
         }
 
-        $validator = new Validator(['csrf_token' => $request->body('csrf_token')], ['csrf_token' => ['Csrf']]);
-        if (! $validator->isValid()) {
-            $this->session->flash('errors', $validator->getErrors());
-            redirect($baseUrl);
-        }
-
         $id = $request->bodyInt('id');
 
         try {

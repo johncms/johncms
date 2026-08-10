@@ -54,24 +54,6 @@ final readonly class DeletePostController
         }
 
         if ($request->getMethod() === 'POST') {
-            $validator = new Validator(
-                ['csrf_token' => $request->body('csrf_token', '')],
-                ['csrf_token' => ['Csrf']]
-            );
-
-            if (! $validator->isValid()) {
-                return new ViewResponse(
-                    '@theme/pages/result.twig',
-                    [
-                        'title'         => __('Delete Message'),
-                        'type'          => 'alert-danger',
-                        'message'       => __('Wrong data'),
-                        'back_url'      => '/forum/delete-post/' . $id . '/',
-                        'back_url_name' => __('Back'),
-                    ]
-                );
-            }
-
             $action = $request->body('action', 'delete');
             $hardDelete = $action === 'delete' && $this->currentUser->rights === 9;
             $result = $this->deletePostUseCase->execute($context, $hardDelete, $this->getForumSettings());

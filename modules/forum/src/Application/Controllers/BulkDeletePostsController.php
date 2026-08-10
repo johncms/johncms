@@ -42,15 +42,6 @@ final readonly class BulkDeletePostsController
         $confirmIds = $this->extractIds((array) $request->bodyList('ids'));
 
         if ($request->hasBody('confirm')) {
-            $validator = new Validator(
-                ['csrf_token' => $request->body('csrf_token', '')],
-                ['csrf_token' => ['Csrf']]
-            );
-
-            if (! $validator->isValid()) {
-                return $this->result('alert-danger', __('Wrong data'), $backUrl);
-            }
-
             if ($confirmIds === []) {
                 return $this->result('alert-danger', __('You did not choose something to delete'), $backUrl);
             }

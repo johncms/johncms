@@ -9,7 +9,6 @@ use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
-use Johncms\Validator\Validator;
 
 final readonly class AmnestyController
 {
@@ -29,10 +28,6 @@ final readonly class AmnestyController
 
     public function apply(Request $request): ViewResponse
     {
-        if (! $this->isCsrfValid($request)) {
-            return $this->renderForm(__('Wrong data'));
-        }
-
         $clearDatabase = $request->bodyInt('term') === 1;
         $this->applyAmnesty->execute($clearDatabase);
 
@@ -40,16 +35,6 @@ final readonly class AmnestyController
             ? __('Amnesty has been successful')
             : __('All the users with active bans were unbanned (Except for bans &quot;till cancel&quot;)'));
         redirect('/admin/bans');
-    }
-
-    private function isCsrfValid(Request $request): bool
-    {
-        $validator = new Validator(
-            ['csrf_token' => $request->body('csrf_token', '')],
-            ['csrf_token' => ['Csrf']]
-        );
-
-        return $validator->isValid();
     }
 
     private function renderForm(?string $errorMessage = null): ViewResponse

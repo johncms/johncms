@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Functional\Http;
 
+use Johncms\Security\Csrf;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\Functional\FunctionalTestCase;
@@ -190,7 +191,14 @@ final class KernelSmokeTest extends FunctionalTestCase
      */
     public function testUndecodableJsonBodyAnswers400(): void
     {
-        $response = $this->handleRequest('/guestbook', 'POST', [], ['CONTENT_TYPE' => 'application/json']);
+        // With the token, so the request is answered by the module rather than rejected by the
+        // CSRF check before the body is ever read.
+        $response = $this->handleRequest(
+            '/guestbook',
+            'POST',
+            ['csrf_token' => $this->container()->get(Csrf::class)->getToken()],
+            ['CONTENT_TYPE' => 'application/json']
+        );
 
         self::assertContains(
             $response->getStatusCode(),

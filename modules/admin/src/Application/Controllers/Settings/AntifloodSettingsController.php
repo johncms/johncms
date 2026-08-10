@@ -11,7 +11,6 @@ use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
-use Johncms\Validator\Validator;
 
 final readonly class AntifloodSettingsController
 {
@@ -31,10 +30,6 @@ final readonly class AntifloodSettingsController
 
     public function save(Request $request): ViewResponse
     {
-        if (! $this->isCsrfValid($request)) {
-            return $this->renderForm(__('Wrong data'));
-        }
-
         try {
             $this->updateAntifloodSettingsUseCase->execute($this->buildDto($request));
         } catch (ConfigWriteException) {
@@ -54,16 +49,6 @@ final readonly class AntifloodSettingsController
             dayFrom: $request->bodyInt('dayfrom', 10),
             dayTo: $request->bodyInt('dayto', 22),
         );
-    }
-
-    private function isCsrfValid(Request $request): bool
-    {
-        $validator = new Validator(
-            ['csrf_token' => $request->body('csrf_token', '')],
-            ['csrf_token' => ['Csrf']]
-        );
-
-        return $validator->isValid();
     }
 
     private function renderForm(string $errorMessage = ''): ViewResponse

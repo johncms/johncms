@@ -13,7 +13,6 @@ use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Users\User;
-use Johncms\Validator\Validator;
 
 final readonly class HiddenTopicsController
 {
@@ -65,7 +64,7 @@ final readonly class HiddenTopicsController
 
     public function deleteAll(Request $request): ViewResponse
     {
-        if (! $this->isCsrfValid($request) || $this->currentUser->rights !== 9) {
+        if ($this->currentUser->rights !== 9) {
             redirect(self::URL);
         }
 
@@ -91,15 +90,5 @@ final readonly class HiddenTopicsController
         }
 
         return [null, null, '', null];
-    }
-
-    private function isCsrfValid(Request $request): bool
-    {
-        $validator = new Validator(
-            ['csrf_token' => $request->body('csrf_token', '')],
-            ['csrf_token' => ['Csrf']]
-        );
-
-        return $validator->isValid();
     }
 }

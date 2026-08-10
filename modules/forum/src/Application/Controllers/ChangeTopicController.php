@@ -44,7 +44,6 @@ final readonly class ChangeTopicController
             'name'             => $request->body('name', (string) $topic->name),
             'meta_keywords'    => $request->body('meta_keywords', $topic->meta_keywords ?? ''),
             'meta_description' => $request->body('meta_description', $topic->meta_description ?? ''),
-            'csrf_token'       => $request->body('csrf_token', ''),
         ];
 
         $errors = [];
@@ -68,7 +67,6 @@ final readonly class ChangeTopicController
                 'meta_description' => [
                     'StringLength' => ['max' => 65000],
                 ],
-                'csrf_token'    => ['Csrf'],
             ];
 
             $validator = new Validator($formData, $rules);

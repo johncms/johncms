@@ -28,7 +28,6 @@ final readonly class UpdateProfileUseCase
         $isAdmin = $this->currentUser->rights >= 7;
 
         $formData = $command->toFormData();
-        $formData['csrf_token'] = $command->csrfToken;
 
         $validationRules = [
             'imname'      => [
@@ -53,7 +52,6 @@ final readonly class UpdateProfileUseCase
                 ],
             ],
             'sex'         => ['InArray' => ['haystack' => ['m', 'zh']]],
-            'csrf_token'  => ['Csrf'],
         ];
 
         // When email confirmation is enabled, the email becomes mandatory and is validated against DNS
@@ -90,8 +88,6 @@ final readonly class UpdateProfileUseCase
         if ($profileUser->id === $this->currentUser->id) {
             unset($formData['rights']);
         }
-
-        unset($formData['csrf_token']);
 
         // For regular users changing their email, defer the change until it is confirmed by email
         if (! empty($config['user_email_confirmation']) && $profileUser->mail !== $formData['mail'] && ! $isAdmin) {

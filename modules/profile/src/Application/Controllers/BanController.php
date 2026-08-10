@@ -22,7 +22,6 @@ use Johncms\Modules\Profile\Application\UseCases\GetBanHistoryUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Users\User;
-use Johncms\Validator\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
 final readonly class BanController
@@ -82,10 +81,6 @@ final readonly class BanController
             return $this->renderError($e->getMessage(), 403);
         }
 
-        if (! $this->isCsrfValid($request)) {
-            return $this->renderError(__('Wrong data'));
-        }
-
         $command = new BanUserCommand(
             term: $request->bodyInt('term'),
             timeval: $request->bodyInt('timeval'),
@@ -126,13 +121,10 @@ final readonly class BanController
         );
     }
 
-    public function cancel(Request $request, int $id, int $banId): ViewResponse
+    public function cancel(int $id, int $banId): ViewResponse
     {
         if ($error = $this->staffGuard()) {
             return $error;
-        }
-        if (! $this->isCsrfValid($request)) {
-            return $this->renderError(__('Wrong data'));
         }
 
         try {
@@ -169,13 +161,10 @@ final readonly class BanController
         );
     }
 
-    public function delete(Request $request, int $id, int $banId): ViewResponse
+    public function delete(int $id, int $banId): ViewResponse
     {
         if ($error = $this->supervisorGuard()) {
             return $error;
-        }
-        if (! $this->isCsrfValid($request)) {
-            return $this->renderError(__('Wrong data'));
         }
 
         try {
@@ -204,13 +193,10 @@ final readonly class BanController
         );
     }
 
-    public function clear(Request $request, int $id): ViewResponse
+    public function clear(int $id): ViewResponse
     {
         if ($error = $this->supervisorGuard(__('Violations history can be cleared by Supervisor only'))) {
             return $error;
-        }
-        if (! $this->isCsrfValid($request)) {
-            return $this->renderError(__('Wrong data'));
         }
 
         $this->clearBanHistoryUseCase->execute($id);
@@ -320,15 +306,5 @@ final readonly class BanController
         }
 
         return null;
-    }
-
-    private function isCsrfValid(Request $request): bool
-    {
-        $validator = new Validator(
-            ['csrf_token' => $request->body('csrf_token', '')],
-            ['csrf_token' => ['Csrf']]
-        );
-
-        return $validator->isValid();
     }
 }

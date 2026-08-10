@@ -28,8 +28,8 @@
 
     <form name="new_topic" action="{{ action_url }}" method="post">
         <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}"/>
-        {% if errors.csrf_token|default([]) %}
-            <div class="alert alert-danger">{{ errors.csrf_token|join(', ') }}</div>
+        {% if errors._form|default([]) %}
+            <div class="alert alert-danger">{{ errors._form|join(', ') }}</div>
         {% endif %}
         <div class="form-group">
             <label for="th">{{ __('Title') }}</label>

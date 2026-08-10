@@ -13,7 +13,6 @@ use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
 use Johncms\Http\View\ViewResponse;
-use Johncms\Validator\Validator;
 
 final readonly class LanguagesController
 {
@@ -37,10 +36,6 @@ final readonly class LanguagesController
 
     public function save(Request $request): ViewResponse
     {
-        if (! $this->isCsrfValid($request)) {
-            return $this->renderIndex(__('Wrong data'));
-        }
-
         $defaultCode = $request->body('lng');
         $updateList = $request->hasBody('update');
 
@@ -139,23 +134,9 @@ final readonly class LanguagesController
 
     private function validatedCode(Request $request): ?string
     {
-        if (! $this->isCsrfValid($request)) {
-            return null;
-        }
-
         $code = trim($request->body('code', ''));
 
         return $code !== '' ? $code : null;
-    }
-
-    private function isCsrfValid(Request $request): bool
-    {
-        $validator = new Validator(
-            ['csrf_token' => $request->body('csrf_token', '')],
-            ['csrf_token' => ['Csrf']]
-        );
-
-        return $validator->isValid();
     }
 
     private function renderIndex(string $errorMessage = ''): ViewResponse

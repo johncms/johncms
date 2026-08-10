@@ -10,7 +10,6 @@ use Johncms\Modules\Admin\Application\UseCases\ScanFileIntegrityUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
-use Johncms\Validator\Validator;
 use Twig\Markup;
 
 final readonly class FileIntegrityController
@@ -78,24 +77,12 @@ final readonly class FileIntegrityController
         ]);
     }
 
-    public function createSnapshot(Request $request): string
+    public function createSnapshot(): string
     {
-        if ($this->isCsrfValid($request)) {
-            $this->createSnapshotUseCase->execute();
-            $this->session->flash('success_message', __('Snapshot successfully created'));
-        }
+        $this->createSnapshotUseCase->execute();
+        $this->session->flash('success_message', __('Snapshot successfully created'));
 
         redirect(self::URL);
-    }
-
-    private function isCsrfValid(Request $request): bool
-    {
-        $validator = new Validator(
-            ['csrf_token' => $request->body('csrf_token', '')],
-            ['csrf_token' => ['Csrf']]
-        );
-
-        return $validator->isValid();
     }
 
     /**

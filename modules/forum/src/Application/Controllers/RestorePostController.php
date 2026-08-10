@@ -54,24 +54,6 @@ final readonly class RestorePostController
         }
 
         if ($request->getMethod() === 'POST') {
-            $validator = new Validator(
-                ['csrf_token' => $request->body('csrf_token', '')],
-                ['csrf_token' => ['Csrf']]
-            );
-
-            if (! $validator->isValid()) {
-                return new ViewResponse(
-                    '@theme/pages/result.twig',
-                    [
-                        'title'         => __('Restore Message'),
-                        'type'          => 'alert-danger',
-                        'message'       => __('Wrong data'),
-                        'back_url'      => '/forum/restore-post/' . $id . '/',
-                        'back_url_name' => __('Back'),
-                    ]
-                );
-            }
-
             $this->restorePostUseCase->execute($context);
             redirect($context->backUrl);
         }

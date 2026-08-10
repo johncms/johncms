@@ -9,7 +9,7 @@
 
 {% block content %}
     <h4>{{ __('Reply') }}</h4>
-    {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: errors.csrf_token|default([])} only %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: errors._form|default([])} only %}
     <form action="/guestbook/otvet?id={{ id }}" method="post">
         <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}"/>
         <p>

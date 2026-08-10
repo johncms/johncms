@@ -11,7 +11,6 @@ use Johncms\Modules\Album\Application\UseCases\MoveAlbumUseCase;
 use Johncms\Modules\Album\Domain\Models\Album;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
-use Johncms\Validator\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
 final readonly class SortAlbumController
@@ -22,14 +21,11 @@ final readonly class SortAlbumController
     ) {
     }
 
-    public function moveUp(Request $request, int $al): ViewResponse
+    public function moveUp(int $al): ViewResponse
     {
         $album = $this->resolveContext($al);
         if ($album instanceof ViewResponse) {
             return $album;
-        }
-        if (! $this->isCsrfValid($request)) {
-            return $this->renderError(__('Wrong data'));
         }
 
         $this->moveAlbumUseCase->moveUp($album);
@@ -37,14 +33,11 @@ final readonly class SortAlbumController
         redirect('/album/user/' . $album->user_id);
     }
 
-    public function moveDown(Request $request, int $al): ViewResponse
+    public function moveDown(int $al): ViewResponse
     {
         $album = $this->resolveContext($al);
         if ($album instanceof ViewResponse) {
             return $album;
-        }
-        if (! $this->isCsrfValid($request)) {
-            return $this->renderError(__('Wrong data'));
         }
 
         $this->moveAlbumUseCase->moveDown($album);
@@ -64,16 +57,6 @@ final readonly class SortAlbumController
         } catch (AlbumEditForbiddenException $e) {
             return $this->renderError($e->getMessage(), 403);
         }
-    }
-
-    private function isCsrfValid(Request $request): bool
-    {
-        $validator = new Validator(
-            ['csrf_token' => $request->body('csrf_token', '')],
-            ['csrf_token' => ['Csrf']]
-        );
-
-        return $validator->isValid();
     }
 
     private function renderError(string $message, int $status = 200): ViewResponse

@@ -19,8 +19,8 @@
     {% if success_message|default('') %}
         {% include '@theme/components/alert.twig' with {alert_type: 'alert-success', alert: success_message} only %}
     {% endif %}
-    {% if errors.csrf_token is defined %}
-        {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: errors.csrf_token} only %}
+    {% if errors._form is defined %}
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: errors._form} only %}
     {% endif %}
 
     <div class="border-0">

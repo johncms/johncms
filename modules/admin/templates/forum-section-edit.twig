@@ -14,7 +14,7 @@
 {% block content %}
     <form action="{{ form_action }}" method="post">
         <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}"/>
-        {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: errors.csrf_token|default([])} only %}
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: errors._form|default([])} only %}
         {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: errors.parent|default([])} only %}
 
         <div class="form-group">

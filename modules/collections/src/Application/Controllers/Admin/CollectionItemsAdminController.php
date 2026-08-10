@@ -25,7 +25,6 @@ use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Http\Session;
-use Johncms\Validator\Validator;
 
 final readonly class CollectionItemsAdminController
 {
@@ -107,10 +106,6 @@ final readonly class CollectionItemsAdminController
             return $this->collectionNotFound();
         }
 
-        if (! $this->isCsrfValid($request)) {
-            return $this->wrongData($collection_id);
-        }
-
         $id = $request->bodyInt('id') ?: null;
         if ($id !== null && $this->findOwnedItem($collection_id, $id) === null) {
             return $this->wrongData($collection_id);
@@ -159,13 +154,13 @@ final readonly class CollectionItemsAdminController
         ]);
     }
 
-    public function delete(Request $request, int $collection_id, int $id): ViewResponse
+    public function delete(int $collection_id, int $id): ViewResponse
     {
         if ($this->collectionRepository->findById($collection_id) === null) {
             return $this->collectionNotFound();
         }
 
-        if ($this->isCsrfValid($request) && $this->findOwnedItem($collection_id, $id) !== null) {
+        if ($this->findOwnedItem($collection_id, $id) !== null) {
             $this->deleteItem->execute($id);
             $this->session->flash('success_message', __('Deleted successfully'));
         }
@@ -470,7 +465,6 @@ final readonly class CollectionItemsAdminController
 
     private function collectionNotFound(): ViewResponse
     {
-
         return new ViewResponse('@admin/pages/result.twig', $this->menu(__('Collections'), __('Collections')) + [
             'type'     => 'alert-danger',
             'message'  => __('Wrong data'),
@@ -480,22 +474,11 @@ final readonly class CollectionItemsAdminController
 
     private function wrongData(int $collectionId): ViewResponse
     {
-
         return new ViewResponse('@admin/pages/result.twig', $this->menu(__('Items'), __('Items')) + [
             'title'    => __('Items'),
             'type'     => 'alert-danger',
             'message'  => __('Wrong data'),
             'back_url' => $this->baseUrl($collectionId),
         ]);
-    }
-
-    private function isCsrfValid(Request $request): bool
-    {
-        $validator = new Validator(
-            ['csrf_token' => $request->body('csrf_token', '')],
-            ['csrf_token' => ['Csrf']]
-        );
-
-        return $validator->isValid();
     }
 }

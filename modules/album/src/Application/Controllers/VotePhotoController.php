@@ -12,7 +12,6 @@ use Johncms\Modules\Album\Application\UseCases\VotePhotoUseCase;
 use Johncms\Modules\Album\Domain\Enums\VoteType;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
-use Johncms\Validator\Validator;
 
 final readonly class VotePhotoController
 {
@@ -23,14 +22,10 @@ final readonly class VotePhotoController
     ) {
     }
 
-    public function __invoke(Request $request, int $img, string $type): ViewResponse
+    public function __invoke(int $img, string $type): ViewResponse
     {
         $voteType = VoteType::tryFrom($type);
         if ($voteType === null) {
-            return $this->renderError(__('Wrong data'));
-        }
-
-        if (! $this->isCsrfValid($request)) {
             return $this->renderError(__('Wrong data'));
         }
 
@@ -46,16 +41,6 @@ final readonly class VotePhotoController
         $this->votePhotoUseCase->execute($photo, $voteType);
 
         redirect('/album/photo/' . $photo->id);
-    }
-
-    private function isCsrfValid(Request $request): bool
-    {
-        $validator = new Validator(
-            ['csrf_token' => $request->body('csrf_token', '')],
-            ['csrf_token' => ['Csrf']]
-        );
-
-        return $validator->isValid();
     }
 
     private function renderError(string $message): ViewResponse

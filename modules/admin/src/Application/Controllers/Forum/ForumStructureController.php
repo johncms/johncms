@@ -102,10 +102,6 @@ final readonly class ForumStructureController
 
     public function add(Request $request): ViewResponse
     {
-        if (! $this->isCsrfValid($request)) {
-            return $this->addForm($request, [__('Wrong data')]);
-        }
-
         $parentId = $request->queryInt('parent');
         $name = trim($request->body('name', ''));
         $description = trim($request->body('desc', ''));
@@ -153,8 +149,8 @@ final readonly class ForumStructureController
 
         $fields = $this->fieldsFromRequest($request, $section);
         $validator = new Validator(
-            ['name' => $fields['name'], 'csrf_token' => $request->body('csrf_token', '')],
-            ['name' => ['NotEmpty', 'StringLength' => ['min' => 2, 'max' => 150]], 'csrf_token' => ['Csrf']]
+            ['name' => $fields['name']],
+            ['name' => ['NotEmpty', 'StringLength' => ['min' => 2, 'max' => 150]]]
         );
 
         $cycle = $this->editSection->wouldCreateCycle($section->id, (int) $fields['parent']);
@@ -219,10 +215,6 @@ final readonly class ForumStructureController
 
     public function delete(Request $request, int $id): ViewResponse
     {
-        if (! $this->isCsrfValid($request)) {
-            return $this->error(__('Wrong data'));
-        }
-
         $section = $this->repository->find($id);
         if ($section === null) {
             redirect(self::URL);
@@ -397,15 +389,5 @@ final readonly class ForumStructureController
             'page_title'  => $title,
             'module_menu' => ['forum' => true],
         ];
-    }
-
-    private function isCsrfValid(Request $request): bool
-    {
-        $validator = new Validator(
-            ['csrf_token' => $request->body('csrf_token', '')],
-            ['csrf_token' => ['Csrf']]
-        );
-
-        return $validator->isValid();
     }
 }

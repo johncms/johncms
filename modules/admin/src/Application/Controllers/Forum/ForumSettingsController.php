@@ -11,7 +11,6 @@ use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
 use Johncms\Http\View\ViewResponse;
-use Johncms\Validator\Validator;
 
 final readonly class ForumSettingsController
 {
@@ -31,10 +30,6 @@ final readonly class ForumSettingsController
 
     public function save(Request $request): ViewResponse
     {
-        if (! $this->isCsrfValid($request)) {
-            return $this->renderForm(__('Wrong data'));
-        }
-
         $dto = new ForumSettingsDTO(
             fileCounters: $request->hasBody('file_counters'),
             topicKeywords: trim($request->body('topic_keywords', '')),
@@ -53,16 +48,6 @@ final readonly class ForumSettingsController
 
         $this->session->flash('success_message', __('Settings are saved successfully'));
         redirect(self::URL);
-    }
-
-    private function isCsrfValid(Request $request): bool
-    {
-        $validator = new Validator(
-            ['csrf_token' => $request->body('csrf_token', '')],
-            ['csrf_token' => ['Csrf']]
-        );
-
-        return $validator->isValid();
     }
 
     private function renderForm(string $errorMessage = ''): ViewResponse
