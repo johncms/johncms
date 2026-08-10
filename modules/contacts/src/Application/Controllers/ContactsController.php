@@ -16,8 +16,8 @@ use Johncms\Http\Request;
 use Johncms\Http\Session;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Users\User;
-use Johncms\Validator\Validator;
-use Laminas\Validator\Identical;
+use Johncms\Validator\Rules\Identical;
+use Johncms\Validator\ValidatorInterface;
 
 final readonly class ContactsController
 {
@@ -34,6 +34,7 @@ final readonly class ContactsController
         private ContactsCaptchaService $captchaService,
         private ConsentService $consentService,
         private SubmitContactMessageUseCase $submitMessage,
+        private ValidatorInterface $validator,
     ) {
     }
 
@@ -56,24 +57,22 @@ final readonly class ContactsController
                 $field = 'consent_' . $consent->id;
                 $formData[$field] = $request->body($field, '');
                 if ($consent->isRequired) {
-                    $consentFields[$field] = ['Identical' => ['token' => '1']];
+                    // The message belongs to this rule alone. The previous API took an override
+                    // for the whole form, so the same text also replaced the message of the
+                    // honeypot field, which carries an Identical of its own.
+                    $consentFields[$field] = [
+                        new Identical(token: '1', message: __('You must accept the consent to continue')),
+                    ];
                 }
             }
 
             $clientInfo = $this->environment->getClientInfo();
-            $consentMessage = __('You must accept the consent to continue');
-            $validator = new Validator(
+            $result = $this->validator->validate(
                 $formData,
-                $this->form->getValidationRules($clientInfo) + $consentFields,
-                [
-                    'Identical' => [
-                        Identical::NOT_SAME      => $consentMessage,
-                        Identical::MISSING_TOKEN => $consentMessage,
-                    ],
-                ]
+                $this->form->getValidationRules($clientInfo) + $consentFields
             );
 
-            if ($validator->isValid()) {
+            if ($result->isValid()) {
                 $this->submitMessage->execute(
                     new CreateContactMessageDTO(
                         userId:    $this->user->isValid() ? $this->user->id : null,
@@ -101,7 +100,7 @@ final readonly class ContactsController
                 redirect(self::URL);
             }
 
-            $errors = $validator->getErrors();
+            $errors = $result->getErrors();
         }
 
         return new ViewResponse(

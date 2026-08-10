@@ -10,7 +10,6 @@ use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Http\Session;
-use Johncms\Validator\Validator;
 
 final readonly class ContactMessageDeleteController
 {
