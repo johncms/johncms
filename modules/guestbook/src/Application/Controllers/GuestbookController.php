@@ -20,7 +20,7 @@ use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Http\Session;
 use Johncms\Users\User;
-use Johncms\Validator\Validator;
+use Johncms\Validator\ValidatorInterface;
 
 final readonly class GuestbookController
 {
@@ -37,6 +37,7 @@ final readonly class GuestbookController
         private GuestbookForm $form,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
+        private ValidatorInterface $validator,
     ) {
     }
 
@@ -62,8 +63,8 @@ final readonly class GuestbookController
 
         if ($request->getMethod() === 'POST' && $this->access->canWrite()) {
             $formData = $this->form->getFormData($request);
-            $validator = new Validator($formData, $this->form->getValidationRules());
-            if ($validator->isValid()) {
+            $result = $this->validator->validate($formData, $this->form->getValidationRules());
+            if ($result->isValid()) {
                 $this->createEntry->execute(
                     new CreateGuestbookEntryDTO(
                         adminClub:     $this->mode->isAdminClub(),
@@ -78,7 +79,7 @@ final readonly class GuestbookController
                 $this->session->flash('message', __('Your message was added successfully'));
                 redirect($baseUrl);
             }
-            $errors = $validator->getErrors();
+            $errors = $result->getErrors();
         }
 
         $pagination = $this->paginationFactory->create($this->guestbookEntries->count());

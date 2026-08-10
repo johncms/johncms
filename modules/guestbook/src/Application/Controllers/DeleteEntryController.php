@@ -12,7 +12,6 @@ use Johncms\Modules\Guestbook\Application\UseCases\GetGuestbookEntryContextUseCa
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Http\Session;
-use Johncms\Validator\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
 final readonly class DeleteEntryController

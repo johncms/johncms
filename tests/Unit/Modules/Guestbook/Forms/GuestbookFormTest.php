@@ -9,6 +9,9 @@ use Johncms\Modules\Guestbook\Application\Forms\GuestbookForm;
 use Johncms\Http\Request;
 use Johncms\System\Utility\EditorContentNormalizer;
 use Johncms\Users\User;
+use Johncms\Validator\Rules\Captcha;
+use Johncms\Validator\Rules\StringLength;
+use Johncms\Validator\ValidationResult;
 use PHPUnit\Framework\TestCase;
 use Tests\Support\UserFactory;
 
@@ -43,7 +46,7 @@ final class GuestbookFormTest extends TestCase
 
         self::assertArrayHasKey('message', $rules);
         // Flood and Ban are form-level rules: they belong to no field of the form.
-        self::assertArrayHasKey('_form', $rules);
+        self::assertArrayHasKey(ValidationResult::FORM_KEY, $rules);
         self::assertArrayNotHasKey('name', $rules);
         self::assertArrayNotHasKey('code', $rules);
     }
@@ -53,8 +56,13 @@ final class GuestbookFormTest extends TestCase
         $rules = $this->makeForm(UserFactory::make(valid: false))->getValidationRules();
 
         self::assertArrayHasKey('name', $rules);
-        self::assertSame(['min' => 3, 'max' => 25], $rules['name']['StringLength']);
-        self::assertContains('Captcha', $rules['code']);
+
+        $name = $rules['name'][0];
+        self::assertInstanceOf(StringLength::class, $name);
+        self::assertSame(3, $name->min);
+        self::assertSame(25, $name->max);
+
+        self::assertInstanceOf(Captcha::class, $rules['code'][0]);
     }
 
     private function makeForm(User $user): GuestbookForm

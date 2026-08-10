@@ -8,6 +8,13 @@ use Johncms\Modules\Guestbook\Domain\Models\GuestbookEntry;
 use Johncms\Http\Request;
 use Johncms\System\Utility\EditorContentNormalizer;
 use Johncms\Users\User;
+use Johncms\Validator\Rules\Ban;
+use Johncms\Validator\Rules\Captcha;
+use Johncms\Validator\Rules\Flood;
+use Johncms\Validator\Rules\ModelNotExists;
+use Johncms\Validator\Rules\RuleInterface;
+use Johncms\Validator\Rules\StringLength;
+use Johncms\Validator\ValidationResult;
 
 class GuestbookForm
 {
@@ -31,39 +38,32 @@ class GuestbookForm
     }
 
     /**
-     * @return array[]
-     * @psalm-suppress MissingClosureReturnType,MissingClosureParamType
+     * @return array<string, list<RuleInterface>>
      */
     public function getValidationRules(): array
     {
         $rules = [
-            'message'    => [
-                'NotEmpty',
-                'StringLength'   => ['min' => 4],
-                'ModelNotExists' => [
-                    'model'   => GuestbookEntry::class,
-                    'field'   => 'text',
-                    'exclude' => function ($query) {
+            'message' => [
+                new StringLength(min: 4),
+                new ModelNotExists(
+                    model: GuestbookEntry::class,
+                    field: 'text',
+                    // The same message posted twice within ten minutes by the same visitor is a
+                    // duplicate; an identical message from somebody else is not.
+                    exclude: function ($query): void {
                         $query->where('user_id', $this->user->id)->where('time', '>', (time() - 600));
                     },
-                ],
+                ),
             ],
-            '_form'      => [
-                'Flood',
-                'Ban' => [
-                    'bans' => [1, 13],
-                ],
+            ValidationResult::FORM_KEY => [
+                new Flood(),
+                new Ban(bans: [1, 13]),
             ],
         ];
 
         if (! $this->user->isValid()) {
-            $rules['name'] = [
-                'NotEmpty',
-                'StringLength' => ['min' => 3, 'max' => 25],
-            ];
-            $rules['code'] = [
-                'Captcha',
-            ];
+            $rules['name'] = [new StringLength(min: 3, max: 25)];
+            $rules['code'] = [new Captcha()];
         }
 
         return $rules;

@@ -10,7 +10,6 @@ use Johncms\Modules\Guestbook\Domain\Enums\ClearGuestbookPeriod;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Http\Session;
-use Johncms\Validator\Validator;
 
 final readonly class ClearGuestbookController
 {

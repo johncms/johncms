@@ -14,7 +14,8 @@ use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Http\Session;
 use Johncms\System\Utility\EditorContentNormalizer;
-use Johncms\Validator\Validator;
+use Johncms\Validator\Rules\StringLength;
+use Johncms\Validator\ValidatorInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 final readonly class ReplyController
@@ -26,6 +27,7 @@ final readonly class ReplyController
         private GetGuestbookEntryContextUseCase $contextUseCase,
         private EnsureGuestbookEntryManageAccessUseCase $manageAccessUseCase,
         private ReplyToGuestbookEntryUseCase $replyUseCase,
+        private ValidatorInterface $validator,
     ) {
     }
 
@@ -59,26 +61,17 @@ final readonly class ReplyController
         $attachedFiles = (array) $request->bodyInts('attached_files');
 
         if ($request->getMethod() === 'POST') {
-            $rules = [
-                'message' => [
-                    'NotEmpty',
-                    'StringLength' => ['min' => 4, 'max' => 16000],
-                ],
-            ];
-
-            $validator = new Validator(
-                [
-                    'message' => $text,
-                ],
-                $rules
+            $result = $this->validator->validate(
+                ['message' => $text],
+                ['message' => [new StringLength(min: 4, max: 16000)]]
             );
-            if ($validator->isValid()) {
+            if ($result->isValid()) {
                 $this->replyUseCase->execute($entry, $text, $attachedFiles);
                 $this->session->flash('message', __('Your reply to the message was saved'));
                 redirect($baseUrl);
             }
 
-            $errors = $validator->getErrors();
+            $errors = $result->getErrors();
         }
 
         return new ViewResponse(
