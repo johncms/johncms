@@ -1,12 +1,10 @@
 # Common ignores
 /.idea
-# Agent tooling: shared reviewers, commands and planning docs are versioned
-# (see .agents/README.md), personal settings and scratch notes stay local
+# Agent tooling: shared reviewers and commands are versioned (see .agents/README.md),
+# personal settings, planning docs and scratch notes stay local
 /.claude/*
 !/.claude/agents/
 !/.claude/commands/
-!/.claude/*-plan.md
-!/.claude/*-analysis.md
 /config/autoload/*.local.php
 /config/*.local.php
 /dist
