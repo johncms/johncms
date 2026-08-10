@@ -18,7 +18,6 @@ return [
         // Transport settings
         'options'   => [
             'smtp' => [
-                'name'       => 'example.com',
                 'host'       => '127.0.0.1',
                 'username'   => 'mail@example.com',
                 'password'   => 'password',
