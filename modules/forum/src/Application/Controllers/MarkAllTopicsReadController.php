@@ -10,7 +10,6 @@ use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumUserAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\MarkAllTopicsReadUseCase;
 use Johncms\Http\Request;
-use Johncms\Validator\Validator;
 
 final readonly class MarkAllTopicsReadController
 {

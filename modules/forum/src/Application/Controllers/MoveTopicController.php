@@ -12,7 +12,6 @@ use Johncms\Modules\Forum\Application\UseCases\GetMoveTopicContextUseCase;
 use Johncms\Modules\Forum\Application\UseCases\MoveTopicUseCase;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
-use Johncms\Validator\Validator;
 
 final readonly class MoveTopicController
 {

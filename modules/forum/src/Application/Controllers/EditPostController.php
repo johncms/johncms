@@ -15,7 +15,6 @@ use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
 use Johncms\System\Utility\EditorContentNormalizer;
 use Johncms\Users\User;
-use Johncms\Validator\Validator;
 
 final readonly class EditPostController
 {

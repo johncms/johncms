@@ -10,7 +10,6 @@ use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\GetFilterByAuthorContextUseCase;
 use Johncms\Modules\Forum\Application\UseCases\SetFilterByAuthorUseCase;
 use Johncms\Http\Request;
-use Johncms\Validator\Validator;
 
 final readonly class SetFilterByAuthorController
 {
