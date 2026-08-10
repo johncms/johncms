@@ -100,7 +100,7 @@ msgstr ""
 #: modules/mail/src/Application/Controllers/ClearConversationController.php:45
 #: modules/mail/src/Application/Controllers/ClearConversationController.php:62
 #: modules/mail/src/Application/Controllers/ClearConversationController.php:76
-#: modules/mail/templates/public/messages.twig:160
+#: modules/mail/templates/public/messages.twig:161
 msgid "Clear messages"
 msgstr ""
 
@@ -119,7 +119,7 @@ msgstr ""
 #: modules/mail/src/Application/UseCases/GetIncomingConversationsUseCase.php:79
 #: modules/mail/src/Application/UseCases/GetOutgoingConversationsUseCase.php:79
 #: modules/mail/templates/public/blocklist.twig:42
-#: modules/mail/templates/public/messages.twig:151
+#: modules/mail/templates/public/messages.twig:152
 msgid "Delete"
 msgstr ""
 
@@ -134,7 +134,7 @@ msgstr ""
 #: modules/mail/templates/public/contacts.twig:65
 #: modules/mail/templates/public/conversations.twig:85
 #: modules/mail/templates/public/files.twig:55
-#: modules/mail/templates/public/messages.twig:175
+#: modules/mail/templates/public/messages.twig:176
 msgid "Back"
 msgstr ""
 
@@ -310,7 +310,7 @@ msgstr ""
 #: modules/mail/templates/public/contacts.twig:12
 #: modules/mail/templates/public/conversations.twig:12
 #: modules/mail/templates/public/files.twig:12
-#: modules/mail/templates/public/messages.twig:51
+#: modules/mail/templates/public/messages.twig:52
 msgid "The list is empty"
 msgstr ""
 
@@ -318,7 +318,7 @@ msgstr ""
 msgid "User since:"
 msgstr ""
 
-#: modules/mail/templates/public/confirm.twig:21
+#: modules/mail/templates/public/confirm.twig:22
 msgid "Cancel"
 msgstr ""
 
@@ -336,7 +336,7 @@ msgstr[0] ""
 #: modules/mail/templates/public/contacts.twig:61
 #: modules/mail/templates/public/conversations.twig:81
 #: modules/mail/templates/public/files.twig:51
-#: modules/mail/templates/public/messages.twig:171
+#: modules/mail/templates/public/messages.twig:172
 msgid "Total:"
 msgstr ""
 
@@ -344,23 +344,23 @@ msgstr ""
 msgid "Last:"
 msgstr ""
 
-#: modules/mail/templates/public/messages.twig:20
-#: modules/mail/templates/public/messages.twig:28
+#: modules/mail/templates/public/messages.twig:21
+#: modules/mail/templates/public/messages.twig:29
 msgid "To Whom"
 msgstr ""
 
-#: modules/mail/templates/public/messages.twig:35
+#: modules/mail/templates/public/messages.twig:36
 msgid "Message"
 msgstr ""
 
-#: modules/mail/templates/public/messages.twig:42
+#: modules/mail/templates/public/messages.twig:43
 msgid "Choose file"
 msgstr ""
 
-#: modules/mail/templates/public/messages.twig:45
+#: modules/mail/templates/public/messages.twig:46
 msgid "Send"
 msgstr ""
 
-#: modules/mail/templates/public/messages.twig:103
+#: modules/mail/templates/public/messages.twig:104
 msgid "Attached files"
 msgstr ""

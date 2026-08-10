@@ -172,4 +172,55 @@ final class ExceptionResponseFactoryTest extends TestCase
         self::assertStringContainsString('&lt;b&gt;Gone&lt;/b&gt;', $content);
         self::assertStringNotContainsString('<b>Gone</b>', $content);
     }
+
+    public function testACsrfFailureRendersA403Page(): void
+    {
+        $render = $this->createMock(RendererInterface::class);
+        $render->expects(self::once())
+            ->method('render')
+            ->with('@theme/pages/errors/403.twig', self::anything())
+            ->willReturn('rendered 403');
+
+        $factory = new ExceptionResponseFactory($render, $this->createMock(LoggerInterface::class));
+
+        $response = $factory->csrfTokenMismatch(wantsJson: false);
+
+        self::assertSame(Response::HTTP_FORBIDDEN, $response->getStatusCode());
+        self::assertSame('rendered 403', $response->getContent());
+    }
+
+    /**
+     * The Vue components read response.data.message, so an XHR must not be answered with a page.
+     */
+    public function testACsrfFailureOfAnXhrIsAnsweredWithJson(): void
+    {
+        $render = $this->createMock(RendererInterface::class);
+        $render->expects(self::never())->method('render');
+
+        $factory = new ExceptionResponseFactory($render, $this->createMock(LoggerInterface::class));
+
+        $response = $factory->csrfTokenMismatch(wantsJson: true);
+
+        self::assertSame(Response::HTTP_FORBIDDEN, $response->getStatusCode());
+        self::assertSame('application/json', $response->headers->get('Content-Type'));
+
+        $payload = json_decode((string) $response->getContent(), true);
+
+        self::assertIsArray($payload);
+        self::assertArrayHasKey('message', $payload);
+        self::assertNotSame('', $payload['message']);
+    }
+
+    public function testABroken403TemplateStillAnswers403(): void
+    {
+        $render = $this->createMock(RendererInterface::class);
+        $render->method('render')->willThrowException(new RuntimeException('broken template'));
+
+        $logger = $this->createMock(LoggerInterface::class);
+        $logger->expects(self::once())->method('error');
+
+        $factory = new ExceptionResponseFactory($render, $logger);
+
+        self::assertSame(Response::HTTP_FORBIDDEN, $factory->csrfTokenMismatch(wantsJson: false)->getStatusCode());
+    }
 }

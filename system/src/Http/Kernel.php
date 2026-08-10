@@ -16,6 +16,7 @@ use Johncms\Exceptions\HttpRedirectException;
 use Johncms\Exceptions\MethodNotAllowedException;
 use Johncms\Exceptions\PageNotFoundException;
 use Johncms\Http\Controller\ActionInvoker;
+use Johncms\Http\Middleware\CsrfMiddleware;
 use Johncms\Http\Middleware\TrimStringsMiddleware;
 use Johncms\Logs\DebugDetailsPolicy;
 use Johncms\Router\MiddlewareDispatcher;
@@ -216,7 +217,13 @@ final readonly class Kernel implements HttpKernelInterface, TerminableInterface
         // return a Response, a string or null) is unchanged — it is just enforced one call earlier.
         return $this->middlewareDispatcher->dispatch(
             request: $request,
-            middlewares: [TrimStringsMiddleware::class, ...$match->middlewares],
+            middlewares: [
+                TrimStringsMiddleware::class,
+                // Before the middlewares of the route, so a forged request is rejected without
+                // reaching the logic of the module. Routes opt out with Route::withoutCsrf().
+                ...($match->csrfExempt ? [] : [CsrfMiddleware::class]),
+                ...$match->middlewares,
+            ],
             handler: fn (Request $request): Response => $this->responseNormalizer->normalize(
                 $this->invokeController($match->handler, $request, $match->params)
             ),

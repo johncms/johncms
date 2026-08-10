@@ -239,7 +239,7 @@ msgid "Photo added to the profile"
 msgstr ""
 
 #: modules/album/src/Application/UseCases/SaveAlbumUseCase.php:32
-#: modules/album/templates/public/album-form.twig:17
+#: modules/album/templates/public/album-form.twig:18
 msgid "Title"
 msgstr ""
 
@@ -253,8 +253,8 @@ msgid "You have not entered password"
 msgstr ""
 
 #: modules/album/src/Application/UseCases/SaveAlbumUseCase.php:38
-#: modules/album/templates/public/album-form.twig:25
-#: modules/album/templates/public/enter-password.twig:17
+#: modules/album/templates/public/album-form.twig:26
+#: modules/album/templates/public/enter-password.twig:18
 msgid "Password"
 msgstr ""
 
@@ -391,48 +391,48 @@ msgstr ""
 msgid "A lovely butterfly."
 msgstr ""
 
-#: modules/album/templates/public/add-photo.twig:20
+#: modules/album/templates/public/add-photo.twig:21
 msgid "Choose file"
 msgstr ""
 
-#: modules/album/templates/public/add-photo.twig:24
+#: modules/album/templates/public/add-photo.twig:25
 msgid "Allowed format image JPG, JPEG, PNG, GIF<br>File size should not exceed %d kb."
 msgstr ""
 
-#: modules/album/templates/public/add-photo.twig:28
-#: modules/album/templates/public/album-form.twig:21
-#: modules/album/templates/public/edit-photo.twig:19
+#: modules/album/templates/public/add-photo.twig:29
+#: modules/album/templates/public/album-form.twig:22
+#: modules/album/templates/public/edit-photo.twig:20
 msgid "Description"
-msgstr ""
-
-#: modules/album/templates/public/add-photo.twig:32
-#: modules/album/templates/public/album-form.twig:46
-#: modules/album/templates/public/edit-photo.twig:23
-msgid "Save"
 msgstr ""
 
 #: modules/album/templates/public/add-photo.twig:33
 #: modules/album/templates/public/album-form.twig:47
-#: modules/album/templates/public/confirm-delete.twig:19
 #: modules/album/templates/public/edit-photo.twig:24
-#: modules/album/templates/public/enter-password.twig:24
-#: modules/album/templates/public/move-photo.twig:23
+msgid "Save"
+msgstr ""
+
+#: modules/album/templates/public/add-photo.twig:34
+#: modules/album/templates/public/album-form.twig:48
+#: modules/album/templates/public/confirm-delete.twig:19
+#: modules/album/templates/public/edit-photo.twig:25
+#: modules/album/templates/public/enter-password.twig:25
+#: modules/album/templates/public/move-photo.twig:24
 msgid "Cancel"
 msgstr ""
 
-#: modules/album/templates/public/album-form.twig:29
+#: modules/album/templates/public/album-form.twig:30
 msgid "Access"
 msgstr ""
 
-#: modules/album/templates/public/album-form.twig:34
+#: modules/album/templates/public/album-form.twig:35
 msgid "Everyone"
 msgstr ""
 
-#: modules/album/templates/public/album-form.twig:38
+#: modules/album/templates/public/album-form.twig:39
 msgid "With Password"
 msgstr ""
 
-#: modules/album/templates/public/album-form.twig:42
+#: modules/album/templates/public/album-form.twig:43
 msgid "Only for me"
 msgstr ""
 
@@ -471,11 +471,11 @@ msgstr[0] ""
 msgid "Delete"
 msgstr ""
 
-#: modules/album/templates/public/enter-password.twig:15
+#: modules/album/templates/public/enter-password.twig:16
 msgid "You must type a password to view this album"
 msgstr ""
 
-#: modules/album/templates/public/enter-password.twig:23
+#: modules/album/templates/public/enter-password.twig:24
 msgid "Enter"
 msgstr ""
 
@@ -509,11 +509,11 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: modules/album/templates/public/move-photo.twig:13
+#: modules/album/templates/public/move-photo.twig:14
 msgid "Select Album"
 msgstr ""
 
-#: modules/album/templates/public/move-photo.twig:22
+#: modules/album/templates/public/move-photo.twig:23
 #: modules/album/templates/public/show-one.twig:82
 msgid "Move"
 msgstr ""

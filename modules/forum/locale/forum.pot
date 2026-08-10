@@ -58,7 +58,7 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/SubmitVoteController.php:52
 #: modules/forum/templates/public/edit-post.twig:26
 #: modules/forum/templates/public/new-topic.twig:72
-#: modules/forum/templates/public/reply-message.twig:33
+#: modules/forum/templates/public/reply-message.twig:34
 msgid "Back"
 msgstr ""
 
@@ -93,7 +93,7 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/AddFileController.php:105
 #: modules/forum/src/Application/Controllers/AddFileController.php:106
 #: modules/forum/templates/public/new-topic.twig:63
-#: modules/forum/templates/public/reply-message.twig:27
+#: modules/forum/templates/public/reply-message.twig:28
 #: modules/forum/templates/public/topic.twig:43
 msgid "Add File"
 msgstr ""
@@ -373,7 +373,7 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/UnreadTopicsController.php:58
 #: modules/forum/src/Application/Controllers/ViewForumVisitorsController.php:59
 #: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:89
-#: modules/forum/templates/public/curators.twig:20
+#: modules/forum/templates/public/curators.twig:21
 #: modules/forum/templates/public/files-list.twig:26
 #: modules/forum/templates/public/files-sections.twig:35
 #: modules/forum/templates/public/filter-by-author.twig:21
@@ -452,7 +452,7 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/NewTopicController.php:156
 #: modules/forum/src/Application/Controllers/NewTopicController.php:161
 #: modules/forum/src/Application/Controllers/NewTopicController.php:162
-#: modules/forum/templates/public/topics.twig:34
+#: modules/forum/templates/public/topics.twig:35
 msgid "New Topic"
 msgstr ""
 
@@ -515,7 +515,7 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/ViewForumVisitorsController.php:48
 #: modules/forum/templates/public/index.twig:53
 #: modules/forum/templates/public/section.twig:44
-#: modules/forum/templates/public/topics.twig:106
+#: modules/forum/templates/public/topics.twig:107
 msgid "Who in Forum"
 msgstr ""
 
@@ -755,64 +755,64 @@ msgid "Add more"
 msgstr ""
 
 #: modules/forum/templates/public/add-file.twig:18
-#: modules/forum/templates/public/add-file.twig:33
-#: modules/forum/templates/public/add-poll.twig:42
+#: modules/forum/templates/public/add-file.twig:34
+#: modules/forum/templates/public/add-poll.twig:43
 #: modules/forum/templates/public/change-topic.twig:41
-#: modules/forum/templates/public/curators.twig:37
-#: modules/forum/templates/public/edit-poll.twig:53
+#: modules/forum/templates/public/curators.twig:38
+#: modules/forum/templates/public/edit-poll.twig:54
 #: modules/forum/templates/public/filter-by-author.twig:49
 #: modules/forum/templates/public/move-topic.twig:36
 #: modules/forum/templates/public/show-post.twig:140
 msgid "Back to topic"
 msgstr ""
 
-#: modules/forum/templates/public/add-file.twig:25
+#: modules/forum/templates/public/add-file.twig:26
 msgid "Choose file"
 msgstr ""
 
-#: modules/forum/templates/public/add-file.twig:29
+#: modules/forum/templates/public/add-file.twig:30
 msgid "Max. Size"
 msgstr ""
 
-#: modules/forum/templates/public/add-file.twig:32
+#: modules/forum/templates/public/add-file.twig:33
 msgid "Upload"
 msgstr ""
 
-#: modules/forum/templates/public/add-poll.twig:16
 #: modules/forum/templates/public/add-poll.twig:17
-#: modules/forum/templates/public/edit-poll.twig:20
+#: modules/forum/templates/public/add-poll.twig:18
 #: modules/forum/templates/public/edit-poll.twig:21
+#: modules/forum/templates/public/edit-poll.twig:22
 msgid "Poll"
 msgstr ""
 
-#: modules/forum/templates/public/add-poll.twig:19
-#: modules/forum/templates/public/edit-poll.twig:23
+#: modules/forum/templates/public/add-poll.twig:20
+#: modules/forum/templates/public/edit-poll.twig:24
 msgid "Maximum length: 200 characters"
 msgstr ""
 
-#: modules/forum/templates/public/add-poll.twig:22
-#: modules/forum/templates/public/edit-poll.twig:26
+#: modules/forum/templates/public/add-poll.twig:23
+#: modules/forum/templates/public/edit-poll.twig:27
 msgid "Answers"
 msgstr ""
 
-#: modules/forum/templates/public/add-poll.twig:28
-#: modules/forum/templates/public/edit-poll.twig:39
+#: modules/forum/templates/public/add-poll.twig:29
+#: modules/forum/templates/public/edit-poll.twig:40
 msgid "Maximum length: 150 characters"
 msgstr ""
 
-#: modules/forum/templates/public/add-poll.twig:34
-#: modules/forum/templates/public/edit-poll.twig:45
+#: modules/forum/templates/public/add-poll.twig:35
+#: modules/forum/templates/public/edit-poll.twig:46
 msgid "Add Answer"
 msgstr ""
 
-#: modules/forum/templates/public/add-poll.twig:37
-#: modules/forum/templates/public/edit-poll.twig:48
+#: modules/forum/templates/public/add-poll.twig:38
+#: modules/forum/templates/public/edit-poll.twig:49
 msgid "Delete last"
 msgstr ""
 
-#: modules/forum/templates/public/add-poll.twig:41
+#: modules/forum/templates/public/add-poll.twig:42
 #: modules/forum/templates/public/change-topic.twig:40
-#: modules/forum/templates/public/edit-poll.twig:52
+#: modules/forum/templates/public/edit-poll.twig:53
 #: modules/forum/templates/public/edit-post.twig:23
 msgid "Save"
 msgstr ""
@@ -820,7 +820,7 @@ msgstr ""
 #: modules/forum/templates/public/bulk-delete-posts.twig:13
 #: modules/forum/templates/public/delete-post-file.twig:12
 #: modules/forum/templates/public/delete-post.twig:19
-#: modules/forum/templates/public/delete-topic.twig:14
+#: modules/forum/templates/public/delete-topic.twig:15
 msgid "Do you really want to delete?"
 msgstr ""
 
@@ -831,17 +831,17 @@ msgstr ""
 #: modules/forum/templates/public/delete-poll.twig:15
 #: modules/forum/templates/public/delete-post-file.twig:17
 #: modules/forum/templates/public/delete-post.twig:24
-#: modules/forum/templates/public/delete-topic.twig:24
+#: modules/forum/templates/public/delete-topic.twig:25
 msgid "Delete"
 msgstr ""
 
 #: modules/forum/templates/public/bulk-delete-posts.twig:23
-#: modules/forum/templates/public/clear-search-history.twig:16
+#: modules/forum/templates/public/clear-search-history.twig:17
 #: modules/forum/templates/public/delete-poll-answer.twig:16
 #: modules/forum/templates/public/delete-poll.twig:16
 #: modules/forum/templates/public/delete-post-file.twig:18
 #: modules/forum/templates/public/delete-post.twig:28
-#: modules/forum/templates/public/delete-topic.twig:31
+#: modules/forum/templates/public/delete-topic.twig:32
 #: modules/forum/templates/public/restore-post.twig:18
 msgid "Cancel"
 msgstr ""
@@ -861,11 +861,11 @@ msgstr ""
 msgid "Meta description"
 msgstr ""
 
-#: modules/forum/templates/public/clear-search-history.twig:12
+#: modules/forum/templates/public/clear-search-history.twig:13
 msgid "Do you really want to clear the search history?"
 msgstr ""
 
-#: modules/forum/templates/public/clear-search-history.twig:15
+#: modules/forum/templates/public/clear-search-history.twig:16
 msgid "Clear"
 msgstr ""
 
@@ -950,7 +950,7 @@ msgstr ""
 msgid "Changes saved"
 msgstr ""
 
-#: modules/forum/templates/public/curators.twig:35
+#: modules/forum/templates/public/curators.twig:36
 msgid "Assign"
 msgstr ""
 
@@ -972,24 +972,24 @@ msgid "WARNING!<br>This is last post of topic. By deleting this post topic will 
 msgstr ""
 
 #: modules/forum/templates/public/delete-post.twig:26
-#: modules/forum/templates/public/delete-topic.twig:19
+#: modules/forum/templates/public/delete-topic.twig:20
 msgid "Hide"
 msgstr ""
 
-#: modules/forum/templates/public/delete-topic.twig:30
+#: modules/forum/templates/public/delete-topic.twig:31
 msgid "Perform"
 msgstr ""
 
 #: modules/forum/templates/public/edit-post.twig:16
 #: modules/forum/templates/public/new-topic.twig:44
-#: modules/forum/templates/public/reply-message.twig:20
+#: modules/forum/templates/public/reply-message.twig:21
 #: modules/forum/templates/public/topic.twig:36
 msgid "Message"
 msgstr ""
 
 #: modules/forum/templates/public/edit-post.twig:26
 #: modules/forum/templates/public/new-topic.twig:77
-#: modules/forum/templates/public/reply-message.twig:33
+#: modules/forum/templates/public/reply-message.twig:34
 msgid "Smilies"
 msgstr ""
 
@@ -1006,7 +1006,7 @@ msgstr ""
 #: modules/forum/templates/public/search.twig:66
 #: modules/forum/templates/public/topic-list.twig:85
 #: modules/forum/templates/public/topic.twig:256
-#: modules/forum/templates/public/topics.twig:97
+#: modules/forum/templates/public/topics.twig:98
 #: modules/forum/templates/public/visitors.twig:38
 msgid "Total"
 msgstr ""
@@ -1054,7 +1054,7 @@ msgid "Title"
 msgstr ""
 
 #: modules/forum/templates/public/new-topic.twig:66
-#: modules/forum/templates/public/reply-message.twig:30
+#: modules/forum/templates/public/reply-message.twig:31
 #: modules/forum/templates/public/topic.twig:46
 #: modules/forum/templates/public/topic.twig:49
 msgid "Write"
@@ -1069,7 +1069,7 @@ msgstr ""
 msgid "Go to Topic"
 msgstr ""
 
-#: modules/forum/templates/public/reply-message.twig:16
+#: modules/forum/templates/public/reply-message.twig:17
 msgid "Topic"
 msgstr ""
 
@@ -1096,7 +1096,7 @@ msgstr ""
 
 #: modules/forum/templates/public/search.twig:50
 #: modules/forum/templates/public/topic-list.twig:73
-#: modules/forum/templates/public/topics.twig:90
+#: modules/forum/templates/public/topics.twig:91
 msgid "Author"
 msgstr ""
 
@@ -1129,28 +1129,28 @@ msgid "Show period"
 msgstr ""
 
 #: modules/forum/templates/public/topic-list.twig:39
-#: modules/forum/templates/public/topics.twig:46
+#: modules/forum/templates/public/topics.twig:47
 msgid "Pinned topic"
 msgstr ""
 
 #: modules/forum/templates/public/topic-list.twig:46
-#: modules/forum/templates/public/topics.twig:53
+#: modules/forum/templates/public/topics.twig:54
 msgid "Topic has poll"
 msgstr ""
 
 #: modules/forum/templates/public/topic-list.twig:53
-#: modules/forum/templates/public/topics.twig:60
+#: modules/forum/templates/public/topics.twig:61
 msgid "Closed topic"
 msgstr ""
 
 #: modules/forum/templates/public/topic-list.twig:60
-#: modules/forum/templates/public/topics.twig:67
-#: modules/forum/templates/public/topics.twig:78
+#: modules/forum/templates/public/topics.twig:68
+#: modules/forum/templates/public/topics.twig:79
 msgid "Deleted topic"
 msgstr ""
 
 #: modules/forum/templates/public/topic-list.twig:74
-#: modules/forum/templates/public/topics.twig:91
+#: modules/forum/templates/public/topics.twig:92
 msgid "Last post"
 msgstr ""
 
@@ -1231,7 +1231,7 @@ msgstr ""
 msgid "No topics in this section"
 msgstr ""
 
-#: modules/forum/templates/public/topics.twig:81
+#: modules/forum/templates/public/topics.twig:82
 msgid "Last page"
 msgstr ""
 

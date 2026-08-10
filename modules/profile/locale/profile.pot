@@ -57,8 +57,8 @@ msgstr ""
 #: modules/profile/src/Application/Controllers/KarmaController.php:123
 #: modules/profile/src/Application/Controllers/PhotoController.php:74
 #: modules/profile/src/Application/Controllers/RestorePasswordController.php:118
-#: modules/profile/templates/public/restore-password-set.twig:13
-#: modules/profile/templates/public/restore-password.twig:43
+#: modules/profile/templates/public/restore-password-set.twig:14
+#: modules/profile/templates/public/restore-password.twig:44
 msgid "Continue"
 msgstr ""
 
@@ -308,7 +308,7 @@ msgstr ""
 #: modules/profile/src/Application/Controllers/RestorePasswordController.php:102
 #: modules/profile/src/Application/Controllers/RestorePasswordController.php:114
 #: modules/profile/src/Application/Controllers/RestorePasswordController.php:128
-#: modules/profile/templates/public/restore-password.twig:10
+#: modules/profile/templates/public/restore-password.twig:11
 msgid "Restore password"
 msgstr ""
 
@@ -458,13 +458,13 @@ msgid "All"
 msgstr ""
 
 #: modules/profile/src/Application/UseCases/GetKarmaListUseCase.php:65
-#: modules/profile/templates/public/karma-vote.twig:23
+#: modules/profile/templates/public/karma-vote.twig:24
 #: modules/profile/templates/public/view.twig:122
 msgid "Positive"
 msgstr ""
 
 #: modules/profile/src/Application/UseCases/GetKarmaListUseCase.php:66
-#: modules/profile/templates/public/karma-vote.twig:27
+#: modules/profile/templates/public/karma-vote.twig:28
 #: modules/profile/templates/public/view.twig:128
 msgid "Negative"
 msgstr ""
@@ -616,12 +616,12 @@ msgstr ""
 #: modules/profile/templates/public/ban.twig:87
 #: modules/profile/templates/public/confirm-delete.twig:19
 #: modules/profile/templates/public/edit.twig:277
-#: modules/profile/templates/public/forum-settings.twig:50
-#: modules/profile/templates/public/images.twig:34
-#: modules/profile/templates/public/karma-vote.twig:47
-#: modules/profile/templates/public/mail-settings.twig:31
-#: modules/profile/templates/public/password.twig:47
-#: modules/profile/templates/public/settings.twig:89
+#: modules/profile/templates/public/forum-settings.twig:51
+#: modules/profile/templates/public/images.twig:35
+#: modules/profile/templates/public/karma-vote.twig:48
+#: modules/profile/templates/public/mail-settings.twig:32
+#: modules/profile/templates/public/password.twig:48
+#: modules/profile/templates/public/settings.twig:90
 msgid "Cancel"
 msgstr ""
 
@@ -710,8 +710,8 @@ msgid "Error when confirming e-mail. Invalid confirmation code."
 msgstr ""
 
 #: modules/profile/templates/public/edit.twig:31
-#: modules/profile/templates/public/restore-password.twig:12
-#: modules/profile/templates/public/restore-password.twig:18
+#: modules/profile/templates/public/restore-password.twig:13
+#: modules/profile/templates/public/restore-password.twig:19
 msgid "Username"
 msgstr ""
 
@@ -892,56 +892,56 @@ msgid "Supervisor"
 msgstr ""
 
 #: modules/profile/templates/public/edit.twig:276
-#: modules/profile/templates/public/forum-settings.twig:49
-#: modules/profile/templates/public/images.twig:33
-#: modules/profile/templates/public/mail-settings.twig:30
-#: modules/profile/templates/public/password.twig:46
-#: modules/profile/templates/public/settings.twig:88
+#: modules/profile/templates/public/forum-settings.twig:50
+#: modules/profile/templates/public/images.twig:34
+#: modules/profile/templates/public/mail-settings.twig:31
+#: modules/profile/templates/public/password.twig:47
+#: modules/profile/templates/public/settings.twig:89
 msgid "Save"
 msgstr ""
 
-#: modules/profile/templates/public/forum-settings.twig:18
+#: modules/profile/templates/public/forum-settings.twig:19
 msgid "Basic settings"
 msgstr ""
 
-#: modules/profile/templates/public/forum-settings.twig:22
+#: modules/profile/templates/public/forum-settings.twig:23
 msgid "Inverse sorting"
 msgstr ""
 
-#: modules/profile/templates/public/forum-settings.twig:26
+#: modules/profile/templates/public/forum-settings.twig:27
 msgid "Use the form of a quick answer"
 msgstr ""
 
-#: modules/profile/templates/public/forum-settings.twig:30
+#: modules/profile/templates/public/forum-settings.twig:31
 msgid "Preview of messages"
 msgstr ""
 
-#: modules/profile/templates/public/forum-settings.twig:33
+#: modules/profile/templates/public/forum-settings.twig:34
 msgid "Attach first post"
 msgstr ""
 
-#: modules/profile/templates/public/forum-settings.twig:37
+#: modules/profile/templates/public/forum-settings.twig:38
 msgid "Always"
 msgstr ""
 
-#: modules/profile/templates/public/forum-settings.twig:41
+#: modules/profile/templates/public/forum-settings.twig:42
 msgid "In unread topics"
 msgstr ""
 
-#: modules/profile/templates/public/forum-settings.twig:45
+#: modules/profile/templates/public/forum-settings.twig:46
 msgid "Never"
 msgstr ""
 
-#: modules/profile/templates/public/forum-settings.twig:51
-#: modules/profile/templates/public/settings.twig:92
+#: modules/profile/templates/public/forum-settings.twig:52
+#: modules/profile/templates/public/settings.twig:93
 msgid "Reset Settings"
 msgstr ""
 
-#: modules/profile/templates/public/images.twig:24
+#: modules/profile/templates/public/images.twig:25
 msgid "Choose file"
 msgstr ""
 
-#: modules/profile/templates/public/images.twig:28
+#: modules/profile/templates/public/images.twig:29
 msgid "Allowed image formats: JPG, PNG, GIF. File size should not exceed %d kb.<br>The new image will replace old (if was)."
 msgstr ""
 
@@ -953,23 +953,23 @@ msgstr ""
 msgid "Date"
 msgstr ""
 
-#: modules/profile/templates/public/karma-vote.twig:20
+#: modules/profile/templates/public/karma-vote.twig:21
 msgid "Type of vote"
 msgstr ""
 
-#: modules/profile/templates/public/karma-vote.twig:31
+#: modules/profile/templates/public/karma-vote.twig:32
 msgid "Votes quantity"
 msgstr ""
 
-#: modules/profile/templates/public/karma-vote.twig:40
+#: modules/profile/templates/public/karma-vote.twig:41
 msgid "Comment"
 msgstr ""
 
-#: modules/profile/templates/public/karma-vote.twig:42
+#: modules/profile/templates/public/karma-vote.twig:43
 msgid "Min. 2, Max. 500 characters"
 msgstr ""
 
-#: modules/profile/templates/public/karma-vote.twig:46
+#: modules/profile/templates/public/karma-vote.twig:47
 #: modules/profile/templates/public/view.twig:134
 msgid "Vote"
 msgstr ""
@@ -978,104 +978,104 @@ msgstr ""
 msgid "Reset Karma"
 msgstr ""
 
-#: modules/profile/templates/public/mail-settings.twig:18
+#: modules/profile/templates/public/mail-settings.twig:19
 msgid "Who can write you?"
 msgstr ""
 
-#: modules/profile/templates/public/mail-settings.twig:22
+#: modules/profile/templates/public/mail-settings.twig:23
 msgid "All can write"
 msgstr ""
 
-#: modules/profile/templates/public/mail-settings.twig:26
+#: modules/profile/templates/public/mail-settings.twig:27
 msgid "Only my contacts"
 msgstr ""
 
-#: modules/profile/templates/public/password.twig:14
-#: modules/profile/templates/public/password.twig:20
+#: modules/profile/templates/public/password.twig:15
+#: modules/profile/templates/public/password.twig:21
 msgid "Enter old password"
 msgstr ""
 
-#: modules/profile/templates/public/password.twig:26
-#: modules/profile/templates/public/password.twig:32
+#: modules/profile/templates/public/password.twig:27
+#: modules/profile/templates/public/password.twig:33
 msgid "Enter new password"
 msgstr ""
 
-#: modules/profile/templates/public/password.twig:36
-#: modules/profile/templates/public/password.twig:42
+#: modules/profile/templates/public/password.twig:37
+#: modules/profile/templates/public/password.twig:43
 msgid "Repeat password"
 msgstr ""
 
-#: modules/profile/templates/public/restore-password-set.twig:11
+#: modules/profile/templates/public/restore-password-set.twig:12
 msgid "A new password will be generated and sent to the E-mail address specified in your profile."
 msgstr ""
 
-#: modules/profile/templates/public/restore-password.twig:22
-#: modules/profile/templates/public/restore-password.twig:28
+#: modules/profile/templates/public/restore-password.twig:23
+#: modules/profile/templates/public/restore-password.twig:29
 msgid "Your E-mail"
 msgstr ""
 
-#: modules/profile/templates/public/restore-password.twig:31
-#: modules/profile/templates/public/restore-password.twig:40
+#: modules/profile/templates/public/restore-password.twig:32
+#: modules/profile/templates/public/restore-password.twig:41
 msgid "Verification code"
 msgstr ""
 
-#: modules/profile/templates/public/restore-password.twig:33
+#: modules/profile/templates/public/restore-password.twig:34
 msgid "Enter verification code"
 msgstr ""
 
-#: modules/profile/templates/public/restore-password.twig:47
+#: modules/profile/templates/public/restore-password.twig:48
 msgid "Password will be send to E-mail address specified in your profile.<br />WARNING !! If E-mail address has not been specified in your profile, you will not be able to recover your password."
 msgstr ""
 
-#: modules/profile/templates/public/settings.twig:22
+#: modules/profile/templates/public/settings.twig:23
 msgid "Time settings"
 msgstr ""
 
-#: modules/profile/templates/public/settings.twig:24
-#: modules/profile/templates/public/settings.twig:32
+#: modules/profile/templates/public/settings.twig:25
+#: modules/profile/templates/public/settings.twig:33
 msgid "Shift of time"
 msgstr ""
 
-#: modules/profile/templates/public/settings.twig:35
+#: modules/profile/templates/public/settings.twig:36
 msgid "System time"
 msgstr ""
 
-#: modules/profile/templates/public/settings.twig:39
+#: modules/profile/templates/public/settings.twig:40
 msgid "System Functions"
 msgstr ""
 
-#: modules/profile/templates/public/settings.twig:42
+#: modules/profile/templates/public/settings.twig:43
 msgid "Direct URL"
 msgstr ""
 
-#: modules/profile/templates/public/settings.twig:46
+#: modules/profile/templates/public/settings.twig:47
 msgid "Youtube Player"
 msgstr ""
 
-#: modules/profile/templates/public/settings.twig:49
+#: modules/profile/templates/public/settings.twig:50
 msgid "Text entering"
 msgstr ""
 
-#: modules/profile/templates/public/settings.twig:51
-#: modules/profile/templates/public/settings.twig:58
+#: modules/profile/templates/public/settings.twig:52
+#: modules/profile/templates/public/settings.twig:59
 msgid "Height of field"
 msgstr ""
 
-#: modules/profile/templates/public/settings.twig:62
+#: modules/profile/templates/public/settings.twig:63
 msgid "Appearance"
 msgstr ""
 
-#: modules/profile/templates/public/settings.twig:64
-#: modules/profile/templates/public/settings.twig:71
+#: modules/profile/templates/public/settings.twig:65
+#: modules/profile/templates/public/settings.twig:72
 msgid "Size of Lists"
 msgstr ""
 
-#: modules/profile/templates/public/settings.twig:76
-#: modules/profile/templates/public/settings.twig:78
+#: modules/profile/templates/public/settings.twig:77
+#: modules/profile/templates/public/settings.twig:79
 msgid "Select Language"
 msgstr ""
 
-#: modules/profile/templates/public/settings.twig:81
+#: modules/profile/templates/public/settings.twig:82
 msgid "Site Default"
 msgstr ""
 

@@ -17,6 +17,7 @@ use Johncms\Exceptions\MethodNotAllowedException;
 use Johncms\Exceptions\PageNotFoundException;
 use Johncms\View\RendererInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
@@ -82,6 +83,38 @@ final readonly class ExceptionResponseFactory
         }
 
         return new Response($body, Response::HTTP_NOT_FOUND);
+    }
+
+    /**
+     * A request that failed the CSRF check.
+     *
+     * The answer is negotiated because the Vue components post through axios and read
+     * response.data.message: an HTML page would reach them as an unparseable body and the
+     * failure would surface as "something went wrong" instead of the real reason.
+     */
+    public function csrfTokenMismatch(bool $wantsJson): Response
+    {
+        $title = d__('system', 'The session has expired');
+        $message = d__('system', 'Reload the page and submit the form again.');
+
+        if ($wantsJson) {
+            return new JsonResponse(['message' => $title . ' ' . $message], Response::HTTP_FORBIDDEN);
+        }
+
+        try {
+            $body = $this->renderer->render(
+                '@theme/pages/errors/403.twig',
+                ['title' => $title, 'message' => $message]
+            );
+        } catch (Throwable $throwable) {
+            // Same reason as the 404 above: a broken theme override must not turn the status the
+            // browser acts on into a 500.
+            $this->logger->error('The 403 template failed to render', ['exception' => $throwable]);
+
+            $body = $this->plainTextPage($title, $message);
+        }
+
+        return new Response($body, Response::HTTP_FORBIDDEN);
     }
 
     private function plainTextPage(string $title, string $message): string

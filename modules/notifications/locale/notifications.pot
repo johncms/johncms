@@ -14,7 +14,7 @@ msgid "Notifications"
 msgstr ""
 
 #: modules/notifications/src/Application/Controllers/SettingsController.php:28
-#: modules/notifications/templates/public/index.twig:71
+#: modules/notifications/templates/public/index.twig:72
 msgid "Settings"
 msgstr ""
 
@@ -62,18 +62,18 @@ msgstr ""
 msgid "Total"
 msgstr ""
 
-#: modules/notifications/templates/public/index.twig:66
+#: modules/notifications/templates/public/index.twig:67
 msgid "Clear notifications"
 msgstr ""
 
-#: modules/notifications/templates/public/settings.twig:26
+#: modules/notifications/templates/public/settings.twig:27
 msgid "Display the number of unread messages in the forum"
 msgstr ""
 
-#: modules/notifications/templates/public/settings.twig:30
+#: modules/notifications/templates/public/settings.twig:31
 msgid "Save"
 msgstr ""
 
-#: modules/notifications/templates/public/settings.twig:31
+#: modules/notifications/templates/public/settings.twig:32
 msgid "Cancel"
 msgstr ""

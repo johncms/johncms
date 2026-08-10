@@ -14,8 +14,8 @@ msgstr ""
 #: modules/registration/src/Application/Controllers/RegistrationController.php:149
 #: modules/registration/src/Application/Controllers/RegistrationController.php:170
 #: modules/registration/src/Application/Controllers/RegistrationController.php:171
-#: modules/registration/templates/public/index.twig:15
-#: modules/registration/templates/public/index.twig:128
+#: modules/registration/templates/public/index.twig:16
+#: modules/registration/templates/public/index.twig:129
 msgid "Registration"
 msgstr ""
 
@@ -39,67 +39,67 @@ msgstr ""
 msgid "Error when confirming e-mail. Invalid confirmation code."
 msgstr ""
 
-#: modules/registration/templates/public/index.twig:18
+#: modules/registration/templates/public/index.twig:19
 msgid "You can get authorized on the site after confirmation of your registration."
 msgstr ""
 
-#: modules/registration/templates/public/index.twig:26
+#: modules/registration/templates/public/index.twig:27
 msgid "Please, do not register names like 111, shhhh, uuuu, etc. They will be deleted. <br /> Also all the profiles registered via proxy servers will be deleted"
 msgstr ""
 
-#: modules/registration/templates/public/index.twig:30
+#: modules/registration/templates/public/index.twig:31
 msgid "Choose Nickname"
 msgstr ""
 
-#: modules/registration/templates/public/index.twig:39
+#: modules/registration/templates/public/index.twig:40
 msgid "Username"
 msgstr ""
 
-#: modules/registration/templates/public/index.twig:43
+#: modules/registration/templates/public/index.twig:44
 msgid "Min. 2, Max. 20 characters.<br />Allowed letters of the russian and latin alphabets, numbers and symbols - = @ ! ? ~ _ ( ) [ ] . * (Except zero)"
 msgstr ""
 
-#: modules/registration/templates/public/index.twig:47
-#: modules/registration/templates/public/index.twig:56
+#: modules/registration/templates/public/index.twig:48
+#: modules/registration/templates/public/index.twig:57
 msgid "Assign a password"
 msgstr ""
 
-#: modules/registration/templates/public/index.twig:62
-#: modules/registration/templates/public/index.twig:69
+#: modules/registration/templates/public/index.twig:63
+#: modules/registration/templates/public/index.twig:70
 msgid "E-mail"
 msgstr ""
 
-#: modules/registration/templates/public/index.twig:75
+#: modules/registration/templates/public/index.twig:76
 msgid "Select Gender"
 msgstr ""
 
-#: modules/registration/templates/public/index.twig:78
+#: modules/registration/templates/public/index.twig:79
 msgid "Man"
 msgstr ""
 
-#: modules/registration/templates/public/index.twig:79
+#: modules/registration/templates/public/index.twig:80
 msgid "Woman"
 msgstr ""
 
-#: modules/registration/templates/public/index.twig:84
-#: modules/registration/templates/public/index.twig:91
+#: modules/registration/templates/public/index.twig:85
+#: modules/registration/templates/public/index.twig:92
 msgid "Your name"
 msgstr ""
 
-#: modules/registration/templates/public/index.twig:96
+#: modules/registration/templates/public/index.twig:97
 msgid "Tell us a little about yourself"
 msgstr ""
 
-#: modules/registration/templates/public/index.twig:101
-#: modules/registration/templates/public/index.twig:111
+#: modules/registration/templates/public/index.twig:102
+#: modules/registration/templates/public/index.twig:112
 msgid "Verification code"
 msgstr ""
 
-#: modules/registration/templates/public/index.twig:103
+#: modules/registration/templates/public/index.twig:104
 msgid "Enter verification code"
 msgstr ""
 
-#: modules/registration/templates/public/index.twig:115
+#: modules/registration/templates/public/index.twig:116
 msgid "If you cannot see the image code, enable graphics in your browser and refresh this page"
 msgstr ""
 

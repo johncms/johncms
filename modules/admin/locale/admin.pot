@@ -826,7 +826,7 @@ msgstr ""
 
 #: modules/admin/src/Application/Controllers/Users/UsersController.php:143
 #: modules/admin/src/Application/Controllers/Users/UsersController.php:144
-#: modules/admin/templates/login.twig:45
+#: modules/admin/templates/login.twig:46
 msgid "Login"
 msgstr ""
 
@@ -1710,30 +1710,30 @@ msgstr ""
 msgid "Update List"
 msgstr ""
 
-#: modules/admin/templates/login-captcha.twig:21
-#: modules/admin/templates/login-captcha.twig:30
+#: modules/admin/templates/login-captcha.twig:22
+#: modules/admin/templates/login-captcha.twig:31
 msgid "Verification code"
 msgstr ""
 
-#: modules/admin/templates/login-captcha.twig:23
+#: modules/admin/templates/login-captcha.twig:24
 msgid "Enter verification code"
 msgstr ""
 
-#: modules/admin/templates/login-captcha.twig:39
+#: modules/admin/templates/login-captcha.twig:40
 msgid "Continue"
 msgstr ""
 
-#: modules/admin/templates/login.twig:18
+#: modules/admin/templates/login.twig:19
 msgid "Authorization"
 msgstr ""
 
-#: modules/admin/templates/login.twig:22
-#: modules/admin/templates/login.twig:30
+#: modules/admin/templates/login.twig:23
+#: modules/admin/templates/login.twig:31
 msgid "Username"
 msgstr ""
 
-#: modules/admin/templates/login.twig:34
-#: modules/admin/templates/login.twig:42
+#: modules/admin/templates/login.twig:35
+#: modules/admin/templates/login.twig:43
 msgid "Password"
 msgstr ""
 

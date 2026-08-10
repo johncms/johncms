@@ -85,7 +85,7 @@ msgstr ""
 #: modules/login/src/Application/Controllers/LoginController.php:76
 #: modules/login/src/Application/Controllers/LoginController.php:88
 #: modules/login/src/Application/Controllers/LoginController.php:89
-#: modules/login/templates/public/login.twig:39
+#: modules/login/templates/public/login.twig:40
 #: themes/default/templates/components/sidebar-user-menu.twig:69
 msgid "Login"
 msgstr ""
@@ -125,7 +125,7 @@ msgstr ""
 msgid "Select language"
 msgstr ""
 
-#: modules/language/templates/public/index.twig:26
+#: modules/language/templates/public/index.twig:27
 msgid "Apply"
 msgstr ""
 
@@ -145,7 +145,7 @@ msgstr ""
 #: modules/login/src/Application/Controllers/LogoutController.php:43
 #: modules/login/src/Application/Controllers/LogoutController.php:48
 #: modules/login/src/Application/Controllers/LogoutController.php:49
-#: modules/login/templates/public/logout.twig:12
+#: modules/login/templates/public/logout.twig:13
 msgid "Logout"
 msgstr ""
 
@@ -159,16 +159,16 @@ msgstr ""
 msgid "The security code is not correct"
 msgstr ""
 
-#: modules/login/templates/public/captcha.twig:12
-#: modules/login/templates/public/captcha.twig:21
+#: modules/login/templates/public/captcha.twig:13
+#: modules/login/templates/public/captcha.twig:22
 msgid "Verification code"
 msgstr ""
 
-#: modules/login/templates/public/captcha.twig:14
+#: modules/login/templates/public/captcha.twig:15
 msgid "Enter verification code"
 msgstr ""
 
-#: modules/login/templates/public/captcha.twig:26
+#: modules/login/templates/public/captcha.twig:27
 msgid "Continue"
 msgstr ""
 
@@ -180,25 +180,25 @@ msgstr ""
 msgid "Sorry, but your request for registration is not considered yet. Please, be patient."
 msgstr ""
 
-#: modules/login/templates/public/login.twig:11
+#: modules/login/templates/public/login.twig:12
 msgid "Authorization"
 msgstr ""
 
-#: modules/login/templates/public/login.twig:16
-#: modules/login/templates/public/login.twig:24
+#: modules/login/templates/public/login.twig:17
+#: modules/login/templates/public/login.twig:25
 msgid "Username"
 msgstr ""
 
-#: modules/login/templates/public/login.twig:28
-#: modules/login/templates/public/login.twig:36
+#: modules/login/templates/public/login.twig:29
+#: modules/login/templates/public/login.twig:37
 msgid "Password"
 msgstr ""
 
-#: modules/login/templates/public/login.twig:40
+#: modules/login/templates/public/login.twig:41
 msgid "Forgot password?"
 msgstr ""
 
-#: modules/login/templates/public/login.twig:42
+#: modules/login/templates/public/login.twig:43
 #: themes/default/templates/components/sidebar-user-menu.twig:77
 msgid "Registration"
 msgstr ""
@@ -207,8 +207,8 @@ msgstr ""
 msgid "Are you sure you want to leave the site?"
 msgstr ""
 
-#: modules/login/templates/public/logout.twig:13
-#: modules/notifications/templates/public/settings.twig:31
+#: modules/login/templates/public/logout.twig:14
+#: modules/notifications/templates/public/settings.twig:32
 #: themes/default/templates/pages/comments-delete.twig:18
 msgid "Cancel"
 msgstr ""
@@ -226,7 +226,7 @@ msgid "Notifications"
 msgstr ""
 
 #: modules/notifications/src/Application/Controllers/SettingsController.php:28
-#: modules/notifications/templates/public/index.twig:71
+#: modules/notifications/templates/public/index.twig:72
 msgid "Settings"
 msgstr ""
 
@@ -270,15 +270,15 @@ msgstr ""
 msgid "Total"
 msgstr ""
 
-#: modules/notifications/templates/public/index.twig:66
+#: modules/notifications/templates/public/index.twig:67
 msgid "Clear notifications"
 msgstr ""
 
-#: modules/notifications/templates/public/settings.twig:26
+#: modules/notifications/templates/public/settings.twig:27
 msgid "Display the number of unread messages in the forum"
 msgstr ""
 
-#: modules/notifications/templates/public/settings.twig:30
+#: modules/notifications/templates/public/settings.twig:31
 msgid "Save"
 msgstr ""
 
@@ -286,31 +286,31 @@ msgstr ""
 msgid "Redirect to an external link"
 msgstr ""
 
-#: modules/redirect/templates/public/index.twig:12
+#: modules/redirect/templates/public/index.twig:13
 msgid "External Link"
 msgstr ""
 
-#: modules/redirect/templates/public/index.twig:13
+#: modules/redirect/templates/public/index.twig:14
 msgid "ATTENTION!"
 msgstr ""
 
-#: modules/redirect/templates/public/index.twig:15
+#: modules/redirect/templates/public/index.twig:16
 msgid "You are going to leave our site and go to an external link"
 msgstr ""
 
-#: modules/redirect/templates/public/index.twig:19
+#: modules/redirect/templates/public/index.twig:20
 msgid "Administration of our site is not responsible for the content of external sites"
 msgstr ""
 
-#: modules/redirect/templates/public/index.twig:21
+#: modules/redirect/templates/public/index.twig:22
 msgid "It is recommended not to specify your data, relating to %s (Login, Password), on third party sites"
 msgstr ""
 
-#: modules/redirect/templates/public/index.twig:26
+#: modules/redirect/templates/public/index.twig:27
 msgid "Go to Link"
 msgstr ""
 
-#: modules/redirect/templates/public/index.twig:30
+#: modules/redirect/templates/public/index.twig:31
 #: system/src/Comments.php:200
 #: system/src/Comments.php:236
 #: system/src/Comments.php:253
@@ -482,19 +482,27 @@ msgstr ""
 msgid "Last activity"
 msgstr ""
 
-#: system/src/Http/ExceptionResponseFactory.php:47
+#: system/src/Http/ExceptionResponseFactory.php:48
 msgid "Method Not Allowed"
 msgstr ""
 
-#: system/src/Http/ExceptionResponseFactory.php:65
+#: system/src/Http/ExceptionResponseFactory.php:66
 msgid "ERROR: 404 Not Found"
 msgstr ""
 
-#: system/src/Http/ExceptionResponseFactory.php:68
+#: system/src/Http/ExceptionResponseFactory.php:69
 msgid "You are looking for something that doesn't exist or may have moved"
 msgstr ""
 
-#: system/src/Http/ExceptionResponseFactory.php:107
+#: system/src/Http/ExceptionResponseFactory.php:97
+msgid "The session has expired"
+msgstr ""
+
+#: system/src/Http/ExceptionResponseFactory.php:98
+msgid "Reload the page and submit the form again."
+msgstr ""
+
+#: system/src/Http/ExceptionResponseFactory.php:140
 msgid "Bad Request"
 msgstr ""
 
@@ -509,7 +517,6 @@ msgstr ""
 
 #: system/src/NavChain.php:76
 #: themes/default/templates/admin/pages/errors/403.twig:21
-#: themes/default/templates/pages/errors/403.twig:16
 msgid "Home"
 msgstr ""
 
@@ -692,11 +699,11 @@ msgstr ""
 msgid "Set Dark Theme"
 msgstr ""
 
-#: themes/default/templates/components/comments-form.twig:20
+#: themes/default/templates/components/comments-form.twig:21
 msgid "Message"
 msgstr ""
 
-#: themes/default/templates/components/comments-form.twig:24
+#: themes/default/templates/components/comments-form.twig:25
 msgid "Send"
 msgstr ""
 

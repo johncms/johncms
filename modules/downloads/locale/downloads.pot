@@ -66,8 +66,8 @@ msgstr ""
 #: modules/downloads/src/Application/Middlewares/DownloadsAdminMiddleware.php:30
 #: modules/downloads/templates/public/comments-review.twig:108
 #: modules/downloads/templates/public/favorites.twig:30
-#: modules/downloads/templates/public/index.twig:150
-#: modules/downloads/templates/public/moderation.twig:38
+#: modules/downloads/templates/public/index.twig:151
+#: modules/downloads/templates/public/moderation.twig:39
 #: modules/downloads/templates/public/new-files.twig:30
 #: modules/downloads/templates/public/scan-dir.twig:52
 #: modules/downloads/templates/public/search.twig:58
@@ -199,7 +199,7 @@ msgid "Comments are disabled"
 msgstr ""
 
 #: modules/downloads/src/Application/Controllers/CommentsReviewController.php:106
-#: modules/downloads/templates/public/index.twig:153
+#: modules/downloads/templates/public/index.twig:154
 msgid "Review comments"
 msgstr ""
 
@@ -210,7 +210,7 @@ msgstr ""
 #: modules/downloads/src/Application/Controllers/CreateCategoryController.php:108
 #: modules/downloads/src/Application/Controllers/CreateCategoryController.php:124
 #: modules/downloads/src/Application/Controllers/CreateCategoryController.php:149
-#: modules/downloads/templates/public/index.twig:133
+#: modules/downloads/templates/public/index.twig:134
 msgid "Create Folder"
 msgstr ""
 
@@ -230,7 +230,7 @@ msgstr ""
 
 #: modules/downloads/src/Application/Controllers/CreateCategoryController.php:100
 #: modules/downloads/src/Application/Controllers/EditCategoryController.php:104
-#: modules/downloads/templates/public/category-form.twig:42
+#: modules/downloads/templates/public/category-form.twig:43
 msgid "You can write only the following extensions"
 msgstr ""
 
@@ -253,7 +253,7 @@ msgstr ""
 #: modules/downloads/src/Application/Controllers/DeleteCategoryController.php:45
 #: modules/downloads/src/Application/Controllers/DeleteCategoryController.php:64
 #: modules/downloads/src/Application/Controllers/DeleteCategoryController.php:65
-#: modules/downloads/templates/public/index.twig:137
+#: modules/downloads/templates/public/index.twig:138
 msgid "Delete Folder"
 msgstr ""
 
@@ -299,7 +299,7 @@ msgid "For registered users only"
 msgstr ""
 
 #: modules/downloads/src/Application/Controllers/FavoritesController.php:57
-#: modules/downloads/templates/public/index.twig:155
+#: modules/downloads/templates/public/index.twig:156
 msgid "Favorites"
 msgstr ""
 
@@ -344,8 +344,8 @@ msgstr ""
 #: modules/downloads/src/Application/Controllers/FilesUploadController.php:67
 #: modules/downloads/src/Application/Controllers/FilesUploadController.php:201
 #: modules/downloads/src/Application/Controllers/FilesUploadController.php:202
-#: modules/downloads/templates/public/index.twig:123
-#: modules/downloads/templates/public/index.twig:145
+#: modules/downloads/templates/public/index.twig:124
+#: modules/downloads/templates/public/index.twig:146
 msgid "Upload File"
 msgstr ""
 
@@ -389,7 +389,7 @@ msgid "The file has been moved"
 msgstr ""
 
 #: modules/downloads/src/Application/Controllers/MoveFileController.php:114
-#: modules/downloads/templates/public/index.twig:139
+#: modules/downloads/templates/public/index.twig:140
 #: modules/downloads/templates/public/scan-dir.twig:48
 msgid "Update counters"
 msgstr ""
@@ -408,7 +408,7 @@ msgid "Update"
 msgstr ""
 
 #: modules/downloads/src/Application/Controllers/ScanDirectoryController.php:105
-#: modules/downloads/templates/public/index.twig:138
+#: modules/downloads/templates/public/index.twig:139
 #: modules/downloads/templates/public/scan-dir.twig:45
 msgid "Remove missing files"
 msgstr ""
@@ -418,8 +418,8 @@ msgid "Database successfully updated"
 msgstr ""
 
 #: modules/downloads/src/Application/Controllers/ScanDirectoryController.php:267
-#: modules/downloads/templates/public/import.twig:35
-#: modules/downloads/templates/public/upload.twig:39
+#: modules/downloads/templates/public/import.twig:36
+#: modules/downloads/templates/public/upload.twig:40
 msgid "Download"
 msgstr ""
 
@@ -498,32 +498,32 @@ msgid "Duration"
 msgstr ""
 
 #: modules/downloads/src/Application/Services/FileMediaInfoService.php:45
-#: modules/downloads/templates/public/edit-file.twig:38
 #: modules/downloads/templates/public/edit-file.twig:39
+#: modules/downloads/templates/public/edit-file.twig:40
 msgid "Artist"
 msgstr ""
 
 #: modules/downloads/src/Application/Services/FileMediaInfoService.php:45
-#: modules/downloads/templates/public/edit-file.twig:43
 #: modules/downloads/templates/public/edit-file.twig:44
+#: modules/downloads/templates/public/edit-file.twig:45
 msgid "Title"
 msgstr ""
 
 #: modules/downloads/src/Application/Services/FileMediaInfoService.php:45
-#: modules/downloads/templates/public/edit-file.twig:48
 #: modules/downloads/templates/public/edit-file.twig:49
+#: modules/downloads/templates/public/edit-file.twig:50
 msgid "Album"
 msgstr ""
 
 #: modules/downloads/src/Application/Services/FileMediaInfoService.php:45
-#: modules/downloads/templates/public/edit-file.twig:53
 #: modules/downloads/templates/public/edit-file.twig:54
+#: modules/downloads/templates/public/edit-file.twig:55
 msgid "Genre"
 msgstr ""
 
 #: modules/downloads/src/Application/Services/FileMediaInfoService.php:45
-#: modules/downloads/templates/public/edit-file.twig:58
 #: modules/downloads/templates/public/edit-file.twig:59
+#: modules/downloads/templates/public/edit-file.twig:60
 msgid "Year"
 msgstr ""
 
@@ -684,128 +684,128 @@ msgstr ""
 #: modules/downloads/templates/public/additional-files.twig:24
 #: modules/downloads/templates/public/comments-review.twig:89
 #: modules/downloads/templates/public/components/file-row.twig:22
-#: modules/downloads/templates/public/confirm-delete.twig:18
-#: modules/downloads/templates/public/delete-category.twig:20
-#: modules/downloads/templates/public/edit-screenshots.twig:24
+#: modules/downloads/templates/public/confirm-delete.twig:19
+#: modules/downloads/templates/public/delete-category.twig:21
+#: modules/downloads/templates/public/edit-screenshots.twig:25
 #: modules/downloads/templates/public/index.twig:67
 msgid "Delete"
 msgstr ""
 
 #: modules/downloads/templates/public/additional-files.twig:31
-#: modules/downloads/templates/public/index.twig:120
+#: modules/downloads/templates/public/index.twig:121
 msgid "Add file"
 msgstr ""
 
-#: modules/downloads/templates/public/additional-files.twig:36
-#: modules/downloads/templates/public/edit-screenshots.twig:37
-#: modules/downloads/templates/public/upload.twig:15
+#: modules/downloads/templates/public/additional-files.twig:37
+#: modules/downloads/templates/public/edit-screenshots.twig:39
+#: modules/downloads/templates/public/upload.twig:16
 msgid "Choose file"
 msgstr ""
 
-#: modules/downloads/templates/public/additional-files.twig:39
-#: modules/downloads/templates/public/edit-screenshots.twig:40
-#: modules/downloads/templates/public/upload.twig:18
+#: modules/downloads/templates/public/additional-files.twig:40
+#: modules/downloads/templates/public/edit-screenshots.twig:42
+#: modules/downloads/templates/public/upload.twig:19
 msgid "Max. Size"
 msgstr ""
 
-#: modules/downloads/templates/public/additional-files.twig:43
+#: modules/downloads/templates/public/additional-files.twig:44
 msgid "Or link to it"
 msgstr ""
 
-#: modules/downloads/templates/public/additional-files.twig:44
-#: modules/downloads/templates/public/import.twig:13
+#: modules/downloads/templates/public/additional-files.twig:45
 #: modules/downloads/templates/public/import.twig:14
+#: modules/downloads/templates/public/import.twig:15
 msgid "Link to file"
 msgstr ""
 
-#: modules/downloads/templates/public/additional-files.twig:48
 #: modules/downloads/templates/public/additional-files.twig:49
-#: modules/downloads/templates/public/import.twig:19
+#: modules/downloads/templates/public/additional-files.twig:50
 #: modules/downloads/templates/public/import.twig:20
-#: modules/downloads/templates/public/upload.twig:23
+#: modules/downloads/templates/public/import.twig:21
 #: modules/downloads/templates/public/upload.twig:24
+#: modules/downloads/templates/public/upload.twig:25
 msgid "Save as"
 msgstr ""
 
-#: modules/downloads/templates/public/additional-files.twig:51
-#: modules/downloads/templates/public/import.twig:22
-#: modules/downloads/templates/public/upload.twig:26
+#: modules/downloads/templates/public/additional-files.twig:52
+#: modules/downloads/templates/public/import.twig:23
+#: modules/downloads/templates/public/upload.twig:27
 msgid "max. 100 characters"
 msgstr ""
 
-#: modules/downloads/templates/public/additional-files.twig:55
 #: modules/downloads/templates/public/additional-files.twig:56
-#: modules/downloads/templates/public/edit-additional-file.twig:13
+#: modules/downloads/templates/public/additional-files.twig:57
 #: modules/downloads/templates/public/edit-additional-file.twig:14
-#: modules/downloads/templates/public/edit-file.twig:19
+#: modules/downloads/templates/public/edit-additional-file.twig:15
 #: modules/downloads/templates/public/edit-file.twig:20
-#: modules/downloads/templates/public/import.twig:33
+#: modules/downloads/templates/public/edit-file.twig:21
 #: modules/downloads/templates/public/import.twig:34
-#: modules/downloads/templates/public/upload.twig:37
+#: modules/downloads/templates/public/import.twig:35
 #: modules/downloads/templates/public/upload.twig:38
+#: modules/downloads/templates/public/upload.twig:39
 msgid "Link to download file"
 msgstr ""
 
-#: modules/downloads/templates/public/additional-files.twig:57
+#: modules/downloads/templates/public/additional-files.twig:58
 msgid "Download the additional file"
 msgstr ""
 
-#: modules/downloads/templates/public/additional-files.twig:61
-#: modules/downloads/templates/public/category-form.twig:39
+#: modules/downloads/templates/public/additional-files.twig:62
 #: modules/downloads/templates/public/category-form.twig:40
-#: modules/downloads/templates/public/import.twig:54
+#: modules/downloads/templates/public/category-form.twig:41
+#: modules/downloads/templates/public/import.twig:55
 #: modules/downloads/templates/public/index.twig:56
-#: modules/downloads/templates/public/upload.twig:58
+#: modules/downloads/templates/public/upload.twig:59
 msgid "Allowed extensions"
-msgstr ""
-
-#: modules/downloads/templates/public/additional-files.twig:65
-#: modules/downloads/templates/public/category-form.twig:46
-#: modules/downloads/templates/public/edit-additional-file.twig:19
-#: modules/downloads/templates/public/edit-file.twig:67
-#: modules/downloads/templates/public/edit-screenshots.twig:45
-#: modules/downloads/templates/public/import.twig:58
-#: modules/downloads/templates/public/upload.twig:62
-msgid "Save"
 msgstr ""
 
 #: modules/downloads/templates/public/additional-files.twig:66
 #: modules/downloads/templates/public/category-form.twig:47
-#: modules/downloads/templates/public/confirm-delete.twig:19
-#: modules/downloads/templates/public/delete-category.twig:21
 #: modules/downloads/templates/public/edit-additional-file.twig:20
 #: modules/downloads/templates/public/edit-file.twig:68
-#: modules/downloads/templates/public/edit-screenshots.twig:46
+#: modules/downloads/templates/public/edit-screenshots.twig:47
 #: modules/downloads/templates/public/import.twig:59
+#: modules/downloads/templates/public/upload.twig:63
+msgid "Save"
+msgstr ""
+
+#: modules/downloads/templates/public/additional-files.twig:67
+#: modules/downloads/templates/public/category-form.twig:48
+#: modules/downloads/templates/public/confirm-delete.twig:20
+#: modules/downloads/templates/public/delete-category.twig:22
+#: modules/downloads/templates/public/edit-additional-file.twig:21
+#: modules/downloads/templates/public/edit-file.twig:69
+#: modules/downloads/templates/public/edit-screenshots.twig:48
+#: modules/downloads/templates/public/import.twig:60
 #: modules/downloads/templates/public/move-file-confirm.twig:16
 #: modules/downloads/templates/public/move-file.twig:34
 #: modules/downloads/templates/public/upload-result.twig:34
-#: modules/downloads/templates/public/upload.twig:63
+#: modules/downloads/templates/public/upload.twig:64
 msgid "Cancel"
 msgstr ""
 
-#: modules/downloads/templates/public/category-form.twig:18
 #: modules/downloads/templates/public/category-form.twig:19
+#: modules/downloads/templates/public/category-form.twig:20
 msgid "Folder name"
 msgstr ""
 
-#: modules/downloads/templates/public/category-form.twig:21
+#: modules/downloads/templates/public/category-form.twig:22
 msgid "Only latin characters and numbers"
 msgstr ""
 
-#: modules/downloads/templates/public/category-form.twig:25
 #: modules/downloads/templates/public/category-form.twig:26
+#: modules/downloads/templates/public/category-form.twig:27
 msgid "Title to display"
 msgstr ""
 
-#: modules/downloads/templates/public/category-form.twig:30
-#: modules/downloads/templates/public/edit-file.twig:25
-#: modules/downloads/templates/public/import.twig:47
-#: modules/downloads/templates/public/upload.twig:51
+#: modules/downloads/templates/public/category-form.twig:31
+#: modules/downloads/templates/public/edit-file.twig:26
+#: modules/downloads/templates/public/import.twig:48
+#: modules/downloads/templates/public/upload.twig:52
 msgid "Description"
 msgstr ""
 
-#: modules/downloads/templates/public/category-form.twig:36
+#: modules/downloads/templates/public/category-form.twig:37
 msgid "Allow users to upload files"
 msgstr ""
 
@@ -838,12 +838,12 @@ msgstr ""
 msgid "Folder"
 msgstr ""
 
-#: modules/downloads/templates/public/edit-file.twig:14
 #: modules/downloads/templates/public/edit-file.twig:15
+#: modules/downloads/templates/public/edit-file.twig:16
 msgid "Name for display"
 msgstr ""
 
-#: modules/downloads/templates/public/edit-file.twig:34
+#: modules/downloads/templates/public/edit-file.twig:35
 msgid "Edit MP3 Tags"
 msgstr ""
 
@@ -851,12 +851,12 @@ msgstr ""
 msgid "Current screenshots"
 msgstr ""
 
-#: modules/downloads/templates/public/edit-screenshots.twig:32
+#: modules/downloads/templates/public/edit-screenshots.twig:33
 msgid "Add screenshot"
 msgstr ""
 
 #: modules/downloads/templates/public/favorites.twig:13
-#: modules/downloads/templates/public/index.twig:109
+#: modules/downloads/templates/public/index.twig:110
 #: modules/downloads/templates/public/search.twig:31
 #: modules/downloads/templates/public/top-files.twig:20
 #: modules/downloads/templates/public/top-users.twig:13
@@ -864,8 +864,8 @@ msgid "List is empty"
 msgstr ""
 
 #: modules/downloads/templates/public/favorites.twig:22
-#: modules/downloads/templates/public/index.twig:99
-#: modules/downloads/templates/public/moderation.twig:30
+#: modules/downloads/templates/public/index.twig:100
+#: modules/downloads/templates/public/moderation.twig:31
 #: modules/downloads/templates/public/new-files.twig:22
 #: modules/downloads/templates/public/search.twig:40
 #: modules/downloads/templates/public/user-files.twig:29
@@ -876,20 +876,20 @@ msgstr ""
 msgid "Import more"
 msgstr ""
 
-#: modules/downloads/templates/public/import.twig:26
 #: modules/downloads/templates/public/import.twig:27
-#: modules/downloads/templates/public/upload.twig:30
+#: modules/downloads/templates/public/import.twig:28
 #: modules/downloads/templates/public/upload.twig:31
+#: modules/downloads/templates/public/upload.twig:32
 msgid "File Name"
 msgstr ""
 
-#: modules/downloads/templates/public/import.twig:29
-#: modules/downloads/templates/public/upload.twig:33
+#: modules/downloads/templates/public/import.twig:30
+#: modules/downloads/templates/public/upload.twig:34
 msgid "max. 200 characters"
 msgstr ""
 
-#: modules/downloads/templates/public/import.twig:41
-#: modules/downloads/templates/public/upload.twig:45
+#: modules/downloads/templates/public/import.twig:42
+#: modules/downloads/templates/public/upload.twig:46
 msgid "Choose screenshot"
 msgstr ""
 
@@ -909,47 +909,47 @@ msgstr ""
 msgid "List of files"
 msgstr ""
 
-#: modules/downloads/templates/public/index.twig:79
+#: modules/downloads/templates/public/index.twig:80
 msgid "Sorting"
 msgstr ""
 
-#: modules/downloads/templates/public/index.twig:81
+#: modules/downloads/templates/public/index.twig:82
 msgid "by time"
 msgstr ""
 
-#: modules/downloads/templates/public/index.twig:82
+#: modules/downloads/templates/public/index.twig:83
 msgid "by name"
 msgstr ""
 
-#: modules/downloads/templates/public/index.twig:86
+#: modules/downloads/templates/public/index.twig:87
 msgid "descending"
 msgstr ""
 
-#: modules/downloads/templates/public/index.twig:87
+#: modules/downloads/templates/public/index.twig:88
 msgid "ascending"
 msgstr ""
 
-#: modules/downloads/templates/public/index.twig:89
+#: modules/downloads/templates/public/index.twig:90
 msgid "Sort"
 msgstr ""
 
-#: modules/downloads/templates/public/index.twig:124
+#: modules/downloads/templates/public/index.twig:125
 msgid "Import File"
 msgstr ""
 
-#: modules/downloads/templates/public/index.twig:130
+#: modules/downloads/templates/public/index.twig:131
 msgid "Section actions"
 msgstr ""
 
-#: modules/downloads/templates/public/index.twig:134
+#: modules/downloads/templates/public/index.twig:135
 msgid "Update Files"
 msgstr ""
 
-#: modules/downloads/templates/public/index.twig:136
+#: modules/downloads/templates/public/index.twig:137
 msgid "Change Folder"
 msgstr ""
 
-#: modules/downloads/templates/public/moderation.twig:25
+#: modules/downloads/templates/public/moderation.twig:26
 msgid "Accept all files"
 msgstr ""
 

@@ -17,5 +17,12 @@
 declare(strict_types=1);
 
 return [
-    'except' => [],
+    /*
+     * Observation mode: with false a failed check is only written to the log and the request is
+     * let through, so a form that still misses the token surfaces in the log rather than in
+     * support. Temporary — it is removed once the check is turned on.
+     */
+    'enforce' => false,
+
+    'except'  => [],
 ];

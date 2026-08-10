@@ -85,7 +85,7 @@ msgstr ""
 
 #: modules/help/src/Application/Controllers/MySmiliesController.php:51
 #: modules/help/src/Application/Controllers/SmiliesCatalogController.php:43
-#: modules/help/templates/public/smilies-list.twig:23
+#: modules/help/templates/public/smilies-list.twig:24
 msgid "My smilies"
 msgstr ""
 
@@ -188,7 +188,7 @@ msgstr ""
 msgid "Total:"
 msgstr ""
 
-#: modules/help/templates/public/confirm.twig:27
+#: modules/help/templates/public/confirm.twig:28
 msgid "Cancel"
 msgstr ""
 
@@ -276,15 +276,15 @@ msgstr ""
 msgid "Add Smilies"
 msgstr ""
 
-#: modules/help/templates/public/my-smilies-list.twig:33
-#: modules/help/templates/public/smilies-list.twig:40
+#: modules/help/templates/public/my-smilies-list.twig:34
+#: modules/help/templates/public/smilies-list.twig:41
 msgid "or"
 msgstr ""
 
-#: modules/help/templates/public/my-smilies-list.twig:42
+#: modules/help/templates/public/my-smilies-list.twig:43
 msgid "Delete"
 msgstr ""
 
-#: modules/help/templates/public/smilies-list.twig:49
+#: modules/help/templates/public/smilies-list.twig:50
 msgid "Add"
 msgstr ""

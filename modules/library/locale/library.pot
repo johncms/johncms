@@ -139,7 +139,7 @@ msgstr ""
 #: modules/library/src/Application/Controllers/DeleteArticleImageController.php:47
 #: modules/library/src/Application/Controllers/DeleteArticleImageController.php:57
 #: modules/library/src/Application/Controllers/DeleteArticleImageController.php:58
-#: modules/library/templates/public/edit-article.twig:32
+#: modules/library/templates/public/edit-article.twig:33
 msgid "Delete Cover Image"
 msgstr ""
 
@@ -219,8 +219,8 @@ msgstr ""
 #: modules/library/src/Application/Controllers/TagsController.php:31
 #: modules/library/src/Application/Controllers/TagsController.php:39
 #: modules/library/src/Application/Controllers/TagsController.php:52
-#: modules/library/templates/public/create-article.twig:61
-#: modules/library/templates/public/edit-article.twig:63
+#: modules/library/templates/public/create-article.twig:62
+#: modules/library/templates/public/edit-article.twig:64
 msgid "Tags"
 msgstr ""
 
@@ -426,11 +426,11 @@ msgstr ""
 msgid "Section:"
 msgstr ""
 
-#: modules/library/templates/public/components/rating-vote.twig:8
+#: modules/library/templates/public/components/rating-vote.twig:9
 msgid "Select a rating:"
 msgstr ""
 
-#: modules/library/templates/public/components/rating-vote.twig:14
+#: modules/library/templates/public/components/rating-vote.twig:15
 msgid "Vote"
 msgstr ""
 
@@ -459,61 +459,61 @@ msgstr ""
 msgid "To Section"
 msgstr ""
 
-#: modules/library/templates/public/create-article.twig:31
 #: modules/library/templates/public/create-article.twig:32
-#: modules/library/templates/public/create-section.twig:20
+#: modules/library/templates/public/create-article.twig:33
 #: modules/library/templates/public/create-section.twig:21
-#: modules/library/templates/public/edit-article.twig:41
-#: modules/library/templates/public/edit-article.twig:44
-#: modules/library/templates/public/edit-section.twig:25
-#: modules/library/templates/public/edit-section.twig:28
+#: modules/library/templates/public/create-section.twig:22
+#: modules/library/templates/public/edit-article.twig:42
+#: modules/library/templates/public/edit-article.twig:45
+#: modules/library/templates/public/edit-section.twig:26
+#: modules/library/templates/public/edit-section.twig:29
 msgid "Title"
 msgstr ""
 
-#: modules/library/templates/public/create-article.twig:36
-#: modules/library/templates/public/edit-article.twig:48
+#: modules/library/templates/public/create-article.twig:37
+#: modules/library/templates/public/edit-article.twig:49
 msgid "Announce"
 msgstr ""
 
-#: modules/library/templates/public/create-article.twig:41
-#: modules/library/templates/public/edit-article.twig:55
+#: modules/library/templates/public/create-article.twig:42
+#: modules/library/templates/public/edit-article.twig:56
 msgid "Text"
 msgstr ""
 
-#: modules/library/templates/public/create-article.twig:46
-#: modules/library/templates/public/edit-article.twig:87
+#: modules/library/templates/public/create-article.twig:47
+#: modules/library/templates/public/edit-article.twig:88
 msgid "Commenting on the Article"
 msgstr ""
 
-#: modules/library/templates/public/create-article.twig:51
-#: modules/library/templates/public/edit-article.twig:36
+#: modules/library/templates/public/create-article.twig:52
+#: modules/library/templates/public/edit-article.twig:37
 msgid "To upload a photo"
 msgstr ""
 
-#: modules/library/templates/public/create-article.twig:56
+#: modules/library/templates/public/create-article.twig:57
 msgid "Select the text file"
 msgstr ""
 
-#: modules/library/templates/public/create-article.twig:57
+#: modules/library/templates/public/create-article.twig:58
 msgid "Text entry field will be ignored"
-msgstr ""
-
-#: modules/library/templates/public/create-article.twig:66
-#: modules/library/templates/public/create-section.twig:40
-#: modules/library/templates/public/edit-article.twig:97
-#: modules/library/templates/public/edit-section.twig:78
-msgid "Save"
 msgstr ""
 
 #: modules/library/templates/public/create-article.twig:67
 #: modules/library/templates/public/create-section.twig:41
+#: modules/library/templates/public/edit-article.twig:98
+#: modules/library/templates/public/edit-section.twig:79
+msgid "Save"
+msgstr ""
+
+#: modules/library/templates/public/create-article.twig:68
+#: modules/library/templates/public/create-section.twig:42
 #: modules/library/templates/public/delete-article-image.twig:21
 #: modules/library/templates/public/delete-article.twig:22
 #: modules/library/templates/public/delete-section.twig:30
 #: modules/library/templates/public/delete-section.twig:45
-#: modules/library/templates/public/delete-section.twig:96
-#: modules/library/templates/public/edit-article.twig:98
-#: modules/library/templates/public/edit-section.twig:79
+#: modules/library/templates/public/delete-section.twig:97
+#: modules/library/templates/public/edit-article.twig:99
+#: modules/library/templates/public/edit-section.twig:80
 msgid "Cancel"
 msgstr ""
 
@@ -521,23 +521,23 @@ msgstr ""
 msgid "Section created"
 msgstr ""
 
-#: modules/library/templates/public/create-section.twig:25
-#: modules/library/templates/public/edit-section.twig:32
+#: modules/library/templates/public/create-section.twig:26
+#: modules/library/templates/public/edit-section.twig:33
 msgid "Section description"
 msgstr ""
 
-#: modules/library/templates/public/create-section.twig:29
-#: modules/library/templates/public/edit-section.twig:38
+#: modules/library/templates/public/create-section.twig:30
+#: modules/library/templates/public/edit-section.twig:39
 msgid "Section type"
 msgstr ""
 
-#: modules/library/templates/public/create-section.twig:32
-#: modules/library/templates/public/edit-section.twig:41
+#: modules/library/templates/public/create-section.twig:33
+#: modules/library/templates/public/edit-section.twig:42
 msgid "Articles"
 msgstr ""
 
-#: modules/library/templates/public/create-section.twig:36
-#: modules/library/templates/public/edit-section.twig:45
+#: modules/library/templates/public/create-section.twig:37
+#: modules/library/templates/public/edit-section.twig:46
 msgid "Sections"
 msgstr ""
 
@@ -566,8 +566,8 @@ msgstr ""
 
 #: modules/library/templates/public/delete-article.twig:15
 #: modules/library/templates/public/delete-section.twig:23
-#: modules/library/templates/public/delete-section.twig:72
-#: modules/library/templates/public/delete-section.twig:89
+#: modules/library/templates/public/delete-section.twig:73
+#: modules/library/templates/public/delete-section.twig:90
 msgid "Back to Library"
 msgstr ""
 
@@ -599,44 +599,44 @@ msgstr ""
 msgid "Yes, Move and Delete"
 msgstr ""
 
-#: modules/library/templates/public/delete-section.twig:54
+#: modules/library/templates/public/delete-section.twig:55
 msgid "Move contents of \"%s\" to:"
 msgstr ""
 
-#: modules/library/templates/public/delete-section.twig:65
+#: modules/library/templates/public/delete-section.twig:66
 #: modules/library/templates/public/premod.twig:37
 msgid "Approve"
 msgstr ""
 
-#: modules/library/templates/public/delete-section.twig:70
+#: modules/library/templates/public/delete-section.twig:71
 msgid "No sections available to move the contents of \"%s\" to."
 msgstr ""
 
-#: modules/library/templates/public/delete-section.twig:79
+#: modules/library/templates/public/delete-section.twig:80
 msgid "Successfully deleted:<br>Directories: (%d)<br>Articles: (%d)<br>Tags: (%d)<br>Comments: (%d)<br>Images: (%d)"
 msgstr ""
 
-#: modules/library/templates/public/delete-section.twig:93
+#: modules/library/templates/public/delete-section.twig:94
 msgid "Are you sure you want to delete section \"%s\" along with ALL its contents? This action cannot be undone."
 msgstr ""
 
-#: modules/library/templates/public/delete-section.twig:95
+#: modules/library/templates/public/delete-section.twig:96
 msgid "Yes, Delete Everything"
 msgstr ""
 
-#: modules/library/templates/public/delete-section.twig:103
+#: modules/library/templates/public/delete-section.twig:104
 msgid "Section \"%s\" contains subsections or articles. Choose how to delete it:"
 msgstr ""
 
-#: modules/library/templates/public/delete-section.twig:107
+#: modules/library/templates/public/delete-section.twig:109
 msgid "Move contents to another section, then delete"
 msgstr ""
 
-#: modules/library/templates/public/delete-section.twig:111
+#: modules/library/templates/public/delete-section.twig:113
 msgid "Delete section and all its contents"
 msgstr ""
 
-#: modules/library/templates/public/delete-section.twig:114
+#: modules/library/templates/public/delete-section.twig:116
 msgid "Continue"
 msgstr ""
 
@@ -645,20 +645,20 @@ msgstr ""
 msgid "Changes saved successfully."
 msgstr ""
 
-#: modules/library/templates/public/edit-article.twig:58
+#: modules/library/templates/public/edit-article.twig:59
 msgid "The text of the Article can not be edited, a large amount of data !!!"
 msgstr ""
 
-#: modules/library/templates/public/edit-article.twig:70
-#: modules/library/templates/public/edit-section.twig:63
+#: modules/library/templates/public/edit-article.twig:71
+#: modules/library/templates/public/edit-section.twig:64
 msgid "Move to Section"
 msgstr ""
 
-#: modules/library/templates/public/edit-article.twig:83
+#: modules/library/templates/public/edit-article.twig:84
 msgid "Verified"
 msgstr ""
 
-#: modules/library/templates/public/edit-article.twig:90
+#: modules/library/templates/public/edit-article.twig:91
 msgid "Number of readings"
 msgstr ""
 
@@ -666,19 +666,19 @@ msgstr ""
 msgid "Back to Section"
 msgstr ""
 
-#: modules/library/templates/public/edit-section.twig:50
+#: modules/library/templates/public/edit-section.twig:51
 msgid "Allow users to add their Articles?"
 msgstr ""
 
-#: modules/library/templates/public/edit-section.twig:53
+#: modules/library/templates/public/edit-section.twig:54
 msgid "Yes"
 msgstr ""
 
-#: modules/library/templates/public/edit-section.twig:57
+#: modules/library/templates/public/edit-section.twig:58
 msgid "No"
 msgstr ""
 
-#: modules/library/templates/public/edit-section.twig:66
+#: modules/library/templates/public/edit-section.twig:67
 msgid "The ROOT"
 msgstr ""
 
