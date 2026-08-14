@@ -6,7 +6,6 @@ use Johncms\Modules\Modules;
 use Johncms\Security\BanIP;
 use Johncms\Http\Environment;
 use Johncms\System\i18n\Translator;
-use Johncms\Users\CurrentUserAuthenticator;
 
 date_default_timezone_set('UTC');
 mb_internal_encoding('UTF-8');
@@ -76,11 +75,10 @@ if (! defined('CONSOLE_MODE') || CONSOLE_MODE === false) {
     new Johncms\System\Utility\Cleanup($db);
 }
 
-// Authenticates the visitor by their cookies and, as a side effect, runs the ban check and
-// records the IP history. Called before the translator, which picks the locale from the user
-// settings. In a worker runtime this covers the boot request only — Kernel::handle() then
-// authenticates the visitor of every subsequent request.
-$container->get(CurrentUserAuthenticator::class)->authenticate();
+// The visitor is not identified here. Kernel::handle() does it for every request, including the
+// first, and it must be the only place: the kernel clears the per-request state of the shared
+// services at the start of each cycle, so anything decided during boot — the reissued sign-in
+// cookie among it — would be thrown away moments later.
 
 // Register the system languages domain and folder
 $translator = di(Translator::class);

@@ -4,20 +4,20 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Login\Application\Controllers;
 
+use Johncms\Auth\Session\SignInManager;
 use Johncms\Modules\Login\Application\UseCases\PerformLoginUseCase;
 use Johncms\Modules\Login\Domain\Enums\LoginStatus;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
-use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Response;
 
 final readonly class LoginController
 {
     public function __construct(
         private NavChain $navChain,
         private PerformLoginUseCase $performLogin,
+        private SignInManager $signInManager,
     ) {
     }
 
@@ -43,7 +43,7 @@ final readonly class LoginController
                 $result = $this->performLogin->execute($userLogin, $userPass, $captchaCode);
 
                 return match ($result->status) {
-                    LoginStatus::Success => $this->handleSuccess($result->userId, $result->passwordHash),
+                    LoginStatus::Success => $this->handleSuccess($request, (int) $result->userId),
                     LoginStatus::CaptchaRequired => new ViewResponse(
                         '@login/public/captcha.twig',
                         [
@@ -52,22 +52,23 @@ final readonly class LoginController
                             'captcha'    => $result->captcha,
                             'user_login' => $userLogin,
                             'user_pass'  => $userPass,
+                            'remember'   => $this->remembered($request),
                         ]
                     ),
                     LoginStatus::EmailNotConfirmed => $this->confirmationRequired('email'),
                     LoginStatus::ModerationPending => $this->confirmationRequired('moderation'),
-                    LoginStatus::Error => $this->loginForm($result->errors, $userLogin),
+                    LoginStatus::Error => $this->loginForm($result->errors, $userLogin, $request),
                 };
             }
         }
 
-        return $this->loginForm($error, $userLogin);
+        return $this->loginForm($error, $userLogin, $request);
     }
 
     /**
      * @param array<int, string> $errors
      */
-    private function loginForm(array $errors, string $userLogin): ViewResponse
+    private function loginForm(array $errors, string $userLogin, Request $request): ViewResponse
     {
         return new ViewResponse(
             '@login/public/login.twig',
@@ -76,6 +77,7 @@ final readonly class LoginController
                 'page_title' => __('Login'),
                 'error'      => $errors,
                 'user_login' => $userLogin,
+                'remember'   => $this->remembered($request),
             ]
         );
     }
@@ -92,12 +94,23 @@ final readonly class LoginController
         );
     }
 
-    private function handleSuccess(?int $userId, ?string $passwordHash): RedirectResponse
+    private function handleSuccess(Request $request, int $userId): RedirectResponse
     {
-        $response = new RedirectResponse('/');
-        $expire = time() + 3600 * 24 * 365;
-        $response->headers->setCookie(Cookie::create('cuid', (string) $userId, $expire, '/', null, false, false, false, null));
-        $response->headers->setCookie(Cookie::create('cups', (string) $passwordHash, $expire, '/', null, false, false, false, null));
-        return $response;
+        $this->signInManager->signIn($userId, $this->remembered($request), $request);
+
+        return new RedirectResponse('/');
+    }
+
+    /**
+     * Whether to keep the visitor signed in after the browser closes. The checkbox is pre-checked
+     * by default, so an absent field on a submitted form means it was cleared on purpose.
+     */
+    private function remembered(Request $request): bool
+    {
+        if (! $request->hasBody('login')) {
+            return (bool) config('auth.session.remember_by_default', true);
+        }
+
+        return $request->hasBody('remember');
     }
 }

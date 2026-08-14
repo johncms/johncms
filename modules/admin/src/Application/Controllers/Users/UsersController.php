@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Johncms\Modules\Admin\Application\Controllers\Users;
 
 use Illuminate\Support\Str;
+use Johncms\Auth\Session\SignInManager;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
 use Johncms\Http\View\ViewResponse;
 use Johncms\System\Users\User;
 use Mobicms\Captcha\Code;
 use Mobicms\Captcha\Image;
-use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -19,6 +19,7 @@ final readonly class UsersController
 {
     public function __construct(
         private Session $session,
+        private SignInManager $signInManager,
     ) {
     }
 
@@ -93,17 +94,14 @@ final readonly class UsersController
                             redirect('/');
                         } else {
                             // Если все проверки прошли удачно, подготавливаем вход на сайт
-                            $expire = time() + 3600 * 24 * 365;
-                            $response = new RedirectResponse('/admin/');
-                            $response->headers->setCookie(
-                                Cookie::create('cuid', (string) $loginUser->id, $expire, '/', null, false, false, false, null)
-                            );
-                            $response->headers->setCookie(
-                                Cookie::create('cups', md5($user_pass), $expire, '/', null, false, false, false, null)
+                            $this->signInManager->signIn(
+                                $loginUser->id,
+                                $request->hasBody('mem'),
+                                $request
                             );
 
                             $db->exec("UPDATE `users` SET `sestime` = '" . time() . "' WHERE `id` = " . $loginUser->id);
-                            return $response;
+                            return new RedirectResponse('/admin/');
                         }
                     } else {
                         // Если логин неудачный

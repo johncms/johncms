@@ -918,3 +918,6 @@ msgstr "Змінено:"
 msgid "Edited"
 msgstr "Відредаговано"
 
+
+msgid "Remember me"
+msgstr "Запам'ятати мене"

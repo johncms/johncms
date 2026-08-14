@@ -81,11 +81,11 @@ msgstr ""
 #: modules/login/src/Application/Controllers/LoginController.php:26
 #: modules/login/src/Application/Controllers/LoginController.php:50
 #: modules/login/src/Application/Controllers/LoginController.php:51
-#: modules/login/src/Application/Controllers/LoginController.php:75
 #: modules/login/src/Application/Controllers/LoginController.php:76
-#: modules/login/src/Application/Controllers/LoginController.php:88
-#: modules/login/src/Application/Controllers/LoginController.php:89
-#: modules/login/templates/public/login.twig:40
+#: modules/login/src/Application/Controllers/LoginController.php:77
+#: modules/login/src/Application/Controllers/LoginController.php:90
+#: modules/login/src/Application/Controllers/LoginController.php:91
+#: modules/login/templates/public/login.twig:51
 #: themes/default/templates/components/sidebar-user-menu.twig:69
 msgid "Login"
 msgstr ""
@@ -137,14 +137,14 @@ msgstr ""
 msgid "You have not entered password"
 msgstr ""
 
-#: modules/login/src/Application/Controllers/LogoutController.php:42
+#: modules/login/src/Application/Controllers/LogoutController.php:39
 #: themes/default/templates/components/sidebar-user-menu.twig:52
 msgid "Personal"
 msgstr ""
 
-#: modules/login/src/Application/Controllers/LogoutController.php:43
-#: modules/login/src/Application/Controllers/LogoutController.php:48
-#: modules/login/src/Application/Controllers/LogoutController.php:49
+#: modules/login/src/Application/Controllers/LogoutController.php:40
+#: modules/login/src/Application/Controllers/LogoutController.php:45
+#: modules/login/src/Application/Controllers/LogoutController.php:46
 #: modules/login/templates/public/logout.twig:13
 msgid "Logout"
 msgstr ""
@@ -159,16 +159,16 @@ msgstr ""
 msgid "The security code is not correct"
 msgstr ""
 
-#: modules/login/templates/public/captcha.twig:13
-#: modules/login/templates/public/captcha.twig:22
+#: modules/login/templates/public/captcha.twig:14
+#: modules/login/templates/public/captcha.twig:23
 msgid "Verification code"
 msgstr ""
 
-#: modules/login/templates/public/captcha.twig:15
+#: modules/login/templates/public/captcha.twig:16
 msgid "Enter verification code"
 msgstr ""
 
-#: modules/login/templates/public/captcha.twig:27
+#: modules/login/templates/public/captcha.twig:29
 msgid "Continue"
 msgstr ""
 
@@ -180,25 +180,29 @@ msgstr ""
 msgid "Sorry, but your request for registration is not considered yet. Please, be patient."
 msgstr ""
 
-#: modules/login/templates/public/login.twig:12
+#: modules/login/templates/public/login.twig:13
 msgid "Authorization"
 msgstr ""
 
-#: modules/login/templates/public/login.twig:17
-#: modules/login/templates/public/login.twig:25
+#: modules/login/templates/public/login.twig:18
+#: modules/login/templates/public/login.twig:26
 msgid "Username"
 msgstr ""
 
-#: modules/login/templates/public/login.twig:29
-#: modules/login/templates/public/login.twig:37
+#: modules/login/templates/public/login.twig:30
+#: modules/login/templates/public/login.twig:38
 msgid "Password"
 msgstr ""
 
-#: modules/login/templates/public/login.twig:41
+#: modules/login/templates/public/login.twig:49
+msgid "Remember me"
+msgstr ""
+
+#: modules/login/templates/public/login.twig:52
 msgid "Forgot password?"
 msgstr ""
 
-#: modules/login/templates/public/login.twig:43
+#: modules/login/templates/public/login.twig:54
 #: themes/default/templates/components/sidebar-user-menu.twig:77
 msgid "Registration"
 msgstr ""

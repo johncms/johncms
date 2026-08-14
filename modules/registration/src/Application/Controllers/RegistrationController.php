@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Registration\Application\Controllers;
 
 use Illuminate\Support\Str;
+use Johncms\Auth\Session\SignInManager;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Consent\Application\Services\ConsentService;
 use Johncms\Modules\Registration\Application\DTO\RegistrationFormDTO;
@@ -23,7 +24,6 @@ use Johncms\Validator\Rules\StringLength;
 use Johncms\Validator\ValidatorInterface;
 use Mobicms\Captcha\Code;
 use Mobicms\Captcha\Image;
-use Symfony\Component\HttpFoundation\Cookie;
 
 final readonly class RegistrationController
 {
@@ -35,6 +35,7 @@ final readonly class RegistrationController
         private ConsentService $consentService,
         private Environment $env,
         private ValidatorInterface $validator,
+        private SignInManager $signInManager,
     ) {
     }
 
@@ -125,11 +126,10 @@ final readonly class RegistrationController
                     }
                 }
 
-                $cookies = [];
+                // A registration that still needs a confirmed address or an administrator's
+                // approval does not sign anybody in: there is nothing to sign in as yet.
                 if ($config['mod_reg'] !== 1 && empty($config['user_email_confirmation'])) {
-                    $expire = time() + 3600 * 24 * 365;
-                    $cookies[] = Cookie::create('cuid', (string) $newUser->id, $expire, '/', null, false, false, false, null);
-                    $cookies[] = Cookie::create('cups', md5($fields['password']), $expire, '/', null, false, false, false, null);
+                    $this->signInManager->signIn($newUser->id, true, $request);
                 }
 
                 return new ViewResponse(
@@ -142,8 +142,7 @@ final readonly class RegistrationController
                         'reg_pass'       => $fields['password'],
                         'needs_email'    => ! empty($config['user_email_confirmation']),
                         'needs_approval' => $config['mod_reg'] === 1,
-                    ],
-                    cookies: $cookies
+                    ]
                 );
             }
 

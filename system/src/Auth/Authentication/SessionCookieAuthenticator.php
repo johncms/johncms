@@ -68,6 +68,7 @@ final readonly class SessionCookieAuthenticator implements AuthenticatorInterfac
             userId: $session->user_id,
             method: AuthMethod::Session,
             impersonatorId: $session->impersonator_id,
+            sessionId: $session->id,
         );
     }
 }

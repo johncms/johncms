@@ -66,10 +66,6 @@ final class PerformLoginUseCase
 
         $loginUser->update(['sestime' => time()]);
 
-        return new LoginResultDTO(
-            LoginStatus::Success,
-            userId: $loginUser->id,
-            passwordHash: md5($userPass),
-        );
+        return new LoginResultDTO(LoginStatus::Success, userId: $loginUser->id);
     }
 }

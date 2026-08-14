@@ -43,7 +43,7 @@ msgid "Upload Avatar"
 msgstr ""
 
 #: modules/profile/src/Application/Controllers/AvatarController.php:62
-#: modules/profile/src/Application/Controllers/ChangePasswordController.php:85
+#: modules/profile/src/Application/Controllers/ChangePasswordController.php:86
 #: modules/profile/src/Application/Controllers/PhotoController.php:62
 msgid "Repeat"
 msgstr ""
@@ -53,7 +53,7 @@ msgid "The avatar is successfully uploaded"
 msgstr ""
 
 #: modules/profile/src/Application/Controllers/AvatarController.php:74
-#: modules/profile/src/Application/Controllers/ChangePasswordController.php:118
+#: modules/profile/src/Application/Controllers/ChangePasswordController.php:105
 #: modules/profile/src/Application/Controllers/KarmaController.php:122
 #: modules/profile/src/Application/Controllers/PhotoController.php:74
 #: modules/profile/src/Application/Controllers/RestorePasswordController.php:119
@@ -89,7 +89,6 @@ msgstr ""
 #: modules/profile/src/Application/Controllers/BanController.php:305
 #: modules/profile/src/Application/Controllers/KarmaController.php:137
 #: modules/profile/src/Application/Controllers/KarmaController.php:159
-#: modules/profile/src/Application/UseCases/GetRecoveryContextUseCase.php:23
 msgid "Wrong data"
 msgstr ""
 
@@ -174,18 +173,18 @@ msgstr ""
 msgid "Ban the User"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/ChangePasswordController.php:36
-#: modules/profile/src/Application/Controllers/ChangePasswordController.php:38
-#: modules/profile/src/Application/Controllers/ChangePasswordController.php:43
-#: modules/profile/src/Application/Controllers/ChangePasswordController.php:62
-#: modules/profile/src/Application/Controllers/ChangePasswordController.php:64
-#: modules/profile/src/Application/Controllers/ChangePasswordController.php:126
+#: modules/profile/src/Application/Controllers/ChangePasswordController.php:37
+#: modules/profile/src/Application/Controllers/ChangePasswordController.php:39
+#: modules/profile/src/Application/Controllers/ChangePasswordController.php:44
+#: modules/profile/src/Application/Controllers/ChangePasswordController.php:63
+#: modules/profile/src/Application/Controllers/ChangePasswordController.php:65
+#: modules/profile/src/Application/Controllers/ChangePasswordController.php:112
 #: modules/profile/templates/public/account.twig:68
 #: modules/profile/templates/public/edit.twig:235
 msgid "Change Password"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/ChangePasswordController.php:116
+#: modules/profile/src/Application/Controllers/ChangePasswordController.php:103
 msgid "Password successfully changed"
 msgstr ""
 
@@ -404,7 +403,12 @@ msgstr ""
 msgid "The password must contain at least 3 characters"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/CompletePasswordRecoveryUseCase.php:35
+#: modules/profile/src/Application/UseCases/CompletePasswordRecoveryUseCase.php:32
+#: modules/profile/src/Application/UseCases/GetRecoveryContextUseCase.php:29
+msgid "Time allotted for the password recovery has been exceeded"
+msgstr ""
+
+#: modules/profile/src/Application/UseCases/CompletePasswordRecoveryUseCase.php:46
 msgid "Your new password"
 msgstr ""
 
@@ -482,17 +486,9 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/GetRecoveryContextUseCase.php:28
+#: modules/profile/src/Application/UseCases/GetRecoveryContextUseCase.php:35
 #: modules/profile/src/Application/UseCases/SendPasswordRecoveryUseCase.php:35
 msgid "User does not exists"
-msgstr ""
-
-#: modules/profile/src/Application/UseCases/GetRecoveryContextUseCase.php:32
-msgid "Password recovery is impossible"
-msgstr ""
-
-#: modules/profile/src/Application/UseCases/GetRecoveryContextUseCase.php:38
-msgid "Time allotted for the password recovery has been exceeded"
 msgstr ""
 
 #: modules/profile/src/Application/UseCases/GetVoteContextUseCase.php:33

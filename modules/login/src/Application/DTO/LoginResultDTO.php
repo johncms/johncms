@@ -13,7 +13,6 @@ final readonly class LoginResultDTO
         public LoginStatus $status,
         public array $errors = [],
         public ?int $userId = null,
-        public ?string $passwordHash = null,
         public ?Image $captcha = null,
     ) {
     }

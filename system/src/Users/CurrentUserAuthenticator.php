@@ -12,31 +12,32 @@ declare(strict_types=1);
 
 namespace Johncms\Users;
 
-use Johncms\Http\Request;
+use Johncms\Auth\CurrentUser;
 use Johncms\System\Users\User as LegacyUser;
 use Johncms\System\Users\UserFactory as LegacyUserFactory;
-use RuntimeException;
-use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Loads the visitor of the request being served into the two shared current-user services.
  *
  * Both of them are singletons that dozens of controllers and services take in their constructor,
- * so they cannot be rebuilt per request — instead their state is replaced here, once per request:
- * the boot calls this before anything reads the user (the translator picks the locale from it),
- * and the kernel calls it again for every request of a long-running runtime.
+ * so they cannot be rebuilt per request — instead their state is replaced here, once per request.
+ *
+ * Who the visitor is has already been decided by the authenticator chain behind CurrentUser;
+ * this only fills the models the older code reads. That separation is the point: identifying a
+ * visitor happens once, in one place, whatever the credentials were, and everything here is
+ * just a lookup by id.
  */
 final class CurrentUserAuthenticator
 {
     /**
-     * The request the shared instances currently hold the user of. Under FPM the boot and the
-     * kernel serve the same request object, so the second call is a no-op instead of a second
-     * round of authentication queries.
+     * The user the shared instances currently hold. Resolving the identity is cheap after the
+     * first time, but the two lookups below are not, and the kernel may call this again for the
+     * same visitor.
      */
-    private ?Request $authenticatedFor = null;
+    private ?int $loadedUserId = null;
 
     public function __construct(
-        private readonly RequestStack $requestStack,
+        private readonly CurrentUser $currentUser,
         private readonly LegacyUserFactory $legacyUserFactory,
         private readonly LegacyUser $legacyUser,
         private readonly UserFactory $userFactory,
@@ -46,22 +47,26 @@ final class CurrentUserAuthenticator
 
     public function authenticate(): void
     {
-        $request = $this->requestStack->getCurrentRequest();
+        $userId = $this->currentUser->identity()->userId;
 
-        if (! $request instanceof Request) {
-            throw new RuntimeException('No request is being served: the request stack is empty.');
-        }
-
-        if ($this->authenticatedFor === $request) {
+        if ($this->loadedUserId === $userId) {
             return;
         }
 
-        $this->authenticatedFor = $request;
+        $this->loadedUserId = $userId;
 
-        // The legacy user goes first, as it did when it was the boot that resolved it: it is the
-        // one that records the IP history, and the Eloquent user then finds the address already
-        // up to date and writes nothing.
-        $this->legacyUserFactory->authenticate($this->legacyUser, $request);
-        $this->userFactory->authenticate($this->user, $request);
+        // The legacy user goes first: it is the one that records the IP history, and the
+        // Eloquent user then finds the address already up to date and writes nothing.
+        $this->legacyUserFactory->load($this->legacyUser, $userId);
+        $this->userFactory->load($this->user, $userId);
+    }
+
+    /**
+     * Drops the cached user id so the next call reloads. Called when the visitor changes inside
+     * one request — signing in, and stepping into or out of impersonation.
+     */
+    public function forget(): void
+    {
+        $this->loadedUserId = null;
     }
 }

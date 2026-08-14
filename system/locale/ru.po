@@ -940,3 +940,6 @@ msgstr "E-mail:"
 
 msgid "Open in admin panel"
 msgstr "Открыть в админ-панели"
+
+msgid "Remember me"
+msgstr "Запомнить меня"

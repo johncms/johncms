@@ -3,6 +3,7 @@
 
     @var error      array  Messages about what went wrong with the previous attempt.
     @var user_login string
+    @var remember   bool   Initial state of the "remember me" checkbox.
 #}
 {% extends '@theme/layouts/default.twig' %}
 
@@ -36,6 +37,16 @@
                 required
                 placeholder="{{ __('Password') }}"
             >
+        </div>
+        <div class="form-check mb-3">
+            <input type="checkbox"
+                   class="form-check-input"
+                   name="remember"
+                   value="1"
+                   id="remember"
+                   {{ remember ? 'checked' : '' }}
+            >
+            <label class="form-check-label" for="remember">{{ __('Remember me') }}</label>
         </div>
         <button type="submit" name="login" value="1" class="btn btn-fill btn-primary">{{ __('Login') }}</button>
         <a href="/profile/password-recovery" class="btn btn-link">{{ __('Forgot password?') }}</a>

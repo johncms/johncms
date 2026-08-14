@@ -35,6 +35,10 @@ final readonly class Identity
      * @param list<string>|null   $tokenAbilities Restrictions of the API token the request came
      *                                            with; null when the request is not token-based.
      *                                            An empty list is a token that may do nothing.
+     * @param int|null            $sessionId      The session row this request arrived on. Needed
+     *                                            to close exactly this session on sign-out, to
+     *                                            mark it as "this device" in the list, and to
+     *                                            find the way back out of impersonation.
      */
     public function __construct(
         public int $userId = 0,
@@ -43,6 +47,7 @@ final readonly class Identity
         public AuthMethod $method = AuthMethod::Guest,
         public ?int $impersonatorId = null,
         public ?array $tokenAbilities = null,
+        public ?int $sessionId = null,
     ) {
     }
 

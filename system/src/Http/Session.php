@@ -126,6 +126,16 @@ class Session implements ResetInterface
     }
 
     /**
+     * Issue a new session id, keeping the data. Use this on sign-in: an identifier somebody
+     * planted in the visitor's browser beforehand must not stay valid once they are signed in
+     * (session fixation). Unlike invalidate(), what the session holds survives.
+     */
+    public function migrate(): void
+    {
+        $this->symfonySession->migrate(true);
+    }
+
+    /**
      * Start the session. Idempotent: does nothing when the session is already started.
      */
     public function start(): void

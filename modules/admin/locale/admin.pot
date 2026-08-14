@@ -788,25 +788,25 @@ msgstr ""
 msgid "Nickname"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/UsersController.php:42
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:43
 msgid "You have not entered login"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/UsersController.php:46
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:47
 msgid "You have not entered password"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/UsersController.php:65
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:66
 msgid "The security code is not correct"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/UsersController.php:116
-#: modules/admin/src/Application/Controllers/Users/UsersController.php:120
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:114
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:118
 msgid "Authorization failed"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/UsersController.php:143
-#: modules/admin/src/Application/Controllers/Users/UsersController.php:144
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:141
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:142
 #: modules/admin/templates/login.twig:46
 msgid "Login"
 msgstr ""

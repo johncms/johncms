@@ -20,8 +20,6 @@ use Tests\Functional\FunctionalTestCase;
  */
 final class CurrentUserPerRequestTest extends FunctionalTestCase
 {
-    private const COOKIE_PASSWORD = 'per-request-user-cups';
-
     private ?int $userId = null;
 
     protected function tearDown(): void
@@ -42,7 +40,7 @@ final class CurrentUserPerRequestTest extends FunctionalTestCase
         $user = $this->container()->get(User::class);
         $legacyUser = $this->container()->get(LegacyUser::class);
 
-        $this->handleRequest('/', cookies: ['cuid' => (string) $userId, 'cups' => self::COOKIE_PASSWORD]);
+        $this->handleRequest('/', cookies: $this->actingAs($userId));
 
         self::assertSame($userId, $user->id, 'The Eloquent user must hold the visitor of the request.');
         self::assertTrue($user->exists);
@@ -66,7 +64,7 @@ final class CurrentUserPerRequestTest extends FunctionalTestCase
         $user = $this->container()->get(User::class);
         $legacyUser = $this->container()->get(LegacyUser::class);
 
-        $this->handleRequest('/', cookies: ['cuid' => (string) $userId, 'cups' => self::COOKIE_PASSWORD]);
+        $this->handleRequest('/', cookies: $this->actingAs($userId));
 
         // Replacing the objects would leave every service that took them in its constructor with
         // the user of the request the container was built for.
@@ -98,7 +96,7 @@ final class CurrentUserPerRequestTest extends FunctionalTestCase
             [
                 'name'     => $name,
                 'name_lat' => $name,
-                'password' => md5(self::COOKIE_PASSWORD),
+                'password' => md5(md5('per-request-user')),
                 'ip'       => sprintf('%u', ip2long('127.0.0.1')),
                 'datereg'  => time(),
                 'lastdate' => time(),

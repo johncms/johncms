@@ -10,9 +10,12 @@
 
 declare(strict_types=1);
 
+use Johncms\Auth\Session\AuthCookieFactory;
+use Johncms\Auth\Session\AuthSessionManager;
 use Johncms\Console\Commands\CacheClearCommand;
 use Johncms\Modules\Admin\Application\UseCases\RebuildSmiliesCacheUseCase;
 use Johncms\Modules\Admin\Domain\Services\LanguageFilesManagerInterface;
+use Johncms\Http\Environment;
 use Johncms\Modules\ModuleInstaller;
 use Johncms\Modules\Modules;
 use Johncms\Http\Request;
@@ -96,11 +99,23 @@ if ($request->getMethod() === 'POST') {
                     'smileys'         => [],
                 ]
             );
-            // Устанавливаем сессию и COOKIE c данными администратора
-            $_SESSION['uid'] = $user->id;
-            $_SESSION['ups'] = md5($fields['admin_password']);
-            setcookie('cuid', (string) $user->id, time() + 3600 * 24 * 365, '/');
-            setcookie('cups', md5($fields['admin_password']), time() + 3600 * 24 * 365, '/');
+            // Signs the new administrator in. The installer answers outside the kernel, so the
+            // cookie is emitted directly instead of being queued — its attributes still come from
+            // AuthCookieFactory, so they cannot drift from the ones the site sets later.
+            $issued = di(AuthSessionManager::class)->start(
+                $user->id,
+                true,
+                di(Environment::class)->getClientInfo()
+            );
+            header(
+                'Set-Cookie: ' . di(AuthCookieFactory::class)->create(
+                    $issued->token,
+                    true,
+                    $issued->session->expires_at,
+                    $request->isSecure()
+                ),
+                false
+            );
 
             if (! empty($fields['install_demo'])) {
                 // Seed a couple of regular users referenced by module demo data (authors, commenters).

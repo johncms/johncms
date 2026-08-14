@@ -13,7 +13,6 @@ declare(strict_types=1);
 namespace Johncms\Users;
 
 use Johncms\Http\Environment;
-use Johncms\Http\Request;
 
 class UserFactory
 {
@@ -24,8 +23,8 @@ class UserFactory
 
     /**
      * Builds the shared instance holding the current user: a guest, since the request it belongs
-     * to is not known at container build time. It is authenticate() that loads the visitor into
-     * it, once per request.
+     * to is not known at container build time. It is load() that puts the visitor into it, once
+     * per request.
      */
     public function __invoke(): User
     {
@@ -33,23 +32,19 @@ class UserFactory
     }
 
     /**
-     * Identifies the visitor of the given request by their cookies and loads them into the shared
-     * current-user instance.
+     * Loads the user the authenticator chain identified into the shared current-user instance.
+     * Whether the visitor is who they claim was decided before this: here there is only a
+     * lookup, and 0 means nobody is signed in.
      */
-    public function authenticate(User $currentUser, Request $request): void
+    public function load(User $currentUser, int $userId): void
     {
-        $this->hydrate($currentUser, $this->resolveUser($request));
-    }
+        $visitor = $userId === 0 ? null : User::query()->find($userId);
 
-    protected function resolveUser(Request $request): User
-    {
-        $userId = $request->cookies->getInt('cuid', 0);
-
-        if ($userId !== 0) {
-            return $this->authentication($userId, md5($request->cookies->getString('cups', '')));
+        if ($visitor instanceof User) {
+            $this->ipHistory($visitor);
         }
 
-        return new User();
+        $this->hydrate($currentUser, $visitor ?? new User());
     }
 
     /**
@@ -66,35 +61,6 @@ class UserFactory
         // Anything loaded for the previous visitor (the ip history, the notifications) belongs to
         // them, and Eloquent would keep serving it from here as if it were the current user's.
         $currentUser->setRelations([]);
-    }
-
-    private function authentication(int $userId, string $userPassword): User
-    {
-        $user = User::query()->find($userId);
-
-        if ($user instanceof User) {
-            if ($userPassword === $user->password && $this->checkPermit($user)) {
-                $this->ipHistory($user); // Фиксируем историю IP
-                return $user;
-            }
-            // Если авторизация не прошла
-            ++$user->failed_login;
-            $user->save();
-            $this->userUnset();
-        } else {
-            // Если пользователь не существует
-            $this->userUnset();
-        }
-
-        return new User();
-    }
-
-    private function checkPermit(User $user): bool
-    {
-        return $user->failed_login < 3
-            || ($user->failed_login > 2
-                && $user->ip === $this->env->getIp(false)
-                && $user->browser === $this->env->getUserAgent());
     }
 
     /**
@@ -130,16 +96,5 @@ class UserFactory
             $user->ip_via_proxy = empty($ip_via_proxy) ? 0 : $ip_via_proxy;
             $user->save();
         }
-    }
-
-    /**
-     * Уничтожаем данные авторизации юзера
-     *
-     * @return void
-     */
-    protected function userUnset(): void
-    {
-        setcookie('cuid', '');
-        setcookie('cups', '');
     }
 }

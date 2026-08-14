@@ -13,7 +13,6 @@ declare(strict_types=1);
 namespace Johncms\System\Users;
 
 use Johncms\Http\Environment;
-use Johncms\Http\Request;
 use PDO;
 
 /**
@@ -38,8 +37,8 @@ class UserFactory
 
     /**
      * Builds the shared instance holding the current user: a guest, since the request it belongs
-     * to is not known at container build time. It is authenticate() that loads the visitor into
-     * it, once per request.
+     * to is not known at container build time. It is load() that puts the visitor into it, once
+     * per request.
      */
     public function __invoke(): User
     {
@@ -47,61 +46,35 @@ class UserFactory
     }
 
     /**
-     * Identifies the visitor of the given request by their cookies and loads them into the shared
-     * current-user instance. Also runs the ban check and records the IP history.
+     * Loads the user the authenticator chain identified into the shared current-user instance.
+     * Also runs the ban check and records the IP history.
      */
-    public function authenticate(User $currentUser, Request $request): void
+    public function load(User $currentUser, int $userId): void
     {
-        $currentUser->setProperties($this->getUserData($request));
+        $currentUser->setProperties($this->getUserData($userId));
     }
 
     /**
      * @return array<string, mixed>
      */
-    protected function getUserData(Request $request): array
+    protected function getUserData(int $userId): array
     {
-        $userPassword = md5($request->cookies->getString('cups', ''));
-        $userId = $request->cookies->getInt('cuid', 0);
-
-        if ($userId && $userPassword) {
-            return $this->authentification($userId, $userPassword);
+        if ($userId === 0) {
+            return [];
         }
 
-        return [];
-    }
-
-    private function authentification(int $userId, string $userPassword): array
-    {
         $req = $this->db->query('SELECT * FROM `users` WHERE `id` = ' . $userId);
 
-        if ($req->rowCount()) {
-            $userData = $req->fetch();
-
-            if ($this->checkPermit($userData) && $userPassword === $userData['password']) {
-                $this->banCheck($userData); // Проверяем на бан
-                $this->ipHistory($userData); // Фиксируем историю IP
-                return $userData;
-            }
-            // Если авторизация не прошла
-            $this->db->exec(
-                "UPDATE `users` SET `failed_login` = '" . ($userData['failed_login'] + 1) .
-                "' WHERE `id` = " . $userData['id']
-            );
-            $this->userUnset();
-        } else {
-            // Если пользователь не существует
-            $this->userUnset();
+        if ($req->rowCount() === 0) {
+            return [];
         }
 
-        return [];
-    }
+        $userData = $req->fetch();
 
-    private function checkPermit(array $userData): bool
-    {
-        return $userData['failed_login'] < 3
-            || ($userData['failed_login'] > 2
-                && $userData['ip'] == $this->env->getIp()
-                && $userData['browser'] == $this->env->getUserAgent());
+        $this->banCheck($userData); // Проверяем на бан
+        $this->ipHistory($userData); // Фиксируем историю IP
+
+        return $userData;
     }
 
     protected function banCheck(array &$userData): void
@@ -158,16 +131,5 @@ class UserFactory
                 WHERE `id` = " . $userData['id']
             );
         }
-    }
-
-    /**
-     * Уничтожаем данные авторизации юзера
-     *
-     * @return void
-     */
-    protected function userUnset(): void
-    {
-        setcookie('cuid', '');
-        setcookie('cups', '');
     }
 }

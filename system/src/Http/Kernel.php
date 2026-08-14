@@ -117,9 +117,10 @@ final readonly class Kernel implements HttpKernelInterface, TerminableInterface
             $this->session->start();
         }
 
-        // The visitor of this request is loaded into the shared current-user services. A no-op
-        // under FPM, where the boot already did it for this very request; in a worker it is what
-        // keeps the previous visitor from answering as the current one.
+        // Who is making this request. The authenticator chain decides it, and the shared
+        // current-user services are filled from the answer. The only place this happens, for
+        // every request of every runtime — the boot deliberately does not do it, or the state
+        // reset above would discard what it decided.
         $this->currentUserAuthenticator->authenticate();
 
         // The language of this visitor, applied on top of the translator built at boot. Resolving

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Profile\Application\Controllers;
 
+use Johncms\Auth\Session\SessionRevocationReason;
+use Johncms\Auth\Session\SignInManager;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Profile\Application\DTO\ChangePasswordCommand;
 use Johncms\Modules\Profile\Application\DTO\ChangePasswordContextDTO;
@@ -15,8 +17,6 @@ use Johncms\Modules\Profile\Application\UseCases\GetChangePasswordContextUseCase
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Users\User;
-use Symfony\Component\HttpFoundation\Cookie;
-use Symfony\Component\HttpFoundation\Response;
 
 final readonly class ChangePasswordController
 {
@@ -25,6 +25,7 @@ final readonly class ChangePasswordController
         private User $currentUser,
         private GetChangePasswordContextUseCase $getChangePasswordContextUseCase,
         private ChangePasswordUseCase $changePasswordUseCase,
+        private SignInManager $signInManager,
     ) {
     }
 
@@ -87,26 +88,12 @@ final readonly class ChangePasswordController
             );
         }
 
-        // Keep the persistent login cookie in sync after changing one's own password.
-        // The legacy call omitted the path argument, so PHP sent no Path attribute and the
-        // browser scoped the cookie to the "default path" per RFC 6265 5.1.4 (the current
-        // request path with the last segment removed) rather than site-wide '/'. Cookie::create()
-        // always forces an explicit Path attribute, so that default is reproduced here instead of
-        // silently widening the cookie to '/'.
-        $cookies = [];
-        if ($context->isSelf && $request->cookies->has('cuid') && $request->cookies->has('cups')) {
-            $cookies[] = Cookie::create(
-                'cups',
-                md5($newPassword),
-                time() + 3600 * 24 * 365,
-                $this->defaultCookiePath($request),
-                null,
-                false,
-                false,
-                false,
-                null
-            );
-        }
+        // A changed password closes every other session: whoever knew the old one — including
+        // somebody holding a copy of the cookie — is signed out everywhere but here.
+        $this->signInManager->signOutEverywhereElse(
+            $context->profileUserId,
+            SessionRevocationReason::PasswordChange
+        );
 
         return new ViewResponse(
             '@theme/pages/result.twig',
@@ -116,30 +103,13 @@ final readonly class ChangePasswordController
                 'message'       => __('Password successfully changed'),
                 'back_url'      => $context->isSelf ? '/login' : '/profile/' . $context->profileUserId,
                 'back_url_name' => __('Continue'),
-            ],
-            cookies: $cookies
+            ]
         );
     }
 
     private function buildTitle(ChangePasswordContextDTO $context): string
     {
         return $context->profileUserName . ': ' . __('Change Password');
-    }
-
-    /**
-     * RFC 6265 5.1.4 "default path" for the current request: the request path with everything
-     * from (and including) the right-most slash removed, or '/' if there is none/only one slash.
-     */
-    private function defaultCookiePath(Request $request): string
-    {
-        $path = $request->getPathInfo();
-        $lastSlash = strrpos($path, '/');
-
-        if ($lastSlash === false || $lastSlash === 0) {
-            return '/';
-        }
-
-        return substr($path, 0, $lastSlash);
     }
 
     private function renderError(string $title, string $message, int $status = 200): ViewResponse

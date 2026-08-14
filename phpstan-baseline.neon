@@ -2875,7 +2875,7 @@ parameters:
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
 			identifier: property.notFound
-			count: 2
+			count: 1
 			path: public/install/steps/step_4.php
 
 		-
@@ -3003,12 +3003,6 @@ parameters:
 			identifier: identical.alwaysFalse
 			count: 1
 			path: system/src/Sitemap/RobotsTxtUpdater.php
-
-		-
-			message: '#^Right side of && is always true\.$#'
-			identifier: booleanAnd.rightAlwaysTrue
-			count: 1
-			path: system/src/System/Users/UserFactory.php
 
 		-
 			message: '#^Property Johncms\\Users\\User\:\:\$active_bans \(Johncms\\Users\\Ban\) does not accept default value of type array\.$#'

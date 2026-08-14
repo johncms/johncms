@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace Tests\Functional;
 
+use Johncms\Auth\Session\AuthSession;
+use Johncms\Auth\Session\AuthSessionManager;
 use Johncms\Container\PSRContainerFactory;
 use Johncms\Http\Kernel;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
+use Johncms\Security\ClientInfoDTO;
 use PDO;
 use PDOException;
 use PHPUnit\Framework\TestCase;
@@ -36,6 +39,9 @@ abstract class FunctionalTestCase extends TestCase
 
     private static ?string $bootFailure = null;
 
+    /** @var list<int> Sessions opened by actingAs(), removed again in tearDown(). */
+    private array $openedSessionIds = [];
+
     protected function setUp(): void
     {
         $this->bootApplication();
@@ -44,6 +50,13 @@ abstract class FunctionalTestCase extends TestCase
         // in the class. Under CONSOLE_MODE it holds in-memory storage (SessionFactory), and
         // clearing it keeps one test from seeing what another one wrote.
         $this->container()->get(Session::class)->clear();
+    }
+
+    protected function tearDown(): void
+    {
+        $this->signOutAll();
+
+        parent::tearDown();
     }
 
     protected function handleRequest(
@@ -65,6 +78,39 @@ abstract class FunctionalTestCase extends TestCase
         $_COOKIE = $request->cookies->all();
 
         return $this->container()->get(Kernel::class)->handle($request);
+    }
+
+    /**
+     * Signs a test in as the given user and returns the cookies to drive requests with.
+     *
+     * Opens a real session and lets the request go through the real authenticator, so what the
+     * test exercises is the path live visitors take — no test-only seam has to exist in
+     * production code for this. The rows are removed again in tearDown().
+     *
+     * @return array<string, string> Cookies for handleRequest().
+     */
+    protected function actingAs(int $userId, bool $remember = true): array
+    {
+        $sessions = $this->container()->get(AuthSessionManager::class);
+        $issued = $sessions->start($userId, $remember, new ClientInfoDTO('127.0.0.1', '', 'phpunit'));
+
+        $this->openedSessionIds[] = $issued->session->id;
+
+        return [$sessions->settings()->cookieName => $issued->token];
+    }
+
+    /**
+     * Removes the sessions opened by actingAs(). The functional suite runs against the database
+     * of the local stand, so it has to leave it as it found it.
+     */
+    protected function signOutAll(): void
+    {
+        if ($this->openedSessionIds === []) {
+            return;
+        }
+
+        AuthSession::query()->whereIn('id', $this->openedSessionIds)->delete();
+        $this->openedSessionIds = [];
     }
 
     protected function container(): ContainerInterface
