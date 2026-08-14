@@ -256,7 +256,7 @@ final class AuthSessionManagerTest extends TestCase
         $manager->start(7, false, $this->client(), now: $now - 13 * 3600);
         $manager->start(8, true, $this->client(), now: $now);
 
-        $removed = (new EloquentAuthSessionRepository())->deleteExpiredBefore($now);
+        $removed = (new EloquentAuthSessionRepository())->deleteDeadBefore($now);
 
         self::assertSame(1, $removed);
         self::assertSame(1, AuthSession::query()->count());

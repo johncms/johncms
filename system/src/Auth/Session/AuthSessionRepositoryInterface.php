@@ -48,9 +48,13 @@ interface AuthSessionRepositoryInterface
     public function revokeAllForUser(int $userId, int $revokedAt, string $reason, ?int $exceptId = null): int;
 
     /**
+     * Removes sessions that stopped working before the given moment — expired or signed out.
+     * Both conditions are needed: a session revoked today keeps a future expiry, and one that
+     * simply ran out was never revoked.
+     *
      * @return int Number of rows removed.
      */
-    public function deleteExpiredBefore(int $timestamp): int;
+    public function deleteDeadBefore(int $timestamp): int;
 
     public function countActiveForUser(int $userId, int $now): int;
 }

@@ -87,9 +87,12 @@ final class EloquentAuthSessionRepository implements AuthSessionRepositoryInterf
         );
     }
 
-    public function deleteExpiredBefore(int $timestamp): int
+    public function deleteDeadBefore(int $timestamp): int
     {
-        return AuthSession::query()->where('expires_at', '<', $timestamp)->delete();
+        return AuthSession::query()
+            ->where('expires_at', '<', $timestamp)
+            ->orWhere('revoked_at', '<', $timestamp)
+            ->delete();
     }
 
     public function countActiveForUser(int $userId, int $now): int
