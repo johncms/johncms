@@ -7,6 +7,13 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 use Intervention\Image\ImageManager;
 use Johncms\Ads;
 use Johncms\AdsFactory;
+use Johncms\Auth\Authentication\AuthenticatorChain;
+use Johncms\Auth\Authentication\AuthenticatorInterface;
+use Johncms\Auth\Authorization\AccessChecker;
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\Authorization\AccessVoterInterface;
+use Johncms\Auth\Authorization\PermissionProviderInterface;
+use Johncms\Auth\Authorization\PermissionRegistry;
 use Johncms\Cache;
 use Johncms\Counters;
 use Johncms\CountersFactory;
@@ -109,6 +116,13 @@ return static function (ContainerConfigurator $container): void {
     // before the directory load below, since an instanceof rule only applies to what follows it.
     $services->instanceof(RuleConstraintFactoryInterface::class)->tag('johncms.validator.rule_factory');
 
+    // Authentication and authorization extension points. All three are open to modules: a way of
+    // identifying the visitor, a rule about what is allowed, and the permissions a module
+    // declares. Like the rule above, these must precede the directory load to apply to it.
+    $services->instanceof(AuthenticatorInterface::class)->tag('johncms.auth.authenticator');
+    $services->instanceof(AccessVoterInterface::class)->tag('johncms.auth.voter');
+    $services->instanceof(PermissionProviderInterface::class)->tag('johncms.auth.permissions');
+
     $services->load(
         'Johncms\\',
         ROOT_PATH . 'system/src'
@@ -148,6 +162,13 @@ return static function (ContainerConfigurator $container): void {
                 ROOT_PATH . 'system/src/Http/Pagination/Pagination.php',
                 ROOT_PATH . 'system/src/Http/UploadedFileDTO.php',
                 ROOT_PATH . 'system/src/Security/ClientInfoDTO.php',
+                // Value objects and enums of the auth layer: Identity carries scalars, and the
+                // matcher is a pure function. Autowiring them breaks the container build.
+                ROOT_PATH . 'system/src/Auth/Identity.php',
+                ROOT_PATH . 'system/src/Auth/AuthMethod.php',
+                ROOT_PATH . 'system/src/Auth/Authorization/PermissionDefinition.php',
+                ROOT_PATH . 'system/src/Auth/Authorization/PermissionMatcher.php',
+                ROOT_PATH . 'system/src/Auth/Authorization/Vote.php',
                 ROOT_PATH . 'system/src/View/Theme/ThemeDTO.php',
                 // Built by the scan command with the translation set it fills, not by the container.
                 ROOT_PATH . 'system/src/System/i18n/TwigScanner.php',
@@ -177,6 +198,17 @@ return static function (ContainerConfigurator $container): void {
     $services->set(\Johncms\Users\User::class)->factory(service(\Johncms\Users\UserFactory::class));
     $services->set(\Johncms\Users\Repository\UserRepositoryInterface::class, \Johncms\Users\Repository\EloquentUserRepository::class);
     $services->set(\Johncms\System\Users\User::class)->factory(service(UserFactory::class));
+
+    // The authenticators are asked in the order they are tagged, and the order is a decision:
+    // a request carrying both a bearer token and a session cookie must be answered by the token.
+    $services->set(AuthenticatorChain::class)
+        ->arg('$authenticators', tagged_iterator('johncms.auth.authenticator'));
+    $services->set(AccessChecker::class)
+        ->arg('$voters', tagged_iterator('johncms.auth.voter'));
+    $services->alias(AccessCheckerInterface::class, AccessChecker::class);
+    $services->set(PermissionRegistry::class)
+        ->arg('$providers', tagged_iterator('johncms.auth.permissions'))
+        ->arg('$definitions', []);
 
     $services->set(AntifloodCheckerInterface::class, AntifloodChecker::class)->autowire();
     $services->set(RequestRateLogInterface::class, FileRequestRateLog::class);

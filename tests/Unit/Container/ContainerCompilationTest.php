@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Container;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Container\PSRContainerFactory;
 use Johncms\Http\Environment;
 use Johncms\Http\Session;
@@ -63,7 +64,7 @@ final class ContainerCompilationTest extends TestCase
         $tagged = array_keys($container->findTaggedServiceIds('johncms.resettable'));
         sort($tagged);
 
-        self::assertSame([Environment::class, Session::class, NavChain::class], $tagged);
+        self::assertSame([CurrentUser::class, Environment::class, Session::class, NavChain::class], $tagged);
     }
 
     private function containerInstanceProperty(): \ReflectionProperty
