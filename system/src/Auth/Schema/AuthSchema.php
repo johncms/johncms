@@ -34,10 +34,91 @@ final class AuthSchema
 
     public const AUTH_SESSIONS = 'auth_sessions';
 
+    public const ROLES = 'roles';
+
+    public const ROLE_PERMISSIONS = 'role_permissions';
+
+    public const USER_ROLES = 'user_roles';
+
     public static function create(Builder $schema): void
     {
         self::createPasswordResetTokens($schema);
         self::createAuthSessions($schema);
+        self::createRoles($schema);
+        self::createRolePermissions($schema);
+        self::createUserRoles($schema);
+    }
+
+    private static function createRoles(Builder $schema): void
+    {
+        if ($schema->hasTable(self::ROLES)) {
+            return;
+        }
+
+        $schema->create(
+            self::ROLES,
+            static function (Blueprint $table): void {
+                $table->increments('id');
+                // What checks and code refer to; unlike the name, it is never renamed.
+                $table->string('slug', 64)->unique();
+                $table->string('name', 191)->default('');
+                // Who outranks whom: which roles a moderator may act on, and later which
+                // accounts an administrator may browse as.
+                $table->smallInteger('level')->unsigned()->default(0);
+                // Mirrored into users.rights while the old numeric column is still read.
+                $table->tinyInteger('legacy_rights')->unsigned()->nullable();
+                // A built-in role: its slug and level are fixed and it cannot be deleted.
+                $table->boolean('is_system')->default(false);
+                // Applies to every signed-in visitor without a row in user_roles. That is what
+                // keeps the table small: only the exceptions are stored.
+                $table->boolean('is_default')->default(false);
+                // The role of visitors who are not signed in. Exactly one row has this.
+                $table->boolean('is_guest')->default(false);
+                $table->integer('created_at')->unsigned()->default(0);
+                $table->integer('updated_at')->unsigned()->default(0);
+            }
+        );
+    }
+
+    private static function createRolePermissions(Builder $schema): void
+    {
+        if ($schema->hasTable(self::ROLE_PERMISSIONS)) {
+            return;
+        }
+
+        $schema->create(
+            self::ROLE_PERMISSIONS,
+            static function (Blueprint $table): void {
+                $table->increments('id');
+                $table->integer('role_id')->unsigned()->index();
+                // The permission key as the code spells it, or a pattern such as 'forum.*'.
+                // Kept even when the module declaring it is switched off, so that switching the
+                // module back on restores what the role was granted.
+                $table->string('permission', 128);
+                $table->unique(['role_id', 'permission']);
+            }
+        );
+    }
+
+    private static function createUserRoles(Builder $schema): void
+    {
+        if ($schema->hasTable(self::USER_ROLES)) {
+            return;
+        }
+
+        $schema->create(
+            self::USER_ROLES,
+            static function (Blueprint $table): void {
+                $table->increments('id');
+                $table->integer('user_id')->unsigned()->index();
+                $table->integer('role_id')->unsigned()->index();
+                $table->integer('granted_by')->unsigned()->nullable();
+                $table->integer('granted_at')->unsigned()->default(0);
+                // Temporary moderation: the row stops counting on its own.
+                $table->integer('expires_at')->unsigned()->nullable();
+                $table->unique(['user_id', 'role_id']);
+            }
+        );
     }
 
     private static function createAuthSessions(Builder $schema): void

@@ -56,6 +56,29 @@ final readonly class Identity
         return new self();
     }
 
+    /**
+     * The same visitor with their roles and permissions filled in.
+     *
+     * Authenticators answer who the visitor is; what they are allowed is looked up separately,
+     * for guests as much as for anybody else — a guest without the permissions of the guest role
+     * would be barred from the parts of the site that are open to everyone.
+     *
+     * @param list<string> $roles
+     * @param list<string> $permissions
+     */
+    public function withGrants(array $roles, array $permissions): self
+    {
+        return new self(
+            userId: $this->userId,
+            roles: $roles,
+            permissions: $permissions,
+            method: $this->method,
+            impersonatorId: $this->impersonatorId,
+            tokenAbilities: $this->tokenAbilities,
+            sessionId: $this->sessionId,
+        );
+    }
+
     public function isGuest(): bool
     {
         return $this->userId === 0;

@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Johncms\Auth;
 
 use Johncms\Auth\Authentication\AuthenticatorChain;
+use Johncms\Auth\Authorization\PermissionResolver;
 use Johncms\Http\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Contracts\Service\ResetInterface;
@@ -34,6 +35,7 @@ final class CurrentUser implements ResetInterface
 
     public function __construct(
         private readonly AuthenticatorChain $authenticators,
+        private readonly PermissionResolver $permissions,
         private readonly RequestStack $requestStack,
     ) {
     }
@@ -68,10 +70,11 @@ final class CurrentUser implements ResetInterface
 
         // Console commands, cron and the scheduler run without a request: nobody is signed in,
         // and asking for the current user there must not be an error — it is a guest.
-        if (! $request instanceof Request) {
-            return Identity::guest();
-        }
+        $identity = $request instanceof Request
+            ? $this->authenticators->authenticate($request)
+            : Identity::guest();
 
-        return $this->authenticators->authenticate($request);
+        // Who they are and what they may do are two separate questions, answered in that order.
+        return $this->permissions->resolve($identity);
     }
 }

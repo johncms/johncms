@@ -15,8 +15,10 @@ use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\Authorization\AccessVoterInterface;
 use Johncms\Auth\Authorization\PermissionProviderInterface;
 use Johncms\Auth\Authorization\PermissionRegistry;
+use Johncms\Auth\Authorization\RoleRepositoryInterface;
 use Johncms\Auth\Infrastructure\Persistence\Repository\EloquentAuthSessionRepository;
 use Johncms\Auth\Infrastructure\Persistence\Repository\EloquentPasswordResetTokenRepository;
+use Johncms\Auth\Infrastructure\Persistence\Repository\EloquentRoleRepository;
 use Johncms\Auth\Password\PasswordHasherFactory;
 use Johncms\Auth\Password\PasswordHasherInterface;
 use Johncms\Auth\Password\PasswordResetTokenRepositoryInterface;
@@ -78,6 +80,7 @@ use Johncms\View\Theme\ThemeRepositoryInterface;
 use Johncms\View\Twig\AppVariable;
 use Johncms\View\Twig\Extension\AppExtension;
 use Johncms\View\Twig\Extension\AssetExtension;
+use Johncms\View\Twig\Extension\AuthExtension;
 use Johncms\View\Twig\Extension\FormatExtension;
 use Johncms\View\Twig\Extension\MailExtension;
 use Johncms\View\Twig\Extension\I18nExtension;
@@ -183,6 +186,7 @@ return static function (ContainerConfigurator $container): void {
                 ROOT_PATH . 'system/src/Auth/Authorization/PermissionDefinition.php',
                 ROOT_PATH . 'system/src/Auth/Authorization/PermissionMatcher.php',
                 ROOT_PATH . 'system/src/Auth/Authorization/Vote.php',
+                ROOT_PATH . 'system/src/Auth/Authorization/SystemRole.php',
                 ROOT_PATH . 'system/src/Auth/SecureToken.php',
                 ROOT_PATH . 'system/src/Auth/Schema',
                 ROOT_PATH . 'system/src/Auth/Session/IssuedSession.php',
@@ -235,6 +239,7 @@ return static function (ContainerConfigurator $container): void {
     $services->set(PasswordHasherInterface::class)->factory(service(PasswordHasherFactory::class));
     $services->set(LoginThrottleInterface::class, CacheLoginThrottle::class);
     $services->set(AuthSessionRepositoryInterface::class, EloquentAuthSessionRepository::class);
+    $services->set(RoleRepositoryInterface::class, EloquentRoleRepository::class);
     // Read from config at instantiation rather than while the container is built: the built
     // container is cached, and anything resolved there would freeze the configuration into it.
     $services->set(SessionSettings::class)->factory(service(SessionSettingsFactory::class));
@@ -334,6 +339,7 @@ return static function (ContainerConfigurator $container): void {
         ->tag('johncms.twig_extension')
         ->tag('johncms.twig_extension.mail');
     $services->set(SiteExtension::class)->tag('johncms.twig_extension');
+    $services->set(AuthExtension::class)->tag('johncms.twig_extension');
     // The renderer is handed over as a closure: a controller that returns a string or a Response
     // of its own must not have the template environment assembled behind it.
     $services->set(ResponseNormalizer::class)->arg('$renderer', service_closure(RendererInterface::class));

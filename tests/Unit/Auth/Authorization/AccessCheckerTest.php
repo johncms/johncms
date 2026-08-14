@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Auth\Authorization;
 
 use Johncms\Auth\Authentication\AuthenticatorChain;
+use Johncms\Auth\Authorization\PermissionResolver;
 use Johncms\Auth\Authorization\AccessChecker;
 use Johncms\Auth\Authorization\AccessVoterInterface;
 use Johncms\Auth\Authorization\Vote;
@@ -13,6 +14,7 @@ use PHPUnit\Framework\TestCase;
 use stdClass;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Tests\Support\FakeAccessVoter;
+use Tests\Support\FakeRoleRepository;
 use Tests\Support\IdentityFactory;
 
 final class AccessCheckerTest extends TestCase
@@ -91,8 +93,12 @@ final class AccessCheckerTest extends TestCase
     private function checker(AccessVoterInterface ...$voters): AccessChecker
     {
         return new AccessChecker(
-            new CurrentUser(new AuthenticatorChain([]), new RequestStack()),
+            new CurrentUser(new AuthenticatorChain([]), $this->permissionResolver(), new RequestStack()),
             $voters
         );
+    }
+    private function permissionResolver(): PermissionResolver
+    {
+        return new PermissionResolver(new FakeRoleRepository());
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Container;
 
+use Johncms\Auth\Authorization\Voters\BanVoter;
 use Johncms\Auth\CurrentUser;
 use Johncms\Container\PSRContainerFactory;
 use Johncms\Http\CookieQueue;
@@ -66,7 +67,14 @@ final class ContainerCompilationTest extends TestCase
         sort($tagged);
 
         self::assertSame(
-            [CurrentUser::class, CookieQueue::class, Environment::class, Session::class, NavChain::class],
+            [
+                BanVoter::class,
+                CurrentUser::class,
+                CookieQueue::class,
+                Environment::class,
+                Session::class,
+                NavChain::class,
+            ],
             $tagged
         );
     }

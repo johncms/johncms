@@ -10,6 +10,7 @@
 
 declare(strict_types=1);
 
+use Johncms\Auth\Authorization\RoleSeeder;
 use Johncms\Auth\Password\PasswordHasherInterface;
 use Johncms\Auth\Session\AuthCookieFactory;
 use Johncms\Auth\Session\AuthSessionManager;
@@ -76,6 +77,10 @@ if ($request->getMethod() === 'POST') {
         $configFile = "<?php\n\n" . 'return ' . var_export($system_settings, true) . ";\n";
 
         if (file_put_contents(CONFIG_PATH . 'autoload/system.local.php', $configFile)) {
+            // The built-in roles, from the same seeder the upgrade command uses, so a fresh
+            // installation and an upgraded one cannot end up with different sets.
+            di(RoleSeeder::class)->seed();
+
             // Регистрируем пользователя
             $hasher = di(PasswordHasherInterface::class);
             $user = new User();

@@ -195,3 +195,18 @@ function config(?string $key = null, mixed $default = null): mixed
 
     return ConfigRepository::get($key, $default);
 }
+
+/**
+ * Whether the visitor of the current request may do this.
+ *
+ * A convenience for templates and for the few places that have no constructor to inject into.
+ * Code that can take AccessCheckerInterface should take it: a test replacing the checker cannot
+ * reach through this.
+ *
+ * @param string $permission Dot-separated key, `<module>.<resource>.<action>`.
+ * @param mixed  $subject    Narrows the question to one object for the voters that understand it.
+ */
+function can(string $permission, mixed $subject = null): bool
+{
+    return di(\Johncms\Auth\Authorization\AccessCheckerInterface::class)->allows($permission, $subject);
+}

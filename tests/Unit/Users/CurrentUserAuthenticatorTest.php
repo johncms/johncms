@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Users;
 
 use Johncms\Auth\Authentication\AuthenticatorChain;
+use Johncms\Auth\Authorization\PermissionResolver;
 use Johncms\Auth\CurrentUser;
 use Johncms\Http\Request;
 use Johncms\System\Users\User as LegacyUser;
@@ -15,6 +16,7 @@ use Johncms\Users\UserFactory;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Tests\Support\FakeAuthenticator;
+use Tests\Support\FakeRoleRepository;
 use Tests\Support\IdentityFactory;
 
 final class CurrentUserAuthenticatorTest extends TestCase
@@ -54,7 +56,7 @@ final class CurrentUserAuthenticatorTest extends TestCase
         $factory->expects(self::once())->method('load')->with(self::anything(), 0);
 
         $authenticator = new CurrentUserAuthenticator(
-            new CurrentUser(new AuthenticatorChain([]), new RequestStack()),
+            new CurrentUser(new AuthenticatorChain([]), $this->permissionResolver(), new RequestStack()),
             $legacyFactory,
             new LegacyUser(),
             $factory,
@@ -115,6 +117,10 @@ final class CurrentUserAuthenticatorTest extends TestCase
         $stack = new RequestStack();
         $stack->push(Request::create('/'));
 
-        return new CurrentUser(new AuthenticatorChain([new FakeAuthenticator($identity)]), $stack);
+        return new CurrentUser(new AuthenticatorChain([new FakeAuthenticator($identity)]), $this->permissionResolver(), $stack);
+    }
+    private function permissionResolver(): PermissionResolver
+    {
+        return new PermissionResolver(new FakeRoleRepository());
     }
 }

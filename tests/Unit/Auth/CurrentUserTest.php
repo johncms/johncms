@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Auth;
 
 use Johncms\Auth\Authentication\AuthenticatorChain;
+use Johncms\Auth\Authorization\PermissionResolver;
 use Johncms\Auth\Authentication\AuthenticatorInterface;
 use Johncms\Auth\CurrentUser;
 use Johncms\Auth\Identity;
@@ -12,13 +13,14 @@ use Johncms\Http\Request;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Tests\Support\FakeAuthenticator;
+use Tests\Support\FakeRoleRepository;
 use Tests\Support\IdentityFactory;
 
 final class CurrentUserTest extends TestCase
 {
     public function testWithoutARequestTheVisitorIsAGuest(): void
     {
-        $currentUser = new CurrentUser(new AuthenticatorChain([]), new RequestStack());
+        $currentUser = new CurrentUser(new AuthenticatorChain([]), $this->permissionResolver(), new RequestStack());
 
         self::assertTrue($currentUser->isGuest());
         self::assertSame(0, $currentUser->id());
@@ -63,7 +65,7 @@ final class CurrentUserTest extends TestCase
             }
         };
 
-        $currentUser = new CurrentUser(new AuthenticatorChain([$authenticator]), $stack);
+        $currentUser = new CurrentUser(new AuthenticatorChain([$authenticator]), $this->permissionResolver(), $stack);
 
         self::assertSame(1, $currentUser->id());
 
@@ -85,6 +87,10 @@ final class CurrentUserTest extends TestCase
         $stack = new RequestStack();
         $stack->push(Request::create('/'));
 
-        return new CurrentUser(new AuthenticatorChain([$authenticator]), $stack);
+        return new CurrentUser(new AuthenticatorChain([$authenticator]), $this->permissionResolver(), $stack);
+    }
+    private function permissionResolver(): PermissionResolver
+    {
+        return new PermissionResolver(new FakeRoleRepository());
     }
 }
