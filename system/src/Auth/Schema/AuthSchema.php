@@ -32,9 +32,48 @@ final class AuthSchema
 {
     public const PASSWORD_RESET_TOKENS = 'password_reset_tokens';
 
+    public const AUTH_SESSIONS = 'auth_sessions';
+
     public static function create(Builder $schema): void
     {
         self::createPasswordResetTokens($schema);
+        self::createAuthSessions($schema);
+    }
+
+    private static function createAuthSessions(Builder $schema): void
+    {
+        if ($schema->hasTable(self::AUTH_SESSIONS)) {
+            return;
+        }
+
+        $schema->create(
+            self::AUTH_SESSIONS,
+            static function (Blueprint $table): void {
+                $table->increments('id');
+                $table->integer('user_id')->unsigned()->index();
+                // Only the digest, like every other secret here: the cookie the visitor holds
+                // is the single copy, so a leaked dump cannot be replayed as a sign-in.
+                $table->string('token_hash', 64)->unique();
+                $table->integer('created_at')->unsigned();
+                // Moved forward at most once per renew_interval, together with expires_at.
+                $table->integer('last_used_at')->unsigned()->index();
+                $table->integer('expires_at')->unsigned()->index();
+                // The cap that is never extended. Null means there is none, which is the
+                // default: a cap would undo the sliding lifetime for the most active visitors.
+                $table->integer('absolute_expires_at')->unsigned()->nullable();
+                $table->boolean('remember')->default(false);
+                // Textual, unlike the legacy ip columns: new tables are IPv6-ready from the start.
+                $table->string('ip', 45)->default('');
+                $table->string('user_agent', 255)->default('');
+                $table->integer('revoked_at')->unsigned()->nullable();
+                $table->string('revoked_reason', 32)->nullable();
+                // Set when an administrator is browsing as this user. The session then belongs
+                // to the user, while the audit trail still names who opened it.
+                $table->integer('impersonator_id')->unsigned()->nullable();
+                // The administrator's own session, restored when they return to themselves.
+                $table->integer('parent_session_id')->unsigned()->nullable();
+            }
+        );
     }
 
     private static function createPasswordResetTokens(Builder $schema): void

@@ -14,8 +14,12 @@ use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\Authorization\AccessVoterInterface;
 use Johncms\Auth\Authorization\PermissionProviderInterface;
 use Johncms\Auth\Authorization\PermissionRegistry;
+use Johncms\Auth\Infrastructure\Persistence\Repository\EloquentAuthSessionRepository;
 use Johncms\Auth\Infrastructure\Persistence\Repository\EloquentPasswordResetTokenRepository;
 use Johncms\Auth\Password\PasswordResetTokenRepositoryInterface;
+use Johncms\Auth\Session\AuthSessionRepositoryInterface;
+use Johncms\Auth\Session\SessionSettings;
+use Johncms\Auth\Session\SessionSettingsFactory;
 use Johncms\Cache;
 use Johncms\Counters;
 use Johncms\CountersFactory;
@@ -173,6 +177,10 @@ return static function (ContainerConfigurator $container): void {
                 ROOT_PATH . 'system/src/Auth/Authorization/Vote.php',
                 ROOT_PATH . 'system/src/Auth/SecureToken.php',
                 ROOT_PATH . 'system/src/Auth/Schema',
+                ROOT_PATH . 'system/src/Auth/Session/IssuedSession.php',
+                ROOT_PATH . 'system/src/Auth/Session/SessionRevocationReason.php',
+                // Built by SessionSettingsFactory from config, not autowired from its scalars.
+                ROOT_PATH . 'system/src/Auth/Session/SessionSettings.php',
                 ROOT_PATH . 'system/src/View/Theme/ThemeDTO.php',
                 // Built by the scan command with the translation set it fills, not by the container.
                 ROOT_PATH . 'system/src/System/i18n/TwigScanner.php',
@@ -214,6 +222,10 @@ return static function (ContainerConfigurator $container): void {
         ->arg('$providers', tagged_iterator('johncms.auth.permissions'))
         ->arg('$definitions', []);
     $services->set(PasswordResetTokenRepositoryInterface::class, EloquentPasswordResetTokenRepository::class);
+    $services->set(AuthSessionRepositoryInterface::class, EloquentAuthSessionRepository::class);
+    // Read from config at instantiation rather than while the container is built: the built
+    // container is cached, and anything resolved there would freeze the configuration into it.
+    $services->set(SessionSettings::class)->factory(service(SessionSettingsFactory::class));
 
     $services->set(AntifloodCheckerInterface::class, AntifloodChecker::class)->autowire();
     $services->set(RequestRateLogInterface::class, FileRequestRateLog::class);
