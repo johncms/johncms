@@ -14,6 +14,7 @@ namespace Install;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Schema\Blueprint;
+use Johncms\Auth\Schema\AuthSchema;
 
 class Database
 {
@@ -251,5 +252,10 @@ class Database
                 $table->softDeletes();
             }
         );
+
+        // The tables of the authentication layer are defined once, where the upgrade command
+        // and the tests take them from as well: a copy here would drift from what an already
+        // installed site gets.
+        AuthSchema::create($schema);
     }
 }

@@ -14,6 +14,8 @@ use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\Authorization\AccessVoterInterface;
 use Johncms\Auth\Authorization\PermissionProviderInterface;
 use Johncms\Auth\Authorization\PermissionRegistry;
+use Johncms\Auth\Infrastructure\Persistence\Repository\EloquentPasswordResetTokenRepository;
+use Johncms\Auth\Password\PasswordResetTokenRepositoryInterface;
 use Johncms\Cache;
 use Johncms\Counters;
 use Johncms\CountersFactory;
@@ -169,6 +171,8 @@ return static function (ContainerConfigurator $container): void {
                 ROOT_PATH . 'system/src/Auth/Authorization/PermissionDefinition.php',
                 ROOT_PATH . 'system/src/Auth/Authorization/PermissionMatcher.php',
                 ROOT_PATH . 'system/src/Auth/Authorization/Vote.php',
+                ROOT_PATH . 'system/src/Auth/SecureToken.php',
+                ROOT_PATH . 'system/src/Auth/Schema',
                 ROOT_PATH . 'system/src/View/Theme/ThemeDTO.php',
                 // Built by the scan command with the translation set it fills, not by the container.
                 ROOT_PATH . 'system/src/System/i18n/TwigScanner.php',
@@ -209,6 +213,7 @@ return static function (ContainerConfigurator $container): void {
     $services->set(PermissionRegistry::class)
         ->arg('$providers', tagged_iterator('johncms.auth.permissions'))
         ->arg('$definitions', []);
+    $services->set(PasswordResetTokenRepositoryInterface::class, EloquentPasswordResetTokenRepository::class);
 
     $services->set(AntifloodCheckerInterface::class, AntifloodChecker::class)->autowire();
     $services->set(RequestRateLogInterface::class, FileRequestRateLog::class);

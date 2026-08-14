@@ -104,7 +104,7 @@ final readonly class RestorePasswordController
 
         try {
             $user = $this->getRecoveryContext->execute($id, $code);
-            $this->completePasswordRecovery->execute($user);
+            $this->completePasswordRecovery->execute($user, $code);
         } catch (PasswordRecoveryException $e) {
             return $this->error($e->getMessage());
         }

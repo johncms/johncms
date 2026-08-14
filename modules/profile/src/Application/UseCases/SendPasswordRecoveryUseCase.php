@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Profile\Application\UseCases;
 
+use Johncms\Auth\Password\PasswordResetTokens;
 use Johncms\Mail\EmailMessage;
 use Johncms\Modules\Profile\Application\DTO\SendRecoveryCommand;
 use Johncms\Modules\Profile\Application\Exceptions\PasswordRecoveryException;
@@ -13,11 +14,10 @@ use Johncms\Utils\Transliterator;
 
 final readonly class SendPasswordRecoveryUseCase
 {
-    private const RECOVERY_INTERVAL = 86400;
-
     public function __construct(
         private ProfileUserRepositoryInterface $profileUserRepository,
         private Translator $translator,
+        private PasswordResetTokens $resetTokens,
     ) {
     }
 
@@ -39,11 +39,11 @@ final readonly class SendPasswordRecoveryUseCase
             throw new PasswordRecoveryException(__('Invalid Email address'));
         }
 
-        if ($user->rest_time > time() - self::RECOVERY_INTERVAL) {
+        if (! $this->resetTokens->canRequest($user->id)) {
             throw new PasswordRecoveryException(__('Password can be recovered 1 time per day'));
         }
 
-        $code = md5((string) random_int(1000, 9999));
+        $code = $this->resetTokens->issue($user->id);
         $link = $homeUrl . '/profile/password-recovery/set/' . $user->id . '/' . $code;
         $name = ! empty($user->imname) ? $user->imname : $user->name;
 
@@ -61,7 +61,5 @@ final readonly class SendPasswordRecoveryUseCase
                 ],
             ]
         );
-
-        $this->profileUserRepository->startPasswordRecovery($user->id, $code, time());
     }
 }

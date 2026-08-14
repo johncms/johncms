@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Profile\Application\UseCases;
 
+use Johncms\Auth\Password\PasswordResetTokens;
 use Johncms\Mail\EmailMessage;
+use Johncms\Modules\Profile\Application\Exceptions\PasswordRecoveryException;
 use Johncms\Modules\Profile\Application\Services\PasswordGenerator;
 use Johncms\Modules\Profile\Domain\Repository\ProfileUserRepositoryInterface;
 use Johncms\System\i18n\Translator;
@@ -16,11 +18,20 @@ final readonly class CompletePasswordRecoveryUseCase
         private ProfileUserRepositoryInterface $profileUserRepository,
         private Translator $translator,
         private PasswordGenerator $passwordGenerator,
+        private PasswordResetTokens $resetTokens,
     ) {
     }
 
-    public function execute(User $user): void
+    /**
+     * Spends the recovery link and issues a new password. Consuming the token first is what
+     * makes a resubmitted link a no-op instead of a second password reset.
+     */
+    public function execute(User $user, string $code): void
     {
+        if ($this->resetTokens->consume($code) !== $user->id) {
+            throw new PasswordRecoveryException(__('Time allotted for the password recovery has been exceeded'));
+        }
+
         $password = $this->passwordGenerator->generate(4);
         $name = ! empty($user->imname) ? $user->imname : $user->name;
 
@@ -40,6 +51,6 @@ final readonly class CompletePasswordRecoveryUseCase
             ]
         );
 
-        $this->profileUserRepository->completePasswordRecovery($user->id, md5(md5($password)));
+        $this->profileUserRepository->updatePassword($user->id, md5(md5($password)));
     }
 }

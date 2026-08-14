@@ -19,30 +19,6 @@ final class ProfileUserRepository implements ProfileUserRepositoryInterface
         return User::query()->where('name_lat', '=', $nameLat)->first();
     }
 
-    public function startPasswordRecovery(int $id, string $code, int $time): void
-    {
-        User::query()->where('id', '=', $id)->update([
-            'rest_code' => $code,
-            'rest_time' => $time,
-        ]);
-    }
-
-    public function clearPasswordRecovery(int $id): void
-    {
-        User::query()->where('id', '=', $id)->update([
-            'rest_code' => '',
-            'rest_time' => '',
-        ]);
-    }
-
-    public function completePasswordRecovery(int $id, string $hashedPassword): void
-    {
-        User::query()->where('id', '=', $id)->update([
-            'rest_code' => '',
-            'password'  => $hashedPassword,
-        ]);
-    }
-
     public function markGuestbookSeen(int $userId, int $commCount): void
     {
         User::query()->where('id', '=', $userId)->update(['comm_old' => $commCount]);
