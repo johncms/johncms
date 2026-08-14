@@ -10,6 +10,7 @@
 
 declare(strict_types=1);
 
+use Johncms\Auth\Password\PasswordHasherInterface;
 use Johncms\Auth\Session\AuthCookieFactory;
 use Johncms\Auth\Session\AuthSessionManager;
 use Johncms\Console\Commands\CacheClearCommand;
@@ -76,11 +77,12 @@ if ($request->getMethod() === 'POST') {
 
         if (file_put_contents(CONFIG_PATH . 'autoload/system.local.php', $configFile)) {
             // Регистрируем пользователя
-            $user = (new User())->create(
+            $hasher = di(PasswordHasherInterface::class);
+            $user = new User();
+            $user->fill(
                 [
                     'name'            => $fields['admin_login'],
                     'name_lat'        => mb_strtolower($fields['admin_login']),
-                    'password'        => md5(md5($fields['admin_password'])),
                     'mail'            => $fields['email'],
                     'www'             => $fields['homeurl'],
                     'datereg'         => time(),
@@ -99,6 +101,9 @@ if ($request->getMethod() === 'POST') {
                     'smileys'         => [],
                 ]
             );
+            $user->password = $hasher->hash($fields['admin_password']);
+            $user->save();
+
             // Signs the new administrator in. The installer answers outside the kernel, so the
             // cookie is emitted directly instead of being queued — its attributes still come from
             // AuthCookieFactory, so they cannot drift from the ones the site sets later.
@@ -124,11 +129,11 @@ if ($request->getMethod() === 'POST') {
                     ['name' => 'Maria', 'sex' => 'f', 'mail' => 'maria@example.com', 'ip' => '192.0.2.20'],
                 ];
                 foreach ($demoUsers as $demoUser) {
-                    (new User())->create(
+                    $demoModel = new User();
+                    $demoModel->fill(
                         [
                             'name'            => $demoUser['name'],
                             'name_lat'        => mb_strtolower($demoUser['name']),
-                            'password'        => md5(md5('demo')),
                             'mail'            => $demoUser['mail'],
                             'www'             => '',
                             'datereg'         => time(),
@@ -147,6 +152,8 @@ if ($request->getMethod() === 'POST') {
                             'smileys'         => [],
                         ]
                     );
+                    $demoModel->password = $hasher->hash('demo');
+                    $demoModel->save();
                 }
 
                 $modules = new Modules();

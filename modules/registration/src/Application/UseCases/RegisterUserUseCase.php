@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Registration\Application\UseCases;
 
+use Johncms\Auth\Password\PasswordHasherInterface;
 use Johncms\Mail\EmailMessage;
 use Johncms\Modules\Registration\Application\DTO\RegistrationFormDTO;
 use Johncms\Security\ClientInfoDTO;
@@ -14,6 +15,7 @@ final readonly class RegisterUserUseCase
 {
     public function __construct(
         private Translator $translator,
+        private PasswordHasherInterface $hasher,
     ) {
     }
 
@@ -21,11 +23,11 @@ final readonly class RegisterUserUseCase
     {
         $config = config('johncms');
 
-        $newUser = (new User())->create(
+        $newUser = new User();
+        $newUser->fill(
             [
                 'name'              => $dto->name,
                 'name_lat'          => $dto->nameLat,
-                'password'          => md5(md5($dto->password)),
                 'imname'            => $dto->imname,
                 'about'             => $dto->about,
                 'sex'               => $dto->sex,
@@ -46,6 +48,10 @@ final readonly class RegisterUserUseCase
                 'confirmation_code' => ! empty($config['user_email_confirmation']) ? uniqid('email_', true) : null,
             ]
         );
+        // Assigned rather than filled: the password is not a mass-assignable attribute, so that
+        // no form handler can ever set it by accident.
+        $newUser->password = $this->hasher->hash($dto->password);
+        $newUser->save();
 
         if ($config['user_email_confirmation']) {
             $link = $config['homeurl'] . '/registration/confirm-email?id=' . $newUser->id . '&code=' . $newUser->confirmation_code;

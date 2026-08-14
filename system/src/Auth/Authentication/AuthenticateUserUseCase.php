@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Johncms\Auth\Authentication;
 
 use Illuminate\Support\Str;
+use Johncms\Auth\Password\PasswordHasherInterface;
 use Johncms\Users\User;
 
 /**
@@ -31,8 +32,10 @@ final readonly class AuthenticateUserUseCase
     /** Failures after which the form starts asking for a verification code. */
     private const FAILURES_BEFORE_CAPTCHA = 3;
 
-    public function __construct(private LoginCaptcha $captcha)
-    {
+    public function __construct(
+        private LoginCaptcha $captcha,
+        private PasswordHasherInterface $hasher,
+    ) {
     }
 
     public function execute(LoginCredentialsDTO $credentials): LoginResultDTO
@@ -55,12 +58,13 @@ final readonly class AuthenticateUserUseCase
             }
         }
 
-        if (md5(md5($credentials->password)) !== $user->password) {
+        if (! $this->hasher->verify($credentials->password, $user->password)) {
             $this->countFailure($user);
 
             return new LoginResultDTO(LoginStatus::InvalidCredentials);
         }
 
+        $this->rehashIfNeeded($user, $credentials->password);
         $user->update(['failed_login' => 0]);
 
         // The password was right, so the account is named from here on: what follows is about
@@ -76,6 +80,19 @@ final readonly class AuthenticateUserUseCase
         $user->update(['sestime' => time()]);
 
         return new LoginResultDTO(LoginStatus::Success, $user->id);
+    }
+
+    /**
+     * A successful sign-in is the only moment the password exists in the clear, so it is the
+     * only moment a hash made by an older scheme can be replaced. Accounts move to the current
+     * one as their owners come back, without anyone being asked to reset anything.
+     */
+    private function rehashIfNeeded(User $user, string $password): void
+    {
+        if ($this->hasher->needsRehash($user->password)) {
+            $user->password = $this->hasher->hash($password);
+            $user->save();
+        }
     }
 
     private function findUser(string $login): ?User

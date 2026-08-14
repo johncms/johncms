@@ -16,6 +16,8 @@ use Johncms\Auth\Authorization\PermissionProviderInterface;
 use Johncms\Auth\Authorization\PermissionRegistry;
 use Johncms\Auth\Infrastructure\Persistence\Repository\EloquentAuthSessionRepository;
 use Johncms\Auth\Infrastructure\Persistence\Repository\EloquentPasswordResetTokenRepository;
+use Johncms\Auth\Password\PasswordHasherFactory;
+use Johncms\Auth\Password\PasswordHasherInterface;
 use Johncms\Auth\Password\PasswordResetTokenRepositoryInterface;
 use Johncms\Auth\Session\AuthSessionRepositoryInterface;
 use Johncms\Auth\Session\SessionSettings;
@@ -225,6 +227,9 @@ return static function (ContainerConfigurator $container): void {
         ->arg('$providers', tagged_iterator('johncms.auth.permissions'))
         ->arg('$definitions', []);
     $services->set(PasswordResetTokenRepositoryInterface::class, EloquentPasswordResetTokenRepository::class);
+    // Reads the algorithm from config at instantiation: baking it into the compiled container
+    // would keep a changed configuration from ever taking effect.
+    $services->set(PasswordHasherInterface::class)->factory(service(PasswordHasherFactory::class));
     $services->set(AuthSessionRepositoryInterface::class, EloquentAuthSessionRepository::class);
     // Read from config at instantiation rather than while the container is built: the built
     // container is cached, and anything resolved there would freeze the configuration into it.

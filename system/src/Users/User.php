@@ -122,11 +122,22 @@ class User extends Model
         'email_confirmed'       => 'bool',
     ];
 
+    /**
+     * Never serialised: the hash has no business appearing in an array or a JSON response that
+     * happens to include a user.
+     */
+    protected $hidden = [
+        'password',
+    ];
+
+    /**
+     * The password is deliberately absent: assigning it goes through the property, so a handler
+     * filling a model from a form can never set it, however the form was crafted.
+     */
     protected $fillable = [
         'id',
         'name',
         'name_lat',
-        'password',
         'rights',
         'failed_login',
         'imname',

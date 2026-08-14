@@ -10,6 +10,9 @@ use Johncms\Auth\Authentication\AuthenticateUserUseCase;
 use Johncms\Auth\Authentication\LoginCaptcha;
 use Johncms\Auth\Authentication\LoginCredentialsDTO;
 use Johncms\Auth\Authentication\LoginStatus;
+use Johncms\Auth\Password\LegacyMd5PasswordVerifier;
+use Johncms\Auth\Password\NativePasswordHasher;
+use Johncms\Auth\Password\PasswordHasherInterface;
 use Johncms\Config\ConfigRepository;
 use Johncms\Http\Session;
 use Johncms\Users\User;
@@ -25,6 +28,8 @@ final class AuthenticateUserUseCaseTest extends TestCase
 
     private LoginCaptcha $captcha;
 
+    private PasswordHasherInterface $hasher;
+
     private AuthenticateUserUseCase $useCase;
 
     protected function setUp(): void
@@ -35,7 +40,10 @@ final class AuthenticateUserUseCaseTest extends TestCase
         ConfigRepository::init(['johncms' => ['user_email_confirmation' => 0]]);
 
         $this->captcha = new LoginCaptcha(new Session(new MockArraySessionStorage()));
-        $this->useCase = new AuthenticateUserUseCase($this->captcha);
+        // The cheapest cost bcrypt accepts: these tests hash on every fixture, and the strength
+        // of the algorithm is not what they are about.
+        $this->hasher = new NativePasswordHasher(new LegacyMd5PasswordVerifier(), PASSWORD_BCRYPT, ['cost' => 4]);
+        $this->useCase = new AuthenticateUserUseCase($this->captcha, $this->hasher);
     }
 
     protected function tearDown(): void
@@ -185,22 +193,80 @@ final class AuthenticateUserUseCaseTest extends TestCase
         self::assertTrue($this->useCase->execute(new LoginCredentialsDTO('Tester', self::PASSWORD))->isSuccessful());
     }
 
+    /**
+     * Upgrading a site must not force everyone to reset their password: the old scheme keeps
+     * working until its owner comes back.
+     */
+    public function testAPasswordStoredInTheOldSchemeStillSignsIn(): void
+    {
+        $this->createUser(storedHash: md5(md5(self::PASSWORD)));
+
+        self::assertTrue($this->useCase->execute(new LoginCredentialsDTO('Tester', self::PASSWORD))->isSuccessful());
+    }
+
+    /**
+     * Signing in is the only moment the password exists in the clear, so it is the only moment
+     * an outdated hash can be replaced.
+     */
+    public function testSigningInReplacesAnOutdatedHash(): void
+    {
+        $legacyHash = md5(md5(self::PASSWORD));
+        $user = $this->createUser(storedHash: $legacyHash);
+
+        $this->useCase->execute(new LoginCredentialsDTO('Tester', self::PASSWORD));
+
+        $stored = $this->reload($user)->password;
+        self::assertNotSame($legacyHash, $stored);
+        self::assertTrue($this->hasher->verify(self::PASSWORD, $stored));
+        // And the replacement is good enough that it is not replaced again next time.
+        self::assertFalse($this->hasher->needsRehash($stored));
+    }
+
+    public function testAWrongPasswordAgainstAnOldHashDoesNotSignIn(): void
+    {
+        $this->createUser(storedHash: md5(md5(self::PASSWORD)));
+
+        self::assertSame(
+            LoginStatus::InvalidCredentials,
+            $this->useCase->execute(new LoginCredentialsDTO('Tester', 'wrong'))->status
+        );
+    }
+
+    /**
+     * An account created through an external service has no password at all, and an empty
+     * column must never be a way in.
+     */
+    public function testAnAccountWithoutAPasswordCannotBeSignedInto(): void
+    {
+        $this->createUser(storedHash: '');
+
+        self::assertSame(
+            LoginStatus::InvalidCredentials,
+            $this->useCase->execute(new LoginCredentialsDTO('Tester', ''))->status
+        );
+    }
+
     private function createUser(
         bool $approved = true,
         bool $emailConfirmed = true,
         int $failedLogin = 0,
+        ?string $storedHash = null,
     ): User {
-        return User::query()->create(
+        $user = new User();
+        $user->fill(
             [
                 'name'            => 'Tester',
                 'name_lat'        => 'tester',
-                'password'        => md5(md5(self::PASSWORD)),
                 'preg'            => $approved,
                 'email_confirmed' => $emailConfirmed,
                 'failed_login'    => $failedLogin,
                 'sestime'         => 0,
             ]
         );
+        $user->password = $storedHash ?? $this->hasher->hash(self::PASSWORD);
+        $user->save();
+
+        return $user;
     }
 
     private function reload(User $user): User

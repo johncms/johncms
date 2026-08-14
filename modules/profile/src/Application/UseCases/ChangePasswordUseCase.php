@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Profile\Application\UseCases;
 
+use Johncms\Auth\Password\PasswordHasherInterface;
 use Johncms\Modules\Profile\Application\DTO\ChangePasswordCommand;
 use Johncms\Modules\Profile\Application\Exceptions\ChangePasswordException;
 use Johncms\Modules\Profile\Application\Exceptions\ProfileNotFoundException;
@@ -15,6 +16,7 @@ final readonly class ChangePasswordUseCase
     public function __construct(
         private ProfileUserRepositoryInterface $profileUserRepository,
         private User $currentUser,
+        private PasswordHasherInterface $hasher,
     ) {
     }
 
@@ -36,7 +38,7 @@ final readonly class ChangePasswordUseCase
             $errors[] = __('It is necessary to fill in all fields');
         }
 
-        if (! $errors && $isSelf && md5(md5($command->oldPassword)) !== $profileUser->password) {
+        if (! $errors && $isSelf && ! $this->hasher->verify($command->oldPassword, $profileUser->password)) {
             $errors[] = __('Old password entered incorrectly');
         }
 
@@ -52,6 +54,6 @@ final readonly class ChangePasswordUseCase
             throw new ChangePasswordException($errors);
         }
 
-        $this->profileUserRepository->updatePassword($profileUser->id, md5(md5($command->newPassword)));
+        $this->profileUserRepository->updatePassword($profileUser->id, $this->hasher->hash($command->newPassword));
     }
 }

@@ -2759,36 +2759,6 @@ parameters:
 			path: modules/registration/src/Application/Controllers/ConfirmEmailController.php
 
 		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$confirmation_code\.$#'
-			identifier: property.notFound
-			count: 1
-			path: modules/registration/src/Application/UseCases/RegisterUserUseCase.php
-
-		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
-			identifier: property.notFound
-			count: 1
-			path: modules/registration/src/Application/UseCases/RegisterUserUseCase.php
-
-		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$mail\.$#'
-			identifier: property.notFound
-			count: 1
-			path: modules/registration/src/Application/UseCases/RegisterUserUseCase.php
-
-		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$name\.$#'
-			identifier: property.notFound
-			count: 2
-			path: modules/registration/src/Application/UseCases/RegisterUserUseCase.php
-
-		-
-			message: '#^Method Johncms\\Modules\\Registration\\Application\\UseCases\\RegisterUserUseCase\:\:execute\(\) should return Johncms\\Users\\User but returns Illuminate\\Database\\Eloquent\\Model\.$#'
-			identifier: return.type
-			count: 1
-			path: modules/registration/src/Application/UseCases/RegisterUserUseCase.php
-
-		-
 			message: '#^Comparison operation "\<\=" between 4 and 20 is always true\.$#'
 			identifier: smallerOrEqual.alwaysTrue
 			count: 1
@@ -2859,12 +2829,6 @@ parameters:
 			identifier: variable.undefined
 			count: 1
 			path: public/install/steps/step_3.php
-
-		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
-			identifier: property.notFound
-			count: 1
-			path: public/install/steps/step_4.php
 
 		-
 			message: '#^Variable \$translator might not be defined\.$#'

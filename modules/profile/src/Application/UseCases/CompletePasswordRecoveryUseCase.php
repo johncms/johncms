@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Profile\Application\UseCases;
 
+use Johncms\Auth\Password\PasswordHasherInterface;
 use Johncms\Auth\Password\PasswordResetTokens;
 use Johncms\Mail\EmailMessage;
 use Johncms\Modules\Profile\Application\Exceptions\PasswordRecoveryException;
@@ -19,6 +20,7 @@ final readonly class CompletePasswordRecoveryUseCase
         private Translator $translator,
         private PasswordGenerator $passwordGenerator,
         private PasswordResetTokens $resetTokens,
+        private PasswordHasherInterface $hasher,
     ) {
     }
 
@@ -51,6 +53,6 @@ final readonly class CompletePasswordRecoveryUseCase
             ]
         );
 
-        $this->profileUserRepository->updatePassword($user->id, md5(md5($password)));
+        $this->profileUserRepository->updatePassword($user->id, $this->hasher->hash($password));
     }
 }
