@@ -54,6 +54,11 @@ final readonly class LoginController
                 $userLogin,
                 $request
             ),
+            LoginStatus::TooManyAttempts => $this->loginForm(
+                [sprintf(__('Too many attempts. Try again in %s.'), $this->waitTime($result->retryAfter))],
+                $userLogin,
+                $request
+            ),
             LoginStatus::EmailNotConfirmed => $this->confirmationRequired('email'),
             LoginStatus::ModerationPending => $this->confirmationRequired('moderation'),
             LoginStatus::InvalidCredentials => $this->loginForm([__('Authorization failed')], $userLogin, $request),
@@ -76,6 +81,17 @@ final readonly class LoginController
         }
 
         return $errors;
+    }
+
+    /**
+     * The wait in whole minutes, rounded up: telling somebody to come back in 47 seconds invites
+     * them to sit and count, and the exact figure is of no use to them.
+     */
+    private function waitTime(int $seconds): string
+    {
+        $minutes = max(1, (int) ceil($seconds / 60));
+
+        return sprintf(n__('%d minute', '%d minutes', $minutes), $minutes);
     }
 
     private function handleSuccess(Request $request, int $userId): RedirectResponse

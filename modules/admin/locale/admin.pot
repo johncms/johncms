@@ -268,7 +268,7 @@ msgstr ""
 
 #: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:248
 #: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:86
-#: modules/admin/src/Application/Controllers/Users/UsersController.php:99
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:114
 #: modules/admin/src/Application/Middlewares/AdminAccessMiddleware.php:56
 #: modules/admin/src/Application/Middlewares/SuperAdminAccessMiddleware.php:55
 msgid "Access denied"
@@ -793,20 +793,31 @@ msgstr ""
 msgid "The security code is not correct"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/UsersController.php:69
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:66
+#, php-format
+msgid "Too many attempts. Try again in %s."
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:73
 msgid "Authorization failed"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/UsersController.php:81
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:85
 msgid "You have not entered login"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/UsersController.php:85
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:89
 msgid "You have not entered password"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/UsersController.php:148
-#: modules/admin/src/Application/Controllers/Users/UsersController.php:149
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:103
+#, php-format
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] ""
+
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:163
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:164
 #: modules/admin/templates/login.twig:46
 msgid "Login"
 msgstr ""

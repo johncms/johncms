@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Registration\Application\UseCases;
 
 use Johncms\Auth\Password\PasswordHasherInterface;
+use Johncms\Auth\SecureToken;
 use Johncms\Mail\EmailMessage;
 use Johncms\Modules\Registration\Application\DTO\RegistrationFormDTO;
 use Johncms\Security\ClientInfoDTO;
@@ -45,7 +46,7 @@ final readonly class RegisterUserUseCase
                 'set_mail'          => [],
                 'smileys'           => [],
                 'email_confirmed'   => ! empty($config['user_email_confirmation']) ? null : 1,
-                'confirmation_code' => ! empty($config['user_email_confirmation']) ? uniqid('email_', true) : null,
+                'confirmation_code' => ! empty($config['user_email_confirmation']) ? SecureToken::generate() : null,
             ]
         );
         // Assigned rather than filled: the password is not a mass-assignable attribute, so that

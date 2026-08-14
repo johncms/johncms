@@ -18,7 +18,7 @@ msgid "Database"
 msgstr ""
 
 #: public/install/index.php:93
-#: public/install/steps/step_4.php:33
+#: public/install/steps/step_4.php:34
 msgid "Setting"
 msgstr ""
 
@@ -120,7 +120,7 @@ msgstr ""
 msgid "Database does not exist"
 msgstr ""
 
-#: public/install/steps/step_4.php:173
+#: public/install/steps/step_4.php:180
 msgid "ERROR: Can't write system.local.php"
 msgstr ""
 

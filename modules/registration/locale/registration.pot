@@ -23,7 +23,7 @@ msgstr ""
 msgid "You must accept the consent to continue"
 msgstr ""
 
-#: modules/registration/src/Application/UseCases/RegisterUserUseCase.php:61
+#: modules/registration/src/Application/UseCases/RegisterUserUseCase.php:68
 msgid "Registration on the website"
 msgstr ""
 

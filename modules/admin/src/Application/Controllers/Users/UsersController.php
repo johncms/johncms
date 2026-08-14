@@ -62,6 +62,10 @@ final readonly class UsersController
             LoginStatus::Success => $this->handleSuccess($request, (int) $result->userId, $userLogin),
             LoginStatus::CaptchaRequired => $this->captchaForm($request, $userLogin, $userPass),
             LoginStatus::CaptchaMismatch => $this->loginForm([__('The security code is not correct')], $userLogin),
+            LoginStatus::TooManyAttempts => $this->loginForm(
+                [sprintf(__('Too many attempts. Try again in %s.'), $this->waitTime($result->retryAfter))],
+                $userLogin
+            ),
             // An account still waiting for its address to be confirmed or for approval has no
             // business here, and saying which of the two it is would confirm the login exists.
             LoginStatus::EmailNotConfirmed,
@@ -86,6 +90,17 @@ final readonly class UsersController
         }
 
         return $errors;
+    }
+
+    /**
+     * The wait in whole minutes, rounded up: the exact number of seconds is of no use to anyone
+     * waiting it out.
+     */
+    private function waitTime(int $seconds): string
+    {
+        $minutes = max(1, (int) ceil($seconds / 60));
+
+        return sprintf(n__('%d minute', '%d minutes', $minutes), $minutes);
     }
 
     /**

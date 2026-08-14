@@ -25,10 +25,13 @@ enum LoginStatus
     /** Wrong login or wrong password — deliberately not distinguished. */
     case InvalidCredentials;
 
-    /** Too many failed attempts: the visitor has to answer a verification code first. */
+    /** Enough has gone wrong that a verification code is asked for before the password. */
     case CaptchaRequired;
 
     case CaptchaMismatch;
+
+    /** Guessing has gone far enough that attempts are refused for a while. */
+    case TooManyAttempts;
 
     /** The password was right, but the address has not been confirmed yet. */
     case EmailNotConfirmed;

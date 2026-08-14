@@ -79,12 +79,12 @@ msgstr ""
 
 #: config/places.global.php:21
 #: modules/login/src/Application/Controllers/LoginController.php:30
-#: modules/login/src/Application/Controllers/LoginController.php:96
-#: modules/login/src/Application/Controllers/LoginController.php:97
-#: modules/login/src/Application/Controllers/LoginController.php:110
-#: modules/login/src/Application/Controllers/LoginController.php:111
-#: modules/login/src/Application/Controllers/LoginController.php:125
+#: modules/login/src/Application/Controllers/LoginController.php:112
+#: modules/login/src/Application/Controllers/LoginController.php:113
 #: modules/login/src/Application/Controllers/LoginController.php:126
+#: modules/login/src/Application/Controllers/LoginController.php:127
+#: modules/login/src/Application/Controllers/LoginController.php:141
+#: modules/login/src/Application/Controllers/LoginController.php:142
 #: modules/login/templates/public/login.twig:51
 #: themes/default/templates/components/sidebar-user-menu.twig:69
 msgid "Login"
@@ -134,17 +134,28 @@ msgstr ""
 msgid "The security code is not correct"
 msgstr ""
 
-#: modules/login/src/Application/Controllers/LoginController.php:59
+#: modules/login/src/Application/Controllers/LoginController.php:58
+#, php-format
+msgid "Too many attempts. Try again in %s."
+msgstr ""
+
+#: modules/login/src/Application/Controllers/LoginController.php:64
 msgid "Authorization failed"
 msgstr ""
 
-#: modules/login/src/Application/Controllers/LoginController.php:71
+#: modules/login/src/Application/Controllers/LoginController.php:76
 msgid "You have not entered login"
 msgstr ""
 
-#: modules/login/src/Application/Controllers/LoginController.php:75
+#: modules/login/src/Application/Controllers/LoginController.php:80
 msgid "You have not entered password"
 msgstr ""
+
+#: modules/login/src/Application/Controllers/LoginController.php:94
+#, php-format
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] ""
 
 #: modules/login/src/Application/Controllers/LogoutController.php:39
 #: themes/default/templates/components/sidebar-user-menu.twig:52

@@ -405,29 +405,29 @@ msgstr ""
 msgid "Ban not active"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/ChangePasswordUseCase.php:33
-#: modules/profile/src/Application/UseCases/ChangePasswordUseCase.php:36
+#: modules/profile/src/Application/UseCases/ChangePasswordUseCase.php:35
+#: modules/profile/src/Application/UseCases/ChangePasswordUseCase.php:38
 msgid "It is necessary to fill in all fields"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/ChangePasswordUseCase.php:40
+#: modules/profile/src/Application/UseCases/ChangePasswordUseCase.php:42
 msgid "Old password entered incorrectly"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/ChangePasswordUseCase.php:44
+#: modules/profile/src/Application/UseCases/ChangePasswordUseCase.php:46
 msgid "The password confirmation you entered is wrong"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/ChangePasswordUseCase.php:48
+#: modules/profile/src/Application/UseCases/ChangePasswordUseCase.php:50
 msgid "The password must contain at least 3 characters"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/CompletePasswordRecoveryUseCase.php:32
+#: modules/profile/src/Application/UseCases/CompletePasswordRecoveryUseCase.php:34
 #: modules/profile/src/Application/UseCases/GetRecoveryContextUseCase.php:29
 msgid "Time allotted for the password recovery has been exceeded"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/CompletePasswordRecoveryUseCase.php:46
+#: modules/profile/src/Application/UseCases/CompletePasswordRecoveryUseCase.php:48
 msgid "Your new password"
 msgstr ""
 
@@ -556,11 +556,11 @@ msgstr ""
 msgid "Password recovery"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/UpdateProfileUseCase.php:120
+#: modules/profile/src/Application/UseCases/UpdateProfileUseCase.php:121
 msgid "Confirm email change"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/UpdateProfileUseCase.php:137
+#: modules/profile/src/Application/UseCases/UpdateProfileUseCase.php:138
 msgid "The procedure for changing the email address was started"
 msgstr ""
 

@@ -1969,3 +1969,13 @@ msgstr "Згоди"
 msgid "Cookie banner"
 msgstr "Банер cookie"
 
+
+msgid "Too many attempts. Try again in %s."
+msgstr "Забагато спроб. Повторіть через %s."
+
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] "%d хвилину"
+msgstr[1] "%d хвилини"
+msgstr[2] "%d хвилин"
+msgstr[3] "%d хвилин"

@@ -13,10 +13,17 @@ use Johncms\Auth\Authentication\LoginStatus;
 use Johncms\Auth\Password\LegacyMd5PasswordVerifier;
 use Johncms\Auth\Password\NativePasswordHasher;
 use Johncms\Auth\Password\PasswordHasherInterface;
+use Johncms\Auth\Throttling\CacheLoginThrottle;
+use Johncms\Auth\Throttling\LoginThrottleInterface;
 use Johncms\Config\ConfigRepository;
+use Johncms\Http\Environment;
+use Johncms\Http\Request;
 use Johncms\Http\Session;
 use Johncms\Users\User;
+use Illuminate\Cache\ArrayStore;
+use Illuminate\Cache\Repository as CacheRepository;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 use Tests\Support\BootsInMemoryDatabase;
 
@@ -29,6 +36,8 @@ final class AuthenticateUserUseCaseTest extends TestCase
     private LoginCaptcha $captcha;
 
     private PasswordHasherInterface $hasher;
+
+    private LoginThrottleInterface $throttle;
 
     private AuthenticateUserUseCase $useCase;
 
@@ -43,7 +52,17 @@ final class AuthenticateUserUseCaseTest extends TestCase
         // The cheapest cost bcrypt accepts: these tests hash on every fixture, and the strength
         // of the algorithm is not what they are about.
         $this->hasher = new NativePasswordHasher(new LegacyMd5PasswordVerifier(), PASSWORD_BCRYPT, ['cost' => 4]);
-        $this->useCase = new AuthenticateUserUseCase($this->captcha, $this->hasher);
+        $this->throttle = new CacheLoginThrottle(new CacheRepository(new ArrayStore()));
+
+        $requestStack = new RequestStack();
+        $requestStack->push(Request::create('/'));
+
+        $this->useCase = new AuthenticateUserUseCase(
+            $this->captcha,
+            $this->hasher,
+            $this->throttle,
+            new Environment($requestStack)
+        );
     }
 
     protected function tearDown(): void
@@ -96,22 +115,30 @@ final class AuthenticateUserUseCaseTest extends TestCase
         );
     }
 
-    public function testFailedAttemptsAreCountedUpToTheThreshold(): void
-    {
-        $user = $this->createUser();
-
-        for ($attempt = 0; $attempt < 5; $attempt++) {
-            $this->useCase->execute(new LoginCredentialsDTO('Tester', 'wrong'));
-        }
-
-        // Past the threshold the form asks for a code anyway; a climbing number would mean nothing.
-        self::assertSame(3, $this->reload($user)->failed_login);
-    }
-
     public function testAfterThreeFailuresAVerificationCodeIsAskedFor(): void
     {
-        $this->createUser(failedLogin: 3);
+        $this->createUser();
+        $this->failTimes(3);
 
+        self::assertSame(
+            LoginStatus::CaptchaRequired,
+            $this->useCase->execute(new LoginCredentialsDTO('Tester', self::PASSWORD))->status
+        );
+    }
+
+    /**
+     * The failures are counted against the attempt, not against the account, so a guesser who
+     * never names an existing login is slowed down just the same.
+     */
+    public function testFailuresAgainstAnUnknownLoginCountToo(): void
+    {
+        $this->createUser();
+
+        for ($attempt = 0; $attempt < 3; $attempt++) {
+            $this->useCase->execute(new LoginCredentialsDTO('nobody', 'wrong'));
+        }
+
+        // Same address, a different login: the address key has run out on its own.
         self::assertSame(
             LoginStatus::CaptchaRequired,
             $this->useCase->execute(new LoginCredentialsDTO('Tester', self::PASSWORD))->status
@@ -120,7 +147,8 @@ final class AuthenticateUserUseCaseTest extends TestCase
 
     public function testAWrongVerificationCodeStopsTheAttempt(): void
     {
-        $this->createUser(failedLogin: 3);
+        $this->createUser();
+        $this->failTimes(3);
         $this->captcha->issue();
 
         self::assertSame(
@@ -131,7 +159,8 @@ final class AuthenticateUserUseCaseTest extends TestCase
 
     public function testTheRightVerificationCodeLetsTheAttemptThrough(): void
     {
-        $this->createUser(failedLogin: 3);
+        $this->createUser();
+        $this->failTimes(3);
         $code = $this->captcha->issue();
 
         self::assertTrue(
@@ -145,7 +174,8 @@ final class AuthenticateUserUseCaseTest extends TestCase
      */
     public function testAVerificationCodeIsGoodForOneAnswer(): void
     {
-        $this->createUser(failedLogin: 3);
+        $this->createUser();
+        $this->failTimes(3);
         $code = $this->captcha->issue();
 
         $this->useCase->execute(new LoginCredentialsDTO('Tester', self::PASSWORD, 'nope'));
@@ -156,13 +186,31 @@ final class AuthenticateUserUseCaseTest extends TestCase
         );
     }
 
-    public function testASuccessfulSignInClearsTheFailureCount(): void
+    public function testASuccessfulSignInForgetsTheFailures(): void
     {
-        $user = $this->createUser(failedLogin: 2);
+        $this->createUser();
+        $this->failTimes(3);
 
-        $this->useCase->execute(new LoginCredentialsDTO('Tester', self::PASSWORD));
+        $code = $this->captcha->issue();
+        $this->useCase->execute(new LoginCredentialsDTO('Tester', self::PASSWORD, $code));
 
-        self::assertSame(0, $this->reload($user)->failed_login);
+        // No verification code asked for this time: the run of failures is gone.
+        self::assertTrue($this->useCase->execute(new LoginCredentialsDTO('Tester', self::PASSWORD))->isSuccessful());
+    }
+
+    /**
+     * A verification code alone is no protection against a script that solves them: past a
+     * further threshold the attempts are simply refused for a while.
+     */
+    public function testEnoughFailuresRefuseAttemptsAltogether(): void
+    {
+        $this->createUser();
+        $this->failTimes(10);
+
+        $result = $this->useCase->execute(new LoginCredentialsDTO('Tester', self::PASSWORD));
+
+        self::assertSame(LoginStatus::TooManyAttempts, $result->status);
+        self::assertGreaterThan(0, $result->retryAfter);
     }
 
     public function testAnAccountAwaitingApprovalIsNamedButNotSignedIn(): void
@@ -267,6 +315,17 @@ final class AuthenticateUserUseCaseTest extends TestCase
         $user->save();
 
         return $user;
+    }
+
+    /**
+     * Fails the sign-in the given number of times, answering the verification code correctly
+     * whenever it is asked for, so the run is not cut short by it.
+     */
+    private function failTimes(int $times): void
+    {
+        for ($attempt = 0; $attempt < $times; $attempt++) {
+            $this->useCase->execute(new LoginCredentialsDTO('Tester', 'wrong', $this->captcha->issue()));
+        }
     }
 
     private function reload(User $user): User

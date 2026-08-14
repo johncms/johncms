@@ -10,6 +10,7 @@
 
 namespace Johncms\Security;
 
+use Johncms\Auth\SecureToken;
 use Johncms\Http\Session;
 
 class Csrf
@@ -63,10 +64,12 @@ class Csrf
     /**
      * Generate token
      *
-     * @return string
+     * A token that can be guessed is a token that defeats the check it exists for: uniqid() is
+     * derived from the clock, so an attacker who knows roughly when a page was opened can
+     * enumerate the possibilities.
      */
     public function generateToken(): string
     {
-        return uniqid('', true);
+        return SecureToken::generate();
     }
 }

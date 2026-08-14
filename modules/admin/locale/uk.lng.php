@@ -403,6 +403,14 @@
       'Collections' => 'Колекції',
       'Consents' => 'Згоди',
       'Cookie banner' => 'Банер cookie',
+      'Too many attempts. Try again in %s.' => 'Забагато спроб. Повторіть через %s.',
+      '%d minute' => 
+      array (
+        0 => '%d хвилину',
+        1 => '%d хвилини',
+        2 => '%d хвилин',
+        3 => '%d хвилин',
+      ),
     ),
   ),
 );

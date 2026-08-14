@@ -14,6 +14,8 @@ namespace Johncms\Auth\Authentication;
 
 use Illuminate\Support\Str;
 use Johncms\Auth\Password\PasswordHasherInterface;
+use Johncms\Auth\Throttling\LoginThrottleInterface;
+use Johncms\Http\Environment;
 use Johncms\Users\User;
 
 /**
@@ -29,43 +31,55 @@ use Johncms\Users\User;
  */
 final readonly class AuthenticateUserUseCase
 {
-    /** Failures after which the form starts asking for a verification code. */
-    private const FAILURES_BEFORE_CAPTCHA = 3;
-
     public function __construct(
         private LoginCaptcha $captcha,
         private PasswordHasherInterface $hasher,
+        private LoginThrottleInterface $throttle,
+        private Environment $environment,
     ) {
     }
 
     public function execute(LoginCredentialsDTO $credentials): LoginResultDTO
     {
-        $user = $this->findUser($credentials->login);
+        $keys = $this->throttleKeys($credentials->login);
 
-        // An unknown login and a wrong password answer the same, so the form cannot be used to
-        // find out which accounts exist.
-        if ($user === null) {
-            return new LoginResultDTO(LoginStatus::InvalidCredentials);
+        foreach ($keys as $key) {
+            $retryAfter = $this->throttle->retryAfter($key);
+
+            if ($retryAfter > 0) {
+                return new LoginResultDTO(LoginStatus::TooManyAttempts, retryAfter: $retryAfter);
+            }
         }
 
-        if ($user->failed_login >= self::FAILURES_BEFORE_CAPTCHA) {
+        // Asked for before the password is looked at, and decided on the attempts rather than on
+        // the account: a wrong password does not have to name an existing account to be counted.
+        if ($this->verificationNeeded($keys)) {
             if ($credentials->captchaAnswer === '') {
                 return new LoginResultDTO(LoginStatus::CaptchaRequired);
             }
 
             if (! $this->captcha->verify($credentials->captchaAnswer)) {
+                $this->registerFailure($keys);
+
                 return new LoginResultDTO(LoginStatus::CaptchaMismatch);
             }
         }
 
-        if (! $this->hasher->verify($credentials->password, $user->password)) {
-            $this->countFailure($user);
+        $user = $this->findUser($credentials->login);
+
+        // An unknown login and a wrong password answer the same, so the form cannot be used to
+        // find out which accounts exist.
+        if ($user === null || ! $this->hasher->verify($credentials->password, $user->password)) {
+            $this->registerFailure($keys);
 
             return new LoginResultDTO(LoginStatus::InvalidCredentials);
         }
 
         $this->rehashIfNeeded($user, $credentials->password);
-        $user->update(['failed_login' => 0]);
+
+        foreach ($keys as $key) {
+            $this->throttle->clear($key);
+        }
 
         // The password was right, so the account is named from here on: what follows is about
         // the state of the account, not about who is trying to get in.
@@ -80,6 +94,46 @@ final readonly class AuthenticateUserUseCase
         $user->update(['sestime' => time()]);
 
         return new LoginResultDTO(LoginStatus::Success, $user->id);
+    }
+
+    /**
+     * The login being tried and the address trying it, counted separately: neither walking
+     * through logins from one address nor rotating addresses against one login gets around the
+     * limit, and a guesser cannot lock the owner of an account out by failing on their behalf —
+     * their own address runs out of attempts first.
+     *
+     * @return list<string>
+     */
+    private function throttleKeys(string $login): array
+    {
+        return [
+            'login:' . mb_strtolower(trim($login)),
+            'ip:' . $this->environment->getClientInfo()->ip,
+        ];
+    }
+
+    /**
+     * @param list<string> $keys
+     */
+    private function verificationNeeded(array $keys): bool
+    {
+        foreach ($keys as $key) {
+            if ($this->throttle->requiresVerification($key)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param list<string> $keys
+     */
+    private function registerFailure(array $keys): void
+    {
+        foreach ($keys as $key) {
+            $this->throttle->registerFailure($key);
+        }
     }
 
     /**
@@ -104,16 +158,5 @@ final readonly class AuthenticateUserUseCase
         }
 
         return User::query()->where('name_lat', '=', $nameLat)->first();
-    }
-
-    /**
-     * The counter stops at the threshold: past it the form asks for a verification code anyway,
-     * and letting it climb would only make the number in the database meaningless.
-     */
-    private function countFailure(User $user): void
-    {
-        if ($user->failed_login < self::FAILURES_BEFORE_CAPTCHA) {
-            $user->update(['failed_login' => $user->failed_login + 1]);
-        }
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
+use Illuminate\Contracts\Cache\Repository as CacheRepositoryInterface;
 use Intervention\Image\ImageManager;
 use Johncms\Ads;
 use Johncms\AdsFactory;
@@ -22,6 +23,8 @@ use Johncms\Auth\Password\PasswordResetTokenRepositoryInterface;
 use Johncms\Auth\Session\AuthSessionRepositoryInterface;
 use Johncms\Auth\Session\SessionSettings;
 use Johncms\Auth\Session\SessionSettingsFactory;
+use Johncms\Auth\Throttling\CacheLoginThrottle;
+use Johncms\Auth\Throttling\LoginThrottleInterface;
 use Johncms\Cache;
 use Johncms\Counters;
 use Johncms\CountersFactory;
@@ -230,6 +233,7 @@ return static function (ContainerConfigurator $container): void {
     // Reads the algorithm from config at instantiation: baking it into the compiled container
     // would keep a changed configuration from ever taking effect.
     $services->set(PasswordHasherInterface::class)->factory(service(PasswordHasherFactory::class));
+    $services->set(LoginThrottleInterface::class, CacheLoginThrottle::class);
     $services->set(AuthSessionRepositoryInterface::class, EloquentAuthSessionRepository::class);
     // Read from config at instantiation rather than while the container is built: the built
     // container is cached, and anything resolved there would freeze the configuration into it.
@@ -335,6 +339,8 @@ return static function (ContainerConfigurator $container): void {
     $services->set(ResponseNormalizer::class)->arg('$renderer', service_closure(RendererInterface::class));
     $services->set(Translator::class)->factory(service(TranslatorServiceFactory::class));
     $services->set(Cache::class)->factory([Cache::class, 'create']);
+    // So that anything asking for a cache by the framework interface gets the application one.
+    $services->alias(CacheRepositoryInterface::class, Cache::class);
     $services->set(SitemapGenerator::class)->arg('$moduleProviders', tagged_iterator('johncms.sitemap_provider'));
     $services->set(MediaEmbed::class)->factory([MediaEmbed::class, 'create']);
     $services->set(Embed::class)->factory([MediaEmbed::class, 'create']);

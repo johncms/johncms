@@ -943,3 +943,13 @@ msgstr "Открыть в админ-панели"
 
 msgid "Remember me"
 msgstr "Запомнить меня"
+
+msgid "Too many attempts. Try again in %s."
+msgstr "Слишком много попыток. Повторите через %s."
+
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] "%d минуту"
+msgstr[1] "%d минуты"
+msgstr[2] "%d минут"
+msgstr[3] "%d минут"

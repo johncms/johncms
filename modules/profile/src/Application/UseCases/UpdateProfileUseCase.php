@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Profile\Application\UseCases;
 
+use Johncms\Auth\SecureToken;
 use Johncms\Mail\EmailMessage;
 use Johncms\Modules\Profile\Application\DTO\UpdateProfileCommand;
 use Johncms\Modules\Profile\Application\Exceptions\EditProfileException;
@@ -93,7 +94,7 @@ final readonly class UpdateProfileUseCase
         // For regular users changing their email, defer the change until it is confirmed by email
         if (! empty($config['user_email_confirmation']) && $profileUser->mail !== $formData['mail'] && ! $isAdmin) {
             $newEmail = $formData['mail'];
-            $confirmationCode = uniqid('email_', true);
+            $confirmationCode = SecureToken::generate();
 
             $formData['new_email'] = $newEmail;
             $formData['mail'] = $profileUser->mail;
