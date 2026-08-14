@@ -1,0 +1,58 @@
+{#
+    The devices the account is signed in on.
+
+    @var sessions        UserSessionDTO[]
+    @var form_action     string
+    @var success_message string
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    {% if success_message %}
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-success', alert: success_message} only %}
+    {% endif %}
+
+    <p class="text-muted">
+        {{ __('Here are the devices your account is currently signed in on. Sign out any of them if you do not recognise it.') }}
+    </p>
+
+    <div class="list-group">
+        {% for item in sessions %}
+            <div class="list-group-item">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div class="me-3">
+                        <div>
+                            {{ item.userAgent ?: __('Unknown device') }}
+                            {% if item.isCurrent %}
+                                <span class="badge text-bg-success">{{ __('This device') }}</span>
+                            {% endif %}
+                        </div>
+                        <div class="text-muted small">
+                            {{ __('IP address') }}: {{ item.ip }}<br>
+                            {{ __('Last activity') }}: {{ item.lastUsedAt|display_date }}<br>
+                            {{ __('Signed in') }}: {{ item.createdAt|display_date }}
+                        </div>
+                    </div>
+                    <form method="post" action="{{ form_action }}">
+                        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                        <input type="hidden" name="session_id" value="{{ item.id }}">
+                        <button type="submit" class="btn btn-sm btn-outline-danger">
+                            {{ item.isCurrent ? __('Sign out') : __('Close') }}
+                        </button>
+                    </form>
+                </div>
+            </div>
+        {% else %}
+            <div class="list-group-item">{{ __('No active devices') }}</div>
+        {% endfor %}
+    </div>
+
+    {% if sessions|length > 1 %}
+        <form method="post" action="{{ form_action }}/close-others" class="mt-3">
+            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+            <button type="submit" class="btn btn-outline-danger">
+                {{ __('Sign out on all other devices') }}
+            </button>
+        </form>
+    {% endif %}
+{% endblock %}

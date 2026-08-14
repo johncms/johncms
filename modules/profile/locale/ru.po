@@ -1196,3 +1196,46 @@ msgstr "скрыт"
 msgid "Admin Notes"
 msgstr "Заметки Администратора"
 
+
+msgid "My Devices"
+msgstr "Мои устройства"
+
+msgid "Personal"
+msgstr "Личное"
+
+msgid "The device has been signed out"
+msgstr "Устройство отключено"
+
+msgid "%d device has been signed out"
+msgid_plural "%d devices have been signed out"
+msgstr[0] "Отключено %d устройство"
+msgstr[1] "Отключено %d устройства"
+msgstr[2] "Отключено %d устройств"
+msgstr[3] "Отключено %d устройств"
+
+msgid "Here are the devices your account is currently signed in on. Sign out any of them if you do not recognise it."
+msgstr "Здесь показаны устройства, на которых сейчас выполнен вход в ваш аккаунт. Если какое-то из них вам незнакомо, отключите его."
+
+msgid "Unknown device"
+msgstr "Неизвестное устройство"
+
+msgid "This device"
+msgstr "Это устройство"
+
+msgid "Last activity"
+msgstr "Последняя активность"
+
+msgid "Signed in"
+msgstr "Вход выполнен"
+
+msgid "Sign out"
+msgstr "Выйти"
+
+msgid "Close"
+msgstr "Отключить"
+
+msgid "No active devices"
+msgstr "Активных устройств нет"
+
+msgid "Sign out on all other devices"
+msgstr "Выйти на всех других устройствах"

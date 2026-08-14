@@ -16,6 +16,7 @@ use Johncms\Modules\Profile\Application\Controllers\PhotoController;
 use Johncms\Modules\Profile\Application\Controllers\ProfileController;
 use Johncms\Modules\Profile\Application\Controllers\ResetSettingsController;
 use Johncms\Modules\Profile\Application\Controllers\RestorePasswordController;
+use Johncms\Modules\Profile\Application\Controllers\SessionsController;
 use Johncms\Modules\Profile\Application\Controllers\SettingsController;
 use Johncms\Modules\Profile\Application\Controllers\StatisticsController;
 use Johncms\Modules\Profile\Application\Middlewares\AuthorizedUserMiddleware;
@@ -25,6 +26,10 @@ return static function (RouteCollection $router): void {
     // Routes migrated to the new architecture (require an authenticated user)
     $profileGroup = $router->group('', function (RouteCollection $r): void {
         $r->get('/profile/account', AccountController::class)->name('profile.account');
+        $r->get('/profile/sessions', [SessionsController::class, 'index'])->name('profile.sessions');
+        $r->post('/profile/sessions', [SessionsController::class, 'revoke'])->name('profile.sessions.revoke');
+        $r->post('/profile/sessions/close-others', [SessionsController::class, 'revokeOthers'])
+            ->name('profile.sessions.revoke-others');
         $r->get('/profile/settings', [SettingsController::class, 'general'])->name('profile.settings');
         $r->post('/profile/settings', [SettingsController::class, 'saveGeneral'])->name('profile.settings.save');
         $r->post('/profile/settings/reset', [SettingsController::class, 'resetGeneral'])->name('profile.settings.reset');

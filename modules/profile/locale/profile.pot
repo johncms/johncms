@@ -315,6 +315,25 @@ msgstr ""
 msgid "Password successfully changed.<br>New password sent to your E-mail address."
 msgstr ""
 
+#: modules/profile/src/Application/Controllers/SessionsController.php:39
+#: modules/profile/templates/public/account.twig:69
+msgid "My Devices"
+msgstr ""
+
+#: modules/profile/src/Application/Controllers/SessionsController.php:40
+msgid "Personal"
+msgstr ""
+
+#: modules/profile/src/Application/Controllers/SessionsController.php:67
+msgid "The device has been signed out"
+msgstr ""
+
+#: modules/profile/src/Application/Controllers/SessionsController.php:82
+#, php-format
+msgid "%d device has been signed out"
+msgid_plural "%d devices have been signed out"
+msgstr[0] ""
+
 #: modules/profile/src/Application/Controllers/SettingsController.php:51
 #: modules/profile/src/Application/Controllers/SettingsController.php:181
 msgid "General setting"
@@ -590,7 +609,7 @@ msgstr ""
 msgid "Blocked"
 msgstr ""
 
-#: modules/profile/templates/public/account.twig:69
+#: modules/profile/templates/public/account.twig:70
 msgid "System Settings"
 msgstr ""
 
@@ -934,6 +953,7 @@ msgid "Allowed image formats: JPG, PNG, GIF. File size should not exceed %d kb.<
 msgstr ""
 
 #: modules/profile/templates/public/ip-history.twig:19
+#: modules/profile/templates/public/sessions.twig:31
 msgid "IP address"
 msgstr ""
 
@@ -1013,6 +1033,42 @@ msgstr ""
 
 #: modules/profile/templates/public/restore-password.twig:48
 msgid "Password will be send to E-mail address specified in your profile.<br />WARNING !! If E-mail address has not been specified in your profile, you will not be able to recover your password."
+msgstr ""
+
+#: modules/profile/templates/public/sessions.twig:16
+msgid "Here are the devices your account is currently signed in on. Sign out any of them if you do not recognise it."
+msgstr ""
+
+#: modules/profile/templates/public/sessions.twig:25
+msgid "Unknown device"
+msgstr ""
+
+#: modules/profile/templates/public/sessions.twig:27
+msgid "This device"
+msgstr ""
+
+#: modules/profile/templates/public/sessions.twig:32
+msgid "Last activity"
+msgstr ""
+
+#: modules/profile/templates/public/sessions.twig:33
+msgid "Signed in"
+msgstr ""
+
+#: modules/profile/templates/public/sessions.twig:40
+msgid "Sign out"
+msgstr ""
+
+#: modules/profile/templates/public/sessions.twig:40
+msgid "Close"
+msgstr ""
+
+#: modules/profile/templates/public/sessions.twig:46
+msgid "No active devices"
+msgstr ""
+
+#: modules/profile/templates/public/sessions.twig:54
+msgid "Sign out on all other devices"
 msgstr ""
 
 #: modules/profile/templates/public/settings.twig:23

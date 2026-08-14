@@ -1196,3 +1196,46 @@ msgstr "прихований"
 msgid "Admin Notes"
 msgstr "Примітки адміністратора"
 
+
+msgid "My Devices"
+msgstr "Мої пристрої"
+
+msgid "Personal"
+msgstr "Особисте"
+
+msgid "The device has been signed out"
+msgstr "Пристрій відключено"
+
+msgid "%d device has been signed out"
+msgid_plural "%d devices have been signed out"
+msgstr[0] "Відключено %d пристрій"
+msgstr[1] "Відключено %d пристрої"
+msgstr[2] "Відключено %d пристроїв"
+msgstr[3] "Відключено %d пристроїв"
+
+msgid "Here are the devices your account is currently signed in on. Sign out any of them if you do not recognise it."
+msgstr "Тут показані пристрої, на яких зараз виконано вхід у ваш обліковий запис. Якщо якийсь із них вам незнайомий, відключіть його."
+
+msgid "Unknown device"
+msgstr "Невідомий пристрій"
+
+msgid "This device"
+msgstr "Цей пристрій"
+
+msgid "Last activity"
+msgstr "Остання активність"
+
+msgid "Signed in"
+msgstr "Вхід виконано"
+
+msgid "Sign out"
+msgstr "Вийти"
+
+msgid "Close"
+msgstr "Відключити"
+
+msgid "No active devices"
+msgstr "Активних пристроїв немає"
+
+msgid "Sign out on all other devices"
+msgstr "Вийти на всіх інших пристроях"
