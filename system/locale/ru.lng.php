@@ -220,6 +220,12 @@ PHP должен работать с драйвером по умолчанию:
         2 => '%d минут',
         3 => '%d минут',
       ),
+      'Accounts with an outdated password hash' => 'Аккаунты со старым хэшем пароля',
+      'These accounts predate the current password hashing and their owners have not signed in since.
+Each one is converted automatically the next time its owner signs in — nobody has to reset anything.
+The number is shown so that support for the old scheme is not removed while it is still in use.' => 'Эти аккаунты созданы до перехода на текущее хэширование паролей, и их владельцы с тех пор не заходили.
+Каждый будет переведён автоматически при следующем входе владельца — сбрасывать ничего не нужно.
+Число показано, чтобы поддержку старой схемы не убрали, пока она ещё используется.',
     ),
   ),
 );

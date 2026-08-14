@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Application\Controllers\System;
 
+use Johncms\Auth\Password\LegacyPasswordAudit;
 use Johncms\Checker\SystemChecker;
 use Johncms\Http\AdminAreaContext;
 use Johncms\Http\View\ViewResponse;
@@ -18,7 +19,7 @@ final readonly class SystemCheckController
     ) {
     }
 
-    public function index(SystemChecker $checker): ViewResponse
+    public function index(SystemChecker $checker, LegacyPasswordAudit $audit): ViewResponse
     {
         // This route is registered outside the guarded admin group (it answers before the panel is
         // usable), so nothing else enters the area context its layout is rendered in.
@@ -37,6 +38,7 @@ final readonly class SystemCheckController
                     ['title' => __('Required parameters'), 'checks' => $this->rows($checker->checkExtensions())],
                     ['title' => __('Database'), 'checks' => $this->rows($checker->checkDatabase())],
                     ['title' => __('Recommended parameters'), 'checks' => $this->rows($checker->recommendations())],
+                    ['title' => __('Security'), 'checks' => $this->rows($checker->checkSecurity($audit))],
                 ],
             ]
         );

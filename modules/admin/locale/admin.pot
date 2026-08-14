@@ -126,7 +126,7 @@ msgid "Language Settings"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:255
-#: modules/admin/src/Application/Controllers/System/SystemCheckController.php:27
+#: modules/admin/src/Application/Controllers/System/SystemCheckController.php:28
 msgid "System check"
 msgstr ""
 
@@ -136,6 +136,7 @@ msgid "Maintenance"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:275
+#: modules/admin/src/Application/Controllers/System/SystemCheckController.php:41
 msgid "Security"
 msgstr ""
 
@@ -700,15 +701,15 @@ msgstr ""
 msgid "Failed"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/System/SystemCheckController.php:37
+#: modules/admin/src/Application/Controllers/System/SystemCheckController.php:38
 msgid "Required parameters"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/System/SystemCheckController.php:38
+#: modules/admin/src/Application/Controllers/System/SystemCheckController.php:39
 msgid "Database"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/System/SystemCheckController.php:39
+#: modules/admin/src/Application/Controllers/System/SystemCheckController.php:40
 msgid "Recommended parameters"
 msgstr ""
 

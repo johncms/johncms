@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms\Checker;
 
+use Johncms\Auth\Password\LegacyPasswordAudit;
 use PDO;
 
 class SystemChecker
@@ -97,6 +98,30 @@ class SystemChecker
                 'error'       => ! $opcache_enabled,
                 'error_level' => self::WARNING,
                 'description' => d__('system', 'It is recommended to enable the php opcache extension to improve performance.'),
+            ],
+        ];
+    }
+
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    public function checkSecurity(LegacyPasswordAudit $audit): array
+    {
+        $legacy = $audit->countAccountsOnLegacyHash();
+
+        return [
+            [
+                'name'        => d__('system', 'Accounts with an outdated password hash'),
+                'check_code'  => 'legacy_password_hash',
+                'value'       => sprintf('%d / %d', $legacy, $audit->countAccounts()),
+                'error'       => $legacy > 0,
+                'error_level' => self::INFO,
+                'description' => d__(
+                    'system',
+                    'These accounts predate the current password hashing and their owners have not signed in since.
+Each one is converted automatically the next time its owner signs in — nobody has to reset anything.
+The number is shown so that support for the old scheme is not removed while it is still in use.'
+                ),
             ],
         ];
     }

@@ -213,6 +213,12 @@ PHP повинен працювати з драйвером за замовчу�
         2 => '%d хвилин',
         3 => '%d хвилин',
       ),
+      'Accounts with an outdated password hash' => 'Облікові записи зі старим хешем пароля',
+      'These accounts predate the current password hashing and their owners have not signed in since.
+Each one is converted automatically the next time its owner signs in — nobody has to reset anything.
+The number is shown so that support for the old scheme is not removed while it is still in use.' => 'Ці облікові записи створено до переходу на поточне хешування паролів, і їхні власники відтоді не заходили.
+Кожен буде переведено автоматично під час наступного входу власника — скидати нічого не потрібно.
+Число показано, щоб підтримку старої схеми не прибрали, поки вона ще використовується.',
     ),
   ),
 );
