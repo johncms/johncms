@@ -65,6 +65,7 @@ final readonly class Kernel implements HttpKernelInterface, TerminableInterface
         private Session $session,
         private RequestStack $requestStack,
         private RequestRateLogInterface $requestRateLog,
+        private CookieQueue $cookieQueue,
         private CurrentUserAuthenticator $currentUserAuthenticator,
         private LocaleResolver $localeResolver,
         private Translator $translator,
@@ -127,7 +128,13 @@ final readonly class Kernel implements HttpKernelInterface, TerminableInterface
         $this->translator->setLocale($this->localeResolver->resolve());
 
         try {
-            return $catch ? $this->handleCaught($request) : $this->handleRaw($request);
+            $response = $catch ? $this->handleCaught($request) : $this->handleRaw($request);
+
+            // Cookies decided on earlier in the cycle — the reissued sign-in cookie, for one —
+            // are attached here, where a response finally exists to carry them.
+            $this->cookieQueue->applyTo($response);
+
+            return $response;
         } finally {
             // Pop even when handleRaw() throws (catch = false), or the stack grows by one request
             // per failed cycle and getCurrentRequest() keeps answering with a request already served.
