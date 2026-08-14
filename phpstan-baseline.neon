@@ -37,18 +37,6 @@ parameters:
 			path: modules/admin/src/Application/Controllers/Settings/CountersController.php
 
 		-
-			message: '#^If condition is always true\.$#'
-			identifier: if.alwaysTrue
-			count: 1
-			path: modules/admin/src/Application/Controllers/Users/UsersController.php
-
-		-
-			message: '#^Unreachable statement \- code above always terminates\.$#'
-			identifier: deadCode.unreachable
-			count: 1
-			path: modules/admin/src/Application/Controllers/Users/UsersController.php
-
-		-
 			message: '#^Access to an undefined property Johncms\\Users\\User\:\:\$bancount\.$#'
 			identifier: property.notFound
 			count: 1

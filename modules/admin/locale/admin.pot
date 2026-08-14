@@ -268,6 +268,7 @@ msgstr ""
 
 #: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:248
 #: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:86
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:99
 #: modules/admin/src/Application/Middlewares/AdminAccessMiddleware.php:56
 #: modules/admin/src/Application/Middlewares/SuperAdminAccessMiddleware.php:55
 msgid "Access denied"
@@ -788,25 +789,24 @@ msgstr ""
 msgid "Nickname"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/UsersController.php:43
-msgid "You have not entered login"
-msgstr ""
-
-#: modules/admin/src/Application/Controllers/Users/UsersController.php:47
-msgid "You have not entered password"
-msgstr ""
-
-#: modules/admin/src/Application/Controllers/Users/UsersController.php:66
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:64
 msgid "The security code is not correct"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/UsersController.php:114
-#: modules/admin/src/Application/Controllers/Users/UsersController.php:118
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:69
 msgid "Authorization failed"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/UsersController.php:141
-#: modules/admin/src/Application/Controllers/Users/UsersController.php:142
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:81
+msgid "You have not entered login"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:85
+msgid "You have not entered password"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:148
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:149
 #: modules/admin/templates/login.twig:46
 msgid "Login"
 msgstr ""
@@ -1691,16 +1691,16 @@ msgstr ""
 msgid "Update List"
 msgstr ""
 
-#: modules/admin/templates/login-captcha.twig:22
-#: modules/admin/templates/login-captcha.twig:31
+#: modules/admin/templates/login-captcha.twig:21
+#: modules/admin/templates/login-captcha.twig:30
 msgid "Verification code"
 msgstr ""
 
-#: modules/admin/templates/login-captcha.twig:24
+#: modules/admin/templates/login-captcha.twig:23
 msgid "Enter verification code"
 msgstr ""
 
-#: modules/admin/templates/login-captcha.twig:40
+#: modules/admin/templates/login-captcha.twig:36
 msgid "Continue"
 msgstr ""
 

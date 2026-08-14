@@ -2,10 +2,9 @@
     The verification code, asked for after several failed attempts.
 
     @var string captcha    The image as a data URI.
-    @var int    id         Id of the account being logged into.
     @var string user_login
     @var string user_pass
-    @var string remember
+    @var bool   remember   Carried through, so the choice survives the verification step.
 #}
 {% extends '@admin/layouts/guest.twig' %}
 
@@ -31,12 +30,9 @@
                                placeholder="{{ __('Verification code') }}"
                         >
                     </div>
-                    {% if id %}
-                        <input type="hidden" name="id" value="{{ id }}"/>
-                    {% endif %}
                     <input type="hidden" name="n" value="{{ user_login }}"/>
                     <input type="hidden" name="p" value="{{ user_pass }}"/>
-                    <input type="hidden" name="mem" value="{{ remember }}"/>
+                    {% if remember %}<input type="hidden" name="mem" value="1"/>{% endif %}
                     <input type="submit" name="login" value="{{ __('Continue') }}" class="btn btn-primary"/>
                 </form>
             </div>

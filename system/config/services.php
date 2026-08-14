@@ -172,6 +172,9 @@ return static function (ContainerConfigurator $container): void {
                 // matcher is a pure function. Autowiring them breaks the container build.
                 ROOT_PATH . 'system/src/Auth/Identity.php',
                 ROOT_PATH . 'system/src/Auth/AuthMethod.php',
+                ROOT_PATH . 'system/src/Auth/Authentication/LoginCredentialsDTO.php',
+                ROOT_PATH . 'system/src/Auth/Authentication/LoginResultDTO.php',
+                ROOT_PATH . 'system/src/Auth/Authentication/LoginStatus.php',
                 ROOT_PATH . 'system/src/Auth/Authorization/PermissionDefinition.php',
                 ROOT_PATH . 'system/src/Auth/Authorization/PermissionMatcher.php',
                 ROOT_PATH . 'system/src/Auth/Authorization/Vote.php',

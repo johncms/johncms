@@ -4,132 +4,139 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Application\Controllers\Users;
 
-use Illuminate\Support\Str;
+use Johncms\Auth\Authentication\AuthenticateUserUseCase;
+use Johncms\Auth\Authentication\LoginCaptcha;
+use Johncms\Auth\Authentication\LoginCredentialsDTO;
+use Johncms\Auth\Authentication\LoginStatus;
 use Johncms\Auth\Session\SignInManager;
 use Johncms\Http\Request;
-use Johncms\Http\Session;
 use Johncms\Http\View\ViewResponse;
+use Johncms\Modules\Admin\Domain\Enums\UserRights;
 use Johncms\System\Users\User;
-use Mobicms\Captcha\Code;
+use Johncms\Users\User as EloquentUser;
 use Mobicms\Captcha\Image;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * The sign-in screen of the admin panel.
+ *
+ * It stays separate from the public one: a site may have no public sign-in at all — the theme
+ * may not offer one, the module may be switched off — and an administrator still has to get in.
+ * Separate is the screen, not the logic: the decision comes from the same core use case, and
+ * only what happens around it differs.
+ */
 final readonly class UsersController
 {
     public function __construct(
-        private Session $session,
+        private AuthenticateUserUseCase $authenticateUser,
+        private LoginCaptcha $captcha,
         private SignInManager $signInManager,
     ) {
     }
 
-    public function login(Request $request, User $user): Response | ViewResponse
+    public function login(Request $request, User $user): Response|ViewResponse
     {
         if ($user->isValid()) {
             redirect('/admin/');
         }
 
-        $config = config('johncms');
-        $db = di(\PDO::class);
+        $userLogin = trim($request->body('n', ''));
+        $userPass = trim($request->body('p', ''));
 
-        $error = [];
-        $captcha = false;
-        $display_form = 1;
-        $user_login = trim($request->body('n', ''));
-        $user_pass = trim($request->body('p', ''));
-        $captchaCode = trim($request->body('code', ''));
-
-        if (empty($user_login)) {
-            $error[] = __('You have not entered login');
+        if (! $request->hasBody('login')) {
+            return $this->loginForm([], $userLogin);
         }
 
-        if (empty($user_pass)) {
-            $error[] = __('You have not entered password');
+        $errors = $this->missingFields($userLogin, $userPass);
+
+        if ($errors !== []) {
+            return $this->loginForm($errors, $userLogin);
         }
 
-        if (! $error) {
-            // Запрос в базу на юзера
-            $stmt = $db->prepare('SELECT * FROM `users` WHERE `name_lat` = ? LIMIT 1');
-            $stmt->execute([Str::slug($user_login, '_')]);
+        $result = $this->authenticateUser->execute(
+            new LoginCredentialsDTO($userLogin, $userPass, trim($request->body('code', '')))
+        );
 
-            if ($stmt->rowCount()) {
-                $loginUser = new User($stmt->fetch());
+        return match ($result->status) {
+            LoginStatus::Success => $this->handleSuccess($request, (int) $result->userId, $userLogin),
+            LoginStatus::CaptchaRequired => $this->captchaForm($request, $userLogin, $userPass),
+            LoginStatus::CaptchaMismatch => $this->loginForm([__('The security code is not correct')], $userLogin),
+            // An account still waiting for its address to be confirmed or for approval has no
+            // business here, and saying which of the two it is would confirm the login exists.
+            LoginStatus::EmailNotConfirmed,
+            LoginStatus::ModerationPending,
+            LoginStatus::InvalidCredentials => $this->loginForm([__('Authorization failed')], $userLogin),
+        };
+    }
 
-                if ($loginUser->failed_login > 2) {
-                    if ($captchaCode) {
-                        $sessionCode = $this->session->get('code');
-                        if (mb_strlen($captchaCode) > 2 && strtolower($captchaCode) === strtolower($sessionCode)) {
-                            // Если введен правильный проверочный код
-                            $captcha = true;
-                        } else {
-                            // Если проверочный код указан неверно
-                            $error[] = __('The security code is not correct');
-                        }
+    /**
+     * @return array<int, string>
+     */
+    private function missingFields(string $userLogin, string $userPass): array
+    {
+        $errors = [];
 
-                        $this->session->remove('code');
-                    } else {
-                        // Показываем CAPTCHA
-                        $code = (string) new Code();
-                        $this->session->set('code', $code);
-                        return new ViewResponse(
-                            '@admin/login-captcha.twig',
-                            $this->pageMeta() + [
-                                'captcha'    => (string) new Image($code),
-                                'user_login' => $user_login,
-                                'user_pass'  => $user_pass,
-                                'id'         => $loginUser->id,
-                                'remember'   => $request->body('mem', ''),
-                            ]
-                        );
-                    }
-                }
-
-                if ($loginUser->failed_login < 3 || $captcha) {
-                    if (md5(md5($user_pass)) == $loginUser->password) {
-                        // Если логин удачный
-                        $display_form = 0;
-                        $db->exec("UPDATE `users` SET `failed_login` = '0' WHERE `id` = " . $loginUser->id);
-
-                        if ((! $loginUser->email_confirmed && $config['user_email_confirmation']) || ! $loginUser->preg) {
-                            redirect('/');
-                        } else {
-                            // Если все проверки прошли удачно, подготавливаем вход на сайт
-                            $this->signInManager->signIn(
-                                $loginUser->id,
-                                $request->hasBody('mem'),
-                                $request
-                            );
-
-                            $db->exec("UPDATE `users` SET `sestime` = '" . time() . "' WHERE `id` = " . $loginUser->id);
-                            return new RedirectResponse('/admin/');
-                        }
-                    } else {
-                        // Если логин неудачный
-                        if ($loginUser->failed_login < 3) {
-                            // Прибавляем к счетчику неудачных логинов
-                            $failed_login = $loginUser->failed_login + 1;
-                            $db->exec("UPDATE `users` SET `failed_login` = '" . $failed_login . "' WHERE `id` = " . $loginUser->id);
-                        }
-
-                        $error[] = __('Authorization failed');
-                    }
-                }
-            } else {
-                $error[] = __('Authorization failed');
-            }
+        if ($userLogin === '') {
+            $errors[] = __('You have not entered login');
         }
 
-        if ($display_form) {
-            return new ViewResponse(
-                '@admin/login.twig',
-                $this->pageMeta() + [
-                    'errors'     => $request->hasBody('login') ? $error : [],
-                    'user_login' => $user_login,
-                ]
-            );
+        if ($userPass === '') {
+            $errors[] = __('You have not entered password');
         }
 
-        return new Response('');
+        return $errors;
+    }
+
+    /**
+     * Correct credentials are not the same as being allowed in here. Answering on this screen,
+     * instead of signing the visitor in and letting the panel refuse them afterwards, keeps the
+     * message where it makes sense.
+     */
+    private function handleSuccess(Request $request, int $userId, string $userLogin): Response|ViewResponse
+    {
+        if (! $this->mayEnterAdminPanel($userId)) {
+            return $this->loginForm([__('Access denied')], $userLogin, Response::HTTP_FORBIDDEN);
+        }
+
+        $this->signInManager->signIn($userId, $request->hasBody('mem'), $request);
+
+        return new RedirectResponse('/admin/');
+    }
+
+    private function mayEnterAdminPanel(int $userId): bool
+    {
+        $user = EloquentUser::query()->find($userId);
+
+        return $user !== null && $user->rights >= UserRights::ADMIN->value;
+    }
+
+    /**
+     * @param array<int, string> $errors
+     */
+    private function loginForm(array $errors, string $userLogin, int $status = Response::HTTP_OK): ViewResponse
+    {
+        return new ViewResponse(
+            '@admin/login.twig',
+            $this->pageMeta() + [
+                'errors'     => $errors,
+                'user_login' => $userLogin,
+            ],
+            $status
+        );
+    }
+
+    private function captchaForm(Request $request, string $userLogin, string $userPass): ViewResponse
+    {
+        return new ViewResponse(
+            '@admin/login-captcha.twig',
+            $this->pageMeta() + [
+                'captcha'    => (string) new Image($this->captcha->issue()),
+                'user_login' => $userLogin,
+                'user_pass'  => $userPass,
+                'remember'   => $request->hasBody('mem'),
+            ]
+        );
     }
 
     /**

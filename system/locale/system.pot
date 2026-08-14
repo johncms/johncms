@@ -78,13 +78,13 @@ msgid "Library"
 msgstr ""
 
 #: config/places.global.php:21
-#: modules/login/src/Application/Controllers/LoginController.php:26
-#: modules/login/src/Application/Controllers/LoginController.php:50
-#: modules/login/src/Application/Controllers/LoginController.php:51
-#: modules/login/src/Application/Controllers/LoginController.php:76
-#: modules/login/src/Application/Controllers/LoginController.php:77
-#: modules/login/src/Application/Controllers/LoginController.php:90
-#: modules/login/src/Application/Controllers/LoginController.php:91
+#: modules/login/src/Application/Controllers/LoginController.php:30
+#: modules/login/src/Application/Controllers/LoginController.php:96
+#: modules/login/src/Application/Controllers/LoginController.php:97
+#: modules/login/src/Application/Controllers/LoginController.php:110
+#: modules/login/src/Application/Controllers/LoginController.php:111
+#: modules/login/src/Application/Controllers/LoginController.php:125
+#: modules/login/src/Application/Controllers/LoginController.php:126
 #: modules/login/templates/public/login.twig:51
 #: themes/default/templates/components/sidebar-user-menu.twig:69
 msgid "Login"
@@ -129,11 +129,20 @@ msgstr ""
 msgid "Apply"
 msgstr ""
 
-#: modules/login/src/Application/Controllers/LoginController.php:34
+#: modules/login/src/Application/Controllers/LoginController.php:53
+#: system/src/Validator/Rules/Captcha.php:27
+msgid "The security code is not correct"
+msgstr ""
+
+#: modules/login/src/Application/Controllers/LoginController.php:59
+msgid "Authorization failed"
+msgstr ""
+
+#: modules/login/src/Application/Controllers/LoginController.php:71
 msgid "You have not entered login"
 msgstr ""
 
-#: modules/login/src/Application/Controllers/LoginController.php:38
+#: modules/login/src/Application/Controllers/LoginController.php:75
 msgid "You have not entered password"
 msgstr ""
 
@@ -147,16 +156,6 @@ msgstr ""
 #: modules/login/src/Application/Controllers/LogoutController.php:46
 #: modules/login/templates/public/logout.twig:13
 msgid "Logout"
-msgstr ""
-
-#: modules/login/src/Application/UseCases/PerformLoginUseCase.php:27
-#: modules/login/src/Application/UseCases/PerformLoginUseCase.php:54
-msgid "Authorization failed"
-msgstr ""
-
-#: modules/login/src/Application/UseCases/PerformLoginUseCase.php:43
-#: system/src/Validator/Rules/Captcha.php:27
-msgid "The security code is not correct"
 msgstr ""
 
 #: modules/login/templates/public/captcha.twig:14

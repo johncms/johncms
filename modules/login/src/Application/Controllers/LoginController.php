@@ -4,19 +4,23 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Login\Application\Controllers;
 
+use Johncms\Auth\Authentication\AuthenticateUserUseCase;
+use Johncms\Auth\Authentication\LoginCaptcha;
+use Johncms\Auth\Authentication\LoginCredentialsDTO;
+use Johncms\Auth\Authentication\LoginStatus;
 use Johncms\Auth\Session\SignInManager;
-use Johncms\Modules\Login\Application\UseCases\PerformLoginUseCase;
-use Johncms\Modules\Login\Domain\Enums\LoginStatus;
-use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
+use Johncms\NavChain;
+use Mobicms\Captcha\Image;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 final readonly class LoginController
 {
     public function __construct(
         private NavChain $navChain,
-        private PerformLoginUseCase $performLogin,
+        private AuthenticateUserUseCase $authenticateUser,
+        private LoginCaptcha $captcha,
         private SignInManager $signInManager,
     ) {
     }
@@ -25,44 +29,60 @@ final readonly class LoginController
     {
         $this->navChain->add(__('Login'));
 
-        $error = [];
         $userLogin = $request->body('n', '');
         $userPass = $request->body('p', '');
 
-        if ($request->hasBody('login')) {
-            if (empty($userLogin)) {
-                $error[] = __('You have not entered login');
-            }
-
-            if (empty($userPass)) {
-                $error[] = __('You have not entered password');
-            }
-
-            if (! $error) {
-                $captchaCode = $request->body('code', '');
-                $result = $this->performLogin->execute($userLogin, $userPass, $captchaCode);
-
-                return match ($result->status) {
-                    LoginStatus::Success => $this->handleSuccess($request, (int) $result->userId),
-                    LoginStatus::CaptchaRequired => new ViewResponse(
-                        '@login/public/captcha.twig',
-                        [
-                            'title'      => __('Login'),
-                            'page_title' => __('Login'),
-                            'captcha'    => $result->captcha,
-                            'user_login' => $userLogin,
-                            'user_pass'  => $userPass,
-                            'remember'   => $this->remembered($request),
-                        ]
-                    ),
-                    LoginStatus::EmailNotConfirmed => $this->confirmationRequired('email'),
-                    LoginStatus::ModerationPending => $this->confirmationRequired('moderation'),
-                    LoginStatus::Error => $this->loginForm($result->errors, $userLogin, $request),
-                };
-            }
+        if (! $request->hasBody('login')) {
+            return $this->loginForm([], $userLogin, $request);
         }
 
-        return $this->loginForm($error, $userLogin, $request);
+        $errors = $this->missingFields($userLogin, $userPass);
+
+        if ($errors !== []) {
+            return $this->loginForm($errors, $userLogin, $request);
+        }
+
+        $result = $this->authenticateUser->execute(
+            new LoginCredentialsDTO($userLogin, $userPass, $request->body('code', ''))
+        );
+
+        return match ($result->status) {
+            LoginStatus::Success => $this->handleSuccess($request, (int) $result->userId),
+            LoginStatus::CaptchaRequired => $this->captchaForm($request, $userLogin, $userPass),
+            LoginStatus::CaptchaMismatch => $this->loginForm(
+                [__('The security code is not correct')],
+                $userLogin,
+                $request
+            ),
+            LoginStatus::EmailNotConfirmed => $this->confirmationRequired('email'),
+            LoginStatus::ModerationPending => $this->confirmationRequired('moderation'),
+            LoginStatus::InvalidCredentials => $this->loginForm([__('Authorization failed')], $userLogin, $request),
+        };
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    private function missingFields(string $userLogin, string $userPass): array
+    {
+        $errors = [];
+
+        if ($userLogin === '') {
+            $errors[] = __('You have not entered login');
+        }
+
+        if ($userPass === '') {
+            $errors[] = __('You have not entered password');
+        }
+
+        return $errors;
+    }
+
+    private function handleSuccess(Request $request, int $userId): RedirectResponse
+    {
+        $this->signInManager->signIn($userId, $this->remembered($request), $request);
+
+        return new RedirectResponse('/');
     }
 
     /**
@@ -82,6 +102,21 @@ final readonly class LoginController
         );
     }
 
+    private function captchaForm(Request $request, string $userLogin, string $userPass): ViewResponse
+    {
+        return new ViewResponse(
+            '@login/public/captcha.twig',
+            [
+                'title'      => __('Login'),
+                'page_title' => __('Login'),
+                'captcha'    => new Image($this->captcha->issue()),
+                'user_login' => $userLogin,
+                'user_pass'  => $userPass,
+                'remember'   => $this->remembered($request),
+            ]
+        );
+    }
+
     private function confirmationRequired(string $type): ViewResponse
     {
         return new ViewResponse(
@@ -92,13 +127,6 @@ final readonly class LoginController
                 'confirm'    => $type,
             ]
         );
-    }
-
-    private function handleSuccess(Request $request, int $userId): RedirectResponse
-    {
-        $this->signInManager->signIn($userId, $this->remembered($request), $request);
-
-        return new RedirectResponse('/');
     }
 
     /**
