@@ -187,6 +187,7 @@ return static function (ContainerConfigurator $container): void {
                 ROOT_PATH . 'system/src/Auth/Authorization/PermissionMatcher.php',
                 ROOT_PATH . 'system/src/Auth/Authorization/Vote.php',
                 ROOT_PATH . 'system/src/Auth/Authorization/SystemRole.php',
+                ROOT_PATH . 'system/src/Auth/Authorization/LegacyRightsMigrationReport.php',
                 ROOT_PATH . 'system/src/Auth/SecureToken.php',
                 ROOT_PATH . 'system/src/Auth/Schema',
                 ROOT_PATH . 'system/src/Auth/Session/IssuedSession.php',

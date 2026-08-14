@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Auth\Authorization;
 
+use Gettext\Translator;
+use Gettext\TranslatorFunctions;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Auth\Authorization\Role;
@@ -25,6 +27,9 @@ final class RoleSeederTest extends TestCase
     protected function setUp(): void
     {
         $this->bootDatabase();
+        // The seeder names the roles through the gettext helpers, which nothing has registered
+        // in an isolated unit test.
+        TranslatorFunctions::register(new Translator());
         AuthSchema::create(Capsule::schema());
 
         $this->roles = new EloquentRoleRepository();
