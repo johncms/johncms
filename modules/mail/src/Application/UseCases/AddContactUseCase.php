@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Mail\Application\UseCases;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Mail\Application\Exceptions\UserNotFoundException;
 use Johncms\Modules\Mail\Application\Exceptions\CannotAddYourselfException;
 use Johncms\Modules\Mail\Domain\Repository\ContactRepositoryInterface;
@@ -13,7 +14,7 @@ final readonly class AddContactUseCase
 {
     public function __construct(
         private ContactRepositoryInterface $contactRepository,
-        private User $currentUser,
+        private CurrentUser $currentUser,
     ) {
     }
 
@@ -24,13 +25,13 @@ final readonly class AddContactUseCase
             throw new UserNotFoundException('User does not exists');
         }
 
-        if ($contactUser->id === $this->currentUser->id) {
+        if ($contactUser->id === $this->currentUser->id()) {
             throw new CannotAddYourselfException('You cannot add yourself as a contact');
         }
 
-        $existingContact = $this->contactRepository->findContact($this->currentUser->id, $contactId);
+        $existingContact = $this->contactRepository->findContact($this->currentUser->id(), $contactId);
         if ($existingContact === null) {
-            $this->contactRepository->addContact($this->currentUser->id, $contactId);
+            $this->contactRepository->addContact($this->currentUser->id(), $contactId);
         }
         // If contact already exists (maybe blocked), do nothing
     }

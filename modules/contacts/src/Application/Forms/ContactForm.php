@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Contacts\Application\Forms;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Contacts\Domain\Models\ContactMessage;
 use Johncms\Http\Request;
 use Johncms\Security\ClientInfoDTO;
-use Johncms\Users\User;
 use Johncms\Validator\Rules\Ban;
 use Johncms\Validator\Rules\Captcha;
 use Johncms\Validator\Rules\EmailAddress;
@@ -26,7 +26,7 @@ final readonly class ContactForm
     public const HONEYPOT_FIELD = 'contact_link';
 
     public function __construct(
-        private User $user,
+        private CurrentUser $currentUser,
     ) {
     }
 
@@ -45,10 +45,10 @@ final readonly class ContactForm
 
         $formData = array_map('trim', $formData);
 
-        if ($this->user->isValid()) {
-            $formData['name'] = $this->user->name;
+        if ($this->currentUser->isValid()) {
+            $formData['name'] = $this->currentUser->user()->name;
             if ($formData['email'] === '') {
-                $formData['email'] = (string) $this->user->mail;
+                $formData['email'] = (string) $this->currentUser->user()->mail;
             }
         }
 
@@ -85,7 +85,7 @@ final readonly class ContactForm
             ],
         ];
 
-        if (! $this->user->isValid()) {
+        if (! $this->currentUser->isValid()) {
             $rules['code'] = [new Captcha()];
         }
 

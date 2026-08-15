@@ -6,6 +6,7 @@ namespace Johncms\Modules\Mail\Application\UseCases;
 
 use Illuminate\Support\Collection;
 use Johncms\Auth\Authorization\StaffTitles;
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Mail\Application\DTO\ConversationItemDTO;
 use Johncms\Modules\Mail\Application\DTO\ConversationListResultDTO;
 use Johncms\Modules\Mail\Application\Services\MailMessagePreviewService;
@@ -20,7 +21,7 @@ final readonly class GetOutgoingConversationsUseCase
     public function __construct(
         private StaffTitles $staffTitles,
         private MailMessageRepositoryInterface $mailMessageRepository,
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private UserProperties $userProperties,
         private DateFormatterInterface $dateFormatter,
         private MailMessagePreviewService $previewService,
@@ -29,12 +30,12 @@ final readonly class GetOutgoingConversationsUseCase
 
     public function count(): int
     {
-        return $this->mailMessageRepository->countOutgoingConversations($this->currentUser->id);
+        return $this->mailMessageRepository->countOutgoingConversations($this->currentUser->id());
     }
 
     public function getPage(int $limit, int $offset): ConversationListResultDTO
     {
-        $users = $this->mailMessageRepository->getOutgoingConversations($this->currentUser->id, $limit, $offset);
+        $users = $this->mailMessageRepository->getOutgoingConversations($this->currentUser->id(), $limit, $offset);
 
         return new ConversationListResultDTO(
             items: $this->mapToDTO($users),
@@ -54,8 +55,8 @@ final readonly class GetOutgoingConversationsUseCase
                 continue;
             }
 
-            $countMessage = $this->mailMessageRepository->countMessagesBetween($this->currentUser->id, $user->id);
-            $messages = $this->mailMessageRepository->getMessagesBetween($this->currentUser->id, $user->id);
+            $countMessage = $this->mailMessageRepository->countMessagesBetween($this->currentUser->id(), $user->id);
+            $messages = $this->mailMessageRepository->getMessagesBetween($this->currentUser->id(), $user->id);
             $lastMessage = $messages->sortByDesc('time')->first();
 
             $previewText = '';

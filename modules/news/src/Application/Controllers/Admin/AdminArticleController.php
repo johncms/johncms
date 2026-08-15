@@ -6,6 +6,7 @@ namespace Johncms\Modules\News\Application\Controllers\Admin;
 
 use Carbon\Carbon;
 use Exception;
+use Johncms\Auth\CurrentUser;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
@@ -55,11 +56,10 @@ final readonly class AdminArticleController
      * Article creation page
      *
      * @param Request $request
-     * @param User $user
      * @param int $section_id
      * @return Response
      */
-    public function add(Request $request, User $user, int $section_id = 0): Response | ViewResponse
+    public function add(Request $request, CurrentUser $user, int $section_id = 0): Response | ViewResponse
     {
         $this->addSectionBreadcrumbs();
 
@@ -130,7 +130,7 @@ final readonly class AdminArticleController
                 }
 
                 if (! $check) {
-                    $data['fields']['created_by'] = $user->id;
+                    $data['fields']['created_by'] = $user->id();
                     $created_article = (new NewsArticle())->create($data['fields']);
 
                     $search_text = $created_article->getRawOriginal('name') . strip_tags(' ' . $created_article->getRawOriginal('preview_text') . ' ' . $created_article->getRawOriginal('text'));
@@ -157,10 +157,9 @@ final readonly class AdminArticleController
      *
      * @param int $article_id
      * @param Request $request
-     * @param User $user
      * @return Response
      */
-    public function edit(int $article_id, Request $request, User $user): Response | ViewResponse
+    public function edit(int $article_id, Request $request, CurrentUser $user): Response | ViewResponse
     {
         $this->addSectionBreadcrumbs();
 
@@ -229,7 +228,7 @@ final readonly class AdminArticleController
                     ->first();
 
                 if (! $check) {
-                    $data['fields']['updated_by'] = $user->id;
+                    $data['fields']['updated_by'] = $user->id();
                     $data['fields']['attached_files'] = array_merge((array) $article->attached_files, $data['fields']['attached_files']);
                     $article->update($data['fields']);
 

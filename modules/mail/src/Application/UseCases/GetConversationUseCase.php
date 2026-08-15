@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Mail\Application\UseCases;
 
 use Johncms\Auth\Authorization\StaffTitles;
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Mail\Application\DTO\ConversationResultDTO;
 use Johncms\Modules\Mail\Application\DTO\MessageItemDTO;
 use Johncms\Modules\Mail\Application\Exceptions\UserNotFoundException;
@@ -31,7 +32,7 @@ final readonly class GetConversationUseCase
         private SmiliesRendererInterface $smiliesRenderer,
         private \HTMLPurifier $purifier,
         private Embed $media,
-        private User $currentUser,
+        private CurrentUser $currentUser,
     ) {
     }
 
@@ -39,21 +40,21 @@ final readonly class GetConversationUseCase
     {
         $this->ensureContactExists($contactId);
 
-        return $this->mailMessageRepository->countConversation($this->currentUser->id, $contactId);
+        return $this->mailMessageRepository->countConversation($this->currentUser->id(), $contactId);
     }
 
     public function getPage(int $contactId, int $limit, int $offset): ConversationResultDTO
     {
         $this->ensureContactExists($contactId);
 
-        $messages = $this->mailMessageRepository->getConversation($this->currentUser->id, $contactId, $limit, $offset);
+        $messages = $this->mailMessageRepository->getConversation($this->currentUser->id(), $contactId, $limit, $offset);
 
         $items = $this->mapToDTO($messages);
         $this->markIncomingAsRead($messages);
 
-        $canWrite = empty($this->currentUser->ban['1'])
-            && empty($this->currentUser->ban['3'])
-            && ! $this->contactRepository->isBlocked($contactId, $this->currentUser->id);
+        $canWrite = empty($this->currentUser->user()->ban['1'])
+            && empty($this->currentUser->user()->ban['3'])
+            && ! $this->contactRepository->isBlocked($contactId, $this->currentUser->id());
 
         return new ConversationResultDTO(
             items: $items,
@@ -139,7 +140,7 @@ final readonly class GetConversationUseCase
     {
         $ids = [];
         foreach ($messages as $message) {
-            if ($message instanceof MailMessage && ! $message->read && $message->from_id === $this->currentUser->id) {
+            if ($message instanceof MailMessage && ! $message->read && $message->from_id === $this->currentUser->id()) {
                 $ids[] = $message->id;
             }
         }

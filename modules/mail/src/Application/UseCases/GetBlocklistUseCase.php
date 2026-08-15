@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Mail\Application\UseCases;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Mail\Domain\Repository\ContactRepositoryInterface;
-use Johncms\Users\User;
 
 final readonly class GetBlocklistUseCase
 {
     public function __construct(
         private ContactRepositoryInterface $contactRepository,
-        private User $user,
+        private CurrentUser $currentUser,
     ) {
     }
 
@@ -22,7 +22,7 @@ final readonly class GetBlocklistUseCase
      */
     public function execute(): array
     {
-        $blocklist = $this->contactRepository->getBlocklist($this->user->id);
+        $blocklist = $this->contactRepository->getBlocklist($this->currentUser->id());
 
         return [
             'blocklist' => $blocklist,

@@ -3,6 +3,7 @@
 namespace Johncms\Modules\News\Domain\Models;
 
 use Carbon\Carbon;
+use Johncms\Auth\CurrentUser;
 use Twig\Markup;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -98,9 +99,7 @@ class NewsArticle extends Model
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        /** @var User $user */
-        $user = di(User::class);
-        $this->perPage = $user->config->kmess;
+        $this->perPage = di(CurrentUser::class)->user()->config->kmess;
         $this->media = di(MediaEmbed::class);
     }
 
@@ -240,14 +239,13 @@ class NewsArticle extends Model
      */
     public function getCurrentVoteAttribute(): int
     {
-        /** @var User $user */
-        $user = di(User::class);
+        $user = di(CurrentUser::class);
         if (! $user->isValid()) {
             return 0;
         }
 
         /** @var NewsVote $vote */
-        $vote = $this->votes()->where('user_id', $user->id)->first();
+        $vote = $this->votes()->where('user_id', $user->id())->first();
         if ($vote === null) {
             return 0;
         }

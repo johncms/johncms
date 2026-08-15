@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Mail\Application\UseCases;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Mail\Application\Exceptions\MessageNotFoundException;
 use Johncms\Modules\Mail\Application\Services\MailFileService;
 use Johncms\Modules\Mail\Domain\Models\MailMessage;
 use Johncms\Modules\Mail\Domain\Repository\MailMessageRepositoryInterface;
-use Johncms\Users\User;
 
 final readonly class DeleteMessageUseCase
 {
     public function __construct(
         private MailMessageRepositoryInterface $mailMessageRepository,
         private MailFileService $mailFileService,
-        private User $currentUser,
+        private CurrentUser $currentUser,
     ) {
     }
 
@@ -27,7 +27,7 @@ final readonly class DeleteMessageUseCase
         }
 
         // Check ownership: message must belong to current user (either as recipient or sender)
-        if ($message->user_id !== $this->currentUser->id && $message->from_id !== $this->currentUser->id) {
+        if ($message->user_id !== $this->currentUser->id() && $message->from_id !== $this->currentUser->id()) {
             throw new MessageNotFoundException();
         }
 
@@ -38,7 +38,7 @@ final readonly class DeleteMessageUseCase
         }
 
         // Unread message received by current user: hard delete with file cleanup
-        if ($message->read === 0 && $message->user_id === $this->currentUser->id) {
+        if ($message->read === 0 && $message->user_id === $this->currentUser->id()) {
             $this->deleteFileIfExists($message->file_name);
             $this->mailMessageRepository->delete($messageId);
             return;
@@ -52,7 +52,7 @@ final readonly class DeleteMessageUseCase
         }
 
         // Otherwise: soft delete (mark as deleted for current user)
-        $message->delete = $this->currentUser->id;
+        $message->delete = $this->currentUser->id();
         $this->mailMessageRepository->save($message);
     }
 

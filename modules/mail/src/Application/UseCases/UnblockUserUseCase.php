@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Mail\Application\UseCases;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Mail\Domain\Repository\ContactRepositoryInterface;
-use Johncms\Users\User;
 
 final readonly class UnblockUserUseCase
 {
     public function __construct(
         private ContactRepositoryInterface $contactRepository,
-        private User $user,
+        private CurrentUser $currentUser,
     ) {
     }
 
@@ -22,6 +22,6 @@ final readonly class UnblockUserUseCase
      */
     public function execute(int $userIdToUnblock): void
     {
-        $this->contactRepository->unblockUser($this->user->id, $userIdToUnblock);
+        $this->contactRepository->unblockUser($this->currentUser->id(), $userIdToUnblock);
     }
 }

@@ -5,30 +5,30 @@ declare(strict_types=1);
 namespace Johncms\Modules\Mail\Application\UseCases;
 
 use Illuminate\Support\Collection;
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Mail\Application\DTO\FileItemDTO;
 use Johncms\Modules\Mail\Application\DTO\FileListResultDTO;
 use Johncms\Modules\Mail\Application\Services\MailFileService;
 use Johncms\Modules\Mail\Domain\Models\MailMessage;
 use Johncms\Modules\Mail\Domain\Repository\MailMessageRepositoryInterface;
-use Johncms\Users\User;
 
 final readonly class GetAttachedFilesUseCase
 {
     public function __construct(
         private MailMessageRepositoryInterface $mailMessageRepository,
         private MailFileService $mailFileService,
-        private User $currentUser,
+        private CurrentUser $currentUser,
     ) {
     }
 
     public function count(): int
     {
-        return $this->mailMessageRepository->countAttachedFiles($this->currentUser->id);
+        return $this->mailMessageRepository->countAttachedFiles($this->currentUser->id());
     }
 
     public function getPage(int $limit, int $offset): FileListResultDTO
     {
-        $messages = $this->mailMessageRepository->getAttachedFiles($this->currentUser->id, $limit, $offset);
+        $messages = $this->mailMessageRepository->getAttachedFiles($this->currentUser->id(), $limit, $offset);
 
         return new FileListResultDTO(
             items: $this->mapToDTO($messages),

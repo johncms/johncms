@@ -6,12 +6,12 @@ namespace Johncms\Modules\Notifications\Application\UseCases;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\Authorization\CorePermissions;
+use Johncms\Auth\CurrentUser;
 use Johncms\Counters;
 use Johncms\Modules\Downloads\Application\Services\DownloadsPermissions;
 use Johncms\Modules\Library\Application\Services\LibraryPermissions;
 use Johncms\Modules\Notifications\Application\DTO\NotificationListResultDTO;
 use Johncms\Modules\Notifications\Domain\Repository\NotificationRepositoryInterface;
-use Johncms\Users\User;
 
 final readonly class GetNotificationListUseCase
 {
@@ -19,7 +19,7 @@ final readonly class GetNotificationListUseCase
         private AccessCheckerInterface $accessChecker,
         private Counters $counters,
         private NotificationRepositoryInterface $notificationRepository,
-        private User $currentUser,
+        private CurrentUser $currentUser,
     ) {
     }
 
@@ -81,7 +81,7 @@ final readonly class GetNotificationListUseCase
         if (! empty($counters['ban'])) {
             $notifications[] = [
                 'name'    => __('Ban'),
-                'url'     => '/profile/' . $this->currentUser->id . '/bans',
+                'url'     => '/profile/' . $this->currentUser->id() . '/bans',
                 'counter' => 0,
                 'type'    => 'warning',
             ];
@@ -108,7 +108,7 @@ final readonly class GetNotificationListUseCase
         if (! empty($counters['guestbook_comments'])) {
             $notifications[] = [
                 'name'    => __('Guestbook'),
-                'url'     => '/profile/' . $this->currentUser->id . '/guestbook',
+                'url'     => '/profile/' . $this->currentUser->id() . '/guestbook',
                 'counter' => $counters['guestbook_comments'],
                 'type'    => 'info',
             ];

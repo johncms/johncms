@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Notifications\Application\Controllers;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Notifications\Application\UseCases\SaveSettingsUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
 use Johncms\Http\View\ViewResponse;
-use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -18,7 +18,7 @@ final readonly class SettingsController
     public function __construct(
         private Session $session,
         private NavChain $navChain,
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private SaveSettingsUseCase $saveSettingsUseCase,
     ) {
     }
@@ -40,7 +40,7 @@ final readonly class SettingsController
         $message = (string) $this->session->getFlash('message');
 
         $defaultSettings = ['show_forum_unread' => true];
-        $currentSettings = array_merge($defaultSettings, ($this->currentUser->notification_settings ?? []));
+        $currentSettings = array_merge($defaultSettings, ($this->currentUser->user()->notification_settings ?? []));
 
         return new ViewResponse(
             '@notifications/public/settings.twig',

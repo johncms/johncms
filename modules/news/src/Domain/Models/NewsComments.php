@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Johncms\Auth\CurrentUser;
 use Johncms\Casts\DateHuman;
 use Johncms\Users\User;
 
@@ -50,9 +51,7 @@ class NewsComments extends Model
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        /** @var User $user */
-        $user = di(User::class);
-        $this->perPage = $user->config->kmess;
+        $this->perPage = di(CurrentUser::class)->user()->config->kmess;
     }
 
     public function user(): HasOne

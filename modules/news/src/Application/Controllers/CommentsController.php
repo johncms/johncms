@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Arr;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\Authorization\StaffTitles;
+use Johncms\Auth\CurrentUser;
 use Johncms\FileInfo;
 use Johncms\Files\FileStorage;
 use Johncms\Http\Environment;
@@ -43,9 +44,8 @@ final readonly class CommentsController
      * @param int $article_id
      * @param AssetRuntime $assets
      * @param SmiliesRendererInterface $smiliesRenderer
-     * @param User $current_user
      */
-    public function index(int $article_id, AssetRuntime $assets, SmiliesRendererInterface $smiliesRenderer, User $current_user): Response
+    public function index(int $article_id, AssetRuntime $assets, SmiliesRendererInterface $smiliesRenderer, CurrentUser $current_user): Response
     {
         if ($article_id === 0) {
             return new JsonResponse(['error' => __('Bad Request')], Response::HTTP_BAD_REQUEST);
@@ -101,13 +101,13 @@ final readonly class CommentsController
                         'user'       => $user_data,
                     ];
 
-                    if ($current_user->id === $user->id) {
+                    if ($current_user->id() === $user->id) {
                         $message['can_delete'] = true;
                     }
 
                     $message['can_quote'] = false;
                     $message['can_reply'] = false;
-                    if ($current_user->id !== $user->id && $current_user->isValid()) {
+                    if ($current_user->id() !== $user->id && $current_user->isValid()) {
                         $message['can_quote'] = true;
                         $message['can_reply'] = true;
                     }
@@ -136,15 +136,15 @@ final readonly class CommentsController
         return new JsonResponse($array);
     }
 
-    public function add(int $article_id, Request $request, User $user, Environment $env): Response
+    public function add(int $article_id, Request $request, CurrentUser $currentUser, Environment $env): Response
     {
         $post_body = $this->decodeJsonBody($request);
 
-        if (! empty($user->ban)) {
+        if (! empty($currentUser->user()->ban)) {
             return new JsonResponse(['message' => __('You have a ban!')], Response::HTTP_FORBIDDEN);
         }
 
-        if (! $user->isValid()) {
+        if (! $currentUser->isValid()) {
             return new JsonResponse(['message' => __('You are not logged in')], Response::HTTP_FORBIDDEN);
         }
 
@@ -156,7 +156,7 @@ final readonly class CommentsController
                 (new NewsComments())->create(
                     [
                         'article_id'     => $article->id,
-                        'user_id'        => $user->id,
+                        'user_id'        => $currentUser->id(),
                         'text'           => $comment,
                         'user_data'      => [
                             'user_agent'   => $env->getUserAgent(),
@@ -170,7 +170,7 @@ final readonly class CommentsController
 
                 $last_page = $this->paginationFactory->create(
                     (new NewsComments())->where('article_id', $article->id)->count(),
-                    $user->config->kmess
+                    $currentUser->user()->config->kmess
                 )->getTotalPages();
                 return new JsonResponse(['message' => __('The comment was added successfully'), 'last_page' => $last_page]);
             }
@@ -181,7 +181,7 @@ final readonly class CommentsController
         }
     }
 
-    public function del(Request $request, User $user, FileStorage $storage): Response
+    public function del(Request $request, CurrentUser $currentUser, FileStorage $storage): Response
     {
         $post_body = $this->decodeJsonBody($request);
 
@@ -189,7 +189,7 @@ final readonly class CommentsController
 
         try {
             $post = (new NewsComments())->findOrFail($comment_id);
-            if ($user->id === $post->user_id || $this->accessChecker->allows(NewsPermissions::COMMENTS_MODERATE)) {
+            if ($currentUser->id() === $post->user_id || $this->accessChecker->allows(NewsPermissions::COMMENTS_MODERATE)) {
                 try {
                     if (! empty($post->attached_files)) {
                         foreach ($post->attached_files as $attached_file) {

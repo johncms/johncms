@@ -6,6 +6,7 @@ namespace Johncms\Modules\Registration\Application\Controllers;
 
 use Illuminate\Support\Str;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\CurrentUser;
 use Johncms\Auth\Session\SignInManager;
 use Johncms\Http\Environment;
 use Johncms\Http\Request;
@@ -35,7 +36,7 @@ final readonly class RegistrationController
         private RegistrationSettings $settings,
         private Session $session,
         private NavChain $navChain,
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private RegisterUserUseCase $registerUser,
         private ConsentService $consentService,
         private Environment $env,

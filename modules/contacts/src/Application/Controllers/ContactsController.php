@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Contacts\Application\Controllers;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Consent\Application\Services\ConsentService;
 use Johncms\Modules\Contacts\Application\DTO\CreateContactMessageDTO;
 use Johncms\Modules\Contacts\Application\Forms\ContactForm;
@@ -15,7 +16,6 @@ use Johncms\Http\Environment;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
 use Johncms\Http\View\ViewResponse;
-use Johncms\Users\User;
 use Johncms\Validator\Rules\Identical;
 use Johncms\Validator\ValidatorInterface;
 
@@ -28,7 +28,7 @@ final readonly class ContactsController
         private Session $session,
         private NavChain $navChain,
         private Environment $environment,
-        private User $user,
+        private CurrentUser $currentUser,
         private ContactSettingsProvider $settingsProvider,
         private ContactForm $form,
         private ContactsCaptchaService $captchaService,
@@ -75,7 +75,7 @@ final readonly class ContactsController
             if ($result->isValid()) {
                 $this->submitMessage->execute(
                     new CreateContactMessageDTO(
-                        userId:    $this->user->isValid() ? $this->user->id : null,
+                        userId:    $this->currentUser->isValid() ? $this->currentUser->id() : null,
                         name:      $formData['name'],
                         email:     $formData['email'],
                         message:   $formData['message'],
@@ -88,7 +88,7 @@ final readonly class ContactsController
                     if (($formData['consent_' . $consent->id] ?? '') === '1') {
                         $this->consentService->logAcceptance(
                             $consent->id,
-                            $this->user->isValid() ? $this->user->id : null,
+                            $this->currentUser->isValid() ? $this->currentUser->id() : null,
                             $clientInfo->ip,
                             $consent->version
                         );
@@ -113,8 +113,8 @@ final readonly class ContactsController
                 'form_data'      => $formData,
                 'errors'         => $errors,
                 'consents'       => $consents,
-                'show_captcha'   => ! $this->user->isValid(),
-                'captcha'        => $this->user->isValid() ? '' : $this->captchaService->generate(),
+                'show_captcha'   => ! $this->currentUser->isValid(),
+                'captcha'        => $this->currentUser->isValid() ? '' : $this->captchaService->generate(),
                 'honeypot_field' => ContactForm::HONEYPOT_FIELD,
                 'message'        => $this->session->getFlash('message'),
             ]

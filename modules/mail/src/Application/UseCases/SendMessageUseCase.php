@@ -6,6 +6,7 @@ namespace Johncms\Modules\Mail\Application\UseCases;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\Authorization\CorePermissions;
+use Johncms\Auth\CurrentUser;
 use Johncms\Http\UploadedFileDTO;
 use Johncms\Modules\Mail\Application\DTO\SendMessageCommand;
 use Johncms\Modules\Mail\Application\Exceptions\SendMessageException;
@@ -24,16 +25,16 @@ final readonly class SendMessageUseCase
         private ContactRepositoryInterface $contactRepository,
         private MailFileService $mailFileService,
         private AntifloodCheckerInterface $antifloodChecker,
-        private User $currentUser,
+        private CurrentUser $currentUser,
     ) {
     }
 
     public function execute(SendMessageCommand $command): void
     {
-        $me = $this->currentUser->id;
+        $me = $this->currentUser->id();
         $recipientId = $command->recipientId;
 
-        if (! empty($this->currentUser->ban['1']) || ! empty($this->currentUser->ban['3'])) {
+        if (! empty($this->currentUser->user()->ban['1']) || ! empty($this->currentUser->user()->ban['3'])) {
             throw new SendMessageException(__('Access forbidden'));
         }
 
@@ -100,7 +101,7 @@ final readonly class SendMessageUseCase
         ]);
         $this->mailMessageRepository->save($message);
 
-        $this->currentUser->update(['lastpost' => $now]);
+        $this->currentUser->user()->update(['lastpost' => $now]);
 
         // Refresh contact activity time only when both records already existed
         // (newly created contacts were just stored with the current time).
@@ -122,7 +123,7 @@ final readonly class SendMessageUseCase
             return;
         }
 
-        $contact = $this->contactRepository->findContact($recipient->id, $this->currentUser->id);
+        $contact = $this->contactRepository->findContact($recipient->id, $this->currentUser->id());
 
         if ($access === 1 && $contact === null) {
             throw new SendMessageException(__('To this user can write only contacts'));

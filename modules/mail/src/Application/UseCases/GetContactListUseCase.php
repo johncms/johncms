@@ -5,30 +5,30 @@ declare(strict_types=1);
 namespace Johncms\Modules\Mail\Application\UseCases;
 
 use Illuminate\Support\Collection;
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Mail\Application\DTO\ContactItemDTO;
 use Johncms\Modules\Mail\Application\DTO\ContactListResultDTO;
 use Johncms\Modules\Mail\Domain\Models\Contact;
 use Johncms\Modules\Mail\Domain\Repository\ContactRepositoryInterface;
 use Johncms\Modules\Mail\Domain\Repository\MailMessageRepositoryInterface;
-use Johncms\Users\User;
 
 final readonly class GetContactListUseCase
 {
     public function __construct(
         private ContactRepositoryInterface $contactRepository,
         private MailMessageRepositoryInterface $mailMessageRepository,
-        private User $currentUser,
+        private CurrentUser $currentUser,
     ) {
     }
 
     public function count(): int
     {
-        return $this->contactRepository->countContactList($this->currentUser->id);
+        return $this->contactRepository->countContactList($this->currentUser->id());
     }
 
     public function getPage(int $limit, int $offset): ContactListResultDTO
     {
-        $contacts = $this->contactRepository->getContactList($this->currentUser->id, $limit, $offset);
+        $contacts = $this->contactRepository->getContactList($this->currentUser->id(), $limit, $offset);
 
         $filters = [
             'all' => [
@@ -63,8 +63,8 @@ final readonly class GetContactListUseCase
                 continue;
             }
 
-            $countMessage = $this->mailMessageRepository->countMessagesBetween($this->currentUser->id, $contactUser->id);
-            $newCountMessage = $this->mailMessageRepository->countNewMessagesFrom($this->currentUser->id, $contactUser->id);
+            $countMessage = $this->mailMessageRepository->countMessagesBetween($this->currentUser->id(), $contactUser->id);
+            $newCountMessage = $this->mailMessageRepository->countNewMessagesFrom($this->currentUser->id(), $contactUser->id);
 
             $items->push(new ContactItemDTO(
                 id: $contactUser->id,

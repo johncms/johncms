@@ -4,22 +4,22 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Mail\Application\UseCases;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Mail\Application\DTO\DeleteContactContextDTO;
 use Johncms\Modules\Mail\Application\Exceptions\ContactNotFoundException;
 use Johncms\Modules\Mail\Domain\Repository\ContactRepositoryInterface;
-use Johncms\Users\User;
 
 final readonly class GetDeleteContactContextUseCase
 {
     public function __construct(
         private ContactRepositoryInterface $contactRepository,
-        private User $currentUser,
+        private CurrentUser $currentUser,
     ) {
     }
 
     public function execute(int $contactId): DeleteContactContextDTO
     {
-        $contact = $this->contactRepository->findContact($this->currentUser->id, $contactId);
+        $contact = $this->contactRepository->findContact($this->currentUser->id(), $contactId);
         if ($contact === null) {
             throw new ContactNotFoundException();
         }

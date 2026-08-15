@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\News\Application\Controllers;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\News\Application\Article;
 use Johncms\Modules\News\Application\MetaTagsManager;
 use Johncms\Modules\News\Application\Section;
 use Johncms\NavChain;
-use Johncms\Users\User;
 
 final readonly class ArticleController
 {
     public function __construct(
         private NavChain $navChain,
         private MetaTagsManager $metaTagsManager,
-        private User $currentUser,
+        private CurrentUser $currentUser,
     ) {
     }
 
@@ -40,7 +40,7 @@ final readonly class ArticleController
             $this->metaTagsManager->setForArticle($current_article)->toArray() + [
                 'article'         => $current_article,
                 'current_section' => $section->getLastSection(),
-                'can_write'       => $this->currentUser->isValid() && empty($this->currentUser->ban),
+                'can_write'       => $this->currentUser->isValid() && empty($this->currentUser->user()->ban),
             ]
         );
     }
