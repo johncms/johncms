@@ -20,7 +20,7 @@ use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Johncms\Modules\Guestbook\Application\Services\GuestbookPermissions;
 use Johncms\Modules\Library\Application\Services\LibraryPermissions;
 use Johncms\Notifications\Notification;
-use Johncms\System\Users\User;
+use Johncms\Users\User;
 use PDO;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -529,10 +529,11 @@ class Counters
 
         $notifications['new_album_comm'] = $this->db->query('SELECT COUNT(*) FROM `cms_album_files` WHERE `user_id` = \'' . $this->user->id . '\' AND `unread_comments` = 1')->fetchColumn();
 
-        // Временный костыль для обратной совместимости
-        $default = ['show_forum_unread' => false];
-        $settings = ! empty($this->user->notification_settings) ? json_decode($this->user->notification_settings, true) : [];
-        $notification_settings = array_merge($default, $settings);
+        // The column is cast to an array by the model, so there is nothing to decode here.
+        $notification_settings = array_merge(
+            ['show_forum_unread' => false],
+            $this->user->notification_settings ?? []
+        );
         if ($notification_settings['show_forum_unread']) {
             $forum_counters = $this->forumCounters();
             $notifications['forum_new'] = $forum_counters['new_messages'];

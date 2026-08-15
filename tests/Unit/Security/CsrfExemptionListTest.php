@@ -6,7 +6,7 @@ namespace Tests\Unit\Security;
 
 use Johncms\Router\Route;
 use Johncms\Router\RouteCollectorFactory;
-use Johncms\System\Users\User;
+use Johncms\Users\User;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 

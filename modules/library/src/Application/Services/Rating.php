@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Library\Application\Services;
 
-use Johncms\System\Users\User;
+use Johncms\Users\User;
 use PDO;
 
 class Rating

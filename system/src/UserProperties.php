@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms;
 
-use Johncms\System\Users\User;
+use Johncms\Users\User;
 
 class UserProperties
 {

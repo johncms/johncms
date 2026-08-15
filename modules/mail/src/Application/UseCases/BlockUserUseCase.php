@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Mail\Application\UseCases;
 
 use Johncms\Modules\Mail\Domain\Repository\ContactRepositoryInterface;
-use Johncms\System\Users\User;
+use Johncms\Users\User;
 
 final readonly class BlockUserUseCase
 {

@@ -24,7 +24,7 @@ use Johncms\Security\HTMLPurifier;
 use Johncms\Smilies\SmiliesRendererInterface;
 use Johncms\Http\Session;
 use Johncms\Http\Environment;
-use Johncms\System\Users\User;
+use Johncms\Users\User;
 use Johncms\Users\IgnoreListCheckerInterface;
 use Johncms\System\Utility\EditorContentNormalizer;
 use Johncms\Utils\DateFormatterInterface;

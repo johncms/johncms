@@ -7,7 +7,7 @@ namespace Johncms\Modules\Notifications\Application\Middlewares;
 use Johncms\Router\MiddlewareInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Johncms\Http\Request;
-use Johncms\System\Users\User;
+use Johncms\Users\User;
 
 final readonly class AuthorizedUserMiddleware implements MiddlewareInterface
 {

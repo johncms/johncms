@@ -70,8 +70,8 @@ class Notification extends Model
         static::addGlobalScope(
             'access',
             static function (Builder $builder) {
-                /** @var \Johncms\System\Users\User $user */
-                $user = di(\Johncms\System\Users\User::class);
+                /** @var \Johncms\Users\User $user */
+                $user = di(\Johncms\Users\User::class);
                 $builder->where('user_id', '=', $user->id);
             }
         );

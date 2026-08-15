@@ -7,9 +7,8 @@ namespace Tests\Unit\Users;
 use Johncms\Auth\Authentication\AuthenticatorChain;
 use Johncms\Auth\Authorization\PermissionResolver;
 use Johncms\Auth\CurrentUser;
+use Johncms\Auth\Identity;
 use Johncms\Http\Request;
-use Johncms\System\Users\User as LegacyUser;
-use Johncms\System\Users\UserFactory as LegacyUserFactory;
 use Johncms\Users\CurrentUserAuthenticator;
 use Johncms\Users\User;
 use Johncms\Users\UserFactory;
@@ -21,21 +20,15 @@ use Tests\Support\IdentityFactory;
 
 final class CurrentUserAuthenticatorTest extends TestCase
 {
-    public function testTheVisitorIsLoadedIntoBothSharedInstances(): void
+    public function testTheVisitorIsLoadedIntoTheSharedInstance(): void
     {
-        $legacyUser = new LegacyUser();
         $user = new User();
-
-        $legacyFactory = $this->createMock(LegacyUserFactory::class);
-        $legacyFactory->expects(self::once())->method('load')->with($legacyUser, 42);
 
         $factory = $this->createMock(UserFactory::class);
         $factory->expects(self::once())->method('load')->with($user, 42);
 
         $authenticator = new CurrentUserAuthenticator(
             $this->currentUser(IdentityFactory::user(id: 42)),
-            $legacyFactory,
-            $legacyUser,
             $factory,
             $user
         );
@@ -44,21 +37,16 @@ final class CurrentUserAuthenticatorTest extends TestCase
     }
 
     /**
-     * Nobody is signed in: the models are still filled, with nothing, so whatever the previous
-     * visitor left in them cannot answer for this request.
+     * Nobody is signed in: the model is still filled, with nothing, so whatever the previous
+     * visitor left in it cannot answer for this request.
      */
     public function testAGuestIsAlsoLoaded(): void
     {
-        $legacyFactory = $this->createMock(LegacyUserFactory::class);
-        $legacyFactory->expects(self::once())->method('load')->with(self::anything(), 0);
-
         $factory = $this->createMock(UserFactory::class);
         $factory->expects(self::once())->method('load')->with(self::anything(), 0);
 
         $authenticator = new CurrentUserAuthenticator(
             new CurrentUser(new AuthenticatorChain([]), $this->permissionResolver(), new RequestStack()),
-            $legacyFactory,
-            new LegacyUser(),
             $factory,
             new User()
         );
@@ -68,17 +56,12 @@ final class CurrentUserAuthenticatorTest extends TestCase
 
     public function testTheSameVisitorIsLoadedOnlyOnce(): void
     {
-        // The kernel may call this more than once for one request; each call is two queries.
-        $legacyFactory = $this->createMock(LegacyUserFactory::class);
-        $legacyFactory->expects(self::once())->method('load');
-
+        // The kernel may call this more than once for one request, and each call is a query.
         $factory = $this->createMock(UserFactory::class);
         $factory->expects(self::once())->method('load');
 
         $authenticator = new CurrentUserAuthenticator(
             $this->currentUser(IdentityFactory::user(id: 42)),
-            $legacyFactory,
-            new LegacyUser(),
             $factory,
             new User()
         );
@@ -89,20 +72,15 @@ final class CurrentUserAuthenticatorTest extends TestCase
 
     /**
      * Signing in and stepping into impersonation change the visitor inside one request, and the
-     * models have to follow.
+     * model has to follow.
      */
     public function testForgettingForcesAReload(): void
     {
-        $legacyFactory = $this->createMock(LegacyUserFactory::class);
-        $legacyFactory->expects(self::exactly(2))->method('load');
-
         $factory = $this->createMock(UserFactory::class);
         $factory->expects(self::exactly(2))->method('load');
 
         $authenticator = new CurrentUserAuthenticator(
             $this->currentUser(IdentityFactory::user(id: 42)),
-            $legacyFactory,
-            new LegacyUser(),
             $factory,
             new User()
         );
@@ -112,13 +90,18 @@ final class CurrentUserAuthenticatorTest extends TestCase
         $authenticator->authenticate();
     }
 
-    private function currentUser(\Johncms\Auth\Identity $identity): CurrentUser
+    private function currentUser(Identity $identity): CurrentUser
     {
         $stack = new RequestStack();
         $stack->push(Request::create('/'));
 
-        return new CurrentUser(new AuthenticatorChain([new FakeAuthenticator($identity)]), $this->permissionResolver(), $stack);
+        return new CurrentUser(
+            new AuthenticatorChain([new FakeAuthenticator($identity)]),
+            $this->permissionResolver(),
+            $stack
+        );
     }
+
     private function permissionResolver(): PermissionResolver
     {
         return new PermissionResolver(new FakeRoleRepository());

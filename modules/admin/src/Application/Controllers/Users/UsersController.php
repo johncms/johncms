@@ -16,7 +16,7 @@ use Johncms\Auth\Identity;
 use Johncms\Auth\Session\SignInManager;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
-use Johncms\System\Users\User;
+use Johncms\Users\User;
 use Mobicms\Captcha\Image;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;

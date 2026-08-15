@@ -14,7 +14,7 @@ namespace Johncms\System\i18n;
 
 use Johncms\Http\Request;
 use Johncms\Http\Session;
-use Johncms\System\Users\User;
+use Johncms\Users\User;
 use RuntimeException;
 use Symfony\Component\HttpFoundation\RequestStack;
 

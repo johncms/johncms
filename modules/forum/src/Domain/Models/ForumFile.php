@@ -17,7 +17,7 @@ use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Johncms\FileInfo;
-use Johncms\System\Users\User;
+use Johncms\Users\User;
 
 /**
  * Class File

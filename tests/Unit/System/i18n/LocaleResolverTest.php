@@ -8,7 +8,7 @@ use Johncms\Config\ConfigRepository;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
 use Johncms\System\i18n\LocaleResolver;
-use Johncms\System\Users\User;
+use Johncms\Users\User;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -96,6 +96,11 @@ final class LocaleResolverTest extends TestCase
 
     private function userWithLocale(string $locale): User
     {
-        return new User(['set_user' => serialize(['lng' => $locale])]);
+        // The raw attribute, the way a row comes back from the database: assigning it would run
+        // the cast and serialize the string a second time.
+        $user = new User();
+        $user->setRawAttributes(['set_user' => serialize(['lng' => $locale])]);
+
+        return $user;
     }
 }

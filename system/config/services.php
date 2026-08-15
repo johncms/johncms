@@ -69,7 +69,6 @@ use Johncms\Http\Session;
 use Johncms\Http\SessionFactory;
 use Johncms\System\i18n\Translator;
 use Johncms\System\i18n\TranslatorServiceFactory;
-use Johncms\System\Users\UserFactory;
 use Johncms\Console\Commands\I18nScanCommand;
 use Johncms\Console\Commands\TwigCompileCommand;
 use Johncms\Console\Commands\TwigLintCommand;
@@ -219,7 +218,6 @@ return static function (ContainerConfigurator $container): void {
     $services->set(\PDO::class, PdoFactory::class)->factory(service(PdoFactory::class));
     $services->set(\Johncms\Users\User::class)->factory(service(\Johncms\Users\UserFactory::class));
     $services->set(\Johncms\Users\Repository\UserRepositoryInterface::class, \Johncms\Users\Repository\EloquentUserRepository::class);
-    $services->set(\Johncms\System\Users\User::class)->factory(service(UserFactory::class));
 
     // The authenticators are asked in the order they are tagged, and the order is a decision:
     // a request carrying both a bearer token and a session cookie must be answered by the token.

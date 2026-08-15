@@ -8,7 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
 use Johncms\System\i18n\Translator;
-use Johncms\System\Users\User;
+use Johncms\Users\User;
 
 class FormattedDate implements CastsAttributes
 {
