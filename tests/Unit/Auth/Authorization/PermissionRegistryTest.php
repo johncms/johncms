@@ -64,6 +64,23 @@ final class PermissionRegistryTest extends TestCase
         );
     }
 
+    /**
+     * The editor prints a heading above every group. A module that never named its group is still
+     * listed, under its own key, rather than under nothing at all.
+     */
+    public function testAGroupIsTitledByTheModuleOrByItsKey(): void
+    {
+        $registry = new PermissionRegistry([
+            $this->provider(
+                new PermissionDefinition('forum.topic.view', 'forum', 'View topics'),
+                new PermissionDefinition('forum.topic.delete', 'forum', 'Delete topics', 'Forum'),
+            ),
+            $this->provider(new PermissionDefinition('news.article.edit', 'news', 'Edit articles')),
+        ]);
+
+        self::assertSame(['forum' => 'Forum', 'news' => 'news'], $registry->groupLabels());
+    }
+
     public function testUnknownPermissionIsAnError(): void
     {
         $this->expectException(InvalidArgumentException::class);

@@ -10,6 +10,8 @@ use Johncms\Users\User;
 
 interface UserListRepositoryInterface
 {
+    public function findById(int $id): ?User;
+
     /**
      * Количество подтверждённых пользователей (preg = 1).
      */

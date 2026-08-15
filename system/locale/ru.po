@@ -965,3 +965,39 @@ msgstr ""
 "Эти аккаунты созданы до перехода на текущее хэширование паролей, и их владельцы с тех пор не заходили.\n"
 "Каждый будет переведён автоматически при следующем входе владельца — сбрасывать ничего не нужно.\n"
 "Число показано, чтобы поддержку старой схемы не убрали, пока она ещё используется."
+
+msgid "Admin panel"
+msgstr "Админ панель"
+
+msgid "Access the admin panel"
+msgstr "Доступ в админ панель"
+
+msgid "Change system settings"
+msgstr "Изменение системных настроек"
+
+msgid "Manage roles and permissions"
+msgstr "Управление ролями и правами"
+
+msgid "Guest"
+msgstr "Гость"
+
+msgid "User"
+msgstr "Пользователь"
+
+msgid "Method Not Allowed"
+msgstr "Метод не поддерживается"
+
+msgid "Bad Request"
+msgstr "Некорректный запрос"
+
+msgid "The session has expired"
+msgstr "Сессия устарела"
+
+msgid "Reload the page and submit the form again."
+msgstr "Обновите страницу и отправьте форму заново."
+
+msgid "The input is not between '%min%' and '%max%', inclusively"
+msgstr "Значение не входит в диапазон от '%min%' до '%max%' включительно"
+
+msgid "The two given tokens do not match"
+msgstr "Указанные значения не совпадают"

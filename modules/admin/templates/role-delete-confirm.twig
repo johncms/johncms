@@ -1,0 +1,27 @@
+{#
+    Confirmation of deleting a role.
+
+    @var string role_name
+    @var int    holders     Accounts holding the role right now; they keep the account, not the role.
+    @var string form_action
+    @var string back_url
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    <div class="alert alert-warning">
+        {{ __('Do you really want to delete?') }}
+        <div class="mt-2"><strong>{{ role_name }}</strong></div>
+        {% if holders > 0 %}
+            <div class="mt-2">
+                {{ n__('It is held by one account, which loses everything the role granted it.', 'It is held by %d accounts, which lose everything the role granted them.', holders)|format(holders) }}
+            </div>
+        {% endif %}
+    </div>
+
+    <form method="post" action="{{ form_action }}">
+        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+        <button type="submit" class="btn btn-danger">{{ __('Delete') }}</button>
+        <a href="{{ back_url }}" class="btn btn-secondary">{{ __('Cancel') }}</a>
+    </form>
+{% endblock %}

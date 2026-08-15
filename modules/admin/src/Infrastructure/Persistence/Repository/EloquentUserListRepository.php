@@ -11,6 +11,11 @@ use Johncms\Users\User;
 
 final class EloquentUserListRepository implements UserListRepositoryInterface
 {
+    public function findById(int $id): ?User
+    {
+        return User::query()->find($id);
+    }
+
     public function countApproved(): int
     {
         return User::query()->where('preg', 1)->count();

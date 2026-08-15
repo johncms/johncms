@@ -74,6 +74,68 @@ final class EloquentRoleRepository implements RoleRepositoryInterface
         return $roles;
     }
 
+    public function permissionCounts(): array
+    {
+        /** @var array<int, int> $counts */
+        $counts = RolePermission::query()
+            ->selectRaw('role_id, COUNT(*) AS aggregate')
+            ->groupBy('role_id')
+            ->pluck('aggregate', 'role_id')
+            ->all();
+
+        return $counts;
+    }
+
+    public function holderCounts(int $now): array
+    {
+        /** @var array<int, int> $counts */
+        $counts = UserRole::query()
+            ->selectRaw('role_id, COUNT(*) AS aggregate')
+            ->where(
+                static function (Builder $query) use ($now): void {
+                    $query->whereNull('expires_at')->orWhere('expires_at', '>', $now);
+                }
+            )
+            ->groupBy('role_id')
+            ->pluck('aggregate', 'role_id')
+            ->all();
+
+        return $counts;
+    }
+
+    public function create(string $slug, string $name, int $level, int $now): Role
+    {
+        return Role::query()->create(
+            [
+                'slug'          => $slug,
+                'name'          => $name,
+                'level'         => $level,
+                // A role the site added has no place on the old numeric scale, so it contributes
+                // nothing to the mirrored users.rights.
+                'legacy_rights' => null,
+                'is_system'     => false,
+                'is_default'    => false,
+                'is_guest'      => false,
+                'created_at'    => $now,
+                'updated_at'    => $now,
+            ]
+        );
+    }
+
+    public function update(int $roleId, string $name, int $level, int $now): void
+    {
+        Role::query()
+            ->where('id', '=', $roleId)
+            ->update(['name' => $name, 'level' => $level, 'updated_at' => $now]);
+    }
+
+    public function delete(int $roleId): void
+    {
+        RolePermission::query()->where('role_id', '=', $roleId)->delete();
+        UserRole::query()->where('role_id', '=', $roleId)->delete();
+        Role::query()->where('id', '=', $roleId)->delete();
+    }
+
     public function permissionsFor(array $roleIds): array
     {
         if ($roleIds === []) {
@@ -100,6 +162,17 @@ final class EloquentRoleRepository implements RoleRepositoryInterface
         if ($rows !== []) {
             RolePermission::query()->insert($rows);
         }
+    }
+
+    public function grantsFor(int $userId): array
+    {
+        /** @var array<int, int|null> $grants */
+        $grants = UserRole::query()
+            ->where('user_id', '=', $userId)
+            ->pluck('expires_at', 'role_id')
+            ->all();
+
+        return $grants;
     }
 
     public function grant(int $userId, int $roleId, ?int $grantedBy, int $grantedAt, ?int $expiresAt = null): void

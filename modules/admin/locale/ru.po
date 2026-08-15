@@ -1982,3 +1982,109 @@ msgstr[0] "%d минуту"
 msgstr[1] "%d минуты"
 msgstr[2] "%d минут"
 msgstr[3] "%d минут"
+
+msgid "Roles"
+msgstr "Роли"
+
+msgid "New role"
+msgstr "Новая роль"
+
+msgid "Role:"
+msgstr "Роль:"
+
+msgid "Roles of the user"
+msgstr "Роли пользователя"
+
+msgid "Identifier"
+msgstr "Идентификатор"
+
+msgid "Used in code and cannot be changed later, for example: news-editor"
+msgstr "Используется в коде и потом не меняется, например: news-editor"
+
+msgid "Level"
+msgstr "Уровень"
+
+msgid "Level:"
+msgstr "Уровень:"
+
+msgid "Permissions:"
+msgstr "Прав:"
+
+msgid "Accounts:"
+msgstr "Пользователей:"
+
+msgid "Built-in"
+msgstr "Встроенная"
+
+msgid "Everybody signed in"
+msgstr "Все авторизованные"
+
+msgid "Expired"
+msgstr "Истекла"
+
+msgid "Until"
+msgstr "До"
+
+msgid "Leave empty to grant it without an end date"
+msgstr "Оставьте пустым, чтобы выдать бессрочно"
+
+msgid "This role stands above your own"
+msgstr "Эта роль выше вашей собственной"
+
+msgid "What each role may do"
+msgstr "Что может каждая роль"
+
+msgid "Changes saved successfully"
+msgstr "Изменения успешно сохранены"
+
+msgid "The role is deleted"
+msgstr "Роль удалена"
+
+msgid "A built-in role cannot be deleted"
+msgstr "Встроенную роль удалить нельзя"
+
+msgid "A role with this identifier already exists"
+msgstr "Роль с таким идентификатором уже существует"
+
+msgid "The identifier may hold lower case letters, digits and hyphens, and starts with a letter"
+msgstr "Идентификатор может состоять из строчных латинских букв, цифр и дефисов и начинаться с буквы"
+
+msgid "The expiry date is not a date"
+msgstr "Дата окончания указана неверно"
+
+msgid "You cannot manage a role that outranks your own"
+msgstr "Нельзя управлять ролью выше вашей собственной"
+
+msgid "You cannot place a role above your own"
+msgstr "Нельзя поставить роль выше вашей собственной"
+
+msgid "You cannot change the roles of somebody who outranks you"
+msgstr "Нельзя менять роли пользователя, который выше вас"
+
+msgid "Who outranks whom. A role cannot be placed above your own."
+msgstr "Определяет, кто кого выше. Роль нельзя поставить выше вашей собственной."
+
+msgid "This is a built-in role: its name and its level are fixed, because the code refers to them. What it may do is yours to change."
+msgstr "Это встроенная роль: её название и уровень зафиксированы, на них ссылается код. Права роли можно менять как угодно."
+
+msgid "The role also carries permissions no installed module declares. They are kept as they are:"
+msgstr "У роли есть права, которых не объявляет ни один установленный модуль. Они сохраняются как есть:"
+
+msgid "A role carries the permissions the code checks. The \"Guest\" role decides what the site shows without signing in, and \"User\" applies to everybody who is signed in."
+msgstr "Роль несёт права, которые проверяет код. Роль «Гость» определяет, что видно на сайте без входа, а «Пользователь» применяется ко всем, кто вошёл."
+
+msgid "Everybody signed in holds the \"%s\" role; it is not given out."
+msgstr "Роль «%s» есть у всех, кто вошёл; отдельно её не выдают."
+
+msgid "It is held by one account, which loses everything the role granted it."
+msgid_plural "It is held by %d accounts, which lose everything the role granted them."
+msgstr[0] "Её имеет %d пользователь, он потеряет всё, что она давала."
+msgstr[1] "Её имеют %d пользователя, они потеряют всё, что она давала."
+msgstr[2] "Её имеют %d пользователей, они потеряют всё, что она давала."
+msgstr[3] "Её имеют %d пользователей, они потеряют всё, что она давала."
+
+msgid "Full access"
+msgstr "Полный доступ"
+
+msgid "A role of this level is allowed everything, whatever is ticked, so the permissions are not shown for it. That is what keeps a site from locking itself out of its own admin panel."
+msgstr "Роль такого уровня может всё, независимо от отмеченных прав, поэтому список прав для неё не показывается. Именно это не даёт сайту закрыть самому себе доступ в админ панель."

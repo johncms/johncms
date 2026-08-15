@@ -1,0 +1,78 @@
+{#
+    The roles of one account.
+
+    @var string      user_name
+    @var string      user_url
+    @var string|null default_role    The role everybody signed in holds without being given it.
+    @var array       rows            Roles: id, name, slug, level, granted, expiresAt, expired,
+                                     manageable.
+    @var string      form_action
+    @var string      back_url
+    @var string      roles_url       Where the roles themselves are edited.
+    @var array       errors          Messages about the form as a whole.
+    @var string      success_message Empty unless a save has just succeeded.
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success shadow border-0', alert: success_message} only %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger shadow border-0', alert: errors} only %}
+
+    <div style="max-width: 720px">
+        <h3><a href="{{ user_url }}">{{ user_name }}</a></h3>
+
+        {% if default_role %}
+            <div class="text-muted small mb-3">
+                {{ __('Everybody signed in holds the "%s" role; it is not given out.')|format(default_role) }}
+            </div>
+        {% endif %}
+
+        <form method="post" action="{{ form_action }}">
+            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+
+            {% for row in rows %}
+                <div class="border-bottom py-2">
+                    <div class="form-check">
+                        <input type="checkbox"
+                               class="form-check-input"
+                               name="roles[]"
+                               value="{{ row.id }}"
+                               id="role_{{ row.id }}"
+                               {% if row.granted %}checked{% endif %}
+                               {% if not row.manageable %}disabled{% endif %}>
+                        <label class="form-check-label" for="role_{{ row.id }}">
+                            {{ row.name }}
+                            <span class="text-muted small">{{ row.slug }} · {{ __('Level:') }} {{ row.level }}</span>
+                            {% if row.expired %}
+                                <span class="badge rounded-pill bg-danger">{{ __('Expired') }}</span>
+                            {% endif %}
+                        </label>
+                    </div>
+                    {% if row.manageable %}
+                        <div class="mt-1 ms-4">
+                            <label for="expires_{{ row.id }}" class="text-muted small">{{ __('Until') }}</label>
+                            <input type="date"
+                                   class="form-control form-control-sm"
+                                   style="max-width: 220px"
+                                   id="expires_{{ row.id }}"
+                                   name="expires_{{ row.id }}"
+                                   value="{{ row.expiresAt }}">
+                            <div class="text-muted small">{{ __('Leave empty to grant it without an end date') }}</div>
+                        </div>
+                    {% else %}
+                        <div class="mt-1 ms-4 text-muted small">{{ __('This role stands above your own') }}</div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            <div class="mt-3">
+                <input type="submit" value="{{ __('Save') }}" class="btn btn-primary">
+                <a href="{{ back_url }}" class="btn btn-secondary">{{ __('Cancel') }}</a>
+            </div>
+        </form>
+
+        <div class="mt-3">
+            <a href="{{ roles_url }}">{{ __('What each role may do') }}</a>
+        </div>
+    </div>
+{% endblock %}

@@ -13,7 +13,7 @@ declare(strict_types=1);
 namespace Johncms\Auth\Authorization\Voters;
 
 use Johncms\Auth\Authorization\AccessVoterInterface;
-use Johncms\Auth\Authorization\RoleRepositoryInterface;
+use Johncms\Auth\Authorization\RoleLevels;
 use Johncms\Auth\Authorization\SystemRole;
 use Johncms\Auth\Authorization\Vote;
 use Johncms\Auth\Identity;
@@ -30,7 +30,7 @@ use Johncms\Auth\Identity;
  */
 final readonly class SuperAdminVoter implements AccessVoterInterface
 {
-    public function __construct(private RoleRepositoryInterface $roles)
+    public function __construct(private RoleLevels $levels)
     {
     }
 
@@ -45,28 +45,8 @@ final readonly class SuperAdminVoter implements AccessVoterInterface
             return Vote::Abstain;
         }
 
-        foreach ($identity->roles as $slug) {
-            if ($this->levelOf($slug) >= SystemRole::SUPERVISOR_LEVEL) {
-                return Vote::Allow;
-            }
-        }
-
-        return Vote::Abstain;
-    }
-
-    /**
-     * The built-in roles answer without a query; one the site added is looked up.
-     */
-    private function levelOf(string $slug): int
-    {
-        $systemRole = SystemRole::tryFrom($slug);
-
-        if ($systemRole !== null) {
-            return $systemRole->level();
-        }
-
-        $role = $this->roles->findBySlug($slug);
-
-        return $role === null ? 0 : $role->level;
+        return SystemRole::grantsEverything($this->levels->highest($identity))
+            ? Vote::Allow
+            : Vote::Abstain;
     }
 }

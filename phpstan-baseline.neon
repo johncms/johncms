@@ -145,12 +145,6 @@ parameters:
 			path: modules/admin/src/Infrastructure/Persistence/Repository/EloquentIpSearchRepository.php
 
 		-
-			message: '#^Method Johncms\\Modules\\Admin\\Infrastructure\\Persistence\\Repository\\EloquentStaffRepository\:\:getStaff\(\) should return Illuminate\\Support\\Collection\<int, Johncms\\Users\\User\> but returns Illuminate\\Support\\Collection\<int, stdClass\>\.$#'
-			identifier: return.type
-			count: 1
-			path: modules/admin/src/Infrastructure/Persistence/Repository/EloquentStaffRepository.php
-
-		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Album\\Domain\\Models\\Album\:\:\$photos_count\.$#'
 			identifier: property.notFound
 			count: 2

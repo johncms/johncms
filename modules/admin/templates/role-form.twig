@@ -1,0 +1,126 @@
+{#
+    A role: what it is called, where it stands, and what it may do.
+
+    @var string form_action
+    @var string back_url
+    @var bool   is_new     No role yet: the identifier is asked for and is fixed afterwards.
+    @var bool   is_system  A built-in role: only its permissions are the site's to change.
+    @var bool   full_access The role is allowed everything by its level; no matrix is shown.
+    @var string role_name  Empty for a new role.
+    @var string role_slug  The identifier of an existing role; empty for a new one.
+    @var array  fields     Values of the form: slug, name, level, permissions.
+    @var int    max_level  The highest level the visitor may assign: their own.
+    @var array  groups     Permission groups: label and items (key, label, granted).
+    @var array  undeclared Permission keys no installed module declares; kept as they are.
+    @var array  errors     Validation messages, keyed by field name.
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    <div style="max-width: 720px">
+        <form method="post" action="{{ form_action }}">
+            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+
+            {% if is_system %}
+                {% if not full_access %}
+                    <div class="alert alert-info">
+                        {{ __('This is a built-in role: its name and its level are fixed, because the code refers to them. What it may do is yours to change.') }}
+                    </div>
+                {% endif %}
+                <div class="form-group">
+                    <div class="fw-bold">{{ role_name }}</div>
+                    <div class="text-muted small"><code>{{ role_slug }}</code></div>
+                </div>
+            {% else %}
+                {% if is_new %}
+                    <div class="form-group">
+                        <label for="slug">{{ __('Identifier') }}</label>
+                        <input type="text"
+                               id="slug"
+                               name="slug"
+                               class="form-control {% if errors.slug|default([]) is not empty %}is-invalid{% endif %}"
+                               value="{{ fields.slug }}">
+                        {% include '@theme/components/field-errors.twig' with {errors: errors.slug|default([])} only %}
+                        <div class="text-muted small">{{ __('Used in code and cannot be changed later, for example: news-editor') }}</div>
+                    </div>
+                {% else %}
+                    <div class="form-group">
+                        <div class="text-muted small"><code>{{ role_slug }}</code></div>
+                    </div>
+                {% endif %}
+
+                <div class="form-group">
+                    <label for="name">{{ __('Title') }}</label>
+                    <input type="text"
+                           id="name"
+                           name="name"
+                           class="form-control {% if errors.name|default([]) is not empty %}is-invalid{% endif %}"
+                           value="{{ fields.name }}">
+                    {% include '@theme/components/field-errors.twig' with {errors: errors.name|default([])} only %}
+                </div>
+
+                <div class="form-group">
+                    <label for="level">{{ __('Level') }}</label>
+                    <input type="number"
+                           id="level"
+                           name="level"
+                           min="0"
+                           max="{{ max_level }}"
+                           class="form-control col-sm-3 {% if errors.level|default([]) is not empty %}is-invalid{% endif %}"
+                           value="{{ fields.level }}">
+                    {% include '@theme/components/field-errors.twig' with {errors: errors.level|default([])} only %}
+                    <div class="text-muted small">{{ __('Who outranks whom. A role cannot be placed above your own.') }}</div>
+                </div>
+            {% endif %}
+
+            <h3 class="mt-3">{{ __('Permissions') }}</h3>
+
+            {% if full_access %}
+                <div class="alert alert-warning">
+                    {{ __('A role of this level is allowed everything, whatever is ticked, so the permissions are not shown for it. That is what keeps a site from locking itself out of its own admin panel.') }}
+                </div>
+            {% endif %}
+
+            {% for group in (full_access ? [] : groups) %}
+                <div class="mt-3">
+                    <div class="fw-bold">{{ group.label }}</div>
+                    {% for item in group.items %}
+                        <div class="form-check">
+                            <input type="checkbox"
+                                   class="form-check-input"
+                                   name="permissions[]"
+                                   value="{{ item.key }}"
+                                   id="permission_{{ item.key|replace({'.': '_'}) }}"
+                                   {% if item.granted %}checked{% endif %}>
+                            <label class="form-check-label" for="permission_{{ item.key|replace({'.': '_'}) }}">
+                                {{ item.label }}
+                                <span class="text-muted small">{{ item.key }}</span>
+                            </label>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+
+            {% if undeclared is not empty and not full_access %}
+                <div class="alert alert-warning mt-3">
+                    <div>{{ __('The role also carries permissions no installed module declares. They are kept as they are:') }}</div>
+                    <div class="mt-1">
+                        {% for permission in undeclared %}
+                            <code>{{ permission }}</code>{% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="mt-3">
+                {% if is_system and full_access %}
+                    {# Name, level and permissions are all out of reach: there is nothing to save. #}
+                    <a href="{{ back_url }}" class="btn btn-secondary">{{ __('Back') }}</a>
+                {% else %}
+                    <input type="submit" value="{{ __('Save') }}" class="btn btn-primary">
+                    <a href="{{ back_url }}" class="btn btn-secondary">{{ __('Cancel') }}</a>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+{% endblock %}

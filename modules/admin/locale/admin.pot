@@ -10,6 +10,7 @@ msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:26
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:64
+#: modules/admin/src/Application/Controllers/Access/UserRolesController.php:130
 #: modules/admin/src/Application/Controllers/Settings/AdsController.php:306
 #: modules/admin/src/Application/Services/AdRowMapper.php:121
 msgid "Users"
@@ -33,51 +34,62 @@ msgstr ""
 msgid "Administration"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:82
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:83
+#: modules/admin/src/Application/Controllers/Access/RolesController.php:69
+#: modules/admin/src/Application/Controllers/Access/RolesController.php:133
+#: modules/admin/src/Application/Controllers/Access/RolesController.php:245
+#: modules/admin/src/Application/Controllers/Access/RolesController.php:322
+#: modules/admin/src/Application/Controllers/Access/RolesController.php:333
+#: modules/admin/src/Application/Services/AdminUserRowMapper.php:77
+msgid "Roles"
+msgstr ""
+
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:92
 #: modules/admin/src/Application/Controllers/Users/AmnestyController.php:43
 #: modules/admin/src/Application/Controllers/Users/BanListController.php:43
 msgid "Ban Panel"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:92
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:102
 #: modules/admin/src/Application/Controllers/Users/UserCleanupController.php:40
 msgid "Database cleanup"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:100
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:110
 msgid "Antiflood"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:108
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:118
 #: modules/admin/src/Application/Controllers/Users/KarmaController.php:54
 #: modules/admin/src/Application/Controllers/Users/KarmaController.php:77
 msgid "Karma"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:121
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:131
 msgid "Modules"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:137
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:147
 #: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:59
+#: modules/admin/templates/role-form.twig:74
 msgid "Permissions"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:145
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:155
 #: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:90
 #: modules/admin/templates/user-delete-confirm.twig:33
 msgid "Forum"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:153
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:163
 msgid "News"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:161
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:171
 msgid "Collections"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:169
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:179
 #: modules/admin/src/Application/Controllers/Settings/AdsController.php:50
 #: modules/admin/src/Application/Controllers/Settings/AdsController.php:124
 #: modules/admin/src/Application/Controllers/Settings/AdsController.php:144
@@ -86,19 +98,19 @@ msgstr ""
 msgid "Advertisement"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:177
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:187
 msgid "Consents"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:185
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:195
 msgid "Contacts"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:193
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:203
 msgid "Cookie banner"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:202
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:212
 #: modules/admin/src/Application/Controllers/Settings/CountersController.php:31
 #: modules/admin/src/Application/Controllers/Settings/CountersController.php:48
 #: modules/admin/src/Application/Controllers/Settings/CountersController.php:92
@@ -108,46 +120,46 @@ msgstr ""
 msgid "Counters"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:215
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:225
 msgid "System"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:231
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:241
 #: modules/admin/src/Application/Controllers/Settings/SystemSettingsController.php:71
 msgid "System Settings"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:239
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:249
 msgid "Update Smilies"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:247
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:257
 msgid "Language Settings"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:255
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:265
 #: modules/admin/src/Application/Controllers/System/SystemCheckController.php:28
 msgid "System check"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:263
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:273
 #: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:68
 msgid "Maintenance"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:275
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:285
 #: modules/admin/src/Application/Controllers/System/SystemCheckController.php:41
 msgid "Security"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:291
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:301
 #: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:29
 #: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:42
 #: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:71
 msgid "Anti-Spyware"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:299
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:309
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:50
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:74
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:126
@@ -157,6 +169,50 @@ msgstr ""
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:227
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:274
 msgid "Ban by IP"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/Access/RolesController.php:129
+#: modules/admin/src/Application/Controllers/Access/RolesController.php:157
+msgid "A built-in role cannot be deleted"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/Access/RolesController.php:132
+#: modules/admin/src/Application/Controllers/Settings/CountersController.php:155
+msgid "Delete:"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/Access/RolesController.php:162
+msgid "The role is deleted"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/Access/RolesController.php:195
+#: modules/admin/src/Application/Controllers/Access/UserRolesController.php:94
+msgid "Changes saved successfully"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/Access/RolesController.php:198
+msgid "A role with this identifier already exists"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/Access/RolesController.php:229
+msgid "The identifier may hold lower case letters, digits and hyphens, and starts with a letter"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/Access/RolesController.php:243
+msgid "New role"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/Access/RolesController.php:243
+msgid "Role:"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/Access/UserRolesController.php:71
+msgid "The expiry date is not a date"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/Access/UserRolesController.php:129
+#: modules/admin/src/Application/Controllers/Access/UserRolesController.php:150
+msgid "Roles of the user"
 msgstr ""
 
 #: modules/admin/src/Application/Controllers/DashboardController.php:23
@@ -230,6 +286,7 @@ msgstr ""
 #: modules/admin/templates/forum-section-edit.twig:22
 #: modules/admin/templates/forum-section-form.twig:24
 #: modules/admin/templates/forum-section-form.twig:25
+#: modules/admin/templates/role-form.twig:51
 #: modules/admin/templates/settings.twig:67
 msgid "Title"
 msgstr ""
@@ -272,6 +329,7 @@ msgstr ""
 #: modules/admin/src/Application/Controllers/Users/UsersController.php:114
 #: modules/admin/src/Application/Middlewares/AdminAccessMiddleware.php:56
 #: modules/admin/src/Application/Middlewares/SuperAdminAccessMiddleware.php:55
+#: modules/admin/src/Application/UseCases/EnsureRoleManagementAccessUseCase.php:37
 msgid "Access denied"
 msgstr ""
 
@@ -460,6 +518,8 @@ msgstr ""
 #: modules/admin/templates/forum-structure.twig:35
 #: modules/admin/templates/languages-manage.twig:51
 #: modules/admin/templates/registrations.twig:36
+#: modules/admin/templates/role-delete-confirm.twig:24
+#: modules/admin/templates/roles.twig:54
 #: modules/admin/templates/user-delete-confirm.twig:39
 #: modules/admin/templates/users-cleanup.twig:25
 msgid "Delete"
@@ -503,6 +563,7 @@ msgstr ""
 
 #: modules/admin/src/Application/Controllers/Settings/AdsController.php:305
 #: modules/admin/src/Application/Services/AdRowMapper.php:121
+#: modules/admin/templates/roles.twig:31
 msgid "Guests"
 msgstr ""
 
@@ -572,12 +633,9 @@ msgstr ""
 msgid "Viewing"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/CountersController.php:155
-msgid "Delete:"
-msgstr ""
-
 #: modules/admin/src/Application/Controllers/Settings/CountersController.php:160
 #: modules/admin/templates/forum-section-delete-confirm.twig:12
+#: modules/admin/templates/role-delete-confirm.twig:13
 msgid "Do you really want to delete?"
 msgstr ""
 
@@ -859,20 +917,16 @@ msgstr ""
 msgid "Second IP is entered incorrectly"
 msgstr ""
 
-#: modules/admin/src/Application/UseCases/GetStaffListUseCase.php:28
-msgid "Supervisors"
+#: modules/admin/src/Application/UseCases/EnsureRoleManagementAccessUseCase.php:43
+msgid "You cannot manage a role that outranks your own"
 msgstr ""
 
-#: modules/admin/src/Application/UseCases/GetStaffListUseCase.php:29
-msgid "Administrators"
+#: modules/admin/src/Application/UseCases/EnsureRoleManagementAccessUseCase.php:47
+msgid "You cannot place a role above your own"
 msgstr ""
 
-#: modules/admin/src/Application/UseCases/GetStaffListUseCase.php:30
-msgid "Super Moderators"
-msgstr ""
-
-#: modules/admin/src/Application/UseCases/GetStaffListUseCase.php:31
-msgid "Moderators"
+#: modules/admin/src/Application/UseCases/EnsureUserRoleAccessUseCase.php:30
+msgid "You cannot change the roles of somebody who outranks you"
 msgstr ""
 
 #: modules/admin/src/Application/UseCases/PrepareIpBanUseCase.php:41
@@ -911,8 +965,11 @@ msgstr ""
 #: modules/admin/templates/ip-ban-search.twig:24
 #: modules/admin/templates/karma-clear-confirm.twig:22
 #: modules/admin/templates/karma.twig:44
+#: modules/admin/templates/role-delete-confirm.twig:25
+#: modules/admin/templates/role-form.twig:115
 #: modules/admin/templates/smilies.twig:21
 #: modules/admin/templates/user-delete-confirm.twig:40
+#: modules/admin/templates/user-roles.twig:70
 #: modules/admin/templates/users-cleanup.twig:26
 msgid "Cancel"
 msgstr ""
@@ -990,7 +1047,9 @@ msgstr ""
 #: modules/admin/templates/karma.twig:43
 #: modules/admin/templates/languages.twig:31
 #: modules/admin/templates/modules-access.twig:44
+#: modules/admin/templates/role-form.twig:114
 #: modules/admin/templates/settings.twig:107
+#: modules/admin/templates/user-roles.twig:69
 msgid "Save"
 msgstr ""
 
@@ -1054,6 +1113,7 @@ msgstr ""
 #: modules/admin/templates/counter-view.twig:50
 #: modules/admin/templates/counters.twig:38
 #: modules/admin/templates/forum-structure.twig:34
+#: modules/admin/templates/roles.twig:52
 msgid "Edit"
 msgstr ""
 
@@ -1067,6 +1127,7 @@ msgstr ""
 #: modules/admin/templates/ip-bans.twig:46
 #: modules/admin/templates/ip-search.twig:57
 #: modules/admin/templates/registrations.twig:47
+#: modules/admin/templates/roles.twig:62
 #: modules/admin/templates/staff.twig:23
 msgid "Total:"
 msgstr ""
@@ -1089,6 +1150,7 @@ msgstr ""
 #: modules/admin/templates/ip-search.twig:61
 #: modules/admin/templates/languages-manage.twig:63
 #: modules/admin/templates/registrations.twig:55
+#: modules/admin/templates/roles.twig:66
 #: modules/admin/templates/staff.twig:27
 msgid "Back"
 msgstr ""
@@ -1227,6 +1289,7 @@ msgstr ""
 #: modules/admin/templates/forum-section-form.twig:54
 #: modules/admin/templates/forum-structure.twig:41
 #: modules/admin/templates/ip-bans.twig:54
+#: modules/admin/templates/roles.twig:63
 msgid "Add"
 msgstr ""
 
@@ -1779,6 +1842,68 @@ msgstr ""
 msgid "Confirm all"
 msgstr ""
 
+#: modules/admin/templates/role-delete-confirm.twig:17
+msgid "It is held by one account, which loses everything the role granted it."
+msgid_plural "It is held by %d accounts, which lose everything the role granted them."
+msgstr[0] ""
+
+#: modules/admin/templates/role-form.twig:26
+msgid "This is a built-in role: its name and its level are fixed, because the code refers to them. What it may do is yours to change."
+msgstr ""
+
+#: modules/admin/templates/role-form.twig:35
+msgid "Identifier"
+msgstr ""
+
+#: modules/admin/templates/role-form.twig:42
+msgid "Used in code and cannot be changed later, for example: news-editor"
+msgstr ""
+
+#: modules/admin/templates/role-form.twig:61
+msgid "Level"
+msgstr ""
+
+#: modules/admin/templates/role-form.twig:70
+msgid "Who outranks whom. A role cannot be placed above your own."
+msgstr ""
+
+#: modules/admin/templates/role-form.twig:78
+msgid "A role of this level is allowed everything, whatever is ticked, so the permissions are not shown for it. That is what keeps a site from locking itself out of its own admin panel."
+msgstr ""
+
+#: modules/admin/templates/role-form.twig:104
+msgid "The role also carries permissions no installed module declares. They are kept as they are:"
+msgstr ""
+
+#: modules/admin/templates/roles.twig:15
+msgid "A role carries the permissions the code checks. The \"Guest\" role decides what the site shows without signing in, and \"User\" applies to everybody who is signed in."
+msgstr ""
+
+#: modules/admin/templates/roles.twig:28
+msgid "Full access"
+msgstr ""
+
+#: modules/admin/templates/roles.twig:34
+msgid "Everybody signed in"
+msgstr ""
+
+#: modules/admin/templates/roles.twig:37
+msgid "Built-in"
+msgstr ""
+
+#: modules/admin/templates/roles.twig:42
+#: modules/admin/templates/user-roles.twig:45
+msgid "Level:"
+msgstr ""
+
+#: modules/admin/templates/roles.twig:44
+msgid "Permissions:"
+msgstr ""
+
+#: modules/admin/templates/roles.twig:47
+msgid "Accounts:"
+msgstr ""
+
 #: modules/admin/templates/settings.twig:22
 msgid "Common Settings"
 msgstr ""
@@ -1882,6 +2007,30 @@ msgstr ""
 
 #: modules/admin/templates/user-delete-confirm.twig:36
 msgid "All threads and posts created by the user go in the hidden state"
+msgstr ""
+
+#: modules/admin/templates/user-roles.twig:26
+msgid "Everybody signed in holds the \"%s\" role; it is not given out."
+msgstr ""
+
+#: modules/admin/templates/user-roles.twig:47
+msgid "Expired"
+msgstr ""
+
+#: modules/admin/templates/user-roles.twig:53
+msgid "Until"
+msgstr ""
+
+#: modules/admin/templates/user-roles.twig:60
+msgid "Leave empty to grant it without an end date"
+msgstr ""
+
+#: modules/admin/templates/user-roles.twig:63
+msgid "This role stands above your own"
+msgstr ""
+
+#: modules/admin/templates/user-roles.twig:75
+msgid "What each role may do"
 msgstr ""
 
 #: modules/admin/templates/users-cleanup.twig:17

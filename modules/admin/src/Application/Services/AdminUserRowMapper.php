@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Johncms\Modules\Admin\Application\Services;
 
 use Illuminate\Support\Collection;
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Users\User;
 
 /**
@@ -14,6 +16,7 @@ final readonly class AdminUserRowMapper
 {
     public function __construct(
         private User $currentUser,
+        private AccessCheckerInterface $accessChecker,
     ) {
     }
 
@@ -46,7 +49,7 @@ final readonly class AdminUserRowMapper
             'show_origin'             => $this->currentUser->rights >= 3,
             // Filled in by the mappers that decorate this row; the template reads them always.
             'active'                  => false,
-            'buttons'                 => [],
+            'buttons'                 => $this->roleButtons($user),
         ];
 
         if ($this->currentUser->isValid() && $this->currentUser->id !== $user->id) {
@@ -54,5 +57,25 @@ final readonly class AdminUserRowMapper
         }
 
         return $item;
+    }
+
+    /**
+     * The way to the roles of the account, for the staff who may hand them out. A mapper that
+     * decorates this row replaces the buttons with its own.
+     *
+     * @return list<array<string, string>>
+     */
+    private function roleButtons(User $user): array
+    {
+        if (! $this->accessChecker->allows(CorePermissions::ADMIN_ROLES_MANAGE)) {
+            return [];
+        }
+
+        return [
+            [
+                'url'  => '/admin/users/' . $user->id . '/roles',
+                'name' => __('Roles'),
+            ],
+        ];
     }
 }

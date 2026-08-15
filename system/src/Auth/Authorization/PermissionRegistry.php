@@ -81,6 +81,29 @@ final class PermissionRegistry
     }
 
     /**
+     * The title of every group, keyed by the group. A module that named its group gets that name;
+     * one that did not is listed under the key itself rather than under an empty heading.
+     *
+     * @return array<string, string>
+     */
+    public function groupLabels(): array
+    {
+        $labels = [];
+
+        foreach ($this->all() as $definition) {
+            if ($definition->groupLabel !== null) {
+                $labels[$definition->group] ??= $definition->groupLabel;
+            }
+        }
+
+        foreach ($this->all() as $definition) {
+            $labels[$definition->group] ??= $definition->group;
+        }
+
+        return $labels;
+    }
+
+    /**
      * @return array<string, PermissionDefinition>
      */
     private function collect(): array

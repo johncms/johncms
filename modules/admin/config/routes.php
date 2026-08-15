@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Johncms\Modules\Admin\Application\Controllers\Access\RolesController;
+use Johncms\Modules\Admin\Application\Controllers\Access\UserRolesController;
 use Johncms\Modules\Admin\Application\Controllers\DashboardController;
 use Johncms\Modules\Admin\Application\Controllers\Forum\ForumDashboardController;
 use Johncms\Modules\Admin\Application\Controllers\Forum\ForumSettingsController;
@@ -56,6 +58,18 @@ return static function (RouteCollection $router, User $user): void {
         $r->get('/admin/users/{sort}', UserListController::class)
             ->name('admin.users.sort')
             ->requirements(['sort' => 'by-nick|by-ip']);
+        // Who may open these is decided by the admin.roles.manage permission rather than by the
+        // group: an administrator holds it, and a role standing above the visitor's own is
+        // listed but not opened.
+        $r->get('/admin/roles', [RolesController::class, 'index'])->name('admin.roles');
+        $r->get('/admin/roles/new', [RolesController::class, 'newForm'])->name('admin.roles.new');
+        $r->post('/admin/roles/new', [RolesController::class, 'store'])->name('admin.roles.store');
+        $r->get('/admin/roles/{id:number}/edit', [RolesController::class, 'editForm'])->name('admin.roles.edit');
+        $r->post('/admin/roles/{id:number}/edit', [RolesController::class, 'update'])->name('admin.roles.update');
+        $r->get('/admin/roles/{id:number}/delete', [RolesController::class, 'deleteConfirm'])->name('admin.roles.delete_confirm');
+        $r->post('/admin/roles/{id:number}/delete', [RolesController::class, 'delete'])->name('admin.roles.delete');
+        $r->get('/admin/users/{id:number}/roles', [UserRolesController::class, 'form'])->name('admin.users.roles');
+        $r->post('/admin/users/{id:number}/roles', [UserRolesController::class, 'save'])->name('admin.users.roles.save');
         $r->get('/admin/ip-whois', IpWhoisController::class)->name('admin.ip_whois');
         $r->get('/admin/ip-search', IpSearchController::class)->name('admin.ip_search');
         $r->get('/admin/ip-search/{mode}', IpSearchController::class)

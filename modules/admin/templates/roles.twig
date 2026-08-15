@@ -1,0 +1,68 @@
+{#
+    The roles of the site and what each of them carries.
+
+    @var array  items           Rows: id, slug, name, level, isSystem, isDefault, isGuest,
+                                permissions, holders, manageable, fullAccess.
+    @var string add_url
+    @var string success_message Empty unless a save has just succeeded.
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success shadow border-0', alert: success_message} only %}
+
+    <div class="alert alert-info">
+        {{ __('A role carries the permissions the code checks. The "Guest" role decides what the site shows without signing in, and "User" applies to everybody who is signed in.') }}
+    </div>
+
+    {% for item in items %}
+        <div class="new_post-item without_avatar">
+            <div class="d-flex justify-content-between align-items-center">
+                {% if item.manageable %}
+                    <a href="/admin/roles/{{ item.id }}/edit" class="h3">{{ item.name }}</a>
+                {% else %}
+                    <span class="h3">{{ item.name }}</span>
+                {% endif %}
+                <div>
+                    {% if item.fullAccess %}
+                        <span class="badge rounded-pill bg-warning text-dark">{{ __('Full access') }}</span>
+                    {% endif %}
+                    {% if item.isGuest %}
+                        <span class="badge rounded-pill bg-secondary">{{ __('Guests') }}</span>
+                    {% endif %}
+                    {% if item.isDefault %}
+                        <span class="badge rounded-pill bg-secondary">{{ __('Everybody signed in') }}</span>
+                    {% endif %}
+                    {% if item.isSystem %}
+                        <span class="badge rounded-pill bg-light text-dark">{{ __('Built-in') }}</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="text-muted small">
+                <code>{{ item.slug }}</code> · {{ __('Level:') }} {{ item.level }}
+                {% if not item.fullAccess %}
+                    · {{ __('Permissions:') }} {{ item.permissions }}
+                {% endif %}
+                {% if not item.isDefault and not item.isGuest %}
+                    · {{ __('Accounts:') }} {{ item.holders }}
+                {% endif %}
+            </div>
+            {% if item.manageable %}
+                <div class="mt-2 d-flex align-items-center">
+                    <a href="/admin/roles/{{ item.id }}/edit" class="me-2">{{ __('Edit') }}</a>
+                    {% if not item.isSystem %}
+                        <a href="/admin/roles/{{ item.id }}/delete" class="me-2 text-danger">{{ __('Delete') }}</a>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+    {% endfor %}
+
+    <div class="mt-2">
+        <div class="mb-2">{{ __('Total:') }} {{ items|length }}</div>
+        <a href="{{ add_url }}" class="btn btn-primary">{{ __('Add') }}</a>
+    </div>
+    <div class="mt-2">
+        <a href="/admin">{{ __('Back') }}</a>
+    </div>
+{% endblock %}

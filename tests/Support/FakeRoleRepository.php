@@ -11,8 +11,8 @@ use Johncms\Auth\Authorization\RoleRepositoryInterface;
 /**
  * Roles held in memory, so authorization can be tested without a schema.
  *
- * Only the reads are implemented; the writes throw, because a test reaching for them wants the
- * real repository against a real table.
+ * Enough of the writes are implemented to grant and revoke; the ones that shape the catalogue
+ * itself belong to a test running against a real table.
  */
 final class FakeRoleRepository implements RoleRepositoryInterface
 {
@@ -25,6 +25,9 @@ final class FakeRoleRepository implements RoleRepositoryInterface
     /** @var array<int, list<string>> Role slugs granted to a user id. */
     private array $granted = [];
 
+    /** @var array<int, array<int, int|null>> When a grant runs out: user id => role id => time. */
+    private array $expiries = [];
+
     /**
      * @param list<string> $permissions
      */
@@ -34,6 +37,7 @@ final class FakeRoleRepository implements RoleRepositoryInterface
         int $level = 10,
         bool $isDefault = false,
         bool $isGuest = false,
+        bool $isSystem = false,
     ): Role {
         $role = new Role();
         $role->forceFill(
@@ -42,7 +46,7 @@ final class FakeRoleRepository implements RoleRepositoryInterface
                 'slug'       => $slug,
                 'name'       => $slug,
                 'level'      => $level,
-                'is_system'  => false,
+                'is_system'  => $isSystem,
                 'is_default' => $isDefault,
                 'is_guest'   => $isGuest,
             ]
@@ -107,6 +111,61 @@ final class FakeRoleRepository implements RoleRepositoryInterface
         )));
     }
 
+    public function permissionCounts(): array
+    {
+        return array_map(static fn (array $permissions): int => count($permissions), $this->permissions);
+    }
+
+    public function holderCounts(int $now): array
+    {
+        $counts = [];
+
+        foreach ($this->granted as $slugs) {
+            foreach ($slugs as $slug) {
+                $role = $this->findBySlug($slug);
+
+                if ($role !== null) {
+                    $counts[$role->id] = ($counts[$role->id] ?? 0) + 1;
+                }
+            }
+        }
+
+        return $counts;
+    }
+
+    public function create(string $slug, string $name, int $level, int $now): Role
+    {
+        $role = $this->add($slug, level: $level);
+        $role->name = $name;
+
+        return $role;
+    }
+
+    public function update(int $roleId, string $name, int $level, int $now): void
+    {
+        $role = $this->findById($roleId);
+
+        if ($role !== null) {
+            $role->name = $name;
+            $role->level = $level;
+        }
+    }
+
+    public function delete(int $roleId): void
+    {
+        $role = $this->findById($roleId);
+
+        if ($role === null) {
+            return;
+        }
+
+        foreach (array_keys($this->granted) as $userId) {
+            $this->revoke($userId, $roleId);
+        }
+
+        unset($this->roles[$role->slug], $this->permissions[$roleId]);
+    }
+
     public function permissionsFor(array $roleIds): array
     {
         $permissions = [];
@@ -123,13 +182,34 @@ final class FakeRoleRepository implements RoleRepositoryInterface
         $this->permissions[$roleId] = array_values(array_unique($permissions));
     }
 
+    public function grantsFor(int $userId): array
+    {
+        $grants = [];
+
+        foreach ($this->granted[$userId] ?? [] as $slug) {
+            $role = $this->findBySlug($slug);
+
+            if ($role !== null) {
+                $grants[$role->id] = $this->expiries[$userId][$role->id] ?? null;
+            }
+        }
+
+        return $grants;
+    }
+
     public function grant(int $userId, int $roleId, ?int $grantedBy, int $grantedAt, ?int $expiresAt = null): void
     {
         $role = $this->findById($roleId);
 
-        if ($role !== null) {
+        if ($role === null) {
+            return;
+        }
+
+        if (! in_array($role->slug, $this->granted[$userId] ?? [], true)) {
             $this->granted[$userId][] = $role->slug;
         }
+
+        $this->expiries[$userId][$roleId] = $expiresAt;
     }
 
     public function revoke(int $userId, int $roleId): void

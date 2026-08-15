@@ -51,11 +51,47 @@ interface RoleRepositoryInterface
     public function permissionsFor(array $roleIds): array;
 
     /**
+     * How many permissions each role carries, keyed by role id.
+     *
+     * @return array<int, int>
+     */
+    public function permissionCounts(): array;
+
+    /**
+     * How many accounts hold each role, keyed by role id. Only the granted ones are counted: a
+     * default role has no rows and applies to everybody signed in.
+     *
+     * @return array<int, int>
+     */
+    public function holderCounts(int $now): array;
+
+    public function create(string $slug, string $name, int $level, int $now): Role;
+
+    /**
+     * Changes what a role is called and where it sits in the hierarchy. The slug is not among the
+     * arguments on purpose: code refers to it, so it is fixed once the role exists.
+     */
+    public function update(int $roleId, string $name, int $level, int $now): void;
+
+    /**
+     * Removes the role together with its permissions and everything granted through it.
+     */
+    public function delete(int $roleId): void;
+
+    /**
      * Replaces the permissions of a role with the given set.
      *
      * @param list<string> $permissions
      */
     public function setPermissions(int $roleId, array $permissions): void;
+
+    /**
+     * The explicit grants of one account: role id => when the grant runs out, null when it never
+     * does. Expired rows are included, because the screen listing them is the one that clears them.
+     *
+     * @return array<int, int|null>
+     */
+    public function grantsFor(int $userId): array;
 
     public function grant(int $userId, int $roleId, ?int $grantedBy, int $grantedAt, ?int $expiresAt = null): void;
 

@@ -226,6 +226,18 @@ Each one is converted automatically the next time its owner signs in — nobody 
 The number is shown so that support for the old scheme is not removed while it is still in use.' => 'Эти аккаунты созданы до перехода на текущее хэширование паролей, и их владельцы с тех пор не заходили.
 Каждый будет переведён автоматически при следующем входе владельца — сбрасывать ничего не нужно.
 Число показано, чтобы поддержку старой схемы не убрали, пока она ещё используется.',
+      'Admin panel' => 'Админ панель',
+      'Access the admin panel' => 'Доступ в админ панель',
+      'Change system settings' => 'Изменение системных настроек',
+      'Manage roles and permissions' => 'Управление ролями и правами',
+      'Guest' => 'Гость',
+      'User' => 'Пользователь',
+      'Method Not Allowed' => 'Метод не поддерживается',
+      'Bad Request' => 'Некорректный запрос',
+      'The session has expired' => 'Сессия устарела',
+      'Reload the page and submit the form again.' => 'Обновите страницу и отправьте форму заново.',
+      'The input is not between \'%min%\' and \'%max%\', inclusively' => 'Значение не входит в диапазон от \'%min%\' до \'%max%\' включительно',
+      'The two given tokens do not match' => 'Указанные значения не совпадают',
     ),
   ),
 );

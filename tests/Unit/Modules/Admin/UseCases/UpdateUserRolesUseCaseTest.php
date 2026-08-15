@@ -1,0 +1,139 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Tests\Unit\Modules\Admin\UseCases;
+
+use Gettext\Translator;
+use Gettext\TranslatorFunctions;
+use Illuminate\Database\Capsule\Manager as Capsule;
+use Illuminate\Database\Schema\Blueprint;
+use Johncms\Auth\Authorization\RightsMirror;
+use Johncms\Auth\Authorization\RoleSeeder;
+use Johncms\Auth\Authorization\SystemRole;
+use Johncms\Auth\Infrastructure\Persistence\Repository\EloquentRoleRepository;
+use Johncms\Auth\Schema\AuthSchema;
+use Johncms\Modules\Admin\Application\UseCases\UpdateUserRolesUseCase;
+use Johncms\Users\User;
+use PHPUnit\Framework\TestCase;
+use Tests\Support\BootsInMemoryDatabase;
+
+final class UpdateUserRolesUseCaseTest extends TestCase
+{
+    use BootsInMemoryDatabase;
+
+    private EloquentRoleRepository $roles;
+
+    private UpdateUserRolesUseCase $useCase;
+
+    protected function setUp(): void
+    {
+        $this->bootDatabase();
+        // The built-in roles are named through the gettext helpers, which nothing has registered
+        // in an isolated unit test.
+        TranslatorFunctions::register(new Translator());
+        AuthSchema::create(Capsule::schema());
+        $this->createUsersTable();
+
+        $this->roles = new EloquentRoleRepository();
+        (new RoleSeeder($this->roles))->seed();
+
+        $this->useCase = new UpdateUserRolesUseCase($this->roles, new RightsMirror($this->roles));
+    }
+
+    protected function tearDown(): void
+    {
+        $this->shutdownDatabase();
+    }
+
+    public function testGrantingARoleUpdatesTheMirroredNumber(): void
+    {
+        $user = $this->createUser();
+
+        $this->useCase->execute($user->id, [$this->roleId(SystemRole::Admin) => null], viewerLevel: 90);
+
+        self::assertSame([SystemRole::Admin->value], $this->slugsOf($user->id));
+        self::assertSame(7, $this->rightsOf($user->id));
+    }
+
+    public function testARoleThatIsNoLongerTickedIsTakenAway(): void
+    {
+        $user = $this->createUser();
+        $this->useCase->execute($user->id, [$this->roleId(SystemRole::Admin) => null], viewerLevel: 90);
+
+        $this->useCase->execute($user->id, [], viewerLevel: 90);
+
+        self::assertSame([], $this->slugsOf($user->id));
+        self::assertSame(0, $this->rightsOf($user->id));
+    }
+
+    /**
+     * Temporary moderation: the row stops counting on its own, without anybody clearing it.
+     */
+    public function testAGrantCanBeGivenAnEndDate(): void
+    {
+        $user = $this->createUser();
+        $expiresAt = time() + 86400;
+
+        $this->useCase->execute($user->id, [$this->roleId(SystemRole::ForumModerator) => $expiresAt], viewerLevel: 90);
+
+        self::assertSame([$this->roleId(SystemRole::ForumModerator) => $expiresAt], $this->roles->grantsFor($user->id));
+    }
+
+    /**
+     * The form never shows a role standing above the visitor, so a request that omits it must not
+     * be read as "take it away" — that would be a way to demote somebody who outranks you.
+     */
+    public function testARoleAboveTheViewerIsLeftAloneByASaveThatOmitsIt(): void
+    {
+        $user = $this->createUser();
+        $this->roles->grant($user->id, $this->roleId(SystemRole::Supervisor), null, time());
+
+        $this->useCase->execute($user->id, [$this->roleId(SystemRole::ForumModerator) => null], viewerLevel: 70);
+
+        self::assertSame(
+            [SystemRole::ForumModerator->value, SystemRole::Supervisor->value],
+            $this->slugsOf($user->id)
+        );
+        self::assertSame(9, $this->rightsOf($user->id));
+    }
+
+    /**
+     * @return list<string>
+     */
+    private function slugsOf(int $userId): array
+    {
+        return $this->roles->grantedTo($userId, time())->pluck('slug')->sort()->values()->all();
+    }
+
+    private function rightsOf(int $userId): int
+    {
+        return (int) User::query()->find($userId)?->rights;
+    }
+
+    private function roleId(SystemRole $role): int
+    {
+        return (int) $this->roles->findBySlug($role->value)?->id;
+    }
+
+    private function createUser(): User
+    {
+        $user = new User();
+        $user->fill(['name' => 'staff-' . uniqid(), 'rights' => 0]);
+        $user->save();
+
+        return $user;
+    }
+
+    private function createUsersTable(): void
+    {
+        Capsule::schema()->create(
+            'users',
+            static function (Blueprint $table): void {
+                $table->increments('id');
+                $table->string('name')->default('');
+                $table->integer('rights')->default(0);
+            }
+        );
+    }
+}

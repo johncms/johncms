@@ -74,6 +74,16 @@
                     <span class="badge rounded-pill text-bg-light">{{ counters.staff|format_number }}</span>
                 </a>
             </li>
+            {% if can('admin.roles.manage') %}
+                <li class="{{ usr_menu.roles|default(false) ? 'active' : '' }}">
+                    <a href="/admin/roles">
+                        <svg class="icon">
+                            <use xlink:href="{{ sprite }}#shield"/>
+                        </svg>
+                        <span class="flex-grow-1">{{ d__('admin', 'Roles') }}</span>
+                    </a>
+                </li>
+            {% endif %}
             <li class="{{ usr_menu.ban_panel|default(false) ? 'active' : '' }}">
                 <a href="/admin/bans">
                     <svg class="icon">

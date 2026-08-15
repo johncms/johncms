@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Johncms\View\Twig\Runtime;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
+use Illuminate\Database\Eloquent\Builder;
+use Johncms\Auth\Authorization\UserRole;
 use Johncms\Users\Ban;
 use Johncms\Users\User;
 use Twig\Extension\RuntimeExtensionInterface;
@@ -30,8 +32,26 @@ final class AdminRuntime implements RuntimeExtensionInterface
         return $this->counters ??= [
             'registrations' => User::query()->where('preg', 0)->count(),
             'users'         => User::query()->where('preg', 1)->count(),
-            'staff'         => User::query()->where('rights', '>=', 1)->count(),
+            'staff'         => $this->countStaff(),
             'bans'          => Ban::query()->where('ban_time', '>', time())->count(),
         ];
+    }
+
+    /**
+     * Accounts holding a role that was granted to them. The default role is not one of those:
+     * everybody signed in holds it, without a row and without being staff.
+     */
+    private function countStaff(): int
+    {
+        $now = time();
+
+        return UserRole::query()
+            ->where(
+                static function (Builder $query) use ($now): void {
+                    $query->whereNull('expires_at')->orWhere('expires_at', '>', $now);
+                }
+            )
+            ->distinct()
+            ->count('user_id');
     }
 }

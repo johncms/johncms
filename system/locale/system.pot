@@ -339,6 +339,66 @@ msgstr ""
 msgid "Back"
 msgstr ""
 
+#: system/src/Auth/Authorization/CorePermissions.php:34
+msgid "Admin panel"
+msgstr ""
+
+#: system/src/Auth/Authorization/CorePermissions.php:40
+msgid "Access the admin panel"
+msgstr ""
+
+#: system/src/Auth/Authorization/CorePermissions.php:46
+msgid "Change system settings"
+msgstr ""
+
+#: system/src/Auth/Authorization/CorePermissions.php:52
+msgid "Manage roles and permissions"
+msgstr ""
+
+#: system/src/Auth/Authorization/SystemRole.php:103
+msgid "Guest"
+msgstr ""
+
+#: system/src/Auth/Authorization/SystemRole.php:104
+msgid "User"
+msgstr ""
+
+#: system/src/Auth/Authorization/SystemRole.php:105
+#: system/src/UserProperties.php:68
+#: system/src/Users/UserMutators.php:61
+msgid "Forum moderator"
+msgstr ""
+
+#: system/src/Auth/Authorization/SystemRole.php:106
+#: system/src/UserProperties.php:69
+#: system/src/Users/UserMutators.php:62
+msgid "Download moderator"
+msgstr ""
+
+#: system/src/Auth/Authorization/SystemRole.php:107
+#: system/src/UserProperties.php:70
+#: system/src/Users/UserMutators.php:63
+msgid "Library moderator"
+msgstr ""
+
+#: system/src/Auth/Authorization/SystemRole.php:108
+#: system/src/UserProperties.php:71
+#: system/src/Users/UserMutators.php:64
+msgid "Super moderator"
+msgstr ""
+
+#: system/src/Auth/Authorization/SystemRole.php:109
+#: system/src/UserProperties.php:72
+#: system/src/Users/UserMutators.php:65
+msgid "Administrator"
+msgstr ""
+
+#: system/src/Auth/Authorization/SystemRole.php:110
+#: system/src/UserProperties.php:73
+#: system/src/Users/UserMutators.php:66
+msgid "Supervisor"
+msgstr ""
+
 #: system/src/Checker/SystemChecker.php:30
 msgid "PHP version"
 msgstr ""
@@ -546,36 +606,6 @@ msgstr ""
 msgid "Home"
 msgstr ""
 
-#: system/src/UserProperties.php:68
-#: system/src/Users/UserMutators.php:61
-msgid "Forum moderator"
-msgstr ""
-
-#: system/src/UserProperties.php:69
-#: system/src/Users/UserMutators.php:62
-msgid "Download moderator"
-msgstr ""
-
-#: system/src/UserProperties.php:70
-#: system/src/Users/UserMutators.php:63
-msgid "Library moderator"
-msgstr ""
-
-#: system/src/UserProperties.php:71
-#: system/src/Users/UserMutators.php:64
-msgid "Super moderator"
-msgstr ""
-
-#: system/src/UserProperties.php:72
-#: system/src/Users/UserMutators.php:65
-msgid "Administrator"
-msgstr ""
-
-#: system/src/UserProperties.php:73
-#: system/src/Users/UserMutators.php:66
-msgid "Supervisor"
-msgstr ""
-
 #: system/src/Users/UserPlaceFormatter.php:54
 msgid "Somewhere on the site"
 msgstr ""
@@ -643,14 +673,14 @@ msgid "'%hostname%' does not appear to have any valid MX or A records for the em
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:17
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:342
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:352
 #: themes/default/templates/components/sidebar-main-menu.twig:6
 #: themes/default/templates/components/sidebar-main-menu.twig:179
 msgid "Set Light Theme"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:17
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:341
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:351
 #: themes/default/templates/components/sidebar-main-menu.twig:6
 #: themes/default/templates/components/sidebar-main-menu.twig:178
 msgid "Set Dark Theme"

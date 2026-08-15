@@ -31,21 +31,26 @@ final class CorePermissions implements PermissionProviderInterface
 
     public function permissions(): iterable
     {
+        $group = d__('system', 'Admin panel');
+
         return [
             new PermissionDefinition(
                 self::ADMIN_ACCESS,
                 self::GROUP,
-                d__('system', 'Access the admin panel')
+                d__('system', 'Access the admin panel'),
+                $group
             ),
             new PermissionDefinition(
                 self::ADMIN_SETTINGS_MANAGE,
                 self::GROUP,
-                d__('system', 'Change system settings')
+                d__('system', 'Change system settings'),
+                $group
             ),
             new PermissionDefinition(
                 self::ADMIN_ROLES_MANAGE,
                 self::GROUP,
-                d__('system', 'Manage roles and permissions')
+                d__('system', 'Manage roles and permissions'),
+                $group
             ),
         ];
     }

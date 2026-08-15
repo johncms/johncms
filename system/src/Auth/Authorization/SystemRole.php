@@ -38,6 +38,16 @@ enum SystemRole: string
      */
     public const SUPERVISOR_LEVEL = 90;
 
+    /**
+     * Whether a role standing this high may do anything at all, whatever permissions it carries.
+     * The one rule of the hierarchy that is not a permission, so it lives next to the level it
+     * compares against rather than in whoever happens to ask.
+     */
+    public static function grantsEverything(int $level): bool
+    {
+        return $level >= self::SUPERVISOR_LEVEL;
+    }
+
     public function level(): int
     {
         return match ($this) {

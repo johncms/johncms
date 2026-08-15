@@ -7,6 +7,7 @@ namespace Tests\Unit\Auth\Authorization;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Schema\Blueprint;
 use Johncms\Auth\Authorization\AccessChecker;
+use Johncms\Auth\Authorization\RoleLevels;
 use Johncms\Auth\Authorization\SystemRole;
 use Johncms\Auth\Authorization\Vote;
 use Johncms\Auth\Authorization\Voters\BanVoter;
@@ -54,7 +55,7 @@ final class VotersTest extends TestCase
     public function testSupervisorLevelAllowsEverything(): void
     {
         $roles = new FakeRoleRepository();
-        $voter = new SuperAdminVoter($roles);
+        $voter = new SuperAdminVoter(new RoleLevels($roles));
 
         $supervisor = IdentityFactory::withRoles([SystemRole::Supervisor->value]);
 
@@ -63,7 +64,7 @@ final class VotersTest extends TestCase
 
     public function testLesserRolesGetNothingFromIt(): void
     {
-        $voter = new SuperAdminVoter(new FakeRoleRepository());
+        $voter = new SuperAdminVoter(new RoleLevels(new FakeRoleRepository()));
 
         self::assertSame(
             Vote::Abstain,
@@ -81,7 +82,7 @@ final class VotersTest extends TestCase
         $roles = new FakeRoleRepository();
         $roles->add('owner', level: SystemRole::SUPERVISOR_LEVEL);
 
-        $voter = new SuperAdminVoter($roles);
+        $voter = new SuperAdminVoter(new RoleLevels($roles));
 
         self::assertSame(Vote::Allow, $voter->vote(IdentityFactory::withRoles(['owner']), 'anything', null));
     }
@@ -116,7 +117,7 @@ final class VotersTest extends TestCase
                 new PermissionResolver(new FakeRoleRepository()),
                 new RequestStack()
             ),
-            [new SuperAdminVoter(new FakeRoleRepository()), new BanVoter()]
+            [new SuperAdminVoter(new RoleLevels(new FakeRoleRepository())), new BanVoter()]
         );
 
         $supervisor = new Identity(userId: 7, roles: [SystemRole::Supervisor->value]);
