@@ -13,18 +13,18 @@ declare(strict_types=1);
 namespace Johncms;
 
 use Johncms\Auth\Authorization\StaffTitles;
+use Johncms\Auth\CurrentUser;
 use Johncms\Users\User;
 
 class UserProperties
 {
-    /** @var User */
-    public $current_user;
+    public CurrentUser $current_user;
 
     private StaffTitles $staffTitles;
 
     public function __construct()
     {
-        $this->current_user = di(User::class);
+        $this->current_user = di(CurrentUser::class);
         $this->staffTitles = di(StaffTitles::class);
     }
 
@@ -43,7 +43,7 @@ class UserProperties
         $userId = (int) ($user_data['user_id'] ?? $user_data['id'] ?? 0);
 
         $data_array['user_profile_link'] = '';
-        if ($userId > 0 && $this->current_user->id !== $userId && $this->current_user->isValid()) {
+        if ($userId > 0 && $this->current_user->id() !== $userId && $this->current_user->isValid()) {
             $data_array['user_profile_link'] = '/profile/' . $userId;
         }
 

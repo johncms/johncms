@@ -7,6 +7,7 @@ namespace Johncms\Casts;
 use Carbon\Carbon;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
+use Johncms\Auth\CurrentUser;
 use Johncms\System\i18n\Translator;
 use Johncms\Users\User;
 
@@ -24,8 +25,7 @@ class FormattedDate implements CastsAttributes
     public function get($model, $key, $value, $attributes)
     {
         if (! empty($value)) {
-            /** @var User $user */
-            $user = di(User::class);
+            $user = di(CurrentUser::class)->user();
             /** @var Translator $translator */
             $translator = di(Translator::class);
 

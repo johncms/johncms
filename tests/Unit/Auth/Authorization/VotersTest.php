@@ -21,6 +21,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Tests\Support\BootsInMemoryDatabase;
 use Tests\Support\FakeRoleRepository;
+use Tests\Support\FakeUserRepository;
 use Tests\Support\IdentityFactory;
 
 final class VotersTest extends TestCase
@@ -115,7 +116,8 @@ final class VotersTest extends TestCase
             new CurrentUser(
                 new AuthenticatorChain([]),
                 new PermissionResolver(new FakeRoleRepository()),
-                new RequestStack()
+                new RequestStack(),
+                new FakeUserRepository()
             ),
             [new SuperAdminVoter(new RoleLevels(new FakeRoleRepository())), new BanVoter()]
         );

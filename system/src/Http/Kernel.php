@@ -29,6 +29,7 @@ use Johncms\System\i18n\LocaleResolver;
 use Johncms\System\i18n\Translator;
 use Johncms\System\Users\UserStat;
 use Johncms\Users\CurrentUserAuthenticator;
+use Johncms\Users\IpHistoryRecorder;
 use LogicException;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
@@ -69,6 +70,7 @@ final readonly class Kernel implements HttpKernelInterface, TerminableInterface
         private RequestRateLogInterface $requestRateLog,
         private CookieQueue $cookieQueue,
         private CurrentUserAuthenticator $currentUserAuthenticator,
+        private IpHistoryRecorder $ipHistoryRecorder,
         private LocaleResolver $localeResolver,
         private Translator $translator,
         private ModuleContext $moduleContext,
@@ -117,12 +119,16 @@ final readonly class Kernel implements HttpKernelInterface, TerminableInterface
             // save() below. Native storage cannot be restarted once headers are sent, so a worker
             // will also need a different storage in SessionFactory.
             $this->session->start();
+
+            // Another write, and it runs before the controller: the address moved down into the
+            // history is the one the visitor arrived with, and UserStat overwrites the visit
+            // fields it reads once the response is out. Asking who the visitor is here is also
+            // what runs the authenticator chain for this request.
+            $this->ipHistoryRecorder->record();
         }
 
-        // Who is making this request. The authenticator chain decides it, and the shared
-        // current-user services are filled from the answer. The only place this happens, for
-        // every request of every runtime — the boot deliberately does not do it, or the state
-        // reset above would discard what it decided.
+        // The shared User instance the older code injects is filled from the same answer, once
+        // per request, for as long as anything still takes the model in its constructor.
         $this->currentUserAuthenticator->authenticate();
 
         // The language of this visitor, applied on top of the translator built at boot. Resolving

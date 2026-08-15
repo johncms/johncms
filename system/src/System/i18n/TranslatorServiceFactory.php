@@ -14,19 +14,17 @@ namespace Johncms\System\i18n;
 
 class TranslatorServiceFactory
 {
-    public function __construct(
-        private readonly LocaleResolver $localeResolver,
-    ) {
-    }
-
     /**
-     * The locale of the boot request. The translator is shared, so the kernel then applies the
-     * locale of every request it serves on top of this one.
+     * The translator of the site, speaking the language the site is configured in.
+     *
+     * Who is visiting is not asked here: this runs at boot, before there is a database
+     * connection, and the language of a signed-in visitor is a query away. The kernel applies
+     * the locale of the visitor on top of this one, for every request it serves.
      */
     public function __invoke(): Translator
     {
         $translator = new Translator();
-        $translator->setLocale($this->localeResolver->resolve());
+        $translator->setLocale((string) config('johncms.lng', 'en'));
 
         return $translator;
     }

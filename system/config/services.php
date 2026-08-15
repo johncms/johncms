@@ -324,7 +324,7 @@ return static function (ContainerConfigurator $container): void {
 
     $services->set(AppVariable::class)
         ->arg('$environment', ViewEnvironment::Web)
-        ->arg('$user', service_closure(\Johncms\Users\User::class))
+        ->arg('$currentUser', service(\Johncms\Auth\CurrentUser::class))
         ->arg('$csrf', service_closure(Csrf::class));
     $services->set(AppExtension::class)
         ->arg('$app', service_closure(AppVariable::class))

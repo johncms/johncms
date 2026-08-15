@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\View\Twig;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Http\CurrentPage;
 use Johncms\Security\Csrf;
 use Johncms\System\i18n\Translator;
@@ -24,10 +25,10 @@ use InvalidArgumentException;
 final readonly class AppVariable
 {
     /**
-     * The user and the CSRF token arrive as closures: building them costs a database query and a
-     * session, and a page that never mentions them should pay neither.
+     * The CSRF token arrives as a closure: building it costs a session, and a page that never
+     * mentions it should pay nothing. The current user is lazy on its own — the profile behind
+     * app.user is queried on the first template asking for it.
      *
-     * @param callable(): User $user
      * @param callable(): Csrf $csrf
      */
     public function __construct(
@@ -35,7 +36,7 @@ final readonly class AppVariable
         private CurrentPage $currentPage,
         private ColorScheme $colorScheme,
         private ThemeRepositoryInterface $themes,
-        private mixed $user,
+        private CurrentUser $currentUser,
         private mixed $csrf,
         private Translator $translator,
     ) {
@@ -77,7 +78,7 @@ final readonly class AppVariable
 
     public function getUser(): User
     {
-        return ($this->user)();
+        return $this->currentUser->user();
     }
 
     public function getLocale(): string

@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms;
 
-use Johncms\Users\User;
+use Johncms\Auth\CurrentUser;
 use Johncms\Utils\PlainTextFormatter;
 use PDO;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -22,7 +22,7 @@ class Ads
     /** @var PDO */
     private $db;
 
-    /** @var User */
+    /** @var CurrentUser */
     private $user;
 
     /** @var null|array */
@@ -31,7 +31,7 @@ class Ads
     /** @var RequestStack */
     private $requestStack;
 
-    public function __construct(PDO $pdo, User $user, RequestStack $requestStack)
+    public function __construct(PDO $pdo, CurrentUser $user, RequestStack $requestStack)
     {
         $this->db = $pdo;
         $this->user = $user;

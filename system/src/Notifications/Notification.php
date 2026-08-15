@@ -15,6 +15,7 @@ namespace Johncms\Notifications;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Johncms\Auth\CurrentUser;
 use Johncms\Casts\DateHuman;
 use Johncms\Users\User;
 use Twig\Markup;
@@ -70,9 +71,7 @@ class Notification extends Model
         static::addGlobalScope(
             'access',
             static function (Builder $builder) {
-                /** @var \Johncms\Users\User $user */
-                $user = di(\Johncms\Users\User::class);
-                $builder->where('user_id', '=', $user->id);
+                $builder->where('user_id', '=', di(CurrentUser::class)->id());
             }
         );
     }

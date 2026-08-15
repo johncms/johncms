@@ -142,7 +142,7 @@ class Comments
         $this->dateFormatter = $container->get(DateFormatterInterface::class);
         $this->ignoreListChecker = $container->get(IgnoreListCheckerInterface::class);
         $this->db = $container->get(PDO::class);
-        $this->systemUser = $container->get(User::class);
+        $this->systemUser = $container->get(CurrentUser::class)->user();
         $this->accessChecker = $container->get(AccessCheckerInterface::class);
         $this->currentUser = $container->get(CurrentUser::class);
         $this->roleLevels = $container->get(RoleLevels::class);

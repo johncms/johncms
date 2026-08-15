@@ -11,83 +11,46 @@ use Johncms\Auth\Identity;
 use Johncms\Http\Request;
 use Johncms\Users\CurrentUserAuthenticator;
 use Johncms\Users\User;
-use Johncms\Users\UserFactory;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Tests\Support\FakeAuthenticator;
 use Tests\Support\FakeRoleRepository;
-use Tests\Support\IdentityFactory;
+use Tests\Support\FakeUserRepository;
 
 final class CurrentUserAuthenticatorTest extends TestCase
 {
-    public function testTheVisitorIsLoadedIntoTheSharedInstance(): void
+    /**
+     * Nobody is signed in: the shared model is still refilled, with nothing, so whatever the
+     * previous visitor left in it cannot answer for this request.
+     */
+    public function testTheStateOfThePreviousVisitorIsDropped(): void
     {
-        $user = new User();
+        $shared = new User();
+        $shared->setRawAttributes(['id' => 42, 'name' => 'Somebody'], true);
+        $shared->exists = true;
 
-        $factory = $this->createMock(UserFactory::class);
-        $factory->expects(self::once())->method('load')->with($user, 42);
-
-        $authenticator = new CurrentUserAuthenticator(
-            $this->currentUser(IdentityFactory::user(id: 42)),
-            $factory,
-            $user
-        );
-
+        $authenticator = new CurrentUserAuthenticator($this->currentUser(Identity::guest()), $shared);
         $authenticator->authenticate();
+
+        self::assertSame([], $shared->getAttributes());
+        self::assertFalse($shared->exists);
     }
 
     /**
-     * Nobody is signed in: the model is still filled, with nothing, so whatever the previous
-     * visitor left in it cannot answer for this request.
+     * The mirror runs once per request, and a second call must not undo what the request has
+     * done to the model in between.
      */
-    public function testAGuestIsAlsoLoaded(): void
+    public function testTheSameVisitorIsMirroredOnlyOnce(): void
     {
-        $factory = $this->createMock(UserFactory::class);
-        $factory->expects(self::once())->method('load')->with(self::anything(), 0);
+        $shared = new User();
 
-        $authenticator = new CurrentUserAuthenticator(
-            new CurrentUser(new AuthenticatorChain([]), $this->permissionResolver(), new RequestStack()),
-            $factory,
-            new User()
-        );
-
+        $authenticator = new CurrentUserAuthenticator($this->currentUser(Identity::guest()), $shared);
         $authenticator->authenticate();
-    }
 
-    public function testTheSameVisitorIsLoadedOnlyOnce(): void
-    {
-        // The kernel may call this more than once for one request, and each call is a query.
-        $factory = $this->createMock(UserFactory::class);
-        $factory->expects(self::once())->method('load');
-
-        $authenticator = new CurrentUserAuthenticator(
-            $this->currentUser(IdentityFactory::user(id: 42)),
-            $factory,
-            new User()
-        );
-
+        $shared->setRawAttributes(['name' => 'Changed by the request'], true);
         $authenticator->authenticate();
-        $authenticator->authenticate();
-    }
 
-    /**
-     * Signing in and stepping into impersonation change the visitor inside one request, and the
-     * model has to follow.
-     */
-    public function testForgettingForcesAReload(): void
-    {
-        $factory = $this->createMock(UserFactory::class);
-        $factory->expects(self::exactly(2))->method('load');
-
-        $authenticator = new CurrentUserAuthenticator(
-            $this->currentUser(IdentityFactory::user(id: 42)),
-            $factory,
-            new User()
-        );
-
-        $authenticator->authenticate();
-        $authenticator->forget();
-        $authenticator->authenticate();
+        self::assertSame(['name' => 'Changed by the request'], $shared->getAttributes());
     }
 
     private function currentUser(Identity $identity): CurrentUser
@@ -97,13 +60,9 @@ final class CurrentUserAuthenticatorTest extends TestCase
 
         return new CurrentUser(
             new AuthenticatorChain([new FakeAuthenticator($identity)]),
-            $this->permissionResolver(),
-            $stack
+            new PermissionResolver(new FakeRoleRepository()),
+            $stack,
+            new FakeUserRepository()
         );
-    }
-
-    private function permissionResolver(): PermissionResolver
-    {
-        return new PermissionResolver(new FakeRoleRepository());
     }
 }

@@ -20,7 +20,7 @@ use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Johncms\Modules\Guestbook\Application\Services\GuestbookPermissions;
 use Johncms\Modules\Library\Application\Services\LibraryPermissions;
 use Johncms\Notifications\Notification;
-use Johncms\Users\User;
+use Johncms\Auth\CurrentUser;
 use PDO;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -41,7 +41,7 @@ class Counters
     /** @var string */
     private $homeurl;
 
-    /** @var User */
+    /** @var CurrentUser */
     private $user;
 
     /** @var Cache */
@@ -54,7 +54,7 @@ class Counters
 
     public function __construct(
         PDO $pdo,
-        User $user,
+        CurrentUser $user,
         string $homeUrl,
         Cache $cache,
         RequestStack $requestStack,
@@ -181,7 +181,7 @@ class Counters
         if ($this->user->isValid()) {
             $total = $this->db->query(
                 "SELECT COUNT(*) FROM `forum_topic`
-                LEFT JOIN `cms_forum_rdm` ON `forum_topic`.`id` = `cms_forum_rdm`.`topic_id` AND `cms_forum_rdm`.`user_id` = '" . $this->user->id . "'
+                LEFT JOIN `cms_forum_rdm` ON `forum_topic`.`id` = `cms_forum_rdm`.`topic_id` AND `cms_forum_rdm`.`user_id` = '" . $this->user->id() . "'
                 WHERE (`cms_forum_rdm`.`topic_id` IS NULL OR `forum_topic`.`last_post_date` > `cms_forum_rdm`.`time`)
                 " . ($this->accessChecker->allows(ForumPermissions::DELETED_VIEW) ? '' : ' AND (`forum_topic`.`deleted` != 1 OR `forum_topic`.`deleted` IS NULL)') . '
                 '
@@ -209,7 +209,7 @@ class Counters
         if ($this->user->isValid()) {
             $total = $this->db->query(
                 "SELECT COUNT(*) FROM `forum_topic`
-                LEFT JOIN `cms_forum_rdm` ON `forum_topic`.`id` = `cms_forum_rdm`.`topic_id` AND `cms_forum_rdm`.`user_id` = '" . $this->user->id . "'
+                LEFT JOIN `cms_forum_rdm` ON `forum_topic`.`id` = `cms_forum_rdm`.`topic_id` AND `cms_forum_rdm`.`user_id` = '" . $this->user->id() . "'
                 WHERE (`cms_forum_rdm`.`topic_id` IS NULL OR `forum_topic`.`last_post_date` > `cms_forum_rdm`.`time`)
                 " . ($this->accessChecker->allows(ForumPermissions::DELETED_VIEW) ? '' : ' AND (`forum_topic`.`deleted` != 1 OR `forum_topic`.`deleted` IS NULL)') . '
                 '
@@ -288,11 +288,11 @@ class Counters
         if (! $this->user->isValid()) {
             $new_mail = $this->db->query(
                 "SELECT COUNT(*) FROM `cms_mail`
-                            LEFT JOIN `cms_contact` ON `cms_mail`.`user_id`=`cms_contact`.`from_id` AND `cms_contact`.`user_id`='" . $this->user->id . "'
-                            WHERE `cms_mail`.`from_id`='" . $this->user->id . "'
+                            LEFT JOIN `cms_contact` ON `cms_mail`.`user_id`=`cms_contact`.`from_id` AND `cms_contact`.`user_id`='" . $this->user->id() . "'
+                            WHERE `cms_mail`.`from_id`='" . $this->user->id() . "'
                             AND `cms_mail`.`sys`='0'
                             AND `cms_mail`.`read`='0'
-                            AND `cms_mail`.`delete`!='" . $this->user->id . "'
+                            AND `cms_mail`.`delete`!='" . $this->user->id() . "'
                             AND `cms_contact`.`ban`!='1'"
             )->fetchColumn();
         }
@@ -509,30 +509,30 @@ class Counters
             $notifications['downloads_mod'] = $this->db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '3'")->fetchColumn();
         }
 
-        if (! empty($this->user->ban)) {
+        if (! empty($this->user->user()->ban)) {
             $notifications['ban'] = 1;
         }
 
-        if ($this->user->comm_count > $this->user->comm_old) {
-            $notifications['guestbook_comments'] = ($this->user->comm_count - $this->user->comm_old);
+        if ($this->user->user()->comm_count > $this->user->user()->comm_old) {
+            $notifications['guestbook_comments'] = ($this->user->user()->comm_count - $this->user->user()->comm_old);
         }
 
         $notifications['new_mail'] = $this->db->query(
             "SELECT COUNT(*) FROM `cms_mail`
-                            LEFT JOIN `cms_contact` ON `cms_mail`.`user_id`=`cms_contact`.`from_id` AND `cms_contact`.`user_id`='" . $this->user->id . "'
-                            WHERE `cms_mail`.`from_id`='" . $this->user->id . "'
+                            LEFT JOIN `cms_contact` ON `cms_mail`.`user_id`=`cms_contact`.`from_id` AND `cms_contact`.`user_id`='" . $this->user->id() . "'
+                            WHERE `cms_mail`.`from_id`='" . $this->user->id() . "'
                             AND `cms_mail`.`sys`='0'
                             AND `cms_mail`.`read`='0'
-                            AND `cms_mail`.`delete`!='" . $this->user->id . "'
+                            AND `cms_mail`.`delete`!='" . $this->user->id() . "'
                             AND `cms_contact`.`ban`!='1'"
         )->fetchColumn();
 
-        $notifications['new_album_comm'] = $this->db->query('SELECT COUNT(*) FROM `cms_album_files` WHERE `user_id` = \'' . $this->user->id . '\' AND `unread_comments` = 1')->fetchColumn();
+        $notifications['new_album_comm'] = $this->db->query('SELECT COUNT(*) FROM `cms_album_files` WHERE `user_id` = \'' . $this->user->id() . '\' AND `unread_comments` = 1')->fetchColumn();
 
         // The column is cast to an array by the model, so there is nothing to decode here.
         $notification_settings = array_merge(
             ['show_forum_unread' => false],
-            $this->user->notification_settings ?? []
+            $this->user->user()->notification_settings ?? []
         );
         if ($notification_settings['show_forum_unread']) {
             $forum_counters = $this->forumCounters();

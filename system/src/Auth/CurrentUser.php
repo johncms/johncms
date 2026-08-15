@@ -15,6 +15,8 @@ namespace Johncms\Auth;
 use Johncms\Auth\Authentication\AuthenticatorChain;
 use Johncms\Auth\Authorization\PermissionResolver;
 use Johncms\Http\Request;
+use Johncms\Users\Repository\UserRepositoryInterface;
+use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Contracts\Service\ResetInterface;
 
@@ -33,10 +35,13 @@ final class CurrentUser implements ResetInterface
 {
     private ?Identity $identity = null;
 
+    private ?User $user = null;
+
     public function __construct(
         private readonly AuthenticatorChain $authenticators,
         private readonly PermissionResolver $permissions,
         private readonly RequestStack $requestStack,
+        private readonly UserRepositoryInterface $users,
     ) {
     }
 
@@ -59,9 +64,42 @@ final class CurrentUser implements ResetInterface
         return $this->identity()->isGuest();
     }
 
+    /**
+     * Whether the visitor is a fully fledged member: signed in, registration approved and, when
+     * the site asks for it, the address confirmed.
+     *
+     * Not the same question as isGuest(): the checks are made when signing in, but an account can
+     * lose its approval — or the site can start asking for confirmed addresses — while a session
+     * of it is still alive.
+     */
+    public function isValid(): bool
+    {
+        return ! $this->isGuest() && $this->user()->isValid();
+    }
+
+    /**
+     * The profile of the visitor: nickname, settings, counters — the fields the identity has no
+     * business carrying.
+     *
+     * Loaded on the first ask and not before, so a page that only checks permissions costs no
+     * query. A guest is an unsaved model rather than null: the templates and the settings readers
+     * ask the same questions of everybody, and the defaults of an empty user are the right
+     * answers for a visitor who is not signed in.
+     */
+    public function user(): User
+    {
+        if ($this->user === null) {
+            $id = $this->id();
+            $this->user = ($id === 0 ? null : $this->users->find($id)) ?? new User();
+        }
+
+        return $this->user;
+    }
+
     public function reset(): void
     {
         $this->identity = null;
+        $this->user = null;
     }
 
     private function resolve(): Identity

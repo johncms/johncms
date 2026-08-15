@@ -15,6 +15,7 @@ use Johncms\Security\AntifloodChecker;
 use Johncms\Users\User;
 use PHPUnit\Framework\TestCase;
 use Tests\Support\BootsInMemoryDatabase;
+use Tests\Support\CurrentUserFactory;
 
 final class AntifloodCheckerTest extends TestCase
 {
@@ -36,7 +37,7 @@ final class AntifloodCheckerTest extends TestCase
     {
         $this->configureAntiflood(day: 60, night: 60, mode: 3);
 
-        $checker = new AntifloodChecker($this->userWhoJustPosted(), $this->accessChecker(allows: true));
+        $checker = new AntifloodChecker(CurrentUserFactory::withProfile($this->userWhoJustPosted()), $this->accessChecker(allows: true));
 
         self::assertSame(4, $checker->getRemainingSeconds());
     }
@@ -45,7 +46,7 @@ final class AntifloodCheckerTest extends TestCase
     {
         $this->configureAntiflood(day: 60, night: 60, mode: 3);
 
-        $checker = new AntifloodChecker($this->userWhoJustPosted(), $this->accessChecker(allows: false));
+        $checker = new AntifloodChecker(CurrentUserFactory::withProfile($this->userWhoJustPosted()), $this->accessChecker(allows: false));
 
         self::assertSame(60, $checker->getRemainingSeconds());
     }
@@ -57,7 +58,7 @@ final class AntifloodCheckerTest extends TestCase
     public function testTheAdaptiveModeSeesTheStaffThroughTheirRoles(): void
     {
         $this->configureAntiflood(day: 10, night: 300, mode: 1);
-        $checker = new AntifloodChecker($this->userWhoJustPosted(), $this->accessChecker(allows: false));
+        $checker = new AntifloodChecker(CurrentUserFactory::withProfile($this->userWhoJustPosted()), $this->accessChecker(allows: false));
 
         self::assertSame(300, $checker->getRemainingSeconds(), 'Nobody of the staff is online');
 
@@ -82,7 +83,7 @@ final class AntifloodCheckerTest extends TestCase
             ]
         );
 
-        $checker = new AntifloodChecker($this->userWhoJustPosted(), $this->accessChecker(allows: false));
+        $checker = new AntifloodChecker(CurrentUserFactory::withProfile($this->userWhoJustPosted()), $this->accessChecker(allows: false));
 
         self::assertSame(300, $checker->getRemainingSeconds());
     }

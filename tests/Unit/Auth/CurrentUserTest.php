@@ -12,15 +12,18 @@ use Johncms\Auth\Identity;
 use Johncms\Http\Request;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Johncms\Users\Repository\UserRepositoryInterface;
+use Johncms\Users\User;
 use Tests\Support\FakeAuthenticator;
 use Tests\Support\FakeRoleRepository;
+use Tests\Support\FakeUserRepository;
 use Tests\Support\IdentityFactory;
 
 final class CurrentUserTest extends TestCase
 {
     public function testWithoutARequestTheVisitorIsAGuest(): void
     {
-        $currentUser = new CurrentUser(new AuthenticatorChain([]), $this->permissionResolver(), new RequestStack());
+        $currentUser = $this->currentUser(new FakeAuthenticator(null), new RequestStack());
 
         self::assertTrue($currentUser->isGuest());
         self::assertSame(0, $currentUser->id());
@@ -46,6 +49,36 @@ final class CurrentUserTest extends TestCase
     }
 
     /**
+     * A guest has no row to load, and the empty model is what answers for them: templates and
+     * settings readers ask the same questions of everybody. No query is involved, which is why
+     * this test needs no database.
+     */
+    public function testTheProfileOfAGuestIsAnEmptyUser(): void
+    {
+        $currentUser = $this->currentUser(new FakeAuthenticator(null), new RequestStack());
+
+        $user = $currentUser->user();
+
+        self::assertFalse($user->exists);
+        self::assertFalse($user->isValid());
+        self::assertSame($user, $currentUser->user());
+    }
+
+    public function testTheProfileOfASignedInVisitorIsLoadedOnceByTheirId(): void
+    {
+        $profile = new User();
+        $profile->forceFill(['id' => 42, 'name' => 'Signed in']);
+
+        $currentUser = $this->currentUser(
+            new FakeAuthenticator(IdentityFactory::user(id: 42)),
+            users: new FakeUserRepository([$profile])
+        );
+
+        self::assertSame($profile, $currentUser->user());
+        self::assertSame('Signed in', $currentUser->user()->name);
+    }
+
+    /**
      * A worker runtime serves many requests from one process: the identity of the previous
      * visitor must not answer for the next one.
      */
@@ -65,7 +98,12 @@ final class CurrentUserTest extends TestCase
             }
         };
 
-        $currentUser = new CurrentUser(new AuthenticatorChain([$authenticator]), $this->permissionResolver(), $stack);
+        $currentUser = new CurrentUser(
+            new AuthenticatorChain([$authenticator]),
+            $this->permissionResolver(),
+            $stack,
+            new FakeUserRepository()
+        );
 
         self::assertSame(1, $currentUser->id());
 
@@ -82,13 +120,24 @@ final class CurrentUserTest extends TestCase
         self::assertFalse($authenticator->asked);
     }
 
-    private function currentUser(FakeAuthenticator $authenticator): CurrentUser
-    {
-        $stack = new RequestStack();
-        $stack->push(Request::create('/'));
+    private function currentUser(
+        FakeAuthenticator $authenticator,
+        ?RequestStack $stack = null,
+        ?UserRepositoryInterface $users = null
+    ): CurrentUser {
+        if ($stack === null) {
+            $stack = new RequestStack();
+            $stack->push(Request::create('/'));
+        }
 
-        return new CurrentUser(new AuthenticatorChain([$authenticator]), $this->permissionResolver(), $stack);
+        return new CurrentUser(
+            new AuthenticatorChain([$authenticator]),
+            $this->permissionResolver(),
+            $stack,
+            $users ?? new FakeUserRepository()
+        );
     }
+
     private function permissionResolver(): PermissionResolver
     {
         return new PermissionResolver(new FakeRoleRepository());

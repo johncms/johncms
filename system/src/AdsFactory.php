@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Users\User;
 use PDO;
 use Psr\Container\ContainerInterface;
@@ -23,7 +24,7 @@ class AdsFactory
     {
         return new Ads(
             $container->get(PDO::class),
-            $container->get(User::class),
+            $container->get(CurrentUser::class),
             $container->get(RequestStack::class)
         );
     }

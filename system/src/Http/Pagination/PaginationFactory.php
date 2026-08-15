@@ -7,7 +7,7 @@ namespace Johncms\Http\Pagination;
 use Johncms\Http\QueryStringBuilder;
 use Johncms\Http\Request;
 use Johncms\View\RendererInterface;
-use Johncms\Users\User;
+use Johncms\Auth\CurrentUser;
 use RuntimeException;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -21,7 +21,7 @@ final readonly class PaginationFactory
     public function __construct(
         private RequestStack $requestStack,
         private RendererInterface $renderer,
-        private User $user,
+        private CurrentUser $currentUser,
         private QueryStringBuilder $queryStringBuilder,
     ) {
     }
@@ -33,7 +33,7 @@ final readonly class PaginationFactory
         ?int $currentPage = null,
     ): Pagination {
         $request = $this->request();
-        $perPage ??= (int) $this->user->config->kmess;
+        $perPage ??= (int) $this->currentUser->user()->config->kmess;
         $currentPage ??= $request->queryInt($pageParamName, 1);
 
         return new Pagination(

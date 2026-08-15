@@ -14,19 +14,19 @@ namespace Johncms\Utils;
 
 use Carbon\Carbon;
 use Johncms\System\i18n\Translator;
-use Johncms\Users\User;
+use Johncms\Auth\CurrentUser;
 
 final readonly class DateFormatter implements DateFormatterInterface
 {
     public function __construct(
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private Translator $translator,
     ) {
     }
 
     public function format(int $timestamp): string
     {
-        $shift = (int) config('johncms.timeshift', 0) + $this->currentUser->config->timeshift;
+        $shift = (int) config('johncms.timeshift', 0) + $this->currentUser->user()->config->timeshift;
 
         return Carbon::createFromTimestamp($timestamp, $shift)
             ->locale($this->translator->getLocale())

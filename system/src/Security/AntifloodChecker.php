@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Auth\Authorization\UserRole;
+use Johncms\Auth\CurrentUser;
 use Johncms\Users\User;
 
 final readonly class AntifloodChecker implements AntifloodCheckerInterface
@@ -24,7 +25,7 @@ final readonly class AntifloodChecker implements AntifloodCheckerInterface
     private const STAFF_LIMIT = 4;
 
     public function __construct(
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private AccessCheckerInterface $accessChecker,
     ) {
     }
@@ -34,7 +35,7 @@ final readonly class AntifloodChecker implements AntifloodCheckerInterface
         $limit = $this->accessChecker->allows(CorePermissions::ANTIFLOOD_RELAXED)
             ? self::STAFF_LIMIT
             : $this->getLimit();
-        $remaining = $this->currentUser->lastpost + $limit - time();
+        $remaining = $this->currentUser->user()->lastpost + $limit - time();
 
         return max(0, $remaining);
     }

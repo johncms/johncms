@@ -14,7 +14,7 @@ namespace Johncms\System\i18n;
 
 use Johncms\Http\Request;
 use Johncms\Http\Session;
-use Johncms\Users\User;
+use Johncms\Auth\CurrentUser;
 use RuntimeException;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -31,7 +31,7 @@ final readonly class LocaleResolver
     public function __construct(
         private RequestStack $requestStack,
         private Session $session,
-        private User $user,
+        private CurrentUser $currentUser,
     ) {
     }
 
@@ -41,9 +41,8 @@ final readonly class LocaleResolver
         $systemLocale = $config['lng'] ?? 'en';
         $localeList = $config['lng_list'] ?? [];
 
-        // Read from the query only: this also runs during boot, and reading the body would decode
-        // a JSON payload there — an unparsable one then killed the whole boot with an uncaught
-        // JsonException, before any error handler was registered.
+        // Read from the query only: reading the body would decode a JSON payload, and an
+        // unparsable one would answer a language question with an exception.
         $requestedLocale = $this->request()->query->getString('setlng') ?: null;
 
         if ($requestedLocale !== null && array_key_exists($requestedLocale, $localeList)) {
@@ -57,7 +56,7 @@ final readonly class LocaleResolver
             return $this->session->get('lng');
         }
 
-        $userLocale = $this->user->config->lng;
+        $userLocale = $this->currentUser->user()->config->lng;
 
         if (array_key_exists($userLocale, $localeList)) {
             $this->session->set('lng', $userLocale);

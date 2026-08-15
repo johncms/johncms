@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms\System\Users;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Http\Environment;
 use Johncms\Users\User;
 use Psr\Container\ContainerInterface;
@@ -42,7 +43,7 @@ class UserStat
     {
         $this->db = $container->get(\PDO::class);
         $this->env = $container->get(Environment::class);
-        $this->user = $container->get(User::class);
+        $this->user = $container->get(CurrentUser::class)->user();
         $this->config = config();
 
         if ($this->user->isValid()) {

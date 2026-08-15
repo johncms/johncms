@@ -9,6 +9,7 @@ use Johncms\Http\Request;
 use Johncms\Http\Session;
 use Johncms\System\i18n\LocaleResolver;
 use Johncms\Users\User;
+use Tests\Support\CurrentUserFactory;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -75,12 +76,12 @@ final class LocaleResolverTest extends TestCase
         $stack = new RequestStack();
         $stack->push($request);
 
-        self::assertSame('en', (new LocaleResolver($stack, $this->session, new User()))->resolve());
+        self::assertSame('en', (new LocaleResolver($stack, $this->session, CurrentUserFactory::guest()))->resolve());
     }
 
     public function testResolvingWithoutARequestFails(): void
     {
-        $resolver = new LocaleResolver(new RequestStack(), $this->session, new User());
+        $resolver = new LocaleResolver(new RequestStack(), $this->session, CurrentUserFactory::guest());
 
         $this->expectException(RuntimeException::class);
         $resolver->resolve();
@@ -91,7 +92,7 @@ final class LocaleResolverTest extends TestCase
         $stack = new RequestStack();
         $stack->push(Request::create($uri));
 
-        return (new LocaleResolver($stack, $this->session, $user))->resolve();
+        return (new LocaleResolver($stack, $this->session, CurrentUserFactory::withProfile($user)))->resolve();
     }
 
     private function userWithLocale(string $locale): User

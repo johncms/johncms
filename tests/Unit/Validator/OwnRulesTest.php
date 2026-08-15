@@ -10,6 +10,7 @@ use Johncms\Http\Session;
 use Johncms\Security\AntifloodCheckerInterface;
 use Johncms\Validator\RuleCompiler;
 use Johncms\Validator\RuleValidators\BanValidator;
+use Tests\Support\CurrentUserFactory;
 use Johncms\Validator\RuleValidators\CaptchaValidator;
 use Johncms\Validator\RuleValidators\FloodValidator;
 use Johncms\Validator\RuleValidators\InArrayValidator;
@@ -238,7 +239,7 @@ final class OwnRulesTest extends TestCase
         };
         $user->activeBans = $bans;
 
-        return new BanValidator($user);
+        return new BanValidator(CurrentUserFactory::withProfile($user));
     }
 
     private function sessionWithCode(string $code): Session

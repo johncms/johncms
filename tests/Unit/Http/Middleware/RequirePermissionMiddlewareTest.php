@@ -24,6 +24,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Tests\Support\FakeAccessChecker;
 use Tests\Support\FakeAuthenticator;
 use Tests\Support\FakeRoleRepository;
+use Tests\Support\FakeUserRepository;
 use Tests\Support\IdentityFactory;
 
 /**
@@ -120,7 +121,8 @@ final class RequirePermissionMiddlewareTest extends TestCase
         $currentUser = new CurrentUser(
             new AuthenticatorChain([new FakeAuthenticator($identity ?? IdentityFactory::user())]),
             new PermissionResolver(new FakeRoleRepository()),
-            $stack
+            $stack,
+            new FakeUserRepository()
         );
 
         $middleware = new RequirePermissionMiddleware(

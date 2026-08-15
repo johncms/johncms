@@ -15,6 +15,7 @@ use stdClass;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Tests\Support\FakeAccessVoter;
 use Tests\Support\FakeRoleRepository;
+use Tests\Support\FakeUserRepository;
 use Tests\Support\IdentityFactory;
 
 final class AccessCheckerTest extends TestCase
@@ -93,7 +94,12 @@ final class AccessCheckerTest extends TestCase
     private function checker(AccessVoterInterface ...$voters): AccessChecker
     {
         return new AccessChecker(
-            new CurrentUser(new AuthenticatorChain([]), $this->permissionResolver(), new RequestStack()),
+            new CurrentUser(
+                new AuthenticatorChain([]),
+                $this->permissionResolver(),
+                new RequestStack(),
+                new FakeUserRepository()
+            ),
             $voters
         );
     }

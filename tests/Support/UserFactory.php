@@ -21,12 +21,11 @@ final class UserFactory
      * @param int[] $banTypes
      * @param array<string, mixed> $attributes
      */
-    public static function make(int $rights = 0, bool $valid = true, array $banTypes = [], array $attributes = []): User
+    public static function make(bool $valid = true, array $banTypes = [], array $attributes = []): User
     {
         $user = new User(array_merge([
             'id'       => $valid ? 1 : 0,
             'name'     => 'TestUser',
-            'rights'   => $rights,
             'preg'     => $valid,
             'lastdate' => time(),
         ], $attributes));
