@@ -45,7 +45,6 @@ final readonly class ModulesAccessController
         return new ModulesAccessDTO(
             registration: $request->bodyInt('reg'),
             libraryComments: (bool) $request->bodyInt('libcomm'),
-            downloads: $request->bodyInt('down'),
             downloadsComments: (bool) $request->bodyInt('downcomm'),
             community: $request->bodyInt('active'),
         );
@@ -78,8 +77,9 @@ final readonly class ModulesAccessController
      */
     private function groups(): array
     {
-        // The forum and the guestbook are absent on purpose: who may read them and write in them
-        // is a permission of the guest and the user roles now, edited in the role editor.
+        // Who may open a module is a permission of the guest and the user roles now, edited in
+        // the role editor; what is left here of the modules that have comments is the toggle for
+        // those, which is a feature of the module rather than a right of anybody.
         $allowed = ['value' => 2, 'label' => __('Access is allowed')];
         $authorized = ['value' => 1, 'label' => __('Only for authorized')];
         $denied = ['value' => 0, 'label' => __('Access denied')];
@@ -95,8 +95,8 @@ final readonly class ModulesAccessController
             [
                 'title'    => __('Downloads'),
                 'name'     => 'down',
-                'value'    => (int) config('johncms.mod_down', 0),
-                'options'  => [$allowed, $authorized, $denied],
+                'value'    => null,
+                'options'  => [],
                 'comments' => ['name' => 'downcomm', 'value' => (bool) config('johncms.mod_down_comm', false)],
             ],
             [

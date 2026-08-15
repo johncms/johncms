@@ -9,7 +9,6 @@ final readonly class ModulesAccessDTO
     public function __construct(
         public int $registration,
         public bool $libraryComments,
-        public int $downloads,
         public bool $downloadsComments,
         public int $community,
     ) {

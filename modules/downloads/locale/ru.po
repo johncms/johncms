@@ -1090,3 +1090,6 @@ msgstr "Определять, кто может загружать в папку
 
 msgid "Read the comments of the files while they are switched off"
 msgstr "Читать комментарии к файлам, когда они отключены"
+
+msgid "Open the downloads"
+msgstr "Открывать загрузки"

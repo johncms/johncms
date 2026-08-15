@@ -19,6 +19,9 @@ final class DownloadsPermissions implements PermissionProviderInterface
 {
     public const GROUP = 'downloads';
 
+    /** Open the downloads at all. What the "who may use the downloads" setting used to say. */
+    public const VIEW = 'downloads.view';
+
     /** Create and change folders, edit files, and open the ones awaiting moderation. */
     public const MODERATE = 'downloads.moderate';
 
@@ -42,6 +45,13 @@ final class DownloadsPermissions implements PermissionProviderInterface
         $administrators = [SystemRole::Admin->value];
 
         return [
+            new PermissionDefinition(
+                self::VIEW,
+                self::GROUP,
+                d__('downloads', 'Open the downloads'),
+                $group,
+                [SystemRole::Guest->value, SystemRole::User->value]
+            ),
             new PermissionDefinition(
                 self::MODERATE,
                 self::GROUP,

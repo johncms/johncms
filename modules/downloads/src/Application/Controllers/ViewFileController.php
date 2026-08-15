@@ -193,7 +193,6 @@ final readonly class ViewFileController
                 'can_manage'       => $this->accessChecker->allows(DownloadsPermissions::MODERATE),
                 'can_move'         => $this->accessChecker->allows(DownloadsPermissions::FILE_MOVE),
                 'comments_enabled' => ! empty($config['mod_down_comm']) || $this->accessChecker->allows(DownloadsPermissions::COMMENTS_ALWAYS_VIEW),
-                'downloads_open'   => (bool) $config['mod_down'],
             ]
         );
     }

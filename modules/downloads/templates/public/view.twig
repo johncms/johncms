@@ -9,16 +9,10 @@
     @var can_manage       bool         The visitor may edit and delete the file.
     @var can_move         bool         The visitor may move the file to another folder.
     @var comments_enabled bool
-    @var downloads_open   bool         Downloads are closed for everyone but the staff.
 #}
 {% extends '@theme/layouts/default.twig' %}
 
 {% block content %}
-    {% if not downloads_open %}
-        <div class="alert alert-danger border-0 shadow">
-            {{ __('Downloads are closed') }}
-        </div>
-    {% endif %}
 
     {% if file.vote_accepted %}
         <div class="row">

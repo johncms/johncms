@@ -63,6 +63,14 @@ final readonly class ModuleAccessMigration
                 'library.view' => [1, 2],
             ],
         ],
+        'mod_down' => [
+            SystemRole::Guest->value => [
+                'downloads.view' => [2],
+            ],
+            SystemRole::User->value => [
+                'downloads.view' => [1, 2],
+            ],
+        ],
     ];
 
     /**
@@ -90,6 +98,11 @@ final readonly class ModuleAccessMigration
         'mod_lib' => [
             SystemRole::Admin->value => [
                 'library.view' => [0],
+            ],
+        ],
+        'mod_down' => [
+            SystemRole::Admin->value => [
+                'downloads.view' => [0],
             ],
         ],
     ];

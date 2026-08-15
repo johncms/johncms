@@ -15,17 +15,10 @@
     @var can_review     bool         The visitor may open the review of comments.
     @var sort_by_name   bool         Files are sorted by name, by time otherwise.
     @var sort_ascending bool
-    @var downloads_open bool         Downloads are closed for everyone but the staff.
 #}
 {% extends '@theme/layouts/default.twig' %}
 
 {% block content %}
-    {% if not downloads_open %}
-        <div class="alert alert-danger border-0 shadow">
-            {{ __('Downloads are closed') }}
-        </div>
-    {% endif %}
-
     {% if not id %}
         <div class="mb-3 mt-n1">
             {% if urls.new %}

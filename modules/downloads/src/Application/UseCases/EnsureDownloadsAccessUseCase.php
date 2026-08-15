@@ -4,14 +4,17 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Downloads\Application\UseCases;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Downloads\Application\Exceptions\DownloadsAccessDeniedException;
 use Johncms\Modules\Downloads\Application\Exceptions\DownloadsErrorCode;
-use Johncms\Users\User;
+use Johncms\Modules\Downloads\Application\Services\DownloadsPermissions;
 
 final readonly class EnsureDownloadsAccessUseCase
 {
     public function __construct(
-        private User $currentUser,
+        private AccessCheckerInterface $accessChecker,
+        private CurrentUser $currentUser,
     ) {
     }
 
@@ -20,14 +23,16 @@ final readonly class EnsureDownloadsAccessUseCase
      */
     public function execute(): void
     {
-        $config = config('johncms');
-
-        if (! $config['mod_down'] && $this->currentUser->rights < 7) {
-            throw new DownloadsAccessDeniedException(DownloadsErrorCode::DOWNLOADS_CLOSED);
+        if ($this->accessChecker->allows(DownloadsPermissions::VIEW)) {
+            return;
         }
 
-        if ($config['mod_down'] === 1 && ! $this->currentUser->isValid()) {
-            throw new DownloadsAccessDeniedException(DownloadsErrorCode::DOWNLOADS_AUTH_REQUIRED);
-        }
+        // A guest is told to sign in and everybody else that the section is closed; which of the
+        // two it is depends on the user role, and only the first is actionable.
+        throw new DownloadsAccessDeniedException(
+            $this->currentUser->isGuest()
+                ? DownloadsErrorCode::DOWNLOADS_AUTH_REQUIRED
+                : DownloadsErrorCode::DOWNLOADS_CLOSED
+        );
     }
 }

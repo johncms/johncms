@@ -161,7 +161,6 @@ final readonly class ScanDirectoryController
             'urls'           => ['downloads' => '/downloads/'],
             'updated_info'   => $updatedInfo,
             'select_mode'    => $selectMode,
-            'downloads_open' => (bool) config('johncms.mod_down'),
         ]);
     }
 

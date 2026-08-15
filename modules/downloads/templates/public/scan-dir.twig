@@ -5,16 +5,10 @@
     @var select_mode    bool  True while the scope has not been chosen yet.
     @var updated_info   array categories, files, additional_files
     @var urls           array downloads
-    @var downloads_open bool  Downloads are closed for everyone but the staff.
 #}
 {% extends '@theme/layouts/default.twig' %}
 
 {% block content %}
-    {% if not downloads_open %}
-        <div class="alert alert-danger border-0 shadow">
-            {{ __('Downloads are closed') }}
-        </div>
-    {% endif %}
     {% if select_mode %}
         <div>
             {% if id %}

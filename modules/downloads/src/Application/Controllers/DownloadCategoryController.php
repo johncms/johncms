@@ -151,7 +151,6 @@ final readonly class DownloadCategoryController
             'can_review'     => ! empty($config['mod_down_comm']) || $this->accessChecker->allows(DownloadsPermissions::COMMENTS_ALWAYS_VIEW),
             'sort_by_name'   => $sortByName,
             'sort_ascending' => $sortAscending,
-            'downloads_open' => (bool) $config['mod_down'],
         ]);
     }
 

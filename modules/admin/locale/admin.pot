@@ -71,7 +71,7 @@ msgid "Modules"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:147
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:56
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:55
 #: modules/admin/templates/role-form.twig:76
 msgid "Permissions"
 msgstr ""

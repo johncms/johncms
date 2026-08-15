@@ -51,7 +51,7 @@
                 </a>
             </li>
         {% endif %}
-        {% if config('johncms.mod_down') or (app.user.isValid and app.user.rights >= 7) %}
+        {% if can('downloads.view') %}
             <li>
                 <a href="/downloads/">
                     <svg class="icon">
