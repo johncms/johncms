@@ -584,3 +584,12 @@ msgstr[3] "фотографии"
 msgid "Total:"
 msgstr "Всего:"
 
+
+msgid "Photo albums"
+msgstr "Фотоальбомы"
+
+msgid "Manage the albums and the photos of another account"
+msgstr "Управлять альбомами и фотографиями другого аккаунта"
+
+msgid "Read the comments of the photos while they are switched off"
+msgstr "Читать комментарии к фотографиям, когда они отключены"

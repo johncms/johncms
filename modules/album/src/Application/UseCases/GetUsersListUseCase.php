@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Album\Application\UseCases;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Modules\Album\Application\Services\AlbumPermissions;
 use Johncms\Modules\Album\Domain\Repository\AlbumPhotoRepositoryInterface;
 use Johncms\Modules\Album\Domain\Repository\AlbumRepositoryInterface;
 use Johncms\Users\User;
 
 final readonly class GetUsersListUseCase
 {
-    private const MODERATOR_RIGHTS = 6;
-
     public function __construct(
+        private AccessCheckerInterface $accessChecker,
         private AlbumRepositoryInterface $albumRepository,
         private AlbumPhotoRepositoryInterface $albumPhotoRepository,
         private User $currentUser,
@@ -47,7 +48,7 @@ final readonly class GetUsersListUseCase
      */
     private function restrictForUser(): ?int
     {
-        return $this->currentUser->rights >= self::MODERATOR_RIGHTS
+        return $this->accessChecker->allows(AlbumPermissions::MODERATE)
             ? null
             : $this->currentUser->id;
     }

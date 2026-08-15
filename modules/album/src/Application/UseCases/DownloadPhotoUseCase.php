@@ -35,8 +35,7 @@ final readonly class DownloadPhotoUseCase
             throw new AlbumPhotoNotFoundException();
         }
 
-        // Downloads bypass at moderator level (legacy used rights >= 6, unlike show).
-        $this->ensureAccess->execute($photo->album, null, EnsureAlbumAccessUseCase::MODERATOR_RIGHTS);
+        $this->ensureAccess->execute($photo->album);
 
         $path = UPLOAD_PATH . 'users/album/' . $photo->user_id . '/' . $photo->img_name;
         if (! is_file($path)) {

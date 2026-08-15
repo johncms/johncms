@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Album\Application\UseCases;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Modules\Album\Application\DTO\PhotoPageResultDTO;
 use Johncms\Modules\Album\Application\Exceptions\AlbumPhotoNotFoundException;
+use Johncms\Modules\Album\Application\Services\AlbumPermissions;
 use Johncms\Modules\Album\Application\Services\PhotoPresenter;
 use Johncms\Modules\Album\Domain\Models\AlbumPhoto;
 use Johncms\Modules\Album\Domain\Repository\AlbumPhotoRepositoryInterface;
@@ -14,12 +16,11 @@ use Johncms\Users\User;
 
 final readonly class GetPhotoViewUseCase
 {
-    private const MODERATOR_RIGHTS = 6;
-    private const ADMIN_RIGHTS = 7;
     private const VOTE_MIN_POSTS = 5;
     private const VOTE_MIN_AGE = 259200; // 3 days since registration
 
     public function __construct(
+        private AccessCheckerInterface $accessChecker,
         private AlbumPhotoRepositoryInterface $photoRepository,
         private AlbumVoteRepositoryInterface $voteRepository,
         private EnsureAlbumAccessUseCase $ensureAccess,
@@ -61,7 +62,7 @@ final readonly class GetPhotoViewUseCase
                 $displayed,
                 $this->canVote($displayed),
                 $this->commentsEnabled(),
-                $this->currentUser->rights >= self::MODERATOR_RIGHTS || $isOwner,
+                $this->accessChecker->allows(AlbumPermissions::MODERATE) || $isOwner,
                 $isOwner,
             );
 
@@ -99,11 +100,17 @@ final readonly class GetPhotoViewUseCase
             && $this->currentUser->datereg < (time() - self::VOTE_MIN_AGE);
     }
 
+    /**
+     * The comments of the photos are switched by the setting of the downloads, which is where
+     * this module took them from. The setting stays where it is; who may read them past it is
+     * the permission.
+     */
     private function commentsEnabled(): bool
     {
         $config = config('johncms');
 
-        return ! empty($config['mod_down_comm']) || $this->currentUser->rights >= self::ADMIN_RIGHTS;
+        return ! empty($config['mod_down_comm'])
+            || $this->accessChecker->allows(AlbumPermissions::COMMENTS_ALWAYS_VIEW);
     }
 
     private function copyToProfile(AlbumPhoto $photo): void

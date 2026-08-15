@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Album\Application\UseCases;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Http\Session;
 use Johncms\Modules\Album\Application\Exceptions\AlbumAccessDeniedException;
 use Johncms\Modules\Album\Application\Exceptions\AlbumPasswordRequiredException;
+use Johncms\Modules\Album\Application\Services\AlbumPermissions;
 use Johncms\Modules\Album\Domain\Enums\AlbumAccess;
 use Johncms\Modules\Album\Domain\Models\Album;
-use Johncms\Http\Session;
 use Johncms\Users\User;
 
 /**
@@ -19,23 +21,18 @@ use Johncms\Users\User;
  */
 final readonly class EnsureAlbumAccessUseCase
 {
-    public const ADMIN_RIGHTS = 7;
-    public const MODERATOR_RIGHTS = 6;
-
     public function __construct(
         private User $currentUser,
         private Session $session,
+        private AccessCheckerInterface $accessChecker,
     ) {
     }
 
     /**
-     * @param int $bypassRights staff rights level that bypasses the access checks.
-     *                          show uses ADMIN_RIGHTS (legacy), download uses MODERATOR_RIGHTS.
-     *
      * @throws AlbumAccessDeniedException     when a private album is closed for the viewer
      * @throws AlbumPasswordRequiredException when a password-protected album is still locked
      */
-    public function execute(Album $album, ?string $submittedPassword = null, int $bypassRights = self::ADMIN_RIGHTS): void
+    public function execute(Album $album, ?string $submittedPassword = null): void
     {
         $access = AlbumAccess::fromStored($album->access);
 
@@ -44,7 +41,7 @@ final readonly class EnsureAlbumAccessUseCase
             $this->session->remove('ap');
         }
 
-        if ($album->user_id === $this->currentUser->id || $this->currentUser->rights >= $bypassRights) {
+        if ($album->user_id === $this->currentUser->id || $this->accessChecker->allows(AlbumPermissions::MODERATE)) {
             return;
         }
 

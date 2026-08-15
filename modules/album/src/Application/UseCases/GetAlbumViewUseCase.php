@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Album\Application\UseCases;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Modules\Album\Application\DTO\AlbumViewResultDTO;
 use Johncms\Modules\Album\Application\Exceptions\AlbumNotFoundException;
+use Johncms\Modules\Album\Application\Services\AlbumPermissions;
 use Johncms\Modules\Album\Application\Services\PhotoPresenter;
 use Johncms\Modules\Album\Domain\Models\Album;
 use Johncms\Modules\Album\Domain\Models\AlbumPhoto;
@@ -16,11 +18,11 @@ use Johncms\Users\User;
 
 final readonly class GetAlbumViewUseCase
 {
-    private const ADMIN_RIGHTS = 7;
     private const VOTE_MIN_POSTS = 5;
     private const VOTE_MIN_AGE = 259200; // 3 days since registration
 
     public function __construct(
+        private AccessCheckerInterface $accessChecker,
         private AlbumRepositoryInterface $albumRepository,
         private AlbumPhotoRepositoryInterface $photoRepository,
         private AlbumVoteRepositoryInterface $voteRepository,
@@ -58,7 +60,7 @@ final readonly class GetAlbumViewUseCase
         }
 
         $hasAddPhoto = ($album->user_id === $this->currentUser->id && empty($this->currentUser->ban))
-            || $this->currentUser->rights >= self::ADMIN_RIGHTS;
+            || $this->accessChecker->allows(AlbumPermissions::MODERATE);
 
         return new AlbumViewResultDTO(
             albumId: $album->id,

@@ -229,7 +229,19 @@ msgstr ""
 msgid "Girls"
 msgstr ""
 
-#: modules/album/src/Application/UseCases/GetPhotoViewUseCase.php:56
+#: modules/album/src/Application/Services/AlbumPermissions.php:29
+msgid "Photo albums"
+msgstr ""
+
+#: modules/album/src/Application/Services/AlbumPermissions.php:35
+msgid "Manage the albums and the photos of another account"
+msgstr ""
+
+#: modules/album/src/Application/Services/AlbumPermissions.php:42
+msgid "Read the comments of the photos while they are switched off"
+msgstr ""
+
+#: modules/album/src/Application/UseCases/GetPhotoViewUseCase.php:57
 msgid "Photo added to the profile"
 msgstr ""
 

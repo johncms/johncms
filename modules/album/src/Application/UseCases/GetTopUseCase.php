@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Album\Application\UseCases;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Modules\Album\Application\DTO\PhotoViewDTO;
+use Johncms\Modules\Album\Application\Services\AlbumPermissions;
 use Johncms\Modules\Album\Application\Services\PhotoPresenter;
 use Johncms\Modules\Album\Domain\Enums\TopFilter;
 use Johncms\Modules\Album\Domain\Models\AlbumPhoto;
@@ -14,11 +16,11 @@ use Johncms\Users\User;
 
 final readonly class GetTopUseCase
 {
-    private const MODERATOR_RIGHTS = 6;
     private const VOTE_MIN_POSTS = 5;
     private const VOTE_MIN_AGE = 259200; // 3 days since registration
 
     public function __construct(
+        private AccessCheckerInterface $accessChecker,
         private AlbumPhotoRepositoryInterface $albumPhotoRepository,
         private AlbumVoteRepositoryInterface $albumVoteRepository,
         private PhotoPresenter $photoPresenter,
@@ -67,7 +69,7 @@ final readonly class GetTopUseCase
      */
     private function restrictForUser(): ?int
     {
-        return $this->currentUser->rights >= self::MODERATOR_RIGHTS
+        return $this->accessChecker->allows(AlbumPermissions::MODERATE)
             ? null
             : $this->currentUser->id;
     }

@@ -4,18 +4,19 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Album\Application\UseCases;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Modules\Album\Application\DTO\EditAlbumContextDTO;
 use Johncms\Modules\Album\Application\Exceptions\AlbumEditForbiddenException;
 use Johncms\Modules\Album\Application\Exceptions\AlbumNotFoundException;
 use Johncms\Modules\Album\Application\Exceptions\AlbumOwnerNotFoundException;
+use Johncms\Modules\Album\Application\Services\AlbumPermissions;
 use Johncms\Modules\Album\Domain\Repository\AlbumRepositoryInterface;
 use Johncms\Users\User;
 
 final readonly class GetEditAlbumContextUseCase
 {
-    private const ADMIN_RIGHTS = 7;
-
     public function __construct(
+        private AccessCheckerInterface $accessChecker,
         private AlbumRepositoryInterface $albumRepository,
         private User $currentUser,
     ) {
@@ -53,9 +54,9 @@ final readonly class GetEditAlbumContextUseCase
     private function ensureCanManage(int $ownerId): void
     {
         $isOwner = $ownerId === $this->currentUser->id && empty($this->currentUser->ban);
-        $isAdmin = $this->currentUser->rights >= self::ADMIN_RIGHTS;
+        $canModerate = $this->accessChecker->allows(AlbumPermissions::MODERATE);
 
-        if (! $isOwner && ! $isAdmin) {
+        if (! $isOwner && ! $canModerate) {
             throw new AlbumEditForbiddenException();
         }
     }
