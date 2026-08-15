@@ -42,6 +42,7 @@ use Johncms\Media\MediaEmbed;
 use Johncms\NavChain;
 use Johncms\Router\RouteCollectorFactory;
 use Johncms\Router\RequestContextFactory;
+use Johncms\Router\UrlMatcherFactory;
 use Johncms\Router\SymfonyRouteMatcher;
 use Johncms\Security\Csrf;
 use Johncms\Security\CsrfExemptions;
@@ -96,7 +97,6 @@ use Psr\Log\LoggerInterface;
 use Simba77\EmbedMedia\Embed;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\Matcher\UrlMatcherInterface;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -274,10 +274,11 @@ return static function (ContainerConfigurator $container): void {
     $services->set(Environment::class)->autowire();
     $services->set(RouteCollection::class)->factory(service(RouteCollectorFactory::class));
     $services->set(RequestContext::class)->factory(service(RequestContextFactory::class));
-    $services->set(UrlMatcher::class)
-        ->arg('$routes', service(RouteCollection::class))
-        ->arg('$context', service(RequestContext::class));
-    $services->alias(UrlMatcherInterface::class, UrlMatcher::class);
+    // The collection is passed as a closure rather than as a service: with the cache on, the
+    // matcher is built from the dump and the collection is never constructed at all.
+    $services->set(UrlMatcherInterface::class)
+        ->factory([service(UrlMatcherFactory::class), 'create'])
+        ->args([service_closure(RouteCollection::class), service(RequestContext::class), CACHE_ROUTES]);
     $services->set(SymfonyRouteMatcher::class);
     // Every page of the site is a Twig template now; the installer builds an engine of its own.
     $services->alias(RendererInterface::class, TwigRenderer::class);

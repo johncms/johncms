@@ -28,6 +28,10 @@ const CMS_VERSION = '9.9';
 // Remove the data/cache/container.php file to clear the cache. It creates automatically.
 const CACHE_CONTAINER = false;
 
+// Cache the routes. Recommended for production mode: the route files are then read once instead
+// of on every request. Remove the data/cache/routes.php file after changing a route.
+const CACHE_ROUTES = false;
+
 // Включаем режим отладки
 const DEBUG = true;
 
