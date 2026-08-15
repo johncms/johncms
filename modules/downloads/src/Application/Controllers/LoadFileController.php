@@ -4,20 +4,21 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Modules\Downloads\Application\Services\DownloadsPermissions;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\Modules\Downloads\Domain\Models\DownloadMoreFile;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
 use Johncms\Http\View\ViewResponse;
-use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 final readonly class LoadFileController
 {
     public function __construct(
+        private AccessCheckerInterface $accessChecker,
         private Session $session,
-        private User $currentUser,
     ) {
     }
 
@@ -32,7 +33,7 @@ final readonly class LoadFileController
             return $this->notFound();
         }
 
-        if ($file->type === 3 && $this->currentUser->rights < 6 && $this->currentUser->rights !== 4) {
+        if ($file->type === 3 && ! $this->accessChecker->allows(DownloadsPermissions::MODERATE)) {
             return $this->notFound();
         }
 

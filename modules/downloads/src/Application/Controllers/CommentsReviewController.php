@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Modules\Downloads\Application\Services\DownloadsPermissions;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
@@ -12,7 +14,6 @@ use Johncms\Modules\Downloads\Application\UseCases\ViewCommentsReviewUseCase;
 use Johncms\NavChain;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Smilies\SmiliesRendererInterface;
-use Johncms\Users\User;
 use Johncms\Utils\DateFormatterInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Markup;
@@ -20,10 +21,10 @@ use Twig\Markup;
 final readonly class CommentsReviewController
 {
     public function __construct(
+        private AccessCheckerInterface $accessChecker,
         private NavChain $navChain,
         private DateFormatterInterface $dateFormatter,
         private SmiliesRendererInterface $smiliesRenderer,
-        private User $currentUser,
         private ViewCommentsReviewUseCase $useCase,
         private DownloadFilePathService $filePathService,
         private PaginationFactory $paginationFactory,
@@ -36,7 +37,7 @@ final readonly class CommentsReviewController
     {
         $config = config('johncms');
 
-        if (! $config['mod_down_comm'] && $this->currentUser->rights < 7) {
+        if (! $config['mod_down_comm'] && ! $this->accessChecker->allows(DownloadsPermissions::COMMENTS_ALWAYS_VIEW)) {
             return new ViewResponse(
                 '@theme/pages/result.twig',
                 [

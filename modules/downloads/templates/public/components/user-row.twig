@@ -28,7 +28,7 @@
                 {% endif %}
             </div>
         </div>
-        {% if app.user.isValid and app.user.rights >= 3 %}
+        {% if can('users.origin.view') %}
             <div class="post-footer d-flex justify-content-between border-top pt-2 mt-2">
                 <div class="post-user-info d-flex overflow-hidden small align-items-center">
                     <div class="user-ip me-2">

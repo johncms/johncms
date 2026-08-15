@@ -191,6 +191,10 @@
       'Actions' => 'Действия',
       'Remove from Favorites' => 'Удалить из избранного',
       'Add to Favorites' => 'В избранное',
+      'Manage folders and files' => 'Управлять папками и файлами',
+      'Move a file to another folder' => 'Перемещать файл в другую папку',
+      'Decide who may upload into a folder and in which formats' => 'Определять, кто может загружать в папку и в каких форматах',
+      'Read the comments of the files while they are switched off' => 'Читать комментарии к файлам, когда они отключены',
     ),
   ),
 );

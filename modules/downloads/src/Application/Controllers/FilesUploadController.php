@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Modules\Downloads\Application\Services\DownloadsPermissions;
 use Exception;
 use Intervention\Image\ImageManager;
 use Johncms\FileInfo;
@@ -28,6 +30,7 @@ final readonly class FilesUploadController
     ];
 
     public function __construct(
+        private AccessCheckerInterface $accessChecker,
         private NavChain $navChain,
         private User $currentUser,
         private ImageManager $imageManager,
@@ -45,7 +48,7 @@ final readonly class FilesUploadController
             return $this->error(__('The directory does not exist'), '/downloads/');
         }
 
-        $isAdmin = $this->currentUser->rights === 4 || $this->currentUser->rights >= 6;
+        $isAdmin = $this->accessChecker->allows(DownloadsPermissions::MODERATE);
         $canUpload = $isAdmin || ($category->field && $this->currentUser->isValid());
 
         if (! $canUpload) {

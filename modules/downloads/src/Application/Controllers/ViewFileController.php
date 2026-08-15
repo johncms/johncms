@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Modules\Downloads\Application\Services\DownloadsPermissions;
 use Johncms\Modules\Downloads\Application\FilePresenter;
 use Johncms\Modules\Downloads\Application\Services\CategoryNavService;
 use Johncms\Modules\Downloads\Application\Services\DownloadCategoryPathService;
@@ -26,6 +28,7 @@ use Symfony\Component\HttpFoundation\Response;
 final readonly class ViewFileController
 {
     public function __construct(
+        private AccessCheckerInterface $accessChecker,
         private NavChain $navChain,
         private User $currentUser,
         private Session $session,
@@ -79,7 +82,7 @@ final readonly class ViewFileController
             return $this->fileNotFound();
         }
 
-        if ($file->type === 3 && $this->currentUser->rights < 6 && $this->currentUser->rights !== 4) {
+        if ($file->type === 3 && ! $this->accessChecker->allows(DownloadsPermissions::MODERATE)) {
             return new ViewResponse(
                 '@theme/pages/result.twig',
                 [
@@ -187,8 +190,9 @@ final readonly class ViewFileController
                         ? $this->categoryPathService->getCategoryUrl($file->category)
                         : '/downloads/',
                 ],
-                'can_manage'       => $this->currentUser->rights === 4 || $this->currentUser->rights >= 6,
-                'comments_enabled' => ! empty($config['mod_down_comm']) || $this->currentUser->rights >= 7,
+                'can_manage'       => $this->accessChecker->allows(DownloadsPermissions::MODERATE),
+                'can_move'         => $this->accessChecker->allows(DownloadsPermissions::FILE_MOVE),
+                'comments_enabled' => ! empty($config['mod_down_comm']) || $this->accessChecker->allows(DownloadsPermissions::COMMENTS_ALWAYS_VIEW),
                 'downloads_open'   => (bool) $config['mod_down'],
             ]
         );

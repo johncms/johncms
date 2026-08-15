@@ -55,7 +55,7 @@
                     {% endif %}
                 </div>
 
-                {% set can_see_meta = app.user.isValid and app.user.rights %}
+                {% set can_see_meta = can('users.origin.view') %}
                 {% if can_see_meta or item.edit_count %}
                     <div class="post-footer d-flex justify-content-between pt-2">
                         <div class="overflow-hidden">

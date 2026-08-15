@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Modules\Downloads\Application\Services\DownloadsPermissions;
 use Johncms\Modules\Downloads\Application\Services\DownloadCategoryPathService;
 use Johncms\Modules\Downloads\Application\Services\DownloadSlugService;
 use Johncms\Modules\Downloads\Domain\Models\DownloadCategory;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
-use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\Response;
 
 final readonly class CreateCategoryController
@@ -23,8 +24,8 @@ final readonly class CreateCategoryController
     ];
 
     public function __construct(
+        private AccessCheckerInterface $accessChecker,
         private NavChain $navChain,
-        private User $currentUser,
         private DownloadSlugService $slugService,
         private DownloadCategoryPathService $categoryPathService,
     ) {
@@ -71,7 +72,7 @@ final readonly class CreateCategoryController
             'cancel_url'    => $cancelUrl,
             'extensions'    => implode(', ', self::DEFAULT_EXTENSIONS),
             'edit_form'     => false,
-            'can_set_rules' => $this->currentUser->rights === 9,
+            'can_set_rules' => $this->accessChecker->allows(DownloadsPermissions::UPLOAD_RULES_MANAGE),
             'folder_params' => ['name' => '', 'rus_name' => '', 'desc' => '', 'user_down' => 0, 'format' => ''],
         ]);
     }
@@ -82,7 +83,11 @@ final readonly class CreateCategoryController
         $name = trim($post['name'] ?? '');
         $rusName = trim($post['rus_name'] ?? '');
         $desc = trim($post['desc'] ?? '');
-        $userDown = isset($post['user_down']) ? 1 : 0;
+        // Who may upload into the folder is set by whoever is allowed to decide it; the form
+        // does not offer the field to anybody else, and a request that carries it anyway is not
+        // a reason to open the folder up.
+        $canSetRules = $this->accessChecker->allows(DownloadsPermissions::UPLOAD_RULES_MANAGE);
+        $userDown = ($canSetRules && isset($post['user_down'])) ? 1 : 0;
         $format = ($userDown && isset($post['format'])) ? trim($post['format']) : '';
         $errors = [];
 
@@ -94,7 +99,7 @@ final readonly class CreateCategoryController
             $errors[] = __('Invalid characters');
         }
 
-        if ($this->currentUser->rights === 9 && $userDown && $format) {
+        if ($userDown && $format) {
             foreach (explode(',', $format) as $value) {
                 if (! in_array(trim($value), self::DEFAULT_EXTENSIONS, true)) {
                     $errors[] = __('You can write only the following extensions') . ': ' . implode(', ', self::DEFAULT_EXTENSIONS);

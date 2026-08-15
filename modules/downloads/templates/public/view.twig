@@ -6,7 +6,8 @@
     @var file             array        Attributes of the file plus what the controller has built.
     @var in_bookmarks     bool
     @var urls             array        downloads, back
-    @var can_manage       bool         The visitor may edit, move and delete the file.
+    @var can_manage       bool         The visitor may edit and delete the file.
+    @var can_move         bool         The visitor may move the file to another folder.
     @var comments_enabled bool
     @var downloads_open   bool         Downloads are closed for everyone but the staff.
 #}
@@ -136,7 +137,9 @@
                         <a class="dropdown-item" href="/downloads/edit-screen/{{ id }}/">{{ __('Managing Screenshots') }}</a>
                         <a class="dropdown-item" href="/downloads/additional-files/{{ id }}/">{{ __('Additional Files') }}</a>
                         <a class="dropdown-item" href="/downloads/delete-file/{{ id }}/">{{ __('Delete File') }}</a>
-                        <a class="dropdown-item" href="/downloads/move-file/{{ id }}/">{{ __('Move File') }}</a>
+                        {% if can_move %}
+                            <a class="dropdown-item" href="/downloads/move-file/{{ id }}/">{{ __('Move File') }}</a>
+                        {% endif %}
                     </div>
                 </div>
             </div>

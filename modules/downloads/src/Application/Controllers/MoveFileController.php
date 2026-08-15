@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Modules\Downloads\Application\Services\DownloadsPermissions;
 use Johncms\Modules\Downloads\Application\Services\CategoryNavService;
 use Johncms\Modules\Downloads\Application\Services\DownloadFilePathService;
 use Johncms\Modules\Downloads\Application\UseCases\MoveFileUseCase;
@@ -12,14 +14,13 @@ use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
-use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\Response;
 
 final readonly class MoveFileController
 {
     public function __construct(
+        private AccessCheckerInterface $accessChecker,
         private NavChain $navChain,
-        private User $currentUser,
         private MoveFileUseCase $moveFileUseCase,
         private CategoryNavService $categoryNavService,
         private DownloadFilePathService $filePathService,
@@ -28,7 +29,7 @@ final readonly class MoveFileController
 
     public function __invoke(Request $request, int $id): ViewResponse
     {
-        if ($this->currentUser->rights <= 6) {
+        if (! $this->accessChecker->allows(DownloadsPermissions::FILE_MOVE)) {
             return $this->notFound();
         }
 

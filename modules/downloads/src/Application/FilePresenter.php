@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Downloads\Application;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Modules\Downloads\Application\Services\DownloadsPermissions;
 use Johncms\Modules\Downloads\Application\Services\DownloadFilePathService;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\View\Asset\AssetResolver;
-use Johncms\Users\User;
 
 final class FilePresenter
 {
@@ -32,8 +33,8 @@ final class FilePresenter
     ];
 
     public function __construct(
+        private AccessCheckerInterface $accessChecker,
         private AssetResolver $assets,
-        private User $currentUser,
         private DownloadFilePathService $filePathService,
     ) {
     }
@@ -64,7 +65,7 @@ final class FilePresenter
         }
 
         $data['comments_url'] = '';
-        if ($config['mod_down_comm'] || $this->currentUser->rights >= 7) {
+        if ($config['mod_down_comm'] || $this->accessChecker->allows(DownloadsPermissions::COMMENTS_ALWAYS_VIEW)) {
             $data['comments_url'] = '/downloads/comments/' . $file->id;
         }
 

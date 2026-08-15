@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Modules\Downloads\Application\Services\DownloadsPermissions;
 use Johncms\Modules\Downloads\Application\Services\DownloadCategoryPathService;
 use Johncms\Modules\Downloads\Application\Services\DownloadSlugService;
 use Johncms\Modules\Downloads\Domain\Models\DownloadCategory;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
-use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -24,8 +25,8 @@ final readonly class EditCategoryController
     ];
 
     public function __construct(
+        private AccessCheckerInterface $accessChecker,
         private NavChain $navChain,
-        private User $currentUser,
         private DownloadSlugService $slugService,
         private DownloadCategoryPathService $categoryPathService,
     ) {
@@ -96,7 +97,7 @@ final readonly class EditCategoryController
         $userDown = 0;
         $format = '';
 
-        if ($this->currentUser->rights === 9 && isset($post['user_down'])) {
+        if ($this->accessChecker->allows(DownloadsPermissions::UPLOAD_RULES_MANAGE) && isset($post['user_down'])) {
             $userDown = 1;
             $format = trim($post['format'] ?? '');
             foreach (explode(', ', $format) as $value) {
@@ -139,7 +140,7 @@ final readonly class EditCategoryController
             'cancel_url'    => $this->categoryPathService->getCategoryUrl($category),
             'extensions'    => implode(', ', self::DEFAULT_EXTENSIONS),
             'edit_form'     => true,
-            'can_set_rules' => $this->currentUser->rights === 9,
+            'can_set_rules' => $this->accessChecker->allows(DownloadsPermissions::UPLOAD_RULES_MANAGE),
             'folder_params' => [
                 'name'      => '',
                 'rus_name'  => $category->rus_name,

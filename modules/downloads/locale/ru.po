@@ -1078,3 +1078,15 @@ msgstr "Удалить из избранного"
 msgid "Add to Favorites"
 msgstr "В избранное"
 
+
+msgid "Manage folders and files"
+msgstr "Управлять папками и файлами"
+
+msgid "Move a file to another folder"
+msgstr "Перемещать файл в другую папку"
+
+msgid "Decide who may upload into a folder and in which formats"
+msgstr "Определять, кто может загружать в папку и в каких форматах"
+
+msgid "Read the comments of the files while they are switched off"
+msgstr "Читать комментарии к файлам, когда они отключены"

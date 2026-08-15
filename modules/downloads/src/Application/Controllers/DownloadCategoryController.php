@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Modules\Downloads\Application\Services\DownloadsPermissions;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
@@ -20,6 +22,7 @@ use Johncms\Users\User;
 final readonly class DownloadCategoryController
 {
     public function __construct(
+        private AccessCheckerInterface $accessChecker,
         private NavChain $navChain,
         private User $currentUser,
         private FilePresenter $filePresenter,
@@ -63,7 +66,7 @@ final readonly class DownloadCategoryController
         $totalCat = DownloadCategory::query()->where('refid', $category->id)->count();
         $categories = [];
         if ($totalCat > 0) {
-            $hasEdit = $this->currentUser->rights === 4 || $this->currentUser->rights >= 6;
+            $hasEdit = $this->accessChecker->allows(DownloadsPermissions::MODERATE);
             DownloadCategory::query()->where('refid', $category->id)->orderBy('sort')->each(
                 function (DownloadCategory $cat) use (&$categories, $hasEdit): void {
                     $categories[] = [
@@ -144,8 +147,8 @@ final readonly class DownloadCategoryController
             'categories'     => $categories,
             'total_cat'      => $totalCat,
             'can_upload'     => $canUpload,
-            'can_manage'     => $this->currentUser->rights === 4 || $this->currentUser->rights >= 6,
-            'can_review'     => $this->currentUser->rights >= 7 || ! empty($config['mod_down_comm']),
+            'can_manage'     => $this->accessChecker->allows(DownloadsPermissions::MODERATE),
+            'can_review'     => ! empty($config['mod_down_comm']) || $this->accessChecker->allows(DownloadsPermissions::COMMENTS_ALWAYS_VIEW),
             'sort_by_name'   => $sortByName,
             'sort_ascending' => $sortAscending,
             'downloads_open' => (bool) $config['mod_down'],

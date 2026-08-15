@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Modules\Downloads\Application\Services\DownloadsPermissions;
 use Johncms\Comments;
 use Johncms\Http\PageMeta;
 use Johncms\Modules\Downloads\Application\Services\CategoryNavService;
@@ -19,6 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
 final readonly class FileCommentsController
 {
     public function __construct(
+        private AccessCheckerInterface $accessChecker,
         private RendererInterface $renderer,
         private NavChain $navChain,
         private User $currentUser,
@@ -32,7 +35,7 @@ final readonly class FileCommentsController
     {
         $config = config('johncms');
 
-        if (! $config['mod_down_comm'] && $this->currentUser->rights < 7) {
+        if (! $config['mod_down_comm'] && ! $this->accessChecker->allows(DownloadsPermissions::COMMENTS_ALWAYS_VIEW)) {
             return new Response(
                 $this->renderer->render(
                     '@theme/pages/result.twig',
@@ -85,7 +88,7 @@ final readonly class FileCommentsController
             );
         }
 
-        if ($file->type === 3 && $this->currentUser->rights < 6 && $this->currentUser->rights !== 4) {
+        if ($file->type === 3 && ! $this->accessChecker->allows(DownloadsPermissions::MODERATE)) {
             return new Response(
                 $this->renderer->render(
                     '@theme/pages/result.twig',
