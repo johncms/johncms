@@ -25,7 +25,6 @@ final readonly class UpdateModulesAccessUseCase
         $config['mod_reg'] = $dto->registration;
         $config['mod_lib_comm'] = $dto->libraryComments;
         $config['mod_down_comm'] = $dto->downloadsComments;
-        $config['active'] = $dto->community;
 
         $this->configRepository->saveJohncms($config);
     }

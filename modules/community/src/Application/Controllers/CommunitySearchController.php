@@ -11,13 +11,11 @@ use Johncms\Modules\Community\Application\UseCases\ViewSearchUseCase;
 use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\Users\User;
 
 final readonly class CommunitySearchController
 {
     public function __construct(
         private NavChain $navChain,
-        private User $currentUser,
         private ViewSearchUseCase $viewSearchUseCase,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
@@ -29,17 +27,6 @@ final readonly class CommunitySearchController
         $communityTitle = __('Community');
         $this->navChain->add($communityTitle, '/community/');
 
-        $config = config('johncms');
-        if (! $config['active'] && ! $this->currentUser->isValid()) {
-            return new ViewResponse(
-                '@theme/pages/result.twig',
-                [
-                    'title'   => $communityTitle,
-                    'type'    => 'alert-danger',
-                    'message' => __('For registered users only'),
-                ]
-            );
-        }
 
         $pageTitle = __('User Search');
         $this->navChain->add($pageTitle);

@@ -8,13 +8,11 @@ use Johncms\Modules\Community\Application\UseCases\ViewTopUseCase;
 use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\Users\User;
 
 final readonly class CommunityTopController
 {
     public function __construct(
         private NavChain $navChain,
-        private User $currentUser,
         private ViewTopUseCase $viewTopUseCase,
     ) {
     }
@@ -24,17 +22,6 @@ final readonly class CommunityTopController
         $communityTitle = __('Community');
         $this->navChain->add($communityTitle, '/community/');
 
-        $config = config('johncms');
-        if (! $config['active'] && ! $this->currentUser->isValid()) {
-            return new ViewResponse(
-                '@theme/pages/result.twig',
-                [
-                    'title'   => $communityTitle,
-                    'type'    => 'alert-danger',
-                    'message' => __('For registered users only'),
-                ]
-            );
-        }
 
         $route = $request->attributes->all();
         $mod = (string) ($route['mod'] ?? '');

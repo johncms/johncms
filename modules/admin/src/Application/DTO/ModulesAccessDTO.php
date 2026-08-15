@@ -10,7 +10,6 @@ final readonly class ModulesAccessDTO
         public int $registration,
         public bool $libraryComments,
         public bool $downloadsComments,
-        public int $community,
     ) {
     }
 }

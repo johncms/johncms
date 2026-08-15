@@ -2,42 +2,38 @@ msgid ""
 msgstr ""
 "X-Domain: community\n"
 
-#: modules/community/src/Application/Controllers/AdministrationController.php:28
-#: modules/community/src/Application/Controllers/CommunityBirthdaysController.php:28
-#: modules/community/src/Application/Controllers/CommunityIndexController.php:23
-#: modules/community/src/Application/Controllers/CommunitySearchController.php:29
-#: modules/community/src/Application/Controllers/CommunityTopController.php:24
-#: modules/community/src/Application/Controllers/CommunityUsersController.php:28
+#: modules/community/src/Application/Controllers/AdministrationController.php:26
+#: modules/community/src/Application/Controllers/CommunityBirthdaysController.php:26
+#: modules/community/src/Application/Controllers/CommunityIndexController.php:21
+#: modules/community/src/Application/Controllers/CommunitySearchController.php:27
+#: modules/community/src/Application/Controllers/CommunityTopController.php:22
+#: modules/community/src/Application/Controllers/CommunityUsersController.php:26
+#: modules/community/src/Application/Services/CommunityPermissions.php:28
 #: modules/community/src/Application/UseCases/ViewIndexUseCase.php:21
 msgid "Community"
 msgstr ""
 
-#: modules/community/src/Application/Controllers/AdministrationController.php:38
-#: modules/community/src/Application/Controllers/CommunityBirthdaysController.php:38
-#: modules/community/src/Application/Controllers/CommunityIndexController.php:33
-#: modules/community/src/Application/Controllers/CommunitySearchController.php:39
-#: modules/community/src/Application/Controllers/CommunityTopController.php:34
-#: modules/community/src/Application/Controllers/CommunityUsersController.php:38
-msgid "For registered users only"
-msgstr ""
-
-#: modules/community/src/Application/Controllers/AdministrationController.php:43
+#: modules/community/src/Application/Controllers/AdministrationController.php:30
 #: modules/community/templates/public/index.twig:27
 msgid "Administration"
 msgstr ""
 
-#: modules/community/src/Application/Controllers/CommunityBirthdaysController.php:43
+#: modules/community/src/Application/Controllers/CommunityBirthdaysController.php:30
 #: modules/community/templates/public/index.twig:32
 msgid "Birthdays"
 msgstr ""
 
-#: modules/community/src/Application/Controllers/CommunitySearchController.php:44
+#: modules/community/src/Application/Controllers/CommunitySearchController.php:31
 #: modules/community/templates/public/components/back-links.twig:4
 msgid "User Search"
 msgstr ""
 
-#: modules/community/src/Application/Controllers/CommunityUsersController.php:43
+#: modules/community/src/Application/Controllers/CommunityUsersController.php:30
 msgid "List of users"
+msgstr ""
+
+#: modules/community/src/Application/Services/CommunityPermissions.php:27
+msgid "Open the lists of the community"
 msgstr ""
 
 #: modules/community/src/Application/UseCases/ViewSearchUseCase.php:25

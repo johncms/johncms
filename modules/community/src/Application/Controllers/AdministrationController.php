@@ -10,13 +10,11 @@ use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Community\Application\UseCases\ViewAdministrationUseCase;
 use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
-use Johncms\Users\User;
 
 final readonly class AdministrationController
 {
     public function __construct(
         private NavChain $navChain,
-        private User $currentUser,
         private ViewAdministrationUseCase $viewAdministrationUseCase,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
@@ -28,17 +26,6 @@ final readonly class AdministrationController
         $communityTitle = __('Community');
         $this->navChain->add($communityTitle, '/community/');
 
-        $config = config('johncms');
-        if (! $config['active'] && ! $this->currentUser->isValid()) {
-            return new ViewResponse(
-                '@theme/pages/result.twig',
-                [
-                    'title'   => $communityTitle,
-                    'type'    => 'alert-danger',
-                    'message' => __('For registered users only'),
-                ]
-            );
-        }
 
         $pageTitle = __('Administration');
         $this->navChain->add($pageTitle);

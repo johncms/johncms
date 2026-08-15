@@ -171,3 +171,6 @@ msgstr[3] "баллов"
 msgid "Delete"
 msgstr "Удалить"
 
+
+msgid "Open the lists of the community"
+msgstr "Открывать списки сообщества"

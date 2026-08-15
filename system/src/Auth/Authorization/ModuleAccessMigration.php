@@ -71,6 +71,13 @@ final readonly class ModuleAccessMigration
                 'downloads.view' => [1, 2],
             ],
         ],
+        // The lists of the community were the one setting with two values rather than three:
+        // open to everybody, or to signed-in visitors.
+        'active' => [
+            SystemRole::Guest->value => [
+                'community.view' => [1],
+            ],
+        ],
     ];
 
     /**

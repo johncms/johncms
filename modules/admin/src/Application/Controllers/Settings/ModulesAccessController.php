@@ -46,7 +46,6 @@ final readonly class ModulesAccessController
             registration: $request->bodyInt('reg'),
             libraryComments: (bool) $request->bodyInt('libcomm'),
             downloadsComments: (bool) $request->bodyInt('downcomm'),
-            community: $request->bodyInt('active'),
         );
     }
 
@@ -98,16 +97,6 @@ final readonly class ModulesAccessController
                 'value'    => null,
                 'options'  => [],
                 'comments' => ['name' => 'downcomm', 'value' => (bool) config('johncms.mod_down_comm', false)],
-            ],
-            [
-                'title'    => __('Community'),
-                'name'     => 'active',
-                'value'    => (int) config('johncms.active', 0),
-                'options'  => [
-                    ['value' => 1, 'label' => __('Access is allowed')],
-                    ['value' => 0, 'label' => __('Only for authorized')],
-                ],
-                'comments' => null,
             ],
             [
                 'title'    => __('Registration'),
