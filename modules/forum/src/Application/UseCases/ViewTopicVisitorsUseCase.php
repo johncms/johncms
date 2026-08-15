@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\UseCases;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\DTO\ForumVisitorsQueryDTO;
 use Johncms\Modules\Forum\Application\DTO\ForumVisitorsResultDTO;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumVisitorRowMapper;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumWhoRepositoryInterface;
-use Johncms\Users\User;
 
 final readonly class ViewTopicVisitorsUseCase
 {
@@ -18,7 +18,7 @@ final readonly class ViewTopicVisitorsUseCase
         private ForumWhoRepositoryInterface $whoRepository,
         private ForumTopicRepositoryInterface $topicRepository,
         private ForumVisitorRowMapper $visitorRowMapper,
-        private User $currentUser,
+        private CurrentUser $currentUser,
     ) {
     }
 
@@ -29,7 +29,7 @@ final readonly class ViewTopicVisitorsUseCase
             throw new ForumNotFoundException('Topic not found.');
         }
 
-        $limit = (int) $this->currentUser->config->kmess;
+        $limit = (int) $this->currentUser->user()->config->kmess;
         $total = $query->guests
             ? $this->whoRepository->countTopicGuests($topicId)
             : $this->whoRepository->countTopicUsers($topicId);

@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\Services\ForumSectionTreeService;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Domain\Models\ForumMessage;
@@ -102,7 +103,7 @@ class ForumUtils
     public static function getPostPage(int $post_id, int $topic_id): string
     {
         /** @var User $user */
-        $user = di(User::class);
+        $user = di(CurrentUser::class)->user();
         $upfp = $user->set_forum['upfp'] ?? 0;
         $perPage = max(1, (int) $user->config->kmess);
         $totalMessages = (new ForumMessage())

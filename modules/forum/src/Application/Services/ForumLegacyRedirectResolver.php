@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\Services;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Domain\Repository\ForumSectionRepositoryInterface;
-use Johncms\Users\User;
 
 final class ForumLegacyRedirectResolver
 {
     public function __construct(
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private ForumSectionRepositoryInterface $sectionRepository,
         private ForumSectionPathService $sectionPathService,
         private ForumTopicPathService $topicPathService,
@@ -49,7 +49,7 @@ final class ForumLegacyRedirectResolver
             $page = isset($query['page']) ? abs((int) $query['page']) : 0;
             $start = isset($query['start']) ? abs((int) $query['start']) : 0;
             if ($page <= 1 && $start > 0) {
-                $page = (int) floor($start / max(1, (int) $this->currentUser->config->kmess)) + 1;
+                $page = (int) floor($start / max(1, (int) $this->currentUser->user()->config->kmess)) + 1;
             }
             if ($page > 1) {
                 $params['page'] = $page;
@@ -83,7 +83,7 @@ final class ForumLegacyRedirectResolver
             $page = isset($query['page']) ? abs((int) $query['page']) : 0;
             $start = isset($query['start']) ? abs((int) $query['start']) : 0;
             if ($page <= 1 && $start > 0) {
-                $page = (int) floor($start / max(1, (int) $this->currentUser->config->kmess)) + 1;
+                $page = (int) floor($start / max(1, (int) $this->currentUser->user()->config->kmess)) + 1;
             }
             if ($page > 1) {
                 $url .= '?page=' . $page;
@@ -105,7 +105,7 @@ final class ForumLegacyRedirectResolver
                 $page = isset($query['page']) ? abs((int) $query['page']) : 0;
                 $start = isset($query['start']) ? abs((int) $query['start']) : 0;
                 if ($page <= 1 && $start > 0) {
-                    $page = (int) floor($start / max(1, (int) $this->currentUser->config->kmess)) + 1;
+                    $page = (int) floor($start / max(1, (int) $this->currentUser->user()->config->kmess)) + 1;
                 }
                 if ($page > 1) {
                     $params['page'] = $page;
@@ -122,7 +122,7 @@ final class ForumLegacyRedirectResolver
                 $page = isset($query['page']) ? abs((int) $query['page']) : 0;
                 $start = isset($query['start']) ? abs((int) $query['start']) : 0;
                 if ($page <= 1 && $start > 0) {
-                    $page = (int) floor($start / max(1, (int) $this->currentUser->config->kmess)) + 1;
+                    $page = (int) floor($start / max(1, (int) $this->currentUser->user()->config->kmess)) + 1;
                 }
                 if ($page > 1) {
                     return '/forum/unread/?' . http_build_query(['page' => $page]);
@@ -156,7 +156,7 @@ final class ForumLegacyRedirectResolver
             $page = isset($query['page']) ? abs((int) $query['page']) : 0;
             $start = isset($query['start']) ? abs((int) $query['start']) : 0;
             if ($page <= 1 && $start > 0) {
-                $page = (int) floor($start / max(1, (int) $this->currentUser->config->kmess)) + 1;
+                $page = (int) floor($start / max(1, (int) $this->currentUser->user()->config->kmess)) + 1;
             }
 
             $url = $this->topicPathService->getTopicUrlById($legacyId, $page > 1 ? $page : null);

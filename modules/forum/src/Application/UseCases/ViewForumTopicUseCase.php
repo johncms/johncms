@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\UseCases;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Carbon\Carbon;
 use Johncms\Modules\Forum\Application\DTO\ForumTopicPageResultDTO;
@@ -21,7 +22,6 @@ use Johncms\Modules\Forum\Domain\Repository\ForumVoteRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumWhoRepositoryInterface;
 use Johncms\Notifications\Notification;
 use Johncms\Http\Session;
-use Johncms\Users\User;
 use Johncms\Utils\ShortNumberFormatter;
 
 final readonly class ViewForumTopicUseCase
@@ -34,7 +34,7 @@ final readonly class ViewForumTopicUseCase
         private ForumWhoRepositoryInterface $whoRepository,
         private ForumSectionPathService $sectionPathService,
         private ForumTopicPathService $topicPathService,
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private Session $session,
         private AccessCheckerInterface $accessChecker,
     ) {
@@ -84,7 +84,7 @@ final readonly class ViewForumTopicUseCase
         }
 
         if ($this->currentUser->isValid()) {
-            $this->unreadRepository->markTopicAsRead($topic->id, $this->currentUser->id, time());
+            $this->unreadRepository->markTopicAsRead($topic->id, $this->currentUser->id(), time());
         }
 
         $online = [];
@@ -98,7 +98,7 @@ final readonly class ViewForumTopicUseCase
         }
 
         $isFilterEnabled = $filterEnabled && $filterTopicId === $topic->id;
-        $perPage = (int) $this->currentUser->config->kmess;
+        $perPage = (int) $this->currentUser->user()->config->kmess;
         $start = ($page - 1) * $perPage;
 
         $filterUserIds = $isFilterEnabled ? $filterByUsers : [];
@@ -136,13 +136,13 @@ final readonly class ViewForumTopicUseCase
                 if (
                     (
                         $canModerateTopic
-                        || ($i === 1 && $access === 2 && $message->user_id === $this->currentUser->id)
-                        || ($message->user_id === $this->currentUser->id
+                        || ($i === 1 && $access === 2 && $message->user_id === $this->currentUser->id())
+                        || ($message->user_id === $this->currentUser->id()
                             && empty($setForum['upfp'])
                             && ($start + $i) === $total
                             && $message->date > time() - 300
                         )
-                        || ($message->user_id === $this->currentUser->id
+                        || ($message->user_id === $this->currentUser->id()
                             && ! empty($setForum['upfp'])
                             && $start === 0
                             && $i === 1
@@ -154,7 +154,7 @@ final readonly class ViewForumTopicUseCase
                 }
 
                 if (
-                    $this->currentUser->id !== $message->user_id
+                    $this->currentUser->id() !== $message->user_id
                     && $this->currentUser->isValid()
                     && (! $topic->closed || $canReplyInClosedTopic)
                 ) {

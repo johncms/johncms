@@ -6,6 +6,7 @@ namespace Johncms\Modules\Forum\Application\Controllers;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\Authorization\CorePermissions;
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
@@ -24,7 +25,6 @@ use Johncms\Http\Environment;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
 use Johncms\System\Utility\EditorContentNormalizer;
-use Johncms\Users\User;
 use Johncms\Validator\Rules\ModelNotExists;
 use Johncms\Validator\Rules\StringLength;
 use Johncms\Validator\ValidatorInterface;
@@ -41,7 +41,7 @@ final readonly class NewTopicController
         private \HTMLPurifier $purifier,
         private Embed $embed,
         private NavChain $navChain,
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private ForumErrorRenderer $forumErrorRenderer,
         private GetNewTopicContextUseCase $contextUseCase,
         private CreateTopicUseCase $createTopicUseCase,
@@ -123,7 +123,7 @@ final readonly class NewTopicController
                         // The same text from the same author is a double post; from somebody
                         // else it is a coincidence.
                         exclude: function ($query): void {
-                            $query->where('user_id', $this->currentUser->id);
+                            $query->where('user_id', $this->currentUser->id());
                         },
                     ),
                 ],
@@ -196,8 +196,8 @@ final readonly class NewTopicController
         ];
 
         $setForum = [];
-        if ($this->currentUser->isValid() && ! empty($this->currentUser->set_forum)) {
-            $setForum = (array) $this->currentUser->set_forum;
+        if ($this->currentUser->isValid() && ! empty($this->currentUser->user()->set_forum)) {
+            $setForum = (array) $this->currentUser->user()->set_forum;
         }
 
         return array_merge($setForumDefault, $setForum);

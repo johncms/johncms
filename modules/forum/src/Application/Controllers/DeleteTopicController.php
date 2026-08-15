@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\Controllers;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
@@ -15,12 +16,11 @@ use Johncms\Modules\Forum\Application\UseCases\DeleteTopicUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetDeleteTopicContextUseCase;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
-use Johncms\Users\User;
 
 final readonly class DeleteTopicController
 {
     public function __construct(
-        private User $user,
+        private CurrentUser $currentUser,
         private ForumErrorRenderer $forumErrorRenderer,
         private GetDeleteTopicContextUseCase $contextUseCase,
         private DeleteTopicUseCase $deleteTopicUseCase,
@@ -64,7 +64,7 @@ final readonly class DeleteTopicController
             if ($deleteMode === 2 && $this->accessChecker->allows(ForumPermissions::TOPIC_DESTROY)) {
                 $this->deleteTopicUseCase->deleteTopic($topic->id);
             } else {
-                $this->deleteTopicUseCase->hideTopic($topic->id, $this->user->name);
+                $this->deleteTopicUseCase->hideTopic($topic->id, $this->currentUser->user()->name);
             }
 
             redirect($this->sectionPathService->getSectionUrlById($topic->section_id) ?? '/forum/');

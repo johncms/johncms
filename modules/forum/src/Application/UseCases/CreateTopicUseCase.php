@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\UseCases;
 
 use Carbon\Carbon;
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\DTO\NewTopicResultDTO;
 use Johncms\Modules\Forum\Application\Services\ForumTopicSlugService;
 use Johncms\Modules\Forum\Application\Services\ForumTopicStatsRecalculator;
@@ -14,7 +15,6 @@ use Johncms\Modules\Forum\Domain\Models\ForumTopic;
 use Johncms\Modules\Forum\Domain\Models\ForumUnread;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
 use Johncms\Security\ClientInfoDTO;
-use Johncms\Users\User;
 
 final readonly class CreateTopicUseCase
 {
@@ -22,7 +22,7 @@ final readonly class CreateTopicUseCase
         private ForumTopicRepositoryInterface $topicRepository,
         private ForumTopicStatsRecalculator $topicStatsRecalculator,
         private ForumTopicSlugService $topicSlugService,
-        private User $currentUser,
+        private CurrentUser $currentUser,
     ) {
     }
 
@@ -37,23 +37,23 @@ final readonly class CreateTopicUseCase
         $topic = new ForumTopic();
         $topic->section_id = $section->id;
         $topic->created_at = Carbon::now();
-        $topic->user_id = $this->currentUser->id;
-        $topic->user_name = $this->currentUser->name;
+        $topic->user_id = $this->currentUser->id();
+        $topic->user_name = $this->currentUser->user()->name;
         $topic->name = $topicName;
         $topic->slug = $this->topicSlugService->generateUniqueSlug($topicName, $section->id);
         $topic->meta_keywords = $metaKeywords;
         $topic->meta_description = $metaDescription;
         $topic->last_post_date = time();
         $topic->post_count = 0;
-        $topic->curators = $section->access === 1 ? [$this->currentUser->id => $this->currentUser->name] : [];
+        $topic->curators = $section->access === 1 ? [$this->currentUser->id() => $this->currentUser->user()->name] : [];
 
         $this->topicRepository->save($topic);
 
         $message = new ForumMessage();
         $message->topic_id = $topic->id;
         $message->date = time();
-        $message->user_id = $this->currentUser->id;
-        $message->user_name = $this->currentUser->name;
+        $message->user_id = $this->currentUser->id();
+        $message->user_name = $this->currentUser->user()->name;
         $message->ip = $clientInfo->ip;
         $message->ip_via_proxy = $clientInfo->ipViaProxy;
         $message->user_agent = $clientInfo->userAgent;
@@ -62,16 +62,16 @@ final readonly class CreateTopicUseCase
 
         $this->topicStatsRecalculator->recalculate($topic->id);
 
-        $this->currentUser->update(
+        $this->currentUser->user()->update(
             [
-                'postforum' => ($this->currentUser->postforum + 1),
+                'postforum' => ($this->currentUser->user()->postforum + 1),
                 'lastpost'  => time(),
             ]
         );
 
         $unread = new ForumUnread();
         $unread->topic_id = $topic->id;
-        $unread->user_id = $this->currentUser->id;
+        $unread->user_id = $this->currentUser->id();
         $unread->time = time();
         $unread->save();
 

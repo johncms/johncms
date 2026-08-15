@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\UseCases;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Exception;
 use Johncms\Files\FileStorage;
@@ -34,7 +35,7 @@ final readonly class DeletePostUseCase
         private ForumUnreadRepositoryInterface $unreadRepository,
         private ForumSectionPathService $sectionPathService,
         private ForumTopicPathService $topicPathService,
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private FileStorage $fileStorage,
         private AccessCheckerInterface $accessChecker,
     ) {
@@ -78,7 +79,7 @@ final readonly class DeletePostUseCase
                 strict: true,
             );
 
-            $page = (int) ceil($strictPageCount / $this->currentUser->config->kmess);
+            $page = (int) ceil($strictPageCount / $this->currentUser->user()->config->kmess);
             $page = max(1, $page);
 
             $this->messageRepository->deleteById($message->id);
@@ -98,11 +99,11 @@ final readonly class DeletePostUseCase
             $this->fileRepository->markDeletedByPostId($message->id);
 
             if ($context->posts === 1) {
-                $this->topicRepository->markDeleted($topic->id, $this->currentUser->name);
+                $this->topicRepository->markDeleted($topic->id, $this->currentUser->user()->name);
                 $redirectUrl = $this->sectionPathService->getSectionUrlById($topic->section_id) ?? '/forum/';
                 $shouldRecountTopic = false;
             } else {
-                $this->messageRepository->markDeletedById($message->id, $this->currentUser->name);
+                $this->messageRepository->markDeletedById($message->id, $this->currentUser->user()->name);
                 $redirectUrl = $this->topicPathService->getTopicUrl($topic, $context->page > 1 ? $context->page : null);
             }
         }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\UseCases;
 
 use Illuminate\Support\Collection;
+use Johncms\Auth\CurrentUser;
 use Johncms\FileInfo;
 use Johncms\Http\UploadedFileDTO;
 use Johncms\Modules\Forum\Application\DTO\AttachFileToPostResultDTO;
@@ -14,7 +15,6 @@ use Johncms\Modules\Forum\Domain\Models\ForumMessage;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Domain\Repository\ForumFileRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
-use Johncms\Users\User;
 use RuntimeException;
 
 final readonly class AttachFileToPostUseCase
@@ -22,7 +22,7 @@ final readonly class AttachFileToPostUseCase
     public function __construct(
         private ForumMessageRepositoryInterface $messageRepository,
         private ForumFileRepositoryInterface $fileRepository,
-        private User $currentUser,
+        private CurrentUser $currentUser,
     ) {
     }
 
@@ -138,7 +138,7 @@ final readonly class AttachFileToPostUseCase
     private function getMessagePage(int $topicId): int
     {
         $total = (int) ForumMessage::query()->where('topic_id', $topicId)->count();
-        $perPage = (int) ($this->currentUser->set_user->kmess ?? $this->currentUser->config->kmess ?? 10);
+        $perPage = (int) ($this->currentUser->user()->set_user->kmess ?? $this->currentUser->user()->config->kmess ?? 10);
         if ($perPage <= 0) {
             $perPage = 10;
         }

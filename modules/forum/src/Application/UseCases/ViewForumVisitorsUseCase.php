@@ -4,24 +4,24 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\UseCases;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\DTO\ForumVisitorsQueryDTO;
 use Johncms\Modules\Forum\Application\DTO\ForumVisitorsResultDTO;
 use Johncms\Modules\Forum\Application\Services\ForumVisitorRowMapper;
 use Johncms\Modules\Forum\Domain\Repository\ForumWhoRepositoryInterface;
-use Johncms\Users\User;
 
 final readonly class ViewForumVisitorsUseCase
 {
     public function __construct(
         private ForumWhoRepositoryInterface $whoRepository,
         private ForumVisitorRowMapper $visitorRowMapper,
-        private User $currentUser,
+        private CurrentUser $currentUser,
     ) {
     }
 
     public function execute(ForumVisitorsQueryDTO $query): ForumVisitorsResultDTO
     {
-        $limit = (int) $this->currentUser->config->kmess;
+        $limit = (int) $this->currentUser->user()->config->kmess;
         $total = $query->guests
             ? $this->whoRepository->countForumGuests()
             : $this->whoRepository->countForumUsers();

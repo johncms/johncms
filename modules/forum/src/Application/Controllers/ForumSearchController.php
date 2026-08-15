@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\Controllers;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Modules\Forum\Application\DTO\ForumSearchQueryDTO;
 use Johncms\Modules\Forum\Application\Exceptions\ForumValidationException;
@@ -12,13 +13,12 @@ use Johncms\Modules\Forum\Application\UseCases\ViewForumSearchUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
-use Johncms\Users\User;
 
 final readonly class ForumSearchController
 {
     public function __construct(
         private NavChain $navChain,
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private ForumErrorRenderer $forumErrorRenderer,
         private ViewForumSearchUseCase $viewForumSearchUseCase,
         private PaginationFactory $paginationFactory,
@@ -30,7 +30,7 @@ final readonly class ForumSearchController
         $search = rawurldecode(trim($request->queryParam('search', '')));
         $searchInTopicNames = $request->query->has('t');
         $page = max(1, $request->queryInt('page', 1));
-        $offset = ($page - 1) * (int) $this->currentUser->config->kmess;
+        $offset = ($page - 1) * (int) $this->currentUser->user()->config->kmess;
 
         try {
             $result = $this->viewForumSearchUseCase->execute(

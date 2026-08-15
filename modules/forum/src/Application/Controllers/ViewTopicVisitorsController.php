@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\Controllers;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\DTO\ForumVisitorsQueryDTO;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
@@ -16,13 +17,12 @@ use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
-use Johncms\Users\User;
 
 final readonly class ViewTopicVisitorsController
 {
     public function __construct(
         private NavChain $navChain,
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private EnsureForumUserAccessUseCase $forumUserAccessUseCase,
         private ForumErrorRenderer $forumErrorRenderer,
         private ViewTopicVisitorsUseCase $viewTopicVisitorsUseCase,
@@ -51,7 +51,7 @@ final readonly class ViewTopicVisitorsController
 
         $showGuests = $request->queryParam('mode') === 'guests';
         $page = max(1, $request->queryInt('page', 1));
-        $start = ($page - 1) * (int) $this->currentUser->config->kmess;
+        $start = ($page - 1) * (int) $this->currentUser->user()->config->kmess;
 
         try {
             $result = $this->viewTopicVisitorsUseCase->execute(

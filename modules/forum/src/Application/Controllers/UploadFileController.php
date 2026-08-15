@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\Controllers;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\CurrentUser;
 use Johncms\FileInfo;
 use Johncms\Files\FileStorage;
 use Johncms\Http\Request;
@@ -12,7 +13,6 @@ use Johncms\Http\UploadedFileMapper;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
-use Johncms\Users\User;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -24,7 +24,7 @@ final readonly class UploadFileController
         private AccessCheckerInterface $accessChecker,
         private FileStorage $fileStorage,
         private EnsureForumAccessUseCase $forumAccessUseCase,
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private LoggerInterface $logger,
         private UploadedFileMapper $uploadedFileMapper,
     ) {
@@ -40,8 +40,8 @@ final readonly class UploadFileController
 
         if (
             ! $this->currentUser->isValid()
-            || isset($this->currentUser->ban[1])
-            || isset($this->currentUser->ban[11])
+            || isset($this->currentUser->user()->ban[1])
+            || isset($this->currentUser->user()->ban[11])
             || ! $this->accessChecker->allows(ForumPermissions::POST)
         ) {
             return new JsonResponse(['error' => ['message' => __('Access denied')]], JsonResponse::HTTP_FORBIDDEN);
@@ -74,7 +74,7 @@ final readonly class UploadFileController
                 [
                     'module'       => 'forum',
                     'feature'      => 'upload_file',
-                    'user_id'      => $this->currentUser->id,
+                    'user_id'      => $this->currentUser->id(),
                     'trace'        => $exception->getTraceAsString(),
                     'request_data' => $request->request->all(),
                 ]

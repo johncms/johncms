@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\UseCases;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\DTO\EditPostContextDTO;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
-use Johncms\Users\User;
 
 final readonly class EditPostUseCase
 {
     public function __construct(
         private ForumMessageRepositoryInterface $messageRepository,
-        private User $currentUser,
+        private CurrentUser $currentUser,
     ) {
     }
 
@@ -20,7 +20,7 @@ final readonly class EditPostUseCase
     {
         $message = $context->message;
         $message->edit_time = time();
-        $message->editor_name = $this->currentUser->name;
+        $message->editor_name = $this->currentUser->user()->name;
         $message->edit_count = ((int) $message->edit_count) + 1;
         $message->text = $messageText;
 

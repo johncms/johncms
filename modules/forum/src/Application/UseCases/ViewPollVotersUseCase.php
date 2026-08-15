@@ -5,18 +5,18 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\UseCases;
 
 use Johncms\Auth\Authorization\StaffTitles;
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\DTO\PollVotersQueryDTO;
 use Johncms\Modules\Forum\Application\DTO\PollVotersResultDTO;
 use Johncms\Modules\Forum\Application\Exceptions\ForumValidationException;
 use Johncms\Modules\Forum\Domain\Repository\ForumVoteRepositoryInterface;
-use Johncms\Users\User;
 
 final readonly class ViewPollVotersUseCase
 {
     public function __construct(
         private StaffTitles $staffTitles,
         private ForumVoteRepositoryInterface $voteRepository,
-        private User $currentUser,
+        private CurrentUser $currentUser,
     ) {
     }
 
@@ -27,7 +27,7 @@ final readonly class ViewPollVotersUseCase
             throw new ForumValidationException('Poll not found.');
         }
 
-        $limit = (int) $this->currentUser->config->kmess;
+        $limit = (int) $this->currentUser->user()->config->kmess;
         $start = (max(1, $query->page) - 1) * max(1, $limit);
         $total = $this->voteRepository->countUsersByTopic($query->topicId);
         $items = [];
@@ -61,7 +61,7 @@ final readonly class ViewPollVotersUseCase
 
         foreach ($rows as $row) {
             $row['user_profile_link'] = '';
-            if (! empty($row['id']) && $this->currentUser->isValid() && $this->currentUser->id !== (int) $row['id']) {
+            if (! empty($row['id']) && $this->currentUser->isValid() && $this->currentUser->id() !== (int) $row['id']) {
                 $row['user_profile_link'] = '/profile/' . $row['id'];
             }
 

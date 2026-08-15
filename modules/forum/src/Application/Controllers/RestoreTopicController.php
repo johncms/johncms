@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\Controllers;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Modules\Forum\Application\UseCases\GetRestoreTopicContextUseCase;
 use Johncms\Modules\Forum\Application\UseCases\RestoreTopicUseCase;
-use Johncms\Users\User;
 
 final readonly class RestoreTopicController
 {
     public function __construct(
-        private User $user,
+        private CurrentUser $currentUser,
         private ForumErrorRenderer $forumErrorRenderer,
         private GetRestoreTopicContextUseCase $contextUseCase,
         private RestoreTopicUseCase $restoreTopicUseCase,
@@ -38,7 +38,7 @@ final readonly class RestoreTopicController
             pageNotFound();
         }
 
-        $this->restoreTopicUseCase->execute($topic->id, $this->user->name);
+        $this->restoreTopicUseCase->execute($topic->id, $this->currentUser->user()->name);
         redirect($topic->url);
     }
 }

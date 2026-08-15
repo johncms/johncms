@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\UseCases;
 
 use Johncms\Auth\Authorization\CorePermissions;
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Modules\Forum\Application\DTO\PostMessageResultDTO;
@@ -15,7 +16,6 @@ use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
 use Johncms\Notifications\Notification;
 use Johncms\Smilies\SmiliesRendererInterface;
 use Johncms\Security\ClientInfoDTO;
-use Johncms\Users\User;
 
 final readonly class ReplyMessageUseCase
 {
@@ -23,7 +23,7 @@ final readonly class ReplyMessageUseCase
         private ForumMessageRepositoryInterface $messageRepository,
         private ForumTopicStatsRecalculator $topicStatsRecalculator,
         private SmiliesRendererInterface $smiliesRenderer,
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private Notification $notification,
         private AccessCheckerInterface $accessChecker,
     ) {
@@ -40,17 +40,17 @@ final readonly class ReplyMessageUseCase
         $message = new ForumMessage();
         $message->topic_id = $topic->id;
         $message->date = time();
-        $message->user_id = $this->currentUser->id;
-        $message->user_name = $this->currentUser->name;
+        $message->user_id = $this->currentUser->id();
+        $message->user_name = $this->currentUser->user()->name;
         $message->ip = $clientInfo->ip;
         $message->ip_via_proxy = $clientInfo->ipViaProxy;
         $message->user_agent = $clientInfo->userAgent;
         $message->text = $messageText;
         $this->messageRepository->save($message);
 
-        $this->currentUser->update(
+        $this->currentUser->user()->update(
             [
-                'postforum' => ($this->currentUser->postforum + 1),
+                'postforum' => ($this->currentUser->user()->postforum + 1),
                 'lastpost'  => time(),
             ]
         );
@@ -72,7 +72,7 @@ final readonly class ReplyMessageUseCase
     {
         $includeDeleted = $this->accessChecker->allows(ForumPermissions::DELETED_VIEW);
         $total = $this->messageRepository->countByTopicId($topicId, $includeDeleted);
-        $page = $forumSettings['upfp'] ? 1 : (int) ceil($total / $this->currentUser->config->kmess);
+        $page = $forumSettings['upfp'] ? 1 : (int) ceil($total / $this->currentUser->user()->config->kmess);
 
         return max(1, $page);
     }
@@ -91,11 +91,11 @@ final readonly class ReplyMessageUseCase
                 'module'     => 'forum',
                 'event_type' => 'new_message',
                 'user_id'    => $sourceMessage->user_id,
-                'sender_id'  => $this->currentUser->id,
+                'sender_id'  => $this->currentUser->id(),
                 'entity_id'  => $postId,
                 'fields'     => [
                     'topic_name'       => htmlspecialchars($topic->name),
-                    'user_name'        => htmlspecialchars($this->currentUser->name),
+                    'user_name'        => htmlspecialchars($this->currentUser->user()->name),
                     'topic_url'        => $topic->url,
                     'reply_to_message' => '/forum/post/' . $sourceMessage->id . '/',
                     'message'          => $previewMessage,

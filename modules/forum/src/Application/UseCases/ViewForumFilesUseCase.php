@@ -6,6 +6,7 @@ namespace Johncms\Modules\Forum\Application\UseCases;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\Authorization\StaffTitles;
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\DTO\ForumFilesQueryDTO;
 use Johncms\Modules\Forum\Application\DTO\ForumFilesViewResultDTO;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
@@ -18,7 +19,6 @@ use Johncms\Modules\Forum\Domain\Repository\ForumFileRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumSectionRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
 use Johncms\Smilies\SmiliesRendererInterface;
-use Johncms\Users\User;
 use Johncms\Utils\DateFormatterInterface;
 use Simba77\EmbedMedia\Embed;
 use Twig\Markup;
@@ -35,7 +35,7 @@ final readonly class ViewForumFilesUseCase
         private SmiliesRendererInterface $smiliesRenderer,
         private \HTMLPurifier $purifier,
         private Embed $embed,
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private AccessCheckerInterface $accessChecker,
     ) {
     }
@@ -168,7 +168,7 @@ final readonly class ViewForumFilesUseCase
                 filter: $listingFilter,
                 upfp: ! empty($forumSettings['upfp']),
                 start: $query->start,
-                limit: (int) $this->currentUser->config->kmess,
+                limit: (int) $this->currentUser->user()->config->kmess,
             ));
 
             $files = $this->mapRowsToFiles($rows);
@@ -267,13 +267,13 @@ final readonly class ViewForumFilesUseCase
             $text = $this->embed->embedMedia($text);
             $text = $this->smiliesRenderer->render($text, $this->staffTitles->isStaff((int) $row['user_id']));
 
-            $page = (int) ceil((int) ($row['page'] ?? 0) / $this->currentUser->config->kmess);
+            $page = (int) ceil((int) ($row['page'] ?? 0) / $this->currentUser->user()->config->kmess);
             $row['post_text'] = new Markup($text, 'UTF-8');
             $row['post_time'] = $this->dateFormatter->format((int) $row['time']);
             $row['user_is_online'] = time() <= (int) ($row['lastdate'] ?? 0) + 300;
             $row['user_profile_link'] = '';
 
-            if ($this->currentUser->isValid() && (int) $this->currentUser->id !== (int) $row['user_id']) {
+            if ($this->currentUser->isValid() && $this->currentUser->id() !== (int) $row['user_id']) {
                 $row['user_profile_link'] = '/profile/' . $row['user_id'];
             }
 
@@ -327,8 +327,8 @@ final readonly class ViewForumFilesUseCase
         ];
 
         $setForum = [];
-        if ($this->currentUser->isValid() && ! empty($this->currentUser->set_forum)) {
-            $setForum = (array) $this->currentUser->set_forum;
+        if ($this->currentUser->isValid() && ! empty($this->currentUser->user()->set_forum)) {
+            $setForum = (array) $this->currentUser->user()->set_forum;
         }
 
         return array_merge($setForumDefault, $setForum);
@@ -389,7 +389,7 @@ final readonly class ViewForumFilesUseCase
     private function buildSeoMeta(ForumFilesQueryDTO $query, array $context, string $caption): array
     {
         $contextName = (string) ($context['contextName'] ?? '');
-        $page = (int) floor($query->start / max(1, (int) $this->currentUser->config->kmess)) + 1;
+        $page = (int) floor($query->start / max(1, (int) $this->currentUser->user()->config->kmess)) + 1;
 
         $baseTitle = $caption;
         if ($contextName !== '') {

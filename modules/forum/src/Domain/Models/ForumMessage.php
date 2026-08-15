@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Domain\Models;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -136,7 +137,7 @@ class ForumMessage extends Model
     {
         parent::__construct($attributes);
         $this->purifier = di(HTMLPurifier::class);
-        $this->current_user = di(User::class);
+        $this->current_user = di(CurrentUser::class)->user();
         $this->dateFormatter = di(DateFormatterInterface::class);
         $this->media = di(MediaEmbed::class);
     }

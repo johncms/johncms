@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\UseCases;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\DTO\ForumSectionPageResultDTO;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumPermissions;
@@ -12,7 +13,6 @@ use Johncms\Modules\Forum\Application\Services\ForumSectionPathService;
 use Johncms\Modules\Forum\Domain\Repository\ForumSectionRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumWhoRepositoryInterface;
-use Johncms\Users\User;
 
 final readonly class ViewForumSectionUseCase
 {
@@ -22,7 +22,7 @@ final readonly class ViewForumSectionUseCase
         private ForumTopicRepositoryInterface $topicRepository,
         private ForumWhoRepositoryInterface $whoRepository,
         private ForumSectionPathService $sectionPathService,
-        private User $currentUser,
+        private CurrentUser $currentUser,
     ) {
     }
 
@@ -46,7 +46,7 @@ final readonly class ViewForumSectionUseCase
                 throw new ForumNotFoundException('Section not found.');
             }
 
-            $perPage = (int) $this->currentUser->config->kmess;
+            $perPage = (int) $this->currentUser->user()->config->kmess;
             $total = $this->topicRepository->countReadBySectionId($currentSection->id);
             $topics = $this->topicRepository->getReadBySectionId(
                 $currentSection->id,
@@ -104,9 +104,9 @@ final readonly class ViewForumSectionUseCase
 
     private function canCreateTopic(): bool
     {
-        return $this->currentUser->is_valid
-            && ! isset($this->currentUser->ban['1'])
-            && ! isset($this->currentUser->ban['11'])
+        return $this->currentUser->isValid()
+            && ! isset($this->currentUser->user()->ban['1'])
+            && ! isset($this->currentUser->user()->ban['11'])
             && $this->accessChecker->allows(ForumPermissions::POST);
     }
 }

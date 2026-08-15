@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\Services;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumSectionRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
-use Johncms\Users\User;
 use Twig\Markup;
 
 final readonly class ForumVisitorPlaceFormatter
@@ -18,7 +18,7 @@ final readonly class ForumVisitorPlaceFormatter
         private ForumTopicPathService $topicPathService,
         private ForumTopicRepositoryInterface $topicRepository,
         private ForumMessageRepositoryInterface $messageRepository,
-        private User $currentUser,
+        private CurrentUser $currentUser,
     ) {
     }
 

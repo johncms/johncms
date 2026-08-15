@@ -6,6 +6,7 @@ namespace Johncms\Modules\Forum\Application\Services;
 
 use Illuminate\Support\Collection;
 use Johncms\Auth\Authorization\StaffTitles;
+use Johncms\Auth\CurrentUser;
 use Johncms\Users\GuestSession;
 use Johncms\Users\User;
 
@@ -14,7 +15,7 @@ final readonly class ForumVisitorRowMapper
     public function __construct(
         private StaffTitles $staffTitles,
         private ForumVisitorPlaceFormatter $placeFormatter,
-        private User $currentUser,
+        private CurrentUser $currentUser,
     ) {
     }
 
@@ -60,7 +61,7 @@ final readonly class ForumVisitorRowMapper
             'ip_via_proxy'            => $row->ip_via_proxy !== '' ? $row->ip_via_proxy : 0,
         ];
 
-        if ($this->currentUser->isValid() && $this->currentUser->id !== $row->id) {
+        if ($this->currentUser->isValid() && $this->currentUser->id() !== $row->id) {
             $item['user_profile_link'] = '/profile/' . $row->id;
         }
 

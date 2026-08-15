@@ -5,20 +5,20 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\UseCases;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\DTO\EditPostContextDTO;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Domain\Models\ForumSection;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
-use Johncms\Users\User;
 
 final readonly class GetEditPostContextUseCase
 {
     public function __construct(
         private ForumMessageRepositoryInterface $messageRepository,
         private ForumTopicPathService $topicPathService,
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private AccessCheckerInterface $accessChecker,
     ) {
     }
@@ -52,7 +52,7 @@ final readonly class GetEditPostContextUseCase
             strict: false,
         );
 
-        $page = (int) ceil($totalForPage / $this->currentUser->config->kmess);
+        $page = (int) ceil($totalForPage / $this->currentUser->user()->config->kmess);
         $page = max(1, $page);
 
         $posts = $this->messageRepository->countByTopicId($message->topic_id, false);

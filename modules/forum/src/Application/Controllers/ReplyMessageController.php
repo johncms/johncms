@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\Controllers;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
@@ -20,7 +21,6 @@ use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Http\Session;
 use Johncms\System\Utility\EditorContentNormalizer;
-use Johncms\Users\User;
 use Twig\Markup;
 
 final readonly class ReplyMessageController
@@ -30,7 +30,7 @@ final readonly class ReplyMessageController
         private Session $session,
         private AntifloodCheckerInterface $antifloodChecker,
         private EditorContentNormalizer $editorContentNormalizer,
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private ForumMessageRepositoryInterface $messageRepository,
         private ForumErrorRenderer $forumErrorRenderer,
         private GetReplyMessageContextUseCase $contextUseCase,
@@ -80,7 +80,7 @@ final readonly class ReplyMessageController
             );
         }
 
-        if ($sourceMessage->user_id === $this->currentUser->id) {
+        if ($sourceMessage->user_id === $this->currentUser->id()) {
             return new ViewResponse(
                 '@theme/pages/result.twig',
                 [
@@ -145,7 +145,7 @@ final readonly class ReplyMessageController
                 );
             }
 
-            $lastMessage = $this->messageRepository->findLastMessageByUser($this->currentUser->id);
+            $lastMessage = $this->messageRepository->findLastMessageByUser($this->currentUser->id());
             if ($lastMessage !== null && $msg === (string) $lastMessage->getRawOriginal('text')) {
                 return new ViewResponse(
                     '@theme/pages/result.twig',
@@ -222,8 +222,8 @@ final readonly class ReplyMessageController
         ];
 
         $setForum = [];
-        if ($this->currentUser->isValid() && ! empty($this->currentUser->set_forum)) {
-            $setForum = (array) $this->currentUser->set_forum;
+        if ($this->currentUser->isValid() && ! empty($this->currentUser->user()->set_forum)) {
+            $setForum = (array) $this->currentUser->user()->set_forum;
         }
 
         return array_merge($setForumDefault, $setForum);

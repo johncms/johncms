@@ -15,6 +15,7 @@ namespace Johncms\Modules\Forum\Domain\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Johncms\Auth\CurrentUser;
 use Johncms\Casts\SpecialChars;
 use Johncms\Users\User;
 
@@ -66,14 +67,13 @@ class ForumVote extends Model
      */
     public function scopeVoteUser(Builder $query): Builder
     {
-        /** @var User $user */
-        $user = di(User::class);
-        if ($user->is_valid) {
+        $user = di(CurrentUser::class);
+        if ($user->isValid()) {
             return $query->selectSub(
                 (new ForumVoteUser())
                     ->selectRaw('count(*)')
                     ->whereRaw('cms_forum_vote_users.topic = cms_forum_vote.topic')
-                    ->where('user', '=', $user->id),
+                    ->where('user', '=', $user->id()),
                 'vote_user'
             )
                 ->addSelect('cms_forum_vote.*');

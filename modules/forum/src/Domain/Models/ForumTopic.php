@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Domain\Models;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -151,7 +152,7 @@ class ForumTopic extends Model
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->current_user = di(User::class);
+        $this->current_user = di(CurrentUser::class)->user();
         $this->dateFormatter = di(DateFormatterInterface::class);
     }
 
@@ -182,15 +183,14 @@ class ForumTopic extends Model
      */
     public function scopeRead(Builder $query): Builder
     {
-        /** @var User $user */
-        $user = di(User::class);
-        if ($user->is_valid) {
+        $user = di(CurrentUser::class);
+        if ($user->isValid()) {
             return $query->selectSub(
                 (new ForumUnread())
                     ->selectRaw('count(*)')
                     ->whereRaw('cms_forum_rdm.time >= forum_topic.last_post_date')
                     ->whereRaw('cms_forum_rdm.topic_id = forum_topic.id')
-                    ->where('user_id', '=', $user->id),
+                    ->where('user_id', '=', $user->id()),
                 'read'
             )
                 ->addSelect('forum_topic.*');

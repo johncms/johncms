@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\Controllers;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
@@ -14,14 +15,13 @@ use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Http\Session;
-use Johncms\Users\User;
 use Johncms\Utils\ShortNumberFormatter;
 
 final readonly class ForumTopicController
 {
     public function __construct(
         private Session $session,
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private NavChain $navChain,
         private ViewForumTopicUseCase $viewForumTopicUseCase,
         private PaginationFactory $paginationFactory,
@@ -32,7 +32,7 @@ final readonly class ForumTopicController
     public function __invoke(Request $request, string $path): ViewResponse
     {
         $setForum = $this->getForumSettings();
-        $perPage = (int) $this->currentUser->config->kmess;
+        $perPage = (int) $this->currentUser->user()->config->kmess;
         $page = max(1, $request->queryInt('page', 1));
         if ($page === 1) {
             $start = max(0, $request->queryInt('start', 0));
@@ -139,8 +139,8 @@ final readonly class ForumTopicController
         ];
 
         $settings = [];
-        if ($this->currentUser->isValid() && ! empty($this->currentUser->set_forum)) {
-            $settings = (array) $this->currentUser->set_forum;
+        if ($this->currentUser->isValid() && ! empty($this->currentUser->user()->set_forum)) {
+            $settings = (array) $this->currentUser->user()->set_forum;
         }
 
         return array_merge($default, $settings);

@@ -6,6 +6,7 @@ namespace Johncms\Modules\Forum\Application\UseCases;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\Authorization\CorePermissions;
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Johncms\Modules\Forum\Application\DTO\PostActionsDTO;
 use Johncms\Modules\Forum\Application\DTO\PostAuthorDTO;
@@ -19,7 +20,6 @@ use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Domain\Models\ForumFile;
 use Johncms\Modules\Forum\Domain\Models\ForumMessage;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
-use Johncms\Users\User;
 use Johncms\Utils\DateFormatterInterface;
 
 final readonly class ViewPostUseCase
@@ -27,7 +27,7 @@ final readonly class ViewPostUseCase
     public function __construct(
         private ForumMessageRepositoryInterface $messageRepository,
         private ForumTopicPathService $topicPathService,
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private DateFormatterInterface $dateFormatter,
         private AccessCheckerInterface $accessChecker,
     ) {
@@ -154,7 +154,7 @@ final readonly class ViewPostUseCase
         if (
             $this->currentUser->isValid()
             && $authorId !== null
-            && $this->currentUser->id !== $authorId
+            && $this->currentUser->id() !== $authorId
             && (! $isTopicClosed || $canReplyInClosedTopic)
         ) {
             $replyUrl = '/forum/reply-message/' . $postId . '/' . ($page > 1 ? '?page=' . $page : '');
@@ -170,7 +170,7 @@ final readonly class ViewPostUseCase
             return '';
         }
 
-        if ($this->currentUser->id === $message->user_id) {
+        if ($this->currentUser->id() === $message->user_id) {
             return '';
         }
 
@@ -187,7 +187,7 @@ final readonly class ViewPostUseCase
         }
 
         $total = (int) $countQuery->count();
-        $page = (int) ceil($total / $this->currentUser->config->kmess);
+        $page = (int) ceil($total / $this->currentUser->user()->config->kmess);
 
         return max(1, $page);
     }

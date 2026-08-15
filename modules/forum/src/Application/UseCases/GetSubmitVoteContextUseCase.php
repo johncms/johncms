@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\UseCases;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\DTO\SubmitVoteContextDTO;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumValidationException;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumVoteRepositoryInterface;
-use Johncms\Users\User;
 
 final readonly class GetSubmitVoteContextUseCase
 {
     public function __construct(
         private ForumTopicRepositoryInterface $topicRepository,
         private ForumVoteRepositoryInterface $voteRepository,
-        private User $currentUser,
+        private CurrentUser $currentUser,
     ) {
     }
 

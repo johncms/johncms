@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\Controllers;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
@@ -11,12 +12,11 @@ use Johncms\Modules\Forum\Application\UseCases\BulkDeletePostsUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetBulkDeletePostsContextUseCase;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
-use Johncms\Users\User;
 
 final readonly class BulkDeletePostsController
 {
     public function __construct(
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private ForumErrorRenderer $forumErrorRenderer,
         private GetBulkDeletePostsContextUseCase $contextUseCase,
         private BulkDeletePostsUseCase $bulkDeletePostsUseCase,
@@ -45,7 +45,7 @@ final readonly class BulkDeletePostsController
                 return $this->result('alert-danger', __('You did not choose something to delete'), $backUrl);
             }
 
-            $this->bulkDeletePostsUseCase->execute($id, $confirmIds, $this->currentUser->name);
+            $this->bulkDeletePostsUseCase->execute($id, $confirmIds, $this->currentUser->user()->name);
 
             return $this->result('alert-success', __('Marked posts are deleted'), $backUrl);
         }

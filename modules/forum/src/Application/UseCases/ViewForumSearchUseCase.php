@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\UseCases;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Modules\Forum\Application\DTO\ForumSearchQueryDTO;
@@ -13,7 +14,6 @@ use Johncms\Modules\Forum\Application\Exceptions\ForumValidationException;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Domain\Repository\ForumSearchHistoryRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumSearchRepositoryInterface;
-use Johncms\Users\User;
 use Johncms\Utils\DateFormatterInterface;
 use Twig\Markup;
 
@@ -24,7 +24,7 @@ final readonly class ViewForumSearchUseCase
         private ForumSearchHistoryRepositoryInterface $searchHistoryRepository,
         private ForumTopicPathService $topicPathService,
         private DateFormatterInterface $dateFormatter,
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private AccessCheckerInterface $accessChecker,
     ) {
     }
@@ -39,7 +39,7 @@ final readonly class ViewForumSearchUseCase
         }
 
         $includeDeleted = $this->accessChecker->allows(ForumPermissions::DELETED_VIEW);
-        $limit = (int) $this->currentUser->config->kmess;
+        $limit = (int) $this->currentUser->user()->config->kmess;
         $total = 0;
         $rows = [];
 
@@ -170,14 +170,14 @@ final readonly class ViewForumSearchUseCase
             return [];
         }
 
-        $history = $this->searchHistoryRepository->getByUserId((int) $this->currentUser->id);
+        $history = $this->searchHistoryRepository->getByUserId($this->currentUser->id());
         if ($addToHistory && $search !== '' && ! in_array($search, $history, true)) {
             if (count($history) > 20) {
                 array_shift($history);
             }
 
             $history[] = $search;
-            $this->searchHistoryRepository->saveForUser((int) $this->currentUser->id, $history);
+            $this->searchHistoryRepository->saveForUser($this->currentUser->id(), $history);
         }
 
         sort($history);

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\UseCases;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Modules\Forum\Application\DTO\PostMessageResultDTO;
@@ -14,7 +15,6 @@ use Johncms\Modules\Forum\Domain\Models\ForumUnread;
 use Johncms\Modules\Forum\Domain\Repository\ForumFileRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
 use Johncms\Security\ClientInfoDTO;
-use Johncms\Users\User;
 
 final readonly class PostMessageUseCase
 {
@@ -22,7 +22,7 @@ final readonly class PostMessageUseCase
         private ForumMessageRepositoryInterface $messageRepository,
         private ForumTopicStatsRecalculator $topicStatsRecalculator,
         private ForumFileRepositoryInterface $fileRepository,
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private AccessCheckerInterface $accessChecker,
     ) {
     }
@@ -45,16 +45,16 @@ final readonly class PostMessageUseCase
 
         $this->topicStatsRecalculator->recalculate($topic->id);
 
-        $this->currentUser->update(
+        $this->currentUser->user()->update(
             [
-                'postforum' => ($this->currentUser->postforum + 1),
+                'postforum' => ($this->currentUser->user()->postforum + 1),
                 'lastpost'  => time(),
             ]
         );
 
         if ($addFiles) {
             ForumUnread::query()->updateOrInsert(
-                ['topic_id' => $topic->id, 'user_id' => $this->currentUser->id],
+                ['topic_id' => $topic->id, 'user_id' => $this->currentUser->id()],
                 ['time' => time()]
             );
         }
@@ -73,8 +73,8 @@ final readonly class PostMessageUseCase
         $message = new ForumMessage();
         $message->topic_id = $topic->id;
         $message->date = time();
-        $message->user_id = $this->currentUser->id;
-        $message->user_name = $this->currentUser->name;
+        $message->user_id = $this->currentUser->id();
+        $message->user_name = $this->currentUser->user()->name;
         $message->ip = $clientInfo->ip;
         $message->ip_via_proxy = $clientInfo->ipViaProxy;
         $message->user_agent = $clientInfo->userAgent;
@@ -96,7 +96,7 @@ final readonly class PostMessageUseCase
             return null;
         }
 
-        if ((int) $lastMessage->user_id !== $this->currentUser->id) {
+        if ((int) $lastMessage->user_id !== $this->currentUser->id()) {
             return null;
         }
 
@@ -129,7 +129,7 @@ final readonly class PostMessageUseCase
     {
         $includeDeleted = $this->accessChecker->allows(ForumPermissions::DELETED_VIEW);
         $total = $this->messageRepository->countByTopicId($topicId, $includeDeleted);
-        $page = $forumSettings['upfp'] ? 1 : (int) ceil($total / $this->currentUser->config->kmess);
+        $page = $forumSettings['upfp'] ? 1 : (int) ceil($total / $this->currentUser->user()->config->kmess);
 
         return max(1, $page);
     }

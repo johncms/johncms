@@ -15,7 +15,7 @@ final readonly class EnsureEditPostAccessUseCase
 {
     public function __construct(
         private ForumMessageRepositoryInterface $messageRepository,
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private CurrentUser $identity,
         private RoleLevels $roleLevels,
     ) {
@@ -28,7 +28,7 @@ final readonly class EnsureEditPostAccessUseCase
         if ($context->canModerate) {
             // A moderator does not touch the posts of somebody standing above them; the roles say
             // who stands where.
-            if ($message->user_id !== $this->currentUser->id) {
+            if ($message->user_id !== $this->currentUser->id()) {
                 $authorLevel = $this->roleLevels->highestGrantedTo((int) $message->user_id);
 
                 if ($authorLevel > $this->roleLevels->highest($this->identity->identity())) {
@@ -39,14 +39,14 @@ final readonly class EnsureEditPostAccessUseCase
             return;
         }
 
-        if ($message->user_id !== $this->currentUser->id) {
+        if ($message->user_id !== $this->currentUser->id()) {
             throw new ForumAccessDeniedException(__('You are trying to change another\'s post'));
         }
 
         $check = true;
         if ($context->section->access === 2) {
             $first = $this->messageRepository->findFirstByTopicId($message->topic_id);
-            if ($first !== null && $first->user_id === $this->currentUser->id && $first->id === $message->id) {
+            if ($first !== null && $first->user_id === $this->currentUser->id() && $first->id === $message->id) {
                 $check = false;
             }
         }
@@ -56,7 +56,7 @@ final readonly class EnsureEditPostAccessUseCase
         }
 
         $lastMessage = $this->messageRepository->findLastByTopicId($message->topic_id, false);
-        if ($lastMessage === null || $lastMessage->user_id !== $this->currentUser->id) {
+        if ($lastMessage === null || $lastMessage->user_id !== $this->currentUser->id()) {
             throw new ForumAccessDeniedException(__('Your message not already latest, you cannot change it'));
         }
 

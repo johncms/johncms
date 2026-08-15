@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\UseCases;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\DTO\AttachFileAccessDTO;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Exceptions\UploadExpiredException;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
-use Johncms\Users\User;
 
 final readonly class GetAttachFileContextUseCase
 {
     public function __construct(
         private ForumMessageRepositoryInterface $messageRepository,
-        private User $currentUser,
+        private CurrentUser $currentUser,
     ) {
     }
 
@@ -28,7 +28,7 @@ final readonly class GetAttachFileContextUseCase
         }
 
         $message = $this->messageRepository->findById($messageId);
-        if ($message === null || $message->user_id !== $this->currentUser->id) {
+        if ($message === null || $message->user_id !== $this->currentUser->id()) {
             throw new ForumNotFoundException(sprintf('Message with id "%s" could not be found.', $messageId));
         }
 

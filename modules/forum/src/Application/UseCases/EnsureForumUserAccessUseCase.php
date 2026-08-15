@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\UseCases;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumErrorCode;
-use Johncms\Users\User;
 
 final readonly class EnsureForumUserAccessUseCase
 {
     public function __construct(
-        private User $currentUser,
+        private CurrentUser $currentUser,
     ) {
     }
 

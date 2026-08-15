@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\Controllers;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
@@ -14,12 +15,11 @@ use Johncms\Modules\Forum\Application\UseCases\EnsureEditPostAccessUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetEditPostContextUseCase;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
-use Johncms\Users\User;
 
 final readonly class DeletePostController
 {
     public function __construct(
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private ForumErrorRenderer $forumErrorRenderer,
         private GetEditPostContextUseCase $contextUseCase,
         private EnsureEditPostAccessUseCase $accessUseCase,
@@ -86,8 +86,8 @@ final readonly class DeletePostController
         ];
 
         $setForum = [];
-        if ($this->currentUser->isValid() && ! empty($this->currentUser->set_forum)) {
-            $setForum = (array) $this->currentUser->set_forum;
+        if ($this->currentUser->isValid() && ! empty($this->currentUser->user()->set_forum)) {
+            $setForum = (array) $this->currentUser->user()->set_forum;
         }
 
         return array_merge($setForumDefault, $setForum);
