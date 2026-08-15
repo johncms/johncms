@@ -11,6 +11,7 @@ use Johncms\Modules\Guestbook\Domain\Models\GuestbookEntry;
 use Johncms\Modules\Guestbook\Domain\Repository\GuestbookEntryRepositoryInterface;
 use Johncms\Users\Repository\UserRepositoryInterface;
 use PHPUnit\Framework\TestCase;
+use Tests\Support\CurrentUserFactory;
 use Tests\Support\UserFactory;
 
 final class CreateGuestbookEntryUseCaseTest extends TestCase
@@ -38,7 +39,7 @@ final class CreateGuestbookEntryUseCaseTest extends TestCase
         $userRepository = $this->createMock(UserRepositoryInterface::class);
         $userRepository->expects(self::once())->method('registerGuestbookPost')->with(self::identicalTo($user));
 
-        $useCase = new CreateGuestbookEntryUseCase($repository, $userRepository, $user);
+        $useCase = new CreateGuestbookEntryUseCase($repository, $userRepository, CurrentUserFactory::withProfile($user));
         $result = $useCase->execute(new CreateGuestbookEntryDTO(
             adminClub:     true,
             name:          'TestUser',
@@ -62,7 +63,6 @@ final class CreateGuestbookEntryUseCaseTest extends TestCase
 
     public function testGuestEntryDoesNotUpdateUserStats(): void
     {
-        $guest = UserFactory::make(valid: false);
         $capturedAttributes = null;
 
         $repository = $this->createMock(GuestbookEntryRepositoryInterface::class);
@@ -74,7 +74,7 @@ final class CreateGuestbookEntryUseCaseTest extends TestCase
         $userRepository = $this->createMock(UserRepositoryInterface::class);
         $userRepository->expects(self::never())->method('registerGuestbookPost');
 
-        $useCase = new CreateGuestbookEntryUseCase($repository, $userRepository, $guest);
+        $useCase = new CreateGuestbookEntryUseCase($repository, $userRepository, CurrentUserFactory::guest());
         $useCase->execute(new CreateGuestbookEntryDTO(
             adminClub:     false,
             name:          'Guest',

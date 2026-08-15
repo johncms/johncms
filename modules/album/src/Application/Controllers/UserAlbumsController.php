@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Album\Application\Controllers;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Http\Session;
 use Johncms\Modules\Album\Application\Exceptions\AlbumOwnerNotFoundException;
 use Johncms\Modules\Album\Application\UseCases\GetUserAlbumsUseCase;
 use Johncms\NavChain;
-use Johncms\Users\User;
 
 final readonly class UserAlbumsController
 {
     public function __construct(
         private Session $session,
         private NavChain $navChain,
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private GetUserAlbumsUseCase $useCase,
     ) {
     }
@@ -64,7 +64,7 @@ final readonly class UserAlbumsController
             $albums[] = $row;
         }
 
-        $isSelf = $owner->id === $this->currentUser->id;
+        $isSelf = $owner->id === $this->currentUser->id();
         $title = $isSelf ? __('Your albums') : __('User albums:') . ' ' . $owner->name;
 
         $this->navChain->add(__('Albums'), '/album');

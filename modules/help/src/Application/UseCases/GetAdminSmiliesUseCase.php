@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Help\Application\UseCases;
 
-use Johncms\Users\User;
+use Johncms\Auth\CurrentUser;
 use Johncms\Utils\Transliterator;
 
 final readonly class GetAdminSmiliesUseCase
@@ -12,7 +12,7 @@ final readonly class GetAdminSmiliesUseCase
     public const USER_SMILIES_MAX = 20;
 
     public function __construct(
-        private User $currentUser,
+        private CurrentUser $currentUser,
     ) {
     }
 
@@ -62,6 +62,6 @@ final readonly class GetAdminSmiliesUseCase
      */
     private function userSmilies(): array
     {
-        return is_array($this->currentUser->smileys) ? array_values($this->currentUser->smileys) : [];
+        return is_array($this->currentUser->user()->smileys) ? array_values($this->currentUser->user()->smileys) : [];
     }
 }

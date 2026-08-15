@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Album\Application\UseCases;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Album\Application\DTO\PhotoViewDTO;
 use Johncms\Modules\Album\Application\Services\AlbumPermissions;
 use Johncms\Modules\Album\Application\Services\PhotoPresenter;
@@ -12,7 +13,6 @@ use Johncms\Modules\Album\Domain\Enums\TopFilter;
 use Johncms\Modules\Album\Domain\Models\AlbumPhoto;
 use Johncms\Modules\Album\Domain\Repository\AlbumPhotoRepositoryInterface;
 use Johncms\Modules\Album\Domain\Repository\AlbumVoteRepositoryInterface;
-use Johncms\Users\User;
 
 final readonly class GetTopUseCase
 {
@@ -24,13 +24,13 @@ final readonly class GetTopUseCase
         private AlbumPhotoRepositoryInterface $albumPhotoRepository,
         private AlbumVoteRepositoryInterface $albumVoteRepository,
         private PhotoPresenter $photoPresenter,
-        private User $currentUser,
+        private CurrentUser $currentUser,
     ) {
     }
 
     public function count(TopFilter $filter): int
     {
-        return $this->albumPhotoRepository->countTop($filter, $this->restrictForUser(), $this->currentUser->id);
+        return $this->albumPhotoRepository->countTop($filter, $this->restrictForUser(), $this->currentUser->id());
     }
 
     /**
@@ -41,7 +41,7 @@ final readonly class GetTopUseCase
         $photos = $this->albumPhotoRepository->getTop(
             $filter,
             $this->restrictForUser(),
-            $this->currentUser->id,
+            $this->currentUser->id(),
             $limit,
             $offset
         );
@@ -50,13 +50,13 @@ final readonly class GetTopUseCase
 
         $userEligibleToVote = $this->isUserEligibleToVote();
         $votedPhotoIds = $userEligibleToVote
-            ? array_flip($this->albumVoteRepository->filterVotedPhotoIds($this->currentUser->id, $photoIds))
+            ? array_flip($this->albumVoteRepository->filterVotedPhotoIds($this->currentUser->id(), $photoIds))
             : [];
 
         $result = [];
         foreach ($photos as $photo) {
             $canVote = $userEligibleToVote
-                && $photo->user_id !== $this->currentUser->id
+                && $photo->user_id !== $this->currentUser->id()
                 && ! isset($votedPhotoIds[$photo->id]);
             $result[] = $this->photoPresenter->present($photo, $canVote);
         }
@@ -71,13 +71,13 @@ final readonly class GetTopUseCase
     {
         return $this->accessChecker->allows(AlbumPermissions::MODERATE)
             ? null
-            : $this->currentUser->id;
+            : $this->currentUser->id();
     }
 
     private function isUserEligibleToVote(): bool
     {
-        return empty($this->currentUser->ban)
-            && $this->currentUser->postforum > self::VOTE_MIN_POSTS
-            && $this->currentUser->datereg < (time() - self::VOTE_MIN_AGE);
+        return empty($this->currentUser->user()->ban)
+            && $this->currentUser->user()->postforum > self::VOTE_MIN_POSTS
+            && $this->currentUser->user()->datereg < (time() - self::VOTE_MIN_AGE);
     }
 }

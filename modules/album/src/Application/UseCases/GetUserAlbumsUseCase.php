@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Album\Application\UseCases;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Album\Application\DTO\UserAlbumsResultDTO;
 use Johncms\Modules\Album\Application\Exceptions\AlbumOwnerNotFoundException;
 use Johncms\Modules\Album\Application\Services\AlbumPermissions;
@@ -18,7 +19,7 @@ final readonly class GetUserAlbumsUseCase
     public function __construct(
         private AccessCheckerInterface $accessChecker,
         private AlbumRepositoryInterface $albumRepository,
-        private User $currentUser,
+        private CurrentUser $currentUser,
     ) {
     }
 
@@ -29,12 +30,12 @@ final readonly class GetUserAlbumsUseCase
             throw new AlbumOwnerNotFoundException();
         }
 
-        $isOwner = $owner->id === $this->currentUser->id;
+        $isOwner = $owner->id === $this->currentUser->id();
         $canModerate = $this->accessChecker->allows(AlbumPermissions::MODERATE);
-        $notBanned = empty($this->currentUser->ban);
+        $notBanned = empty($this->currentUser->user()->ban);
 
         // Moderators see all albums; regular users only see non-private albums and their own.
-        $restrictForViewer = $canModerate ? null : $this->currentUser->id;
+        $restrictForViewer = $canModerate ? null : $this->currentUser->id();
         $albums = $this->albumRepository->getUserAlbums($userId, $restrictForViewer);
 
         $canManage = ($isOwner && $notBanned) || $canModerate;

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Library\Application\Controllers;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\CurrentUser;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Library\Application\Services\Hashtags;
@@ -15,7 +16,6 @@ use Johncms\Modules\Library\Application\Services\Utils;
 use Johncms\Modules\Library\Domain\Models\LibraryCategory;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
-use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\Response;
 
 final readonly class EditArticleController
@@ -26,7 +26,7 @@ final readonly class EditArticleController
     public function __construct(
         private AccessCheckerInterface $accessChecker,
         private NavChain $navChain,
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private LibrarySlugService $slugService,
     ) {
     }
@@ -49,7 +49,7 @@ final readonly class EditArticleController
 
         $isAdmin = $this->accessChecker->allows(LibraryPermissions::MODERATE);
         $isOwner = $this->currentUser->isValid()
-            && (int) $article->uploader_id === (int) $this->currentUser->id;
+            && (int) $article->uploader_id === $this->currentUser->id();
 
         if (! $isAdmin && ! $isOwner) {
             return new ViewResponse(
@@ -108,7 +108,7 @@ final readonly class EditArticleController
             'premod'        => $article->premod > 0,
             'comments'      => $article->comments > 0,
             'count_views'   => (int) $article->count_views,
-            'field_height'  => $this->currentUser->config->fieldHeight,
+            'field_height'  => $this->currentUser->user()->config->fieldHeight,
         ]);
     }
 

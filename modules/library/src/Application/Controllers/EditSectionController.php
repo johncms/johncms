@@ -6,6 +6,7 @@ namespace Johncms\Modules\Library\Application\Controllers;
 
 use Illuminate\Database\Eloquent\Collection;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\CurrentUser;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Library\Application\Services\LibraryCategoryPathService;
@@ -15,7 +16,6 @@ use Johncms\Modules\Library\Application\Services\Tree;
 use Johncms\Modules\Library\Domain\Models\LibraryCategory;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
-use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\Response;
 
 final readonly class EditSectionController
@@ -23,7 +23,7 @@ final readonly class EditSectionController
     public function __construct(
         private AccessCheckerInterface $accessChecker,
         private NavChain $navChain,
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private LibrarySlugService $slugService,
         private LibraryCategoryPathService $categoryPathService,
     ) {
@@ -96,7 +96,7 @@ final readonly class EditSectionController
             'parent'          => (int) $category->parent,
             'is_empty'        => $isEmpty,
             'parent_sections' => $parentSections,
-            'field_height'    => $this->currentUser->config->fieldHeight,
+            'field_height'    => $this->currentUser->user()->config->fieldHeight,
         ]);
     }
 

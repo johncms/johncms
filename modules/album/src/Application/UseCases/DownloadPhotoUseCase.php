@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Album\Application\UseCases;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Album\Application\Exceptions\AlbumPhotoFileMissingException;
 use Johncms\Modules\Album\Application\Exceptions\AlbumPhotoNotFoundException;
 use Johncms\Modules\Album\Domain\Repository\AlbumPhotoRepositoryInterface;
-use Johncms\Users\User;
 
 final readonly class DownloadPhotoUseCase
 {
     public function __construct(
         private AlbumPhotoRepositoryInterface $photoRepository,
         private EnsureAlbumAccessUseCase $ensureAccess,
-        private User $currentUser,
+        private CurrentUser $currentUser,
     ) {
     }
 
@@ -42,8 +42,8 @@ final readonly class DownloadPhotoUseCase
             throw new AlbumPhotoFileMissingException();
         }
 
-        if (! $this->photoRepository->hasUserDownload($this->currentUser->id, $photo->id)) {
-            $this->photoRepository->addDownload($this->currentUser->id, $photo->id, time());
+        if (! $this->photoRepository->hasUserDownload($this->currentUser->id(), $photo->id)) {
+            $this->photoRepository->addDownload($this->currentUser->id(), $photo->id, time());
             $this->photoRepository->refreshDownloadsCount($photo->id);
         }
 

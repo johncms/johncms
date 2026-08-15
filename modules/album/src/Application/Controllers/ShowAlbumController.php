@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Album\Application\Controllers;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Album\Application\Exceptions\AlbumAccessDeniedException;
@@ -13,13 +14,12 @@ use Johncms\Modules\Album\Application\UseCases\GetAlbumViewUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
-use Johncms\Users\User;
 
 final readonly class ShowAlbumController
 {
     public function __construct(
         private NavChain $navChain,
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private GetAlbumViewUseCase $useCase,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
@@ -60,7 +60,7 @@ final readonly class ShowAlbumController
 
         $title = __('Albums');
         $this->navChain->add($title, '/album');
-        $userAlbumsLabel = $result->ownerId === $this->currentUser->id ? __('Your albums') : __('User albums');
+        $userAlbumsLabel = $result->ownerId === $this->currentUser->id() ? __('Your albums') : __('User albums');
         $this->navChain->add($userAlbumsLabel, '/album/user/' . $result->ownerId);
         $this->navChain->add($result->albumName);
 

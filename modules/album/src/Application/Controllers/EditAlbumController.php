@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Album\Application\Controllers;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Album\Application\DTO\EditAlbumContextDTO;
 use Johncms\Modules\Album\Application\DTO\SaveAlbumCommand;
 use Johncms\Modules\Album\Application\Exceptions\AlbumEditForbiddenException;
@@ -15,14 +16,13 @@ use Johncms\Modules\Album\Application\UseCases\SaveAlbumUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
-use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\Response;
 
 final readonly class EditAlbumController
 {
     public function __construct(
         private NavChain $navChain,
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private GetEditAlbumContextUseCase $getContextUseCase,
         private SaveAlbumUseCase $saveAlbumUseCase,
     ) {
@@ -161,7 +161,7 @@ final readonly class EditAlbumController
             : '/album/user/' . $context->ownerId . '/create';
 
         $this->navChain->add(__('Albums'), '/album');
-        $userAlbumsLabel = $context->ownerId === $this->currentUser->id ? __('Your albums') : __('User albums');
+        $userAlbumsLabel = $context->ownerId === $this->currentUser->id() ? __('Your albums') : __('User albums');
         $this->navChain->add($userAlbumsLabel, '/album/user/' . $context->ownerId);
         if ($context->isEdit()) {
             $this->navChain->add($context->album->name, '/album/' . $context->album->id);
@@ -177,7 +177,7 @@ final readonly class EditAlbumController
                 'action_url'    => $actionUrl,
                 'back_url'      => '/album/user/' . $context->ownerId,
                 'form_data'     => $formData,
-                'field_height'  => $this->currentUser->config->fieldHeight,
+                'field_height'  => $this->currentUser->user()->config->fieldHeight,
             ]
         );
     }

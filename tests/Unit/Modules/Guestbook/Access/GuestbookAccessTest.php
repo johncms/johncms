@@ -9,6 +9,7 @@ use Johncms\Modules\Guestbook\Application\Access\GuestbookAccess;
 use Johncms\Modules\Guestbook\Application\Services\GuestbookPermissions;
 use PHPUnit\Framework\TestCase;
 use Tests\Support\FakeAccessChecker;
+use Tests\Support\CurrentUserFactory;
 use Tests\Support\UserFactory;
 
 final class GuestbookAccessTest extends TestCase
@@ -20,7 +21,7 @@ final class GuestbookAccessTest extends TestCase
 
     public function testReadingAndWritingAskTheirOwnPermissions(): void
     {
-        $user = UserFactory::make();
+        $user = CurrentUserFactory::withProfile(UserFactory::make());
 
         $reader = new GuestbookAccess($user, new FakeAccessChecker([GuestbookPermissions::VIEW]));
         self::assertTrue($reader->canRead());
@@ -39,14 +40,14 @@ final class GuestbookAccessTest extends TestCase
     {
         $allowed = new FakeAccessChecker([GuestbookPermissions::POST]);
 
-        self::assertFalse((new GuestbookAccess(UserFactory::make(banTypes: [1]), $allowed))->canWrite());
-        self::assertFalse((new GuestbookAccess(UserFactory::make(banTypes: [13]), $allowed))->canWrite());
-        self::assertTrue((new GuestbookAccess(UserFactory::make(banTypes: [3]), $allowed))->canWrite());
+        self::assertFalse((new GuestbookAccess(CurrentUserFactory::withProfile(UserFactory::make(banTypes: [1])), $allowed))->canWrite());
+        self::assertFalse((new GuestbookAccess(CurrentUserFactory::withProfile(UserFactory::make(banTypes: [13])), $allowed))->canWrite());
+        self::assertTrue((new GuestbookAccess(CurrentUserFactory::withProfile(UserFactory::make(banTypes: [3])), $allowed))->canWrite());
     }
 
     public function testCanClearAsksThePermission(): void
     {
-        $user = UserFactory::make();
+        $user = CurrentUserFactory::withProfile(UserFactory::make());
         $allowed = new FakeAccessChecker([GuestbookPermissions::CLEAR]);
 
         self::assertTrue((new GuestbookAccess($user, $allowed))->canClear());

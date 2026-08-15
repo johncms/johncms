@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Johncms\Modules\Album\Application\UseCases;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\CurrentUser;
 use Johncms\Http\Session;
 use Johncms\Modules\Album\Application\Exceptions\AlbumAccessDeniedException;
 use Johncms\Modules\Album\Application\Exceptions\AlbumPasswordRequiredException;
 use Johncms\Modules\Album\Application\Services\AlbumPermissions;
 use Johncms\Modules\Album\Domain\Enums\AlbumAccess;
 use Johncms\Modules\Album\Domain\Models\Album;
-use Johncms\Users\User;
 
 /**
  * Shared access guard for an album (reused by show, comments and download).
@@ -22,7 +22,7 @@ use Johncms\Users\User;
 final readonly class EnsureAlbumAccessUseCase
 {
     public function __construct(
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private Session $session,
         private AccessCheckerInterface $accessChecker,
     ) {
@@ -41,7 +41,7 @@ final readonly class EnsureAlbumAccessUseCase
             $this->session->remove('ap');
         }
 
-        if ($album->user_id === $this->currentUser->id || $this->accessChecker->allows(AlbumPermissions::MODERATE)) {
+        if ($album->user_id === $this->currentUser->id() || $this->accessChecker->allows(AlbumPermissions::MODERATE)) {
             return;
         }
 

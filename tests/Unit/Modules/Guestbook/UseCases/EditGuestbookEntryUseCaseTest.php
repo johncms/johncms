@@ -8,6 +8,7 @@ use Johncms\Modules\Guestbook\Application\UseCases\EditGuestbookEntryUseCase;
 use Johncms\Modules\Guestbook\Domain\Models\GuestbookEntry;
 use Johncms\Modules\Guestbook\Domain\Repository\GuestbookEntryRepositoryInterface;
 use PHPUnit\Framework\TestCase;
+use Tests\Support\CurrentUserFactory;
 use Tests\Support\UserFactory;
 
 final class EditGuestbookEntryUseCaseTest extends TestCase
@@ -23,7 +24,7 @@ final class EditGuestbookEntryUseCaseTest extends TestCase
         $repository = $this->createMock(GuestbookEntryRepositoryInterface::class);
         $repository->expects(self::once())->method('save')->with(self::identicalTo($entry));
 
-        $useCase = new EditGuestbookEntryUseCase($repository, UserFactory::make(rights: 3, attributes: ['name' => 'Moderator']));
+        $useCase = new EditGuestbookEntryUseCase($repository, CurrentUserFactory::withProfile(UserFactory::make(attributes: ['name' => 'Moderator'])));
         $useCase->execute($entry, 'new text', [2, 3]);
 
         // edit_time/edit_who имеют касты (TimeToDate дёргает di()), поэтому читаем сырые атрибуты
@@ -47,7 +48,7 @@ final class EditGuestbookEntryUseCaseTest extends TestCase
         $repository = $this->createMock(GuestbookEntryRepositoryInterface::class);
         $repository->expects(self::once())->method('save');
 
-        $useCase = new EditGuestbookEntryUseCase($repository, UserFactory::make(rights: 3));
+        $useCase = new EditGuestbookEntryUseCase($repository, CurrentUserFactory::withProfile(UserFactory::make()));
         $useCase->execute($entry, 'edited', []);
 
         self::assertSame([7], $entry->attached_files);

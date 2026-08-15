@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Downloads\Application\Services\DownloadsPermissions;
 use Exception;
 use Intervention\Image\ImageManager;
@@ -17,7 +18,6 @@ use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
-use Johncms\Users\User;
 use Twig\Markup;
 
 final readonly class FilesUploadController
@@ -32,7 +32,7 @@ final readonly class FilesUploadController
     public function __construct(
         private AccessCheckerInterface $accessChecker,
         private NavChain $navChain,
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private ImageManager $imageManager,
         private DownloadSlugService $slugService,
         private DownloadFilePathService $filePathService,
@@ -162,7 +162,7 @@ final readonly class FilesUploadController
             'text'     => $linkText,
             'rus_name' => $displayNameTruncated,
             'type'     => $type,
-            'user_id'  => $this->currentUser->id,
+            'user_id'  => $this->currentUser->id(),
             'about'    => $description,
             'desc'     => '',
         ]);

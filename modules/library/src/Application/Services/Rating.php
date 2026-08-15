@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Library\Application\Services;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Users\User;
 use PDO;
 
@@ -37,17 +38,17 @@ class Rating
 
     private function addVote(int $point): void
     {
-        $user = di(User::class);
+        $user = di(CurrentUser::class);
 
         $point = in_array($point, range(0, 5), true) ? $point : 0;
         $stmt  = $this->db->prepare('SELECT COUNT(*) FROM `cms_library_rating` WHERE `user_id` = ? AND `st_id` = ?');
-        $stmt->execute([$user->id, $this->lib_id]);
+        $stmt->execute([$user->id(), $this->lib_id]);
         if ($stmt->fetchColumn() > 0) {
             $stmt = $this->db->prepare('UPDATE `cms_library_rating` SET `point` = ? WHERE `user_id` = ? AND `st_id` = ?');
-            $stmt->execute([$point, $user->id, $this->lib_id]);
+            $stmt->execute([$point, $user->id(), $this->lib_id]);
         } elseif ($this->lib_id > 0 && $user->isValid()) {
             $stmt = $this->db->prepare('INSERT INTO `cms_library_rating` (`user_id`, `st_id`, `point`) VALUES (?, ?, ?)');
-            $stmt->execute([$user->id, $this->lib_id, $point]);
+            $stmt->execute([$user->id(), $this->lib_id, $point]);
         }
 
         redirect($this->safeRefererUrl());
@@ -107,10 +108,10 @@ class Rating
      */
     public function getUserVote(): int
     {
-        $user = di(User::class);
+        $user = di(CurrentUser::class);
 
         $stmt = $this->db->prepare('SELECT `point` FROM `cms_library_rating` WHERE `user_id` = ? AND `st_id` = ? LIMIT 1');
-        $stmt->execute([$user->id, $this->lib_id]);
+        $stmt->execute([$user->id(), $this->lib_id]);
         $point = $stmt->fetchColumn();
 
         return $point === false ? -1 : (int) $point;

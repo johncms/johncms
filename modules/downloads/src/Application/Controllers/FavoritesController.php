@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Downloads\Application\FilePresenter;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
@@ -11,14 +12,13 @@ use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Modules\Downloads\Application\UseCases\ViewFavoritesUseCase;
 use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
-use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\Response;
 
 final readonly class FavoritesController
 {
     public function __construct(
         private NavChain $navChain,
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private ViewFavoritesUseCase $useCase,
         private FilePresenter $filePresenter,
         private PaginationFactory $paginationFactory,
@@ -40,14 +40,14 @@ final readonly class FavoritesController
             );
         }
 
-        $pagination = $this->paginationFactory->create($this->useCase->count($this->currentUser->id));
+        $pagination = $this->paginationFactory->create($this->useCase->count($this->currentUser->id()));
 
         $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
         if ($redirectUrl !== null) {
             redirect($redirectUrl);
         }
 
-        $result = $this->useCase->getPage($this->currentUser->id, $pagination->getPerPage(), $pagination->getOffset());
+        $result = $this->useCase->getPage($this->currentUser->id(), $pagination->getPerPage(), $pagination->getOffset());
 
         $files = [];
         foreach ($result->files as $file) {

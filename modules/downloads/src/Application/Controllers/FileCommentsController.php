@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Downloads\Application\Services\DownloadsPermissions;
 use Johncms\Comments;
 use Johncms\Http\PageMeta;
@@ -15,7 +16,6 @@ use Johncms\Modules\Downloads\Domain\Repository\DownloadFileRepositoryInterface;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\View\RendererInterface;
-use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\Response;
 
 final readonly class FileCommentsController
@@ -24,7 +24,7 @@ final readonly class FileCommentsController
         private AccessCheckerInterface $accessChecker,
         private RendererInterface $renderer,
         private NavChain $navChain,
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private DownloadFileRepositoryInterface $fileRepository,
         private CategoryNavService $categoryNavService,
         private DownloadFilePathService $filePathService,
@@ -118,7 +118,7 @@ final readonly class FileCommentsController
         $mod = $request->queryParam('mod', '');
         $page = max(1, $request->queryInt('page', 1));
         $start = $request->query->has('page')
-            ? ($page - 1) * (int) $this->currentUser->config->kmess
+            ? ($page - 1) * (int) $this->currentUser->user()->config->kmess
             : abs($request->queryInt('start', 0));
 
         $meta = new PageMeta($documentTitle, $page);

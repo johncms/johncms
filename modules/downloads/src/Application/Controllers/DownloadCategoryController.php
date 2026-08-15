@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Downloads\Application\Services\DownloadsPermissions;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
@@ -17,14 +18,13 @@ use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
-use Johncms\Users\User;
 
 final readonly class DownloadCategoryController
 {
     public function __construct(
         private AccessCheckerInterface $accessChecker,
         private NavChain $navChain,
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private FilePresenter $filePresenter,
         private DownloadCategoryPathService $categoryPathService,
         private PaginationFactory $paginationFactory,

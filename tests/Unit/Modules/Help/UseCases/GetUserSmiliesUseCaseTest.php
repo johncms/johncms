@@ -8,6 +8,7 @@ use Gettext\Translator;
 use Gettext\TranslatorFunctions;
 use Johncms\Modules\Help\Application\UseCases\GetUserSmiliesUseCase;
 use PHPUnit\Framework\TestCase;
+use Tests\Support\CurrentUserFactory;
 use Tests\Support\UserFactory;
 
 final class GetUserSmiliesUseCaseTest extends TestCase
@@ -30,6 +31,6 @@ final class GetUserSmiliesUseCaseTest extends TestCase
 
     private function makeUseCase(): GetUserSmiliesUseCase
     {
-        return new GetUserSmiliesUseCase(UserFactory::make());
+        return new GetUserSmiliesUseCase(CurrentUserFactory::withProfile(UserFactory::make()));
     }
 }

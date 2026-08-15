@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\FileInfo;
 use Johncms\Modules\Downloads\Application\Services\DownloadCategoryPathService;
 use Johncms\Modules\Downloads\Domain\Models\DownloadBookmark;
@@ -14,7 +15,6 @@ use Johncms\Modules\Downloads\Domain\Models\DownloadMoreFile;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
-use Johncms\Users\User;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,7 +23,7 @@ final readonly class ScanDirectoryController
 {
     public function __construct(
         private NavChain $navChain,
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private DownloadCategoryPathService $categoryPathService,
     ) {
     }
@@ -290,7 +290,7 @@ final readonly class ScanDirectoryController
                         'text'     => 'Download',
                         'rus_name' => $origName,
                         'type'     => 2,
-                        'user_id'  => $this->currentUser->id,
+                        'user_id'  => $this->currentUser->id(),
                         'about'    => '',
                         'desc'     => '',
                     ]);

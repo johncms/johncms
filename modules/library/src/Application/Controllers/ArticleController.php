@@ -6,6 +6,7 @@ namespace Johncms\Modules\Library\Application\Controllers;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\Authorization\CorePermissions;
+use Johncms\Auth\CurrentUser;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
@@ -19,7 +20,6 @@ use Johncms\Modules\Library\Application\Services\Rating;
 use Johncms\Modules\Library\Application\Services\Tree;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
-use Johncms\Users\User;
 use Johncms\Utils\DateFormatterInterface;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -30,7 +30,7 @@ final readonly class ArticleController
         private Session $session,
         private NavChain $navChain,
         private DateFormatterInterface $dateFormatter,
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private LibraryArticlePathService $articlePathService,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
@@ -80,7 +80,7 @@ final readonly class ArticleController
         $text = $textRenderer->renderPage($pages[$page - 1], $this->accessChecker->allows(CorePermissions::SMILIES_ADMIN_USE));
 
         $isAdmin   = $this->accessChecker->allows(LibraryPermissions::MODERATE);
-        $moderMenu = $isAdmin || ($this->currentUser->isValid() && (int) $article->uploader_id === (int) $this->currentUser->id);
+        $moderMenu = $isAdmin || ($this->currentUser->isValid() && (int) $article->uploader_id === $this->currentUser->id());
 
         $this->navChain->add(__('Library'), '/library/');
         $dirNav = new Tree($article->cat_id);

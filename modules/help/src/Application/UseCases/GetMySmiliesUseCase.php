@@ -6,8 +6,8 @@ namespace Johncms\Modules\Help\Application\UseCases;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\Authorization\CorePermissions;
+use Johncms\Auth\CurrentUser;
 use Johncms\Smilies\SmiliesRendererInterface;
-use Johncms\Users\User;
 use Johncms\Utils\Transliterator;
 use Twig\Markup;
 
@@ -15,7 +15,7 @@ final readonly class GetMySmiliesUseCase
 {
     public function __construct(
         private AccessCheckerInterface $accessChecker,
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private SmiliesRendererInterface $smiliesRenderer,
     ) {
     }
@@ -50,6 +50,6 @@ final readonly class GetMySmiliesUseCase
      */
     private function smilies(): array
     {
-        return is_array($this->currentUser->smileys) ? array_values($this->currentUser->smileys) : [];
+        return is_array($this->currentUser->user()->smileys) ? array_values($this->currentUser->user()->smileys) : [];
     }
 }

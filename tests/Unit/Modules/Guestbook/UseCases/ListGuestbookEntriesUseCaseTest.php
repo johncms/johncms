@@ -33,7 +33,9 @@ use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 use Tests\Support\FakeAccessChecker;
 use Tests\Support\FakeAuthenticator;
 use Tests\Support\FakeRoleRepository;
+use Tests\Support\FakeUserRepository;
 use Tests\Support\IdentityFactory;
+use Tests\Support\CurrentUserFactory;
 use Tests\Support\UserFactory;
 
 final class ListGuestbookEntriesUseCaseTest extends TestCase
@@ -167,13 +169,14 @@ final class ListGuestbookEntriesUseCaseTest extends TestCase
         $currentUser = new CurrentUser(
             new AuthenticatorChain([new FakeAuthenticator(IdentityFactory::user(id: 1, roles: ['user', 'moderator']))]),
             new PermissionResolver($this->roles),
-            $stack
+            $stack,
+            new FakeUserRepository()
         );
 
         return new ListGuestbookEntriesUseCase(
             $this->repository,
             $currentUser,
-            new GuestbookMode($legacyUser, $this->session, $accessChecker),
+            new GuestbookMode(CurrentUserFactory::withProfile($legacyUser), $this->session, $accessChecker),
             $this->makeTextFormatter(),
             $accessChecker,
             new RoleLevels($this->roles),

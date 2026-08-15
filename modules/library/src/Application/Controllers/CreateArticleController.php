@@ -6,6 +6,7 @@ namespace Johncms\Modules\Library\Application\Controllers;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\CurrentUser;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Library\Application\Services\Hashtags;
@@ -18,7 +19,6 @@ use Johncms\Modules\Library\Domain\Models\LibraryCategory;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
 use Johncms\Security\AntifloodCheckerInterface;
-use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Markup;
 
@@ -28,7 +28,7 @@ final readonly class CreateArticleController
         private AccessCheckerInterface $accessChecker,
         private NavChain $navChain,
         private AntifloodCheckerInterface $antifloodChecker,
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private LibrarySlugService $slugService,
         private LibraryArticlePathService $articlePathService,
         private LibraryCategoryPathService $categoryPathService,
@@ -127,8 +127,8 @@ final readonly class CreateArticleController
             'slug'        => $slug,
             'announce'    => $announce,
             'text'        => $text,
-            'uploader'    => $this->currentUser->name,
-            'uploader_id' => $this->currentUser->id,
+            'uploader'    => $this->currentUser->user()->name,
+            'uploader_id' => $this->currentUser->id(),
             'premod'      => $isAdmin ? 1 : 0,
             'comments'    => $allowComments,
             'time'        => time(),
@@ -154,7 +154,7 @@ final readonly class CreateArticleController
             }
         }
 
-        Capsule::table('users')->where('id', $this->currentUser->id)->update(['lastpost' => time()]);
+        Capsule::table('users')->where('id', $this->currentUser->id())->update(['lastpost' => time()]);
 
         $articleUrl = $cid !== null ? $this->articlePathService->getArticleUrlById($cid) : null;
 
@@ -188,7 +188,7 @@ final readonly class CreateArticleController
             'success'      => $cid !== null && empty($errors),
             'approved'     => $approved,
             'article_url'  => $articleUrl,
-            'field_height' => $this->currentUser->config->fieldHeight,
+            'field_height' => $this->currentUser->user()->config->fieldHeight,
         ]);
     }
 

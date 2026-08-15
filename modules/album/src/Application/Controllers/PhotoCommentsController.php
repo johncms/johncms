@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Album\Application\Controllers;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Comments;
 use Johncms\Http\PageMeta;
 use Johncms\Modules\Album\Application\Exceptions\AlbumAccessDeniedException;
@@ -14,13 +15,12 @@ use Johncms\Modules\Album\Domain\Repository\AlbumPhotoRepositoryInterface;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
-use Johncms\Users\User;
 
 final readonly class PhotoCommentsController
 {
     public function __construct(
         private NavChain $navChain,
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private GetPhotoCommentsContextUseCase $useCase,
         private AlbumPhotoRepositoryInterface $photoRepository,
     ) {
@@ -39,12 +39,12 @@ final readonly class PhotoCommentsController
         }
 
         // Reset the unread mark when the owner opens the comments.
-        if ($this->currentUser->id === $context->ownerId && $context->ownerUnread) {
+        if ($this->currentUser->id() === $context->ownerId && $context->ownerUnread) {
             $this->photoRepository->setUnreadComments($img, false);
         }
 
         $this->navChain->add(__('Albums'), '/album');
-        $userAlbumsLabel = $context->ownerId === $this->currentUser->id ? __('Your albums') : __('User albums');
+        $userAlbumsLabel = $context->ownerId === $this->currentUser->id() ? __('Your albums') : __('User albums');
         $this->navChain->add($userAlbumsLabel, '/album/user/' . $context->ownerId);
         $this->navChain->add($context->albumName, '/album/' . $context->albumId);
         $this->navChain->add(__('Photo'), '/album/photo/' . $context->photoId);
@@ -54,7 +54,7 @@ final readonly class PhotoCommentsController
         $mod = $request->queryParam('mod', '');
         $page = max(1, $request->queryInt('page', 1));
         $start = $request->query->has('page')
-            ? ($page - 1) * (int) $this->currentUser->config->kmess
+            ? ($page - 1) * (int) $this->currentUser->user()->config->kmess
             : abs($request->queryInt('start', 0));
 
         $meta = new PageMeta(__('Comments'), $page);
@@ -79,7 +79,7 @@ final readonly class PhotoCommentsController
         $html = (string) ob_get_clean();
 
         // Flag unread comments for the owner when someone else adds one.
-        if ($comm->added && $this->currentUser->id !== $context->ownerId) {
+        if ($comm->added && $this->currentUser->id() !== $context->ownerId) {
             $this->photoRepository->setUnreadComments($img, true);
         }
 

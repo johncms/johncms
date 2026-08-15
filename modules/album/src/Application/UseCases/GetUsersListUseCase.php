@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Album\Application\UseCases;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Album\Application\Services\AlbumPermissions;
 use Johncms\Modules\Album\Domain\Repository\AlbumPhotoRepositoryInterface;
 use Johncms\Modules\Album\Domain\Repository\AlbumRepositoryInterface;
@@ -16,7 +17,7 @@ final readonly class GetUsersListUseCase
         private AccessCheckerInterface $accessChecker,
         private AlbumRepositoryInterface $albumRepository,
         private AlbumPhotoRepositoryInterface $albumPhotoRepository,
-        private User $currentUser,
+        private CurrentUser $currentUser,
     ) {
     }
 
@@ -50,6 +51,6 @@ final readonly class GetUsersListUseCase
     {
         return $this->accessChecker->allows(AlbumPermissions::MODERATE)
             ? null
-            : $this->currentUser->id;
+            : $this->currentUser->id();
     }
 }

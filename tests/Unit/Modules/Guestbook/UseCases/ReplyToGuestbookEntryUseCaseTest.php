@@ -8,6 +8,7 @@ use Johncms\Modules\Guestbook\Application\UseCases\ReplyToGuestbookEntryUseCase;
 use Johncms\Modules\Guestbook\Domain\Models\GuestbookEntry;
 use Johncms\Modules\Guestbook\Domain\Repository\GuestbookEntryRepositoryInterface;
 use PHPUnit\Framework\TestCase;
+use Tests\Support\CurrentUserFactory;
 use Tests\Support\UserFactory;
 
 final class ReplyToGuestbookEntryUseCaseTest extends TestCase
@@ -22,7 +23,7 @@ final class ReplyToGuestbookEntryUseCaseTest extends TestCase
         $repository = $this->createMock(GuestbookEntryRepositoryInterface::class);
         $repository->expects(self::once())->method('save')->with(self::identicalTo($entry));
 
-        $useCase = new ReplyToGuestbookEntryUseCase($repository, UserFactory::make(rights: 7, attributes: ['name' => 'Admin']));
+        $useCase = new ReplyToGuestbookEntryUseCase($repository, CurrentUserFactory::withProfile(UserFactory::make(attributes: ['name' => 'Admin'])));
         $useCase->execute($entry, 'reply text', [5]);
 
         // otime имеет каст TimeToDate (дёргает di()), поэтому читаем сырой атрибут

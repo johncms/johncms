@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Album\Application\UseCases;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Album\Application\DTO\PhotoPageResultDTO;
 use Johncms\Modules\Album\Application\Exceptions\AlbumPhotoNotFoundException;
 use Johncms\Modules\Album\Application\Services\AlbumPermissions;
@@ -12,7 +13,6 @@ use Johncms\Modules\Album\Application\Services\PhotoPresenter;
 use Johncms\Modules\Album\Domain\Models\AlbumPhoto;
 use Johncms\Modules\Album\Domain\Repository\AlbumPhotoRepositoryInterface;
 use Johncms\Modules\Album\Domain\Repository\AlbumVoteRepositoryInterface;
-use Johncms\Users\User;
 
 final readonly class GetPhotoViewUseCase
 {
@@ -25,7 +25,7 @@ final readonly class GetPhotoViewUseCase
         private AlbumVoteRepositoryInterface $voteRepository,
         private EnsureAlbumAccessUseCase $ensureAccess,
         private PhotoPresenter $photoPresenter,
-        private User $currentUser,
+        private CurrentUser $currentUser,
     ) {
     }
 
@@ -52,12 +52,12 @@ final readonly class GetPhotoViewUseCase
         $successMessage = '';
         $detail = null;
         if ($displayed !== null) {
-            if ($addToProfile && $album->user_id === $this->currentUser->id) {
+            if ($addToProfile && $album->user_id === $this->currentUser->id()) {
                 $this->copyToProfile($displayed);
                 $successMessage = __('Photo added to the profile');
             }
 
-            $isOwner = $displayed->user_id === $this->currentUser->id;
+            $isOwner = $displayed->user_id === $this->currentUser->id();
             $detail = $this->photoPresenter->presentDetail(
                 $displayed,
                 $this->canVote($displayed),
@@ -68,8 +68,8 @@ final readonly class GetPhotoViewUseCase
 
             // Record a unique view after the DTO is built so the displayed
             // counter keeps the pre-increment value, like the legacy page.
-            if (! $this->photoRepository->hasUserView($this->currentUser->id, $displayed->id)) {
-                $this->photoRepository->addView($this->currentUser->id, $displayed->id, time());
+            if (! $this->photoRepository->hasUserView($this->currentUser->id(), $displayed->id)) {
+                $this->photoRepository->addView($this->currentUser->id(), $displayed->id, time());
                 $this->photoRepository->refreshViewsCount($displayed->id);
             }
         }
@@ -86,18 +86,18 @@ final readonly class GetPhotoViewUseCase
 
     private function canVote(AlbumPhoto $photo): bool
     {
-        if (! $this->isViewerEligibleToVote() || $photo->user_id === $this->currentUser->id) {
+        if (! $this->isViewerEligibleToVote() || $photo->user_id === $this->currentUser->id()) {
             return false;
         }
 
-        return $this->voteRepository->filterVotedPhotoIds($this->currentUser->id, [$photo->id]) === [];
+        return $this->voteRepository->filterVotedPhotoIds($this->currentUser->id(), [$photo->id]) === [];
     }
 
     private function isViewerEligibleToVote(): bool
     {
-        return empty($this->currentUser->ban)
-            && $this->currentUser->postforum > self::VOTE_MIN_POSTS
-            && $this->currentUser->datereg < (time() - self::VOTE_MIN_AGE);
+        return empty($this->currentUser->user()->ban)
+            && $this->currentUser->user()->postforum > self::VOTE_MIN_POSTS
+            && $this->currentUser->user()->datereg < (time() - self::VOTE_MIN_AGE);
     }
 
     /**
@@ -119,10 +119,10 @@ final readonly class GetPhotoViewUseCase
         $profileDir = UPLOAD_PATH . 'users/photo/';
 
         if (is_file($albumDir . $photo->tmb_name)) {
-            copy($albumDir . $photo->tmb_name, $profileDir . $this->currentUser->id . '_small.jpg');
+            copy($albumDir . $photo->tmb_name, $profileDir . $this->currentUser->id() . '_small.jpg');
         }
         if (is_file($albumDir . $photo->img_name)) {
-            copy($albumDir . $photo->img_name, $profileDir . $this->currentUser->id . '.jpg');
+            copy($albumDir . $photo->img_name, $profileDir . $this->currentUser->id() . '.jpg');
         }
     }
 }

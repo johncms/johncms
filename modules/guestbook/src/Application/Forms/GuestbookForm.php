@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Guestbook\Application\Forms;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Guestbook\Domain\Models\GuestbookEntry;
 use Johncms\Http\Request;
 use Johncms\System\Utility\EditorContentNormalizer;
-use Johncms\Users\User;
 use Johncms\Validator\Rules\Ban;
 use Johncms\Validator\Rules\Captcha;
 use Johncms\Validator\Rules\Flood;
@@ -19,7 +19,7 @@ use Johncms\Validator\ValidationResult;
 class GuestbookForm
 {
     public function __construct(
-        private readonly User $user,
+        private readonly CurrentUser $currentUser,
         private readonly EditorContentNormalizer $editorContentNormalizer,
     ) {
     }
@@ -51,7 +51,7 @@ class GuestbookForm
                     // The same message posted twice within ten minutes by the same visitor is a
                     // duplicate; an identical message from somebody else is not.
                     exclude: function ($query): void {
-                        $query->where('user_id', $this->user->id)->where('time', '>', (time() - 600));
+                        $query->where('user_id', $this->currentUser->id())->where('time', '>', (time() - 600));
                     },
                 ),
             ],
@@ -61,7 +61,7 @@ class GuestbookForm
             ],
         ];
 
-        if (! $this->user->isValid()) {
+        if (! $this->currentUser->isValid()) {
             $rules['name'] = [new StringLength(min: 3, max: 25)];
             $rules['code'] = [new Captcha()];
         }

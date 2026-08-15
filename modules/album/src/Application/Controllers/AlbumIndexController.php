@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Album\Application\Controllers;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Album\Application\UseCases\GetAlbumIndexUseCase;
 use Johncms\NavChain;
-use Johncms\Users\User;
 
 final readonly class AlbumIndexController
 {
     public function __construct(
         private NavChain $navChain,
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private GetAlbumIndexUseCase $getAlbumIndexUseCase,
     ) {
     }
@@ -31,7 +31,7 @@ final readonly class AlbumIndexController
                 'title'         => $title,
                 'page_title'    => $title,
                 'data'          => $data,
-                'my_albums_url' => '/album/user/' . $this->currentUser->id,
+                'my_albums_url' => '/album/user/' . $this->currentUser->id(),
             ]
         );
     }

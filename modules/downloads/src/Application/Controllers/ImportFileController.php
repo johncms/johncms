@@ -6,13 +6,13 @@ namespace Johncms\Modules\Downloads\Application\Controllers;
 
 use Exception;
 use Intervention\Image\ImageManager;
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Downloads\Application\Services\DownloadCategoryPathService;
 use Johncms\Modules\Downloads\Application\Services\DownloadFilePathService;
 use Johncms\Modules\Downloads\Domain\Models\DownloadCategory;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
-use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Markup;
 
@@ -26,7 +26,7 @@ final readonly class ImportFileController
     ];
 
     public function __construct(
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private ImageManager $imageManager,
         private DownloadFilePathService $filePathService,
         private DownloadCategoryPathService $categoryPathService,
@@ -146,7 +146,7 @@ final readonly class ImportFileController
             'text'     => $linkText,
             'rus_name' => mb_substr($displayName, 0, 200),
             'type'     => 2,
-            'user_id'  => $this->currentUser->id,
+            'user_id'  => $this->currentUser->id(),
             'about'    => $description,
             'desc'     => '',
         ]);

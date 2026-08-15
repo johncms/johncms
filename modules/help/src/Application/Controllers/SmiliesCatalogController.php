@@ -14,9 +14,9 @@ namespace Johncms\Modules\Help\Application\Controllers;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\Authorization\CorePermissions;
+use Johncms\Auth\CurrentUser;
 use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
-use Johncms\Users\User;
 
 final readonly class SmiliesCatalogController
 {
@@ -25,7 +25,7 @@ final readonly class SmiliesCatalogController
     public function __construct(
         private AccessCheckerInterface $accessChecker,
         private NavChain $navChain,
-        private User $currentUser,
+        private CurrentUser $currentUser,
     ) {
     }
 
@@ -39,7 +39,7 @@ final readonly class SmiliesCatalogController
         $items = [];
 
         if ($this->currentUser->isValid()) {
-            $smilies = $this->currentUser->smileys ?? [];
+            $smilies = $this->currentUser->user()->smileys ?? [];
             $myCount = is_array($smilies) ? count($smilies) : 0;
             $items[] = [
                 'url'   => '/help/smilies/my/',

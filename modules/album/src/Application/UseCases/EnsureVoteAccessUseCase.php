@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Album\Application\UseCases;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Album\Application\Exceptions\VoteNotAllowedException;
 use Johncms\Modules\Album\Domain\Models\AlbumPhoto;
 use Johncms\Modules\Album\Domain\Repository\AlbumVoteRepositoryInterface;
-use Johncms\Users\User;
 
 /**
  * Verifies that the current user is allowed to vote for a photo:
@@ -21,17 +21,17 @@ final readonly class EnsureVoteAccessUseCase
 
     public function __construct(
         private AlbumVoteRepositoryInterface $voteRepository,
-        private User $currentUser,
+        private CurrentUser $currentUser,
     ) {
     }
 
     public function execute(AlbumPhoto $photo): void
     {
-        $eligible = $photo->user_id !== $this->currentUser->id
-            && empty($this->currentUser->ban)
-            && $this->currentUser->postforum > self::VOTE_MIN_POSTS
-            && $this->currentUser->datereg < (time() - self::VOTE_MIN_AGE)
-            && ! $this->voteRepository->hasUserVote($this->currentUser->id, $photo->id);
+        $eligible = $photo->user_id !== $this->currentUser->id()
+            && empty($this->currentUser->user()->ban)
+            && $this->currentUser->user()->postforum > self::VOTE_MIN_POSTS
+            && $this->currentUser->user()->datereg < (time() - self::VOTE_MIN_AGE)
+            && ! $this->voteRepository->hasUserVote($this->currentUser->id(), $photo->id);
 
         if (! $eligible) {
             throw new VoteNotAllowedException();

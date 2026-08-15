@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Guestbook\Application\Controllers;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
@@ -19,7 +20,6 @@ use Johncms\Http\Environment;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Http\Session;
-use Johncms\Users\User;
 use Johncms\Validator\ValidatorInterface;
 
 final readonly class GuestbookController
@@ -28,7 +28,7 @@ final readonly class GuestbookController
         private NavChain $navChain,
         private Session $session,
         private Environment $environment,
-        private User $user,
+        private CurrentUser $currentUser,
         private GuestbookAccess $access,
         private GuestbookMode $mode,
         private ListGuestbookEntriesUseCase $guestbookEntries,
@@ -68,7 +68,7 @@ final readonly class GuestbookController
                 $this->createEntry->execute(
                     new CreateGuestbookEntryDTO(
                         adminClub:     $this->mode->isAdminClub(),
-                        name:          $this->user->isValid() ? $this->user->name : $formData['name'],
+                        name:          $this->currentUser->isValid() ? $this->currentUser->user()->name : $formData['name'],
                         text:          $formData['message'],
                         ip:            $this->environment->getIp(false),
                         userAgent:     $this->environment->getUserAgent(),
@@ -94,7 +94,7 @@ final readonly class GuestbookController
         $meta = new PageMeta($pageTitle, $pagination->getCurrentPage());
 
         $posts = $this->guestbookEntries->getPage($pagination->getPerPage(), $pagination->getOffset());
-        $showCaptcha = $this->access->canWrite() && ! $this->user->isValid();
+        $showCaptcha = $this->access->canWrite() && ! $this->currentUser->isValid();
 
         return new ViewResponse(
             '@guestbook/public/index.twig',

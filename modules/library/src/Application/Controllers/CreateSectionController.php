@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Library\Application\Controllers;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\CurrentUser;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Library\Application\Services\LibraryCategoryPathService;
@@ -12,7 +13,6 @@ use Johncms\Modules\Library\Application\Services\LibraryPermissions;
 use Johncms\Modules\Library\Application\Services\LibrarySlugService;
 use Johncms\Modules\Library\Domain\Models\LibraryCategory;
 use Johncms\NavChain;
-use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\Response;
 
 final readonly class CreateSectionController
@@ -20,7 +20,7 @@ final readonly class CreateSectionController
     public function __construct(
         private AccessCheckerInterface $accessChecker,
         private NavChain $navChain,
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private LibrarySlugService $slugService,
         private LibraryCategoryPathService $categoryPathService,
     ) {
@@ -97,7 +97,7 @@ final readonly class CreateSectionController
             'form_url'     => $formUrl,
             'parent_url'   => $parentUrl,
             'created'      => $created,
-            'field_height' => $this->currentUser->config->fieldHeight,
+            'field_height' => $this->currentUser->user()->config->fieldHeight,
         ]);
     }
 }

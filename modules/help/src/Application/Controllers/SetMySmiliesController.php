@@ -14,6 +14,7 @@ namespace Johncms\Modules\Help\Application\Controllers;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\Authorization\CorePermissions;
+use Johncms\Auth\CurrentUser;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Users\User;
@@ -26,7 +27,7 @@ final readonly class SetMySmiliesController
 
     public function __construct(
         private AccessCheckerInterface $accessChecker,
-        private User $currentUser,
+        private CurrentUser $currentUser,
     ) {
     }
 
@@ -63,7 +64,7 @@ final readonly class SetMySmiliesController
             return new RedirectResponse('/help/smilies/my/');
         }
 
-        $smilies = is_array($this->currentUser->smileys) ? $this->currentUser->smileys : [];
+        $smilies = is_array($this->currentUser->user()->smileys) ? $this->currentUser->user()->smileys : [];
 
         if ($isDelete) {
             $smilies = array_values(array_diff($smilies, (array) $post['delete_sm']));
@@ -77,7 +78,7 @@ final readonly class SetMySmiliesController
             $smilies = array_slice($smilies, 0, self::USER_SMILIES_MAX);
         }
 
-        User::query()->where('id', $this->currentUser->id)->update(['smileys' => serialize($smilies)]);
+        User::query()->where('id', $this->currentUser->id())->update(['smileys' => serialize($smilies)]);
 
         $pageSuffix = $page > 1 ? '?page=' . $page : '';
 

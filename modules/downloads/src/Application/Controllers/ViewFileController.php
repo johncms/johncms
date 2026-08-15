@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Downloads\Application\Services\DownloadsPermissions;
 use Johncms\Modules\Downloads\Application\FilePresenter;
 use Johncms\Modules\Downloads\Application\Services\CategoryNavService;
@@ -22,7 +23,6 @@ use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
 use Johncms\Http\View\ViewResponse;
-use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\Response;
 
 final readonly class ViewFileController
@@ -30,7 +30,7 @@ final readonly class ViewFileController
     public function __construct(
         private AccessCheckerInterface $accessChecker,
         private NavChain $navChain,
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private Session $session,
         private ViewFileUseCase $viewFileUseCase,
         private VoteOnFileUseCase $voteUseCase,
@@ -122,7 +122,7 @@ final readonly class ViewFileController
         }
 
         $inBookmarks = $this->currentUser->isValid()
-            ? $this->bookmarkUseCase->execute($id, $this->currentUser->id, $bookmarkAction)
+            ? $this->bookmarkUseCase->execute($id, $this->currentUser->id(), $bookmarkAction)
             : 0;
 
         // Breadcrumbs

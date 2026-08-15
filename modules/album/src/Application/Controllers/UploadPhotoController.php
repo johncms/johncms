@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Album\Application\Controllers;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Http\UploadedFileMapper;
 use Johncms\Modules\Album\Application\Exceptions\AlbumEditForbiddenException;
 use Johncms\Modules\Album\Application\Exceptions\AlbumNotFoundException;
@@ -14,7 +15,6 @@ use Johncms\Modules\Album\Domain\Models\Album;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
-use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -22,7 +22,7 @@ final readonly class UploadPhotoController
 {
     public function __construct(
         private NavChain $navChain,
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private GetUploadPhotoContextUseCase $getContextUseCase,
         private UploadPhotoUseCase $uploadPhotoUseCase,
         private UploadedFileMapper $uploadedFileMapper,
@@ -78,7 +78,7 @@ final readonly class UploadPhotoController
         $title = __('Upload image');
 
         $this->navChain->add(__('Albums'), '/album');
-        $userAlbumsLabel = $album->user_id === $this->currentUser->id ? __('Your albums') : __('User albums');
+        $userAlbumsLabel = $album->user_id === $this->currentUser->id() ? __('Your albums') : __('User albums');
         $this->navChain->add($userAlbumsLabel, '/album/user/' . $album->user_id);
         $this->navChain->add($album->name, '/album/' . $album->id);
         $this->navChain->add($title);
@@ -92,7 +92,7 @@ final readonly class UploadPhotoController
                 'back_url'      => '/album/' . $album->id,
                 'error_message' => $errors,
                 'max_file_size' => (int) config('johncms.flsz'),
-                'field_height'  => $this->currentUser->config->fieldHeight,
+                'field_height'  => $this->currentUser->user()->config->fieldHeight,
             ]
         );
     }

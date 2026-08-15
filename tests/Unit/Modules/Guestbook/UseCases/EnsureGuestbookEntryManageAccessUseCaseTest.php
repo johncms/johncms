@@ -20,6 +20,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Tests\Support\FakeAccessChecker;
 use Tests\Support\FakeAuthenticator;
 use Tests\Support\FakeRoleRepository;
+use Tests\Support\FakeUserRepository;
 use Tests\Support\IdentityFactory;
 use Tests\Support\UserFactory;
 
@@ -86,7 +87,8 @@ final class EnsureGuestbookEntryManageAccessUseCaseTest extends TestCase
         $currentUser = new CurrentUser(
             new AuthenticatorChain([new FakeAuthenticator($identity)]),
             new PermissionResolver($this->roles),
-            $stack
+            $stack,
+            new FakeUserRepository()
         );
 
         return new EnsureGuestbookEntryManageAccessUseCase(

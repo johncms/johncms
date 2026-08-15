@@ -8,11 +8,12 @@ use Johncms\Config\ConfigRepository;
 use Johncms\Modules\Guestbook\Application\Forms\GuestbookForm;
 use Johncms\Http\Request;
 use Johncms\System\Utility\EditorContentNormalizer;
-use Johncms\Users\User;
+use Johncms\Auth\CurrentUser;
 use Johncms\Validator\Rules\Captcha;
 use Johncms\Validator\Rules\StringLength;
 use Johncms\Validator\ValidationResult;
 use PHPUnit\Framework\TestCase;
+use Tests\Support\CurrentUserFactory;
 use Tests\Support\UserFactory;
 
 final class GuestbookFormTest extends TestCase
@@ -31,7 +32,7 @@ final class GuestbookFormTest extends TestCase
             'attached_files' => ['3', 7],
         ]);
 
-        $form = new GuestbookForm(UserFactory::make(), new EditorContentNormalizer());
+        $form = new GuestbookForm(CurrentUserFactory::withProfile(UserFactory::make()), new EditorContentNormalizer());
         $formData = $form->getFormData($request);
 
         self::assertSame('John', $formData['name']);
@@ -42,7 +43,7 @@ final class GuestbookFormTest extends TestCase
 
     public function testValidationRulesForValidUser(): void
     {
-        $rules = $this->makeForm(UserFactory::make())->getValidationRules();
+        $rules = $this->makeForm(CurrentUserFactory::withProfile(UserFactory::make()))->getValidationRules();
 
         self::assertArrayHasKey('message', $rules);
         // Flood and Ban are form-level rules: they belong to no field of the form.
@@ -53,7 +54,7 @@ final class GuestbookFormTest extends TestCase
 
     public function testValidationRulesForGuestIncludeNameAndCaptcha(): void
     {
-        $rules = $this->makeForm(UserFactory::make(valid: false))->getValidationRules();
+        $rules = $this->makeForm(CurrentUserFactory::guest())->getValidationRules();
 
         self::assertArrayHasKey('name', $rules);
 
@@ -65,7 +66,7 @@ final class GuestbookFormTest extends TestCase
         self::assertInstanceOf(Captcha::class, $rules['code'][0]);
     }
 
-    private function makeForm(User $user): GuestbookForm
+    private function makeForm(CurrentUser $user): GuestbookForm
     {
         return new GuestbookForm($user, new EditorContentNormalizer());
     }

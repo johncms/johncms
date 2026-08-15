@@ -12,17 +12,17 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Help\Application\Controllers;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\Response;
 
 final readonly class SetAvatarController
 {
     public function __construct(
         private NavChain $navChain,
-        private User $currentUser,
+        private CurrentUser $currentUser,
     ) {
     }
 
@@ -65,7 +65,7 @@ final readonly class SetAvatarController
         $this->navChain->add($pageTitle);
 
         if ($request->getMethod() === 'POST') {
-            $targetPath = UPLOAD_PATH . 'users/avatar/' . $this->currentUser->id . '.png';
+            $targetPath = UPLOAD_PATH . 'users/avatar/' . $this->currentUser->id() . '.png';
             if (@copy($sourcePath, $targetPath)) {
                 return new ViewResponse(
                     '@theme/pages/result.twig',
@@ -73,7 +73,7 @@ final readonly class SetAvatarController
                         'title'         => $pageTitle,
                         'type'          => 'alert-success',
                         'message'       => __('Avatar has been successfully applied'),
-                        'back_url'      => '/profile/' . $this->currentUser->id . '/edit',
+                        'back_url'      => '/profile/' . $this->currentUser->id() . '/edit',
                         'back_url_name' => __('Continue'),
                     ]
                 );

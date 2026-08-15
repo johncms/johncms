@@ -11,6 +11,7 @@ use Johncms\Modules\Guestbook\Application\Services\GuestbookPermissions;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 use Tests\Support\FakeAccessChecker;
+use Tests\Support\CurrentUserFactory;
 use Tests\Support\UserFactory;
 
 final class GuestbookModeTest extends TestCase
@@ -24,7 +25,7 @@ final class GuestbookModeTest extends TestCase
 
     public function testAdminClubRequiresSessionFlagAndThePermission(): void
     {
-        $mode = new GuestbookMode(UserFactory::make(), $this->session, $this->allowed());
+        $mode = new GuestbookMode(CurrentUserFactory::withProfile(UserFactory::make()), $this->session, $this->allowed());
 
         self::assertFalse($mode->isAdminClub());
         self::assertTrue($mode->isGuestbook());
@@ -39,7 +40,7 @@ final class GuestbookModeTest extends TestCase
     {
         $this->session->set('ga', 1);
 
-        $mode = new GuestbookMode(UserFactory::make(), $this->session, new FakeAccessChecker());
+        $mode = new GuestbookMode(CurrentUserFactory::withProfile(UserFactory::make()), $this->session, new FakeAccessChecker());
 
         self::assertFalse($mode->isAdminClub());
     }
@@ -48,7 +49,7 @@ final class GuestbookModeTest extends TestCase
     {
         $this->session->set('ga', 1);
 
-        $user = UserFactory::make(attributes: ['id' => 5]);
+        $user = CurrentUserFactory::withProfile(UserFactory::make(attributes: ['id' => 5]));
         $mode = new GuestbookMode($user, $this->session, new FakeAccessChecker(), [5]);
 
         self::assertTrue($mode->isAdminClub());
@@ -56,7 +57,7 @@ final class GuestbookModeTest extends TestCase
 
     public function testSwitchSetsAndRemovesSessionFlag(): void
     {
-        $mode = new GuestbookMode(UserFactory::make(), $this->session, $this->allowed());
+        $mode = new GuestbookMode(CurrentUserFactory::withProfile(UserFactory::make()), $this->session, $this->allowed());
 
         $mode->switch($this->makeRequest('set'));
         self::assertTrue($this->session->has('ga'));
@@ -67,7 +68,7 @@ final class GuestbookModeTest extends TestCase
 
     public function testSwitchIsIgnoredWithoutAccess(): void
     {
-        $mode = new GuestbookMode(UserFactory::make(), $this->session, new FakeAccessChecker());
+        $mode = new GuestbookMode(CurrentUserFactory::withProfile(UserFactory::make()), $this->session, new FakeAccessChecker());
 
         $mode->switch($this->makeRequest('set'));
 

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Album\Application\Controllers;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Modules\Album\Application\Exceptions\AlbumAccessDeniedException;
 use Johncms\Modules\Album\Application\Exceptions\AlbumPasswordRequiredException;
@@ -12,13 +13,12 @@ use Johncms\Modules\Album\Application\UseCases\GetPhotoViewUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
-use Johncms\Users\User;
 
 final readonly class ShowPhotoController
 {
     public function __construct(
         private NavChain $navChain,
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private GetPhotoViewUseCase $useCase,
         private PaginationFactory $paginationFactory,
     ) {
@@ -46,7 +46,7 @@ final readonly class ShowPhotoController
 
         $title = __('View photo');
         $this->navChain->add(__('Albums'), '/album');
-        $userAlbumsLabel = $result->ownerId === $this->currentUser->id ? __('Your albums') : __('User albums');
+        $userAlbumsLabel = $result->ownerId === $this->currentUser->id() ? __('Your albums') : __('User albums');
         $this->navChain->add($userAlbumsLabel, '/album/user/' . $result->ownerId);
         if ($result->photo !== null) {
             $this->navChain->add($result->photo->albumName, '/album/' . $result->albumId);

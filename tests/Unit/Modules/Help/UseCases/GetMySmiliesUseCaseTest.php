@@ -9,6 +9,7 @@ use Johncms\Smilies\SmiliesRendererInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Tests\Support\FakeAccessChecker;
+use Tests\Support\CurrentUserFactory;
 use Tests\Support\UserFactory;
 
 final class GetMySmiliesUseCaseTest extends TestCase
@@ -55,6 +56,6 @@ final class GetMySmiliesUseCaseTest extends TestCase
     {
         $user = UserFactory::make(attributes: ['smileys' => $smilies]);
 
-        return new GetMySmiliesUseCase(new FakeAccessChecker(), $user, $this->smiliesRenderer);
+        return new GetMySmiliesUseCase(new FakeAccessChecker(), CurrentUserFactory::withProfile($user), $this->smiliesRenderer);
     }
 }

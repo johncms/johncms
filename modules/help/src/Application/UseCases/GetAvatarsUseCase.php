@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Help\Application\UseCases;
 
-use Johncms\Users\User;
+use Johncms\Auth\CurrentUser;
 
 final readonly class GetAvatarsUseCase
 {
     public const PER_PAGE = 50;
 
     public function __construct(
-        private User $currentUser,
+        private CurrentUser $currentUser,
     ) {
     }
 

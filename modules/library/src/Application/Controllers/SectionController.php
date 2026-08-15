@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Library\Application\Controllers;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\CurrentUser;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
@@ -17,7 +18,6 @@ use Johncms\Modules\Library\Application\Services\Utils;
 use Johncms\Modules\Library\Domain\Models\LibraryCategory;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
-use Johncms\Users\User;
 use Johncms\Utils\DateFormatterInterface;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -27,7 +27,7 @@ final readonly class SectionController
         private AccessCheckerInterface $accessChecker,
         private NavChain $navChain,
         private DateFormatterInterface $dateFormatter,
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private LibraryCategoryPathService $categoryPathService,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
