@@ -5,7 +5,7 @@ msgstr ""
 #: system/src/Http/AdminAreaContext.php:33
 #: modules/admin/src/Application/Controllers/DashboardController.php:22
 #: modules/admin/src/Application/Controllers/Ip/IpWhoisController.php:37
-#: modules/admin/src/Application/Services/AdminPermissions.php:28
+#: modules/admin/src/Application/Services/AdminPermissions.php:32
 msgid "Admin Panel"
 msgstr ""
 
@@ -906,12 +906,16 @@ msgstr ""
 msgid "Underline"
 msgstr ""
 
-#: modules/admin/src/Application/Services/AdminPermissions.php:34
+#: modules/admin/src/Application/Services/AdminPermissions.php:38
 msgid "Delete a forum section with everything in it"
 msgstr ""
 
-#: modules/admin/src/Application/Services/AdminPermissions.php:40
+#: modules/admin/src/Application/Services/AdminPermissions.php:44
 msgid "Empty the lists of hidden topics and posts"
+msgstr ""
+
+#: modules/admin/src/Application/Services/AdminPermissions.php:50
+msgid "Open the report on the state of the installation"
 msgstr ""
 
 #: modules/admin/src/Application/Services/BanListRowMapper.php:40

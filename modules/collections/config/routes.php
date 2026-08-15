@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 use Johncms\Modules\Collections\Application\Controllers\Admin\CollectionFieldsAdminController;
 use Johncms\Modules\Collections\Application\Controllers\Admin\CollectionItemsAdminController;
-use Johncms\Modules\Collections\Application\Controllers\Admin\CollectionSectionsAdminController;
 use Johncms\Modules\Collections\Application\Controllers\Admin\CollectionsAdminController;
+use Johncms\Modules\Collections\Application\Controllers\Admin\CollectionSectionsAdminController;
 use Johncms\Modules\Collections\Application\Controllers\CollectionRouterController;
+use Johncms\Modules\Collections\Application\Services\CollectionsPermissions;
 use Johncms\Router\RouteCollection;
-use Johncms\System\Users\User;
 
-return static function (RouteCollection $router, User $user): void {
+return static function (RouteCollection $router): void {
     // Admin panel. Public output (URL resolver) routes are added in a later iteration.
-    if ($user->rights >= 9 && $user->isValid()) {
+    $admin = $router->group('', function (RouteCollection $router): void {
         $router->get('/admin/collections', [CollectionsAdminController::class, 'index'])->name('collections.admin.index');
         $router->get('/admin/collections/new', [CollectionsAdminController::class, 'newForm'])->name('collections.admin.new');
         $router->post('/admin/collections', [CollectionsAdminController::class, 'store'])->name('collections.admin.store');
@@ -43,7 +43,8 @@ return static function (RouteCollection $router, User $user): void {
         $router->get('/admin/collections/{collection_id:number}/items/{id:number}/edit', [CollectionItemsAdminController::class, 'editForm'])->name('collections.admin.items.edit');
         $router->get('/admin/collections/{collection_id:number}/items/{id:number}/delete', [CollectionItemsAdminController::class, 'deleteConfirm'])->name('collections.admin.items.delete_confirm');
         $router->post('/admin/collections/{collection_id:number}/items/{id:number}/delete', [CollectionItemsAdminController::class, 'delete'])->name('collections.admin.items.delete');
-    }
+    });
+    $admin->permission(CollectionsPermissions::MANAGE);
 
     // Public output. Low-priority catch-all that maps root URLs to collections;
     // real module routes have higher priority and win first. The custom

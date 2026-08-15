@@ -6,6 +6,7 @@ namespace Johncms\Modules\Admin\Application\Services;
 
 use Johncms\Auth\Authorization\PermissionDefinition;
 use Johncms\Auth\Authorization\PermissionProviderInterface;
+use Johncms\Auth\Authorization\SystemRole;
 
 /**
  * The permissions of the admin panel that are finer than "may open the panel".
@@ -23,6 +24,9 @@ final class AdminPermissions implements PermissionProviderInterface
     /** Empty the lists of hidden topics and posts for good. */
     public const FORUM_HIDDEN_PURGE = 'admin.forum.hidden.purge';
 
+    /** Open the report on the state of the installation: versions, extensions, permissions. */
+    public const SYSTEM_CHECK = 'admin.system_check';
+
     public function permissions(): iterable
     {
         $group = d__('admin', 'Admin Panel');
@@ -39,6 +43,13 @@ final class AdminPermissions implements PermissionProviderInterface
                 self::GROUP,
                 d__('admin', 'Empty the lists of hidden topics and posts'),
                 $group
+            ),
+            new PermissionDefinition(
+                self::SYSTEM_CHECK,
+                self::GROUP,
+                d__('admin', 'Open the report on the state of the installation'),
+                $group,
+                [SystemRole::SuperModerator->value, SystemRole::Admin->value]
             ),
         ];
     }

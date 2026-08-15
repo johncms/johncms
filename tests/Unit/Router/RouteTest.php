@@ -55,6 +55,39 @@ final class RouteTest extends TestCase
         self::assertArrayNotHasKey(Route::CSRF_EXEMPT_ATTRIBUTE, $route->compile()->getDefaults());
     }
 
+    public function testPermissionTravelsOnTheCompiledRoute(): void
+    {
+        $route = new Route(method: 'GET', path: '/admin/news', handler: 'NewsAdminController');
+
+        $compiled = $route->permission('news.manage')->compile();
+
+        self::assertSame('news.manage', $compiled->getDefault(Route::PERMISSION_ATTRIBUTE));
+        self::assertArrayNotHasKey(Route::PERMISSION_HIDDEN_ATTRIBUTE, $compiled->getDefaults());
+    }
+
+    public function testARouteMayAskToStayInvisibleInsteadOfAnsweringForbidden(): void
+    {
+        $route = new Route(method: 'GET', path: '/secret', handler: 'SecretController');
+
+        $compiled = $route->permission('secret.view', hidden: true)->compile();
+
+        self::assertTrue($compiled->getDefault(Route::PERMISSION_HIDDEN_ATTRIBUTE));
+    }
+
+    /**
+     * The permission of a group is a fallback, not an override: a route naming its own asks for
+     * that one.
+     */
+    public function testAnInheritedPermissionDoesNotReplaceTheOneTheRouteNamed(): void
+    {
+        $route = new Route(method: 'GET', path: '/admin/news/settings', handler: 'NewsAdminController');
+        $route->permission('news.settings.manage');
+
+        $compiled = $route->inheritPermission('news.manage', false)->compile();
+
+        self::assertSame('news.settings.manage', $compiled->getDefault(Route::PERMISSION_ATTRIBUTE));
+    }
+
     public function testCompileDoesNotAddMiddlewaresDefaultWhenNoMiddlewareDefined(): void
     {
         $route = new Route(

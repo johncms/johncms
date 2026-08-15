@@ -1019,3 +1019,9 @@ msgstr "Использовать служебные смайлы"
 
 msgid "Moderate the comments of the modules"
 msgstr "Модерировать комментарии модулей"
+
+msgid "You are not allowed to open this page."
+msgstr "У вас нет доступа к этой странице."
+
+msgid "Access denied"
+msgstr "Доступ запрещён"

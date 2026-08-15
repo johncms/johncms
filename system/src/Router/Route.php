@@ -10,6 +10,8 @@ final class Route
 {
     public const MODULE_ATTRIBUTE = '_module';
     public const CSRF_EXEMPT_ATTRIBUTE = '_csrf_exempt';
+    public const PERMISSION_ATTRIBUTE = '_permission';
+    public const PERMISSION_HIDDEN_ATTRIBUTE = '_permission_hidden';
 
     private ?string $name = null;
     private int $priority = 0;
@@ -61,6 +63,42 @@ final class Route
     {
         $this->defaults[Route::CSRF_EXEMPT_ATTRIBUTE] = true;
         return $this;
+    }
+
+    /**
+     * The permission a visitor needs to reach this route. Read by RequirePermissionMiddleware,
+     * which the kernel puts in front of the route whenever the attribute is there.
+     *
+     * It is an attribute rather than a middleware of its own because middlewares are resolved by
+     * class name and are therefore singletons: they cannot take "which permission" in their
+     * constructor, and one middleware class per permission is not a design.
+     *
+     * @param bool $hidden Answer 404 instead of 403, for the rare route whose very existence
+     *                     should not be confirmed. The default is 403: the addresses of the admin
+     *                     panel are known anyway, and a refusal that says so is one a site owner
+     *                     can debug.
+     */
+    public function permission(string $permission, bool $hidden = false): self
+    {
+        $this->defaults[Route::PERMISSION_ATTRIBUTE] = $permission;
+
+        if ($hidden) {
+            $this->defaults[Route::PERMISSION_HIDDEN_ATTRIBUTE] = true;
+        }
+
+        return $this;
+    }
+
+    /**
+     * The permission of the surrounding group, applied only where the route has none of its own.
+     */
+    public function inheritPermission(string $permission, bool $hidden): self
+    {
+        if (isset($this->defaults[Route::PERMISSION_ATTRIBUTE])) {
+            return $this;
+        }
+
+        return $this->permission($permission, $hidden);
     }
 
     public function priority(int $priority): self

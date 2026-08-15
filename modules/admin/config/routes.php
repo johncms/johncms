@@ -10,11 +10,11 @@ use Johncms\Modules\Admin\Application\Controllers\Forum\ForumSettingsController;
 use Johncms\Modules\Admin\Application\Controllers\Forum\ForumStructureController;
 use Johncms\Modules\Admin\Application\Controllers\Forum\HiddenPostsController;
 use Johncms\Modules\Admin\Application\Controllers\Forum\HiddenTopicsController;
-use Johncms\Modules\Admin\Application\Controllers\Settings\AdsController;
 use Johncms\Modules\Admin\Application\Controllers\Ip\IpBanController;
 use Johncms\Modules\Admin\Application\Controllers\Ip\IpSearchController;
-use Johncms\Modules\Admin\Application\Controllers\Languages\LanguagesController;
 use Johncms\Modules\Admin\Application\Controllers\Ip\IpWhoisController;
+use Johncms\Modules\Admin\Application\Controllers\Languages\LanguagesController;
+use Johncms\Modules\Admin\Application\Controllers\Settings\AdsController;
 use Johncms\Modules\Admin\Application\Controllers\Settings\AntifloodSettingsController;
 use Johncms\Modules\Admin\Application\Controllers\Settings\CountersController;
 use Johncms\Modules\Admin\Application\Controllers\Settings\ModulesAccessController;
@@ -34,19 +34,19 @@ use Johncms\Modules\Admin\Application\Controllers\Users\UserListController;
 use Johncms\Modules\Admin\Application\Controllers\Users\UsersController;
 use Johncms\Modules\Admin\Application\Middlewares\AdminAccessMiddleware;
 use Johncms\Modules\Admin\Application\Middlewares\SuperAdminAccessMiddleware;
+use Johncms\Modules\Admin\Application\Services\AdminPermissions;
 use Johncms\Router\RouteCollection;
-use Johncms\System\Users\User;
 
-return static function (RouteCollection $router, User $user): void {
+return static function (RouteCollection $router): void {
     // Public route: the admin login screen (no access guard).
     $router->map(['GET', 'POST'], '/admin/login', [UsersController::class, 'login'])->name('admin.login');
 
-    if ($user->rights >= 6 && $user->isValid()) {
-        $router->map(['GET', 'POST'], '/admin/system_check', [SystemCheckController::class, 'index'])->name('admin.system_check');
-    }
+    $router->map(['GET', 'POST'], '/admin/system_check', [SystemCheckController::class, 'index'])
+        ->name('admin.system_check')
+        ->permission(AdminPermissions::SYSTEM_CHECK);
 
-    // Routes migrated to the new architecture. The whole group requires an
-    // administrator (rights >= 7); higher-privilege actions add their own guards.
+    // Routes migrated to the new architecture. The whole group is behind AdminAccessMiddleware,
+    // which asks admin.access; screens that need more than that add their own gate.
     // Static segments are registered before the legacy catch-all below so they
     // win on first match (plain UrlMatcher, registration order).
     $adminGroup = $router->group('', function (RouteCollection $r): void {
@@ -115,9 +115,9 @@ return static function (RouteCollection $router, User $user): void {
         $r->get('/admin/emoticons', [EmoticonsController::class, 'index'])->name('admin.emoticons');
         $r->post('/admin/emoticons', [EmoticonsController::class, 'rebuild'])->name('admin.emoticons.rebuild');
 
-        // Higher-privilege actions (rights >= 9). Group middleware does not propagate
-        // into nested groups, so SuperAdminAccessMiddleware is self-contained and
-        // applies the stricter gate on its own (rights >= 9 implies rights >= 7).
+        // Everything that changes the site as a whole. Group middleware does not propagate
+        // into nested groups, so SuperAdminAccessMiddleware is self-contained and asks for
+        // admin.settings.manage on its own.
         $superGroup = $r->group('', function (RouteCollection $sr): void {
             $sr->get('/admin/settings', [SystemSettingsController::class, 'form'])->name('admin.settings');
             $sr->post('/admin/settings', [SystemSettingsController::class, 'save'])->name('admin.settings.save');

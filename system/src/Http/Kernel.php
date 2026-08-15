@@ -17,9 +17,11 @@ use Johncms\Exceptions\MethodNotAllowedException;
 use Johncms\Exceptions\PageNotFoundException;
 use Johncms\Http\Controller\ActionInvoker;
 use Johncms\Http\Middleware\CsrfMiddleware;
+use Johncms\Http\Middleware\RequirePermissionMiddleware;
 use Johncms\Http\Middleware\TrimStringsMiddleware;
 use Johncms\Logs\DebugDetailsPolicy;
 use Johncms\Router\MiddlewareDispatcher;
+use Johncms\Router\Route;
 use Johncms\Router\RouteMatchResult;
 use Johncms\Router\SymfonyRouteMatcher;
 use Johncms\Security\RequestRateLogInterface;
@@ -214,6 +216,13 @@ final readonly class Kernel implements HttpKernelInterface, TerminableInterface
 
         $request->attributes->add($match->params);
 
+        // The permission of the route travels to the middleware on the request: the middleware is
+        // a singleton and cannot be told which permission to ask any other way.
+        if ($match->permission !== null) {
+            $request->attributes->set(Route::PERMISSION_ATTRIBUTE, $match->permission);
+            $request->attributes->set(Route::PERMISSION_HIDDEN_ATTRIBUTE, $match->permissionHidden);
+        }
+
         // The translations of the module owning the route, before anything renders. Belongs to the
         // cycle rather than to the controller: controllers are built per request only because of
         // work like this, and a guard rejecting the request must answer in the right language too.
@@ -230,6 +239,9 @@ final readonly class Kernel implements HttpKernelInterface, TerminableInterface
                 // Before the middlewares of the route, so a forged request is rejected without
                 // reaching the logic of the module. Routes opt out with Route::withoutCsrf().
                 ...($match->csrfExempt ? [] : [CsrfMiddleware::class]),
+                // Before the middlewares of the route: whoever may not open the route at all has
+                // no business reaching the guards of the module behind it.
+                ...($match->permission !== null ? [RequirePermissionMiddleware::class] : []),
                 ...$match->middlewares,
             ],
             handler: fn (Request $request): Response => $this->responseNormalizer->normalize(

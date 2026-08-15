@@ -19,7 +19,7 @@ msgstr ""
 #: modules/news/src/Application/Controllers/SectionController.php:35
 #: modules/news/src/Application/MetaTagsManager.php:105
 #: modules/news/src/Application/MetaTagsManager.php:106
-#: modules/news/src/Application/Services/NewsPermissions.php:28
+#: modules/news/src/Application/Services/NewsPermissions.php:29
 msgid "News"
 msgstr ""
 
@@ -166,8 +166,16 @@ msgstr ""
 msgid "The requested section was not found."
 msgstr ""
 
-#: modules/news/src/Application/Services/NewsPermissions.php:27
+#: modules/news/src/Application/Services/NewsPermissions.php:35
 msgid "Delete the comments of other people"
+msgstr ""
+
+#: modules/news/src/Application/Services/NewsPermissions.php:42
+msgid "Comment on the news"
+msgstr ""
+
+#: modules/news/src/Application/Services/NewsPermissions.php:51
+msgid "Manage the news"
 msgstr ""
 
 #: modules/news/src/Install/Installer.php:42

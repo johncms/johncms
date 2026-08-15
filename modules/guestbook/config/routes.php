@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Johncms\Http\Middleware\RequireAuthMiddleware;
 use Johncms\Modules\Guestbook\Application\Controllers\ClearGuestbookController;
 use Johncms\Modules\Guestbook\Application\Controllers\DeleteEntryController;
 use Johncms\Modules\Guestbook\Application\Controllers\EditEntryController;
@@ -13,9 +14,8 @@ use Johncms\Modules\Guestbook\Application\Middlewares\GuestbookCleanAccessMiddle
 use Johncms\Modules\Guestbook\Application\Middlewares\GuestbookEditAccessMiddleware;
 use Johncms\Modules\Guestbook\Application\Middlewares\GuestbookReplyAccessMiddleware;
 use Johncms\Router\RouteCollection;
-use Johncms\System\Users\User;
 
-return static function (RouteCollection $router, User $user): void {
+return static function (RouteCollection $router): void {
     $router->map(['GET', 'POST'], '/guestbook', GuestbookController::class)->name('guestbook.index');
     $router->map(['GET', 'POST'], '/guestbook/ga', SwitchTypeController::class)->name('guestbook.switch_type');
     $router
@@ -34,7 +34,7 @@ return static function (RouteCollection $router, User $user): void {
         ->map(['GET', 'POST'], '/guestbook/clean', ClearGuestbookController::class)
         ->name('guestbook.clean')
         ->addMiddleware(GuestbookCleanAccessMiddleware::class);
-    if ($user->isValid()) {
-        $router->map(['GET', 'POST'], '/guestbook/upload_file', UploadFileController::class)->name('guestbook.upload_file');
-    }
+    $router->map(['GET', 'POST'], '/guestbook/upload_file', UploadFileController::class)
+        ->name('guestbook.upload_file')
+        ->addMiddleware(RequireAuthMiddleware::class);
 };

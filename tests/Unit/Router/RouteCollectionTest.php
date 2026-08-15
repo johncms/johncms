@@ -110,6 +110,33 @@ final class RouteCollectionTest extends TestCase
         self::assertArrayNotHasKey(Route::CSRF_EXEMPT_ATTRIBUTE, $defaults);
     }
 
+    /**
+     * Unlike the CSRF exemption, and like the middlewares: a section with a stricter gate says so
+     * itself, where the gate can be read next to the routes it closes.
+     */
+    public function testThePermissionOfAGroupReachesItsOwnRoutesOnly(): void
+    {
+        $collection = new RouteCollection();
+        $collection->get('/admin/news', 'news_handler')->setName('news.admin');
+        $collection->get('/admin/news/settings', 'settings_handler')
+            ->setName('news.admin.settings')
+            ->permission('news.settings.manage');
+        $collection->group('/admin/news/tags', static function (RouteCollection $group): void {
+            $group->get('', 'tags_handler')->setName('news.admin.tags');
+        });
+        $collection->permission('news.manage');
+
+        $compiled = $collection->compile();
+
+        self::assertSame('news.manage', $compiled->get('news.admin')?->getDefault(Route::PERMISSION_ATTRIBUTE));
+        self::assertSame(
+            'news.settings.manage',
+            $compiled->get('news.admin.settings')?->getDefault(Route::PERMISSION_ATTRIBUTE),
+            'A route naming its own permission keeps it'
+        );
+        self::assertNull($compiled->get('news.admin.tags')?->getDefault(Route::PERMISSION_ATTRIBUTE));
+    }
+
     public function testNestedGroupAppliesOwnMiddlewaresToRoutes(): void
     {
         $collection = (new RouteCollection())

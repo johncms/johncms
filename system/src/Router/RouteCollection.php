@@ -25,6 +25,11 @@ final class RouteCollection
     /** Whether every route declared from here is exempt from the CSRF check. */
     private bool $csrfExempt = false;
 
+    /** The permission every route declared from here needs, unless it names one of its own. */
+    private ?string $permission = null;
+
+    private bool $permissionHidden = false;
+
     /** @var list<RouteCollection> */
     private array $groups = [];
 
@@ -116,6 +121,20 @@ final class RouteCollection
         return $this;
     }
 
+    /**
+     * The permission every route of this collection needs. A route naming its own keeps it.
+     *
+     * Like the middlewares of a group, it does not reach into a nested group: a section with a
+     * stricter gate declares that gate itself, where it can be read.
+     */
+    public function permission(string $permission, bool $hidden = false): self
+    {
+        $this->permission = $permission;
+        $this->permissionHidden = $hidden;
+
+        return $this;
+    }
+
     public function group(string $prefix, callable $group): RouteCollection
     {
         $collection = new self($this->routeRequirements);
@@ -142,6 +161,10 @@ final class RouteCollection
 
             if ($this->csrfExempt) {
                 $route->withoutCsrf();
+            }
+
+            if ($this->permission !== null) {
+                $route->inheritPermission($this->permission, $this->permissionHidden);
             }
 
             $name = $route->getName() ?? 'legacy_route_' . ++$this->autoRouteIndex;

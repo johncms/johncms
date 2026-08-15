@@ -612,7 +612,15 @@ msgstr ""
 msgid "Reload the page and submit the form again."
 msgstr ""
 
-#: system/src/Http/ExceptionResponseFactory.php:140
+#: system/src/Http/ExceptionResponseFactory.php:128
+msgid "Access denied"
+msgstr ""
+
+#: system/src/Http/ExceptionResponseFactory.php:129
+msgid "You are not allowed to open this page."
+msgstr ""
+
+#: system/src/Http/ExceptionResponseFactory.php:169
 msgid "Bad Request"
 msgstr ""
 

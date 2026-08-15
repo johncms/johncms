@@ -6,6 +6,7 @@ namespace Tests\Unit\Router;
 
 use Johncms\Http\Request;
 use Johncms\Http\RequestPathNormalizer;
+use Johncms\Router\Route as JohncmsRoute;
 use Johncms\Router\RouteMatchResult;
 use Johncms\Router\SymfonyRouteMatcher;
 use PHPUnit\Framework\TestCase;
@@ -100,6 +101,54 @@ final class SymfonyRouteMatcherTest extends TestCase
         $matcher = new SymfonyRouteMatcher(new UrlMatcher($routes, $context), $context, new RequestPathNormalizer());
 
         self::assertFalse($matcher->dispatch('POST', '/guestbook')->csrfExempt);
+    }
+
+    /**
+     * The permission travels on the result rather than among the parameters of the route: the
+     * kernel puts it on the request for the middleware, and the controller never sees it.
+     */
+    public function testThePermissionOfARouteIsReportedAndKeptOutOfTheParameters(): void
+    {
+        $routes = new RouteCollection();
+        $routes->add(
+            'news.admin',
+            new Route(
+                '/admin/news',
+                [
+                    '_handler'                            => 'news_admin_handler',
+                    JohncmsRoute::PERMISSION_ATTRIBUTE        => 'news.manage',
+                    JohncmsRoute::PERMISSION_HIDDEN_ATTRIBUTE => true,
+                ],
+                [],
+                [],
+                '',
+                [],
+                ['GET']
+            ),
+        );
+
+        $context = new RequestContext();
+        $matcher = new SymfonyRouteMatcher(new UrlMatcher($routes, $context), $context, new RequestPathNormalizer());
+
+        $result = $matcher->dispatch('GET', '/admin/news');
+
+        self::assertSame('news.manage', $result->permission);
+        self::assertTrue($result->permissionHidden);
+        self::assertSame([], $result->params);
+    }
+
+    public function testARouteWithoutAPermissionReportsNone(): void
+    {
+        $routes = new RouteCollection();
+        $routes->add('home', new Route('/', ['_handler' => 'home_handler'], [], [], '', [], ['GET']));
+
+        $context = new RequestContext();
+        $matcher = new SymfonyRouteMatcher(new UrlMatcher($routes, $context), $context, new RequestPathNormalizer());
+
+        $result = $matcher->dispatch('GET', '/');
+
+        self::assertNull($result->permission);
+        self::assertFalse($result->permissionHidden);
     }
 
     public function testARouteWithoutAModuleReportsNone(): void

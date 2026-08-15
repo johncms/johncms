@@ -132,6 +132,7 @@ msgstr ""
 #: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:109
 #: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:150
 #: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:262
+#: modules/collections/src/Application/Services/CollectionsPermissions.php:29
 msgid "Collections"
 msgstr ""
 
@@ -220,6 +221,10 @@ msgstr ""
 #: modules/collections/src/Application/Controllers/Admin/CollectionsAdminController.php:149
 #: modules/collections/templates/admin/collections.twig:16
 msgid "New collection"
+msgstr ""
+
+#: modules/collections/src/Application/Services/CollectionsPermissions.php:28
+msgid "Manage the collections"
 msgstr ""
 
 #: modules/collections/src/Install/Installer.php:40

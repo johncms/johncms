@@ -446,3 +446,6 @@ msgstr "Корень"
 msgid "Open"
 msgstr "Открыть"
 
+
+msgid "Manage the collections"
+msgstr "Управлять коллекциями"

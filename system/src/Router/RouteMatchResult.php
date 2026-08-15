@@ -25,6 +25,10 @@ final class RouteMatchResult
         public readonly ?string $module = null,
         /** Whether the matched route opted out of the CSRF check via Route::withoutCsrf(). */
         public readonly bool $csrfExempt = false,
+        /** The permission the route asks for, declared with Route::permission(); null when open. */
+        public readonly ?string $permission = null,
+        /** Whether a refusal of that permission answers 404 rather than 403. */
+        public readonly bool $permissionHidden = false,
     ) {
     }
 }

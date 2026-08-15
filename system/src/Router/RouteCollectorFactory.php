@@ -12,28 +12,29 @@ declare(strict_types=1);
 
 namespace Johncms\Router;
 
-use Johncms\System\Users\User;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Routing\RouteCollection as SymfonyRouteCollection;
 
 class RouteCollectorFactory
 {
+    /**
+     * The collection does not depend on who is asking: a route closed to the visitor is declared
+     * all the same and its gate is a middleware. That is what makes the collection dumpable and
+     * cacheable, and what lets the routing happen without identifying the visitor first.
+     */
     public function __invoke(ContainerInterface $container): SymfonyRouteCollection
     {
-        /** @var User $user */
-        $user = $container->get(User::class);
-
         $router = new RouteCollection(new RouteRequirements());
-        $this->addRoutesFromConfig($router, $user);
-        $this->addModuleRoutes($router, $user);
+        $this->addRoutesFromConfig($router);
+        $this->addModuleRoutes($router);
 
         return $router->compile();
     }
 
-    private function addRoutesFromConfig(RouteCollection $router, User $user): void
+    private function addRoutesFromConfig(RouteCollection $router): void
     {
         $registerRoutes = require CONFIG_PATH . 'routes.php';
-        $registerRoutes($router, $user);
+        $registerRoutes($router);
     }
 
     /**
@@ -41,13 +42,13 @@ class RouteCollectorFactory
      * of the file declaring it. That is what lets the request pipeline set up the module context
      * of the page, instead of each controller naming its own module.
      */
-    private function addModuleRoutes(RouteCollection $router, User $user): void
+    private function addModuleRoutes(RouteCollection $router): void
     {
         foreach (glob(MODULES_PATH . '*/config/routes.php') as $file) {
             $router->setModule(basename(dirname($file, 2)));
 
             $registerRoutes = require $file;
-            $registerRoutes($router, $user);
+            $registerRoutes($router);
         }
 
         $router->setModule(null);

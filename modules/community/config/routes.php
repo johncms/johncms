@@ -9,9 +9,8 @@ use Johncms\Modules\Community\Application\Controllers\CommunitySearchController;
 use Johncms\Modules\Community\Application\Controllers\CommunityTopController;
 use Johncms\Modules\Community\Application\Controllers\CommunityUsersController;
 use Johncms\Router\RouteCollection;
-use Johncms\System\Users\User;
 
-return static function (RouteCollection $router, User $user): void {
+return static function (RouteCollection $router): void {
     $router->get('/community', CommunityIndexController::class)->name('community.index');
     $router->get('/community/administration', AdministrationController::class)->name('community.administration');
     $router->get('/community/birthdays', CommunityBirthdaysController::class)->name('community.birthdays');

@@ -115,6 +115,8 @@
       'The search didn\'t yield any results.' => 'Поиск не дал результатов.',
       'Enter a tag' => 'Введите тег',
       'Delete the comments of other people' => 'Удалять комментарии других людей',
+      'Comment on the news' => 'Комментировать новости',
+      'Manage the news' => 'Управлять новостями',
     ),
   ),
 );

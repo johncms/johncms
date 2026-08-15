@@ -2094,3 +2094,6 @@ msgstr "Удалять раздел форума вместе со всем со
 
 msgid "Empty the lists of hidden topics and posts"
 msgstr "Очищать списки скрытых тем и сообщений"
+
+msgid "Open the report on the state of the installation"
+msgstr "Открывать отчёт о состоянии установки"

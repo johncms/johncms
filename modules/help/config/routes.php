@@ -3,19 +3,18 @@
 declare(strict_types=1);
 
 use Johncms\Modules\Help\Application\Controllers\AdminSmiliesController;
-use Johncms\Modules\Help\Application\Controllers\HelpIndexController;
 use Johncms\Modules\Help\Application\Controllers\AvatarCatalogController;
+use Johncms\Modules\Help\Application\Controllers\AvatarListController;
 use Johncms\Modules\Help\Application\Controllers\ForumRulesController;
+use Johncms\Modules\Help\Application\Controllers\HelpIndexController;
 use Johncms\Modules\Help\Application\Controllers\MySmiliesController;
+use Johncms\Modules\Help\Application\Controllers\SetAvatarController;
 use Johncms\Modules\Help\Application\Controllers\SetMySmiliesController;
 use Johncms\Modules\Help\Application\Controllers\SmiliesCatalogController;
 use Johncms\Modules\Help\Application\Controllers\UserSmiliesController;
-use Johncms\Modules\Help\Application\Controllers\AvatarListController;
-use Johncms\Modules\Help\Application\Controllers\SetAvatarController;
 use Johncms\Router\RouteCollection;
-use Johncms\System\Users\User;
 
-return static function (RouteCollection $router, User $user): void {
+return static function (RouteCollection $router): void {
     $router->get('/help', HelpIndexController::class)->name('help.index');
 
     $router->get('/help/forum', ForumRulesController::class)->name('help.forum');

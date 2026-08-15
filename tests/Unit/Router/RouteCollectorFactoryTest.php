@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\Unit\Router;
 
 use Johncms\Router\RouteCollectorFactory;
-use Johncms\System\Users\User;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Routing\RouteCollection;
@@ -16,9 +15,10 @@ final class RouteCollectorFactoryTest extends TestCase
 
     protected function setUp(): void
     {
-        $user = new User();
+        // Building the collection asks the container for nothing: the routes are the same for
+        // every visitor, and what closes one is a middleware rather than a condition around it.
         $this->container = $this->createMock(ContainerInterface::class);
-        $this->container->method('get')->with(User::class)->willReturn($user);
+        $this->container->expects(self::never())->method('get');
     }
 
     public function testModuleRoutesAreLoaded(): void

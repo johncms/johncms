@@ -117,6 +117,35 @@ final readonly class ExceptionResponseFactory
         return new Response($body, Response::HTTP_FORBIDDEN);
     }
 
+    /**
+     * A refusal: the visitor is signed in and the route is not theirs to open.
+     *
+     * Negotiated like the CSRF failure above, and for the same reason — the components of the
+     * theme read response.data.message.
+     */
+    public function forbidden(bool $wantsJson = false, ?string $message = null): Response
+    {
+        $title = d__('system', 'Access denied');
+        $message ??= d__('system', 'You are not allowed to open this page.');
+
+        if ($wantsJson) {
+            return new JsonResponse(['message' => $title . ' ' . $message], Response::HTTP_FORBIDDEN);
+        }
+
+        try {
+            $body = $this->renderer->render(
+                '@theme/pages/errors/403.twig',
+                ['title' => $title, 'message' => $message]
+            );
+        } catch (Throwable $throwable) {
+            $this->logger->error('The 403 template failed to render', ['exception' => $throwable]);
+
+            $body = $this->plainTextPage($title, $message);
+        }
+
+        return new Response($body, Response::HTTP_FORBIDDEN);
+    }
+
     private function plainTextPage(string $title, string $message): string
     {
         return sprintf(

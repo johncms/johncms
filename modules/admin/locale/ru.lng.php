@@ -454,6 +454,7 @@
       'A role of this level is allowed everything, whatever is ticked, so the permissions are not shown for it. That is what keeps a site from locking itself out of its own admin panel.' => 'Роль такого уровня может всё, независимо от отмеченных прав, поэтому список прав для неё не показывается. Именно это не даёт сайту закрыть самому себе доступ в админ панель.',
       'Delete a forum section with everything in it' => 'Удалять раздел форума вместе со всем содержимым',
       'Empty the lists of hidden topics and posts' => 'Очищать списки скрытых тем и сообщений',
+      'Open the report on the state of the installation' => 'Открывать отчёт о состоянии установки',
     ),
   ),
 );

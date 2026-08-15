@@ -244,6 +244,8 @@ The number is shown so that support for the old scheme is not removed while it i
       'See where a visitor is on the site and where they came from' => 'Видеть, где посетитель находится на сайте и откуда пришёл',
       'Use the smilies kept for the staff' => 'Использовать служебные смайлы',
       'Moderate the comments of the modules' => 'Модерировать комментарии модулей',
+      'You are not allowed to open this page.' => 'У вас нет доступа к этой странице.',
+      'Access denied' => 'Доступ запрещён',
     ),
   ),
 );
