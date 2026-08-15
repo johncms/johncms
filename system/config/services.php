@@ -130,12 +130,9 @@ return static function (ContainerConfigurator $container): void {
     // before the directory load below, since an instanceof rule only applies to what follows it.
     $services->instanceof(RuleConstraintFactoryInterface::class)->tag('johncms.validator.rule_factory');
 
-    // Authentication and authorization extension points. All three are open to modules: a way of
-    // identifying the visitor, a rule about what is allowed, and the permissions a module
-    // declares. Like the rule above, these must precede the directory load to apply to it.
-    $services->instanceof(AuthenticatorInterface::class)->tag('johncms.auth.authenticator');
-    $services->instanceof(AccessVoterInterface::class)->tag('johncms.auth.voter');
-    $services->instanceof(PermissionProviderInterface::class)->tag('johncms.auth.permissions');
+    // The authentication and authorization extension points are tagged by PSRContainerFactory
+    // instead: an instanceof rule here would reach the services of this file only, and a module
+    // declaring a voter or a permission would be silently ignored.
 
     $services->load(
         'Johncms\\',

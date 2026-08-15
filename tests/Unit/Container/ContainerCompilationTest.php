@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Container;
 
+use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Auth\Authorization\Voters\BanVoter;
 use Johncms\Auth\CurrentUser;
 use Johncms\Container\PSRContainerFactory;
 use Johncms\Http\CookieQueue;
+use Johncms\Modules\Admin\Application\Services\AdminPermissions;
 use Johncms\Http\Environment;
 use Johncms\Http\Session;
 use Johncms\NavChain;
@@ -77,6 +79,39 @@ final class ContainerCompilationTest extends TestCase
             ],
             $tagged
         );
+    }
+
+    /**
+     * A module joins an extension point by implementing an interface, and the tag is applied by
+     * registerForAutoconfiguration() in the factory. As an instanceof rule of the core services
+     * file it reached the core alone: a permission declared by a module compiled fine and never
+     * appeared in the role editor, which is exactly what happened once.
+     */
+    public function testAPermissionDeclaredByAModuleIsCollectedToo(): void
+    {
+        $container = (new PSRContainerFactory())();
+        self::assertInstanceOf(ContainerBuilder::class, $container);
+
+        $providers = array_keys($container->findTaggedServiceIds('johncms.auth.permissions'));
+
+        self::assertContains(CorePermissions::class, $providers);
+        self::assertContains(AdminPermissions::class, $providers);
+    }
+
+    /**
+     * The same tag applied twice — once by an instanceof rule, once by autoconfiguration — would
+     * put the service into its tagged iterator twice, and every voter would vote twice.
+     */
+    public function testTheExtensionPointsAreTaggedOnce(): void
+    {
+        $container = (new PSRContainerFactory())();
+        self::assertInstanceOf(ContainerBuilder::class, $container);
+
+        foreach (['johncms.auth.voter', 'johncms.auth.permissions', 'johncms.auth.authenticator'] as $tag) {
+            foreach ($container->findTaggedServiceIds($tag) as $id => $attributes) {
+                self::assertCount(1, $attributes, $id . ' carries ' . $tag . ' more than once');
+            }
+        }
     }
 
     private function containerInstanceProperty(): \ReflectionProperty

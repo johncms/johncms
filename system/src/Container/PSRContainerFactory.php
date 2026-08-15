@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Johncms\Container;
 
+use Johncms\Auth\Authentication\AuthenticatorInterface;
+use Johncms\Auth\Authorization\AccessVoterInterface;
+use Johncms\Auth\Authorization\PermissionProviderInterface;
 use Psr\Container\ContainerInterface as PsrContainerInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -31,6 +34,7 @@ class PSRContainerFactory
 
         $container = new ContainerBuilder();
 
+        $this->registerExtensionPoints($container);
         $this->loadCoreServices($container);
         $this->loadModuleServices($container);
         $this->loadOverrideServices($container);
@@ -61,6 +65,28 @@ class PSRContainerFactory
             (new self())();
         }
         return self::$containerInstance;
+    }
+
+    /**
+     * The extension points a module joins by implementing an interface: a way of identifying the
+     * visitor, a rule about what is allowed, and the permissions a module declares.
+     *
+     * Registered on the builder rather than as an instanceof rule of a services file, because
+     * such a rule only reaches the services declared in that same file. A module would have to
+     * repeat it in its own services.php, and one that forgot would compile fine and simply never
+     * be asked anything — a voter that never votes and permissions that never reach the editor.
+     */
+    private function registerExtensionPoints(ContainerBuilder $container): void
+    {
+        $tags = [
+            AuthenticatorInterface::class      => 'johncms.auth.authenticator',
+            AccessVoterInterface::class        => 'johncms.auth.voter',
+            PermissionProviderInterface::class => 'johncms.auth.permissions',
+        ];
+
+        foreach ($tags as $interface => $tag) {
+            $container->registerForAutoconfiguration($interface)->addTag($tag);
+        }
     }
 
     private function loadCoreServices(ContainerBuilder $container): void
