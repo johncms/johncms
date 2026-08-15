@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Infrastructure\Persistence\Repository;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Johncms\Auth\Authorization\UserRole;
+use Johncms\Auth\Schema\AuthSchema;
 use Johncms\Modules\Forum\Domain\Models\ForumMessage;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
 
@@ -214,8 +217,9 @@ class ForumMessageRepository implements ForumMessageRepositoryInterface
             ->select('forum_messages.user_id', 'forum_messages.user_name')
             ->join('users', 'users.id', '=', 'forum_messages.user_id')
             ->where('forum_messages.topic_id', $topicId)
-            ->where('users.rights', '<', 6)
-            ->where('users.rights', '!=', 3)
+            // A curator is appointed among the members of the topic. Whoever already holds a
+            // role of the staff moderates it without being appointed to anything.
+            ->whereNotExists($this->grantedRoles()->toBase())
             ->groupBy('forum_messages.user_id', 'forum_messages.user_name')
             ->orderBy('forum_messages.user_name')
             ->get();
@@ -229,6 +233,28 @@ class ForumMessageRepository implements ForumMessageRepositoryInterface
         }
 
         return $candidates;
+    }
+
+    /**
+     * The roles granted to the account the outer query is looking at, still in force.
+     *
+     * @return Builder<UserRole>
+     */
+    private function grantedRoles(): Builder
+    {
+        $now = time();
+
+        /** @var Builder<UserRole> $query */
+        $query = UserRole::query();
+        $query->whereColumn(AuthSchema::USER_ROLES . '.user_id', 'users.id');
+        $query->where(
+            static function (Builder $builder) use ($now): void {
+                $builder->whereNull(AuthSchema::USER_ROLES . '.expires_at')
+                    ->orWhere(AuthSchema::USER_ROLES . '.expires_at', '>', $now);
+            }
+        );
+
+        return $query;
     }
 
     public function getTopicAuthorFilterOptions(int $topicId): array
