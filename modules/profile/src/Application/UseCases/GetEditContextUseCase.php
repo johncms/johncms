@@ -4,9 +4,13 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Profile\Application\UseCases;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\Authorization\RoleLevels;
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Profile\Application\DTO\EditProfileContextDTO;
 use Johncms\Modules\Profile\Application\Exceptions\ProfileAccessForbiddenException;
 use Johncms\Modules\Profile\Application\Exceptions\ProfileNotFoundException;
+use Johncms\Modules\Profile\Application\Services\ProfilePermissions;
 use Johncms\Modules\Profile\Domain\Repository\ProfileUserRepositoryInterface;
 use Johncms\Users\User;
 
@@ -15,6 +19,9 @@ final readonly class GetEditContextUseCase
     public function __construct(
         private ProfileUserRepositoryInterface $profileUserRepository,
         private User $currentUser,
+        private CurrentUser $identity,
+        private AccessCheckerInterface $accessChecker,
+        private RoleLevels $roleLevels,
     ) {
     }
 
@@ -22,15 +29,19 @@ final readonly class GetEditContextUseCase
     {
         $profileUser = $this->profileUserRepository->findById($userId);
 
-        // Hide non-confirmed profiles from regular users (only admins with rights >= 7 may see them)
-        if ($profileUser === null || (! $profileUser->preg && $this->currentUser->rights < 7)) {
+        // An account awaiting confirmation exists only for whoever is allowed to see one
+        if ($profileUser === null || (! $profileUser->preg && ! $this->accessChecker->allows(ProfilePermissions::UNCONFIRMED_VIEW))) {
             throw new ProfileNotFoundException();
         }
 
         $isSelf = $profileUser->id === $this->currentUser->id;
+        $mayEditOthers = $this->accessChecker->allows(ProfilePermissions::PROFILE_EDIT);
+        $ownLevel = $this->roleLevels->highest($this->identity->identity());
+        $targetLevel = $this->roleLevels->highestGrantedTo($profileUser->id);
 
-        // The profile may be edited by its owner, or by an admin (rights >= 7) over a user with no higher rights
-        if (! $isSelf && ($this->currentUser->rights < 7 || $profileUser->rights > $this->currentUser->rights)) {
+        // Somebody else's profile is edited by whoever holds the permission and does not stand
+        // below its owner
+        if (! $isSelf && (! $mayEditOthers || $targetLevel > $ownLevel)) {
             throw new ProfileAccessForbiddenException(__('You cannot edit profile of higher administration'));
         }
 
@@ -42,7 +53,8 @@ final readonly class GetEditContextUseCase
         return new EditProfileContextDTO(
             profileUser: $profileUser,
             isSelf: $isSelf,
-            canEditAdminFields: $this->currentUser->rights >= 7,
+            canEditAdminFields: $mayEditOthers,
+            canResetSettings: $this->accessChecker->allows(ProfilePermissions::SETTINGS_RESET) && $targetLevel < $ownLevel,
         );
     }
 }

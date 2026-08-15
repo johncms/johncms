@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Profile\Application\UseCases;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\SecureToken;
 use Johncms\Mail\EmailMessage;
 use Johncms\Modules\Profile\Application\DTO\UpdateProfileCommand;
 use Johncms\Modules\Profile\Application\Exceptions\EditProfileException;
+use Johncms\Modules\Profile\Application\Services\ProfilePermissions;
 use Johncms\Modules\Profile\Domain\Repository\ProfileUserRepositoryInterface;
 use Johncms\System\i18n\Translator;
 use Johncms\Users\User;
@@ -23,7 +25,7 @@ final readonly class UpdateProfileUseCase
     public function __construct(
         private ProfileUserRepositoryInterface $profileUserRepository,
         private Translator $translator,
-        private User $currentUser,
+        private AccessCheckerInterface $accessChecker,
         private ValidatorInterface $validator,
     ) {
     }
@@ -31,7 +33,7 @@ final readonly class UpdateProfileUseCase
     public function execute(UpdateProfileCommand $command, User $profileUser): void
     {
         $config = config('johncms');
-        $isAdmin = $this->currentUser->rights >= 7;
+        $isAdmin = $this->accessChecker->allows(ProfilePermissions::PROFILE_EDIT);
 
         $formData = $command->toFormData();
 
@@ -67,11 +69,6 @@ final readonly class UpdateProfileUseCase
             $validationRules['mail'][] = new EmailAddress(checkMxRecord: true);
         }
 
-        // Clamp the requested rights to what the editor is allowed to assign
-        if ($formData['rights'] > $this->currentUser->rights || $formData['rights'] > 9 || $formData['rights'] < 0) {
-            $formData['rights'] = 0;
-        }
-
         if ($isAdmin) {
             $validationRules['name'] = [new StringLength(min: 2, max: 25)];
         }
@@ -82,13 +79,7 @@ final readonly class UpdateProfileUseCase
 
         // Regular users cannot change administrative fields
         if (! $isAdmin) {
-            unset($formData['name'], $formData['karma_off'], $formData['sex'], $formData['rights'], $formData['admin_notes']);
-        }
-
-        // Admins cannot change their own rights: the form does not render this field for self-edit,
-        // so keeping it would silently reset the editor's own rights to the default value.
-        if ($profileUser->id === $this->currentUser->id) {
-            unset($formData['rights']);
+            unset($formData['name'], $formData['karma_off'], $formData['sex'], $formData['admin_notes']);
         }
 
         // For regular users changing their email, defer the change until it is confirmed by email

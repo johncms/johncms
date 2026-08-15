@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Profile\Application\UseCases;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Modules\Profile\Application\DTO\KarmaListDTO;
 use Johncms\Modules\Profile\Application\Exceptions\ProfileNotFoundException;
+use Johncms\Modules\Profile\Application\Services\ProfilePermissions;
 use Johncms\Modules\Profile\Domain\Repository\KarmaRepositoryInterface;
 use Johncms\Modules\Profile\Domain\Repository\ProfileUserRepositoryInterface;
 use Johncms\Smilies\SmiliesRendererInterface;
@@ -21,7 +23,7 @@ final readonly class GetKarmaListUseCase
         private KarmaRepositoryInterface $karmaRepository,
         private DateFormatterInterface $dateFormatter,
         private SmiliesRendererInterface $smiliesRenderer,
-        private User $currentUser,
+        private AccessCheckerInterface $accessChecker,
     ) {
     }
 
@@ -38,7 +40,7 @@ final readonly class GetKarmaListUseCase
 
         $votes = $this->karmaRepository->getReceived($target->id, $this->typeFilter($type), $limit, $offset);
 
-        $isSupervisor = $this->currentUser->rights === 9;
+        $mayDelete = $this->accessChecker->allows(ProfilePermissions::KARMA_DESTROY);
         $base = '/profile/' . $target->id . '/karma';
 
         $items = [];
@@ -54,7 +56,7 @@ final readonly class GetKarmaListUseCase
                 'display_date' => $this->dateFormatter->format($vote->time),
                 'text'         => $this->smiliesRenderer->render(PlainTextFormatter::escape($vote->text)),
             ];
-            if ($isSupervisor) {
+            if ($mayDelete) {
                 $item['delete_url'] = $base . '/delete/' . $vote->id . '?type=' . $type;
             }
             $items[] = $item;
@@ -69,7 +71,7 @@ final readonly class GetKarmaListUseCase
         return new KarmaListDTO(
             items: $items,
             filters: $filters,
-            resetUrl: $isSupervisor ? $base . '/clean' : null,
+            resetUrl: $mayDelete ? $base . '/clean' : null,
             backUrl: '/profile/' . $target->id,
         );
     }
@@ -78,8 +80,8 @@ final readonly class GetKarmaListUseCase
     {
         $target = $this->profileUserRepository->findById($targetId);
 
-        // Hide non-confirmed profiles from regular users (only admins with rights >= 7 may see them)
-        if ($target === null || (! $target->preg && $this->currentUser->rights < 7)) {
+        // An account awaiting confirmation exists only for whoever is allowed to see one
+        if ($target === null || (! $target->preg && ! $this->accessChecker->allows(ProfilePermissions::UNCONFIRMED_VIEW))) {
             throw new ProfileNotFoundException();
         }
 

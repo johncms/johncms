@@ -9,7 +9,7 @@
     <h3>{{ __('Statistic') }}</h3>
 
     <ul>
-        {% if app.user.isValid and app.user.rights >= 7 %}
+        {% if can('users.unconfirmed.view') %}
             <li>
                 {% if not profile_user.preg and not profile_user.regadm %}
                     {{ __('Pending confirmation') }}

@@ -194,7 +194,7 @@
                         <div>{{ user.mibile }}</div>
                     </div>
                 {% endif %}
-                {% if (user.mail and user.mailvis) or (app.user.isValid and app.user.rights >= 7) or is_self %}
+                {% if (user.mail and user.mailvis) or can('users.email.view') or is_self %}
                     <div class="d-flex">
                         <div class="text-muted pe-2">{{ __('E-mail') }}:</div>
                         <div>
@@ -220,7 +220,7 @@
         </div>
     </div>
 
-    {% if user.admin_notes and app.user.isValid and app.user.rights > 0 %}
+    {% if user.admin_notes and can('users.notes.view') %}
         <div class="mt-4">
             <div class="alert alert-warning">
                 <div class="fw-bold h4">{{ __('Admin Notes') }}</div>

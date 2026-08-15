@@ -121,7 +121,6 @@ final readonly class EditProfileController
             name: (string) $request->request->filter('name', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
             karmaOff: $request->bodyInt('karma_off'),
             sex: (string) $request->request->filter('sex', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
-            rights: $request->bodyInt('rights'),
             adminNotes: $request->body('admin_notes', ''),
         );
     }
@@ -148,7 +147,6 @@ final readonly class EditProfileController
             'name'        => $user->name,
             'karma_off'   => $user->karma_off,
             'sex'         => $user->sex,
-            'rights'      => $user->rights,
             'admin_notes' => $user->admin_notes,
         ];
     }
@@ -186,6 +184,8 @@ final readonly class EditProfileController
                 'field_height'    => $this->currentUser->config->fieldHeight,
                 'user'            => $userArray,
                 'form_data'       => $formData,
+                'can_edit_admin_fields' => $context->canEditAdminFields,
+                'can_reset_settings'    => $context->canResetSettings,
             ]
         );
     }

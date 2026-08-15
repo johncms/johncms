@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Profile\Application\UseCases;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Modules\Profile\Application\Access\BanAccess;
 use Johncms\Modules\Profile\Application\DTO\BanHistoryDTO;
 use Johncms\Modules\Profile\Application\Exceptions\ProfileNotFoundException;
+use Johncms\Modules\Profile\Application\Services\ProfilePermissions;
 use Johncms\Modules\Profile\Domain\Repository\BanRepositoryInterface;
 use Johncms\Modules\Profile\Domain\Repository\ProfileUserRepositoryInterface;
 use Johncms\Users\Ban;
@@ -17,7 +20,8 @@ final readonly class GetBanHistoryUseCase
     public function __construct(
         private ProfileUserRepositoryInterface $profileUserRepository,
         private BanRepositoryInterface $banRepository,
-        private User $currentUser,
+        private AccessCheckerInterface $accessChecker,
+        private BanAccess $banAccess,
     ) {
     }
 
@@ -45,7 +49,10 @@ final readonly class GetBanHistoryUseCase
         ];
 
         $base = '/profile/' . $target->id . '/bans';
-        $isSupervisor = $this->currentUser->rights === 9;
+        $mayLift = $this->accessChecker->allows(ProfilePermissions::BAN_PERMANENT);
+        $mayDestroy = $this->accessChecker->allows(ProfilePermissions::BAN_DESTROY);
+        // Who applied a ban is of interest to whoever applies them
+        $maySeeAuthor = $this->banAccess->mayBanAnything();
 
         $items = [];
         foreach ($bans as $ban) {
@@ -56,10 +63,10 @@ final readonly class GetBanHistoryUseCase
             $period = $ban->ban_time - $ban->ban_while;
 
             $buttons = [];
-            if ($this->currentUser->rights >= 7 && $remain > 0) {
+            if ($mayLift && $remain > 0) {
                 $buttons[] = ['url' => $base . '/' . $ban->id . '/cancel', 'name' => __('Cancel Ban')];
             }
-            if ($isSupervisor) {
+            if ($mayDestroy) {
                 $buttons[] = ['url' => $base . '/' . $ban->id . '/delete', 'name' => __('Delete Ban')];
             }
 
@@ -69,7 +76,7 @@ final readonly class GetBanHistoryUseCase
                 'reason_formatted' => $ban->ban_reason,
                 'time_name'        => $period < 86400000 ? DurationFormatter::format($period) : __('Till cancel'),
                 'remain'           => $remain > 0 ? DurationFormatter::format($remain) : '',
-                'ban_who'          => $ban->ban_who,
+                'ban_who'          => $maySeeAuthor ? $ban->ban_who : null,
                 'buttons'          => $buttons,
             ];
         }
@@ -77,7 +84,7 @@ final readonly class GetBanHistoryUseCase
         return new BanHistoryDTO(
             userName: $target->name,
             items: $items,
-            clearHistoryUrl: $isSupervisor ? $base . '/clear' : null,
+            clearHistoryUrl: $mayDestroy ? $base . '/clear' : null,
             backUrl: '/profile/' . $target->id,
         );
     }
@@ -86,8 +93,8 @@ final readonly class GetBanHistoryUseCase
     {
         $target = $this->profileUserRepository->findById($targetId);
 
-        // Hide non-confirmed profiles from regular users (only admins with rights >= 7 may see them)
-        if ($target === null || (! $target->preg && $this->currentUser->rights < 7)) {
+        // An account awaiting confirmation exists only for whoever is allowed to see one
+        if ($target === null || (! $target->preg && ! $this->accessChecker->allows(ProfilePermissions::UNCONFIRMED_VIEW))) {
             throw new ProfileNotFoundException();
         }
 

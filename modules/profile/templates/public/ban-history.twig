@@ -29,7 +29,7 @@
                                 {{ item.reason_formatted }}
                             </div>
                             <div class="text-muted small mb-2">
-                                {% if app.user.isValid and app.user.rights > 0 %}
+                                {% if item.ban_who %}
                                     <div>
                                         {{ __('Blocked by:') }}: {{ item.ban_who }}
                                     </div>

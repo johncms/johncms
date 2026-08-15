@@ -10,7 +10,6 @@
 {% extends '@theme/layouts/default.twig' %}
 
 {% block content %}
-    {% set rights = app.user.isValid ? app.user.rights : 0 %}
     <form action="{{ form_action }}" method="post">
         <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
         {% if post_id|default(0) %}
@@ -20,7 +19,7 @@
         <h3>{{ __('Ban:') }} {{ user_login }}</h3>
 
         <h4>{{ __('Ban type') }}</h4>
-        {% if rights >= 6 %}
+        {% if can('users.ban.manage') %}
             <div class="custom-control custom-radio">
                 <input type="radio" id="full" name="term" value="1" class="custom-control-input" checked="checked">
                 <label class="custom-control-label" for="full">{{ __('Full block') }}</label>
@@ -38,13 +37,13 @@
                 <label class="custom-control-label" for="guestbook">{{ __('Guestbook') }}</label>
             </div>
         {% endif %}
-        {% if rights == 3 or rights >= 6 %}
+        {% if can('users.ban.forum') %}
             <div class="custom-control custom-radio">
-                <input type="radio" id="forum" name="term" value="11" class="custom-control-input"{% if rights == 3 %} checked="checked"{% endif %}>
+                <input type="radio" id="forum" name="term" value="11" class="custom-control-input"{% if not can('users.ban.manage') %} checked="checked"{% endif %}>
                 <label class="custom-control-label" for="forum">{{ __('Forum') }}</label>
             </div>
         {% endif %}
-        {% if rights == 5 or rights >= 6 %}
+        {% if can('users.ban.library') %}
             <div class="custom-control custom-radio">
                 <input type="radio" id="library" name="term" value="15" class="custom-control-input">
                 <label class="custom-control-label" for="library">{{ __('Library') }}</label>
@@ -64,13 +63,13 @@
             <input type="radio" id="hours" name="time" value="2" class="custom-control-input" checked="checked">
             <label class="custom-control-label" for="hours">{{ __('Hours (24 max.)') }}</label>
         </div>
-        {% if rights >= 6 %}
+        {% if can('users.ban.manage') %}
             <div class="custom-control custom-radio">
                 <input type="radio" id="days" name="time" value="3" class="custom-control-input" checked="checked">
                 <label class="custom-control-label" for="days">{{ __('Days (30 max.)') }}</label>
             </div>
         {% endif %}
-        {% if rights >= 7 %}
+        {% if can('users.ban.permanent') %}
             <div class="custom-control custom-radio">
                 <input type="radio" id="till_cancel" name="time" value="4" class="custom-control-input">
                 <label class="custom-control-label" for="till_cancel">{{ __('Till cancel') }}</label>

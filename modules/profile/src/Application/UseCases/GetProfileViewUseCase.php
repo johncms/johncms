@@ -4,9 +4,15 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Profile\Application\UseCases;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\Authorization\CorePermissions;
+use Johncms\Auth\Authorization\RoleLevels;
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Mail\Domain\Repository\ContactRepositoryInterface;
+use Johncms\Modules\Profile\Application\Access\BanAccess;
 use Johncms\Modules\Profile\Application\DTO\ProfileViewDTO;
 use Johncms\Modules\Profile\Application\Exceptions\ProfileNotFoundException;
+use Johncms\Modules\Profile\Application\Services\ProfilePermissions;
 use Johncms\Modules\Profile\Domain\Repository\KarmaRepositoryInterface;
 use Johncms\Modules\Profile\Domain\Repository\ProfileUserRepositoryInterface;
 use Johncms\Users\User;
@@ -34,6 +40,10 @@ final readonly class GetProfileViewUseCase
         private ProfileUserRepositoryInterface $profileUserRepository,
         private ContactRepositoryInterface $contactRepository,
         private KarmaRepositoryInterface $karmaRepository,
+        private AccessCheckerInterface $accessChecker,
+        private BanAccess $banAccess,
+        private CurrentUser $identity,
+        private RoleLevels $roleLevels,
         private User $currentUser,
     ) {
     }
@@ -42,14 +52,20 @@ final readonly class GetProfileViewUseCase
     {
         $profileUser = $this->profileUserRepository->findById($userId);
 
-        // Hide non-confirmed profiles from regular users (only admins with rights >= 7 may see them)
-        if ($profileUser === null || (! $profileUser->preg && $this->currentUser->rights < 7)) {
+        // An account awaiting confirmation exists only for whoever is allowed to see one
+        if ($profileUser === null || (! $profileUser->preg && ! $this->accessChecker->allows(ProfilePermissions::UNCONFIRMED_VIEW))) {
             throw new ProfileNotFoundException();
         }
 
         $config = config('johncms');
         $isOwner = $profileUser->id === $this->currentUser->id;
         $contactState = $this->contactState($profileUser->id);
+        // Where the two of them stand relative to each other: it decides the buttons and whether
+        // the address the account signed in from is shown at all
+        $ownLevel = $this->roleLevels->highest($this->identity->identity());
+        $targetLevel = $this->roleLevels->highestGrantedTo($profileUser->id);
+        $targetStandsAbove = $targetLevel > $ownLevel;
+        $targetStandsBelow = $targetLevel < $ownLevel;
 
         $userData = $profileUser->setAppends(self::APPENDS)->toArray();
 
@@ -75,7 +91,7 @@ final readonly class GetProfileViewUseCase
         return new ProfileViewDTO(
             title: $isOwner ? __('My Profile') : __('User Profile'),
             user: $userData,
-            showIp: $this->currentUser->rights > 0 && $this->currentUser->rights >= $profileUser->rights,
+            showIp: ! $targetStandsAbove && $this->accessChecker->allows(CorePermissions::USERS_ORIGIN_VIEW),
             canWrite: ! $this->isIgnored($profileUser->id)
                 && $contactState !== 2
                 && ! isset($this->currentUser->ban['1'])
@@ -85,7 +101,7 @@ final readonly class GetProfileViewUseCase
             activeBan: $activeBan,
             activeBanReason: $activeBanReason,
             counters: ['ban' => $profileUser->bans()->count()],
-            buttons: $this->buildButtons($profileUser, $contactState),
+            buttons: $this->buildButtons($profileUser, $contactState, $targetStandsAbove, $targetStandsBelow),
         );
     }
 
@@ -147,7 +163,7 @@ final readonly class GetProfileViewUseCase
     private function buildNotifications(User $profileUser, array $config): array
     {
         $notifications = [];
-        if ($this->currentUser->rights >= 7 && ! $profileUser->preg && empty($profileUser->regadm)) {
+        if (! $profileUser->preg && empty($profileUser->regadm) && $this->accessChecker->allows(ProfilePermissions::UNCONFIRMED_VIEW)) {
             $notifications[] = __('Pending confirmation');
         }
         if (! empty($config['user_email_confirmation']) && ! $profileUser->email_confirmed) {
@@ -160,8 +176,12 @@ final readonly class GetProfileViewUseCase
     /**
      * @return array<int, array{url: string, name: string}>
      */
-    private function buildButtons(User $profileUser, int $contactState): array
-    {
+    private function buildButtons(
+        User $profileUser,
+        int $contactState,
+        bool $targetStandsAbove,
+        bool $targetStandsBelow
+    ): array {
         $buttons = [];
         $isOwner = $profileUser->id === $this->currentUser->id;
 
@@ -171,17 +191,15 @@ final readonly class GetProfileViewUseCase
                 : ['url' => '/mail/delete-contact/' . $profileUser->id, 'name' => __('Remove from Contacts')];
         }
 
-        if (
-            $isOwner
-            || $this->currentUser->rights === 9
-            || ($this->currentUser->rights === 7 && $this->currentUser->rights > $profileUser->rights)
-        ) {
+        // Each button leads to a screen with a guard of its own, and asks here exactly what that
+        // guard asks: a button nobody may press is worse than no button.
+        if ($isOwner || (! $targetStandsAbove && $this->accessChecker->allows(ProfilePermissions::PROFILE_EDIT))) {
             $buttons[] = ['url' => '/profile/' . $profileUser->id . '/edit', 'name' => __('Edit')];
         }
-        if (! $isOwner && $this->currentUser->rights >= 7 && $this->currentUser->rights > $profileUser->rights) {
+        if (! $isOwner && ! $targetStandsAbove && $this->accessChecker->allows(CorePermissions::ADMIN_SETTINGS_MANAGE)) {
             $buttons[] = ['url' => '/admin/users/' . $profileUser->id . '/delete', 'name' => __('Delete')];
         }
-        if (! $isOwner && $this->currentUser->rights > $profileUser->rights) {
+        if (! $isOwner && $targetStandsBelow && $this->banAccess->mayBanAnything()) {
             $buttons[] = ['url' => '/profile/' . $profileUser->id . '/bans/new', 'name' => __('Ban')];
         }
 

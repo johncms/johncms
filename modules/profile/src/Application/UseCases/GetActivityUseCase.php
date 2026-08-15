@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Johncms\Modules\Profile\Application\UseCases;
 
 use Illuminate\Support\Collection;
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Domain\Models\ForumMessage;
 use Johncms\Modules\Forum\Domain\Models\ForumTopic;
@@ -13,6 +15,7 @@ use Johncms\Modules\Guestbook\Domain\Models\GuestbookEntry;
 use Johncms\Modules\Profile\Application\DTO\ActivityDTO;
 use Johncms\Modules\Profile\Application\Exceptions\ProfileNotFoundException;
 use Johncms\Modules\Profile\Application\Services\ForumActivityPreviewService;
+use Johncms\Modules\Profile\Application\Services\ProfilePermissions;
 use Johncms\Modules\Profile\Domain\Enums\ActivityType;
 use Johncms\Modules\Profile\Domain\Repository\ProfileActivityRepositoryInterface;
 use Johncms\Modules\Profile\Domain\Repository\ProfileUserRepositoryInterface;
@@ -28,6 +31,7 @@ final readonly class GetActivityUseCase
         private ForumTopicPathService $topicPathService,
         private GuestbookEntryTextFormatter $guestbookTextFormatter,
         private DateFormatterInterface $dateFormatter,
+        private AccessCheckerInterface $accessChecker,
         private User $currentUser,
     ) {
     }
@@ -39,7 +43,7 @@ final readonly class GetActivityUseCase
         return match ($type) {
             ActivityType::Comments => $this->activityRepository->countGuestbookEntries(
                 $profileUser->id,
-                $this->currentUser->rights >= 1
+                $this->includeAdminClub()
             ),
             ActivityType::Topics   => $this->activityRepository->countForumTopics($profileUser->id, $this->includeDeleted()),
             ActivityType::Messages => $this->activityRepository->countForumMessages($profileUser->id, $this->includeDeleted()),
@@ -55,7 +59,7 @@ final readonly class GetActivityUseCase
         $records = match ($type) {
             ActivityType::Comments => $this->activityRepository->getGuestbookEntries(
                 $profileUser->id,
-                $this->currentUser->rights >= 1,
+                $this->includeAdminClub(),
                 $limit,
                 $offset
             ),
@@ -81,8 +85,8 @@ final readonly class GetActivityUseCase
     {
         $profileUser = $this->profileUserRepository->findById($userId);
 
-        // Hide non-confirmed profiles from regular users (only admins with rights >= 7 may see them)
-        if ($profileUser === null || (! $profileUser->preg && $this->currentUser->rights < 7)) {
+        // An account awaiting confirmation exists only for whoever is allowed to see one
+        if ($profileUser === null || (! $profileUser->preg && ! $this->accessChecker->allows(ProfilePermissions::UNCONFIRMED_VIEW))) {
             throw new ProfileNotFoundException();
         }
 
@@ -91,7 +95,17 @@ final readonly class GetActivityUseCase
 
     private function includeDeleted(): bool
     {
-        return $this->currentUser->rights >= 7;
+        return $this->accessChecker->allows(ForumPermissions::DELETED_VIEW);
+    }
+
+    /**
+     * Whether the entries of the admin club count as activity. Still the number: who may enter
+     * the club is the guestbook's own check, and it becomes a permission when that module is
+     * converted.
+     */
+    private function includeAdminClub(): bool
+    {
+        return $this->currentUser->rights >= 1;
     }
 
     /**

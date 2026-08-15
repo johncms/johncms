@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Profile\Application\Controllers;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Http\Pagination\Pagination;
 use Johncms\Http\Pagination\PaginationFactory;
@@ -19,6 +20,7 @@ use Johncms\Modules\Profile\Application\UseCases\ClearBanHistoryUseCase;
 use Johncms\Modules\Profile\Application\UseCases\DeleteBanUseCase;
 use Johncms\Modules\Profile\Application\UseCases\GetBanFormContextUseCase;
 use Johncms\Modules\Profile\Application\UseCases\GetBanHistoryUseCase;
+use Johncms\Modules\Profile\Application\Services\ProfilePermissions;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Users\User;
@@ -29,6 +31,7 @@ final readonly class BanController
     public function __construct(
         private NavChain $navChain,
         private User $currentUser,
+        private AccessCheckerInterface $accessChecker,
         private GetBanHistoryUseCase $getBanHistoryUseCase,
         private GetBanFormContextUseCase $getBanFormContextUseCase,
         private BanUserUseCase $banUserUseCase,
@@ -100,7 +103,7 @@ final readonly class BanController
 
     public function cancelForm(int $id, int $banId): ViewResponse
     {
-        if ($error = $this->staffGuard()) {
+        if ($error = $this->liftGuard()) {
             return $error;
         }
 
@@ -123,7 +126,7 @@ final readonly class BanController
 
     public function cancel(int $id, int $banId): ViewResponse
     {
-        if ($error = $this->staffGuard()) {
+        if ($error = $this->liftGuard()) {
             return $error;
         }
 
@@ -142,7 +145,7 @@ final readonly class BanController
 
     public function deleteForm(int $id, int $banId): ViewResponse
     {
-        if ($error = $this->supervisorGuard()) {
+        if ($error = $this->destroyGuard()) {
             return $error;
         }
 
@@ -163,7 +166,7 @@ final readonly class BanController
 
     public function delete(int $id, int $banId): ViewResponse
     {
-        if ($error = $this->supervisorGuard()) {
+        if ($error = $this->destroyGuard()) {
             return $error;
         }
 
@@ -180,7 +183,7 @@ final readonly class BanController
 
     public function clearForm(int $id): ViewResponse
     {
-        if ($error = $this->supervisorGuard(__('Violations history can be cleared by Supervisor only'))) {
+        if ($error = $this->destroyGuard(__('Violations history can be cleared by Supervisor only'))) {
             return $error;
         }
 
@@ -195,7 +198,7 @@ final readonly class BanController
 
     public function clear(int $id): ViewResponse
     {
-        if ($error = $this->supervisorGuard(__('Violations history can be cleared by Supervisor only'))) {
+        if ($error = $this->destroyGuard(__('Violations history can be cleared by Supervisor only'))) {
             return $error;
         }
 
@@ -290,18 +293,24 @@ final readonly class BanController
         );
     }
 
-    private function staffGuard(): ?ViewResponse
+    /**
+     * Ending a ban before it runs out.
+     */
+    private function liftGuard(): ?ViewResponse
     {
-        if ($this->currentUser->rights < 7) {
+        if (! $this->accessChecker->allows(ProfilePermissions::BAN_PERMANENT)) {
             return $this->renderError(__('Wrong data'), 403);
         }
 
         return null;
     }
 
-    private function supervisorGuard(?string $message = null): ?ViewResponse
+    /**
+     * Deleting the record of a ban, which leaves no trace of it in the history.
+     */
+    private function destroyGuard(?string $message = null): ?ViewResponse
     {
-        if ($this->currentUser->rights !== 9) {
+        if (! $this->accessChecker->allows(ProfilePermissions::BAN_DESTROY)) {
             return $this->renderError($message ?? __('Wrong data'), 403);
         }
 

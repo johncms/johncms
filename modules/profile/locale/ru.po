@@ -1239,3 +1239,42 @@ msgstr "Активных устройств нет"
 
 msgid "Sign out on all other devices"
 msgstr "Выйти на всех других устройствах"
+
+msgid "Open an account awaiting confirmation"
+msgstr "Открывать аккаунт, ожидающий подтверждения"
+
+msgid "Edit the profile of another account"
+msgstr "Редактировать профиль другого аккаунта"
+
+msgid "Change the password of another account"
+msgstr "Менять пароль другого аккаунта"
+
+msgid "Reset the settings of another account"
+msgstr "Сбрасывать настройки другого аккаунта"
+
+msgid "Read the notes the staff keep about an account"
+msgstr "Читать заметки персонала об аккаунте"
+
+msgid "Read the e-mail address of an account that hides it"
+msgstr "Видеть скрытый e-mail аккаунта"
+
+msgid "Ban from the site, private messages, comments and the guestbook"
+msgstr "Блокировать доступ к сайту, личным сообщениям, комментариям и гостевой книге"
+
+msgid "Ban from the forum"
+msgstr "Блокировать доступ к форуму"
+
+msgid "Ban from the library"
+msgstr "Блокировать доступ к библиотеке"
+
+msgid "Ban without an end date and lift a ban"
+msgstr "Блокировать без срока и снимать блокировку"
+
+msgid "Delete the record of a ban"
+msgstr "Удалять запись о блокировке"
+
+msgid "Delete a karma entry"
+msgstr "Удалять запись кармы"
+
+msgid "Roles of the account"
+msgstr "Роли аккаунта"

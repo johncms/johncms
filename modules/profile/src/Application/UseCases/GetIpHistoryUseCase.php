@@ -4,9 +4,13 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Profile\Application\UseCases;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\Authorization\CorePermissions;
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Profile\Application\DTO\IpHistoryDTO;
 use Johncms\Modules\Profile\Application\Exceptions\ProfileAccessForbiddenException;
 use Johncms\Modules\Profile\Application\Exceptions\ProfileNotFoundException;
+use Johncms\Modules\Profile\Application\Services\ProfilePermissions;
 use Johncms\Modules\Profile\Domain\Repository\IpHistoryRepositoryInterface;
 use Johncms\Modules\Profile\Domain\Repository\ProfileUserRepositoryInterface;
 use Johncms\Users\IpHistory;
@@ -19,7 +23,8 @@ final readonly class GetIpHistoryUseCase
         private ProfileUserRepositoryInterface $profileUserRepository,
         private IpHistoryRepositoryInterface $ipHistoryRepository,
         private DateFormatterInterface $dateFormatter,
-        private User $currentUser,
+        private AccessCheckerInterface $accessChecker,
+        private CurrentUser $currentUser,
     ) {
     }
 
@@ -60,13 +65,13 @@ final readonly class GetIpHistoryUseCase
     {
         $profileUser = $this->profileUserRepository->findById($userId);
 
-        // Hide non-confirmed profiles from regular users (only admins with rights >= 7 may see them)
-        if ($profileUser === null || (! $profileUser->preg && $this->currentUser->rights < 7)) {
+        // An account awaiting confirmation exists only for whoever is allowed to see one
+        if ($profileUser === null || (! $profileUser->preg && ! $this->accessChecker->allows(ProfilePermissions::UNCONFIRMED_VIEW))) {
             throw new ProfileNotFoundException();
         }
 
-        // IP history is visible to admins and to the profile owner only
-        if (! $this->currentUser->rights && $this->currentUser->id !== $profileUser->id) {
+        // The addresses an account signed in from are its owner's business and the staff's
+        if ($this->currentUser->id() !== $profileUser->id && ! $this->accessChecker->allows(CorePermissions::USERS_ORIGIN_VIEW)) {
             throw new ProfileAccessForbiddenException();
         }
 

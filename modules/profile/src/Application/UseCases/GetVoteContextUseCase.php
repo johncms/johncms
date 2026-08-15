@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Profile\Application\UseCases;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Modules\Profile\Application\DTO\VoteContextDTO;
 use Johncms\Modules\Profile\Application\Exceptions\KarmaVoteException;
 use Johncms\Modules\Profile\Application\Exceptions\ProfileNotFoundException;
+use Johncms\Modules\Profile\Application\Services\ProfilePermissions;
 use Johncms\Modules\Profile\Domain\Repository\KarmaRepositoryInterface;
 use Johncms\Modules\Profile\Domain\Repository\ProfileUserRepositoryInterface;
 use Johncms\Users\User;
@@ -16,6 +18,7 @@ final readonly class GetVoteContextUseCase
     public function __construct(
         private ProfileUserRepositoryInterface $profileUserRepository,
         private KarmaRepositoryInterface $karmaRepository,
+        private AccessCheckerInterface $accessChecker,
         private User $currentUser,
     ) {
     }
@@ -24,7 +27,8 @@ final readonly class GetVoteContextUseCase
     {
         $target = $this->profileUserRepository->findById($targetId);
 
-        if ($target === null || (! $target->preg && $this->currentUser->rights < 7)) {
+        // An account awaiting confirmation exists only for whoever is allowed to see one
+        if ($target === null || (! $target->preg && ! $this->accessChecker->allows(ProfilePermissions::UNCONFIRMED_VIEW))) {
             throw new ProfileNotFoundException();
         }
 

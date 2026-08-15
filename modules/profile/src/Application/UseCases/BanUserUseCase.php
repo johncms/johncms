@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Profile\Application\UseCases;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Modules\Profile\Application\Access\BanAccess;
 use Johncms\Modules\Profile\Application\DTO\BanUserCommand;
 use Johncms\Modules\Profile\Application\Exceptions\BanException;
 use Johncms\Modules\Profile\Domain\Repository\BanRepositoryInterface;
 use Johncms\Modules\Profile\Domain\Repository\KarmaRepositoryInterface;
+use Johncms\Modules\Profile\Application\Services\ProfilePermissions;
 use Johncms\Modules\Profile\Domain\Repository\ProfileUserRepositoryInterface;
 use Johncms\Users\User;
 
@@ -17,6 +20,8 @@ final readonly class BanUserUseCase
         private BanRepositoryInterface $banRepository,
         private KarmaRepositoryInterface $karmaRepository,
         private ProfileUserRepositoryInterface $profileUserRepository,
+        private AccessCheckerInterface $accessChecker,
+        private BanAccess $banAccess,
         private User $currentUser,
     ) {
     }
@@ -35,13 +40,7 @@ final readonly class BanUserUseCase
             $error = __('There is no required data');
         }
 
-        if (
-            ($this->currentUser->rights === 1 && $term !== 14)
-            || ($this->currentUser->rights === 2 && $term !== 12)
-            || ($this->currentUser->rights === 3 && $term !== 11)
-            || ($this->currentUser->rights === 4 && $term !== 16)
-            || ($this->currentUser->rights === 5 && $term !== 15)
-        ) {
+        if (! $this->banAccess->mayApply($term)) {
             $error = __('You have no rights to ban in this section');
         }
 
@@ -67,7 +66,8 @@ final readonly class BanUserUseCase
     }
 
     /**
-     * Convert the selected unit and amount into a duration in seconds, applying per-unit and per-rights caps.
+     * Convert the selected unit and amount into a duration in seconds, capped by the unit and by
+     * what the visitor is allowed to hand out.
      */
     private function resolveDuration(int $unit, int $timeval): int
     {
@@ -85,11 +85,13 @@ final readonly class BanUserUseCase
                 $timeval = min($timeval, 60) * 60;
         }
 
-        if ($this->currentUser->rights < 6 && $timeval > 86400) {
+        // A ban of one section is worth a day; the general ban of an account is worth a month;
+        // longer than that is for whoever may also lift one.
+        if (! $this->accessChecker->allows(ProfilePermissions::BAN_MANAGE) && $timeval > 86400) {
             $timeval = 86400;
         }
 
-        if ($this->currentUser->rights < 7 && $timeval > 2592000) {
+        if (! $this->accessChecker->allows(ProfilePermissions::BAN_PERMANENT) && $timeval > 2592000) {
             $timeval = 2592000;
         }
 

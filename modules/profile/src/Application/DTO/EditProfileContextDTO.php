@@ -12,6 +12,7 @@ final readonly class EditProfileContextDTO
         public User $profileUser,
         public bool $isSelf,
         public bool $canEditAdminFields,
+        public bool $canResetSettings,
     ) {
     }
 }

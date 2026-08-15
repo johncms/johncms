@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Profile\Application\Controllers;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Http\Pagination\Pagination;
 use Johncms\Http\Pagination\PaginationFactory;
@@ -13,6 +14,7 @@ use Johncms\Modules\Profile\Application\DTO\VoteContextDTO;
 use Johncms\Modules\Profile\Application\DTO\VoteKarmaCommand;
 use Johncms\Modules\Profile\Application\Exceptions\KarmaVoteException;
 use Johncms\Modules\Profile\Application\Exceptions\ProfileNotFoundException;
+use Johncms\Modules\Profile\Application\Services\ProfilePermissions;
 use Johncms\Modules\Profile\Application\UseCases\CleanKarmaUseCase;
 use Johncms\Modules\Profile\Application\UseCases\DeleteKarmaVoteUseCase;
 use Johncms\Modules\Profile\Application\UseCases\GetKarmaListUseCase;
@@ -29,6 +31,7 @@ final readonly class KarmaController
     public function __construct(
         private NavChain $navChain,
         private User $currentUser,
+        private AccessCheckerInterface $accessChecker,
         private GetKarmaListUseCase $getKarmaListUseCase,
         private GetNewKarmaUseCase $getNewKarmaUseCase,
         private GetVoteContextUseCase $getVoteContextUseCase,
@@ -127,7 +130,7 @@ final readonly class KarmaController
     public function deleteForm(Request $request, int $id, int $voteId): ViewResponse
     {
         $this->ensureKarmaEnabled();
-        if ($error = $this->supervisorGuard()) {
+        if ($error = $this->destroyGuard()) {
             return $error;
         }
 
@@ -149,7 +152,7 @@ final readonly class KarmaController
     public function delete(Request $request, int $id, int $voteId): ViewResponse
     {
         $this->ensureKarmaEnabled();
-        if ($error = $this->supervisorGuard()) {
+        if ($error = $this->destroyGuard()) {
             return $error;
         }
 
@@ -167,7 +170,7 @@ final readonly class KarmaController
     public function cleanForm(int $id): ViewResponse
     {
         $this->ensureKarmaEnabled();
-        if ($error = $this->supervisorGuard()) {
+        if ($error = $this->destroyGuard()) {
             return $error;
         }
 
@@ -181,7 +184,7 @@ final readonly class KarmaController
     public function clean(int $id): ViewResponse
     {
         $this->ensureKarmaEnabled();
-        if ($error = $this->supervisorGuard()) {
+        if ($error = $this->destroyGuard()) {
             return $error;
         }
 
@@ -277,9 +280,9 @@ final readonly class KarmaController
         );
     }
 
-    private function supervisorGuard(): ?ViewResponse
+    private function destroyGuard(): ?ViewResponse
     {
-        if ($this->currentUser->rights !== 9) {
+        if (! $this->accessChecker->allows(ProfilePermissions::KARMA_DESTROY)) {
             return $this->renderError(__('Access forbidden'), 403);
         }
 

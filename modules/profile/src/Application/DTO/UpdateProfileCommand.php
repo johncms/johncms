@@ -20,11 +20,10 @@ final readonly class UpdateProfileCommand
         public string $jabber,
         public string $www,
         public string $status,
-        // Admin-only fields (applied only when the editor has rights >= 7)
+        // Admin-only fields, applied only to an editor allowed to edit somebody else's profile
         public string $name,
         public int $karmaOff,
         public string $sex,
-        public int $rights,
         public string $adminNotes,
     ) {
     }
@@ -53,7 +52,6 @@ final readonly class UpdateProfileCommand
             'name'        => $this->name,
             'karma_off'   => $this->karmaOff,
             'sex'         => $this->sex,
-            'rights'      => $this->rights,
             'admin_notes' => $this->adminNotes,
         ];
     }
