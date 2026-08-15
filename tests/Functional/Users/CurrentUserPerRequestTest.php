@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Tests\Functional\Users;
 
-use Johncms\Users\User;
+use Johncms\Auth\CurrentUser;
 use PDO;
 use Tests\Functional\FunctionalTestCase;
 
 /**
  * The current-user service is shared, and hundreds of controllers take it in their constructor —
- * so it cannot be rebuilt per request, its state is replaced instead (CurrentUserAuthenticator).
- * This asserts both halves of that: the same object survives, and what it holds belongs to the
+ * so it cannot be rebuilt per request; what it answers is dropped between requests instead. This
+ * asserts both halves of that: the same service survives, and who it answers with belongs to the
  * request being served rather than to the previous one.
  *
  * A worker runtime is where this matters; under FPM the process ends with the request. That is
@@ -32,37 +32,38 @@ final class CurrentUserPerRequestTest extends FunctionalTestCase
         parent::tearDown();
     }
 
-    public function testTheVisitorOfEachRequestIsLoadedIntoTheSharedInstance(): void
+    public function testTheVisitorOfEachRequestIsTheOneAnswered(): void
     {
         $userId = $this->createUser();
 
-        $user = $this->container()->get(User::class);
+        $currentUser = $this->container()->get(CurrentUser::class);
 
         $this->handleRequest('/', cookies: $this->actingAs($userId));
 
-        self::assertSame($userId, $user->id, 'The user must hold the visitor of the request.');
-        self::assertTrue($user->exists);
+        self::assertSame($userId, $currentUser->id(), 'The service must answer with the visitor of the request.');
+        self::assertSame($userId, $currentUser->user()->id);
+        self::assertTrue($currentUser->user()->exists);
 
-        // A guest now: everything the previous visitor left in the shared instance has to go, or
-        // the next request of a worker answers as them.
+        // A guest now: everything the previous visitor left behind has to go, or the next request
+        // of a worker is answered as them.
         $this->handleRequest('/');
 
-        self::assertNull($user->id, 'The user still holds the previous visitor.');
-        self::assertFalse($user->exists);
-        self::assertSame([], $user->ban);
+        self::assertSame(0, $currentUser->id(), 'The service still answers with the previous visitor.');
+        self::assertFalse($currentUser->user()->exists);
+        self::assertSame([], $currentUser->user()->ban);
     }
 
-    public function testTheSharedInstanceIsNeverReplaced(): void
+    public function testTheSharedServiceIsNeverReplaced(): void
     {
         $userId = $this->createUser();
 
-        $user = $this->container()->get(User::class);
+        $currentUser = $this->container()->get(CurrentUser::class);
 
         $this->handleRequest('/', cookies: $this->actingAs($userId));
 
-        // Replacing the objects would leave every service that took them in its constructor with
-        // the user of the request the container was built for.
-        self::assertSame($user, $this->container()->get(User::class));
+        // Replacing the object would leave every service that took it in its constructor with the
+        // one built for the request the container was built for.
+        self::assertSame($currentUser, $this->container()->get(CurrentUser::class));
     }
 
     /**

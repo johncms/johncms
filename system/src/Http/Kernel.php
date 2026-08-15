@@ -28,7 +28,6 @@ use Johncms\Security\RequestRateLogInterface;
 use Johncms\System\i18n\LocaleResolver;
 use Johncms\System\i18n\Translator;
 use Johncms\System\Users\UserStat;
-use Johncms\Users\CurrentUserAuthenticator;
 use Johncms\Users\IpHistoryRecorder;
 use LogicException;
 use Psr\Container\ContainerInterface;
@@ -69,7 +68,6 @@ final readonly class Kernel implements HttpKernelInterface, TerminableInterface
         private RequestStack $requestStack,
         private RequestRateLogInterface $requestRateLog,
         private CookieQueue $cookieQueue,
-        private CurrentUserAuthenticator $currentUserAuthenticator,
         private IpHistoryRecorder $ipHistoryRecorder,
         private LocaleResolver $localeResolver,
         private Translator $translator,
@@ -126,10 +124,6 @@ final readonly class Kernel implements HttpKernelInterface, TerminableInterface
             // what runs the authenticator chain for this request.
             $this->ipHistoryRecorder->record();
         }
-
-        // The shared User instance the older code injects is filled from the same answer, once
-        // per request, for as long as anything still takes the model in its constructor.
-        $this->currentUserAuthenticator->authenticate();
 
         // The language of this visitor, applied on top of the translator built at boot. Resolving
         // it needs the user, hence the order; setting the same locale again is a no-op, so under

@@ -220,7 +220,6 @@ return static function (ContainerConfigurator $container): void {
     $services->set(\PDO::class, PdoFactory::class)->factory(service(PdoFactory::class));
     // Creating and altering tables: a handful of console commands and the installer.
     $services->set(SchemaBuilder::class)->factory(service(SchemaBuilderFactory::class));
-    $services->set(\Johncms\Users\User::class)->factory(service(\Johncms\Users\UserFactory::class));
     $services->set(\Johncms\Users\Repository\UserRepositoryInterface::class, \Johncms\Users\Repository\EloquentUserRepository::class);
 
     // The authenticators are asked in the order they are tagged, and the order is a decision:
