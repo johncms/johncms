@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\UseCases;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Modules\Forum\Application\DTO\EditPostContextDTO;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
+use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Domain\Models\ForumSection;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
@@ -17,6 +19,7 @@ final readonly class GetEditPostContextUseCase
         private ForumMessageRepositoryInterface $messageRepository,
         private ForumTopicPathService $topicPathService,
         private User $currentUser,
+        private AccessCheckerInterface $accessChecker,
     ) {
     }
 
@@ -35,10 +38,12 @@ final readonly class GetEditPostContextUseCase
         /** @var ForumSection $section */
         $section = $message->topic->section;
 
-        $effectiveRights = $this->resolveEffectiveRights($message->topic->curators ?? []);
+        // The curator of the topic moderates it: the topic is what the permission is asked
+        // about, and the voter of the module answers for them.
+        $canModerate = $this->accessChecker->allows(ForumPermissions::TOPIC_MODERATE, $message->topic);
 
         $upfp = ! empty($forumSettings['upfp']);
-        $includeDeleted = $effectiveRights >= 7;
+        $includeDeleted = $this->accessChecker->allows(ForumPermissions::DELETED_VIEW);
         $totalForPage = $this->messageRepository->countByTopicIdWithComparison(
             topicId: $message->topic_id,
             messageId: $message->id,
@@ -56,22 +61,10 @@ final readonly class GetEditPostContextUseCase
             message: $message,
             topic: $message->topic,
             section: $section,
-            effectiveRights: $effectiveRights,
+            canModerate: $canModerate,
             page: $page,
             posts: $posts,
             backUrl: $this->topicPathService->getTopicUrl($message->topic, $page > 1 ? $page : null),
         );
-    }
-
-    /**
-     * @param array<int, string> $curators
-     */
-    private function resolveEffectiveRights(array $curators): int
-    {
-        if (array_key_exists($this->currentUser->id, $curators)) {
-            return 3;
-        }
-
-        return $this->currentUser->rights;
     }
 }

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Modules\Admin\UseCases;
 
+use Johncms\Auth\Authorization\PermissionRegistry;
+use Johncms\Auth\Authorization\DefaultPermissions;
 use Gettext\Translator;
 use Gettext\TranslatorFunctions;
 use Illuminate\Database\Capsule\Manager as Capsule;
@@ -36,7 +38,7 @@ final class UpdateUserRolesUseCaseTest extends TestCase
         $this->createUsersTable();
 
         $this->roles = new EloquentRoleRepository();
-        (new RoleSeeder($this->roles))->seed();
+        (new RoleSeeder($this->roles, new DefaultPermissions(new PermissionRegistry())))->seed();
 
         $this->useCase = new UpdateUserRolesUseCase($this->roles, new RightsMirror($this->roles));
     }

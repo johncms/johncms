@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\UseCases;
 
+use Johncms\Modules\Forum\Application\Services\ForumPermissions;
+use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Modules\Forum\Application\DTO\PostMessageResultDTO;
 use Johncms\Modules\Forum\Application\Services\ForumTopicStatsRecalculator;
 use Johncms\Modules\Forum\Domain\Models\ForumMessage;
@@ -21,6 +23,7 @@ final readonly class PostMessageUseCase
         private ForumTopicStatsRecalculator $topicStatsRecalculator,
         private ForumFileRepositoryInterface $fileRepository,
         private User $currentUser,
+        private AccessCheckerInterface $accessChecker,
     ) {
     }
 
@@ -86,7 +89,7 @@ final readonly class PostMessageUseCase
     {
         $lastMessage = $this->messageRepository->findLastMessageInTopic(
             $topic->id,
-            $this->currentUser->rights >= 7
+            $this->accessChecker->allows(ForumPermissions::DELETED_VIEW)
         );
 
         if ($lastMessage === null) {
@@ -124,7 +127,7 @@ final readonly class PostMessageUseCase
 
     private function resolveMessagePage(int $topicId, array $forumSettings): int
     {
-        $includeDeleted = $this->currentUser->rights >= 7;
+        $includeDeleted = $this->accessChecker->allows(ForumPermissions::DELETED_VIEW);
         $total = $this->messageRepository->countByTopicId($topicId, $includeDeleted);
         $page = $forumSettings['upfp'] ? 1 : (int) ceil($total / $this->currentUser->config->kmess);
 

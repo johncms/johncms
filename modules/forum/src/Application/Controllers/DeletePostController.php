@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\Controllers;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
@@ -22,6 +24,7 @@ final readonly class DeletePostController
         private GetEditPostContextUseCase $contextUseCase,
         private EnsureEditPostAccessUseCase $accessUseCase,
         private DeletePostUseCase $deletePostUseCase,
+        private AccessCheckerInterface $accessChecker,
     ) {
     }
 
@@ -54,7 +57,7 @@ final readonly class DeletePostController
 
         if ($request->getMethod() === 'POST') {
             $action = $request->body('action', 'delete');
-            $hardDelete = $action === 'delete' && $this->currentUser->rights === 9;
+            $hardDelete = $action === 'delete' && $this->accessChecker->allows(ForumPermissions::POST_DESTROY);
             $result = $this->deletePostUseCase->execute($context, $hardDelete, $this->getForumSettings());
             redirect($result->redirectUrl);
         }
@@ -66,7 +69,7 @@ final readonly class DeletePostController
                 'page_title'      => __('Delete Message'),
                 'posts'           => $context->posts,
                 'back_url'        => $context->backUrl,
-                'can_hard_delete' => $this->currentUser->rights === 9,
+                'can_hard_delete' => $this->accessChecker->allows(ForumPermissions::POST_DESTROY),
                 'delete_action'   => '/forum/delete-post/' . $id . '/',
             ]
         );

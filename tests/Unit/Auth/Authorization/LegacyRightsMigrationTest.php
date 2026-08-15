@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Auth\Authorization;
 
+use Johncms\Auth\Authorization\PermissionRegistry;
+use Johncms\Auth\Authorization\DefaultPermissions;
 use Gettext\Translator;
 use Gettext\TranslatorFunctions;
 use Illuminate\Database\Capsule\Manager as Capsule;
@@ -39,7 +41,7 @@ final class LegacyRightsMigrationTest extends TestCase
         $this->createUsersTable();
 
         $this->roles = new EloquentRoleRepository();
-        (new RoleSeeder($this->roles))->seed();
+        (new RoleSeeder($this->roles, new DefaultPermissions(new PermissionRegistry())))->seed();
 
         $this->migration = new LegacyRightsMigration($this->roles);
         $this->mirror = new RightsMirror($this->roles);

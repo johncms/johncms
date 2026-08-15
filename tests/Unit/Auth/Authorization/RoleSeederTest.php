@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Auth\Authorization;
 
+use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Gettext\Translator;
 use Gettext\TranslatorFunctions;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Auth\Authorization\DefaultPermissions;
+use Johncms\Auth\Authorization\PermissionRegistry;
 use Johncms\Auth\Authorization\Role;
 use Johncms\Auth\Authorization\RoleSeeder;
 use Johncms\Auth\Authorization\SystemRole;
@@ -34,7 +36,7 @@ final class RoleSeederTest extends TestCase
         AuthSchema::create(Capsule::schema());
 
         $this->roles = new EloquentRoleRepository();
-        $this->seeder = new RoleSeeder($this->roles);
+        $this->seeder = new RoleSeeder($this->roles, $this->defaults());
     }
 
     protected function tearDown(): void
@@ -105,7 +107,7 @@ final class RoleSeederTest extends TestCase
             self::assertNotNull($role);
 
             self::assertEqualsCanonicalizing(
-                DefaultPermissions::forRole($systemRole->value),
+                $this->defaults()->forRole($systemRole->value),
                 $this->roles->permissionsFor([$role->id]),
                 $systemRole->value . ' should carry its default permissions'
             );
@@ -142,5 +144,14 @@ final class RoleSeederTest extends TestCase
         Role::query()->where('slug', '=', SystemRole::LibraryModerator->value)->delete();
 
         self::assertSame([SystemRole::LibraryModerator->value], $this->seeder->seed());
+    }
+
+    /**
+     * The matrix as the running site assembles it: from the permissions the core and the modules
+     * declare, not from a copy kept in the test.
+     */
+    private function defaults(): DefaultPermissions
+    {
+        return new DefaultPermissions(new PermissionRegistry([new CorePermissions(), new ForumPermissions()]));
     }
 }

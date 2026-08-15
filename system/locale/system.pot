@@ -39,7 +39,7 @@ msgid "Watching the photo album"
 msgstr ""
 
 #: config/places.global.php:14
-#: system/src/Auth/Authorization/CorePermissions.php:49
+#: system/src/Auth/Authorization/CorePermissions.php:52
 #: themes/default/templates/components/sidebar-main-menu.twig:85
 #: modules/homepage/templates/public/index.twig:46
 msgid "Users"
@@ -340,35 +340,39 @@ msgstr ""
 msgid "Back"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:47
+#: system/src/Auth/Authorization/CorePermissions.php:50
 msgid "Admin panel"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:48
+#: system/src/Auth/Authorization/CorePermissions.php:51
 msgid "System"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:55
+#: system/src/Auth/Authorization/CorePermissions.php:67
 msgid "Access the admin panel"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:61
+#: system/src/Auth/Authorization/CorePermissions.php:74
 msgid "Change system settings"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:67
+#: system/src/Auth/Authorization/CorePermissions.php:80
 msgid "Manage roles and permissions"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:73
+#: system/src/Auth/Authorization/CorePermissions.php:87
 msgid "See error details and the developer panel"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:79
+#: system/src/Auth/Authorization/CorePermissions.php:94
 msgid "Post without waiting out the full antiflood delay"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:85
+#: system/src/Auth/Authorization/CorePermissions.php:101
+msgid "Use the smilies kept for the staff"
+msgstr ""
+
+#: system/src/Auth/Authorization/CorePermissions.php:108
 msgid "See where a visitor is on the site and where they came from"
 msgstr ""
 
@@ -611,9 +615,9 @@ msgstr ""
 #: system/src/Http/PageMeta.php:18
 #: modules/forum/src/Application/Controllers/ForumSearchController.php:87
 #: modules/forum/src/Application/Controllers/ForumSearchController.php:96
-#: modules/forum/src/Application/Controllers/ForumTopicController.php:152
-#: modules/forum/src/Application/Controllers/ForumTopicController.php:161
-#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:418
+#: modules/forum/src/Application/Controllers/ForumTopicController.php:155
+#: modules/forum/src/Application/Controllers/ForumTopicController.php:164
+#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:421
 msgid "Page"
 msgstr ""
 

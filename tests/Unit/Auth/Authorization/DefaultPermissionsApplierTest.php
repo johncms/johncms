@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Auth\Authorization;
 
+use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Gettext\Translator;
 use Gettext\TranslatorFunctions;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Auth\Authorization\DefaultPermissions;
 use Johncms\Auth\Authorization\DefaultPermissionsApplier;
+use Johncms\Auth\Authorization\PermissionRegistry;
 use Johncms\Auth\Authorization\RoleSeeder;
 use Johncms\Auth\Authorization\SystemRole;
 use Johncms\Auth\Infrastructure\Persistence\Repository\EloquentRoleRepository;
@@ -34,7 +36,7 @@ final class DefaultPermissionsApplierTest extends TestCase
         AuthSchema::create(Capsule::schema());
 
         $this->roles = new EloquentRoleRepository();
-        $this->applier = new DefaultPermissionsApplier($this->roles);
+        $this->applier = new DefaultPermissionsApplier($this->roles, $this->defaults());
     }
 
     protected function tearDown(): void
@@ -48,7 +50,7 @@ final class DefaultPermissionsApplierTest extends TestCase
      */
     public function testARoleWithoutPermissionsGetsTheDefaults(): void
     {
-        (new RoleSeeder($this->roles))->seed();
+        (new RoleSeeder($this->roles, $this->defaults()))->seed();
         $admin = $this->roles->findBySlug(SystemRole::Admin->value);
         self::assertNotNull($admin);
         $this->roles->setPermissions($admin->id, []);
@@ -56,7 +58,7 @@ final class DefaultPermissionsApplierTest extends TestCase
         $granted = $this->applier->apply();
 
         self::assertEqualsCanonicalizing(
-            DefaultPermissions::forRole(SystemRole::Admin->value),
+            $this->defaults()->forRole(SystemRole::Admin->value),
             $this->roles->permissionsFor([$admin->id])
         );
         self::assertArrayHasKey(SystemRole::Admin->value, $granted);
@@ -68,7 +70,7 @@ final class DefaultPermissionsApplierTest extends TestCase
      */
     public function testWhatTheSiteGrantedItselfSurvives(): void
     {
-        (new RoleSeeder($this->roles))->seed();
+        (new RoleSeeder($this->roles, $this->defaults()))->seed();
         $moderator = $this->roles->findBySlug(SystemRole::ForumModerator->value);
         self::assertNotNull($moderator);
         $this->roles->setPermissions($moderator->id, ['forum.topic.delete']);
@@ -81,7 +83,7 @@ final class DefaultPermissionsApplierTest extends TestCase
 
     public function testRunningAgainGrantsNothing(): void
     {
-        (new RoleSeeder($this->roles))->seed();
+        (new RoleSeeder($this->roles, $this->defaults()))->seed();
 
         self::assertSame([], $this->applier->apply());
     }
@@ -91,11 +93,20 @@ final class DefaultPermissionsApplierTest extends TestCase
      */
     public function testARoleTheSiteAddedIsLeftAlone(): void
     {
-        (new RoleSeeder($this->roles))->seed();
+        (new RoleSeeder($this->roles, $this->defaults()))->seed();
         $custom = $this->roles->create('news-editor', 'News editor', 20, time());
 
         $this->applier->apply();
 
         self::assertSame([], $this->roles->permissionsFor([$custom->id]));
+    }
+
+    /**
+     * The matrix as the running site assembles it: from the permissions the core and the modules
+     * declare, not from a copy kept in the test.
+     */
+    private function defaults(): DefaultPermissions
+    {
+        return new DefaultPermissions(new PermissionRegistry([new CorePermissions(), new ForumPermissions()]));
     }
 }

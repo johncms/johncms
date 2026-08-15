@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\UseCases;
 
+use Johncms\Modules\Forum\Application\Services\ForumPermissions;
+use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Modules\Forum\Application\DTO\TopicsPeriodQueryDTO;
 use Johncms\Modules\Forum\Application\DTO\TopicsPeriodResultDTO;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
@@ -19,12 +21,15 @@ final readonly class ViewTopicsByPeriodUseCase
         private ForumTopicPathService $topicPathService,
         private DateFormatterInterface $dateFormatter,
         private User $currentUser,
+        private AccessCheckerInterface $accessChecker,
     ) {
     }
 
     public function execute(TopicsPeriodQueryDTO $query): TopicsPeriodResultDTO
     {
-        $useModerationDate = $this->currentUser->rights === 9;
+        // The moderation figures and the deleted topics go together, and both are what
+        // "may see what was deleted" stands for.
+        $useModerationDate = $this->accessChecker->allows(ForumPermissions::DELETED_VIEW);
         $includeDeleted = $useModerationDate;
         $fromTime = time() - $query->hours * 3600;
         $total = $this->topicRepository->countForPeriod($fromTime, $includeDeleted, $useModerationDate);
@@ -54,7 +59,7 @@ final readonly class ViewTopicsByPeriodUseCase
         $topics = [];
 
         foreach ($rows as $row) {
-            if ($this->currentUser->rights >= 7) {
+            if ($this->accessChecker->allows(ForumPermissions::DELETED_VIEW)) {
                 $pagesCount = (int) ceil((int) $row['mod_post_count'] / $this->currentUser->config->kmess);
                 $row['show_posts_count'] = ShortNumberFormatter::format((int) $row['mod_post_count']);
                 $row['show_last_author'] = $row['mod_last_post_author_name'];

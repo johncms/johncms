@@ -15,54 +15,46 @@ namespace Johncms\Auth\Authorization;
 /**
  * What each built-in role may do on a site that has not been configured by hand.
  *
- * One table, for two callers that must not disagree: the seeder creating the roles of a fresh
- * installation, and the command bringing an existing installation up to the same set. It is
- * written as the numeric checks are converted — a permission arrives here in the same commit that
- * starts asking for it, so an upgraded site keeps doing what it did before.
+ * Assembled from the catalogue rather than written out here: every permission names the roles it
+ * belongs to, so a module decides what its own moderator is supposed to have and the core never
+ * has to know the module. A module that is switched off declares nothing and its defaults are
+ * simply not there.
  *
- * The supervisor is deliberately absent: SuperAdminVoter answers for that level, and listing
- * permissions for it would suggest the list is what makes it powerful.
+ * Two callers must not disagree about it: the seeder creating the roles of a fresh installation,
+ * and the command bringing an existing one up to the same set.
+ *
+ * The supervisor is deliberately absent from every list: SuperAdminVoter answers for that level,
+ * and permissions granted to it would suggest the list is what makes it powerful.
  */
-final class DefaultPermissions
+final readonly class DefaultPermissions
 {
+    public function __construct(private PermissionRegistry $registry)
+    {
+    }
+
     /**
      * Permission keys per role slug.
      *
      * @return array<string, list<string>>
      */
-    public static function all(): array
+    public function all(): array
     {
-        return [
-            SystemRole::Guest->value              => [],
-            SystemRole::User->value               => [],
-            SystemRole::ForumModerator->value     => [
-                CorePermissions::ANTIFLOOD_RELAXED,
-            ],
-            SystemRole::DownloadsModerator->value => [
-                CorePermissions::ANTIFLOOD_RELAXED,
-            ],
-            SystemRole::LibraryModerator->value   => [
-                CorePermissions::ANTIFLOOD_RELAXED,
-            ],
-            SystemRole::SuperModerator->value     => [
-                CorePermissions::ANTIFLOOD_RELAXED,
-                CorePermissions::USERS_ORIGIN_VIEW,
-            ],
-            SystemRole::Admin->value              => [
-                CorePermissions::ADMIN_ACCESS,
-                CorePermissions::ADMIN_ROLES_MANAGE,
-                CorePermissions::ANTIFLOOD_RELAXED,
-                CorePermissions::USERS_ORIGIN_VIEW,
-                CorePermissions::SYSTEM_DEBUG_VIEW,
-            ],
-        ];
+        $matrix = [];
+
+        foreach ($this->registry->all() as $definition) {
+            foreach ($definition->defaultRoles as $slug) {
+                $matrix[$slug][] = $definition->key;
+            }
+        }
+
+        return $matrix;
     }
 
     /**
      * @return list<string>
      */
-    public static function forRole(string $slug): array
+    public function forRole(string $slug): array
     {
-        return self::all()[$slug] ?? [];
+        return $this->all()[$slug] ?? [];
     }
 }

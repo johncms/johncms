@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\UseCases;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Exception;
 use Johncms\Files\FileStorage;
 use Johncms\Modules\Forum\Application\DTO\DeletePostResultDTO;
@@ -34,6 +36,7 @@ final readonly class DeletePostUseCase
         private ForumTopicPathService $topicPathService,
         private User $currentUser,
         private FileStorage $fileStorage,
+        private AccessCheckerInterface $accessChecker,
     ) {
     }
 
@@ -52,7 +55,7 @@ final readonly class DeletePostUseCase
         }
 
         $redirectUrl = $context->backUrl;
-        if ($hardDelete && $this->currentUser->rights === 9) {
+        if ($hardDelete && $this->accessChecker->allows(ForumPermissions::POST_DESTROY)) {
             $linkedFileIds = $this->messageFileRepository->getFileIdsByMessageId((int) $message->id);
             $this->messageFileRepository->deleteByMessageId((int) $message->id);
 

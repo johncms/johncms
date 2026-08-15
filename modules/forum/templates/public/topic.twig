@@ -83,7 +83,7 @@
         <div class="alert alert-danger">
             {{ __('Topic deleted by') }} <b>{{ topic.deleted_by }}</b>
         </div>
-    {% elseif topic.deleted_by and app.user.isValid and app.user.rights >= 7 %}
+    {% elseif topic.deleted_by and can('forum.deleted.view') %}
         <div class="alert alert-success">
             {{ __('Undelete topic') }} <b>{{ topic.deleted_by }}</b>
         </div>
@@ -122,7 +122,7 @@
             <div class="mb-3">
                 <div>
                     {{ __('Total votes') }}:
-                    {% if app.user.isValid and app.user.rights > 6 %}
+                    {% if can('forum.poll.voters.view') %}
                         <a href="/forum/poll-voters/{{ id }}/">{{ topic_vote.count }}</a>
                     {% else %}
                         {{ topic_vote.count }}

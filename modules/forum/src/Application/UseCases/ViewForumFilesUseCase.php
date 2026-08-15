@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\UseCases;
 
+use Johncms\Modules\Forum\Application\Services\ForumPermissions;
+use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Modules\Forum\Application\DTO\ForumFilesQueryDTO;
 use Johncms\Modules\Forum\Application\DTO\ForumFilesViewResultDTO;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
@@ -32,6 +34,7 @@ final readonly class ViewForumFilesUseCase
         private \HTMLPurifier $purifier,
         private Embed $embed,
         private User $currentUser,
+        private AccessCheckerInterface $accessChecker,
     ) {
     }
 
@@ -154,7 +157,7 @@ final readonly class ViewForumFilesUseCase
 
         if ($total > 0) {
             $forumSettings = $this->getForumSettings();
-            $listingScope = $this->createScopeQuery($context, $this->currentUser->rights >= 7);
+            $listingScope = $this->createScopeQuery($context, $this->accessChecker->allows(ForumPermissions::DELETED_VIEW));
             $listingFilter = $query->isNew
                 ? ForumFileCountQuery::forNew($listingScope, $newFrom)
                 : ForumFileCountQuery::forType($listingScope, $query->fileType);
@@ -203,7 +206,7 @@ final readonly class ViewForumFilesUseCase
     private function buildSectionsResult(array $context, string $lnk, int $newFrom): ForumFilesViewResultDTO
     {
         $types = $this->getFileTypes();
-        $scope = $this->createScopeQuery($context, $this->currentUser->rights >= 7);
+        $scope = $this->createScopeQuery($context, $this->accessChecker->allows(ForumPermissions::DELETED_VIEW));
         $seoMeta = $this->buildSeoMeta(
             new ForumFilesQueryDTO(start: 0, contextCategoryId: $context['categoryId'] ?? 0, contextSectionId: $context['sectionId'] ?? 0, contextTopicId: $context['topicId'] ?? 0, fileType: 0, isNew: false),
             $context,

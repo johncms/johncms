@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\Controllers;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\Authorization\CorePermissions;
+use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\ForumUtils;
@@ -45,6 +48,7 @@ final readonly class NewTopicController
         private AttachUploadedFilesToMessageUseCase $attachUploadedFilesUseCase,
         private ForumSectionPathService $sectionPathService,
         private ValidatorInterface $validator,
+        private AccessCheckerInterface $accessChecker,
     ) {
     }
 
@@ -92,7 +96,7 @@ final readonly class NewTopicController
             'attached_files' => (array) $request->bodyInts('attached_files'),
         ];
 
-        if ($this->currentUser->rights > 0) {
+        if ($this->accessChecker->allows(ForumPermissions::TOPIC_META_MANAGE)) {
             $data['meta_keywords'] = $request->body('meta_keywords');
             $data['meta_description'] = $request->body('meta_description');
         }
@@ -152,7 +156,10 @@ final readonly class NewTopicController
 
         $msgPreview = $this->purifier->purify((string) $data['message']);
         $msgPreview = $this->embed->embedMedia($msgPreview);
-        $msgPreview = $this->smiliesRenderer->render($msgPreview, $this->currentUser->rights > 0);
+        $msgPreview = $this->smiliesRenderer->render(
+            $msgPreview,
+            $this->accessChecker->allows(CorePermissions::SMILIES_ADMIN_USE)
+        );
 
         ForumUtils::buildBreadcrumbs($section->parent, $section->name, $section->url);
         $this->navChain->add(__('New Topic'));
@@ -170,7 +177,7 @@ final readonly class NewTopicController
                 'show_preview'    => ! empty($data['name']) && ! empty($data['message']) && ! $request->body('submit'),
                 'preview_message' => new Markup($msgPreview, 'UTF-8'),
                 'preview_time'    => time(),
-                'can_set_meta'    => $this->currentUser->rights > 0,
+                'can_set_meta'    => $this->accessChecker->allows(ForumPermissions::TOPIC_META_MANAGE),
                 'preview_enabled' => ! empty($this->getForumSettings()['preview']),
                 'errors'          => $errors,
                 'data'            => $data,

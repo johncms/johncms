@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\UseCases;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\Authorization\CorePermissions;
+use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Johncms\Modules\Forum\Application\DTO\PostActionsDTO;
 use Johncms\Modules\Forum\Application\DTO\PostAuthorDTO;
 use Johncms\Modules\Forum\Application\DTO\PostEditInfoDTO;
@@ -26,6 +29,7 @@ final readonly class ViewPostUseCase
         private ForumTopicPathService $topicPathService,
         private User $currentUser,
         private DateFormatterInterface $dateFormatter,
+        private AccessCheckerInterface $accessChecker,
     ) {
     }
 
@@ -39,7 +43,7 @@ final readonly class ViewPostUseCase
             throw new ForumNotFoundException(sprintf('Message with id "%s" could not be found.', $postId));
         }
 
-        if ($this->currentUser->rights < 7 && $message->deleted) {
+        if ($message->deleted && ! $this->accessChecker->allows(ForumPermissions::DELETED_VIEW)) {
             throw new ForumAccessDeniedException(sprintf('Access denied to message with id "%d".', $postId));
         }
 
@@ -124,7 +128,7 @@ final readonly class ViewPostUseCase
 
     private function getModerationInfo(ForumMessage $message): ?PostModerationDTO
     {
-        if ($this->currentUser->rights < 1) {
+        if (! $this->accessChecker->allows(CorePermissions::USERS_ORIGIN_VIEW)) {
             return null;
         }
 
@@ -145,7 +149,7 @@ final readonly class ViewPostUseCase
     {
         $replyUrl = null;
         $quoteUrl = null;
-        $canReplyInClosedTopic = $this->currentUser->rights === 3 || $this->currentUser->rights >= 6;
+        $canReplyInClosedTopic = $this->accessChecker->allows(ForumPermissions::TOPIC_MODERATE);
 
         if (
             $this->currentUser->isValid()

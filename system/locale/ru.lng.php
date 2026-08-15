@@ -242,6 +242,7 @@ The number is shown so that support for the old scheme is not removed while it i
       'See error details and the developer panel' => 'Видеть подробности ошибок и панель разработчика',
       'Post without waiting out the full antiflood delay' => 'Писать, не выжидая полную задержку антифлуда',
       'See where a visitor is on the site and where they came from' => 'Видеть, где посетитель находится на сайте и откуда пришёл',
+      'Use the smilies kept for the staff' => 'Использовать служебные смайлы',
     ),
   ),
 );

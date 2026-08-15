@@ -1267,3 +1267,27 @@ msgstr "Пользователи"
 msgid "Guests"
 msgstr "Гости"
 
+
+msgid "Moderate topics: close, pin, move, edit, restore"
+msgstr "Модерировать темы: закрывать, закреплять, переносить, править, восстанавливать"
+
+msgid "Manage the poll of a topic"
+msgstr "Управлять опросом темы"
+
+msgid "See deleted topics and posts"
+msgstr "Видеть удалённые темы и сообщения"
+
+msgid "Appoint the curators of a topic"
+msgstr "Назначать кураторов темы"
+
+msgid "See who voted in a poll"
+msgstr "Видеть, кто как проголосовал"
+
+msgid "Delete a topic for good"
+msgstr "Удалять тему безвозвратно"
+
+msgid "Delete a post for good"
+msgstr "Удалять сообщение безвозвратно"
+
+msgid "Fill in the keywords and the description of a topic"
+msgstr "Заполнять ключевые слова и описание темы"

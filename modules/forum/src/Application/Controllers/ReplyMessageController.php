@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\Controllers;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
@@ -35,6 +37,7 @@ final readonly class ReplyMessageController
         private ReplyMessageUseCase $replyMessageUseCase,
         private AttachUploadedFilesToMessageUseCase $attachUploadedFilesUseCase,
         private ForumTopicPathService $topicPathService,
+        private AccessCheckerInterface $accessChecker,
     ) {
     }
 
@@ -61,7 +64,10 @@ final readonly class ReplyMessageController
         $topic = $context->topic;
         $sourceMessage = $context->message;
 
-        if (($topic->deleted || $topic->closed) && $this->currentUser->rights < 7) {
+        if (
+            ($topic->deleted && ! $this->accessChecker->allows(ForumPermissions::DELETED_VIEW))
+            || ($topic->closed && ! $this->accessChecker->allows(ForumPermissions::TOPIC_MODERATE))
+        ) {
             return new ViewResponse(
                 '@theme/pages/result.twig',
                 [

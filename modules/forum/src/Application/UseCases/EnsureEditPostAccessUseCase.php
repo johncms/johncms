@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\UseCases;
 
+use Johncms\Auth\Authorization\RoleLevels;
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\DTO\EditPostContextDTO;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
@@ -14,6 +16,8 @@ final readonly class EnsureEditPostAccessUseCase
     public function __construct(
         private ForumMessageRepositoryInterface $messageRepository,
         private User $currentUser,
+        private CurrentUser $identity,
+        private RoleLevels $roleLevels,
     ) {
     }
 
@@ -21,11 +25,13 @@ final readonly class EnsureEditPostAccessUseCase
     {
         $message = $context->message;
 
-        if ($context->effectiveRights === 3 || $context->effectiveRights >= 6) {
+        if ($context->canModerate) {
+            // A moderator does not touch the posts of somebody standing above them; the roles say
+            // who stands where.
             if ($message->user_id !== $this->currentUser->id) {
-                $author = User::query()->find($message->user_id);
+                $authorLevel = $this->roleLevels->highestGrantedTo((int) $message->user_id);
 
-                if ($author !== null && $author->rights > $context->effectiveRights) {
+                if ($authorLevel > $this->roleLevels->highest($this->identity->identity())) {
                     throw new ForumAccessDeniedException(__('You cannot edit posts of higher administration'));
                 }
             }

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\UseCases;
 
+use Johncms\Modules\Forum\Application\Services\ForumPermissions;
+use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Modules\Forum\Application\DTO\ReplyMessageContextDTO;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
@@ -17,6 +19,7 @@ final readonly class GetReplyMessageContextUseCase
         private ForumMessageRepositoryInterface $messageRepository,
         private ForumTopicRepositoryInterface $topicRepository,
         private User $currentUser,
+        private AccessCheckerInterface $accessChecker,
     ) {
     }
 
@@ -38,7 +41,7 @@ final readonly class GetReplyMessageContextUseCase
             throw new ForumNotFoundException('Message not found.');
         }
 
-        if ($this->currentUser->rights < 7 && $message->deleted) {
+        if ($message->deleted && ! $this->accessChecker->allows(ForumPermissions::DELETED_VIEW)) {
             throw new ForumNotFoundException('Message not found.');
         }
 

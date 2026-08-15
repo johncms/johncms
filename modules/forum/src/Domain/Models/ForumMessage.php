@@ -12,6 +12,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Domain\Models;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -152,9 +154,7 @@ class ForumMessage extends Model
         static::addGlobalScope(
             'access',
             static function (Builder $builder) {
-                /** @var User $user */
-                $user = di(User::class);
-                if ($user->rights < 7) {
+                if (! di(AccessCheckerInterface::class)->allows(ForumPermissions::DELETED_VIEW)) {
                     $builder->where('deleted', '!=', 1)->orWhereNull('deleted');
                 }
             }

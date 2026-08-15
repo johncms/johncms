@@ -14,7 +14,7 @@ final readonly class EditPostContextDTO
         public ForumMessage $message,
         public ForumTopic $topic,
         public ForumSection $section,
-        public int $effectiveRights,
+        public bool $canModerate,
         public int $page,
         public int $posts,
         public string $backUrl,

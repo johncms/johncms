@@ -42,18 +42,31 @@ final class CorePermissions implements PermissionProviderInterface
     /** See where a visitor came from and where on the site they are. */
     public const USERS_ORIGIN_VIEW = 'users.origin.view';
 
+    /** Use the smilies kept for the staff. */
+    public const SMILIES_ADMIN_USE = 'system.smilies.admin';
+
     public function permissions(): iterable
     {
         $adminGroup = d__('system', 'Admin panel');
         $systemGroup = d__('system', 'System');
         $usersGroup = d__('system', 'Users');
 
+        $staff = [
+            SystemRole::ForumModerator->value,
+            SystemRole::DownloadsModerator->value,
+            SystemRole::LibraryModerator->value,
+            SystemRole::SuperModerator->value,
+            SystemRole::Admin->value,
+        ];
+        $administrators = [SystemRole::Admin->value];
+
         return [
             new PermissionDefinition(
                 self::ADMIN_ACCESS,
                 self::GROUP,
                 d__('system', 'Access the admin panel'),
-                $adminGroup
+                $adminGroup,
+                $administrators
             ),
             new PermissionDefinition(
                 self::ADMIN_SETTINGS_MANAGE,
@@ -65,25 +78,36 @@ final class CorePermissions implements PermissionProviderInterface
                 self::ADMIN_ROLES_MANAGE,
                 self::GROUP,
                 d__('system', 'Manage roles and permissions'),
-                $adminGroup
+                $adminGroup,
+                $administrators
             ),
             new PermissionDefinition(
                 self::SYSTEM_DEBUG_VIEW,
                 self::SYSTEM_GROUP,
                 d__('system', 'See error details and the developer panel'),
-                $systemGroup
+                $systemGroup,
+                $administrators
             ),
             new PermissionDefinition(
                 self::ANTIFLOOD_RELAXED,
                 self::SYSTEM_GROUP,
                 d__('system', 'Post without waiting out the full antiflood delay'),
-                $systemGroup
+                $systemGroup,
+                $staff
+            ),
+            new PermissionDefinition(
+                self::SMILIES_ADMIN_USE,
+                self::SYSTEM_GROUP,
+                d__('system', 'Use the smilies kept for the staff'),
+                $systemGroup,
+                $staff
             ),
             new PermissionDefinition(
                 self::USERS_ORIGIN_VIEW,
                 self::USERS_GROUP,
                 d__('system', 'See where a visitor is on the site and where they came from'),
-                $usersGroup
+                $usersGroup,
+                [SystemRole::SuperModerator->value, SystemRole::Admin->value]
             ),
         ];
     }

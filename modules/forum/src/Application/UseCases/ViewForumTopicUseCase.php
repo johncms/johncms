@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\UseCases;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Carbon\Carbon;
 use Johncms\Modules\Forum\Application\DTO\ForumTopicPageResultDTO;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
@@ -34,6 +36,7 @@ final readonly class ViewForumTopicUseCase
         private ForumTopicPathService $topicPathService,
         private User $currentUser,
         private Session $session,
+        private AccessCheckerInterface $accessChecker,
     ) {
     }
 
@@ -108,10 +111,9 @@ final readonly class ViewForumTopicUseCase
             filterUserIds: $filterUserIds,
         );
 
-        $curator = $this->currentUser->rights < 6
-            && $this->currentUser->rights !== 3
-            && array_key_exists($this->currentUser->id, (array) $topic->curators)
-            && $this->currentUser->isValid();
+        // A curator moderates the topic they were appointed to: the permission is the same one
+        // a moderator holds, and the topic is the subject that narrows it down.
+        $canModerateTopic = $this->accessChecker->allows(ForumPermissions::TOPIC_MODERATE, $topic);
 
         $firstMessage = null;
         if (
@@ -128,14 +130,12 @@ final readonly class ViewForumTopicUseCase
         }
 
         $i = 1;
-        $canReplyInClosedTopic = $this->currentUser->rights === 3 || $this->currentUser->rights >= 6;
+        $canReplyInClosedTopic = $canModerateTopic;
         $messages = $messagesCollection->map(
-            function (ForumMessage $message) use ($curator, $setForum, $access, &$i, $start, $total, $topic, $canReplyInClosedTopic, $page): ForumMessage {
+            function (ForumMessage $message) use ($canModerateTopic, $setForum, $access, &$i, $start, $total, $topic, $canReplyInClosedTopic, $page): ForumMessage {
                 if (
                     (
-                        (($this->currentUser->rights === 3 || $this->currentUser->rights >= 6 || $curator)
-                            && $this->currentUser->rights >= $message->rights
-                        )
+                        $canModerateTopic
                         || ($i === 1 && $access === 2 && $message->user_id === $this->currentUser->id)
                         || ($message->user_id === $this->currentUser->id
                             && empty($setForum['upfp'])
@@ -192,7 +192,7 @@ final readonly class ViewForumTopicUseCase
         $writeAccess = false;
         if (
             ($this->currentUser->isValid() && ! $topic->closed && config('johncms.mod_forum') !== 3 && $access !== 4)
-            || $this->currentUser->rights >= 7
+            || $this->accessChecker->allows(ForumPermissions::TOPIC_MODERATE)
         ) {
             $writeAccess = true;
         }

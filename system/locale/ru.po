@@ -1013,3 +1013,6 @@ msgstr "Писать, не выжидая полную задержку анти
 
 msgid "See where a visitor is on the site and where they came from"
 msgstr "Видеть, где посетитель находится на сайте и откуда пришёл"
+
+msgid "Use the smilies kept for the staff"
+msgstr "Использовать служебные смайлы"

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\Controllers;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\ForumUtils;
@@ -23,6 +25,7 @@ final readonly class ForumTopicController
         private NavChain $navChain,
         private ViewForumTopicUseCase $viewForumTopicUseCase,
         private PaginationFactory $paginationFactory,
+        private AccessCheckerInterface $accessChecker,
     ) {
     }
 
@@ -80,7 +83,7 @@ final readonly class ForumTopicController
         );
 
         $filterSuffix = $page > 1 ? '?page=' . $page : '';
-        $canModerate = $this->currentUser->rights === 3 || $this->currentUser->rights >= 6;
+        $canModerate = $this->accessChecker->allows(ForumPermissions::TOPIC_MODERATE);
 
         return new ViewResponse(
             '@forum/public/topic.twig',
@@ -103,7 +106,7 @@ final readonly class ForumTopicController
                     'filter_url'       => '/forum/filter/' . $result->viewData['id'] . '/'
                         . ($result->viewData['filter_by_author'] ? 'clear/' : '') . $filterSuffix,
                     'can_moderate'     => $canModerate,
-                    'can_set_curators' => $this->currentUser->rights >= 7,
+                    'can_set_curators' => $this->accessChecker->allows(ForumPermissions::CURATORS_MANAGE),
                 ]
             )
         );

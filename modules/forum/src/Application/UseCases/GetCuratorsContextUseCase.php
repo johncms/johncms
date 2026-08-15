@@ -4,19 +4,20 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\UseCases;
 
+use Johncms\Modules\Forum\Application\Services\ForumPermissions;
+use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Domain\Models\ForumTopic;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
-use Johncms\Users\User;
 
 final readonly class GetCuratorsContextUseCase
 {
     public function __construct(
         private ForumTopicRepositoryInterface $topicRepository,
         private ForumMessageRepositoryInterface $messageRepository,
-        private User $currentUser,
+        private AccessCheckerInterface $accessChecker,
     ) {
     }
 
@@ -25,7 +26,7 @@ final readonly class GetCuratorsContextUseCase
      */
     public function execute(int $topicId): array
     {
-        if ($this->currentUser->rights < 7) {
+        if (! $this->accessChecker->allows(ForumPermissions::CURATORS_MANAGE)) {
             throw new ForumAccessDeniedException('Access denied to manage curators.');
         }
 

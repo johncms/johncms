@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\UseCases;
 
+use Johncms\Modules\Forum\Application\Services\ForumPermissions;
+use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Modules\Forum\Application\DTO\UnreadTopicsQueryDTO;
 use Johncms\Modules\Forum\Application\DTO\UnreadTopicsResultDTO;
 use Johncms\Modules\Forum\Application\Services\ForumSectionPathService;
@@ -21,12 +23,13 @@ final readonly class ViewUnreadTopicsUseCase
         private ForumTopicPathService $topicPathService,
         private DateFormatterInterface $dateFormatter,
         private User $currentUser,
+        private AccessCheckerInterface $accessChecker,
     ) {
     }
 
     public function execute(UnreadTopicsQueryDTO $query): UnreadTopicsResultDTO
     {
-        $includeDeleted = $this->currentUser->rights >= 7;
+        $includeDeleted = $this->accessChecker->allows(ForumPermissions::DELETED_VIEW);
         $total = $this->topicRepository->countUnreadForUser((int) $this->currentUser->id, $includeDeleted);
         $topics = [];
 
@@ -53,7 +56,7 @@ final readonly class ViewUnreadTopicsUseCase
         $topics = [];
 
         foreach ($rows as $row) {
-            if ($this->currentUser->rights >= 7) {
+            if ($this->accessChecker->allows(ForumPermissions::DELETED_VIEW)) {
                 $pagesCount = (int) ceil((int) $row['mod_post_count'] / $this->currentUser->config->kmess);
                 $row['show_posts_count'] = ShortNumberFormatter::format((int) $row['mod_post_count']);
                 $row['show_last_author'] = $row['mod_last_post_author_name'];

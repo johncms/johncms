@@ -12,6 +12,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Domain\Models;
 
+use Johncms\Modules\Forum\Application\Services\ForumPermissions;
+use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Smilies\SmiliesRendererInterface;
 use Johncms\Users\User;
 use Johncms\Utils\DateFormatterInterface;
@@ -28,6 +30,18 @@ use Twig\Markup;
  */
 trait MessageMutators
 {
+    /** @var bool|null Answered once per model: the mutators below ask for it repeatedly. */
+    protected ?bool $sees_deleted = null;
+
+    /**
+     * Whether the moderation figures — the deleted posts among them — are shown at all.
+     */
+    protected function seesDeleted(): bool
+    {
+        return $this->sees_deleted ??= di(AccessCheckerInterface::class)
+            ->allows(ForumPermissions::DELETED_VIEW);
+    }
+
     /**
      * These columns are nullable in the database, and a template that reads a null attribute of a
      * model falls through to a method of the same name. The accessors keep them typed instead.
@@ -101,7 +115,7 @@ trait MessageMutators
      */
     public function getRestoreUrlAttribute(): string
     {
-        if ($this->current_user->rights >= 7 && $this->deleted) {
+        if ($this->seesDeleted() && $this->deleted) {
             return '/forum/restore-post/' . $this->id . '/';
         }
         return '';

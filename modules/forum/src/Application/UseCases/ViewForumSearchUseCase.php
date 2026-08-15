@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\UseCases;
 
+use Johncms\Modules\Forum\Application\Services\ForumPermissions;
+use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Modules\Forum\Application\DTO\ForumSearchQueryDTO;
 use Johncms\Modules\Forum\Application\DTO\ForumSearchResultDTO;
 use Johncms\Modules\Forum\Application\Exceptions\ForumErrorCode;
@@ -23,6 +25,7 @@ final readonly class ViewForumSearchUseCase
         private ForumTopicPathService $topicPathService,
         private DateFormatterInterface $dateFormatter,
         private User $currentUser,
+        private AccessCheckerInterface $accessChecker,
     ) {
     }
 
@@ -35,7 +38,7 @@ final readonly class ViewForumSearchUseCase
             throw new ForumValidationException(ForumErrorCode::FORUM_SEARCH_INVALID_LENGTH, 'Invalid search query length.');
         }
 
-        $includeDeleted = $this->currentUser->rights >= 7;
+        $includeDeleted = $this->accessChecker->allows(ForumPermissions::DELETED_VIEW);
         $limit = (int) $this->currentUser->config->kmess;
         $total = 0;
         $rows = [];

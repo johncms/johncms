@@ -20,7 +20,7 @@
         </div>
     {% endif %}
 
-    {% if app.user.isValid and app.user.rights %}
+    {% if can('users.origin.view') %}
         <div class="d-flex mb-3">
             <a href="{{ users_list_url }}" class="btn btn-outline-primary me-2 {{ is_users ? 'active' : '' }}">{{ __('Users') }}</a>
             <a href="{{ guests_list_url }}" class="btn btn-outline-primary {{ is_users ? '' : 'active' }}">{{ __('Guests') }}</a>

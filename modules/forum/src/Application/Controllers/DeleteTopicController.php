@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\Controllers;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
@@ -24,6 +26,7 @@ final readonly class DeleteTopicController
         private DeleteTopicUseCase $deleteTopicUseCase,
         private ForumSectionPathService $sectionPathService,
         private ForumTopicPathService $topicPathService,
+        private AccessCheckerInterface $accessChecker,
     ) {
     }
 
@@ -58,7 +61,7 @@ final readonly class DeleteTopicController
         if ($request->hasBody('submit')) {
             $deleteMode = $request->bodyInt('del', 0);
 
-            if ($deleteMode === 2 && $this->user->rights === 9) {
+            if ($deleteMode === 2 && $this->accessChecker->allows(ForumPermissions::TOPIC_DESTROY)) {
                 $this->deleteTopicUseCase->deleteTopic($topic->id);
             } else {
                 $this->deleteTopicUseCase->hideTopic($topic->id, $this->user->name);
@@ -73,7 +76,7 @@ final readonly class DeleteTopicController
                 'title'           => __('Delete Topic'),
                 'page_title'      => __('Delete Topic'),
                 'back_url'        => $this->topicPathService->getTopicUrlById($topic->id) ?? '/forum/',
-                'can_hard_delete' => $this->user->rights === 9,
+                'can_hard_delete' => $this->accessChecker->allows(ForumPermissions::TOPIC_DESTROY),
                 'delete_url'      => '/forum/delete-topic/' . $topic->id . '/',
             ]
         );

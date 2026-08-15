@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\UseCases;
 
+use Johncms\Auth\Authorization\CorePermissions;
+use Johncms\Modules\Forum\Application\Services\ForumPermissions;
+use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Modules\Forum\Application\DTO\PostMessageResultDTO;
 use Johncms\Modules\Forum\Application\Services\ForumTopicStatsRecalculator;
 use Johncms\Modules\Forum\Domain\Models\ForumMessage;
@@ -22,6 +25,7 @@ final readonly class ReplyMessageUseCase
         private SmiliesRendererInterface $smiliesRenderer,
         private User $currentUser,
         private Notification $notification,
+        private AccessCheckerInterface $accessChecker,
     ) {
     }
 
@@ -66,7 +70,7 @@ final readonly class ReplyMessageUseCase
 
     private function resolveMessagePage(int $topicId, array $forumSettings): int
     {
-        $includeDeleted = $this->currentUser->rights >= 7;
+        $includeDeleted = $this->accessChecker->allows(ForumPermissions::DELETED_VIEW);
         $total = $this->messageRepository->countByTopicId($topicId, $includeDeleted);
         $page = $forumSettings['upfp'] ? 1 : (int) ceil($total / $this->currentUser->config->kmess);
 
@@ -77,7 +81,10 @@ final readonly class ReplyMessageUseCase
     {
         $previewMessage = strip_tags(trim($messageText));
         $previewMessage = strlen($previewMessage) > 200 ? mb_substr($previewMessage, 0, 200) . '...' : $previewMessage;
-        $previewMessage = $this->smiliesRenderer->render($previewMessage, ($this->currentUser->rights > 0));
+        $previewMessage = $this->smiliesRenderer->render(
+            $previewMessage,
+            $this->accessChecker->allows(CorePermissions::SMILIES_ADMIN_USE)
+        );
 
         $this->notification->create(
             [

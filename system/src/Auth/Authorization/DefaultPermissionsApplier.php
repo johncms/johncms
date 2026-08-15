@@ -24,8 +24,10 @@ namespace Johncms\Auth\Authorization;
  */
 final readonly class DefaultPermissionsApplier
 {
-    public function __construct(private RoleRepositoryInterface $roles)
-    {
+    public function __construct(
+        private RoleRepositoryInterface $roles,
+        private DefaultPermissions $defaults,
+    ) {
     }
 
     /**
@@ -36,7 +38,7 @@ final readonly class DefaultPermissionsApplier
     {
         $granted = [];
 
-        foreach (DefaultPermissions::all() as $slug => $defaults) {
+        foreach ($this->defaults->all() as $slug => $defaults) {
             $role = $this->roles->findBySlug($slug);
 
             if ($role === null || $defaults === []) {

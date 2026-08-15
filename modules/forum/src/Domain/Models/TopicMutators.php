@@ -12,6 +12,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Domain\Models;
 
+use Johncms\Modules\Forum\Application\Services\ForumPermissions;
+use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Users\User;
 use Johncms\Utils\DateFormatterInterface;
@@ -30,6 +32,18 @@ use Johncms\Utils\ShortNumberFormatter;
  */
 trait TopicMutators
 {
+    /** @var bool|null Answered once per model: the mutators below ask for it repeatedly. */
+    protected ?bool $sees_deleted = null;
+
+    /**
+     * Whether the moderation figures — the deleted posts among them — are shown at all.
+     */
+    protected function seesDeleted(): bool
+    {
+        return $this->sees_deleted ??= di(AccessCheckerInterface::class)
+            ->allows(ForumPermissions::DELETED_VIEW);
+    }
+
     /**
      * The flags of a topic are nullable in the database, and a template that reads a null
      * attribute of a model falls through to a method of the same name. These four keep the
@@ -82,7 +96,7 @@ trait TopicMutators
      */
     public function getShowPostsCountAttribute(): string
     {
-        if ($this->current_user->rights >= 7) {
+        if ($this->seesDeleted()) {
             return ShortNumberFormatter::format($this->mod_post_count);
         }
         return ShortNumberFormatter::format($this->post_count);
@@ -95,7 +109,7 @@ trait TopicMutators
      */
     public function getShowLastAuthorAttribute(): string
     {
-        if ($this->current_user->rights >= 7) {
+        if ($this->seesDeleted()) {
             return $this->mod_last_post_author_name;
         }
         return $this->last_post_author_name;
@@ -108,7 +122,7 @@ trait TopicMutators
      */
     public function getShowLastPostDateAttribute(): string
     {
-        if ($this->current_user->rights >= 7) {
+        if ($this->seesDeleted()) {
             return $this->dateFormatter->format($this->mod_last_post_date);
         }
         return $this->dateFormatter->format($this->last_post_date);
@@ -121,7 +135,7 @@ trait TopicMutators
      */
     public function getLastPageUrlAttribute(): string
     {
-        if ($this->current_user->rights >= 7) {
+        if ($this->seesDeleted()) {
             $page = (int) ceil($this->mod_post_count / $this->current_user->set_user->kmess);
         } else {
             $page = (int) ceil($this->post_count / $this->current_user->set_user->kmess);

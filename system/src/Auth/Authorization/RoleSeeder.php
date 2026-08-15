@@ -27,8 +27,10 @@ namespace Johncms\Auth\Authorization;
  */
 final readonly class RoleSeeder
 {
-    public function __construct(private RoleRepositoryInterface $roles)
-    {
+    public function __construct(
+        private RoleRepositoryInterface $roles,
+        private DefaultPermissions $defaults,
+    ) {
     }
 
     /**
@@ -58,7 +60,7 @@ final readonly class RoleSeeder
                 ]
             );
 
-            $this->roles->setPermissions($role->id, DefaultPermissions::forRole($systemRole->value));
+            $this->roles->setPermissions($role->id, $this->defaults->forRole($systemRole->value));
             $created[] = $systemRole->value;
         }
 
