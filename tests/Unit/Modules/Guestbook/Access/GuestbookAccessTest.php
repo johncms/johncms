@@ -18,46 +18,38 @@ final class GuestbookAccessTest extends TestCase
         ConfigRepository::init([]);
     }
 
-    public function testGuestCanWriteOnlyWhenGuestsAreAllowed(): void
-    {
-        $guest = UserFactory::make(valid: false);
-
-        self::assertTrue((new GuestbookAccess($guest, new FakeAccessChecker(), ['mod_guest' => 2]))->canWrite());
-        self::assertFalse((new GuestbookAccess($guest, new FakeAccessChecker(), ['mod_guest' => 1]))->canWrite());
-    }
-
-    public function testValidUserCanWrite(): void
+    public function testReadingAndWritingAskTheirOwnPermissions(): void
     {
         $user = UserFactory::make();
 
-        self::assertTrue((new GuestbookAccess($user, new FakeAccessChecker(), ['mod_guest' => 1]))->canWrite());
+        $reader = new GuestbookAccess($user, new FakeAccessChecker([GuestbookPermissions::VIEW]));
+        self::assertTrue($reader->canRead());
+        self::assertFalse($reader->canWrite());
+
+        $writer = new GuestbookAccess($user, new FakeAccessChecker([GuestbookPermissions::POST]));
+        self::assertTrue($writer->canWrite());
+        self::assertFalse($writer->canRead());
     }
 
-    public function testBannedUserCannotWrite(): void
+    /**
+     * A ban of the guestbook or of the whole site keeps the entry form away even from somebody
+     * whose role allows writing.
+     */
+    public function testABannedVisitorCannotWrite(): void
     {
-        $config = ['mod_guest' => 1];
+        $allowed = new FakeAccessChecker([GuestbookPermissions::POST]);
 
-        self::assertFalse((new GuestbookAccess(UserFactory::make(banTypes: [1]), new FakeAccessChecker(), $config))->canWrite());
-        self::assertFalse((new GuestbookAccess(UserFactory::make(banTypes: [13]), new FakeAccessChecker(), $config))->canWrite());
-        self::assertTrue((new GuestbookAccess(UserFactory::make(banTypes: [3]), new FakeAccessChecker(), $config))->canWrite());
+        self::assertFalse((new GuestbookAccess(UserFactory::make(banTypes: [1]), $allowed))->canWrite());
+        self::assertFalse((new GuestbookAccess(UserFactory::make(banTypes: [13]), $allowed))->canWrite());
+        self::assertTrue((new GuestbookAccess(UserFactory::make(banTypes: [3]), $allowed))->canWrite());
     }
 
     public function testCanClearAsksThePermission(): void
     {
-        $config = ['mod_guest' => 1];
         $user = UserFactory::make();
         $allowed = new FakeAccessChecker([GuestbookPermissions::CLEAR]);
 
-        self::assertTrue((new GuestbookAccess($user, $allowed, $config))->canClear());
-        self::assertFalse((new GuestbookAccess($user, new FakeAccessChecker(), $config))->canClear());
-    }
-
-    public function testIsClosed(): void
-    {
-        $user = UserFactory::make();
-
-        self::assertTrue((new GuestbookAccess($user, new FakeAccessChecker(), ['mod_guest' => 0]))->isClosed());
-        self::assertFalse((new GuestbookAccess($user, new FakeAccessChecker(), ['mod_guest' => 1]))->isClosed());
-        self::assertFalse((new GuestbookAccess($user, new FakeAccessChecker(), ['mod_guest' => 2]))->isClosed());
+        self::assertTrue((new GuestbookAccess($user, $allowed))->canClear());
+        self::assertFalse((new GuestbookAccess($user, new FakeAccessChecker()))->canClear());
     }
 }

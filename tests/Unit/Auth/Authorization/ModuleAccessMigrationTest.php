@@ -89,6 +89,20 @@ final class ModuleAccessMigrationTest extends TestCase
         self::assertSame(['forum.post'], $this->permissionsOf('admin'));
     }
 
+    /**
+     * The guestbook is the module where the guest could write without signing in, so its two
+     * permissions part company at a different value than the ones of the forum.
+     */
+    public function testAGuestbookForRegisteredVisitorsStillLetsTheGuestRead(): void
+    {
+        $this->grant('guest', ['guestbook.view', 'guestbook.post']);
+
+        $this->migration->apply(['mod_guest' => 1]);
+
+        self::assertSame(['guestbook.view'], $this->permissionsOf('guest'));
+        self::assertEqualsCanonicalizing(['guestbook.view', 'guestbook.post'], $this->permissionsOf('user'));
+    }
+
     public function testASettingTheSiteDoesNotHaveIsLeftAlone(): void
     {
         $this->grant('guest', ['forum.view']);

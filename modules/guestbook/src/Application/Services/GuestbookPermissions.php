@@ -15,6 +15,12 @@ final class GuestbookPermissions implements PermissionProviderInterface
 {
     public const GROUP = 'guestbook';
 
+    /** Read the guestbook at all. What the "who may use the guestbook" setting used to say. */
+    public const VIEW = 'guestbook.view';
+
+    /** Leave an entry. */
+    public const POST = 'guestbook.post';
+
     /** Edit and delete the entries of other people. */
     public const ENTRY_MANAGE = 'guestbook.entry.manage';
 
@@ -39,6 +45,20 @@ final class GuestbookPermissions implements PermissionProviderInterface
         ];
 
         return [
+            new PermissionDefinition(
+                self::VIEW,
+                self::GROUP,
+                d__('guestbook', 'Read the guestbook'),
+                $group,
+                [SystemRole::Guest->value, SystemRole::User->value]
+            ),
+            new PermissionDefinition(
+                self::POST,
+                self::GROUP,
+                d__('guestbook', 'Leave an entry in the guestbook'),
+                $group,
+                [SystemRole::Guest->value, SystemRole::User->value]
+            ),
             new PermissionDefinition(
                 self::ENTRY_MANAGE,
                 self::GROUP,

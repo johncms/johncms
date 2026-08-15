@@ -44,7 +44,7 @@ msgid "The message was saved"
 msgstr ""
 
 #: modules/guestbook/src/Application/Controllers/GuestbookController.php:46
-#: modules/guestbook/src/Application/Services/GuestbookPermissions.php:32
+#: modules/guestbook/src/Application/Services/GuestbookPermissions.php:38
 msgid "Guestbook"
 msgstr ""
 
@@ -78,19 +78,27 @@ msgstr ""
 msgid "Only images are allowed"
 msgstr ""
 
-#: modules/guestbook/src/Application/Services/GuestbookPermissions.php:45
+#: modules/guestbook/src/Application/Services/GuestbookPermissions.php:51
+msgid "Read the guestbook"
+msgstr ""
+
+#: modules/guestbook/src/Application/Services/GuestbookPermissions.php:58
+msgid "Leave an entry in the guestbook"
+msgstr ""
+
+#: modules/guestbook/src/Application/Services/GuestbookPermissions.php:65
 msgid "Edit and delete the entries of other people"
 msgstr ""
 
-#: modules/guestbook/src/Application/Services/GuestbookPermissions.php:52
+#: modules/guestbook/src/Application/Services/GuestbookPermissions.php:72
 msgid "Answer an entry on behalf of the staff"
 msgstr ""
 
-#: modules/guestbook/src/Application/Services/GuestbookPermissions.php:59
+#: modules/guestbook/src/Application/Services/GuestbookPermissions.php:79
 msgid "Empty the guestbook"
 msgstr ""
 
-#: modules/guestbook/src/Application/Services/GuestbookPermissions.php:66
+#: modules/guestbook/src/Application/Services/GuestbookPermissions.php:86
 msgid "Enter the admin club"
 msgstr ""
 
@@ -142,7 +150,7 @@ msgid "Clear all"
 msgstr ""
 
 #: modules/guestbook/templates/public/clear.twig:26
-#: modules/guestbook/templates/public/index.twig:99
+#: modules/guestbook/templates/public/index.twig:95
 msgid "Clear"
 msgstr ""
 
@@ -182,7 +190,7 @@ msgid "Author"
 msgstr ""
 
 #: modules/guestbook/templates/public/edit.twig:20
-#: modules/guestbook/templates/public/index.twig:47
+#: modules/guestbook/templates/public/index.twig:43
 msgid "Message"
 msgstr ""
 
@@ -196,36 +204,32 @@ msgstr ""
 msgid "Back"
 msgstr ""
 
-#: modules/guestbook/templates/public/index.twig:16
-msgid "The guestbook is closed"
-msgstr ""
-
-#: modules/guestbook/templates/public/index.twig:30
-#: modules/guestbook/templates/public/index.twig:38
+#: modules/guestbook/templates/public/index.twig:26
+#: modules/guestbook/templates/public/index.twig:34
 msgid "Name"
 msgstr ""
 
-#: modules/guestbook/templates/public/index.twig:55
+#: modules/guestbook/templates/public/index.twig:51
 msgid "Verification code"
 msgstr ""
 
-#: modules/guestbook/templates/public/index.twig:57
-#: modules/guestbook/templates/public/index.twig:65
+#: modules/guestbook/templates/public/index.twig:53
+#: modules/guestbook/templates/public/index.twig:61
 msgid "Symbols on the picture"
 msgstr ""
 
-#: modules/guestbook/templates/public/index.twig:69
+#: modules/guestbook/templates/public/index.twig:65
 msgid "If you cannot see the image code, enable graphics in your browser and refresh this page"
 msgstr ""
 
-#: modules/guestbook/templates/public/index.twig:74
+#: modules/guestbook/templates/public/index.twig:70
 msgid "Write"
 msgstr ""
 
-#: modules/guestbook/templates/public/index.twig:79
+#: modules/guestbook/templates/public/index.twig:75
 msgid "For registered users only"
 msgstr ""
 
-#: modules/guestbook/templates/public/index.twig:86
+#: modules/guestbook/templates/public/index.twig:82
 msgid "The guestbook is empty.<br><strong>Be the first! :)</strong>"
 msgstr ""

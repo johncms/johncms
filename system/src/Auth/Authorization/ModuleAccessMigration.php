@@ -45,6 +45,16 @@ final readonly class ModuleAccessMigration
                 'forum.post' => [1, 2],
             ],
         ],
+        'mod_guest' => [
+            SystemRole::Guest->value => [
+                'guestbook.view' => [1, 2],
+                'guestbook.post' => [2],
+            ],
+            SystemRole::User->value => [
+                'guestbook.view' => [1, 2],
+                'guestbook.post' => [1, 2],
+            ],
+        ],
     ];
 
     /**
@@ -61,6 +71,12 @@ final readonly class ModuleAccessMigration
         'mod_forum' => [
             SystemRole::Admin->value => [
                 'forum.view' => [0],
+            ],
+        ],
+        'mod_guest' => [
+            SystemRole::Admin->value => [
+                'guestbook.view' => [0],
+                'guestbook.post' => [0],
             ],
         ],
     ];

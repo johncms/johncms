@@ -71,13 +71,12 @@ msgid "Modules"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:147
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:59
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:57
 #: modules/admin/templates/role-form.twig:76
 msgid "Permissions"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:155
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:90
 #: modules/admin/templates/user-delete-confirm.twig:33
 msgid "Forum"
 msgstr ""
@@ -653,42 +652,34 @@ msgid "On the main showing option 1, on the other pages option 2"
 msgstr ""
 
 #: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:84
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:122
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:108
 msgid "Access is allowed"
 msgstr ""
 
 #: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:85
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:123
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:109
 msgid "Only for authorized"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:93
-msgid "Read only"
-msgstr ""
-
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:97
-msgid "Guestbook"
-msgstr ""
-
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:104
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:90
 msgid "Library"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:111
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:97
 msgid "Downloads"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:118
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:104
 msgid "Community"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:128
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:114
 #: modules/admin/src/Domain/Enums/IpBanType.php:22
 #: modules/admin/templates/ip-ban-form.twig:27
 msgid "Registration"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:131
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:117
 msgid "With moderation"
 msgstr ""
 

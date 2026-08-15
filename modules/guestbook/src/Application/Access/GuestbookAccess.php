@@ -13,13 +13,17 @@ final readonly class GuestbookAccess
     public function __construct(
         private User $user,
         private AccessCheckerInterface $accessChecker,
-        private array $config,
     ) {
+    }
+
+    public function canRead(): bool
+    {
+        return $this->accessChecker->allows(GuestbookPermissions::VIEW);
     }
 
     public function canWrite(): bool
     {
-        return ($this->user->isValid() || $this->config['mod_guest'] === 2)
+        return $this->accessChecker->allows(GuestbookPermissions::POST)
             && ! isset($this->user->ban['1'])
             && ! isset($this->user->ban['13']);
     }
@@ -27,10 +31,5 @@ final readonly class GuestbookAccess
     public function canClear(): bool
     {
         return $this->accessChecker->allows(GuestbookPermissions::CLEAR);
-    }
-
-    public function isClosed(): bool
-    {
-        return ! $this->config['mod_guest'];
     }
 }

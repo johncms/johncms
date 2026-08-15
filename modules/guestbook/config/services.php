@@ -37,8 +37,5 @@ return static function (ContainerConfigurator $container): void {
         EloquentGuestbookEntryRepository::class
     )->public();
 
-    $services->set(GuestbookAccess::class)
-        ->autowire()
-        ->arg('$config', config('johncms'))
-        ->public();
+    $services->set(GuestbookAccess::class)->autowire()->public();
 };

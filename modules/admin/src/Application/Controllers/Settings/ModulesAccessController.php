@@ -44,7 +44,6 @@ final readonly class ModulesAccessController
     {
         return new ModulesAccessDTO(
             registration: $request->bodyInt('reg'),
-            guestbook: $request->bodyInt('guest'),
             library: $request->bodyInt('lib'),
             libraryComments: (bool) $request->bodyInt('libcomm'),
             downloads: $request->bodyInt('down'),
@@ -80,20 +79,13 @@ final readonly class ModulesAccessController
      */
     private function groups(): array
     {
-        // The forum is absent on purpose: who may read it and write in it is a permission of the
-        // guest and the user roles now, and is edited in the role editor.
+        // The forum and the guestbook are absent on purpose: who may read them and write in them
+        // is a permission of the guest and the user roles now, edited in the role editor.
         $allowed = ['value' => 2, 'label' => __('Access is allowed')];
         $authorized = ['value' => 1, 'label' => __('Only for authorized')];
         $denied = ['value' => 0, 'label' => __('Access denied')];
 
         return [
-            [
-                'title'    => __('Guestbook'),
-                'name'     => 'guest',
-                'value'    => (int) config('johncms.mod_guest', 0),
-                'options'  => [$allowed, $authorized, $denied],
-                'comments' => null,
-            ],
             [
                 'title'    => __('Library'),
                 'name'     => 'lib',

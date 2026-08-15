@@ -2,7 +2,6 @@
     @param list<GuestbookEntryDTO> posts
     @param ?Markup                 pagination
     @param bool                    can_write
-    @param bool                    is_closed
     @param bool                    can_clear
     @param array                   errors     Validation messages of the form.
     @param array                   form_data  Values the visitor has entered.
@@ -12,9 +11,6 @@
 {% extends '@theme/layouts/default.twig' %}
 
 {% block content %}
-    {% if is_closed %}
-        {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: __('The guestbook is closed')} only %}
-    {% endif %}
     {% if message|default('') %}
         {% include '@theme/components/alert.twig' with {alert_type: 'alert-success', alert: message} only %}
     {% endif %}

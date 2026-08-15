@@ -71,6 +71,8 @@ Inserting links: <a href="https://johncms.com">https://johncms.com</a>, images, 
       'Answer an entry on behalf of the staff' => 'Отвечать на запись от имени администрации',
       'Empty the guestbook' => 'Очищать гостевую книгу',
       'Enter the admin club' => 'Входить в клуб администрации',
+      'Read the guestbook' => 'Читать гостевую книгу',
+      'Leave an entry in the guestbook' => 'Оставлять записи в гостевой книге',
     ),
   ),
 );

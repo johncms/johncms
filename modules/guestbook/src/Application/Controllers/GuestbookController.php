@@ -47,7 +47,7 @@ final readonly class GuestbookController
         $baseUrl = '/guestbook/';
         $this->navChain->add($pageTitle, $baseUrl);
 
-        if ($this->access->isClosed() && ! $this->access->canClear()) {
+        if (! $this->access->canRead()) {
             return new ViewResponse(
                 '@theme/pages/result.twig',
                 [
@@ -104,7 +104,6 @@ final readonly class GuestbookController
                 'description' => $meta->description,
                 'posts'       => $posts,
                 'pagination'  => $pagination->hasPages() ? $pagination->render() : null,
-                'is_closed'   => $this->access->isClosed(),
                 'can_write'   => $this->access->canWrite(),
                 'can_clear'   => $this->access->canClear(),
                 'errors'      => $errors,

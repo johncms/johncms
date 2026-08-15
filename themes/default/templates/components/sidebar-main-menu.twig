@@ -38,7 +38,7 @@
                 </a>
             </li>
         {% endif %}
-        {% if config('johncms.mod_guest') or (app.user.isValid and app.user.rights >= 7) %}
+        {% if can('guestbook.view') %}
             <li>
                 <a href="/guestbook/ga">
                     <svg class="icon">
