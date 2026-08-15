@@ -1,7 +1,6 @@
 {#
     Entry page of the library: the top level sections and the ways into the listings.
 
-    @param bool    library_open Whether the library accepts readers at all.
     @param int     total
     @param array[] sections
     @param int     new_articles Articles added over the last three days, 0 hides the button.
@@ -11,11 +10,6 @@
 {% extends '@theme/layouts/default.twig' %}
 
 {% block content %}
-    {% if not library_open %}
-        <div class="alert alert-danger border-0 shadow">
-            {{ __('Library is closed') }}
-        </div>
-    {% endif %}
     <div class="mb-2 mt-n2">
         {% if new_articles %}
             <a href="/library/new" class="btn btn-outline-primary btn-sm me-1 mt-1">

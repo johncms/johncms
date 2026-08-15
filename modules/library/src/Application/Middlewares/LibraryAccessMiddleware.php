@@ -4,29 +4,31 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Library\Application\Middlewares;
 
-use Johncms\Router\MiddlewareInterface;
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\CurrentUser;
 use Johncms\Http\Request;
+use Johncms\Modules\Library\Application\Services\LibraryPermissions;
+use Johncms\Router\MiddlewareInterface;
 use Johncms\View\RendererInterface;
-use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\Response;
 
 final readonly class LibraryAccessMiddleware implements MiddlewareInterface
 {
     public function __construct(
-        private User $currentUser,
+        private AccessCheckerInterface $accessChecker,
+        private CurrentUser $currentUser,
         private RendererInterface $renderer,
     ) {
     }
 
     public function handle(Request $request, callable $next): Response
     {
-        $config = config('johncms');
         $error = '';
 
-        if (! $config['mod_lib'] && $this->currentUser->rights < 7) {
-            $error = __('Library is closed');
-        } elseif ($config['mod_lib'] === 1 && ! $this->currentUser->isValid()) {
-            $error = __('Access forbidden');
+        if (! $this->accessChecker->allows(LibraryPermissions::VIEW)) {
+            // A guest is told to sign in and everybody else that the library is closed; which of
+            // the two it is depends on the user role, and only the first is actionable.
+            $error = $this->currentUser->isGuest() ? __('Access forbidden') : __('Library is closed');
         }
 
         if ($error) {

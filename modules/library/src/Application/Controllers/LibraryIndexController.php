@@ -53,7 +53,6 @@ final readonly class LibraryIndexController
         return new ViewResponse('@library/public/index.twig', [
             'title'        => __('Library'),
             'page_title'   => __('Library'),
-            'library_open' => (bool) config('johncms.mod_lib'),
             'total'        => $total,
             'sections'     => $list,
             'admin'        => $isAdmin,

@@ -778,3 +778,6 @@ msgstr "Сортировка"
 
 msgid "Manage the sections and the articles"
 msgstr "Управлять разделами и статьями"
+
+msgid "Read the library"
+msgstr "Читать библиотеку"

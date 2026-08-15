@@ -71,7 +71,7 @@ msgid "Modules"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:147
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:57
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:56
 #: modules/admin/templates/role-form.twig:76
 msgid "Permissions"
 msgstr ""
@@ -325,7 +325,7 @@ msgid "Wrong data"
 msgstr ""
 
 #: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:251
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:86
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:85
 #: modules/admin/src/Application/Controllers/Users/UsersController.php:119
 #: modules/admin/src/Application/Middlewares/AdminAccessMiddleware.php:58
 #: modules/admin/src/Application/Middlewares/SuperAdminAccessMiddleware.php:58
@@ -651,35 +651,35 @@ msgstr ""
 msgid "On the main showing option 1, on the other pages option 2"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:84
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:108
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:83
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:107
 msgid "Access is allowed"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:85
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:109
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:84
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:108
 msgid "Only for authorized"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:90
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:89
 msgid "Library"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:97
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:96
 msgid "Downloads"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:104
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:103
 msgid "Community"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:114
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:113
 #: modules/admin/src/Domain/Enums/IpBanType.php:22
 #: modules/admin/templates/ip-ban-form.twig:27
 msgid "Registration"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:117
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:116
 msgid "With moderation"
 msgstr ""
 

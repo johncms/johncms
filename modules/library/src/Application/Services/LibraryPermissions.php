@@ -15,6 +15,9 @@ final class LibraryPermissions implements PermissionProviderInterface
 {
     public const GROUP = 'library';
 
+    /** Read the library at all. What the "who may use the library" setting used to say. */
+    public const VIEW = 'library.view';
+
     /**
      * Create and change the sections and the articles, and read the ones still waiting to be
      * published.
@@ -24,6 +27,13 @@ final class LibraryPermissions implements PermissionProviderInterface
     public function permissions(): iterable
     {
         return [
+            new PermissionDefinition(
+                self::VIEW,
+                self::GROUP,
+                d__('library', 'Read the library'),
+                d__('library', 'Library'),
+                [SystemRole::Guest->value, SystemRole::User->value]
+            ),
             new PermissionDefinition(
                 self::MODERATE,
                 self::GROUP,

@@ -64,7 +64,7 @@
                 </a>
             </li>
         {% endif %}
-        {% if config('johncms.mod_lib') or (app.user.isValid and app.user.rights >= 7) %}
+        {% if can('library.view') %}
             <li>
                 <a href="/library/">
                     <svg class="icon">

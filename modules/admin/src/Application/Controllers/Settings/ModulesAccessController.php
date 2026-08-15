@@ -44,7 +44,6 @@ final readonly class ModulesAccessController
     {
         return new ModulesAccessDTO(
             registration: $request->bodyInt('reg'),
-            library: $request->bodyInt('lib'),
             libraryComments: (bool) $request->bodyInt('libcomm'),
             downloads: $request->bodyInt('down'),
             downloadsComments: (bool) $request->bodyInt('downcomm'),
@@ -89,8 +88,8 @@ final readonly class ModulesAccessController
             [
                 'title'    => __('Library'),
                 'name'     => 'lib',
-                'value'    => (int) config('johncms.mod_lib', 0),
-                'options'  => [$allowed, $authorized, $denied],
+                'value'    => null,
+                'options'  => [],
                 'comments' => ['name' => 'libcomm', 'value' => (bool) config('johncms.mod_lib_comm', false)],
             ],
             [

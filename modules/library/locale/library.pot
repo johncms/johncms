@@ -18,7 +18,7 @@ msgstr ""
 #: modules/library/src/Application/Controllers/EditArticleController.php:60
 #: modules/library/src/Application/Controllers/EditSectionController.php:40
 #: modules/library/src/Application/Controllers/PremodController.php:40
-#: modules/library/src/Application/Middlewares/LibraryAccessMiddleware.php:29
+#: modules/library/src/Application/Middlewares/LibraryAccessMiddleware.php:31
 msgid "Access forbidden"
 msgstr ""
 
@@ -55,8 +55,9 @@ msgstr ""
 #: modules/library/src/Application/Controllers/TagsController.php:68
 #: modules/library/src/Application/Controllers/TopController.php:31
 #: modules/library/src/Application/Controllers/TopController.php:33
-#: modules/library/src/Application/Middlewares/LibraryAccessMiddleware.php:35
-#: modules/library/src/Application/Services/LibraryPermissions.php:31
+#: modules/library/src/Application/Middlewares/LibraryAccessMiddleware.php:37
+#: modules/library/src/Application/Services/LibraryPermissions.php:34
+#: modules/library/src/Application/Services/LibraryPermissions.php:41
 msgid "Library"
 msgstr ""
 
@@ -110,7 +111,7 @@ msgstr ""
 #: modules/library/src/Application/Controllers/CreateSectionController.php:65
 #: modules/library/src/Application/Controllers/CreateSectionController.php:95
 #: modules/library/src/Application/Controllers/CreateSectionController.php:96
-#: modules/library/templates/public/index.twig:62
+#: modules/library/templates/public/index.twig:56
 msgid "Create Section"
 msgstr ""
 
@@ -187,12 +188,12 @@ msgstr ""
 #: modules/library/src/Application/Controllers/LatestCommentsController.php:24
 #: modules/library/src/Application/Controllers/LatestCommentsController.php:60
 #: modules/library/src/Application/Controllers/LatestCommentsController.php:61
-#: modules/library/templates/public/index.twig:27
+#: modules/library/templates/public/index.twig:21
 msgid "Latest comments"
 msgstr ""
 
 #: modules/library/src/Application/Controllers/NewArticlesController.php:38
-#: modules/library/templates/public/index.twig:22
+#: modules/library/templates/public/index.twig:16
 msgid "New Articles"
 msgstr ""
 
@@ -200,14 +201,14 @@ msgstr ""
 #: modules/library/src/Application/Controllers/PremodController.php:47
 #: modules/library/src/Application/Controllers/PremodController.php:98
 #: modules/library/src/Application/Controllers/PremodController.php:99
-#: modules/library/templates/public/index.twig:65
+#: modules/library/templates/public/index.twig:59
 msgid "Moderation Articles"
 msgstr ""
 
 #: modules/library/src/Application/Controllers/SearchController.php:33
 #: modules/library/src/Application/Controllers/SearchController.php:44
 #: modules/library/src/Application/Controllers/SearchController.php:48
-#: modules/library/templates/public/index.twig:25
+#: modules/library/templates/public/index.twig:19
 #: modules/library/templates/public/search.twig:25
 msgid "Search"
 msgstr ""
@@ -229,7 +230,7 @@ msgstr ""
 #: modules/library/src/Application/Controllers/TagsController.php:54
 #: modules/library/src/Application/Services/Hashtags.php:182
 #: modules/library/templates/public/articles.twig:38
-#: modules/library/templates/public/index.twig:57
+#: modules/library/templates/public/index.twig:51
 #: modules/library/templates/public/latest-comments.twig:28
 #: modules/library/templates/public/search.twig:55
 #: modules/library/templates/public/sections.twig:42
@@ -243,7 +244,7 @@ msgid "Articles tagged: %s"
 msgstr ""
 
 #: modules/library/src/Application/Controllers/TopController.php:30
-#: modules/library/templates/public/index.twig:26
+#: modules/library/templates/public/index.twig:20
 msgid "Rating articles"
 msgstr ""
 
@@ -259,12 +260,15 @@ msgstr ""
 msgid "By comments"
 msgstr ""
 
-#: modules/library/src/Application/Middlewares/LibraryAccessMiddleware.php:27
-#: modules/library/templates/public/index.twig:16
+#: modules/library/src/Application/Middlewares/LibraryAccessMiddleware.php:31
 msgid "Library is closed"
 msgstr ""
 
-#: modules/library/src/Application/Services/LibraryPermissions.php:30
+#: modules/library/src/Application/Services/LibraryPermissions.php:33
+msgid "Read the library"
+msgstr ""
+
+#: modules/library/src/Application/Services/LibraryPermissions.php:40
 msgid "Manage the sections and the articles"
 msgstr ""
 
