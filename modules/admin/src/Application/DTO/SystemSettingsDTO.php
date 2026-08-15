@@ -23,6 +23,11 @@ final readonly class SystemSettingsDTO
         public string $termsOfUseUrl,
         public string $personalDataPolicyUrl,
         public string $cookiePolicyUrl,
+        // Switches of the modules that are not permissions of anybody: whether a module has
+        // comments at all, and whether a new account waits for an administrator.
+        public bool $libraryComments,
+        public bool $downloadsComments,
+        public bool $registrationModeration,
     ) {
     }
 }

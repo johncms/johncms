@@ -17,7 +17,6 @@ use Johncms\Modules\Admin\Application\Controllers\Languages\LanguagesController;
 use Johncms\Modules\Admin\Application\Controllers\Settings\AdsController;
 use Johncms\Modules\Admin\Application\Controllers\Settings\AntifloodSettingsController;
 use Johncms\Modules\Admin\Application\Controllers\Settings\CountersController;
-use Johncms\Modules\Admin\Application\Controllers\Settings\ModulesAccessController;
 use Johncms\Modules\Admin\Application\Controllers\Settings\SystemSettingsController;
 use Johncms\Modules\Admin\Application\Controllers\System\EmoticonsController;
 use Johncms\Modules\Admin\Application\Controllers\System\FileIntegrityController;
@@ -79,8 +78,6 @@ return static function (RouteCollection $router): void {
         $r->get('/admin/bans/{sort}', BanListController::class)
             ->name('admin.bans.sort')
             ->requirements(['sort' => 'by-violations']);
-        $r->get('/admin/modules-access', [ModulesAccessController::class, 'form'])->name('admin.modules_access');
-        $r->post('/admin/modules-access', [ModulesAccessController::class, 'save'])->name('admin.modules_access.save');
         $r->get('/admin/antiflood', [AntifloodSettingsController::class, 'form'])->name('admin.antiflood');
         $r->post('/admin/antiflood', [AntifloodSettingsController::class, 'save'])->name('admin.antiflood.save');
         $r->get('/admin/registrations', [RegistrationModerationController::class, 'index'])->name('admin.registrations');

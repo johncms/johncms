@@ -51,6 +51,24 @@
                 </div>
             </fieldset>
             <fieldset class="mt-3">
+                <legend>{{ __('Modules') }}</legend>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" name="mod_lib_comm" value="1" id="mod_lib_comm"{% if settings.mod_lib_comm %} checked="checked"{% endif %}>
+                    <label class="form-check-label" for="mod_lib_comm">{{ __('Comments in the library') }}</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" name="mod_down_comm" value="1" id="mod_down_comm"{% if settings.mod_down_comm %} checked="checked"{% endif %}>
+                    <label class="form-check-label" for="mod_down_comm">{{ __('Comments in the downloads') }}</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" name="registration_moderation" value="1" id="registration_moderation"{% if settings.registration_moderation %} checked="checked"{% endif %}>
+                    <label class="form-check-label" for="registration_moderation">{{ __('New accounts wait for confirmation') }}</label>
+                </div>
+                <div class="text-muted small mt-2">
+                    {{ __('Who may open a module and write in it is set by the permissions of the roles.') }}
+                </div>
+            </fieldset>
+            <fieldset class="mt-3">
                 <legend>{{ __('Time shift') }}</legend>
                 <div class="form-group">
                     <label for="timeshift">+ - 12 Hour</label>

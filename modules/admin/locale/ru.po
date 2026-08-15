@@ -2097,3 +2097,15 @@ msgstr "Очищать списки скрытых тем и сообщений"
 
 msgid "Open the report on the state of the installation"
 msgstr "Открывать отчёт о состоянии установки"
+
+msgid "Comments in the library"
+msgstr "Комментарии в библиотеке"
+
+msgid "Comments in the downloads"
+msgstr "Комментарии в загрузках"
+
+msgid "New accounts wait for confirmation"
+msgstr "Новые аккаунты ждут подтверждения"
+
+msgid "Who may open a module and write in it is set by the permissions of the roles."
+msgstr "Кто может открывать модуль и писать в нём, задаётся правами ролей."

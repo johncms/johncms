@@ -139,14 +139,6 @@
     <div id="collapseModules" class="collapse{{ module_menu ? ' show' : '' }}" data-bs-parent="#accordionAdmin">
         <div class="border-bottom"></div>
         <ul class="nav nav__vertical">
-            <li class="{{ module_menu.access|default(false) ? 'active' : '' }}">
-                <a href="/admin/modules-access">
-                    <svg class="icon">
-                        <use xlink:href="{{ sprite }}#shield"/>
-                    </svg>
-                    <span class="flex-grow-1">{{ d__('admin', 'Permissions') }}</span>
-                </a>
-            </li>
             <li class="{{ module_menu.forum|default(false) ? 'active' : '' }}">
                 <a href="/admin/forum">
                     <svg class="icon">

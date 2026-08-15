@@ -38,6 +38,9 @@ final readonly class UpdateSystemSettingsUseCase
         $config['terms_of_use_url'] = $dto->termsOfUseUrl;
         $config['personal_data_policy_url'] = $dto->personalDataPolicyUrl;
         $config['cookie_policy_url'] = $dto->cookiePolicyUrl;
+        $config['mod_lib_comm'] = $dto->libraryComments;
+        $config['mod_down_comm'] = $dto->downloadsComments;
+        $config['registration_moderation'] = $dto->registrationModeration;
 
         $this->configRepository->saveJohncms($config);
     }

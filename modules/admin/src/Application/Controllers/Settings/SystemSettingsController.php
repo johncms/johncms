@@ -9,6 +9,7 @@ use Johncms\Modules\Admin\Application\DTO\SystemSettingsDTO;
 use Johncms\Modules\Admin\Application\UseCases\UpdateSystemSettingsUseCase;
 use Johncms\Modules\Admin\Domain\Exceptions\ConfigWriteException;
 use Johncms\Modules\Admin\Domain\Services\ThemeListProviderInterface;
+use Johncms\Modules\Registration\Application\Services\RegistrationSettings;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
@@ -21,6 +22,7 @@ final readonly class SystemSettingsController
         private NavChain $navChain,
         private UpdateSystemSettingsUseCase $updateSystemSettingsUseCase,
         private ThemeListProviderInterface $themeListProvider,
+        private RegistrationSettings $registrationSettings,
         private Session $session,
     ) {
     }
@@ -63,6 +65,9 @@ final readonly class SystemSettingsController
             termsOfUseUrl: trim($request->body('terms_of_use_url', '')),
             personalDataPolicyUrl: trim($request->body('personal_data_policy_url', '')),
             cookiePolicyUrl: trim($request->body('cookie_policy_url', '')),
+            libraryComments: (bool) $request->bodyInt('mod_lib_comm'),
+            downloadsComments: (bool) $request->bodyInt('mod_down_comm'),
+            registrationModeration: (bool) $request->bodyInt('registration_moderation'),
         );
     }
 
@@ -115,6 +120,9 @@ final readonly class SystemSettingsController
             'personal_data_policy_url' => (string) config('johncms.personal_data_policy_url', ''),
             'cookie_policy_url'       => (string) config('johncms.cookie_policy_url', ''),
             'skindef'                 => (string) config('johncms.skindef', 'default'),
+            'mod_lib_comm'            => (bool) config('johncms.mod_lib_comm', false),
+            'mod_down_comm'           => (bool) config('johncms.mod_down_comm', false),
+            'registration_moderation' => $this->registrationSettings->moderationEnabled(),
         ];
     }
 }

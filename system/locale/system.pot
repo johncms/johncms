@@ -706,14 +706,14 @@ msgid "'%hostname%' does not appear to have any valid MX or A records for the em
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:17
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:352
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:344
 #: themes/default/templates/components/sidebar-main-menu.twig:6
 #: themes/default/templates/components/sidebar-main-menu.twig:179
 msgid "Set Light Theme"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:17
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:351
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:343
 #: themes/default/templates/components/sidebar-main-menu.twig:6
 #: themes/default/templates/components/sidebar-main-menu.twig:178
 msgid "Set Dark Theme"

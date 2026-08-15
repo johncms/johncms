@@ -455,6 +455,10 @@
       'Delete a forum section with everything in it' => 'Удалять раздел форума вместе со всем содержимым',
       'Empty the lists of hidden topics and posts' => 'Очищать списки скрытых тем и сообщений',
       'Open the report on the state of the installation' => 'Открывать отчёт о состоянии установки',
+      'Comments in the library' => 'Комментарии в библиотеке',
+      'Comments in the downloads' => 'Комментарии в загрузках',
+      'New accounts wait for confirmation' => 'Новые аккаунты ждут подтверждения',
+      'Who may open a module and write in it is set by the permissions of the roles.' => 'Кто может открывать модуль и писать в нём, задаётся правами ролей.',
     ),
   ),
 );

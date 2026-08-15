@@ -3,6 +3,7 @@
 // Default configuration
 return [
     'johncms' => [
+        // Deprecated, see the mod_* keys below: the lists of the community are community.view.
         'active'                  => 1,
         'antiflood'               => [
             'mode'    => 2,
@@ -42,13 +43,18 @@ return [
         // Whether a new account waits for an administrator to confirm it. Null means the site has
         // not decided since the setting was split off mod_reg, and the old number still answers.
         'registration_moderation' => null,
+        // Whether a module has comments at all. A feature of the module, not a right of anybody,
+        // so these stay settings; they are edited in /admin/settings.
+        'mod_lib_comm'            => true,
+        'mod_down_comm'           => true,
+        // Deprecated: who may open a module and write in it is a permission of the guest and the
+        // user roles. Kept only so that auth:migrate-module-access can read what a site had; they
+        // are read nowhere else and disappear with the numeric access levels.
         'mod_reg'                 => 2,
         'mod_forum'               => 2,
         'mod_guest'               => 2,
         'mod_lib'                 => 2,
-        'mod_lib_comm'            => true,
         'mod_down'                => 2,
-        'mod_down_comm'           => true,
         'meta_key'                => 'johncms',
         'meta_desc'               => 'Powered by JohnCMS http://johncms.com',
         'skindef'                 => 'default',
