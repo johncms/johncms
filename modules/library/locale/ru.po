@@ -775,3 +775,6 @@ msgstr "Облако тегов"
 msgid "Sort"
 msgstr "Сортировка"
 
+
+msgid "Manage the sections and the articles"
+msgstr "Управлять разделами и статьями"

@@ -4,16 +4,18 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Library\Application\Controllers;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
+use Johncms\Modules\Library\Application\Services\Hashtags;
+use Johncms\Modules\Library\Application\Services\LibraryPermissions;
 use Johncms\Modules\Library\Application\Services\LibrarySlugService;
+use Johncms\Modules\Library\Application\Services\Tree;
+use Johncms\Modules\Library\Application\Services\Utils;
 use Johncms\Modules\Library\Domain\Models\LibraryCategory;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
-use Johncms\Http\Request;
 use Johncms\Users\User;
-use Johncms\Modules\Library\Application\Services\Hashtags;
-use Johncms\Modules\Library\Application\Services\Tree;
-use Johncms\Modules\Library\Application\Services\Utils;
 use Symfony\Component\HttpFoundation\Response;
 
 final readonly class EditArticleController
@@ -22,6 +24,7 @@ final readonly class EditArticleController
     private const EDITABLE_TEXT_LENGTH = 500000;
 
     public function __construct(
+        private AccessCheckerInterface $accessChecker,
         private NavChain $navChain,
         private User $currentUser,
         private LibrarySlugService $slugService,
@@ -44,7 +47,7 @@ final readonly class EditArticleController
             );
         }
 
-        $isAdmin = $this->currentUser->rights > 4;
+        $isAdmin = $this->accessChecker->allows(LibraryPermissions::MODERATE);
         $isOwner = $this->currentUser->isValid()
             && (int) $article->uploader_id === (int) $this->currentUser->id;
 

@@ -5,24 +5,27 @@ declare(strict_types=1);
 namespace Johncms\Modules\Library\Application\Controllers;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Http\Request;
+use Johncms\Http\View\ViewResponse;
+use Johncms\Modules\Library\Application\Services\Hashtags;
 use Johncms\Modules\Library\Application\Services\LibraryArticlePathService;
 use Johncms\Modules\Library\Application\Services\LibraryCategoryPathService;
+use Johncms\Modules\Library\Application\Services\LibraryPermissions;
 use Johncms\Modules\Library\Application\Services\LibrarySlugService;
+use Johncms\Modules\Library\Application\Services\Utils;
 use Johncms\Modules\Library\Domain\Models\LibraryCategory;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
-use Johncms\Http\View\ViewResponse;
 use Johncms\Security\AntifloodCheckerInterface;
-use Johncms\Http\Request;
 use Johncms\Users\User;
-use Johncms\Modules\Library\Application\Services\Hashtags;
-use Johncms\Modules\Library\Application\Services\Utils;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Markup;
 
 final readonly class CreateArticleController
 {
     public function __construct(
+        private AccessCheckerInterface $accessChecker,
         private NavChain $navChain,
         private AntifloodCheckerInterface $antifloodChecker,
         private User $currentUser,
@@ -35,7 +38,7 @@ final readonly class CreateArticleController
     public function __invoke(Request $request): ViewResponse
     {
         $catId = max(0, $request->queryInt('id', 0));
-        $isAdmin = $this->currentUser->rights > 4;
+        $isAdmin = $this->accessChecker->allows(LibraryPermissions::MODERATE);
 
         $this->navChain->add(__('Library'), '/library/');
         $this->navChain->add(__('Write Article'));

@@ -4,24 +4,27 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Library\Application\Controllers;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Library\Application\Services\LibraryCategoryPathService;
+use Johncms\Modules\Library\Application\Services\LibraryPermissions;
+use Johncms\Modules\Library\Application\Services\Rating;
+use Johncms\Modules\Library\Application\Services\Tree;
+use Johncms\Modules\Library\Application\Services\Utils;
 use Johncms\Modules\Library\Domain\Models\LibraryCategory;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
 use Johncms\Users\User;
-use Johncms\Modules\Library\Application\Services\Rating;
-use Johncms\Modules\Library\Application\Services\Tree;
-use Johncms\Modules\Library\Application\Services\Utils;
 use Johncms\Utils\DateFormatterInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 final readonly class SectionController
 {
     public function __construct(
+        private AccessCheckerInterface $accessChecker,
         private NavChain $navChain,
         private DateFormatterInterface $dateFormatter,
         private User $currentUser,
@@ -54,7 +57,7 @@ final readonly class SectionController
         $dirNav->processNavPanel();
         $dirNav->printNavPanel();
 
-        $isAdmin = $this->currentUser->rights > 4;
+        $isAdmin = $this->accessChecker->allows(LibraryPermissions::MODERATE);
 
         if ($category->dir) {
             return $this->renderSectionsList($category, $isAdmin);

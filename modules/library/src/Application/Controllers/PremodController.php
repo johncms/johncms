@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Library\Application\Controllers;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
-use Johncms\Http\View\ViewResponse;
-use Johncms\Modules\Library\Domain\Models\LibraryText;
-use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
-use Johncms\Users\User;
+use Johncms\Http\View\ViewResponse;
+use Johncms\Modules\Library\Application\Services\LibraryPermissions;
+use Johncms\Modules\Library\Domain\Models\LibraryText;
+use Johncms\NavChain;
 use Johncms\Utils\DateFormatterInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,10 +20,10 @@ use Symfony\Component\HttpFoundation\Response;
 final readonly class PremodController
 {
     public function __construct(
+        private AccessCheckerInterface $accessChecker,
         private NavChain $navChain,
         private Session $session,
         private DateFormatterInterface $dateFormatter,
-        private User $currentUser,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
     ) {
@@ -30,7 +31,7 @@ final readonly class PremodController
 
     public function __invoke(Request $request): Response|ViewResponse
     {
-        if (! ($this->currentUser->rights > 4)) {
+        if (! $this->accessChecker->allows(LibraryPermissions::MODERATE)) {
             return new ViewResponse(
                 '@theme/pages/result.twig',
                 [

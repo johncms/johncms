@@ -4,21 +4,22 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Library\Application\Controllers;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Library\Application\LegacyRedirectHandler;
+use Johncms\Modules\Library\Application\Services\LibraryPermissions;
+use Johncms\Modules\Library\Application\Services\Utils;
 use Johncms\Modules\Library\Domain\Models\LibraryCategory;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
-use Johncms\Users\User;
-use Johncms\Modules\Library\Application\Services\Utils;
 
 final readonly class LibraryIndexController
 {
     public function __construct(
+        private AccessCheckerInterface $accessChecker,
         private NavChain $navChain,
         private LegacyRedirectHandler $legacyRedirectHandler,
-        private User $currentUser,
     ) {
     }
 
@@ -28,7 +29,7 @@ final readonly class LibraryIndexController
 
         $this->navChain->add(__('Library'), '/library/');
 
-        $isAdmin     = $this->currentUser->rights > 4;
+        $isAdmin     = $this->accessChecker->allows(LibraryPermissions::MODERATE);
         $countPremod = $isAdmin ? LibraryText::query()->where('premod', 0)->count() : 0;
         $new         = LibraryText::query()->where('time', '>', time() - 259200)->where('premod', 1)->count();
 

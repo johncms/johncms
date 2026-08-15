@@ -4,18 +4,21 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Library\Application\Controllers;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Http\Request;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Library\Application\Services\LibraryCategoryPathService;
+use Johncms\Modules\Library\Application\Services\LibraryPermissions;
 use Johncms\Modules\Library\Application\Services\LibrarySlugService;
 use Johncms\Modules\Library\Domain\Models\LibraryCategory;
 use Johncms\NavChain;
-use Johncms\Http\Request;
-use Johncms\Http\View\ViewResponse;
 use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\Response;
 
 final readonly class CreateSectionController
 {
     public function __construct(
+        private AccessCheckerInterface $accessChecker,
         private NavChain $navChain,
         private User $currentUser,
         private LibrarySlugService $slugService,
@@ -25,7 +28,7 @@ final readonly class CreateSectionController
 
     public function __invoke(Request $request): ViewResponse
     {
-        if ($this->currentUser->rights <= 4) {
+        if (! $this->accessChecker->allows(LibraryPermissions::MODERATE)) {
             return new ViewResponse(
                 '@theme/pages/result.twig',
                 [

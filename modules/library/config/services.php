@@ -6,6 +6,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
 use Johncms\Modules\Library\Application\Services\LibraryArticlePathService;
 use Johncms\Modules\Library\Application\Services\LibraryCategoryPathService;
+use Johncms\Modules\Library\Application\Services\LibraryPermissions;
 use Johncms\Modules\Library\Application\Services\LibrarySlugService;
 use Johncms\Modules\Library\Application\Sitemap\LibraryUrlsProvider;
 use Johncms\Modules\Library\Domain\Repository\LibraryTextRepositoryInterface;
@@ -29,6 +30,9 @@ return static function (ContainerConfigurator $container): void {
     $services->set(LibraryCategoryPathService::class)->autowire()->public();
     $services->set(LibraryArticlePathService::class)->autowire()->public();
     $services->set(LibrarySlugService::class)->autowire()->public();
+    // The Services directory is not loaded as a whole, so the provider of the permissions is
+    // registered by hand; autoconfigure() is what puts the tag of the extension point on it.
+    $services->set(LibraryPermissions::class)->autowire()->autoconfigure();
 
     $services->set(LibraryUrlsProvider::class, LibraryUrlsProvider::class)->tag('johncms.sitemap_provider')->public();
 

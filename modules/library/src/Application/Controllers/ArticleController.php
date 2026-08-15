@@ -4,25 +4,29 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Library\Application\Controllers;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Http\Session;
 use Johncms\Http\View\ViewResponse;
+use Johncms\Modules\Library\Application\Services\ArticleTextRenderer;
+use Johncms\Modules\Library\Application\Services\Hashtags;
 use Johncms\Modules\Library\Application\Services\LibraryArticlePathService;
+use Johncms\Modules\Library\Application\Services\LibraryPermissions;
+use Johncms\Modules\Library\Application\Services\Rating;
+use Johncms\Modules\Library\Application\Services\Tree;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
 use Johncms\Users\User;
-use Johncms\Modules\Library\Application\Services\ArticleTextRenderer;
-use Johncms\Modules\Library\Application\Services\Hashtags;
-use Johncms\Modules\Library\Application\Services\Rating;
-use Johncms\Modules\Library\Application\Services\Tree;
 use Johncms\Utils\DateFormatterInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 final readonly class ArticleController
 {
     public function __construct(
+        private AccessCheckerInterface $accessChecker,
         private Session $session,
         private NavChain $navChain,
         private DateFormatterInterface $dateFormatter,
@@ -43,7 +47,7 @@ final readonly class ArticleController
         $id = $parsed['articleId'];
         $article = LibraryText::query()->find($id);
 
-        if ($article === null || (! $article->premod && ! ($this->currentUser->rights > 4))) {
+        if ($article === null || (! $article->premod && ! $this->accessChecker->allows(LibraryPermissions::MODERATE))) {
             return new ViewResponse(
                 '@theme/pages/result.twig',
                 [
@@ -73,9 +77,9 @@ final readonly class ArticleController
         }
         $page = $pagination->getCurrentPage();
 
-        $text = $textRenderer->renderPage($pages[$page - 1], $this->currentUser->rights > 0);
+        $text = $textRenderer->renderPage($pages[$page - 1], $this->accessChecker->allows(CorePermissions::SMILIES_ADMIN_USE));
 
-        $isAdmin   = $this->currentUser->rights > 4;
+        $isAdmin   = $this->accessChecker->allows(LibraryPermissions::MODERATE);
         $moderMenu = $isAdmin || ($this->currentUser->isValid() && (int) $article->uploader_id === (int) $this->currentUser->id);
 
         $this->navChain->add(__('Library'), '/library/');

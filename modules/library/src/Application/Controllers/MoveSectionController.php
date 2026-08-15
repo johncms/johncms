@@ -4,21 +4,22 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Library\Application\Controllers;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Modules\Library\Application\Services\LibraryPermissions;
 use Johncms\Modules\Library\Domain\Models\LibraryCategory;
-use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 final readonly class MoveSectionController
 {
     public function __construct(
-        private User $currentUser,
+        private AccessCheckerInterface $accessChecker,
     ) {
     }
 
     public function __invoke(int $parentId, string $direction, int $positionIndex): Response
     {
-        if (! ($this->currentUser->rights > 4)) {
+        if (! $this->accessChecker->allows(LibraryPermissions::MODERATE)) {
             return new Response('', Response::HTTP_FORBIDDEN);
         }
 

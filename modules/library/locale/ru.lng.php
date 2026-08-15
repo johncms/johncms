@@ -147,6 +147,7 @@
       'Create' => 'Создать',
       'Tag Cloud' => 'Облако тегов',
       'Sort' => 'Сортировка',
+      'Manage the sections and the articles' => 'Управлять разделами и статьями',
     ),
   ),
 );
