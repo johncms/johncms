@@ -5,15 +5,12 @@ declare(strict_types=1);
 namespace Johncms\Modules\Admin\Application\UseCases;
 
 use Johncms\Auth\Authorization\Role;
-use Johncms\Auth\Authorization\RightsMirror;
 use Johncms\Auth\Authorization\RoleRepositoryInterface;
 
 final readonly class UpdateUserRolesUseCase
 {
-    public function __construct(
-        private RoleRepositoryInterface $roles,
-        private RightsMirror $rightsMirror,
-    ) {
+    public function __construct(private RoleRepositoryInterface $roles)
+    {
     }
 
     /**
@@ -54,9 +51,5 @@ final readonly class UpdateUserRolesUseCase
                 $this->roles->revoke($userId, $role->id);
             }
         }
-
-        // Three hundred checks across the modules still compare against the number, so it is kept
-        // in step with the roles until they have all been converted.
-        $this->rightsMirror->sync($userId, $now);
     }
 }

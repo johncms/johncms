@@ -25,7 +25,6 @@ use Johncms\Auth\Schema\AuthSchema;
  * @property string      $slug
  * @property string      $name
  * @property int         $level
- * @property int|null    $legacy_rights
  * @property bool        $is_system
  * @property bool        $is_default
  * @property bool        $is_guest
@@ -50,7 +49,6 @@ class Role extends Model
         'slug',
         'name',
         'level',
-        'legacy_rights',
         'is_system',
         'is_default',
         'is_guest',

@@ -48,15 +48,14 @@ final readonly class RoleSeeder
 
             $role = Role::query()->create(
                 [
-                    'slug'          => $systemRole->value,
-                    'name'          => $systemRole->label(),
-                    'level'         => $systemRole->level(),
-                    'legacy_rights' => $systemRole->legacyRights(),
-                    'is_system'     => true,
-                    'is_default'    => $systemRole->isDefault(),
-                    'is_guest'      => $systemRole->isGuest(),
-                    'created_at'    => $now,
-                    'updated_at'    => $now,
+                    'slug'       => $systemRole->value,
+                    'name'       => $systemRole->label(),
+                    'level'      => $systemRole->level(),
+                    'is_system'  => true,
+                    'is_default' => $systemRole->isDefault(),
+                    'is_guest'   => $systemRole->isGuest(),
+                    'created_at' => $now,
+                    'updated_at' => $now,
                 ]
             );
 

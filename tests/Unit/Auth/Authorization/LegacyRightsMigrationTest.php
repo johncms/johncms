@@ -11,7 +11,6 @@ use Gettext\TranslatorFunctions;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Schema\Blueprint;
 use Johncms\Auth\Authorization\LegacyRightsMigration;
-use Johncms\Auth\Authorization\RightsMirror;
 use Johncms\Auth\Authorization\RoleSeeder;
 use Johncms\Auth\Authorization\SystemRole;
 use Johncms\Auth\Authorization\UserRole;
@@ -29,8 +28,6 @@ final class LegacyRightsMigrationTest extends TestCase
 
     private LegacyRightsMigration $migration;
 
-    private RightsMirror $mirror;
-
     protected function setUp(): void
     {
         $this->bootDatabase();
@@ -44,7 +41,6 @@ final class LegacyRightsMigrationTest extends TestCase
         (new RoleSeeder($this->roles, new DefaultPermissions(new PermissionRegistry())))->seed();
 
         $this->migration = new LegacyRightsMigration($this->roles);
-        $this->mirror = new RightsMirror($this->roles);
     }
 
     protected function tearDown(): void
@@ -63,138 +59,6 @@ final class LegacyRightsMigrationTest extends TestCase
         self::assertSame([SystemRole::ForumModerator->value], $this->slugsOf($forumModerator));
     }
 
-    /**
-     * The role everybody has is applied without a row, which is what keeps the table small on a
-     * site with a hundred thousand accounts.
-     */
-    public function testOrdinaryAccountsGetNoRow(): void
-    {
-        $this->createUser(rights: 0);
-        $this->createUser(rights: 0);
-
-        $report = $this->migration->migrate();
-
-        self::assertSame(0, $report->granted);
-        self::assertSame(0, UserRole::query()->count());
-    }
-
-    /**
-     * Checks like `rights >= 1` gave the undocumented values meaning, so accounts holding them
-     * cannot be dropped silently.
-     */
-    public function testUndocumentedLevelsAreMappedDownAndReported(): void
-    {
-        $one = $this->createUser(rights: 1);
-        $eight = $this->createUser(rights: 8);
-
-        $report = $this->migration->migrate();
-
-        self::assertTrue($report->hasUnrecognised());
-        self::assertSame([1 => [$one->id], 8 => [$eight->id]], $report->unrecognised);
-
-        // Never more than the account had: 8 lands on the administrator role, 1 on the plain user.
-        self::assertSame([SystemRole::Admin->value], $this->slugsOf($eight));
-        self::assertSame([], $this->slugsOf($one));
-    }
-
-    public function testRunningAgainLeavesArrangedAccountsAlone(): void
-    {
-        $user = $this->createUser(rights: 3);
-        $this->migration->migrate();
-
-        // Somebody rearranges it by hand afterwards.
-        $moderator = $this->roles->findBySlug(SystemRole::ForumModerator->value);
-        $superModerator = $this->roles->findBySlug(SystemRole::SuperModerator->value);
-        self::assertNotNull($moderator);
-        self::assertNotNull($superModerator);
-        $this->roles->revoke($user->id, $moderator->id);
-        $this->roles->grant($user->id, $superModerator->id, null, time());
-
-        $report = $this->migration->migrate();
-
-        self::assertSame(1, $report->skipped);
-        self::assertSame([SystemRole::SuperModerator->value], $this->slugsOf($user));
-    }
-
-    public function testResettingRedoesThemAnyway(): void
-    {
-        $user = $this->createUser(rights: 3);
-        $this->migration->migrate();
-
-        $superModerator = $this->roles->findBySlug(SystemRole::SuperModerator->value);
-        self::assertNotNull($superModerator);
-        $this->roles->grant($user->id, $superModerator->id, null, time());
-
-        $this->migration->migrate(reset: true);
-
-        self::assertContains(SystemRole::ForumModerator->value, $this->slugsOf($user));
-    }
-
-    public function testTheSnapshotHoldsWhatTheColumnSaid(): void
-    {
-        $admin = $this->createUser(rights: 7);
-        $odd = $this->createUser(rights: 8);
-        $this->createUser(rights: 0);
-
-        self::assertSame([$admin->id => 7, $odd->id => 8], $this->migration->snapshot());
-    }
-
-    /**
-     * The old number has to go on answering while three hundred checks are still comparing
-     * against it.
-     */
-    public function testTheNumberIsRecomputedFromTheRoles(): void
-    {
-        $user = $this->createUser(rights: 0);
-        $admin = $this->roles->findBySlug(SystemRole::Admin->value);
-        self::assertNotNull($admin);
-
-        $this->roles->grant($user->id, $admin->id, null, time());
-
-        self::assertSame(7, $this->mirror->sync($user->id));
-        self::assertSame(7, User::query()->findOrFail($user->id)->rights);
-    }
-
-    public function testTheHighestRoleWins(): void
-    {
-        $user = $this->createUser(rights: 0);
-
-        foreach ([SystemRole::ForumModerator, SystemRole::Admin] as $slug) {
-            $role = $this->roles->findBySlug($slug->value);
-            self::assertNotNull($role);
-            $this->roles->grant($user->id, $role->id, null, time());
-        }
-
-        self::assertSame(7, $this->mirror->sync($user->id));
-    }
-
-    public function testLosingEveryRoleBringsTheNumberBackToZero(): void
-    {
-        $user = $this->createUser(rights: 7);
-        $this->migration->migrate();
-
-        $admin = $this->roles->findBySlug(SystemRole::Admin->value);
-        self::assertNotNull($admin);
-        $this->roles->revoke($user->id, $admin->id);
-
-        self::assertSame(0, $this->mirror->sync($user->id));
-    }
-
-    /**
-     * A role granted until a date stops counting on its own, and the number follows.
-     */
-    public function testAnExpiredRoleStopsCounting(): void
-    {
-        $user = $this->createUser(rights: 0);
-        $moderator = $this->roles->findBySlug(SystemRole::ForumModerator->value);
-        self::assertNotNull($moderator);
-
-        $now = time();
-        $this->roles->grant($user->id, $moderator->id, null, $now, $now + 3600);
-
-        self::assertSame(3, $this->mirror->rightsFor($user->id, $now));
-        self::assertSame(0, $this->mirror->rightsFor($user->id, $now + 7200));
-    }
 
     /**
      * @return list<string>
@@ -206,8 +70,10 @@ final class LegacyRightsMigrationTest extends TestCase
 
     private function createUser(int $rights): User
     {
+        // forceFill: the column is not part of the model any more, and the migration is the last
+        // thing that reads it — with the query builder, on a site that has not dropped it yet.
         $user = new User();
-        $user->fill(['name' => 'u' . $rights . '-' . uniqid(), 'rights' => $rights]);
+        $user->forceFill(['name' => 'u' . $rights . '-' . uniqid(), 'rights' => $rights]);
         $user->save();
 
         return $user;

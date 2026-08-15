@@ -10,7 +10,6 @@ use Gettext\Translator;
 use Gettext\TranslatorFunctions;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Schema\Blueprint;
-use Johncms\Auth\Authorization\RightsMirror;
 use Johncms\Auth\Authorization\RoleSeeder;
 use Johncms\Auth\Authorization\SystemRole;
 use Johncms\Auth\Infrastructure\Persistence\Repository\EloquentRoleRepository;
@@ -40,7 +39,7 @@ final class UpdateUserRolesUseCaseTest extends TestCase
         $this->roles = new EloquentRoleRepository();
         (new RoleSeeder($this->roles, new DefaultPermissions(new PermissionRegistry())))->seed();
 
-        $this->useCase = new UpdateUserRolesUseCase($this->roles, new RightsMirror($this->roles));
+        $this->useCase = new UpdateUserRolesUseCase($this->roles);
     }
 
     protected function tearDown(): void
@@ -48,14 +47,13 @@ final class UpdateUserRolesUseCaseTest extends TestCase
         $this->shutdownDatabase();
     }
 
-    public function testGrantingARoleUpdatesTheMirroredNumber(): void
+    public function testTickingARoleGrantsIt(): void
     {
         $user = $this->createUser();
 
         $this->useCase->execute($user->id, [$this->roleId(SystemRole::Admin) => null], viewerLevel: 90);
 
         self::assertSame([SystemRole::Admin->value], $this->slugsOf($user->id));
-        self::assertSame(7, $this->rightsOf($user->id));
     }
 
     public function testARoleThatIsNoLongerTickedIsTakenAway(): void
@@ -66,7 +64,6 @@ final class UpdateUserRolesUseCaseTest extends TestCase
         $this->useCase->execute($user->id, [], viewerLevel: 90);
 
         self::assertSame([], $this->slugsOf($user->id));
-        self::assertSame(0, $this->rightsOf($user->id));
     }
 
     /**
@@ -97,7 +94,6 @@ final class UpdateUserRolesUseCaseTest extends TestCase
             [SystemRole::ForumModerator->value, SystemRole::Supervisor->value],
             $this->slugsOf($user->id)
         );
-        self::assertSame(9, $this->rightsOf($user->id));
     }
 
     /**
@@ -108,10 +104,6 @@ final class UpdateUserRolesUseCaseTest extends TestCase
         return $this->roles->grantedTo($userId, time())->pluck('slug')->sort()->values()->all();
     }
 
-    private function rightsOf(int $userId): int
-    {
-        return (int) User::query()->find($userId)?->rights;
-    }
 
     private function roleId(SystemRole $role): int
     {
@@ -121,7 +113,7 @@ final class UpdateUserRolesUseCaseTest extends TestCase
     private function createUser(): User
     {
         $user = new User();
-        $user->fill(['name' => 'staff-' . uniqid(), 'rights' => 0]);
+        $user->fill(['name' => 'staff-' . uniqid()]);
         $user->save();
 
         return $user;
@@ -134,7 +126,6 @@ final class UpdateUserRolesUseCaseTest extends TestCase
             static function (Blueprint $table): void {
                 $table->increments('id');
                 $table->string('name')->default('');
-                $table->integer('rights')->default(0);
             }
         );
     }

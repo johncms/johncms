@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Console\Commands;
 
-use Illuminate\Database\Capsule\Manager as Capsule;
+use Illuminate\Database\Schema\Builder;
 use Johncms\AdminTasks\AsAdminTask;
 use Johncms\Auth\Authorization\RoleSeeder;
 use Johncms\Auth\Schema\AuthSchema;
@@ -33,8 +33,10 @@ use Throwable;
 )]
 final class AuthUpgradeSchemaCommand extends Command
 {
-    public function __construct(private readonly RoleSeeder $roleSeeder)
-    {
+    public function __construct(
+        private readonly RoleSeeder $roleSeeder,
+        private readonly Builder $schema,
+    ) {
         parent::__construct();
     }
 
@@ -43,7 +45,7 @@ final class AuthUpgradeSchemaCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         try {
-            AuthSchema::create(Capsule::schema());
+            AuthSchema::create($this->schema);
             $created = $this->roleSeeder->seed();
         } catch (Throwable $exception) {
             $io->error('Could not update the authentication tables: ' . $exception->getMessage());

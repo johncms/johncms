@@ -28,8 +28,6 @@ use Johncms\System\Users\UserConfig;
  * @property string $name
  * @property string $name_lat
  * @property string $password
- * @property int $rights
- * @property int $failed_login
  * @property string $imname
  * @property string $sex
  * @property int $komm
@@ -58,8 +56,6 @@ use Johncms\System\Users\UserConfig;
  * @property int $sestime
  * @property int $total_on_site
  * @property int $lastpost
- * @property string $rest_code
- * @property int $rest_time
  * @property int $movings
  * @property string $place
  * @property UserConfig $set_user
@@ -138,8 +134,6 @@ class User extends Model
         'id',
         'name',
         'name_lat',
-        'rights',
-        'failed_login',
         'imname',
         'sex',
         'komm',
@@ -168,8 +162,6 @@ class User extends Model
         'sestime',
         'total_on_site',
         'lastpost',
-        'rest_code',
-        'rest_time',
         'movings',
         'place',
         'set_user',

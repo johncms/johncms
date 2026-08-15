@@ -30,7 +30,9 @@ use Johncms\Auth\Throttling\LoginThrottleInterface;
 use Johncms\Cache;
 use Johncms\Counters;
 use Johncms\CountersFactory;
+use Illuminate\Database\Schema\Builder as SchemaBuilder;
 use Johncms\Database\PdoFactory;
+use Johncms\Database\SchemaBuilderFactory;
 use Johncms\Files\Filesystem;
 use Johncms\Files\FileStorage;
 use Johncms\ImageManagerFactory;
@@ -216,6 +218,8 @@ return static function (ContainerConfigurator $container): void {
     // so the facade is built by a factory instead of being autowired from its constructor.
     $services->set(Session::class)->factory(service(SessionFactory::class));
     $services->set(\PDO::class, PdoFactory::class)->factory(service(PdoFactory::class));
+    // Creating and altering tables: a handful of console commands and the installer.
+    $services->set(SchemaBuilder::class)->factory(service(SchemaBuilderFactory::class));
     $services->set(\Johncms\Users\User::class)->factory(service(\Johncms\Users\UserFactory::class));
     $services->set(\Johncms\Users\Repository\UserRepositoryInterface::class, \Johncms\Users\Repository\EloquentUserRepository::class);
 

@@ -65,8 +65,6 @@ final class AuthSchema
                 // Who outranks whom: which roles a moderator may act on, and later which
                 // accounts an administrator may browse as.
                 $table->smallInteger('level')->unsigned()->default(0);
-                // Mirrored into users.rights while the old numeric column is still read.
-                $table->tinyInteger('legacy_rights')->unsigned()->nullable();
                 // A built-in role: its slug and level are fixed and it cannot be deleted.
                 $table->boolean('is_system')->default(false);
                 // Applies to every signed-in visitor without a row in user_roles. That is what

@@ -35,7 +35,6 @@ final readonly class RegisterUserUseCase
                 'about'             => $dto->about,
                 'sex'               => $dto->sex,
                 'mail'              => $dto->email,
-                'rights'            => 0,
                 'ip'                => $clientInfo->ip,
                 'ip_via_proxy'      => $clientInfo->ipViaProxy,
                 'browser'           => $clientInfo->userAgent,

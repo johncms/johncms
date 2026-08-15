@@ -79,10 +79,10 @@ final class CurrentUserPerRequestTest extends FunctionalTestCase
                 `name` = :name, `name_lat` = :name_lat, `password` = :password,
                 `imname` = "", `sex` = "m", `mail` = "", `skype` = "", `jabber` = "", `www` = "",
                 `live` = "", `mibile` = "", `status` = "", `browser` = "", `regadm` = "",
-                `rest_code` = "", `set_user` = "a:0:{}", `ip` = :ip, `ip_via_proxy` = 0,
+                `set_user` = "a:0:{}", `ip` = :ip, `ip_via_proxy` = 0,
                 `preg` = 1, `mailvis` = 0,
                 `dayb` = 0, `monthb` = 0, `karma_plus` = 0, `karma_minus` = 0, `karma_off` = 0,
-                `failed_login` = 0, `datereg` = :datereg, `lastdate` = :lastdate, `email_confirmed` = 1'
+                `datereg` = :datereg, `lastdate` = :lastdate, `email_confirmed` = 1'
         );
 
         $statement->execute(

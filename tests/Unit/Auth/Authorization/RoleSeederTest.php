@@ -56,7 +56,6 @@ final class RoleSeederTest extends TestCase
             self::assertNotNull($role, $systemRole->value . ' should exist');
             self::assertTrue($role->is_system);
             self::assertSame($systemRole->level(), $role->level);
-            self::assertSame($systemRole->legacyRights(), $role->legacy_rights);
         }
     }
 

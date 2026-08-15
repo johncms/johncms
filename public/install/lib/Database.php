@@ -172,8 +172,6 @@ class Database
                 $table->string('name', 100)->default('');
                 $table->string('name_lat', 100)->default('')->index('name_lat');
                 $table->string('password')->default('');
-                $table->tinyInteger('rights')->unsigned()->default(0);
-                $table->tinyInteger('failed_login')->unsigned()->default(0);
                 $table->string('imname')->default('');
                 $table->string('sex', 5)->default('');
                 $table->integer('komm')->unsigned()->default(0);
@@ -202,8 +200,6 @@ class Database
                 $table->integer('sestime')->unsigned()->default(0);
                 $table->integer('total_on_site')->unsigned()->default(0);
                 $table->integer('lastpost')->unsigned()->default(0);
-                $table->string('rest_code')->default('');
-                $table->integer('rest_time')->unsigned()->default(0);
                 $table->integer('movings')->unsigned()->default(0);
                 $table->text('place')->nullable();
                 $table->text('set_user')->nullable();

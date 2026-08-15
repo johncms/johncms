@@ -297,7 +297,6 @@ final class AuthenticateUserUseCaseTest extends TestCase
     private function createUser(
         bool $approved = true,
         bool $emailConfirmed = true,
-        int $failedLogin = 0,
         ?string $storedHash = null,
     ): User {
         $user = new User();
@@ -307,7 +306,6 @@ final class AuthenticateUserUseCaseTest extends TestCase
                 'name_lat'        => 'tester',
                 'preg'            => $approved,
                 'email_confirmed' => $emailConfirmed,
-                'failed_login'    => $failedLogin,
                 'sestime'         => 0,
             ]
         );
@@ -346,7 +344,6 @@ final class AuthenticateUserUseCaseTest extends TestCase
                 $table->string('name')->default('');
                 $table->string('name_lat')->default('');
                 $table->string('password')->default('');
-                $table->integer('failed_login')->default(0);
                 $table->boolean('preg')->default(true);
                 $table->boolean('email_confirmed')->default(true);
                 $table->integer('sestime')->default(0);

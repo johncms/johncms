@@ -158,17 +158,14 @@ final class EloquentRoleRepository implements RoleRepositoryInterface
     {
         return Role::query()->create(
             [
-                'slug'          => $slug,
-                'name'          => $name,
-                'level'         => $level,
-                // A role the site added has no place on the old numeric scale, so it contributes
-                // nothing to the mirrored users.rights.
-                'legacy_rights' => null,
-                'is_system'     => false,
-                'is_default'    => false,
-                'is_guest'      => false,
-                'created_at'    => $now,
-                'updated_at'    => $now,
+                'slug'       => $slug,
+                'name'       => $name,
+                'level'      => $level,
+                'is_system'  => false,
+                'is_default' => false,
+                'is_guest'   => false,
+                'created_at' => $now,
+                'updated_at' => $now,
             ]
         );
     }
