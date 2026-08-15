@@ -59,6 +59,37 @@ final readonly class RoleLevels
     }
 
     /**
+     * The same for a whole page of accounts, in one query. What a listing asks before deciding
+     * which of its rows carry the buttons of the staff.
+     *
+     * @param list<int> $userIds
+     * @return array<int, int> User id => level, one entry per account asked for.
+     */
+    public function highestGrantedToMany(array $userIds, ?int $now = null): array
+    {
+        if ($userIds === []) {
+            return [];
+        }
+
+        // Whatever the default roles carry is the floor under every account, granted or not.
+        $floor = 0;
+
+        foreach ($this->roles->defaults() as $role) {
+            $floor = max($floor, $role->level);
+        }
+
+        $granted = $this->roles->grantedLevelsFor(array_values(array_unique($userIds)), $now ?? time());
+
+        $levels = [];
+
+        foreach ($userIds as $userId) {
+            $levels[$userId] = max($floor, $granted[$userId] ?? 0);
+        }
+
+        return $levels;
+    }
+
+    /**
      * The built-in roles answer without a query; one the site added is looked up.
      */
     public function levelOf(string $slug): int

@@ -229,3 +229,14 @@ msgstr "Изменено"
 msgid "Edit"
 msgstr "Изменить"
 
+msgid "Edit and delete the entries of other people"
+msgstr "Редактировать и удалять записи других людей"
+
+msgid "Answer an entry on behalf of the staff"
+msgstr "Отвечать на запись от имени администрации"
+
+msgid "Empty the guestbook"
+msgstr "Очищать гостевую книгу"
+
+msgid "Enter the admin club"
+msgstr "Входить в клуб администрации"

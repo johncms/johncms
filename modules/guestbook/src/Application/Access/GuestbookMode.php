@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Guestbook\Application\Access;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
+use Johncms\Modules\Guestbook\Application\Services\GuestbookPermissions;
 use Johncms\Users\User;
 
 final readonly class GuestbookMode
@@ -15,6 +17,7 @@ final readonly class GuestbookMode
     public function __construct(
         private User $user,
         private Session $session,
+        private AccessCheckerInterface $accessChecker,
         private array $guestAccess = [],
     ) {
     }
@@ -44,6 +47,7 @@ final readonly class GuestbookMode
 
     private function hasAdminClubAccess(): bool
     {
-        return $this->user->rights >= 1 || in_array($this->user->id, $this->guestAccess, true);
+        return $this->accessChecker->allows(GuestbookPermissions::ADMIN_CLUB_VIEW)
+            || in_array($this->user->id, $this->guestAccess, true);
     }
 }

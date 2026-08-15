@@ -32,7 +32,7 @@ use Johncms\Users\User;
  * @property int $user_id
  * @property string $name
  * @property string $text
- * @property int $ip
+ * @property string $ip Stored as a number, read and written as the address.
  * @property string $browser
  * @property string $admin
  * @property string $otvet

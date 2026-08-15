@@ -44,6 +44,7 @@ msgid "The message was saved"
 msgstr ""
 
 #: modules/guestbook/src/Application/Controllers/GuestbookController.php:46
+#: modules/guestbook/src/Application/Services/GuestbookPermissions.php:32
 msgid "Guestbook"
 msgstr ""
 
@@ -75,6 +76,22 @@ msgstr ""
 
 #: modules/guestbook/src/Application/Controllers/UploadFileController.php:43
 msgid "Only images are allowed"
+msgstr ""
+
+#: modules/guestbook/src/Application/Services/GuestbookPermissions.php:45
+msgid "Edit and delete the entries of other people"
+msgstr ""
+
+#: modules/guestbook/src/Application/Services/GuestbookPermissions.php:52
+msgid "Answer an entry on behalf of the staff"
+msgstr ""
+
+#: modules/guestbook/src/Application/Services/GuestbookPermissions.php:59
+msgid "Empty the guestbook"
+msgstr ""
+
+#: modules/guestbook/src/Application/Services/GuestbookPermissions.php:66
+msgid "Enter the admin club"
 msgstr ""
 
 #: modules/guestbook/src/Install/Installer.php:38

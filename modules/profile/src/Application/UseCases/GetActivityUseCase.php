@@ -11,6 +11,7 @@ use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Domain\Models\ForumMessage;
 use Johncms\Modules\Forum\Domain\Models\ForumTopic;
 use Johncms\Modules\Guestbook\Application\Services\GuestbookEntryTextFormatter;
+use Johncms\Modules\Guestbook\Application\Services\GuestbookPermissions;
 use Johncms\Modules\Guestbook\Domain\Models\GuestbookEntry;
 use Johncms\Modules\Profile\Application\DTO\ActivityDTO;
 use Johncms\Modules\Profile\Application\Exceptions\ProfileNotFoundException;
@@ -32,7 +33,6 @@ final readonly class GetActivityUseCase
         private GuestbookEntryTextFormatter $guestbookTextFormatter,
         private DateFormatterInterface $dateFormatter,
         private AccessCheckerInterface $accessChecker,
-        private User $currentUser,
     ) {
     }
 
@@ -99,13 +99,12 @@ final readonly class GetActivityUseCase
     }
 
     /**
-     * Whether the entries of the admin club count as activity. Still the number: who may enter
-     * the club is the guestbook's own check, and it becomes a permission when that module is
-     * converted.
+     * Whether the entries of the admin club count as activity. The guestbook decides who may
+     * enter the club, so the question is asked with its permission.
      */
     private function includeAdminClub(): bool
     {
-        return $this->currentUser->rights >= 1;
+        return $this->accessChecker->allows(GuestbookPermissions::ADMIN_CLUB_VIEW);
     }
 
     /**

@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Guestbook\Application\Access;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Modules\Guestbook\Application\Services\GuestbookPermissions;
 use Johncms\Users\User;
 
 final readonly class GuestbookAccess
 {
     public function __construct(
         private User $user,
+        private AccessCheckerInterface $accessChecker,
         private array $config,
     ) {
     }
@@ -23,7 +26,7 @@ final readonly class GuestbookAccess
 
     public function canClear(): bool
     {
-        return $this->user->rights >= 7;
+        return $this->accessChecker->allows(GuestbookPermissions::CLEAR);
     }
 
     public function isClosed(): bool

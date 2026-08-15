@@ -8,10 +8,17 @@ use Gettext\Translator;
 use Gettext\TranslatorFunctions;
 use HTMLPurifier;
 use Illuminate\Database\Eloquent\Collection;
+use Johncms\Auth\Authentication\AuthenticatorChain;
+use Johncms\Auth\Authorization\CorePermissions;
+use Johncms\Auth\Authorization\PermissionResolver;
+use Johncms\Auth\Authorization\RoleLevels;
+use Johncms\Auth\CurrentUser;
 use Johncms\Config\ConfigRepository;
+use Johncms\Http\Request;
 use Johncms\Http\Session;
 use Johncms\Modules\Guestbook\Application\Access\GuestbookMode;
 use Johncms\Modules\Guestbook\Application\Services\GuestbookEntryTextFormatter;
+use Johncms\Modules\Guestbook\Application\Services\GuestbookPermissions;
 use Johncms\Modules\Guestbook\Application\UseCases\ListGuestbookEntriesUseCase;
 use Johncms\Modules\Guestbook\Domain\Models\GuestbookEntry;
 use Johncms\Modules\Guestbook\Domain\Repository\GuestbookEntryRepositoryInterface;
@@ -20,7 +27,12 @@ use Johncms\Users\User;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Simba77\EmbedMedia\Embed;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
+use Tests\Support\FakeAccessChecker;
+use Tests\Support\FakeAuthenticator;
+use Tests\Support\FakeRoleRepository;
+use Tests\Support\IdentityFactory;
 use Tests\Support\UserFactory;
 
 final class ListGuestbookEntriesUseCaseTest extends TestCase
@@ -29,6 +41,8 @@ final class ListGuestbookEntriesUseCaseTest extends TestCase
 
     private Session $session;
 
+    private FakeRoleRepository $roles;
+
     protected function setUp(): void
     {
         ConfigRepository::init([]);
@@ -36,6 +50,10 @@ final class ListGuestbookEntriesUseCaseTest extends TestCase
         TranslatorFunctions::register(new Translator());
         $this->repository = $this->createMock(GuestbookEntryRepositoryInterface::class);
         $this->session = new Session(new MockArraySessionStorage());
+        $this->roles = new FakeRoleRepository();
+        $this->roles->add('user', level: 10, isDefault: true);
+        $this->roles->add('moderator', level: 30);
+        $this->roles->add('supervisor', level: 90);
     }
 
     public function testCountPassesAdminClubModeToRepository(): void
@@ -44,7 +62,7 @@ final class ListGuestbookEntriesUseCaseTest extends TestCase
 
         $this->repository->expects(self::once())->method('countEntries')->with(true)->willReturn(42);
 
-        $useCase = $this->makeUseCase(UserFactory::make(rights: 1));
+        $useCase = $this->makeUseCase(granted: [GuestbookPermissions::ADMIN_CLUB_VIEW]);
 
         self::assertSame(42, $useCase->count());
     }
@@ -57,7 +75,7 @@ final class ListGuestbookEntriesUseCaseTest extends TestCase
             ->with(false, 10, 20)
             ->willReturn(new Collection());
 
-        $useCase = $this->makeUseCase(UserFactory::make(rights: 1));
+        $useCase = $this->makeUseCase();
 
         self::assertSame([], $useCase->getPage(10, 20));
     }
@@ -69,7 +87,7 @@ final class ListGuestbookEntriesUseCaseTest extends TestCase
 
         $this->repository->method('getEntries')->willReturn(new Collection([$entry]));
 
-        $dtos = $this->makeUseCase(UserFactory::make(rights: 0))->getPage(10, 0);
+        $dtos = $this->makeUseCase()->getPage(10, 0);
 
         self::assertCount(1, $dtos);
         $dto = $dtos[0];
@@ -92,14 +110,18 @@ final class ListGuestbookEntriesUseCaseTest extends TestCase
         self::assertNull($dto->meta);
     }
 
-    public function testMetaDeniesManagingEntryOfHigherRankedAuthor(): void
+    public function testMetaDeniesManagingEntryOfAnAuthorStandingAbove(): void
     {
-        $author = UserFactory::make(rights: 9, attributes: ['id' => 5, 'status' => '']);
+        $author = UserFactory::make(attributes: ['id' => 5, 'status' => '']);
         $entry = $this->makeEntry(['user_id' => 5], $author);
+        $this->roles->grantTo(1, ['moderator']);
+        $this->roles->grantTo(5, ['supervisor']);
 
         $this->repository->method('getEntries')->willReturn(new Collection([$entry]));
 
-        $dto = $this->makeUseCase(UserFactory::make(rights: 6))->getPage(10, 0)[0];
+        $dto = $this->makeUseCase(
+            granted: [GuestbookPermissions::ENTRY_MANAGE, CorePermissions::USERS_ORIGIN_VIEW]
+        )->getPage(10, 0)[0];
 
         self::assertNotNull($dto->meta);
         self::assertSame('127.0.0.1', $dto->meta->ip);
@@ -117,7 +139,9 @@ final class ListGuestbookEntriesUseCaseTest extends TestCase
 
         $this->repository->method('getEntries')->willReturn(new Collection([$entry]));
 
-        $dto = $this->makeUseCase(UserFactory::make(rights: 1))->getPage(10, 0)[0];
+        $dto = $this->makeUseCase(
+            granted: [GuestbookPermissions::ENTRY_MANAGE, GuestbookPermissions::ENTRY_REPLY]
+        )->getPage(10, 0)[0];
 
         self::assertNull($dto->user);
         self::assertFalse($dto->isOnline);
@@ -129,13 +153,29 @@ final class ListGuestbookEntriesUseCaseTest extends TestCase
         self::assertSame('/guestbook/otvet?id=10', $dto->meta->replyUrl);
     }
 
-    private function makeUseCase(User $currentUser): ListGuestbookEntriesUseCase
+    /**
+     * @param list<string> $granted
+     */
+    private function makeUseCase(array $granted = []): ListGuestbookEntriesUseCase
     {
+        $legacyUser = UserFactory::make(attributes: ['id' => 1]);
+        $accessChecker = new FakeAccessChecker($granted);
+
+        $stack = new RequestStack();
+        $stack->push(Request::create('/guestbook', 'GET'));
+        $currentUser = new CurrentUser(
+            new AuthenticatorChain([new FakeAuthenticator(IdentityFactory::user(id: 1, roles: ['user', 'moderator']))]),
+            new PermissionResolver($this->roles),
+            $stack
+        );
+
         return new ListGuestbookEntriesUseCase(
             $this->repository,
             $currentUser,
-            new GuestbookMode($currentUser, $this->session),
+            new GuestbookMode($legacyUser, $this->session, $accessChecker),
             $this->makeTextFormatter(),
+            $accessChecker,
+            new RoleLevels($this->roles),
         );
     }
 

@@ -70,7 +70,7 @@
     </div>
     <div class="post-footer d-flex justify-content-between mt-2">
         <div class="overflow-hidden">
-            {% if post.meta %}
+            {% if post.meta and post.meta.ip %}
                 <div class="post-meta d-flex">
                     <div class="user-ip me-2">
                         <a href="{{ post.meta.searchIpUrl }}">{{ post.meta.ip }}</a>

@@ -111,6 +111,19 @@ final class FakeRoleRepository implements RoleRepositoryInterface
         )));
     }
 
+    public function grantedLevelsFor(array $userIds, int $now): array
+    {
+        $levels = [];
+
+        foreach ($userIds as $userId) {
+            foreach ($this->grantedTo($userId, $now) as $role) {
+                $levels[$userId] = max($levels[$userId] ?? 0, $role->level);
+            }
+        }
+
+        return $levels;
+    }
+
     public function permissionCounts(): array
     {
         return array_map(static fn (array $permissions): int => count($permissions), $this->permissions);

@@ -1417,12 +1417,6 @@ parameters:
 			path: modules/guestbook/src/Application/UseCases/ListGuestbookEntriesUseCase.php
 
 		-
-			message: '#^Parameter \$ip of class Johncms\\Modules\\Guestbook\\Application\\DTO\\GuestbookEntryMetaDTO constructor expects string, int given\.$#'
-			identifier: argument.type
-			count: 1
-			path: modules/guestbook/src/Application/UseCases/ListGuestbookEntriesUseCase.php
-
-		-
 			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Builder\:\:active\(\)\.$#'
 			identifier: method.notFound
 			count: 1

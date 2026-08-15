@@ -7,8 +7,10 @@ namespace Tests\Unit\Modules\Guestbook\Access;
 use Johncms\Http\Session;
 use Johncms\Modules\Guestbook\Application\Access\GuestbookMode;
 use Johncms\Http\Request;
+use Johncms\Modules\Guestbook\Application\Services\GuestbookPermissions;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
+use Tests\Support\FakeAccessChecker;
 use Tests\Support\UserFactory;
 
 final class GuestbookModeTest extends TestCase
@@ -20,9 +22,9 @@ final class GuestbookModeTest extends TestCase
         $this->session = new Session(new MockArraySessionStorage());
     }
 
-    public function testAdminClubRequiresSessionFlagAndRights(): void
+    public function testAdminClubRequiresSessionFlagAndThePermission(): void
     {
-        $mode = new GuestbookMode(UserFactory::make(rights: 1), $this->session);
+        $mode = new GuestbookMode(UserFactory::make(), $this->session, $this->allowed());
 
         self::assertFalse($mode->isAdminClub());
         self::assertTrue($mode->isGuestbook());
@@ -33,11 +35,11 @@ final class GuestbookModeTest extends TestCase
         self::assertFalse($mode->isGuestbook());
     }
 
-    public function testSessionFlagWithoutRightsIsIgnored(): void
+    public function testSessionFlagWithoutThePermissionIsIgnored(): void
     {
         $this->session->set('ga', 1);
 
-        $mode = new GuestbookMode(UserFactory::make(rights: 0), $this->session);
+        $mode = new GuestbookMode(UserFactory::make(), $this->session, new FakeAccessChecker());
 
         self::assertFalse($mode->isAdminClub());
     }
@@ -46,15 +48,15 @@ final class GuestbookModeTest extends TestCase
     {
         $this->session->set('ga', 1);
 
-        $user = UserFactory::make(rights: 0, attributes: ['id' => 5]);
-        $mode = new GuestbookMode($user, $this->session, [5]);
+        $user = UserFactory::make(attributes: ['id' => 5]);
+        $mode = new GuestbookMode($user, $this->session, new FakeAccessChecker(), [5]);
 
         self::assertTrue($mode->isAdminClub());
     }
 
     public function testSwitchSetsAndRemovesSessionFlag(): void
     {
-        $mode = new GuestbookMode(UserFactory::make(rights: 1), $this->session);
+        $mode = new GuestbookMode(UserFactory::make(), $this->session, $this->allowed());
 
         $mode->switch($this->makeRequest('set'));
         self::assertTrue($this->session->has('ga'));
@@ -65,11 +67,16 @@ final class GuestbookModeTest extends TestCase
 
     public function testSwitchIsIgnoredWithoutAccess(): void
     {
-        $mode = new GuestbookMode(UserFactory::make(rights: 0), $this->session);
+        $mode = new GuestbookMode(UserFactory::make(), $this->session, new FakeAccessChecker());
 
         $mode->switch($this->makeRequest('set'));
 
         self::assertFalse($this->session->has('ga'));
+    }
+
+    private function allowed(): FakeAccessChecker
+    {
+        return new FakeAccessChecker([GuestbookPermissions::ADMIN_CLUB_VIEW]);
     }
 
     private function makeRequest(string $do): Request

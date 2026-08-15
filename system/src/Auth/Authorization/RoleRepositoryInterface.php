@@ -101,4 +101,16 @@ interface RoleRepositoryInterface
      * @return Collection<int, Role>
      */
     public function grantedTo(int $userId, int $now): Collection;
+
+    /**
+     * The highest level granted to each of these accounts, in one query rather than one per
+     * account: a listing comparing the visitor against every author on the page would otherwise
+     * ask the same question a dozen times.
+     *
+     * Accounts holding nothing beyond the default roles are absent from the result.
+     *
+     * @param list<int> $userIds
+     * @return array<int, int> User id => level.
+     */
+    public function grantedLevelsFor(array $userIds, int $now): array;
 }

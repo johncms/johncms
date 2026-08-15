@@ -74,6 +74,29 @@ final class EloquentRoleRepository implements RoleRepositoryInterface
         return $roles;
     }
 
+    public function grantedLevelsFor(array $userIds, int $now): array
+    {
+        if ($userIds === []) {
+            return [];
+        }
+
+        /** @var array<int, int> $levels */
+        $levels = Role::query()
+            ->join(UserRole::query()->getModel()->getTable() . ' as ur', 'ur.role_id', '=', 'roles.id')
+            ->whereIn('ur.user_id', $userIds)
+            ->where(
+                static function (Builder $query) use ($now): void {
+                    $query->whereNull('ur.expires_at')->orWhere('ur.expires_at', '>', $now);
+                }
+            )
+            ->groupBy('ur.user_id')
+            ->selectRaw('ur.user_id AS user_id, MAX(roles.level) AS aggregate')
+            ->pluck('aggregate', 'user_id')
+            ->all();
+
+        return $levels;
+    }
+
     public function permissionCounts(): array
     {
         /** @var array<int, int> $counts */
