@@ -115,18 +115,18 @@
                 <span class="flex-grow-1">{{ d__('system', 'Contacts') }}</span>
             </a>
         </li>
-        {% if app.user.isValid and app.user.rights >= 1 %}
-            {% if app.user.rights >= 7 %}
-                <li>
-                    <div class="border-bottom mt-3 mb-3"></div>
-                    <a href="/admin/">
-                        <svg class="icon text-danger">
-                            <use xlink:href="{{ asset('icons/sprite.svg') }}#settings"/>
-                        </svg>
-                        <span class="flex-grow-1 text-danger">{{ d__('system', 'Admin Panel') }}</span>
-                    </a>
-                </li>
-            {% endif %}
+        {% if can('admin.access') %}
+            <li>
+                <div class="border-bottom mt-3 mb-3"></div>
+                <a href="/admin/">
+                    <svg class="icon text-danger">
+                        <use xlink:href="{{ asset('icons/sprite.svg') }}#settings"/>
+                    </svg>
+                    <span class="flex-grow-1 text-danger">{{ d__('system', 'Admin Panel') }}</span>
+                </a>
+            </li>
+        {% endif %}
+        {% if can('guestbook.admin_club.view') %}
             <li>
                 <a href="/guestbook/ga?do=set">
                     <svg class="icon text-danger">
