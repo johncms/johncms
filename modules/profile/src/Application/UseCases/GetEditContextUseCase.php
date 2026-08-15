@@ -18,7 +18,7 @@ final readonly class GetEditContextUseCase
 {
     public function __construct(
         private ProfileUserRepositoryInterface $profileUserRepository,
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private CurrentUser $identity,
         private AccessCheckerInterface $accessChecker,
         private RoleLevels $roleLevels,
@@ -34,7 +34,7 @@ final readonly class GetEditContextUseCase
             throw new ProfileNotFoundException();
         }
 
-        $isSelf = $profileUser->id === $this->currentUser->id;
+        $isSelf = $profileUser->id === $this->currentUser->id();
         $mayEditOthers = $this->accessChecker->allows(ProfilePermissions::PROFILE_EDIT);
         $ownLevel = $this->roleLevels->highest($this->identity->identity());
         $targetLevel = $this->roleLevels->highestGrantedTo($profileUser->id);
@@ -46,7 +46,7 @@ final readonly class GetEditContextUseCase
         }
 
         // A banned editor may not change any profile
-        if (! empty($this->currentUser->ban)) {
+        if (! empty($this->currentUser->user()->ban)) {
             throw new ProfileAccessForbiddenException();
         }
 

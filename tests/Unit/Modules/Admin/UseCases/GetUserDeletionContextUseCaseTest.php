@@ -21,6 +21,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Tests\Support\BootsInMemoryDatabase;
 use Tests\Support\FakeAuthenticator;
 use Tests\Support\FakeRoleRepository;
+use Tests\Support\FakeUserRepository;
 use Tests\Support\IdentityFactory;
 
 final class GetUserDeletionContextUseCaseTest extends TestCase
@@ -97,7 +98,8 @@ final class GetUserDeletionContextUseCaseTest extends TestCase
         $currentUser = new CurrentUser(
             new AuthenticatorChain([new FakeAuthenticator(IdentityFactory::user(id: $viewerId))]),
             new PermissionResolver($this->roles),
-            $stack
+            $stack,
+            new FakeUserRepository()
         );
 
         return new GetUserDeletionContextUseCase(

@@ -4,24 +4,24 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Profile\Application\UseCases;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Profile\Application\Exceptions\BanException;
 use Johncms\Modules\Profile\Application\Exceptions\ProfileNotFoundException;
 use Johncms\Modules\Profile\Domain\Repository\BanRepositoryInterface;
 use Johncms\Users\Ban;
-use Johncms\Users\User;
 
 final readonly class CancelBanUseCase
 {
     public function __construct(
         private BanRepositoryInterface $banRepository,
-        private User $currentUser,
+        private CurrentUser $currentUser,
     ) {
     }
 
     public function getCancelableBan(int $targetId, int $banId): Ban
     {
         // A ban cannot be cancelled on yourself
-        if ($targetId === $this->currentUser->id) {
+        if ($targetId === $this->currentUser->id()) {
             throw new ProfileNotFoundException();
         }
 

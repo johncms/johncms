@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Profile\Application\UseCases;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Auth\Password\PasswordHasherInterface;
 use Johncms\Modules\Profile\Application\DTO\ChangePasswordCommand;
 use Johncms\Modules\Profile\Application\Exceptions\ChangePasswordException;
 use Johncms\Modules\Profile\Application\Exceptions\ProfileNotFoundException;
 use Johncms\Modules\Profile\Domain\Repository\ProfileUserRepositoryInterface;
-use Johncms\Users\User;
 
 final readonly class ChangePasswordUseCase
 {
     public function __construct(
         private ProfileUserRepositoryInterface $profileUserRepository,
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private PasswordHasherInterface $hasher,
     ) {
     }
@@ -27,7 +27,7 @@ final readonly class ChangePasswordUseCase
             throw new ProfileNotFoundException();
         }
 
-        $isSelf = $profileUser->id === $this->currentUser->id;
+        $isSelf = $profileUser->id === $this->currentUser->id();
 
         $errors = [];
         if ($isSelf) {

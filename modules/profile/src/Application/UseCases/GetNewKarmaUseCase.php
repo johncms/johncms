@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Profile\Application\UseCases;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Profile\Application\DTO\KarmaListDTO;
 use Johncms\Modules\Profile\Domain\Repository\KarmaRepositoryInterface;
 use Johncms\Smilies\SmiliesRendererInterface;
 use Johncms\Users\Karma;
-use Johncms\Users\User;
 use Johncms\Utils\DateFormatterInterface;
 use Johncms\Utils\PlainTextFormatter;
 
@@ -18,18 +18,18 @@ final readonly class GetNewKarmaUseCase
         private KarmaRepositoryInterface $karmaRepository,
         private DateFormatterInterface $dateFormatter,
         private SmiliesRendererInterface $smiliesRenderer,
-        private User $currentUser,
+        private CurrentUser $currentUser,
     ) {
     }
 
     public function count(): int
     {
-        return $this->karmaRepository->countVotesReceivedAfter($this->currentUser->id, time() - 86400);
+        return $this->karmaRepository->countVotesReceivedAfter($this->currentUser->id(), time() - 86400);
     }
 
     public function getPage(int $limit, int $offset): KarmaListDTO
     {
-        $userId = $this->currentUser->id;
+        $userId = $this->currentUser->id();
         $votes = $this->karmaRepository->getReceivedAfter($userId, time() - 86400, $limit, $offset);
 
         $items = [];

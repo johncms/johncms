@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Profile\Application\Controllers;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Comments;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Http\PageMeta;
@@ -12,13 +13,12 @@ use Johncms\Modules\Profile\Application\UseCases\GetGuestbookContextUseCase;
 use Johncms\Modules\Profile\Application\UseCases\MarkGuestbookReadUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\Users\User;
 
 final readonly class GuestbookController
 {
     public function __construct(
         private NavChain $navChain,
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private GetGuestbookContextUseCase $getGuestbookContextUseCase,
         private MarkGuestbookReadUseCase $markGuestbookReadUseCase,
     ) {
@@ -48,7 +48,7 @@ final readonly class GuestbookController
         $mod = $request->queryParam('mod', '');
         $page = max(1, $request->queryInt('page', 1));
         $start = $request->query->has('page')
-            ? ($page - 1) * (int) $this->currentUser->config->kmess
+            ? ($page - 1) * (int) $this->currentUser->user()->config->kmess
             : abs($request->queryInt('start', 0));
 
         // Reset the unread counter only when the owner simply views the guestbook (not during reply/edit/delete)

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Application\Controllers\Ip;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
@@ -17,7 +18,6 @@ use Johncms\NavChain;
 use Johncms\Http\Environment;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
-use Johncms\Users\User;
 
 final readonly class IpBanController
 {
@@ -26,7 +26,7 @@ final readonly class IpBanController
     public function __construct(
         private Environment $environment,
         private NavChain $navChain,
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private GetIpBanListUseCase $getList,
         private PrepareIpBanUseCase $prepareIpBan,
         private StoreIpBanUseCase $storeIpBan,
@@ -77,7 +77,7 @@ final readonly class IpBanController
         return new ViewResponse('@admin/ip-ban-form.twig', $this->menuData($title, $title) + [
             'form_action'  => self::URL . '/new',
             'errors'       => $errors,
-            'field_height' => $this->currentUser->config->fieldHeight,
+            'field_height' => $this->currentUser->user()->config->fieldHeight,
         ]);
     }
 
@@ -113,7 +113,7 @@ final readonly class IpBanController
             $ip2,
             $request->bodyInt('term', 1),
             trim($request->body('url', '')),
-            $this->currentUser->name,
+            $this->currentUser->user()->name,
             trim($request->body('reason', '')),
         );
 
@@ -211,7 +211,7 @@ final readonly class IpBanController
         return new ViewResponse('@admin/ip-bans.twig', $this->menuData($title, $title) + [
             'items'        => $conflicts->map(fn (BanIp $ban): array => $this->listRow($ban))->all(),
             'total'        => $conflicts->count(),
-            'per_page'     => $this->currentUser->config->kmess,
+            'per_page'     => $this->currentUser->user()->config->kmess,
             'show_actions' => false,
             'message'      => __('Address you entered conflicts with other who in the database'),
             'add_url'      => self::URL . '/new',

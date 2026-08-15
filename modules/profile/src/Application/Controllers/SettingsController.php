@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Profile\Application\Controllers;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Profile\Application\DTO\UpdateForumSettingsCommand;
 use Johncms\Modules\Profile\Application\DTO\UpdateMailSettingsCommand;
 use Johncms\Modules\Profile\Application\DTO\UpdateUserSettingsCommand;
@@ -14,13 +15,12 @@ use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
-use Johncms\Users\User;
 
 final readonly class SettingsController
 {
     public function __construct(
         private NavChain $navChain,
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private UserSettingsUseCase $userSettingsUseCase,
         private ForumSettingsUseCase $forumSettingsUseCase,
         private MailSettingsUseCase $mailSettingsUseCase,
@@ -34,17 +34,17 @@ final readonly class SettingsController
 
         $data = [
             'buttons'     => $this->buttons('general'),
-            'user_config' => $this->currentUser->config,
+            'user_config' => $this->currentUser->user()->config,
             'site_lng'    => $config['lng'],
             'lng_list'        => [],
             'user_lng'        => '',
             'form_action'     => '/profile/settings',
-            'system_time'     => date('H:i', time() + ($config['timeshift'] + $this->currentUser->set_user->timeshift) * 3600),
+            'system_time'     => date('H:i', time() + ($config['timeshift'] + $this->currentUser->user()->set_user->timeshift) * 3600),
             'success_message' => $this->pullFlash(),
         ];
 
         if (count($config['lng_list']) > 1) {
-            $data['user_lng'] = $this->currentUser->set_user->lng ?? $config['lng'];
+            $data['user_lng'] = $this->currentUser->user()->set_user->lng ?? $config['lng'];
             $data['lng_list'] = $config['lng_list'];
         }
 
@@ -62,7 +62,7 @@ final readonly class SettingsController
             lng: trim($request->body('iso', '')),
         );
 
-        $selectedLng = $this->userSettingsUseCase->save($command, $this->currentUser);
+        $selectedLng = $this->userSettingsUseCase->save($command, $this->currentUser->user());
         if ($selectedLng !== null) {
             $this->session->set('lng', $selectedLng);
         }
@@ -73,14 +73,14 @@ final readonly class SettingsController
 
     public function resetGeneral(): ViewResponse
     {
-        $this->userSettingsUseCase->reset($this->currentUser);
+        $this->userSettingsUseCase->reset($this->currentUser->user());
         $this->session->flash('reset_ok', true);
         redirect('/profile/settings');
     }
 
     public function forum(): ViewResponse
     {
-        return $this->renderForumView($this->forumSettingsUseCase->getCurrent($this->currentUser), null);
+        return $this->renderForumView($this->forumSettingsUseCase->getCurrent($this->currentUser->user()), null);
     }
 
     public function saveForum(Request $request): ViewResponse
@@ -92,19 +92,19 @@ final readonly class SettingsController
             postclip: $request->bodyInt('postclip', 1),
         );
 
-        $setForum = $this->forumSettingsUseCase->save($command, $this->currentUser);
+        $setForum = $this->forumSettingsUseCase->save($command, $this->currentUser->user());
 
         return $this->renderForumView($setForum, __('Settings saved successfully'));
     }
 
     public function resetForum(): ViewResponse
     {
-        return $this->renderForumView($this->forumSettingsUseCase->reset($this->currentUser), __('Default settings are set'));
+        return $this->renderForumView($this->forumSettingsUseCase->reset($this->currentUser->user()), __('Default settings are set'));
     }
 
     public function mail(): ViewResponse
     {
-        return $this->renderMailView($this->mailSettingsUseCase->getCurrent($this->currentUser), null);
+        return $this->renderMailView($this->mailSettingsUseCase->getCurrent($this->currentUser->user()), null);
     }
 
     public function saveMail(Request $request): ViewResponse
@@ -113,7 +113,7 @@ final readonly class SettingsController
             access: $request->bodyInt('access'),
         );
 
-        $setMail = $this->mailSettingsUseCase->save($command, $this->currentUser);
+        $setMail = $this->mailSettingsUseCase->save($command, $this->currentUser->user());
 
         return $this->renderMailView($setMail, __('Settings saved successfully'));
     }

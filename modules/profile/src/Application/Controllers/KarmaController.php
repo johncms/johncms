@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Profile\Application\Controllers;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\CurrentUser;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Http\Pagination\Pagination;
 use Johncms\Http\Pagination\PaginationFactory;
@@ -23,14 +24,13 @@ use Johncms\Modules\Profile\Application\UseCases\GetVoteContextUseCase;
 use Johncms\Modules\Profile\Application\UseCases\VoteKarmaUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\Response;
 
 final readonly class KarmaController
 {
     public function __construct(
         private NavChain $navChain,
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private AccessCheckerInterface $accessChecker,
         private GetKarmaListUseCase $getKarmaListUseCase,
         private GetNewKarmaUseCase $getNewKarmaUseCase,
@@ -223,7 +223,7 @@ final readonly class KarmaController
         return new ViewResponse(
             '@profile/public/karma-vote.twig',
             [
-                'field_height' => $this->currentUser->config->fieldHeight,
+                'field_height' => $this->currentUser->user()->config->fieldHeight,
                 'title'        => $title,
                 'page_title'   => $title,
                 'options'      => range(1, $context->availablePoints),

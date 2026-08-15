@@ -46,7 +46,7 @@ final readonly class GetProfileViewUseCase
         private BanAccess $banAccess,
         private CurrentUser $identity,
         private RoleLevels $roleLevels,
-        private User $currentUser,
+        private CurrentUser $currentUser,
     ) {
     }
 
@@ -60,7 +60,7 @@ final readonly class GetProfileViewUseCase
         }
 
         $config = config('johncms');
-        $isOwner = $profileUser->id === $this->currentUser->id;
+        $isOwner = $profileUser->id === $this->currentUser->id();
         $contactState = $this->contactState($profileUser->id);
         // Where the two of them stand relative to each other: it decides the buttons and whether
         // the address the account signed in from is shown at all
@@ -96,8 +96,8 @@ final readonly class GetProfileViewUseCase
             showIp: ! $targetStandsAbove && $this->accessChecker->allows(CorePermissions::USERS_ORIGIN_VIEW),
             canWrite: ! $this->isIgnored($profileUser->id)
                 && $contactState !== 2
-                && ! isset($this->currentUser->ban['1'])
-                && ! isset($this->currentUser->ban['3']),
+                && ! isset($this->currentUser->user()->ban['1'])
+                && ! isset($this->currentUser->user()->ban['3']),
             blocked: $contactState === 2,
             notifications: $notifications,
             activeBan: $activeBan,
@@ -126,22 +126,22 @@ final readonly class GetProfileViewUseCase
         $data['positive_url'] = '/profile/' . $profileUser->id . '/karma?type=1';
         $data['negative_url'] = '/profile/' . $profileUser->id . '/karma';
 
-        if ($profileUser->id !== $this->currentUser->id) {
+        if ($profileUser->id !== $this->currentUser->id()) {
             $karmaForStaff = ! empty($config['karma']['adm']) || ! $this->staffTitles->isStaff((int) $profileUser->id);
-            $canVote = ! $this->currentUser->karma_off
+            $canVote = ! $this->currentUser->user()->karma_off
                 && $karmaForStaff
-                && $profileUser->ip !== $this->currentUser->ip;
+                && $profileUser->ip !== $this->currentUser->user()->ip;
             if ($canVote) {
-                $sum = $this->karmaRepository->sumPointsGivenSince($this->currentUser->id, $this->currentUser->karma_time);
+                $sum = $this->karmaRepository->sumPointsGivenSince($this->currentUser->id(), $this->currentUser->user()->karma_time);
                 $count = $this->karmaRepository->countVotesGivenTo(
-                    $this->currentUser->id,
+                    $this->currentUser->id(),
                     $profileUser->id,
-                    $this->currentUser->karma_time,
+                    $this->currentUser->user()->karma_time,
                     time() - 86400
                 );
                 if (
-                    empty($this->currentUser->ban)
-                    && $this->currentUser->postforum >= $config['karma']['forum']
+                    empty($this->currentUser->user()->ban)
+                    && $this->currentUser->user()->postforum >= $config['karma']['forum']
                     && ($config['karma']['karma_points'] - $sum) > 0
                     && ! $count
                 ) {
@@ -149,9 +149,9 @@ final readonly class GetProfileViewUseCase
                 }
             }
         } else {
-            $totalKarma = $this->karmaRepository->countVotesReceivedAfter($this->currentUser->id, time() - 86400);
+            $totalKarma = $this->karmaRepository->countVotesReceivedAfter($this->currentUser->id(), time() - 86400);
             if ($totalKarma > 0) {
-                $data['karma_new_url'] = '/profile/' . $this->currentUser->id . '/karma/new';
+                $data['karma_new_url'] = '/profile/' . $this->currentUser->id() . '/karma/new';
                 $data['karma_new'] = $totalKarma;
             }
         }
@@ -186,7 +186,7 @@ final readonly class GetProfileViewUseCase
         bool $targetStandsBelow
     ): array {
         $buttons = [];
-        $isOwner = $profileUser->id === $this->currentUser->id;
+        $isOwner = $profileUser->id === $this->currentUser->id();
 
         if ($contactState !== 2) {
             $buttons[] = $contactState === 0
@@ -214,7 +214,7 @@ final readonly class GetProfileViewUseCase
      */
     private function contactState(int $targetId): int
     {
-        $contact = $this->contactRepository->findContact($this->currentUser->id, $targetId);
+        $contact = $this->contactRepository->findContact($this->currentUser->id(), $targetId);
         if ($contact === null) {
             return 0;
         }
@@ -227,7 +227,7 @@ final readonly class GetProfileViewUseCase
      */
     private function isIgnored(int $targetId): bool
     {
-        $contact = $this->contactRepository->findContact($targetId, $this->currentUser->id);
+        $contact = $this->contactRepository->findContact($targetId, $this->currentUser->id());
 
         return $contact !== null && $contact->ban == 1;
     }

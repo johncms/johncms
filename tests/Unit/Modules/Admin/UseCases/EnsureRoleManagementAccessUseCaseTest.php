@@ -23,6 +23,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Tests\Support\BootsInMemoryDatabase;
 use Tests\Support\FakeAuthenticator;
 use Tests\Support\FakeRoleRepository;
+use Tests\Support\FakeUserRepository;
 use Tests\Support\IdentityFactory;
 
 final class EnsureRoleManagementAccessUseCaseTest extends TestCase
@@ -101,7 +102,8 @@ final class EnsureRoleManagementAccessUseCaseTest extends TestCase
         $currentUser = new CurrentUser(
             new AuthenticatorChain([new FakeAuthenticator($identity)]),
             new PermissionResolver($this->roles),
-            $stack
+            $stack,
+            new FakeUserRepository()
         );
 
         $levels = new RoleLevels($this->roles);

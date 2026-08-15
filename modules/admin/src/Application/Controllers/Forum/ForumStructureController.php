@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Admin\Application\Controllers\Forum;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Admin\Application\Services\AdminPermissions;
 use Johncms\Modules\Admin\Application\UseCases\AddForumSectionUseCase;
 use Johncms\Modules\Admin\Application\UseCases\DeleteForumSectionUseCase;
@@ -15,7 +16,6 @@ use Johncms\Modules\Forum\Domain\Models\ForumSection;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
-use Johncms\Users\User;
 use Johncms\Validator\Rules\StringLength;
 use Johncms\Validator\ValidatorInterface;
 
@@ -26,7 +26,7 @@ final readonly class ForumStructureController
     public function __construct(
         private NavChain $navChain,
         private ForumSectionTreeService $sectionTree,
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private AccessCheckerInterface $accessChecker,
         private ForumStructureRepositoryInterface $repository,
         private AddForumSectionUseCase $addSection,
@@ -98,7 +98,7 @@ final readonly class ForumStructureController
             'parent_section_name' => $parentName,
             'form_action'         => self::URL . '/new' . ($parentId ? '?parent=' . $parentId : ''),
             'back_url'            => self::URL . ($parentId ? '?id=' . $parentId : ''),
-            'field_height'        => $this->currentUser->config->fieldHeight,
+            'field_height'        => $this->currentUser->user()->config->fieldHeight,
             'errors'              => $errors,
             'access_options'      => $this->accessOptions(),
             'type_options'        => $this->sectionTypeOptions(),

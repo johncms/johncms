@@ -12,6 +12,7 @@ use Johncms\Auth\AuthMethod;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Auth\Authorization\PermissionResolver;
+use Johncms\Auth\CurrentUser;
 use Johncms\Auth\Identity;
 use Johncms\Auth\Session\SignInManager;
 use Johncms\Http\Request;
@@ -40,7 +41,7 @@ final readonly class UsersController
     ) {
     }
 
-    public function login(Request $request, User $user): Response|ViewResponse
+    public function login(Request $request, CurrentUser $user): Response|ViewResponse
     {
         if ($user->isValid()) {
             redirect('/admin/');

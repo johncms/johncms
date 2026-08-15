@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Profile\Application\Controllers;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\CurrentUser;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Http\Pagination\Pagination;
 use Johncms\Http\Pagination\PaginationFactory;
@@ -30,7 +31,7 @@ final readonly class BanController
 {
     public function __construct(
         private NavChain $navChain,
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private AccessCheckerInterface $accessChecker,
         private GetBanHistoryUseCase $getBanHistoryUseCase,
         private GetBanFormContextUseCase $getBanFormContextUseCase,
@@ -239,7 +240,7 @@ final readonly class BanController
         return new ViewResponse(
             '@profile/public/ban.twig',
             [
-                'field_height' => $this->currentUser->config->fieldHeight,
+                'field_height' => $this->currentUser->user()->config->fieldHeight,
                 'title'        => $title,
                 'page_title'   => $title,
                 'form_action'  => '/profile/' . $target->id . '/bans/new',

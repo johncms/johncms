@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Profile\Application\Controllers;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Profile\Application\DTO\EditProfileContextDTO;
 use Johncms\Modules\Profile\Application\DTO\UpdateProfileCommand;
@@ -29,7 +30,7 @@ final readonly class EditProfileController
         private DeleteAvatarUseCase $deleteAvatarUseCase,
         private DeletePhotoUseCase $deletePhotoUseCase,
         private Session $session,
-        private User $currentUser,
+        private CurrentUser $currentUser,
     ) {
     }
 
@@ -181,7 +182,7 @@ final readonly class EditProfileController
                 'back_url'        => '/profile/' . $context->profileUser->id,
                 'form_action'     => '/profile/' . $context->profileUser->id . '/edit',
                 'has_avatar'      => $hasAvatar,
-                'field_height'    => $this->currentUser->config->fieldHeight,
+                'field_height'    => $this->currentUser->user()->config->fieldHeight,
                 'user'            => $userArray,
                 'form_data'       => $formData,
                 'can_edit_admin_fields' => $context->canEditAdminFields,

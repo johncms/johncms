@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Profile\Application\Controllers;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Auth\Session\SessionRevocationReason;
 use Johncms\Auth\Session\SignInManager;
 use Johncms\Http\View\ViewResponse;
@@ -16,13 +17,12 @@ use Johncms\Modules\Profile\Application\UseCases\ChangePasswordUseCase;
 use Johncms\Modules\Profile\Application\UseCases\GetChangePasswordContextUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\Users\User;
 
 final readonly class ChangePasswordController
 {
     public function __construct(
         private NavChain $navChain,
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private GetChangePasswordContextUseCase $getChangePasswordContextUseCase,
         private ChangePasswordUseCase $changePasswordUseCase,
         private SignInManager $signInManager,

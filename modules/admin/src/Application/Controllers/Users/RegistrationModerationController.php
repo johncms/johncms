@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Application\Controllers\Users;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
@@ -15,7 +16,6 @@ use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
-use Johncms\Users\User;
 
 final readonly class RegistrationModerationController
 {
@@ -23,7 +23,7 @@ final readonly class RegistrationModerationController
 
     public function __construct(
         private NavChain $navChain,
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private GetPendingRegistrationsUseCase $getPendingRegistrations,
         private ApproveRegistrationUseCase $approveRegistration,
         private DeleteRegistrationUseCase $deleteRegistration,
@@ -69,7 +69,7 @@ final readonly class RegistrationModerationController
     public function approve(Request $request): ViewResponse
     {
         if (($id = $this->postedId($request)) > 0) {
-            $this->approveRegistration->execute($id, $this->currentUser->name);
+            $this->approveRegistration->execute($id, $this->currentUser->user()->name);
             $this->session->flash('success_message', __('Registration is confirmed'));
         }
 
@@ -78,7 +78,7 @@ final readonly class RegistrationModerationController
 
     public function approveAll(): ViewResponse
     {
-        $this->approveRegistration->executeAll($this->currentUser->name);
+        $this->approveRegistration->executeAll($this->currentUser->user()->name);
         $this->session->flash('success_message', __('Registration is confirmed'));
 
         redirect(self::URL);

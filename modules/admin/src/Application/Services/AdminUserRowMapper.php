@@ -7,6 +7,7 @@ namespace Johncms\Modules\Admin\Application\Services;
 use Illuminate\Support\Collection;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\Authorization\CorePermissions;
+use Johncms\Auth\CurrentUser;
 use Johncms\Users\User;
 
 /**
@@ -15,7 +16,7 @@ use Johncms\Users\User;
 final readonly class AdminUserRowMapper
 {
     public function __construct(
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private AccessCheckerInterface $accessChecker,
     ) {
     }
@@ -51,7 +52,7 @@ final readonly class AdminUserRowMapper
             'buttons'                 => $this->roleButtons($user),
         ];
 
-        if ($this->currentUser->isValid() && $this->currentUser->id !== $user->id) {
+        if ($this->currentUser->isValid() && $this->currentUser->id() !== $user->id) {
             $item['user_profile_link'] = '/profile/' . $user->id;
         }
 

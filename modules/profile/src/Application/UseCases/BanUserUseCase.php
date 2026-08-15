@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Profile\Application\UseCases;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Profile\Application\Access\BanAccess;
 use Johncms\Modules\Profile\Application\DTO\BanUserCommand;
 use Johncms\Modules\Profile\Application\Exceptions\BanException;
@@ -22,7 +23,7 @@ final readonly class BanUserUseCase
         private ProfileUserRepositoryInterface $profileUserRepository,
         private AccessCheckerInterface $accessChecker,
         private BanAccess $banAccess,
-        private User $currentUser,
+        private CurrentUser $currentUser,
     ) {
     }
 
@@ -55,7 +56,7 @@ final readonly class BanUserUseCase
         }
 
         $now = time();
-        $this->banRepository->add($target->id, $now + $duration, $now, $term, $this->currentUser->name, $reason);
+        $this->banRepository->add($target->id, $now + $duration, $now, $term, $this->currentUser->user()->name, $reason);
 
         $karmaConfig = config('johncms')['karma'];
         if (! empty($karmaConfig['on'])) {

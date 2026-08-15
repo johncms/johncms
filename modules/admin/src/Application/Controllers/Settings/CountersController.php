@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Application\Controllers\Settings;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Admin\Application\UseCases\GetCounterListUseCase;
 use Johncms\Modules\Admin\Application\UseCases\ManageCounterUseCase;
 use Johncms\Modules\Admin\Application\UseCases\SaveCounterUseCase;
@@ -11,7 +12,6 @@ use Johncms\Modules\Admin\Domain\Models\Counter;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
-use Johncms\Users\User;
 
 final readonly class CountersController
 {
@@ -19,7 +19,7 @@ final readonly class CountersController
 
     public function __construct(
         private NavChain $navChain,
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private GetCounterListUseCase $getList,
         private SaveCounterUseCase $saveCounter,
         private ManageCounterUseCase $manageCounter,
@@ -184,7 +184,7 @@ final readonly class CountersController
             'mode'                   => $counter?->mode ?? 0,
             'require_cookie_consent' => (bool) ($counter?->require_cookie_consent ?? false),
             'enabled'                => $counter === null ? true : $counter->switch === 1,
-            'field_height'           => $this->currentUser->config->fieldHeight,
+            'field_height'           => $this->currentUser->user()->config->fieldHeight,
         ]);
     }
 

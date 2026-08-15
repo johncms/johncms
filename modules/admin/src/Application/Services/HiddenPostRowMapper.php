@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Application\Services;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Domain\Models\ForumMessage;
 use Johncms\Modules\Forum\Domain\Models\ForumTopic;
@@ -21,7 +22,7 @@ final readonly class HiddenPostRowMapper
     public function __construct(
         private DateFormatterInterface $dateFormatter,
         private ForumTopicPathService $topicPath,
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private AccessCheckerInterface $accessChecker,
     ) {
     }
@@ -81,6 +82,6 @@ final readonly class HiddenPostRowMapper
 
     private function profileLink(?int $userId): string
     {
-        return $userId && $this->currentUser->id !== $userId ? '/profile/' . $userId : '';
+        return $userId && $this->currentUser->id() !== $userId ? '/profile/' . $userId : '';
     }
 }

@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Profile\Application\UseCases;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Profile\Application\DTO\VoteContextDTO;
 use Johncms\Modules\Profile\Application\DTO\VoteKarmaCommand;
 use Johncms\Modules\Profile\Domain\Repository\KarmaRepositoryInterface;
 use Johncms\Modules\Profile\Domain\Repository\ProfileUserRepositoryInterface;
 use Johncms\Notifications\Notification;
 use Johncms\Smilies\SmiliesRendererInterface;
-use Johncms\Users\User;
 use Johncms\Utils\PlainTextFormatter;
 
 final readonly class VoteKarmaUseCase
@@ -19,7 +19,7 @@ final readonly class VoteKarmaUseCase
         private ProfileUserRepositoryInterface $profileUserRepository,
         private KarmaRepositoryInterface $karmaRepository,
         private SmiliesRendererInterface $smiliesRenderer,
-        private User $currentUser,
+        private CurrentUser $currentUser,
     ) {
     }
 
@@ -33,8 +33,8 @@ final readonly class VoteKarmaUseCase
         }
 
         $this->karmaRepository->addVote(
-            $this->currentUser->id,
-            $this->currentUser->name,
+            $this->currentUser->id(),
+            $this->currentUser->user()->name,
             $context->targetId,
             $points,
             $type,
@@ -49,9 +49,9 @@ final readonly class VoteKarmaUseCase
                 'module'     => 'karma',
                 'event_type' => 'new_vote',
                 'user_id'    => $context->targetId,
-                'sender_id'  => $this->currentUser->id,
+                'sender_id'  => $this->currentUser->id(),
                 'fields'     => [
-                    'user_name'   => htmlspecialchars($this->currentUser->name),
+                    'user_name'   => htmlspecialchars($this->currentUser->user()->name),
                     'karma_url'   => '/profile/' . $context->targetId . '/karma?type=2',
                     'vote_points' => ($type ? '+' : '-') . $points,
                     'message'     => $this->smiliesRenderer->render(PlainTextFormatter::escape($text)),
