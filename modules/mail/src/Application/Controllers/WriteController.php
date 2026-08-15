@@ -4,27 +4,28 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Mail\Application\Controllers;
 
-use Johncms\Http\View\ViewResponse;
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
+use Johncms\Http\Request;
 use Johncms\Http\UploadedFileMapper;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Mail\Application\DTO\SendMessageCommand;
 use Johncms\Modules\Mail\Application\Exceptions\SendMessageException;
 use Johncms\Modules\Mail\Application\Exceptions\UserNotFoundException;
 use Johncms\Modules\Mail\Application\UseCases\GetConversationUseCase;
 use Johncms\Modules\Mail\Application\UseCases\SendMessageUseCase;
 use Johncms\NavChain;
-use Johncms\Http\Request;
 use Johncms\System\Utility\EditorContentNormalizer;
-use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 final readonly class WriteController
 {
     public function __construct(
+        private AccessCheckerInterface $accessChecker,
         private NavChain $navChain,
-        private User $currentUser,
         private EditorContentNormalizer $editorContentNormalizer,
         private GetConversationUseCase $getConversationUseCase,
         private SendMessageUseCase $sendMessageUseCase,
@@ -103,7 +104,7 @@ final readonly class WriteController
                 'page_title'  => $conversationTitle,
                 'description' => $meta->description,
                 'ask_recipient' => $result->showNickInput,
-                'can_see_meta'  => $this->currentUser->isValid() && $this->currentUser->rights > 0,
+                'can_see_meta'  => $this->accessChecker->allows(CorePermissions::USERS_ORIGIN_VIEW),
                 'data' => [
                     'errors'          => [],
                     'form_action'     => $result->formAction,

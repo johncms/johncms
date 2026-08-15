@@ -3,7 +3,7 @@ msgstr ""
 "X-Domain: online\n"
 
 #: modules/online/src/Application/Controllers/GuestController.php:32
-#: modules/online/src/Application/FiltersBuilder.php:23
+#: modules/online/src/Application/FiltersBuilder.php:25
 msgid "Guests"
 msgstr ""
 
@@ -15,12 +15,12 @@ msgstr ""
 #: modules/online/src/Application/Controllers/IndexController.php:56
 #: modules/online/src/Application/Controllers/IpController.php:31
 #: modules/online/src/Application/Controllers/IpController.php:42
-#: modules/online/src/Application/Middlewares/OnlineAdminMiddleware.php:26
+#: modules/online/src/Application/Middlewares/OnlineAdminMiddleware.php:27
 msgid "Online"
 msgstr ""
 
 #: modules/online/src/Application/Controllers/HistoryController.php:32
-#: modules/online/src/Application/FiltersBuilder.php:19
+#: modules/online/src/Application/FiltersBuilder.php:21
 msgid "History"
 msgstr ""
 
@@ -29,15 +29,15 @@ msgid "Who is online?"
 msgstr ""
 
 #: modules/online/src/Application/Controllers/IpController.php:29
-#: modules/online/src/Application/FiltersBuilder.php:24
+#: modules/online/src/Application/FiltersBuilder.php:26
 msgid "IP Activity"
 msgstr ""
 
-#: modules/online/src/Application/FiltersBuilder.php:18
+#: modules/online/src/Application/FiltersBuilder.php:20
 msgid "Users"
 msgstr ""
 
-#: modules/online/src/Application/Middlewares/OnlineAdminMiddleware.php:28
+#: modules/online/src/Application/Middlewares/OnlineAdminMiddleware.php:29
 msgid "Access denied"
 msgstr ""
 

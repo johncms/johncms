@@ -6,28 +6,31 @@ namespace Johncms\Modules\News\Application\Controllers;
 
 use Carbon\Carbon;
 use Exception;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Arr;
+use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\FileInfo;
 use Johncms\Files\FileStorage;
+use Johncms\Http\Environment;
 use Johncms\Http\Pagination\PaginationFactory;
+use Johncms\Http\Request;
 use Johncms\Media\MediaEmbed;
+use Johncms\Modules\News\Application\Services\NewsPermissions;
 use Johncms\Modules\News\Domain\Models\NewsArticle;
 use Johncms\Modules\News\Domain\Models\NewsComments;
 use Johncms\Security\HTMLPurifier;
 use Johncms\Smilies\SmiliesRendererInterface;
-use Johncms\Http\Environment;
-use Johncms\Http\Request;
-use Johncms\View\Twig\Runtime\AssetRuntime;
 use Johncms\Users\User;
+use Johncms\View\Twig\Runtime\AssetRuntime;
 use League\Flysystem\FilesystemException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 final readonly class CommentsController
 {
     public function __construct(
+        private AccessCheckerInterface $accessChecker,
         private PaginationFactory $paginationFactory,
     ) {
     }
@@ -64,10 +67,12 @@ final readonly class CommentsController
         $currentPage = $pagination->getCurrentPage();
         $lastPage = $pagination->getTotalPages();
 
+        $canModerate = $this->accessChecker->allows(NewsPermissions::COMMENTS_MODERATE);
+
         $array = [
             'current_page'   => $currentPage,
             'data'           => $comments->map(
-                static function (NewsComments $comment) use ($assets, $smiliesRenderer, $current_user, $purifier, $embed) {
+                static function (NewsComments $comment) use ($assets, $smiliesRenderer, $current_user, $purifier, $embed, $canModerate) {
                     $user = $comment->user;
                     $user_data = [];
                     if ($user) {
@@ -104,7 +109,7 @@ final readonly class CommentsController
                         $message['can_reply'] = true;
                     }
 
-                    if ($current_user->rights > 6) {
+                    if ($canModerate) {
                         $message['can_delete'] = true;
                         $message['user_agent'] = Arr::get($comment->user_data, 'user_agent', '');
                         $message['ip'] = Arr::get($comment->user_data, 'ip', '');
@@ -181,7 +186,7 @@ final readonly class CommentsController
 
         try {
             $post = (new NewsComments())->findOrFail($comment_id);
-            if ($user->rights >= 6 || $user->id === $post->user_id) {
+            if ($user->id === $post->user_id || $this->accessChecker->allows(NewsPermissions::COMMENTS_MODERATE)) {
                 try {
                     if (! empty($post->attached_files)) {
                         foreach ($post->attached_files as $attached_file) {

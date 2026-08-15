@@ -63,7 +63,7 @@
             {% endif %}
         </div>
     {% endif %}
-    {% if app.user.isValid and app.user.rights %}
+    {% if can('users.origin.view') %}
         <div class="post-footer d-flex justify-content-between">
             <div class="overflow-hidden">
                 <div class="post-meta d-flex">

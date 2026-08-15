@@ -12,6 +12,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Help\Application\Controllers;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
 use Johncms\Users\User;
@@ -21,6 +23,7 @@ final readonly class SmiliesCatalogController
     private const USER_SMILIES_MAX = 20;
 
     public function __construct(
+        private AccessCheckerInterface $accessChecker,
         private NavChain $navChain,
         private User $currentUser,
     ) {
@@ -45,7 +48,7 @@ final readonly class SmiliesCatalogController
             ];
         }
 
-        if ($this->currentUser->rights >= 1) {
+        if ($this->accessChecker->allows(CorePermissions::SMILIES_ADMIN_USE)) {
             $items[] = [
                 'url'   => '/help/smilies/admin/',
                 'name'  => __('For administration'),

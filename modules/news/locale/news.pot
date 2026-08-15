@@ -19,6 +19,7 @@ msgstr ""
 #: modules/news/src/Application/Controllers/SectionController.php:35
 #: modules/news/src/Application/MetaTagsManager.php:105
 #: modules/news/src/Application/MetaTagsManager.php:106
+#: modules/news/src/Application/Services/NewsPermissions.php:28
 msgid "News"
 msgstr ""
 
@@ -61,7 +62,7 @@ msgid "The article was successfully deleted"
 msgstr ""
 
 #: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:326
-#: modules/news/src/Application/Controllers/CommentsController.php:217
+#: modules/news/src/Application/Controllers/CommentsController.php:222
 msgid "Only images are allowed"
 msgstr ""
 
@@ -108,31 +109,31 @@ msgstr ""
 msgid "The section was successfully deleted"
 msgstr ""
 
-#: modules/news/src/Application/Controllers/CommentsController.php:46
+#: modules/news/src/Application/Controllers/CommentsController.php:49
 msgid "Bad Request"
 msgstr ""
 
-#: modules/news/src/Application/Controllers/CommentsController.php:136
+#: modules/news/src/Application/Controllers/CommentsController.php:141
 msgid "You have a ban!"
 msgstr ""
 
-#: modules/news/src/Application/Controllers/CommentsController.php:140
+#: modules/news/src/Application/Controllers/CommentsController.php:145
 msgid "You are not logged in"
 msgstr ""
 
-#: modules/news/src/Application/Controllers/CommentsController.php:167
+#: modules/news/src/Application/Controllers/CommentsController.php:172
 msgid "The comment was added successfully"
 msgstr ""
 
-#: modules/news/src/Application/Controllers/CommentsController.php:170
+#: modules/news/src/Application/Controllers/CommentsController.php:175
 msgid "Enter the comment text"
 msgstr ""
 
-#: modules/news/src/Application/Controllers/CommentsController.php:195
+#: modules/news/src/Application/Controllers/CommentsController.php:200
 msgid "The comment was deleted successfully"
 msgstr ""
 
-#: modules/news/src/Application/Controllers/CommentsController.php:201
+#: modules/news/src/Application/Controllers/CommentsController.php:206
 msgid "Access denied"
 msgstr ""
 
@@ -163,6 +164,10 @@ msgstr ""
 
 #: modules/news/src/Application/Section.php:76
 msgid "The requested section was not found."
+msgstr ""
+
+#: modules/news/src/Application/Services/NewsPermissions.php:27
+msgid "Delete the comments of other people"
 msgstr ""
 
 #: modules/news/src/Install/Installer.php:42

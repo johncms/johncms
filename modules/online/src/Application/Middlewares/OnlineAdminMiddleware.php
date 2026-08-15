@@ -4,23 +4,24 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Online\Application\Middlewares;
 
-use Johncms\Router\MiddlewareInterface;
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Http\Request;
+use Johncms\Router\MiddlewareInterface;
 use Johncms\View\RendererInterface;
-use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\Response;
 
 final readonly class OnlineAdminMiddleware implements MiddlewareInterface
 {
     public function __construct(
-        private User $currentUser,
+        private AccessCheckerInterface $accessChecker,
         private RendererInterface $renderer,
     ) {
     }
 
     public function handle(Request $request, callable $next): Response
     {
-        if (! $this->currentUser->rights) {
+        if (! $this->accessChecker->allows(CorePermissions::USERS_ORIGIN_VIEW)) {
             return new Response(
                 $this->renderer->render('@theme/pages/result.twig', [
                     'title'   => __('Online'),

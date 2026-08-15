@@ -4,7 +4,11 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Notifications\Application\UseCases;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Counters;
+use Johncms\Modules\Downloads\Application\Services\DownloadsPermissions;
+use Johncms\Modules\Library\Application\Services\LibraryPermissions;
 use Johncms\Modules\Notifications\Application\DTO\NotificationListResultDTO;
 use Johncms\Modules\Notifications\Domain\Repository\NotificationRepositoryInterface;
 use Johncms\Users\User;
@@ -12,6 +16,7 @@ use Johncms\Users\User;
 final readonly class GetNotificationListUseCase
 {
     public function __construct(
+        private AccessCheckerInterface $accessChecker,
         private Counters $counters,
         private NotificationRepositoryInterface $notificationRepository,
         private User $currentUser,
@@ -43,31 +48,34 @@ final readonly class GetNotificationListUseCase
     {
         $notifications = [];
 
-        if ($this->currentUser->rights >= 7) {
-            if (! empty($counters['reg_total'])) {
-                $notifications[] = [
-                    'name'    => __('Users on registration'),
-                    'url'     => '/admin/reg/',
-                    'counter' => $counters['reg_total'],
-                    'type'    => 'info',
-                ];
-            }
-            if (! empty($counters['library_mod'])) {
-                $notifications[] = [
-                    'name'    => __('Articles on moderation'),
-                    'url'     => '/library/premod',
-                    'counter' => $counters['library_mod'],
-                    'type'    => 'info',
-                ];
-            }
-            if (! empty($counters['downloads_mod'])) {
-                $notifications[] = [
-                    'name'    => __('Downloads on moderation'),
-                    'url'     => '/downloads/moderation',
-                    'counter' => true,
-                    'type'    => 'info',
-                ];
-            }
+        // Each of these leads to a screen of its own, and is offered to whoever may open that
+        // screen — one number for all three said 'the administrator' and hid the queue of the
+        // library from the moderator whose queue it is.
+        if (! empty($counters['reg_total']) && $this->accessChecker->allows(CorePermissions::ADMIN_ACCESS)) {
+            $notifications[] = [
+                'name'    => __('Users on registration'),
+                'url'     => '/admin/reg/',
+                'counter' => $counters['reg_total'],
+                'type'    => 'info',
+            ];
+        }
+
+        if (! empty($counters['library_mod']) && $this->accessChecker->allows(LibraryPermissions::MODERATE)) {
+            $notifications[] = [
+                'name'    => __('Articles on moderation'),
+                'url'     => '/library/premod',
+                'counter' => $counters['library_mod'],
+                'type'    => 'info',
+            ];
+        }
+
+        if (! empty($counters['downloads_mod']) && $this->accessChecker->allows(DownloadsPermissions::MODERATE)) {
+            $notifications[] = [
+                'name'    => __('Downloads on moderation'),
+                'url'     => '/downloads/moderation',
+                'counter' => true,
+                'type'    => 'info',
+            ];
         }
 
         if (! empty($counters['ban'])) {

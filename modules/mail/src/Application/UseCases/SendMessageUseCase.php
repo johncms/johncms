@@ -4,19 +4,22 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Mail\Application\UseCases;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\Authorization\CorePermissions;
+use Johncms\Http\UploadedFileDTO;
 use Johncms\Modules\Mail\Application\DTO\SendMessageCommand;
 use Johncms\Modules\Mail\Application\Exceptions\SendMessageException;
 use Johncms\Modules\Mail\Application\Services\MailFileService;
 use Johncms\Modules\Mail\Domain\Models\MailMessage;
 use Johncms\Modules\Mail\Domain\Repository\ContactRepositoryInterface;
 use Johncms\Modules\Mail\Domain\Repository\MailMessageRepositoryInterface;
-use Johncms\Http\UploadedFileDTO;
 use Johncms\Security\AntifloodCheckerInterface;
 use Johncms\Users\User;
 
 final readonly class SendMessageUseCase
 {
     public function __construct(
+        private AccessCheckerInterface $accessChecker,
         private MailMessageRepositoryInterface $mailMessageRepository,
         private ContactRepositoryInterface $contactRepository,
         private MailFileService $mailFileService,
@@ -109,7 +112,7 @@ final readonly class SendMessageUseCase
 
     private function ensureRecipientAllowsMessages(User $recipient): void
     {
-        if ($this->currentUser->rights >= 1) {
+        if ($this->accessChecker->allows(CorePermissions::SMILIES_ADMIN_USE)) {
             return;
         }
 

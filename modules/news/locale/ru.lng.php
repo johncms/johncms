@@ -114,6 +114,7 @@
       'Search query' => 'Поисковый запрос',
       'The search didn\'t yield any results.' => 'Поиск не дал результатов.',
       'Enter a tag' => 'Введите тег',
+      'Delete the comments of other people' => 'Удалять комментарии других людей',
     ),
   ),
 );

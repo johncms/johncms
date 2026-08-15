@@ -12,6 +12,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Help\Application\Controllers;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Users\User;
@@ -23,6 +25,7 @@ final readonly class SetMySmiliesController
     private const USER_SMILIES_MAX = 20;
 
     public function __construct(
+        private AccessCheckerInterface $accessChecker,
         private User $currentUser,
     ) {
     }
@@ -51,7 +54,7 @@ final readonly class SetMySmiliesController
         $isAdd = isset($post['add']);
         $isDelete = isset($post['delete']);
 
-        $invalidRequest = ($adm && ! $this->currentUser->rights)
+        $invalidRequest = ($adm && ! $this->accessChecker->allows(CorePermissions::SMILIES_ADMIN_USE))
             || ($isAdd && ! $adm && ! $cat)
             || ($isDelete && empty($post['delete_sm']))
             || ($isAdd && empty($post['add_sm']));

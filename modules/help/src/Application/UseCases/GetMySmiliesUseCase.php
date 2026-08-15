@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Help\Application\UseCases;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Smilies\SmiliesRendererInterface;
 use Johncms\Users\User;
 use Johncms\Utils\Transliterator;
@@ -12,6 +14,7 @@ use Twig\Markup;
 final readonly class GetMySmiliesUseCase
 {
     public function __construct(
+        private AccessCheckerInterface $accessChecker,
         private User $currentUser,
         private SmiliesRendererInterface $smiliesRenderer,
     ) {
@@ -35,7 +38,7 @@ final readonly class GetMySmiliesUseCase
                 'lat_smile' => $value,
                 'smile'     => Transliterator::toCyrillic($smile),
                 // The renderer returns the image tag of the smiley, so it is markup by contract.
-                'picture'   => new Markup($this->smiliesRenderer->render($smile, $this->currentUser->rights >= 1), 'UTF-8'),
+                'picture'   => new Markup($this->smiliesRenderer->render($smile, $this->accessChecker->allows(CorePermissions::SMILIES_ADMIN_USE)), 'UTF-8'),
             ];
         }
 

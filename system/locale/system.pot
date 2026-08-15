@@ -62,7 +62,7 @@ msgid "Downloads"
 msgstr ""
 
 #: config/places.global.php:18
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:102
+#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:110
 #: themes/default/templates/components/sidebar-main-menu.twig:47
 #: modules/homepage/templates/public/index.twig:43
 msgid "Guestbook"
@@ -249,31 +249,31 @@ msgstr ""
 msgid "Settings saved!"
 msgstr ""
 
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:49
+#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:56
 msgid "Users on registration"
 msgstr ""
 
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:57
+#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:65
 msgid "Articles on moderation"
 msgstr ""
 
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:65
+#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:74
 msgid "Downloads on moderation"
 msgstr ""
 
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:75
+#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:83
 msgid "Ban"
 msgstr ""
 
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:84
+#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:92
 msgid "New forum posts"
 msgstr ""
 
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:93
+#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:101
 msgid "Mail"
 msgstr ""
 
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:111
+#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:119
 msgid "Comments"
 msgstr ""
 

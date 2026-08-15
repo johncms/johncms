@@ -12,20 +12,21 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Help\Application\Controllers;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
-use Johncms\Modules\Help\Application\UseCases\GetAdminSmiliesUseCase;
 use Johncms\Http\View\ViewResponse;
+use Johncms\Modules\Help\Application\UseCases\GetAdminSmiliesUseCase;
 use Johncms\NavChain;
-use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\Response;
 
 final readonly class AdminSmiliesController
 {
     public function __construct(
+        private AccessCheckerInterface $accessChecker,
         private NavChain $navChain,
-        private User $currentUser,
         private GetAdminSmiliesUseCase $adminSmilies,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
@@ -34,7 +35,7 @@ final readonly class AdminSmiliesController
 
     public function __invoke(): ViewResponse
     {
-        if ($this->currentUser->rights < 1) {
+        if (! $this->accessChecker->allows(CorePermissions::SMILIES_ADMIN_USE)) {
             return new ViewResponse(
                 '@theme/pages/result.twig',
                 [

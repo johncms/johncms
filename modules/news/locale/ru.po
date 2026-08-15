@@ -529,3 +529,6 @@ msgstr "Поиск не дал результатов."
 msgid "Enter a tag"
 msgstr "Введите тег"
 
+
+msgid "Delete the comments of other people"
+msgstr "Удалять комментарии других людей"
