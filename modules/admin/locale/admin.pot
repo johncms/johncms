@@ -71,7 +71,7 @@ msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:147
 #: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:59
-#: modules/admin/templates/role-form.twig:74
+#: modules/admin/templates/role-form.twig:76
 msgid "Permissions"
 msgstr ""
 
@@ -286,7 +286,7 @@ msgstr ""
 #: modules/admin/templates/forum-section-edit.twig:22
 #: modules/admin/templates/forum-section-form.twig:24
 #: modules/admin/templates/forum-section-form.twig:25
-#: modules/admin/templates/role-form.twig:51
+#: modules/admin/templates/role-form.twig:53
 #: modules/admin/templates/settings.twig:67
 msgid "Title"
 msgstr ""
@@ -966,7 +966,7 @@ msgstr ""
 #: modules/admin/templates/karma-clear-confirm.twig:22
 #: modules/admin/templates/karma.twig:44
 #: modules/admin/templates/role-delete-confirm.twig:25
-#: modules/admin/templates/role-form.twig:115
+#: modules/admin/templates/role-form.twig:121
 #: modules/admin/templates/smilies.twig:21
 #: modules/admin/templates/user-delete-confirm.twig:40
 #: modules/admin/templates/user-roles.twig:70
@@ -1047,7 +1047,7 @@ msgstr ""
 #: modules/admin/templates/karma.twig:43
 #: modules/admin/templates/languages.twig:31
 #: modules/admin/templates/modules-access.twig:44
-#: modules/admin/templates/role-form.twig:114
+#: modules/admin/templates/role-form.twig:120
 #: modules/admin/templates/settings.twig:107
 #: modules/admin/templates/user-roles.twig:69
 msgid "Save"
@@ -1150,6 +1150,7 @@ msgstr ""
 #: modules/admin/templates/ip-search.twig:61
 #: modules/admin/templates/languages-manage.twig:63
 #: modules/admin/templates/registrations.twig:55
+#: modules/admin/templates/role-form.twig:118
 #: modules/admin/templates/roles.twig:66
 #: modules/admin/templates/staff.twig:27
 msgid "Back"
@@ -1847,31 +1848,31 @@ msgid "It is held by one account, which loses everything the role granted it."
 msgid_plural "It is held by %d accounts, which lose everything the role granted them."
 msgstr[0] ""
 
-#: modules/admin/templates/role-form.twig:26
+#: modules/admin/templates/role-form.twig:27
 msgid "This is a built-in role: its name and its level are fixed, because the code refers to them. What it may do is yours to change."
 msgstr ""
 
-#: modules/admin/templates/role-form.twig:35
+#: modules/admin/templates/role-form.twig:37
 msgid "Identifier"
 msgstr ""
 
-#: modules/admin/templates/role-form.twig:42
+#: modules/admin/templates/role-form.twig:44
 msgid "Used in code and cannot be changed later, for example: news-editor"
 msgstr ""
 
-#: modules/admin/templates/role-form.twig:61
+#: modules/admin/templates/role-form.twig:63
 msgid "Level"
 msgstr ""
 
-#: modules/admin/templates/role-form.twig:70
+#: modules/admin/templates/role-form.twig:72
 msgid "Who outranks whom. A role cannot be placed above your own."
 msgstr ""
 
-#: modules/admin/templates/role-form.twig:78
+#: modules/admin/templates/role-form.twig:80
 msgid "A role of this level is allowed everything, whatever is ticked, so the permissions are not shown for it. That is what keeps a site from locking itself out of its own admin panel."
 msgstr ""
 
-#: modules/admin/templates/role-form.twig:104
+#: modules/admin/templates/role-form.twig:106
 msgid "The role also carries permissions no installed module declares. They are kept as they are:"
 msgstr ""
 

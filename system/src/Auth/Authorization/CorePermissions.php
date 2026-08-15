@@ -20,6 +20,10 @@ final class CorePermissions implements PermissionProviderInterface
 {
     public const GROUP = 'admin';
 
+    public const SYSTEM_GROUP = 'system';
+
+    public const USERS_GROUP = 'users';
+
     /** Enter the admin panel at all. */
     public const ADMIN_ACCESS = 'admin.access';
 
@@ -29,28 +33,57 @@ final class CorePermissions implements PermissionProviderInterface
     /** Manage roles and what each of them may do. */
     public const ADMIN_ROLES_MANAGE = 'admin.roles.manage';
 
+    /** Read the details of a failure and the figures of the developer panel. */
+    public const SYSTEM_DEBUG_VIEW = 'system.debug.view';
+
+    /** Post again after the short fixed delay instead of the one the site configured. */
+    public const ANTIFLOOD_RELAXED = 'system.antiflood.relaxed';
+
+    /** See where a visitor came from and where on the site they are. */
+    public const USERS_ORIGIN_VIEW = 'users.origin.view';
+
     public function permissions(): iterable
     {
-        $group = d__('system', 'Admin panel');
+        $adminGroup = d__('system', 'Admin panel');
+        $systemGroup = d__('system', 'System');
+        $usersGroup = d__('system', 'Users');
 
         return [
             new PermissionDefinition(
                 self::ADMIN_ACCESS,
                 self::GROUP,
                 d__('system', 'Access the admin panel'),
-                $group
+                $adminGroup
             ),
             new PermissionDefinition(
                 self::ADMIN_SETTINGS_MANAGE,
                 self::GROUP,
                 d__('system', 'Change system settings'),
-                $group
+                $adminGroup
             ),
             new PermissionDefinition(
                 self::ADMIN_ROLES_MANAGE,
                 self::GROUP,
                 d__('system', 'Manage roles and permissions'),
-                $group
+                $adminGroup
+            ),
+            new PermissionDefinition(
+                self::SYSTEM_DEBUG_VIEW,
+                self::SYSTEM_GROUP,
+                d__('system', 'See error details and the developer panel'),
+                $systemGroup
+            ),
+            new PermissionDefinition(
+                self::ANTIFLOOD_RELAXED,
+                self::SYSTEM_GROUP,
+                d__('system', 'Post without waiting out the full antiflood delay'),
+                $systemGroup
+            ),
+            new PermissionDefinition(
+                self::USERS_ORIGIN_VIEW,
+                self::USERS_GROUP,
+                d__('system', 'See where a visitor is on the site and where they came from'),
+                $usersGroup
             ),
         ];
     }

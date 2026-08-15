@@ -238,6 +238,10 @@ The number is shown so that support for the old scheme is not removed while it i
       'Reload the page and submit the form again.' => 'Обновите страницу и отправьте форму заново.',
       'The input is not between \'%min%\' and \'%max%\', inclusively' => 'Значение не входит в диапазон от \'%min%\' до \'%max%\' включительно',
       'The two given tokens do not match' => 'Указанные значения не совпадают',
+      'System' => 'Система',
+      'See error details and the developer panel' => 'Видеть подробности ошибок и панель разработчика',
+      'Post without waiting out the full antiflood delay' => 'Писать, не выжидая полную задержку антифлуда',
+      'See where a visitor is on the site and where they came from' => 'Видеть, где посетитель находится на сайте и откуда пришёл',
     ),
   ),
 );

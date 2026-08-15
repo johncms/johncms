@@ -18,6 +18,9 @@ namespace Johncms\Auth\Authorization;
  * Used by the installer building a fresh site and by the upgrade command bringing an existing
  * one over, so the two cannot end up with different sets.
  *
+ * A role is created with the permissions of DefaultPermissions, the same table the command for
+ * existing installations applies.
+ *
  * Safe to run again, and deliberately conservative about it: a role that is already there keeps
  * the permissions it has. Re-running must never undo what a site configured — the only thing it
  * fixes is what is missing.
@@ -55,34 +58,10 @@ final readonly class RoleSeeder
                 ]
             );
 
-            $this->roles->setPermissions($role->id, $this->initialPermissions($systemRole));
+            $this->roles->setPermissions($role->id, DefaultPermissions::forRole($systemRole->value));
             $created[] = $systemRole->value;
         }
 
         return $created;
-    }
-
-    /**
-     * What a freshly created role starts with.
-     *
-     * Only the admin-panel permissions are granted here, because they are the only ones the core
-     * itself declares. What the moderator roles may do in the forum, the library and the rest is
-     * granted by those modules as their permissions move over — until then those roles are empty
-     * and the numeric mirror is what still answers.
-     *
-     * The supervisor gets nothing explicitly: SuperAdminVoter answers for that role, which is
-     * what keeps a site from being locked out of its own admin panel by a misconfigured matrix.
-     *
-     * @return list<string>
-     */
-    private function initialPermissions(SystemRole $role): array
-    {
-        return match ($role) {
-            SystemRole::Admin => [
-                CorePermissions::ADMIN_ACCESS,
-                CorePermissions::ADMIN_ROLES_MANAGE,
-            ],
-            default => [],
-        };
     }
 }

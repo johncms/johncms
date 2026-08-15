@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Johncms\View\Twig\Runtime;
 
 use Illuminate\Database\Capsule\Manager;
-use Johncms\Users\User;
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\Authorization\CorePermissions;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Twig\Extension\RuntimeExtensionInterface;
 
@@ -19,7 +20,7 @@ use Twig\Extension\RuntimeExtensionInterface;
 final readonly class DebugPanelRuntime implements RuntimeExtensionInterface
 {
     public function __construct(
-        private User $user,
+        private AccessCheckerInterface $accessChecker,
         private RequestStack $requestStack,
     ) {
     }
@@ -42,7 +43,7 @@ final readonly class DebugPanelRuntime implements RuntimeExtensionInterface
 
     private function isVisible(): bool
     {
-        return DEBUG_FOR_ALL || (DEBUG && $this->user->rights >= 7);
+        return DEBUG_FOR_ALL || (DEBUG && $this->accessChecker->allows(CorePermissions::SYSTEM_DEBUG_VIEW));
     }
 
     /**

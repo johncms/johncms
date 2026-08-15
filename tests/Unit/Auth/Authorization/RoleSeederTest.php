@@ -8,6 +8,7 @@ use Gettext\Translator;
 use Gettext\TranslatorFunctions;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Johncms\Auth\Authorization\CorePermissions;
+use Johncms\Auth\Authorization\DefaultPermissions;
 use Johncms\Auth\Authorization\Role;
 use Johncms\Auth\Authorization\RoleSeeder;
 use Johncms\Auth\Authorization\SystemRole;
@@ -89,6 +90,26 @@ final class RoleSeederTest extends TestCase
             CorePermissions::ADMIN_ACCESS,
             $this->roles->permissionsFor([$admin->id])
         );
+    }
+
+    /**
+     * A fresh installation and an upgraded one must end up with the same matrix, so both read the
+     * same table rather than each carrying its own idea of it.
+     */
+    public function testARoleIsCreatedWithTheDefaultsOfItsSlug(): void
+    {
+        $this->seeder->seed();
+
+        foreach (SystemRole::cases() as $systemRole) {
+            $role = $this->roles->findBySlug($systemRole->value);
+            self::assertNotNull($role);
+
+            self::assertEqualsCanonicalizing(
+                DefaultPermissions::forRole($systemRole->value),
+                $this->roles->permissionsFor([$role->id]),
+                $systemRole->value . ' should carry its default permissions'
+            );
+        }
     }
 
     public function testRunningAgainCreatesNothing(): void

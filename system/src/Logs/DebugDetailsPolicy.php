@@ -12,7 +12,8 @@ declare(strict_types=1);
 
 namespace Johncms\Logs;
 
-use Johncms\Users\User;
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\Authorization\CorePermissions;
 use Psr\Container\ContainerInterface;
 use Throwable;
 
@@ -22,6 +23,9 @@ use Throwable;
  * Extracted from GlobalErrorHandler so the kernel answers 500 with exactly the
  * same visibility rule: DEBUG alone is not enough — the shipped config/constants.php has
  * DEBUG = true, so showing details on DEBUG alone would leak stack traces to every visitor.
+ *
+ * The checker is taken from the container rather than injected: this class answers while a
+ * failure is being handled, and that failure may be the container itself.
  */
 final readonly class DebugDetailsPolicy
 {
@@ -42,9 +46,11 @@ final readonly class DebugDetailsPolicy
         }
 
         try {
-            return $this->container->get(User::class)?->rights > 0;
+            return (bool) $this->container->get(AccessCheckerInterface::class)
+                ?->allows(CorePermissions::SYSTEM_DEBUG_VIEW);
         } catch (Throwable) {
-            // The failure may well be the container itself; a missing user means "not an admin".
+            // The failure may well be the container itself; without an answer nobody sees the
+            // details.
             return false;
         }
     }

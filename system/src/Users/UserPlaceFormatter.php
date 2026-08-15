@@ -12,6 +12,8 @@ declare(strict_types=1);
 
 namespace Johncms\Users;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Utils\PlainTextFormatter;
 use Twig\Markup;
 
@@ -24,7 +26,7 @@ final class UserPlaceFormatter implements UserPlaceFormatterInterface
     private ?array $places = null;
 
     public function __construct(
-        private readonly User $currentUser,
+        private readonly AccessCheckerInterface $accessChecker,
     ) {
     }
 
@@ -47,7 +49,9 @@ final class UserPlaceFormatter implements UserPlaceFormatterInterface
             return $this->markup(str_replace('#home#', $homeUrl, $places[$pathWithoutQuery]));
         }
 
-        $url = $homeUrl . ($this->currentUser->rights >= 6 ? $place : '') . '/';
+        // Only the staff are told which page exactly: everybody else gets the home page behind
+        // a "somewhere on the site" link.
+        $url = $homeUrl . ($this->accessChecker->allows(CorePermissions::USERS_ORIGIN_VIEW) ? $place : '') . '/';
 
         return $this->markup(
             '<a href="' . PlainTextFormatter::escape($url) . '">'

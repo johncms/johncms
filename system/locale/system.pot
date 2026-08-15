@@ -39,6 +39,7 @@ msgid "Watching the photo album"
 msgstr ""
 
 #: config/places.global.php:14
+#: system/src/Auth/Authorization/CorePermissions.php:49
 #: themes/default/templates/components/sidebar-main-menu.twig:85
 #: modules/homepage/templates/public/index.twig:46
 msgid "Users"
@@ -339,20 +340,36 @@ msgstr ""
 msgid "Back"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:34
+#: system/src/Auth/Authorization/CorePermissions.php:47
 msgid "Admin panel"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:40
+#: system/src/Auth/Authorization/CorePermissions.php:48
+msgid "System"
+msgstr ""
+
+#: system/src/Auth/Authorization/CorePermissions.php:55
 msgid "Access the admin panel"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:46
+#: system/src/Auth/Authorization/CorePermissions.php:61
 msgid "Change system settings"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:52
+#: system/src/Auth/Authorization/CorePermissions.php:67
 msgid "Manage roles and permissions"
+msgstr ""
+
+#: system/src/Auth/Authorization/CorePermissions.php:73
+msgid "See error details and the developer panel"
+msgstr ""
+
+#: system/src/Auth/Authorization/CorePermissions.php:79
+msgid "Post without waiting out the full antiflood delay"
+msgstr ""
+
+#: system/src/Auth/Authorization/CorePermissions.php:85
+msgid "See where a visitor is on the site and where they came from"
 msgstr ""
 
 #: system/src/Auth/Authorization/SystemRole.php:103
@@ -606,7 +623,7 @@ msgstr ""
 msgid "Home"
 msgstr ""
 
-#: system/src/Users/UserPlaceFormatter.php:54
+#: system/src/Users/UserPlaceFormatter.php:58
 msgid "Somewhere on the site"
 msgstr ""
 

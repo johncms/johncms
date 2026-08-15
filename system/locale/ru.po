@@ -1001,3 +1001,15 @@ msgstr "Значение не входит в диапазон от '%min%' до
 
 msgid "The two given tokens do not match"
 msgstr "Указанные значения не совпадают"
+
+msgid "System"
+msgstr "Система"
+
+msgid "See error details and the developer panel"
+msgstr "Видеть подробности ошибок и панель разработчика"
+
+msgid "Post without waiting out the full antiflood delay"
+msgstr "Писать, не выжидая полную задержку антифлуда"
+
+msgid "See where a visitor is on the site and where they came from"
+msgstr "Видеть, где посетитель находится на сайте и откуда пришёл"
