@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Application\Controllers\Forum;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Modules\Admin\Application\Services\AdminPermissions;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
@@ -12,7 +14,6 @@ use Johncms\Modules\Admin\Application\UseCases\ManageHiddenForumUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
-use Johncms\Users\User;
 
 final readonly class HiddenTopicsController
 {
@@ -20,7 +21,7 @@ final readonly class HiddenTopicsController
 
     public function __construct(
         private NavChain $navChain,
-        private User $currentUser,
+        private AccessCheckerInterface $accessChecker,
         private ManageHiddenForumUseCase $manageHidden,
         private HiddenTopicRowMapper $rowMapper,
         private PaginationFactory $paginationFactory,
@@ -57,14 +58,14 @@ final readonly class HiddenTopicsController
             'per_page'     => $pagination->getPerPage(),
             'filtered_by'  => (string) $filteredBy,
             'reset_filter' => self::URL,
-            'del_all_url'  => $this->currentUser->rights === 9 && $total > 0 ? self::URL . '/delete' . $filterLink : '',
+            'del_all_url'  => $this->accessChecker->allows(AdminPermissions::FORUM_HIDDEN_PURGE) && $total > 0 ? self::URL . '/delete' . $filterLink : '',
             'pagination'   => $pagination->render(),
         ]);
     }
 
     public function deleteAll(Request $request): ViewResponse
     {
-        if ($this->currentUser->rights !== 9) {
+        if (! $this->accessChecker->allows(AdminPermissions::FORUM_HIDDEN_PURGE)) {
             redirect(self::URL);
         }
 

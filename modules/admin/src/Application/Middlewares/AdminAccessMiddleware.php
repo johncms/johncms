@@ -4,26 +4,28 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Application\Middlewares;
 
-use Johncms\Modules\Admin\Domain\Enums\UserRights;
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\Authorization\CorePermissions;
+use Johncms\Auth\CurrentUser;
 use Johncms\Router\MiddlewareInterface;
 use Johncms\Http\AdminAreaContext;
 use Johncms\Http\Request;
 use Johncms\System\i18n\Translator;
 use Johncms\View\RendererInterface;
-use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Базовый гейт админпанели: доступ только авторизованным пользователям
- * с правами не ниже администратора. Гость отправляется на экран входа,
- * авторизованный пользователь без достаточных прав получает 403 без админ-обвеса.
- * Действия с повышенными требованиями (rights >= 9) проверяются дополнительно
- * в соответствующих Ensure*AccessUseCase.
+ * The gate of the admin panel: only for those allowed to open it at all. A guest is sent to the
+ * sign-in screen, somebody signed in without the permission gets a 403 without the trimmings of
+ * the panel around it.
+ *
+ * Screens that ask for more than opening the panel check their own permission on top of this one.
  */
 final readonly class AdminAccessMiddleware implements MiddlewareInterface
 {
     public function __construct(
-        private User $user,
+        private CurrentUser $currentUser,
+        private AccessCheckerInterface $accessChecker,
         private RendererInterface $renderer,
         private Translator $translator,
         private AdminAreaContext $adminArea,
@@ -32,11 +34,11 @@ final readonly class AdminAccessMiddleware implements MiddlewareInterface
 
     public function handle(Request $request, callable $next): Response
     {
-        if (! $this->user->isValid()) {
+        if ($this->currentUser->isGuest()) {
             redirect('/admin/login');
         }
 
-        if ($this->user->rights < UserRights::ADMIN->value) {
+        if (! $this->accessChecker->allows(CorePermissions::ADMIN_ACCESS)) {
             return $this->renderForbidden();
         }
 

@@ -8,12 +8,15 @@ use Johncms\Auth\Authentication\AuthenticateUserUseCase;
 use Johncms\Auth\Authentication\LoginCaptcha;
 use Johncms\Auth\Authentication\LoginCredentialsDTO;
 use Johncms\Auth\Authentication\LoginStatus;
+use Johncms\Auth\AuthMethod;
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\Authorization\CorePermissions;
+use Johncms\Auth\Authorization\PermissionResolver;
+use Johncms\Auth\Identity;
 use Johncms\Auth\Session\SignInManager;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
-use Johncms\Modules\Admin\Domain\Enums\UserRights;
 use Johncms\System\Users\User;
-use Johncms\Users\User as EloquentUser;
 use Mobicms\Captcha\Image;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,6 +35,8 @@ final readonly class UsersController
         private AuthenticateUserUseCase $authenticateUser,
         private LoginCaptcha $captcha,
         private SignInManager $signInManager,
+        private PermissionResolver $permissionResolver,
+        private AccessCheckerInterface $accessChecker,
     ) {
     }
 
@@ -119,11 +124,15 @@ final readonly class UsersController
         return new RedirectResponse('/admin/');
     }
 
+    /**
+     * Asked about the account that just proved who it is, not about the visitor of this request:
+     * nobody is signed in yet, so the roles of that account are resolved on the spot.
+     */
     private function mayEnterAdminPanel(int $userId): bool
     {
-        $user = EloquentUser::query()->find($userId);
+        $identity = $this->permissionResolver->resolve(new Identity(userId: $userId, method: AuthMethod::Session));
 
-        return $user !== null && $user->rights >= UserRights::ADMIN->value;
+        return $this->accessChecker->allowsFor($identity, CorePermissions::ADMIN_ACCESS);
     }
 
     /**

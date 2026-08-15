@@ -46,7 +46,7 @@ final readonly class AdminUserRowMapper
             'ip_via_proxy'            => $user->ip_via_proxy !== '' ? $user->ip_via_proxy : '',
             'search_ip_via_proxy_url' => $user->ip_via_proxy !== '' ? '/admin/ip-search?ip=' . $user->ip_via_proxy : '',
             // The address and the user agent of a visitor are for the staff only.
-            'show_origin'             => $this->currentUser->rights >= 3,
+            'show_origin'             => $this->accessChecker->allows(CorePermissions::USERS_ORIGIN_VIEW),
             // Filled in by the mappers that decorate this row; the template reads them always.
             'active'                  => false,
             'buttons'                 => $this->roleButtons($user),

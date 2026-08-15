@@ -4,16 +4,17 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Application\Controllers\Forum;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Modules\Admin\Application\UseCases\GetForumDashboardUseCase;
 use Johncms\NavChain;
 use Johncms\Http\View\ViewResponse;
-use Johncms\Users\User;
 
 final readonly class ForumDashboardController
 {
     public function __construct(
         private NavChain $navChain,
-        private User $currentUser,
+        private AccessCheckerInterface $accessChecker,
         private GetForumDashboardUseCase $getDashboard,
     ) {
     }
@@ -28,7 +29,7 @@ final readonly class ForumDashboardController
             'page_title'    => $title,
             'module_menu'   => ['forum' => true],
             'counters'      => $this->getDashboard->execute(),
-            'can_configure' => $this->currentUser->rights >= 9,
+            'can_configure' => $this->accessChecker->allows(CorePermissions::ADMIN_SETTINGS_MANAGE),
         ]);
     }
 }

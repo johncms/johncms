@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Application\Controllers\Forum;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Modules\Admin\Application\Services\AdminPermissions;
 use Johncms\Modules\Admin\Application\UseCases\AddForumSectionUseCase;
 use Johncms\Modules\Admin\Application\UseCases\DeleteForumSectionUseCase;
 use Johncms\Modules\Admin\Application\UseCases\EditForumSectionUseCase;
@@ -25,6 +27,7 @@ final readonly class ForumStructureController
         private NavChain $navChain,
         private ForumSectionTreeService $sectionTree,
         private User $currentUser,
+        private AccessCheckerInterface $accessChecker,
         private ForumStructureRepositoryInterface $repository,
         private AddForumSectionUseCase $addSection,
         private EditForumSectionUseCase $editSection,
@@ -200,7 +203,7 @@ final readonly class ForumStructureController
                 'categories'  => $this->moveOptions($this->repository->categoriesForMove($id), $section->parent),
                 'form_action' => self::URL . '/' . $id . '/delete',
                 'back_url'    => self::URL,
-                'can_destroy' => $this->currentUser->rights === 9,
+                'can_destroy' => $this->accessChecker->allows(AdminPermissions::FORUM_STRUCTURE_DESTROY),
             ]);
         }
 
@@ -212,7 +215,7 @@ final readonly class ForumStructureController
             'categories'  => $this->sectionRows($this->repository->topLevelExcept($ref)),
             'form_action' => self::URL . '/' . $id . '/delete',
             'back_url'    => self::URL,
-            'can_destroy' => $this->currentUser->rights === 9,
+            'can_destroy' => $this->accessChecker->allows(AdminPermissions::FORUM_STRUCTURE_DESTROY),
         ]);
     }
 
@@ -244,7 +247,7 @@ final readonly class ForumStructureController
         }
 
         if ($request->hasBody('delete')) {
-            if ($this->currentUser->rights !== 9) {
+            if (! $this->accessChecker->allows(AdminPermissions::FORUM_STRUCTURE_DESTROY)) {
                 return $this->error(__('Access denied'));
             }
             foreach ($this->deleteSection->deleteWithContent($id) as $filename) {

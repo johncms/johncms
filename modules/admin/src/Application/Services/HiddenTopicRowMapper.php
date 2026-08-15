@@ -7,6 +7,8 @@ namespace Johncms\Modules\Admin\Application\Services;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Domain\Models\ForumSection;
 use Johncms\Modules\Forum\Domain\Models\ForumTopic;
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Users\User;
 use Johncms\Utils\DateFormatterInterface;
 
@@ -18,6 +20,7 @@ final readonly class HiddenTopicRowMapper
         private DateFormatterInterface $dateFormatter,
         private ForumTopicPathService $topicPath,
         private User $currentUser,
+        private AccessCheckerInterface $accessChecker,
     ) {
     }
 
@@ -63,9 +66,8 @@ final readonly class HiddenTopicRowMapper
             'topic_name'              => $topic->name,
             'topic_url'               => $this->topicPath->getTopicUrlById((int) $topic->id) ?? '/forum/',
             'path'                    => $path,
-            // The address and the user agent of an author with more rights than the visitor has
-            // are not theirs to see.
-            'show_origin'             => $this->currentUser->rights >= ($author->rights ?? 0),
+            // The address and the user agent of a visitor are for the staff only.
+            'show_origin'             => $this->accessChecker->allows(CorePermissions::USERS_ORIGIN_VIEW),
             'browser'                 => $author->browser ?? '',
             'user_is_online'          => $author !== null && time() <= $author->lastdate + 300,
             'ip'                      => long2ip($ip),

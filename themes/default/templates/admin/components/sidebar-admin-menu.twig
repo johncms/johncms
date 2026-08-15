@@ -10,7 +10,7 @@
     @var array sec_menu    The same for the "Security" group.
 #}
 {% set counters = admin_counters() %}
-{% set rights = app.user.isValid ? app.user.rights : 0 %}
+{% set can_manage_site = can('admin.settings.manage') %}
 {% set sprite = asset('icons/sprite.svg') %}
 {% set theme_sprite = asset('icons/sprite.svg', true) %}
 {% set is_dark = app.dark_scheme %}
@@ -93,7 +93,7 @@
                     <span class="badge rounded-pill text-bg-light">{{ counters.bans|format_number }}</span>
                 </a>
             </li>
-            {% if rights == 9 %}
+            {% if can_manage_site %}
                 <li class="{{ usr_menu.usr_clean|default(false) ? 'active' : '' }}">
                     <a href="/admin/users/cleanup">
                         <svg class="icon">
@@ -203,7 +203,7 @@
                     <span class="flex-grow-1">{{ d__('admin', 'Cookie banner') }}</span>
                 </a>
             </li>
-            {% if rights == 9 %}
+            {% if can_manage_site %}
                 <li class="{{ module_menu.counters|default(false) ? 'active' : '' }}">
                     <a href="/admin/counters">
                         <svg class="icon">

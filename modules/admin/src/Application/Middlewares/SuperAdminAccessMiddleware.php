@@ -4,25 +4,28 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Application\Middlewares;
 
-use Johncms\Modules\Admin\Domain\Enums\UserRights;
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\Authorization\CorePermissions;
+use Johncms\Auth\CurrentUser;
 use Johncms\Router\MiddlewareInterface;
 use Johncms\Http\AdminAreaContext;
 use Johncms\Http\Request;
 use Johncms\System\i18n\Translator;
 use Johncms\View\RendererInterface;
-use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Гейт действий с повышенными требованиями (rights >= 9): системные настройки,
- * управление IP-банами, кармой, счётчиками, языками, удаление пользователей и т.п.
- * Самодостаточен: middleware родительской admin-группы во вложенные группы не
- * пробрасывается, поэтому гость и недостаточные права обрабатываются здесь же.
+ * The gate of everything that changes the site as a whole: system settings, IP bans, karma,
+ * counters, languages, maintenance, deleting an account.
+ *
+ * Self-contained: the middleware of the surrounding admin group does not reach into a nested
+ * group, so a guest and a visitor without the permission are answered here as well.
  */
 final readonly class SuperAdminAccessMiddleware implements MiddlewareInterface
 {
     public function __construct(
-        private User $user,
+        private CurrentUser $currentUser,
+        private AccessCheckerInterface $accessChecker,
         private RendererInterface $renderer,
         private Translator $translator,
         private AdminAreaContext $adminArea,
@@ -31,11 +34,11 @@ final readonly class SuperAdminAccessMiddleware implements MiddlewareInterface
 
     public function handle(Request $request, callable $next): Response
     {
-        if (! $this->user->isValid()) {
+        if ($this->currentUser->isGuest()) {
             redirect('/admin/login');
         }
 
-        if ($this->user->rights < UserRights::SUPER_ADMIN->value) {
+        if (! $this->accessChecker->allows(CorePermissions::ADMIN_SETTINGS_MANAGE)) {
             return $this->renderForbidden();
         }
 
