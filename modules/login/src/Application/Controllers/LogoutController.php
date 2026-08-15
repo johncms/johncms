@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Login\Application\Controllers;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Auth\Session\SignInManager;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
-use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 final readonly class LogoutController
 {
     public function __construct(
         private NavChain $navChain,
-        private User $currentUser,
+        private CurrentUser $currentUser,
         private SignInManager $signInManager,
     ) {
     }
