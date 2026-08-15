@@ -39,6 +39,9 @@ return [
                 'version' => 1.0,
             ],
         ],
+        // Whether a new account waits for an administrator to confirm it. Null means the site has
+        // not decided since the setting was split off mod_reg, and the old number still answers.
+        'registration_moderation' => null,
         'mod_reg'                 => 2,
         'mod_forum'               => 2,
         'mod_guest'               => 2,

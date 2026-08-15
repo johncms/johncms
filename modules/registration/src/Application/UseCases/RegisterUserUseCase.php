@@ -8,6 +8,7 @@ use Johncms\Auth\Password\PasswordHasherInterface;
 use Johncms\Auth\SecureToken;
 use Johncms\Mail\EmailMessage;
 use Johncms\Modules\Registration\Application\DTO\RegistrationFormDTO;
+use Johncms\Modules\Registration\Application\Services\RegistrationSettings;
 use Johncms\Security\ClientInfoDTO;
 use Johncms\System\i18n\Translator;
 use Johncms\Users\User;
@@ -15,6 +16,7 @@ use Johncms\Users\User;
 final readonly class RegisterUserUseCase
 {
     public function __construct(
+        private RegistrationSettings $settings,
         private Translator $translator,
         private PasswordHasherInterface $hasher,
     ) {
@@ -40,7 +42,7 @@ final readonly class RegisterUserUseCase
                 'datereg'           => time(),
                 'lastdate'          => time(),
                 'sestime'           => time(),
-                'preg'              => $config['mod_reg'] > 1 ? 1 : 0,
+                'preg'              => $this->settings->moderationEnabled() ? 0 : 1,
                 'set_user'          => [],
                 'set_forum'         => [],
                 'set_mail'          => [],

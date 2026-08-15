@@ -150,3 +150,6 @@ msgstr "Пожалуйста подождите, пока модератор о�
 msgid "Enter"
 msgstr "Вход"
 
+
+msgid "Register an account"
+msgstr "Регистрировать аккаунт"

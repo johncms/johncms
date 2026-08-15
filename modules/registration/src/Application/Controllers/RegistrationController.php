@@ -5,15 +5,18 @@ declare(strict_types=1);
 namespace Johncms\Modules\Registration\Application\Controllers;
 
 use Illuminate\Support\Str;
+use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\Session\SignInManager;
-use Johncms\Http\View\ViewResponse;
-use Johncms\Modules\Consent\Application\Services\ConsentService;
-use Johncms\Modules\Registration\Application\DTO\RegistrationFormDTO;
-use Johncms\Modules\Registration\Application\UseCases\RegisterUserUseCase;
-use Johncms\NavChain;
 use Johncms\Http\Environment;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
+use Johncms\Http\View\ViewResponse;
+use Johncms\Modules\Consent\Application\Services\ConsentService;
+use Johncms\Modules\Registration\Application\DTO\RegistrationFormDTO;
+use Johncms\Modules\Registration\Application\Services\RegistrationPermissions;
+use Johncms\Modules\Registration\Application\Services\RegistrationSettings;
+use Johncms\Modules\Registration\Application\UseCases\RegisterUserUseCase;
+use Johncms\NavChain;
 use Johncms\Users\User;
 use Johncms\Validator\Rules\Captcha;
 use Johncms\Validator\Rules\EmailAddress;
@@ -28,6 +31,8 @@ use Mobicms\Captcha\Image;
 final readonly class RegistrationController
 {
     public function __construct(
+        private AccessCheckerInterface $accessChecker,
+        private RegistrationSettings $settings,
         private Session $session,
         private NavChain $navChain,
         private User $currentUser,
@@ -43,7 +48,7 @@ final readonly class RegistrationController
     {
         $config = config('johncms');
 
-        if (! $config['mod_reg'] || $this->currentUser->isValid()) {
+        if ($this->currentUser->isValid() || ! $this->accessChecker->allows(RegistrationPermissions::REGISTER)) {
             return new ViewResponse(
                 '@registration/public/registration-closed.twig',
                 [
@@ -128,7 +133,7 @@ final readonly class RegistrationController
 
                 // A registration that still needs a confirmed address or an administrator's
                 // approval does not sign anybody in: there is nothing to sign in as yet.
-                if ($config['mod_reg'] !== 1 && empty($config['user_email_confirmation'])) {
+                if (! $this->settings->moderationEnabled() && empty($config['user_email_confirmation'])) {
                     $this->signInManager->signIn($newUser->id, true, $request);
                 }
 
@@ -141,7 +146,7 @@ final readonly class RegistrationController
                         'reg_nick'       => $fields['name'],
                         'reg_pass'       => $fields['password'],
                         'needs_email'    => ! empty($config['user_email_confirmation']),
-                        'needs_approval' => $config['mod_reg'] === 1,
+                        'needs_approval' => $this->settings->moderationEnabled(),
                     ]
                 );
             }
@@ -162,7 +167,7 @@ final readonly class RegistrationController
                 'fields'         => $fields,
                 'captcha'        => (string) new Image($code),
                 'consents'       => $consents,
-                'needs_approval' => $config['mod_reg'] === 1,
+                'needs_approval' => $this->settings->moderationEnabled(),
                 'email_required' => ! empty($config['user_email_required']) || ! empty($config['user_email_confirmation']),
             ]
         );

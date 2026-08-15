@@ -78,6 +78,13 @@ final readonly class ModuleAccessMigration
                 'community.view' => [1],
             ],
         ],
+        // Half of mod_reg: whether an account can be registered at all. The other half — whether
+        // it then waits for an administrator — stayed a setting, under a name that says so.
+        'mod_reg' => [
+            SystemRole::Guest->value => [
+                'registration.register' => [1, 2],
+            ],
+        ],
     ];
 
     /**

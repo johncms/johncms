@@ -8,6 +8,7 @@ use Johncms\Http\Session;
 use Johncms\Modules\Admin\Application\DTO\ModulesAccessDTO;
 use Johncms\Modules\Admin\Application\UseCases\UpdateModulesAccessUseCase;
 use Johncms\Modules\Admin\Domain\Exceptions\ConfigWriteException;
+use Johncms\Modules\Registration\Application\Services\RegistrationSettings;
 use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
 use Johncms\Http\Request;
@@ -19,6 +20,7 @@ final readonly class ModulesAccessController
     public function __construct(
         private NavChain $navChain,
         private UpdateModulesAccessUseCase $updateModulesAccessUseCase,
+        private RegistrationSettings $registrationSettings,
         private Session $session,
     ) {
     }
@@ -43,7 +45,7 @@ final readonly class ModulesAccessController
     private function buildDto(Request $request): ModulesAccessDTO
     {
         return new ModulesAccessDTO(
-            registration: $request->bodyInt('reg'),
+            registrationModeration: (bool) $request->bodyInt('reg_moderation'),
             libraryComments: (bool) $request->bodyInt('libcomm'),
             downloadsComments: (bool) $request->bodyInt('downcomm'),
         );
@@ -69,8 +71,9 @@ final readonly class ModulesAccessController
     }
 
     /**
-     * The modules whose access is managed here, each with the modes it offers and the mode it is
-     * in. A module that also has comments carries the toggle for them.
+     * What is left of this screen: the switches that are not permissions of anybody. Each row may
+     * carry a set of modes and a toggle; the modes are gone from every module whose access became
+     * a permission, and the screen disappears once the toggles have a home of their own.
      *
      * @return list<array<string, mixed>>
      */
@@ -89,21 +92,25 @@ final readonly class ModulesAccessController
                 'name'     => 'lib',
                 'value'    => null,
                 'options'  => [],
-                'comments' => ['name' => 'libcomm', 'value' => (bool) config('johncms.mod_lib_comm', false)],
+                'toggle'   => ['name' => 'libcomm', 'value' => (bool) config('johncms.mod_lib_comm', false), 'label' => __('Comments')],
             ],
             [
                 'title'    => __('Downloads'),
                 'name'     => 'down',
                 'value'    => null,
                 'options'  => [],
-                'comments' => ['name' => 'downcomm', 'value' => (bool) config('johncms.mod_down_comm', false)],
+                'toggle'   => ['name' => 'downcomm', 'value' => (bool) config('johncms.mod_down_comm', false), 'label' => __('Comments')],
             ],
             [
                 'title'    => __('Registration'),
                 'name'     => 'reg',
-                'value'    => (int) config('johncms.mod_reg', 0),
-                'options'  => [$allowed, ['value' => 1, 'label' => __('With moderation')], $denied],
-                'comments' => null,
+                'value'    => null,
+                'options'  => [],
+                'toggle'   => [
+                    'name'  => 'reg_moderation',
+                    'value' => $this->registrationSettings->moderationEnabled(),
+                    'label' => __('With moderation'),
+                ],
             ],
         ];
     }

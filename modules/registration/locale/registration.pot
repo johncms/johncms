@@ -7,23 +7,28 @@ msgstr ""
 msgid "Email confirmation"
 msgstr ""
 
-#: modules/registration/src/Application/Controllers/RegistrationController.php:50
-#: modules/registration/src/Application/Controllers/RegistrationController.php:51
+#: modules/registration/src/Application/Controllers/RegistrationController.php:55
 #: modules/registration/src/Application/Controllers/RegistrationController.php:56
-#: modules/registration/src/Application/Controllers/RegistrationController.php:138
-#: modules/registration/src/Application/Controllers/RegistrationController.php:139
-#: modules/registration/src/Application/Controllers/RegistrationController.php:159
-#: modules/registration/src/Application/Controllers/RegistrationController.php:160
+#: modules/registration/src/Application/Controllers/RegistrationController.php:61
+#: modules/registration/src/Application/Controllers/RegistrationController.php:143
+#: modules/registration/src/Application/Controllers/RegistrationController.php:144
+#: modules/registration/src/Application/Controllers/RegistrationController.php:164
+#: modules/registration/src/Application/Controllers/RegistrationController.php:165
+#: modules/registration/src/Application/Services/RegistrationPermissions.php:31
 #: modules/registration/templates/public/index.twig:16
 #: modules/registration/templates/public/index.twig:129
 msgid "Registration"
 msgstr ""
 
-#: modules/registration/src/Application/Controllers/RegistrationController.php:102
+#: modules/registration/src/Application/Controllers/RegistrationController.php:107
 msgid "You must accept the consent to continue"
 msgstr ""
 
-#: modules/registration/src/Application/UseCases/RegisterUserUseCase.php:68
+#: modules/registration/src/Application/Services/RegistrationPermissions.php:30
+msgid "Register an account"
+msgstr ""
+
+#: modules/registration/src/Application/UseCases/RegisterUserUseCase.php:70
 msgid "Registration on the website"
 msgstr ""
 

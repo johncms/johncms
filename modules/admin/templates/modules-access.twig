@@ -2,7 +2,7 @@
     Who may open which module.
 
     @var array  groups          Modules: title, name, value, options (value, label) and an
-                                optional comments toggle (name, value).
+                                optional toggle (name, value, label).
     @var string form_action
     @var string error_message   Empty unless the last save failed.
     @var string success_message Empty unless a save has just succeeded.
@@ -27,10 +27,10 @@
                         </div>
                     {% endfor %}
 
-                    {% if group.comments is not empty %}
+                    {% if group.toggle is not empty %}
                         <div class="form-check mt-2">
-                            <input type="checkbox" class="form-check-input" name="{{ group.comments.name }}" value="1" id="{{ group.comments.name }}"{% if group.comments.value %} checked{% endif %}>
-                            <label class="form-check-label" for="{{ group.comments.name }}">{{ __('Comments') }}</label>
+                            <input type="checkbox" class="form-check-input" name="{{ group.toggle.name }}" value="1" id="{{ group.toggle.name }}"{% if group.toggle.value %} checked{% endif %}>
+                            <label class="form-check-label" for="{{ group.toggle.name }}">{{ group.toggle.label }}</label>
                         </div>
                     {% endif %}
                 </div>
@@ -38,9 +38,6 @@
         {% endfor %}
 
         <div class="mt-3">
-            <div class="alert alert-info">
-                {{ __('Administrators always have access to all closed modules and comments') }}
-            </div>
             <input type="submit" name="submit" id="button" value="{{ __('Save') }}" class="btn btn-primary">
         </div>
     </form>

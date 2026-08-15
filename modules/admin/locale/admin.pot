@@ -71,7 +71,7 @@ msgid "Modules"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:147
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:54
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:56
 #: modules/admin/templates/role-form.twig:76
 msgid "Permissions"
 msgstr ""
@@ -233,7 +233,7 @@ msgstr ""
 #: modules/admin/src/Application/Controllers/Forum/ForumSettingsController.php:49
 #: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:53
 #: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:39
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:39
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:41
 #: modules/admin/src/Application/Controllers/Settings/SystemSettingsController.php:41
 #: modules/admin/src/Application/Controllers/Users/KarmaController.php:48
 msgid "Settings are saved successfully"
@@ -325,7 +325,7 @@ msgid "Wrong data"
 msgstr ""
 
 #: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:251
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:84
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:87
 #: modules/admin/src/Application/Controllers/Users/UsersController.php:119
 #: modules/admin/src/Application/Middlewares/AdminAccessMiddleware.php:58
 #: modules/admin/src/Application/Middlewares/SuperAdminAccessMiddleware.php:58
@@ -467,7 +467,7 @@ msgstr ""
 #: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:113
 #: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:128
 #: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:36
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:36
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:38
 #: modules/admin/src/Application/Controllers/Settings/SystemSettingsController.php:38
 #: modules/admin/src/Application/Controllers/Users/KarmaController.php:45
 msgid "ERROR: Can not write file `system.local.php`"
@@ -651,29 +651,35 @@ msgstr ""
 msgid "On the main showing option 1, on the other pages option 2"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:82
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:85
 msgid "Access is allowed"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:83
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:86
 msgid "Only for authorized"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:88
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:91
 msgid "Library"
 msgstr ""
 
 #: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:95
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:102
+#: modules/admin/templates/user-delete-confirm.twig:28
+msgid "Comments"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:98
 msgid "Downloads"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:102
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:105
 #: modules/admin/src/Domain/Enums/IpBanType.php:22
 #: modules/admin/templates/ip-ban-form.twig:27
 msgid "Registration"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:105
+#: modules/admin/src/Application/Controllers/Settings/ModulesAccessController.php:112
 msgid "With moderation"
 msgstr ""
 
@@ -1044,7 +1050,7 @@ msgstr ""
 #: modules/admin/templates/ip-ban-form.twig:53
 #: modules/admin/templates/karma.twig:43
 #: modules/admin/templates/languages.twig:31
-#: modules/admin/templates/modules-access.twig:44
+#: modules/admin/templates/modules-access.twig:41
 #: modules/admin/templates/role-form.twig:120
 #: modules/admin/templates/settings.twig:107
 #: modules/admin/templates/user-roles.twig:69
@@ -1818,15 +1824,6 @@ msgstr ""
 
 #: modules/admin/templates/maintenance.twig:61
 msgid "There are no available tasks"
-msgstr ""
-
-#: modules/admin/templates/modules-access.twig:33
-#: modules/admin/templates/user-delete-confirm.twig:28
-msgid "Comments"
-msgstr ""
-
-#: modules/admin/templates/modules-access.twig:42
-msgid "Administrators always have access to all closed modules and comments"
 msgstr ""
 
 #: modules/admin/templates/registrations.twig:35
