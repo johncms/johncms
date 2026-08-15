@@ -13,11 +13,12 @@ declare(strict_types=1);
 namespace Johncms\Users;
 
 use Carbon\Carbon;
-use Twig\Markup;
+use Johncms\Auth\Authorization\StaffTitles;
 use Johncms\Security\HTMLPurifier;
 use Johncms\Smilies\SmiliesRendererInterface;
 use Johncms\System\i18n\Translator;
 use Johncms\System\Users\UserConfig;
+use Twig\Markup;
 
 trait UserMutators
 {
@@ -51,22 +52,12 @@ trait UserMutators
     }
 
     /**
-     * Название должности пользователя
-     *
-     * @return string
+     * The caption under the nickname: the highest role granted to the account, empty for an
+     * account holding none.
      */
     public function getRightsNameAttribute(): string
     {
-        $user_rights_names = [
-            3 => d__('system', 'Forum moderator'),
-            4 => d__('system', 'Download moderator'),
-            5 => d__('system', 'Library moderator'),
-            6 => d__('system', 'Super moderator'),
-            7 => d__('system', 'Administrator'),
-            9 => d__('system', 'Supervisor'),
-        ];
-
-        return array_key_exists($this->rights, $user_rights_names) ? $user_rights_names[$this->rights] : '';
+        return di(StaffTitles::class)->titleFor((int) $this->id);
     }
 
     /**

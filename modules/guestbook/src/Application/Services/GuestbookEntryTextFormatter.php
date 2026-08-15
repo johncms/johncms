@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Guestbook\Application\Services;
 
 use HTMLPurifier;
+use Johncms\Auth\Authorization\StaffTitles;
 use Johncms\Modules\Guestbook\Domain\Models\GuestbookEntry;
 use Johncms\Smilies\SmiliesRendererInterface;
 use Simba77\EmbedMedia\Embed;
@@ -13,6 +14,7 @@ use Twig\Markup;
 final readonly class GuestbookEntryTextFormatter
 {
     public function __construct(
+        private StaffTitles $staffTitles,
         private HTMLPurifier $purifier,
         private Embed $media,
         private SmiliesRendererInterface $smiliesRenderer,
@@ -28,7 +30,7 @@ final readonly class GuestbookEntryTextFormatter
         $text = $this->media->embedMedia($this->purifier->purify($entry->text));
 
         return new Markup(
-            $this->smiliesRenderer->render($text, $entry->user !== null && $entry->user->rights >= 1),
+            $this->smiliesRenderer->render($text, $this->staffTitles->isStaff((int) $entry->user_id)),
             'UTF-8'
         );
     }

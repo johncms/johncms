@@ -197,7 +197,6 @@ final class DownloadFileRepository implements DownloadFileRepositoryInterface
             ->select(
                 'download__comments.*',
                 'download__comments.id as cid',
-                'users.rights as user_rights',
                 'download__files.rus_name'
             )
             ->orderByDesc('download__comments.time')

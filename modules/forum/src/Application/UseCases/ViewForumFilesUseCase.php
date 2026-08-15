@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\UseCases;
 
-use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\Authorization\StaffTitles;
 use Johncms\Modules\Forum\Application\DTO\ForumFilesQueryDTO;
 use Johncms\Modules\Forum\Application\DTO\ForumFilesViewResultDTO;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
+use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Domain\Query\ForumFileCountQuery;
 use Johncms\Modules\Forum\Domain\Query\ForumFileListingQuery;
@@ -25,6 +26,7 @@ use Twig\Markup;
 final readonly class ViewForumFilesUseCase
 {
     public function __construct(
+        private StaffTitles $staffTitles,
         private ForumFileRepositoryInterface $fileRepository,
         private ForumSectionRepositoryInterface $sectionRepository,
         private ForumTopicRepositoryInterface $topicRepository,
@@ -257,13 +259,13 @@ final readonly class ViewForumFilesUseCase
     private function mapRowsToFiles(array $rows): array
     {
         $files = [];
-        $userRightsNames = $this->getUserRightsNames();
+        $this->staffTitles->preload(array_map(static fn (array $row): int => (int) ($row['user_id'] ?? 0), $rows));
 
         foreach ($rows as $row) {
             $text = mb_substr((string) ($row['text'] ?? ''), 0, 500);
             $text = $this->purifier->purify($text);
             $text = $this->embed->embedMedia($text);
-            $text = $this->smiliesRenderer->render($text, ! empty($row['rights']));
+            $text = $this->smiliesRenderer->render($text, $this->staffTitles->isStaff((int) $row['user_id']));
 
             $page = (int) ceil((int) ($row['page'] ?? 0) / $this->currentUser->config->kmess);
             $row['post_text'] = new Markup($text, 'UTF-8');
@@ -275,7 +277,7 @@ final readonly class ViewForumFilesUseCase
                 $row['user_profile_link'] = '/profile/' . $row['user_id'];
             }
 
-            $row['user_rights_name'] = $userRightsNames[(int) $row['rights']] ?? '';
+            $row['user_rights_name'] = $this->staffTitles->titleFor((int) $row['user_id']);
             $row['user_name'] = $row['name'];
             $row['post_url'] = '/forum/post/' . $row['post'] . '/';
             $row['topic_url'] = $this->topicPathService->getTopicUrlById((int) $row['topic'], $page > 1 ? $page : null) ?? '/forum/';
@@ -294,21 +296,6 @@ final readonly class ViewForumFilesUseCase
         }
 
         return $files;
-    }
-
-    /**
-     * @return array<int, string>
-     */
-    private function getUserRightsNames(): array
-    {
-        return [
-            3 => __('Forum moderator'),
-            4 => __('Download moderator'),
-            5 => __('Library moderator'),
-            6 => __('Super moderator'),
-            7 => __('Administrator'),
-            9 => __('Supervisor'),
-        ];
     }
 
     /**

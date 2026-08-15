@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms;
 
+use Johncms\Auth\Authorization\StaffTitles;
 use Johncms\Users\User;
 
 class UserProperties
@@ -19,9 +20,12 @@ class UserProperties
     /** @var User */
     public $current_user;
 
+    private StaffTitles $staffTitles;
+
     public function __construct()
     {
         $this->current_user = di(User::class);
+        $this->staffTitles = di(StaffTitles::class);
     }
 
     /**
@@ -34,9 +38,13 @@ class UserProperties
     {
         $data_array = [];
 
+        // Some callers pass a row of the users table, some a row that joined one; both name the
+        // account, under a different key.
+        $userId = (int) ($user_data['user_id'] ?? $user_data['id'] ?? 0);
+
         $data_array['user_profile_link'] = '';
-        if (isset($user_data['user_id']) && $this->current_user->id !== $user_data['user_id'] && $this->current_user->isValid()) {
-            $data_array['user_profile_link'] = '/profile/' . $user_data['user_id'];
+        if ($userId > 0 && $this->current_user->id !== $userId && $this->current_user->isValid()) {
+            $data_array['user_profile_link'] = '/profile/' . $userId;
         }
 
         $data_array['ip'] = long2ip((int) $user_data['ip']);
@@ -52,27 +60,8 @@ class UserProperties
         }
 
         $data_array['user_is_online'] = time() <= $user_data['lastdate'] + 300;
-        $rights = isset($user_data['rights']) ? (int) $user_data['rights'] : 0;
-        $data_array['user_rights_name'] = $this->getRightsName($rights);
+        $data_array['user_rights_name'] = $this->staffTitles->titleFor($userId);
 
         return $data_array;
-    }
-
-    /**
-     * @param int $rights
-     * @return string
-     */
-    public function getRightsName(int $rights): string
-    {
-        $user_rights_names = [
-            3 => d__('system', 'Forum moderator'),
-            4 => d__('system', 'Download moderator'),
-            5 => d__('system', 'Library moderator'),
-            6 => d__('system', 'Super moderator'),
-            7 => d__('system', 'Administrator'),
-            9 => d__('system', 'Supervisor'),
-        ];
-
-        return array_key_exists($rights, $user_rights_names) ? $user_rights_names[$rights] : '';
     }
 }

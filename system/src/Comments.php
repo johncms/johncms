@@ -15,6 +15,7 @@ namespace Johncms;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Auth\Authorization\RoleLevels;
+use Johncms\Auth\Authorization\StaffTitles;
 use Johncms\Auth\Authorization\SystemRole;
 use Johncms\Auth\CurrentUser;
 use Johncms\Container\PSRContainerFactory;
@@ -84,6 +85,8 @@ class Comments
 
     private RoleLevels $roleLevels;
 
+    private StaffTitles $staffTitles;
+
     /** @var bool Возможность отвечать на комментарий */
     private $access_reply = false;
 
@@ -143,6 +146,7 @@ class Comments
         $this->accessChecker = $container->get(AccessCheckerInterface::class);
         $this->currentUser = $container->get(CurrentUser::class);
         $this->roleLevels = $container->get(RoleLevels::class);
+        $this->staffTitles = $container->get(StaffTitles::class);
         $this->view = di(RendererInterface::class);
         $this->nav_chain = di(NavChain::class);
         $this->purifier = di(HTMLPurifier::class);
@@ -448,7 +452,7 @@ class Comments
                 $items = [];
                 if ($this->total) {
                     $req = $this->db->query(
-                        'SELECT `' . $this->comments_table . '`.*, `' . $this->comments_table . '`.`id` AS `subid`, `users`.`rights`, `users`.`lastdate`, `users`.`sex`, `users`.`status`, `users`.`datereg`, `users`.`id`
+                        'SELECT `' . $this->comments_table . '`.*, `' . $this->comments_table . '`.`id` AS `subid`, `users`.`lastdate`, `users`.`sex`, `users`.`status`, `users`.`datereg`, `users`.`id`
                     FROM `' . $this->comments_table . '` LEFT JOIN `users` ON `' . $this->comments_table . "`.`user_id` = `users`.`id`
                     WHERE `sub_id` = '" . $this->sub_id . "' ORDER BY `subid` DESC LIMIT $start, $kmess"
                     );
@@ -478,7 +482,7 @@ class Comments
 
                         $text = $this->purifier->purify($res['text']);
                         $text = $this->embed->embedMedia($text);
-                        $text = $this->smiliesRenderer->render($text, $res['rights'] >= 1);
+                        $text = $this->smiliesRenderer->render($text, $this->staffTitles->isStaff((int) $res['user_id']));
 
                         $res['post_text'] = new Markup($text, 'UTF-8');
                         $res['edit_count'] = $attributes['edit_count'] ?? 0;

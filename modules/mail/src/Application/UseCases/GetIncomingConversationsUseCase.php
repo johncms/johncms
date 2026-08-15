@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Mail\Application\UseCases;
 
 use Illuminate\Support\Collection;
+use Johncms\Auth\Authorization\StaffTitles;
 use Johncms\Modules\Mail\Application\DTO\ConversationItemDTO;
 use Johncms\Modules\Mail\Application\DTO\ConversationListResultDTO;
 use Johncms\Modules\Mail\Application\Services\MailMessagePreviewService;
@@ -17,6 +18,7 @@ use Twig\Markup;
 final readonly class GetIncomingConversationsUseCase
 {
     public function __construct(
+        private StaffTitles $staffTitles,
         private MailMessageRepositoryInterface $mailMessageRepository,
         private User $currentUser,
         private UserProperties $userProperties,
@@ -61,7 +63,11 @@ final readonly class GetIncomingConversationsUseCase
             $unread = false;
 
             if ($lastMessage) {
-                $previewText = $this->previewService->render($lastMessage->text, $user->id, (bool) $user->rights);
+                $previewText = $this->previewService->render(
+                    $lastMessage->text,
+                    $user->id,
+                    $this->staffTitles->isStaff((int) $user->id)
+                );
                 $displayDate = $this->dateFormatter->format($lastMessage->time);
                 $unread = ! $lastMessage->read;
             }

@@ -113,4 +113,14 @@ interface RoleRepositoryInterface
      * @return array<int, int> User id => level.
      */
     public function grantedLevelsFor(array $userIds, int $now): array;
+
+    /**
+     * The roles granted to each of these accounts, in one query. Accounts holding none are
+     * absent from the result, and so are the roles every account has by default: what is asked
+     * here is what distinguishes an account, not what everybody carries.
+     *
+     * @param list<int> $userIds
+     * @return array<int, list<Role>> User id => roles.
+     */
+    public function grantedRolesFor(array $userIds, int $now): array;
 }

@@ -12,6 +12,7 @@ use Johncms\Auth\Authentication\AuthenticatorChain;
 use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Auth\Authorization\PermissionResolver;
 use Johncms\Auth\Authorization\RoleLevels;
+use Johncms\Auth\Authorization\StaffTitles;
 use Johncms\Auth\CurrentUser;
 use Johncms\Config\ConfigRepository;
 use Johncms\Http\Request;
@@ -82,7 +83,8 @@ final class ListGuestbookEntriesUseCaseTest extends TestCase
 
     public function testMapsEntryToDtoWithoutMetaForRegularUser(): void
     {
-        $author = UserFactory::make(rights: 9, attributes: ['id' => 5, 'name' => 'Author', 'status' => 'The Boss']);
+        $author = UserFactory::make(attributes: ['id' => 5, 'name' => 'Author', 'status' => 'The Boss']);
+        $this->roles->grantTo(5, ['supervisor']);
         $entry = $this->makeEntry(['user_id' => 5, 'name' => 'Author', 'text' => 'Hello', 'otvet' => 'Reply'], $author);
 
         $this->repository->method('getEntries')->willReturn(new Collection([$entry]));
@@ -103,8 +105,7 @@ final class ListGuestbookEntriesUseCaseTest extends TestCase
         self::assertNotNull($dto->user);
         self::assertSame(5, $dto->user->id);
         self::assertSame('/profile/5', $dto->user->profileUrl);
-        self::assertSame('Supervisor', $dto->user->rightsName);
-        self::assertSame(9, $dto->user->rights);
+        self::assertSame('Supervisor', $dto->user->rightsName, 'The caption is the role, not a number');
         self::assertSame('The Boss', $dto->user->status);
 
         self::assertNull($dto->meta);
@@ -176,6 +177,7 @@ final class ListGuestbookEntriesUseCaseTest extends TestCase
             $this->makeTextFormatter(),
             $accessChecker,
             new RoleLevels($this->roles),
+            new StaffTitles($this->roles),
         );
     }
 
@@ -191,7 +193,12 @@ final class ListGuestbookEntriesUseCaseTest extends TestCase
         $smiliesRenderer = $this->createMock(SmiliesRendererInterface::class);
         $smiliesRenderer->method('render')->willReturnArgument(0);
 
-        return new GuestbookEntryTextFormatter($purifier, $media, $smiliesRenderer);
+        return new GuestbookEntryTextFormatter(
+            new StaffTitles($this->roles),
+            $purifier,
+            $media,
+            $smiliesRenderer
+        );
     }
 
     /**

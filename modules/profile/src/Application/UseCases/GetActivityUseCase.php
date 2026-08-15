@@ -6,6 +6,7 @@ namespace Johncms\Modules\Profile\Application\UseCases;
 
 use Illuminate\Support\Collection;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\Authorization\StaffTitles;
 use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;
 use Johncms\Modules\Forum\Domain\Models\ForumMessage;
@@ -26,6 +27,7 @@ use Johncms\Utils\DateFormatterInterface;
 final readonly class GetActivityUseCase
 {
     public function __construct(
+        private StaffTitles $staffTitles,
         private ProfileUserRepositoryInterface $profileUserRepository,
         private ProfileActivityRepositoryInterface $activityRepository,
         private ForumActivityPreviewService $forumPreview,
@@ -126,7 +128,10 @@ final readonly class GetActivityUseCase
                 'topic_url'     => $this->topicPathService->getTopicUrlById((int) $message->topic_id) ?? '/forum/',
                 'topic_name'    => $topic->name ?? '',
                 'topic_id'      => $message->topic_id,
-                'text'          => $this->forumPreview->make((string) $message->text, (int) $message->rights),
+                'text'          => $this->forumPreview->make(
+                    (string) $message->text,
+                    $this->staffTitles->isStaff((int) $message->user_id)
+                ),
                 'message_url'   => '/forum/post/' . $message->id . '/',
                 'display_date'  => $this->dateFormatter->format($message->date),
                 'category_name' => $category->name ?? '',
@@ -160,7 +165,7 @@ final readonly class GetActivityUseCase
                 'topic_id'      => $topic->id,
                 'text'          => $this->forumPreview->make(
                     (string) ($firstMessage->text ?? ''),
-                    (int) ($firstMessage->rights ?? 0)
+                    $this->staffTitles->isStaff((int) ($firstMessage->user_id ?? 0))
                 ),
                 'display_date'  => $this->dateFormatter->format($topic->last_post_date),
                 'category_name' => $category->name ?? '',

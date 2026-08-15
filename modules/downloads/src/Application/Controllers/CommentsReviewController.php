@@ -5,14 +5,15 @@ declare(strict_types=1);
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
-use Johncms\Modules\Downloads\Application\Services\DownloadsPermissions;
+use Johncms\Auth\Authorization\StaffTitles;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
+use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Downloads\Application\Services\DownloadFilePathService;
+use Johncms\Modules\Downloads\Application\Services\DownloadsPermissions;
 use Johncms\Modules\Downloads\Application\UseCases\ViewCommentsReviewUseCase;
 use Johncms\NavChain;
-use Johncms\Http\View\ViewResponse;
 use Johncms\Smilies\SmiliesRendererInterface;
 use Johncms\Utils\DateFormatterInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,6 +22,7 @@ use Twig\Markup;
 final readonly class CommentsReviewController
 {
     public function __construct(
+        private StaffTitles $staffTitles,
         private AccessCheckerInterface $accessChecker,
         private NavChain $navChain,
         private DateFormatterInterface $dateFormatter,
@@ -65,7 +67,7 @@ final readonly class CommentsReviewController
             $attrs = unserialize($comment->getAttribute('attributes'), ['allowed_classes' => false]);
 
             $text = $this->purifier->purify($comment->text);
-            $text = $this->smiliesRenderer->render($text, ($comment->user_rights ?? 0) >= 1);
+            $text = $this->smiliesRenderer->render($text, $this->staffTitles->isStaff((int) $comment->user_id));
 
             $replyText = null;
             $replyTime = '';
@@ -73,7 +75,10 @@ final readonly class CommentsReviewController
             $replyAuthorName = '';
             if (! empty($comment->reply)) {
                 $reply = $this->purifier->purify($comment->reply);
-                $replyText = new Markup($this->smiliesRenderer->render($reply, ($attrs['reply_rights'] ?? 0) >= 1), 'UTF-8');
+                // reply_staff is what a reply records now; the older ones carry the number of
+                // whoever wrote them.
+                $replyIsOfStaff = (bool) ($attrs['reply_staff'] ?? (($attrs['reply_rights'] ?? 0) >= 1));
+                $replyText = new Markup($this->smiliesRenderer->render($reply, $replyIsOfStaff), 'UTF-8');
                 $replyTime = $this->dateFormatter->format($attrs['reply_time']);
                 $replyAuthorUrl = '/profile/' . $attrs['reply_id'];
                 $replyAuthorName = $attrs['reply_name'];

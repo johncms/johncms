@@ -12,8 +12,9 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Domain\Models;
 
-use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\Authorization\StaffTitles;
+use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Johncms\Smilies\SmiliesRendererInterface;
 use Johncms\Users\User;
 use Johncms\Utils\DateFormatterInterface;
@@ -140,7 +141,9 @@ trait MessageMutators
         $text = $this->purifier->purify($this->text);
         $text = $this->media->embedMedia($text);
 
-        return new Markup(di(SmiliesRendererInterface::class)->render($text, (bool) $this->rights), 'UTF-8');
+        $authorIsStaff = di(StaffTitles::class)->isStaff((int) $this->user_id);
+
+        return new Markup(di(SmiliesRendererInterface::class)->render($text, $authorIsStaff), 'UTF-8');
     }
 
     /**
@@ -190,7 +193,6 @@ trait MessageMutators
             $this->user_model = new User(
                 [
                     'id'           => $this->user_id,
-                    'rights'       => $this->rights,
                     'lastdate'     => $this->lastdate,
                     'status'       => $this->status,
                     'datereg'      => $this->datereg,

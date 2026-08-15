@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\UseCases;
 
+use Johncms\Auth\Authorization\StaffTitles;
 use Johncms\Modules\Forum\Application\DTO\PollVotersQueryDTO;
 use Johncms\Modules\Forum\Application\DTO\PollVotersResultDTO;
 use Johncms\Modules\Forum\Application\Exceptions\ForumValidationException;
@@ -13,6 +14,7 @@ use Johncms\Users\User;
 final readonly class ViewPollVotersUseCase
 {
     public function __construct(
+        private StaffTitles $staffTitles,
         private ForumVoteRepositoryInterface $voteRepository,
         private User $currentUser,
     ) {
@@ -54,8 +56,8 @@ final readonly class ViewPollVotersUseCase
     private function mapItems(array $rows): array
     {
         $items = [];
-        $userRightsNames = $this->getUserRightsNames();
         $currentTime = time();
+        $this->staffTitles->preload(array_map(static fn (array $row): int => (int) ($row['id'] ?? 0), $rows));
 
         foreach ($rows as $row) {
             $row['user_profile_link'] = '';
@@ -63,7 +65,7 @@ final readonly class ViewPollVotersUseCase
                 $row['user_profile_link'] = '/profile/' . $row['id'];
             }
 
-            $row['user_rights_name'] = $userRightsNames[(int) ($row['rights'] ?? 0)] ?? '';
+            $row['user_rights_name'] = $this->staffTitles->titleFor((int) ($row['id'] ?? 0));
             $row['user_is_online'] = $currentTime <= (int) ($row['lastdate'] ?? 0) + 300;
 
             $ip = long2ip((int) ($row['ip'] ?? 0));
@@ -79,20 +81,5 @@ final readonly class ViewPollVotersUseCase
         }
 
         return $items;
-    }
-
-    /**
-     * @return array<int, string>
-     */
-    private function getUserRightsNames(): array
-    {
-        return [
-            3 => __('Forum moderator'),
-            4 => __('Download moderator'),
-            5 => __('Library moderator'),
-            6 => __('Super moderator'),
-            7 => __('Administrator'),
-            9 => __('Supervisor'),
-        ];
     }
 }

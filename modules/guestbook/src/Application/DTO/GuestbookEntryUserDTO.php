@@ -10,7 +10,6 @@ final readonly class GuestbookEntryUserDTO
         public int $id,
         public string $profileUrl,
         public string $rightsName,
-        public int $rights,
         public string $status,
     ) {
     }

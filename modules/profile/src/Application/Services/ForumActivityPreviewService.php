@@ -19,11 +19,11 @@ final readonly class ForumActivityPreviewService
     /**
      * Build a short plain-text preview of a forum post.
      */
-    public function make(string $rawText, int $rights): string
+    public function make(string $rawText, bool $authorIsStaff): string
     {
         $text = $this->purifier->purify($rawText);
         $text = $this->media->embedMedia($text);
-        $text = $this->smiliesRenderer->render($text, $rights > 0);
+        $text = $this->smiliesRenderer->render($text, $authorIsStaff);
         $text = strip_tags($text);
         $text = html_entity_decode($text, ENT_QUOTES | ENT_HTML5, 'UTF-8');
         $text = trim((string) (preg_replace('/\s+/u', ' ', $text) ?? $text));

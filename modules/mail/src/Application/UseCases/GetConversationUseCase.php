@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Mail\Application\UseCases;
 
+use Johncms\Auth\Authorization\StaffTitles;
 use Johncms\Modules\Mail\Application\DTO\ConversationResultDTO;
 use Johncms\Modules\Mail\Application\DTO\MessageItemDTO;
 use Johncms\Modules\Mail\Application\Exceptions\UserNotFoundException;
@@ -21,6 +22,7 @@ use Twig\Markup;
 final readonly class GetConversationUseCase
 {
     public function __construct(
+        private StaffTitles $staffTitles,
         private MailMessageRepositoryInterface $mailMessageRepository,
         private ContactRepositoryInterface $contactRepository,
         private MailFileService $mailFileService,
@@ -85,7 +87,7 @@ final readonly class GetConversationUseCase
 
             // The message author (the user who wrote it) is stored in user_id.
             $author = $message->recipient;
-            $authorRights = $author->rights ?? 0;
+            $authorIsStaff = $author !== null && $this->staffTitles->isStaff((int) $author->id);
 
             $userData = $author !== null
                 ? $this->userProperties->getFromArray(array_merge($author->getRawOriginal(), ['user_id' => $message->user_id]))
@@ -93,7 +95,7 @@ final readonly class GetConversationUseCase
 
             $text = $this->purifier->purify($message->text);
             $text = $this->media->embedMedia($text);
-            $text = $this->smiliesRenderer->render($text, $authorRights >= 1);
+            $text = $this->smiliesRenderer->render($text, $authorIsStaff);
 
             $files = [];
             if ($message->file_name) {

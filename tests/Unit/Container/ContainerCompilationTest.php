@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Container;
 
 use Johncms\Auth\Authorization\CorePermissions;
+use Johncms\Auth\Authorization\StaffTitles;
 use Johncms\Auth\Authorization\Voters\BanVoter;
 use Johncms\Auth\CurrentUser;
 use Johncms\Container\PSRContainerFactory;
@@ -70,6 +71,7 @@ final class ContainerCompilationTest extends TestCase
 
         self::assertSame(
             [
+                StaffTitles::class,
                 BanVoter::class,
                 CurrentUser::class,
                 CookieQueue::class,

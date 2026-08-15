@@ -142,7 +142,6 @@ final class ForumFileRepository implements ForumFileRepositoryInterface
                 'mess.user_id',
                 'mess.text',
                 'u.name',
-                'u.rights',
                 'u.lastdate',
                 'u.status',
             ])

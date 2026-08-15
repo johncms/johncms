@@ -9,6 +9,7 @@ use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Arr;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\Authorization\StaffTitles;
 use Johncms\FileInfo;
 use Johncms\Files\FileStorage;
 use Johncms\Http\Environment;
@@ -30,6 +31,7 @@ use Symfony\Component\HttpFoundation\Response;
 final readonly class CommentsController
 {
     public function __construct(
+        private StaffTitles $staffTitles,
         private AccessCheckerInterface $accessChecker,
         private PaginationFactory $paginationFactory,
     ) {
@@ -68,11 +70,12 @@ final readonly class CommentsController
         $lastPage = $pagination->getTotalPages();
 
         $canModerate = $this->accessChecker->allows(NewsPermissions::COMMENTS_MODERATE);
+        $staffTitles = $this->staffTitles;
 
         $array = [
             'current_page'   => $currentPage,
             'data'           => $comments->map(
-                static function (NewsComments $comment) use ($assets, $smiliesRenderer, $current_user, $purifier, $embed, $canModerate) {
+                static function (NewsComments $comment) use ($assets, $smiliesRenderer, $current_user, $purifier, $embed, $canModerate, $staffTitles) {
                     $user = $comment->user;
                     $user_data = [];
                     if ($user) {
@@ -89,7 +92,7 @@ final readonly class CommentsController
 
                     $text = $purifier->purify($comment->text);
                     $text = $embed->embedMedia($text);
-                    $text = $smiliesRenderer->render($text, ($user->rights > 0));
+                    $text = $smiliesRenderer->render($text, $staffTitles->isStaff((int) $comment->getAttribute('user_id')));
 
                     $message = [
                         'id'         => $comment->id,

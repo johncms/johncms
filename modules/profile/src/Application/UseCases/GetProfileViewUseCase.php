@@ -7,6 +7,7 @@ namespace Johncms\Modules\Profile\Application\UseCases;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Auth\Authorization\RoleLevels;
+use Johncms\Auth\Authorization\StaffTitles;
 use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Mail\Domain\Repository\ContactRepositoryInterface;
 use Johncms\Modules\Profile\Application\Access\BanAccess;
@@ -37,6 +38,7 @@ final readonly class GetProfileViewUseCase
     ];
 
     public function __construct(
+        private StaffTitles $staffTitles,
         private ProfileUserRepositoryInterface $profileUserRepository,
         private ContactRepositoryInterface $contactRepository,
         private KarmaRepositoryInterface $karmaRepository,
@@ -125,8 +127,9 @@ final readonly class GetProfileViewUseCase
         $data['negative_url'] = '/profile/' . $profileUser->id . '/karma';
 
         if ($profileUser->id !== $this->currentUser->id) {
+            $karmaForStaff = ! empty($config['karma']['adm']) || ! $this->staffTitles->isStaff((int) $profileUser->id);
             $canVote = ! $this->currentUser->karma_off
-                && (! $profileUser->rights || ($profileUser->rights && ! $config['karma']['adm']))
+                && $karmaForStaff
                 && $profileUser->ip !== $this->currentUser->ip;
             if ($canVote) {
                 $sum = $this->karmaRepository->sumPointsGivenSince($this->currentUser->id, $this->currentUser->karma_time);

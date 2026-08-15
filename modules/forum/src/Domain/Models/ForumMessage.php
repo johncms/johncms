@@ -64,7 +64,6 @@ use Simba77\EmbedMedia\Embed;
  * @property string $search_ip_via_proxy_url
  * @property string $user_profile_link
  *
- * @property string $rights
  *
  * @method ForumMessage users()
  *
@@ -173,7 +172,6 @@ class ForumMessage extends Model
             ->addSelect(
                 [
                     'forum_messages.*',
-                    'users.rights',
                     'users.lastdate',
                     'users.status',
                     'users.datereg',

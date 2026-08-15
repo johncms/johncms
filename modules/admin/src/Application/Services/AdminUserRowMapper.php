@@ -37,7 +37,6 @@ final readonly class AdminUserRowMapper
         $item = [
             'id'                      => $user->id,
             'name'                    => $user->name,
-            'rights'                  => $user->rights,
             'browser'                 => $user->browser,
             'user_is_online'          => $user->is_online,
             'user_profile_link'       => '',

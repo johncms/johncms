@@ -8,7 +8,7 @@
 {% extends '@theme/layouts/default.twig' %}
 
 {% block content %}
-    {% if app.user.isValid and app.user.rights >= 9 %}
+    {% if can('news.manage') %}
         <div class="mb-3 mt-n1">
             <a href="/admin/news/" class="btn btn-outline-danger btn-sm">{{ __('Admin panel') }}</a>
         </div>

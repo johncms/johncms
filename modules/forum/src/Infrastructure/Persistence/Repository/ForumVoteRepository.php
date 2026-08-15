@@ -55,7 +55,6 @@ final class ForumVoteRepository implements ForumVoteRepositoryInterface
             ->where('cms_forum_vote_users.topic', $topicId)
             ->select([
                 'cms_forum_vote_users.*',
-                'users.rights',
                 'users.lastdate',
                 'users.name',
                 'users.sex',

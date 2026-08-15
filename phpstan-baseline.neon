@@ -2705,12 +2705,6 @@ parameters:
 			path: modules/profile/src/Application/UseCases/GetActivityUseCase.php
 
 		-
-			message: '#^Left side of && is always true\.$#'
-			identifier: booleanAnd.leftAlwaysTrue
-			count: 1
-			path: modules/profile/src/Application/UseCases/GetProfileViewUseCase.php
-
-		-
 			message: '#^Method Johncms\\Modules\\Profile\\Infrastructure\\Persistence\\Repository\\EloquentProfileActivityRepository\:\:findFirstTopicMessage\(\) never returns Johncms\\Modules\\Forum\\Domain\\Models\\ForumMessage so it can be removed from the return type\.$#'
 			identifier: return.unusedType
 			count: 1

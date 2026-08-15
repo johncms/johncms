@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Profile\Application\UseCases;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\Authorization\StaffTitles;
 use Johncms\Modules\Profile\Application\DTO\VoteContextDTO;
 use Johncms\Modules\Profile\Application\Exceptions\KarmaVoteException;
 use Johncms\Modules\Profile\Application\Exceptions\ProfileNotFoundException;
@@ -16,6 +17,7 @@ use Johncms\Users\User;
 final readonly class GetVoteContextUseCase
 {
     public function __construct(
+        private StaffTitles $staffTitles,
         private ProfileUserRepositoryInterface $profileUserRepository,
         private KarmaRepositoryInterface $karmaRepository,
         private AccessCheckerInterface $accessChecker,
@@ -40,7 +42,7 @@ final readonly class GetVoteContextUseCase
         $config = config('johncms')['karma'];
         $errors = [];
 
-        if ($target->rights && $config['adm']) {
+        if (empty($config['adm']) && $this->staffTitles->isStaff((int) $target->id)) {
             $errors[] = __('It is forbidden to vote for administration');
         }
 

@@ -97,6 +97,34 @@ final class EloquentRoleRepository implements RoleRepositoryInterface
         return $levels;
     }
 
+    public function grantedRolesFor(array $userIds, int $now): array
+    {
+        if ($userIds === []) {
+            return [];
+        }
+
+        /** @var Collection<int, Role> $rows Static analysis loses the model type through addSelect(). */
+        $rows = Role::query()
+            ->join(UserRole::query()->getModel()->getTable() . ' as ur', 'ur.role_id', '=', 'roles.id')
+            ->whereIn('ur.user_id', $userIds)
+            ->where(
+                static function (Builder $query) use ($now): void {
+                    $query->whereNull('ur.expires_at')->orWhere('ur.expires_at', '>', $now);
+                }
+            )
+            ->select('roles.*')
+            ->addSelect('ur.user_id as granted_to')
+            ->get();
+
+        $granted = [];
+
+        foreach ($rows as $role) {
+            $granted[(int) $role->getAttribute('granted_to')][] = $role;
+        }
+
+        return $granted;
+    }
+
     public function permissionCounts(): array
     {
         /** @var array<int, int> $counts */
