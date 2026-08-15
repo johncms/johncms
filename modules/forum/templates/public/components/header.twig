@@ -6,9 +6,8 @@
     @var files_name   string
     @var files_count  int
 #}
-{% if not config('johncms.mod_forum') %}
-    <div class="alert alert-danger">{{ __('Forum is closed') }}</div>
-{% elseif config('johncms.mod_forum') == 3 %}
+{# The visitor is here, so they may read; the banner is about what they may not do. #}
+{% if not can('forum.post') %}
     <div class="alert alert-danger">{{ __('Read only') }}</div>
 {% endif %}
 

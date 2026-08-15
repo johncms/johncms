@@ -19,6 +19,12 @@ final class ForumPermissions implements PermissionProviderInterface
 {
     public const GROUP = 'forum';
 
+    /** Read the forum at all. What the "who may use the forum" setting used to say. */
+    public const VIEW = 'forum.view';
+
+    /** Write in the forum: start a topic, answer in one, attach a file to a post. */
+    public const POST = 'forum.post';
+
     /** Close, pin, move, edit and restore topics; edit and delete the posts of others. */
     public const TOPIC_MODERATE = 'forum.topic.moderate';
 
@@ -58,6 +64,22 @@ final class ForumPermissions implements PermissionProviderInterface
         $administrators = [SystemRole::Admin->value];
 
         return [
+            new PermissionDefinition(
+                self::VIEW,
+                self::GROUP,
+                d__('forum', 'Read the forum'),
+                $group,
+                [SystemRole::Guest->value, SystemRole::User->value]
+            ),
+            // The staff roles carry it as well, so that taking it from the user role — the read-only
+            // forum of the old setting — leaves the moderators able to answer.
+            new PermissionDefinition(
+                self::POST,
+                self::GROUP,
+                d__('forum', 'Write in the forum'),
+                $group,
+                [SystemRole::User->value, ...$moderators]
+            ),
             new PermissionDefinition(
                 self::TOPIC_MODERATE,
                 self::GROUP,

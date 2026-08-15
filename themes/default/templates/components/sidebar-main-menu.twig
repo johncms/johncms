@@ -25,7 +25,7 @@
                 {% endif %}
             </a>
         </li>
-        {% if config('johncms.mod_forum') or (app.user.isValid and app.user.rights >= 7) %}
+        {% if can('forum.view') %}
             <li>
                 <a href="/forum/">
                     <svg class="icon">

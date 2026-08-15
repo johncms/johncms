@@ -232,6 +232,8 @@
       'Delete a topic for good' => 'Удалять тему безвозвратно',
       'Delete a post for good' => 'Удалять сообщение безвозвратно',
       'Fill in the keywords and the description of a topic' => 'Заполнять ключевые слова и описание темы',
+      'Read the forum' => 'Читать форум',
+      'Write in the forum' => 'Писать на форуме',
     ),
   ),
 );

@@ -191,7 +191,7 @@ final readonly class ViewForumTopicUseCase
 
         $writeAccess = false;
         if (
-            ($this->currentUser->isValid() && ! $topic->closed && config('johncms.mod_forum') !== 3 && $access !== 4)
+            ($this->currentUser->isValid() && ! $topic->closed && $access !== 4 && $this->accessChecker->allows(ForumPermissions::POST))
             || $this->accessChecker->allows(ForumPermissions::TOPIC_MODERATE)
         ) {
             $writeAccess = true;

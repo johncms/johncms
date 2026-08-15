@@ -23,7 +23,6 @@ final readonly class UpdateModulesAccessUseCase
         $config = $this->configRepository->getJohncms();
 
         $config['mod_reg'] = $dto->registration;
-        $config['mod_forum'] = $dto->forum;
         $config['mod_guest'] = $dto->guestbook;
         $config['mod_lib'] = $dto->library;
         $config['mod_lib_comm'] = $dto->libraryComments;

@@ -25,13 +25,11 @@ final readonly class GetReplyMessageContextUseCase
 
     public function execute(int $messageId): ReplyMessageContextDTO
     {
-        $config = config('johncms');
-
         if (
             ! $this->currentUser->isValid()
             || isset($this->currentUser->ban[1])
             || isset($this->currentUser->ban[11])
-            || (! $this->currentUser->rights && $config['mod_forum'] === 3)
+            || ! $this->accessChecker->allows(ForumPermissions::POST)
         ) {
             throw new ForumAccessDeniedException('Access denied to post message.');
         }

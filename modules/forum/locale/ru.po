@@ -1291,3 +1291,9 @@ msgstr "Удалять сообщение безвозвратно"
 
 msgid "Fill in the keywords and the description of a topic"
 msgstr "Заполнять ключевые слова и описание темы"
+
+msgid "Read the forum"
+msgstr "Читать форум"
+
+msgid "Write in the forum"
+msgstr "Писать на форуме"

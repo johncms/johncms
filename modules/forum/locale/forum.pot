@@ -67,8 +67,8 @@ msgstr ""
 
 #: modules/forum/src/Application/Controllers/AddFileController.php:89
 #: modules/forum/src/Application/Controllers/AddFileController.php:90
-#: modules/forum/src/Application/Controllers/UploadFileController.php:51
-#: modules/forum/src/Application/Controllers/UploadFileController.php:82
+#: modules/forum/src/Application/Controllers/UploadFileController.php:53
+#: modules/forum/src/Application/Controllers/UploadFileController.php:84
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:55
 #: modules/forum/src/Application/UseCases/AttachFileToPostUseCase.php:46
 #: modules/forum/src/Application/UseCases/AttachFileToPostUseCase.php:72
@@ -255,7 +255,7 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:72
 #: modules/forum/src/Application/Controllers/ViewTopicVisitorsController.php:79
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:36
-#: modules/forum/src/Application/Services/ForumPermissions.php:48
+#: modules/forum/src/Application/Services/ForumPermissions.php:54
 #: modules/forum/templates/public/files-list.twig:143
 #: modules/forum/templates/public/search.twig:87
 #: modules/forum/templates/public/show-post.twig:141
@@ -362,7 +362,7 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/MarkAllTopicsReadController.php:36
 #: modules/forum/src/Application/Controllers/MarkAllTopicsReadController.php:37
 #: modules/forum/src/Application/Controllers/UnreadTopicsController.php:46
-#: modules/forum/templates/public/components/header.twig:21
+#: modules/forum/templates/public/components/header.twig:20
 msgid "Unread"
 msgstr ""
 
@@ -479,12 +479,12 @@ msgstr ""
 msgid "There is nothing new in this forum for selected period"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/UploadFileController.php:35
-#: modules/forum/src/Application/Controllers/UploadFileController.php:45
+#: modules/forum/src/Application/Controllers/UploadFileController.php:38
+#: modules/forum/src/Application/Controllers/UploadFileController.php:47
 msgid "Access denied"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/UploadFileController.php:56
+#: modules/forum/src/Application/Controllers/UploadFileController.php:58
 msgid "Only images are allowed"
 msgstr ""
 
@@ -507,7 +507,6 @@ msgid "For registered users only"
 msgstr ""
 
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:50
-#: modules/forum/templates/public/components/header.twig:10
 msgid "Forum is closed"
 msgstr ""
 
@@ -515,35 +514,43 @@ msgstr ""
 msgid "Search query must be between 2 and 64 characters"
 msgstr ""
 
-#: modules/forum/src/Application/Services/ForumPermissions.php:64
+#: modules/forum/src/Application/Services/ForumPermissions.php:70
+msgid "Read the forum"
+msgstr ""
+
+#: modules/forum/src/Application/Services/ForumPermissions.php:79
+msgid "Write in the forum"
+msgstr ""
+
+#: modules/forum/src/Application/Services/ForumPermissions.php:86
 msgid "Moderate topics: close, pin, move, edit, restore"
 msgstr ""
 
-#: modules/forum/src/Application/Services/ForumPermissions.php:71
+#: modules/forum/src/Application/Services/ForumPermissions.php:93
 msgid "Manage the poll of a topic"
 msgstr ""
 
-#: modules/forum/src/Application/Services/ForumPermissions.php:78
+#: modules/forum/src/Application/Services/ForumPermissions.php:100
 msgid "See deleted topics and posts"
 msgstr ""
 
-#: modules/forum/src/Application/Services/ForumPermissions.php:85
+#: modules/forum/src/Application/Services/ForumPermissions.php:107
 msgid "Appoint the curators of a topic"
 msgstr ""
 
-#: modules/forum/src/Application/Services/ForumPermissions.php:92
+#: modules/forum/src/Application/Services/ForumPermissions.php:114
 msgid "See who voted in a poll"
 msgstr ""
 
-#: modules/forum/src/Application/Services/ForumPermissions.php:99
+#: modules/forum/src/Application/Services/ForumPermissions.php:121
 msgid "Delete a topic for good"
 msgstr ""
 
-#: modules/forum/src/Application/Services/ForumPermissions.php:105
+#: modules/forum/src/Application/Services/ForumPermissions.php:127
 msgid "Delete a post for good"
 msgstr ""
 
-#: modules/forum/src/Application/Services/ForumPermissions.php:111
+#: modules/forum/src/Application/Services/ForumPermissions.php:133
 msgid "Fill in the keywords and the description of a topic"
 msgstr ""
 
@@ -881,19 +888,19 @@ msgstr ""
 msgid "Forum rules"
 msgstr ""
 
-#: modules/forum/templates/public/components/header.twig:12
+#: modules/forum/templates/public/components/header.twig:11
 msgid "Read only"
 msgstr ""
 
-#: modules/forum/templates/public/components/header.twig:34
+#: modules/forum/templates/public/components/header.twig:33
 msgid "Show for Period"
 msgstr ""
 
-#: modules/forum/templates/public/components/header.twig:43
+#: modules/forum/templates/public/components/header.twig:42
 msgid "Last activity"
 msgstr ""
 
-#: modules/forum/templates/public/components/header.twig:62
+#: modules/forum/templates/public/components/header.twig:61
 #: modules/forum/templates/public/search.twig:33
 msgid "Search"
 msgstr ""

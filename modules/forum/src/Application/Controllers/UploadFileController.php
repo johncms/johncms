@@ -4,21 +4,24 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\Controllers;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\FileInfo;
 use Johncms\Files\FileStorage;
+use Johncms\Http\Request;
 use Johncms\Http\UploadedFileMapper;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
+use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
-use Johncms\Http\Request;
 use Johncms\Users\User;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Psr\Log\LoggerInterface;
 use Throwable;
 
 final readonly class UploadFileController
 {
     public function __construct(
+        private AccessCheckerInterface $accessChecker,
         private FileStorage $fileStorage,
         private EnsureForumAccessUseCase $forumAccessUseCase,
         private User $currentUser,
@@ -35,12 +38,11 @@ final readonly class UploadFileController
             return new JsonResponse(['error' => ['message' => __('Access denied')]], JsonResponse::HTTP_FORBIDDEN);
         }
 
-        $config = config('johncms');
         if (
             ! $this->currentUser->isValid()
             || isset($this->currentUser->ban[1])
             || isset($this->currentUser->ban[11])
-            || (! $this->currentUser->rights && $config['mod_forum'] === 3)
+            || ! $this->accessChecker->allows(ForumPermissions::POST)
         ) {
             return new JsonResponse(['error' => ['message' => __('Access denied')]], JsonResponse::HTTP_FORBIDDEN);
         }

@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\UseCases;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Modules\Forum\Application\DTO\ForumSectionPageResultDTO;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
+use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Johncms\Modules\Forum\Application\Services\ForumSectionPathService;
 use Johncms\Modules\Forum\Domain\Repository\ForumSectionRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
@@ -15,6 +17,7 @@ use Johncms\Users\User;
 final readonly class ViewForumSectionUseCase
 {
     public function __construct(
+        private AccessCheckerInterface $accessChecker,
         private ForumSectionRepositoryInterface $sectionRepository,
         private ForumTopicRepositoryInterface $topicRepository,
         private ForumWhoRepositoryInterface $whoRepository,
@@ -101,11 +104,9 @@ final readonly class ViewForumSectionUseCase
 
     private function canCreateTopic(): bool
     {
-        $config = config('johncms');
-
-        return ($this->currentUser->is_valid
+        return $this->currentUser->is_valid
             && ! isset($this->currentUser->ban['1'])
             && ! isset($this->currentUser->ban['11'])
-            && $config['mod_forum'] !== 4) || $this->currentUser->rights > 0;
+            && $this->accessChecker->allows(ForumPermissions::POST);
     }
 }
