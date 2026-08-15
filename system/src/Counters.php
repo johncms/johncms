@@ -12,6 +12,13 @@ declare(strict_types=1);
 
 namespace Johncms;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\Authorization\CorePermissions;
+use Johncms\Modules\Album\Application\Services\AlbumPermissions;
+use Johncms\Modules\Downloads\Application\Services\DownloadsPermissions;
+use Johncms\Modules\Forum\Application\Services\ForumPermissions;
+use Johncms\Modules\Guestbook\Application\Services\GuestbookPermissions;
+use Johncms\Modules\Library\Application\Services\LibraryPermissions;
 use Johncms\Notifications\Notification;
 use Johncms\System\Users\User;
 use PDO;
@@ -43,13 +50,22 @@ class Counters
     /** @var RequestStack */
     private $requestStack;
 
-    public function __construct(PDO $pdo, User $user, string $homeUrl, Cache $cache, RequestStack $requestStack)
-    {
+    private AccessCheckerInterface $accessChecker;
+
+    public function __construct(
+        PDO $pdo,
+        User $user,
+        string $homeUrl,
+        Cache $cache,
+        RequestStack $requestStack,
+        AccessCheckerInterface $accessChecker
+    ) {
         $this->db = $pdo;
         $this->user = $user;
         $this->homeurl = $homeUrl;
         $this->cache = $cache;
         $this->requestStack = $requestStack;
+        $this->accessChecker = $accessChecker;
     }
 
     /**
@@ -74,7 +90,7 @@ class Counters
         $counters = $this->albumRawCounters();
 
         $newcount = 0;
-        if ($this->user->rights >= 6 && $counters['new_adm']) {
+        if ($counters['new_adm'] && $this->accessChecker->allows(AlbumPermissions::MODERATE)) {
             $newcount = $counters['new_adm'];
         } elseif ($counters['new']) {
             $newcount = $counters['new'];
@@ -122,7 +138,7 @@ class Counters
             $total .= '&nbsp;/&nbsp;<span class="red"><a href="downloads/?act=new_files">+' . $new . '</a></span>';
         }
 
-        if ($this->user->rights == 4 || $this->user->rights >= 6) {
+        if ($this->accessChecker->allows(DownloadsPermissions::MODERATE)) {
             if ($mod) {
                 $total .= '&nbsp;/&nbsp;<span class="red"><a href="/downloads/moderation">м. ' . $mod . '</a></span>';
             }
@@ -167,7 +183,7 @@ class Counters
                 "SELECT COUNT(*) FROM `forum_topic`
                 LEFT JOIN `cms_forum_rdm` ON `forum_topic`.`id` = `cms_forum_rdm`.`topic_id` AND `cms_forum_rdm`.`user_id` = '" . $this->user->id . "'
                 WHERE (`cms_forum_rdm`.`topic_id` IS NULL OR `forum_topic`.`last_post_date` > `cms_forum_rdm`.`time`)
-                " . ($this->user->rights >= 7 ? '' : ' AND (`forum_topic`.`deleted` != 1 OR `forum_topic`.`deleted` IS NULL)') . '
+                " . ($this->accessChecker->allows(ForumPermissions::DELETED_VIEW) ? '' : ' AND (`forum_topic`.`deleted` != 1 OR `forum_topic`.`deleted` IS NULL)') . '
                 '
             )->fetchColumn();
 
@@ -195,7 +211,7 @@ class Counters
                 "SELECT COUNT(*) FROM `forum_topic`
                 LEFT JOIN `cms_forum_rdm` ON `forum_topic`.`id` = `cms_forum_rdm`.`topic_id` AND `cms_forum_rdm`.`user_id` = '" . $this->user->id . "'
                 WHERE (`cms_forum_rdm`.`topic_id` IS NULL OR `forum_topic`.`last_post_date` > `cms_forum_rdm`.`time`)
-                " . ($this->user->rights >= 7 ? '' : ' AND (`forum_topic`.`deleted` != 1 OR `forum_topic`.`deleted` IS NULL)') . '
+                " . ($this->accessChecker->allows(ForumPermissions::DELETED_VIEW) ? '' : ' AND (`forum_topic`.`deleted` != 1 OR `forum_topic`.`deleted` IS NULL)') . '
                 '
             )->fetchColumn();
         }
@@ -222,7 +238,7 @@ class Counters
             $total .= '&#160;/&#160;<span class="red"><a href="' . $this->homeurl . '/library/?act=new">+' . $new . '</a></span>';
         }
 
-        if (($this->user->rights == 5 || $this->user->rights >= 6) && $mod) {
+        if ($mod && $this->accessChecker->allows(LibraryPermissions::MODERATE)) {
             $total .= '&#160;/&#160;<span class="red"><a href="' . $this->homeurl . '/library/premod">M:' . $mod . '</a></span>';
         }
 
@@ -340,7 +356,7 @@ class Counters
     {
         $guestbook = $this->db->query('SELECT COUNT(*) FROM `guest` WHERE `adm` = 0 AND `time` > ' . (time() - 86400))->fetchColumn();
         $admin_club = 0;
-        if ($this->user->rights >= 1) {
+        if ($this->accessChecker->allows(GuestbookPermissions::ADMIN_CLUB_VIEW)) {
             $admin_club = $this->db->query('SELECT COUNT(*) FROM `guest` WHERE `adm`=\'1\' AND `time`> ' . (time() - 86400))->fetchColumn();
         }
 
@@ -439,7 +455,7 @@ class Counters
         $counters = $this->albumRawCounters();
 
         $newcount = 0;
-        if ($this->user->rights >= 6 && $counters['new_adm']) {
+        if ($counters['new_adm'] && $this->accessChecker->allows(AlbumPermissions::MODERATE)) {
             $newcount = $counters['new_adm'];
         } elseif ($counters['new']) {
             $newcount = $counters['new'];
@@ -479,9 +495,17 @@ class Counters
             return $notifications;
         }
 
-        if ($this->user->rights >= 7) {
+        // Counted for whoever is shown it: the queue of the library belongs to the moderator of
+        // the library, not to everybody who was above a 7.
+        if ($this->accessChecker->allows(CorePermissions::ADMIN_ACCESS)) {
             $notifications['reg_total'] = $this->db->query("SELECT COUNT(*) FROM `users` WHERE `preg`='0'")->fetchColumn();
+        }
+
+        if ($this->accessChecker->allows(LibraryPermissions::MODERATE)) {
             $notifications['library_mod'] = $this->db->query('SELECT COUNT(*) FROM `library_texts` WHERE `premod` = 0')->fetchColumn();
+        }
+
+        if ($this->accessChecker->allows(DownloadsPermissions::MODERATE)) {
             $notifications['downloads_mod'] = $this->db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '3'")->fetchColumn();
         }
 

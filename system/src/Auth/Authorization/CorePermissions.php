@@ -45,6 +45,9 @@ final class CorePermissions implements PermissionProviderInterface
     /** Use the smilies kept for the staff. */
     public const SMILIES_ADMIN_USE = 'system.smilies.admin';
 
+    /** Reply to, edit and delete the comments the modules keep in the shared engine. */
+    public const COMMENTS_MODERATE = 'system.comments.moderate';
+
     public function permissions(): iterable
     {
         $adminGroup = d__('system', 'Admin panel');
@@ -101,6 +104,13 @@ final class CorePermissions implements PermissionProviderInterface
                 d__('system', 'Use the smilies kept for the staff'),
                 $systemGroup,
                 $staff
+            ),
+            new PermissionDefinition(
+                self::COMMENTS_MODERATE,
+                self::SYSTEM_GROUP,
+                d__('system', 'Moderate the comments of the modules'),
+                $systemGroup,
+                [SystemRole::SuperModerator->value, SystemRole::Admin->value]
             ),
             new PermissionDefinition(
                 self::USERS_ORIGIN_VIEW,

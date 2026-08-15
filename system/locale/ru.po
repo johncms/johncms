@@ -1016,3 +1016,6 @@ msgstr "Видеть, где посетитель находится на сай
 
 msgid "Use the smilies kept for the staff"
 msgstr "Использовать служебные смайлы"
+
+msgid "Moderate the comments of the modules"
+msgstr "Модерировать комментарии модулей"

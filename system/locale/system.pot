@@ -39,7 +39,7 @@ msgid "Watching the photo album"
 msgstr ""
 
 #: config/places.global.php:14
-#: system/src/Auth/Authorization/CorePermissions.php:52
+#: system/src/Auth/Authorization/CorePermissions.php:55
 #: themes/default/templates/components/sidebar-main-menu.twig:85
 #: modules/homepage/templates/public/index.twig:46
 msgid "Users"
@@ -50,12 +50,12 @@ msgid "Users List"
 msgstr ""
 
 #: config/places.global.php:16
-#: system/src/Comments.php:196
-#: system/src/Comments.php:232
-#: system/src/Comments.php:261
-#: system/src/Comments.php:287
-#: system/src/Comments.php:328
-#: system/src/Comments.php:355
+#: system/src/Comments.php:207
+#: system/src/Comments.php:244
+#: system/src/Comments.php:273
+#: system/src/Comments.php:297
+#: system/src/Comments.php:338
+#: system/src/Comments.php:365
 #: themes/default/templates/components/sidebar-main-menu.twig:60
 #: modules/homepage/templates/public/index.twig:44
 msgid "Downloads"
@@ -326,53 +326,57 @@ msgid "Go to Link"
 msgstr ""
 
 #: modules/redirect/templates/public/index.twig:31
-#: system/src/Comments.php:200
-#: system/src/Comments.php:236
-#: system/src/Comments.php:253
+#: system/src/Comments.php:211
+#: system/src/Comments.php:248
 #: system/src/Comments.php:265
-#: system/src/Comments.php:291
-#: system/src/Comments.php:332
-#: system/src/Comments.php:347
-#: system/src/Comments.php:359
+#: system/src/Comments.php:277
+#: system/src/Comments.php:301
+#: system/src/Comments.php:342
+#: system/src/Comments.php:357
+#: system/src/Comments.php:369
 #: themes/default/templates/admin/pages/result.twig:21
 #: themes/default/templates/pages/comments-list.twig:138
 #: themes/default/templates/pages/result.twig:19
 msgid "Back"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:50
+#: system/src/Auth/Authorization/CorePermissions.php:53
 msgid "Admin panel"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:51
+#: system/src/Auth/Authorization/CorePermissions.php:54
 msgid "System"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:67
+#: system/src/Auth/Authorization/CorePermissions.php:70
 msgid "Access the admin panel"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:74
+#: system/src/Auth/Authorization/CorePermissions.php:77
 msgid "Change system settings"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:80
+#: system/src/Auth/Authorization/CorePermissions.php:83
 msgid "Manage roles and permissions"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:87
+#: system/src/Auth/Authorization/CorePermissions.php:90
 msgid "See error details and the developer panel"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:94
+#: system/src/Auth/Authorization/CorePermissions.php:97
 msgid "Post without waiting out the full antiflood delay"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:101
+#: system/src/Auth/Authorization/CorePermissions.php:104
 msgid "Use the smilies kept for the staff"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:108
+#: system/src/Auth/Authorization/CorePermissions.php:111
+msgid "Moderate the comments of the modules"
+msgstr ""
+
+#: system/src/Auth/Authorization/CorePermissions.php:118
 msgid "See where a visitor is on the site and where they came from"
 msgstr ""
 
@@ -529,62 +533,62 @@ msgid ""
 "PHP should work with the default driver: <a href=\"https://www.php.net/manual/en/intro.mysqlnd.php\" target=\"_blank\">MySQL Native Driver (mysqlnd)</a>."
 msgstr ""
 
-#: system/src/Comments.php:185
-#: system/src/Comments.php:249
-#: system/src/Comments.php:250
+#: system/src/Comments.php:196
+#: system/src/Comments.php:261
+#: system/src/Comments.php:262
 #: themes/default/templates/pages/comments-list.twig:106
 msgid "Reply"
 msgstr ""
 
-#: system/src/Comments.php:198
+#: system/src/Comments.php:209
 msgid "Administrator already replied to this message"
 msgstr ""
 
-#: system/src/Comments.php:263
-#: system/src/Comments.php:357
+#: system/src/Comments.php:275
+#: system/src/Comments.php:367
 msgid "Wrong data"
 msgstr ""
 
-#: system/src/Comments.php:275
-#: system/src/Comments.php:343
-#: system/src/Comments.php:344
+#: system/src/Comments.php:287
+#: system/src/Comments.php:353
+#: system/src/Comments.php:354
 #: themes/default/templates/pages/comments-list.twig:118
 msgid "Edit"
 msgstr ""
 
-#: system/src/Comments.php:289
+#: system/src/Comments.php:299
 msgid "You cannot edit posts of higher administration"
 msgstr ""
 
-#: system/src/Comments.php:369
-#: system/src/Comments.php:403
-#: system/src/Comments.php:404
+#: system/src/Comments.php:379
+#: system/src/Comments.php:413
+#: system/src/Comments.php:414
 #: themes/default/templates/pages/comments-delete.twig:16
 #: themes/default/templates/pages/comments-list.twig:121
 msgid "Delete"
 msgstr ""
 
-#: system/src/Comments.php:621
+#: system/src/Comments.php:678
 msgid "Text is too short"
 msgstr ""
 
-#: system/src/Comments.php:627
+#: system/src/Comments.php:684
 msgid "You cannot add the message so often<br>Please, wait"
 msgstr ""
 
-#: system/src/Comments.php:627
+#: system/src/Comments.php:684
 msgid "seconds"
 msgstr ""
 
-#: system/src/Comments.php:635
+#: system/src/Comments.php:692
 msgid "Message already exists"
 msgstr ""
 
-#: system/src/Counters.php:175
+#: system/src/Counters.php:191
 msgid "Unread"
 msgstr ""
 
-#: system/src/Counters.php:181
+#: system/src/Counters.php:197
 msgid "Last activity"
 msgstr ""
 
@@ -747,7 +751,7 @@ msgstr ""
 msgid "Contacts"
 msgstr ""
 
-#: themes/default/templates/components/sidebar-main-menu.twig:126
+#: themes/default/templates/components/sidebar-main-menu.twig:125
 msgid "Admin Panel"
 msgstr ""
 

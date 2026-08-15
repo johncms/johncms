@@ -12,6 +12,11 @@ declare(strict_types=1);
 
 namespace Johncms;
 
+use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\Authorization\CorePermissions;
+use Johncms\Auth\Authorization\RoleLevels;
+use Johncms\Auth\Authorization\SystemRole;
+use Johncms\Auth\CurrentUser;
 use Johncms\Container\PSRContainerFactory;
 use Johncms\Media\MediaEmbed;
 use Johncms\Security\AntifloodCheckerInterface;
@@ -21,7 +26,6 @@ use Johncms\Http\Session;
 use Johncms\Http\Environment;
 use Johncms\System\Users\User;
 use Johncms\Users\IgnoreListCheckerInterface;
-use Johncms\Users\User as UserModel;
 use Johncms\System\Utility\EditorContentNormalizer;
 use Johncms\Utils\DateFormatterInterface;
 use Johncms\View\RendererInterface;
@@ -74,6 +78,12 @@ class Comments
     /** @var User */
     private $systemUser;
 
+    private AccessCheckerInterface $accessChecker;
+
+    private CurrentUser $currentUser;
+
+    private RoleLevels $roleLevels;
+
     /** @var bool Возможность отвечать на комментарий */
     private $access_reply = false;
 
@@ -83,8 +93,6 @@ class Comments
     /** @var bool Возможность удалять комментарий */
     private $access_delete = false;
 
-    /** @var int Уровень доступа для Администрации */
-    private $access_level = 6;
 
     // Параметры отображения комментариев
 
@@ -132,6 +140,9 @@ class Comments
         $this->ignoreListChecker = $container->get(IgnoreListCheckerInterface::class);
         $this->db = $container->get(PDO::class);
         $this->systemUser = $container->get(User::class);
+        $this->accessChecker = $container->get(AccessCheckerInterface::class);
+        $this->currentUser = $container->get(CurrentUser::class);
+        $this->roleLevels = $container->get(RoleLevels::class);
         $this->view = di(RendererInterface::class);
         $this->nav_chain = di(NavChain::class);
         $this->purifier = di(HTMLPurifier::class);
@@ -172,7 +183,7 @@ class Comments
         }
 
         // Открываем доступ для Администрации
-        if ($this->systemUser->rights >= $this->access_level) {
+        if ($this->accessChecker->allows(CorePermissions::COMMENTS_MODERATE)) {
             $this->access_reply = true;
             $this->access_edit = true;
             $this->access_delete = true;
@@ -189,7 +200,7 @@ class Comments
                         $res = $req->fetch();
                         $attributes = unserialize($res['attributes'], ['allowed_classes' => false]);
 
-                        if (! empty($res['reply']) && $attributes['reply_rights'] > $this->systemUser->rights) {
+                        if (! empty($res['reply']) && $this->replyIsOfHigherStaff($attributes)) {
                             echo $this->view->render(
                                 '@theme/pages/result.twig',
                                 [
@@ -205,7 +216,8 @@ class Comments
 
                             if (empty($message['error'])) {
                                 $attributes['reply_id'] = $this->systemUser->id;
-                                $attributes['reply_rights'] = $this->systemUser->rights;
+                                $attributes['reply_level'] = $this->ownLevel();
+                                $attributes['reply_staff'] = $this->accessChecker->allows(CorePermissions::SMILIES_ADMIN_USE);
                                 $attributes['reply_name'] = $this->systemUser->name;
                                 $attributes['reply_time'] = time();
 
@@ -278,9 +290,7 @@ class Comments
                     if ($req->rowCount()) {
                         $res = $req->fetch();
                         $attributes = unserialize($res['attributes'], ['allowed_classes' => false]);
-                        $user = UserModel::query()->find((int) $res['user_id']);
-
-                        if (($user->rights ?? 0) > $this->systemUser->rights) {
+                        if ($this->roleLevels->highestGrantedTo((int) $res['user_id']) > $this->ownLevel()) {
                             echo $this->view->render(
                                 '@theme/pages/result.twig',
                                 [
@@ -483,7 +493,7 @@ class Comments
                         if (! empty($res['reply'])) {
                             $reply = $this->purifier->purify($res['reply']);
                             $reply = $this->embed->embedMedia($reply);
-                            $reply = $this->smiliesRenderer->render($reply, $attributes['reply_rights'] >= 1);
+                            $reply = $this->smiliesRenderer->render($reply, $this->replyIsOfStaff($attributes));
                             $res['reply_text'] = new Markup($reply, 'UTF-8');
                             $res['reply_time'] = $this->dateFormatter->format($attributes['reply_time']);
                             $res['reply_author_url'] = '/profile/' . $attributes['reply_id'];
@@ -522,7 +532,7 @@ class Comments
                         'message_form' => $data['message_form'] ?? '',
                         'pagination'   => $data['pagination'] ?? '',
                         // The address and the browser of an author are for the staff only.
-                        'show_origin'  => (bool) $this->systemUser->rights,
+                        'show_origin'  => $this->accessChecker->allows(CorePermissions::USERS_ORIGIN_VIEW),
                         'back_url'     => $this->back_url,
                     ]
                 );
@@ -603,6 +613,53 @@ class Comments
      * @param bool $rpt_check проверка на повтор сообщений
      * @return array|bool
      */
+    /**
+     * Where the visitor stands, so a reply of the staff is not overwritten from below.
+     */
+    private function ownLevel(): int
+    {
+        return $this->roleLevels->highest($this->currentUser->identity());
+    }
+
+    /**
+     * Whether the reply already on the comment was left by somebody standing above the visitor.
+     *
+     * Replies written before the roles arrived carry the number the author had; the closest
+     * role at or below it is what that number stood for.
+     *
+     * @param array<string, mixed> $attributes
+     */
+    private function replyIsOfHigherStaff(array $attributes): bool
+    {
+        return $this->replyLevel($attributes) > $this->ownLevel();
+    }
+
+    /**
+     * @param array<string, mixed> $attributes
+     */
+    private function replyIsOfStaff(array $attributes): bool
+    {
+        if (isset($attributes['reply_staff'])) {
+            return (bool) $attributes['reply_staff'];
+        }
+
+        return ($attributes['reply_rights'] ?? 0) >= 1;
+    }
+
+    /**
+     * @param array<string, mixed> $attributes
+     */
+    private function replyLevel(array $attributes): int
+    {
+        if (isset($attributes['reply_level'])) {
+            return (int) $attributes['reply_level'];
+        }
+
+        $legacy = (int) ($attributes['reply_rights'] ?? 0);
+
+        return $legacy > 0 ? SystemRole::nearestBelowLegacyRights($legacy)->level() : 0;
+    }
+
     private function msgCheck(bool $rpt_check = false)
     {
         $error = [];
