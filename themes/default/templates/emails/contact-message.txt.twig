@@ -1,0 +1,22 @@
+{#
+    A message sent through the contact form, delivered to the site owner, plain text.
+
+    @var string sender_name
+    @var string sender_email
+    @var string message_text
+    @var string admin_link
+#}
+{% extends '@theme/emails/layout.txt.twig' %}
+
+{% set email_title = __('New message from the contact form') %}
+
+{% block content %}
+{{ __('A new message has been sent through the contact form on the <a href="%s">%s</a> website', home_url(), copyright())|striptags }}
+
+{{ __('Sender:') }} {{ sender_name }}
+{{ __('E-mail:') }} {{ sender_email }}
+
+{{ message_text }}
+
+{{ __('Open in admin panel') }}: {{ admin_link }}
+{% endblock %}

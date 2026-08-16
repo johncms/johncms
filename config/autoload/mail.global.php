@@ -50,6 +50,22 @@ return [
             ],
         ],
 
+        /*
+         * DKIM signature: proves to the receiving server that the message really comes from your
+         * domain, which is what keeps it out of the spam folder. Signing is off while any of the
+         * three settings below is empty.
+         *
+         * `private_key` takes the key itself or a path to it in the form `file:///path/to/key.pem`.
+         * `selector` is the name under which the matching public key is published in DNS as
+         * `<selector>._domainkey.<domain>`.
+         */
+        'dkim'      => [
+            'private_key' => '',
+            'domain'      => '',
+            'selector'    => '',
+            'passphrase'  => '',
+        ],
+
         // The mail queue: messages are queued by the site and delivered by the mail:send-pending
         // task, so that a slow or unreachable mail server never holds up a page.
         'queue'     => [

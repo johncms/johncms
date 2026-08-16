@@ -51,6 +51,8 @@ use Johncms\Mail\MailFactory;
 use Johncms\Mail\Queue\EloquentEmailQueue;
 use Johncms\Mail\Queue\EmailQueueInterface;
 use Johncms\Mail\Queue\MailQueueSettings;
+use Symfony\Component\Mime\HtmlToTextConverter\DefaultHtmlToTextConverter;
+use Symfony\Component\Mime\HtmlToTextConverter\HtmlToTextConverterInterface;
 use Johncms\Media\MediaEmbed;
 use Johncms\NavChain;
 use Johncms\Router\RouteCollectorFactory;
@@ -229,6 +231,11 @@ return static function (ContainerConfigurator $container): void {
                 ROOT_PATH . 'system/src/Auth/External/ProviderSettings.php',
                 ROOT_PATH . 'system/src/Auth/External/ExternalAuthException.php',
                 ROOT_PATH . 'system/src/Auth/External/ExternalAccountConflictException.php',
+                // The body of one rendered message and the exception of a broken mail
+                // configuration: value objects carrying scalars, not services.
+                ROOT_PATH . 'system/src/Mail/RenderedEmailDTO.php',
+                ROOT_PATH . 'system/src/Mail/Exception',
+                ROOT_PATH . 'system/src/Mail/Schema',
                 ROOT_PATH . 'system/src/View/Theme/ThemeDTO.php',
                 // Built by the scan command with the translation set it fills, not by the container.
                 ROOT_PATH . 'system/src/System/i18n/TwigScanner.php',
@@ -376,6 +383,11 @@ return static function (ContainerConfigurator $container): void {
         ->arg('$environment', ViewEnvironment::Install)
         ->arg('$extensions', tagged_iterator('johncms.twig_extension.install'));
     $services->set(\Johncms\Mail\MailRenderer::class)->arg('$twig', service('johncms.twig.mail'));
+    // The plain text alternative of a message whose template does not provide one of its own.
+    // Installing league/html-to-markdown and swapping this for LeagueHtmlToMarkdownConverter
+    // gives a better rendering of such text; the templates shipped with the theme write it
+    // themselves and do not go through the converter at all.
+    $services->set(HtmlToTextConverterInterface::class, DefaultHtmlToTextConverter::class);
 
     $services->set(AppVariable::class)
         ->arg('$environment', ViewEnvironment::Web)

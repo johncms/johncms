@@ -16,6 +16,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\Log\NullLogger;
 use Symfony\Component\Mailer\Exception\TransportException;
 use Symfony\Component\Mime\Email;
+use Symfony\Component\Mime\HtmlToTextConverter\DefaultHtmlToTextConverter;
 use Tests\Support\BootsInMemoryDatabase;
 use Twig\Environment;
 use Twig\Loader\ArrayLoader;
@@ -30,6 +31,11 @@ final class EmailSenderTest extends TestCase
     use BootsInMemoryDatabase;
 
     private const TEMPLATE = 'welcome.twig';
+
+    private const TEXT_TEMPLATE = 'welcome.txt.twig';
+
+    /** A template without a text form of its own, so the text is derived from the markup. */
+    private const HTML_ONLY = 'plain.twig';
 
     /** @var list<Email> */
     private array $delivered = [];
@@ -63,7 +69,16 @@ final class EmailSenderTest extends TestCase
         );
 
         $renderer = new MailRenderer(
-            new Environment(new ArrayLoader([self::TEMPLATE => 'Hello, {{ user_name }}!']))
+            new Environment(
+                new ArrayLoader(
+                    [
+                        self::TEMPLATE      => '<p>Hello, {{ user_name }}!</p>',
+                        self::TEXT_TEMPLATE => 'Hello, {{ user_name }}!',
+                        self::HTML_ONLY     => '<style>p { color: red }</style><p>Nothing but  markup</p>',
+                    ]
+                )
+            ),
+            new DefaultHtmlToTextConverter()
         );
 
         return new EmailSender(
@@ -107,9 +122,80 @@ final class EmailSenderTest extends TestCase
 
         $email = $this->delivered[0];
         self::assertSame('Welcome', $email->getSubject());
-        self::assertSame('Hello, Ann!', $email->getHtmlBody());
+        self::assertSame('<p>Hello, Ann!</p>', $email->getHtmlBody());
         self::assertSame('"User" <user@example.com>', $email->getTo()[0]->toString());
         self::assertNotNull($this->row($message)->getRawOriginal('sent_at'));
+    }
+
+    // -----------------------------------------------------------------------------------
+    // The text alternative
+    // -----------------------------------------------------------------------------------
+
+    /**
+     * A message carrying only HTML reads as bulk mail to a spam filter, so every message goes out
+     * with both forms.
+     */
+    public function testTheTextFormComesFromTheTemplateOfItsOwn(): void
+    {
+        $this->queueMessage(['user_name' => 'Ann']);
+
+        $this->sender()->send(5);
+
+        self::assertSame('Hello, Ann!', $this->delivered[0]->getTextBody());
+    }
+
+    public function testTheTextFormIsDerivedFromTheMarkupWhenThereIsNoTextTemplate(): void
+    {
+        $this->queueMessage(template: self::HTML_ONLY);
+
+        $this->sender()->send(5);
+
+        // The stylesheet is gone and the run of spaces is closed up.
+        self::assertSame('Nothing but markup', $this->delivered[0]->getTextBody());
+    }
+
+    // -----------------------------------------------------------------------------------
+    // Addressing
+    // -----------------------------------------------------------------------------------
+
+    public function testAnAnswerCanBeDirectedSomewhereElse(): void
+    {
+        $this->queueMessage(['reply_to' => 'visitor@example.com', 'reply_to_name' => 'Visitor']);
+
+        $this->sender()->send(5);
+
+        self::assertSame('"Visitor" <visitor@example.com>', $this->delivered[0]->getReplyTo()[0]->toString());
+    }
+
+    public function testCopiesAreAddressedOneByOneOrInBulk(): void
+    {
+        $this->queueMessage(
+            [
+                'cc'  => 'boss@example.com',
+                'bcc' => ['audit@example.com', 'archive@example.com'],
+            ]
+        );
+
+        $this->sender()->send(5);
+
+        $email = $this->delivered[0];
+        self::assertSame(['boss@example.com'], array_map(static fn($a) => $a->getAddress(), $email->getCc()));
+        self::assertSame(
+            ['audit@example.com', 'archive@example.com'],
+            array_map(static fn($a) => $a->getAddress(), $email->getBcc())
+        );
+    }
+
+    public function testEmptyAddressFieldsAreIgnored(): void
+    {
+        $this->queueMessage(['reply_to' => '  ', 'cc' => ['', '   '], 'bcc' => '']);
+
+        $this->sender()->send(5);
+
+        $email = $this->delivered[0];
+        self::assertSame([], $email->getReplyTo());
+        self::assertSame([], $email->getCc());
+        self::assertSame([], $email->getBcc());
     }
 
     /**

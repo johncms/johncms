@@ -39,7 +39,10 @@ final readonly class TwigEnvironmentFactory
         }
 
         $twig = new Environment($loader, [
-            'autoescape' => 'html',
+            // Escaping follows the format the file name announces: `page.twig` is HTML and is
+            // escaped as such, while the text form of an email — `registration.txt.twig` — is not
+            // markup and must reach the reader as it was written, ampersands and all.
+            'autoescape' => 'name',
             'cache'      => CACHE_PATH . 'twig' . DS . $environment->value,
             'debug'      => $this->debug,
             // Reading a template that was never assigned is a bug, and in development it should

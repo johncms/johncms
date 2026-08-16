@@ -7,6 +7,7 @@ namespace Johncms\Mail;
 use Gettext\TranslatorFunctions;
 use Gettext\TranslatorInterface;
 use Johncms\System\i18n\Translator;
+use Symfony\Component\Mime\HtmlToTextConverter\HtmlToTextConverterInterface;
 use Twig\Environment;
 use TypeError;
 
@@ -19,14 +20,16 @@ use TypeError;
  */
 final readonly class MailRenderer
 {
-    public function __construct(private Environment $twig)
-    {
+    public function __construct(
+        private Environment $twig,
+        private HtmlToTextConverterInterface $htmlToText,
+    ) {
     }
 
     /**
      * @param array<string, mixed> $data
      */
-    public function render(string $template, array $data, string $locale): string
+    public function render(string $template, array $data, string $locale): RenderedEmailDTO
     {
         $previous = self::currentTranslator();
 
@@ -35,13 +38,51 @@ final readonly class MailRenderer
         $translator->addTranslationDomain('system', ROOT_PATH . 'system/locale');
         TranslatorFunctions::register($translator);
 
+        $context = $data + ['locale' => $locale];
+
         try {
-            return $this->twig->render($template, $data + ['locale' => $locale]);
+            $html = $this->twig->render($template, $context);
+
+            return new RenderedEmailDTO($html, $this->text($template, $context, $html));
         } finally {
             if ($previous !== null) {
                 TranslatorFunctions::register($previous);
             }
         }
+    }
+
+    /**
+     * The plain text alternative of a message.
+     *
+     * A message carrying only HTML looks like bulk mail to a spam filter and is unreadable to a
+     * client that shows text. The wording of the text form is worth writing by hand, so a template
+     * of its own is used when the theme provides one — `registration.txt.twig` next to
+     * `registration.twig` — and only otherwise is the text derived from the rendered HTML.
+     *
+     * @param array<string, mixed> $context
+     */
+    private function text(string $template, array $context, string $html): string
+    {
+        $textTemplate = preg_replace('/\.twig$/', '.txt.twig', $template);
+
+        if ($textTemplate !== null && $textTemplate !== $template && $this->twig->getLoader()->exists($textTemplate)) {
+            return trim($this->twig->render($textTemplate, $context));
+        }
+
+        return self::tidy($this->htmlToText->convert($html, 'utf-8'));
+    }
+
+    /**
+     * The converter works on the markup and leaves the blank lines the markup had; what a person
+     * reads should not open with a screen of them.
+     */
+    private static function tidy(string $text): string
+    {
+        $text = preg_replace('/[ \t]+/', ' ', $text) ?? $text;
+        $text = preg_replace('/ ?\R/', "\n", $text) ?? $text;
+        $text = preg_replace('/\n{3,}/', "\n\n", $text) ?? $text;
+
+        return trim($text);
     }
 
     /**

@@ -62,9 +62,26 @@ final readonly class EmailSender
                     $email->subject($subject);
                 }
 
-                $email->html(
-                    $this->renderer->render(self::template($message->template), $fields, (string) $message->locale)
-                );
+                // Whom an answer should go to when it is not the address the site sends from: the
+                // visitor who filled in a form, rather than the no-reply mailbox of the site.
+                $replyTo = trim((string) ($fields['reply_to'] ?? ''));
+                if ($replyTo !== '') {
+                    $email->replyTo($this->address($replyTo, (string) ($fields['reply_to_name'] ?? '')));
+                }
+
+                foreach ($this->addresses($fields['cc'] ?? []) as $cc) {
+                    $email->addCc($cc);
+                }
+
+                foreach ($this->addresses($fields['bcc'] ?? []) as $bcc) {
+                    $email->addBcc($bcc);
+                }
+
+                $body = $this->renderer->render(self::template($message->template), $fields, (string) $message->locale);
+                $email->html($body->html);
+                if ($body->text !== '') {
+                    $email->text($body->text);
+                }
             } catch (Throwable $exception) {
                 // Building the message is deterministic: whatever went wrong here — an address no
                 // server would accept (RfcComplianceException), a template that does not render —
@@ -116,6 +133,25 @@ final readonly class EmailSender
         }
 
         return new Address($email, $name);
+    }
+
+    /**
+     * A list of addresses out of one queue field, which holds either a single address or several.
+     *
+     * @return list<Address>
+     */
+    private function addresses(mixed $value): array
+    {
+        $addresses = [];
+
+        foreach (is_array($value) ? $value : [$value] as $address) {
+            $address = trim((string) $address);
+            if ($address !== '') {
+                $addresses[] = new Address($address);
+            }
+        }
+
+        return $addresses;
     }
 
     private function giveUp(EmailMessage $message, string $error, ?Throwable $exception = null): void

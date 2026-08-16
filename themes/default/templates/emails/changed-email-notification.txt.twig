@@ -1,0 +1,19 @@
+{#
+    Notice sent to the old address once a new one is set, plain text.
+
+    @var string user_name
+    @var string new_email
+#}
+{% extends '@theme/emails/layout.txt.twig' %}
+
+{% set email_title = __('Changing email address') %}
+
+{% block content %}
+{{ __('Hello, %s!', user_name) }}
+
+{{ __('You have started the process of changing the email address on the <a href="%s">%s</a> website', home_url(), copyright())|striptags }}
+
+{{ __('The new email address is:') }} {{ new_email }}
+
+{{ __('If you have not started the procedure for changing email, please contact us in any way convenient for you.') }}
+{% endblock %}

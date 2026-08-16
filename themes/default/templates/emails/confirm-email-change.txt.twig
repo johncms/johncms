@@ -1,0 +1,21 @@
+{#
+    The link that confirms a new email address, plain text.
+
+    @var string user_name
+    @var string link_to_confirm
+#}
+{% extends '@theme/emails/layout.txt.twig' %}
+
+{% set email_title = __('Confirm email change') %}
+
+{% block content %}
+{{ __('Hello, %s!', user_name) }}
+
+{{ __('You have started the process of changing the email address on the <a href="%s">%s</a> website', home_url(), copyright())|striptags }}
+
+{{ __('To continue please click the confirm button') }}
+
+{{ link_to_confirm }}
+
+{{ __('If you have not registered on our site, please ignore this email.') }}
+{% endblock %}

@@ -1,0 +1,19 @@
+{#
+    The plain text form of the layout every email shares.
+
+    A message that carries only HTML reads as bulk mail to a spam filter, so each email has a
+    text alternative next to it: `registration.txt.twig` beside `registration.twig`. The wording
+    is the same — the strings are the ones the HTML templates already use, so nothing new has to
+    be translated — with the markup dropped and every link written out in full, because in text
+    an address is the only way to follow one.
+
+    @var string email_title Heading of the message.
+    @var string locale      Language of the recipient.
+#}
+{{ email_title }}
+
+{% block content %}{% endblock %}
+
+--
+{{ __('The email is generated automatically. Please don\'t answer it. <br> To contact us, use the contact information on our website.')|replace({' <br> ': "\n"})|striptags }}
+{{ copyright() }} {{ home_url() }}

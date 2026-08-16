@@ -1,0 +1,25 @@
+{#
+    Confirmation of a new account, plain text.
+
+    @var string user_name
+    @var string user_login
+    @var string link_to_confirm
+#}
+{% extends '@theme/emails/layout.txt.twig' %}
+
+{% set email_title = __('Registration on the website') %}
+
+{% block content %}
+{{ __('Hello, %s!', user_name) }}
+
+{{ __('You have successfully registered on the <a href="%s">%s</a> website', home_url(), copyright())|striptags }}
+
+{{ __('Your login:') }} {{ user_login }}
+{{ __('Your password:') }} {{ __('The one you specified when registering') }}
+
+{{ __('To activate your account, please confirm your registration on the %s website.', copyright()) }}
+
+{{ link_to_confirm }}
+
+{{ __('If you have not registered on our site, please ignore this email. In this case, the account will not be activated and will be automatically deleted.') }}
+{% endblock %}

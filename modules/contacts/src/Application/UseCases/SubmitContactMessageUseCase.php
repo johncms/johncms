@@ -65,6 +65,9 @@ final readonly class SubmitContactMessageUseCase
                     'email_to'     => $notifyEmail,
                     'name_to'      => (string) ($config['copyright'] ?? ''),
                     'subject'      => __('New message from the contact form'),
+                    // Answering the notification answers the visitor, not the mailbox of the site.
+                    'reply_to'      => $message->email,
+                    'reply_to_name' => $message->name,
                     'sender_name'  => $message->name,
                     'sender_email' => $message->email,
                     'message_text' => $message->message,
