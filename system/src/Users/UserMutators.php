@@ -177,14 +177,41 @@ trait UserMutators
     }
 
     /**
-     * The website of the user, sanitized the same way.
+     * The website of the user: a link when the address is one a browser may follow, the address
+     * as plain text otherwise. Null when the user has given none.
+     *
+     * The field holds an address, not markup, so it is not run through the HTML sanitizer: an
+     * allow list of schemes is what keeps `javascript:` out of an href.
      */
     public function getWebsiteAttribute(): ?Markup
     {
-        $sanitizer = di(HtmlSanitizerInterface::class);
-        $website = $sanitizer->sanitize((string) $this->www);
+        // The address is stored escaped by the profile form, and escaped again below on output.
+        $address = trim(html_entity_decode((string) $this->www, ENT_QUOTES | ENT_HTML5, 'UTF-8'));
+        if ($address === '') {
+            return null;
+        }
 
-        return $website === '' ? null : new Markup($website, 'UTF-8');
+        $escaped = htmlspecialchars($address, ENT_QUOTES, 'UTF-8');
+        if (! $this->isFollowableAddress($address)) {
+            return new Markup($escaped, 'UTF-8');
+        }
+
+        // nofollow: the address is whatever a visitor typed about themselves.
+        return new Markup('<a href="' . $escaped . '" rel="nofollow noopener">' . $escaped . '</a>', 'UTF-8');
+    }
+
+    /**
+     * Whether the address is an http(s) URL. parse_url is asked for the scheme rather than
+     * filter_var for a verdict, because the scheme is the whole question here.
+     */
+    private function isFollowableAddress(string $address): bool
+    {
+        $scheme = parse_url($address, PHP_URL_SCHEME);
+        if (! is_string($scheme) || ! in_array(strtolower($scheme), ['http', 'https'], true)) {
+            return false;
+        }
+
+        return filter_var($address, FILTER_VALIDATE_URL) !== false;
     }
 
     /**
