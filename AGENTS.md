@@ -13,7 +13,7 @@ guide first:
 * Module layers, dependency rules, refactoring principles, repository rules → read `.agents/architecture.md`
 * Actions with access checks (guard → context → action), exception mapping → read `.agents/access-guard.md`
 * Paginated lists, page titles / meta description → read `.agents/pagination.md`
-* User input handling, output escaping in templates → read `.agents/escaping.md`
+* User input handling, output escaping in templates, sanitizing user HTML → read `.agents/escaping.md`
 * Translations, `.po`/`.pot`/`.lng.php` files, `__()` strings → read `.agents/localization.md`
 * Creating a new module (structure, autoload, DI, routes, templates) → read `.agents/new-module.md`
 * Writing or changing a template (namespaces, environments, components) → read `.agents/templates.md`

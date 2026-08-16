@@ -35,5 +35,41 @@ Contexts autoescape does not cover:
 Do not put HTML escaping into the data itself. A URL built as `'&amp;mod=reply'` is escaped a
 second time on output and arrives broken; build it with `&` and let the template escape it.
 
-For rich content (HTML from an editor), apply the sanitizer before rendering and return the
-result as `Markup`.
+## Sanitizing rich content
+
+HTML that came from a user — an editor, a post, a title an administrator typed — is stored raw
+and cleaned on output. Take `Johncms\Security\HtmlSanitizerInterface` and return the result as
+`Markup`:
+
+```php
+public function __construct(
+    private HtmlSanitizerInterface $sanitizer,
+) {
+}
+
+public function format(string $text): Markup
+{
+    return new Markup($this->sanitizer->sanitize($text), 'UTF-8');
+}
+```
+
+The caller says what kind of content it has, never how to clean it — which library does the
+work is an implementation detail of `HtmlSanitizer` and `HtmlPurifierFactory`, and no other
+class mentions it:
+
+| Policy | For | Allows |
+| --- | --- | --- |
+| `HtmlPolicy::RichContent` (default) | posts, comments, articles — what an editor produced | block elements, images, tables, embedded media, the classes listed in `config/autoload/htmlpurifier.global.php`, and bare URLs become links |
+| `HtmlPolicy::Inline` | a short text inside a label or a sentence | inline formatting and links, nothing that breaks the line it lives on |
+| `HtmlPolicy::InlineWithParagraphs` | a short text that stands on its own | the above plus `p` and `span` |
+
+`toPlainText()` is the same content stripped to text — for previews, page titles and
+breadcrumbs. It sanitizes before it strips the tags, so the body of a removed element cannot
+resurface as visible text; `strip_tags()` on raw input does not.
+
+Do not build a sanitizer of your own. A new kind of content means a new case in `HtmlPolicy`
+and its configuration in `HtmlPurifierFactory`, so that every policy of the site is described
+in one place and stays comparable.
+
+A URL is not markup. Validate its scheme against an allow list (`http`, `https`, or a local
+path) instead of passing it through the sanitizer — see `UserMutators::getWebsiteAttribute()`.

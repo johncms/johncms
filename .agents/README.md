@@ -14,7 +14,7 @@ automatically; `CLAUDE.md` is a symlink to it for Claude Code.
 | --- | --- |
 | `architecture.md` | module layers, dependency rules, repository rules |
 | `access-guard.md` | guard → context → action, exception mapping |
-| `escaping.md` | user input handling, output escaping |
+| `escaping.md` | user input handling, output escaping, sanitizing user HTML |
 | `localization.md` | translations, `.po`/`.pot`/`.lng.php`, `__()` strings |
 | `pagination.md` | paginated lists, page titles / meta description |
 | `new-module.md` | creating a new module |

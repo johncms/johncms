@@ -18,10 +18,15 @@ Twig escapes what it prints, so the review is about the places that opt out of i
 
 * Every `|raw` is justified: the value is markup by contract, and there is no source to fix.
   Repeated `|raw` on values from one source means the source should return `Twig\Markup`.
-* Every service returning `Twig\Markup` sanitizes what it wraps — user HTML goes through the
-  purifier before it becomes `Markup`.
+* Every service returning `Twig\Markup` sanitizes what it wraps — user HTML goes through
+  `HtmlSanitizerInterface` before it becomes `Markup`.
+* The policy fits the content: `HtmlPolicy::RichContent` for what an editor produced,
+  `Inline` / `InlineWithParagraphs` for a short text that must not carry block markup. A
+  caller that builds an `HTMLPurifier` (or any other sanitizer) of its own is a finding —
+  a new policy belongs in `HtmlPurifierFactory`.
 * URLs built from user data have their scheme validated/allowlisted (`http`, `https`, or a
-  local path) before output.
+  local path) before output. A URL is not markup: an HTML sanitizer is not a substitute for
+  the scheme check (see `UserMutators::getWebsiteAttribute()`).
 * No user data interpolated into inline `<script>` or event-handler attributes;
   `|e('js')` for a JS literal, `|json_encode|raw` for a structure.
 * An unquoted attribute uses `|e('html_attr')`.
