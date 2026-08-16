@@ -40,6 +40,8 @@ final class AuthSchema
 
     public const USER_ROLES = 'user_roles';
 
+    public const AUTH_EVENTS = 'auth_events';
+
     public static function create(Builder $schema): void
     {
         self::createPasswordResetTokens($schema);
@@ -47,6 +49,7 @@ final class AuthSchema
         self::createRoles($schema);
         self::createRolePermissions($schema);
         self::createUserRoles($schema);
+        self::createAuthEvents($schema);
     }
 
     private static function createRoles(Builder $schema): void
@@ -151,6 +154,34 @@ final class AuthSchema
                 $table->integer('impersonator_id')->unsigned()->nullable();
                 // The administrator's own session, restored when they return to themselves.
                 $table->integer('parent_session_id')->unsigned()->nullable();
+            }
+        );
+    }
+
+    private static function createAuthEvents(Builder $schema): void
+    {
+        if ($schema->hasTable(self::AUTH_EVENTS)) {
+            return;
+        }
+
+        $schema->create(
+            self::AUTH_EVENTS,
+            static function (Blueprint $table): void {
+                $table->increments('id');
+                // Whom the event is about. Null when nobody was identified — a sign-in attempt on
+                // a login that does not exist still belongs in the record.
+                $table->integer('user_id')->unsigned()->nullable()->index();
+                // Who did it, when that is somebody else: an administrator granting a role, or the
+                // administrator behind an impersonated session.
+                $table->integer('actor_id')->unsigned()->nullable()->index();
+                $table->string('event', 64)->index();
+                $table->string('ip', 45)->default('');
+                $table->string('user_agent', 255)->default('');
+                // Whatever the event needs beyond the columns: the role that was granted, why a
+                // sign-in was refused. Free-form on purpose — a column per event would be a
+                // schema change for every new kind of event.
+                $table->json('context')->nullable();
+                $table->integer('created_at')->unsigned()->index();
             }
         );
     }

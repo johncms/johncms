@@ -50,12 +50,12 @@ msgid "Users List"
 msgstr ""
 
 #: config/places.global.php:16
-#: system/src/Comments.php:207
-#: system/src/Comments.php:244
-#: system/src/Comments.php:273
-#: system/src/Comments.php:297
-#: system/src/Comments.php:338
-#: system/src/Comments.php:365
+#: system/src/Comments.php:211
+#: system/src/Comments.php:248
+#: system/src/Comments.php:277
+#: system/src/Comments.php:301
+#: system/src/Comments.php:342
+#: system/src/Comments.php:369
 #: themes/default/templates/components/sidebar-main-menu.twig:60
 #: modules/homepage/templates/public/index.twig:44
 msgid "Downloads"
@@ -326,14 +326,14 @@ msgid "Go to Link"
 msgstr ""
 
 #: modules/redirect/templates/public/index.twig:31
-#: system/src/Comments.php:211
-#: system/src/Comments.php:248
-#: system/src/Comments.php:265
-#: system/src/Comments.php:277
-#: system/src/Comments.php:301
-#: system/src/Comments.php:342
-#: system/src/Comments.php:357
-#: system/src/Comments.php:369
+#: system/src/Comments.php:215
+#: system/src/Comments.php:252
+#: system/src/Comments.php:269
+#: system/src/Comments.php:281
+#: system/src/Comments.php:305
+#: system/src/Comments.php:346
+#: system/src/Comments.php:361
+#: system/src/Comments.php:373
 #: themes/default/templates/admin/pages/result.twig:21
 #: themes/default/templates/pages/comments-list.twig:138
 #: themes/default/templates/pages/result.twig:19
@@ -389,39 +389,63 @@ msgid "User"
 msgstr ""
 
 #: system/src/Auth/Authorization/SystemRole.php:105
-#: system/src/UserProperties.php:68
-#: system/src/Users/UserMutators.php:61
 msgid "Forum moderator"
 msgstr ""
 
 #: system/src/Auth/Authorization/SystemRole.php:106
-#: system/src/UserProperties.php:69
-#: system/src/Users/UserMutators.php:62
 msgid "Download moderator"
 msgstr ""
 
 #: system/src/Auth/Authorization/SystemRole.php:107
-#: system/src/UserProperties.php:70
-#: system/src/Users/UserMutators.php:63
 msgid "Library moderator"
 msgstr ""
 
 #: system/src/Auth/Authorization/SystemRole.php:108
-#: system/src/UserProperties.php:71
-#: system/src/Users/UserMutators.php:64
 msgid "Super moderator"
 msgstr ""
 
 #: system/src/Auth/Authorization/SystemRole.php:109
-#: system/src/UserProperties.php:72
-#: system/src/Users/UserMutators.php:65
 msgid "Administrator"
 msgstr ""
 
 #: system/src/Auth/Authorization/SystemRole.php:110
-#: system/src/UserProperties.php:73
-#: system/src/Users/UserMutators.php:66
 msgid "Supervisor"
+msgstr ""
+
+#: system/src/Auth/Events/AuthEventType.php:49
+msgid "Signed in"
+msgstr ""
+
+#: system/src/Auth/Events/AuthEventType.php:50
+msgid "Sign-in failed"
+msgstr ""
+
+#: system/src/Auth/Events/AuthEventType.php:51
+msgid "Signed out"
+msgstr ""
+
+#: system/src/Auth/Events/AuthEventType.php:52
+msgid "Password changed"
+msgstr ""
+
+#: system/src/Auth/Events/AuthEventType.php:53
+msgid "Password recovery requested"
+msgstr ""
+
+#: system/src/Auth/Events/AuthEventType.php:54
+msgid "Password recovered"
+msgstr ""
+
+#: system/src/Auth/Events/AuthEventType.php:55
+msgid "Device signed out"
+msgstr ""
+
+#: system/src/Auth/Events/AuthEventType.php:56
+msgid "Role granted"
+msgstr ""
+
+#: system/src/Auth/Events/AuthEventType.php:57
+msgid "Role revoked"
 msgstr ""
 
 #: system/src/Checker/SystemChecker.php:30
@@ -533,54 +557,54 @@ msgid ""
 "PHP should work with the default driver: <a href=\"https://www.php.net/manual/en/intro.mysqlnd.php\" target=\"_blank\">MySQL Native Driver (mysqlnd)</a>."
 msgstr ""
 
-#: system/src/Comments.php:196
-#: system/src/Comments.php:261
-#: system/src/Comments.php:262
+#: system/src/Comments.php:200
+#: system/src/Comments.php:265
+#: system/src/Comments.php:266
 #: themes/default/templates/pages/comments-list.twig:106
 msgid "Reply"
 msgstr ""
 
-#: system/src/Comments.php:209
+#: system/src/Comments.php:213
 msgid "Administrator already replied to this message"
 msgstr ""
 
-#: system/src/Comments.php:275
-#: system/src/Comments.php:367
+#: system/src/Comments.php:279
+#: system/src/Comments.php:371
 msgid "Wrong data"
 msgstr ""
 
-#: system/src/Comments.php:287
-#: system/src/Comments.php:353
-#: system/src/Comments.php:354
+#: system/src/Comments.php:291
+#: system/src/Comments.php:357
+#: system/src/Comments.php:358
 #: themes/default/templates/pages/comments-list.twig:118
 msgid "Edit"
 msgstr ""
 
-#: system/src/Comments.php:299
+#: system/src/Comments.php:303
 msgid "You cannot edit posts of higher administration"
 msgstr ""
 
-#: system/src/Comments.php:379
-#: system/src/Comments.php:413
-#: system/src/Comments.php:414
+#: system/src/Comments.php:383
+#: system/src/Comments.php:417
+#: system/src/Comments.php:418
 #: themes/default/templates/pages/comments-delete.twig:16
 #: themes/default/templates/pages/comments-list.twig:121
 msgid "Delete"
 msgstr ""
 
-#: system/src/Comments.php:678
+#: system/src/Comments.php:682
 msgid "Text is too short"
 msgstr ""
 
-#: system/src/Comments.php:684
+#: system/src/Comments.php:688
 msgid "You cannot add the message so often<br>Please, wait"
 msgstr ""
 
-#: system/src/Comments.php:684
+#: system/src/Comments.php:688
 msgid "seconds"
 msgstr ""
 
-#: system/src/Comments.php:692
+#: system/src/Comments.php:696
 msgid "Message already exists"
 msgstr ""
 
@@ -629,7 +653,7 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/ForumSearchController.php:96
 #: modules/forum/src/Application/Controllers/ForumTopicController.php:155
 #: modules/forum/src/Application/Controllers/ForumTopicController.php:164
-#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:421
+#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:408
 msgid "Page"
 msgstr ""
 
@@ -706,14 +730,14 @@ msgid "'%hostname%' does not appear to have any valid MX or A records for the em
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:17
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:344
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:354
 #: themes/default/templates/components/sidebar-main-menu.twig:6
 #: themes/default/templates/components/sidebar-main-menu.twig:179
 msgid "Set Light Theme"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:17
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:343
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:353
 #: themes/default/templates/components/sidebar-main-menu.twig:6
 #: themes/default/templates/components/sidebar-main-menu.twig:178
 msgid "Set Dark Theme"

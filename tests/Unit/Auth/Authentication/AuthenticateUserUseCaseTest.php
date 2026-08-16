@@ -26,6 +26,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 use Tests\Support\BootsInMemoryDatabase;
+use Tests\Support\RecordingAuthEventLogger;
 
 final class AuthenticateUserUseCaseTest extends TestCase
 {
@@ -40,6 +41,8 @@ final class AuthenticateUserUseCaseTest extends TestCase
     private LoginThrottleInterface $throttle;
 
     private AuthenticateUserUseCase $useCase;
+
+    private RecordingAuthEventLogger $eventLogger;
 
     protected function setUp(): void
     {
@@ -57,11 +60,14 @@ final class AuthenticateUserUseCaseTest extends TestCase
         $requestStack = new RequestStack();
         $requestStack->push(Request::create('/'));
 
+        $this->eventLogger = new RecordingAuthEventLogger();
+
         $this->useCase = new AuthenticateUserUseCase(
             $this->captcha,
             $this->hasher,
             $this->throttle,
-            new Environment($requestStack)
+            new Environment($requestStack),
+            $this->eventLogger
         );
     }
 
@@ -292,6 +298,49 @@ final class AuthenticateUserUseCaseTest extends TestCase
             LoginStatus::InvalidCredentials,
             $this->useCase->execute(new LoginCredentialsDTO('Tester', ''))->status
         );
+    }
+
+    public function testASuccessfulSignInIsRecorded(): void
+    {
+        $user = $this->createUser();
+
+        $this->useCase->execute(new LoginCredentialsDTO('Tester', self::PASSWORD));
+
+        self::assertSame(['login.success'], $this->eventLogger->events());
+        self::assertSame($user->id, $this->eventLogger->entries()[0]['user_id']);
+    }
+
+    /**
+     * The login that was tried is part of the record: without it the trail cannot tell an owner
+     * mistyping their password from somebody walking through names.
+     */
+    public function testARefusedAttemptIsRecordedWithTheLoginAndTheReason(): void
+    {
+        $this->createUser();
+
+        $this->useCase->execute(new LoginCredentialsDTO('Tester', 'wrong'));
+
+        $entry = $this->eventLogger->entries()[0];
+
+        self::assertSame('login.failed', $entry['event']);
+        self::assertSame('Tester', $entry['context']['login']);
+        self::assertSame('invalid_credentials', $entry['context']['reason']);
+    }
+
+    /**
+     * Otherwise anybody could fill the table by keeping on trying after the throttle has already
+     * closed the door.
+     */
+    public function testAttemptsRefusedByTheThrottleAreNotRecorded(): void
+    {
+        $this->createUser();
+        $this->failTimes(20);
+        $recorded = count($this->eventLogger->entries());
+
+        $result = $this->useCase->execute(new LoginCredentialsDTO('Tester', 'wrong', $this->captcha->issue()));
+
+        self::assertSame(LoginStatus::TooManyAttempts, $result->status);
+        self::assertCount($recorded, $this->eventLogger->entries());
     }
 
     private function createUser(

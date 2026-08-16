@@ -13,6 +13,8 @@ declare(strict_types=1);
 namespace Johncms\Auth\Session;
 
 use Johncms\Auth\CurrentUser;
+use Johncms\Auth\Events\AuthEventLoggerInterface;
+use Johncms\Auth\Events\AuthEventType;
 use Johncms\Http\CookieQueue;
 use Johncms\Http\Environment;
 use Johncms\Http\Request;
@@ -39,6 +41,7 @@ final readonly class SignInManager
         private Environment $environment,
         private PhpSession $phpSession,
         private CurrentUser $currentUser,
+        private AuthEventLoggerInterface $eventLogger,
     ) {
     }
 
@@ -77,6 +80,7 @@ final readonly class SignInManager
 
             if ($session !== null) {
                 $this->sessions->revoke($session, SessionRevocationReason::Logout);
+                $this->eventLogger->log(AuthEventType::Logout, $session->user_id);
             }
         }
 
@@ -92,6 +96,19 @@ final readonly class SignInManager
      */
     public function signOutEverywhereElse(int $userId, SessionRevocationReason $reason): int
     {
-        return $this->sessions->revokeAllFor($userId, $reason, $this->currentUser->identity()->sessionId);
+        $closed = $this->sessions->revokeAllFor($userId, $reason, $this->currentUser->identity()->sessionId);
+
+        if ($closed > 0) {
+            $this->eventLogger->log(
+                AuthEventType::SessionRevoked,
+                $userId,
+                [
+                    'reason' => $reason->value,
+                    'count'  => $closed,
+                ]
+            );
+        }
+
+        return $closed;
     }
 }

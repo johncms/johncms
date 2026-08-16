@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Johncms\Modules\Profile\Application\UseCases;
 
 use Johncms\Auth\CurrentUser;
+use Johncms\Auth\Events\AuthEventLoggerInterface;
+use Johncms\Auth\Events\AuthEventType;
 use Johncms\Auth\Session\AuthSessionManager;
 use Johncms\Auth\Session\AuthSessionRepositoryInterface;
 use Johncms\Auth\Session\SessionRevocationReason;
@@ -21,6 +23,7 @@ final readonly class RevokeUserSessionUseCase
         private AuthSessionManager $sessions,
         private AuthSessionRepositoryInterface $repository,
         private CurrentUser $currentUser,
+        private AuthEventLoggerInterface $eventLogger,
     ) {
     }
 
@@ -37,6 +40,15 @@ final readonly class RevokeUserSessionUseCase
         }
 
         $this->sessions->revoke($session, SessionRevocationReason::Logout);
+        $this->eventLogger->log(
+            AuthEventType::SessionRevoked,
+            $session->user_id,
+            [
+                'session_id' => $session->id,
+                'reason'     => SessionRevocationReason::Logout->value,
+                'count'      => 1,
+            ]
+        );
 
         return true;
     }

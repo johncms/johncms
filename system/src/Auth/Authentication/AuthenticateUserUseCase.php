@@ -13,6 +13,8 @@ declare(strict_types=1);
 namespace Johncms\Auth\Authentication;
 
 use Illuminate\Support\Str;
+use Johncms\Auth\Events\AuthEventLoggerInterface;
+use Johncms\Auth\Events\AuthEventType;
 use Johncms\Auth\Password\PasswordHasherInterface;
 use Johncms\Auth\Throttling\LoginThrottleInterface;
 use Johncms\Http\Environment;
@@ -36,6 +38,7 @@ final readonly class AuthenticateUserUseCase
         private PasswordHasherInterface $hasher,
         private LoginThrottleInterface $throttle,
         private Environment $environment,
+        private AuthEventLoggerInterface $eventLogger,
     ) {
     }
 
@@ -60,6 +63,7 @@ final readonly class AuthenticateUserUseCase
 
             if (! $this->captcha->verify($credentials->captchaAnswer)) {
                 $this->registerFailure($keys);
+                $this->logFailure($credentials->login, 'captcha_mismatch');
 
                 return new LoginResultDTO(LoginStatus::CaptchaMismatch);
             }
@@ -71,6 +75,7 @@ final readonly class AuthenticateUserUseCase
         // find out which accounts exist.
         if ($user === null || ! $this->hasher->verify($credentials->password, $user->password)) {
             $this->registerFailure($keys);
+            $this->logFailure($credentials->login, 'invalid_credentials', $user?->id);
 
             return new LoginResultDTO(LoginStatus::InvalidCredentials);
         }
@@ -84,14 +89,19 @@ final readonly class AuthenticateUserUseCase
         // The password was right, so the account is named from here on: what follows is about
         // the state of the account, not about who is trying to get in.
         if (! $user->email_confirmed && config('johncms.user_email_confirmation')) {
+            $this->logFailure($credentials->login, 'email_not_confirmed', $user->id);
+
             return new LoginResultDTO(LoginStatus::EmailNotConfirmed, $user->id);
         }
 
         if (! $user->preg) {
+            $this->logFailure($credentials->login, 'moderation_pending', $user->id);
+
             return new LoginResultDTO(LoginStatus::ModerationPending, $user->id);
         }
 
         $user->update(['sestime' => time()]);
+        $this->eventLogger->log(AuthEventType::LoginSuccess, $user->id);
 
         return new LoginResultDTO(LoginStatus::Success, $user->id);
     }
@@ -134,6 +144,25 @@ final readonly class AuthenticateUserUseCase
         foreach ($keys as $key) {
             $this->throttle->registerFailure($key);
         }
+    }
+
+    /**
+     * A refused attempt, with the login that was tried and why it was refused: without the login
+     * the trail cannot tell an owner mistyping their password from somebody walking through names.
+     *
+     * Attempts refused by the throttle are not recorded — they are the consequence of failures
+     * already in the log, and writing a row for each of them would let anyone fill the table.
+     */
+    private function logFailure(string $login, string $reason, ?int $userId = null): void
+    {
+        $this->eventLogger->log(
+            AuthEventType::LoginFailed,
+            $userId,
+            [
+                'login'  => mb_substr(trim($login), 0, 191),
+                'reason' => $reason,
+            ]
+        );
     }
 
     /**

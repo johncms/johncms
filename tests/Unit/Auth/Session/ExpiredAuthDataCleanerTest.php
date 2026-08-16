@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace Tests\Unit\Auth\Session;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
+use Johncms\Auth\Events\AuthEvent;
+use Johncms\Auth\Events\AuthEventType;
+use Johncms\Auth\Infrastructure\Persistence\Repository\EloquentAuthEventRepository;
 use Johncms\Auth\Infrastructure\Persistence\Repository\EloquentAuthSessionRepository;
 use Johncms\Auth\Infrastructure\Persistence\Repository\EloquentPasswordResetTokenRepository;
 use Johncms\Auth\Password\PasswordResetToken;
@@ -31,6 +34,8 @@ final class ExpiredAuthDataCleanerTest extends TestCase
 
     private ExpiredAuthDataCleaner $cleaner;
 
+    private EloquentAuthEventRepository $eventRepository;
+
     protected function setUp(): void
     {
         $this->bootDatabase();
@@ -38,10 +43,11 @@ final class ExpiredAuthDataCleanerTest extends TestCase
 
         $sessionRepository = new EloquentAuthSessionRepository();
         $tokenRepository = new EloquentPasswordResetTokenRepository();
+        $this->eventRepository = new EloquentAuthEventRepository();
 
         $this->sessions = new AuthSessionManager($sessionRepository, new SessionSettings());
         $this->resetTokens = new PasswordResetTokens($tokenRepository);
-        $this->cleaner = new ExpiredAuthDataCleaner($sessionRepository, $tokenRepository);
+        $this->cleaner = new ExpiredAuthDataCleaner($sessionRepository, $tokenRepository, $this->eventRepository);
     }
 
     protected function tearDown(): void
@@ -115,6 +121,33 @@ final class ExpiredAuthDataCleanerTest extends TestCase
 
         self::assertSame(1, $this->cleaner->clean($now)['reset_tokens']);
         self::assertSame(1, PasswordResetToken::query()->count());
+    }
+
+    /**
+     * The trail is what an investigation reads months later, so it outlives the sessions and the
+     * links by a wide margin.
+     */
+    public function testAuditEntriesAreKeptFarLongerThanSessions(): void
+    {
+        $now = time();
+        $this->storeEvent($now - 100 * self::DAY);
+        $this->storeEvent($now - 200 * self::DAY);
+
+        self::assertSame(1, $this->cleaner->clean($now)['events']);
+        self::assertSame(1, AuthEvent::query()->count());
+    }
+
+    private function storeEvent(int $createdAt): void
+    {
+        $this->eventRepository->store(
+            [
+                'user_id'    => 7,
+                'event'      => AuthEventType::LoginSuccess->value,
+                'ip'         => '192.0.2.10',
+                'user_agent' => 'Mozilla/5.0',
+                'created_at' => $createdAt,
+            ]
+        );
     }
 
     private function client(): ClientInfoDTO

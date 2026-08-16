@@ -6,11 +6,15 @@ namespace Johncms\Modules\Admin\Application\UseCases;
 
 use Johncms\Auth\Authorization\Role;
 use Johncms\Auth\Authorization\RoleRepositoryInterface;
+use Johncms\Auth\Events\AuthEventLoggerInterface;
+use Johncms\Auth\Events\AuthEventType;
 
 final readonly class UpdateUserRolesUseCase
 {
-    public function __construct(private RoleRepositoryInterface $roles)
-    {
+    public function __construct(
+        private RoleRepositoryInterface $roles,
+        private AuthEventLoggerInterface $eventLogger,
+    ) {
     }
 
     /**
@@ -47,9 +51,31 @@ final readonly class UpdateUserRolesUseCase
 
             if ($isSelected && (! $wasGranted || $existing[$role->id] !== $selected[$role->id])) {
                 $this->roles->grant($userId, $role->id, $grantedBy, $now, $selected[$role->id]);
+                $this->logChange(AuthEventType::RoleGranted, $userId, $role, $selected[$role->id], $now);
             } elseif (! $isSelected && $wasGranted) {
                 $this->roles->revoke($userId, $role->id);
+                $this->logChange(AuthEventType::RoleRevoked, $userId, $role, null, $now);
             }
         }
+    }
+
+    /**
+     * The role is recorded by slug rather than by id: the log is read long after the fact, and a
+     * role that has been deleted since must still be readable in it.
+     */
+    private function logChange(
+        AuthEventType $event,
+        int $userId,
+        Role $role,
+        ?int $expiresAt,
+        int $now,
+    ): void {
+        $context = ['role' => $role->slug];
+
+        if ($expiresAt !== null) {
+            $context['expires_at'] = $expiresAt;
+        }
+
+        $this->eventLogger->log($event, $userId, $context, now: $now);
     }
 }

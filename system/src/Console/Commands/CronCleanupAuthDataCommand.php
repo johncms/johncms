@@ -16,12 +16,12 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
     name: 'auth:cleanup',
-    description: 'Delete sessions that stopped working and expired password recovery links',
+    description: 'Delete sessions that stopped working, expired password recovery links and old audit entries',
 )]
 #[AsScheduledTask(expression: '20 4 * * *', withoutOverlapping: true)]
 #[AsAdminTask(
     title: 'Clean up sign-in data',
-    description: 'Removes long-dead sessions and expired password recovery links.',
+    description: 'Removes long-dead sessions, expired password recovery links and old audit entries.',
 )]
 final class CronCleanupAuthDataCommand extends Command
 {
@@ -39,20 +39,31 @@ final class CronCleanupAuthDataCommand extends Command
             description: 'How long a session that stopped working is kept before it is deleted',
             default: 30
         );
+        $this->addOption(
+            name: 'event-retention-days',
+            mode: InputOption::VALUE_REQUIRED,
+            description: 'How long an entry of the sign-in audit trail is kept',
+            default: 180
+        );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
         $retentionDays = max(0, (int) $input->getOption('retention-days'));
+        $eventRetentionDays = max(0, (int) $input->getOption('event-retention-days'));
 
-        $removed = $this->cleaner->clean(retention: $retentionDays * 86400);
+        $removed = $this->cleaner->clean(
+            retention: $retentionDays * 86400,
+            eventRetention: $eventRetentionDays * 86400
+        );
 
         $io->success(
             sprintf(
-                'Removed %d session(s) and %d password recovery link(s).',
+                'Removed %d session(s), %d password recovery link(s) and %d audit entry(-ies).',
                 $removed['sessions'],
-                $removed['reset_tokens']
+                $removed['reset_tokens'],
+                $removed['events']
             )
         );
 

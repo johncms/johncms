@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Profile\Application\UseCases;
 
+use Johncms\Auth\Events\AuthEventLoggerInterface;
+use Johncms\Auth\Events\AuthEventType;
 use Johncms\Auth\Password\PasswordResetTokens;
 use Johncms\Mail\EmailMessage;
 use Johncms\Modules\Profile\Application\DTO\SendRecoveryCommand;
@@ -18,6 +20,7 @@ final readonly class SendPasswordRecoveryUseCase
         private ProfileUserRepositoryInterface $profileUserRepository,
         private Translator $translator,
         private PasswordResetTokens $resetTokens,
+        private AuthEventLoggerInterface $eventLogger,
     ) {
     }
 
@@ -61,5 +64,9 @@ final readonly class SendPasswordRecoveryUseCase
                 ],
             ]
         );
+
+        // Recorded even though nothing has changed yet: a wave of requests against one account is
+        // what an attempted takeover looks like from the outside.
+        $this->eventLogger->log(AuthEventType::PasswordResetRequested, $user->id);
     }
 }

@@ -1025,3 +1025,30 @@ msgstr "У вас нет доступа к этой странице."
 
 msgid "Access denied"
 msgstr "Доступ запрещён"
+
+msgid "Signed in"
+msgstr "Вход выполнен"
+
+msgid "Sign-in failed"
+msgstr "Неудачная попытка входа"
+
+msgid "Signed out"
+msgstr "Выход из аккаунта"
+
+msgid "Password changed"
+msgstr "Пароль изменён"
+
+msgid "Password recovery requested"
+msgstr "Запрошено восстановление пароля"
+
+msgid "Password recovered"
+msgstr "Пароль восстановлен"
+
+msgid "Device signed out"
+msgstr "Устройство отключено"
+
+msgid "Role granted"
+msgstr "Роль выдана"
+
+msgid "Role revoked"
+msgstr "Роль снята"

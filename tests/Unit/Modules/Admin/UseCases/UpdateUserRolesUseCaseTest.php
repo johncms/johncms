@@ -18,6 +18,7 @@ use Johncms\Modules\Admin\Application\UseCases\UpdateUserRolesUseCase;
 use Johncms\Users\User;
 use PHPUnit\Framework\TestCase;
 use Tests\Support\BootsInMemoryDatabase;
+use Tests\Support\RecordingAuthEventLogger;
 
 final class UpdateUserRolesUseCaseTest extends TestCase
 {
@@ -26,6 +27,8 @@ final class UpdateUserRolesUseCaseTest extends TestCase
     private EloquentRoleRepository $roles;
 
     private UpdateUserRolesUseCase $useCase;
+
+    private RecordingAuthEventLogger $eventLogger;
 
     protected function setUp(): void
     {
@@ -39,7 +42,8 @@ final class UpdateUserRolesUseCaseTest extends TestCase
         $this->roles = new EloquentRoleRepository();
         (new RoleSeeder($this->roles, new DefaultPermissions(new PermissionRegistry())))->seed();
 
-        $this->useCase = new UpdateUserRolesUseCase($this->roles);
+        $this->eventLogger = new RecordingAuthEventLogger();
+        $this->useCase = new UpdateUserRolesUseCase($this->roles, $this->eventLogger);
     }
 
     protected function tearDown(): void
@@ -94,6 +98,36 @@ final class UpdateUserRolesUseCaseTest extends TestCase
             [SystemRole::ForumModerator->value, SystemRole::Supervisor->value],
             $this->slugsOf($user->id)
         );
+    }
+
+    /**
+     * Recorded by slug rather than by id: the log is read long after the fact, and a role deleted
+     * since must still be readable in it.
+     */
+    public function testGrantingAndTakingARoleAwayAreBothRecorded(): void
+    {
+        $user = $this->createUser();
+        $moderator = $this->roleId(SystemRole::ForumModerator);
+
+        $this->useCase->execute($user->id, [$moderator => null], viewerLevel: 90);
+        $this->useCase->execute($user->id, [], viewerLevel: 90);
+
+        self::assertSame(['role.granted', 'role.revoked'], $this->eventLogger->events());
+        self::assertSame(
+            SystemRole::ForumModerator->value,
+            $this->eventLogger->entries()[0]['context']['role']
+        );
+    }
+
+    public function testASaveThatChangesNothingRecordsNothing(): void
+    {
+        $user = $this->createUser();
+        $moderator = $this->roleId(SystemRole::ForumModerator);
+
+        $this->useCase->execute($user->id, [$moderator => null], viewerLevel: 90);
+        $this->useCase->execute($user->id, [$moderator => null], viewerLevel: 90);
+
+        self::assertSame(['role.granted'], $this->eventLogger->events());
     }
 
     /**

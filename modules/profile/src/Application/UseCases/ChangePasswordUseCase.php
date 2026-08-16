@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Johncms\Modules\Profile\Application\UseCases;
 
 use Johncms\Auth\CurrentUser;
+use Johncms\Auth\Events\AuthEventLoggerInterface;
+use Johncms\Auth\Events\AuthEventType;
 use Johncms\Auth\Password\PasswordHasherInterface;
 use Johncms\Modules\Profile\Application\DTO\ChangePasswordCommand;
 use Johncms\Modules\Profile\Application\Exceptions\ChangePasswordException;
@@ -17,6 +19,7 @@ final readonly class ChangePasswordUseCase
         private ProfileUserRepositoryInterface $profileUserRepository,
         private CurrentUser $currentUser,
         private PasswordHasherInterface $hasher,
+        private AuthEventLoggerInterface $eventLogger,
     ) {
     }
 
@@ -55,5 +58,8 @@ final readonly class ChangePasswordUseCase
         }
 
         $this->profileUserRepository->updatePassword($profileUser->id, $this->hasher->hash($command->newPassword));
+        // The owner changing their own password and an administrator changing it for them are the
+        // same row here, told apart by the actor the logger fills in.
+        $this->eventLogger->log(AuthEventType::PasswordChanged, $profileUser->id);
     }
 }

@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Profile\Application\UseCases;
 
+use Johncms\Auth\Events\AuthEventLoggerInterface;
+use Johncms\Auth\Events\AuthEventType;
 use Johncms\Auth\Password\PasswordHasherInterface;
 use Johncms\Auth\Password\PasswordResetTokens;
+use Johncms\Auth\Session\AuthSessionManager;
+use Johncms\Auth\Session\SessionRevocationReason;
 use Johncms\Mail\EmailMessage;
 use Johncms\Modules\Profile\Application\Exceptions\PasswordRecoveryException;
 use Johncms\Modules\Profile\Application\Services\PasswordGenerator;
@@ -21,6 +25,8 @@ final readonly class CompletePasswordRecoveryUseCase
         private PasswordGenerator $passwordGenerator,
         private PasswordResetTokens $resetTokens,
         private PasswordHasherInterface $hasher,
+        private AuthSessionManager $sessions,
+        private AuthEventLoggerInterface $eventLogger,
     ) {
     }
 
@@ -54,5 +60,11 @@ final readonly class CompletePasswordRecoveryUseCase
         );
 
         $this->profileUserRepository->updatePassword($user->id, $this->hasher->hash($password));
+
+        // Every session goes, without the exception a password change makes for the current one:
+        // whoever is recovering a password is not signed in, so a session that survives here would
+        // belong to whoever took the account over.
+        $this->sessions->revokeAllFor($user->id, SessionRevocationReason::PasswordChange);
+        $this->eventLogger->log(AuthEventType::PasswordResetCompleted, $user->id);
     }
 }

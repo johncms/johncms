@@ -16,6 +16,10 @@ use Johncms\Auth\Authorization\AccessVoterInterface;
 use Johncms\Auth\Authorization\PermissionProviderInterface;
 use Johncms\Auth\Authorization\PermissionRegistry;
 use Johncms\Auth\Authorization\RoleRepositoryInterface;
+use Johncms\Auth\Events\AuthEventLogger;
+use Johncms\Auth\Events\AuthEventLoggerInterface;
+use Johncms\Auth\Events\AuthEventRepositoryInterface;
+use Johncms\Auth\Infrastructure\Persistence\Repository\EloquentAuthEventRepository;
 use Johncms\Auth\Infrastructure\Persistence\Repository\EloquentAuthSessionRepository;
 use Johncms\Auth\Infrastructure\Persistence\Repository\EloquentPasswordResetTokenRepository;
 use Johncms\Auth\Infrastructure\Persistence\Repository\EloquentRoleRepository;
@@ -190,6 +194,7 @@ return static function (ContainerConfigurator $container): void {
                 ROOT_PATH . 'system/src/Auth/Schema',
                 ROOT_PATH . 'system/src/Auth/Session/IssuedSession.php',
                 ROOT_PATH . 'system/src/Auth/Session/SessionRevocationReason.php',
+                ROOT_PATH . 'system/src/Auth/Events/AuthEventType.php',
                 // Built by SessionSettingsFactory from config, not autowired from its scalars.
                 ROOT_PATH . 'system/src/Auth/Session/SessionSettings.php',
                 ROOT_PATH . 'system/src/View/Theme/ThemeDTO.php',
@@ -233,6 +238,8 @@ return static function (ContainerConfigurator $container): void {
         ->arg('$providers', tagged_iterator('johncms.auth.permissions'))
         ->arg('$definitions', []);
     $services->set(PasswordResetTokenRepositoryInterface::class, EloquentPasswordResetTokenRepository::class);
+    $services->set(AuthEventRepositoryInterface::class, EloquentAuthEventRepository::class);
+    $services->set(AuthEventLoggerInterface::class, AuthEventLogger::class);
     // Reads the algorithm from config at instantiation: baking it into the compiled container
     // would keep a changed configuration from ever taking effect.
     $services->set(PasswordHasherInterface::class)->factory(service(PasswordHasherFactory::class));
