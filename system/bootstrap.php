@@ -25,17 +25,13 @@ defined('_IN_JOHNCMS') || die('Error: restricted access');
 $config = (new \Johncms\Config\ConfigLoader(CONFIG_PATH . 'autoload'))->load();
 \Johncms\Config\ConfigRepository::init($config);
 
-// Error handling
-if (DEBUG) {
-    error_reporting(E_ALL);
-    ini_set('display_errors', 'On');
-    ini_set('log_errors', 'On');
-    ini_set('error_log', LOG_PATH . 'errors-' . date('Y-m-d') . '.log');
-} else {
-    error_reporting(E_ALL & ~E_DEPRECATED);
-    ini_set('display_errors', 'Off');
-    ini_set('log_errors', 'Off');
-}
+// Error handling. Whatever PHP reports on its own — above all the failures of the boot itself,
+// which happen before the handlers below exist — goes to the file of the application logger, so
+// there is a single log to read.
+error_reporting(DEBUG ? E_ALL : E_ALL & ~E_DEPRECATED);
+ini_set('display_errors', DEBUG ? 'On' : 'Off');
+ini_set('log_errors', 'On');
+ini_set('error_log', \Johncms\Logs\LoggerFactory::currentFile());
 
 $container = \Johncms\Container\PSRContainerFactory::getContainer();
 

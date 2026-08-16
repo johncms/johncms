@@ -12,6 +12,9 @@ use RuntimeException;
 
 final readonly class LoggerFactory
 {
+    private const FILENAME_FORMAT = '{filename}-{date}';
+    private const DATE_FORMAT = 'Y-m-d';
+
     public function __invoke(): Logger
     {
         $loggingConfig = config('logging');
@@ -34,7 +37,15 @@ final readonly class LoggerFactory
                 $days = (int) ($handlerConfig['days'] ?? 10);
 
                 if ($days > 0) {
-                    $logger->pushHandler(new RotatingFileHandler($path, $days, Level::Debug));
+                    $logger->pushHandler(
+                        new RotatingFileHandler(
+                            filename: $path,
+                            maxFiles: $days,
+                            level: Level::Debug,
+                            dateFormat: self::DATE_FORMAT,
+                            filenameFormat: self::FILENAME_FORMAT,
+                        )
+                    );
                 } else {
                     $logger->pushHandler(new StreamHandler($path, Level::Debug));
                 }
@@ -47,5 +58,33 @@ final readonly class LoggerFactory
         }
 
         return $logger;
+    }
+
+    /**
+     * The file the logger writes to right now.
+     *
+     * PHP logs by itself everything that happens before the error handlers are registered, and
+     * that has to land in the same file instead of a second one next to it.
+     */
+    public static function currentFile(): string
+    {
+        $loggingConfig = config('logging');
+        $defaultHandler = $loggingConfig['default'] ?? 'file';
+        $handlerConfig = $loggingConfig['handlers'][$defaultHandler] ?? [];
+
+        $path = $handlerConfig['path'] ?? LOG_PATH . 'johncms.log';
+        if ((int) ($handlerConfig['days'] ?? 10) <= 0) {
+            return $path;
+        }
+
+        $pathInfo = pathinfo($path);
+        $name = str_replace(
+            ['{filename}', '{date}'],
+            [$pathInfo['filename'], date(self::DATE_FORMAT)],
+            self::FILENAME_FORMAT
+        );
+
+        return $pathInfo['dirname'] . DIRECTORY_SEPARATOR . $name
+            . (isset($pathInfo['extension']) ? '.' . $pathInfo['extension'] : '');
     }
 }

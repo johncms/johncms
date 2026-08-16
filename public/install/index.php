@@ -32,6 +32,10 @@ $config = (new \Johncms\Config\ConfigLoader(CONFIG_PATH . 'autoload'))->load();
 // handling as the front controller: failures are logged, and their details are shown only
 // when DEBUG allows it. Without this an uncaught exception here is governed by php.ini
 // display_errors and can dump a stack trace to the visitor.
+ini_set('display_errors', DEBUG ? 'On' : 'Off');
+ini_set('log_errors', 'On');
+ini_set('error_log', \Johncms\Logs\LoggerFactory::currentFile());
+
 $container = \Johncms\Container\PSRContainerFactory::getContainer();
 (new \Johncms\Logs\GlobalErrorHandler(
     logger:    $container->get(\Psr\Log\LoggerInterface::class),
