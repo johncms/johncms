@@ -46,10 +46,7 @@ final class HtmlPurifierFactory
 
     public function create(HtmlPolicy $policy): \HTMLPurifier
     {
-        $config = HTMLPurifier_Config::createDefault();
-        // Without a path of our own the definitions are cached inside vendor/, which is wiped
-        // by every composer install and is read-only on a properly deployed site.
-        $config->set('Cache.SerializerPath', $this->cacheDirectory());
+        $config = $this->baseConfig();
 
         match ($policy) {
             HtmlPolicy::RichContent         => $this->configureRichContent($config),
@@ -58,6 +55,49 @@ final class HtmlPurifierFactory
         };
 
         return new \HTMLPurifier($config);
+    }
+
+    /**
+     * The same, for a policy a module declared. The definition is an allow list, so anything it
+     * does not name is gone — a module cannot widen what the sanitizer lets through beyond the
+     * elements and attributes it enumerates, and never to scripts or event handlers.
+     */
+    public function createFromDefinition(HtmlPolicyDefinition $definition): \HTMLPurifier
+    {
+        $config = $this->baseConfig();
+        $config->set('HTML.Allowed', $this->compileAllowedElements($definition));
+        $config->set('Attr.AllowedClasses', $definition->allowedClasses);
+        $config->set('Attr.AllowedFrameTargets', $definition->frameTargets);
+        $config->set('URI.AllowedSchemes', array_fill_keys($definition->linkSchemes, true));
+        $config->set('AutoFormat.Linkify', $definition->linkify);
+
+        return new \HTMLPurifier($config);
+    }
+
+    private function baseConfig(): HTMLPurifier_Config
+    {
+        $config = HTMLPurifier_Config::createDefault();
+        // Without a path of our own the definitions are cached inside vendor/, which is wiped
+        // by every composer install and is read-only on a properly deployed site.
+        $config->set('Cache.SerializerPath', $this->cacheDirectory());
+
+        return $config;
+    }
+
+    /**
+     * `tag[attr|attr],tag` — the shape HTML.Allowed expects. An element with no attributes is
+     * written bare, since an empty pair of brackets is not valid there.
+     */
+    private function compileAllowedElements(HtmlPolicyDefinition $definition): string
+    {
+        $parts = [];
+        foreach ($definition->elements as $element => $attributes) {
+            $parts[] = $attributes === []
+                ? $element
+                : $element . '[' . implode('|', $attributes) . ']';
+        }
+
+        return implode(',', $parts);
     }
 
     private function configureRichContent(HTMLPurifier_Config $config): void

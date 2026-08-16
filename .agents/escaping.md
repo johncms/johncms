@@ -67,9 +67,31 @@ class mentions it:
 breadcrumbs. It sanitizes before it strips the tags, so the body of a removed element cannot
 resurface as visible text; `strip_tags()` on raw input does not.
 
-Do not build a sanitizer of your own. A new kind of content means a new case in `HtmlPolicy`
-and its configuration in `HtmlPurifierFactory`, so that every policy of the site is described
-in one place and stays comparable.
+A module with a kind of content none of these fits declares a policy of its own — it does not
+edit the core, and it does not build a sanitizer of its own. Register a service implementing
+`HtmlPolicyProviderInterface`; the container tags it, and the policy is asked for by name:
+
+```php
+public function policies(): iterable
+{
+    yield new HtmlPolicyDefinition(
+        name: 'my-module.signature',      // `<module>.<content>` by convention
+        elements: ['a' => ['href'], 'b' => [], 'br' => []],
+        allowedClasses: ['signature'],
+    );
+}
+
+$this->sanitizer->sanitize($text, 'my-module.signature');
+```
+
+The definition is an allow list and cannot widen what the sanitizer permits: elements that
+carry behaviour (`script`, `iframe`, `form`, `style`, …), attributes starting with `on`, and
+executable link schemes are refused by `HtmlPolicyDefinition` where they are written. Asking
+for a name nobody declared throws `UnknownHtmlPolicyException` — there is no fallback policy,
+because falling back would clean the content by rules never meant for it.
+
+The three built-in policies stay in `HtmlPolicy` and `HtmlPurifierFactory`; they are reachable
+only through the enum, never by name.
 
 A URL is not markup. Validate its scheme against an allow list (`http`, `https`, or a local
 path) instead of passing it through the sanitizer — see `UserMutators::getWebsiteAttribute()`.

@@ -16,7 +16,7 @@ namespace Johncms\Security;
  * The HTMLPurifier-backed sanitizer.
  *
  * One purifier per policy, built when the policy is first used: a page that only renders posts
- * never pays for the configuration of the other two.
+ * never pays for the configuration of the other policies, however many modules declared one.
  */
 final class HtmlSanitizer implements HtmlSanitizerInterface
 {
@@ -25,10 +25,11 @@ final class HtmlSanitizer implements HtmlSanitizerInterface
 
     public function __construct(
         private readonly HtmlPurifierFactory $purifierFactory,
+        private readonly HtmlPolicyRegistry $policyRegistry = new HtmlPolicyRegistry(),
     ) {
     }
 
-    public function sanitize(string $html, HtmlPolicy $policy = HtmlPolicy::RichContent): string
+    public function sanitize(string $html, HtmlPolicy|string $policy = HtmlPolicy::RichContent): string
     {
         if ($html === '') {
             return '';
@@ -37,7 +38,7 @@ final class HtmlSanitizer implements HtmlSanitizerInterface
         return $this->purifier($policy)->purify($html);
     }
 
-    public function toPlainText(string $html, HtmlPolicy $policy = HtmlPolicy::RichContent): string
+    public function toPlainText(string $html, HtmlPolicy|string $policy = HtmlPolicy::RichContent): string
     {
         // Sanitized first: stripping the tags of markup nobody validated would turn the content
         // of a <script> into visible text.
@@ -47,8 +48,16 @@ final class HtmlSanitizer implements HtmlSanitizerInterface
         return trim((string) preg_replace('/\s+/u', ' ', $text));
     }
 
-    private function purifier(HtmlPolicy $policy): \HTMLPurifier
+    private function purifier(HtmlPolicy|string $policy): \HTMLPurifier
     {
-        return $this->purifiers[$policy->name] ??= $this->purifierFactory->create($policy);
+        if ($policy instanceof HtmlPolicy) {
+            return $this->purifiers[$policy->name] ??= $this->purifierFactory->create($policy);
+        }
+
+        // A built-in policy is not reachable by its name: the enum is the way to it, and one
+        // name meaning two different things would be a trap.
+        return $this->purifiers['custom:' . $policy] ??= $this->purifierFactory->createFromDefinition(
+            $this->policyRegistry->get($policy)
+        );
     }
 }

@@ -8,6 +8,7 @@ use Johncms\Auth\Authentication\AuthenticatorInterface;
 use Johncms\Auth\Authorization\AccessVoterInterface;
 use Johncms\Auth\External\ExternalIdentityProviderInterface;
 use Johncms\Auth\Authorization\PermissionProviderInterface;
+use Johncms\Security\HtmlPolicyProviderInterface;
 use Psr\Container\ContainerInterface as PsrContainerInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -70,7 +71,8 @@ class PSRContainerFactory
 
     /**
      * The extension points a module joins by implementing an interface: a way of identifying the
-     * visitor, a rule about what is allowed, and the permissions a module declares.
+     * visitor, a rule about what is allowed, the permissions a module declares, and the HTML
+     * policy its own kind of content is cleaned by.
      *
      * Registered on the builder rather than as an instanceof rule of a services file, because
      * such a rule only reaches the services declared in that same file. A module would have to
@@ -84,6 +86,7 @@ class PSRContainerFactory
             AccessVoterInterface::class        => 'johncms.auth.voter',
             PermissionProviderInterface::class => 'johncms.auth.permissions',
             ExternalIdentityProviderInterface::class => 'johncms.auth.external_provider',
+            HtmlPolicyProviderInterface::class  => 'johncms.html_policy_provider',
         ];
 
         foreach ($tags as $interface => $tag) {

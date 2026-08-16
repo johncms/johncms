@@ -59,6 +59,7 @@ use Johncms\Security\AntifloodChecker;
 use Johncms\Security\FileRequestRateLog;
 use Johncms\Security\RequestRateLogInterface;
 use Johncms\Security\AntifloodCheckerInterface;
+use Johncms\Security\HtmlPolicyRegistry;
 use Johncms\Security\HtmlPurifierFactory;
 use Johncms\Security\HtmlSanitizer;
 use Johncms\Security\HtmlSanitizerInterface;
@@ -187,6 +188,10 @@ return static function (ContainerConfigurator $container): void {
                 ROOT_PATH . 'system/src/Http/Pagination/Pagination.php',
                 ROOT_PATH . 'system/src/Http/UploadedFileDTO.php',
                 ROOT_PATH . 'system/src/Security/ClientInfoDTO.php',
+                // A policy is a value object a module builds itself, and the exception carries a
+                // scalar message: neither is a service the container can assemble.
+                ROOT_PATH . 'system/src/Security/HtmlPolicyDefinition.php',
+                ROOT_PATH . 'system/src/Security/UnknownHtmlPolicyException.php',
                 // Value objects and enums of the auth layer: Identity carries scalars, and the
                 // matcher is a pure function. Autowiring them breaks the container build.
                 ROOT_PATH . 'system/src/Auth/Identity.php',
@@ -300,6 +305,10 @@ return static function (ContainerConfigurator $container): void {
     $services->alias(Counters::class, 'counters');
     $services->set(MailFactory::class)->factory([MailFactory::class, 'create']);
     $services->set(HtmlPurifierFactory::class);
+    // A module declares an HTML policy of its own by registering an HtmlPolicyProviderInterface;
+    // the tag is put on it by PSRContainerFactory, so its services.php needs nothing special.
+    $services->set(HtmlPolicyRegistry::class)
+        ->arg('$providers', tagged_iterator('johncms.html_policy_provider'));
     $services->set(HtmlSanitizerInterface::class, HtmlSanitizer::class)->autowire();
 
     $services->set(RuleCompiler::class)

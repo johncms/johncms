@@ -22,8 +22,9 @@ Twig escapes what it prints, so the review is about the places that opt out of i
   `HtmlSanitizerInterface` before it becomes `Markup`.
 * The policy fits the content: `HtmlPolicy::RichContent` for what an editor produced,
   `Inline` / `InlineWithParagraphs` for a short text that must not carry block markup. A
-  caller that builds an `HTMLPurifier` (or any other sanitizer) of its own is a finding —
-  a new policy belongs in `HtmlPurifierFactory`.
+  caller that builds an `HTMLPurifier` (or any other sanitizer) of its own is a finding — a
+  module declares its own policy through `HtmlPolicyProviderInterface`, and the core adds one
+  to `HtmlPolicy` and `HtmlPurifierFactory`.
 * URLs built from user data have their scheme validated/allowlisted (`http`, `https`, or a
   local path) before output. A URL is not markup: an HTML sanitizer is not a substitute for
   the scheme check (see `UserMutators::getWebsiteAttribute()`).
