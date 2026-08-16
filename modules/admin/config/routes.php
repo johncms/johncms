@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Johncms\Modules\Admin\Application\Controllers\Access\AuthLogController;
 use Johncms\Modules\Admin\Application\Controllers\Access\RolesController;
 use Johncms\Modules\Admin\Application\Controllers\Access\UserRolesController;
 use Johncms\Modules\Admin\Application\Controllers\DashboardController;
@@ -67,6 +68,11 @@ return static function (RouteCollection $router): void {
         $r->post('/admin/roles/{id:number}/edit', [RolesController::class, 'update'])->name('admin.roles.update');
         $r->get('/admin/roles/{id:number}/delete', [RolesController::class, 'deleteConfirm'])->name('admin.roles.delete_confirm');
         $r->post('/admin/roles/{id:number}/delete', [RolesController::class, 'delete'])->name('admin.roles.delete');
+        // Reading the trail is a permission of its own: it names who did what, which is more than
+        // "may open the panel" is meant to grant.
+        $r->get('/admin/auth-log', AuthLogController::class)
+            ->name('admin.auth_log')
+            ->permission(AdminPermissions::AUTH_LOG_VIEW);
         $r->get('/admin/users/{id:number}/roles', [UserRolesController::class, 'form'])->name('admin.users.roles');
         $r->post('/admin/users/{id:number}/roles', [UserRolesController::class, 'save'])->name('admin.users.roles.save');
         $r->get('/admin/ip-whois', IpWhoisController::class)->name('admin.ip_whois');

@@ -5,7 +5,7 @@ msgstr ""
 #: system/src/Http/AdminAreaContext.php:33
 #: modules/admin/src/Application/Controllers/DashboardController.php:22
 #: modules/admin/src/Application/Controllers/Ip/IpWhoisController.php:37
-#: modules/admin/src/Application/Services/AdminPermissions.php:32
+#: modules/admin/src/Application/Services/AdminPermissions.php:35
 msgid "Admin Panel"
 msgstr ""
 
@@ -45,46 +45,51 @@ msgstr ""
 msgid "Roles"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:92
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:93
+#: modules/admin/src/Application/Controllers/Access/AuthLogController.php:53
+msgid "Sign-in log"
+msgstr ""
+
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:102
 #: modules/admin/src/Application/Controllers/Users/AmnestyController.php:43
 #: modules/admin/src/Application/Controllers/Users/BanListController.php:43
 msgid "Ban Panel"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:102
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:112
 #: modules/admin/src/Application/Controllers/Users/UserCleanupController.php:40
 msgid "Database cleanup"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:110
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:120
 msgid "Antiflood"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:118
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:128
 #: modules/admin/src/Application/Controllers/Users/KarmaController.php:54
 #: modules/admin/src/Application/Controllers/Users/KarmaController.php:77
 msgid "Karma"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:131
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:141
 #: modules/admin/templates/settings.twig:54
 msgid "Modules"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:147
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:157
 #: modules/admin/templates/user-delete-confirm.twig:33
 msgid "Forum"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:155
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:165
 msgid "News"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:163
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:173
 msgid "Collections"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:171
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:181
 #: modules/admin/src/Application/Controllers/Settings/AdsController.php:50
 #: modules/admin/src/Application/Controllers/Settings/AdsController.php:124
 #: modules/admin/src/Application/Controllers/Settings/AdsController.php:144
@@ -93,19 +98,19 @@ msgstr ""
 msgid "Advertisement"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:179
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:189
 msgid "Consents"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:187
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:197
 msgid "Contacts"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:195
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:205
 msgid "Cookie banner"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:204
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:214
 #: modules/admin/src/Application/Controllers/Settings/CountersController.php:31
 #: modules/admin/src/Application/Controllers/Settings/CountersController.php:48
 #: modules/admin/src/Application/Controllers/Settings/CountersController.php:92
@@ -115,46 +120,46 @@ msgstr ""
 msgid "Counters"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:217
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:227
 msgid "System"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:233
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:243
 #: modules/admin/src/Application/Controllers/Settings/SystemSettingsController.php:76
 msgid "System Settings"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:241
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:251
 msgid "Update Smilies"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:249
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:259
 msgid "Language Settings"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:257
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:267
 #: modules/admin/src/Application/Controllers/System/SystemCheckController.php:28
 msgid "System check"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:265
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:275
 #: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:68
 msgid "Maintenance"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:277
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:287
 #: modules/admin/src/Application/Controllers/System/SystemCheckController.php:41
 msgid "Security"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:293
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:303
 #: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:29
 #: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:42
 #: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:71
 msgid "Anti-Spyware"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:301
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:311
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:50
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:74
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:126
@@ -319,7 +324,7 @@ msgid "Wrong data"
 msgstr ""
 
 #: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:251
-#: modules/admin/src/Application/Controllers/Users/UsersController.php:119
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:120
 #: modules/admin/src/Application/Middlewares/AdminAccessMiddleware.php:58
 #: modules/admin/src/Application/Middlewares/SuperAdminAccessMiddleware.php:58
 #: modules/admin/src/Application/UseCases/EnsureRoleManagementAccessUseCase.php:37
@@ -362,14 +367,14 @@ msgid "Hidden posts"
 msgstr ""
 
 #: modules/admin/src/Application/Controllers/Forum/HiddenPostsController.php:85
-#: modules/admin/src/Application/Services/HiddenPostRowMapper.php:76
+#: modules/admin/src/Application/Services/HiddenPostRowMapper.php:77
 msgid "by topic"
 msgstr ""
 
 #: modules/admin/src/Application/Controllers/Forum/HiddenPostsController.php:90
 #: modules/admin/src/Application/Controllers/Forum/HiddenTopicsController.php:85
-#: modules/admin/src/Application/Services/HiddenPostRowMapper.php:77
-#: modules/admin/src/Application/Services/HiddenTopicRowMapper.php:80
+#: modules/admin/src/Application/Services/HiddenPostRowMapper.php:78
+#: modules/admin/src/Application/Services/HiddenTopicRowMapper.php:81
 msgid "by author"
 msgstr ""
 
@@ -379,7 +384,7 @@ msgid "Hidden topics"
 msgstr ""
 
 #: modules/admin/src/Application/Controllers/Forum/HiddenTopicsController.php:90
-#: modules/admin/src/Application/Services/HiddenTopicRowMapper.php:81
+#: modules/admin/src/Application/Services/HiddenTopicRowMapper.php:82
 msgid "by section"
 msgstr ""
 
@@ -800,35 +805,35 @@ msgstr ""
 msgid "Nickname"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/UsersController.php:69
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:70
 msgid "The security code is not correct"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/UsersController.php:71
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:72
 #, php-format
 msgid "Too many attempts. Try again in %s."
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/UsersController.php:78
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:79
 msgid "Authorization failed"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/UsersController.php:90
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:91
 msgid "You have not entered login"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/UsersController.php:94
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:95
 msgid "You have not entered password"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/UsersController.php:108
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:109
 #, php-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] ""
 
-#: modules/admin/src/Application/Controllers/Users/UsersController.php:172
 #: modules/admin/src/Application/Controllers/Users/UsersController.php:173
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:174
 #: modules/admin/templates/login.twig:46
 msgid "Login"
 msgstr ""
@@ -857,16 +862,20 @@ msgstr ""
 msgid "Underline"
 msgstr ""
 
-#: modules/admin/src/Application/Services/AdminPermissions.php:38
+#: modules/admin/src/Application/Services/AdminPermissions.php:41
 msgid "Delete a forum section with everything in it"
 msgstr ""
 
-#: modules/admin/src/Application/Services/AdminPermissions.php:44
+#: modules/admin/src/Application/Services/AdminPermissions.php:47
 msgid "Empty the lists of hidden topics and posts"
 msgstr ""
 
-#: modules/admin/src/Application/Services/AdminPermissions.php:50
+#: modules/admin/src/Application/Services/AdminPermissions.php:53
 msgid "Open the report on the state of the installation"
+msgstr ""
+
+#: modules/admin/src/Application/Services/AdminPermissions.php:60
+msgid "Read the sign-in log"
 msgstr ""
 
 #: modules/admin/src/Application/Services/BanListRowMapper.php:40
@@ -991,6 +1000,7 @@ msgstr ""
 #: modules/admin/templates/ad-form.twig:58
 #: modules/admin/templates/ads.twig:49
 #: modules/admin/templates/ads.twig:62
+#: modules/admin/templates/auth-log.twig:33
 msgid "Show"
 msgstr ""
 
@@ -1022,6 +1032,7 @@ msgid "Save"
 msgstr ""
 
 #: modules/admin/templates/ads.twig:31
+#: modules/admin/templates/auth-log.twig:43
 #: modules/admin/templates/banned-users.twig:25
 #: modules/admin/templates/counters.twig:20
 #: modules/admin/templates/forum-hidden-posts.twig:25
@@ -1090,6 +1101,7 @@ msgid "Hide"
 msgstr ""
 
 #: modules/admin/templates/ads.twig:75
+#: modules/admin/templates/auth-log.twig:82
 #: modules/admin/templates/banned-users.twig:37
 #: modules/admin/templates/counters.twig:46
 #: modules/admin/templates/ip-bans.twig:46
@@ -1105,6 +1117,7 @@ msgid "Delete inactive links"
 msgstr ""
 
 #: modules/admin/templates/ads.twig:84
+#: modules/admin/templates/auth-log.twig:86
 #: modules/admin/templates/banned-users.twig:46
 #: modules/admin/templates/counter-view.twig:52
 #: modules/admin/templates/counters.twig:51
@@ -1154,6 +1167,30 @@ msgstr ""
 
 #: modules/admin/templates/antiflood.twig:45
 msgid "End of day"
+msgstr ""
+
+#: modules/admin/templates/auth-log.twig:19
+msgid "User ID"
+msgstr ""
+
+#: modules/admin/templates/auth-log.twig:24
+msgid "Event"
+msgstr ""
+
+#: modules/admin/templates/auth-log.twig:26
+msgid "Any"
+msgstr ""
+
+#: modules/admin/templates/auth-log.twig:37
+msgid "Reset"
+msgstr ""
+
+#: modules/admin/templates/auth-log.twig:54
+msgid "User"
+msgstr ""
+
+#: modules/admin/templates/auth-log.twig:59
+msgid "Performed by"
 msgstr ""
 
 #: modules/admin/templates/banned-users.twig:17

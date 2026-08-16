@@ -2109,3 +2109,27 @@ msgstr "Новые аккаунты ждут подтверждения"
 
 msgid "Who may open a module and write in it is set by the permissions of the roles."
 msgstr "Кто может открывать модуль и писать в нём, задаётся правами ролей."
+
+msgid "Sign-in log"
+msgstr "Журнал входов"
+
+msgid "Read the sign-in log"
+msgstr "Читать журнал входов"
+
+msgid "User ID"
+msgstr "ID пользователя"
+
+msgid "Event"
+msgstr "Событие"
+
+msgid "Any"
+msgstr "Любое"
+
+msgid "Reset"
+msgstr "Сбросить"
+
+msgid "User"
+msgstr "Пользователь"
+
+msgid "Performed by"
+msgstr "Выполнил"

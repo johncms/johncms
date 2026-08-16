@@ -27,6 +27,9 @@ final class AdminPermissions implements PermissionProviderInterface
     /** Open the report on the state of the installation: versions, extensions, permissions. */
     public const SYSTEM_CHECK = 'admin.system_check';
 
+    /** Read the sign-in log: who signed in, what was refused, who changed whose roles. */
+    public const AUTH_LOG_VIEW = 'admin.auth_log.view';
+
     public function permissions(): iterable
     {
         $group = d__('admin', 'Admin Panel');
@@ -50,6 +53,13 @@ final class AdminPermissions implements PermissionProviderInterface
                 d__('admin', 'Open the report on the state of the installation'),
                 $group,
                 [SystemRole::SuperModerator->value, SystemRole::Admin->value]
+            ),
+            new PermissionDefinition(
+                self::AUTH_LOG_VIEW,
+                self::GROUP,
+                d__('admin', 'Read the sign-in log'),
+                $group,
+                [SystemRole::Admin->value]
             ),
         ];
     }

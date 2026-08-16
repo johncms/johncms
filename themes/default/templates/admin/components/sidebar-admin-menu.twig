@@ -84,6 +84,16 @@
                     </a>
                 </li>
             {% endif %}
+            {% if can('admin.auth_log.view') %}
+                <li class="{{ usr_menu.auth_log|default(false) ? 'active' : '' }}">
+                    <a href="/admin/auth-log">
+                        <svg class="icon">
+                            <use xlink:href="{{ sprite }}#log-in"/>
+                        </svg>
+                        <span class="flex-grow-1">{{ d__('admin', 'Sign-in log') }}</span>
+                    </a>
+                </li>
+            {% endif %}
             <li class="{{ usr_menu.ban_panel|default(false) ? 'active' : '' }}">
                 <a href="/admin/bans">
                     <svg class="icon">
