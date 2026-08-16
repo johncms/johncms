@@ -247,6 +247,24 @@ label {
   color: #b1b1b1;
 }
 
+.form-select {
+  // Bootstrap hardcodes the light background here, while the text color follows --bs-body-color
+  --bs-form-select-bg-img: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23b1b1b1' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+  background-color: #222;
+  border: 1px solid #515151;
+  color: #b1b1b1;
+
+  &:disabled {
+    background-color: #2b2b2b;
+    color: #7a7a7a;
+  }
+
+  option {
+    background-color: #222;
+    color: #d8d8d8;
+  }
+}
+
 
 // User
 .post-user .user-name {
