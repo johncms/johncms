@@ -175,7 +175,7 @@ trait TopicMutators
      */
     public function getFormattedViewCountAttribute(): string
     {
-        return ShortNumberFormatter::format($this->view_count);
+        return ShortNumberFormatter::format($this->view_count ?? 0);
     }
 
     /**

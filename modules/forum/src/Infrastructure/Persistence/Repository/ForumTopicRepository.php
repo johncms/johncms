@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Infrastructure\Persistence\Repository;
 
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Query\Expression;
 use Johncms\Modules\Forum\Domain\Models\ForumTopic;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
 
@@ -266,9 +267,10 @@ final class ForumTopicRepository implements ForumTopicRepositoryInterface
 
     public function incrementViewCount(int $topicId): void
     {
+        // The column is nullable, and a plain increment would keep NULL forever
         ForumTopic::query()
             ->where('id', $topicId)
-            ->increment('view_count');
+            ->update(['view_count' => new Expression('COALESCE(`view_count`, 0) + 1')]);
     }
 
     public function updateStats(int $topicId, array $stats): void

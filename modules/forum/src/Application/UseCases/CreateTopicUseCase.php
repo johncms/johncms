@@ -44,6 +44,7 @@ final readonly class CreateTopicUseCase
         $topic->meta_keywords = $metaKeywords;
         $topic->meta_description = $metaDescription;
         $topic->last_post_date = time();
+        $topic->view_count = 0;
         $topic->post_count = 0;
         $topic->curators = $section->access === 1 ? [$this->currentUser->id() => $this->currentUser->user()->name] : [];
 
