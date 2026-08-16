@@ -9,7 +9,9 @@ use Johncms\Auth\Authentication\SessionCookieAuthenticator;
 use Johncms\Auth\AuthMethod;
 use Johncms\Auth\Infrastructure\Persistence\Repository\EloquentAuthSessionRepository;
 use Johncms\Auth\Schema\AuthSchema;
+use Johncms\Auth\Impersonation\ImpersonationSettings;
 use Johncms\Auth\Session\AuthCookieFactory;
+use Johncms\Auth\Session\AuthSession;
 use Johncms\Auth\Session\AuthSessionManager;
 use Johncms\Auth\Session\SessionRevocationReason;
 use Johncms\Auth\Session\SessionSettings;
@@ -39,10 +41,12 @@ final class SessionCookieAuthenticatorTest extends TestCase
         $settings = new SessionSettings();
         $this->sessions = new AuthSessionManager(new EloquentAuthSessionRepository(), $settings);
         $this->cookieQueue = new CookieQueue();
+        $impersonation = new ImpersonationSettings();
         $this->authenticator = new SessionCookieAuthenticator(
             $this->sessions,
-            new AuthCookieFactory($settings),
-            $this->cookieQueue
+            new AuthCookieFactory($settings, $impersonation),
+            $this->cookieQueue,
+            $impersonation
         );
     }
 
@@ -141,6 +145,61 @@ final class SessionCookieAuthenticatorTest extends TestCase
         );
 
         self::assertTrue($this->cookieQueue->all()[0]->isSecure());
+    }
+
+    /**
+     * The hour an impersonated session gets is the hour it lasts: an administrator who keeps
+     * clicking must not slide it forward the way an ordinary visit does.
+     */
+    public function testAnImpersonatedSessionIsNotExtended(): void
+    {
+        $issued = $this->sessions->start(
+            7,
+            false,
+            $this->client(),
+            impersonatorId: 1,
+            now: time() - 3600
+        );
+        $expiresAt = $issued->session->expires_at;
+
+        $identity = $this->authenticator->authenticate($this->requestWith($issued->token));
+
+        self::assertSame(1, $identity?->impersonatorId);
+        self::assertSame([], $this->cookieQueue->all());
+        self::assertSame($expiresAt, AuthSession::query()->findOrFail($issued->session->id)->expires_at);
+    }
+
+    /**
+     * What makes "the administrator closed the tab" a non-problem: the impersonated session dies
+     * on its own and the next request finds them being themselves again.
+     */
+    public function testADeadImpersonationFallsBackToTheParentSession(): void
+    {
+        $admin = $this->sessions->start(1, true, $this->client());
+        $dead = $this->sessions->start(7, false, $this->client(), impersonatorId: 1, lifetimeOverride: 1, now: time() - 10);
+
+        $identity = $this->authenticator->authenticate(
+            Request::create('/', 'GET', [], [
+                (new SessionSettings())->cookieName => $dead->token,
+                (new ImpersonationSettings())->parentCookieName => $admin->token,
+            ])
+        );
+
+        self::assertSame(1, $identity?->userId);
+        self::assertFalse($identity->isImpersonating());
+        self::assertSame($admin->token, $this->cookieValue((new SessionSettings())->cookieName));
+        self::assertSame('', $this->cookieValue((new ImpersonationSettings())->parentCookieName));
+    }
+
+    private function cookieValue(string $name): ?string
+    {
+        foreach ($this->cookieQueue->all() as $cookie) {
+            if ($cookie->getName() === $name) {
+                return $cookie->getValue();
+            }
+        }
+
+        return null;
     }
 
     private function requestWith(string $token): Request

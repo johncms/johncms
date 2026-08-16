@@ -12,11 +12,13 @@ declare(strict_types=1);
 
 namespace Johncms\Http;
 
+use Johncms\Auth\CurrentUser;
 use Johncms\Exceptions\HttpRedirectException;
 use Johncms\Exceptions\MethodNotAllowedException;
 use Johncms\Exceptions\PageNotFoundException;
 use Johncms\Http\Controller\ActionInvoker;
 use Johncms\Http\Middleware\CsrfMiddleware;
+use Johncms\Http\Middleware\ImpersonationAuditMiddleware;
 use Johncms\Http\Middleware\RequirePermissionMiddleware;
 use Johncms\Http\Middleware\TrimStringsMiddleware;
 use Johncms\Logs\DebugDetailsPolicy;
@@ -69,6 +71,7 @@ final readonly class Kernel implements HttpKernelInterface, TerminableInterface
         private RequestRateLogInterface $requestRateLog,
         private CookieQueue $cookieQueue,
         private IpHistoryRecorder $ipHistoryRecorder,
+        private CurrentUser $currentUser,
         private LocaleResolver $localeResolver,
         private Translator $translator,
         private ModuleContext $moduleContext,
@@ -197,6 +200,13 @@ final readonly class Kernel implements HttpKernelInterface, TerminableInterface
 
     public function terminate(HttpFoundationRequest $request, Response $response): void
     {
+        // An administrator browsing as somebody else leaves the user's own visit fields alone:
+        // otherwise the user would show up in "who is online" while they are not, and their last
+        // visit would lie to everybody looking at their profile.
+        if ($this->currentUser->identity()->isImpersonating()) {
+            return;
+        }
+
         // Register the location of the visitor on the site. Moved here from handleRaw(): it is a
         // post-response side effect (a database write), not something the response depends on.
         new UserStat($this->container);
@@ -242,6 +252,10 @@ final readonly class Kernel implements HttpKernelInterface, TerminableInterface
                 // Before the middlewares of the route: whoever may not open the route at all has
                 // no business reaching the guards of the module behind it.
                 ...($match->permission !== null ? [RequirePermissionMiddleware::class] : []),
+                // Records the changing requests made while browsing as somebody else. Before the
+                // middlewares of the route, so an attempt refused further down still leaves a
+                // trace of having been made.
+                ImpersonationAuditMiddleware::class,
                 ...$match->middlewares,
             ],
             handler: fn (Request $request): Response => $this->responseNormalizer->normalize(

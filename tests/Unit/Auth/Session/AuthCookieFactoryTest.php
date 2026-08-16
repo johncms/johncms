@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Auth\Session;
 
+use Johncms\Auth\Impersonation\ImpersonationSettings;
 use Johncms\Auth\Session\AuthCookieFactory;
 use Johncms\Auth\Session\SessionSettings;
 use PHPUnit\Framework\TestCase;
@@ -68,13 +69,13 @@ final class AuthCookieFactoryTest extends TestCase
 
     public function testTheCookieNameFollowsTheSettings(): void
     {
-        $factory = new AuthCookieFactory(new SessionSettings(cookieName: 'custom_auth'));
+        $factory = new AuthCookieFactory(new SessionSettings(cookieName: 'custom_auth'), new ImpersonationSettings());
 
         self::assertSame('custom_auth', $factory->create('secret', true, null, secure: false)->getName());
     }
 
     private function factory(): AuthCookieFactory
     {
-        return new AuthCookieFactory(new SessionSettings());
+        return new AuthCookieFactory(new SessionSettings(), new ImpersonationSettings());
     }
 }

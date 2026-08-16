@@ -39,7 +39,7 @@ msgid "Watching the photo album"
 msgstr ""
 
 #: config/places.global.php:14
-#: system/src/Auth/Authorization/CorePermissions.php:55
+#: system/src/Auth/Authorization/CorePermissions.php:58
 #: themes/default/templates/components/sidebar-main-menu.twig:85
 #: modules/homepage/templates/public/index.twig:46
 msgid "Users"
@@ -340,44 +340,48 @@ msgstr ""
 msgid "Back"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:53
+#: system/src/Auth/Authorization/CorePermissions.php:56
 msgid "Admin panel"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:54
+#: system/src/Auth/Authorization/CorePermissions.php:57
 msgid "System"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:70
+#: system/src/Auth/Authorization/CorePermissions.php:73
 msgid "Access the admin panel"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:77
+#: system/src/Auth/Authorization/CorePermissions.php:80
 msgid "Change system settings"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:83
+#: system/src/Auth/Authorization/CorePermissions.php:86
 msgid "Manage roles and permissions"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:90
+#: system/src/Auth/Authorization/CorePermissions.php:93
 msgid "See error details and the developer panel"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:97
+#: system/src/Auth/Authorization/CorePermissions.php:100
 msgid "Post without waiting out the full antiflood delay"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:104
+#: system/src/Auth/Authorization/CorePermissions.php:107
 msgid "Use the smilies kept for the staff"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:111
+#: system/src/Auth/Authorization/CorePermissions.php:114
 msgid "Moderate the comments of the modules"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:118
+#: system/src/Auth/Authorization/CorePermissions.php:121
 msgid "See where a visitor is on the site and where they came from"
+msgstr ""
+
+#: system/src/Auth/Authorization/CorePermissions.php:128
+msgid "Browse the site as another user"
 msgstr ""
 
 #: system/src/Auth/Authorization/SystemRole.php:103
@@ -412,40 +416,69 @@ msgstr ""
 msgid "Supervisor"
 msgstr ""
 
-#: system/src/Auth/Events/AuthEventType.php:49
+#: system/src/Auth/Events/AuthEventType.php:56
 msgid "Signed in"
 msgstr ""
 
-#: system/src/Auth/Events/AuthEventType.php:50
+#: system/src/Auth/Events/AuthEventType.php:57
 msgid "Sign-in failed"
 msgstr ""
 
-#: system/src/Auth/Events/AuthEventType.php:51
+#: system/src/Auth/Events/AuthEventType.php:58
 msgid "Signed out"
 msgstr ""
 
-#: system/src/Auth/Events/AuthEventType.php:52
+#: system/src/Auth/Events/AuthEventType.php:59
 msgid "Password changed"
 msgstr ""
 
-#: system/src/Auth/Events/AuthEventType.php:53
+#: system/src/Auth/Events/AuthEventType.php:60
 msgid "Password recovery requested"
 msgstr ""
 
-#: system/src/Auth/Events/AuthEventType.php:54
+#: system/src/Auth/Events/AuthEventType.php:61
 msgid "Password recovered"
 msgstr ""
 
-#: system/src/Auth/Events/AuthEventType.php:55
+#: system/src/Auth/Events/AuthEventType.php:62
 msgid "Device signed out"
 msgstr ""
 
-#: system/src/Auth/Events/AuthEventType.php:56
+#: system/src/Auth/Events/AuthEventType.php:63
 msgid "Role granted"
 msgstr ""
 
-#: system/src/Auth/Events/AuthEventType.php:57
+#: system/src/Auth/Events/AuthEventType.php:64
 msgid "Role revoked"
+msgstr ""
+
+#: system/src/Auth/Events/AuthEventType.php:65
+msgid "Started browsing as the user"
+msgstr ""
+
+#: system/src/Auth/Events/AuthEventType.php:66
+msgid "Stopped browsing as the user"
+msgstr ""
+
+#: system/src/Auth/Events/AuthEventType.php:67
+msgid "Action while browsing as the user"
+msgstr ""
+
+#: system/src/Auth/Impersonation/ImpersonationManager.php:160
+#: system/src/Http/ExceptionResponseFactory.php:128
+msgid "Access denied"
+msgstr ""
+
+#: system/src/Auth/Impersonation/ImpersonationManager.php:164
+msgid "You are already signed in as yourself"
+msgstr ""
+
+#: system/src/Auth/Impersonation/ImpersonationManager.php:168
+msgid "User does not exists"
+msgstr ""
+
+#: system/src/Auth/Impersonation/ImpersonationManager.php:176
+msgid "You cannot browse as somebody who outranks you"
 msgstr ""
 
 #: system/src/Checker/SystemChecker.php:30
@@ -636,10 +669,6 @@ msgstr ""
 msgid "Reload the page and submit the form again."
 msgstr ""
 
-#: system/src/Http/ExceptionResponseFactory.php:128
-msgid "Access denied"
-msgstr ""
-
 #: system/src/Http/ExceptionResponseFactory.php:129
 msgid "You are not allowed to open this page."
 msgstr ""
@@ -765,6 +794,14 @@ msgstr ""
 
 #: themes/default/templates/components/debug.twig:29
 msgid "Time"
+msgstr ""
+
+#: themes/default/templates/components/impersonation-banner.twig:11
+msgid "You are browsing the site as %s."
+msgstr ""
+
+#: themes/default/templates/components/impersonation-banner.twig:15
+msgid "Return to my account"
 msgstr ""
 
 #: themes/default/templates/components/sidebar-main-menu.twig:22
@@ -929,27 +966,27 @@ msgstr ""
 msgid "If you receive this mail by mistake, just ignore this letter"
 msgstr ""
 
-#: themes/default/templates/layouts/default.twig:107
+#: themes/default/templates/layouts/default.twig:108
 msgid "Privacy Policy"
 msgstr ""
 
-#: themes/default/templates/layouts/default.twig:108
+#: themes/default/templates/layouts/default.twig:109
 msgid "Terms of Use"
 msgstr ""
 
-#: themes/default/templates/layouts/default.twig:109
+#: themes/default/templates/layouts/default.twig:110
 msgid "Personal Data Processing Policy"
 msgstr ""
 
-#: themes/default/templates/layouts/default.twig:110
+#: themes/default/templates/layouts/default.twig:111
 msgid "Cookie Policy"
 msgstr ""
 
-#: themes/default/templates/layouts/default.twig:175
+#: themes/default/templates/layouts/default.twig:176
 msgid "We use cookies to improve the site. By continuing to use the site, you agree to our %sPrivacy Policy%s."
 msgstr ""
 
-#: themes/default/templates/layouts/default.twig:178
+#: themes/default/templates/layouts/default.twig:179
 msgid "Accept"
 msgstr ""
 

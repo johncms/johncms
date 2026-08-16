@@ -42,6 +42,9 @@ final class CorePermissions implements PermissionProviderInterface
     /** See where a visitor came from and where on the site they are. */
     public const USERS_ORIGIN_VIEW = 'users.origin.view';
 
+    /** Browse the site as another account, to see what they see. */
+    public const USERS_IMPERSONATE = 'users.impersonate';
+
     /** Use the smilies kept for the staff. */
     public const SMILIES_ADMIN_USE = 'system.smilies.admin';
 
@@ -118,6 +121,13 @@ final class CorePermissions implements PermissionProviderInterface
                 d__('system', 'See where a visitor is on the site and where they came from'),
                 $usersGroup,
                 [SystemRole::SuperModerator->value, SystemRole::Admin->value]
+            ),
+            new PermissionDefinition(
+                self::USERS_IMPERSONATE,
+                self::USERS_GROUP,
+                d__('system', 'Browse the site as another user'),
+                $usersGroup,
+                $administrators
             ),
         ];
     }

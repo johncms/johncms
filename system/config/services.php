@@ -19,6 +19,8 @@ use Johncms\Auth\Authorization\RoleRepositoryInterface;
 use Johncms\Auth\Events\AuthEventLogger;
 use Johncms\Auth\Events\AuthEventLoggerInterface;
 use Johncms\Auth\Events\AuthEventRepositoryInterface;
+use Johncms\Auth\Impersonation\ImpersonationSettings;
+use Johncms\Auth\Impersonation\ImpersonationSettingsFactory;
 use Johncms\Auth\Infrastructure\Persistence\Repository\EloquentAuthEventRepository;
 use Johncms\Auth\Infrastructure\Persistence\Repository\EloquentAuthSessionRepository;
 use Johncms\Auth\Infrastructure\Persistence\Repository\EloquentPasswordResetTokenRepository;
@@ -197,6 +199,10 @@ return static function (ContainerConfigurator $container): void {
                 ROOT_PATH . 'system/src/Auth/Events/AuthEventType.php',
                 // Built by SessionSettingsFactory from config, not autowired from its scalars.
                 ROOT_PATH . 'system/src/Auth/Session/SessionSettings.php',
+                // Same story: built by ImpersonationSettingsFactory from config.
+                ROOT_PATH . 'system/src/Auth/Impersonation/ImpersonationSettings.php',
+                ROOT_PATH . 'system/src/Auth/Impersonation/ImpersonationNotAllowedException.php',
+                ROOT_PATH . 'system/src/Auth/Impersonation/ImpersonationBannerDTO.php',
                 ROOT_PATH . 'system/src/View/Theme/ThemeDTO.php',
                 // Built by the scan command with the translation set it fills, not by the container.
                 ROOT_PATH . 'system/src/System/i18n/TwigScanner.php',
@@ -249,6 +255,7 @@ return static function (ContainerConfigurator $container): void {
     // Read from config at instantiation rather than while the container is built: the built
     // container is cached, and anything resolved there would freeze the configuration into it.
     $services->set(SessionSettings::class)->factory(service(SessionSettingsFactory::class));
+    $services->set(ImpersonationSettings::class)->factory(service(ImpersonationSettingsFactory::class));
 
     $services->set(AntifloodCheckerInterface::class, AntifloodChecker::class)->autowire();
     $services->set(RequestRateLogInterface::class, FileRequestRateLog::class);

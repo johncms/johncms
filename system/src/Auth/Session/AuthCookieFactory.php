@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms\Auth\Session;
 
+use Johncms\Auth\Impersonation\ImpersonationSettings;
 use Symfony\Component\HttpFoundation\Cookie;
 
 /**
@@ -26,8 +27,10 @@ use Symfony\Component\HttpFoundation\Cookie;
  */
 final readonly class AuthCookieFactory
 {
-    public function __construct(private SessionSettings $settings)
-    {
+    public function __construct(
+        private SessionSettings $settings,
+        private ImpersonationSettings $impersonation,
+    ) {
     }
 
     /**
@@ -40,16 +43,7 @@ final readonly class AuthCookieFactory
      */
     public function create(string $token, bool $remember, ?int $expiresAt, bool $secure): Cookie
     {
-        return Cookie::create(
-            name: $this->settings->cookieName,
-            value: $token,
-            expire: $remember ? ($expiresAt ?? 0) : 0,
-            path: '/',
-            secure: $secure,
-            httpOnly: true,
-            raw: false,
-            sameSite: Cookie::SAMESITE_LAX,
-        );
+        return $this->build($this->settings->cookieName, $token, $remember ? ($expiresAt ?? 0) : 0, $secure);
     }
 
     /**
@@ -57,10 +51,32 @@ final readonly class AuthCookieFactory
      */
     public function forget(bool $secure): Cookie
     {
+        return $this->build($this->settings->cookieName, '', 1, $secure);
+    }
+
+    /**
+     * The cookie the administrator's own session waits in while they browse as somebody else.
+     *
+     * Built here rather than in the impersonation code so it carries exactly the flags of the
+     * sign-in cookie — it holds a secret of the same value, and a second place building cookies
+     * is how one of them ends up without HttpOnly.
+     */
+    public function createParent(string $token, int $expiresAt, bool $secure): Cookie
+    {
+        return $this->build($this->impersonation->parentCookieName, $token, $expiresAt, $secure);
+    }
+
+    public function forgetParent(bool $secure): Cookie
+    {
+        return $this->build($this->impersonation->parentCookieName, '', 1, $secure);
+    }
+
+    private function build(string $name, string $value, int $expire, bool $secure): Cookie
+    {
         return Cookie::create(
-            name: $this->settings->cookieName,
-            value: '',
-            expire: 1,
+            name: $name,
+            value: $value,
+            expire: $expire,
             path: '/',
             secure: $secure,
             httpOnly: true,

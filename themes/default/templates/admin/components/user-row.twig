@@ -3,8 +3,8 @@
     staff — where they came from.
 
     @param array item Row prepared by AdminUserRowMapper: id, name, user_profile_link,
-                      user_is_online, active, buttons, show_origin, ip, search_ip_url,
-                      ip_via_proxy, search_ip_via_proxy_url, browser.
+                      user_is_online, active, buttons, post_buttons, show_origin, ip,
+                      search_ip_url, ip_via_proxy, search_ip_via_proxy_url, browser.
 #}
 <div class="user-row {{ item.active ? 'bg-yellow-light' : '' }}">
     <div class="d-flex align-items-start">
@@ -22,10 +22,17 @@
                     <a class="user-login me-2">{{ item.name }}</a>
                 {% endif %}
             </div>
-            {% if item.buttons is not empty %}
-                <div class="mt-3">
+            {% if item.buttons is not empty or item.post_buttons|default([]) is not empty %}
+                <div class="mt-3 d-flex flex-wrap align-items-center gap-3">
                     {% for button in item.buttons %}
                         <a href="{{ button.url }}">{{ button.name }}</a>
+                    {% endfor %}
+                    {# Actions that change something are posted with a token, not linked. #}
+                    {% for button in item.post_buttons|default([]) %}
+                        <form method="post" action="{{ button.url }}" class="m-0">
+                            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                            <button type="submit" class="btn btn-link p-0 align-baseline">{{ button.name }}</button>
+                        </form>
                     {% endfor %}
                 </div>
             {% endif %}

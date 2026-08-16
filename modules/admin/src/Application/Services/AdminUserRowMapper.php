@@ -50,6 +50,10 @@ final readonly class AdminUserRowMapper
             // Filled in by the mappers that decorate this row; the template reads them always.
             'active'                  => false,
             'buttons'                 => $this->roleButtons($user),
+            // Browsing as somebody changes what the request may do, so it is a POST with a token
+            // rather than a link: a link would be one image tag away from being triggered for an
+            // administrator who never asked for it.
+            'post_buttons'            => $this->impersonationButtons($user),
         ];
 
         if ($this->currentUser->isValid() && $this->currentUser->id() !== $user->id) {
@@ -57,6 +61,27 @@ final readonly class AdminUserRowMapper
         }
 
         return $item;
+    }
+
+    /**
+     * "Browse as this user", for whoever holds the permission. Whether this particular account may
+     * be browsed as — nobody may browse as somebody who outranks them — is decided when the button
+     * is pressed: answering it here would cost a query about the roles of every row on the page.
+     *
+     * @return list<array<string, string>>
+     */
+    private function impersonationButtons(User $user): array
+    {
+        if ($user->id === $this->currentUser->id() || ! $this->accessChecker->allows(CorePermissions::USERS_IMPERSONATE)) {
+            return [];
+        }
+
+        return [
+            [
+                'url'  => '/impersonation/start/' . $user->id,
+                'name' => __('Browse as this user'),
+            ],
+        ];
     }
 
     /**

@@ -1052,3 +1052,30 @@ msgstr "Роль выдана"
 
 msgid "Role revoked"
 msgstr "Роль снята"
+
+msgid "Browse the site as another user"
+msgstr "Просматривать сайт от имени другого пользователя"
+
+msgid "Started browsing as the user"
+msgstr "Вход под пользователем"
+
+msgid "Stopped browsing as the user"
+msgstr "Выход из режима просмотра под пользователем"
+
+msgid "Action while browsing as the user"
+msgstr "Действие в режиме просмотра под пользователем"
+
+msgid "You are already signed in as yourself"
+msgstr "Вы и так вошли под своей учётной записью"
+
+msgid "User does not exists"
+msgstr "Пользователь не существует"
+
+msgid "You cannot browse as somebody who outranks you"
+msgstr "Нельзя просматривать сайт от имени того, кто выше вас"
+
+msgid "You are browsing the site as %s."
+msgstr "Вы просматриваете сайт от имени пользователя %s."
+
+msgid "Return to my account"
+msgstr "Вернуться в свою учётную запись"

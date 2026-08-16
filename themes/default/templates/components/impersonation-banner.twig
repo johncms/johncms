@@ -1,0 +1,18 @@
+{#
+    Shown on every page while an administrator browses the site as somebody else.
+
+    Deliberately impossible to miss: writing as the user is allowed, so the one thing that must
+    never happen is forgetting whose account this is.
+#}
+{% set banner = impersonation() %}
+{% if banner %}
+    <div class="alert alert-warning d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3" role="alert">
+        <div>
+            {{ __('You are browsing the site as %s.')|format(banner.userName) }}
+        </div>
+        <form method="post" action="{{ banner.stopUrl }}" class="m-0">
+            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+            <button type="submit" class="btn btn-sm btn-warning">{{ __('Return to my account') }}</button>
+        </form>
+    </div>
+{% endif %}

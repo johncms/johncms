@@ -15,6 +15,7 @@ namespace Johncms\Auth\Session;
 use Johncms\Auth\CurrentUser;
 use Johncms\Auth\Events\AuthEventLoggerInterface;
 use Johncms\Auth\Events\AuthEventType;
+use Johncms\Auth\Impersonation\ImpersonationSettings;
 use Johncms\Http\CookieQueue;
 use Johncms\Http\Environment;
 use Johncms\Http\Request;
@@ -42,6 +43,7 @@ final readonly class SignInManager
         private PhpSession $phpSession,
         private CurrentUser $currentUser,
         private AuthEventLoggerInterface $eventLogger,
+        private ImpersonationSettings $impersonation,
     ) {
     }
 
@@ -73,7 +75,8 @@ final readonly class SignInManager
      */
     public function signOut(Request $request): void
     {
-        $sessionId = $this->currentUser->identity()->sessionId;
+        $identity = $this->currentUser->identity();
+        $sessionId = $identity->sessionId;
 
         if ($sessionId !== null) {
             $session = $this->repository->findById($sessionId);
@@ -84,8 +87,31 @@ final readonly class SignInManager
             }
         }
 
+        // Signing out during impersonation means signing out, so the administrator's own session
+        // goes too. Leaving it alive would put them back on the site right after they asked to
+        // leave it — not what anybody pressing "sign out" expects.
+        if ($identity->isImpersonating()) {
+            $this->signOutParent($request);
+        }
+
         $this->cookieQueue->add($this->cookies->forget($request->isSecure()));
         $this->phpSession->invalidate();
+    }
+
+    /**
+     * Closes the session waiting in the parent cookie and clears that cookie.
+     */
+    private function signOutParent(Request $request): void
+    {
+        $parentToken = $request->cookies->getString($this->impersonation->parentCookieName, '');
+        $parent = $parentToken === '' ? null : $this->sessions->find($parentToken);
+
+        if ($parent !== null) {
+            $this->sessions->revoke($parent, SessionRevocationReason::Logout);
+            $this->eventLogger->log(AuthEventType::Logout, $parent->user_id);
+        }
+
+        $this->cookieQueue->add($this->cookies->forgetParent($request->isSecure()));
     }
 
     /**

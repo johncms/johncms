@@ -2133,3 +2133,6 @@ msgstr "Пользователь"
 
 msgid "Performed by"
 msgstr "Выполнил"
+
+msgid "Browse as this user"
+msgstr "Войти под этим пользователем"

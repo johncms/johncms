@@ -40,6 +40,13 @@ enum AuthEventType: string
 
     case RoleRevoked = 'role.revoked';
 
+    case ImpersonationStart = 'impersonation.start';
+
+    case ImpersonationStop = 'impersonation.stop';
+
+    /** A request that changed something while an administrator was browsing as somebody else. */
+    case ImpersonatedAction = 'impersonation.action';
+
     /**
      * A human-readable label for the admin log, translated at call time rather than stored.
      */
@@ -55,6 +62,9 @@ enum AuthEventType: string
             self::SessionRevoked => d__('system', 'Device signed out'),
             self::RoleGranted => d__('system', 'Role granted'),
             self::RoleRevoked => d__('system', 'Role revoked'),
+            self::ImpersonationStart => d__('system', 'Started browsing as the user'),
+            self::ImpersonationStop => d__('system', 'Stopped browsing as the user'),
+            self::ImpersonatedAction => d__('system', 'Action while browsing as the user'),
         };
     }
 }

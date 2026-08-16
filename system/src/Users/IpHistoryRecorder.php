@@ -36,6 +36,12 @@ final readonly class IpHistoryRecorder
             return;
         }
 
+        // The address of an administrator browsing as this user is not part of the user's history:
+        // it would show up in their profile as a visit they never made.
+        if ($this->currentUser->identity()->isImpersonating()) {
+            return;
+        }
+
         $user = $this->currentUser->user();
         $ipViaProxy = $this->env->getIpViaProxy(false);
         $ipViaProxy = empty($ipViaProxy) ? '' : $ipViaProxy;

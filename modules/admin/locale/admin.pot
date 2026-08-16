@@ -41,7 +41,7 @@ msgstr ""
 #: modules/admin/src/Application/Controllers/Access/RolesController.php:245
 #: modules/admin/src/Application/Controllers/Access/RolesController.php:322
 #: modules/admin/src/Application/Controllers/Access/RolesController.php:333
-#: modules/admin/src/Application/Services/AdminUserRowMapper.php:77
+#: modules/admin/src/Application/Services/AdminUserRowMapper.php:102
 msgid "Roles"
 msgstr ""
 
@@ -876,6 +876,10 @@ msgstr ""
 
 #: modules/admin/src/Application/Services/AdminPermissions.php:60
 msgid "Read the sign-in log"
+msgstr ""
+
+#: modules/admin/src/Application/Services/AdminUserRowMapper.php:82
+msgid "Browse as this user"
 msgstr ""
 
 #: modules/admin/src/Application/Services/BanListRowMapper.php:40

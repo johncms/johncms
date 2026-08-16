@@ -36,6 +36,28 @@ return [
             'remember_by_default' => true,
         ],
 
+        'impersonation' => [
+            // The cookie holding the administrator's own session while they browse as somebody
+            // else. Their session is not closed and not overwritten — it waits here.
+            'parent_cookie_name' => 'jc_auth_parent',
+
+            // How long browsing as somebody else lasts, in seconds. Never extended, unlike an
+            // ordinary session: an administrator who keeps clicking would otherwise stay somebody
+            // else indefinitely. Starting again is one click and one more line in the audit trail.
+            'lifetime' => 3600,
+
+            // What is refused while browsing as somebody else, whatever the roles say. Taking
+            // over the account outright — changing its password or address, deleting it — is not
+            // what impersonation is for, and entering the panel as somebody else has no purpose
+            // beyond hiding who acted.
+            'denied_permissions' => [
+                'users.impersonate',
+                'admin.access',
+                'admin.settings.manage',
+                'admin.roles.manage',
+            ],
+        ],
+
         'password' => [
             // Any algorithm constant password_hash() accepts. PASSWORD_DEFAULT follows the PHP
             // release; pin it to PASSWORD_ARGON2ID where the extension is available.
