@@ -45,6 +45,9 @@
                     </div>
                     <button type="submit" name="login" value="1" class="btn btn-fill btn-primary">{{ __('Login') }}</button>
                 </form>
+                {# An administrator who signed up through a service has no password, so without
+                   these buttons they could never reach the panel. #}
+                {% include '@theme/components/external-providers.twig' only %}
             </div>
         </div>
     </div>

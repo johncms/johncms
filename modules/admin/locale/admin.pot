@@ -152,14 +152,19 @@ msgstr ""
 msgid "Security"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:303
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:304
+#: modules/admin/src/Application/Controllers/Access/ExternalProvidersController.php:35
+msgid "Sign-in services"
+msgstr ""
+
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:313
 #: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:29
 #: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:42
 #: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:71
 msgid "Anti-Spyware"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:311
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:321
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:50
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:74
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:126
@@ -169,6 +174,12 @@ msgstr ""
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:227
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:274
 msgid "Ban by IP"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/Access/ExternalProvidersController.php:66
+#: modules/admin/src/Application/Controllers/Access/RolesController.php:195
+#: modules/admin/src/Application/Controllers/Access/UserRolesController.php:94
+msgid "Changes saved successfully"
 msgstr ""
 
 #: modules/admin/src/Application/Controllers/Access/RolesController.php:129
@@ -183,11 +194,6 @@ msgstr ""
 
 #: modules/admin/src/Application/Controllers/Access/RolesController.php:162
 msgid "The role is deleted"
-msgstr ""
-
-#: modules/admin/src/Application/Controllers/Access/RolesController.php:195
-#: modules/admin/src/Application/Controllers/Access/UserRolesController.php:94
-msgid "Changes saved successfully"
 msgstr ""
 
 #: modules/admin/src/Application/Controllers/Access/RolesController.php:198
@@ -1024,6 +1030,7 @@ msgstr ""
 #: modules/admin/templates/amnesty.twig:32
 #: modules/admin/templates/antiflood.twig:49
 #: modules/admin/templates/counter-preview.twig:51
+#: modules/admin/templates/external-providers.twig:59
 #: modules/admin/templates/forum-section-edit.twig:76
 #: modules/admin/templates/forum-settings.twig:58
 #: modules/admin/templates/ip-ban-form.twig:53
@@ -1039,6 +1046,7 @@ msgstr ""
 #: modules/admin/templates/auth-log.twig:43
 #: modules/admin/templates/banned-users.twig:25
 #: modules/admin/templates/counters.twig:20
+#: modules/admin/templates/external-providers.twig:56
 #: modules/admin/templates/forum-hidden-posts.twig:25
 #: modules/admin/templates/forum-hidden-topics.twig:25
 #: modules/admin/templates/forum-structure.twig:13
@@ -1239,6 +1247,7 @@ msgstr ""
 
 #: modules/admin/templates/counter-form.twig:57
 #: modules/admin/templates/counter-view.twig:26
+#: modules/admin/templates/external-providers.twig:26
 msgid "Enabled"
 msgstr ""
 
@@ -1301,6 +1310,26 @@ msgstr ""
 #: modules/admin/templates/ip-bans.twig:54
 #: modules/admin/templates/roles.twig:63
 msgid "Add"
+msgstr ""
+
+#: modules/admin/templates/external-providers.twig:33
+msgid "%d users sign in through this service, %d of them have no other way in."
+msgstr ""
+
+#: modules/admin/templates/external-providers.twig:38
+msgid "Client ID"
+msgstr ""
+
+#: modules/admin/templates/external-providers.twig:44
+msgid "Client secret"
+msgstr ""
+
+#: modules/admin/templates/external-providers.twig:47
+msgid "Saved. Fill in to replace."
+msgstr ""
+
+#: modules/admin/templates/external-providers.twig:52
+msgid "Callback URL"
 msgstr ""
 
 #: modules/admin/templates/file-integrity-scan-result.twig:12

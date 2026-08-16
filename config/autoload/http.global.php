@@ -17,6 +17,10 @@ return [
         //     'trusted_proxies' => ['10.0.1.5'],            // one known reverse proxy
         //     'trusted_proxies' => ['173.245.48.0/20'],     // a CDN edge range
         //
+        // Without this, X-Forwarded-Proto is ignored and an HTTPS site behind a TLS-terminating
+        // proxy looks like plain HTTP to the application: cookies lose the Secure flag and
+        // generated absolute URLs (the OAuth callback, password-reset links) come out as http://.
+        //
         // Do NOT put 'private_ranges' (or a broad private CIDR) here without checking how the
         // application is exposed. The bundled nginx talks to PHP-FPM over FastCGI and passes
         // the visitor's own X-Forwarded-For through untouched, while REMOTE_ADDR is whatever

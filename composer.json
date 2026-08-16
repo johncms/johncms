@@ -56,6 +56,7 @@
         "symfony/config": "^7.4",
         "symfony/console": "^7.4",
         "symfony/dependency-injection": "^7.4",
+        "symfony/http-client": "^7.4",
         "symfony/http-foundation": "^7.4",
         "symfony/http-kernel": "^7.4",
         "symfony/mailer": "^v7.4.0",

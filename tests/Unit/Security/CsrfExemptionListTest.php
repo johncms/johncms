@@ -24,7 +24,13 @@ final class CsrfExemptionListTest extends TestCase
      *
      * @var list<string>
      */
-    private const EXEMPT_ROUTES = [];
+    private const EXEMPT_ROUTES = [
+        // The callback of an external sign-in service. It is the provider that sends the visitor
+        // here, and a provider carries no token of ours. What guards this round trip instead is
+        // the single-use state and the PKCE verifier, both of which live in the visitor's own
+        // session and are checked before anything is done with the answer.
+        'auth.external.callback',
+    ];
 
     /**
      * Path patterns allowed in the "except" key of config/csrf.php.

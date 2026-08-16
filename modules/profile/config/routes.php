@@ -16,6 +16,7 @@ use Johncms\Modules\Profile\Application\Controllers\PhotoController;
 use Johncms\Modules\Profile\Application\Controllers\ProfileController;
 use Johncms\Modules\Profile\Application\Controllers\ResetSettingsController;
 use Johncms\Modules\Profile\Application\Controllers\RestorePasswordController;
+use Johncms\Modules\Profile\Application\Controllers\LinkedAccountsController;
 use Johncms\Modules\Profile\Application\Controllers\SessionsController;
 use Johncms\Modules\Profile\Application\Controllers\SettingsController;
 use Johncms\Modules\Profile\Application\Controllers\StatisticsController;
@@ -26,6 +27,8 @@ return static function (RouteCollection $router): void {
     // Routes migrated to the new architecture (require an authenticated user)
     $profileGroup = $router->group('', function (RouteCollection $r): void {
         $r->get('/profile/account', AccountController::class)->name('profile.account');
+        $r->get('/profile/accounts', [LinkedAccountsController::class, 'index'])->name('profile.accounts');
+        $r->post('/profile/accounts', [LinkedAccountsController::class, 'detach'])->name('profile.accounts.detach');
         $r->get('/profile/sessions', [SessionsController::class, 'index'])->name('profile.sessions');
         $r->post('/profile/sessions', [SessionsController::class, 'revoke'])->name('profile.sessions.revoke');
         $r->post('/profile/sessions/close-others', [SessionsController::class, 'revokeOthers'])

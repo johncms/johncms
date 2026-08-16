@@ -19,11 +19,14 @@ use Johncms\Auth\Authorization\RoleRepositoryInterface;
 use Johncms\Auth\Events\AuthEventLogger;
 use Johncms\Auth\Events\AuthEventLoggerInterface;
 use Johncms\Auth\Events\AuthEventRepositoryInterface;
+use Johncms\Auth\External\ExternalIdentityProviderRegistry;
+use Johncms\Auth\External\UserIdentityRepositoryInterface;
 use Johncms\Auth\Impersonation\ImpersonationSettings;
 use Johncms\Auth\Impersonation\ImpersonationSettingsFactory;
 use Johncms\Auth\Infrastructure\Persistence\Repository\EloquentAuthEventRepository;
 use Johncms\Auth\Infrastructure\Persistence\Repository\EloquentAuthSessionRepository;
 use Johncms\Auth\Infrastructure\Persistence\Repository\EloquentPasswordResetTokenRepository;
+use Johncms\Auth\Infrastructure\Persistence\Repository\EloquentUserIdentityRepository;
 use Johncms\Auth\Infrastructure\Persistence\Repository\EloquentRoleRepository;
 use Johncms\Auth\Password\PasswordHasherFactory;
 use Johncms\Auth\Password\PasswordHasherInterface;
@@ -105,7 +108,9 @@ use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Routing\Matcher\UrlMatcherInterface;
 use Symfony\Component\Routing\RequestContext;
+use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\Service\ResetInterface;
 use Symfony\Component\Routing\RouteCollection;
 
@@ -203,6 +208,16 @@ return static function (ContainerConfigurator $container): void {
                 ROOT_PATH . 'system/src/Auth/Impersonation/ImpersonationSettings.php',
                 ROOT_PATH . 'system/src/Auth/Impersonation/ImpersonationNotAllowedException.php',
                 ROOT_PATH . 'system/src/Auth/Impersonation/ImpersonationBannerDTO.php',
+                // Value objects and enums of the external sign-in layer; the providers themselves
+                // are services and stay autowired.
+                ROOT_PATH . 'system/src/Auth/External/ExternalAuthContextDTO.php',
+                ROOT_PATH . 'system/src/Auth/External/ExternalCallbackDTO.php',
+                ROOT_PATH . 'system/src/Auth/External/ExternalIdentityDTO.php',
+                ROOT_PATH . 'system/src/Auth/External/ExternalAuthResultDTO.php',
+                ROOT_PATH . 'system/src/Auth/External/ExternalAuthStatus.php',
+                ROOT_PATH . 'system/src/Auth/External/ProviderSettings.php',
+                ROOT_PATH . 'system/src/Auth/External/ExternalAuthException.php',
+                ROOT_PATH . 'system/src/Auth/External/ExternalAccountConflictException.php',
                 ROOT_PATH . 'system/src/View/Theme/ThemeDTO.php',
                 // Built by the scan command with the translation set it fills, not by the container.
                 ROOT_PATH . 'system/src/System/i18n/TwigScanner.php',
@@ -256,6 +271,14 @@ return static function (ContainerConfigurator $container): void {
     // container is cached, and anything resolved there would freeze the configuration into it.
     $services->set(SessionSettings::class)->factory(service(SessionSettingsFactory::class));
     $services->set(ImpersonationSettings::class)->factory(service(ImpersonationSettingsFactory::class));
+    $services->set(UserIdentityRepositoryInterface::class, EloquentUserIdentityRepository::class);
+    // A module adds a service to sign in with by tagging its provider; the registry is what the
+    // buttons and the callback route are built from.
+    $services->set(ExternalIdentityProviderRegistry::class)
+        ->arg('$providers', tagged_iterator('johncms.auth.external_provider'));
+    // The HTTP client the OAuth providers talk through. Registered under the interface so a test
+    // or a module can put a different one in its place.
+    $services->set(HttpClientInterface::class)->factory([HttpClient::class, 'create']);
 
     $services->set(AntifloodCheckerInterface::class, AntifloodChecker::class)->autowire();
     $services->set(RequestRateLogInterface::class, FileRequestRateLog::class);

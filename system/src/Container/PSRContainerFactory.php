@@ -6,6 +6,7 @@ namespace Johncms\Container;
 
 use Johncms\Auth\Authentication\AuthenticatorInterface;
 use Johncms\Auth\Authorization\AccessVoterInterface;
+use Johncms\Auth\External\ExternalIdentityProviderInterface;
 use Johncms\Auth\Authorization\PermissionProviderInterface;
 use Psr\Container\ContainerInterface as PsrContainerInterface;
 use Symfony\Component\Config\FileLocator;
@@ -82,6 +83,7 @@ class PSRContainerFactory
             AuthenticatorInterface::class      => 'johncms.auth.authenticator',
             AccessVoterInterface::class        => 'johncms.auth.voter',
             PermissionProviderInterface::class => 'johncms.auth.permissions',
+            ExternalIdentityProviderInterface::class => 'johncms.auth.external_provider',
         ];
 
         foreach ($tags as $interface => $tag) {

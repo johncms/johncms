@@ -1278,3 +1278,24 @@ msgstr "Удалять запись кармы"
 
 msgid "Roles of the account"
 msgstr "Роли аккаунта"
+
+msgid "Linked accounts"
+msgstr "Привязанные аккаунты"
+
+msgid "The service has been detached"
+msgstr "Сервис отвязан"
+
+msgid "Unavailable"
+msgstr "Недоступен"
+
+msgid "Linked"
+msgstr "Привязан"
+
+msgid "Detach"
+msgstr "Отвязать"
+
+msgid "No services are linked to your account"
+msgstr "К вашему аккаунту не привязано ни одного сервиса"
+
+msgid "Link another service"
+msgstr "Привязать другой сервис"

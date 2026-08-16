@@ -1,0 +1,41 @@
+{#
+    The last step of signing up through an external service.
+
+    It exists because providers do not hand out logins, and VK may withhold the address
+    altogether — an account without one has nowhere to send password recovery or notifications.
+
+    @var string form_action
+    @var array  errors
+    @var string name
+    @var string email
+    @var bool   email_known Whether the service gave an address it vouches for.
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    <form method="post" action="{{ form_action }}">
+        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+        <p>{{ __('Almost done. Choose a username to finish creating your account.') }}</p>
+
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: errors.form|default([])} only %}
+
+        <div class="form-group">
+            <label for="name">{{ __('Username') }}</label>
+            <input type="text" class="form-control" id="name" name="name" maxlength="20" required value="{{ name }}">
+            {% for message in errors.name|default([]) %}
+                <div class="text-danger small">{{ message }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            <label for="email">{{ __('E-mail') }}</label>
+            <input type="email" class="form-control" id="email" name="email" required value="{{ email }}"
+                   {{ email_known ? 'readonly' : '' }}>
+            {% for message in errors.email|default([]) %}
+                <div class="text-danger small">{{ message }}</div>
+            {% endfor %}
+        </div>
+
+        <button type="submit" class="btn btn-fill btn-primary mt-3">{{ __('Continue') }}</button>
+    </form>
+{% endblock %}

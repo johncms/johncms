@@ -13,6 +13,7 @@ use Johncms\Modules\Admin\Domain\Repository\HiddenForumRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\StaffRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\AdRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\BanAmnestyRepositoryInterface;
+use Johncms\Modules\Admin\Domain\Repository\AuthConfigRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\AuthLogRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\BanListRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\InactiveUsersRepositoryInterface;
@@ -40,6 +41,7 @@ use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentForumAdm
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentForumStructureRepository;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentHiddenForumRepository;
 use Johncms\Modules\Admin\Infrastructure\Cache\FileSmiliesCacheRepository;
+use Johncms\Modules\Admin\Infrastructure\Config\FileSystemAuthConfigRepository;
 use Johncms\Modules\Admin\Infrastructure\Config\FileSystemConfigRepository;
 use Johncms\Modules\Admin\Infrastructure\Config\FileSystemForumConfigRepository;
 use Johncms\Modules\Admin\Infrastructure\Language\FileSystemLanguageFilesManager;
@@ -88,6 +90,7 @@ return static function (ContainerConfigurator $container): void {
     $services->set(IpSearchRepositoryInterface::class, EloquentIpSearchRepository::class)->public();
     $services->set(BanListRepositoryInterface::class, EloquentBanListRepository::class)->public();
     $services->set(AuthLogRepositoryInterface::class, EloquentAuthLogRepository::class)->public();
+    $services->set(AuthConfigRepositoryInterface::class, FileSystemAuthConfigRepository::class)->public();
     $services->set(SystemConfigRepositoryInterface::class, FileSystemConfigRepository::class)->public();
     $services->set(ThemeListProviderInterface::class, FileSystemThemeListProvider::class)->public();
     $services->set(SmiliesScannerInterface::class, FileSystemSmiliesScanner::class)->autowire()->public();

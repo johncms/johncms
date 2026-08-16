@@ -87,6 +87,8 @@ msgstr ""
 #: modules/login/src/Application/Controllers/LoginController.php:141
 #: modules/login/src/Application/Controllers/LoginController.php:142
 #: modules/login/templates/public/login.twig:51
+#: system/src/Http/Controller/ExternalAuthController.php:301
+#: system/src/Http/Controller/ExternalAuthController.php:314
 #: themes/default/templates/components/sidebar-user-menu.twig:69
 msgid "Login"
 msgstr ""
@@ -180,6 +182,7 @@ msgid "Enter verification code"
 msgstr ""
 
 #: modules/login/templates/public/captcha.twig:29
+#: themes/default/templates/pages/external-auth-profile.twig:39
 msgid "Continue"
 msgstr ""
 
@@ -197,6 +200,7 @@ msgstr ""
 
 #: modules/login/templates/public/login.twig:18
 #: modules/login/templates/public/login.twig:26
+#: themes/default/templates/pages/external-auth-profile.twig:23
 msgid "Username"
 msgstr ""
 
@@ -214,6 +218,7 @@ msgid "Forgot password?"
 msgstr ""
 
 #: modules/login/templates/public/login.twig:54
+#: system/src/Http/Controller/ExternalAuthController.php:180
 #: themes/default/templates/components/sidebar-user-menu.twig:77
 msgid "Registration"
 msgstr ""
@@ -464,6 +469,51 @@ msgstr ""
 msgid "Action while browsing as the user"
 msgstr ""
 
+#: system/src/Auth/External/AbstractOAuth2Provider.php:83
+msgid "The sign-in was cancelled"
+msgstr ""
+
+#: system/src/Auth/External/AbstractOAuth2Provider.php:89
+msgid "The service did not return a sign-in code"
+msgstr ""
+
+#: system/src/Auth/External/AbstractOAuth2Provider.php:96
+msgid "The service did not return an access token"
+msgstr ""
+
+#: system/src/Auth/External/AbstractOAuth2Provider.php:185
+msgid "The service is not responding, please try again later"
+msgstr ""
+
+#: system/src/Auth/External/AbstractOAuth2Provider.php:191
+msgid "The service refused the sign-in"
+msgstr ""
+
+#: system/src/Auth/External/AuthenticateViaExternalProviderUseCase.php:62
+msgid "This email address is already registered. Sign in with your password to link the account."
+msgstr ""
+
+#: system/src/Auth/External/OAuthStateStorage.php:90
+#: system/src/Auth/External/OAuthStateStorage.php:98
+#: system/src/Http/Controller/ExternalAuthController.php:128
+#: system/src/Http/Controller/ExternalAuthController.php:139
+#: system/src/Http/Controller/ExternalAuthController.php:215
+msgid "The sign-in attempt has expired, please try again"
+msgstr ""
+
+#: system/src/Auth/External/OAuthStateStorage.php:94
+msgid "The sign-in attempt could not be verified, please try again"
+msgstr ""
+
+#: system/src/Auth/External/Providers/VkProvider.php:85
+#: system/src/Http/Controller/ExternalAuthController.php:109
+msgid "The service did not return an account identifier"
+msgstr ""
+
+#: system/src/Auth/External/UnlinkExternalIdentityUseCase.php:47
+msgid "This is the only way to sign in to the account. Set a password first."
+msgstr ""
+
 #: system/src/Auth/Impersonation/ImpersonationManager.php:160
 #: system/src/Http/ExceptionResponseFactory.php:128
 msgid "Access denied"
@@ -649,6 +699,23 @@ msgstr ""
 msgid "Last activity"
 msgstr ""
 
+#: system/src/Http/Controller/ExternalAuthController.php:70
+#: system/src/Http/Controller/ExternalAuthController.php:90
+msgid "This sign-in service is not available"
+msgstr ""
+
+#: system/src/Http/Controller/ExternalAuthController.php:180
+msgid "Your account is awaiting approval"
+msgstr ""
+
+#: system/src/Http/Controller/ExternalAuthController.php:198
+msgid "Registration is closed on this site"
+msgstr ""
+
+#: system/src/Http/Controller/ExternalAuthController.php:278
+msgid "Finish signing up"
+msgstr ""
+
 #: system/src/Http/ExceptionResponseFactory.php:48
 msgid "Method Not Allowed"
 msgstr ""
@@ -759,14 +826,14 @@ msgid "'%hostname%' does not appear to have any valid MX or A records for the em
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:17
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:354
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:364
 #: themes/default/templates/components/sidebar-main-menu.twig:6
 #: themes/default/templates/components/sidebar-main-menu.twig:179
 msgid "Set Light Theme"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:17
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:353
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:363
 #: themes/default/templates/components/sidebar-main-menu.twig:6
 #: themes/default/templates/components/sidebar-main-menu.twig:178
 msgid "Set Dark Theme"
@@ -794,6 +861,10 @@ msgstr ""
 
 #: themes/default/templates/components/debug.twig:29
 msgid "Time"
+msgstr ""
+
+#: themes/default/templates/components/external-providers.twig:11
+msgid "Or sign in with"
 msgstr ""
 
 #: themes/default/templates/components/impersonation-banner.twig:11
@@ -1008,4 +1079,12 @@ msgstr ""
 
 #: themes/default/templates/pages/comments-list.twig:67
 msgid "Edited"
+msgstr ""
+
+#: themes/default/templates/pages/external-auth-profile.twig:18
+msgid "Almost done. Choose a username to finish creating your account."
+msgstr ""
+
+#: themes/default/templates/pages/external-auth-profile.twig:31
+msgid "E-mail"
 msgstr ""

@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
+use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Modules\Admin\Application\Controllers\Access\AuthLogController;
+use Johncms\Modules\Admin\Application\Controllers\Access\ExternalProvidersController;
 use Johncms\Modules\Admin\Application\Controllers\Access\RolesController;
 use Johncms\Modules\Admin\Application\Controllers\Access\UserRolesController;
 use Johncms\Modules\Admin\Application\Controllers\DashboardController;
@@ -70,6 +72,12 @@ return static function (RouteCollection $router): void {
         $r->post('/admin/roles/{id:number}/delete', [RolesController::class, 'delete'])->name('admin.roles.delete');
         // Reading the trail is a permission of its own: it names who did what, which is more than
         // "may open the panel" is meant to grant.
+        $r->get('/admin/auth/providers', [ExternalProvidersController::class, 'index'])
+            ->name('admin.auth.providers')
+            ->permission(CorePermissions::ADMIN_SETTINGS_MANAGE);
+        $r->post('/admin/auth/providers', [ExternalProvidersController::class, 'save'])
+            ->name('admin.auth.providers.save')
+            ->permission(CorePermissions::ADMIN_SETTINGS_MANAGE);
         $r->get('/admin/auth-log', AuthLogController::class)
             ->name('admin.auth_log')
             ->permission(AdminPermissions::AUTH_LOG_VIEW);

@@ -1,0 +1,18 @@
+{#
+    The buttons of the external sign-in services, on both login screens.
+
+    Nothing is drawn when no provider is switched on and configured, so a site that uses none
+    sees no empty block. Plain links: starting a flow changes nothing on this site — the visitor
+    is simply sent to the service, and what comes back is guarded by state and PKCE.
+#}
+{% set providers = external_providers() %}
+{% if providers is not empty %}
+    <div class="mt-4">
+        <div class="text-muted small mb-2">{{ __('Or sign in with') }}</div>
+        <div class="d-flex flex-wrap gap-2">
+            {% for provider in providers %}
+                <a href="/auth/{{ provider.key }}" class="btn btn-outline-secondary btn-sm">{{ provider.label }}</a>
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}

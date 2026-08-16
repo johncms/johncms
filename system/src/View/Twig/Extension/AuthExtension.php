@@ -19,6 +19,7 @@ final class AuthExtension extends AbstractExtension
         return [
             new TwigFunction('can', [AuthRuntime::class, 'can']),
             new TwigFunction('impersonation', [AuthRuntime::class, 'impersonation']),
+            new TwigFunction('external_providers', [AuthRuntime::class, 'externalProviders']),
         ];
     }
 }

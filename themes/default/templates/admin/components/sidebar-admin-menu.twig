@@ -295,6 +295,16 @@
     <div id="collapseSecurity" class="collapse{{ sec_menu ? ' show' : '' }}" data-bs-parent="#accordionAdmin">
         <div class="border-bottom"></div>
         <ul class="nav nav__vertical">
+            {% if can_manage_site %}
+                <li class="{{ sec_menu.auth_providers|default(false) ? 'active' : '' }}">
+                    <a href="/admin/auth/providers">
+                        <svg class="icon">
+                            <use xlink:href="{{ sprite }}#log-in"/>
+                        </svg>
+                        <span class="flex-grow-1">{{ d__('admin', 'Sign-in services') }}</span>
+                    </a>
+                </li>
+            {% endif %}
             <li class="{{ sec_menu.antispy|default(false) ? 'active' : '' }}">
                 <a href="/admin/file-integrity">
                     <svg class="icon">

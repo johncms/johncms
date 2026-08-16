@@ -63,63 +63,63 @@ msgid "Continue"
 msgstr ""
 
 #: modules/profile/src/Application/Controllers/AvatarController.php:83
-#: modules/profile/src/Application/Controllers/EditProfileController.php:162
+#: modules/profile/src/Application/Controllers/EditProfileController.php:163
 #: modules/profile/src/Application/Controllers/PhotoController.php:83
-#: modules/profile/src/Application/UseCases/GetProfileViewUseCase.php:92
+#: modules/profile/src/Application/UseCases/GetProfileViewUseCase.php:94
 msgid "My Profile"
 msgstr ""
 
 #: modules/profile/src/Application/Controllers/AvatarController.php:83
-#: modules/profile/src/Application/Controllers/EditProfileController.php:162
+#: modules/profile/src/Application/Controllers/EditProfileController.php:163
 #: modules/profile/src/Application/Controllers/GuestbookController.php:44
 #: modules/profile/src/Application/Controllers/PhotoController.php:83
 #: modules/profile/templates/public/account.twig:13
 msgid "Profile"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:101
+#: modules/profile/src/Application/Controllers/BanController.php:102
 msgid "User banned"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:113
-#: modules/profile/src/Application/Controllers/BanController.php:136
-#: modules/profile/src/Application/Controllers/BanController.php:155
-#: modules/profile/src/Application/Controllers/BanController.php:176
-#: modules/profile/src/Application/Controllers/BanController.php:302
-#: modules/profile/src/Application/Controllers/BanController.php:314
+#: modules/profile/src/Application/Controllers/BanController.php:114
+#: modules/profile/src/Application/Controllers/BanController.php:137
+#: modules/profile/src/Application/Controllers/BanController.php:156
+#: modules/profile/src/Application/Controllers/BanController.php:177
+#: modules/profile/src/Application/Controllers/BanController.php:303
+#: modules/profile/src/Application/Controllers/BanController.php:315
 #: modules/profile/src/Application/Controllers/KarmaController.php:140
 #: modules/profile/src/Application/Controllers/KarmaController.php:162
 msgid "Wrong data"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:119
-#: modules/profile/src/Application/Controllers/BanController.php:143
+#: modules/profile/src/Application/Controllers/BanController.php:120
+#: modules/profile/src/Application/Controllers/BanController.php:144
 msgid "Ban termination"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:120
+#: modules/profile/src/Application/Controllers/BanController.php:121
 msgid "Ban time is going to the end. Infrigement will be saved in the bans history"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:121
+#: modules/profile/src/Application/Controllers/BanController.php:122
 msgid "Terminate Ban"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:143
+#: modules/profile/src/Application/Controllers/BanController.php:144
 msgid "Ban terminated"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:159
-#: modules/profile/src/Application/Controllers/BanController.php:181
+#: modules/profile/src/Application/Controllers/BanController.php:160
+#: modules/profile/src/Application/Controllers/BanController.php:182
 msgid "Delete ban"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:160
+#: modules/profile/src/Application/Controllers/BanController.php:161
 msgid "Removing ban along with a record in the bans history"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:161
-#: modules/profile/src/Application/UseCases/GetProfileViewUseCase.php:200
+#: modules/profile/src/Application/Controllers/BanController.php:162
+#: modules/profile/src/Application/UseCases/GetProfileViewUseCase.php:203
 #: modules/profile/templates/public/confirm-delete.twig:18
 #: modules/profile/templates/public/edit.twig:82
 #: modules/profile/templates/public/edit.twig:102
@@ -127,49 +127,49 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:181
+#: modules/profile/src/Application/Controllers/BanController.php:182
 msgid "Ban deleted"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:186
-#: modules/profile/src/Application/Controllers/BanController.php:201
+#: modules/profile/src/Application/Controllers/BanController.php:187
+#: modules/profile/src/Application/Controllers/BanController.php:202
 msgid "Violations history can be cleared by Supervisor only"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:191
-#: modules/profile/src/Application/Controllers/BanController.php:207
+#: modules/profile/src/Application/Controllers/BanController.php:192
+#: modules/profile/src/Application/Controllers/BanController.php:208
 msgid "Violations history"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:192
+#: modules/profile/src/Application/Controllers/BanController.php:193
 msgid "Are you sure want to clean entire history of user violations?"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:193
+#: modules/profile/src/Application/Controllers/BanController.php:194
 msgid "Clear"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:207
+#: modules/profile/src/Application/Controllers/BanController.php:208
 msgid "Violations history cleared"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:212
+#: modules/profile/src/Application/Controllers/BanController.php:213
 msgid "Violations History"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:214
-#: modules/profile/src/Application/Controllers/BanController.php:236
+#: modules/profile/src/Application/Controllers/BanController.php:215
+#: modules/profile/src/Application/Controllers/BanController.php:237
 #: modules/profile/src/Application/Controllers/KarmaController.php:198
 #: modules/profile/src/Application/Controllers/KarmaController.php:220
 #: modules/profile/src/Application/Controllers/KarmaController.php:241
 #: modules/profile/src/Application/Controllers/ProfileController.php:28
-#: modules/profile/src/Application/UseCases/GetProfileViewUseCase.php:92
+#: modules/profile/src/Application/UseCases/GetProfileViewUseCase.php:94
 msgid "User Profile"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:234
-#: modules/profile/src/Application/Controllers/BanController.php:275
-#: modules/profile/src/Application/Controllers/BanController.php:288
+#: modules/profile/src/Application/Controllers/BanController.php:235
+#: modules/profile/src/Application/Controllers/BanController.php:276
+#: modules/profile/src/Application/Controllers/BanController.php:289
 msgid "Ban the User"
 msgstr ""
 
@@ -192,20 +192,20 @@ msgstr ""
 msgid "Email confirmation"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/EditProfileController.php:63
+#: modules/profile/src/Application/Controllers/EditProfileController.php:64
 msgid "Data saved"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/EditProfileController.php:75
+#: modules/profile/src/Application/Controllers/EditProfileController.php:76
 msgid "Avatar is successfully removed"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/EditProfileController.php:87
+#: modules/profile/src/Application/Controllers/EditProfileController.php:88
 msgid "Photo is successfully removed"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/EditProfileController.php:160
-#: modules/profile/src/Application/Controllers/EditProfileController.php:198
+#: modules/profile/src/Application/Controllers/EditProfileController.php:161
+#: modules/profile/src/Application/Controllers/EditProfileController.php:199
 #: modules/profile/templates/public/account.twig:67
 msgid "Edit Profile"
 msgstr ""
@@ -272,6 +272,19 @@ msgstr ""
 msgid "Access forbidden"
 msgstr ""
 
+#: modules/profile/src/Application/Controllers/LinkedAccountsController.php:34
+msgid "Linked accounts"
+msgstr ""
+
+#: modules/profile/src/Application/Controllers/LinkedAccountsController.php:35
+#: modules/profile/src/Application/Controllers/SessionsController.php:40
+msgid "Personal"
+msgstr ""
+
+#: modules/profile/src/Application/Controllers/LinkedAccountsController.php:58
+msgid "The service has been detached"
+msgstr ""
+
 #: modules/profile/src/Application/Controllers/PhotoController.php:58
 #: modules/profile/src/Application/Controllers/PhotoController.php:70
 #: modules/profile/src/Application/Controllers/PhotoController.php:81
@@ -318,10 +331,6 @@ msgstr ""
 #: modules/profile/src/Application/Controllers/SessionsController.php:39
 #: modules/profile/templates/public/account.twig:69
 msgid "My Devices"
-msgstr ""
-
-#: modules/profile/src/Application/Controllers/SessionsController.php:40
-msgid "Personal"
 msgstr ""
 
 #: modules/profile/src/Application/Controllers/SessionsController.php:67
@@ -424,28 +433,28 @@ msgstr ""
 msgid "Delete a karma entry"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/BanUserUseCase.php:33
+#: modules/profile/src/Application/UseCases/BanUserUseCase.php:34
 msgid "Reason not specified"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/BanUserUseCase.php:40
+#: modules/profile/src/Application/UseCases/BanUserUseCase.php:41
 msgid "There is no required data"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/BanUserUseCase.php:44
+#: modules/profile/src/Application/UseCases/BanUserUseCase.php:45
 msgid "You have no rights to ban in this section"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/BanUserUseCase.php:48
+#: modules/profile/src/Application/UseCases/BanUserUseCase.php:49
 msgid "Ban already active"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/BanUserUseCase.php:63
+#: modules/profile/src/Application/UseCases/BanUserUseCase.php:64
 msgid "System"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/BanUserUseCase.php:63
-#: modules/profile/src/Application/UseCases/GetProfileViewUseCase.php:203
+#: modules/profile/src/Application/UseCases/BanUserUseCase.php:64
+#: modules/profile/src/Application/UseCases/GetProfileViewUseCase.php:206
 msgid "Ban"
 msgstr ""
 
@@ -453,29 +462,29 @@ msgstr ""
 msgid "Ban not active"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/ChangePasswordUseCase.php:35
 #: modules/profile/src/Application/UseCases/ChangePasswordUseCase.php:38
+#: modules/profile/src/Application/UseCases/ChangePasswordUseCase.php:41
 msgid "It is necessary to fill in all fields"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/ChangePasswordUseCase.php:42
+#: modules/profile/src/Application/UseCases/ChangePasswordUseCase.php:45
 msgid "Old password entered incorrectly"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/ChangePasswordUseCase.php:46
+#: modules/profile/src/Application/UseCases/ChangePasswordUseCase.php:49
 msgid "The password confirmation you entered is wrong"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/ChangePasswordUseCase.php:50
+#: modules/profile/src/Application/UseCases/ChangePasswordUseCase.php:53
 msgid "The password must contain at least 3 characters"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/CompletePasswordRecoveryUseCase.php:34
+#: modules/profile/src/Application/UseCases/CompletePasswordRecoveryUseCase.php:40
 #: modules/profile/src/Application/UseCases/GetRecoveryContextUseCase.php:29
 msgid "Time allotted for the password recovery has been exceeded"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/CompletePasswordRecoveryUseCase.php:48
+#: modules/profile/src/Application/UseCases/CompletePasswordRecoveryUseCase.php:54
 msgid "Your new password"
 msgstr ""
 
@@ -532,75 +541,75 @@ msgstr ""
 msgid "Negative"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/GetProfileViewUseCase.php:167
+#: modules/profile/src/Application/UseCases/GetProfileViewUseCase.php:170
 #: modules/profile/templates/public/statistics.twig:15
 msgid "Pending confirmation"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/GetProfileViewUseCase.php:170
+#: modules/profile/src/Application/UseCases/GetProfileViewUseCase.php:173
 msgid "E-mail address is not confirmed"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/GetProfileViewUseCase.php:190
+#: modules/profile/src/Application/UseCases/GetProfileViewUseCase.php:193
 msgid "Add to Contacts"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/GetProfileViewUseCase.php:191
+#: modules/profile/src/Application/UseCases/GetProfileViewUseCase.php:194
 msgid "Remove from Contacts"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/GetProfileViewUseCase.php:197
+#: modules/profile/src/Application/UseCases/GetProfileViewUseCase.php:200
 msgid "Edit"
 msgstr ""
 
 #: modules/profile/src/Application/UseCases/GetRecoveryContextUseCase.php:35
-#: modules/profile/src/Application/UseCases/SendPasswordRecoveryUseCase.php:35
+#: modules/profile/src/Application/UseCases/SendPasswordRecoveryUseCase.php:38
 msgid "User does not exists"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/GetVoteContextUseCase.php:37
+#: modules/profile/src/Application/UseCases/GetVoteContextUseCase.php:39
 msgid "You are not allowed to vote for users"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/GetVoteContextUseCase.php:44
+#: modules/profile/src/Application/UseCases/GetVoteContextUseCase.php:46
 msgid "It is forbidden to vote for administration"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/GetVoteContextUseCase.php:48
+#: modules/profile/src/Application/UseCases/GetVoteContextUseCase.php:50
 msgid "Cheating karma is forbidden"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/GetVoteContextUseCase.php:53
+#: modules/profile/src/Application/UseCases/GetVoteContextUseCase.php:55
 #, php-format
 msgid "Users can take part in voting if they have stayed on a site not less %s and their score on the forum %d posts."
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/GetVoteContextUseCase.php:54
+#: modules/profile/src/Application/UseCases/GetVoteContextUseCase.php:56
 msgid "days"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/GetVoteContextUseCase.php:61
+#: modules/profile/src/Application/UseCases/GetVoteContextUseCase.php:63
 msgid "You can vote for single user just one time for 24 hours"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/GetVoteContextUseCase.php:67
+#: modules/profile/src/Application/UseCases/GetVoteContextUseCase.php:69
 #, php-format
 msgid "You have exceeded the limit of votes. New voices will be added %s"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/SendPasswordRecoveryUseCase.php:30
+#: modules/profile/src/Application/UseCases/SendPasswordRecoveryUseCase.php:33
 msgid "The required fields are not filled"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/SendPasswordRecoveryUseCase.php:39
+#: modules/profile/src/Application/UseCases/SendPasswordRecoveryUseCase.php:42
 msgid "Invalid Email address"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/SendPasswordRecoveryUseCase.php:43
+#: modules/profile/src/Application/UseCases/SendPasswordRecoveryUseCase.php:46
 msgid "Password can be recovered 1 time per day"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/SendPasswordRecoveryUseCase.php:58
+#: modules/profile/src/Application/UseCases/SendPasswordRecoveryUseCase.php:61
 msgid "Password recovery"
 msgstr ""
 
@@ -1008,6 +1017,26 @@ msgstr ""
 
 #: modules/profile/templates/public/karma.twig:54
 msgid "Reset Karma"
+msgstr ""
+
+#: modules/profile/templates/public/linked-accounts.twig:24
+msgid "Unavailable"
+msgstr ""
+
+#: modules/profile/templates/public/linked-accounts.twig:29
+msgid "Linked"
+msgstr ""
+
+#: modules/profile/templates/public/linked-accounts.twig:35
+msgid "Detach"
+msgstr ""
+
+#: modules/profile/templates/public/linked-accounts.twig:39
+msgid "No services are linked to your account"
+msgstr ""
+
+#: modules/profile/templates/public/linked-accounts.twig:44
+msgid "Link another service"
 msgstr ""
 
 #: modules/profile/templates/public/mail-settings.twig:19

@@ -289,6 +289,13 @@
       'Delete the record of a ban' => 'Удалять запись о блокировке',
       'Delete a karma entry' => 'Удалять запись кармы',
       'Roles of the account' => 'Роли аккаунта',
+      'Linked accounts' => 'Привязанные аккаунты',
+      'The service has been detached' => 'Сервис отвязан',
+      'Unavailable' => 'Недоступен',
+      'Linked' => 'Привязан',
+      'Detach' => 'Отвязать',
+      'No services are linked to your account' => 'К вашему аккаунту не привязано ни одного сервиса',
+      'Link another service' => 'Привязать другой сервис',
     ),
   ),
 );

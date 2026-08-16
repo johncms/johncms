@@ -58,6 +58,20 @@ return [
             ],
         ],
 
+        'external' => [
+            // Keys of the sign-in services, written here by /admin/auth/providers. The secrets
+            // belong in auth.local.php — that file is gitignored, auth.global.php is not.
+            //
+            // A provider is offered only when it is switched on AND holds both keys: a button
+            // leading to somebody else's error page helps nobody.
+            'providers' => [
+                'github' => ['client_id' => '', 'client_secret' => '', 'enabled' => false],
+                'google' => ['client_id' => '', 'client_secret' => '', 'enabled' => false],
+                'vk'     => ['client_id' => '', 'client_secret' => '', 'enabled' => false],
+                'yandex' => ['client_id' => '', 'client_secret' => '', 'enabled' => false],
+            ],
+        ],
+
         'password' => [
             // Any algorithm constant password_hash() accepts. PASSWORD_DEFAULT follows the PHP
             // release; pin it to PASSWORD_ARGON2ID where the extension is available.

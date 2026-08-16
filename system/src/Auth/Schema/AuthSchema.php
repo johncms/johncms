@@ -42,6 +42,8 @@ final class AuthSchema
 
     public const AUTH_EVENTS = 'auth_events';
 
+    public const USER_IDENTITIES = 'user_identities';
+
     public static function create(Builder $schema): void
     {
         self::createPasswordResetTokens($schema);
@@ -50,6 +52,39 @@ final class AuthSchema
         self::createRolePermissions($schema);
         self::createUserRoles($schema);
         self::createAuthEvents($schema);
+        self::createUserIdentities($schema);
+        self::widenIdentityAvatarUrl($schema);
+    }
+
+    /**
+     * Turns an existing `avatar_url` varchar into text.
+     *
+     * The column shipped as varchar(255) and VK immediately overflowed it, taking the whole
+     * sign-in down with a database error. New installations get the right type from
+     * createUserIdentities(); this is what carries the ones that already ran the upgrade.
+     */
+    private static function widenIdentityAvatarUrl(Builder $schema): void
+    {
+        if (! $schema->hasTable(self::USER_IDENTITIES)) {
+            return;
+        }
+
+        foreach ($schema->getColumns(self::USER_IDENTITIES) as $column) {
+            if ($column['name'] !== 'avatar_url') {
+                continue;
+            }
+
+            if (! str_contains(strtolower((string) $column['type']), 'text')) {
+                $schema->table(
+                    self::USER_IDENTITIES,
+                    static function (Blueprint $table): void {
+                        $table->text('avatar_url')->nullable()->change();
+                    }
+                );
+            }
+
+            return;
+        }
     }
 
     private static function createRoles(Builder $schema): void
@@ -154,6 +189,42 @@ final class AuthSchema
                 $table->integer('impersonator_id')->unsigned()->nullable();
                 // The administrator's own session, restored when they return to themselves.
                 $table->integer('parent_session_id')->unsigned()->nullable();
+            }
+        );
+    }
+
+    private static function createUserIdentities(Builder $schema): void
+    {
+        if ($schema->hasTable(self::USER_IDENTITIES)) {
+            return;
+        }
+
+        $schema->create(
+            self::USER_IDENTITIES,
+            static function (Blueprint $table): void {
+                $table->increments('id');
+                $table->integer('user_id')->unsigned()->index();
+                // The key of the provider as its class spells it. Rows of a provider whose module
+                // has been removed are kept: the account may be linked to it again later, and a
+                // key nothing knows must not be a reason to lose the link.
+                $table->string('provider', 32);
+                // A string rather than an integer: providers disagree about the shape of their
+                // identifiers, and some of them are not numbers at all.
+                $table->string('provider_user_id', 191);
+                // A snapshot taken when the link was made, for reference only. What the provider
+                // says today is asked again on every sign-in.
+                $table->string('email', 191)->nullable();
+                $table->string('nickname', 191)->nullable();
+                // Text, not a varchar: the avatar of a VK account arrives as a signed URL with a
+                // list of crops in the query string and runs to several hundred characters, and a
+                // truncated one is not a picture — it is a broken link.
+                $table->text('avatar_url')->nullable();
+                $table->integer('linked_at')->unsigned();
+                $table->integer('last_login_at')->unsigned()->nullable();
+                // One account of the provider belongs to one user of the site, and one user has
+                // at most one account per provider.
+                $table->unique(['provider', 'provider_user_id']);
+                $table->unique(['user_id', 'provider']);
             }
         );
     }

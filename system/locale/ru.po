@@ -1079,3 +1079,54 @@ msgstr "Вы просматриваете сайт от имени пользо�
 
 msgid "Return to my account"
 msgstr "Вернуться в свою учётную запись"
+
+msgid "The sign-in was cancelled"
+msgstr "Вход отменён"
+
+msgid "The service did not return a sign-in code"
+msgstr "Сервис не вернул код авторизации"
+
+msgid "The service did not return an access token"
+msgstr "Сервис не вернул токен доступа"
+
+msgid "The service is not responding, please try again later"
+msgstr "Сервис не отвечает, попробуйте позже"
+
+msgid "The service refused the sign-in"
+msgstr "Сервис отклонил авторизацию"
+
+msgid "This email address is already registered. Sign in with your password to link the account."
+msgstr "Этот адрес уже зарегистрирован. Войдите по паролю, чтобы привязать аккаунт."
+
+msgid "The sign-in attempt has expired, please try again"
+msgstr "Время на вход истекло, попробуйте ещё раз"
+
+msgid "The sign-in attempt could not be verified, please try again"
+msgstr "Не удалось проверить запрос на вход, попробуйте ещё раз"
+
+msgid "The service did not return an account identifier"
+msgstr "Сервис не вернул идентификатор аккаунта"
+
+msgid "This is the only way to sign in to the account. Set a password first."
+msgstr "Это единственный способ входа в аккаунт. Сначала задайте пароль."
+
+msgid "This sign-in service is not available"
+msgstr "Этот сервис входа недоступен"
+
+msgid "Your account is awaiting approval"
+msgstr "Ваш аккаунт ожидает подтверждения администратором"
+
+msgid "Registration is closed on this site"
+msgstr "Регистрация на сайте закрыта"
+
+msgid "Finish signing up"
+msgstr "Завершение регистрации"
+
+msgid "Or sign in with"
+msgstr "Или войдите через"
+
+msgid "Almost done. Choose a username to finish creating your account."
+msgstr "Почти готово. Выберите имя пользователя, чтобы завершить создание аккаунта."
+
+msgid "E-mail"
+msgstr "E-mail"

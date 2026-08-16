@@ -468,6 +468,12 @@
       'User' => 'Пользователь',
       'Performed by' => 'Выполнил',
       'Browse as this user' => 'Войти под этим пользователем',
+      'Sign-in services' => 'Сервисы входа',
+      '%d users sign in through this service, %d of them have no other way in.' => 'Через этот сервис входят %d пользователей, у %d из них нет другого способа входа.',
+      'Client ID' => 'Client ID',
+      'Client secret' => 'Client secret',
+      'Saved. Fill in to replace.' => 'Сохранён. Заполните, чтобы заменить.',
+      'Callback URL' => 'Адрес возврата (Callback URL)',
     ),
   ),
 );

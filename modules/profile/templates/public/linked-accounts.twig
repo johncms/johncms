@@ -1,0 +1,51 @@
+{#
+    External services the account can be signed in with.
+
+    @var linked          LinkedAccountDTO[]
+    @var available       array Services not linked yet: key, label.
+    @var form_action     string
+    @var success_message string
+    @var error_message   string
+#}
+{% extends '@theme/layouts/default.twig' %}
+
+{% block content %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success', alert: success_message} only %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: error_message} only %}
+
+    <div class="list-group mb-3">
+        {% for item in linked %}
+            <div class="list-group-item d-flex justify-content-between align-items-start">
+                <div>
+                    <div>
+                        {{ item.label }}
+                        {% if not item.available %}
+                            {# The module providing it is gone; the link stays so it can be detached. #}
+                            <span class="badge text-bg-secondary">{{ __('Unavailable') }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="text-muted small">
+                        {% if item.nickname %}{{ item.nickname }} · {% endif %}
+                        {{ __('Linked') }}: {{ item.linkedAt|display_date }}
+                    </div>
+                </div>
+                <form method="post" action="{{ form_action }}">
+                    <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                    <input type="hidden" name="provider" value="{{ item.provider }}">
+                    <button type="submit" class="btn btn-sm btn-outline-danger">{{ __('Detach') }}</button>
+                </form>
+            </div>
+        {% else %}
+            {% include '@theme/components/alert.twig' with {alert_type: 'alert-info', alert: __('No services are linked to your account')} only %}
+        {% endfor %}
+    </div>
+
+    {% if available is not empty %}
+        <div class="text-muted small mb-2">{{ __('Link another service') }}</div>
+        <div class="d-flex flex-wrap gap-2">
+            {% for provider in available %}
+                <a href="/auth/{{ provider.key }}" class="btn btn-outline-secondary btn-sm">{{ provider.label }}</a>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}

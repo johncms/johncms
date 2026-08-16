@@ -1,0 +1,61 @@
+{#
+    Application keys of the sign-in services.
+
+    @var array  providers       Rows: key, label, enabled, clientId, hasSecret, callbackUrl,
+                                users, withoutAlternative.
+    @var string form_action
+    @var string success_message
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success shadow border-0', alert: success_message} only %}
+
+    <form method="post" action="{{ form_action }}">
+        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+
+        {% for provider in providers %}
+            <div class="border rounded p-3 mb-3">
+                <h5>{{ provider.label }}</h5>
+
+                <div class="form-check mb-3">
+                    <input type="checkbox" class="form-check-input"
+                           id="enabled_{{ provider.key }}"
+                           name="providers[{{ provider.key }}][enabled]" value="1"
+                           {{ provider.enabled ? 'checked' : '' }}>
+                    <label class="form-check-label" for="enabled_{{ provider.key }}">{{ __('Enabled') }}</label>
+                </div>
+
+                {% if provider.enabled and provider.withoutAlternative > 0 %}
+                    {# The number is the point of this warning: switching the service off is the
+                       simplest way to lock people out of their own accounts without noticing. #}
+                    <div class="alert alert-warning py-2">
+                        {{ __('%d users sign in through this service, %d of them have no other way in.')|format(provider.users, provider.withoutAlternative) }}
+                    </div>
+                {% endif %}
+
+                <div class="form-group">
+                    <label for="client_id_{{ provider.key }}">{{ __('Client ID') }}</label>
+                    <input type="text" class="form-control" id="client_id_{{ provider.key }}"
+                           name="providers[{{ provider.key }}][client_id]" value="{{ provider.clientId }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="client_secret_{{ provider.key }}">{{ __('Client secret') }}</label>
+                    <input type="password" class="form-control" id="client_secret_{{ provider.key }}"
+                           name="providers[{{ provider.key }}][client_secret]" value=""
+                           placeholder="{{ provider.hasSecret ? __('Saved. Fill in to replace.') : '' }}"
+                           autocomplete="new-password">
+                </div>
+
+                <div class="small text-muted mt-2">
+                    {{ __('Callback URL') }}: <code>{{ provider.callbackUrl }}</code>
+                </div>
+            </div>
+        {% else %}
+            {% include '@theme/components/alert.twig' with {alert_type: 'alert-info', alert: __('The list is empty')} only %}
+        {% endfor %}
+
+        <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
+    </form>
+{% endblock %}

@@ -2136,3 +2136,21 @@ msgstr "Выполнил"
 
 msgid "Browse as this user"
 msgstr "Войти под этим пользователем"
+
+msgid "Sign-in services"
+msgstr "Сервисы входа"
+
+msgid "%d users sign in through this service, %d of them have no other way in."
+msgstr "Через этот сервис входят %d пользователей, у %d из них нет другого способа входа."
+
+msgid "Client ID"
+msgstr "Client ID"
+
+msgid "Client secret"
+msgstr "Client secret"
+
+msgid "Saved. Fill in to replace."
+msgstr "Сохранён. Заполните, чтобы заменить."
+
+msgid "Callback URL"
+msgstr "Адрес возврата (Callback URL)"
