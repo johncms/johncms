@@ -22,7 +22,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Johncms\Casts\Ip;
 use Johncms\Casts\TimeToDate;
 use Johncms\Media\MediaEmbed;
-use Johncms\Security\HTMLPurifier;
+use Johncms\Security\HtmlSanitizerInterface;
 use Johncms\Users\User;
 use Johncms\Utils\DateFormatterInterface;
 use Simba77\EmbedMedia\Embed;
@@ -128,7 +128,7 @@ class ForumMessage extends Model
      */
     protected $current_user;
 
-    protected \HTMLPurifier $purifier;
+    protected HtmlSanitizerInterface $sanitizer;
     protected Embed $media;
 
     protected DateFormatterInterface $dateFormatter;
@@ -136,7 +136,7 @@ class ForumMessage extends Model
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->purifier = di(HTMLPurifier::class);
+        $this->sanitizer = di(HtmlSanitizerInterface::class);
         $this->current_user = di(CurrentUser::class)->user();
         $this->dateFormatter = di(DateFormatterInterface::class);
         $this->media = di(MediaEmbed::class);

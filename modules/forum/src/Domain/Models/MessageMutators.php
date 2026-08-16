@@ -138,7 +138,7 @@ trait MessageMutators
      */
     public function getPostTextAttribute(): Markup
     {
-        $text = $this->purifier->purify($this->text);
+        $text = $this->sanitizer->sanitize($this->text);
         $text = $this->media->embedMedia($text);
 
         $authorIsStaff = di(StaffTitles::class)->isStaff((int) $this->user_id);

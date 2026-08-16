@@ -21,7 +21,7 @@ use Johncms\Auth\CurrentUser;
 use Johncms\Container\PSRContainerFactory;
 use Johncms\Media\MediaEmbed;
 use Johncms\Security\AntifloodCheckerInterface;
-use Johncms\Security\HTMLPurifier;
+use Johncms\Security\HtmlSanitizerInterface;
 use Johncms\Smilies\SmiliesRendererInterface;
 use Johncms\Http\Session;
 use Johncms\Http\Environment;
@@ -68,8 +68,7 @@ class Comments
 
     private IgnoreListCheckerInterface $ignoreListChecker;
 
-    /** @var HTMLPurifier */
-    private $purifier;
+    private HtmlSanitizerInterface $sanitizer;
 
     /** @var MediaEmbed */
     private $embed;
@@ -149,7 +148,7 @@ class Comments
         $this->staffTitles = $container->get(StaffTitles::class);
         $this->view = di(RendererInterface::class);
         $this->nav_chain = di(NavChain::class);
-        $this->purifier = di(HTMLPurifier::class);
+        $this->sanitizer = di(HtmlSanitizerInterface::class);
         $this->embed = di(MediaEmbed::class);
         $this->session = $container->get(Session::class);
 
@@ -234,7 +233,7 @@ class Comments
                                 '
                                 )->execute(
                                     [
-                                        $this->purifier->purify($message['text']),
+                                        $this->sanitizer->sanitize($message['text']),
                                         serialize($attributes),
                                         $this->item,
                                     ]
@@ -257,7 +256,7 @@ class Comments
                             $data = [];
                             $text = '<a href="' . $homeurl . '/profile/' . $res['user_id'] . '"><b>' . $attributes['author_name'] . '</b></a>' .
                                 ' (' . $this->dateFormatter->format($res['time']) . ')<br />' .
-                                $this->purifier->purify($res['text']);
+                                $this->sanitizer->sanitize($res['text']);
                             $reply = $res['reply'];
                             echo $this->view->render(
                                 '@theme/pages/comments-reply.twig',
@@ -328,7 +327,7 @@ class Comments
                                 '
                                 )->execute(
                                     [
-                                        $this->purifier->purify($message['text'] ?? ''),
+                                        $this->sanitizer->sanitize($message['text'] ?? ''),
                                         serialize($attributes),
                                         $this->item,
                                     ]
@@ -350,7 +349,7 @@ class Comments
                         } else {
                             $author = '<a href="' . $homeurl . '/profile/' . $res['user_id'] . '"><b>' . $attributes['author_name'] . '</b></a>';
                             $author .= ' (' . $this->dateFormatter->format($res['time']) . ')<br />';
-                            $author .= $this->purifier->purify($res['text']);
+                            $author .= $this->sanitizer->sanitize($res['text']);
                             echo $this->view->render(
                                 '@theme/pages/comments-reply.twig',
                                 [
@@ -480,7 +479,7 @@ class Comments
 
                         $res['has_edit'] = ($this->access_edit || $this->access_delete);
 
-                        $text = $this->purifier->purify($res['text']);
+                        $text = $this->sanitizer->sanitize($res['text']);
                         $text = $this->embed->embedMedia($text);
                         $text = $this->smiliesRenderer->render($text, $this->staffTitles->isStaff((int) $res['user_id']));
 
@@ -495,7 +494,7 @@ class Comments
 
                         $res['reply_text'] = '';
                         if (! empty($res['reply'])) {
-                            $reply = $this->purifier->purify($res['reply']);
+                            $reply = $this->sanitizer->sanitize($res['reply']);
                             $reply = $this->embed->embedMedia($reply);
                             $reply = $this->smiliesRenderer->render($reply, $this->replyIsOfStaff($attributes));
                             $res['reply_text'] = new Markup($reply, 'UTF-8');
@@ -578,7 +577,7 @@ class Comments
             [
                 (int) ($this->sub_id),
                 $this->systemUser->id,
-                $this->purifier->purify($message),
+                $this->sanitizer->sanitize($message),
                 time(),
                 serialize($attributes),
             ]

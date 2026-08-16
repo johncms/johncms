@@ -12,8 +12,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Johncms\Casts\FormattedDate;
 use Johncms\Media\MediaEmbed;
+use Johncms\Security\HtmlSanitizerInterface;
 use Johncms\Modules\News\Application\Section;
-use Johncms\Modules\News\Application\Utils\Helpers;
 use Johncms\Users\User;
 
 /**
@@ -96,11 +96,14 @@ class NewsArticle extends Model
     /** @var MediaEmbed|mixed */
     protected $media;
 
+    protected HtmlSanitizerInterface $sanitizer;
+
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
         $this->perPage = di(CurrentUser::class)->user()->config->kmess;
         $this->media = di(MediaEmbed::class);
+        $this->sanitizer = di(HtmlSanitizerInterface::class);
     }
 
     /**
@@ -196,7 +199,7 @@ class NewsArticle extends Model
 
     private function markup(?string $raw): ?Markup
     {
-        $text = $this->media->embedMedia(Helpers::purifyHtml((string) $raw));
+        $text = $this->media->embedMedia($this->sanitizer->sanitize((string) $raw));
 
         return $text === '' ? null : new Markup($text, 'UTF-8');
     }

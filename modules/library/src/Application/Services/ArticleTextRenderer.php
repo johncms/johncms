@@ -7,7 +7,7 @@ namespace Johncms\Modules\Library\Application\Services;
 use DOMDocument;
 use DOMElement;
 use Johncms\Media\MediaEmbed;
-use Johncms\Security\HTMLPurifier;
+use Johncms\Security\HtmlSanitizerInterface;
 use Johncms\Smilies\SmiliesRendererInterface;
 use Simba77\EmbedMedia\Embed;
 use Twig\Markup;
@@ -16,13 +16,13 @@ final class ArticleTextRenderer
 {
     private const PAGE_SIZE = 7000;
 
-    private \HTMLPurifier $purifier;
+    private HtmlSanitizerInterface $sanitizer;
     private Embed $media;
     private SmiliesRendererInterface $smiliesRenderer;
 
     public function __construct()
     {
-        $this->purifier = di(HTMLPurifier::class);
+        $this->sanitizer = di(HtmlSanitizerInterface::class);
         $this->media = di(MediaEmbed::class);
         $this->smiliesRenderer = di(SmiliesRendererInterface::class);
     }
@@ -89,11 +89,11 @@ final class ArticleTextRenderer
 
     /**
      * Sanitizes and prepares a page fragment for output. The result is markup by contract: it has
-     * been through the purifier, so a template prints it as it is.
+     * been through the sanitizer, so a template prints it as it is.
      */
     public function renderPage(string $pageHtml, bool $isAdmin): Markup
     {
-        $text = $this->purifier->purify($pageHtml);
+        $text = $this->sanitizer->sanitize($pageHtml);
         $text = $this->media->embedMedia($text);
 
         return new Markup($this->smiliesRenderer->render($text, $isAdmin), 'UTF-8');

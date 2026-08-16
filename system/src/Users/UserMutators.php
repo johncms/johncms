@@ -14,7 +14,7 @@ namespace Johncms\Users;
 
 use Carbon\Carbon;
 use Johncms\Auth\Authorization\StaffTitles;
-use Johncms\Security\HTMLPurifier;
+use Johncms\Security\HtmlSanitizerInterface;
 use Johncms\Smilies\SmiliesRendererInterface;
 use Johncms\System\i18n\Translator;
 use Johncms\System\Users\UserConfig;
@@ -170,9 +170,8 @@ trait UserMutators
      */
     public function getFormattedAboutAttribute(): ?Markup
     {
-        /** @var \HTMLPurifier $purifier */
-        $purifier = di(HTMLPurifier::class);
-        $about = di(SmiliesRendererInterface::class)->render($purifier->purify((string) $this->about));
+        $sanitizer = di(HtmlSanitizerInterface::class);
+        $about = di(SmiliesRendererInterface::class)->render($sanitizer->sanitize((string) $this->about));
 
         return $about === '' ? null : new Markup($about, 'UTF-8');
     }
@@ -182,9 +181,8 @@ trait UserMutators
      */
     public function getWebsiteAttribute(): ?Markup
     {
-        /** @var \HTMLPurifier $purifier */
-        $purifier = di(HTMLPurifier::class);
-        $website = $purifier->purify((string) $this->www);
+        $sanitizer = di(HtmlSanitizerInterface::class);
+        $website = $sanitizer->sanitize((string) $this->www);
 
         return $website === '' ? null : new Markup($website, 'UTF-8');
     }

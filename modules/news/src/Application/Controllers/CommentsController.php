@@ -20,7 +20,7 @@ use Johncms\Media\MediaEmbed;
 use Johncms\Modules\News\Application\Services\NewsPermissions;
 use Johncms\Modules\News\Domain\Models\NewsArticle;
 use Johncms\Modules\News\Domain\Models\NewsComments;
-use Johncms\Security\HTMLPurifier;
+use Johncms\Security\HtmlSanitizerInterface;
 use Johncms\Smilies\SmiliesRendererInterface;
 use Johncms\Users\User;
 use Johncms\View\Twig\Runtime\AssetRuntime;
@@ -62,7 +62,7 @@ final readonly class CommentsController
             ->limit($pagination->getPerPage())
             ->get();
 
-        $purifier = di(HTMLPurifier::class);
+        $sanitizer = di(HtmlSanitizerInterface::class);
         $embed = di(MediaEmbed::class);
 
         $total = $pagination->getTotal();
@@ -75,7 +75,7 @@ final readonly class CommentsController
         $array = [
             'current_page'   => $currentPage,
             'data'           => $comments->map(
-                static function (NewsComments $comment) use ($assets, $smiliesRenderer, $current_user, $purifier, $embed, $canModerate, $staffTitles) {
+                static function (NewsComments $comment) use ($assets, $smiliesRenderer, $current_user, $sanitizer, $embed, $canModerate, $staffTitles) {
                     $user = $comment->user;
                     $user_data = [];
                     if ($user) {
@@ -90,7 +90,7 @@ final readonly class CommentsController
                         ];
                     }
 
-                    $text = $purifier->purify($comment->text);
+                    $text = $sanitizer->sanitize($comment->text);
                     $text = $embed->embedMedia($text);
                     $text = $smiliesRenderer->render($text, $staffTitles->isStaff((int) $comment->getAttribute('user_id')));
 

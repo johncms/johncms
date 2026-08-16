@@ -7,7 +7,6 @@ namespace Johncms\Modules\News\Application\Utils;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Johncms\Modules\News\Domain\Models\NewsSection;
 use Johncms\NavChain;
-use Johncms\Security\HTMLPurifier;
 
 class Helpers
 {
@@ -55,12 +54,5 @@ class Helpers
         }
 
         return $path;
-    }
-
-    public static function purifyHtml($html): string
-    {
-        /** @var \HTMLPurifier $purifier */
-        $purifier = di(HTMLPurifier::class);
-        return $purifier->purify($html);
     }
 }

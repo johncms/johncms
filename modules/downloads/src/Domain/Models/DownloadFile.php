@@ -7,7 +7,7 @@ namespace Johncms\Modules\Downloads\Domain\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Johncms\Media\MediaEmbed;
-use Johncms\Security\HTMLPurifier;
+use Johncms\Security\HtmlSanitizerInterface;
 use Johncms\Smilies\SmiliesRendererInterface;
 use Simba77\EmbedMedia\Embed;
 use Twig\Markup;
@@ -31,14 +31,14 @@ final class DownloadFile extends Model
         'desc',
     ];
 
-    protected \HTMLPurifier $purifier;
+    protected HtmlSanitizerInterface $sanitizer;
     protected Embed $media;
     protected SmiliesRendererInterface $smiliesRenderer;
 
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->purifier = di(HTMLPurifier::class);
+        $this->sanitizer = di(HtmlSanitizerInterface::class);
         $this->media = di(MediaEmbed::class);
         $this->smiliesRenderer = di(SmiliesRendererInterface::class);
     }
@@ -54,7 +54,7 @@ final class DownloadFile extends Model
      */
     public function getAboutHtmlAttribute(): ?Markup
     {
-        $text = $this->purifier->purify((string) $this->about);
+        $text = $this->sanitizer->sanitize((string) $this->about);
         $text = $this->smiliesRenderer->render($this->media->embedMedia($text));
 
         return $text === '' ? null : new Markup($text, 'UTF-8');
