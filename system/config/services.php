@@ -59,7 +59,6 @@ use Johncms\Security\AntifloodChecker;
 use Johncms\Security\FileRequestRateLog;
 use Johncms\Security\RequestRateLogInterface;
 use Johncms\Security\AntifloodCheckerInterface;
-use Johncms\Security\HTMLPurifier;
 use Johncms\Security\HtmlPurifierFactory;
 use Johncms\Security\HtmlSanitizer;
 use Johncms\Security\HtmlSanitizerInterface;
@@ -302,9 +301,6 @@ return static function (ContainerConfigurator $container): void {
     $services->set(MailFactory::class)->factory([MailFactory::class, 'create']);
     $services->set(HtmlPurifierFactory::class);
     $services->set(HtmlSanitizerInterface::class, HtmlSanitizer::class)->autowire();
-    // Deprecated: the raw purifier, for the callers that have not been moved to the sanitizer yet.
-    $services->set(HTMLPurifier::class)->factory([HTMLPurifier::class, 'create']);
-    $services->set(\HTMLPurifier::class, \HTMLPurifier::class)->factory([HTMLPurifier::class, 'create']);
 
     $services->set(RuleCompiler::class)
         ->arg('$factories', tagged_iterator('johncms.validator.rule_factory'));
