@@ -46,6 +46,7 @@ use Johncms\Files\Filesystem;
 use Johncms\Files\FileStorage;
 use Johncms\ImageManagerFactory;
 use Johncms\Logs\LoggerFactory;
+use Johncms\Mail\MailDsnResolver;
 use Johncms\Mail\MailFactory;
 use Johncms\Media\MediaEmbed;
 use Johncms\NavChain;
@@ -303,6 +304,7 @@ return static function (ContainerConfigurator $container): void {
     // The counters are built by a factory under a string id; the alias is what lets a service or
     // a controller ask for them by type.
     $services->alias(Counters::class, 'counters');
+    $services->set(MailDsnResolver::class);
     $services->set(MailFactory::class)->factory([MailFactory::class, 'create']);
     $services->set(HtmlPurifierFactory::class);
     // A module declares an HTML policy of its own by registering an HtmlPolicyProviderInterface;
