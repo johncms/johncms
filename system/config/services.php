@@ -48,6 +48,9 @@ use Johncms\ImageManagerFactory;
 use Johncms\Logs\LoggerFactory;
 use Johncms\Mail\MailDsnResolver;
 use Johncms\Mail\MailFactory;
+use Johncms\Mail\Queue\EloquentEmailQueue;
+use Johncms\Mail\Queue\EmailQueueInterface;
+use Johncms\Mail\Queue\MailQueueSettings;
 use Johncms\Media\MediaEmbed;
 use Johncms\NavChain;
 use Johncms\Router\RouteCollectorFactory;
@@ -306,6 +309,9 @@ return static function (ContainerConfigurator $container): void {
     $services->alias(Counters::class, 'counters');
     $services->set(MailDsnResolver::class);
     $services->set(MailFactory::class)->factory([MailFactory::class, 'create']);
+    // Reads the `queue` section of the mail configuration: an array the container cannot autowire.
+    $services->set(MailQueueSettings::class)->factory([MailQueueSettings::class, 'fromConfig']);
+    $services->set(EmailQueueInterface::class, EloquentEmailQueue::class)->autowire();
     $services->set(HtmlPurifierFactory::class);
     // A module declares an HTML policy of its own by registering an HtmlPolicyProviderInterface;
     // the tag is put on it by PSRContainerFactory, so its services.php needs nothing special.

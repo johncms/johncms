@@ -12,86 +12,125 @@ declare(strict_types=1);
 
 namespace Johncms\Mail;
 
-use Carbon\Carbon;
+use Johncms\Mail\Queue\EmailQueueInterface;
+use Johncms\Mail\Queue\MailQueueRunDTO;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\Mime\Address;
 use Throwable;
 
-class EmailSender
+/**
+ * Delivers one batch of the mail queue.
+ *
+ * Two kinds of failure are told apart, because treating them alike loses mail either way. A
+ * transport that is down is temporary: the message keeps its place and is tried again later. A
+ * message that cannot be built at all — no recipient, an address no server would accept, a
+ * template that does not render — will fail identically on every future run, so it is given up on
+ * at once instead of holding up the queue forever.
+ */
+final readonly class EmailSender
 {
-    public static function send(int $message_count = 5): void
+    public function __construct(
+        private EmailQueueInterface $queue,
+        private MailRenderer $renderer,
+        private MailFactory $mailFactory,
+        private LoggerInterface $logger,
+    ) {
+    }
+
+    public function send(int $messageCount = 5): MailQueueRunDTO
     {
-        /** @var MailRenderer $renderer */
-        $renderer = di(MailRenderer::class);
+        $sent = 0;
+        $retrying = 0;
+        $failed = 0;
 
-        /** @var MailFactory $mailFactory */
-        $mailFactory = di(MailFactory::class);
+        foreach ($this->queue->claim($messageCount) as $message) {
+            $fields = is_array($message->fields) ? $message->fields : [];
 
-        /** @var LoggerInterface $logger */
-        $logger = di(LoggerInterface::class);
-
-        $email = (new EmailMessage())->unsent()->orderBy('priority')->limit($message_count)->get();
-
-        foreach ($email as $item) {
-            /** @var EmailMessage $item */
-            $fields = $item->fields;
-
-            if (empty($fields['email_to']) || empty($item->template)) {
-                $item->update(['sent_at' => Carbon::now()]);
+            $recipient = trim((string) ($fields['email_to'] ?? ''));
+            if ($recipient === '' || $message->template === '') {
+                $this->giveUp($message, 'The message has no recipient or no template.');
+                $failed++;
                 continue;
             }
 
-            // Per-message isolation. Render failures used to be swallowed by Render itself and
-            // the exception message was mailed out as the message body; now they propagate, and
-            // without this guard one unrenderable row would abort the batch on every run and
-            // block the whole queue for good. The row is marked as handled — the same way an
-            // undeliverable row is treated above — so a template that cannot render is not
-            // retried forever.
             try {
-                $message_body = $renderer->render(self::template($item->template), $item->fields, (string) $item->locale);
+                $email = $this->mailFactory->createEmail();
+                $email->to($this->address($recipient, (string) ($fields['name_to'] ?? '')));
+
+                $subject = trim((string) ($fields['subject'] ?? ''));
+                if ($subject !== '') {
+                    $email->subject($subject);
+                }
+
+                $email->html(
+                    $this->renderer->render(self::template($message->template), $fields, (string) $message->locale)
+                );
             } catch (Throwable $exception) {
-                $logger->error(
-                    'Unable to render the email template',
+                // Building the message is deterministic: whatever went wrong here — an address no
+                // server would accept (RfcComplianceException), a template that does not render —
+                // goes wrong the same way on every future run.
+                $this->giveUp($message, $exception->getMessage(), $exception);
+                $failed++;
+                continue;
+            }
+
+            try {
+                $this->mailFactory->send($email);
+            } catch (Throwable $exception) {
+                // A transport that refuses the message right now (TransportExceptionInterface) may
+                // well accept it later, so the message keeps its place until the attempts run out.
+                $willRetry = $this->queue->markAttemptFailed($message, $exception->getMessage());
+
+                $this->logger->error(
+                    sprintf('[EmailSender] Failed to send email to %s', $recipient),
                     [
-                        'template'  => $item->template,
-                        'message_id' => $item->id,
-                        'exception' => $exception,
+                        'message_id' => $message->id,
+                        'attempts'   => $message->attempts + 1,
+                        'will_retry' => $willRetry,
+                        'exception'  => $exception,
                     ]
                 );
-                $item->update(['sent_at' => Carbon::now()]);
+
+                $willRetry ? $retrying++ : $failed++;
                 continue;
             }
 
-            // In some cases, using the @ symbol in the sender's name resulted in an error.
-            if (str_contains($fields['name_to'], '@')) {
-                $fields['name_to'] = null;
-            }
-
-            $email = $mailFactory->createEmail();
-
-            if ($fields['name_to']) {
-                $email->to(sprintf('%s <%s>', $fields['name_to'], $fields['email_to']));
-            } else {
-                $email->to($fields['email_to']);
-            }
-
-            if (! empty($fields['subject'])) {
-                $email->subject($fields['subject']);
-            }
-
-            $email->html($message_body);
-
-            try {
-                $mailFactory->send($email);
-            } catch (TransportExceptionInterface $e) {
-                $logger->error(
-                    sprintf('[EmailSender] Failed to send email to %s', $fields['email_to']),
-                    ['exception' => $e]
-                );
-            }
-
-            $item->update(['sent_at' => Carbon::now()]);
+            $this->queue->markSent($message);
+            $sent++;
         }
+
+        return new MailQueueRunDTO(sent: $sent, retrying: $retrying, failed: $failed);
+    }
+
+    /**
+     * An address the mailer will accept, with the display name when there is a usable one.
+     *
+     * The name is dropped when it holds an `@`: such a name used to break sending outright, and
+     * a message that arrives without a display name is better than one that does not arrive.
+     */
+    private function address(string $email, string $name): Address
+    {
+        $name = trim($name);
+        if ($name === '' || str_contains($name, '@')) {
+            return new Address($email);
+        }
+
+        return new Address($email, $name);
+    }
+
+    private function giveUp(EmailMessage $message, string $error, ?Throwable $exception = null): void
+    {
+        $this->queue->markFailed($message, $error);
+
+        $this->logger->error(
+            '[EmailSender] Gave up on an email that cannot be built',
+            [
+                'message_id' => $message->id,
+                'template'   => $message->template,
+                'reason'     => $error,
+                'exception'  => $exception,
+            ]
+        );
     }
 
     /**

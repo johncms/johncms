@@ -20,6 +20,11 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 #[AsScheduledTask(expression: '* * * * *')]
 final class CronSendEmailCommand extends Command
 {
+    public function __construct(private readonly EmailSender $sender)
+    {
+        parent::__construct();
+    }
+
     protected function configure(): void
     {
         $this->addOption(
@@ -39,8 +44,18 @@ final class CronSendEmailCommand extends Command
             return self::FAILURE;
         }
 
-        EmailSender::send($limit);
-        $io->success(sprintf('Processed email queue with limit %d.', $limit));
+        $result = $this->sender->send($limit);
+
+        $io->success(
+            sprintf(
+                'Processed %d of at most %d queued emails: %d sent, %d to be tried again, %d given up on.',
+                $result->processed(),
+                $limit,
+                $result->sent,
+                $result->retrying,
+                $result->failed
+            )
+        );
 
         return self::SUCCESS;
     }

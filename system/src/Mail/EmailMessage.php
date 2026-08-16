@@ -26,6 +26,12 @@ use Johncms\Casts\DateHuman;
  * @property string $template - Template path
  * @property array $fields - Fields
  * @property array $sent_at - Date the message was sent.
+ * @property int $attempts - Number of delivery attempts made
+ * @property string|null $last_error - Why the last attempt failed
+ * @property array $available_at - The moment before which the message is not tried again
+ * @property array $failed_at - Date the message was given up on
+ * @property array $locked_at - The moment a worker claimed the message
+ * @property string|null $locked_by - The worker holding the claim
  *
  * @property array $created_at - Creation date
  * @property array $updated_at - Date of change
@@ -34,6 +40,8 @@ use Johncms\Casts\DateHuman;
  */
 class EmailMessage extends Model
 {
+    // The date casts render a human phrase ("2 minutes ago") for display. The columns driving the
+    // queue are deliberately left raw: they are compared and written, never shown.
     protected $casts = [
         'fields'     => 'array',
         'sent_at'    => DateHuman::class,

@@ -15,6 +15,7 @@ namespace Install;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Schema\Blueprint;
 use Johncms\Auth\Schema\AuthSchema;
+use Johncms\Mail\Schema\MailSchema;
 
 class Database
 {
@@ -220,20 +221,6 @@ class Database
             }
         );
 
-        // Email
-        $schema->create(
-            'email_messages',
-            static function (Blueprint $table) {
-                $table->bigIncrements('id');
-                $table->integer('priority')->nullable()->comment('Priority of sending the message');
-                $table->string('locale', 8)->comment('The language used for displaying the message');
-                $table->string('template')->comment('Template name');
-                $table->text('fields')->nullable()->comment('Event fields');
-                $table->timestamp('sent_at')->nullable()->comment('The time when the message was sent');
-                $table->timestamps();
-            }
-        );
-
         $schema->create(
             'files',
             static function (Blueprint $table) {
@@ -249,9 +236,10 @@ class Database
             }
         );
 
-        // The tables of the authentication layer are defined once, where the upgrade command
-        // and the tests take them from as well: a copy here would drift from what an already
-        // installed site gets.
+        // The tables of the authentication layer and of the mail queue are defined once, where
+        // the upgrade commands and the tests take them from as well: a copy here would drift from
+        // what an already installed site gets.
         AuthSchema::create($schema);
+        MailSchema::create($schema);
     }
 }

@@ -49,5 +49,24 @@ return [
                 'encryption' => 'ssl',
             ],
         ],
+
+        // The mail queue: messages are queued by the site and delivered by the mail:send-pending
+        // task, so that a slow or unreachable mail server never holds up a page.
+        'queue'     => [
+            // How many times delivery is tried before the message is given up on.
+            'max_attempts'   => 3,
+
+            // Seconds to wait before the 2nd, 3rd, ... attempt. The last value is reused for
+            // every further attempt.
+            'retry_delays'   => [60, 300, 900],
+
+            // Seconds after which a message claimed by a worker that never finished — a process
+            // killed mid-send — is handed to the next run.
+            'lock_timeout'   => 900,
+
+            // How long a delivered message is kept before mail:cleanup removes it. 0 keeps them
+            // forever. Messages that could not be delivered are never removed automatically.
+            'keep_sent_days' => 30,
+        ],
     ],
 ];

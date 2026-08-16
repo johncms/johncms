@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Johncms\Mail;
 
 use Gettext\TranslatorFunctions;
+use Gettext\TranslatorInterface;
 use Johncms\System\i18n\Translator;
 use Twig\Environment;
+use TypeError;
 
 /**
  * Renders the body of one email.
@@ -26,7 +28,7 @@ final readonly class MailRenderer
      */
     public function render(string $template, array $data, string $locale): string
     {
-        $previous = TranslatorFunctions::getTranslator();
+        $previous = self::currentTranslator();
 
         $translator = new Translator();
         $translator->setLocale($locale);
@@ -36,7 +38,25 @@ final readonly class MailRenderer
         try {
             return $this->twig->render($template, $data + ['locale' => $locale]);
         } finally {
-            TranslatorFunctions::register($previous);
+            if ($previous !== null) {
+                TranslatorFunctions::register($previous);
+            }
+        }
+    }
+
+    /**
+     * The translator in force, or null when nothing registered one yet.
+     *
+     * The library has no way to ask: its getter is typed against the interface and raises a
+     * TypeError on the null it holds until the first register(). A process that renders a message
+     * without having gone through the usual bootstrap — a worker, a test — must not die of that.
+     */
+    private static function currentTranslator(): ?TranslatorInterface
+    {
+        try {
+            return TranslatorFunctions::getTranslator();
+        } catch (TypeError) {
+            return null;
         }
     }
 }
