@@ -28,6 +28,7 @@
 
 {% macro reply_form(reply_url, quick_reply, token, css_class) %}
     <form name="new_message" action="{{ reply_url }}" method="post" class="{{ css_class }}">
+        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
         {% if quick_reply %}
             <input type="hidden" name="token" value="{{ token }}"/>
             <div class="form-group">
@@ -93,6 +94,7 @@
         <div class="h3">{{ topic_vote.name }}</div>
         {% if poll_data.show_form %}
             <form action="/forum/poll-vote/{{ id }}/" method="post" class="mb-3">
+                <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
                 {% for item in poll_data.results %}
                     <div class="custom-control custom-radio">
                         <input type="radio" id="vote_{{ item.id }}" name="vote" value="{{ item.id }}" required class="custom-control-input">
@@ -195,7 +197,10 @@
         <div class="border-bottom full-mobile-width mt-4 mb-3"></div>
     {% endif %}
 
-    {% if can_moderate %}<form action="/forum/bulk-delete-posts/{{ id }}/" method="post">{% endif %}
+    {% if can_moderate %}
+        <form action="/forum/bulk-delete-posts/{{ id }}/" method="post">
+            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+    {% endif %}
 
     {% for message in messages %}
         {% include '@forum/public/components/message.twig' with {message: message, can_moderate: can_moderate} only %}
