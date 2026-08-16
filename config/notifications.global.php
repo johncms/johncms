@@ -8,12 +8,6 @@
  * @link      https://johncms.com JohnCMS Project
  */
 
-use Aura\Autoload\Loader;
-
-$loader = new Loader();
-$loader->register();
-$loader->addPrefix('Forum', ROOT_PATH . 'modules/forum/lib');
-
 return [
     // Шаблоны уведомлений для модуля форума
     'forum' => [

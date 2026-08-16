@@ -10,7 +10,6 @@
 
 declare(strict_types=1);
 
-use Aura\Autoload\Loader;
 use Johncms\Config\ConfigRepository;
 use Johncms\Exceptions\HttpRedirectException;
 use Johncms\Exceptions\PageNotFoundException;
@@ -128,20 +127,6 @@ function format_size(int $bytes): string
     }
 
     return number_format($bytes / 1099511627776, 2) . ' TB';
-}
-
-/**
- * Registering an autoloader for the module
- *
- * @param $module_name
- * @param string $dir
- * @deprecated Use the module's root directory as the folder for the namespace.
- */
-function module_lib_loader($module_name, $dir = 'lib')
-{
-    $loader = new Loader();
-    $loader->register();
-    $loader->addPrefix(ucfirst($module_name), ROOT_PATH . 'modules/' . $module_name . '/' . $dir);
 }
 
 /**

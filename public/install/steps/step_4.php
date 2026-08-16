@@ -162,7 +162,6 @@ if ($request->getMethod() === 'POST') {
                 }
 
                 $modules = new Modules();
-                $modules->registerAutoloader();
                 foreach ($modules->getInstalled() as $module) {
                     (new ModuleInstaller($module))->installDemoData();
                 }

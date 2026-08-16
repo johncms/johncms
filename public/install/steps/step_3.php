@@ -17,6 +17,9 @@ use Johncms\Modules\ModuleInstaller;
 use Johncms\Modules\Modules;
 use Johncms\Http\Request;
 
+// The installer lives outside the composer autoload map, so its own classes are required directly.
+require_once dirname(__DIR__) . '/lib/Database.php';
+
 /** @var Request $request Built by the installer entry point, which includes this file. */
 
 $viewData += ['title' => __('Database'), 'page_title' => __('Database')];
@@ -103,7 +106,6 @@ if ($request->getMethod() === 'POST') {
 
             // Installing modules
             $modules = new Modules();
-            $modules->registerAutoloader();
             $installed_modules = $modules->getInstalled();
             foreach ($installed_modules as $module) {
                 (new ModuleInstaller($module))->install();

@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use Johncms\Modules\Modules;
 use Johncms\Security\BanIP;
 use Johncms\Http\Environment;
 use Johncms\System\i18n\Translator;
@@ -86,8 +85,6 @@ $translator->addTranslationDomain('system', __DIR__ . '/locale');
 $translator->defaultDomain('system');
 // Register language helpers
 Gettext\TranslatorFunctions::register($translator);
-
-(new Modules())->registerAutoloader();
 
 // The request of this process, for the front controller: require returns it.
 return $bootRequest;

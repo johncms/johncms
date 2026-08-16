@@ -10,8 +10,6 @@
 
 namespace Johncms\Modules;
 
-use Aura\Autoload\Loader;
-
 class Modules
 {
     /** @var array */
@@ -25,15 +23,5 @@ class Modules
     public function getInstalled(): array
     {
         return array_merge($this->config['installed_modules'], $this->config['system_modules']);
-    }
-
-    public function registerAutoloader(): void
-    {
-        $installed_modules = $this->getInstalled();
-        $loader = (new Loader());
-        $loader->register();
-        foreach ($installed_modules as $module) {
-            $loader->addPrefix(ucfirst($module), ROOT_PATH . 'modules/' . $module . '/');
-        }
     }
 }

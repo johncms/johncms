@@ -59,10 +59,6 @@ $view = new TwigRenderer($container->get('johncms.twig.install'));
 // Shared by every step; a step adds its own title and data to this.
 $viewData = ['locale' => $translator->getLocale()];
 
-$loader = new Aura\Autoload\Loader();
-$loader->register();
-$loader->addPrefix('Install', __DIR__ . '/lib');
-
 $current_step = $request->queryInt('step', 1);
 
 if (
