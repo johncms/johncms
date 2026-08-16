@@ -18,6 +18,7 @@ use Johncms\Modules\Forum\Domain\Query\ForumFileScopeQuery;
 use Johncms\Modules\Forum\Domain\Repository\ForumFileRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumSectionRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
+use Johncms\Security\HtmlSanitizerInterface;
 use Johncms\Smilies\SmiliesRendererInterface;
 use Johncms\Utils\DateFormatterInterface;
 use Simba77\EmbedMedia\Embed;
@@ -33,7 +34,7 @@ final readonly class ViewForumFilesUseCase
         private ForumTopicPathService $topicPathService,
         private DateFormatterInterface $dateFormatter,
         private SmiliesRendererInterface $smiliesRenderer,
-        private \HTMLPurifier $purifier,
+        private HtmlSanitizerInterface $sanitizer,
         private Embed $embed,
         private CurrentUser $currentUser,
         private AccessCheckerInterface $accessChecker,
@@ -263,7 +264,7 @@ final readonly class ViewForumFilesUseCase
 
         foreach ($rows as $row) {
             $text = mb_substr((string) ($row['text'] ?? ''), 0, 500);
-            $text = $this->purifier->purify($text);
+            $text = $this->sanitizer->sanitize($text);
             $text = $this->embed->embedMedia($text);
             $text = $this->smiliesRenderer->render($text, $this->staffTitles->isStaff((int) $row['user_id']));
 

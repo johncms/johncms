@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Profile\Application\Services;
 
+use Johncms\Security\HtmlSanitizerInterface;
 use Johncms\Smilies\SmiliesRendererInterface;
 use Simba77\EmbedMedia\Embed;
 
 final readonly class ForumActivityPreviewService
 {
     public function __construct(
-        private \HTMLPurifier $purifier,
+        private HtmlSanitizerInterface $sanitizer,
         private Embed $media,
         private SmiliesRendererInterface $smiliesRenderer,
     ) {
@@ -21,7 +22,7 @@ final readonly class ForumActivityPreviewService
      */
     public function make(string $rawText, bool $authorIsStaff): string
     {
-        $text = $this->purifier->purify($rawText);
+        $text = $this->sanitizer->sanitize($rawText);
         $text = $this->media->embedMedia($text);
         $text = $this->smiliesRenderer->render($text, $authorIsStaff);
         $text = strip_tags($text);

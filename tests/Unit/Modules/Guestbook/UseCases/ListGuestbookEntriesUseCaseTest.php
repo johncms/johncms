@@ -6,7 +6,6 @@ namespace Tests\Unit\Modules\Guestbook\UseCases;
 
 use Gettext\Translator;
 use Gettext\TranslatorFunctions;
-use HTMLPurifier;
 use Illuminate\Database\Eloquent\Collection;
 use Johncms\Auth\Authentication\AuthenticatorChain;
 use Johncms\Auth\Authorization\CorePermissions;
@@ -23,6 +22,7 @@ use Johncms\Modules\Guestbook\Application\Services\GuestbookPermissions;
 use Johncms\Modules\Guestbook\Application\UseCases\ListGuestbookEntriesUseCase;
 use Johncms\Modules\Guestbook\Domain\Models\GuestbookEntry;
 use Johncms\Modules\Guestbook\Domain\Repository\GuestbookEntryRepositoryInterface;
+use Johncms\Security\HtmlSanitizerInterface;
 use Johncms\Smilies\SmiliesRendererInterface;
 use Johncms\Users\User;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -186,9 +186,9 @@ final class ListGuestbookEntriesUseCaseTest extends TestCase
 
     private function makeTextFormatter(): GuestbookEntryTextFormatter
     {
-        // GuestbookEntryTextFormatter — final, собираем реальный с моками-пассрушниками
-        $purifier = $this->createMock(HTMLPurifier::class);
-        $purifier->method('purify')->willReturnArgument(0);
+        // GuestbookEntryTextFormatter is final, so the real one is built with passthrough mocks.
+        $sanitizer = $this->createMock(HtmlSanitizerInterface::class);
+        $sanitizer->method('sanitize')->willReturnArgument(0);
 
         $media = $this->createMock(Embed::class);
         $media->method('embedMedia')->willReturnArgument(0);
@@ -198,7 +198,7 @@ final class ListGuestbookEntriesUseCaseTest extends TestCase
 
         return new GuestbookEntryTextFormatter(
             new StaffTitles($this->roles),
-            $purifier,
+            $sanitizer,
             $media,
             $smiliesRenderer
         );

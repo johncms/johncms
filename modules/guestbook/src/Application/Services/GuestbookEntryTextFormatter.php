@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Guestbook\Application\Services;
 
-use HTMLPurifier;
 use Johncms\Auth\Authorization\StaffTitles;
 use Johncms\Modules\Guestbook\Domain\Models\GuestbookEntry;
+use Johncms\Security\HtmlSanitizerInterface;
 use Johncms\Smilies\SmiliesRendererInterface;
 use Simba77\EmbedMedia\Embed;
 use Twig\Markup;
@@ -15,7 +15,7 @@ final readonly class GuestbookEntryTextFormatter
 {
     public function __construct(
         private StaffTitles $staffTitles,
-        private HTMLPurifier $purifier,
+        private HtmlSanitizerInterface $sanitizer,
         private Embed $media,
         private SmiliesRendererInterface $smiliesRenderer,
     ) {
@@ -23,11 +23,11 @@ final readonly class GuestbookEntryTextFormatter
 
     /**
      * The text of an entry: sanitized, with the media embedded and the smilies rendered. It is
-     * markup by contract — everything unsafe has been taken out of it by the purifier.
+     * markup by contract — everything unsafe has been taken out of it by the sanitizer.
      */
     public function formatPost(GuestbookEntry $entry): Markup
     {
-        $text = $this->media->embedMedia($this->purifier->purify($entry->text));
+        $text = $this->media->embedMedia($this->sanitizer->sanitize($entry->text));
 
         return new Markup(
             $this->smiliesRenderer->render($text, $this->staffTitles->isStaff((int) $entry->user_id)),
@@ -45,7 +45,7 @@ final readonly class GuestbookEntryTextFormatter
             return null;
         }
 
-        $text = $this->media->embedMedia($this->purifier->purify($entry->otvet));
+        $text = $this->media->embedMedia($this->sanitizer->sanitize($entry->otvet));
 
         return new Markup($this->smiliesRenderer->render($text, true), 'UTF-8');
     }

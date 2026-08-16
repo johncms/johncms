@@ -20,6 +20,7 @@ use Johncms\Modules\Forum\Domain\Models\ForumMessage;
 use Johncms\Modules\Forum\Domain\Models\ForumTopic;
 use Johncms\NavChain;
 use Johncms\Security\AntifloodCheckerInterface;
+use Johncms\Security\HtmlSanitizerInterface;
 use Johncms\Smilies\SmiliesRendererInterface;
 use Johncms\Http\Environment;
 use Johncms\Http\Request;
@@ -38,7 +39,7 @@ final readonly class NewTopicController
         private AntifloodCheckerInterface $antifloodChecker,
         private SmiliesRendererInterface $smiliesRenderer,
         private EditorContentNormalizer $editorContentNormalizer,
-        private \HTMLPurifier $purifier,
+        private HtmlSanitizerInterface $sanitizer,
         private Embed $embed,
         private NavChain $navChain,
         private CurrentUser $currentUser,
@@ -154,7 +155,7 @@ final readonly class NewTopicController
             $errors = $validationResult->getErrors();
         }
 
-        $msgPreview = $this->purifier->purify((string) $data['message']);
+        $msgPreview = $this->sanitizer->sanitize((string) $data['message']);
         $msgPreview = $this->embed->embedMedia($msgPreview);
         $msgPreview = $this->smiliesRenderer->render(
             $msgPreview,

@@ -14,6 +14,7 @@ use Johncms\Modules\Downloads\Application\Services\DownloadFilePathService;
 use Johncms\Modules\Downloads\Application\Services\DownloadsPermissions;
 use Johncms\Modules\Downloads\Application\UseCases\ViewCommentsReviewUseCase;
 use Johncms\NavChain;
+use Johncms\Security\HtmlSanitizerInterface;
 use Johncms\Smilies\SmiliesRendererInterface;
 use Johncms\Utils\DateFormatterInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,7 +32,7 @@ final readonly class CommentsReviewController
         private DownloadFilePathService $filePathService,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
-        private \HTMLPurifier $purifier,
+        private HtmlSanitizerInterface $sanitizer,
     ) {
     }
 
@@ -66,7 +67,7 @@ final readonly class CommentsReviewController
         foreach ($result->comments as $comment) {
             $attrs = unserialize($comment->getAttribute('attributes'), ['allowed_classes' => false]);
 
-            $text = $this->purifier->purify($comment->text);
+            $text = $this->sanitizer->sanitize($comment->text);
             $text = $this->smiliesRenderer->render($text, $this->staffTitles->isStaff((int) $comment->user_id));
 
             $replyText = null;
@@ -74,7 +75,7 @@ final readonly class CommentsReviewController
             $replyAuthorUrl = '';
             $replyAuthorName = '';
             if (! empty($comment->reply)) {
-                $reply = $this->purifier->purify($comment->reply);
+                $reply = $this->sanitizer->sanitize($comment->reply);
                 // reply_staff is what a reply records now; the older ones carry the number of
                 // whoever wrote them.
                 $replyIsOfStaff = (bool) ($attrs['reply_staff'] ?? (($attrs['reply_rights'] ?? 0) >= 1));

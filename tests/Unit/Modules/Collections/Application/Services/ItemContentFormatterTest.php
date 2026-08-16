@@ -4,38 +4,42 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Modules\Collections\Application\Services;
 
-use HTMLPurifier;
 use Johncms\Modules\Collections\Application\Services\ItemContentFormatter;
+use Johncms\Security\HtmlSanitizerInterface;
 use PHPUnit\Framework\TestCase;
+use Twig\Markup;
 
+/**
+ * What the formatter owes: nothing reaches the template unsanitized, and "no content" is null
+ * rather than empty markup. How the sanitizing itself works is covered by HtmlSanitizerTest.
+ */
 final class ItemContentFormatterTest extends TestCase
 {
-    private function formatter(): ItemContentFormatter
-    {
-        return new ItemContentFormatter(new HTMLPurifier());
-    }
-
     public function testReturnsNullForNullOrEmpty(): void
     {
-        self::assertNull($this->formatter()->format(null));
-        self::assertNull($this->formatter()->format(''));
+        $sanitizer = $this->createMock(HtmlSanitizerInterface::class);
+        // Nothing to sanitize, so nothing is asked of the sanitizer either.
+        $sanitizer->expects(self::never())->method('sanitize');
+
+        $formatter = new ItemContentFormatter($sanitizer);
+
+        self::assertNull($formatter->format(null));
+        self::assertNull($formatter->format(''));
     }
 
-    public function testStripsDangerousMarkupButKeepsSafeTags(): void
+    public function testSanitizesTheContentBeforeItBecomesMarkup(): void
     {
-        // Markup by contract, so the assertions read it as the string it prints as.
-        $result = (string) $this->formatter()->format('<p>Hello <b>world</b></p><script>alert(1)</script>');
+        $sanitizer = $this->createMock(HtmlSanitizerInterface::class);
+        // Item content is written in the editor, so it takes the default rich-content policy.
+        $sanitizer->expects(self::once())
+            ->method('sanitize')
+            ->with('<p>Hello <b>world</b></p><script>alert(1)</script>')
+            ->willReturn('<p>Hello <b>world</b></p>');
 
-        self::assertStringContainsString('<b>world</b>', $result);
-        self::assertStringNotContainsString('<script', $result);
-        self::assertStringNotContainsString('alert(1)', $result);
-    }
+        $result = (new ItemContentFormatter($sanitizer))->format('<p>Hello <b>world</b></p><script>alert(1)</script>');
 
-    public function testRemovesEventHandlerAttributes(): void
-    {
-        $result = (string) $this->formatter()->format('<a href="https://example.test" onclick="evil()">link</a>');
-
-        self::assertStringContainsString('href="https://example.test"', $result);
-        self::assertStringNotContainsString('onclick', $result);
+        self::assertInstanceOf(Markup::class, $result);
+        // Markup by contract, so the assertion reads it as the string it prints as.
+        self::assertSame('<p>Hello <b>world</b></p>', (string) $result);
     }
 }

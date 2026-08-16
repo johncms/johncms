@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\Services;
 
-use HTMLPurifier;
+use Johncms\Security\HtmlSanitizerInterface;
 use Twig\Markup;
 
 /**
@@ -14,7 +14,7 @@ use Twig\Markup;
 final readonly class ItemContentFormatter
 {
     public function __construct(
-        private HTMLPurifier $purifier,
+        private HtmlSanitizerInterface $sanitizer,
     ) {
     }
 
@@ -29,6 +29,6 @@ final readonly class ItemContentFormatter
             return null;
         }
 
-        return new Markup($this->purifier->purify($html), 'UTF-8');
+        return new Markup($this->sanitizer->sanitize($html), 'UTF-8');
     }
 }

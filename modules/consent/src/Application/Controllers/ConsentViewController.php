@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Consent\Application\Controllers;
 
-use HTMLPurifier;
 use Johncms\Modules\Consent\Application\Services\ConsentService;
 use Johncms\Modules\Consent\Application\Services\ConsentTitleFormatter;
 use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
+use Johncms\Security\HtmlSanitizerInterface;
 use Twig\Markup;
 
 final readonly class ConsentViewController
@@ -17,7 +17,7 @@ final readonly class ConsentViewController
         private NavChain $navChain,
         private ConsentService $consentService,
         private ConsentTitleFormatter $titleFormatter,
-        private HTMLPurifier $purifier,
+        private HtmlSanitizerInterface $sanitizer,
     ) {
     }
 
@@ -35,7 +35,7 @@ final readonly class ConsentViewController
         return new ViewResponse('@consent/public/view.twig', [
             'title'      => $title,
             'page_title' => $title,
-            'text'       => new Markup($this->purifier->purify($consent->text), 'UTF-8'),
+            'text'       => new Markup($this->sanitizer->sanitize($consent->text), 'UTF-8'),
         ]);
     }
 }

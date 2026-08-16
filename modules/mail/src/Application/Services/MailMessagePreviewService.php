@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Mail\Application\Services;
 
+use Johncms\Security\HtmlSanitizerInterface;
 use Johncms\Smilies\SmiliesRendererInterface;
 use Simba77\EmbedMedia\Embed;
 
@@ -16,7 +17,7 @@ final readonly class MailMessagePreviewService
 
     public function __construct(
         private SmiliesRendererInterface $smiliesRenderer,
-        private \HTMLPurifier $purifier,
+        private HtmlSanitizerInterface $sanitizer,
         private Embed $media,
     ) {
     }
@@ -30,7 +31,7 @@ final readonly class MailMessagePreviewService
         if (mb_strlen($rawText) > self::PREVIEW_LIMIT) {
             $plain = trim(
                 html_entity_decode(
-                    strip_tags($this->purifier->purify($rawText)),
+                    strip_tags($this->sanitizer->sanitize($rawText)),
                     ENT_QUOTES | ENT_HTML5,
                     'UTF-8'
                 )
@@ -41,7 +42,7 @@ final readonly class MailMessagePreviewService
             return $preview . '...<a href="/mail/write/' . $contactId . '">' . __('Continue') . ' &gt;&gt;</a>';
         }
 
-        $html = $this->purifier->purify($rawText);
+        $html = $this->sanitizer->sanitize($rawText);
         $html = $this->media->embedMedia($html);
 
         return $this->smiliesRenderer->render($html, $authorIsAdmin);

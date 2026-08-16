@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Modules\Collections\Application\UseCases;
 
-use HTMLPurifier;
 use Illuminate\Database\Eloquent\Collection;
 use Johncms\Modules\Collections\Application\DTO\PublicItemDTO;
 use Johncms\Modules\Collections\Application\Services\ItemContentFormatter;
@@ -12,17 +11,18 @@ use Johncms\Modules\Collections\Application\UseCases\ListPublicItemsUseCase;
 use Johncms\Modules\Collections\Domain\Models\ContentCollectionItem;
 use Johncms\Modules\Collections\Domain\Query\ContentCollectionItemQuery;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemRepositoryInterface;
+use Johncms\Security\HtmlSanitizerInterface;
 use PHPUnit\Framework\TestCase;
 
 final class ListPublicItemsUseCaseTest extends TestCase
 {
     private function useCase(ContentCollectionItemRepositoryInterface $repository): ListPublicItemsUseCase
     {
-        // Passthrough purifier: these tests assert mapping, not sanitization.
-        $purifier = $this->createMock(HTMLPurifier::class);
-        $purifier->method('purify')->willReturnArgument(0);
+        // Passthrough sanitizer: these tests assert mapping, not sanitization.
+        $sanitizer = $this->createMock(HtmlSanitizerInterface::class);
+        $sanitizer->method('sanitize')->willReturnArgument(0);
 
-        return new ListPublicItemsUseCase($repository, new ItemContentFormatter($purifier));
+        return new ListPublicItemsUseCase($repository, new ItemContentFormatter($sanitizer));
     }
 
     public function testCountUsesOnlyActiveQuery(): void

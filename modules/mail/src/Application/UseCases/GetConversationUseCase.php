@@ -13,6 +13,7 @@ use Johncms\Modules\Mail\Application\Services\MailFileService;
 use Johncms\Modules\Mail\Domain\Models\MailMessage;
 use Johncms\Modules\Mail\Domain\Repository\ContactRepositoryInterface;
 use Johncms\Modules\Mail\Domain\Repository\MailMessageRepositoryInterface;
+use Johncms\Security\HtmlSanitizerInterface;
 use Johncms\Smilies\SmiliesRendererInterface;
 use Johncms\UserProperties;
 use Johncms\Users\User;
@@ -30,7 +31,7 @@ final readonly class GetConversationUseCase
         private UserProperties $userProperties,
         private DateFormatterInterface $dateFormatter,
         private SmiliesRendererInterface $smiliesRenderer,
-        private \HTMLPurifier $purifier,
+        private HtmlSanitizerInterface $sanitizer,
         private Embed $media,
         private CurrentUser $currentUser,
     ) {
@@ -94,7 +95,7 @@ final readonly class GetConversationUseCase
                 ? $this->userProperties->getFromArray(array_merge($author->getRawOriginal(), ['user_id' => $message->user_id]))
                 : [];
 
-            $text = $this->purifier->purify($message->text);
+            $text = $this->sanitizer->sanitize($message->text);
             $text = $this->media->embedMedia($text);
             $text = $this->smiliesRenderer->render($text, $authorIsStaff);
 
