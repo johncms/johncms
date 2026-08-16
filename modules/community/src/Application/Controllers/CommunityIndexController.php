@@ -30,9 +30,10 @@ final readonly class CommunityIndexController
                 'title'      => $result->title,
                 'page_title' => $result->pageTitle,
                 'counters'   => [
-                    'usersCount' => $result->usersCount,
-                    'adminCount' => $result->adminCount,
-                    'birthDays'  => $result->birthDays,
+                    'usersCount'    => $result->usersCount,
+                    'newUsersCount' => $result->newUsersCount,
+                    'adminCount'    => $result->adminCount,
+                    'birthDays'     => $result->birthDays,
                 ],
             ]
         );

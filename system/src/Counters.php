@@ -265,19 +265,6 @@ class Counters
     }
 
     /**
-     * Количество зарегистрированных пользователей
-     *
-     * @return string
-     * @deprecated use usersCounters
-     * TODO: содержимое usersCounters перенести в этот метод после проверки на использование
-     */
-    public function users(): string
-    {
-        $counter = $this->usersCounters();
-        return $counter['total'] . ($counter['new'] ? '&#160;/&#160;<span class="red">+' . $counter['new'] . '</span>' : '');
-    }
-
-    /**
      * Количество непрочитанных личных сообщений
      *
      * @return mixed

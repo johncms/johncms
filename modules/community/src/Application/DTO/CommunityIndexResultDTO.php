@@ -9,7 +9,8 @@ final readonly class CommunityIndexResultDTO
     public function __construct(
         public string $title,
         public string $pageTitle,
-        public string $usersCount,
+        public int $usersCount,
+        public int $newUsersCount,
         public int $adminCount,
         public int $birthDays,
     ) {

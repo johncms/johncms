@@ -19,11 +19,13 @@ final readonly class ViewIndexUseCase
     public function execute(): CommunityIndexResultDTO
     {
         $title = __('Community');
+        $usersCounters = $this->counters->usersCounters();
 
         return new CommunityIndexResultDTO(
             $title,
             $title,
-            $this->counters->users(),
+            $usersCounters['total'],
+            $usersCounters['new'],
             $this->communityUserRepository->countAdministrationUsers(),
             $this->communityUserRepository->countBirthdayUsers((int) date('j'), (int) date('n')),
         );

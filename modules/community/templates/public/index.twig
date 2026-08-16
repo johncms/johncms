@@ -1,7 +1,7 @@
 {#
     Entry page of the community: the search box and the sections with their counters.
 
-    @param array counters usersCount, adminCount, birthDays.
+    @param array counters usersCount, newUsersCount, adminCount, birthDays.
 #}
 {% extends '@theme/layouts/default.twig' %}
 
@@ -21,7 +21,12 @@
             <div class="list-group">
                 <a href="/community/users/" class="list-group-item d-flex justify-content-between align-items-center">
                     {{ __('Users') }}
-                    <span class="badge counter-badge rounded-pill">{{ counters.usersCount }}</span>
+                    <span class="badge counter-badge rounded-pill">
+                        {{- counters.usersCount|format_number -}}
+                        {%- if counters.newUsersCount > 0 -%}
+                            &nbsp;/&nbsp;<span class="text-danger">+{{ counters.newUsersCount|format_number }}</span>
+                        {%- endif -%}
+                    </span>
                 </a>
                 <a href="/community/administration/" class="list-group-item d-flex justify-content-between align-items-center">
                     {{ __('Administration') }}
