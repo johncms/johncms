@@ -6,7 +6,8 @@ namespace Johncms\Modules\Registration\Application\UseCases;
 
 use Johncms\Auth\Password\PasswordHasherInterface;
 use Johncms\Auth\SecureToken;
-use Johncms\Mail\EmailMessage;
+use Johncms\Mail\Queue\MailQueueInterface;
+use Johncms\Mail\Queue\QueuedEmailDTO;
 use Johncms\Modules\Registration\Application\DTO\RegistrationFormDTO;
 use Johncms\Modules\Registration\Application\Services\RegistrationSettings;
 use Johncms\Security\ClientInfoDTO;
@@ -19,6 +20,7 @@ final readonly class RegisterUserUseCase
         private RegistrationSettings $settings,
         private Translator $translator,
         private PasswordHasherInterface $hasher,
+        private MailQueueInterface $mailQueue,
     ) {
     }
 
@@ -58,20 +60,20 @@ final readonly class RegisterUserUseCase
         if ($config['user_email_confirmation']) {
             $link = $config['homeurl'] . '/registration/confirm-email?id=' . $newUser->id . '&code=' . $newUser->confirmation_code;
             $name = ! empty($newUser->imname) ? $newUser->imname : $newUser->name;
-            (new EmailMessage())->create(
-                [
-                    'priority' => 1,
-                    'locale'   => $this->translator->getLocale(),
-                    'template' => '@theme/emails/registration.twig',
-                    'fields'   => [
-                        'email_to'        => $newUser->mail,
-                        'name_to'         => $name,
-                        'subject'         => __('Registration on the website'),
+            $this->mailQueue->push(
+                new QueuedEmailDTO(
+                    template: '@theme/emails/registration.twig',
+                    locale: $this->translator->getLocale(),
+                    recipient: $newUser->mail,
+                    recipientName: $name,
+                    subject: __('Registration on the website'),
+                    priority: 1,
+                    variables: [
                         'user_name'       => $name,
                         'user_login'      => $newUser->name,
                         'link_to_confirm' => $link,
                     ],
-                ]
+                )
             );
         }
 

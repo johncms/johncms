@@ -7,9 +7,12 @@ namespace Tests\Unit\Mail;
 use Carbon\Carbon;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Johncms\Mail\EmailMessage;
+use Johncms\Mail\Exception\InvalidEmailAddressException;
 use Johncms\Mail\Queue\EloquentEmailQueue;
 use Johncms\Mail\Queue\MailQueueSettings;
+use Johncms\Mail\Queue\QueuedEmailDTO;
 use Johncms\Mail\Schema\MailSchema;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Tests\Support\BootsInMemoryDatabase;
 
@@ -66,6 +69,126 @@ final class EloquentEmailQueueTest extends TestCase
 
         self::assertTrue(Capsule::schema()->hasTable(MailSchema::EMAIL_MESSAGES));
         self::assertTrue(Capsule::schema()->hasColumn(MailSchema::EMAIL_MESSAGES, 'attempts'));
+    }
+
+    // -----------------------------------------------------------------------------------
+    // Putting a message in
+    // -----------------------------------------------------------------------------------
+
+    public function testPushStoresTheMessageInTheShapeTheSenderReads(): void
+    {
+        $this->queue()->push(
+            new QueuedEmailDTO(
+                template: '@theme/emails/registration.twig',
+                locale: 'ru',
+                recipient: 'user@example.com',
+                recipientName: 'User',
+                subject: 'Welcome',
+                priority: 1,
+                variables: ['user_login' => 'user'],
+                replyTo: 'support@example.com',
+                replyToName: 'Support',
+                cc: ['boss@example.com'],
+                bcc: ['audit@example.com'],
+            )
+        );
+
+        $row = EmailMessage::query()->firstOrFail();
+        self::assertSame('@theme/emails/registration.twig', $row->template);
+        self::assertSame('ru', $row->locale);
+        self::assertSame(1, $row->priority);
+        self::assertSame(
+            [
+                'email_to'      => 'user@example.com',
+                'name_to'       => 'User',
+                'subject'       => 'Welcome',
+                'reply_to'      => 'support@example.com',
+                'reply_to_name' => 'Support',
+                'cc'            => ['boss@example.com'],
+                'bcc'           => ['audit@example.com'],
+                'user_login'    => 'user',
+            ],
+            $row->fields
+        );
+    }
+
+    public function testOptionalAddressFieldsAreLeftOut(): void
+    {
+        $this->queue()->push(
+            new QueuedEmailDTO(
+                template: '@theme/emails/registration.twig',
+                locale: 'en',
+                recipient: 'user@example.com',
+            )
+        );
+
+        self::assertSame(
+            ['email_to' => 'user@example.com', 'name_to' => '', 'subject' => ''],
+            EmailMessage::query()->firstOrFail()->fields
+        );
+    }
+
+    /**
+     * A template variable must never be able to redirect the message.
+     */
+    public function testAVariableCannotOverwriteAnAddress(): void
+    {
+        $this->queue()->push(
+            new QueuedEmailDTO(
+                template: '@theme/emails/registration.twig',
+                locale: 'en',
+                recipient: 'user@example.com',
+                variables: ['email_to' => 'attacker@example.com'],
+            )
+        );
+
+        self::assertSame('user@example.com', EmailMessage::query()->firstOrFail()->fields['email_to']);
+    }
+
+    /**
+     * Found where the mistake was made, rather than by the cron once the attempts had run out.
+     */
+    #[DataProvider('brokenAddressCases')]
+    public function testAnAddressNoServerWouldAcceptIsRefusedAtOnce(array $overrides): void
+    {
+        $this->expectException(InvalidEmailAddressException::class);
+
+        $this->queue()->push(
+            new QueuedEmailDTO(
+                ...$overrides + [
+                    'template'  => '@theme/emails/registration.twig',
+                    'locale'    => 'en',
+                    'recipient' => 'user@example.com',
+                ]
+            )
+        );
+    }
+
+    public static function brokenAddressCases(): array
+    {
+        return [
+            'recipient' => [['recipient' => 'not an address']],
+            'reply to'  => [['replyTo' => 'not an address']],
+            'copy'      => [['cc' => ['not an address']]],
+            'blind copy' => [['bcc' => ['ok@example.com', 'not an address']]],
+        ];
+    }
+
+    public function testARefusedMessageIsNotQueued(): void
+    {
+        try {
+            $this->queue()->push(
+                new QueuedEmailDTO(
+                    template: '@theme/emails/registration.twig',
+                    locale: 'en',
+                    recipient: 'not an address',
+                )
+            );
+        } catch (InvalidEmailAddressException) {
+            // The point of the test is what the table holds afterwards.
+        }
+
+        self::assertSame(0, EmailMessage::query()->count());
     }
 
     // -----------------------------------------------------------------------------------

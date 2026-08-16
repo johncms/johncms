@@ -10,7 +10,8 @@ use Johncms\Auth\Password\PasswordHasherInterface;
 use Johncms\Auth\Password\PasswordResetTokens;
 use Johncms\Auth\Session\AuthSessionManager;
 use Johncms\Auth\Session\SessionRevocationReason;
-use Johncms\Mail\EmailMessage;
+use Johncms\Mail\Queue\MailQueueInterface;
+use Johncms\Mail\Queue\QueuedEmailDTO;
 use Johncms\Modules\Profile\Application\Exceptions\PasswordRecoveryException;
 use Johncms\Modules\Profile\Application\Services\PasswordGenerator;
 use Johncms\Modules\Profile\Domain\Repository\ProfileUserRepositoryInterface;
@@ -27,6 +28,7 @@ final readonly class CompletePasswordRecoveryUseCase
         private PasswordHasherInterface $hasher,
         private AuthSessionManager $sessions,
         private AuthEventLoggerInterface $eventLogger,
+        private MailQueueInterface $mailQueue,
     ) {
     }
 
@@ -43,20 +45,20 @@ final readonly class CompletePasswordRecoveryUseCase
         $password = $this->passwordGenerator->generate(4);
         $name = ! empty($user->imname) ? $user->imname : $user->name;
 
-        (new EmailMessage())->create(
-            [
-                'priority' => 1,
-                'locale'   => $this->translator->getLocale(),
-                'template' => '@theme/emails/restore-password-complete.twig',
-                'fields'   => [
-                    'email_to'      => $user->mail,
-                    'name_to'       => $name,
-                    'subject'       => __('Your new password'),
+        $this->mailQueue->push(
+            new QueuedEmailDTO(
+                template: '@theme/emails/restore-password-complete.twig',
+                locale: $this->translator->getLocale(),
+                recipient: $user->mail,
+                recipientName: $name,
+                subject: __('Your new password'),
+                priority: 1,
+                variables: [
                     'user_name'     => $name,
                     'user_login'    => $user->name,
                     'user_password' => $password,
                 ],
-            ]
+            )
         );
 
         $this->profileUserRepository->updatePassword($user->id, $this->hasher->hash($password));

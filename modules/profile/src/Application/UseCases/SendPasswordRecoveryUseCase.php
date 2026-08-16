@@ -7,7 +7,8 @@ namespace Johncms\Modules\Profile\Application\UseCases;
 use Johncms\Auth\Events\AuthEventLoggerInterface;
 use Johncms\Auth\Events\AuthEventType;
 use Johncms\Auth\Password\PasswordResetTokens;
-use Johncms\Mail\EmailMessage;
+use Johncms\Mail\Queue\MailQueueInterface;
+use Johncms\Mail\Queue\QueuedEmailDTO;
 use Johncms\Modules\Profile\Application\DTO\SendRecoveryCommand;
 use Johncms\Modules\Profile\Application\Exceptions\PasswordRecoveryException;
 use Johncms\Modules\Profile\Domain\Repository\ProfileUserRepositoryInterface;
@@ -21,6 +22,7 @@ final readonly class SendPasswordRecoveryUseCase
         private Translator $translator,
         private PasswordResetTokens $resetTokens,
         private AuthEventLoggerInterface $eventLogger,
+        private MailQueueInterface $mailQueue,
     ) {
     }
 
@@ -50,19 +52,19 @@ final readonly class SendPasswordRecoveryUseCase
         $link = $homeUrl . '/profile/password-recovery/set/' . $user->id . '/' . $code;
         $name = ! empty($user->imname) ? $user->imname : $user->name;
 
-        (new EmailMessage())->create(
-            [
-                'priority' => 1,
-                'locale'   => $this->translator->getLocale(),
-                'template' => '@theme/emails/restore-password.twig',
-                'fields'   => [
-                    'email_to'        => $user->mail,
-                    'name_to'         => $name,
-                    'subject'         => __('Password recovery'),
+        $this->mailQueue->push(
+            new QueuedEmailDTO(
+                template: '@theme/emails/restore-password.twig',
+                locale: $this->translator->getLocale(),
+                recipient: $user->mail,
+                recipientName: $name,
+                subject: __('Password recovery'),
+                priority: 1,
+                variables: [
                     'user_name'       => $name,
                     'link_to_restore' => $link,
                 ],
-            ]
+            )
         );
 
         // Recorded even though nothing has changed yet: a wave of requests against one account is

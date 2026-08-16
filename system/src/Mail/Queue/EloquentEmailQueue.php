@@ -15,6 +15,9 @@ namespace Johncms\Mail\Queue;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Johncms\Mail\EmailMessage;
+use Johncms\Mail\Exception\InvalidEmailAddressException;
+use Symfony\Component\Mime\Address;
+use Symfony\Component\Mime\Exception\RfcComplianceException;
 
 /**
  * The mail queue on top of the `email_messages` table.
@@ -24,13 +27,45 @@ use Johncms\Mail\EmailMessage;
  * firing again before the previous run finished — therefore cannot pick the same message, without
  * needing row locks the older MySQL versions do not offer.
  */
-final readonly class EloquentEmailQueue implements EmailQueueInterface
+final readonly class EloquentEmailQueue implements EmailQueueInterface, MailQueueInterface
 {
     /** Longer errors say nothing more, and the column is read by people, not by code. */
     private const ERROR_LENGTH_LIMIT = 1000;
 
     public function __construct(private MailQueueSettings $settings)
     {
+    }
+
+    public function push(QueuedEmailDTO $email): void
+    {
+        // Checked here rather than at delivery: an address the mail server will refuse is a
+        // mistake of the caller, and the caller is what is still on screen to report it.
+        $this->assertAddress($email->recipient);
+        if ($email->replyTo !== '') {
+            $this->assertAddress($email->replyTo);
+        }
+
+        foreach ([...$email->cc, ...$email->bcc] as $copy) {
+            $this->assertAddress($copy);
+        }
+
+        EmailMessage::query()->create(
+            [
+                'priority' => $email->priority,
+                'locale'   => $email->locale,
+                'template' => $email->template,
+                'fields'   => $email->fields(),
+            ]
+        );
+    }
+
+    private function assertAddress(string $address): void
+    {
+        try {
+            new Address($address);
+        } catch (RfcComplianceException) {
+            throw InvalidEmailAddressException::forAddress($address);
+        }
     }
 
     public function claim(int $limit): array

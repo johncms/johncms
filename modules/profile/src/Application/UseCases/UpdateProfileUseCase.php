@@ -6,7 +6,8 @@ namespace Johncms\Modules\Profile\Application\UseCases;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\SecureToken;
-use Johncms\Mail\EmailMessage;
+use Johncms\Mail\Queue\MailQueueInterface;
+use Johncms\Mail\Queue\QueuedEmailDTO;
 use Johncms\Modules\Profile\Application\DTO\UpdateProfileCommand;
 use Johncms\Modules\Profile\Application\Exceptions\EditProfileException;
 use Johncms\Modules\Profile\Application\Services\ProfilePermissions;
@@ -27,6 +28,7 @@ final readonly class UpdateProfileUseCase
         private Translator $translator,
         private AccessCheckerInterface $accessChecker,
         private ValidatorInterface $validator,
+        private MailQueueInterface $mailQueue,
     ) {
     }
 
@@ -101,36 +103,36 @@ final readonly class UpdateProfileUseCase
     {
         $link = $homeUrl . '/profile/confirm-email/' . $profileUser->id . '/' . $confirmationCode;
 
-        (new EmailMessage())->create(
-            [
-                'priority' => 1,
-                'locale'   => $this->translator->getLocale(),
-                'template' => '@theme/emails/confirm-email-change.twig',
-                'fields'   => [
-                    'email_to'        => $newEmail,
-                    'name_to'         => $profileUser->name,
-                    'subject'         => __('Confirm email change'),
+        $this->mailQueue->push(
+            new QueuedEmailDTO(
+                template: '@theme/emails/confirm-email-change.twig',
+                locale: $this->translator->getLocale(),
+                recipient: $newEmail,
+                recipientName: $profileUser->name,
+                subject: __('Confirm email change'),
+                priority: 1,
+                variables: [
                     'user_name'       => $profileUser->name,
                     'link_to_confirm' => $link,
                 ],
-            ]
+            )
         );
 
         // Notify the current address that an email change procedure has started
         if (! empty($profileUser->mail)) {
-            (new EmailMessage())->create(
-                [
-                    'priority' => 1,
-                    'locale'   => $this->translator->getLocale(),
-                    'template' => '@theme/emails/changed-email-notification.twig',
-                    'fields'   => [
-                        'email_to'  => $profileUser->mail,
-                        'name_to'   => $profileUser->name,
-                        'subject'   => __('The procedure for changing the email address was started'),
+            $this->mailQueue->push(
+                new QueuedEmailDTO(
+                    template: '@theme/emails/changed-email-notification.twig',
+                    locale: $this->translator->getLocale(),
+                    recipient: $profileUser->mail,
+                    recipientName: $profileUser->name,
+                    subject: __('The procedure for changing the email address was started'),
+                    priority: 1,
+                    variables: [
                         'user_name' => $profileUser->name,
                         'new_email' => $newEmail,
                     ],
-                ]
+                )
             );
         }
     }

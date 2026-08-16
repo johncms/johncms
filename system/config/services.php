@@ -50,6 +50,7 @@ use Johncms\Mail\MailDsnResolver;
 use Johncms\Mail\MailFactory;
 use Johncms\Mail\Queue\EloquentEmailQueue;
 use Johncms\Mail\Queue\EmailQueueInterface;
+use Johncms\Mail\Queue\MailQueueInterface;
 use Johncms\Mail\Queue\MailQueueSettings;
 use Symfony\Component\Mime\HtmlToTextConverter\DefaultHtmlToTextConverter;
 use Symfony\Component\Mime\HtmlToTextConverter\HtmlToTextConverterInterface;
@@ -234,6 +235,7 @@ return static function (ContainerConfigurator $container): void {
                 // The body of one rendered message and the exception of a broken mail
                 // configuration: value objects carrying scalars, not services.
                 ROOT_PATH . 'system/src/Mail/RenderedEmailDTO.php',
+                ROOT_PATH . 'system/src/Mail/Queue/QueuedEmailDTO.php',
                 ROOT_PATH . 'system/src/Mail/Exception',
                 ROOT_PATH . 'system/src/Mail/Schema',
                 ROOT_PATH . 'system/src/View/Theme/ThemeDTO.php',
@@ -319,6 +321,8 @@ return static function (ContainerConfigurator $container): void {
     // Reads the `queue` section of the mail configuration: an array the container cannot autowire.
     $services->set(MailQueueSettings::class)->factory([MailQueueSettings::class, 'fromConfig']);
     $services->set(EmailQueueInterface::class, EloquentEmailQueue::class)->autowire();
+    // The same queue seen from the other end: what modules put messages into.
+    $services->alias(MailQueueInterface::class, EmailQueueInterface::class);
     $services->set(HtmlPurifierFactory::class);
     // A module declares an HTML policy of its own by registering an HtmlPolicyProviderInterface;
     // the tag is put on it by PSRContainerFactory, so its services.php needs nothing special.
