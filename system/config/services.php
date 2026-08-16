@@ -60,6 +60,9 @@ use Johncms\Security\FileRequestRateLog;
 use Johncms\Security\RequestRateLogInterface;
 use Johncms\Security\AntifloodCheckerInterface;
 use Johncms\Security\HTMLPurifier;
+use Johncms\Security\HtmlPurifierFactory;
+use Johncms\Security\HtmlSanitizer;
+use Johncms\Security\HtmlSanitizerInterface;
 use Johncms\Smilies\SmiliesRenderer;
 use Johncms\Smilies\SmiliesRendererInterface;
 use Johncms\Utils\DateFormatter;
@@ -297,6 +300,9 @@ return static function (ContainerConfigurator $container): void {
     // a controller ask for them by type.
     $services->alias(Counters::class, 'counters');
     $services->set(MailFactory::class)->factory([MailFactory::class, 'create']);
+    $services->set(HtmlPurifierFactory::class);
+    $services->set(HtmlSanitizerInterface::class, HtmlSanitizer::class)->autowire();
+    // Deprecated: the raw purifier, for the callers that have not been moved to the sanitizer yet.
     $services->set(HTMLPurifier::class)->factory([HTMLPurifier::class, 'create']);
     $services->set(\HTMLPurifier::class, \HTMLPurifier::class)->factory([HTMLPurifier::class, 'create']);
 

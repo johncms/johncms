@@ -12,8 +12,6 @@ declare(strict_types=1);
 
 namespace Johncms\Security;
 
-use HTMLPurifier_Config;
-use HTMLPurifier_AttrDef_Enum;
 use Psr\Container\ContainerInterface;
 
 /**
@@ -21,53 +19,16 @@ use Psr\Container\ContainerInterface;
  *
  * @package Johncms\Security
  * @mixin \HTMLPurifier
+ *
+ * @deprecated Take HtmlSanitizerInterface instead. The callers that still ask the container for
+ *             a raw \HTMLPurifier are being moved over to it; this factory goes away with the
+ *             last of them.
  */
 class HTMLPurifier
 {
     public function __invoke(ContainerInterface $container): \HTMLPurifier
     {
-        $htmlpurifier_config = config('htmlpurifier', ['allowed_classes' => []]);
-        $config = HTMLPurifier_Config::createDefault();
-        $config->set('Attr.AllowedClasses', $htmlpurifier_config['allowed_classes']);
-        $config->set('AutoFormat.Linkify', true);
-
-        $def = $config->getHTMLDefinition(true);
-        if ($def) {
-            $def->addAttribute(
-                'a',
-                'target',
-                new HTMLPurifier_AttrDef_Enum(
-                    ['_blank', '_self', '_target', '_top']
-                )
-            );
-            $def->addElement(
-                'figure',
-                'Block',
-                'Flow',
-                'Common',
-                [ // attributes
-                    'class',
-                ]
-            );
-            $def->addElement(
-                'oembed',
-                'Block',
-                'Flow',
-                'Common',
-                [ // attributes
-                    'url' => 'URI',
-                ]
-            );
-            $def->addElement(
-                'figcaption',
-                'Block',
-                'Flow',
-                'Common',
-                []
-            );
-        }
-
-        return new \HTMLPurifier($config);
+        return (new HtmlPurifierFactory())->create(HtmlPolicy::RichContent);
     }
 
     public static function create(ContainerInterface $container)
