@@ -2154,3 +2154,87 @@ msgstr "Сохранён. Заполните, чтобы заменить."
 
 msgid "Callback URL"
 msgstr "Адрес возврата (Callback URL)"
+
+msgid "Mail Settings"
+msgstr "Настройки почты"
+
+msgid "ERROR: Can not write file `mail.local.php`"
+msgstr "ОШИБКА: не удаётся записать файл `mail.local.php`"
+
+msgid "Test message"
+msgstr "Тестовое сообщение"
+
+msgid "If you are reading this, the mail settings of your website are working."
+msgstr "Если вы читаете это письмо, настройки почты вашего сайта работают."
+
+msgid "Invalid Email address"
+msgstr "Недопустимый адрес электронной почты"
+
+msgid "The test message could not be sent."
+msgstr "Не удалось отправить тестовое сообщение."
+
+msgid "The test message was sent to %s."
+msgstr "Тестовое сообщение отправлено на адрес %s."
+
+msgid "Connection string"
+msgstr "Строка подключения"
+
+msgid "DSN"
+msgstr "DSN"
+
+msgid "When it is filled in, the settings below are ignored. This is the only way to use a provider with its own API (Mailgun, Postmark, SES and others)."
+msgstr "Если поле заполнено, настройки ниже игнорируются. Это единственный способ использовать провайдера с собственным API (Mailgun, Postmark, SES и другие)."
+
+msgid "Transport"
+msgstr "Транспорт"
+
+msgid "Sending method"
+msgstr "Способ отправки"
+
+msgid "SMTP"
+msgstr "SMTP"
+
+msgid "Server"
+msgstr "Сервер"
+
+msgid "Port"
+msgstr "Порт"
+
+msgid "User name"
+msgstr "Имя пользователя"
+
+msgid "Encryption"
+msgstr "Шифрование"
+
+msgid "None"
+msgstr "Нет"
+
+msgid "ssl - encryption from the first byte, usually port 465. tls - STARTTLS, usually port 587."
+msgstr "ssl — шифрование с первого байта, обычно порт 465. tls — STARTTLS, обычно порт 587."
+
+msgid "Sendmail"
+msgstr "Sendmail"
+
+msgid "Command"
+msgstr "Команда"
+
+msgid "Leave empty to use the setting of php.ini."
+msgstr "Оставьте пустым, чтобы использовать настройку из php.ini."
+
+msgid "Development"
+msgstr "Разработка"
+
+msgid "Send all mail to this address"
+msgstr "Отправлять всю почту на этот адрес"
+
+msgid "Every message goes to this address instead of its real recipients. For a test copy of the site; leave empty on a live one. Several addresses are separated by commas."
+msgstr "Каждое письмо уходит на этот адрес вместо настоящих получателей. Для тестовой копии сайта; на рабочем оставьте пустым. Несколько адресов разделяются запятыми."
+
+msgid "Send a test message to"
+msgstr "Отправить тестовое сообщение на"
+
+msgid "The message is sent immediately, bypassing the queue, so that the answer of the mail server is shown right here. Save the settings first."
+msgstr "Сообщение отправляется сразу, минуя очередь, поэтому ответ почтового сервера виден прямо здесь. Сначала сохраните настройки."
+
+msgid "Send"
+msgstr "Отправить"
