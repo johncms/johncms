@@ -81,6 +81,14 @@ final class HtmlPurifierFactory
         // by every composer install and is read-only on a properly deployed site.
         $config->set('Cache.SerializerPath', $this->cacheDirectory());
 
+        // The scheme validators of the library live in a registry shared by the whole process,
+        // and by default a scheme already in it is handed out without checking it against the
+        // list of the policy at hand. One policy allowing http would then let every later policy
+        // through as well, however narrow its own list of schemes — the first purifier built in
+        // the process would decide for all of them. Turning the override off makes each policy
+        // answer for its own schemes.
+        $config->set('URI.OverrideAllowedSchemes', false);
+
         return $config;
     }
 

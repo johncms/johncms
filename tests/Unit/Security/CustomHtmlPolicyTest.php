@@ -161,6 +161,40 @@ final class CustomHtmlPolicyTest extends TestCase
         );
     }
 
+    /**
+     * The schemes of one policy must not widen another.
+     *
+     * The library keeps its scheme validators in a registry shared by the whole process and, left
+     * to its defaults, hands out one that is already there without checking it against the policy
+     * being applied. A single permissive policy anywhere in the request would then decide for
+     * every policy built after it — and which policy that is depends on the order things happen
+     * to run in, which is why this went unnoticed.
+     */
+    public function testAPermissivePolicyDoesNotWidenALaterOne(): void
+    {
+        $permissive = $this->sanitizerWith(new HtmlPolicyDefinition(
+            name: 'my-module.any-link',
+            elements: ['a' => ['href']],
+            linkSchemes: ['http', 'https', 'mailto'],
+        ));
+        $permissive->sanitize('<a href="http://example.test/">t</a>', 'my-module.any-link');
+
+        $strict = $this->sanitizerWith(new HtmlPolicyDefinition(
+            name: 'my-module.https-only-after',
+            elements: ['a' => ['href']],
+            linkSchemes: ['https'],
+        ));
+
+        self::assertStringNotContainsString(
+            'http://example.test',
+            $strict->sanitize('<a href="http://example.test/">t</a>', 'my-module.https-only-after')
+        );
+        self::assertStringNotContainsString(
+            'mailto:',
+            $strict->sanitize('<a href="mailto:user@example.test">t</a>', 'my-module.https-only-after')
+        );
+    }
+
     public function testAnEmptyPolicyStripsEveryTag(): void
     {
         $result = $this->sanitizerWith(new HtmlPolicyDefinition(name: 'my-module.text', elements: []))
