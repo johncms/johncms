@@ -57,7 +57,7 @@ msgstr ""
 #: modules/help/src/Application/Controllers/SetAvatarController.php:39
 #: modules/help/src/Application/Controllers/SetAvatarController.php:55
 #: modules/help/src/Application/Controllers/SetAvatarController.php:89
-#: modules/help/src/Application/Controllers/SetMySmiliesController.php:43
+#: modules/help/src/Application/Controllers/SetMySmiliesController.php:44
 #: modules/help/src/Application/Controllers/UserSmiliesController.php:45
 #: modules/help/templates/public/catalog.twig:25
 #: modules/help/templates/public/components/list-footer.twig:19
@@ -73,13 +73,13 @@ msgstr ""
 
 #: modules/help/src/Application/Controllers/MySmiliesController.php:41
 #: modules/help/src/Application/Controllers/SetAvatarController.php:35
-#: modules/help/src/Application/Controllers/SetMySmiliesController.php:39
+#: modules/help/src/Application/Controllers/SetMySmiliesController.php:40
 msgid "Access denied"
 msgstr ""
 
 #: modules/help/src/Application/Controllers/MySmiliesController.php:43
 #: modules/help/src/Application/Controllers/SetAvatarController.php:37
-#: modules/help/src/Application/Controllers/SetMySmiliesController.php:41
+#: modules/help/src/Application/Controllers/SetMySmiliesController.php:42
 msgid "You are not logged in"
 msgstr ""
 

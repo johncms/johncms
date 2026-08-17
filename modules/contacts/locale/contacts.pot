@@ -80,7 +80,7 @@ msgstr ""
 msgid "Your message has been sent. We will reply as soon as possible."
 msgstr ""
 
-#: modules/contacts/src/Application/UseCases/SubmitContactMessageUseCase.php:67
+#: modules/contacts/src/Application/UseCases/SubmitContactMessageUseCase.php:71
 msgid "New message from the contact form"
 msgstr ""
 

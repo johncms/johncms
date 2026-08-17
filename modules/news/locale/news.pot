@@ -6,8 +6,8 @@ msgstr ""
 msgid "The requested article was not found."
 msgstr ""
 
-#: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:50
-#: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:312
+#: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:51
+#: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:311
 #: modules/news/src/Application/Controllers/Admin/AdminController.php:32
 #: modules/news/src/Application/Controllers/Admin/AdminController.php:34
 #: modules/news/src/Application/Controllers/Admin/AdminController.php:42
@@ -23,7 +23,7 @@ msgstr ""
 msgid "News"
 msgstr ""
 
-#: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:51
+#: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:52
 #: modules/news/src/Application/Controllers/Admin/AdminController.php:44
 #: modules/news/src/Application/Controllers/Admin/AdminSectionController.php:42
 msgid "Section list"
@@ -36,7 +36,7 @@ msgid "Add article"
 msgstr ""
 
 #: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:113
-#: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:214
+#: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:213
 msgid "The article name cannot be empty"
 msgstr ""
 
@@ -45,24 +45,24 @@ msgid "The article was created successfully"
 msgstr ""
 
 #: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:146
-#: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:244
+#: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:243
 msgid "An article with this code already exists"
 msgstr ""
 
-#: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:167
+#: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:166
 msgid "Edit article"
 msgstr ""
 
-#: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:241
+#: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:240
 msgid "The article was updated successfully"
 msgstr ""
 
-#: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:298
+#: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:297
 msgid "The article was successfully deleted"
 msgstr ""
 
-#: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:326
-#: modules/news/src/Application/Controllers/CommentsController.php:222
+#: modules/news/src/Application/Controllers/Admin/AdminArticleController.php:325
+#: modules/news/src/Application/Controllers/CommentsController.php:225
 msgid "Only images are allowed"
 msgstr ""
 
@@ -109,31 +109,31 @@ msgstr ""
 msgid "The section was successfully deleted"
 msgstr ""
 
-#: modules/news/src/Application/Controllers/CommentsController.php:49
+#: modules/news/src/Application/Controllers/CommentsController.php:51
 msgid "Bad Request"
 msgstr ""
 
-#: modules/news/src/Application/Controllers/CommentsController.php:141
+#: modules/news/src/Application/Controllers/CommentsController.php:144
 msgid "You have a ban!"
 msgstr ""
 
-#: modules/news/src/Application/Controllers/CommentsController.php:145
+#: modules/news/src/Application/Controllers/CommentsController.php:148
 msgid "You are not logged in"
 msgstr ""
 
-#: modules/news/src/Application/Controllers/CommentsController.php:172
+#: modules/news/src/Application/Controllers/CommentsController.php:175
 msgid "The comment was added successfully"
 msgstr ""
 
-#: modules/news/src/Application/Controllers/CommentsController.php:175
+#: modules/news/src/Application/Controllers/CommentsController.php:178
 msgid "Enter the comment text"
 msgstr ""
 
-#: modules/news/src/Application/Controllers/CommentsController.php:200
+#: modules/news/src/Application/Controllers/CommentsController.php:203
 msgid "The comment was deleted successfully"
 msgstr ""
 
-#: modules/news/src/Application/Controllers/CommentsController.php:206
+#: modules/news/src/Application/Controllers/CommentsController.php:209
 msgid "Access denied"
 msgstr ""
 

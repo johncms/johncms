@@ -130,41 +130,46 @@ msgid "System Settings"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:251
-msgid "Update Smilies"
+#: modules/admin/src/Application/Controllers/Settings/MailSettingsController.php:94
+msgid "Mail Settings"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:259
-msgid "Language Settings"
+msgid "Update Smilies"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:267
+msgid "Language Settings"
+msgstr ""
+
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:275
 #: modules/admin/src/Application/Controllers/System/SystemCheckController.php:28
 msgid "System check"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:275
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:283
 #: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:68
 msgid "Maintenance"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:287
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:295
 #: modules/admin/src/Application/Controllers/System/SystemCheckController.php:41
 msgid "Security"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:304
-#: modules/admin/src/Application/Controllers/Access/ExternalProvidersController.php:35
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:312
+#: modules/admin/src/Application/Controllers/Access/ExternalProvidersController.php:37
 msgid "Sign-in services"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:313
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:321
 #: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:29
 #: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:42
 #: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:71
 msgid "Anti-Spyware"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:321
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:329
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:50
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:74
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:126
@@ -176,7 +181,7 @@ msgstr ""
 msgid "Ban by IP"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Access/ExternalProvidersController.php:66
+#: modules/admin/src/Application/Controllers/Access/ExternalProvidersController.php:70
 #: modules/admin/src/Application/Controllers/Access/RolesController.php:195
 #: modules/admin/src/Application/Controllers/Access/UserRolesController.php:94
 msgid "Changes saved successfully"
@@ -239,6 +244,7 @@ msgstr ""
 #: modules/admin/src/Application/Controllers/Forum/ForumSettingsController.php:49
 #: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:53
 #: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:39
+#: modules/admin/src/Application/Controllers/Settings/MailSettingsController.php:46
 #: modules/admin/src/Application/Controllers/Settings/SystemSettingsController.php:43
 #: modules/admin/src/Application/Controllers/Users/KarmaController.php:48
 msgid "Settings are saved successfully"
@@ -654,6 +660,32 @@ msgstr ""
 msgid "On the main showing option 1, on the other pages option 2"
 msgstr ""
 
+#: modules/admin/src/Application/Controllers/Settings/MailSettingsController.php:41
+msgid "ERROR: Can not write file `mail.local.php`"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/Settings/MailSettingsController.php:61
+#: modules/admin/templates/mail-settings.twig:111
+msgid "Test message"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/Settings/MailSettingsController.php:62
+msgid "If you are reading this, the mail settings of your website are working."
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/Settings/MailSettingsController.php:65
+msgid "Invalid Email address"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/Settings/MailSettingsController.php:69
+msgid "The test message could not be sent."
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/Settings/MailSettingsController.php:73
+#, php-format
+msgid "The test message was sent to %s."
+msgstr ""
+
 #: modules/admin/src/Application/Controllers/System/EmoticonsController.php:35
 msgid "Error updating cache"
 msgstr ""
@@ -1036,6 +1068,7 @@ msgstr ""
 #: modules/admin/templates/ip-ban-form.twig:53
 #: modules/admin/templates/karma.twig:43
 #: modules/admin/templates/languages.twig:31
+#: modules/admin/templates/mail-settings.twig:104
 #: modules/admin/templates/role-form.twig:120
 #: modules/admin/templates/settings.twig:125
 #: modules/admin/templates/user-roles.twig:69
@@ -1829,7 +1862,92 @@ msgstr ""
 
 #: modules/admin/templates/login.twig:35
 #: modules/admin/templates/login.twig:43
+#: modules/admin/templates/mail-settings.twig:62
 msgid "Password"
+msgstr ""
+
+#: modules/admin/templates/mail-settings.twig:24
+msgid "Connection string"
+msgstr ""
+
+#: modules/admin/templates/mail-settings.twig:26
+msgid "DSN"
+msgstr ""
+
+#: modules/admin/templates/mail-settings.twig:30
+msgid "When it is filled in, the settings below are ignored. This is the only way to use a provider with its own API (Mailgun, Postmark, SES and others)."
+msgstr ""
+
+#: modules/admin/templates/mail-settings.twig:36
+msgid "Transport"
+msgstr ""
+
+#: modules/admin/templates/mail-settings.twig:38
+msgid "Sending method"
+msgstr ""
+
+#: modules/admin/templates/mail-settings.twig:48
+msgid "SMTP"
+msgstr ""
+
+#: modules/admin/templates/mail-settings.twig:50
+msgid "Server"
+msgstr ""
+
+#: modules/admin/templates/mail-settings.twig:54
+msgid "Port"
+msgstr ""
+
+#: modules/admin/templates/mail-settings.twig:58
+msgid "User name"
+msgstr ""
+
+#: modules/admin/templates/mail-settings.twig:66
+msgid "Encryption"
+msgstr ""
+
+#: modules/admin/templates/mail-settings.twig:70
+msgid "None"
+msgstr ""
+
+#: modules/admin/templates/mail-settings.twig:75
+msgid "ssl - encryption from the first byte, usually port 465. tls - STARTTLS, usually port 587."
+msgstr ""
+
+#: modules/admin/templates/mail-settings.twig:81
+msgid "Sendmail"
+msgstr ""
+
+#: modules/admin/templates/mail-settings.twig:83
+msgid "Command"
+msgstr ""
+
+#: modules/admin/templates/mail-settings.twig:87
+msgid "Leave empty to use the setting of php.ini."
+msgstr ""
+
+#: modules/admin/templates/mail-settings.twig:93
+msgid "Development"
+msgstr ""
+
+#: modules/admin/templates/mail-settings.twig:95
+msgid "Send all mail to this address"
+msgstr ""
+
+#: modules/admin/templates/mail-settings.twig:98
+msgid "Every message goes to this address instead of its real recipients. For a test copy of the site; leave empty on a live one. Several addresses are separated by commas."
+msgstr ""
+
+#: modules/admin/templates/mail-settings.twig:113
+msgid "Send a test message to"
+msgstr ""
+
+#: modules/admin/templates/mail-settings.twig:116
+msgid "The message is sent immediately, bypassing the queue, so that the answer of the mail server is shown right here. Save the settings first."
+msgstr ""
+
+#: modules/admin/templates/mail-settings.twig:121
+msgid "Send"
 msgstr ""
 
 #: modules/admin/templates/maintenance.twig:17

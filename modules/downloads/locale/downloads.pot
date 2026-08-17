@@ -4,9 +4,9 @@ msgstr ""
 
 #: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:51
 #: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:286
-#: modules/downloads/src/Application/Controllers/CommentsReviewController.php:48
-#: modules/downloads/src/Application/Controllers/CommentsReviewController.php:108
-#: modules/downloads/src/Application/Controllers/CommentsReviewController.php:110
+#: modules/downloads/src/Application/Controllers/CommentsReviewController.php:51
+#: modules/downloads/src/Application/Controllers/CommentsReviewController.php:114
+#: modules/downloads/src/Application/Controllers/CommentsReviewController.php:116
 #: modules/downloads/src/Application/Controllers/CreateCategoryController.php:38
 #: modules/downloads/src/Application/Controllers/CreateCategoryController.php:50
 #: modules/downloads/src/Application/Controllers/DeleteCategoryController.php:30
@@ -193,13 +193,13 @@ msgstr ""
 msgid "File not found"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/CommentsReviewController.php:44
-#: modules/downloads/src/Application/Controllers/CommentsReviewController.php:46
+#: modules/downloads/src/Application/Controllers/CommentsReviewController.php:47
+#: modules/downloads/src/Application/Controllers/CommentsReviewController.php:49
 #: modules/downloads/src/Application/Controllers/FileCommentsController.php:45
 msgid "Comments are disabled"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/CommentsReviewController.php:107
+#: modules/downloads/src/Application/Controllers/CommentsReviewController.php:113
 #: modules/downloads/templates/public/index.twig:147
 msgid "Review comments"
 msgstr ""

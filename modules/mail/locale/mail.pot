@@ -64,7 +64,7 @@ msgid "User has been added to your contact list"
 msgstr ""
 
 #: modules/mail/src/Application/Controllers/AddContactController.php:69
-#: modules/mail/src/Application/Services/MailMessagePreviewService.php:41
+#: modules/mail/src/Application/Services/MailMessagePreviewService.php:42
 msgid "Continue"
 msgstr ""
 
@@ -116,8 +116,8 @@ msgstr ""
 #: modules/mail/src/Application/Controllers/DeleteContactController.php:77
 #: modules/mail/src/Application/Controllers/DeleteMessageController.php:38
 #: modules/mail/src/Application/UseCases/GetContactListUseCase.php:91
-#: modules/mail/src/Application/UseCases/GetIncomingConversationsUseCase.php:79
-#: modules/mail/src/Application/UseCases/GetOutgoingConversationsUseCase.php:79
+#: modules/mail/src/Application/UseCases/GetIncomingConversationsUseCase.php:86
+#: modules/mail/src/Application/UseCases/GetOutgoingConversationsUseCase.php:86
 #: modules/mail/templates/public/blocklist.twig:42
 #: modules/mail/templates/public/messages.twig:152
 msgid "Delete"
@@ -140,7 +140,7 @@ msgstr ""
 
 #: modules/mail/src/Application/Controllers/ClearConversationController.php:78
 #: modules/mail/src/Application/Controllers/WriteController.php:87
-#: modules/mail/src/Application/UseCases/SendMessageUseCase.php:42
+#: modules/mail/src/Application/UseCases/SendMessageUseCase.php:43
 msgid "User does not exists"
 msgstr ""
 
@@ -232,77 +232,77 @@ msgid "Blocklist"
 msgstr ""
 
 #: modules/mail/src/Application/UseCases/GetContactListUseCase.php:87
-#: modules/mail/src/Application/UseCases/GetIncomingConversationsUseCase.php:75
-#: modules/mail/src/Application/UseCases/GetOutgoingConversationsUseCase.php:75
+#: modules/mail/src/Application/UseCases/GetIncomingConversationsUseCase.php:82
+#: modules/mail/src/Application/UseCases/GetOutgoingConversationsUseCase.php:82
 #: modules/mail/templates/public/blocklist.twig:41
 msgid "Correspondence"
 msgstr ""
 
 #: modules/mail/src/Application/UseCases/GetContactListUseCase.php:95
-#: modules/mail/src/Application/UseCases/GetIncomingConversationsUseCase.php:83
-#: modules/mail/src/Application/UseCases/GetOutgoingConversationsUseCase.php:83
+#: modules/mail/src/Application/UseCases/GetIncomingConversationsUseCase.php:90
+#: modules/mail/src/Application/UseCases/GetOutgoingConversationsUseCase.php:90
 msgid "Block User"
 msgstr ""
 
-#: modules/mail/src/Application/UseCases/SendMessageUseCase.php:37
+#: modules/mail/src/Application/UseCases/SendMessageUseCase.php:38
 msgid "Access forbidden"
 msgstr ""
 
-#: modules/mail/src/Application/UseCases/SendMessageUseCase.php:47
+#: modules/mail/src/Application/UseCases/SendMessageUseCase.php:48
 msgid "Message cannot be empty"
 msgstr ""
 
-#: modules/mail/src/Application/UseCases/SendMessageUseCase.php:51
+#: modules/mail/src/Application/UseCases/SendMessageUseCase.php:52
 msgid "You cannot send messages to yourself"
 msgstr ""
 
-#: modules/mail/src/Application/UseCases/SendMessageUseCase.php:57
+#: modules/mail/src/Application/UseCases/SendMessageUseCase.php:58
 #, php-format
 msgid "You cannot add the message so often. Please, wait %d sec."
 msgstr ""
 
-#: modules/mail/src/Application/UseCases/SendMessageUseCase.php:64
+#: modules/mail/src/Application/UseCases/SendMessageUseCase.php:65
 msgid "The user at your ignore list. Sending the message is impossible."
 msgstr ""
 
-#: modules/mail/src/Application/UseCases/SendMessageUseCase.php:67
+#: modules/mail/src/Application/UseCases/SendMessageUseCase.php:68
 msgid "The user added you in the ignore list. Sending the message isn't possible."
 msgstr ""
 
-#: modules/mail/src/Application/UseCases/SendMessageUseCase.php:78
+#: modules/mail/src/Application/UseCases/SendMessageUseCase.php:79
 msgid "Message already exists"
 msgstr ""
 
-#: modules/mail/src/Application/UseCases/SendMessageUseCase.php:88
-#: modules/mail/src/Application/UseCases/SendMessageUseCase.php:142
+#: modules/mail/src/Application/UseCases/SendMessageUseCase.php:89
+#: modules/mail/src/Application/UseCases/SendMessageUseCase.php:143
 msgid "Error uploading file"
 msgstr ""
 
-#: modules/mail/src/Application/UseCases/SendMessageUseCase.php:128
+#: modules/mail/src/Application/UseCases/SendMessageUseCase.php:129
 msgid "To this user can write only contacts"
 msgstr ""
 
-#: modules/mail/src/Application/UseCases/SendMessageUseCase.php:132
+#: modules/mail/src/Application/UseCases/SendMessageUseCase.php:133
 msgid "To this user can write only friends"
 msgstr ""
 
-#: modules/mail/src/Application/UseCases/SendMessageUseCase.php:148
+#: modules/mail/src/Application/UseCases/SendMessageUseCase.php:149
 msgid "It is forbidden to upload files without a name"
 msgstr ""
 
-#: modules/mail/src/Application/UseCases/SendMessageUseCase.php:152
+#: modules/mail/src/Application/UseCases/SendMessageUseCase.php:153
 msgid "It is forbidden to upload files without extension"
 msgstr ""
 
-#: modules/mail/src/Application/UseCases/SendMessageUseCase.php:158
+#: modules/mail/src/Application/UseCases/SendMessageUseCase.php:159
 msgid "The size of the file exceeds the maximum allowable upload"
 msgstr ""
 
-#: modules/mail/src/Application/UseCases/SendMessageUseCase.php:162
+#: modules/mail/src/Application/UseCases/SendMessageUseCase.php:163
 msgid "File name contains invalid characters"
 msgstr ""
 
-#: modules/mail/src/Application/UseCases/SendMessageUseCase.php:167
+#: modules/mail/src/Application/UseCases/SendMessageUseCase.php:168
 msgid "Forbidden file type! By uploading permitted only files with the following extension"
 msgstr ""
 

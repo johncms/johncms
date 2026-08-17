@@ -14,12 +14,12 @@ msgid "Community"
 msgstr ""
 
 #: modules/community/src/Application/Controllers/AdministrationController.php:30
-#: modules/community/templates/public/index.twig:27
+#: modules/community/templates/public/index.twig:32
 msgid "Administration"
 msgstr ""
 
 #: modules/community/src/Application/Controllers/CommunityBirthdaysController.php:30
-#: modules/community/templates/public/index.twig:32
+#: modules/community/templates/public/index.twig:37
 msgid "Birthdays"
 msgstr ""
 
@@ -126,7 +126,7 @@ msgstr ""
 msgid "Users"
 msgstr ""
 
-#: modules/community/templates/public/index.twig:37
+#: modules/community/templates/public/index.twig:42
 msgid "Top Activity"
 msgstr ""
 

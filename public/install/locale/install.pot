@@ -13,12 +13,12 @@ msgid "Checking parameters"
 msgstr ""
 
 #: public/install/index.php:88
-#: public/install/steps/step_3.php:22
+#: public/install/steps/step_3.php:25
 msgid "Database"
 msgstr ""
 
 #: public/install/index.php:93
-#: public/install/steps/step_4.php:34
+#: public/install/steps/step_4.php:35
 msgid "Setting"
 msgstr ""
 
@@ -87,40 +87,40 @@ msgstr ""
 msgid "PHP extension fileinfo must be installed"
 msgstr ""
 
-#: public/install/steps/step_3.php:118
+#: public/install/steps/step_3.php:120
 msgid "Correct work of JohnCMS is not guaranteed on your version of mysql server.<br>You can ignore this warning at your own risk."
 msgstr ""
 
-#: public/install/steps/step_3.php:119
+#: public/install/steps/step_3.php:121
 #, php-format
 msgid "Server name: <b>%s</b>. <br>Your mysql server version is <b>%s</b>. But <b>%s</b> is required."
 msgstr ""
 
-#: public/install/steps/step_3.php:123
+#: public/install/steps/step_3.php:125
 msgid "The system requires a properly configured <a href='https://www.php.net/manual/en/intro.mysqlnd.php' target='_blank'>MySQL Native Driver (mysqlnd)</a>."
 msgstr ""
 
-#: public/install/steps/step_3.php:124
+#: public/install/steps/step_3.php:126
 msgid "Please contact your hosting provider's technical support to resolve this issue."
 msgstr ""
 
-#: public/install/steps/step_3.php:128
+#: public/install/steps/step_3.php:130
 msgid "ERROR: Can't write database.local.php"
 msgstr ""
 
-#: public/install/steps/step_3.php:134
+#: public/install/steps/step_3.php:136
 msgid "Invalid database host name"
 msgstr ""
 
-#: public/install/steps/step_3.php:136
+#: public/install/steps/step_3.php:138
 msgid "Invalid database user or password"
 msgstr ""
 
-#: public/install/steps/step_3.php:138
+#: public/install/steps/step_3.php:140
 msgid "Database does not exist"
 msgstr ""
 
-#: public/install/steps/step_4.php:180
+#: public/install/steps/step_4.php:184
 msgid "ERROR: Can't write system.local.php"
 msgstr ""
 

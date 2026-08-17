@@ -2,31 +2,31 @@ msgid ""
 msgstr ""
 "X-Domain: system\n"
 
-#: config/notifications.global.php:20
+#: config/notifications.global.php:14
 #: config/places.global.php:17
 #: themes/default/templates/components/sidebar-main-menu.twig:34
 #: modules/homepage/templates/public/index.twig:42
 msgid "Forum"
 msgstr ""
 
-#: config/notifications.global.php:23
+#: config/notifications.global.php:17
 msgid "New reply on the forum"
 msgstr ""
 
-#: config/notifications.global.php:32
+#: config/notifications.global.php:26
 #, php-format
 msgid "<a href=\"%s\">User <b>%s</b> responded to your message in the topic %s</a>"
 msgstr ""
 
-#: config/notifications.global.php:39
+#: config/notifications.global.php:33
 msgid "Karma"
 msgstr ""
 
-#: config/notifications.global.php:42
+#: config/notifications.global.php:36
 msgid "New vote in karma"
 msgstr ""
 
-#: config/notifications.global.php:43
+#: config/notifications.global.php:37
 msgid "User <b>#user_name#</b> voted in <a href=\"#karma_url#\">your karma</a>."
 msgstr ""
 
@@ -50,12 +50,12 @@ msgid "Users List"
 msgstr ""
 
 #: config/places.global.php:16
-#: system/src/Comments.php:211
-#: system/src/Comments.php:248
-#: system/src/Comments.php:277
-#: system/src/Comments.php:301
-#: system/src/Comments.php:342
-#: system/src/Comments.php:369
+#: system/src/Comments.php:210
+#: system/src/Comments.php:247
+#: system/src/Comments.php:276
+#: system/src/Comments.php:300
+#: system/src/Comments.php:341
+#: system/src/Comments.php:368
 #: themes/default/templates/components/sidebar-main-menu.twig:60
 #: modules/homepage/templates/public/index.twig:44
 msgid "Downloads"
@@ -87,8 +87,8 @@ msgstr ""
 #: modules/login/src/Application/Controllers/LoginController.php:141
 #: modules/login/src/Application/Controllers/LoginController.php:142
 #: modules/login/templates/public/login.twig:51
-#: system/src/Http/Controller/ExternalAuthController.php:301
-#: system/src/Http/Controller/ExternalAuthController.php:314
+#: system/src/Http/Controller/ExternalAuthController.php:312
+#: system/src/Http/Controller/ExternalAuthController.php:325
 #: themes/default/templates/components/sidebar-user-menu.twig:69
 msgid "Login"
 msgstr ""
@@ -218,7 +218,7 @@ msgid "Forgot password?"
 msgstr ""
 
 #: modules/login/templates/public/login.twig:54
-#: system/src/Http/Controller/ExternalAuthController.php:180
+#: system/src/Http/Controller/ExternalAuthController.php:181
 #: themes/default/templates/components/sidebar-user-menu.twig:77
 msgid "Registration"
 msgstr ""
@@ -331,14 +331,14 @@ msgid "Go to Link"
 msgstr ""
 
 #: modules/redirect/templates/public/index.twig:31
-#: system/src/Comments.php:215
-#: system/src/Comments.php:252
-#: system/src/Comments.php:269
-#: system/src/Comments.php:281
-#: system/src/Comments.php:305
-#: system/src/Comments.php:346
-#: system/src/Comments.php:361
-#: system/src/Comments.php:373
+#: system/src/Comments.php:214
+#: system/src/Comments.php:251
+#: system/src/Comments.php:268
+#: system/src/Comments.php:280
+#: system/src/Comments.php:304
+#: system/src/Comments.php:345
+#: system/src/Comments.php:360
+#: system/src/Comments.php:372
 #: themes/default/templates/admin/pages/result.twig:21
 #: themes/default/templates/pages/comments-list.twig:138
 #: themes/default/templates/pages/result.twig:19
@@ -469,44 +469,44 @@ msgstr ""
 msgid "Action while browsing as the user"
 msgstr ""
 
-#: system/src/Auth/External/AbstractOAuth2Provider.php:83
+#: system/src/Auth/External/AbstractOAuth2Provider.php:87
 msgid "The sign-in was cancelled"
 msgstr ""
 
-#: system/src/Auth/External/AbstractOAuth2Provider.php:89
+#: system/src/Auth/External/AbstractOAuth2Provider.php:93
 msgid "The service did not return a sign-in code"
 msgstr ""
 
-#: system/src/Auth/External/AbstractOAuth2Provider.php:96
+#: system/src/Auth/External/AbstractOAuth2Provider.php:100
 msgid "The service did not return an access token"
 msgstr ""
 
-#: system/src/Auth/External/AbstractOAuth2Provider.php:185
+#: system/src/Auth/External/AbstractOAuth2Provider.php:202
 msgid "The service is not responding, please try again later"
 msgstr ""
 
-#: system/src/Auth/External/AbstractOAuth2Provider.php:191
+#: system/src/Auth/External/AbstractOAuth2Provider.php:221
 msgid "The service refused the sign-in"
 msgstr ""
 
-#: system/src/Auth/External/AuthenticateViaExternalProviderUseCase.php:62
+#: system/src/Auth/External/AuthenticateViaExternalProviderUseCase.php:64
 msgid "This email address is already registered. Sign in with your password to link the account."
 msgstr ""
 
-#: system/src/Auth/External/OAuthStateStorage.php:90
-#: system/src/Auth/External/OAuthStateStorage.php:98
-#: system/src/Http/Controller/ExternalAuthController.php:128
-#: system/src/Http/Controller/ExternalAuthController.php:139
-#: system/src/Http/Controller/ExternalAuthController.php:215
+#: system/src/Auth/External/OAuthStateStorage.php:96
+#: system/src/Auth/External/OAuthStateStorage.php:104
+#: system/src/Http/Controller/ExternalAuthController.php:129
+#: system/src/Http/Controller/ExternalAuthController.php:140
+#: system/src/Http/Controller/ExternalAuthController.php:216
 msgid "The sign-in attempt has expired, please try again"
 msgstr ""
 
-#: system/src/Auth/External/OAuthStateStorage.php:94
+#: system/src/Auth/External/OAuthStateStorage.php:100
 msgid "The sign-in attempt could not be verified, please try again"
 msgstr ""
 
-#: system/src/Auth/External/Providers/VkProvider.php:85
-#: system/src/Http/Controller/ExternalAuthController.php:109
+#: system/src/Auth/External/Providers/VkProvider.php:79
+#: system/src/Http/Controller/ExternalAuthController.php:110
 msgid "The service did not return an account identifier"
 msgstr ""
 
@@ -640,54 +640,54 @@ msgid ""
 "PHP should work with the default driver: <a href=\"https://www.php.net/manual/en/intro.mysqlnd.php\" target=\"_blank\">MySQL Native Driver (mysqlnd)</a>."
 msgstr ""
 
-#: system/src/Comments.php:200
+#: system/src/Comments.php:199
+#: system/src/Comments.php:264
 #: system/src/Comments.php:265
-#: system/src/Comments.php:266
 #: themes/default/templates/pages/comments-list.twig:106
 msgid "Reply"
 msgstr ""
 
-#: system/src/Comments.php:213
+#: system/src/Comments.php:212
 msgid "Administrator already replied to this message"
 msgstr ""
 
-#: system/src/Comments.php:279
-#: system/src/Comments.php:371
+#: system/src/Comments.php:278
+#: system/src/Comments.php:370
 msgid "Wrong data"
 msgstr ""
 
-#: system/src/Comments.php:291
+#: system/src/Comments.php:290
+#: system/src/Comments.php:356
 #: system/src/Comments.php:357
-#: system/src/Comments.php:358
 #: themes/default/templates/pages/comments-list.twig:118
 msgid "Edit"
 msgstr ""
 
-#: system/src/Comments.php:303
+#: system/src/Comments.php:302
 msgid "You cannot edit posts of higher administration"
 msgstr ""
 
-#: system/src/Comments.php:383
+#: system/src/Comments.php:382
+#: system/src/Comments.php:416
 #: system/src/Comments.php:417
-#: system/src/Comments.php:418
 #: themes/default/templates/pages/comments-delete.twig:16
 #: themes/default/templates/pages/comments-list.twig:121
 msgid "Delete"
 msgstr ""
 
-#: system/src/Comments.php:682
+#: system/src/Comments.php:681
 msgid "Text is too short"
 msgstr ""
 
-#: system/src/Comments.php:688
+#: system/src/Comments.php:687
 msgid "You cannot add the message so often<br>Please, wait"
 msgstr ""
 
-#: system/src/Comments.php:688
+#: system/src/Comments.php:687
 msgid "seconds"
 msgstr ""
 
-#: system/src/Comments.php:696
+#: system/src/Comments.php:695
 msgid "Message already exists"
 msgstr ""
 
@@ -699,20 +699,20 @@ msgstr ""
 msgid "Last activity"
 msgstr ""
 
-#: system/src/Http/Controller/ExternalAuthController.php:70
-#: system/src/Http/Controller/ExternalAuthController.php:90
+#: system/src/Http/Controller/ExternalAuthController.php:72
+#: system/src/Http/Controller/ExternalAuthController.php:92
 msgid "This sign-in service is not available"
 msgstr ""
 
-#: system/src/Http/Controller/ExternalAuthController.php:180
+#: system/src/Http/Controller/ExternalAuthController.php:181
 msgid "Your account is awaiting approval"
 msgstr ""
 
-#: system/src/Http/Controller/ExternalAuthController.php:198
+#: system/src/Http/Controller/ExternalAuthController.php:199
 msgid "Registration is closed on this site"
 msgstr ""
 
-#: system/src/Http/Controller/ExternalAuthController.php:278
+#: system/src/Http/Controller/ExternalAuthController.php:279
 msgid "Finish signing up"
 msgstr ""
 
@@ -749,7 +749,7 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/ForumSearchController.php:96
 #: modules/forum/src/Application/Controllers/ForumTopicController.php:155
 #: modules/forum/src/Application/Controllers/ForumTopicController.php:164
-#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:408
+#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:409
 msgid "Page"
 msgstr ""
 
@@ -826,14 +826,14 @@ msgid "'%hostname%' does not appear to have any valid MX or A records for the em
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:17
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:364
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:372
 #: themes/default/templates/components/sidebar-main-menu.twig:6
 #: themes/default/templates/components/sidebar-main-menu.twig:179
 msgid "Set Light Theme"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:17
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:363
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:371
 #: themes/default/templates/components/sidebar-main-menu.twig:6
 #: themes/default/templates/components/sidebar-main-menu.twig:178
 msgid "Set Dark Theme"
@@ -909,35 +909,47 @@ msgid "Exit"
 msgstr ""
 
 #: themes/default/templates/emails/changed-email-notification.twig:9
+#: themes/default/templates/emails/changed-email-notification.txt.twig:9
 msgid "Changing email address"
 msgstr ""
 
 #: themes/default/templates/emails/changed-email-notification.twig:12
+#: themes/default/templates/emails/changed-email-notification.txt.twig:12
 #: themes/default/templates/emails/confirm-email-change.twig:12
+#: themes/default/templates/emails/confirm-email-change.txt.twig:12
 #: themes/default/templates/emails/registration.twig:13
+#: themes/default/templates/emails/registration.txt.twig:13
 #: themes/default/templates/emails/restore-password-complete.twig:13
+#: themes/default/templates/emails/restore-password-complete.txt.twig:13
 #: themes/default/templates/emails/restore-password.twig:12
+#: themes/default/templates/emails/restore-password.txt.twig:12
 msgid "Hello, %s!"
 msgstr ""
 
 #: themes/default/templates/emails/changed-email-notification.twig:14
+#: themes/default/templates/emails/changed-email-notification.txt.twig:14
 #: themes/default/templates/emails/confirm-email-change.twig:14
+#: themes/default/templates/emails/confirm-email-change.txt.twig:14
 msgid "You have started the process of changing the email address on the <a href=\"%s\">%s</a> website"
 msgstr ""
 
 #: themes/default/templates/emails/changed-email-notification.twig:17
+#: themes/default/templates/emails/changed-email-notification.txt.twig:16
 msgid "The new email address is:"
 msgstr ""
 
 #: themes/default/templates/emails/changed-email-notification.twig:20
+#: themes/default/templates/emails/changed-email-notification.txt.twig:18
 msgid "If you have not started the procedure for changing email, please contact us in any way convenient for you."
 msgstr ""
 
 #: themes/default/templates/emails/confirm-email-change.twig:9
+#: themes/default/templates/emails/confirm-email-change.txt.twig:9
 msgid "Confirm email change"
 msgstr ""
 
 #: themes/default/templates/emails/confirm-email-change.twig:17
+#: themes/default/templates/emails/confirm-email-change.txt.twig:16
 msgid "To continue please click the confirm button"
 msgstr ""
 
@@ -947,81 +959,103 @@ msgid "Confirm"
 msgstr ""
 
 #: themes/default/templates/emails/confirm-email-change.twig:26
+#: themes/default/templates/emails/confirm-email-change.txt.twig:20
 msgid "If you have not registered on our site, please ignore this email."
 msgstr ""
 
 #: themes/default/templates/emails/contact-message.twig:11
+#: themes/default/templates/emails/contact-message.txt.twig:11
 msgid "New message from the contact form"
 msgstr ""
 
 #: themes/default/templates/emails/contact-message.twig:15
+#: themes/default/templates/emails/contact-message.txt.twig:14
 msgid "A new message has been sent through the contact form on the <a href=\"%s\">%s</a> website"
 msgstr ""
 
 #: themes/default/templates/emails/contact-message.twig:18
+#: themes/default/templates/emails/contact-message.txt.twig:16
 msgid "Sender:"
 msgstr ""
 
 #: themes/default/templates/emails/contact-message.twig:19
+#: themes/default/templates/emails/contact-message.txt.twig:17
 msgid "E-mail:"
 msgstr ""
 
 #: themes/default/templates/emails/contact-message.twig:31
+#: themes/default/templates/emails/contact-message.txt.twig:21
 msgid "Open in admin panel"
 msgstr ""
 
 #: themes/default/templates/emails/layout.twig:122
+#: themes/default/templates/emails/layout.txt.twig:18
 msgid "The email is generated automatically. Please don't answer it. <br> To contact us, use the contact information on our website."
 msgstr ""
 
 #: themes/default/templates/emails/registration.twig:10
+#: themes/default/templates/emails/registration.txt.twig:10
 msgid "Registration on the website"
 msgstr ""
 
 #: themes/default/templates/emails/registration.twig:15
+#: themes/default/templates/emails/registration.txt.twig:15
 msgid "You have successfully registered on the <a href=\"%s\">%s</a> website"
 msgstr ""
 
 #: themes/default/templates/emails/registration.twig:18
+#: themes/default/templates/emails/registration.txt.twig:17
 #: themes/default/templates/emails/restore-password-complete.twig:18
+#: themes/default/templates/emails/restore-password-complete.txt.twig:17
 msgid "Your login:"
 msgstr ""
 
 #: themes/default/templates/emails/registration.twig:19
+#: themes/default/templates/emails/registration.txt.twig:18
 #: themes/default/templates/emails/restore-password-complete.twig:19
+#: themes/default/templates/emails/restore-password-complete.txt.twig:18
 msgid "Your password:"
 msgstr ""
 
 #: themes/default/templates/emails/registration.twig:19
+#: themes/default/templates/emails/registration.txt.twig:18
 msgid "The one you specified when registering"
 msgstr ""
 
 #: themes/default/templates/emails/registration.twig:22
+#: themes/default/templates/emails/registration.txt.twig:20
 msgid "To activate your account, please confirm your registration on the %s website."
 msgstr ""
 
 #: themes/default/templates/emails/registration.twig:31
+#: themes/default/templates/emails/registration.txt.twig:24
 msgid "If you have not registered on our site, please ignore this email. In this case, the account will not be activated and will be automatically deleted."
 msgstr ""
 
 #: themes/default/templates/emails/restore-password-complete.twig:10
+#: themes/default/templates/emails/restore-password-complete.txt.twig:10
 #: themes/default/templates/emails/restore-password.twig:9
+#: themes/default/templates/emails/restore-password.txt.twig:9
 msgid "Password recovery"
 msgstr ""
 
 #: themes/default/templates/emails/restore-password-complete.twig:15
+#: themes/default/templates/emails/restore-password-complete.txt.twig:15
 msgid "You have changed your password on the <a href=\"%s\">%s</a> website"
 msgstr ""
 
 #: themes/default/templates/emails/restore-password-complete.twig:22
+#: themes/default/templates/emails/restore-password-complete.txt.twig:20
 msgid "After logging in, you can change your password to new one."
 msgstr ""
 
 #: themes/default/templates/emails/restore-password.twig:14
+#: themes/default/templates/emails/restore-password.txt.twig:14
 msgid "You start process of password recovery on the <a href=\"%s\">%s</a> website"
 msgstr ""
 
 #: themes/default/templates/emails/restore-password.twig:17
+#: themes/default/templates/emails/restore-password.txt.twig:16
 msgid "In order to recover your password, you must click on the link:"
 msgstr ""
 
@@ -1030,10 +1064,12 @@ msgid "Restore"
 msgstr ""
 
 #: themes/default/templates/emails/restore-password.twig:25
+#: themes/default/templates/emails/restore-password.txt.twig:20
 msgid "Link valid for 1 hour"
 msgstr ""
 
 #: themes/default/templates/emails/restore-password.twig:27
+#: themes/default/templates/emails/restore-password.txt.twig:22
 msgid "If you receive this mail by mistake, just ignore this letter"
 msgstr ""
 
