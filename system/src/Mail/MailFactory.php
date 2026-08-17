@@ -14,11 +14,14 @@ namespace Johncms\Mail;
 
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\Mailer\Event\MessageEvent;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\Mailer;
 use Symfony\Component\Mailer\Transport;
 use Symfony\Component\Mime\Crypto\DkimSigner;
 use Symfony\Component\Mime\Email;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Throwable;
 
@@ -38,6 +41,7 @@ class MailFactory
         // SES and the like) send through, so it is handed over even when the site is on plain smtp.
         $transport = Transport::fromDsn(
             $dsn,
+            dispatcher: $this->dispatcher($config),
             client: $container->get(HttpClientInterface::class),
             logger: $container->get(LoggerInterface::class)
         );
@@ -50,6 +54,27 @@ class MailFactory
         $this->dkimSigner = $this->dkimSigner($config['dkim'] ?? [], $container->get(LoggerInterface::class));
 
         return $this;
+    }
+
+    /**
+     * The dispatcher the transport announces each message to, or null when nothing listens.
+     *
+     * This is the seam Symfony Mailer offers for touching every outgoing message; the site uses it
+     * for one thing so far, sending everything to a single mailbox on a staging copy.
+     *
+     * @param array<string, mixed> $config
+     */
+    private function dispatcher(array $config): ?EventDispatcherInterface
+    {
+        $redirect = RedirectAllMessages::fromConfig($config);
+        if ($redirect === null) {
+            return null;
+        }
+
+        $dispatcher = new EventDispatcher();
+        $dispatcher->addListener(MessageEvent::class, $redirect);
+
+        return $dispatcher;
     }
 
     /**

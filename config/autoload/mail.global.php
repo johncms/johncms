@@ -51,6 +51,16 @@ return [
         ],
 
         /*
+         * Send every message to this address instead of its real recipients: one address or a
+         * list of them. This is what makes a copy of a live site safe to work on — a staging copy
+         * runs with the database of the real site, and a test registration would otherwise write
+         * to a real visitor. The original recipients stay in the `X-Original-To` header.
+         *
+         * Leave empty on a live site.
+         */
+        'redirect_to' => '',
+
+        /*
          * DKIM signature: proves to the receiving server that the message really comes from your
          * domain, which is what keeps it out of the spam folder. Signing is off while any of the
          * three settings below is empty.

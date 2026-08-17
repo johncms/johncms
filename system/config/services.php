@@ -235,6 +235,8 @@ return static function (ContainerConfigurator $container): void {
                 // The body of one rendered message and the exception of a broken mail
                 // configuration: value objects carrying scalars, not services.
                 ROOT_PATH . 'system/src/Mail/RenderedEmailDTO.php',
+                // Built by MailFactory from the configuration, with the addresses it carries.
+                ROOT_PATH . 'system/src/Mail/RedirectAllMessages.php',
                 ROOT_PATH . 'system/src/Mail/Queue/QueuedEmailDTO.php',
                 ROOT_PATH . 'system/src/Mail/Exception',
                 ROOT_PATH . 'system/src/Mail/Schema',
