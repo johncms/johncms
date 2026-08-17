@@ -1,0 +1,125 @@
+{#
+    The mail settings of the site.
+
+    @var array  settings        Current values, keyed by field name.
+    @var array  transports      Names of the transports that can be chosen.
+    @var array  encryptions     Encryption modes of the smtp transport.
+    @var string test_email      Address the test message field is prefilled with.
+    @var string form_action
+    @var string test_action
+    @var string error_message   Empty unless the last save failed.
+    @var string success_message Empty unless a save has just succeeded.
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    <div style="max-width: 640px">
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger shadow border-0', alert: error_message} only %}
+        {% include '@theme/components/alert.twig' with {alert_type: 'alert-success shadow border-0', alert: success_message} only %}
+
+        <form method="post" action="{{ form_action }}">
+            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+
+            <fieldset>
+                <legend>{{ d__('admin', 'Connection string') }}</legend>
+                <div class="form-group">
+                    <label for="dsn">{{ d__('admin', 'DSN') }}</label>
+                    <input type="text" id="dsn" name="dsn" class="form-control" value="{{ settings.dsn }}"
+                           placeholder="smtps://user:password@smtp.example.com:465"/>
+                    <small class="form-text text-muted">
+                        {{ d__('admin', 'When it is filled in, the settings below are ignored. This is the only way to use a provider with its own API (Mailgun, Postmark, SES and others).') }}
+                    </small>
+                </div>
+            </fieldset>
+
+            <fieldset class="mt-3">
+                <legend>{{ d__('admin', 'Transport') }}</legend>
+                <div class="form-group">
+                    <label for="transport">{{ d__('admin', 'Sending method') }}</label>
+                    <select id="transport" name="transport" class="form-control">
+                        {% for transport in transports %}
+                            <option value="{{ transport }}"{% if settings.transport == transport %} selected="selected"{% endif %}>{{ transport }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </fieldset>
+
+            <fieldset class="mt-3">
+                <legend>{{ d__('admin', 'SMTP') }}</legend>
+                <div class="form-group">
+                    <label for="host">{{ d__('admin', 'Server') }}</label>
+                    <input type="text" id="host" name="host" class="form-control" value="{{ settings.host }}"/>
+                </div>
+                <div class="form-group">
+                    <label for="port">{{ d__('admin', 'Port') }}</label>
+                    <input type="text" id="port" name="port" class="form-control col-sm-3" value="{{ settings.port }}"/>
+                </div>
+                <div class="form-group">
+                    <label for="username">{{ d__('admin', 'User name') }}</label>
+                    <input type="text" id="username" name="username" class="form-control" value="{{ settings.username }}"/>
+                </div>
+                <div class="form-group">
+                    <label for="password">{{ d__('admin', 'Password') }}</label>
+                    <input type="password" id="password" name="password" class="form-control" value="{{ settings.password }}"/>
+                </div>
+                <div class="form-group">
+                    <label for="encryption">{{ d__('admin', 'Encryption') }}</label>
+                    <select id="encryption" name="encryption" class="form-control">
+                        {% for encryption in encryptions %}
+                            <option value="{{ encryption }}"{% if settings.encryption == encryption %} selected="selected"{% endif %}>
+                                {{ encryption ?: d__('admin', 'None') }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    <small class="form-text text-muted">
+                        {{ d__('admin', 'ssl - encryption from the first byte, usually port 465. tls - STARTTLS, usually port 587.') }}
+                    </small>
+                </div>
+            </fieldset>
+
+            <fieldset class="mt-3">
+                <legend>{{ d__('admin', 'Sendmail') }}</legend>
+                <div class="form-group">
+                    <label for="sendmail_command">{{ d__('admin', 'Command') }}</label>
+                    <input type="text" id="sendmail_command" name="sendmail_command" class="form-control"
+                           value="{{ settings.sendmail_command }}" placeholder="/usr/sbin/sendmail -bs"/>
+                    <small class="form-text text-muted">
+                        {{ d__('admin', 'Leave empty to use the setting of php.ini.') }}
+                    </small>
+                </div>
+            </fieldset>
+
+            <fieldset class="mt-3">
+                <legend>{{ d__('admin', 'Development') }}</legend>
+                <div class="form-group">
+                    <label for="redirect_to">{{ d__('admin', 'Send all mail to this address') }}</label>
+                    <input type="text" id="redirect_to" name="redirect_to" class="form-control" value="{{ settings.redirect_to }}"/>
+                    <small class="form-text text-muted">
+                        {{ d__('admin', 'Every message goes to this address instead of its real recipients. For a test copy of the site; leave empty on a live one. Several addresses are separated by commas.') }}
+                    </small>
+                </div>
+            </fieldset>
+
+            <div class="mt-3">
+                <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
+            </div>
+        </form>
+
+        <form method="post" action="{{ test_action }}" class="mt-4">
+            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+            <fieldset>
+                <legend>{{ d__('admin', 'Test message') }}</legend>
+                <div class="form-group">
+                    <label for="test_email">{{ d__('admin', 'Send a test message to') }}</label>
+                    <input type="text" id="test_email" name="test_email" class="form-control" value="{{ test_email }}"/>
+                    <small class="form-text text-muted">
+                        {{ d__('admin', 'The message is sent immediately, bypassing the queue, so that the answer of the mail server is shown right here. Save the settings first.') }}
+                    </small>
+                </div>
+            </fieldset>
+            <div class="mt-3">
+                <button type="submit" class="btn btn-outline-primary">{{ d__('admin', 'Send') }}</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

@@ -243,6 +243,14 @@
                     <span class="flex-grow-1">{{ d__('admin', 'System Settings') }}</span>
                 </a>
             </li>
+            <li class="{{ sys_menu.mail_settings|default(false) ? 'active' : '' }}">
+                <a href="/admin/settings/mail">
+                    <svg class="icon">
+                        <use xlink:href="{{ sprite }}#messages"/>
+                    </svg>
+                    <span class="flex-grow-1">{{ d__('admin', 'Mail Settings') }}</span>
+                </a>
+            </li>
             <li class="{{ sys_menu.emoticons|default(false) ? 'active' : '' }}">
                 <a href="/admin/emoticons">
                     <svg class="icon">

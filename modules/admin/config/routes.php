@@ -20,6 +20,7 @@ use Johncms\Modules\Admin\Application\Controllers\Languages\LanguagesController;
 use Johncms\Modules\Admin\Application\Controllers\Settings\AdsController;
 use Johncms\Modules\Admin\Application\Controllers\Settings\AntifloodSettingsController;
 use Johncms\Modules\Admin\Application\Controllers\Settings\CountersController;
+use Johncms\Modules\Admin\Application\Controllers\Settings\MailSettingsController;
 use Johncms\Modules\Admin\Application\Controllers\Settings\SystemSettingsController;
 use Johncms\Modules\Admin\Application\Controllers\System\EmoticonsController;
 use Johncms\Modules\Admin\Application\Controllers\System\FileIntegrityController;
@@ -132,6 +133,9 @@ return static function (RouteCollection $router): void {
         $superGroup = $r->group('', function (RouteCollection $sr): void {
             $sr->get('/admin/settings', [SystemSettingsController::class, 'form'])->name('admin.settings');
             $sr->post('/admin/settings', [SystemSettingsController::class, 'save'])->name('admin.settings.save');
+            $sr->get('/admin/settings/mail', [MailSettingsController::class, 'form'])->name('admin.settings.mail');
+            $sr->post('/admin/settings/mail', [MailSettingsController::class, 'save'])->name('admin.settings.mail.save');
+            $sr->post('/admin/settings/mail/test', [MailSettingsController::class, 'test'])->name('admin.settings.mail.test');
 
             $sr->get('/admin/ip-bans', [IpBanController::class, 'index'])->name('admin.ip_bans');
             $sr->get('/admin/ip-bans/new', [IpBanController::class, 'newForm'])->name('admin.ip_bans.new');
