@@ -28,6 +28,9 @@ services:
       - mariadb
     networks:
       - app_network
+    volumes:
+      # Keeps the Composer cache across container recreations. See COMPOSER_HOME in .docker/php-fpm/Dockerfile.
+      - 'composer_cache:/var/www/.composer'
     logging:
       driver: "json-file"
       options:
@@ -78,6 +81,7 @@ services:
 volumes:
   database_data:
   redis_data:
+  composer_cache:
 
 networks:
   app_network:

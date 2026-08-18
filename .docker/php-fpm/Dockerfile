@@ -14,6 +14,12 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
 
 COPY --link app.ini $PHP_INI_DIR/conf.d/
 
+# Composer runs as www-data, whose home (/var/www) is owned by root, so it cannot create its
+# cache directory there. The path is declared here and made writable in the stages below,
+# after the user id is adjusted; compose mounts a volume over it to keep the cache between
+# container recreations.
+ENV COMPOSER_HOME=/var/www/.composer
+
 FROM php_base AS php_dev
 
 ARG USER_ID=1000
@@ -23,7 +29,9 @@ RUN install-php-extensions xdebug
 RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 COPY --link app.dev.ini $PHP_INI_DIR/conf.d/
 
-RUN usermod -u $USER_ID www-data
+RUN usermod -u $USER_ID www-data && \
+    mkdir -p "$COMPOSER_HOME" && \
+    chown -R www-data:www-data "$COMPOSER_HOME"
 
 USER www-data
 WORKDIR /app
@@ -35,7 +43,9 @@ ARG USER_ID=1000
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 COPY --link app.prod.ini $PHP_INI_DIR/conf.d/
 
-RUN usermod -u $USER_ID www-data
+RUN usermod -u $USER_ID www-data && \
+    mkdir -p "$COMPOSER_HOME" && \
+    chown -R www-data:www-data "$COMPOSER_HOME"
 
 USER www-data
 WORKDIR /app
