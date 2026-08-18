@@ -46,7 +46,7 @@
         "imangazaliev/didom": "^2.0.1",
         "intervention/image": "^4.2",
         "james-heinrich/getid3": "^1.9",
-        "league/flysystem": "^2.0",
+        "league/flysystem": "^3.35",
         "mobicms/captcha": "^4.0",
         "monolog/monolog": "^3.9",
         "simba77/ckeditor-media-embed": "^1.1",
