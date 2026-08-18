@@ -8,6 +8,8 @@ use Johncms\Http\UploadedFileDTO;
 use Johncms\Image\ImageProcessingException;
 use Johncms\Image\ImageProcessorInterface;
 use Johncms\Modules\Profile\Application\Exceptions\ImageUploadException;
+use Johncms\Storage\StorageException;
+use Johncms\Users\UserImages;
 
 final readonly class UploadPhotoUseCase
 {
@@ -18,6 +20,7 @@ final readonly class UploadPhotoUseCase
 
     public function __construct(
         private ImageProcessorInterface $imageProcessor,
+        private UserImages $userImages,
     ) {
     }
 
@@ -29,20 +32,22 @@ final readonly class UploadPhotoUseCase
         }
 
         try {
-            $this->imageProcessor->saveScaledDown(
-                $file->tmpPath,
-                UPLOAD_PATH . 'users/photo/' . $userId . '.jpg',
-                self::PHOTO_WIDTH,
-                self::PHOTO_HEIGHT
+            $this->userImages->storePhoto(
+                $userId,
+                fn(string $target) => $this->imageProcessor->saveScaledDown(
+                    $file->tmpPath,
+                    $target,
+                    self::PHOTO_WIDTH,
+                    self::PHOTO_HEIGHT
+                ),
+                fn(string $target) => $this->imageProcessor->saveScaledDown(
+                    $file->tmpPath,
+                    $target,
+                    self::THUMB_WIDTH,
+                    self::THUMB_HEIGHT
+                )
             );
-
-            $this->imageProcessor->saveScaledDown(
-                $file->tmpPath,
-                UPLOAD_PATH . 'users/photo/' . $userId . '_small.jpg',
-                self::THUMB_WIDTH,
-                self::THUMB_HEIGHT
-            );
-        } catch (ImageProcessingException $exception) {
+        } catch (ImageProcessingException | StorageException $exception) {
             throw new ImageUploadException($exception->getMessage());
         }
     }

@@ -72,6 +72,27 @@ final readonly class FlysystemStorage implements StorageInterface
         }
     }
 
+    public function storeGenerated(string $path, callable $generate): void
+    {
+        $temporary = $this->temporaryPath($path);
+
+        try {
+            $generate($temporary);
+
+            if (! is_file($temporary)) {
+                throw new StorageException(
+                    sprintf('Nothing was generated for "%s": the handler wrote no file.', $path)
+                );
+            }
+
+            $this->storeFile($path, $temporary);
+        } finally {
+            if (is_file($temporary)) {
+                @unlink($temporary);
+            }
+        }
+    }
+
     public function read(string $path): string
     {
         return $this->guard(fn() => $this->filesystem->read($path));
@@ -100,6 +121,11 @@ final readonly class FlysystemStorage implements StorageInterface
     public function mimeType(string $path): string
     {
         return $this->guard(fn() => $this->filesystem->mimeType($path));
+    }
+
+    public function lastModified(string $path): int
+    {
+        return $this->guard(fn() => $this->filesystem->lastModified($path));
     }
 
     public function url(string $path): string

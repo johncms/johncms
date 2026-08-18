@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\View\Twig\Runtime;
 
-use Johncms\Http\PublicUrlResolver;
+use Johncms\Users\UserImages;
 use Johncms\View\Asset\AssetResolver;
 use Johncms\View\Asset\ThemeEntryResolver;
 use Johncms\View\Asset\Vite;
@@ -17,7 +17,7 @@ final readonly class AssetRuntime implements RuntimeExtensionInterface
         private AssetResolver $assets,
         private Vite $vite,
         private ThemeEntryResolver $entries,
-        private PublicUrlResolver $publicUrls,
+        private UserImages $userImages,
     ) {
     }
 
@@ -26,13 +26,9 @@ final readonly class AssetRuntime implements RuntimeExtensionInterface
      */
     public function avatar(int $userId): string
     {
-        $avatar = UPLOAD_PATH . 'users/avatar/' . $userId . '.png';
+        $avatar = $this->userImages->avatarUrl($userId);
 
-        if ($userId > 0 && is_file($avatar)) {
-            return $this->publicUrls->fromPath($avatar) . '?v=' . filemtime($avatar);
-        }
-
-        return $this->assets->url('icons/user.svg');
+        return $avatar === '' ? $this->assets->url('icons/user.svg') : $avatar;
     }
 
     public function url(string $path, bool $versioned = false): string

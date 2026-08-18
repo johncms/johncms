@@ -19,6 +19,7 @@ use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
 use Johncms\Users\User;
+use Johncms\Users\UserImages;
 use Symfony\Component\HttpFoundation\Response;
 
 final readonly class EditProfileController
@@ -31,6 +32,7 @@ final readonly class EditProfileController
         private DeletePhotoUseCase $deletePhotoUseCase,
         private Session $session,
         private CurrentUser $currentUser,
+        private UserImages $userImages,
     ) {
     }
 
@@ -166,11 +168,7 @@ final readonly class EditProfileController
         $userArray = $context->profileUser->toArray();
         $userArray['photo'] = $context->profileUser->photo;
 
-        $avatarPath = UPLOAD_PATH . 'users/avatar/' . $context->profileUser->id . '.png';
-        $hasAvatar = is_file($avatarPath);
-        if ($hasAvatar) {
-            $userArray['avatar_file'] = $avatarPath;
-        }
+        $hasAvatar = $this->userImages->hasAvatar($context->profileUser->id);
 
         return new ViewResponse(
             '@profile/public/edit.twig',

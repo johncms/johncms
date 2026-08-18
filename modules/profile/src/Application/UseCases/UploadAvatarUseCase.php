@@ -8,6 +8,8 @@ use Johncms\Http\UploadedFileDTO;
 use Johncms\Image\ImageProcessingException;
 use Johncms\Image\ImageProcessorInterface;
 use Johncms\Modules\Profile\Application\Exceptions\ImageUploadException;
+use Johncms\Storage\StorageException;
+use Johncms\Users\UserImages;
 
 final readonly class UploadAvatarUseCase
 {
@@ -16,6 +18,7 @@ final readonly class UploadAvatarUseCase
 
     public function __construct(
         private ImageProcessorInterface $imageProcessor,
+        private UserImages $userImages,
     ) {
     }
 
@@ -27,13 +30,16 @@ final readonly class UploadAvatarUseCase
         }
 
         try {
-            $this->imageProcessor->saveScaledDown(
-                $file->tmpPath,
-                UPLOAD_PATH . 'users/avatar/' . $userId . '.png',
-                self::AVATAR_WIDTH,
-                self::AVATAR_HEIGHT
+            $this->userImages->storeAvatar(
+                $userId,
+                fn(string $target) => $this->imageProcessor->saveScaledDown(
+                    $file->tmpPath,
+                    $target,
+                    self::AVATAR_WIDTH,
+                    self::AVATAR_HEIGHT
+                )
             );
-        } catch (ImageProcessingException $exception) {
+        } catch (ImageProcessingException | StorageException $exception) {
             throw new ImageUploadException($exception->getMessage());
         }
     }

@@ -221,12 +221,15 @@ trait UserMutators
      */
     public function getPhotoAttribute(): array
     {
-        $photo = [];
-        if (file_exists(UPLOAD_PATH . 'users/photo/' . $this->id . '_small.jpg')) {
-            $photo['photo'] = '/upload/users/photo/' . $this->id . '.jpg';
-            $photo['photo_preview'] = '/upload/users/photo/' . $this->id . '_small.jpg';
+        $images = di(UserImages::class);
+        if (! $images->hasPhoto($this->id)) {
+            return [];
         }
-        return $photo;
+
+        return [
+            'photo'         => $images->photoUrl($this->id),
+            'photo_preview' => $images->photoPreviewUrl($this->id),
+        ];
     }
 
     /**

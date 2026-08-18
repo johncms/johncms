@@ -58,6 +58,24 @@ interface StorageInterface
     public function storeFile(string $path, string $localFile): void;
 
     /**
+     * Write a file the handler produces, wherever it has to be produced.
+     *
+     * The counterpart of withLocalCopy() for the other direction: everything that generates a
+     * file — the image processor above all — writes to a path, so the handler is given one,
+     * and what it wrote ends up on the disk. The temporary file is removed afterwards, whether
+     * the handler returned or threw.
+     *
+     * The path it is given keeps the extension of the target, because that is what the image
+     * processor takes the output format from.
+     *
+     * @param callable(string): void $generate
+     * @throws StorageException
+     * @throws \Throwable Whatever the handler throws travels through unchanged: it is the
+     *                    caller's failure to make sense of, not the disk's.
+     */
+    public function storeGenerated(string $path, callable $generate): void;
+
+    /**
      * @throws StorageException
      */
     public function read(string $path): string;
@@ -94,6 +112,16 @@ interface StorageInterface
      * @throws StorageException
      */
     public function mimeType(string $path): string;
+
+    /**
+     * When the file was last written, as a Unix timestamp.
+     *
+     * What a cache-busting parameter is built from, and what tells a generated preview that its
+     * source has been replaced.
+     *
+     * @throws StorageException
+     */
+    public function lastModified(string $path): int;
 
     /**
      * The URL the file is served at, or an empty string when the disk is not public.

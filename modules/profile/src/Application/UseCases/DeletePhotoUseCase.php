@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Profile\Application\UseCases;
 
+use Johncms\Users\UserImages;
+
 final readonly class DeletePhotoUseCase
 {
+    public function __construct(
+        private UserImages $userImages,
+    ) {
+    }
+
     public function execute(int $userId): void
     {
-        $photo = UPLOAD_PATH . 'users/photo/' . $userId . '.jpg';
-        $smallPhoto = UPLOAD_PATH . 'users/photo/' . $userId . '_small.jpg';
-        if (is_file($photo)) {
-            @unlink($photo);
-        }
-        if (is_file($smallPhoto)) {
-            @unlink($smallPhoto);
-        }
+        $this->userImages->deletePhoto($userId);
     }
 }
