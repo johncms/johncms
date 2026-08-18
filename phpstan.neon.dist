@@ -35,6 +35,18 @@ parameters:
         - DEBUG
         - DEBUG_FOR_ALL
 
+    # The s3 storage driver is built on an optional package (league/flysystem-aws-s3-v3, and the
+    # AWS SDK behind it), which a site keeping its files on its own server has no reason to
+    # install. StorageFactory checks for it at runtime and says what to install; here the classes
+    # are simply not there to analyse.
+    ignoreErrors:
+        -
+            identifier: class.notFound
+            path: system/src/Storage/StorageFactory.php
+        -
+            identifier: argument.type
+            path: system/src/Storage/StorageFactory.php
+
     treatPhpDocTypesAsCertain: false
 
     tmpDir: data/cache/.phpstan

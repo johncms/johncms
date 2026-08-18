@@ -63,10 +63,10 @@ final class StorageSettingsFactoryTest extends TestCase
      */
     public function testAnUnknownDriverIsRefused(): void
     {
-        $this->config(['disks' => ['media' => ['driver' => 's3', 'root' => '/var/upload']]]);
+        $this->config(['disks' => ['media' => ['driver' => 'ftp', 'root' => '/var/upload']]]);
 
         $this->expectException(UnsupportedStorageDriverException::class);
-        $this->expectExceptionMessage('Unknown storage driver "s3" configured for the "media" disk.');
+        $this->expectExceptionMessage('Unknown storage driver "ftp" configured for the "media" disk.');
 
         (new StorageSettingsFactory())();
     }

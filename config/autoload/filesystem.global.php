@@ -20,7 +20,25 @@ return [
         'default' => 'local',
 
         // Every disk needs a driver; an unknown one is refused when the settings are read.
-        // Supported: local.
+        //
+        // Supported:
+        //   local — a directory on this server;
+        //   s3    — an S3-compatible object store. Needs league/flysystem-aws-s3-v3, which the
+        //           CMS does not ship (it pulls the AWS SDK behind it):
+        //
+        //   'media' => [
+        //       'driver'  => 's3',
+        //       'url'     => 'https://files.example.com',  // the bucket or the CDN in front of it
+        //       'options' => [
+        //           'bucket'     => 'my-bucket',
+        //           'region'     => 'eu-central-1',
+        //           'key'        => '…',
+        //           'secret'     => '…',
+        //           'endpoint'   => null,   // set for the services that are not AWS itself
+        //           'path_style' => null,   // most of those need it set to true
+        //           'prefix'     => '',     // store everything under this key prefix
+        //       ],
+        //   ],
         'disks' => [
             'local' => [
                 'driver' => 'local',

@@ -100,14 +100,19 @@ not supported, is refused where the settings are read.
 ],
 ```
 
+Two drivers exist: `local`, and `s3` for an S3-compatible object store. The S3 one needs
+`league/flysystem-aws-s3-v3`, which the CMS does not ship — configure the driver without it and
+the disk refuses to build with a message saying what to install.
+
 **Injecting a disk:** take `StorageInterface` when the disk is known at wiring time. Reach for
 `StorageRegistryInterface::disk($name)` **only** where the name is learned at runtime — a row of
 `files` says which disk its file is on. Asking a registry for a fixed name is a service locator
 in disguise and hides the dependency from whoever reads the constructor.
 
-Operations: `store`, `storeStream`, `storeFile`, `read`, `readStream`, `exists`, `delete`,
-`size`, `mimeType`, `url`, `withLocalCopy`. Everything the disk cannot do arrives as
-`StorageException` — catch that, never a flysystem type.
+Operations: `store`, `storeStream`, `storeFile`, `storeGenerated`, `read`, `readStream`,
+`exists`, `delete`, `deleteDirectory`, `copy`, `size`, `mimeType`, `lastModified`, `url`,
+`withLocalCopy`. Everything the disk cannot do arrives as `StorageException` — catch that, never
+a flysystem type.
 
 ### Public and private disks
 
@@ -136,12 +141,36 @@ temporary file and removes that file afterwards, whether the handler returned or
 keeps the extension of the source, because that is what the image processor takes the output
 format from.
 
+### Writing a picture
+
+Never hand the image processor a path of your own and hope it lands on the disk. `storeGenerated()`
+gives it a path to write to and stores the result:
+
+```php
+$disk->storeGenerated('users/avatar/5.png', fn(string $target) => $processor->saveScaledDown($upload->tmpPath, $target, 150, 150));
+```
+
+## Where the files of the CMS live
+
+Each area has a small class owning its directory, so a path is spelled out once:
+
+| Class | Files |
+| --- | --- |
+| `Johncms\Users\UserImages` | avatar and profile photo |
+| `Johncms\Modules\Album\Infrastructure\Storage\AlbumPhotoStorage` | pictures of the albums |
+| `Johncms\Modules\Forum\Infrastructure\Storage\ForumAttachmentStorage` | attachments of forum messages |
+| `Johncms\Modules\Library\Infrastructure\Storage\LibraryCoverStorage` | article covers, in three sizes |
+| `Johncms\Modules\Mail\Application\Services\MailFileService` | mail attachments |
+| `Johncms\Files\FileStore` | everything registered in the `files` table |
+
+Add one when a new area needs files; do not spread `UPLOAD_PATH . '…'` through use cases again.
+
 ## Legacy paths
 
-Most of the CMS still builds paths by hand — `UPLOAD_PATH . 'users/album/' . $userId`. That code
-predates the port and is being moved over module by module. When touching such a place: if the
-files belong to a feature that is being reworked anyway, move it to a disk; otherwise leave it
-and do not mix a half-migrated module into an unrelated change.
+The downloads module still builds paths by hand and keeps them in the database (`download__files.dir`,
+relative to the **project root**, not to the disk). It also scans directories, which the port has
+no operation for yet. Moving it over means migrating those rows, so it is a job of its own — do
+not half-convert it as part of an unrelated change.
 
 New code has no excuse: it goes through `FileStore` (registered files) or `StorageInterface`
 (files with no row of their own, such as generated caches).

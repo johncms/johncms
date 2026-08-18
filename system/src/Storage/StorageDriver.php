@@ -23,4 +23,12 @@ enum StorageDriver: string
 {
     /** A directory on the server the CMS runs on. The default, and the only one a fresh site needs. */
     case Local = 'local';
+
+    /**
+     * An S3-compatible object store — AWS, or any of the services speaking its protocol.
+     *
+     * Needs league/flysystem-aws-s3-v3, which is not a dependency of the CMS: it pulls the AWS
+     * SDK behind it, and a site that keeps its files on its own server has no use for either.
+     */
+    case S3 = 's3';
 }
