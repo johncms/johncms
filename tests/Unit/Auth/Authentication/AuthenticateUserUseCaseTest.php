@@ -20,12 +20,11 @@ use Johncms\Http\Environment;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
 use Johncms\Users\User;
-use Illuminate\Cache\ArrayStore;
-use Illuminate\Cache\Repository as CacheRepository;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 use Tests\Support\BootsInMemoryDatabase;
+use Tests\Support\InMemoryCache;
 use Tests\Support\RecordingAuthEventLogger;
 
 final class AuthenticateUserUseCaseTest extends TestCase
@@ -55,7 +54,7 @@ final class AuthenticateUserUseCaseTest extends TestCase
         // The cheapest cost bcrypt accepts: these tests hash on every fixture, and the strength
         // of the algorithm is not what they are about.
         $this->hasher = new NativePasswordHasher(new LegacyMd5PasswordVerifier(), PASSWORD_BCRYPT, ['cost' => 4]);
-        $this->throttle = new CacheLoginThrottle(new CacheRepository(new ArrayStore()));
+        $this->throttle = new CacheLoginThrottle(InMemoryCache::create());
 
         $requestStack = new RequestStack();
         $requestStack->push(Request::create('/'));

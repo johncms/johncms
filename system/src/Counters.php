@@ -21,6 +21,7 @@ use Johncms\Modules\Guestbook\Application\Services\GuestbookPermissions;
 use Johncms\Modules\Library\Application\Services\LibraryPermissions;
 use Johncms\Notifications\Notification;
 use Johncms\Auth\CurrentUser;
+use Johncms\Cache\CacheInterface;
 use PDO;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -35,6 +36,9 @@ class Counters
     /** Online counters cache lifetime, in seconds */
     private const ONLINE_CACHE_TTL = 10;
 
+    /** Tag every counter is filed under, so that all of them can be invalidated at once */
+    private const CACHE_TAG = 'counters';
+
     /** @var PDO */
     private $db;
 
@@ -44,7 +48,7 @@ class Counters
     /** @var CurrentUser */
     private $user;
 
-    /** @var Cache */
+    /** @var CacheInterface */
     private $cache;
 
     /** @var RequestStack */
@@ -56,7 +60,7 @@ class Counters
         PDO $pdo,
         CurrentUser $user,
         string $homeUrl,
-        Cache $cache,
+        CacheInterface $cache,
         RequestStack $requestStack,
         AccessCheckerInterface $accessChecker
     ) {
@@ -116,7 +120,7 @@ class Counters
                 'new'     => (int) $this->db->query('SELECT COUNT(*) FROM `cms_album_files` WHERE `time` > ' . $recent . ' AND `access` = 4')->fetchColumn(),
                 'new_adm' => (int) $this->db->query('SELECT COUNT(*) FROM `cms_album_files` WHERE `time` > ' . $recent . ' AND `access` > 1')->fetchColumn(),
             ];
-        });
+        }, tags: [self::CACHE_TAG]);
     }
 
     /**
@@ -259,7 +263,7 @@ class Counters
                 'users'  => (int) $this->db->query('SELECT COUNT(*) FROM `users` WHERE `lastdate` > ' . $online)->fetchColumn(),
                 'guests' => (int) $this->db->query('SELECT COUNT(*) FROM `cms_sessions` WHERE `lastdate` > ' . $online)->fetchColumn(),
             ];
-        });
+        }, tags: [self::CACHE_TAG]);
 
         return $counters['users'] . ' / ' . $counters['guests'];
     }
@@ -330,7 +334,7 @@ class Counters
                     OR deleted IS NULL"
                 )->fetchColumn(),
             ];
-        });
+        }, tags: [self::CACHE_TAG]);
     }
 
     /**
@@ -383,7 +387,7 @@ class Counters
                 'new'   => (int) $this->db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '2' AND `time` > '$old'")->fetchColumn(),
                 'mod'   => (int) $this->db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '3'")->fetchColumn(),
             ];
-        });
+        }, tags: [self::CACHE_TAG]);
     }
 
     /**
@@ -414,7 +418,7 @@ class Counters
                 'new'   => (int) $this->db->query('SELECT COUNT(*) FROM `library_texts` WHERE `time` > ' . (time() - 259200) . ' AND `premod` = 1')->fetchColumn(),
                 'mod'   => (int) $this->db->query('SELECT COUNT(*) FROM `library_texts` WHERE `premod` = 0')->fetchColumn(),
             ];
-        });
+        }, tags: [self::CACHE_TAG]);
     }
 
     /**
@@ -429,7 +433,7 @@ class Counters
                 'total' => (new Users\User())->approved()->count(),
                 'new'   => (new Users\User())->approved()->where('datereg', '>', (time() - 86400))->count(),
             ];
-        });
+        }, tags: [self::CACHE_TAG]);
     }
 
     /**

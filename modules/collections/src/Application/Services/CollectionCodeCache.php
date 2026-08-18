@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Collections\Application\Services;
 
-use Johncms\Cache;
+use Johncms\Cache\CacheInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionRepositoryInterface;
 
 /**
@@ -17,8 +17,11 @@ final readonly class CollectionCodeCache implements CollectionCodeCacheInterface
 {
     private const CACHE_KEY = 'collections_code_map';
 
+    /** Tag the cached map is filed under */
+    private const CACHE_TAG = 'collections';
+
     public function __construct(
-        private Cache $cache,
+        private CacheInterface $cache,
         private ContentCollectionRepositoryInterface $repository,
     ) {
     }
@@ -28,11 +31,15 @@ final readonly class CollectionCodeCache implements CollectionCodeCacheInterface
      */
     public function map(): array
     {
-        return $this->cache->rememberForever(self::CACHE_KEY, fn (): array => $this->repository->getPublicCodeMap());
+        return $this->cache->rememberForever(
+            self::CACHE_KEY,
+            fn (): array => $this->repository->getPublicCodeMap(),
+            [self::CACHE_TAG]
+        );
     }
 
     public function invalidate(): void
     {
-        $this->cache->forget(self::CACHE_KEY);
+        $this->cache->invalidateTags(self::CACHE_TAG);
     }
 }

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use Illuminate\Contracts\Cache\Repository as CacheRepositoryInterface;
 use Intervention\Image\ImageManager;
 use Johncms\Ads;
 use Johncms\AdsFactory;
@@ -36,7 +35,10 @@ use Johncms\Auth\Session\SessionSettings;
 use Johncms\Auth\Session\SessionSettingsFactory;
 use Johncms\Auth\Throttling\CacheLoginThrottle;
 use Johncms\Auth\Throttling\LoginThrottleInterface;
-use Johncms\Cache;
+use Johncms\Cache\CacheInterface;
+use Johncms\Cache\CachePoolFactory;
+use Johncms\Cache\CacheSettings;
+use Johncms\Cache\CacheSettingsFactory;
 use Johncms\Counters;
 use Johncms\CountersFactory;
 use Illuminate\Database\Schema\Builder as SchemaBuilder;
@@ -165,6 +167,14 @@ return static function (ContainerConfigurator $container): void {
                 ROOT_PATH . 'system/src/Counters.php',
                 ROOT_PATH . 'system/src/FileInfo.php',
                 ROOT_PATH . 'system/src/Config',
+                // The cache settings and the enums behind them are value objects, and the
+                // implementation takes an intersection-typed pool the container cannot resolve:
+                // both are assembled by CachePoolFactory instead.
+                ROOT_PATH . 'system/src/Cache/CacheSettings.php',
+                ROOT_PATH . 'system/src/Cache/CacheDriver.php',
+                ROOT_PATH . 'system/src/Cache/TagsStorage.php',
+                ROOT_PATH . 'system/src/Cache/SymfonyCache.php',
+                ROOT_PATH . 'system/src/Cache/UnsupportedCacheDriverException.php',
                 // Exceptions are never services: those with scalar constructor arguments
                 // (HttpRedirectException) break the container compilation when autowired.
                 ROOT_PATH . 'system/src/Exceptions',
@@ -418,9 +428,11 @@ return static function (ContainerConfigurator $container): void {
     // of its own must not have the template environment assembled behind it.
     $services->set(ResponseNormalizer::class)->arg('$renderer', service_closure(RendererInterface::class));
     $services->set(Translator::class)->factory(service(TranslatorServiceFactory::class));
-    $services->set(Cache::class)->factory([Cache::class, 'create']);
-    // So that anything asking for a cache by the framework interface gets the application one.
-    $services->alias(CacheRepositoryInterface::class, Cache::class);
+    // The cache of the CMS. Read from config at instantiation rather than while the
+    // container is built: the built container is cached, and a driver resolved there would be
+    // frozen into it.
+    $services->set(CacheSettings::class)->factory(service(CacheSettingsFactory::class));
+    $services->set(CacheInterface::class)->factory([service(CachePoolFactory::class), 'create']);
     $services->set(SitemapGenerator::class)->arg('$moduleProviders', tagged_iterator('johncms.sitemap_provider'));
     $services->set(MediaEmbed::class)->factory([MediaEmbed::class, 'create']);
     $services->set(Embed::class)->factory([MediaEmbed::class, 'create']);

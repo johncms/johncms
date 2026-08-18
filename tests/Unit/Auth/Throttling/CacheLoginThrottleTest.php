@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Auth\Throttling;
 
-use Illuminate\Cache\ArrayStore;
-use Illuminate\Cache\Repository as CacheRepository;
 use Johncms\Auth\Throttling\CacheLoginThrottle;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Cache\Adapter\ArrayAdapter;
+use Tests\Support\InMemoryCache;
 
 final class CacheLoginThrottleTest extends TestCase
 {
@@ -118,16 +118,16 @@ final class CacheLoginThrottleTest extends TestCase
      */
     public function testTheTypedLoginDoesNotAppearInTheCacheKey(): void
     {
-        $store = new ArrayStore();
-        (new CacheLoginThrottle(new CacheRepository($store)))->registerFailure('login:secret-name');
+        $storage = new ArrayAdapter();
+        (new CacheLoginThrottle(InMemoryCache::over($storage)))->registerFailure('login:secret-name');
 
-        foreach (array_keys($store->all()) as $key) {
+        foreach (array_keys($storage->getValues()) as $key) {
             self::assertStringNotContainsString('secret-name', (string) $key);
         }
     }
 
     private function throttle(): CacheLoginThrottle
     {
-        return new CacheLoginThrottle(new CacheRepository(new ArrayStore()));
+        return new CacheLoginThrottle(InMemoryCache::create());
     }
 }

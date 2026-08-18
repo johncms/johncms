@@ -14,7 +14,7 @@ namespace Johncms\Modules\News\Application;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
-use Johncms\Cache;
+use Johncms\Cache\CacheInterface;
 use Johncms\Exceptions\PageNotFoundException;
 use Johncms\Modules\News\Domain\Models\NewsSection;
 use Johncms\NavChain;
@@ -22,10 +22,13 @@ use Psr\SimpleCache\InvalidArgumentException;
 
 class Section
 {
+    /** Tag the cached section tree is filed under */
+    private const CACHE_TAG = 'news';
+
     /** @var NavChain */
     protected $nav_chain;
 
-    /** @var Cache $cache */
+    /** @var CacheInterface $cache */
     protected $cache;
 
     /** @var NewsSection[] */
@@ -34,7 +37,7 @@ class Section
     public function __construct()
     {
         $this->nav_chain = di(NavChain::class);
-        $this->cache = di(Cache::class);
+        $this->cache = di(CacheInterface::class);
     }
 
     /**
@@ -127,7 +130,8 @@ class Section
                 'news_subsections',
                 function () use ($section) {
                     return [$section->id => $this->getSubsections($section, [$section->id])];
-                }
+                },
+                [self::CACHE_TAG]
             );
 
             if (empty($ids) || ! array_key_exists($section->id, $ids)) {
@@ -140,7 +144,8 @@ class Section
                     function () use ($section, $ids) {
                         $ids[$section->id] = $this->getSubsections($section, [$section->id]);
                         return $ids;
-                    }
+                    },
+                    [self::CACHE_TAG]
                 );
             }
         }
@@ -161,7 +166,8 @@ class Section
             'news_section_paths',
             function () use ($section_id) {
                 return [$section_id => $this->getPath($section_id)];
-            }
+            },
+            [self::CACHE_TAG]
         );
 
         if (empty($paths) || ! array_key_exists($section_id, $paths)) {
@@ -174,7 +180,8 @@ class Section
                 function () use ($section_id, $paths) {
                     $paths[$section_id] = $this->getPath($section_id);
                     return $paths;
-                }
+                },
+                [self::CACHE_TAG]
             );
         }
         return $paths[$section_id] ?? '';
@@ -210,14 +217,11 @@ class Section
     /**
      * Clearing the cache.
      *
-     * @psalm-suppress InvalidCatch
+     * Every entry of the section tree carries the same tag, so a new key added here needs no
+     * change to this method — it only has to be tagged.
      */
     public function clearCache(): void
     {
-        try {
-            $this->cache->delete('news_subsections');
-            $this->cache->delete('news_section_paths');
-        } catch (InvalidArgumentException $e) {
-        }
+        $this->cache->invalidateTags(self::CACHE_TAG);
     }
 }

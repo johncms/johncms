@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms\Auth\Throttling;
 
-use Illuminate\Contracts\Cache\Repository as CacheRepository;
+use Johncms\Cache\CacheInterface;
 
 /**
  * Counts failed sign-in attempts in the cache.
@@ -38,7 +38,7 @@ final readonly class CacheLoginThrottle implements LoginThrottleInterface
      *                                     lockouts. The last one repeats.
      */
     public function __construct(
-        private CacheRepository $cache,
+        private CacheInterface $cache,
         private int $verificationAfter = 3,
         private int $lockoutAfter = 10,
         private int $decay = 900,
@@ -65,7 +65,7 @@ final readonly class CacheLoginThrottle implements LoginThrottleInterface
     public function registerFailure(string $key): void
     {
         $failures = $this->failures($key) + 1;
-        $this->cache->put($this->failureKey($key), $failures, $this->decay);
+        $this->cache->set($this->failureKey($key), $failures, $this->decay);
 
         if ($failures < $this->lockoutAfter) {
             return;
@@ -76,13 +76,13 @@ final readonly class CacheLoginThrottle implements LoginThrottleInterface
         $step = min($failures - $this->lockoutAfter, count($this->lockoutSteps) - 1);
         $wait = $this->lockoutSteps[$step];
 
-        $this->cache->put($this->lockKey($key), time() + $wait, $wait);
+        $this->cache->set($this->lockKey($key), time() + $wait, $wait);
     }
 
     public function clear(string $key): void
     {
-        $this->cache->forget($this->failureKey($key));
-        $this->cache->forget($this->lockKey($key));
+        $this->cache->delete($this->failureKey($key));
+        $this->cache->delete($this->lockKey($key));
     }
 
     private function failures(string $key): int

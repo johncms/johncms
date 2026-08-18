@@ -14,6 +14,7 @@ namespace Johncms;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\CurrentUser;
+use Johncms\Cache\CacheInterface;
 use Johncms\Users\User;
 use PDO;
 use Psr\Container\ContainerInterface;
@@ -27,7 +28,7 @@ class CountersFactory
             $container->get(PDO::class),
             $container->get(CurrentUser::class),
             config('johncms.homeurl', ''),
-            $container->get(Cache::class),
+            $container->get(CacheInterface::class),
             $container->get(RequestStack::class),
             $container->get(AccessCheckerInterface::class)
         );
