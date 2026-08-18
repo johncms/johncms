@@ -11,6 +11,7 @@ use Johncms\Image\ImageProcessingException;
 use Johncms\Image\ThumbnailGenerator;
 use Johncms\Modules\Forum\Domain\Repository\ForumFileRepositoryInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Johncms\Modules\Forum\Infrastructure\Storage\ForumAttachmentStorage;
 
 /**
  * The thumbnail of an image attached to a post.
@@ -26,6 +27,7 @@ final readonly class FilePreviewController
     public function __construct(
         private ForumFileRepositoryInterface $fileRepository,
         private ThumbnailGenerator $thumbnails,
+        private ForumAttachmentStorage $attachments,
     ) {
     }
 
@@ -36,14 +38,16 @@ final readonly class FilePreviewController
             return new Response('', Response::HTTP_NOT_FOUND);
         }
 
-        $path = UPLOAD_PATH . 'forum' . DS . 'attach' . DS . basename((string) $file->filename);
-        $fileInfo = new FileInfo($path);
-        if (! $fileInfo->isFile() || ! $fileInfo->isImage()) {
+        $filename = (string) $file->filename;
+        if (! $this->attachments->isImage($filename) || ! $this->attachments->exists($filename)) {
             return new Response('', Response::HTTP_NOT_FOUND);
         }
 
         try {
-            $preview = $this->thumbnails->scaledDown($path, self::PREVIEW_SIZE, self::PREVIEW_SIZE);
+            $preview = $this->attachments->withLocalCopy(
+                $filename,
+                fn(string $path): string => $this->thumbnails->scaledDown($path, self::PREVIEW_SIZE, self::PREVIEW_SIZE)
+            );
         } catch (ImageProcessingException) {
             // A corrupt attachment is not an error of the page that shows it: the picture is
             // simply not there.

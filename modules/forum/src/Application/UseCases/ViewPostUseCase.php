@@ -109,8 +109,7 @@ final readonly class ViewPostUseCase
                 continue;
             }
 
-            $file->getFileInfo();
-            if (! $file->file_info?->isFile()) {
+            if (! $file->exists()) {
                 continue;
             }
 

@@ -18,6 +18,7 @@ use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Validator\Rules\StringLength;
 use Johncms\Validator\ValidatorInterface;
+use Johncms\Modules\Forum\Infrastructure\Storage\ForumAttachmentStorage;
 
 final readonly class ForumStructureController
 {
@@ -33,6 +34,7 @@ final readonly class ForumStructureController
         private EditForumSectionUseCase $editSection,
         private DeleteForumSectionUseCase $deleteSection,
         private ValidatorInterface $validator,
+        private ForumAttachmentStorage $attachments,
     ) {
     }
 
@@ -251,7 +253,7 @@ final readonly class ForumStructureController
                 return $this->error(__('Access denied'));
             }
             foreach ($this->deleteSection->deleteWithContent($id) as $filename) {
-                @unlink(UPLOAD_PATH . 'forum/attach/' . $filename);
+                $this->attachments->delete((string) $filename);
             }
             redirect(self::URL . ($parent ? '?id=' . $parent : ''));
         }

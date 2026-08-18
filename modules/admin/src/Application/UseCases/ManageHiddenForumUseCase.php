@@ -6,11 +6,13 @@ namespace Johncms\Modules\Admin\Application\UseCases;
 
 use Illuminate\Database\Eloquent\Collection;
 use Johncms\Modules\Admin\Domain\Repository\HiddenForumRepositoryInterface;
+use Johncms\Modules\Forum\Infrastructure\Storage\ForumAttachmentStorage;
 
 final readonly class ManageHiddenForumUseCase
 {
     public function __construct(
         private HiddenForumRepositoryInterface $repository,
+        private ForumAttachmentStorage $attachments,
     ) {
     }
 
@@ -58,7 +60,7 @@ final readonly class ManageHiddenForumUseCase
     private function unlinkAll(array $filenames): void
     {
         foreach ($filenames as $filename) {
-            @unlink(UPLOAD_PATH . 'forum/attach/' . $filename);
+            $this->attachments->delete((string) $filename);
         }
     }
 }

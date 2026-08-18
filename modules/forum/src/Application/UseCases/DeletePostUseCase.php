@@ -8,6 +8,7 @@ use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Johncms\Files\FileStore;
+use Johncms\Modules\Forum\Infrastructure\Storage\ForumAttachmentStorage;
 use Johncms\Modules\Forum\Application\DTO\DeletePostResultDTO;
 use Johncms\Modules\Forum\Application\DTO\EditPostContextDTO;
 use Johncms\Modules\Forum\Application\Services\ForumSectionPathService;
@@ -36,6 +37,7 @@ final readonly class DeletePostUseCase
         private CurrentUser $currentUser,
         private FileStore $files,
         private AccessCheckerInterface $accessChecker,
+        private ForumAttachmentStorage $attachments,
     ) {
     }
 
@@ -60,10 +62,7 @@ final readonly class DeletePostUseCase
 
             $files = $this->fileRepository->getByPostId($message->id);
             foreach ($files as $file) {
-                $filePath = UPLOAD_PATH . 'forum/attach/' . $file->filename;
-                if (is_file($filePath)) {
-                    unlink($filePath);
-                }
+                $this->attachments->delete((string) $file->filename);
             }
 
             $this->fileRepository->deleteByPostId($message->id);

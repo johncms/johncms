@@ -153,6 +153,7 @@ interface StorageInterface
      * @param callable(string): T $handler
      * @return T
      * @throws StorageException
+     * @throws \Throwable Whatever the handler throws travels through unchanged.
      */
     public function withLocalCopy(string $path, callable $handler): mixed;
 }

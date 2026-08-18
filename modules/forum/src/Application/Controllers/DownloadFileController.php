@@ -6,12 +6,14 @@ namespace Johncms\Modules\Forum\Application\Controllers;
 
 use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Forum\Domain\Repository\ForumFileRepositoryInterface;
+use Johncms\Modules\Forum\Infrastructure\Storage\ForumAttachmentStorage;
 use Symfony\Component\HttpFoundation\Response;
 
 final readonly class DownloadFileController
 {
     public function __construct(
         private ForumFileRepositoryInterface $fileRepository,
+        private ForumAttachmentStorage $attachments,
     ) {
     }
 
@@ -22,15 +24,14 @@ final readonly class DownloadFileController
             return $this->renderNotFound();
         }
 
-        $filePath = UPLOAD_PATH . 'forum/attach/' . $file->filename;
-        if (! is_file($filePath)) {
+        if (! $this->attachments->exists((string) $file->filename)) {
             return $this->renderNotFound();
         }
 
         $file->dlcount = (int) $file->dlcount + 1;
         $this->fileRepository->save($file);
 
-        redirect('/upload/forum/attach/' . $file->filename);
+        redirect($this->attachments->url((string) $file->filename));
     }
 
     private function renderNotFound(): ViewResponse

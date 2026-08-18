@@ -16,6 +16,8 @@ use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Domain\Repository\ForumFileRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
 use RuntimeException;
+use Johncms\Modules\Forum\Infrastructure\Storage\ForumAttachmentStorage;
+use Johncms\Storage\StorageException;
 
 final readonly class AttachFileToPostUseCase
 {
@@ -23,6 +25,7 @@ final readonly class AttachFileToPostUseCase
         private ForumMessageRepositoryInterface $messageRepository,
         private ForumFileRepositoryInterface $fileRepository,
         private CurrentUser $currentUser,
+        private ForumAttachmentStorage $attachments,
     ) {
     }
 
@@ -60,15 +63,15 @@ final readonly class AttachFileToPostUseCase
             $errors[] = __('The forbidden file format.<br>You can upload files of the following extension') . ':<br>' . $allExtensions->implode(', ');
         }
 
-        $fileName = $fileInfo->getCleanName();
-        if (file_exists(UPLOAD_PATH . 'forum/attach/' . $fileName)) {
+        $fileName = (string) $fileInfo->getCleanName();
+        if ($this->attachments->exists($fileName)) {
             $fileName = time() . $fileName;
         }
 
         if (! $errors) {
             try {
-                $file->moveTo(UPLOAD_PATH . 'forum/attach/' . $fileName);
-            } catch (RuntimeException) {
+                $this->attachments->storeFile($fileName, $file->tmpPath);
+            } catch (StorageException) {
                 $errors[] = __('Error uploading file');
             }
         }

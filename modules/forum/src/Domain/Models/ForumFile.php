@@ -16,8 +16,8 @@ use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Johncms\FileInfo;
 use Johncms\Users\User;
+use Johncms\Modules\Forum\Infrastructure\Storage\ForumAttachmentStorage;
 
 /**
  * Class File
@@ -36,7 +36,6 @@ use Johncms\Users\User;
  * @property int $dlcount
  * @property bool $del
  *
- * @property FileInfo|null $file_attrs
  * @property string $file_url
  * @property string $delete_url
  * @property string $file_preview
@@ -47,9 +46,6 @@ class ForumFile extends Model
     protected $table = 'cms_forum_files';
 
     public $timestamps = false;
-
-    /** @var null|FileInfo */
-    public $file_info = null;
 
     protected $fillable = [
         'cat',
@@ -88,9 +84,9 @@ class ForumFile extends Model
         );
     }
 
-    public function getFileInfo(): void
+    public function exists(): bool
     {
-        $this->file_info = new FileInfo(UPLOAD_PATH . 'forum/attach/' . $this->filename);
+        return di(ForumAttachmentStorage::class)->exists((string) $this->filename);
     }
 
     /**
@@ -100,18 +96,14 @@ class ForumFile extends Model
      */
     public function getFilePreviewAttribute(): string
     {
-        if (! is_object($this->file_info)) {
-            $this->getFileInfo();
-        }
+        $attachments = di(ForumAttachmentStorage::class);
+        $filename = (string) $this->filename;
 
-        if (! $this->file_info->isFile()) {
+        if (! $attachments->isImage($filename) || ! $attachments->exists($filename)) {
             return '';
         }
 
-        if ($this->file_info->isImage()) {
-            return '/forum/file-preview/' . $this->id;
-        }
-        return '';
+        return '/forum/file-preview/' . $this->id;
     }
 
     /**
@@ -121,15 +113,12 @@ class ForumFile extends Model
      */
     public function getFileSizeAttribute()
     {
-        if (! is_object($this->file_info)) {
-            $this->getFileInfo();
-        }
-
-        if (! $this->file_info->isFile()) {
+        $attachments = di(ForumAttachmentStorage::class);
+        if (! $attachments->exists((string) $this->filename)) {
             return '';
         }
 
-        return format_size($this->file_info->getSize());
+        return format_size($attachments->size((string) $this->filename));
     }
 
     /**

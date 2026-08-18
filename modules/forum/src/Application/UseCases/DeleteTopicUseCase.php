@@ -6,6 +6,7 @@ namespace Johncms\Modules\Forum\Application\UseCases;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Johncms\Files\FileStore;
+use Johncms\Modules\Forum\Infrastructure\Storage\ForumAttachmentStorage;
 use Johncms\Modules\Forum\Domain\Repository\ForumFileRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageFileRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
@@ -24,6 +25,7 @@ final readonly class DeleteTopicUseCase
         private ForumVoteRepositoryInterface $voteRepository,
         private ForumUnreadRepositoryInterface $unreadRepository,
         private FileStore $files,
+        private ForumAttachmentStorage $attachments,
     ) {
     }
 
@@ -52,10 +54,7 @@ final readonly class DeleteTopicUseCase
         });
 
         foreach ($files as $file) {
-            $filePath = UPLOAD_PATH . 'forum/attach/' . $file->filename;
-            if (is_file($filePath)) {
-                unlink($filePath);
-            }
+            $this->attachments->delete((string) $file->filename);
         }
 
         $this->files->deleteMany($this->messageFileRepository->getOrphanedFileIds($linkedFileIds));

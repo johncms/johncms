@@ -23,6 +23,7 @@ use Johncms\Smilies\SmiliesRendererInterface;
 use Johncms\Utils\DateFormatterInterface;
 use Simba77\EmbedMedia\Embed;
 use Twig\Markup;
+use Johncms\Modules\Forum\Infrastructure\Storage\ForumAttachmentStorage;
 
 final readonly class ViewForumFilesUseCase
 {
@@ -38,6 +39,7 @@ final readonly class ViewForumFilesUseCase
         private Embed $embed,
         private CurrentUser $currentUser,
         private AccessCheckerInterface $accessChecker,
+        private ForumAttachmentStorage $attachments,
     ) {
     }
 
@@ -283,13 +285,11 @@ final readonly class ViewForumFilesUseCase
             $row['post_url'] = '/forum/post/' . $row['post'] . '/';
             $row['topic_url'] = $this->topicPathService->getTopicUrlById((int) $row['topic'], $page > 1 ? $page : null) ?? '/forum/';
 
-            $filePath = UPLOAD_PATH . 'forum/attach/' . $row['filename'];
-            $fileSize = is_file($filePath) ? @filesize($filePath) : 0;
-            $row['file_size'] = round($fileSize / 1024, 0);
-            $attExt = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
+            $filename = (string) $row['filename'];
+            $row['file_size'] = round($this->attachments->size($filename) / 1024, 0);
             $row['file_preview'] = '';
             $row['file_url'] = '/forum/download-file/' . $row['id'] . '/';
-            if (in_array($attExt, ['gif', 'jpg', 'jpeg', 'png'], true)) {
+            if ($this->attachments->isImage($filename)) {
                 $row['file_preview'] = '/forum/file-preview/' . $row['id'];
             }
 
