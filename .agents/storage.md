@@ -165,12 +165,17 @@ Each area has a small class owning its directory, so a path is spelled out once:
 
 Add one when a new area needs files; do not spread `UPLOAD_PATH . '…'` through use cases again.
 
-## Legacy paths
+## The downloads module stays on the filesystem
 
-The downloads module still builds paths by hand and keeps them in the database (`download__files.dir`,
-relative to the **project root**, not to the disk). It also scans directories, which the port has
-no operation for yet. Moving it over means migrating those rows, so it is a job of its own — do
-not half-convert it as part of an unrelated change.
+It works with real directories on purpose, and that is not a debt to pay off. Its categories
+*are* directories: an administrator uploads files over FTP, points the module at the folder and
+scans it, and the tree of the catalogue comes out of the tree on disk. Paths live in the database
+(`download__files.dir`, relative to the project root) because they name a place a human put
+something in.
 
-New code has no excuse: it goes through `FileStore` (registered files) or `StorageInterface`
-(files with no row of their own, such as generated caches).
+A disk takes that away: an object store has no directories to scan, and a path only the CMS
+understands cannot be filled over FTP. Converting the module would cost it the feature it exists
+for, so leave `UPLOAD_PATH` and the direct filesystem calls in it alone.
+
+Everything else goes through `FileStore` (registered files) or `StorageInterface` (files with no
+row of their own, such as generated caches).
