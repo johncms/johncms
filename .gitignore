@@ -1,5 +1,7 @@
 # Common ignores
 /.idea
+# Finder metadata: created in any directory the developer opens on macOS
+.DS_Store
 # Agent tooling: shared reviewers and commands are versioned (see .agents/README.md),
 # personal settings, planning docs and scratch notes stay local
 /.claude/*
