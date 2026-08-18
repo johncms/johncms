@@ -245,6 +245,39 @@ final class FileStoreTest extends TestCase
         self::assertNull($this->files->findById(7));
     }
 
+    /**
+     * Moving a directory onto a private disk must not make the modules build addresses of their
+     * own: the URL they already render turns into the route that streams the file.
+     */
+    public function testAFileOnADiskWithoutAPublicAddressIsLinkedThroughTheRoute(): void
+    {
+        $private = new FlysystemStorage(new Filesystem(new InMemoryFilesystemAdapter()));
+        $store = new FileStore($this->registry($private), $this->files, $this->logger);
+
+        $stored = $store->storeLocalFile($this->localFile('photo.jpg', 'picture bytes'), 'attachments');
+
+        self::assertSame('/file/' . $stored->id, $stored->url);
+    }
+
+    public function testOpenStreamGivesTheContentsAndWhatIsNeededToServeThem(): void
+    {
+        $stored = $this->store->storeLocalFile($this->localFile('photo.txt', 'picture bytes'), 'guestbook');
+
+        $opened = $this->store->openStream($stored->id);
+
+        self::assertNotNull($opened);
+        self::assertSame('photo.txt', $opened->name);
+        self::assertSame('text/plain', $opened->mimeType);
+        self::assertSame(13, $opened->size);
+        self::assertSame('picture bytes', (string) stream_get_contents($opened->stream));
+        fclose($opened->stream);
+    }
+
+    public function testOpeningSomethingThatIsNotRegisteredGivesNull(): void
+    {
+        self::assertNull($this->store->openStream(404));
+    }
+
     public function testFilterIdsInDirectoryKeepsOnlyTheFilesOfThatDirectory(): void
     {
         $this->files->add(1, 'forum_files/aa/bb/cc/mine.jpg');

@@ -28,8 +28,19 @@ return [
                 // Root directory. Everything below is relative to it.
                 'root' => UPLOAD_PATH,
 
-                // Base URL the files are served at. Empty means the disk is not public and its
-                // files are only handed out by a controller.
+                // Base URL the files are served at. Empty means the disk is not public: its
+                // files are then streamed by the /file/{id} controller instead, and the URLs the
+                // modules render change to it on their own.
+                //
+                // A private disk is how attachments stop being reachable by their address alone.
+                // Point its root somewhere outside public/, for example:
+                //
+                //   'attachments' => [
+                //       'driver'     => 'local',
+                //       'root'       => DATA_PATH . 'attachments',
+                //       'url'        => '',
+                //       'visibility' => 'private',
+                //   ],
                 'url' => '/upload',
 
                 // Visibility given to what is written: public or private. It is applied on every

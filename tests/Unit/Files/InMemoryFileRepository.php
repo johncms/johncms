@@ -25,9 +25,9 @@ final class InMemoryFileRepository implements FileRepositoryInterface
     /** Set to have the next create() fail, the way a database error would. */
     public ?Throwable $failOnCreate = null;
 
-    public function add(int $id, string $path, string $disk = 'local'): StoredFile
+    public function add(int $id, string $path, int $size = 1, string $disk = 'local'): StoredFile
     {
-        $file = new StoredFile(['storage' => $disk, 'name' => basename($path), 'path' => $path, 'size' => 1]);
+        $file = new StoredFile(['storage' => $disk, 'name' => basename($path), 'path' => $path, 'size' => $size]);
         $file->id = $id;
         $this->files[$id] = $file;
         $this->nextId = max($this->nextId, $id + 1);

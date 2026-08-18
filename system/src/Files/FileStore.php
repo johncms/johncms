@@ -40,6 +40,13 @@ use Throwable;
  */
 final readonly class FileStore
 {
+    /**
+     * Route that streams a stored file, used for the disks that have no public address of their
+     * own. Kept next to the store rather than in the controller: this is what fills it into
+     * every URL the modules render.
+     */
+    public const string DOWNLOAD_PATH = '/file/';
+
     public function __construct(
         private StorageRegistryInterface $storages,
         private FileRepositoryInterface $files,
@@ -146,6 +153,36 @@ final readonly class FileStore
         $file = $this->files->findById($id);
 
         return $file === null ? null : $this->toDTO($file);
+    }
+
+    /**
+     * Open a stored file for handing it to a visitor.
+     *
+     * How a file on a disk that is not public reaches the browser: a controller asks for this,
+     * decides whether the visitor may have it, and streams it. Null when nothing is registered
+     * under the id.
+     *
+     * @throws FileStoreException when the row is there but the disk will not give the file up.
+     */
+    public function openStream(int $id): ?StoredFileStream
+    {
+        $file = $this->files->findById($id);
+        if ($file === null) {
+            return null;
+        }
+
+        try {
+            $disk = $this->storages->disk($file->storage);
+
+            return new StoredFileStream(
+                stream: $disk->readStream($file->path),
+                name: $file->name,
+                mimeType: $disk->mimeType($file->path),
+                size: $file->size,
+            );
+        } catch (StorageException $exception) {
+            throw new FileStoreException($exception->getMessage(), 0, $exception);
+        }
     }
 
     /**
@@ -358,7 +395,21 @@ final readonly class FileStore
             id: $file->id,
             name: $file->name,
             size: $file->size,
-            url: $storage->url($file->path),
+            url: $this->url($file, $storage),
         );
+    }
+
+    /**
+     * Where the file is reached at: the address of the disk when it is public, and the route
+     * that streams it when it is not.
+     *
+     * Moving a directory to a private disk therefore changes nothing in the modules — the links
+     * they render keep working, they only start going through a controller.
+     */
+    private function url(StoredFile $file, StorageInterface $storage): string
+    {
+        $url = $storage->url($file->path);
+
+        return $url === '' ? self::DOWNLOAD_PATH . $file->id : $url;
     }
 }

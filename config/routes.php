@@ -4,10 +4,15 @@ declare(strict_types=1);
 
 use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Http\Controller\ExternalAuthController;
+use Johncms\Http\Controller\FileController;
 use Johncms\Http\Controller\ImpersonationController;
 use Johncms\Router\RouteCollection;
 
 return static function (RouteCollection $router): void {
+    // Stored files that the web server cannot hand out itself, because their disk is not public.
+    // The address is built by FileStore::DOWNLOAD_PATH, which is what the modules render.
+    $router->get('/file/{id:number}', [FileController::class, 'download'])->name('file.download');
+
     // Browsing as another user. Core routes rather than routes of the admin module: leaving has to
     // work from every page of the site, and the banner offering it is drawn by the theme.
     $router->post('/impersonation/start/{id:number}', [ImpersonationController::class, 'start'])
