@@ -15,6 +15,7 @@ guide first:
 * Paginated lists, page titles / meta description → read `.agents/pagination.md`
 * Caching values, cache tags and invalidation → read `.agents/caching.md`
 * Resizing pictures, thumbnails, previews of an upload → read `.agents/images.md`
+* Storing or deleting files, uploads, disks, the `files` table → read `.agents/storage.md`
 * User input handling, output escaping in templates, sanitizing user HTML → read `.agents/escaping.md`
 * Translations, `.po`/`.pot`/`.lng.php` files, `__()` strings → read `.agents/localization.md`
 * Creating a new module (structure, autoload, DI, routes, templates) → read `.agents/new-module.md`

@@ -19,6 +19,7 @@ automatically; `CLAUDE.md` is a symlink to it for Claude Code.
 | `pagination.md` | paginated lists, page titles / meta description |
 | `caching.md` | caching values, cache tags and invalidation |
 | `images.md` | processing pictures: resizing, thumbnails, cached previews |
+| `storage.md` | storing files: disks, the file registry, public and private disks |
 | `new-module.md` | creating a new module |
 | `templates.md` | Twig templates: namespaces, environments, components, traps |
 | `validation.md` | form validation: rules, the null policy, messages, adding a rule |
