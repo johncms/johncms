@@ -19,6 +19,7 @@ use Johncms\Modules\Downloads\Application\Controllers\MoveFileController;
 use Johncms\Modules\Downloads\Application\Controllers\EditScreenController;
 use Johncms\Modules\Downloads\Application\Controllers\FavoritesController;
 use Johncms\Modules\Downloads\Application\Controllers\FileCommentsController;
+use Johncms\Modules\Downloads\Application\Controllers\FilePreviewController;
 use Johncms\Modules\Downloads\Application\Controllers\FilesUploadController;
 use Johncms\Modules\Downloads\Application\Controllers\LoadFileController;
 use Johncms\Modules\Downloads\Application\Controllers\NewFilesController;
@@ -41,6 +42,12 @@ return static function (RouteCollection $router): void {
         $r->get('/downloads/top-users', TopUsersController::class)->name('downloads.top_users');
         $r->get('/downloads/user-files/{id:number}', UserFilesController::class)->name('downloads.user_files');
         $r->get('/downloads/load/{id:number}', LoadFileController::class)->name('downloads.load_file');
+        // Previews are generated once and cached on disk; they are addressed by file id so
+        // that no part of a path ever comes from the request.
+        $r->get('/downloads/preview/{id:number}', [FilePreviewController::class, 'file'])->name('downloads.file_preview');
+        $r->get('/downloads/preview/{id:number}/{name}', [FilePreviewController::class, 'screen'])
+            ->name('downloads.screen_preview')
+            ->requirements(['name' => '[A-Za-z0-9_.\-]+']);
         $r->map(['GET', 'POST'], '/downloads/comments/{id:number}', FileCommentsController::class)->name('downloads.file_comments');
         $r->map(['GET', 'POST'], '/downloads/upload/{id:number}', FilesUploadController::class)->name('downloads.upload');
 

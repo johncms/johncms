@@ -18,6 +18,7 @@ use Johncms\Modules\Forum\Application\Controllers\DeleteVoteController;
 use Johncms\Modules\Forum\Application\Controllers\DownloadFileController;
 use Johncms\Modules\Forum\Application\Controllers\EditPostController;
 use Johncms\Modules\Forum\Application\Controllers\EditVoteController;
+use Johncms\Modules\Forum\Application\Controllers\FilePreviewController;
 use Johncms\Modules\Forum\Application\Controllers\FilterByAuthorController;
 use Johncms\Modules\Forum\Application\Controllers\ForumFilesController;
 use Johncms\Modules\Forum\Application\Controllers\ForumIndexController;
@@ -53,6 +54,8 @@ return static function (RouteCollection $router): void {
     $forumGroup = $router->group('', function (RouteCollection $r): void {
         $r->map(['GET', 'POST'], '/forum', ForumIndexController::class)->name('forum.index');
         $r->get('/forum/download-file/{id:number}', DownloadFileController::class)->name('forum.download_file');
+        // The thumbnail of an attached picture: generated once, then served from the cache.
+        $r->get('/forum/file-preview/{id:number}', FilePreviewController::class)->name('forum.file_preview');
         $r->get('/forum/files', ForumFilesController::class)->name('forum.files');
         $r->get('/forum/search', ForumSearchController::class)->name('forum.search');
         $r->map(['GET', 'POST'], '/forum/search/history/clear', ClearForumSearchHistoryController::class)->name('forum.search_history_clear');

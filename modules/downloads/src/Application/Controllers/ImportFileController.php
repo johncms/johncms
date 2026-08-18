@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
-use Exception;
-use Intervention\Image\ImageManager;
 use Johncms\Auth\CurrentUser;
+use Johncms\Image\ImageProcessingException;
+use Johncms\Image\ImageProcessorInterface;
 use Johncms\Modules\Downloads\Application\Services\DownloadCategoryPathService;
 use Johncms\Modules\Downloads\Application\Services\DownloadFilePathService;
 use Johncms\Modules\Downloads\Domain\Models\DownloadCategory;
@@ -18,6 +18,9 @@ use Twig\Markup;
 
 final readonly class ImportFileController
 {
+    private const int SCREENSHOT_WIDTH = 1920;
+    private const int SCREENSHOT_HEIGHT = 1080;
+
     private const DEFAULT_EXTENSIONS = [
         'mp4', 'rar', 'zip', 'pdf', 'nth', 'txt', 'tar', 'gz',
         'jpg', 'jpeg', 'gif', 'png', 'bmp', '3gp', 'mp3', 'mpg',
@@ -27,7 +30,7 @@ final readonly class ImportFileController
 
     public function __construct(
         private CurrentUser $currentUser,
-        private ImageManager $imageManager,
+        private ImageProcessorInterface $imageProcessor,
         private DownloadFilePathService $filePathService,
         private DownloadCategoryPathService $categoryPathService,
     ) {
@@ -160,14 +163,14 @@ final readonly class ImportFileController
             $screensDir = \UPLOAD_PATH . 'downloads' . \DS . 'screen' . \DS . $file->id;
             if (mkdir($screensDir, 0777, true) || is_dir($screensDir)) {
                 try {
-                    $img = $this->imageManager->make($screenshot->getPathname());
-                    $img->resize(1920, 1080, static function ($constraint): void {
-                        $constraint->aspectRatio();
-                        $constraint->upsize();
-                    });
-                    $img->save($screensDir . '/' . $file->id . '.png', 100, 'png');
+                    $this->imageProcessor->saveScaledDown(
+                        $screenshot->getPathname(),
+                        $screensDir . '/' . $file->id . '.png',
+                        self::SCREENSHOT_WIDTH,
+                        self::SCREENSHOT_HEIGHT
+                    );
                     $screenAttached = true;
-                } catch (Exception $e) {
+                } catch (ImageProcessingException $e) {
                     $screenAttached = false;
                     $screenError = $e->getMessage();
                 }

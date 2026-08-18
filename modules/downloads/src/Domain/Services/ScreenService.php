@@ -26,7 +26,7 @@ final class ScreenService
                 'path'      => $info->getRealPath(),
                 'url'       => $url,
                 'file_name' => $info->getBasename(),
-                'preview'   => '/assets/modules/downloads/preview.php?type=2&amp;img=' . rawurlencode($url),
+                'preview'   => '/downloads/preview/' . $fileId . '/' . rawurlencode($info->getBasename()),
             ];
         }
 

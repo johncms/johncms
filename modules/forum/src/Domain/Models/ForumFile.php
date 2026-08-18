@@ -109,7 +109,7 @@ class ForumFile extends Model
         }
 
         if ($this->file_info->isImage()) {
-            return '/assets/modules/forum/thumbinal.php?file=' . (urlencode($this->filename));
+            return '/forum/file-preview/' . $this->id;
         }
         return '';
     }

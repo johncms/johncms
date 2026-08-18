@@ -7,9 +7,9 @@ namespace Johncms\Modules\Downloads\Application\Controllers;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Downloads\Application\Services\DownloadsPermissions;
-use Exception;
-use Intervention\Image\ImageManager;
 use Johncms\FileInfo;
+use Johncms\Image\ImageProcessingException;
+use Johncms\Image\ImageProcessorInterface;
 use Johncms\Modules\Downloads\Application\Services\DownloadCategoryPathService;
 use Johncms\Modules\Downloads\Application\Services\DownloadFilePathService;
 use Johncms\Modules\Downloads\Application\Services\DownloadSlugService;
@@ -22,6 +22,9 @@ use Twig\Markup;
 
 final readonly class FilesUploadController
 {
+    private const int SCREENSHOT_WIDTH = 1920;
+    private const int SCREENSHOT_HEIGHT = 1080;
+
     private const DEFAULT_EXTENSIONS = [
         'mp4', 'rar', 'zip', 'pdf', 'nth', 'txt', 'tar', 'gz',
         'jpg', 'jpeg', 'gif', 'png', 'bmp', '3gp', 'mp3', 'mpg',
@@ -33,7 +36,7 @@ final readonly class FilesUploadController
         private AccessCheckerInterface $accessChecker,
         private NavChain $navChain,
         private CurrentUser $currentUser,
-        private ImageManager $imageManager,
+        private ImageProcessorInterface $imageProcessor,
         private DownloadSlugService $slugService,
         private DownloadFilePathService $filePathService,
         private DownloadCategoryPathService $categoryPathService,
@@ -175,14 +178,14 @@ final readonly class FilesUploadController
             $screensDir = \UPLOAD_PATH . 'downloads' . \DS . 'screen' . \DS . $file->id;
             if (mkdir($screensDir, 0777, true) || is_dir($screensDir)) {
                 try {
-                    $img = $this->imageManager->make($screenshot->getPathname());
-                    $img->resize(1920, 1080, static function ($constraint): void {
-                        $constraint->aspectRatio();
-                        $constraint->upsize();
-                    });
-                    $img->save($screensDir . '/' . $file->id . '.png', 100, 'png');
+                    $this->imageProcessor->saveScaledDown(
+                        $screenshot->getPathname(),
+                        $screensDir . '/' . $file->id . '.png',
+                        self::SCREENSHOT_WIDTH,
+                        self::SCREENSHOT_HEIGHT
+                    );
                     $screenAttached = true;
-                } catch (Exception $e) {
+                } catch (ImageProcessingException $e) {
                     $screenAttached = false;
                     $screenError = $e->getMessage();
                 }

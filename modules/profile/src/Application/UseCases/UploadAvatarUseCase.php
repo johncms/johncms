@@ -4,15 +4,18 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Profile\Application\UseCases;
 
-use Exception;
-use Intervention\Image\ImageManager;
 use Johncms\Http\UploadedFileDTO;
+use Johncms\Image\ImageProcessingException;
+use Johncms\Image\ImageProcessorInterface;
 use Johncms\Modules\Profile\Application\Exceptions\ImageUploadException;
 
 final readonly class UploadAvatarUseCase
 {
+    private const int AVATAR_WIDTH = 150;
+    private const int AVATAR_HEIGHT = 150;
+
     public function __construct(
-        private ImageManager $imageManager,
+        private ImageProcessorInterface $imageProcessor,
     ) {
     }
 
@@ -24,19 +27,13 @@ final readonly class UploadAvatarUseCase
         }
 
         try {
-            $avatar = UPLOAD_PATH . 'users/avatar/' . $userId . '.png';
-            $this->imageManager->make($file->tmpPath)
-                ->resize(
-                    150,
-                    150,
-                    static function ($constraint): void {
-                        /** @var \Intervention\Image\Constraint $constraint */
-                        $constraint->aspectRatio();
-                        $constraint->upsize();
-                    }
-                )
-                ->save($avatar, 100, 'png');
-        } catch (Exception $exception) {
+            $this->imageProcessor->saveScaledDown(
+                $file->tmpPath,
+                UPLOAD_PATH . 'users/avatar/' . $userId . '.png',
+                self::AVATAR_WIDTH,
+                self::AVATAR_HEIGHT
+            );
+        } catch (ImageProcessingException $exception) {
             throw new ImageUploadException($exception->getMessage());
         }
     }

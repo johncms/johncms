@@ -290,7 +290,7 @@ final readonly class ViewForumFilesUseCase
             $row['file_preview'] = '';
             $row['file_url'] = '/forum/download-file/' . $row['id'] . '/';
             if (in_array($attExt, ['gif', 'jpg', 'jpeg', 'png'], true)) {
-                $row['file_preview'] = '/assets/modules/forum/thumbinal.php?file=' . urlencode((string) $row['filename']);
+                $row['file_preview'] = '/forum/file-preview/' . $row['id'];
             }
 
             $files[] = $row;

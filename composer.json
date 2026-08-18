@@ -44,7 +44,7 @@
         "gettext/translator": "^1.0",
         "illuminate/database": "^12.41.1",
         "imangazaliev/didom": "^2.0.1",
-        "intervention/image": "^2.5",
+        "intervention/image": "^4.2",
         "james-heinrich/getid3": "^1.9",
         "league/flysystem": "^2.0",
         "mobicms/captcha": "^4.0",

@@ -12,8 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Library\Application\Services;
 
-use Intervention\Image\Constraint;
-use Intervention\Image\ImageManager;
+use Johncms\Image\ImageProcessorInterface;
 use PDO;
 
 class Utils
@@ -56,30 +55,14 @@ class Utils
         $smallSize = 32;
         $bigSize   = 240;
 
-        /** @var ImageManager $image_manager */
-        $image_manager = di(ImageManager::class);
-        $img           = $image_manager->make($image->getPathname());
-        $img->save(UPLOAD_PATH . 'library/images/orig/' . $id . '.png', 100, 'png');
-        $img->resize(
-            $bigSize,
-            null,
-            static function ($constraint) {
-                /** @var $constraint Constraint */
-                $constraint->aspectRatio();
-                $constraint->upsize();
-            }
-        );
-        $img->save(UPLOAD_PATH . 'library/images/big/' . $id . '.png', 100, 'png');
-        $img->resize(
-            $smallSize,
-            null,
-            static function ($constraint) {
-                /** @var $constraint Constraint */
-                $constraint->aspectRatio();
-                $constraint->upsize();
-            }
-        );
-        $img->save(UPLOAD_PATH . 'library/images/small/' . $id . '.png', 100, 'png');
+        $source = $image->getPathname();
+        $processor = di(ImageProcessorInterface::class);
+
+        // The original keeps its size and is only re-encoded to PNG; the two smaller copies are
+        // scaled by width, with the height following from the proportions of the picture.
+        $processor->saveConverted($source, UPLOAD_PATH . 'library/images/orig/' . $id . '.png');
+        $processor->saveScaledDown($source, UPLOAD_PATH . 'library/images/big/' . $id . '.png', $bigSize);
+        $processor->saveScaledDown($source, UPLOAD_PATH . 'library/images/small/' . $id . '.png', $smallSize);
     }
 
     public static function replaceKeywords(string $search, string $text): string

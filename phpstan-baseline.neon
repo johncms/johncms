@@ -2741,30 +2741,6 @@ parameters:
 			path: modules/registration/src/Application/Controllers/ConfirmEmailController.php
 
 		-
-			message: '#^Comparison operation "\<\=" between 4 and 20 is always true\.$#'
-			identifier: smallerOrEqual.alwaysTrue
-			count: 1
-			path: public/assets/modules/forum/thumbinal.php
-
-		-
-			message: '#^Comparison operation "\>" between 4 and 1 is always true\.$#'
-			identifier: greater.alwaysTrue
-			count: 1
-			path: public/assets/modules/forum/thumbinal.php
-
-		-
-			message: '#^Expression on left side of \?\? is not nullable\.$#'
-			identifier: nullCoalesce.expr
-			count: 1
-			path: public/assets/modules/forum/thumbinal.php
-
-		-
-			message: '#^Variable \$color might not be defined\.$#'
-			identifier: variable.undefined
-			count: 1
-			path: public/assets/modules/forum/thumbinal.php
-
-		-
 			message: '#^Comparison operation "\<" between int\<80400, 80599\> and 80400 is always false\.$#'
 			identifier: smaller.alwaysFalse
 			count: 1

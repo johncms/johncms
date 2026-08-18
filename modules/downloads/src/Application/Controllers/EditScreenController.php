@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
-use Exception;
 use Johncms\Modules\Downloads\Application\Services\CategoryNavService;
 use Johncms\Modules\Downloads\Application\Services\DownloadFilePathService;
 use Johncms\Modules\Downloads\Domain\Services\ScreenService;
-use Intervention\Image\ImageManager;
 use Johncms\FileInfo;
+use Johncms\Image\ImageProcessingException;
+use Johncms\Image\ImageProcessorInterface;
 use Johncms\Modules\Downloads\Domain\Models\DownloadFile;
 use Johncms\NavChain;
 use Johncms\Http\Request;
@@ -20,10 +20,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 final readonly class EditScreenController
 {
+    private const int SCREENSHOT_WIDTH = 1920;
+    private const int SCREENSHOT_HEIGHT = 1080;
+
     public function __construct(
         private Session $session,
         private NavChain $navChain,
-        private ImageManager $imageManager,
+        private ImageProcessorInterface $imageProcessor,
         private CategoryNavService $categoryNavService,
         private DownloadFilePathService $filePathService,
     ) {
@@ -115,16 +118,16 @@ final readonly class EditScreenController
         }
 
         try {
-            $img = $this->imageManager->make($screenshot->getPathname());
-            $img->resize(1920, 1080, static function ($constraint): void {
-                $constraint->aspectRatio();
-                $constraint->upsize();
-            });
-            $img->save($fileName, 100, 'png');
+            $this->imageProcessor->saveScaledDown(
+                $screenshot->getPathname(),
+                $fileName,
+                self::SCREENSHOT_WIDTH,
+                self::SCREENSHOT_HEIGHT
+            );
             // Rendering stays outside the try: the catch below reports an image-processing
             // failure, and a template error must not be misreported as one (nor have its raw
             // message printed to the visitor).
-        } catch (Exception $e) {
+        } catch (ImageProcessingException $e) {
             return new ViewResponse('@theme/pages/result.twig', [
                 'title'         => __('Upload screenshot'),
                 'type'          => 'alert-danger',

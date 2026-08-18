@@ -4,15 +4,20 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Profile\Application\UseCases;
 
-use Exception;
-use Intervention\Image\ImageManager;
 use Johncms\Http\UploadedFileDTO;
+use Johncms\Image\ImageProcessingException;
+use Johncms\Image\ImageProcessorInterface;
 use Johncms\Modules\Profile\Application\Exceptions\ImageUploadException;
 
 final readonly class UploadPhotoUseCase
 {
+    private const int PHOTO_WIDTH = 1024;
+    private const int PHOTO_HEIGHT = 960;
+    private const int THUMB_WIDTH = 400;
+    private const int THUMB_HEIGHT = 300;
+
     public function __construct(
-        private ImageManager $imageManager,
+        private ImageProcessorInterface $imageProcessor,
     ) {
     }
 
@@ -24,33 +29,20 @@ final readonly class UploadPhotoUseCase
         }
 
         try {
-            $photo = UPLOAD_PATH . 'users/photo/' . $userId . '.jpg';
-            $smallPhoto = UPLOAD_PATH . 'users/photo/' . $userId . '_small.jpg';
+            $this->imageProcessor->saveScaledDown(
+                $file->tmpPath,
+                UPLOAD_PATH . 'users/photo/' . $userId . '.jpg',
+                self::PHOTO_WIDTH,
+                self::PHOTO_HEIGHT
+            );
 
-            $this->imageManager->make($file->tmpPath)
-                ->resize(
-                    1024,
-                    960,
-                    static function ($constraint): void {
-                        /** @var \Intervention\Image\Constraint $constraint */
-                        $constraint->aspectRatio();
-                        $constraint->upsize();
-                    }
-                )
-                ->save($photo, 100, 'jpg');
-
-            $this->imageManager->make($file->tmpPath)
-                ->resize(
-                    400,
-                    300,
-                    static function ($constraint): void {
-                        /** @var \Intervention\Image\Constraint $constraint */
-                        $constraint->aspectRatio();
-                        $constraint->upsize();
-                    }
-                )
-                ->save($smallPhoto, 100, 'jpg');
-        } catch (Exception $exception) {
+            $this->imageProcessor->saveScaledDown(
+                $file->tmpPath,
+                UPLOAD_PATH . 'users/photo/' . $userId . '_small.jpg',
+                self::THUMB_WIDTH,
+                self::THUMB_HEIGHT
+            );
+        } catch (ImageProcessingException $exception) {
             throw new ImageUploadException($exception->getMessage());
         }
     }

@@ -8,12 +8,12 @@ use Johncms\Modules\Downloads\Application\DTO\FileMediaInfoDTO;
 
 final class FileMediaInfoService
 {
-    public function build(string $fsPath, string $extension, array $existingScreenshots): FileMediaInfoDTO
+    public function build(string $fsPath, int $fileId, string $extension, array $existingScreenshots): FileMediaInfoDTO
     {
         return match (true) {
             in_array($extension, ['mp3', 'aac', 'm4a'], true)          => $this->buildAudio($fsPath, $existingScreenshots),
             in_array($extension, ['avi', 'webm', 'mov', 'mp4'], true)  => $this->buildVideo($fsPath, $existingScreenshots),
-            in_array($extension, ['jpg', 'jpeg', 'gif', 'png'], true)  => $this->buildImage($fsPath, $existingScreenshots),
+            in_array($extension, ['jpg', 'jpeg', 'gif', 'png'], true)  => $this->buildImage($fsPath, $fileId, $existingScreenshots),
             default                                                      => new FileMediaInfoDTO('other', [], $existingScreenshots, null),
         };
     }
@@ -81,11 +81,11 @@ final class FileMediaInfoService
         return new FileMediaInfoDTO('video', $properties, $screenshots, null);
     }
 
-    private function buildImage(string $fsPath, array $screenshots): FileMediaInfoDTO
+    private function buildImage(string $fsPath, int $fileId, array $screenshots): FileMediaInfoDTO
     {
         $screen = [
             'url'     => '/' . $fsPath,
-            'preview' => '/assets/modules/downloads/preview.php?type=2&amp;img=' . rawurlencode($fsPath),
+            'preview' => '/downloads/preview/' . $fileId,
         ];
 
         $imageInfo = null;

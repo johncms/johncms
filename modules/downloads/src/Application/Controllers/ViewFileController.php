@@ -138,6 +138,7 @@ final readonly class ViewFileController
         $extension = strtolower(pathinfo($file->name, PATHINFO_EXTENSION));
         $mediaInfo = $this->mediaInfoService->build(
             $file->dir . '/' . $file->name,
+            $id,
             $extension,
             ScreenService::getScreens($id)
         );

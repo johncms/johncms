@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use Intervention\Image\ImageManager;
 use Johncms\Ads;
 use Johncms\AdsFactory;
 use Johncms\Auth\Authentication\AuthenticatorChain;
@@ -46,7 +45,8 @@ use Johncms\Database\PdoFactory;
 use Johncms\Database\SchemaBuilderFactory;
 use Johncms\Files\Filesystem;
 use Johncms\Files\FileStorage;
-use Johncms\ImageManagerFactory;
+use Johncms\Image\ImageProcessorInterface;
+use Johncms\Image\InterventionImageProcessor;
 use Johncms\Logs\LoggerFactory;
 use Johncms\Mail\MailDsnResolver;
 use Johncms\Mail\MailFactory;
@@ -178,6 +178,7 @@ return static function (ContainerConfigurator $container): void {
                 // Exceptions are never services: those with scalar constructor arguments
                 // (HttpRedirectException) break the container compilation when autowired.
                 ROOT_PATH . 'system/src/Exceptions',
+                ROOT_PATH . 'system/src/Image/ImageProcessingException.php',
                 ROOT_PATH . 'system/src/Files',
                 ROOT_PATH . 'system/src/Modules',
                 ROOT_PATH . 'system/src/Router/Route.php',
@@ -199,6 +200,7 @@ return static function (ContainerConfigurator $container): void {
                 ROOT_PATH . 'system/src/Scheduler/ScheduledTaskDefinition.php',
                 ROOT_PATH . 'system/src/Http/PageMeta.php',
                 ROOT_PATH . 'system/src/Http/View/ViewResponse.php',
+                ROOT_PATH . 'system/src/Http/CachedImageResponse.php',
                 // The request is not a service: it belongs to a cycle, and a container-built one
                 // would be an empty request assembled from the globals of whoever asked first.
                 ROOT_PATH . 'system/src/Http/Request.php',
@@ -319,7 +321,9 @@ return static function (ContainerConfigurator $container): void {
     $services->set(IgnoreListCheckerInterface::class, IgnoreListChecker::class);
     $services->set(DateFormatterInterface::class, DateFormatter::class)->autowire();
     $services->set(NavChain::class)->factory([NavChain::class, 'create']);
-    $services->set(ImageManager::class)->factory(service(ImageManagerFactory::class));
+    // Which library resizes the pictures is settled here and nowhere else: everything that
+    // stores an upload asks for the interface.
+    $services->set(ImageProcessorInterface::class, InterventionImageProcessor::class);
     $services->set(Ads::class)->factory(service(AdsFactory::class));
     $services->set(Csrf::class)->factory([Csrf::class, 'create']);
     // Reads config/csrf.php: an array argument the container cannot autowire.

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Album\Application\UseCases;
 
-use Exception;
-use Intervention\Image\ImageManager;
+use Johncms\Http\UploadedFileDTO;
+use Johncms\Image\ImageProcessingException;
+use Johncms\Image\ImageProcessorInterface;
 use Johncms\Modules\Album\Application\Exceptions\ImageUploadException;
 use Johncms\Modules\Album\Domain\Models\Album;
-use Johncms\Http\UploadedFileDTO;
 use Johncms\Modules\Album\Domain\Repository\AlbumPhotoRepositoryInterface;
 
 final readonly class UploadPhotoUseCase
@@ -20,7 +20,7 @@ final readonly class UploadPhotoUseCase
     private const THUMB_HEIGHT = 300;
 
     public function __construct(
-        private ImageManager $imageManager,
+        private ImageProcessorInterface $imageProcessor,
         private AlbumPhotoRepositoryInterface $photoRepository,
     ) {
     }
@@ -42,36 +42,21 @@ final readonly class UploadPhotoUseCase
         $thumbFile = 'tmb_' . $time . '.jpg';
 
         try {
-            // Save the original, scaled down to fit within the maximum bounds.
-            $img = $this->imageManager->make($file->tmpPath)
-                ->resize(
-                    self::ORIGINAL_WIDTH,
-                    self::ORIGINAL_HEIGHT,
-                    static function ($constraint): void {
-                        /** @var \Intervention\Image\Constraint $constraint */
-                        $constraint->aspectRatio();
-                        $constraint->upsize();
-                    }
-                );
-            $img->save($dir . $originalFile, 100, 'jpg');
+            // The original, scaled down to fit within the maximum bounds.
+            $this->imageProcessor->saveScaledDown(
+                $file->tmpPath,
+                $dir . $originalFile,
+                self::ORIGINAL_WIDTH,
+                self::ORIGINAL_HEIGHT
+            );
 
-            // Build the thumbnail: a blurred, cropped backdrop with the scaled image centered on top.
-            $resized = $this->imageManager->make($file->tmpPath)
-                ->resize(
-                    self::THUMB_WIDTH,
-                    self::THUMB_HEIGHT,
-                    static function ($constraint): void {
-                        /** @var \Intervention\Image\Constraint $constraint */
-                        $constraint->aspectRatio();
-                        $constraint->upsize();
-                    }
-                );
-
-            $thumb = $img->fit(self::THUMB_WIDTH, self::THUMB_HEIGHT)
-                ->blur(20)
-                ->insert($resized, 'center');
-            $thumb->save($dir . $thumbFile, 100, 'jpg');
-        } catch (Exception $exception) {
+            $this->imageProcessor->saveBlurredThumbnail(
+                $file->tmpPath,
+                $dir . $thumbFile,
+                self::THUMB_WIDTH,
+                self::THUMB_HEIGHT
+            );
+        } catch (ImageProcessingException $exception) {
             throw new ImageUploadException($exception->getMessage());
         }
 

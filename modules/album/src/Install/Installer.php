@@ -15,7 +15,7 @@ namespace Johncms\Modules\Album\Install;
 use Gettext\TranslatorFunctions;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Schema\Blueprint;
-use Intervention\Image\ImageManager;
+use Johncms\Image\ImageProcessorInterface;
 use Johncms\Modules\Album\Domain\Enums\AlbumAccess;
 use Johncms\System\i18n\Translator;
 use Throwable;
@@ -201,23 +201,12 @@ class Installer extends \Johncms\Modules\Installer
         }
 
         try {
-            $imageManager = di(ImageManager::class);
-            $resized = $imageManager->make($sourcePath)
-                ->resize(
-                    self::THUMB_WIDTH,
-                    self::THUMB_HEIGHT,
-                    static function ($constraint): void {
-                        /** @var \Intervention\Image\Constraint $constraint */
-                        $constraint->aspectRatio();
-                        $constraint->upsize();
-                    }
-                );
-
-            $imageManager->make($sourcePath)
-                ->fit(self::THUMB_WIDTH, self::THUMB_HEIGHT)
-                ->blur(20)
-                ->insert($resized, 'center')
-                ->save($thumbTarget, 100, 'jpg');
+            di(ImageProcessorInterface::class)->saveBlurredThumbnail(
+                $sourcePath,
+                $thumbTarget,
+                self::THUMB_WIDTH,
+                self::THUMB_HEIGHT
+            );
         } catch (Throwable) {
             // Thumbnail generation is best-effort; fall back to the full-size image.
             copy($sourcePath, $thumbTarget);

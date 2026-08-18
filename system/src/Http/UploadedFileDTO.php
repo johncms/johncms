@@ -24,7 +24,7 @@ use RuntimeException;
  * It carries the upload metadata plus the temporary path, and owns the move operation so that
  * consumers do not need the original HTTP object: moveTo() replaces the former
  * UploadedFileInterface::moveTo(), and the temporary path replaces getStream() for readers
- * (e.g. Intervention's ImageManager::make() accepts a path).
+ * (ImageProcessorInterface, for one, takes the path of the picture to process).
  */
 final readonly class UploadedFileDTO
 {
