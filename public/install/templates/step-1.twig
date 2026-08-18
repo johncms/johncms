@@ -37,9 +37,12 @@
 {% endblock %}
 
 {% block scripts %}
+    {# No jQuery here: the bundle is a module script and so runs after this one. #}
     <script>
-        $(document).on('change', 'input[name=lang]', function () {
-            document.location.href = '/install/?set_locale=' + $(this).val();
-        })
+        document.addEventListener('change', function (event) {
+            if (event.target.matches('input[name=lang]')) {
+                document.location.href = '/install/?set_locale=' + encodeURIComponent(event.target.value);
+            }
+        });
     </script>
 {% endblock %}
