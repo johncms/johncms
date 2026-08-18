@@ -13,7 +13,8 @@ declare(strict_types=1);
 namespace Johncms\Files;
 
 use Johncms\FileInfo;
-use League\Flysystem\FilesystemException;
+use Johncms\Storage\StorageException;
+use Johncms\Storage\StorageRegistryInterface;
 
 class File
 {
@@ -120,7 +121,7 @@ class File
      * Gets the path to the file to save
      *
      * @return string
-     * @throws FilesystemException
+     * @throws StorageException
      */
     public function getSavePath(): string
     {
@@ -137,10 +138,10 @@ class File
             $file_path .= '.' . $extension;
         }
 
-        $file_storage = di(Filesystem::class)->storage($this->storage);
+        $file_storage = di(StorageRegistryInterface::class)->disk($this->storage);
 
         $i = 1;
-        while ($file_storage->fileExists($file_path)) {
+        while ($file_storage->exists($file_path)) {
             $file_path = $file_path_base . $this->getStoragePath() . '/' . $this->getHash() . '_' . $i;
             if (! empty($extension)) {
                 $file_path .= '.' . $extension;
@@ -155,15 +156,15 @@ class File
      * Saves the file and registers it in the database.
      *
      * @return Models\File
-     * @throws FilesystemException
+     * @throws StorageException
      * @psalm-suppress LessSpecificReturnStatement, MoreSpecificReturnType
      */
     public function save(): Models\File
     {
         $path = $this->getSavePath();
 
-        $file_storage = di(Filesystem::class)->storage($this->storage);
-        $file_storage->writeStream($path, fopen($this->source_file, 'rb'));
+        $file_storage = di(StorageRegistryInterface::class)->disk($this->storage);
+        $file_storage->storeFile($path, $this->source_file);
 
         return (new Models\File())->create(
             [

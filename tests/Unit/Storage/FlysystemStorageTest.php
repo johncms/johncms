@@ -1,0 +1,246 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Tests\Unit\Storage;
+
+use Johncms\Storage\DiskSettings;
+use Johncms\Storage\FlysystemStorage;
+use Johncms\Storage\StorageDriver;
+use Johncms\Storage\StorageException;
+use Johncms\Storage\StorageFactory;
+use Johncms\Storage\StorageInterface;
+use League\Flysystem\Filesystem;
+use League\Flysystem\InMemory\InMemoryFilesystemAdapter;
+use PHPUnit\Framework\TestCase;
+use RuntimeException;
+
+/**
+ * The disk is the only class that knows flysystem, so these tests are what catches an upgrade
+ * of the library changing what a stored file looks like. They assert on the result — the bytes,
+ * the mode, the URL — never on calls made to the library.
+ *
+ * withLocalCopy() is covered on both kinds of disk, because its two halves are entirely
+ * different: a local disk hands out the file itself, anything else makes a copy and has to
+ * remove it again.
+ */
+final class FlysystemStorageTest extends TestCase
+{
+    private string $root;
+    private StorageInterface $disk;
+
+    protected function setUp(): void
+    {
+        $this->root = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'johncms-storage-' . bin2hex(random_bytes(6));
+        mkdir($this->root, 0777, true);
+        $this->disk = $this->localDisk();
+    }
+
+    protected function tearDown(): void
+    {
+        $this->removeDirectory($this->root);
+    }
+
+    public function testStoresAndReadsBack(): void
+    {
+        $this->disk->store('dir/file.txt', 'contents');
+
+        self::assertSame('contents', $this->disk->read('dir/file.txt'));
+    }
+
+    public function testStoresFromAStream(): void
+    {
+        $stream = fopen('php://temp', 'r+b');
+        fwrite($stream, 'from stream');
+        rewind($stream);
+
+        $this->disk->storeStream('file.txt', $stream);
+
+        self::assertSame('from stream', $this->disk->read('file.txt'));
+    }
+
+    public function testStoresALocalFile(): void
+    {
+        $source = $this->root . DIRECTORY_SEPARATOR . 'source.txt';
+        file_put_contents($source, 'local file');
+
+        $this->disk->storeFile('copy.txt', $source);
+
+        self::assertSame('local file', $this->disk->read('copy.txt'));
+    }
+
+    public function testStoringAMissingLocalFileThrows(): void
+    {
+        $this->expectException(StorageException::class);
+
+        $this->disk->storeFile('copy.txt', $this->root . DIRECTORY_SEPARATOR . 'not-there.txt');
+    }
+
+    public function testExistsAndDelete(): void
+    {
+        $this->disk->store('file.txt', 'contents');
+        self::assertTrue($this->disk->exists('file.txt'));
+
+        $this->disk->delete('file.txt');
+
+        self::assertFalse($this->disk->exists('file.txt'));
+    }
+
+    /**
+     * FileStore::delete() removes the row first and the file second, and retries have to stay
+     * harmless — so deleting what is not there must not throw.
+     */
+    public function testDeletingAMissingFileIsSilent(): void
+    {
+        $this->disk->delete('never-existed.txt');
+
+        self::assertFalse($this->disk->exists('never-existed.txt'));
+    }
+
+    public function testSizeAndMimeType(): void
+    {
+        $this->disk->store('file.txt', '12345');
+
+        self::assertSame(5, $this->disk->size('file.txt'));
+        self::assertSame('text/plain', $this->disk->mimeType('file.txt'));
+    }
+
+    public function testReadingAMissingFileThrowsStorageException(): void
+    {
+        $this->expectException(StorageException::class);
+
+        $this->disk->read('missing.txt');
+    }
+
+    /**
+     * The mode comes from the configuration, not from umask. Without the visibility the disk
+     * passes on every write, a server with a strict umask would store files the web server
+     * cannot read — which is exactly what the local adapter does when it is told nothing.
+     */
+    public function testStoredFilesGetTheConfiguredModeEvenUnderAStrictUmask(): void
+    {
+        $previous = umask(0077);
+
+        try {
+            $this->disk->store('strict/file.txt', 'contents');
+        } finally {
+            umask($previous);
+        }
+
+        self::assertSame(0644, fileperms($this->root . '/strict/file.txt') & 0777);
+        self::assertSame(0755, fileperms($this->root . '/strict') & 0777);
+    }
+
+    public function testUrlJoinsTheBaseUrlAndEncodesTheSegments(): void
+    {
+        self::assertSame('/upload/dir/file.txt', $this->disk->url('dir/file.txt'));
+        self::assertSame('/upload/dir/my%20file.txt', $this->disk->url('dir/my file.txt'));
+    }
+
+    public function testUrlIsEmptyOnADiskThatIsNotPublic(): void
+    {
+        $private = (new StorageFactory())->create(
+            new DiskSettings(name: 'private', driver: StorageDriver::Local, root: $this->root, visibility: 'private')
+        );
+
+        self::assertSame('', $private->url('dir/file.txt'));
+    }
+
+    public function testLocalDiskHandsOutTheFileItselfWithoutCopying(): void
+    {
+        $this->disk->store('dir/file.txt', 'contents');
+
+        $seen = $this->disk->withLocalCopy('dir/file.txt', static fn(string $path): string => $path);
+
+        self::assertSame(realpath($this->root . '/dir/file.txt'), realpath($seen));
+        self::assertFileExists($seen);
+    }
+
+    public function testLocalCopyOfAMissingFileThrows(): void
+    {
+        $this->expectException(StorageException::class);
+
+        $this->disk->withLocalCopy('missing.txt', static fn(string $path): string => $path);
+    }
+
+    public function testRemoteDiskCopiesTheFileAndRemovesTheCopyAfterwards(): void
+    {
+        $remote = $this->remoteDisk();
+        $remote->store('pictures/photo.jpg', 'jpeg bytes');
+
+        $seen = null;
+        $contents = $remote->withLocalCopy('pictures/photo.jpg', static function (string $path) use (&$seen): string {
+            $seen = $path;
+
+            return (string) file_get_contents($path);
+        });
+
+        self::assertSame('jpeg bytes', $contents);
+        self::assertIsString($seen);
+        // The extension survives: the image processor takes the output format from it.
+        self::assertSame('jpg', pathinfo($seen, PATHINFO_EXTENSION));
+        self::assertFileDoesNotExist($seen);
+    }
+
+    public function testRemoteDiskRemovesTheCopyWhenTheHandlerThrows(): void
+    {
+        $remote = $this->remoteDisk();
+        $remote->store('photo.jpg', 'jpeg bytes');
+
+        $seen = null;
+        try {
+            $remote->withLocalCopy('photo.jpg', static function (string $path) use (&$seen): never {
+                $seen = $path;
+
+                throw new RuntimeException('handler failed');
+            });
+        } catch (RuntimeException $exception) {
+            self::assertSame('handler failed', $exception->getMessage());
+        }
+
+        self::assertIsString($seen);
+        self::assertFileDoesNotExist($seen);
+    }
+
+    private function localDisk(): StorageInterface
+    {
+        return (new StorageFactory())->create(
+            new DiskSettings(
+                name: 'local',
+                driver: StorageDriver::Local,
+                root: $this->root,
+                url: '/upload',
+            )
+        );
+    }
+
+    /**
+     * Stands in for any disk whose files are not on this server: in memory, so withLocalCopy()
+     * has to go through its copying half.
+     */
+    private function remoteDisk(): StorageInterface
+    {
+        return new FlysystemStorage(
+            filesystem: new Filesystem(new InMemoryFilesystemAdapter()),
+            temporaryDirectory: $this->root . DIRECTORY_SEPARATOR . 'tmp',
+        );
+    }
+
+    private function removeDirectory(string $directory): void
+    {
+        if (! is_dir($directory)) {
+            return;
+        }
+
+        foreach (scandir($directory) ?: [] as $entry) {
+            if ($entry === '.' || $entry === '..') {
+                continue;
+            }
+
+            $path = $directory . DIRECTORY_SEPARATOR . $entry;
+            is_dir($path) ? $this->removeDirectory($path) : unlink($path);
+        }
+
+        rmdir($directory);
+    }
+}

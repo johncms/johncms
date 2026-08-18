@@ -43,7 +43,6 @@ use Johncms\CountersFactory;
 use Illuminate\Database\Schema\Builder as SchemaBuilder;
 use Johncms\Database\PdoFactory;
 use Johncms\Database\SchemaBuilderFactory;
-use Johncms\Files\Filesystem;
 use Johncms\Files\FileStorage;
 use Johncms\Image\ImageProcessorInterface;
 use Johncms\Image\InterventionImageProcessor;
@@ -74,6 +73,11 @@ use Johncms\Security\HtmlSanitizer;
 use Johncms\Security\HtmlSanitizerInterface;
 use Johncms\Smilies\SmiliesRenderer;
 use Johncms\Smilies\SmiliesRendererInterface;
+use Johncms\Storage\StorageInterface;
+use Johncms\Storage\StorageRegistry;
+use Johncms\Storage\StorageRegistryInterface;
+use Johncms\Storage\StorageSettings;
+use Johncms\Storage\StorageSettingsFactory;
 use Johncms\Utils\DateFormatter;
 use Johncms\Validator\RuleCompiler;
 use Johncms\Validator\RuleConstraintFactoryInterface;
@@ -252,6 +256,16 @@ return static function (ContainerConfigurator $container): void {
                 ROOT_PATH . 'system/src/Mail/Queue/QueuedEmailDTO.php',
                 ROOT_PATH . 'system/src/Mail/Exception',
                 ROOT_PATH . 'system/src/Mail/Schema',
+                // The storage layer: settings and enums are value objects built by
+                // StorageSettingsFactory, and a disk carries the scalars of its configuration —
+                // StorageFactory assembles it, the container cannot.
+                ROOT_PATH . 'system/src/Storage/DiskSettings.php',
+                ROOT_PATH . 'system/src/Storage/StorageSettings.php',
+                ROOT_PATH . 'system/src/Storage/StorageDriver.php',
+                ROOT_PATH . 'system/src/Storage/FlysystemStorage.php',
+                ROOT_PATH . 'system/src/Storage/StorageException.php',
+                ROOT_PATH . 'system/src/Storage/UnknownStorageDiskException.php',
+                ROOT_PATH . 'system/src/Storage/UnsupportedStorageDriverException.php',
                 ROOT_PATH . 'system/src/View/Theme/ThemeDTO.php',
                 // Built by the scan command with the translation set it fills, not by the container.
                 ROOT_PATH . 'system/src/System/i18n/TwigScanner.php',
@@ -264,7 +278,6 @@ return static function (ContainerConfigurator $container): void {
     // The container itself, published by PSRContainerFactory. Only the PSR interface is exposed:
     // nothing in the application needs the Symfony-specific part of the contract.
     $services->set(ContainerInterface::class)->synthetic();
-    $services->set(Filesystem::class, Filesystem::class);
     $services->set(FileStorage::class, FileStorage::class);
     $services->set(LoggerInterface::class)->factory(service(LoggerFactory::class));
     // The request is not a service: a controller takes it as an action argument, and a service
@@ -437,6 +450,12 @@ return static function (ContainerConfigurator $container): void {
     // frozen into it.
     $services->set(CacheSettings::class)->factory(service(CacheSettingsFactory::class));
     $services->set(CacheInterface::class)->factory([service(CachePoolFactory::class), 'create']);
+    // The disks the CMS stores files on, read from config at instantiation for the same reason.
+    $services->set(StorageSettings::class)->factory(service(StorageSettingsFactory::class));
+    $services->set(StorageRegistryInterface::class, StorageRegistry::class);
+    // The default disk, for the code that knows which disk it works with at wiring time. Only
+    // what learns the name at runtime — a row of `files` — goes through the registry.
+    $services->set(StorageInterface::class)->factory([service(StorageRegistryInterface::class), 'disk']);
     $services->set(SitemapGenerator::class)->arg('$moduleProviders', tagged_iterator('johncms.sitemap_provider'));
     $services->set(MediaEmbed::class)->factory([MediaEmbed::class, 'create']);
     $services->set(Embed::class)->factory([MediaEmbed::class, 'create']);

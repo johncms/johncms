@@ -16,7 +16,8 @@ use Exception;
 use Johncms\Files\Exceptions\BadRequest;
 use Johncms\Files\Exceptions\FileNotFound;
 use Johncms\Http\Request;
-use League\Flysystem\FilesystemException;
+use Johncms\Storage\StorageException;
+use Johncms\Storage\StorageRegistryInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FileStorage
@@ -31,7 +32,7 @@ class FileStorage
      * @param string $working_dir
      * @param bool $multiple
      * @return Models\File|Models\File[]
-     * @throws FilesystemException
+     * @throws StorageException
      */
     public function saveFromRequest(Request $request, string $field_name, string $working_dir, bool $multiple = false)
     {
@@ -88,7 +89,7 @@ class FileStorage
 
     /**
      * @param int $id
-     * @throws FilesystemException
+     * @throws StorageException
      * @throws Exception
      */
     public function delete(int $id): void
@@ -98,7 +99,7 @@ class FileStorage
         if ($file === null) {
             throw new FileNotFound(sprintf('File #%s not found', $id));
         }
-        di(Filesystem::class)->storage($file->storage)->delete($file->path);
+        di(StorageRegistryInterface::class)->disk($file->storage)->delete($file->path);
         $file->delete();
     }
 }

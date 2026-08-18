@@ -10,16 +10,46 @@
 
 declare(strict_types=1);
 
+// The disks the CMS stores files on, reached through Johncms\Storage\StorageInterface.
+// Override in filesystem.local.php — that file is not in the repository, so a server-specific
+// disk survives an update of the CMS.
 return [
     'filesystem' => [
-        // Default storage
-        'default'  => 'local',
+        // Disk used when a caller names none. It is also the name written into `files.storage`,
+        // so renaming a disk means updating the rows that point at it.
+        'default' => 'local',
 
-        // List of storages
-        'storages' => [
+        // Every disk needs a driver; an unknown one is refused when the settings are read.
+        // Supported: local.
+        'disks' => [
             'local' => [
-                'type'     => 'local',
-                'root_dir' => UPLOAD_PATH,
+                'driver' => 'local',
+
+                // Root directory. Everything below is relative to it.
+                'root' => UPLOAD_PATH,
+
+                // Base URL the files are served at. Empty means the disk is not public and its
+                // files are only handed out by a controller.
+                'url' => '/upload',
+
+                // Visibility given to what is written: public or private. It is applied on every
+                // write, because the local adapter otherwise leaves the mode to umask — on a
+                // server with a strict one that means files the web server cannot read.
+                'visibility' => 'public',
+
+                // Modes the visibility above translates to. Leave them alone unless the hosting
+                // needs something else; group-writable directories, for one, are what some
+                // shared hostings require.
+                'permissions' => [
+                    'file' => [
+                        'public'  => 0644,
+                        'private' => 0600,
+                    ],
+                    'dir'  => [
+                        'public'  => 0755,
+                        'private' => 0700,
+                    ],
+                ],
             ],
         ],
     ],
