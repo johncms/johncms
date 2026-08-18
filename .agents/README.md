@@ -17,6 +17,7 @@ automatically; `CLAUDE.md` is a symlink to it for Claude Code.
 | `escaping.md` | user input handling, output escaping, sanitizing user HTML |
 | `localization.md` | translations, `.po`/`.pot`/`.lng.php`, `__()` strings |
 | `pagination.md` | paginated lists, page titles / meta description |
+| `caching.md` | caching values, cache tags and invalidation |
 | `new-module.md` | creating a new module |
 | `templates.md` | Twig templates: namespaces, environments, components, traps |
 | `validation.md` | form validation: rules, the null policy, messages, adding a rule |
