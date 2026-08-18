@@ -29,13 +29,35 @@ final readonly class UploadAvatarUseCase
 }
 ```
 
-Three methods, named after what the site needs rather than after operations of the library:
+The methods are named after what the site needs rather than after operations of the library.
+
+Fitting within bounds:
 
 | Method | What it writes |
 | --- | --- |
 | `saveScaledDown($source, $target, ?$width, ?$height, $quality)` | a copy that fits within the bounds, aspect ratio kept, **never enlarged**; a null side is unconstrained, so a width alone scales by width |
-| `saveBlurredThumbnail($source, $target, $width, $height, $quality)` | a tile of exactly that size: the source cropped to fill it and blurred, with the scaled-down source centered on top |
 | `saveConverted($source, $target, $quality)` | the same picture at its original size, re-encoded |
+
+Arriving at an exact size — they differ in what they give up for it:
+
+| Method | What it writes | Gives up |
+| --- | --- | --- |
+| `saveCropped($source, $target, $width, $height, $position, $quality)` | fills the frame, cuts off what sticks out | the edges |
+| `savePadded($source, $target, $width, $height, $background, $quality)` | the whole picture, the rest filled with the background | margins on two sides |
+| `saveBlurredThumbnail($source, $target, $width, $height, $quality)` | the source blurred to fill the frame, the scaled-down source centered on top | nothing, but the backdrop is blurred |
+| `saveStretched($source, $target, $width, $height, $quality)` | pulls the picture to the frame | **the proportions** |
+
+And `saveWatermarked($source, $target, $watermark, $position, $opacity, $offset, $quality)` lays
+a second picture over the first.
+
+`$position` is `Johncms\Image\ImagePosition`, the nine-way enum of the CMS —
+`InterventionImageProcessor::alignment()` maps it to the one of the library, case by case. Do not
+let `Intervention\Image\Alignment` into a signature. `$background` takes any color string the
+driver understands, or `ImageProcessorInterface::TRANSPARENT`.
+
+`saveStretched()` is the only method that does not keep the proportions, and the name is the
+warning. When a caller reaches for it, check that the source really is of the proportions asked
+for — otherwise the intention was `saveCropped()` or `savePadded()`.
 
 Both arguments are paths, because that is what every caller has: an upload lands on disk
 (`UploadedFileDTO::$tmpPath`) and the result belongs on disk too.
@@ -91,9 +113,26 @@ Relevant when editing `InterventionImageProcessor`, and only there:
 * **Modifiers change the image in place.** Building two variants from one source means `clone`
   (deep, and cheaper than decoding the file twice), not calling a second modifier on the same
   object.
+* **`insert()` counts opacity the other way round**, as a fraction of full opacity where `1.0`
+  is opaque — the CMS takes 0-100 and divides. Out-of-range values raise an exception of the
+  library, so the contract checks the range itself and reports it as an
+  `ImageProcessingException`.
+* **The string `"transparent"` is gone in v4.** `savePadded()` recognises
+  `ImageProcessorInterface::TRANSPARENT` and passes `Color::transparent()` on, so callers never
+  meet the change.
 * Decoding options are set once, in `manager()`: `autoOrientation` (needs `ext-exif`, degrades to
   no rotation without it), `decodeAnimation: false`, `strip: true` — the last one keeps the GPS
   coordinates of a phone photo out of a public file.
+
+## Tests
+
+`tests/Unit/Image/InterventionImageProcessorTest.php` asserts on the **result** — its size, its
+format, the color of a pixel — never on calls made to the library. That is what makes it useful
+across a major upgrade of the dependency. Sources are generated with GD in `setUp()`, so there
+are no fixture files to keep.
+
+Cover every method of the contract, including the ones no module calls yet: the interface
+promises them to module authors, and nothing else would notice them breaking.
 
 ## Adding an operation
 
