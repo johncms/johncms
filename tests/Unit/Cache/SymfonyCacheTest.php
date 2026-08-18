@@ -109,9 +109,17 @@ final class SymfonyCacheTest extends TestCase
     /**
      * The reserved characters of PSR-16 are rejected rather than quietly mangled into a key that
      * collides with another one.
+     *
+     * symfony/cache validates the key inside an assert(), so the rejection only happens where
+     * assertions are executed. With them off — how a site runs in production — an invalid key
+     * passes through untouched, and there is nothing here to assert.
      */
     public function testAKeyWithReservedCharactersIsRejected(): void
     {
+        if (ini_get('zend.assertions') !== '1') {
+            self::markTestSkipped('The key validation of symfony/cache needs zend.assertions=1.');
+        }
+
         $cache = InMemoryCache::create();
 
         $this->expectException(InvalidArgumentException::class);

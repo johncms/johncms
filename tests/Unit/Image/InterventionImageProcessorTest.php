@@ -100,7 +100,7 @@ final class InterventionImageProcessorTest extends TestCase
      */
     public function testQualityReachesTheEncoder(): void
     {
-        $source = $this->createImage('source.jpg', 400, 400);
+        $source = $this->createDetailedImage('source.jpg', 400, 400);
 
         $this->processor->saveConverted($source, $low = $this->path('low.jpg'), 10);
         $this->processor->saveConverted($source, $high = $this->path('high.jpg'), 100);
@@ -260,6 +260,24 @@ final class InterventionImageProcessorTest extends TestCase
     {
         $image = imagecreatetruecolor($width, $height);
         imagefill($image, 0, 0, imagecolorallocate($image, ...$color));
+
+        return $this->write($image, $name);
+    }
+
+    /**
+     * A picture where every pixel differs from its neighbours. A flat colour compresses to the
+     * same handful of bytes at any quality, so only a detailed source tells the two apart.
+     */
+    private function createDetailedImage(string $name, int $width, int $height): string
+    {
+        $image = imagecreatetruecolor($width, $height);
+
+        for ($x = 0; $x < $width; $x++) {
+            for ($y = 0; $y < $height; $y++) {
+                $color = imagecolorallocate($image, ($x * 7 + $y * 13) % 256, ($x * 3) % 256, ($y * 5) % 256);
+                imagesetpixel($image, $x, $y, $color);
+            }
+        }
 
         return $this->write($image, $name);
     }
