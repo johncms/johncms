@@ -21,7 +21,7 @@ chain. A theme overrides any template of a module by mirroring its path
 After adding a module or a theme override directory, regenerate the file the IDE reads:
 
 ```bash
-docker exec $(docker ps -q -f name=johncms9.php-fpm) php system/bin/console twig:ide-config
+docker exec $(docker ps -q -f name=johncms.php-fpm) php system/bin/console twig:ide-config
 ```
 
 `ide-twig.json` is committed, and the verification gate fails while it is stale.
@@ -122,7 +122,7 @@ The other direction is allowed.
 
 ```bash
 sh .agents/scripts/verify.sh                    # cs-check, phpstan, tests, twig:lint, twig:ide-config --check
-docker exec $(docker ps -q -f name=johncms9.php-fpm) composer translate-scan
+docker exec $(docker ps -q -f name=johncms.php-fpm) composer translate-scan
 git diff -- '*.pot' | grep -E '^[+-]msgid'      # must print nothing unless strings were added
 ```
 

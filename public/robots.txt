@@ -4,4 +4,4 @@ Disallow: /download/arctemp/
 Disallow: /files/forum/attach/
 Disallow: /*setTheme=
 Allow: /
-Sitemap: https://johncms9.loc/sitemap.xml
+Sitemap: https://johncms.loc/sitemap.xml

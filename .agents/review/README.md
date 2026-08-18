@@ -31,7 +31,7 @@ code are not findings — mention them at most as a one-line note.
 1. **Deterministic gate first** — run `sh .agents/scripts/verify.sh`.
    If it fails, fix it before starting the checklists; a failing style check or test makes
    every later finding unreliable. Style violations are auto-fixable:
-   `docker exec $(docker ps -q -f name=johncms9.php-fpm) composer cs-fix`.
+   `docker exec $(docker ps -q -f name=johncms.php-fpm) composer cs-fix`.
 2. **Checklists** — run the relevant reviewers (see below).
 3. **Fix** — apply fixes for `BLOCKER` and `MAJOR` findings.
 4. **Re-run the gate once** to confirm nothing broke.

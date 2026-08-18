@@ -16,8 +16,8 @@ Crowdin is synced **manually, via CLI commands only**. There is no automatic syn
 Run both via the php-fpm container:
 
 ```bash
-docker exec $(docker ps -q -f name=johncms9.php-fpm) composer translate-scan
-docker exec $(docker ps -q -f name=johncms9.php-fpm) composer translate
+docker exec $(docker ps -q -f name=johncms.php-fpm) composer translate-scan
+docker exec $(docker ps -q -f name=johncms.php-fpm) composer translate
 ```
 
 ## Crowdin — Manual Commands

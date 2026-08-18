@@ -150,7 +150,7 @@ sh .agents/scripts/verify.sh
 Fix style violations with:
 
 ```bash
-docker exec $(docker ps -q -f name=johncms9.php-fpm) composer cs-fix
+docker exec $(docker ps -q -f name=johncms.php-fpm) composer cs-fix
 ```
 
 * If the user asked for a self-review, its findings were addressed (see `.agents/review/README.md`).
@@ -166,5 +166,5 @@ docker exec $(docker ps -q -f name=johncms9.php-fpm) composer cs-fix
 ## Docker Command Policy
 
 * Run all `php` and `composer` commands inside the `php-fpm` Docker container.
-* Use `docker exec $(docker ps -q -f name=johncms9.php-fpm) <command>` to target the container.
+* Use `docker exec $(docker ps -q -f name=johncms.php-fpm) <command>` to target the container.
 * Do not rely on host PHP/Composer versions for checks, tests, or dependency operations.

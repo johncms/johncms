@@ -34,7 +34,7 @@ Update `composer.json` with PSR-4 autoload:
 Run `composer dump-autoload` in the php-fpm container:
 
 ```bash
-docker exec $(docker ps -q -f name=johncms9.php-fpm) composer dump-autoload
+docker exec $(docker ps -q -f name=johncms.php-fpm) composer dump-autoload
 ```
 
 ## Services Configuration
@@ -113,8 +113,8 @@ A new module gets its own gettext domain, named after the module. Register it in
 Then generate the template and the runtime dictionaries:
 
 ```bash
-docker exec $(docker ps -q -f name=johncms9.php-fpm) composer translate-scan
-docker exec $(docker ps -q -f name=johncms9.php-fpm) composer translate
+docker exec $(docker ps -q -f name=johncms.php-fpm) composer translate-scan
+docker exec $(docker ps -q -f name=johncms.php-fpm) composer translate
 ```
 
 Add a `<lang>.po` in `modules/<module>/locale/` for each language you were asked to translate. For the full pipeline and Crowdin commands, read `.agents/localization.md`.
@@ -126,7 +126,7 @@ without registering anything. The IDE cannot infer that convention, so regenerat
 reads after adding the module:
 
 ```bash
-docker exec $(docker ps -q -f name=johncms9.php-fpm) php system/bin/console twig:ide-config
+docker exec $(docker ps -q -f name=johncms.php-fpm) php system/bin/console twig:ide-config
 ```
 
 Commit the resulting `ide-twig.json`. The verification gate runs the command with `--check` and
