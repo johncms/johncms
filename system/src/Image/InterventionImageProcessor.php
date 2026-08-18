@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Johncms\Image;
 
 use Intervention\Image\Alignment;
+use Intervention\Image\Color;
 use Intervention\Image\Drivers\Gd\Driver as GdDriver;
 use Intervention\Image\Drivers\Imagick\Driver as ImagickDriver;
 use Intervention\Image\ImageManager;
@@ -70,6 +71,99 @@ final class InterventionImageProcessor implements ImageProcessorInterface
         }
     }
 
+    public function saveCropped(
+        string $source,
+        string $target,
+        int $width,
+        int $height,
+        ImagePosition $position = ImagePosition::Center,
+        int $quality = self::DEFAULT_QUALITY,
+    ): void {
+        try {
+            $this->save(
+                $this->manager()->decodePath($source)->cover($width, $height, $this->alignment($position)),
+                $target,
+                $quality
+            );
+        } catch (InterventionException $exception) {
+            throw $this->failure($source, $exception);
+        }
+    }
+
+    public function savePadded(
+        string $source,
+        string $target,
+        int $width,
+        int $height,
+        string $background = 'ffffff',
+        int $quality = self::DEFAULT_QUALITY,
+    ): void {
+        try {
+            $this->save(
+                $this->manager()->decodePath($source)->contain(
+                    $width,
+                    $height,
+                    // The library dropped the string "transparent" in v4; the CMS keeps a name
+                    // for it so that callers need not know a type of the library to ask for it.
+                    $background === self::TRANSPARENT ? Color::transparent() : $background
+                ),
+                $target,
+                $quality
+            );
+        } catch (InterventionException $exception) {
+            throw $this->failure($source, $exception);
+        }
+    }
+
+    public function saveStretched(
+        string $source,
+        string $target,
+        int $width,
+        int $height,
+        int $quality = self::DEFAULT_QUALITY,
+    ): void {
+        try {
+            $this->save(
+                $this->manager()->decodePath($source)->resize($width, $height),
+                $target,
+                $quality
+            );
+        } catch (InterventionException $exception) {
+            throw $this->failure($source, $exception);
+        }
+    }
+
+    public function saveWatermarked(
+        string $source,
+        string $target,
+        string $watermark,
+        ImagePosition $position = ImagePosition::BottomRight,
+        int $opacity = 100,
+        int $offset = 0,
+        int $quality = self::DEFAULT_QUALITY,
+    ): void {
+        if ($opacity < 0 || $opacity > 100) {
+            throw new ImageProcessingException('The opacity of a watermark must be in range 0 to 100.');
+        }
+
+        try {
+            $this->save(
+                $this->manager()->decodePath($source)->insert(
+                    $watermark,
+                    $offset,
+                    $offset,
+                    $this->alignment($position),
+                    // The library counts the other way round, in a fraction of full opacity.
+                    $opacity / 100
+                ),
+                $target,
+                $quality
+            );
+        } catch (InterventionException $exception) {
+            throw $this->failure($source, $exception);
+        }
+    }
+
     public function saveBlurredThumbnail(
         string $source,
         string $target,
@@ -107,6 +201,26 @@ final class InterventionImageProcessor implements ImageProcessorInterface
     private function save(ImageInterface $image, string $target, int $quality): void
     {
         $image->save($target, quality: $quality);
+    }
+
+    /**
+     * The position of the CMS translated into the one of the library. Written out rather than
+     * mapped by value: the two enums are free to disagree, and a renamed case of the library
+     * has to break here instead of silently moving a watermark to another corner.
+     */
+    private function alignment(ImagePosition $position): Alignment
+    {
+        return match ($position) {
+            ImagePosition::TopLeft => Alignment::TOP_LEFT,
+            ImagePosition::Top => Alignment::TOP,
+            ImagePosition::TopRight => Alignment::TOP_RIGHT,
+            ImagePosition::Left => Alignment::LEFT,
+            ImagePosition::Center => Alignment::CENTER,
+            ImagePosition::Right => Alignment::RIGHT,
+            ImagePosition::BottomLeft => Alignment::BOTTOM_LEFT,
+            ImagePosition::Bottom => Alignment::BOTTOM,
+            ImagePosition::BottomRight => Alignment::BOTTOM_RIGHT,
+        };
     }
 
     private function failure(string $source, InterventionException $exception): ImageProcessingException
