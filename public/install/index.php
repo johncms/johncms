@@ -15,6 +15,7 @@ use Johncms\Http\Request;
 use Johncms\Http\RequestFactory;
 use Johncms\System\i18n\Translator;
 use Johncms\View\Twig\TwigRenderer;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 // Check the current PHP version
 if (PHP_VERSION_ID < 80400) {
@@ -49,6 +50,11 @@ session_start();
 // asking the container for one. The steps below are included into this scope and use it.
 /** @var Request $request */
 $request = $container->get(RequestFactory::class)($container);
+
+// Services that outlive a single request read the current one off the stack. The bootstrap does
+// this for the site; the installer never runs it, so without this line anything asking for the
+// request being served — Environment, which step 4 takes the administrator's IP from — throws.
+$container->get(RequestStack::class)->push($request);
 
 $translator = new Translator();
 $translator->setLocale($_SESSION['lng'] ?? 'en');
