@@ -46,7 +46,7 @@ JohnCMS is a multilingual CMS with a long-lived codebase that is gradually being
 
 Tech stack:
 
-* PHP 8.2
+* PHP 8.4
 * MySQL
 * Bootstrap
 * selective Vue components

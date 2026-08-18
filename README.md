@@ -25,7 +25,7 @@ JohnCMS is an open-source PHP community CMS. It includes a forum, news, library,
 
 ## Requirements
 
-- PHP **8.2** or higher
+- PHP **8.4** or higher
 - MySQL **5.6.4** or higher (MySQL Native Driver `mysqlnd` required)
 - Apache with `.htaccess` support
 - PHP extensions: `imagick` or `gd`, `mbstring`, `pdo`, `simplexml`

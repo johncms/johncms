@@ -2765,7 +2765,7 @@ parameters:
 			path: public/assets/modules/forum/thumbinal.php
 
 		-
-			message: '#^Comparison operation "\<" between int\<80200, 80599\> and 80200 is always false\.$#'
+			message: '#^Comparison operation "\<" between int\<80400, 80599\> and 80400 is always false\.$#'
 			identifier: smaller.alwaysFalse
 			count: 1
 			path: public/install/index.php
@@ -2783,7 +2783,7 @@ parameters:
 			path: public/install/steps/step_1.php
 
 		-
-			message: '#^Comparison operation "\<" between int\<80200, 80599\> and 80200 is always false\.$#'
+			message: '#^Comparison operation "\<" between int\<80400, 80599\> and 80400 is always false\.$#'
 			identifier: smaller.alwaysFalse
 			count: 1
 			path: public/install/steps/step_2.php
@@ -2867,7 +2867,7 @@ parameters:
 			path: system/src/Casts/TimeToDate.php
 
 		-
-			message: '#^Comparison operation "\<" between int\<80200, 80599\> and 70300 is always false\.$#'
+			message: '#^Comparison operation "\<" between int\<80400, 80599\> and 80400 is always false\.$#'
 			identifier: smaller.alwaysFalse
 			count: 1
 			path: system/src/Checker/SystemChecker.php

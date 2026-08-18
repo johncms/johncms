@@ -20,8 +20,8 @@ class SystemChecker
     public const CRITICAL = 1;
     public const WARNING = 2;
     public const INFO = 3;
-    public const MIN_PHP_VERSION = '7.3';
-    public const MIN_PHP_VERSION_ID = 70300;
+    public const MIN_PHP_VERSION = '8.4';
+    public const MIN_PHP_VERSION_ID = 80400;
 
     public function checkExtensions(): array
     {

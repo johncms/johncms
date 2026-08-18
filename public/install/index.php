@@ -17,8 +17,8 @@ use Johncms\System\i18n\Translator;
 use Johncms\View\Twig\TwigRenderer;
 
 // Check the current PHP version
-if (PHP_VERSION_ID < 80200) {
-    die('<div style="text-align: center; font-size: xx-large"><strong>ERROR!</strong><br>Your needs PHP 8.2 or higher</div>');
+if (PHP_VERSION_ID < 80400) {
+    die('<div style="text-align: center; font-size: xx-large"><strong>ERROR!</strong><br>Your needs PHP 8.4 or higher</div>');
 }
 
 // Resolved from __DIR__: this line runs before the constants are defined.

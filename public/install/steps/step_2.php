@@ -10,6 +10,7 @@
 
 declare(strict_types=1);
 
+use Johncms\Checker\SystemChecker;
 use Johncms\Http\Request;
 
 /** @var Request $request Built by the installer entry point, which includes this file. */
@@ -20,8 +21,8 @@ $check_extensions = [
     [
         'name'        => __('PHP version'),
         'value'       => PHP_VERSION,
-        'error'       => (PHP_VERSION_ID < 80200),
-        'description' => __('The PHP version must be at least %s', '8.2'),
+        'error'       => (PHP_VERSION_ID < SystemChecker::MIN_PHP_VERSION_ID),
+        'description' => __('The PHP version must be at least %s', SystemChecker::MIN_PHP_VERSION),
     ],
     [
         'name'        => 'PDO',
