@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\UseCases;
 
+use Johncms\Files\FileStore;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageFileRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
 
@@ -12,6 +13,7 @@ final readonly class AttachUploadedFilesToMessageUseCase
     public function __construct(
         private ForumMessageRepositoryInterface $messageRepository,
         private ForumMessageFileRepositoryInterface $messageFileRepository,
+        private FileStore $files,
     ) {
     }
 
@@ -38,7 +40,7 @@ final readonly class AttachUploadedFilesToMessageUseCase
             return;
         }
 
-        $forumFileIds = $this->messageFileRepository->findAttachableFileIds($fileIds, 'forum_files');
+        $forumFileIds = $this->files->filterIdsInDirectory($fileIds, 'forum_files');
         if ($forumFileIds === []) {
             return;
         }

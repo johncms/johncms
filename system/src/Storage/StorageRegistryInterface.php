@@ -28,4 +28,13 @@ interface StorageRegistryInterface
      * @throws UnknownStorageDiskException
      */
     public function disk(?string $name = null): StorageInterface;
+
+    /**
+     * Name of the default disk.
+     *
+     * What a caller writing a file down somewhere has to record along with it — FileStore keeps
+     * it in `files.storage`, so a later read knows which disk the file is on even after the
+     * default has changed.
+     */
+    public function defaultName(): string;
 }

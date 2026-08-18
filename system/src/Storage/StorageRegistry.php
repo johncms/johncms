@@ -34,4 +34,9 @@ final class StorageRegistry implements StorageRegistryInterface
 
         return $this->disks[$name] ??= $this->factory->create($this->settings->disk($name));
     }
+
+    public function defaultName(): string
+    {
+        return $this->settings->default;
+    }
 }

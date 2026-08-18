@@ -8,12 +8,6 @@ interface ForumMessageFileRepositoryInterface
 {
     /**
      * @param int[] $fileIds
-     * @return int[]
-     */
-    public function findAttachableFileIds(array $fileIds, string $pathPrefix): array;
-
-    /**
-     * @param int[] $fileIds
      */
     public function attachFilesToMessage(int $messageId, array $fileIds): void;
 

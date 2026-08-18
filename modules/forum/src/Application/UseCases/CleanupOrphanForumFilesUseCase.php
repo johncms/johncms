@@ -5,15 +5,14 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\UseCases;
 
 use Carbon\Carbon;
-use Johncms\Files\FileStorage;
+use Johncms\Files\FileStore;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageFileRepositoryInterface;
 use Psr\Log\LoggerInterface;
-use Throwable;
 
 final readonly class CleanupOrphanForumFilesUseCase
 {
     public function __construct(
-        private FileStorage $fileStorage,
+        private FileStore $files,
         private ForumMessageFileRepositoryInterface $messageFileRepository,
         private LoggerInterface $logger,
     ) {
@@ -30,32 +29,14 @@ final readonly class CleanupOrphanForumFilesUseCase
             return;
         }
 
-        $deleted = 0;
-        $failed = 0;
-
-        foreach ($fileIds as $fileId) {
-            try {
-                $this->fileStorage->delete($fileId);
-                ++$deleted;
-            } catch (Throwable $exception) {
-                ++$failed;
-
-                $this->logger->error(
-                    '[ForumFilesCleanup] Failed to delete orphan forum file',
-                    [
-                        'file_id' => $fileId,
-                        'error'   => $exception->getMessage(),
-                    ]
-                );
-            }
-        }
+        // A file whose disk refuses to give it up is logged by the store and its row is gone
+        // either way, so there is nothing left here to count as a failure.
+        $this->files->deleteMany($fileIds);
 
         $this->logger->info(
             '[ForumFilesCleanup] Cleanup completed',
             [
                 'candidates' => count($fileIds),
-                'deleted'    => $deleted,
-                'failed'     => $failed,
                 'ttl_hours'  => $ttlHours,
             ]
         );

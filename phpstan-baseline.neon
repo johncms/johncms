@@ -2885,12 +2885,6 @@ parameters:
 			path: system/src/Container/PSRContainerFactory.php
 
 		-
-			message: '#^Method Johncms\\Files\\File\:\:save\(\) should return Johncms\\Files\\Models\\File but returns Illuminate\\Database\\Eloquent\\Model\.$#'
-			identifier: return.type
-			count: 1
-			path: system/src/Files/File.php
-
-		-
 			message: '#^Call to function in_array\(\) with arguments \(int\|string\), array\{\} and true will always evaluate to false\.$#'
 			identifier: function.impossibleType
 			count: 1

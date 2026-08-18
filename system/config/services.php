@@ -43,7 +43,9 @@ use Johncms\CountersFactory;
 use Illuminate\Database\Schema\Builder as SchemaBuilder;
 use Johncms\Database\PdoFactory;
 use Johncms\Database\SchemaBuilderFactory;
-use Johncms\Files\FileStorage;
+use Johncms\Files\FileRepositoryInterface;
+use Johncms\Files\FileStore;
+use Johncms\Files\Infrastructure\Persistence\Repository\EloquentFileRepository;
 use Johncms\Image\ImageProcessorInterface;
 use Johncms\Image\InterventionImageProcessor;
 use Johncms\Logs\LoggerFactory;
@@ -278,7 +280,8 @@ return static function (ContainerConfigurator $container): void {
     // The container itself, published by PSRContainerFactory. Only the PSR interface is exposed:
     // nothing in the application needs the Symfony-specific part of the contract.
     $services->set(ContainerInterface::class)->synthetic();
-    $services->set(FileStorage::class, FileStorage::class);
+    $services->set(FileRepositoryInterface::class, EloquentFileRepository::class);
+    $services->set(FileStore::class, FileStore::class);
     $services->set(LoggerInterface::class)->factory(service(LoggerFactory::class));
     // The request is not a service: a controller takes it as an action argument, and a service
     // that outlives a single request reads the current one off the stack below. The kernel pushes

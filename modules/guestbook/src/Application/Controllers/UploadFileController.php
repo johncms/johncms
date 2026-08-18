@@ -4,65 +4,68 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Guestbook\Application\Controllers;
 
-use Exception;
 use Johncms\FileInfo;
-use Johncms\Files\FileStorage;
-use Johncms\Http\UploadedFileMapper;
+use Johncms\Files\FileStore;
+use Johncms\Files\FileStoreException;
 use Johncms\Http\Request;
-use League\Flysystem\FilesystemException;
+use Johncms\Http\UploadedFileMapper;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 final readonly class UploadFileController
 {
     public function __construct(
-        private FileStorage $fileStorage,
+        private FileStore $files,
         private UploadedFileMapper $uploadedFileMapper,
     ) {
     }
 
     public function __invoke(Request $request): JsonResponse
     {
-        try {
-            $upload = $request->files->get('upload');
-            if (! $upload instanceof UploadedFile) {
-                return new JsonResponse(
-                    [
-                        'error' => [
-                            'message' => __('Wrong data'),
-                        ],
-                    ]
-                );
-            }
-
-            $file_info = new FileInfo((string) $this->uploadedFileMapper->fromUploadedFile($upload)->clientName);
-            if (! $file_info->isImage()) {
-                return new JsonResponse(
-                    [
-                        'error' => [
-                            'message' => __('Only images are allowed'),
-                        ],
-                    ]
-                );
-            }
-
-            $file = $this->fileStorage->saveFromRequest($request, 'upload', 'guestbook');
-            $file_array = [
-                'id'       => $file->id,
-                'name'     => $file->name,
-                'uploaded' => 1,
-                'url'      => $file->url,
-            ];
-            return new JsonResponse($file_array);
-        } catch (FilesystemException | Exception $e) {
+        $upload = $request->files->get('upload');
+        if (! $upload instanceof UploadedFile) {
             return new JsonResponse(
                 [
                     'error' => [
-                        'message' => $e->getMessage(),
+                        'message' => __('Wrong data'),
+                    ],
+                ]
+            );
+        }
+
+        $uploadedFile = $this->uploadedFileMapper->fromUploadedFile($upload);
+
+        $file_info = new FileInfo((string) $uploadedFile->clientName);
+        if (! $file_info->isImage()) {
+            return new JsonResponse(
+                [
+                    'error' => [
+                        'message' => __('Only images are allowed'),
+                    ],
+                ]
+            );
+        }
+
+        try {
+            $file = $this->files->storeUpload($uploadedFile, 'guestbook');
+        } catch (FileStoreException $exception) {
+            return new JsonResponse(
+                [
+                    'error' => [
+                        'message' => $exception->getMessage(),
                     ],
                 ],
                 JsonResponse::HTTP_INTERNAL_SERVER_ERROR
             );
         }
+
+        return new JsonResponse(
+            [
+                'id'       => $file->id,
+                'name'     => $file->name,
+                'uploaded' => 1,
+                'url'      => $file->url,
+            ]
+        );
     }
 }

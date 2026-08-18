@@ -4,16 +4,14 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\UseCases;
 
-use Exception;
 use Illuminate\Database\Capsule\Manager as Capsule;
-use Johncms\Files\FileStorage;
+use Johncms\Files\FileStore;
 use Johncms\Modules\Forum\Domain\Repository\ForumFileRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageFileRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumUnreadRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumVoteRepositoryInterface;
-use League\Flysystem\FilesystemException;
 use Throwable;
 
 final readonly class DeleteTopicUseCase
@@ -25,7 +23,7 @@ final readonly class DeleteTopicUseCase
         private ForumMessageRepositoryInterface $messageRepository,
         private ForumVoteRepositoryInterface $voteRepository,
         private ForumUnreadRepositoryInterface $unreadRepository,
-        private FileStorage $fileStorage,
+        private FileStore $files,
     ) {
     }
 
@@ -60,12 +58,6 @@ final readonly class DeleteTopicUseCase
             }
         }
 
-        $orphanedFileIds = $this->messageFileRepository->getOrphanedFileIds($linkedFileIds);
-        foreach ($orphanedFileIds as $fileId) {
-            try {
-                $this->fileStorage->delete($fileId);
-            } catch (FilesystemException | Exception) {
-            }
-        }
+        $this->files->deleteMany($this->messageFileRepository->getOrphanedFileIds($linkedFileIds));
     }
 }

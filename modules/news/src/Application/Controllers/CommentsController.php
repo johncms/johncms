@@ -12,10 +12,11 @@ use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\Authorization\StaffTitles;
 use Johncms\Auth\CurrentUser;
 use Johncms\FileInfo;
-use Johncms\Files\FileStorage;
+use Johncms\Files\FileStore;
 use Johncms\Http\Environment;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Request;
+use Johncms\Http\UploadedFileMapper;
 use Johncms\Media\MediaEmbed;
 use Johncms\Modules\News\Application\Services\NewsPermissions;
 use Johncms\Modules\News\Domain\Models\NewsArticle;
@@ -24,7 +25,6 @@ use Johncms\Security\HtmlSanitizerInterface;
 use Johncms\Smilies\SmiliesRendererInterface;
 use Johncms\Users\User;
 use Johncms\View\Twig\Runtime\AssetRuntime;
-use League\Flysystem\FilesystemException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -181,7 +181,7 @@ final readonly class CommentsController
         }
     }
 
-    public function del(Request $request, CurrentUser $currentUser, FileStorage $storage): Response
+    public function del(Request $request, CurrentUser $currentUser, FileStore $files): Response
     {
         $post_body = $this->decodeJsonBody($request);
 
@@ -192,12 +192,7 @@ final readonly class CommentsController
             if ($currentUser->id() === $post->user_id || $this->accessChecker->allows(NewsPermissions::COMMENTS_MODERATE)) {
                 try {
                     if (! empty($post->attached_files)) {
-                        foreach ($post->attached_files as $attached_file) {
-                            try {
-                                $storage->delete($attached_file);
-                            } catch (Exception | FilesystemException $exception) {
-                            }
-                        }
+                        $files->deleteMany($post->attached_files);
                     }
                     $post->forceDelete();
                     return new JsonResponse(['message' => __('The comment was deleted successfully')]);
@@ -212,12 +207,17 @@ final readonly class CommentsController
         }
     }
 
-    public function loadFile(Request $request): JsonResponse
+    public function loadFile(Request $request, FileStore $files, UploadedFileMapper $uploadedFileMapper): JsonResponse
     {
         try {
-            /** @var UploadedFile[] $files */
-            $files = $request->files->all();
-            $file_info = new FileInfo($files['upload']->getClientOriginalName());
+            $upload = $request->files->get('upload');
+            if (! $upload instanceof UploadedFile) {
+                return new JsonResponse(['errors' => __('Wrong data')], Response::HTTP_UNPROCESSABLE_ENTITY);
+            }
+
+            $uploadedFile = $uploadedFileMapper->fromUploadedFile($upload);
+
+            $file_info = new FileInfo((string) $uploadedFile->clientName);
             if (! $file_info->isImage()) {
                 return new JsonResponse(
                     [
@@ -228,7 +228,7 @@ final readonly class CommentsController
                 );
             }
 
-            $file = (new FileStorage())->saveFromRequest($request, 'upload', 'news_comments');
+            $file = $files->storeUpload($uploadedFile, 'news_comments');
             $file_array = [
                 'id'       => $file->id,
                 'name'     => $file->name,
@@ -236,7 +236,7 @@ final readonly class CommentsController
                 'url'      => $file->url,
             ];
             return new JsonResponse($file_array);
-        } catch (FilesystemException | Exception $e) {
+        } catch (Exception $e) {
             return new JsonResponse(['errors' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }

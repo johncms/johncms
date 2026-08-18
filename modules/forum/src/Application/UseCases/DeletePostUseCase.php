@@ -7,8 +7,7 @@ namespace Johncms\Modules\Forum\Application\UseCases;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\Services\ForumPermissions;
-use Exception;
-use Johncms\Files\FileStorage;
+use Johncms\Files\FileStore;
 use Johncms\Modules\Forum\Application\DTO\DeletePostResultDTO;
 use Johncms\Modules\Forum\Application\DTO\EditPostContextDTO;
 use Johncms\Modules\Forum\Application\Services\ForumSectionPathService;
@@ -21,7 +20,6 @@ use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumUnreadRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumVoteRepositoryInterface;
 use Johncms\Users\User;
-use League\Flysystem\FilesystemException;
 
 final readonly class DeletePostUseCase
 {
@@ -36,7 +34,7 @@ final readonly class DeletePostUseCase
         private ForumSectionPathService $sectionPathService,
         private ForumTopicPathService $topicPathService,
         private CurrentUser $currentUser,
-        private FileStorage $fileStorage,
+        private FileStore $files,
         private AccessCheckerInterface $accessChecker,
     ) {
     }
@@ -124,12 +122,6 @@ final readonly class DeletePostUseCase
             return;
         }
 
-        $orphanedFileIds = $this->messageFileRepository->getOrphanedFileIds($fileIds);
-        foreach ($orphanedFileIds as $fileId) {
-            try {
-                $this->fileStorage->delete($fileId);
-            } catch (FilesystemException | Exception) {
-            }
-        }
+        $this->files->deleteMany($this->messageFileRepository->getOrphanedFileIds($fileIds));
     }
 }

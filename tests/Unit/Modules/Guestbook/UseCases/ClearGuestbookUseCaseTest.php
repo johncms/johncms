@@ -5,25 +5,29 @@ declare(strict_types=1);
 namespace Tests\Unit\Modules\Guestbook\UseCases;
 
 use Illuminate\Database\Eloquent\Collection;
-use Johncms\Files\FileStorage;
-use Johncms\Modules\Guestbook\Application\Services\DeleteAttachedFilesService;
+use Johncms\Files\FileStore;
 use Johncms\Modules\Guestbook\Application\UseCases\ClearGuestbookUseCase;
 use Johncms\Modules\Guestbook\Domain\Enums\ClearGuestbookPeriod;
 use Johncms\Modules\Guestbook\Domain\Models\GuestbookEntry;
 use Johncms\Modules\Guestbook\Domain\Repository\GuestbookEntryRepositoryInterface;
+use Johncms\Storage\StorageInterface;
+use Johncms\Storage\StorageRegistryInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
+use Tests\Unit\Files\InMemoryFileRepository;
 
 final class ClearGuestbookUseCaseTest extends TestCase
 {
     private GuestbookEntryRepositoryInterface&MockObject $repository;
-    private FileStorage&MockObject $storage;
+    private InMemoryFileRepository $files;
+    private StorageInterface&MockObject $disk;
 
     protected function setUp(): void
     {
         $this->repository = $this->createMock(GuestbookEntryRepositoryInterface::class);
-        $this->storage = $this->createMock(FileStorage::class);
+        $this->files = new InMemoryFileRepository();
+        $this->disk = $this->createMock(StorageInterface::class);
     }
 
     public function testCutoffIsCalculatedFromPeriod(): void
@@ -74,15 +78,22 @@ final class ClearGuestbookUseCaseTest extends TestCase
             ->willReturn(new Collection([$withFiles, $withoutFiles]));
         $this->repository->expects(self::once())->method('deleteEntries');
 
-        $this->storage->expects(self::exactly(2))->method('delete')->with(self::logicalOr(10, 11));
+        $this->files->add(10, 'guestbook/aa/bb/cc/first.jpg');
+        $this->files->add(11, 'guestbook/aa/bb/cc/second.jpg');
+        $this->disk->expects(self::exactly(2))->method('delete');
 
         $this->makeUseCase()->execute(false, ClearGuestbookPeriod::All);
+
+        self::assertSame([], $this->files->ids());
     }
 
     private function makeUseCase(): ClearGuestbookUseCase
     {
-        $attachedFiles = new DeleteAttachedFilesService($this->storage, $this->createMock(LoggerInterface::class));
+        $registry = $this->createMock(StorageRegistryInterface::class);
+        $registry->method('disk')->willReturn($this->disk);
 
-        return new ClearGuestbookUseCase($this->repository, $attachedFiles);
+        $store = new FileStore($registry, $this->files, $this->createMock(LoggerInterface::class));
+
+        return new ClearGuestbookUseCase($this->repository, $store);
     }
 }

@@ -7,7 +7,7 @@ namespace Johncms\Modules\Forum\Application\Controllers;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\CurrentUser;
 use Johncms\FileInfo;
-use Johncms\Files\FileStorage;
+use Johncms\Files\FileStore;
 use Johncms\Http\Request;
 use Johncms\Http\UploadedFileMapper;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
@@ -22,7 +22,7 @@ final readonly class UploadFileController
 {
     public function __construct(
         private AccessCheckerInterface $accessChecker,
-        private FileStorage $fileStorage,
+        private FileStore $files,
         private EnsureForumAccessUseCase $forumAccessUseCase,
         private CurrentUser $currentUser,
         private LoggerInterface $logger,
@@ -53,12 +53,14 @@ final readonly class UploadFileController
                 return new JsonResponse(['error' => ['message' => __('Error uploading file')]]);
             }
 
-            $fileInfo = new FileInfo((string) $this->uploadedFileMapper->fromUploadedFile($upload)->clientName);
+            $uploadedFile = $this->uploadedFileMapper->fromUploadedFile($upload);
+
+            $fileInfo = new FileInfo((string) $uploadedFile->clientName);
             if (! $fileInfo->isImage()) {
                 return new JsonResponse(['error' => ['message' => __('Only images are allowed')]]);
             }
 
-            $file = $this->fileStorage->saveFromRequest($request, 'upload', 'forum_files');
+            $file = $this->files->storeUpload($uploadedFile, 'forum_files');
 
             return new JsonResponse(
                 [

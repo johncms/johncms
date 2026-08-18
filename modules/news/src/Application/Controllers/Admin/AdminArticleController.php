@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
 use Johncms\FileInfo;
-use Johncms\Files\FileStorage;
+use Johncms\Files\FileStore;
 use Johncms\Http\ExceptionResponseFactory;
 use Johncms\Logs\DebugDetailsPolicy;
 use Johncms\Modules\News\Application\Utils\Helpers;
@@ -21,10 +21,10 @@ use Johncms\Modules\News\Domain\Models\NewsSection;
 use Johncms\Http\Session;
 use Johncms\NavChain;
 use Johncms\Http\Request;
+use Johncms\Http\UploadedFileMapper;
 use Johncms\Http\View\ViewResponse;
 use Johncms\System\Utility\EditorContentNormalizer;
 use Johncms\Users\User;
-use League\Flysystem\FilesystemException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -254,9 +254,9 @@ final readonly class AdminArticleController
      *
      * @param int $article_id
      * @param Request $request
-     * @param FileStorage $storage
+     * @param FileStore $files
      */
-    public function del(int $article_id, Request $request, FileStorage $storage): Response | ViewResponse
+    public function del(int $article_id, Request $request, FileStore $files): Response | ViewResponse
     {
         $this->addSectionBreadcrumbs();
 
@@ -281,12 +281,7 @@ final readonly class AdminArticleController
             // Delete article
             try {
                 if (! empty($article->attached_files)) {
-                    foreach ($article->attached_files as $attached_file) {
-                        try {
-                            $storage->delete($attached_file);
-                        } catch (Exception | FilesystemException $exception) {
-                        }
-                    }
+                    $files->deleteMany($article->attached_files);
                 }
                 $article->delete();
             } catch (\Exception $exception) {
@@ -312,12 +307,17 @@ final readonly class AdminArticleController
         );
     }
 
-    public function loadFile(Request $request): JsonResponse
+    public function loadFile(Request $request, FileStore $files, UploadedFileMapper $uploadedFileMapper): JsonResponse
     {
         try {
-            /** @var UploadedFile[] $files */
-            $files = $request->files->all();
-            $file_info = new FileInfo($files['upload']->getClientOriginalName());
+            $upload = $request->files->get('upload');
+            if (! $upload instanceof UploadedFile) {
+                return new JsonResponse(['errors' => __('Wrong data')], Response::HTTP_UNPROCESSABLE_ENTITY);
+            }
+
+            $uploadedFile = $uploadedFileMapper->fromUploadedFile($upload);
+
+            $file_info = new FileInfo((string) $uploadedFile->clientName);
             if (! $file_info->isImage()) {
                 return new JsonResponse(
                     [
@@ -328,7 +328,7 @@ final readonly class AdminArticleController
                 );
             }
 
-            $file = (new FileStorage())->saveFromRequest($request, 'upload', 'news');
+            $file = $files->storeUpload($uploadedFile, 'news');
             $file_array = [
                 'id'       => $file->id,
                 'name'     => $file->name,
@@ -336,7 +336,7 @@ final readonly class AdminArticleController
                 'url'      => $file->url,
             ];
             return new JsonResponse($file_array);
-        } catch (FilesystemException | Exception $e) {
+        } catch (Exception $e) {
             return new JsonResponse(['errors' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }

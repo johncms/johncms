@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Guestbook\Application\UseCases;
 
-use Johncms\Modules\Guestbook\Application\Services\DeleteAttachedFilesService;
+use Johncms\Files\FileStore;
 use Johncms\Modules\Guestbook\Domain\Enums\ClearGuestbookPeriod;
 use Johncms\Modules\Guestbook\Domain\Repository\GuestbookEntryRepositoryInterface;
 
@@ -12,7 +12,7 @@ final readonly class ClearGuestbookUseCase
 {
     public function __construct(
         private GuestbookEntryRepositoryInterface $repository,
-        private DeleteAttachedFilesService $attachedFiles,
+        private FileStore $files,
     ) {
     }
 
@@ -24,7 +24,7 @@ final readonly class ClearGuestbookUseCase
         $entries = $this->repository->getEntriesToClear($adminClub, $olderThan);
         foreach ($entries as $entry) {
             if (! empty($entry->attached_files)) {
-                $this->attachedFiles->delete($entry->attached_files, $entry->id);
+                $this->files->deleteMany($entry->attached_files);
             }
         }
 

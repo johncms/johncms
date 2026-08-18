@@ -5,24 +5,10 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Infrastructure\Persistence\Repository;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
-use Johncms\Files\Models\File;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageFileRepositoryInterface;
 
 final class ForumMessageFileRepository implements ForumMessageFileRepositoryInterface
 {
-    public function findAttachableFileIds(array $fileIds, string $pathPrefix): array
-    {
-        if ($fileIds === []) {
-            return [];
-        }
-
-        return File::query()
-            ->whereIn('id', $fileIds)
-            ->where('path', 'like', $pathPrefix . '/%')
-            ->pluck('id')
-            ->all();
-    }
-
     public function attachFilesToMessage(int $messageId, array $fileIds): void
     {
         if ($fileIds === []) {
