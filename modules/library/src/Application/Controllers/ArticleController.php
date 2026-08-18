@@ -22,6 +22,8 @@ use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
 use Johncms\Utils\DateFormatterInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Johncms\Modules\Library\Infrastructure\Storage\LibraryCoverSize;
+use Johncms\Modules\Library\Infrastructure\Storage\LibraryCoverStorage;
 
 final readonly class ArticleController
 {
@@ -34,6 +36,7 @@ final readonly class ArticleController
         private LibraryArticlePathService $articlePathService,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
+        private LibraryCoverStorage $covers,
     ) {
     }
 
@@ -111,7 +114,7 @@ final readonly class ArticleController
                 'date'    => $this->dateFormatter->format($article->time),
             ];
 
-            $cover = file_exists(UPLOAD_PATH . 'library/images/big/' . $id . '.png');
+            $cover = $this->covers->exists($id, LibraryCoverSize::Big);
         }
 
         return new ViewResponse('@library/public/article.twig', [

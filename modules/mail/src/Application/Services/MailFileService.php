@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace Johncms\Modules\Mail\Application\Services;
 
 use Johncms\Http\UploadedFileDTO;
-use RuntimeException;
+use Johncms\Storage\StorageException;
+use Johncms\Storage\StorageInterface;
 
-final class MailFileService
+final readonly class MailFileService
 {
-    private const UPLOAD_MAIL_PATH = UPLOAD_PATH . 'mail/';
+    private const string DIRECTORY = 'mail';
 
     public const ALLOWED_EXTENSIONS = [
         'exe', 'msi',
@@ -22,18 +23,24 @@ final class MailFileService
         'mp3', 'amr',
     ];
 
+    public function __construct(
+        private StorageInterface $storage,
+    ) {
+    }
+
     public function deleteFile(string $fileName): bool
     {
-        if (empty($fileName)) {
+        if (! $this->fileExists($fileName)) {
             return false;
         }
 
-        $filePath = self::UPLOAD_MAIL_PATH . $fileName;
-        if (file_exists($filePath)) {
-            return @unlink($filePath);
+        try {
+            $this->storage->delete($this->path($fileName));
+        } catch (StorageException) {
+            return false;
         }
 
-        return false;
+        return true;
     }
 
     public function fileExists(string $fileName): bool
@@ -42,7 +49,21 @@ final class MailFileService
             return false;
         }
 
-        return file_exists(self::UPLOAD_MAIL_PATH . $fileName);
+        return $this->storage->exists($this->path($fileName));
+    }
+
+    /**
+     * Address the attachment is served at, or an empty string on a disk that is not public.
+     */
+    public function url(string $fileName): string
+    {
+        return $this->storage->url($this->path($fileName));
+    }
+
+    public function path(string $fileName): string
+    {
+        // The name is stored in a column and ends up in a path.
+        return self::DIRECTORY . '/' . basename($fileName);
     }
 
     /**
@@ -99,12 +120,11 @@ final class MailFileService
 
     public function storeUploadedFile(UploadedFileDTO $file, string $fileName): bool
     {
-        $target = self::UPLOAD_MAIL_PATH . $fileName;
-
         try {
-            $file->moveTo($target);
-            @chmod($target, 0666);
-        } catch (RuntimeException) {
+            // The mode comes from the configuration of the disk; the previous chmod(0666) here
+            // made every mail attachment writable by anything running on the server.
+            $this->storage->storeFile($this->path($fileName), $file->tmpPath);
+        } catch (StorageException) {
             return false;
         }
 

@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms\System\Users;
 
+use Johncms\Storage\StorageInterface;
 use PDO;
 
 class UserClean
@@ -45,10 +46,7 @@ class UserClean
     public function removeAlbum(int $cleanId): void
     {
         // Удаляем папку с файлами картинок
-        $dir = UPLOAD_PATH . 'users/album/' . $cleanId;
-        if (is_dir($dir)) {
-            $this->removeDir($dir);
-        }
+        di(StorageInterface::class)->deleteDirectory('users/album/' . $cleanId);
 
         // Чистим таблицы
         $req = $this->db->query("SELECT `id` FROM `cms_album_files` WHERE `user_id` = '" . $cleanId . "'");
@@ -84,9 +82,7 @@ class UserClean
         if ($req->rowCount()) {
             while ($res = $req->fetch()) {
                 // Удаляем файлы почты
-                if (is_file(UPLOAD_PATH . 'mail/' . $res['file_name'])) {
-                    unlink(UPLOAD_PATH . 'mail/' . $res['file_name']);
-                }
+                di(StorageInterface::class)->delete('mail/' . basename((string) $res['file_name']));
             }
         }
 
@@ -150,15 +146,5 @@ class UserClean
         $this->db->exec("DELETE FROM `cms_album_comments` WHERE `user_id` = '" . $cleanId . "'");
         // Удаляем посты из гостевой
         $this->db->exec("DELETE FROM `guest` WHERE `user_id` = '" . $cleanId . "'");
-    }
-
-    private function removeDir(string $dir): void
-    {
-        if ($objs = glob($dir . '/*')) {
-            foreach ($objs as $obj) {
-                is_dir($obj) ? $this->removeDir($obj) : unlink($obj);
-            }
-        }
-        rmdir($dir);
     }
 }

@@ -17,6 +17,8 @@ use Johncms\Modules\Library\Domain\Models\LibraryCategory;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Johncms\NavChain;
 use Symfony\Component\HttpFoundation\Response;
+use Johncms\Modules\Library\Infrastructure\Storage\LibraryCoverSize;
+use Johncms\Modules\Library\Infrastructure\Storage\LibraryCoverStorage;
 
 final readonly class EditArticleController
 {
@@ -28,6 +30,7 @@ final readonly class EditArticleController
         private NavChain $navChain,
         private CurrentUser $currentUser,
         private LibrarySlugService $slugService,
+        private LibraryCoverStorage $covers,
     ) {
     }
 
@@ -101,7 +104,7 @@ final readonly class EditArticleController
             'text'          => (string) ($article->text ?? ''),
             'text_editable' => mb_strlen((string) $article->text) < self::EDITABLE_TEXT_LENGTH,
             'tags'          => implode(', ', (new Hashtags($id))->getTagNames()),
-            'cover'         => file_exists(UPLOAD_PATH . 'library/images/small/' . $id . '.png'),
+            'cover'         => $this->covers->exists($id, LibraryCoverSize::Small),
             'is_admin'      => $isAdmin,
             'categories'    => $categories,
             'cat_id'        => (int) $article->cat_id,

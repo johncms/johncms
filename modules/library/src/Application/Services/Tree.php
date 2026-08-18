@@ -14,6 +14,8 @@ namespace Johncms\Modules\Library\Application\Services;
 
 use Johncms\NavChain;
 use PDO;
+use Johncms\Modules\Library\Infrastructure\Storage\LibraryCoverSize;
+use Johncms\Modules\Library\Infrastructure\Storage\LibraryCoverStorage;
 
 class Tree
 {
@@ -62,10 +64,9 @@ class Tree
             $obj = new Hashtags($data);
             $this->cleaned['tags'] += $obj->delTags();
 
-            if (file_exists(UPLOAD_PATH . 'library/images/small/' . $data . '.png')) {
-                unlink(UPLOAD_PATH . 'library/images/big/' . $data . '.png');
-                unlink(UPLOAD_PATH . 'library/images/orig/' . $data . '.png');
-                unlink(UPLOAD_PATH . 'library/images/small/' . $data . '.png');
+            $covers = di(LibraryCoverStorage::class);
+            if ($covers->exists((int) $data, LibraryCoverSize::Small)) {
+                $covers->delete((int) $data);
                 $this->cleaned['images'] += 3;
             }
         } else {

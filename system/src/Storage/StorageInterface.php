@@ -102,6 +102,13 @@ interface StorageInterface
     public function delete(string $path): void;
 
     /**
+     * Remove a directory and everything under it. A directory that is not there is not an error.
+     *
+     * @throws StorageException
+     */
+    public function deleteDirectory(string $path): void;
+
+    /**
      * Copy a file to another path of the same disk, replacing whatever is there.
      *
      * @throws StorageException

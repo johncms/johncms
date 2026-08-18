@@ -13,6 +13,8 @@ declare(strict_types=1);
 namespace Johncms\Modules\Library\Application\Services;
 
 use Johncms\Image\ImageProcessorInterface;
+use Johncms\Modules\Library\Infrastructure\Storage\LibraryCoverSize;
+use Johncms\Modules\Library\Infrastructure\Storage\LibraryCoverStorage;
 use PDO;
 
 class Utils
@@ -57,12 +59,19 @@ class Utils
 
         $source = $image->getPathname();
         $processor = di(ImageProcessorInterface::class);
+        $covers = di(LibraryCoverStorage::class);
 
         // The original keeps its size and is only re-encoded to PNG; the two smaller copies are
         // scaled by width, with the height following from the proportions of the picture.
-        $processor->saveConverted($source, UPLOAD_PATH . 'library/images/orig/' . $id . '.png');
-        $processor->saveScaledDown($source, UPLOAD_PATH . 'library/images/big/' . $id . '.png', $bigSize);
-        $processor->saveScaledDown($source, UPLOAD_PATH . 'library/images/small/' . $id . '.png', $smallSize);
+        $covers->store($id, LibraryCoverSize::Original, static function (string $target) use ($processor, $source): void {
+            $processor->saveConverted($source, $target);
+        });
+        $covers->store($id, LibraryCoverSize::Big, static function (string $target) use ($processor, $source, $bigSize): void {
+            $processor->saveScaledDown($source, $target, $bigSize);
+        });
+        $covers->store($id, LibraryCoverSize::Small, static function (string $target) use ($processor, $source, $smallSize): void {
+            $processor->saveScaledDown($source, $target, $smallSize);
+        });
     }
 
     public static function replaceKeywords(string $search, string $text): string
@@ -74,10 +83,6 @@ class Utils
 
     public static function unlinkImages(int $id): void
     {
-        if (file_exists(UPLOAD_PATH . 'library/images/small/' . $id . '.png')) {
-            @unlink(UPLOAD_PATH . 'library/images/big/' . $id . '.png');
-            @unlink(UPLOAD_PATH . 'library/images/orig/' . $id . '.png');
-            @unlink(UPLOAD_PATH . 'library/images/small/' . $id . '.png');
-        }
+        di(LibraryCoverStorage::class)->delete($id);
     }
 }

@@ -7,9 +7,16 @@ namespace Johncms\Modules\Library\Application\Controllers;
 use Johncms\Modules\Library\Domain\Models\LibraryText;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use Johncms\Modules\Library\Infrastructure\Storage\LibraryCoverSize;
+use Johncms\Modules\Library\Infrastructure\Storage\LibraryCoverStorage;
 
 final readonly class DownloadArticleController
 {
+    public function __construct(
+        private LibraryCoverStorage $covers,
+    ) {
+    }
+
     public function __invoke(int $id, string $type): Response
     {
         if (! in_array($type, ['txt', 'fb2'], true)) {
@@ -59,10 +66,9 @@ final readonly class DownloadArticleController
     private function buildFb2(LibraryText $article): string
     {
         $coverBase64 = '';
-        $coverPath = UPLOAD_PATH . 'library/images/orig/' . $article->id . '.png';
-
-        if (file_exists($coverPath)) {
-            $coverBase64 = chunk_split(base64_encode((string) file_get_contents($coverPath)));
+        $articleId = (int) $article->id;
+        if ($this->covers->exists($articleId, LibraryCoverSize::Original)) {
+            $coverBase64 = chunk_split(base64_encode($this->covers->read($articleId, LibraryCoverSize::Original)));
         }
 
         $plain = $this->htmlToPlainText((string) $article->text);

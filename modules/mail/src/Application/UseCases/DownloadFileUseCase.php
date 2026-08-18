@@ -37,6 +37,6 @@ final readonly class DownloadFileUseCase
 
         $this->mailMessageRepository->incrementDownloadCount($messageId);
 
-        return '/upload/mail/' . $message->file_name;
+        return $this->mailFileService->url((string) $message->file_name);
     }
 }
