@@ -8,6 +8,7 @@ use Johncms\Modules\Album\Domain\Models\AlbumPhoto;
 use Johncms\Modules\Album\Domain\Repository\AlbumCommentRepositoryInterface;
 use Johncms\Modules\Album\Domain\Repository\AlbumPhotoRepositoryInterface;
 use Johncms\Modules\Album\Domain\Repository\AlbumVoteRepositoryInterface;
+use Johncms\Modules\Album\Infrastructure\Storage\AlbumPhotoStorage;
 
 final readonly class DeletePhotoUseCase
 {
@@ -15,15 +16,15 @@ final readonly class DeletePhotoUseCase
         private AlbumPhotoRepositoryInterface $photoRepository,
         private AlbumVoteRepositoryInterface $voteRepository,
         private AlbumCommentRepositoryInterface $commentRepository,
+        private AlbumPhotoStorage $photos,
     ) {
     }
 
     public function execute(AlbumPhoto $photo): void
     {
         // Remove the original image and its thumbnail from disk.
-        $albumDir = UPLOAD_PATH . 'users/album/' . $photo->user_id . '/';
-        @unlink($albumDir . $photo->img_name);
-        @unlink($albumDir . $photo->tmb_name);
+        $this->photos->delete($photo->user_id, (string) $photo->img_name);
+        $this->photos->delete($photo->user_id, (string) $photo->tmb_name);
 
         $this->voteRepository->deleteByPhotoIds([$photo->id]);
         $this->commentRepository->deleteByPhotoIds([$photo->id]);

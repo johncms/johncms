@@ -13,6 +13,8 @@ use Johncms\Modules\Album\Application\Services\PhotoPresenter;
 use Johncms\Modules\Album\Domain\Models\AlbumPhoto;
 use Johncms\Modules\Album\Domain\Repository\AlbumPhotoRepositoryInterface;
 use Johncms\Modules\Album\Domain\Repository\AlbumVoteRepositoryInterface;
+use Johncms\Modules\Album\Infrastructure\Storage\AlbumPhotoStorage;
+use Johncms\Users\UserImages;
 
 final readonly class GetPhotoViewUseCase
 {
@@ -26,6 +28,8 @@ final readonly class GetPhotoViewUseCase
         private EnsureAlbumAccessUseCase $ensureAccess,
         private PhotoPresenter $photoPresenter,
         private CurrentUser $currentUser,
+        private AlbumPhotoStorage $photos,
+        private UserImages $userImages,
     ) {
     }
 
@@ -115,14 +119,17 @@ final readonly class GetPhotoViewUseCase
 
     private function copyToProfile(AlbumPhoto $photo): void
     {
-        $albumDir = UPLOAD_PATH . 'users/album/' . $photo->user_id . '/';
-        $profileDir = UPLOAD_PATH . 'users/photo/';
+        if (
+            ! $this->photos->exists($photo->user_id, (string) $photo->img_name)
+            || ! $this->photos->exists($photo->user_id, (string) $photo->tmb_name)
+        ) {
+            return;
+        }
 
-        if (is_file($albumDir . $photo->tmb_name)) {
-            copy($albumDir . $photo->tmb_name, $profileDir . $this->currentUser->id() . '_small.jpg');
-        }
-        if (is_file($albumDir . $photo->img_name)) {
-            copy($albumDir . $photo->img_name, $profileDir . $this->currentUser->id() . '.jpg');
-        }
+        $this->userImages->copyPhotoFrom(
+            $this->currentUser->id(),
+            $this->photos->path($photo->user_id, (string) $photo->img_name),
+            $this->photos->path($photo->user_id, (string) $photo->tmb_name),
+        );
     }
 }

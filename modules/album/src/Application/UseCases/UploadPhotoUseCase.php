@@ -10,6 +10,8 @@ use Johncms\Image\ImageProcessorInterface;
 use Johncms\Modules\Album\Application\Exceptions\ImageUploadException;
 use Johncms\Modules\Album\Domain\Models\Album;
 use Johncms\Modules\Album\Domain\Repository\AlbumPhotoRepositoryInterface;
+use Johncms\Modules\Album\Infrastructure\Storage\AlbumPhotoStorage;
+use Johncms\Storage\StorageException;
 
 final readonly class UploadPhotoUseCase
 {
@@ -22,6 +24,7 @@ final readonly class UploadPhotoUseCase
     public function __construct(
         private ImageProcessorInterface $imageProcessor,
         private AlbumPhotoRepositoryInterface $photoRepository,
+        private AlbumPhotoStorage $photos,
     ) {
     }
 
@@ -32,31 +35,34 @@ final readonly class UploadPhotoUseCase
             throw new ImageUploadException(__('The weight of the file exceeds') . ' ' . $maxKb . 'kb.');
         }
 
-        $dir = UPLOAD_PATH . 'users/album/' . $album->user_id . '/';
-        if (! is_dir($dir) && ! mkdir($dir, 0777) && ! is_dir($dir)) {
-            throw new ImageUploadException(__('An error occurred'));
-        }
-
         $time = time();
         $originalFile = 'img_' . $time . '.jpg';
         $thumbFile = 'tmb_' . $time . '.jpg';
 
         try {
             // The original, scaled down to fit within the maximum bounds.
-            $this->imageProcessor->saveScaledDown(
-                $file->tmpPath,
-                $dir . $originalFile,
-                self::ORIGINAL_WIDTH,
-                self::ORIGINAL_HEIGHT
+            $this->photos->store(
+                $album->user_id,
+                $originalFile,
+                fn(string $target) => $this->imageProcessor->saveScaledDown(
+                    $file->tmpPath,
+                    $target,
+                    self::ORIGINAL_WIDTH,
+                    self::ORIGINAL_HEIGHT
+                )
             );
 
-            $this->imageProcessor->saveBlurredThumbnail(
-                $file->tmpPath,
-                $dir . $thumbFile,
-                self::THUMB_WIDTH,
-                self::THUMB_HEIGHT
+            $this->photos->store(
+                $album->user_id,
+                $thumbFile,
+                fn(string $target) => $this->imageProcessor->saveBlurredThumbnail(
+                    $file->tmpPath,
+                    $target,
+                    self::THUMB_WIDTH,
+                    self::THUMB_HEIGHT
+                )
             );
-        } catch (ImageProcessingException $exception) {
+        } catch (ImageProcessingException | StorageException $exception) {
             throw new ImageUploadException($exception->getMessage());
         }
 

@@ -14,6 +14,7 @@ use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Johncms\Modules\Album\Infrastructure\Storage\AlbumPhotoStorage;
 
 final readonly class EditPhotoController
 {
@@ -22,6 +23,7 @@ final readonly class EditPhotoController
         private CurrentUser $currentUser,
         private GetEditPhotoContextUseCase $getContextUseCase,
         private EditPhotoUseCase $editPhotoUseCase,
+        private AlbumPhotoStorage $photos,
     ) {
     }
 
@@ -74,7 +76,7 @@ final readonly class EditPhotoController
                 'page_title'   => $title,
                 'action_url'   => '/album/photo/' . $photo->id . '/edit',
                 'back_url'     => '/album/' . $photo->album_id,
-                'image_url'    => pathToUrl(UPLOAD_PATH . 'users/album/' . $photo->user_id . '/' . $photo->tmb_name),
+                'image_url'    => $this->photos->url($photo->user_id, (string) $photo->tmb_name),
                 'description'  => $description,
                 'field_height' => $this->currentUser->user()->config->fieldHeight,
             ]

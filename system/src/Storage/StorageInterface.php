@@ -102,6 +102,13 @@ interface StorageInterface
     public function delete(string $path): void;
 
     /**
+     * Copy a file to another path of the same disk, replacing whatever is there.
+     *
+     * @throws StorageException
+     */
+    public function copy(string $from, string $to): void;
+
+    /**
      * Size in bytes.
      *
      * @throws StorageException

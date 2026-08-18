@@ -8,6 +8,7 @@ use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Album\Application\Exceptions\AlbumPhotoFileMissingException;
 use Johncms\Modules\Album\Application\Exceptions\AlbumPhotoNotFoundException;
 use Johncms\Modules\Album\Domain\Repository\AlbumPhotoRepositoryInterface;
+use Johncms\Modules\Album\Infrastructure\Storage\AlbumPhotoStorage;
 
 final readonly class DownloadPhotoUseCase
 {
@@ -15,6 +16,7 @@ final readonly class DownloadPhotoUseCase
         private AlbumPhotoRepositoryInterface $photoRepository,
         private EnsureAlbumAccessUseCase $ensureAccess,
         private CurrentUser $currentUser,
+        private AlbumPhotoStorage $photos,
     ) {
     }
 
@@ -37,8 +39,8 @@ final readonly class DownloadPhotoUseCase
 
         $this->ensureAccess->execute($photo->album);
 
-        $path = UPLOAD_PATH . 'users/album/' . $photo->user_id . '/' . $photo->img_name;
-        if (! is_file($path)) {
+        $url = $this->photos->url($photo->user_id, (string) $photo->img_name);
+        if ($url === '') {
             throw new AlbumPhotoFileMissingException();
         }
 
@@ -47,6 +49,6 @@ final readonly class DownloadPhotoUseCase
             $this->photoRepository->refreshDownloadsCount($photo->id);
         }
 
-        return pathToUrl($path);
+        return $url;
     }
 }

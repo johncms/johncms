@@ -11,6 +11,7 @@ use Johncms\Modules\Album\Domain\Models\AlbumPhoto;
 use Johncms\Smilies\SmiliesRendererInterface;
 use Johncms\Utils\DateFormatterInterface;
 use Johncms\Utils\PlainTextFormatter;
+use Johncms\Modules\Album\Infrastructure\Storage\AlbumPhotoStorage;
 
 /**
  * Builds presentation data for album photos (formerly the Albums\Photo accessors).
@@ -22,6 +23,7 @@ final readonly class PhotoPresenter
     public function __construct(
         private DateFormatterInterface $dateFormatter,
         private SmiliesRendererInterface $smiliesRenderer,
+        private AlbumPhotoStorage $photos,
     ) {
     }
 
@@ -104,11 +106,6 @@ final readonly class PhotoPresenter
 
     private function picture(int $userId, string $thumbName): string
     {
-        $path = UPLOAD_PATH . 'users/album/' . $userId . '/' . $thumbName;
-        if (is_file($path)) {
-            return pathToUrl($path);
-        }
-
-        return '';
+        return $this->photos->url($userId, $thumbName);
     }
 }

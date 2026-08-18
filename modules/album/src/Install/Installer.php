@@ -16,6 +16,7 @@ use Gettext\TranslatorFunctions;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Schema\Blueprint;
 use Johncms\Image\ImageProcessorInterface;
+use Johncms\Modules\Album\Infrastructure\Storage\AlbumPhotoStorage;
 use Johncms\Modules\Album\Domain\Enums\AlbumAccess;
 use Johncms\System\i18n\Translator;
 use Throwable;
@@ -134,11 +135,6 @@ class Installer extends \Johncms\Modules\Installer
                 'access'      => $album['access']->value,
             ]);
 
-            $albumDir = UPLOAD_PATH . 'users' . DS . 'album' . DS . $ownerId . DS;
-            if (! is_dir($albumDir)) {
-                mkdir($albumDir, 0777, true);
-            }
-
             foreach ($album['photos'] as $photo) {
                 $fileTime = $now + $fileSeq++;
                 $imgName = 'img_' . $fileTime . '.jpg';
@@ -146,7 +142,7 @@ class Installer extends \Johncms\Modules\Installer
 
                 $sourcePath = $demoSource . DS . $photo['file'];
                 if (is_file($sourcePath)) {
-                    $this->copyDemoPhoto($sourcePath, $albumDir . $imgName, $albumDir . $tmbName);
+                    $this->copyDemoPhoto($sourcePath, $ownerId, $imgName, $tmbName);
                 }
 
                 Capsule::table('cms_album_files')->insert([
@@ -190,27 +186,33 @@ class Installer extends \Johncms\Modules\Installer
      * mirroring the runtime upload flow. Falls back to the original image if
      * thumbnail generation is unavailable.
      */
-    private function copyDemoPhoto(string $sourcePath, string $originalTarget, string $thumbTarget): void
+    private function copyDemoPhoto(string $sourcePath, int $ownerId, string $imgName, string $tmbName): void
     {
-        if (! is_file($originalTarget)) {
-            copy($sourcePath, $originalTarget);
+        $photos = di(AlbumPhotoStorage::class);
+
+        if (! $photos->exists($ownerId, $imgName)) {
+            $photos->store($ownerId, $imgName, static function (string $target) use ($sourcePath): void {
+                copy($sourcePath, $target);
+            });
         }
 
-        if (is_file($thumbTarget)) {
+        if ($photos->exists($ownerId, $tmbName)) {
             return;
         }
 
-        try {
-            di(ImageProcessorInterface::class)->saveBlurredThumbnail(
-                $sourcePath,
-                $thumbTarget,
-                self::THUMB_WIDTH,
-                self::THUMB_HEIGHT
-            );
-        } catch (Throwable) {
-            // Thumbnail generation is best-effort; fall back to the full-size image.
-            copy($sourcePath, $thumbTarget);
-        }
+        $photos->store($ownerId, $tmbName, static function (string $target) use ($sourcePath): void {
+            try {
+                di(ImageProcessorInterface::class)->saveBlurredThumbnail(
+                    $sourcePath,
+                    $target,
+                    self::THUMB_WIDTH,
+                    self::THUMB_HEIGHT
+                );
+            } catch (Throwable) {
+                // Thumbnail generation is best-effort; fall back to the full-size image.
+                copy($sourcePath, $target);
+            }
+        });
     }
 
     /**

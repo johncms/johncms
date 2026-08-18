@@ -94,6 +94,20 @@ final readonly class UserImages
         $this->storage->storeGenerated($this->photoPreviewPath($userId), $generatePreview);
     }
 
+    /**
+     * Take the photo of the profile from two files that are already on the disk.
+     *
+     * What "use this album picture as my photo" does: the pictures are on the same disk, so
+     * this is a copy rather than a download and an upload.
+     *
+     * @throws StorageException
+     */
+    public function copyPhotoFrom(int $userId, string $sourcePath, string $sourcePreviewPath): void
+    {
+        $this->storage->copy($sourcePath, $this->photoPath($userId));
+        $this->storage->copy($sourcePreviewPath, $this->photoPreviewPath($userId));
+    }
+
     public function deletePhoto(int $userId): void
     {
         $this->storage->delete($this->photoPath($userId));
