@@ -9,6 +9,19 @@ msgstr ""
 msgid "Admin Panel"
 msgstr ""
 
+#: themes/default/templates/admin/components/pending-migrations.twig:12
+msgid "The database needs to be updated"
+msgstr ""
+
+#: themes/default/templates/admin/components/pending-migrations.twig:14
+msgid "The files of the site expect one change the database has not been through yet."
+msgid_plural "The files of the site expect %d changes the database has not been through yet."
+msgstr[0] ""
+
+#: themes/default/templates/admin/components/pending-migrations.twig:17
+msgid "Update the database"
+msgstr ""
+
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:26
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:64
 #: modules/admin/src/Application/Controllers/Access/UserRolesController.php:130

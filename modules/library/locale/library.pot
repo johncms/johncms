@@ -15,7 +15,7 @@ msgstr ""
 #: modules/library/src/Application/Controllers/DeleteArticleController.php:33
 #: modules/library/src/Application/Controllers/DeleteArticleImageController.php:33
 #: modules/library/src/Application/Controllers/DeleteSectionController.php:33
-#: modules/library/src/Application/Controllers/EditArticleController.php:60
+#: modules/library/src/Application/Controllers/EditArticleController.php:63
 #: modules/library/src/Application/Controllers/EditSectionController.php:40
 #: modules/library/src/Application/Controllers/PremodController.php:40
 #: modules/library/src/Application/Middlewares/LibraryAccessMiddleware.php:31
@@ -25,9 +25,9 @@ msgstr ""
 #: modules/library/src/Application/Controllers/ArticleCommentsController.php:37
 #: modules/library/src/Application/Controllers/ArticleCommentsController.php:53
 #: modules/library/src/Application/Controllers/ArticleCommentsController.php:67
-#: modules/library/src/Application/Controllers/ArticleController.php:54
-#: modules/library/src/Application/Controllers/ArticleController.php:85
-#: modules/library/src/Application/Controllers/ArticleController.php:92
+#: modules/library/src/Application/Controllers/ArticleController.php:58
+#: modules/library/src/Application/Controllers/ArticleController.php:88
+#: modules/library/src/Application/Controllers/ArticleController.php:95
 #: modules/library/src/Application/Controllers/CreateArticleController.php:43
 #: modules/library/src/Application/Controllers/CreateArticleController.php:56
 #: modules/library/src/Application/Controllers/CreateSectionController.php:39
@@ -35,7 +35,7 @@ msgstr ""
 #: modules/library/src/Application/Controllers/DeleteArticleController.php:49
 #: modules/library/src/Application/Controllers/DeleteArticleImageController.php:41
 #: modules/library/src/Application/Controllers/DeleteSectionController.php:49
-#: modules/library/src/Application/Controllers/EditArticleController.php:66
+#: modules/library/src/Application/Controllers/EditArticleController.php:69
 #: modules/library/src/Application/Controllers/EditSectionController.php:60
 #: modules/library/src/Application/Controllers/LatestCommentsController.php:23
 #: modules/library/src/Application/Controllers/LibraryIndexController.php:30
@@ -61,9 +61,9 @@ msgstr ""
 msgid "Library"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/ArticleController.php:56
+#: modules/library/src/Application/Controllers/ArticleController.php:60
 #: modules/library/src/Application/Controllers/DeleteArticleController.php:45
-#: modules/library/src/Application/Controllers/EditArticleController.php:44
+#: modules/library/src/Application/Controllers/EditArticleController.php:47
 msgid "Articles do not exist"
 msgstr ""
 
@@ -157,23 +157,23 @@ msgstr ""
 msgid "Delete Section"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/DownloadArticleController.php:83
+#: modules/library/src/Application/Controllers/DownloadArticleController.php:89
 msgid "Author name"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/DownloadArticleController.php:83
+#: modules/library/src/Application/Controllers/DownloadArticleController.php:89
 msgid "Author last name"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/DownloadArticleController.php:85
+#: modules/library/src/Application/Controllers/DownloadArticleController.php:91
 msgid "Date"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/EditArticleController.php:42
-#: modules/library/src/Application/Controllers/EditArticleController.php:58
-#: modules/library/src/Application/Controllers/EditArticleController.php:71
+#: modules/library/src/Application/Controllers/EditArticleController.php:45
+#: modules/library/src/Application/Controllers/EditArticleController.php:61
 #: modules/library/src/Application/Controllers/EditArticleController.php:74
-#: modules/library/src/Application/Controllers/EditArticleController.php:75
+#: modules/library/src/Application/Controllers/EditArticleController.php:77
+#: modules/library/src/Application/Controllers/EditArticleController.php:78
 msgid "Edit Article"
 msgstr ""
 
@@ -272,107 +272,107 @@ msgstr ""
 msgid "Manage the sections and the articles"
 msgstr ""
 
-#: modules/library/src/Install/Installer.php:41
+#: modules/library/src/Install/Installer.php:35
 msgid "Programming"
 msgstr ""
 
-#: modules/library/src/Install/Installer.php:42
+#: modules/library/src/Install/Installer.php:36
 msgid "Articles and guides on development"
 msgstr ""
 
-#: modules/library/src/Install/Installer.php:44
+#: modules/library/src/Install/Installer.php:38
 msgid "Materials on the PHP language"
 msgstr ""
 
-#: modules/library/src/Install/Installer.php:46
+#: modules/library/src/Install/Installer.php:40
 msgid "Materials on JavaScript"
 msgstr ""
 
-#: modules/library/src/Install/Installer.php:47
+#: modules/library/src/Install/Installer.php:41
 msgid "Prose"
 msgstr ""
 
-#: modules/library/src/Install/Installer.php:48
+#: modules/library/src/Install/Installer.php:42
 msgid "Short stories and essays"
 msgstr ""
 
-#: modules/library/src/Install/Installer.php:49
+#: modules/library/src/Install/Installer.php:43
 msgid "User articles"
 msgstr ""
 
-#: modules/library/src/Install/Installer.php:50
+#: modules/library/src/Install/Installer.php:44
 msgid "A section where visitors can publish their own articles"
 msgstr ""
 
-#: modules/library/src/Install/Installer.php:78
+#: modules/library/src/Install/Installer.php:72
 msgid "Getting started with PHP"
 msgstr ""
 
-#: modules/library/src/Install/Installer.php:79
+#: modules/library/src/Install/Installer.php:73
 msgid "Installing PHP and your first script"
 msgstr ""
 
-#: modules/library/src/Install/Installer.php:80
+#: modules/library/src/Install/Installer.php:74
 msgid "<p>PHP is a popular language for web development. In this article we cover installing the interpreter and running your first script.</p>"
 msgstr ""
 
-#: modules/library/src/Install/Installer.php:82
+#: modules/library/src/Install/Installer.php:76
 msgid "Arrays in PHP"
 msgstr ""
 
-#: modules/library/src/Install/Installer.php:83
+#: modules/library/src/Install/Installer.php:77
 msgid "Indexed and associative arrays"
 msgstr ""
 
-#: modules/library/src/Install/Installer.php:84
+#: modules/library/src/Install/Installer.php:78
 msgid "<p>Arrays in PHP can be indexed or associative. Let us look at the main functions for working with them.</p>"
 msgstr ""
 
-#: modules/library/src/Install/Installer.php:86
+#: modules/library/src/Install/Installer.php:80
 msgid "JavaScript basics"
 msgstr ""
 
-#: modules/library/src/Install/Installer.php:87
+#: modules/library/src/Install/Installer.php:81
 msgid "Variables and functions"
 msgstr ""
 
-#: modules/library/src/Install/Installer.php:88
+#: modules/library/src/Install/Installer.php:82
 msgid "<p>JavaScript runs in the browser and makes pages interactive. Let us start with variables and functions.</p>"
 msgstr ""
 
-#: modules/library/src/Install/Installer.php:90
+#: modules/library/src/Install/Installer.php:84
 msgid "An autumn evening"
 msgstr ""
 
-#: modules/library/src/Install/Installer.php:91
+#: modules/library/src/Install/Installer.php:85
 msgid "A short story"
 msgstr ""
 
-#: modules/library/src/Install/Installer.php:92
+#: modules/library/src/Install/Installer.php:86
 msgid "<p>A warm autumn rain fell outside the window, and the city slowly sank into the evening twilight.</p>"
 msgstr ""
 
-#: modules/library/src/Install/Installer.php:95
+#: modules/library/src/Install/Installer.php:89
 msgid "My first article"
 msgstr ""
 
-#: modules/library/src/Install/Installer.php:96
+#: modules/library/src/Install/Installer.php:90
 msgid "An example of a user publication"
 msgstr ""
 
-#: modules/library/src/Install/Installer.php:97
+#: modules/library/src/Install/Installer.php:91
 msgid "<p>This is an example of an article added by a user. In this section anyone can publish their own material.</p>"
 msgstr ""
 
-#: modules/library/src/Install/Installer.php:122
+#: modules/library/src/Install/Installer.php:116
 msgid "<p>Great introduction, straight to the point!</p>"
 msgstr ""
 
-#: modules/library/src/Install/Installer.php:123
+#: modules/library/src/Install/Installer.php:117
 msgid "<p>Thanks, I bookmarked the article.</p>"
 msgstr ""
 
-#: modules/library/src/Install/Installer.php:124
+#: modules/library/src/Install/Installer.php:118
 msgid "<p>It is great that you can publish your own materials.</p>"
 msgstr ""
 

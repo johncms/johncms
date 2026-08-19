@@ -2247,3 +2247,16 @@ msgstr "ОШИБКА: Не удается записать файл `captcha.loc
 
 msgid "This provider is not configured yet. Until it is, the forms fall back to the picture with a code."
 msgstr "Этот провайдер еще не настроен. Пока это не сделано, формы показывают картинку с кодом."
+
+msgid "The database needs to be updated"
+msgstr "Требуется обновление базы данных"
+
+msgid "The files of the site expect one change the database has not been through yet."
+msgid_plural "The files of the site expect %d changes the database has not been through yet."
+msgstr[0] "Файлы сайта ожидают %d изменение, которого в базе данных ещё нет."
+msgstr[1] "Файлы сайта ожидают %d изменения, которых в базе данных ещё нет."
+msgstr[2] "Файлы сайта ожидают %d изменений, которых в базе данных ещё нет."
+msgstr[3] "Файлы сайта ожидают %d изменений, которых в базе данных ещё нет."
+
+msgid "Update the database"
+msgstr "Обновить базу данных"

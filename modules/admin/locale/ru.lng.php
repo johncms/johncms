@@ -505,6 +505,15 @@
       'Captcha' => 'Капча',
       'ERROR: Can not write file `captcha.local.php`' => 'ОШИБКА: Не удается записать файл `captcha.local.php`',
       'This provider is not configured yet. Until it is, the forms fall back to the picture with a code.' => 'Этот провайдер еще не настроен. Пока это не сделано, формы показывают картинку с кодом.',
+      'The database needs to be updated' => 'Требуется обновление базы данных',
+      'The files of the site expect one change the database has not been through yet.' => 
+      array (
+        0 => 'Файлы сайта ожидают %d изменение, которого в базе данных ещё нет.',
+        1 => 'Файлы сайта ожидают %d изменения, которых в базе данных ещё нет.',
+        2 => 'Файлы сайта ожидают %d изменений, которых в базе данных ещё нет.',
+        3 => 'Файлы сайта ожидают %d изменений, которых в базе данных ещё нет.',
+      ),
+      'Update the database' => 'Обновить базу данных',
     ),
   ),
 );

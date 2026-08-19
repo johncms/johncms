@@ -6,6 +6,7 @@ namespace Johncms\Console\Commands;
 
 use Johncms\Database\Migrations\ConsoleMigrationReporter;
 use Johncms\Database\Migrations\Migrator;
+use Johncms\Database\Migrations\PendingMigrations;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -24,8 +25,10 @@ use Throwable;
 )]
 final class MigrateRollbackCommand extends Command
 {
-    public function __construct(private readonly Migrator $migrator)
-    {
+    public function __construct(
+        private readonly Migrator $migrator,
+        private readonly PendingMigrations $pendingMigrations,
+    ) {
         parent::__construct();
     }
 
@@ -76,6 +79,8 @@ final class MigrateRollbackCommand extends Command
 
             return self::FAILURE;
         }
+
+        $this->pendingMigrations->forget();
 
         if ($rolledBack === []) {
             $io->success('There was nothing to roll back.');

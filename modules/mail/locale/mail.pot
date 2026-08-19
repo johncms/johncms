@@ -64,7 +64,7 @@ msgid "User has been added to your contact list"
 msgstr ""
 
 #: modules/mail/src/Application/Controllers/AddContactController.php:69
-#: modules/mail/src/Application/Services/MailMessagePreviewService.php:42
+#: modules/mail/src/Application/Services/MailMessagePreviewService.php:39
 msgid "Continue"
 msgstr ""
 

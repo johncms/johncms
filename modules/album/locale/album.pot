@@ -10,7 +10,7 @@ msgstr ""
 #: modules/album/src/Application/Controllers/DownloadPhotoController.php:48
 #: modules/album/src/Application/Controllers/EditAlbumController.php:163
 #: modules/album/src/Application/Controllers/EditAlbumController.php:195
-#: modules/album/src/Application/Controllers/EditPhotoController.php:63
+#: modules/album/src/Application/Controllers/EditPhotoController.php:65
 #: modules/album/src/Application/Controllers/MovePhotoController.php:61
 #: modules/album/src/Application/Controllers/PhotoCommentsController.php:46
 #: modules/album/src/Application/Controllers/ShowAlbumController.php:61
@@ -36,7 +36,7 @@ msgstr ""
 #: modules/album/src/Application/Controllers/DeleteAlbumController.php:39
 #: modules/album/src/Application/Controllers/DeletePhotoController.php:38
 #: modules/album/src/Application/Controllers/EditAlbumController.php:164
-#: modules/album/src/Application/Controllers/EditPhotoController.php:64
+#: modules/album/src/Application/Controllers/EditPhotoController.php:66
 #: modules/album/src/Application/Controllers/MovePhotoController.php:62
 #: modules/album/src/Application/Controllers/PhotoCommentsController.php:47
 #: modules/album/src/Application/Controllers/ShowAlbumController.php:63
@@ -50,7 +50,7 @@ msgstr ""
 #: modules/album/src/Application/Controllers/DeleteAlbumController.php:39
 #: modules/album/src/Application/Controllers/DeletePhotoController.php:38
 #: modules/album/src/Application/Controllers/EditAlbumController.php:164
-#: modules/album/src/Application/Controllers/EditPhotoController.php:64
+#: modules/album/src/Application/Controllers/EditPhotoController.php:66
 #: modules/album/src/Application/Controllers/MovePhotoController.php:62
 #: modules/album/src/Application/Controllers/PhotoCommentsController.php:47
 #: modules/album/src/Application/Controllers/ShowAlbumController.php:63
@@ -79,7 +79,7 @@ msgid "Delete image"
 msgstr ""
 
 #: modules/album/src/Application/Controllers/DeletePhotoController.php:41
-#: modules/album/src/Application/Controllers/EditPhotoController.php:67
+#: modules/album/src/Application/Controllers/EditPhotoController.php:69
 #: modules/album/src/Application/Controllers/MovePhotoController.php:65
 #: modules/album/src/Application/Controllers/PhotoCommentsController.php:50
 #: modules/album/templates/public/show-one.twig:24
@@ -130,17 +130,17 @@ msgstr ""
 msgid "Create Album"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/EditPhotoController.php:50
-#: modules/album/src/Application/Controllers/EditPhotoController.php:61
-#: modules/album/src/Application/Controllers/EditPhotoController.php:103
+#: modules/album/src/Application/Controllers/EditPhotoController.php:52
+#: modules/album/src/Application/Controllers/EditPhotoController.php:63
+#: modules/album/src/Application/Controllers/EditPhotoController.php:105
 msgid "Edit image"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/EditPhotoController.php:52
+#: modules/album/src/Application/Controllers/EditPhotoController.php:54
 msgid "Image successfully changed"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/EditPhotoController.php:54
+#: modules/album/src/Application/Controllers/EditPhotoController.php:56
 #: modules/album/src/Application/Controllers/MovePhotoController.php:47
 #: modules/album/src/Application/Controllers/MovePhotoController.php:102
 #: modules/album/src/Application/Controllers/UploadPhotoController.php:68
@@ -193,7 +193,6 @@ msgid "View photo"
 msgstr ""
 
 #: modules/album/src/Application/Controllers/UploadPhotoController.php:54
-#: modules/album/src/Application/UseCases/UploadPhotoUseCase.php:37
 msgid "An error occurred"
 msgstr ""
 
@@ -241,7 +240,7 @@ msgstr ""
 msgid "Read the comments of the photos while they are switched off"
 msgstr ""
 
-#: modules/album/src/Application/UseCases/GetPhotoViewUseCase.php:57
+#: modules/album/src/Application/UseCases/GetPhotoViewUseCase.php:61
 msgid "Photo added to the profile"
 msgstr ""
 
@@ -269,7 +268,7 @@ msgstr ""
 msgid "The album already exists"
 msgstr ""
 
-#: modules/album/src/Application/UseCases/UploadPhotoUseCase.php:32
+#: modules/album/src/Application/UseCases/UploadPhotoUseCase.php:35
 msgid "The weight of the file exceeds"
 msgstr ""
 
@@ -310,91 +309,91 @@ msgstr ""
 msgid "Unread Comments"
 msgstr ""
 
-#: modules/album/src/Install/Installer.php:65
+#: modules/album/src/Install/Installer.php:59
 msgid "Nature"
 msgstr ""
 
-#: modules/album/src/Install/Installer.php:66
+#: modules/album/src/Install/Installer.php:60
 msgid "Landscapes and nature views"
 msgstr ""
 
-#: modules/album/src/Install/Installer.php:70
+#: modules/album/src/Install/Installer.php:64
 msgid "A mountain lake surrounded by peaks"
 msgstr ""
 
-#: modules/album/src/Install/Installer.php:71
+#: modules/album/src/Install/Installer.php:65
 msgid "A tiny bird chick in the grass"
 msgstr ""
 
-#: modules/album/src/Install/Installer.php:77
+#: modules/album/src/Install/Installer.php:71
 msgid "Animals"
 msgstr ""
 
-#: modules/album/src/Install/Installer.php:78
+#: modules/album/src/Install/Installer.php:72
 msgid "Photos of animals and insects"
 msgstr ""
 
-#: modules/album/src/Install/Installer.php:82
+#: modules/album/src/Install/Installer.php:76
 msgid "A bright rooster in close-up"
 msgstr ""
 
-#: modules/album/src/Install/Installer.php:83
+#: modules/album/src/Install/Installer.php:77
 msgid "A red squirrel on a tree branch"
 msgstr ""
 
-#: modules/album/src/Install/Installer.php:89
+#: modules/album/src/Install/Installer.php:83
 msgid "My photos"
 msgstr ""
 
-#: modules/album/src/Install/Installer.php:90
+#: modules/album/src/Install/Installer.php:84
 msgid "A personal collection of favorite shots"
 msgstr ""
 
-#: modules/album/src/Install/Installer.php:94
+#: modules/album/src/Install/Installer.php:88
 msgid "A butterfly on a flower"
 msgstr ""
 
-#: modules/album/src/Install/Installer.php:95
+#: modules/album/src/Install/Installer.php:89
 msgid "A grasshopper on a plant"
 msgstr ""
 
-#: modules/album/src/Install/Installer.php:101
+#: modules/album/src/Install/Installer.php:95
 msgid "Private album"
 msgstr ""
 
-#: modules/album/src/Install/Installer.php:102
+#: modules/album/src/Install/Installer.php:96
 msgid "A private album visible to its owner only"
 msgstr ""
 
-#: modules/album/src/Install/Installer.php:106
+#: modules/album/src/Install/Installer.php:100
 msgid "A shot from a private album"
 msgstr ""
 
-#: modules/album/src/Install/Installer.php:112
+#: modules/album/src/Install/Installer.php:106
 msgid "Password-protected album"
 msgstr ""
 
-#: modules/album/src/Install/Installer.php:113
+#: modules/album/src/Install/Installer.php:107
 msgid "An album protected by a password (password: demo)"
 msgstr ""
 
-#: modules/album/src/Install/Installer.php:117
+#: modules/album/src/Install/Installer.php:111
 msgid "A password-protected photo"
 msgstr ""
 
-#: modules/album/src/Install/Installer.php:237
+#: modules/album/src/Install/Installer.php:221
 msgid "A beautiful lake, such an atmospheric shot!"
 msgstr ""
 
-#: modules/album/src/Install/Installer.php:238
+#: modules/album/src/Install/Installer.php:222
 msgid "I would love to visit this place."
 msgstr ""
 
-#: modules/album/src/Install/Installer.php:239
+#: modules/album/src/Install/Installer.php:223
 msgid "Great shot of the squirrel!"
 msgstr ""
 
-#: modules/album/src/Install/Installer.php:240
+#: modules/album/src/Install/Installer.php:224
 msgid "A lovely butterfly."
 msgstr ""
 

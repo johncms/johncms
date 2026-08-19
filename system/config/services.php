@@ -52,6 +52,7 @@ use Johncms\Database\Migrations\MigrationGenerator;
 use Johncms\Database\Migrations\MigrationLocator;
 use Johncms\Database\Migrations\MigrationRepositoryInterface;
 use Johncms\Database\Migrations\Migrator;
+use Johncms\Database\Migrations\PendingMigrations;
 use Johncms\Database\Migrations\ModuleMigrationSourceProvider;
 use Johncms\Database\Migrations\SystemMigrationSourceProvider;
 use Johncms\Database\PdoConnection;
@@ -354,6 +355,7 @@ return static function (ContainerConfigurator $container): void {
     $services->set(MigrationRepositoryInterface::class, DatabaseMigrationRepository::class);
     $services->set(Migrator::class);
     $services->set(MigrationGenerator::class);
+    $services->set(PendingMigrations::class);
     $services->set(\Johncms\Users\Repository\UserRepositoryInterface::class, \Johncms\Users\Repository\EloquentUserRepository::class);
 
     // The authenticators are asked in the order they are tagged, and the order is a decision:

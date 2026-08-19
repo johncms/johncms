@@ -67,6 +67,7 @@
                     </div>
                 </nav>
                 <div class="container-fluid flex-grow-1">
+                    {% include '@admin/components/pending-migrations.twig' only %}
                     {% if page_title|default('') %}
                         <h1 class="mb-0">{{ page_title }}</h1>
                     {% endif %}

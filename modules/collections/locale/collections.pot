@@ -227,39 +227,39 @@ msgstr ""
 msgid "Manage the collections"
 msgstr ""
 
-#: modules/collections/src/Install/Installer.php:40
+#: modules/collections/src/Install/Installer.php:34
 msgid "Blog"
 msgstr ""
 
-#: modules/collections/src/Install/Installer.php:41
+#: modules/collections/src/Install/Installer.php:35
 msgid "Demo blog collection."
 msgstr ""
 
-#: modules/collections/src/Install/Installer.php:53
+#: modules/collections/src/Install/Installer.php:47
 msgid "Author"
 msgstr ""
 
-#: modules/collections/src/Install/Installer.php:66
+#: modules/collections/src/Install/Installer.php:60
 msgid "Rating"
 msgstr ""
 
-#: modules/collections/src/Install/Installer.php:76
+#: modules/collections/src/Install/Installer.php:70
 msgid "Technology"
 msgstr ""
 
-#: modules/collections/src/Install/Installer.php:89
+#: modules/collections/src/Install/Installer.php:83
 msgid "Hello, world!"
 msgstr ""
 
-#: modules/collections/src/Install/Installer.php:99
+#: modules/collections/src/Install/Installer.php:93
 msgid "<p>The first item of the demo collection.</p>"
 msgstr ""
 
-#: modules/collections/src/Install/Installer.php:100
+#: modules/collections/src/Install/Installer.php:94
 msgid "<p>The first item of the demo collection. Edit it in the admin panel.</p>"
 msgstr ""
 
-#: modules/collections/src/Install/Installer.php:112
+#: modules/collections/src/Install/Installer.php:106
 msgid "John"
 msgstr ""
 

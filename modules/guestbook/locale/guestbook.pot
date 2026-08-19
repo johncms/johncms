@@ -102,14 +102,14 @@ msgstr ""
 msgid "Enter the admin club"
 msgstr ""
 
-#: modules/guestbook/src/Install/Installer.php:38
+#: modules/guestbook/src/Install/Installer.php:32
 msgid ""
 "Welcome to the Admin Club!\r\n"
 "Only Moderators and Administrators have access here.\r\n"
 "Regular users are not allowed in."
 msgstr ""
 
-#: modules/guestbook/src/Install/Installer.php:42
+#: modules/guestbook/src/Install/Installer.php:36
 msgid ""
 "The guestbook supports full text formatting in the visual editor:<br>\n"
 "<span style=\"font-weight: bold\">bold</span><br>\n"
@@ -121,11 +121,11 @@ msgid ""
 "Inserting links: <a href=\"https://johncms.com\">https://johncms.com</a>, images, tables, videos and much more"
 msgstr ""
 
-#: modules/guestbook/src/Install/Installer.php:69
+#: modules/guestbook/src/Install/Installer.php:63
 msgid "Welcome to the Guestbook!"
 msgstr ""
 
-#: modules/guestbook/src/Install/Installer.php:73
+#: modules/guestbook/src/Install/Installer.php:67
 msgid "A sample reply from the Administrator"
 msgstr ""
 

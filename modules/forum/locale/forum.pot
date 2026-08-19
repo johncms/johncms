@@ -34,7 +34,7 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/NewMessageController.php:92
 #: modules/forum/src/Application/Controllers/NewMessageController.php:115
 #: modules/forum/src/Application/Controllers/NewMessageController.php:129
-#: modules/forum/src/Application/Controllers/NewTopicController.php:86
+#: modules/forum/src/Application/Controllers/NewTopicController.php:83
 #: modules/forum/src/Application/Controllers/PinTopicController.php:33
 #: modules/forum/src/Application/Controllers/PollVotersController.php:47
 #: modules/forum/src/Application/Controllers/ReplyMessageController.php:57
@@ -68,10 +68,10 @@ msgstr ""
 #: modules/forum/src/Application/Controllers/AddFileController.php:89
 #: modules/forum/src/Application/Controllers/AddFileController.php:90
 #: modules/forum/src/Application/Controllers/UploadFileController.php:53
-#: modules/forum/src/Application/Controllers/UploadFileController.php:84
+#: modules/forum/src/Application/Controllers/UploadFileController.php:86
 #: modules/forum/src/Application/Exceptions/ForumErrorCode.php:55
-#: modules/forum/src/Application/UseCases/AttachFileToPostUseCase.php:46
-#: modules/forum/src/Application/UseCases/AttachFileToPostUseCase.php:72
+#: modules/forum/src/Application/UseCases/AttachFileToPostUseCase.php:49
+#: modules/forum/src/Application/UseCases/AttachFileToPostUseCase.php:75
 msgid "Error uploading file"
 msgstr ""
 
@@ -228,7 +228,7 @@ msgstr ""
 
 #: modules/forum/src/Application/Controllers/DeletePostController.php:43
 #: modules/forum/src/Application/Controllers/DeletePostFileController.php:43
-#: modules/forum/src/Application/Controllers/DownloadFileController.php:45
+#: modules/forum/src/Application/Controllers/DownloadFileController.php:46
 #: modules/forum/src/Application/Controllers/EditPostController.php:46
 #: modules/forum/src/Application/Controllers/FilterByAuthorController.php:54
 #: modules/forum/src/Application/Controllers/ForumFilesController.php:57
@@ -291,11 +291,11 @@ msgstr ""
 msgid "Poll deleted"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/DownloadFileController.php:41
+#: modules/forum/src/Application/Controllers/DownloadFileController.php:42
 msgid "Download file"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/DownloadFileController.php:43
+#: modules/forum/src/Application/Controllers/DownloadFileController.php:44
 msgid "File does not exist"
 msgstr ""
 
@@ -331,7 +331,7 @@ msgstr ""
 
 #: modules/forum/src/Application/Controllers/ForumFilesController.php:48
 #: modules/forum/src/Application/Controllers/ForumFilesController.php:49
-#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:126
+#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:124
 msgid "Forum Files"
 msgstr ""
 
@@ -405,7 +405,7 @@ msgid "You cannot write in a closed topic"
 msgstr ""
 
 #: modules/forum/src/Application/Controllers/NewMessageController.php:88
-#: modules/forum/src/Application/Controllers/NewTopicController.php:82
+#: modules/forum/src/Application/Controllers/NewTopicController.php:79
 #: modules/forum/src/Application/Controllers/ReplyMessageController.php:104
 #, php-format
 msgid "You cannot add the message so often<br>Please, wait %d sec."
@@ -421,14 +421,14 @@ msgstr ""
 msgid "Message already exists"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/NewTopicController.php:67
+#: modules/forum/src/Application/Controllers/NewTopicController.php:64
 msgid "Go to Section"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/NewTopicController.php:79
+#: modules/forum/src/Application/Controllers/NewTopicController.php:76
+#: modules/forum/src/Application/Controllers/NewTopicController.php:161
 #: modules/forum/src/Application/Controllers/NewTopicController.php:166
-#: modules/forum/src/Application/Controllers/NewTopicController.php:171
-#: modules/forum/src/Application/Controllers/NewTopicController.php:172
+#: modules/forum/src/Application/Controllers/NewTopicController.php:167
 #: modules/forum/templates/public/topics.twig:35
 msgid "New Topic"
 msgstr ""
@@ -484,7 +484,7 @@ msgstr ""
 msgid "Access denied"
 msgstr ""
 
-#: modules/forum/src/Application/Controllers/UploadFileController.php:58
+#: modules/forum/src/Application/Controllers/UploadFileController.php:60
 msgid "Only images are allowed"
 msgstr ""
 
@@ -601,11 +601,11 @@ msgstr ""
 msgid "Guest"
 msgstr ""
 
-#: modules/forum/src/Application/UseCases/AttachFileToPostUseCase.php:54
+#: modules/forum/src/Application/UseCases/AttachFileToPostUseCase.php:57
 msgid "File size exceed"
 msgstr ""
 
-#: modules/forum/src/Application/UseCases/AttachFileToPostUseCase.php:60
+#: modules/forum/src/Application/UseCases/AttachFileToPostUseCase.php:63
 msgid "The forbidden file format.<br>You can upload files of the following extension"
 msgstr ""
 
@@ -625,103 +625,103 @@ msgstr ""
 msgid "You cannot edit your posts after 5 minutes"
 msgstr ""
 
-#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:78
+#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:76
 #: modules/forum/templates/public/topics.twig:21
 msgid "Category Files"
 msgstr ""
 
-#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:96
+#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:94
 msgid "Section files"
 msgstr ""
 
-#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:114
+#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:112
 #: modules/forum/templates/public/topic.twig:62
 msgid "Topic Files"
 msgstr ""
 
-#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:157
+#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:155
 #: modules/forum/templates/public/files-list.twig:18
 #: modules/forum/templates/public/files-sections.twig:14
 msgid "New Files"
 msgstr ""
 
-#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:189
+#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:187
 msgid "List of sections"
 msgstr ""
 
-#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:308
+#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:305
 msgid "Windows applications"
 msgstr ""
 
-#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:309
+#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:306
 msgid "Java applications"
 msgstr ""
 
-#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:310
+#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:307
 msgid "SIS"
 msgstr ""
 
-#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:311
+#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:308
 msgid "txt"
 msgstr ""
 
-#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:312
+#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:309
 msgid "Pictures"
 msgstr ""
 
-#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:313
+#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:310
 msgid "Archive"
 msgstr ""
 
-#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:314
+#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:311
 msgid "Videos"
 msgstr ""
 
-#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:315
+#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:312
 msgid "MP3"
 msgstr ""
 
-#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:316
+#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:313
 msgid "Other"
 msgstr ""
 
-#: modules/forum/src/Install/Installer.php:43
+#: modules/forum/src/Install/Installer.php:37
 msgid "Communication"
 msgstr ""
 
-#: modules/forum/src/Install/Installer.php:43
+#: modules/forum/src/Install/Installer.php:37
 msgid "Free discussion on any topic"
 msgstr ""
 
-#: modules/forum/src/Install/Installer.php:44
+#: modules/forum/src/Install/Installer.php:38
 msgid "Off-topic"
 msgstr ""
 
-#: modules/forum/src/Install/Installer.php:45
+#: modules/forum/src/Install/Installer.php:39
 msgid "Dating"
 msgstr ""
 
-#: modules/forum/src/Install/Installer.php:46
+#: modules/forum/src/Install/Installer.php:40
 msgid "Site life"
 msgstr ""
 
-#: modules/forum/src/Install/Installer.php:47
+#: modules/forum/src/Install/Installer.php:41
 msgid "News"
 msgstr ""
 
-#: modules/forum/src/Install/Installer.php:48
+#: modules/forum/src/Install/Installer.php:42
 msgid "Suggestions and wishes"
 msgstr ""
 
-#: modules/forum/src/Install/Installer.php:49
+#: modules/forum/src/Install/Installer.php:43
 msgid "Miscellaneous"
 msgstr ""
 
-#: modules/forum/src/Install/Installer.php:70
+#: modules/forum/src/Install/Installer.php:64
 msgid "Hello everyone!"
 msgstr ""
 
-#: modules/forum/src/Install/Installer.php:106
+#: modules/forum/src/Install/Installer.php:100
 msgid "<p>We are glad to welcome you to our website :)</p><p>Let's get acquainted!</p>"
 msgstr ""
 

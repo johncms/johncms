@@ -1,0 +1,20 @@
+{#
+    Says that the code on disk expects a database it has not been given yet.
+
+    Shown only to whoever may open the maintenance page: to anyone else it would be a notice
+    about something they cannot act on.
+#}
+{% if can('admin.settings.manage') %}
+    {% set pending_migrations_count = pending_migrations() %}
+    {% if pending_migrations_count %}
+        <div class="alert alert-warning shadow border-0 d-flex flex-wrap align-items-center gap-3 mt-3">
+            <div class="me-auto">
+                <strong>{{ d__('admin', 'The database needs to be updated') }}</strong>
+                <div class="small">
+                    {{ dn__('admin', 'The files of the site expect one change the database has not been through yet.', 'The files of the site expect %d changes the database has not been through yet.', pending_migrations_count)|format(pending_migrations_count) }}
+                </div>
+            </div>
+            <a href="/admin/maintenance" class="btn btn-warning text-nowrap">{{ d__('admin', 'Update the database') }}</a>
+        </div>
+    {% endif %}
+{% endif %}

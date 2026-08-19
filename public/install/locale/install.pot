@@ -2,121 +2,121 @@ msgid ""
 msgstr ""
 "X-Domain: install\n"
 
-#: public/install/index.php:78
+#: public/install/index.php:84
 #: public/install/steps/step_1.php:21
 msgid "Preparing for installation"
 msgstr ""
 
-#: public/install/index.php:83
-#: public/install/steps/step_2.php:17
+#: public/install/index.php:89
+#: public/install/steps/step_2.php:18
 msgid "Checking parameters"
 msgstr ""
 
-#: public/install/index.php:88
-#: public/install/steps/step_3.php:25
+#: public/install/index.php:94
+#: public/install/steps/step_3.php:23
 msgid "Database"
 msgstr ""
 
-#: public/install/index.php:93
+#: public/install/index.php:99
 #: public/install/steps/step_4.php:35
 msgid "Setting"
 msgstr ""
 
-#: public/install/index.php:98
+#: public/install/index.php:104
 msgid "Completion"
 msgstr ""
 
-#: public/install/steps/step_2.php:21
+#: public/install/steps/step_2.php:22
 msgid "PHP version"
 msgstr ""
 
-#: public/install/steps/step_2.php:24
+#: public/install/steps/step_2.php:25
 #, php-format
 msgid "The PHP version must be at least %s"
 msgstr ""
 
-#: public/install/steps/step_2.php:28
-#: public/install/steps/step_2.php:34
-#: public/install/steps/step_2.php:40
-#: public/install/steps/step_2.php:46
-#: public/install/steps/step_2.php:52
+#: public/install/steps/step_2.php:29
+#: public/install/steps/step_2.php:35
+#: public/install/steps/step_2.php:41
+#: public/install/steps/step_2.php:47
+#: public/install/steps/step_2.php:53
 msgid "Yes"
 msgstr ""
 
-#: public/install/steps/step_2.php:28
-#: public/install/steps/step_2.php:34
-#: public/install/steps/step_2.php:40
-#: public/install/steps/step_2.php:46
-#: public/install/steps/step_2.php:52
+#: public/install/steps/step_2.php:29
+#: public/install/steps/step_2.php:35
+#: public/install/steps/step_2.php:41
+#: public/install/steps/step_2.php:47
+#: public/install/steps/step_2.php:53
 msgid "No"
 msgstr ""
 
-#: public/install/steps/step_2.php:30
+#: public/install/steps/step_2.php:31
 msgid "PHP extension PDO must be installed"
 msgstr ""
 
-#: public/install/steps/step_2.php:33
+#: public/install/steps/step_2.php:34
 msgid "Imagick or GD extension"
 msgstr ""
 
-#: public/install/steps/step_2.php:36
+#: public/install/steps/step_2.php:37
 msgid "You must install the php extension Imagick or GD"
 msgstr ""
 
-#: public/install/steps/step_2.php:39
+#: public/install/steps/step_2.php:40
 msgid "zlib extension"
 msgstr ""
 
-#: public/install/steps/step_2.php:42
+#: public/install/steps/step_2.php:43
 msgid "PHP extension zlib must be installed"
 msgstr ""
 
-#: public/install/steps/step_2.php:45
+#: public/install/steps/step_2.php:46
 msgid "mbstring extension"
 msgstr ""
 
-#: public/install/steps/step_2.php:48
+#: public/install/steps/step_2.php:49
 msgid "PHP extension mbstring must be installed"
 msgstr ""
 
-#: public/install/steps/step_2.php:51
+#: public/install/steps/step_2.php:52
 msgid "fileinfo extension"
 msgstr ""
 
-#: public/install/steps/step_2.php:54
+#: public/install/steps/step_2.php:55
 msgid "PHP extension fileinfo must be installed"
 msgstr ""
 
-#: public/install/steps/step_3.php:120
+#: public/install/steps/step_3.php:123
 msgid "Correct work of JohnCMS is not guaranteed on your version of mysql server.<br>You can ignore this warning at your own risk."
 msgstr ""
 
-#: public/install/steps/step_3.php:121
+#: public/install/steps/step_3.php:124
 #, php-format
 msgid "Server name: <b>%s</b>. <br>Your mysql server version is <b>%s</b>. But <b>%s</b> is required."
 msgstr ""
 
-#: public/install/steps/step_3.php:125
+#: public/install/steps/step_3.php:128
 msgid "The system requires a properly configured <a href='https://www.php.net/manual/en/intro.mysqlnd.php' target='_blank'>MySQL Native Driver (mysqlnd)</a>."
 msgstr ""
 
-#: public/install/steps/step_3.php:126
+#: public/install/steps/step_3.php:129
 msgid "Please contact your hosting provider's technical support to resolve this issue."
 msgstr ""
 
-#: public/install/steps/step_3.php:130
+#: public/install/steps/step_3.php:133
 msgid "ERROR: Can't write database.local.php"
 msgstr ""
 
-#: public/install/steps/step_3.php:136
+#: public/install/steps/step_3.php:139
 msgid "Invalid database host name"
 msgstr ""
 
-#: public/install/steps/step_3.php:138
+#: public/install/steps/step_3.php:141
 msgid "Invalid database user or password"
 msgstr ""
 
-#: public/install/steps/step_3.php:140
+#: public/install/steps/step_3.php:143
 msgid "Database does not exist"
 msgstr ""
 

@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Johncms\Console\Commands;
 
+use Johncms\AdminTasks\AsAdminTask;
 use Johncms\Database\Migrations\ConsoleMigrationReporter;
 use Johncms\Database\Migrations\Migrator;
+use Johncms\Database\Migrations\PendingMigrations;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -18,10 +20,19 @@ use Throwable;
     name: 'migrate',
     description: 'Apply the migrations the database has not been through yet',
 )]
+// Run in the background: on a large site the schema takes longer than a web server waits, and a
+// queued task cannot be started twice by a reloaded page.
+#[AsAdminTask(
+    title: 'Update the database',
+    description: 'Brings the database up to what the files of the site expect. Safe to run more than once: what has already been applied is skipped.',
+    background: true,
+)]
 final class MigrateCommand extends Command
 {
-    public function __construct(private readonly Migrator $migrator)
-    {
+    public function __construct(
+        private readonly Migrator $migrator,
+        private readonly PendingMigrations $pendingMigrations,
+    ) {
         parent::__construct();
     }
 
@@ -75,6 +86,8 @@ final class MigrateCommand extends Command
 
             return self::FAILURE;
         }
+
+        $this->pendingMigrations->forget();
 
         $io->success(sprintf('The database is up to date. Migrations applied: %d.', count($applied)));
 

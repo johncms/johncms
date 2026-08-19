@@ -19,8 +19,8 @@ msgstr ""
 #: modules/downloads/src/Application/Controllers/EditCategoryController.php:49
 #: modules/downloads/src/Application/Controllers/EditFileController.php:47
 #: modules/downloads/src/Application/Controllers/EditFileController.php:139
-#: modules/downloads/src/Application/Controllers/EditScreenController.php:55
-#: modules/downloads/src/Application/Controllers/EditScreenController.php:153
+#: modules/downloads/src/Application/Controllers/EditScreenController.php:58
+#: modules/downloads/src/Application/Controllers/EditScreenController.php:156
 #: modules/downloads/src/Application/Controllers/FavoritesController.php:35
 #: modules/downloads/src/Application/Controllers/FavoritesController.php:58
 #: modules/downloads/src/Application/Controllers/FavoritesController.php:60
@@ -32,8 +32,8 @@ msgstr ""
 #: modules/downloads/src/Application/Controllers/FileCommentsController.php:116
 #: modules/downloads/src/Application/Controllers/FilesModerationController.php:27
 #: modules/downloads/src/Application/Controllers/FilesModerationController.php:67
-#: modules/downloads/src/Application/Controllers/FilesUploadController.php:62
-#: modules/downloads/src/Application/Controllers/ImportFileController.php:46
+#: modules/downloads/src/Application/Controllers/FilesUploadController.php:65
+#: modules/downloads/src/Application/Controllers/ImportFileController.php:49
 #: modules/downloads/src/Application/Controllers/IndexController.php:44
 #: modules/downloads/src/Application/Controllers/IndexController.php:46
 #: modules/downloads/src/Application/Controllers/LoadFileController.php:74
@@ -59,8 +59,8 @@ msgstr ""
 #: modules/downloads/src/Application/Controllers/UserFilesController.php:79
 #: modules/downloads/src/Application/Controllers/ViewFileController.php:93
 #: modules/downloads/src/Application/Controllers/ViewFileController.php:129
-#: modules/downloads/src/Application/Controllers/ViewFileController.php:173
-#: modules/downloads/src/Application/Controllers/ViewFileController.php:209
+#: modules/downloads/src/Application/Controllers/ViewFileController.php:174
+#: modules/downloads/src/Application/Controllers/ViewFileController.php:210
 #: modules/downloads/src/Application/Exceptions/DownloadsErrorCode.php:19
 #: modules/downloads/src/Application/Middlewares/DownloadsAdminMiddleware.php:27
 #: modules/downloads/src/Application/Middlewares/DownloadsAdminMiddleware.php:31
@@ -100,16 +100,16 @@ msgstr ""
 
 #: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:181
 #: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:188
-#: modules/downloads/src/Application/Controllers/ImportFileController.php:76
-#: modules/downloads/src/Application/Controllers/ImportFileController.php:80
+#: modules/downloads/src/Application/Controllers/ImportFileController.php:79
+#: modules/downloads/src/Application/Controllers/ImportFileController.php:83
 msgid "Invalid Link"
 msgstr ""
 
 #: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:198
 #: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:266
-#: modules/downloads/src/Application/Controllers/FilesUploadController.php:83
-#: modules/downloads/src/Application/Controllers/FilesUploadController.php:143
-#: modules/downloads/src/Application/Controllers/ImportFileController.php:135
+#: modules/downloads/src/Application/Controllers/FilesUploadController.php:86
+#: modules/downloads/src/Application/Controllers/FilesUploadController.php:146
+#: modules/downloads/src/Application/Controllers/ImportFileController.php:138
 msgid "File not attached"
 msgstr ""
 
@@ -117,19 +117,19 @@ msgstr ""
 #: modules/downloads/src/Application/Controllers/CreateCategoryController.php:95
 #: modules/downloads/src/Application/Controllers/EditCategoryController.php:94
 #: modules/downloads/src/Application/Controllers/EditFileController.php:77
-#: modules/downloads/src/Application/Controllers/FilesUploadController.php:112
-#: modules/downloads/src/Application/Controllers/ImportFileController.php:105
+#: modules/downloads/src/Application/Controllers/FilesUploadController.php:115
+#: modules/downloads/src/Application/Controllers/ImportFileController.php:108
 msgid "The required fields are not filled"
 msgstr ""
 
 #: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:219
-#: modules/downloads/src/Application/Controllers/FilesUploadController.php:116
+#: modules/downloads/src/Application/Controllers/FilesUploadController.php:119
 msgid "The weight of the file exceeds"
 msgstr ""
 
 #: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:224
-#: modules/downloads/src/Application/Controllers/FilesUploadController.php:121
-#: modules/downloads/src/Application/Controllers/ImportFileController.php:110
+#: modules/downloads/src/Application/Controllers/FilesUploadController.php:124
+#: modules/downloads/src/Application/Controllers/ImportFileController.php:113
 msgid "Prohibited file type!<br>To upload allowed files that have the following extensions"
 msgstr ""
 
@@ -141,8 +141,8 @@ msgid "File attached"
 msgstr ""
 
 #: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:262
-#: modules/downloads/src/Application/Controllers/EditScreenController.php:142
-#: modules/downloads/src/Application/Controllers/FilesUploadController.php:239
+#: modules/downloads/src/Application/Controllers/EditScreenController.php:145
+#: modules/downloads/src/Application/Controllers/FilesUploadController.php:242
 #: modules/downloads/src/Application/Controllers/MoveFileController.php:103
 #: modules/downloads/src/Application/Controllers/ScanDirectoryController.php:109
 #: modules/downloads/templates/public/import-result.twig:25
@@ -151,7 +151,7 @@ msgid "Back"
 msgstr ""
 
 #: modules/downloads/src/Application/Controllers/AdditionalFilesController.php:271
-#: modules/downloads/src/Application/Controllers/ImportFileController.php:42
+#: modules/downloads/src/Application/Controllers/ImportFileController.php:45
 #: modules/downloads/src/Application/Controllers/ScanDirectoryController.php:133
 #: modules/downloads/src/Application/Controllers/SearchController.php:39
 msgid "Error"
@@ -162,13 +162,13 @@ msgstr ""
 #: modules/downloads/src/Application/Controllers/CreateCategoryController.php:133
 #: modules/downloads/src/Application/Controllers/EditCategoryController.php:117
 #: modules/downloads/src/Application/Controllers/EditFileController.php:79
-#: modules/downloads/src/Application/Controllers/EditScreenController.php:106
-#: modules/downloads/src/Application/Controllers/EditScreenController.php:133
-#: modules/downloads/src/Application/Controllers/FilesUploadController.php:83
-#: modules/downloads/src/Application/Controllers/FilesUploadController.php:132
-#: modules/downloads/src/Application/Controllers/FilesUploadController.php:143
-#: modules/downloads/src/Application/Controllers/ImportFileController.php:137
-#: modules/downloads/src/Application/Controllers/ImportFileController.php:217
+#: modules/downloads/src/Application/Controllers/EditScreenController.php:109
+#: modules/downloads/src/Application/Controllers/EditScreenController.php:136
+#: modules/downloads/src/Application/Controllers/FilesUploadController.php:86
+#: modules/downloads/src/Application/Controllers/FilesUploadController.php:135
+#: modules/downloads/src/Application/Controllers/FilesUploadController.php:146
+#: modules/downloads/src/Application/Controllers/ImportFileController.php:140
+#: modules/downloads/src/Application/Controllers/ImportFileController.php:220
 msgid "Repeat"
 msgstr ""
 
@@ -178,8 +178,8 @@ msgstr ""
 #: modules/downloads/src/Application/Controllers/DeleteFileController.php:97
 #: modules/downloads/src/Application/Controllers/EditFileController.php:135
 #: modules/downloads/src/Application/Controllers/EditFileController.php:137
-#: modules/downloads/src/Application/Controllers/EditScreenController.php:149
-#: modules/downloads/src/Application/Controllers/EditScreenController.php:151
+#: modules/downloads/src/Application/Controllers/EditScreenController.php:152
+#: modules/downloads/src/Application/Controllers/EditScreenController.php:154
 #: modules/downloads/src/Application/Controllers/FileCommentsController.php:64
 #: modules/downloads/src/Application/Controllers/FileCommentsController.php:66
 #: modules/downloads/src/Application/Controllers/FileCommentsController.php:80
@@ -188,8 +188,8 @@ msgstr ""
 #: modules/downloads/src/Application/Controllers/LoadFileController.php:72
 #: modules/downloads/src/Application/Controllers/MoveFileController.php:130
 #: modules/downloads/src/Application/Controllers/MoveFileController.php:132
-#: modules/downloads/src/Application/Controllers/ViewFileController.php:205
-#: modules/downloads/src/Application/Controllers/ViewFileController.php:207
+#: modules/downloads/src/Application/Controllers/ViewFileController.php:206
+#: modules/downloads/src/Application/Controllers/ViewFileController.php:208
 msgid "File not found"
 msgstr ""
 
@@ -218,8 +218,8 @@ msgstr ""
 #: modules/downloads/src/Application/Controllers/CreateCategoryController.php:48
 #: modules/downloads/src/Application/Controllers/DeleteCategoryController.php:47
 #: modules/downloads/src/Application/Controllers/EditCategoryController.php:43
-#: modules/downloads/src/Application/Controllers/FilesUploadController.php:48
-#: modules/downloads/src/Application/Controllers/ImportFileController.php:44
+#: modules/downloads/src/Application/Controllers/FilesUploadController.php:51
+#: modules/downloads/src/Application/Controllers/ImportFileController.php:47
 #: modules/downloads/src/Application/Controllers/NewFilesController.php:47
 #: modules/downloads/src/Application/Controllers/ScanDirectoryController.php:135
 msgid "The directory does not exist"
@@ -270,25 +270,25 @@ msgstr ""
 msgid "Edit Folder"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/EditScreenController.php:58
+#: modules/downloads/src/Application/Controllers/EditScreenController.php:61
 #: modules/downloads/templates/public/view.twig:131
 msgid "Managing Screenshots"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/EditScreenController.php:102
-#: modules/downloads/src/Application/Controllers/EditScreenController.php:129
-#: modules/downloads/src/Application/Controllers/EditScreenController.php:138
+#: modules/downloads/src/Application/Controllers/EditScreenController.php:105
+#: modules/downloads/src/Application/Controllers/EditScreenController.php:132
+#: modules/downloads/src/Application/Controllers/EditScreenController.php:141
 msgid "Upload screenshot"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/EditScreenController.php:104
-#: modules/downloads/src/Application/Controllers/EditScreenController.php:131
+#: modules/downloads/src/Application/Controllers/EditScreenController.php:107
+#: modules/downloads/src/Application/Controllers/EditScreenController.php:134
 #: modules/downloads/templates/public/import-result.twig:17
 #: modules/downloads/templates/public/upload-result.twig:18
 msgid "Screenshot not attached"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/EditScreenController.php:140
+#: modules/downloads/src/Application/Controllers/EditScreenController.php:143
 #: modules/downloads/templates/public/import-result.twig:15
 #: modules/downloads/templates/public/upload-result.twig:16
 msgid "Screenshot is attached"
@@ -337,38 +337,38 @@ msgstr ""
 msgid "All files accepted"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/FilesUploadController.php:55
+#: modules/downloads/src/Application/Controllers/FilesUploadController.php:58
 msgid "Access forbidden"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/FilesUploadController.php:69
-#: modules/downloads/src/Application/Controllers/FilesUploadController.php:70
-#: modules/downloads/src/Application/Controllers/FilesUploadController.php:204
-#: modules/downloads/src/Application/Controllers/FilesUploadController.php:205
+#: modules/downloads/src/Application/Controllers/FilesUploadController.php:72
+#: modules/downloads/src/Application/Controllers/FilesUploadController.php:73
+#: modules/downloads/src/Application/Controllers/FilesUploadController.php:207
+#: modules/downloads/src/Application/Controllers/FilesUploadController.php:208
 #: modules/downloads/templates/public/index.twig:117
 #: modules/downloads/templates/public/index.twig:139
 msgid "Upload File"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/FilesUploadController.php:128
-#: modules/downloads/src/Application/Controllers/FilesUploadController.php:235
+#: modules/downloads/src/Application/Controllers/FilesUploadController.php:131
+#: modules/downloads/src/Application/Controllers/FilesUploadController.php:238
 msgid "Upload file"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/ImportFileController.php:59
-#: modules/downloads/src/Application/Controllers/ImportFileController.php:60
-#: modules/downloads/src/Application/Controllers/ImportFileController.php:133
-#: modules/downloads/src/Application/Controllers/ImportFileController.php:180
-#: modules/downloads/src/Application/Controllers/ImportFileController.php:181
-#: modules/downloads/src/Application/Controllers/ImportFileController.php:213
+#: modules/downloads/src/Application/Controllers/ImportFileController.php:62
+#: modules/downloads/src/Application/Controllers/ImportFileController.php:63
+#: modules/downloads/src/Application/Controllers/ImportFileController.php:136
+#: modules/downloads/src/Application/Controllers/ImportFileController.php:183
+#: modules/downloads/src/Application/Controllers/ImportFileController.php:184
+#: modules/downloads/src/Application/Controllers/ImportFileController.php:216
 msgid "File import"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/ImportFileController.php:116
+#: modules/downloads/src/Application/Controllers/ImportFileController.php:119
 msgid "The file name length must not exceed 100 characters"
 msgstr ""
 
-#: modules/downloads/src/Application/Controllers/ImportFileController.php:120
+#: modules/downloads/src/Application/Controllers/ImportFileController.php:123
 msgid "The file name contains invalid characters"
 msgstr ""
 
@@ -557,135 +557,135 @@ msgstr ""
 msgid "Resolution"
 msgstr ""
 
-#: modules/downloads/src/Install/Installer.php:64
+#: modules/downloads/src/Install/Installer.php:58
 msgid "Music"
 msgstr ""
 
-#: modules/downloads/src/Install/Installer.php:65
+#: modules/downloads/src/Install/Installer.php:59
 msgid "Demo royalty-free audio tracks"
 msgstr ""
 
-#: modules/downloads/src/Install/Installer.php:71
+#: modules/downloads/src/Install/Installer.php:65
 msgid "Atmospheric instrumental track for videos and podcasts."
 msgstr ""
 
-#: modules/downloads/src/Install/Installer.php:79
+#: modules/downloads/src/Install/Installer.php:73
 msgid "Energetic chiptune track, a great fit for game projects."
 msgstr ""
 
-#: modules/downloads/src/Install/Installer.php:87
+#: modules/downloads/src/Install/Installer.php:81
 msgid "Calm background music for streams and videos."
 msgstr ""
 
-#: modules/downloads/src/Install/Installer.php:97
+#: modules/downloads/src/Install/Installer.php:91
 msgid "Video"
 msgstr ""
 
-#: modules/downloads/src/Install/Installer.php:98
+#: modules/downloads/src/Install/Installer.php:92
 msgid "Demo video clips"
 msgstr ""
 
-#: modules/downloads/src/Install/Installer.php:103
+#: modules/downloads/src/Install/Installer.php:97
 msgid "Hornbill in the jungle"
 msgstr ""
 
-#: modules/downloads/src/Install/Installer.php:104
+#: modules/downloads/src/Install/Installer.php:98
 msgid "A short clip of a great hornbill against a tropical forest."
 msgstr ""
 
-#: modules/downloads/src/Install/Installer.php:111
+#: modules/downloads/src/Install/Installer.php:105
 msgid "Mountain under storm clouds"
 msgstr ""
 
-#: modules/downloads/src/Install/Installer.php:112
+#: modules/downloads/src/Install/Installer.php:106
 msgid "A lone mountain on a green plain under heavy storm clouds."
 msgstr ""
 
-#: modules/downloads/src/Install/Installer.php:119
+#: modules/downloads/src/Install/Installer.php:113
 msgid "Snowstorm in the mountains"
 msgstr ""
 
-#: modules/downloads/src/Install/Installer.php:120
+#: modules/downloads/src/Install/Installer.php:114
 msgid "Snow-covered mountain slopes swept by a strong wind."
 msgstr ""
 
-#: modules/downloads/src/Install/Installer.php:130
+#: modules/downloads/src/Install/Installer.php:124
 msgid "Images"
 msgstr ""
 
-#: modules/downloads/src/Install/Installer.php:131
+#: modules/downloads/src/Install/Installer.php:125
 msgid "Demo photos"
 msgstr ""
 
-#: modules/downloads/src/Install/Installer.php:136
+#: modules/downloads/src/Install/Installer.php:130
 msgid "Mountain lake"
 msgstr ""
 
-#: modules/downloads/src/Install/Installer.php:137
+#: modules/downloads/src/Install/Installer.php:131
 msgid "A calm lake surrounded by mountains."
 msgstr ""
 
-#: modules/downloads/src/Install/Installer.php:144
+#: modules/downloads/src/Install/Installer.php:138
 msgid "Grasshopper"
 msgstr ""
 
-#: modules/downloads/src/Install/Installer.php:145
+#: modules/downloads/src/Install/Installer.php:139
 msgid "A macro photo of a grasshopper on a plant."
 msgstr ""
 
-#: modules/downloads/src/Install/Installer.php:152
+#: modules/downloads/src/Install/Installer.php:146
 msgid "Rooster"
 msgstr ""
 
-#: modules/downloads/src/Install/Installer.php:153
+#: modules/downloads/src/Install/Installer.php:147
 msgid "A bright rooster in close-up."
 msgstr ""
 
-#: modules/downloads/src/Install/Installer.php:160
+#: modules/downloads/src/Install/Installer.php:154
 msgid "Green-veined white butterfly"
 msgstr ""
 
-#: modules/downloads/src/Install/Installer.php:161
+#: modules/downloads/src/Install/Installer.php:155
 msgid "A green-veined white butterfly on a flower."
 msgstr ""
 
-#: modules/downloads/src/Install/Installer.php:168
+#: modules/downloads/src/Install/Installer.php:162
 msgid "Bird chick"
 msgstr ""
 
-#: modules/downloads/src/Install/Installer.php:169
+#: modules/downloads/src/Install/Installer.php:163
 msgid "A tiny bird chick in the grass."
 msgstr ""
 
-#: modules/downloads/src/Install/Installer.php:176
+#: modules/downloads/src/Install/Installer.php:170
 msgid "Squirrel"
 msgstr ""
 
-#: modules/downloads/src/Install/Installer.php:177
+#: modules/downloads/src/Install/Installer.php:171
 msgid "A red squirrel on a tree branch."
 msgstr ""
 
-#: modules/downloads/src/Install/Installer.php:187
+#: modules/downloads/src/Install/Installer.php:181
 msgid "Documents"
 msgstr ""
 
-#: modules/downloads/src/Install/Installer.php:188
+#: modules/downloads/src/Install/Installer.php:182
 msgid "Demo documents and archives"
 msgstr ""
 
-#: modules/downloads/src/Install/Installer.php:193
+#: modules/downloads/src/Install/Installer.php:187
 msgid "Text document"
 msgstr ""
 
-#: modules/downloads/src/Install/Installer.php:194
+#: modules/downloads/src/Install/Installer.php:188
 msgid "An example of a plain text file."
 msgstr ""
 
-#: modules/downloads/src/Install/Installer.php:201
+#: modules/downloads/src/Install/Installer.php:195
 msgid "File archive"
 msgstr ""
 
-#: modules/downloads/src/Install/Installer.php:202
+#: modules/downloads/src/Install/Installer.php:196
 msgid "An example ZIP archive with nested files."
 msgstr ""
 
