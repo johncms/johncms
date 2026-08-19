@@ -11,18 +11,17 @@ use Illuminate\Support\Arr;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\Authorization\StaffTitles;
 use Johncms\Auth\CurrentUser;
+use Johncms\Content\ContentContext;
+use Johncms\Content\ContentRendererInterface;
 use Johncms\FileInfo;
 use Johncms\Files\FileStore;
 use Johncms\Http\Environment;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Request;
 use Johncms\Http\UploadedFileMapper;
-use Johncms\Media\MediaEmbed;
 use Johncms\Modules\News\Application\Services\NewsPermissions;
 use Johncms\Modules\News\Domain\Models\NewsArticle;
 use Johncms\Modules\News\Domain\Models\NewsComments;
-use Johncms\Security\HtmlSanitizerInterface;
-use Johncms\Smilies\SmiliesRendererInterface;
 use Johncms\Users\User;
 use Johncms\View\Twig\Runtime\AssetRuntime;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -43,9 +42,8 @@ final readonly class CommentsController
      *
      * @param int $article_id
      * @param AssetRuntime $assets
-     * @param SmiliesRendererInterface $smiliesRenderer
      */
-    public function index(int $article_id, AssetRuntime $assets, SmiliesRendererInterface $smiliesRenderer, CurrentUser $current_user): Response
+    public function index(int $article_id, AssetRuntime $assets, CurrentUser $current_user): Response
     {
         if ($article_id === 0) {
             return new JsonResponse(['error' => __('Bad Request')], Response::HTTP_BAD_REQUEST);
@@ -62,8 +60,7 @@ final readonly class CommentsController
             ->limit($pagination->getPerPage())
             ->get();
 
-        $sanitizer = di(HtmlSanitizerInterface::class);
-        $embed = di(MediaEmbed::class);
+        $content = di(ContentRendererInterface::class);
 
         $total = $pagination->getTotal();
         $currentPage = $pagination->getCurrentPage();
@@ -75,7 +72,7 @@ final readonly class CommentsController
         $array = [
             'current_page'   => $currentPage,
             'data'           => $comments->map(
-                static function (NewsComments $comment) use ($assets, $smiliesRenderer, $current_user, $sanitizer, $embed, $canModerate, $staffTitles) {
+                static function (NewsComments $comment) use ($assets, $current_user, $content, $canModerate, $staffTitles) {
                     $user = $comment->user;
                     $user_data = [];
                     if ($user) {
@@ -90,9 +87,14 @@ final readonly class CommentsController
                         ];
                     }
 
-                    $text = $sanitizer->sanitize($comment->text);
-                    $text = $embed->embedMedia($text);
-                    $text = $smiliesRenderer->render($text, $staffTitles->isStaff((int) $comment->getAttribute('user_id')));
+                    // A JSON payload, so the markup is handed over as a string: Markup is an
+                    // object and json_encode() would write it out as an empty one.
+                    $text = (string) $content->render(
+                        (string) $comment->text,
+                        new ContentContext(
+                            adminSmilies: $staffTitles->isStaff((int) $comment->getAttribute('user_id'))
+                        )
+                    );
 
                     $message = [
                         'id'         => $comment->id,

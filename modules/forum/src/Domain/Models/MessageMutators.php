@@ -14,8 +14,9 @@ namespace Johncms\Modules\Forum\Domain\Models;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\Authorization\StaffTitles;
+use Johncms\Content\ContentContext;
+use Johncms\Content\ContentRendererInterface;
 use Johncms\Modules\Forum\Application\Services\ForumPermissions;
-use Johncms\Smilies\SmiliesRendererInterface;
 use Johncms\Users\User;
 use Johncms\Utils\DateFormatterInterface;
 use Twig\Markup;
@@ -138,12 +139,12 @@ trait MessageMutators
      */
     public function getPostTextAttribute(): Markup
     {
-        $text = $this->sanitizer->sanitize($this->text);
-        $text = $this->media->embedMedia($text);
-
         $authorIsStaff = di(StaffTitles::class)->isStaff((int) $this->user_id);
 
-        return new Markup(di(SmiliesRendererInterface::class)->render($text, $authorIsStaff), 'UTF-8');
+        return di(ContentRendererInterface::class)->render(
+            (string) $this->text,
+            new ContentContext(adminSmilies: $authorIsStaff)
+        );
     }
 
     /**

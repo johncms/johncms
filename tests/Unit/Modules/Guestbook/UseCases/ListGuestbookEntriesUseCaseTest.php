@@ -14,6 +14,7 @@ use Johncms\Auth\Authorization\RoleLevels;
 use Johncms\Auth\Authorization\StaffTitles;
 use Johncms\Auth\CurrentUser;
 use Johncms\Config\ConfigRepository;
+use Johncms\Content\ContentRendererInterface;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
 use Johncms\Modules\Guestbook\Application\Access\GuestbookMode;
@@ -22,12 +23,9 @@ use Johncms\Modules\Guestbook\Application\Services\GuestbookPermissions;
 use Johncms\Modules\Guestbook\Application\UseCases\ListGuestbookEntriesUseCase;
 use Johncms\Modules\Guestbook\Domain\Models\GuestbookEntry;
 use Johncms\Modules\Guestbook\Domain\Repository\GuestbookEntryRepositoryInterface;
-use Johncms\Security\HtmlSanitizerInterface;
-use Johncms\Smilies\SmiliesRendererInterface;
 use Johncms\Users\User;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Simba77\EmbedMedia\Embed;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 use Tests\Support\FakeAccessChecker;
@@ -37,6 +35,7 @@ use Tests\Support\FakeUserRepository;
 use Tests\Support\IdentityFactory;
 use Tests\Support\CurrentUserFactory;
 use Tests\Support\UserFactory;
+use Twig\Markup;
 
 final class ListGuestbookEntriesUseCaseTest extends TestCase
 {
@@ -186,22 +185,17 @@ final class ListGuestbookEntriesUseCaseTest extends TestCase
 
     private function makeTextFormatter(): GuestbookEntryTextFormatter
     {
-        // GuestbookEntryTextFormatter is final, so the real one is built with passthrough mocks.
-        $sanitizer = $this->createMock(HtmlSanitizerInterface::class);
-        $sanitizer->method('sanitize')->willReturnArgument(0);
-
-        $media = $this->createMock(Embed::class);
-        $media->method('embedMedia')->willReturnArgument(0);
-
-        $smiliesRenderer = $this->createMock(SmiliesRendererInterface::class);
-        $smiliesRenderer->method('render')->willReturnArgument(0);
-
-        return new GuestbookEntryTextFormatter(
-            new StaffTitles($this->roles),
-            $sanitizer,
-            $media,
-            $smiliesRenderer
+        // GuestbookEntryTextFormatter is final, so the real one is built over a pipeline that
+        // does nothing but hand the text back: this test is about the listing, not the markup.
+        $content = $this->createMock(ContentRendererInterface::class);
+        $content->method('render')->willReturnCallback(
+            static fn (string $html): Markup => new Markup($html, 'UTF-8')
         );
+        $content->method('renderOrNull')->willReturnCallback(
+            static fn (string $html): ?Markup => $html === '' ? null : new Markup($html, 'UTF-8')
+        );
+
+        return new GuestbookEntryTextFormatter(new StaffTitles($this->roles), $content);
     }
 
     /**

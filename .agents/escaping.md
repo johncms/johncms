@@ -37,6 +37,13 @@ second time on output and arrives broken; build it with `&` and let the template
 
 ## Sanitizing rich content
 
+A text that goes onto a page as content — a post, a comment, an article — is not sanitized here
+by hand: it goes through `Johncms\Content\ContentRendererInterface`, which cleans it and then
+embeds the media and renders the smilies. See `content-pipeline.md`.
+
+What follows is for the rest — a value that is cleaned but not rendered as content: a title, a
+signature, the text behind a `<title>` tag.
+
 HTML that came from a user — an editor, a post, a title an administrator typed — is stored raw
 and cleaned on output. Take `Johncms\Security\HtmlSanitizerInterface` and return the result as
 `Markup`:

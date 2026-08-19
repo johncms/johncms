@@ -4,27 +4,19 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Library\Application\Services;
 
-use DOMDocument;
-use DOMElement;
-use Johncms\Media\MediaEmbed;
-use Johncms\Security\HtmlSanitizerInterface;
-use Johncms\Smilies\SmiliesRendererInterface;
-use Simba77\EmbedMedia\Embed;
+use Johncms\Content\ContentContext;
+use Johncms\Content\ContentRendererInterface;
+use Johncms\Content\Html\HtmlFragment;
 use Twig\Markup;
 
-final class ArticleTextRenderer
+final readonly class ArticleTextRenderer
 {
     private const PAGE_SIZE = 7000;
 
-    private HtmlSanitizerInterface $sanitizer;
-    private Embed $media;
-    private SmiliesRendererInterface $smiliesRenderer;
-
-    public function __construct()
-    {
-        $this->sanitizer = di(HtmlSanitizerInterface::class);
-        $this->media = di(MediaEmbed::class);
-        $this->smiliesRenderer = di(SmiliesRendererInterface::class);
+    public function __construct(
+        private ContentRendererInterface $content,
+        private HtmlFragment $fragment,
+    ) {
     }
 
     /**
@@ -39,33 +31,15 @@ final class ArticleTextRenderer
             return [''];
         }
 
-        $dom = new DOMDocument();
-        libxml_use_internal_errors(true);
-        $dom->loadHTML(
-            '<meta http-equiv="Content-Type" content="text/html; charset=utf-8"><div id="lib-root">' . $html . '</div>',
-            LIBXML_NOERROR | LIBXML_NOWARNING
-        );
-        libxml_clear_errors();
-
-        $root = null;
-        foreach ($dom->getElementsByTagName('div') as $div) {
-            if ($div instanceof DOMElement && $div->getAttribute('id') === 'lib-root') {
-                $root = $div;
-                break;
-            }
-        }
-
-        if ($root === null) {
-            return [$html];
-        }
+        $document = $this->fragment->parse($html);
 
         $pages = [];
         $current = '';
         $currentLength = 0;
 
-        foreach (iterator_to_array($root->childNodes) as $node) {
-            $chunk = $dom->saveHTML($node);
-            if ($chunk === false || trim($chunk) === '') {
+        foreach ($this->fragment->topLevelNodes($document) as $node) {
+            $chunk = $document->saveHtml($node);
+            if (trim($chunk) === '') {
                 continue;
             }
 
@@ -93,9 +67,6 @@ final class ArticleTextRenderer
      */
     public function renderPage(string $pageHtml, bool $isAdmin): Markup
     {
-        $text = $this->sanitizer->sanitize($pageHtml);
-        $text = $this->media->embedMedia($text);
-
-        return new Markup($this->smiliesRenderer->render($text, $isAdmin), 'UTF-8');
+        return $this->content->render($pageHtml, new ContentContext(adminSmilies: $isAdmin));
     }
 }

@@ -5,19 +5,16 @@ declare(strict_types=1);
 namespace Johncms\Modules\Guestbook\Application\Services;
 
 use Johncms\Auth\Authorization\StaffTitles;
+use Johncms\Content\ContentContext;
+use Johncms\Content\ContentRendererInterface;
 use Johncms\Modules\Guestbook\Domain\Models\GuestbookEntry;
-use Johncms\Security\HtmlSanitizerInterface;
-use Johncms\Smilies\SmiliesRendererInterface;
-use Simba77\EmbedMedia\Embed;
 use Twig\Markup;
 
 final readonly class GuestbookEntryTextFormatter
 {
     public function __construct(
         private StaffTitles $staffTitles,
-        private HtmlSanitizerInterface $sanitizer,
-        private Embed $media,
-        private SmiliesRendererInterface $smiliesRenderer,
+        private ContentRendererInterface $content,
     ) {
     }
 
@@ -27,11 +24,9 @@ final readonly class GuestbookEntryTextFormatter
      */
     public function formatPost(GuestbookEntry $entry): Markup
     {
-        $text = $this->media->embedMedia($this->sanitizer->sanitize($entry->text));
-
-        return new Markup(
-            $this->smiliesRenderer->render($text, $this->staffTitles->isStaff((int) $entry->user_id)),
-            'UTF-8'
+        return $this->content->render(
+            $entry->text,
+            new ContentContext(adminSmilies: $this->staffTitles->isStaff((int) $entry->user_id))
         );
     }
 
@@ -41,12 +36,6 @@ final readonly class GuestbookEntryTextFormatter
      */
     public function formatReply(GuestbookEntry $entry): ?Markup
     {
-        if ((string) $entry->otvet === '') {
-            return null;
-        }
-
-        $text = $this->media->embedMedia($this->sanitizer->sanitize($entry->otvet));
-
-        return new Markup($this->smiliesRenderer->render($text, true), 'UTF-8');
+        return $this->content->renderOrNull((string) $entry->otvet, new ContentContext(adminSmilies: true));
     }
 }

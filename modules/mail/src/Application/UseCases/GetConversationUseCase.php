@@ -6,6 +6,8 @@ namespace Johncms\Modules\Mail\Application\UseCases;
 
 use Johncms\Auth\Authorization\StaffTitles;
 use Johncms\Auth\CurrentUser;
+use Johncms\Content\ContentContext;
+use Johncms\Content\ContentRendererInterface;
 use Johncms\Modules\Mail\Application\DTO\ConversationResultDTO;
 use Johncms\Modules\Mail\Application\DTO\MessageItemDTO;
 use Johncms\Modules\Mail\Application\Exceptions\UserNotFoundException;
@@ -13,13 +15,9 @@ use Johncms\Modules\Mail\Application\Services\MailFileService;
 use Johncms\Modules\Mail\Domain\Models\MailMessage;
 use Johncms\Modules\Mail\Domain\Repository\ContactRepositoryInterface;
 use Johncms\Modules\Mail\Domain\Repository\MailMessageRepositoryInterface;
-use Johncms\Security\HtmlSanitizerInterface;
-use Johncms\Smilies\SmiliesRendererInterface;
 use Johncms\UserProperties;
 use Johncms\Users\User;
 use Johncms\Utils\DateFormatterInterface;
-use Simba77\EmbedMedia\Embed;
-use Twig\Markup;
 
 final readonly class GetConversationUseCase
 {
@@ -30,9 +28,7 @@ final readonly class GetConversationUseCase
         private MailFileService $mailFileService,
         private UserProperties $userProperties,
         private DateFormatterInterface $dateFormatter,
-        private SmiliesRendererInterface $smiliesRenderer,
-        private HtmlSanitizerInterface $sanitizer,
-        private Embed $media,
+        private ContentRendererInterface $content,
         private CurrentUser $currentUser,
     ) {
     }
@@ -95,9 +91,7 @@ final readonly class GetConversationUseCase
                 ? $this->userProperties->getFromArray(array_merge($author->getRawOriginal(), ['user_id' => $message->user_id]))
                 : [];
 
-            $text = $this->sanitizer->sanitize($message->text);
-            $text = $this->media->embedMedia($text);
-            $text = $this->smiliesRenderer->render($text, $authorIsStaff);
+            $text = $this->content->render($message->text, new ContentContext(adminSmilies: $authorIsStaff));
 
             $files = [];
             if ($message->file_name) {
@@ -114,7 +108,7 @@ final readonly class GetConversationUseCase
                 userId: $message->user_id,
                 name: $author->name ?? '',
                 read: $message->read,
-                text: new Markup($text, 'UTF-8'),
+                text: $text,
                 displayDate: $this->dateFormatter->format($message->time),
                 userIsOnline: $userData['user_is_online'] ?? false,
                 userProfileLink: $userData['user_profile_link'] ?? '',

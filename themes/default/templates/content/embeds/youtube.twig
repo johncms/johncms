@@ -1,0 +1,11 @@
+{#
+    A YouTube player embedded in a text.
+
+    The ratio classes come from Bootstrap and keep the frame at 16:9 whatever the width of the
+    column is; an iframe of its own has a fixed size of 300x150.
+
+    @var src string The address of the player, built by YoutubeEmbedProvider.
+#}
+<div class="ratio ratio-16x9 my-2">
+    <iframe src="{{ src }}" allowfullscreen="allowfullscreen" loading="lazy"></iframe>
+</div>

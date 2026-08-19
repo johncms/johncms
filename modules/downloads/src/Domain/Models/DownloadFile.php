@@ -6,10 +6,7 @@ namespace Johncms\Modules\Downloads\Domain\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Johncms\Media\MediaEmbed;
-use Johncms\Security\HtmlSanitizerInterface;
-use Johncms\Smilies\SmiliesRendererInterface;
-use Simba77\EmbedMedia\Embed;
+use Johncms\Content\ContentRendererInterface;
 use Twig\Markup;
 
 final class DownloadFile extends Model
@@ -31,18 +28,6 @@ final class DownloadFile extends Model
         'desc',
     ];
 
-    protected HtmlSanitizerInterface $sanitizer;
-    protected Embed $media;
-    protected SmiliesRendererInterface $smiliesRenderer;
-
-    public function __construct(array $attributes = [])
-    {
-        parent::__construct($attributes);
-        $this->sanitizer = di(HtmlSanitizerInterface::class);
-        $this->media = di(MediaEmbed::class);
-        $this->smiliesRenderer = di(SmiliesRendererInterface::class);
-    }
-
     public function category(): BelongsTo
     {
         return $this->belongsTo(DownloadCategory::class, 'refid');
@@ -54,9 +39,8 @@ final class DownloadFile extends Model
      */
     public function getAboutHtmlAttribute(): ?Markup
     {
-        $text = $this->sanitizer->sanitize((string) $this->about);
-        $text = $this->smiliesRenderer->render($this->media->embedMedia($text));
-
-        return $text === '' ? null : new Markup($text, 'UTF-8');
+        // Resolved here rather than in the constructor: a listing hydrates a hundred rows and
+        // only the ones actually shown ask for their description.
+        return di(ContentRendererInterface::class)->renderOrNull((string) $this->about);
     }
 }

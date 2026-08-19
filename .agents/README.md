@@ -18,6 +18,7 @@ automatically; `CLAUDE.md` is a symlink to it for Claude Code.
 | `localization.md` | translations, `.po`/`.pot`/`.lng.php`, `__()` strings |
 | `pagination.md` | paginated lists, page titles / meta description |
 | `caching.md` | caching values, cache tags and invalidation |
+| `content-pipeline.md` | rendering a user's text: media embeds, smilies, adding a step |
 | `images.md` | processing pictures: resizing, thumbnails, cached previews |
 | `storage.md` | storing files: disks, the file registry, public and private disks |
 | `new-module.md` | creating a new module |

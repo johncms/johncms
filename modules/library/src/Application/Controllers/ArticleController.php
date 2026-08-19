@@ -37,6 +37,7 @@ final readonly class ArticleController
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
         private LibraryCoverStorage $covers,
+        private ArticleTextRenderer $textRenderer,
     ) {
     }
 
@@ -67,9 +68,8 @@ final readonly class ArticleController
             $article->increment('count_views');
         }
 
-        $textRenderer = new ArticleTextRenderer();
-        $pages        = $textRenderer->splitIntoPages((string) $article->text);
-        $countPages   = count($pages);
+        $pages      = $this->textRenderer->splitIntoPages((string) $article->text);
+        $countPages = count($pages);
 
         // One text page per pagination page. Canonicalize the ?page parameter
         // (strip page=1/junk, redirect out-of-range to the last page).
@@ -80,7 +80,7 @@ final readonly class ArticleController
         }
         $page = $pagination->getCurrentPage();
 
-        $text = $textRenderer->renderPage($pages[$page - 1], $this->accessChecker->allows(CorePermissions::SMILIES_ADMIN_USE));
+        $text = $this->textRenderer->renderPage($pages[$page - 1], $this->accessChecker->allows(CorePermissions::SMILIES_ADMIN_USE));
 
         $isAdmin   = $this->accessChecker->allows(LibraryPermissions::MODERATE);
         $moderMenu = $isAdmin || ($this->currentUser->isValid() && (int) $article->uploader_id === $this->currentUser->id());

@@ -19,10 +19,10 @@ use Johncms\Auth\Authorization\StaffTitles;
 use Johncms\Auth\Authorization\SystemRole;
 use Johncms\Auth\CurrentUser;
 use Johncms\Container\PSRContainerFactory;
-use Johncms\Media\MediaEmbed;
+use Johncms\Content\ContentContext;
+use Johncms\Content\ContentRendererInterface;
 use Johncms\Security\AntifloodCheckerInterface;
 use Johncms\Security\HtmlSanitizerInterface;
-use Johncms\Smilies\SmiliesRendererInterface;
 use Johncms\Http\Session;
 use Johncms\Http\Environment;
 use Johncms\Users\User;
@@ -62,16 +62,13 @@ class Comments
     /** @var PDO */
     private $db;
 
-    private SmiliesRendererInterface $smiliesRenderer;
-
     private DateFormatterInterface $dateFormatter;
 
     private IgnoreListCheckerInterface $ignoreListChecker;
 
     private HtmlSanitizerInterface $sanitizer;
 
-    /** @var MediaEmbed */
-    private $embed;
+    private ContentRendererInterface $content;
 
     private Session $session;
 
@@ -137,7 +134,6 @@ class Comments
         $start = max(0, (int) ($arg['start'] ?? 0));
 
         $container = PSRContainerFactory::getContainer();
-        $this->smiliesRenderer = $container->get(SmiliesRendererInterface::class);
         $this->dateFormatter = $container->get(DateFormatterInterface::class);
         $this->ignoreListChecker = $container->get(IgnoreListCheckerInterface::class);
         $this->db = $container->get(PDO::class);
@@ -149,7 +145,7 @@ class Comments
         $this->view = di(RendererInterface::class);
         $this->nav_chain = di(NavChain::class);
         $this->sanitizer = di(HtmlSanitizerInterface::class);
-        $this->embed = di(MediaEmbed::class);
+        $this->content = di(ContentRendererInterface::class);
         $this->session = $container->get(Session::class);
 
         $kmess = $this->systemUser->config->kmess;
@@ -479,11 +475,10 @@ class Comments
 
                         $res['has_edit'] = ($this->access_edit || $this->access_delete);
 
-                        $text = $this->sanitizer->sanitize($res['text']);
-                        $text = $this->embed->embedMedia($text);
-                        $text = $this->smiliesRenderer->render($text, $this->staffTitles->isStaff((int) $res['user_id']));
-
-                        $res['post_text'] = new Markup($text, 'UTF-8');
+                        $res['post_text'] = $this->content->render(
+                            (string) $res['text'],
+                            new ContentContext(adminSmilies: $this->staffTitles->isStaff((int) $res['user_id']))
+                        );
                         $res['edit_count'] = $attributes['edit_count'] ?? 0;
                         $res['editor_name'] = $attributes['edit_name'] ?? '';
                         $res['edit_time'] = ! empty($attributes['edit_time']) ? $this->dateFormatter->format($attributes['edit_time']) : '';
@@ -494,10 +489,10 @@ class Comments
 
                         $res['reply_text'] = '';
                         if (! empty($res['reply'])) {
-                            $reply = $this->sanitizer->sanitize($res['reply']);
-                            $reply = $this->embed->embedMedia($reply);
-                            $reply = $this->smiliesRenderer->render($reply, $this->replyIsOfStaff($attributes));
-                            $res['reply_text'] = new Markup($reply, 'UTF-8');
+                            $res['reply_text'] = $this->content->render(
+                                (string) $res['reply'],
+                                new ContentContext(adminSmilies: $this->replyIsOfStaff($attributes))
+                            );
                             $res['reply_time'] = $this->dateFormatter->format($attributes['reply_time']);
                             $res['reply_author_url'] = '/profile/' . $attributes['reply_id'];
                             $res['reply_author_name'] = $attributes['reply_name'];

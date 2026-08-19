@@ -5,6 +5,10 @@ declare(strict_types=1);
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
 use Johncms\Ads;
+use Johncms\Content\ContentRenderer;
+use Johncms\Content\ContentRendererInterface;
+use Johncms\Content\Embed\EmbedProviderRegistry;
+use Johncms\Content\Transformer\ContentTransformerRegistry;
 use Johncms\AdsFactory;
 use Johncms\Auth\Authentication\AuthenticatorChain;
 use Johncms\Auth\Authentication\AuthenticatorInterface;
@@ -57,7 +61,6 @@ use Johncms\Mail\Queue\MailQueueInterface;
 use Johncms\Mail\Queue\MailQueueSettings;
 use Symfony\Component\Mime\HtmlToTextConverter\DefaultHtmlToTextConverter;
 use Symfony\Component\Mime\HtmlToTextConverter\HtmlToTextConverterInterface;
-use Johncms\Media\MediaEmbed;
 use Johncms\NavChain;
 use Johncms\Router\RouteCollectorFactory;
 use Johncms\Router\RequestContextFactory;
@@ -121,7 +124,6 @@ use Johncms\View\ViewEnvironment;
 use Twig\Environment as TwigEnvironment;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
-use Simba77\EmbedMedia\Embed;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Routing\Matcher\UrlMatcherInterface;
@@ -173,6 +175,10 @@ return static function (ContainerConfigurator $container): void {
                 ROOT_PATH . 'system/src/Counters.php',
                 ROOT_PATH . 'system/src/FileInfo.php',
                 ROOT_PATH . 'system/src/Config',
+                // Value objects of the content pipeline: what a caller asks for and what a
+                // provider answers, both carrying scalar constructor arguments.
+                ROOT_PATH . 'system/src/Content/ContentContext.php',
+                ROOT_PATH . 'system/src/Content/Embed/EmbeddedMedia.php',
                 // The cache settings and the enums behind them are value objects, and the
                 // implementation takes an intersection-typed pool the container cannot resolve:
                 // both are assembled by CachePoolFactory instead.
@@ -460,8 +466,13 @@ return static function (ContainerConfigurator $container): void {
     // what learns the name at runtime — a row of `files` — goes through the registry.
     $services->set(StorageInterface::class)->factory([service(StorageRegistryInterface::class), 'disk']);
     $services->set(SitemapGenerator::class)->arg('$moduleProviders', tagged_iterator('johncms.sitemap_provider'));
-    $services->set(MediaEmbed::class)->factory([MediaEmbed::class, 'create']);
-    $services->set(Embed::class)->factory([MediaEmbed::class, 'create']);
+    // The content pipeline. Both registries are handed the services a module tagged by simply
+    // implementing the interface — see PSRContainerFactory::registerExtensionPoints().
+    $services->set(ContentTransformerRegistry::class)
+        ->arg('$transformers', tagged_iterator('johncms.content_transformer'));
+    $services->set(EmbedProviderRegistry::class)
+        ->arg('$providers', tagged_iterator('johncms.embed_provider'));
+    $services->set(ContentRendererInterface::class, ContentRenderer::class)->autowire();
     $services->set(ColorScheme::class);
     $services->set(\Johncms\Scheduler\ScheduleMutexInterface::class, \Johncms\Scheduler\FileScheduleMutex::class);
     $services->set(\Johncms\Scheduler\ScheduledTaskRegistry::class)

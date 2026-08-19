@@ -7,6 +7,8 @@ namespace Johncms\Modules\Forum\Application\Controllers;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Auth\CurrentUser;
+use Johncms\Content\ContentContext;
+use Johncms\Content\ContentRendererInterface;
 use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
@@ -18,18 +20,15 @@ use Johncms\Modules\Forum\Application\UseCases\CreateTopicUseCase;
 use Johncms\Modules\Forum\Application\UseCases\GetNewTopicContextUseCase;
 use Johncms\Modules\Forum\Domain\Models\ForumMessage;
 use Johncms\Modules\Forum\Domain\Models\ForumTopic;
-use Johncms\NavChain;
-use Johncms\Security\AntifloodCheckerInterface;
-use Johncms\Security\HtmlSanitizerInterface;
-use Johncms\Smilies\SmiliesRendererInterface;
 use Johncms\Http\Environment;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
+use Johncms\NavChain;
+use Johncms\Security\AntifloodCheckerInterface;
 use Johncms\System\Utility\EditorContentNormalizer;
 use Johncms\Validator\Rules\ModelNotExists;
 use Johncms\Validator\Rules\StringLength;
 use Johncms\Validator\ValidatorInterface;
-use Simba77\EmbedMedia\Embed;
 use Twig\Markup;
 
 final readonly class NewTopicController
@@ -37,10 +36,8 @@ final readonly class NewTopicController
     public function __construct(
         private Environment $environment,
         private AntifloodCheckerInterface $antifloodChecker,
-        private SmiliesRendererInterface $smiliesRenderer,
         private EditorContentNormalizer $editorContentNormalizer,
-        private HtmlSanitizerInterface $sanitizer,
-        private Embed $embed,
+        private ContentRendererInterface $content,
         private NavChain $navChain,
         private CurrentUser $currentUser,
         private ForumErrorRenderer $forumErrorRenderer,
@@ -155,11 +152,9 @@ final readonly class NewTopicController
             $errors = $validationResult->getErrors();
         }
 
-        $msgPreview = $this->sanitizer->sanitize((string) $data['message']);
-        $msgPreview = $this->embed->embedMedia($msgPreview);
-        $msgPreview = $this->smiliesRenderer->render(
-            $msgPreview,
-            $this->accessChecker->allows(CorePermissions::SMILIES_ADMIN_USE)
+        $msgPreview = $this->content->render(
+            (string) $data['message'],
+            new ContentContext(adminSmilies: $this->accessChecker->allows(CorePermissions::SMILIES_ADMIN_USE))
         );
 
         ForumUtils::buildBreadcrumbs($section->parent, $section->name, $section->url);
@@ -176,7 +171,7 @@ final readonly class NewTopicController
                 'msg'             => (string) $data['message'],
                 'back_url'        => $section->url,
                 'show_preview'    => ! empty($data['name']) && ! empty($data['message']) && ! $request->body('submit'),
-                'preview_message' => new Markup($msgPreview, 'UTF-8'),
+                'preview_message' => $msgPreview,
                 'preview_time'    => time(),
                 'can_set_meta'    => $this->accessChecker->allows(ForumPermissions::TOPIC_META_MANAGE),
                 'preview_enabled' => ! empty($this->getForumSettings()['preview']),

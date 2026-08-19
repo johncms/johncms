@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
+use Johncms\Modules\Library\Application\Services\ArticleTextRenderer;
 use Johncms\Modules\Library\Application\Services\LibraryArticlePathService;
 use Johncms\Modules\Library\Application\Services\LibraryCategoryPathService;
 use Johncms\Modules\Library\Application\Services\LibraryPermissions;
@@ -27,6 +28,7 @@ return static function (ContainerConfigurator $container): void {
         ->autoconfigure()
         ->public();
 
+    $services->set(ArticleTextRenderer::class)->autowire()->public();
     $services->set(LibraryCategoryPathService::class)->autowire()->public();
     $services->set(LibraryArticlePathService::class)->autowire()->public();
     $services->set(LibrarySlugService::class)->autowire()->public();

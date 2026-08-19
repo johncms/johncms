@@ -26,17 +26,21 @@ final class SmiliesRenderer implements SmiliesRendererInterface
 
     public function render(string $text, bool $withAdminSmilies = false): string
     {
+        $map = $this->map($withAdminSmilies);
+
+        return $map === [] ? $text : strtr($text, $map);
+    }
+
+    public function map(bool $withAdminSmilies = false): array
+    {
         $smilies = $this->getSmilies();
         if ($smilies === null) {
-            return $text;
+            return [];
         }
 
-        return strtr(
-            $text,
-            $withAdminSmilies
-                ? array_merge($smilies['usr'], $smilies['adm'])
-                : $smilies['usr']
-        );
+        return $withAdminSmilies
+            ? array_merge($smilies['usr'], $smilies['adm'])
+            : $smilies['usr'];
     }
 
     /**

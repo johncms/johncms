@@ -4,16 +4,13 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Profile\Application\Services;
 
-use Johncms\Security\HtmlSanitizerInterface;
-use Johncms\Smilies\SmiliesRendererInterface;
-use Simba77\EmbedMedia\Embed;
+use Johncms\Content\ContentContext;
+use Johncms\Content\ContentRendererInterface;
 
 final readonly class ForumActivityPreviewService
 {
     public function __construct(
-        private HtmlSanitizerInterface $sanitizer,
-        private Embed $media,
-        private SmiliesRendererInterface $smiliesRenderer,
+        private ContentRendererInterface $content,
     ) {
     }
 
@@ -22,12 +19,7 @@ final readonly class ForumActivityPreviewService
      */
     public function make(string $rawText, bool $authorIsStaff): string
     {
-        $text = $this->sanitizer->sanitize($rawText);
-        $text = $this->media->embedMedia($text);
-        $text = $this->smiliesRenderer->render($text, $authorIsStaff);
-        $text = strip_tags($text);
-        $text = html_entity_decode($text, ENT_QUOTES | ENT_HTML5, 'UTF-8');
-        $text = trim((string) (preg_replace('/\s+/u', ' ', $text) ?? $text));
+        $text = $this->content->toPlainText($rawText, new ContentContext(adminSmilies: $authorIsStaff));
 
         return mb_strimwidth($text, 0, 300, '...');
     }

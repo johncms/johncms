@@ -7,6 +7,8 @@ namespace Johncms\Modules\Forum\Application\UseCases;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\Authorization\StaffTitles;
 use Johncms\Auth\CurrentUser;
+use Johncms\Content\ContentContext;
+use Johncms\Content\ContentRendererInterface;
 use Johncms\Modules\Forum\Application\DTO\ForumFilesQueryDTO;
 use Johncms\Modules\Forum\Application\DTO\ForumFilesViewResultDTO;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
@@ -18,11 +20,7 @@ use Johncms\Modules\Forum\Domain\Query\ForumFileScopeQuery;
 use Johncms\Modules\Forum\Domain\Repository\ForumFileRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumSectionRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
-use Johncms\Security\HtmlSanitizerInterface;
-use Johncms\Smilies\SmiliesRendererInterface;
 use Johncms\Utils\DateFormatterInterface;
-use Simba77\EmbedMedia\Embed;
-use Twig\Markup;
 use Johncms\Modules\Forum\Infrastructure\Storage\ForumAttachmentStorage;
 
 final readonly class ViewForumFilesUseCase
@@ -34,9 +32,7 @@ final readonly class ViewForumFilesUseCase
         private ForumTopicRepositoryInterface $topicRepository,
         private ForumTopicPathService $topicPathService,
         private DateFormatterInterface $dateFormatter,
-        private SmiliesRendererInterface $smiliesRenderer,
-        private HtmlSanitizerInterface $sanitizer,
-        private Embed $embed,
+        private ContentRendererInterface $content,
         private CurrentUser $currentUser,
         private AccessCheckerInterface $accessChecker,
         private ForumAttachmentStorage $attachments,
@@ -266,12 +262,13 @@ final readonly class ViewForumFilesUseCase
 
         foreach ($rows as $row) {
             $text = mb_substr((string) ($row['text'] ?? ''), 0, 500);
-            $text = $this->sanitizer->sanitize($text);
-            $text = $this->embed->embedMedia($text);
-            $text = $this->smiliesRenderer->render($text, $this->staffTitles->isStaff((int) $row['user_id']));
+            $text = $this->content->render(
+                $text,
+                new ContentContext(adminSmilies: $this->staffTitles->isStaff((int) $row['user_id']))
+            );
 
             $page = (int) ceil((int) ($row['page'] ?? 0) / $this->currentUser->user()->config->kmess);
-            $row['post_text'] = new Markup($text, 'UTF-8');
+            $row['post_text'] = $text;
             $row['post_time'] = $this->dateFormatter->format((int) $row['time']);
             $row['user_is_online'] = time() <= (int) ($row['lastdate'] ?? 0) + 300;
             $row['user_profile_link'] = '';
