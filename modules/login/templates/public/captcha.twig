@@ -1,7 +1,7 @@
 {#
     The verification code asked for after several failed attempts.
 
-    @var captcha    string Data URL of the picture.
+    @var captcha    \Johncms\Captcha\CaptchaChallenge
     @var user_login string
     @var user_pass  string Carried through the form, the visitor types it once.
     @var remember   bool   Carried through as well, so the choice survives the captcha step.
@@ -11,18 +11,7 @@
 {% block content %}
     <form method="post">
         <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
-        <img alt="{{ __('Verification code') }}" src="{{ captcha }}">
-        <div class="form-group">
-            <label for="code">{{ __('Enter verification code') }}</label>
-            <input type="text"
-                   class="form-control"
-                   maxlength="5"
-                   name="code"
-                   id="code"
-                   required
-                   placeholder="{{ __('Verification code') }}"
-            >
-        </div>
+        {% include '@theme/components/captcha.twig' with {captcha: captcha, errors: []} only %}
         <input type="hidden" name="n" value="{{ user_login }}"/>
         <input type="hidden" name="p" value="{{ user_pass }}"/>
         {% if remember %}<input type="hidden" name="remember" value="1"/>{% endif %}

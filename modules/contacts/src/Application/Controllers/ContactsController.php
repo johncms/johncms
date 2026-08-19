@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Johncms\Modules\Contacts\Application\Controllers;
 
 use Johncms\Auth\CurrentUser;
+use Johncms\Captcha\CaptchaManager;
 use Johncms\Modules\Consent\Application\Services\ConsentService;
 use Johncms\Modules\Contacts\Application\DTO\CreateContactMessageDTO;
 use Johncms\Modules\Contacts\Application\Forms\ContactForm;
 use Johncms\Modules\Contacts\Application\Services\ContactSettingsProvider;
-use Johncms\Modules\Contacts\Application\Services\ContactsCaptchaService;
 use Johncms\Modules\Contacts\Application\UseCases\SubmitContactMessageUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Environment;
@@ -31,7 +31,7 @@ final readonly class ContactsController
         private CurrentUser $currentUser,
         private ContactSettingsProvider $settingsProvider,
         private ContactForm $form,
-        private ContactsCaptchaService $captchaService,
+        private CaptchaManager $captcha,
         private ConsentService $consentService,
         private SubmitContactMessageUseCase $submitMessage,
         private ValidatorInterface $validator,
@@ -95,7 +95,6 @@ final readonly class ContactsController
                     }
                 }
 
-                $this->captchaService->forget();
                 $this->session->flash('message', __('Your message has been sent. We will reply as soon as possible.'));
                 redirect(self::URL);
             }
@@ -114,7 +113,9 @@ final readonly class ContactsController
                 'errors'         => $errors,
                 'consents'       => $consents,
                 'show_captcha'   => ! $this->currentUser->isValid(),
-                'captcha'        => $this->currentUser->isValid() ? '' : $this->captchaService->generate(),
+                'captcha'        => $this->currentUser->isValid()
+                    ? null
+                    : $this->captcha->challenge(ContactForm::CAPTCHA_SCOPE),
                 'honeypot_field' => ContactForm::HONEYPOT_FIELD,
                 'message'        => $this->session->getFlash('message'),
             ]

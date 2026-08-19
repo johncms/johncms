@@ -5,7 +5,7 @@
     @param bool                    can_clear
     @param array                   errors     Validation messages of the form.
     @param array                   form_data  Values the visitor has entered.
-    @param string                  captcha    Image of the code, as a data URI.
+    @param ?\Johncms\Captcha\CaptchaChallenge captcha The verification, or null when none is asked for.
     @param string                  message    Flash message about the last action.
 #}
 {% extends '@theme/layouts/default.twig' %}
@@ -47,24 +47,8 @@
                         allow_upload: true
                     } only %}
 
-                    {% if not app.user.isValid %}
-                        <img alt="{{ __('Verification code') }}" src="{{ captcha }}">
-                        <div class="form-group">
-                            <label for="code">{{ __('Symbols on the picture') }}</label>
-                            <input type="text"
-                                   class="form-control {{ errors.code is defined ? 'is-invalid' }}"
-                                   maxlength="6"
-                                   name="code"
-                                   id="code"
-                                   autocomplete="off"
-                                   required
-                                   placeholder="{{ __('Symbols on the picture') }}"
-                            >
-                            {% include '@theme/components/field-errors.twig' with {errors: errors.code|default([])} only %}
-                            <div class="text-muted small">
-                                {{ __('If you cannot see the image code, enable graphics in your browser and refresh this page') }}
-                            </div>
-                        </div>
+                    {% if captcha %}
+                        {% include '@theme/components/captcha.twig' with {captcha: captcha, errors: errors.code|default([])} only %}
                     {% endif %}
 
                     <input type="submit" class="btn btn-primary" name="submit" value="{{ __('Write') }}"/>

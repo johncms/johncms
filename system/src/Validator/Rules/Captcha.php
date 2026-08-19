@@ -8,7 +8,11 @@ use Johncms\Validator\RuleValidators\CaptchaValidator;
 use Symfony\Component\Validator\Constraint;
 
 /**
- * The value matches the security code the session holds, compared case-insensitively.
+ * The value answers the captcha the site uses.
+ *
+ * What "answers" means belongs to the provider, not to the rule: the built-in one compares the
+ * value with the code it kept in the session, a remote service is asked about the token. The
+ * scope names the form the captcha guards, so two forms open at once do not share one answer.
  */
 final class Captcha extends Constraint implements RequiresValueInterface
 {
@@ -17,13 +21,15 @@ final class Captcha extends Constraint implements RequiresValueInterface
     private readonly ?string $ruleMessage;
 
     public function __construct(
-        public string $sessionField = 'code',
+        public string $scope = 'default',
         private readonly bool $allowEmpty = false,
         ?string $message = null,
     ) {
         parent::__construct([]);
 
         $this->ruleMessage = $message;
+        // The default the engine sees. Which message a visitor actually gets is decided by the
+        // validator, from what the provider says went wrong.
         $this->message = $message ?? d__('system', 'The security code is not correct');
     }
 

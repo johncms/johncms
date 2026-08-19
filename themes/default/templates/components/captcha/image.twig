@@ -1,0 +1,25 @@
+{#
+    The built-in captcha: a code drawn into a picture.
+
+    @var captcha \Johncms\Captcha\CaptchaChallenge
+    @var errors  array
+#}
+<div class="form-group">
+    {% if captcha.params.image %}
+        <img class="d-block mb-2" alt="{{ __('Verification code') }}" src="{{ captcha.params.image }}">
+    {% endif %}
+    <label for="{{ captcha.fieldName }}">{{ __('Enter verification code') }}</label>
+    <input type="text"
+           class="form-control {{ errors ? 'is-invalid' }}"
+           maxlength="{{ captcha.params.length }}"
+           name="{{ captcha.fieldName }}"
+           id="{{ captcha.fieldName }}"
+           autocomplete="off"
+           required
+           placeholder="{{ __('Verification code') }}"
+    >
+    {% include '@theme/components/field-errors.twig' with {errors: errors} only %}
+    <div class="text-muted small">
+        {{ __('If you cannot see the image code, enable graphics in your browser and refresh this page') }}
+    </div>
+</div>

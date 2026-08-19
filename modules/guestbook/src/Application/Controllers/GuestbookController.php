@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Guestbook\Application\Controllers;
 
 use Johncms\Auth\CurrentUser;
+use Johncms\Captcha\CaptchaManager;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
@@ -12,7 +13,6 @@ use Johncms\Modules\Guestbook\Application\Access\GuestbookAccess;
 use Johncms\Modules\Guestbook\Application\Access\GuestbookMode;
 use Johncms\Modules\Guestbook\Application\DTO\CreateGuestbookEntryDTO;
 use Johncms\Modules\Guestbook\Application\Forms\GuestbookForm;
-use Johncms\Modules\Guestbook\Application\Services\GuestbookCaptchaService;
 use Johncms\Modules\Guestbook\Application\UseCases\CreateGuestbookEntryUseCase;
 use Johncms\Modules\Guestbook\Application\UseCases\ListGuestbookEntriesUseCase;
 use Johncms\NavChain;
@@ -33,7 +33,7 @@ final readonly class GuestbookController
         private GuestbookMode $mode,
         private ListGuestbookEntriesUseCase $guestbookEntries,
         private CreateGuestbookEntryUseCase $createEntry,
-        private GuestbookCaptchaService $captchaService,
+        private CaptchaManager $captcha,
         private GuestbookForm $form,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
@@ -75,7 +75,6 @@ final readonly class GuestbookController
                         attachedFiles: $formData['attached_files'],
                     )
                 );
-                $this->captchaService->forget();
                 $this->session->flash('message', __('Your message was added successfully'));
                 redirect($baseUrl);
             }
@@ -108,7 +107,7 @@ final readonly class GuestbookController
                 'can_clear'   => $this->access->canClear(),
                 'errors'      => $errors,
                 'form_data'   => $this->form->getFormData($request),
-                'captcha'     => $showCaptcha ? $this->captchaService->generate() : '',
+                'captcha'     => $showCaptcha ? $this->captcha->challenge(GuestbookForm::CAPTCHA_SCOPE) : null,
                 'message'     => $this->session->getFlash('message'),
             ]
         );

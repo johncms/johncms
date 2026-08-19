@@ -254,41 +254,41 @@ msgstr ""
 msgid "Forum Settings"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:48
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:50
 msgid "List of sections"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:52
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:54
 msgid "List of categories"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:57
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:93
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:190
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:271
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:379
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:59
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:95
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:192
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:273
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:381
 #: modules/admin/templates/forum.twig:24
 msgid "Forum structure"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:87
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:142
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:89
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:144
 msgid "Invalid ID"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:92
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:94
 msgid "Add Section"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:92
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:94
 msgid "Add Category"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:116
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:118
 msgid "You have not entered Title"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:118
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:120
 #: modules/admin/templates/ad-form.twig:38
 #: modules/admin/templates/ad-form.twig:39
 #: modules/admin/templates/counter-preview.twig:23
@@ -302,28 +302,28 @@ msgstr ""
 msgid "Title"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:118
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:120
 msgid "Invalid length"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:121
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:123
 msgid "Description should be at least 2 characters in length"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:171
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:173
 msgid "Please select a valid parent"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:189
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:191
 msgid "Delete section"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:189
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:191
 msgid "Delete category"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:243
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:262
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:245
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:264
 #: modules/admin/src/Application/Controllers/Settings/AdsController.php:76
 #: modules/admin/src/Application/Controllers/Settings/AdsController.php:120
 #: modules/admin/src/Application/Controllers/Settings/CountersController.php:44
@@ -335,41 +335,41 @@ msgstr ""
 msgid "Wrong data"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:251
-#: modules/admin/src/Application/Controllers/Users/UsersController.php:120
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:253
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:119
 #: modules/admin/src/Application/Middlewares/AdminAccessMiddleware.php:58
 #: modules/admin/src/Application/Middlewares/SuperAdminAccessMiddleware.php:58
 #: modules/admin/src/Application/UseCases/EnsureRoleManagementAccessUseCase.php:37
 msgid "Access denied"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:270
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:272
 msgid "Edit Section"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:347
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:349
 #: modules/admin/templates/forum-section-edit.twig:50
 #: modules/admin/templates/forum-section-form.twig:36
 msgid "Common access"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:348
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:350
 msgid "Assign the newly created authors as curators"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:349
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:351
 msgid "Allow authors to edit the 1st post"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:350
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:352
 msgid "Only for reading"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:360
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:362
 msgid "For subsections"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:361
+#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:363
 msgid "For topics"
 msgstr ""
 
@@ -843,35 +843,35 @@ msgstr ""
 msgid "Nickname"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/UsersController.php:70
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:69
 msgid "The security code is not correct"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/UsersController.php:72
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:71
 #, php-format
 msgid "Too many attempts. Try again in %s."
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/UsersController.php:79
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:78
 msgid "Authorization failed"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/UsersController.php:91
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:90
 msgid "You have not entered login"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/UsersController.php:95
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:94
 msgid "You have not entered password"
 msgstr ""
 
-#: modules/admin/src/Application/Controllers/Users/UsersController.php:109
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:108
 #, php-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] ""
 
+#: modules/admin/src/Application/Controllers/Users/UsersController.php:172
 #: modules/admin/src/Application/Controllers/Users/UsersController.php:173
-#: modules/admin/src/Application/Controllers/Users/UsersController.php:174
 #: modules/admin/templates/login.twig:46
 msgid "Login"
 msgstr ""
@@ -1838,16 +1838,7 @@ msgstr ""
 msgid "Update List"
 msgstr ""
 
-#: modules/admin/templates/login-captcha.twig:21
-#: modules/admin/templates/login-captcha.twig:30
-msgid "Verification code"
-msgstr ""
-
-#: modules/admin/templates/login-captcha.twig:23
-msgid "Enter verification code"
-msgstr ""
-
-#: modules/admin/templates/login-captcha.twig:36
+#: modules/admin/templates/login-captcha.twig:25
 msgid "Continue"
 msgstr ""
 

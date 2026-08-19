@@ -23,6 +23,7 @@ automatically; `CLAUDE.md` is a symlink to it for Claude Code.
 | `new-module.md` | creating a new module |
 | `templates.md` | Twig templates: namespaces, environments, components, traps |
 | `validation.md` | form validation: rules, the null policy, messages, adding a rule |
+| `captcha.md` | captcha: asking for one in a form, scopes, settings, adding a provider |
 | `review/` | self-review protocol and checklists, run on demand (see below) |
 | `scripts/verify.sh` | the deterministic gate: `cs-check`, `phpstan`, `test` |
 

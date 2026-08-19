@@ -21,6 +21,7 @@ guide first:
 * Creating a new module (structure, autoload, DI, routes, templates) → read `.agents/new-module.md`
 * Writing or changing a template (namespaces, environments, components) → read `.agents/templates.md`
 * Validating a form, adding a validation rule, messages of a rule → read `.agents/validation.md`
+* Asking a form for a captcha, adding a captcha provider → read `.agents/captcha.md`
 * Self-review, when the user asks for it (architecture, security, PHP quality, localization) → read `.agents/review/README.md`
 
 ## Self-Review

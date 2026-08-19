@@ -3,7 +3,7 @@
 
     @var fields         array  name, password, email, sex, imname, about, consent_<id>
     @var errors         array  Validation messages by field name.
-    @var captcha        string Data URL of the verification picture.
+    @var captcha        \Johncms\Captcha\CaptchaChallenge
     @var consents       array  Consents the visitor has to give, see FormConsentDTO.
     @var needs_approval bool   The account is opened only after a moderator approves it.
     @var email_required bool   The form asks for an email address.
@@ -99,23 +99,7 @@
             {% include '@theme/components/field-errors.twig' with {errors: errors.about|default([])} only %}
         </div>
 
-        <img alt="{{ __('Verification code') }}" src="{{ captcha }}">
-        <div class="form-group">
-            <label for="captcha">{{ __('Enter verification code') }}</label>
-            <input type="text"
-                   class="form-control {{ errors.captcha|default([]) ? 'is-invalid' : '' }}"
-                   maxlength="6"
-                   name="captcha"
-                   id="captcha"
-                   autocomplete="off"
-                   required
-                   placeholder="{{ __('Verification code') }}"
-            >
-            {% include '@theme/components/field-errors.twig' with {errors: errors.captcha|default([])} only %}
-            <div class="text-muted small">
-                {{ __('If you cannot see the image code, enable graphics in your browser and refresh this page') }}
-            </div>
-        </div>
+        {% include '@theme/components/captcha.twig' with {captcha: captcha, errors: errors.captcha|default([])} only %}
 
         {% for consent in consents %}
             {% include '@theme/components/consent-checkbox.twig' with {

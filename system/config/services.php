@@ -38,6 +38,7 @@ use Johncms\Cache\CacheInterface;
 use Johncms\Cache\CachePoolFactory;
 use Johncms\Cache\CacheSettings;
 use Johncms\Cache\CacheSettingsFactory;
+use Johncms\Captcha\CaptchaProviderRegistry;
 use Johncms\Counters;
 use Johncms\CountersFactory;
 use Illuminate\Database\Schema\Builder as SchemaBuilder;
@@ -268,6 +269,16 @@ return static function (ContainerConfigurator $container): void {
                 ROOT_PATH . 'system/src/Storage/StorageException.php',
                 ROOT_PATH . 'system/src/Storage/UnknownStorageDiskException.php',
                 ROOT_PATH . 'system/src/Storage/UnsupportedStorageDriverException.php',
+                // The captcha layer: challenges, verdicts and the description of a provider's
+                // settings are value objects, and the options are read from config on demand.
+                // The providers themselves are services and stay autowired.
+                ROOT_PATH . 'system/src/Captcha/CaptchaChallenge.php',
+                ROOT_PATH . 'system/src/Captcha/CaptchaResult.php',
+                ROOT_PATH . 'system/src/Captcha/CaptchaFailure.php',
+                ROOT_PATH . 'system/src/Captcha/CaptchaSettingField.php',
+                ROOT_PATH . 'system/src/Captcha/CaptchaSettingType.php',
+                ROOT_PATH . 'system/src/Captcha/CaptchaProviderOptions.php',
+                ROOT_PATH . 'system/src/Captcha/CaptchaException.php',
                 ROOT_PATH . 'system/src/View/Theme/ThemeDTO.php',
                 // Built by the scan command with the translation set it fills, not by the container.
                 ROOT_PATH . 'system/src/System/i18n/TwigScanner.php',
@@ -329,6 +340,12 @@ return static function (ContainerConfigurator $container): void {
     // The HTTP client the OAuth providers talk through. Registered under the interface so a test
     // or a module can put a different one in its place.
     $services->set(HttpClientInterface::class)->factory([HttpClient::class, 'create']);
+
+    // A module adds a captcha of its own by implementing CaptchaProviderInterface; the tag is put
+    // on it by PSRContainerFactory, so its services.php needs nothing special. The registry is
+    // what the forms and the settings page are built from.
+    $services->set(CaptchaProviderRegistry::class)
+        ->arg('$providers', tagged_iterator('johncms.captcha_provider'));
 
     $services->set(AntifloodCheckerInterface::class, AntifloodChecker::class)->autowire();
     $services->set(RequestRateLogInterface::class, FileRequestRateLog::class);

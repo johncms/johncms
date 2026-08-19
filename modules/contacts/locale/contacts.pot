@@ -76,7 +76,7 @@ msgstr ""
 msgid "You must accept the consent to continue"
 msgstr ""
 
-#: modules/contacts/src/Application/Controllers/ContactsController.php:99
+#: modules/contacts/src/Application/Controllers/ContactsController.php:98
 msgid "Your message has been sent. We will reply as soon as possible."
 msgstr ""
 
@@ -193,18 +193,10 @@ msgstr ""
 msgid "Leave this field empty"
 msgstr ""
 
-#: modules/contacts/templates/public/index.twig:109
-msgid "Verification code"
-msgstr ""
-
-#: modules/contacts/templates/public/index.twig:111
-msgid "Enter verification code"
-msgstr ""
-
-#: modules/contacts/templates/public/index.twig:141
+#: modules/contacts/templates/public/index.twig:130
 msgid "Wrong data"
 msgstr ""
 
-#: modules/contacts/templates/public/index.twig:144
+#: modules/contacts/templates/public/index.twig:133
 msgid "Send"
 msgstr ""

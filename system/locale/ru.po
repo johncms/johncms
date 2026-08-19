@@ -1130,3 +1130,33 @@ msgstr "Почти готово. Выберите имя пользовател�
 
 msgid "E-mail"
 msgstr "E-mail"
+
+msgid "The verification has expired, please try again"
+msgstr "Срок действия проверки истек, попробуйте еще раз"
+
+msgid "The verification did not pass, please try again"
+msgstr "Проверка не пройдена, попробуйте еще раз"
+
+msgid "The verification service is unavailable, please try again later"
+msgstr "Сервис проверки недоступен, попробуйте позже"
+
+msgid "Picture with a code"
+msgstr "Картинка с кодом"
+
+msgid "Picture width"
+msgstr "Ширина картинки"
+
+msgid "Picture height"
+msgstr "Высота картинки"
+
+msgid "Picture format"
+msgstr "Формат картинки"
+
+msgid "A narrow picture crowds the characters together and makes them hard to read"
+msgstr "На узкой картинке символы наезжают друг на друга и плохо читаются"
+
+msgid "Minimum code length"
+msgstr "Минимальная длина кода"
+
+msgid "Maximum code length"
+msgstr "Максимальная длина кода"

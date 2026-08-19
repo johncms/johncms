@@ -4,7 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Modules\Guestbook\Forms;
 
+use Johncms\Captcha\CaptchaManager;
+use Johncms\Captcha\CaptchaProviderRegistry;
+use Johncms\Captcha\Providers\ImageCaptchaProvider;
 use Johncms\Config\ConfigRepository;
+use Johncms\Http\Session;
 use Johncms\Modules\Guestbook\Application\Forms\GuestbookForm;
 use Johncms\Http\Request;
 use Johncms\System\Utility\EditorContentNormalizer;
@@ -13,6 +17,8 @@ use Johncms\Validator\Rules\Captcha;
 use Johncms\Validator\Rules\StringLength;
 use Johncms\Validator\ValidationResult;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\NullLogger;
+use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 use Tests\Support\CurrentUserFactory;
 use Tests\Support\UserFactory;
 
@@ -32,7 +38,7 @@ final class GuestbookFormTest extends TestCase
             'attached_files' => ['3', 7],
         ]);
 
-        $form = new GuestbookForm(CurrentUserFactory::withProfile(UserFactory::make()), new EditorContentNormalizer());
+        $form = $this->makeForm(CurrentUserFactory::withProfile(UserFactory::make()));
         $formData = $form->getFormData($request);
 
         self::assertSame('John', $formData['name']);
@@ -63,11 +69,20 @@ final class GuestbookFormTest extends TestCase
         self::assertSame(3, $name->min);
         self::assertSame(25, $name->max);
 
-        self::assertInstanceOf(Captcha::class, $rules['code'][0]);
+        $captcha = $rules['code'][0];
+        self::assertInstanceOf(Captcha::class, $captcha);
+        self::assertSame(GuestbookForm::CAPTCHA_SCOPE, $captcha->scope);
     }
 
     private function makeForm(CurrentUser $user): GuestbookForm
     {
-        return new GuestbookForm($user, new EditorContentNormalizer());
+        $captcha = new CaptchaManager(
+            new CaptchaProviderRegistry(
+                [new ImageCaptchaProvider(new Session(new MockArraySessionStorage()), new NullLogger())]
+            ),
+            new NullLogger(),
+        );
+
+        return new GuestbookForm($user, new EditorContentNormalizer(), $captcha);
     }
 }
