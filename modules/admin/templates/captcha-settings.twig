@@ -1,0 +1,47 @@
+{#
+    Which captcha the site uses, and the settings of each provider.
+
+    @var array  providers       Rows: key, label, isActive, isConfigured, fields.
+    @var string form_action
+    @var string error_message
+    @var string success_message
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success shadow border-0', alert: success_message} only %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger shadow border-0', alert: error_message} only %}
+
+    <form method="post" action="{{ form_action }}">
+        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+
+        {% for provider in providers %}
+            <div class="border rounded p-3 mb-3">
+                <div class="form-check">
+                    <input type="radio" class="form-check-input" id="default_{{ provider.key }}"
+                           name="default" value="{{ provider.key }}"
+                           {{ provider.isActive ? 'checked' : '' }}>
+                    <label class="form-check-label h5" for="default_{{ provider.key }}">{{ provider.label }}</label>
+                </div>
+
+                {% if not provider.isConfigured %}
+                    {# Said out loud: a service picked here without its keys quietly leaves the
+                       forms showing the built-in picture instead. #}
+                    <div class="alert alert-warning py-2 mt-2">
+                        {{ __('This provider is not configured yet. Until it is, the forms fall back to the picture with a code.') }}
+                    </div>
+                {% endif %}
+
+                {% for field in provider.fields %}
+                    {% include '@admin/components/settings-field.twig' with {
+                        field: field,
+                        name: 'providers[' ~ provider.key ~ '][' ~ field.key ~ ']',
+                        id: provider.key ~ '_' ~ field.key
+                    } only %}
+                {% endfor %}
+            </div>
+        {% endfor %}
+
+        <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
+    </form>
+{% endblock %}

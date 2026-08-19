@@ -251,6 +251,14 @@
                     <span class="flex-grow-1">{{ d__('admin', 'Mail Settings') }}</span>
                 </a>
             </li>
+            <li class="{{ sys_menu.captcha_settings|default(false) ? 'active' : '' }}">
+                <a href="/admin/settings/captcha">
+                    <svg class="icon">
+                        <use xlink:href="{{ sprite }}#shield"/>
+                    </svg>
+                    <span class="flex-grow-1">{{ d__('admin', 'Captcha') }}</span>
+                </a>
+            </li>
             <li class="{{ sys_menu.emoticons|default(false) ? 'active' : '' }}">
                 <a href="/admin/emoticons">
                     <svg class="icon">

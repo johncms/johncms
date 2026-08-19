@@ -36,6 +36,15 @@ final readonly class CaptchaProviderOptions
         return new self($values);
     }
 
+    /**
+     * The value as it is stored, for a caller that does not know its type in advance — the
+     * settings page, which walks the fields a provider declares.
+     */
+    public function raw(string $key, mixed $default = null): mixed
+    {
+        return $this->values[$key] ?? $default;
+    }
+
     public function string(string $key, string $default = ''): string
     {
         $value = $this->values[$key] ?? null;

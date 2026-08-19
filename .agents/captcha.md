@@ -58,7 +58,12 @@ filling in their keys, and a provider without them is never put in front of a vi
 
 ## Settings
 
-`config/autoload/captcha.global.php`, overridden in `captcha.local.php`:
+Edited in the panel at `/admin/settings/captcha`. The page lists whatever the registry holds and
+draws the fields each provider declares, so a captcha a module brought along appears there by
+itself; `UpdateCaptchaSettingsUseCase` writes `captcha.local.php` and drops the compiled
+container, the way the mail settings do.
+
+The files themselves — `config/autoload/captcha.global.php`, overridden in `captcha.local.php`:
 
 * `captcha.default` — the key of the provider in use. A key nothing is registered under, or a
   provider whose settings are incomplete, falls back to the built-in picture: a captcha that

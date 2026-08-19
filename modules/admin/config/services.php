@@ -22,6 +22,7 @@ use Johncms\Modules\Admin\Domain\Repository\KarmaRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\IpSearchRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\RegistrationModerationRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\SmiliesCacheRepositoryInterface;
+use Johncms\Modules\Admin\Domain\Repository\CaptchaConfigRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\MailConfigRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\SystemConfigRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\UserDeletionRepositoryInterface;
@@ -43,6 +44,7 @@ use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentForumStr
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentHiddenForumRepository;
 use Johncms\Modules\Admin\Infrastructure\Cache\FileSmiliesCacheRepository;
 use Johncms\Modules\Admin\Infrastructure\Config\FileSystemAuthConfigRepository;
+use Johncms\Modules\Admin\Infrastructure\Config\FileCaptchaConfigRepository;
 use Johncms\Modules\Admin\Infrastructure\Config\FileMailConfigRepository;
 use Johncms\Modules\Admin\Infrastructure\Config\FileSystemConfigRepository;
 use Johncms\Modules\Admin\Infrastructure\Config\FileSystemForumConfigRepository;
@@ -95,6 +97,7 @@ return static function (ContainerConfigurator $container): void {
     $services->set(AuthConfigRepositoryInterface::class, FileSystemAuthConfigRepository::class)->public();
     $services->set(SystemConfigRepositoryInterface::class, FileSystemConfigRepository::class)->public();
     $services->set(MailConfigRepositoryInterface::class, FileMailConfigRepository::class)->public();
+    $services->set(CaptchaConfigRepositoryInterface::class, FileCaptchaConfigRepository::class)->public();
     $services->set(ThemeListProviderInterface::class, FileSystemThemeListProvider::class)->public();
     $services->set(SmiliesScannerInterface::class, FileSystemSmiliesScanner::class)->autowire()->public();
     $services->set(SmiliesCacheRepositoryInterface::class, FileSmiliesCacheRepository::class)->public();

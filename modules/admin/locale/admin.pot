@@ -135,41 +135,46 @@ msgid "Mail Settings"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:259
-msgid "Update Smilies"
+#: modules/admin/src/Application/Controllers/Settings/CaptchaSettingsController.php:60
+msgid "Captcha"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:267
-msgid "Language Settings"
+msgid "Update Smilies"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:275
+msgid "Language Settings"
+msgstr ""
+
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:283
 #: modules/admin/src/Application/Controllers/System/SystemCheckController.php:28
 msgid "System check"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:283
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:291
 #: modules/admin/src/Application/Controllers/System/MaintenanceTasksController.php:68
 msgid "Maintenance"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:295
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:303
 #: modules/admin/src/Application/Controllers/System/SystemCheckController.php:41
 msgid "Security"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:312
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:320
 #: modules/admin/src/Application/Controllers/Access/ExternalProvidersController.php:37
 msgid "Sign-in services"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:321
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:329
 #: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:29
 #: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:42
 #: modules/admin/src/Application/Controllers/System/FileIntegrityController.php:71
 msgid "Anti-Spyware"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:329
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:337
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:50
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:74
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:126
@@ -244,6 +249,7 @@ msgstr ""
 #: modules/admin/src/Application/Controllers/Forum/ForumSettingsController.php:49
 #: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:53
 #: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:39
+#: modules/admin/src/Application/Controllers/Settings/CaptchaSettingsController.php:53
 #: modules/admin/src/Application/Controllers/Settings/MailSettingsController.php:46
 #: modules/admin/src/Application/Controllers/Settings/SystemSettingsController.php:43
 #: modules/admin/src/Application/Controllers/Users/KarmaController.php:48
@@ -635,6 +641,10 @@ msgstr ""
 
 #: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:90
 msgid "If one of administration is online (on the site), the system work in &quot;day&quot; mode, if administration is offline, it switch to &quot;night&quot;"
+msgstr ""
+
+#: modules/admin/src/Application/Controllers/Settings/CaptchaSettingsController.php:50
+msgid "ERROR: Can not write file `captcha.local.php`"
 msgstr ""
 
 #: modules/admin/src/Application/Controllers/Settings/CountersController.php:47
@@ -1061,6 +1071,7 @@ msgstr ""
 #: modules/admin/templates/ad-form.twig:97
 #: modules/admin/templates/amnesty.twig:32
 #: modules/admin/templates/antiflood.twig:49
+#: modules/admin/templates/captcha-settings.twig:45
 #: modules/admin/templates/counter-preview.twig:51
 #: modules/admin/templates/external-providers.twig:59
 #: modules/admin/templates/forum-section-edit.twig:76
@@ -1243,6 +1254,15 @@ msgstr ""
 msgid "Sort"
 msgstr ""
 
+#: modules/admin/templates/captcha-settings.twig:31
+msgid "This provider is not configured yet. Until it is, the forms fall back to the picture with a code."
+msgstr ""
+
+#: modules/admin/templates/components/settings-field.twig:28
+#: modules/admin/templates/external-providers.twig:47
+msgid "Saved. Fill in to replace."
+msgstr ""
+
 #: modules/admin/templates/counter-form.twig:23
 #: modules/admin/templates/counter-form.twig:24
 msgid "Name"
@@ -1355,10 +1375,6 @@ msgstr ""
 
 #: modules/admin/templates/external-providers.twig:44
 msgid "Client secret"
-msgstr ""
-
-#: modules/admin/templates/external-providers.twig:47
-msgid "Saved. Fill in to replace."
 msgstr ""
 
 #: modules/admin/templates/external-providers.twig:52
