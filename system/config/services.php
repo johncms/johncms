@@ -46,7 +46,12 @@ use Johncms\Captcha\CaptchaProviderRegistry;
 use Johncms\Counters;
 use Johncms\CountersFactory;
 use Illuminate\Database\Schema\Builder as SchemaBuilder;
+use Johncms\Database\ConnectionInterface;
+use Johncms\Database\PdoConnection;
 use Johncms\Database\PdoFactory;
+use Johncms\Database\Schema\Adapters\BlueprintCompiler;
+use Johncms\Database\Schema\Adapters\IlluminateSchema;
+use Johncms\Database\Schema\SchemaInterface;
 use Johncms\Database\SchemaBuilderFactory;
 use Johncms\Files\FileRepositoryInterface;
 use Johncms\Files\FileStore;
@@ -191,6 +196,10 @@ return static function (ContainerConfigurator $container): void {
                 // Exceptions are never services: those with scalar constructor arguments
                 // (HttpRedirectException) break the container compilation when autowired.
                 ROOT_PATH . 'system/src/Exceptions',
+                // How a migration describes a table: value objects carrying a column name
+                // and a length, an enum per kind, and the two adapters that read them. The
+                // adapters are registered by hand below; the description is never a service.
+                ROOT_PATH . 'system/src/Database/Schema',
                 ROOT_PATH . 'system/src/Image/ImageProcessingException.php',
                 ROOT_PATH . 'system/src/Files',
                 ROOT_PATH . 'system/src/Modules',
@@ -313,6 +322,11 @@ return static function (ContainerConfigurator $container): void {
     $services->set(\PDO::class, PdoFactory::class)->factory(service(PdoFactory::class));
     // Creating and altering tables: a handful of console commands and the installer.
     $services->set(SchemaBuilder::class)->factory(service(SchemaBuilderFactory::class));
+    // The two contracts a migration is written against. Neither names the library underneath,
+    // so a migration written today keeps working when that library is replaced.
+    $services->alias(ConnectionInterface::class, PdoConnection::class);
+    $services->set(BlueprintCompiler::class);
+    $services->set(SchemaInterface::class, IlluminateSchema::class);
     $services->set(\Johncms\Users\Repository\UserRepositoryInterface::class, \Johncms\Users\Repository\EloquentUserRepository::class);
 
     // The authenticators are asked in the order they are tagged, and the order is a decision:
