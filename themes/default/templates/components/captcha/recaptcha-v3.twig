@@ -1,0 +1,44 @@
+{#
+    Google reCAPTCHA v3: nothing for the visitor to do, a token put into a hidden field.
+
+    The token is fetched when the form is submitted rather than when the page loads: it is good
+    for two minutes, and a page somebody reads before filling in a form outlives that.
+
+    @var captcha \Johncms\Captcha\CaptchaChallenge
+    @var errors  array
+#}
+<div class="form-group">
+    <input type="hidden" name="{{ captcha.fieldName }}" id="{{ captcha.fieldName }}" value="">
+    {# There is no input to hang a message under, so a refusal is said out loud instead. #}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger', alert: errors} only %}
+</div>
+<script src="https://www.google.com/recaptcha/api.js?render={{ captcha.params.site_key|url_encode }}" async defer></script>
+<script>
+    (function () {
+        var field = document.getElementById('{{ captcha.fieldName }}');
+        var form = field.closest('form');
+        if (!form) {
+            return;
+        }
+        var sending = false;
+        form.addEventListener('submit', function (event) {
+            if (sending || typeof grecaptcha === 'undefined') {
+                return;
+            }
+            event.preventDefault();
+            grecaptcha.ready(function () {
+                grecaptcha.execute('{{ captcha.params.site_key|e('js') }}', {action: 'submit'}).then(function (token) {
+                    field.value = token;
+                    sending = true;
+                    // requestSubmit keeps the button that was pressed in the submitted data;
+                    // submit() would drop it, and several forms here tell their actions apart by it.
+                    if (form.requestSubmit) {
+                        form.requestSubmit(event.submitter);
+                    } else {
+                        form.submit();
+                    }
+                });
+            });
+        });
+    })();
+</script>

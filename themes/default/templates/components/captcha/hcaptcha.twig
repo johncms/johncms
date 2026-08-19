@@ -1,0 +1,12 @@
+{#
+    hCaptcha: the checkbox, with a puzzle behind it when the visitor looks suspicious. Its script
+    creates the field the answer is submitted in.
+
+    @var captcha \Johncms\Captcha\CaptchaChallenge
+    @var errors  array
+#}
+<div class="form-group">
+    <div class="h-captcha {{ errors ? 'is-invalid' }}" data-sitekey="{{ captcha.params.site_key }}"></div>
+    {% include '@theme/components/field-errors.twig' with {errors: errors} only %}
+</div>
+<script src="https://js.hcaptcha.com/1/api.js" async defer></script>

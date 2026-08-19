@@ -535,6 +535,26 @@ msgstr ""
 msgid "The verification service is unavailable, please try again later"
 msgstr ""
 
+#: system/src/Captcha/Providers/AbstractRemoteCaptchaProvider.php:92
+msgid "The key of the widget. It is part of the page and is not a secret"
+msgstr ""
+
+#: system/src/Captcha/Providers/AbstractRemoteCaptchaProvider.php:98
+msgid "Used to check the answer. Never leaves the server"
+msgstr ""
+
+#: system/src/Captcha/Providers/AbstractRemoteCaptchaProvider.php:162
+msgid "Public key"
+msgstr ""
+
+#: system/src/Captcha/Providers/AbstractRemoteCaptchaProvider.php:167
+msgid "Secret key"
+msgstr ""
+
+#: system/src/Captcha/Providers/HCaptchaProvider.php:35
+msgid "hCaptcha"
+msgstr ""
+
 #: system/src/Captcha/Providers/ImageCaptchaProvider.php:56
 msgid "Picture with a code"
 msgstr ""
@@ -561,6 +581,30 @@ msgstr ""
 
 #: system/src/Captcha/Providers/ImageCaptchaProvider.php:100
 msgid "Maximum code length"
+msgstr ""
+
+#: system/src/Captcha/Providers/RecaptchaV3Provider.php:48
+msgid "Google reCAPTCHA v3"
+msgstr ""
+
+#: system/src/Captcha/Providers/RecaptchaV3Provider.php:113
+msgid "Score threshold"
+msgstr ""
+
+#: system/src/Captcha/Providers/RecaptchaV3Provider.php:115
+msgid "Between 0 and 1. Submissions scored below it are refused; raising it stops more bots and more people"
+msgstr ""
+
+#: system/src/Captcha/Providers/SmartCaptchaProvider.php:38
+msgid "Yandex SmartCaptcha"
+msgstr ""
+
+#: system/src/Captcha/Providers/SmartCaptchaProvider.php:48
+msgid "Client key"
+msgstr ""
+
+#: system/src/Captcha/Providers/SmartCaptchaProvider.php:53
+msgid "Server key"
 msgstr ""
 
 #: system/src/Checker/SystemChecker.php:30

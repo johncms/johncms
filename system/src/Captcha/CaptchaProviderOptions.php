@@ -50,6 +50,13 @@ final readonly class CaptchaProviderOptions
         return is_numeric($value) ? (int) $value : $default;
     }
 
+    public function float(string $key, float $default = 0.0): float
+    {
+        $value = $this->values[$key] ?? null;
+
+        return is_numeric($value) ? (float) $value : $default;
+    }
+
     public function bool(string $key, bool $default = false): bool
     {
         $value = $this->values[$key] ?? null;

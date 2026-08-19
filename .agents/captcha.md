@@ -43,6 +43,19 @@ both sign-in screens, a `CAPTCHA_SCOPE` on the form class of a module.
 The same scope has to be used for issuing and for checking, or the answer is looked for under a
 key nothing was written to.
 
+## The shipped providers
+
+| Key | What it is |
+| --- | --- |
+| `image` | the built-in picture with a code. Needs nothing, works offline, and is what everything falls back to |
+| `hcaptcha` | a checkbox, with a puzzle behind it for whoever looks suspicious |
+| `smartcaptcha` | Yandex SmartCaptcha. Same idea; its keys are named client key / server key |
+| `recaptcha_v3` | Google reCAPTCHA v3: no widget, a score. Below the threshold a visitor is refused with nothing to solve, and the page loads scripts from Google |
+
+None of the three services needs a composer package: a token, one HTTP request and a `<script>`
+tag is all they are, and `symfony/http-client` is already a dependency. They are switched on by
+filling in their keys, and a provider without them is never put in front of a visitor.
+
 ## Settings
 
 `config/autoload/captcha.global.php`, overridden in `captcha.local.php`:
@@ -74,7 +87,12 @@ What the four methods are for:
   (`CaptchaFailure`): a wrong answer, an expired challenge and an unreachable service are three
   different things to the visitor and to whoever reads the log.
 
-A provider ships its widget template in its own namespace; only the built-in one lives in
+A remote service is less than that: `AbstractRemoteCaptchaProvider` already does the request,
+the timeouts and the two key fields, so a provider on top of it is an address, the names of the
+fields in the payload and what the answer means — the way `AbstractOAuth2Provider` makes a
+sign-in service thirty lines.
+
+A provider ships its widget template in its own namespace; the shipped ones live in
 `@theme/components/captcha/`.
 
 ## Traps

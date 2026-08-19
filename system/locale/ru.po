@@ -1160,3 +1160,27 @@ msgstr "Минимальная длина кода"
 
 msgid "Maximum code length"
 msgstr "Максимальная длина кода"
+
+msgid "Public key"
+msgstr "Публичный ключ"
+
+msgid "Secret key"
+msgstr "Секретный ключ"
+
+msgid "Client key"
+msgstr "Клиентский ключ"
+
+msgid "Server key"
+msgstr "Серверный ключ"
+
+msgid "The key of the widget. It is part of the page and is not a secret"
+msgstr "Ключ виджета. Он является частью страницы и не является секретом"
+
+msgid "Used to check the answer. Never leaves the server"
+msgstr "Используется для проверки ответа. Никогда не покидает сервер"
+
+msgid "Score threshold"
+msgstr "Пороговое значение оценки"
+
+msgid "Between 0 and 1. Submissions scored below it are refused; raising it stops more bots and more people"
+msgstr "От 0 до 1. Отправки с оценкой ниже отклоняются; чем выше значение, тем больше отсеивается и ботов, и людей"

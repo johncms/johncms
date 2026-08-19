@@ -18,6 +18,9 @@ return [
         // The provider the forms use. A key nothing is registered under, or one whose settings
         // are incomplete, falls back to the built-in picture: a captcha that cannot work must
         // not turn into no captcha at all.
+        //
+        // Shipped: image, hcaptcha, smartcaptcha, recaptcha_v3. The three services need no
+        // extra packages — only their keys, which are filled in from the admin panel.
         'default' => 'image',
 
         // Settings per provider, by the key the provider is registered under. A provider that a
@@ -32,6 +35,34 @@ return [
                     'format'     => 'png',
                     'length_min' => 4,
                     'length_max' => 5,
+                ],
+            ],
+
+            // A checkbox, with a puzzle behind it for whoever looks suspicious.
+            'hcaptcha' => [
+                'options' => [
+                    'site_key'   => '',
+                    'secret_key' => '',
+                ],
+            ],
+
+            // Yandex names its keys the other way round: the client key goes on the page, the
+            // server key checks the answer.
+            'smartcaptcha' => [
+                'options' => [
+                    'site_key'   => '',
+                    'secret_key' => '',
+                ],
+            ],
+
+            // Shows the visitor nothing and scores them instead, so somebody scored below the
+            // threshold is simply refused — there is nothing to offer them to prove otherwise.
+            // It also loads scripts from Google on every page carrying a form.
+            'recaptcha_v3' => [
+                'options' => [
+                    'site_key'        => '',
+                    'secret_key'      => '',
+                    'score_threshold' => 0.5,
                 ],
             ],
         ],

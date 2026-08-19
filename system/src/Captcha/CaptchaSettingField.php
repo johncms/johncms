@@ -24,7 +24,7 @@ final readonly class CaptchaSettingField
         public string $key,
         public CaptchaSettingType $type,
         public string $label,
-        public string|int|bool $default = '',
+        public string|int|float|bool $default = '',
         public string $hint = '',
         public array $options = [],
     ) {
