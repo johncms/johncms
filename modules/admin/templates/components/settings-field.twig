@@ -1,0 +1,37 @@
+{#
+    One setting a provider declared, drawn by its type.
+
+    Kept generic on purpose: a provider that describes its settings needs no template of its own.
+
+    @var field \Johncms\Modules\Admin\Application\DTO\CaptchaSettingRowDTO
+    @var name  string Name of the form field, e.g. providers[image][width].
+    @var id    string
+#}
+{% if field.type == 'checkbox' %}
+    <div class="form-check mb-3">
+        <input type="checkbox" class="form-check-input" id="{{ id }}" name="{{ name }}" value="1"
+               {{ field.checked ? 'checked' : '' }}>
+        <label class="form-check-label" for="{{ id }}">{{ field.label }}</label>
+        {% if field.hint %}<div class="form-text">{{ field.hint }}</div>{% endif %}
+    </div>
+{% else %}
+    <div class="form-group">
+        <label for="{{ id }}">{{ field.label }}</label>
+        {% if field.type == 'select' %}
+            <select class="form-select" id="{{ id }}" name="{{ name }}">
+                {% for value, label in field.options %}
+                    <option value="{{ value }}" {{ field.value == value ? 'selected' : '' }}>{{ label }}</option>
+                {% endfor %}
+            </select>
+        {% elseif field.type == 'password' %}
+            <input type="password" class="form-control" id="{{ id }}" name="{{ name }}" value=""
+                   placeholder="{{ field.hasValue ? __('Saved. Fill in to replace.') : '' }}"
+                   autocomplete="new-password">
+        {% else %}
+            <input type="{{ field.type == 'number' ? 'number' : 'text' }}"
+                   {{ field.type == 'number' ? 'step="any"' : '' }}
+                   class="form-control" id="{{ id }}" name="{{ name }}" value="{{ field.value }}">
+        {% endif %}
+        {% if field.hint %}<div class="form-text">{{ field.hint }}</div>{% endif %}
+    </div>
+{% endif %}

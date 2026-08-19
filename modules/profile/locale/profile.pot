@@ -56,21 +56,21 @@ msgstr ""
 #: modules/profile/src/Application/Controllers/ChangePasswordController.php:105
 #: modules/profile/src/Application/Controllers/KarmaController.php:125
 #: modules/profile/src/Application/Controllers/PhotoController.php:74
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:119
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:120
 #: modules/profile/templates/public/restore-password-set.twig:14
-#: modules/profile/templates/public/restore-password.twig:44
+#: modules/profile/templates/public/restore-password.twig:33
 msgid "Continue"
 msgstr ""
 
 #: modules/profile/src/Application/Controllers/AvatarController.php:83
-#: modules/profile/src/Application/Controllers/EditProfileController.php:163
+#: modules/profile/src/Application/Controllers/EditProfileController.php:165
 #: modules/profile/src/Application/Controllers/PhotoController.php:83
 #: modules/profile/src/Application/UseCases/GetProfileViewUseCase.php:94
 msgid "My Profile"
 msgstr ""
 
 #: modules/profile/src/Application/Controllers/AvatarController.php:83
-#: modules/profile/src/Application/Controllers/EditProfileController.php:163
+#: modules/profile/src/Application/Controllers/EditProfileController.php:165
 #: modules/profile/src/Application/Controllers/GuestbookController.php:44
 #: modules/profile/src/Application/Controllers/PhotoController.php:83
 #: modules/profile/templates/public/account.twig:13
@@ -192,20 +192,20 @@ msgstr ""
 msgid "Email confirmation"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/EditProfileController.php:64
+#: modules/profile/src/Application/Controllers/EditProfileController.php:66
 msgid "Data saved"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/EditProfileController.php:76
+#: modules/profile/src/Application/Controllers/EditProfileController.php:78
 msgid "Avatar is successfully removed"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/EditProfileController.php:88
+#: modules/profile/src/Application/Controllers/EditProfileController.php:90
 msgid "Photo is successfully removed"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/EditProfileController.php:161
-#: modules/profile/src/Application/Controllers/EditProfileController.php:199
+#: modules/profile/src/Application/Controllers/EditProfileController.php:163
+#: modules/profile/src/Application/Controllers/EditProfileController.php:197
 #: modules/profile/templates/public/account.twig:67
 msgid "Edit Profile"
 msgstr ""
@@ -261,7 +261,7 @@ msgid "Vote for"
 msgstr ""
 
 #: modules/profile/src/Application/Controllers/KarmaController.php:265
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:133
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:134
 #: modules/profile/templates/public/ban-history.twig:81
 #: modules/profile/templates/public/components/list-footer.twig:18
 #: modules/profile/templates/public/statistics.twig:41
@@ -306,25 +306,25 @@ msgid "For user %s default settings were set."
 msgstr ""
 
 #: modules/profile/src/Application/Controllers/RestorePasswordController.php:35
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:50
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:76
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:85
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:103
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:115
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:129
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:47
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:77
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:86
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:104
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:116
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:130
 #: modules/profile/templates/public/restore-password.twig:11
 msgid "Restore password"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:58
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:59
 msgid "Incorrect code"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:78
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:79
 msgid "Check your e-mail for further information"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:117
+#: modules/profile/src/Application/Controllers/RestorePasswordController.php:118
 msgid "Password successfully changed.<br>New password sent to your E-mail address."
 msgstr ""
 
@@ -621,8 +621,8 @@ msgstr ""
 msgid "The procedure for changing the email address was started"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/UploadAvatarUseCase.php:23
-#: modules/profile/src/Application/UseCases/UploadPhotoUseCase.php:23
+#: modules/profile/src/Application/UseCases/UploadAvatarUseCase.php:29
+#: modules/profile/src/Application/UseCases/UploadPhotoUseCase.php:31
 msgid "The weight of the file exceeds"
 msgstr ""
 
@@ -1075,16 +1075,7 @@ msgstr ""
 msgid "Your E-mail"
 msgstr ""
 
-#: modules/profile/templates/public/restore-password.twig:32
-#: modules/profile/templates/public/restore-password.twig:41
-msgid "Verification code"
-msgstr ""
-
-#: modules/profile/templates/public/restore-password.twig:34
-msgid "Enter verification code"
-msgstr ""
-
-#: modules/profile/templates/public/restore-password.twig:48
+#: modules/profile/templates/public/restore-password.twig:37
 msgid "Password will be send to E-mail address specified in your profile.<br />WARNING !! If E-mail address has not been specified in your profile, you will not be able to recover your password."
 msgstr ""
 

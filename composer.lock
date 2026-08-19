@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "675fab603fc7b5a4328abd3e799050f7",
+    "content-hash": "2e64d2de8e7f6b7112f0f6d28596bcb2",
     "packages": [
         {
             "name": "brick/math",
@@ -1546,27 +1546,27 @@
         },
         {
             "name": "mobicms/captcha",
-            "version": "4.0.0",
+            "version": "5.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mobicms/captcha.git",
-                "reference": "5d8e71818c7f1f8a3f4599641aabe37143c68b0c"
+                "reference": "97d8f5585eb0cec236d0cb608b817df5ede535e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mobicms/captcha/zipball/5d8e71818c7f1f8a3f4599641aabe37143c68b0c",
-                "reference": "5d8e71818c7f1f8a3f4599641aabe37143c68b0c",
+                "url": "https://api.github.com/repos/mobicms/captcha/zipball/97d8f5585eb0cec236d0cb608b817df5ede535e3",
+                "reference": "97d8f5585eb0cec236d0cb608b817df5ede535e3",
                 "shasum": ""
             },
             "require": {
                 "ext-gd": "*",
-                "php": "~8.0 || ~8.1 || ~8.2"
+                "php": "~8.2 || ~8.3 || ~8.4"
             },
             "require-dev": {
-                "phpunit/phpunit": "^9.5",
-                "slevomat/coding-standard": "^8.6",
-                "squizlabs/php_codesniffer": "^3.7",
-                "vimeo/psalm": "^5.1"
+                "pestphp/pest": "^3.8",
+                "slevomat/coding-standard": "^8.22",
+                "squizlabs/php_codesniffer": "^3.13",
+                "vimeo/psalm": "^6.13"
             },
             "type": "library",
             "autoload": {
@@ -1581,7 +1581,7 @@
             "authors": [
                 {
                     "name": "Oleg Kasyanov",
-                    "email": "oleg@mobicms.org",
+                    "email": "oleg@batumi.org",
                     "homepage": "https://github.com/batumibiz",
                     "role": "Team Lead, Developer"
                 },
@@ -1592,14 +1592,13 @@
             ],
             "description": "A simple PHP CAPTCHA library",
             "keywords": [
-                "captcha",
-                "php"
+                "captcha"
             ],
             "support": {
                 "issues": "https://github.com/mobicms/captcha/issues",
                 "source": "https://github.com/mobicms/captcha"
             },
-            "time": "2022-12-09T13:22:27+00:00"
+            "time": "2025-09-20T10:36:55+00:00"
         },
         {
             "name": "monolog/monolog",

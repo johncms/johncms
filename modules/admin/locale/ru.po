@@ -2238,3 +2238,12 @@ msgstr "Сообщение отправляется сразу, минуя оч�
 
 msgid "Send"
 msgstr "Отправить"
+
+msgid "Captcha"
+msgstr "Капча"
+
+msgid "ERROR: Can not write file `captcha.local.php`"
+msgstr "ОШИБКА: Не удается записать файл `captcha.local.php`"
+
+msgid "This provider is not configured yet. Until it is, the forms fall back to the picture with a code."
+msgstr "Этот провайдер еще не настроен. Пока это не сделано, формы показывают картинку с кодом."

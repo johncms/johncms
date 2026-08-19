@@ -502,6 +502,9 @@
       'Send a test message to' => 'Отправить тестовое сообщение на',
       'The message is sent immediately, bypassing the queue, so that the answer of the mail server is shown right here. Save the settings first.' => 'Сообщение отправляется сразу, минуя очередь, поэтому ответ почтового сервера виден прямо здесь. Сначала сохраните настройки.',
       'Send' => 'Отправить',
+      'Captcha' => 'Капча',
+      'ERROR: Can not write file `captcha.local.php`' => 'ОШИБКА: Не удается записать файл `captcha.local.php`',
+      'This provider is not configured yet. Until it is, the forms fall back to the picture with a code.' => 'Этот провайдер еще не настроен. Пока это не сделано, формы показывают картинку с кодом.',
     ),
   ),
 );

@@ -46,7 +46,7 @@
         "intervention/image": "^4.2",
         "james-heinrich/getid3": "^1.9",
         "league/flysystem": "^3.35",
-        "mobicms/captcha": "^4.0",
+        "mobicms/captcha": "^5.2",
         "monolog/monolog": "^3.9",
         "symfony/cache": "^7.4",
         "symfony/config": "^7.4",

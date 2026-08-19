@@ -7,7 +7,6 @@ namespace Tests\Unit\Auth\Authentication;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Schema\Blueprint;
 use Johncms\Auth\Authentication\AuthenticateUserUseCase;
-use Johncms\Auth\Authentication\LoginCaptcha;
 use Johncms\Auth\Authentication\LoginCredentialsDTO;
 use Johncms\Auth\Authentication\LoginStatus;
 use Johncms\Auth\Password\LegacyMd5PasswordVerifier;
@@ -15,12 +14,16 @@ use Johncms\Auth\Password\NativePasswordHasher;
 use Johncms\Auth\Password\PasswordHasherInterface;
 use Johncms\Auth\Throttling\CacheLoginThrottle;
 use Johncms\Auth\Throttling\LoginThrottleInterface;
+use Johncms\Captcha\CaptchaManager;
+use Johncms\Captcha\CaptchaProviderRegistry;
+use Johncms\Captcha\Providers\ImageCaptchaProvider;
 use Johncms\Config\ConfigRepository;
 use Johncms\Http\Environment;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
 use Johncms\Users\User;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\NullLogger;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 use Tests\Support\BootsInMemoryDatabase;
@@ -33,7 +36,9 @@ final class AuthenticateUserUseCaseTest extends TestCase
 
     private const PASSWORD = 'correct horse';
 
-    private LoginCaptcha $captcha;
+    private Session $session;
+
+    private CaptchaManager $captcha;
 
     private PasswordHasherInterface $hasher;
 
@@ -50,7 +55,11 @@ final class AuthenticateUserUseCaseTest extends TestCase
 
         ConfigRepository::init(['johncms' => ['user_email_confirmation' => 0]]);
 
-        $this->captcha = new LoginCaptcha(new Session(new MockArraySessionStorage()));
+        $this->session = new Session(new MockArraySessionStorage());
+        $this->captcha = new CaptchaManager(
+            new CaptchaProviderRegistry([new ImageCaptchaProvider($this->session, new NullLogger())]),
+            new NullLogger(),
+        );
         // The cheapest cost bcrypt accepts: these tests hash on every fixture, and the strength
         // of the algorithm is not what they are about.
         $this->hasher = new NativePasswordHasher(new LegacyMd5PasswordVerifier(), PASSWORD_BCRYPT, ['cost' => 4]);
@@ -154,7 +163,7 @@ final class AuthenticateUserUseCaseTest extends TestCase
     {
         $this->createUser();
         $this->failTimes(3);
-        $this->captcha->issue();
+        $this->issueCaptcha();
 
         self::assertSame(
             LoginStatus::CaptchaMismatch,
@@ -166,7 +175,7 @@ final class AuthenticateUserUseCaseTest extends TestCase
     {
         $this->createUser();
         $this->failTimes(3);
-        $code = $this->captcha->issue();
+        $code = $this->issueCaptcha();
 
         self::assertTrue(
             $this->useCase->execute(new LoginCredentialsDTO('Tester', self::PASSWORD, $code))->isSuccessful()
@@ -181,7 +190,7 @@ final class AuthenticateUserUseCaseTest extends TestCase
     {
         $this->createUser();
         $this->failTimes(3);
-        $code = $this->captcha->issue();
+        $code = $this->issueCaptcha();
 
         $this->useCase->execute(new LoginCredentialsDTO('Tester', self::PASSWORD, 'nope'));
 
@@ -196,7 +205,7 @@ final class AuthenticateUserUseCaseTest extends TestCase
         $this->createUser();
         $this->failTimes(3);
 
-        $code = $this->captcha->issue();
+        $code = $this->issueCaptcha();
         $this->useCase->execute(new LoginCredentialsDTO('Tester', self::PASSWORD, $code));
 
         // No verification code asked for this time: the run of failures is gone.
@@ -336,10 +345,21 @@ final class AuthenticateUserUseCaseTest extends TestCase
         $this->failTimes(20);
         $recorded = count($this->eventLogger->entries());
 
-        $result = $this->useCase->execute(new LoginCredentialsDTO('Tester', 'wrong', $this->captcha->issue()));
+        $result = $this->useCase->execute(new LoginCredentialsDTO('Tester', 'wrong', $this->issueCaptcha()));
 
         self::assertSame(LoginStatus::TooManyAttempts, $result->status);
         self::assertCount($recorded, $this->eventLogger->entries());
+    }
+
+    /**
+     * A code asked for the way the sign-in screens ask for it, and read back out of the session
+     * so the test can answer it.
+     */
+    private function issueCaptcha(): string
+    {
+        $this->captcha->challenge(AuthenticateUserUseCase::CAPTCHA_SCOPE);
+
+        return (string) $this->session->get('captcha.' . AuthenticateUserUseCase::CAPTCHA_SCOPE, '');
     }
 
     private function createUser(
@@ -370,7 +390,7 @@ final class AuthenticateUserUseCaseTest extends TestCase
     private function failTimes(int $times): void
     {
         for ($attempt = 0; $attempt < $times; $attempt++) {
-            $this->useCase->execute(new LoginCredentialsDTO('Tester', 'wrong', $this->captcha->issue()));
+            $this->useCase->execute(new LoginCredentialsDTO('Tester', 'wrong', $this->issueCaptcha()));
         }
     }
 

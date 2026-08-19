@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Johncms\Modules\Admin\Application\Controllers\Users;
 
 use Johncms\Auth\Authentication\AuthenticateUserUseCase;
-use Johncms\Auth\Authentication\LoginCaptcha;
 use Johncms\Auth\Authentication\LoginCredentialsDTO;
 use Johncms\Auth\Authentication\LoginStatus;
 use Johncms\Auth\AuthMethod;
@@ -15,10 +14,10 @@ use Johncms\Auth\Authorization\PermissionResolver;
 use Johncms\Auth\CurrentUser;
 use Johncms\Auth\Identity;
 use Johncms\Auth\Session\SignInManager;
+use Johncms\Captcha\CaptchaManager;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Users\User;
-use Mobicms\Captcha\Image;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -34,7 +33,7 @@ final readonly class UsersController
 {
     public function __construct(
         private AuthenticateUserUseCase $authenticateUser,
-        private LoginCaptcha $captcha,
+        private CaptchaManager $captcha,
         private SignInManager $signInManager,
         private PermissionResolver $permissionResolver,
         private AccessCheckerInterface $accessChecker,
@@ -61,7 +60,7 @@ final readonly class UsersController
         }
 
         $result = $this->authenticateUser->execute(
-            new LoginCredentialsDTO($userLogin, $userPass, trim($request->body('code', '')))
+            new LoginCredentialsDTO($userLogin, $userPass, trim($request->body($this->captcha->fieldName(), '')))
         );
 
         return match ($result->status) {
@@ -156,7 +155,7 @@ final readonly class UsersController
         return new ViewResponse(
             '@admin/login-captcha.twig',
             $this->pageMeta() + [
-                'captcha'    => (string) new Image($this->captcha->issue()),
+                'captcha'    => $this->captcha->challenge(AuthenticateUserUseCase::CAPTCHA_SCOPE),
                 'user_login' => $userLogin,
                 'user_pass'  => $userPass,
                 'remember'   => $request->hasBody('mem'),

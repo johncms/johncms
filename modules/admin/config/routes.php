@@ -20,6 +20,7 @@ use Johncms\Modules\Admin\Application\Controllers\Languages\LanguagesController;
 use Johncms\Modules\Admin\Application\Controllers\Settings\AdsController;
 use Johncms\Modules\Admin\Application\Controllers\Settings\AntifloodSettingsController;
 use Johncms\Modules\Admin\Application\Controllers\Settings\CountersController;
+use Johncms\Modules\Admin\Application\Controllers\Settings\CaptchaSettingsController;
 use Johncms\Modules\Admin\Application\Controllers\Settings\MailSettingsController;
 use Johncms\Modules\Admin\Application\Controllers\Settings\SystemSettingsController;
 use Johncms\Modules\Admin\Application\Controllers\System\EmoticonsController;
@@ -136,6 +137,9 @@ return static function (RouteCollection $router): void {
             $sr->get('/admin/settings/mail', [MailSettingsController::class, 'form'])->name('admin.settings.mail');
             $sr->post('/admin/settings/mail', [MailSettingsController::class, 'save'])->name('admin.settings.mail.save');
             $sr->post('/admin/settings/mail/test', [MailSettingsController::class, 'test'])->name('admin.settings.mail.test');
+            $sr->get('/admin/settings/captcha', [CaptchaSettingsController::class, 'form'])->name('admin.settings.captcha');
+            $sr->post('/admin/settings/captcha', [CaptchaSettingsController::class, 'save'])
+                ->name('admin.settings.captcha.save');
 
             $sr->get('/admin/ip-bans', [IpBanController::class, 'index'])->name('admin.ip_bans');
             $sr->get('/admin/ip-bans/new', [IpBanController::class, 'newForm'])->name('admin.ip_bans.new');

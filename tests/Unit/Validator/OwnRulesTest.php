@@ -6,6 +6,9 @@ namespace Tests\Unit\Validator;
 
 use Gettext\Translator;
 use Gettext\TranslatorFunctions;
+use Johncms\Captcha\CaptchaManager;
+use Johncms\Captcha\CaptchaProviderRegistry;
+use Johncms\Captcha\Providers\ImageCaptchaProvider;
 use Johncms\Http\Session;
 use Johncms\Security\AntifloodCheckerInterface;
 use Johncms\Validator\RuleCompiler;
@@ -26,6 +29,8 @@ use Johncms\Validator\Translation\GettextTranslator;
 use Johncms\Validator\ValidationResult;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
+use Psr\Log\NullLogger;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Johncms\Users\User;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
@@ -100,18 +105,44 @@ final class OwnRulesTest extends TestCase
 
     public function testCaptchaComparesTheSessionCodeCaseInsensitively(): void
     {
-        $validators = [CaptchaValidator::class => new CaptchaValidator($this->sessionWithCode('AbC'))];
-
-        self::assertTrue($this->validate(new Captcha(), 'abc', $validators)->isValid());
-        self::assertTrue($this->validate(new Captcha(), 'ABC', $validators)->isValid());
-        self::assertFalse($this->validate(new Captcha(), 'xyz', $validators)->isValid());
+        self::assertTrue($this->validate(new Captcha(), 'abc', $this->captchaValidators('AbC'))->isValid());
+        self::assertTrue($this->validate(new Captcha(), 'ABC', $this->captchaValidators('AbC'))->isValid());
+        self::assertFalse($this->validate(new Captcha(), 'xyz', $this->captchaValidators('AbC'))->isValid());
     }
 
     public function testCaptchaFailsWhenTheSessionHoldsNoCode(): void
     {
-        $validators = [CaptchaValidator::class => new CaptchaValidator(new Session(new MockArraySessionStorage()))];
+        $session = new Session(new MockArraySessionStorage());
 
+        self::assertFalse($this->validate(new Captcha(), 'abc', $this->validatorsFor($session))->isValid());
+    }
+
+    /**
+     * The answer is spent by being checked: a picture answered once must not stay answerable, or
+     * a captured submission could be replayed until it got through.
+     */
+    public function testCaptchaAnswersOnlyOnce(): void
+    {
+        $session = $this->sessionWithCode('AbC');
+        $validators = $this->validatorsFor($session);
+
+        self::assertTrue($this->validate(new Captcha(), 'abc', $validators)->isValid());
         self::assertFalse($this->validate(new Captcha(), 'abc', $validators)->isValid());
+    }
+
+    /**
+     * Two forms open at once keep their own answers: one shared session key used to let the
+     * later of them erase the code of the earlier.
+     */
+    public function testCaptchaScopesAreIndependent(): void
+    {
+        $session = new Session(new MockArraySessionStorage());
+        $session->set('captcha.guestbook', 'AbC');
+        $session->set('captcha.registration', 'XyZ');
+        $validators = $this->validatorsFor($session);
+
+        self::assertTrue($this->validate(new Captcha(scope: 'guestbook'), 'abc', $validators)->isValid());
+        self::assertTrue($this->validate(new Captcha(scope: 'registration'), 'xyz', $validators)->isValid());
     }
 
     /**
@@ -121,9 +152,7 @@ final class OwnRulesTest extends TestCase
      */
     public function testAnEmptyCaptchaIsReportedAsAMissingValue(): void
     {
-        $validators = [CaptchaValidator::class => new CaptchaValidator($this->sessionWithCode('AbC'))];
-
-        $result = $this->validate(new Captcha(), '', $validators);
+        $result = $this->validate(new Captcha(), '', $this->captchaValidators('AbC'));
 
         self::assertFalse($result->isValid());
         self::assertSame('Value is required and can\'t be empty', $result->getFirstError('field'));
@@ -245,8 +274,32 @@ final class OwnRulesTest extends TestCase
     private function sessionWithCode(string $code): Session
     {
         $session = new Session(new MockArraySessionStorage());
-        $session->set('code', $code);
+        $session->set('captcha.default', $code);
 
         return $session;
+    }
+
+    /**
+     * @return array<class-string, object>
+     */
+    private function captchaValidators(string $code): array
+    {
+        return $this->validatorsFor($this->sessionWithCode($code));
+    }
+
+    /**
+     * The built-in provider over the given session, reached the way the application reaches it:
+     * through the registry and the manager, so the wiring is part of what is tested.
+     *
+     * @return array<class-string, object>
+     */
+    private function validatorsFor(Session $session): array
+    {
+        $manager = new CaptchaManager(
+            new CaptchaProviderRegistry([new ImageCaptchaProvider($session, new NullLogger())]),
+            new NullLogger(),
+        );
+
+        return [CaptchaValidator::class => new CaptchaValidator($manager, new RequestStack())];
     }
 }

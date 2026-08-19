@@ -24,7 +24,7 @@ msgstr ""
 #: modules/guestbook/src/Application/Controllers/DeleteEntryController.php:56
 #: modules/guestbook/src/Application/Controllers/EditEntryController.php:48
 #: modules/guestbook/src/Application/Controllers/ReplyController.php:50
-#: modules/guestbook/src/Application/Controllers/UploadFileController.php:32
+#: modules/guestbook/src/Application/Controllers/UploadFileController.php:30
 msgid "Wrong data"
 msgstr ""
 
@@ -56,7 +56,7 @@ msgstr ""
 msgid "Guestbook is closed"
 msgstr ""
 
-#: modules/guestbook/src/Application/Controllers/GuestbookController.php:79
+#: modules/guestbook/src/Application/Controllers/GuestbookController.php:78
 msgid "Your message was added successfully"
 msgstr ""
 
@@ -150,7 +150,7 @@ msgid "Clear all"
 msgstr ""
 
 #: modules/guestbook/templates/public/clear.twig:26
-#: modules/guestbook/templates/public/index.twig:95
+#: modules/guestbook/templates/public/index.twig:79
 msgid "Clear"
 msgstr ""
 
@@ -209,27 +209,14 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: modules/guestbook/templates/public/index.twig:51
-msgid "Verification code"
-msgstr ""
-
-#: modules/guestbook/templates/public/index.twig:53
-#: modules/guestbook/templates/public/index.twig:61
-msgid "Symbols on the picture"
-msgstr ""
-
-#: modules/guestbook/templates/public/index.twig:65
-msgid "If you cannot see the image code, enable graphics in your browser and refresh this page"
-msgstr ""
-
-#: modules/guestbook/templates/public/index.twig:70
+#: modules/guestbook/templates/public/index.twig:54
 msgid "Write"
 msgstr ""
 
-#: modules/guestbook/templates/public/index.twig:75
+#: modules/guestbook/templates/public/index.twig:59
 msgid "For registered users only"
 msgstr ""
 
-#: modules/guestbook/templates/public/index.twig:82
+#: modules/guestbook/templates/public/index.twig:66
 msgid "The guestbook is empty.<br><strong>Be the first! :)</strong>"
 msgstr ""

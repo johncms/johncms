@@ -5,14 +5,13 @@ declare(strict_types=1);
 namespace Johncms\Modules\Login\Application\Controllers;
 
 use Johncms\Auth\Authentication\AuthenticateUserUseCase;
-use Johncms\Auth\Authentication\LoginCaptcha;
 use Johncms\Auth\Authentication\LoginCredentialsDTO;
 use Johncms\Auth\Authentication\LoginStatus;
 use Johncms\Auth\Session\SignInManager;
+use Johncms\Captcha\CaptchaManager;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
-use Mobicms\Captcha\Image;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 final readonly class LoginController
@@ -20,7 +19,7 @@ final readonly class LoginController
     public function __construct(
         private NavChain $navChain,
         private AuthenticateUserUseCase $authenticateUser,
-        private LoginCaptcha $captcha,
+        private CaptchaManager $captcha,
         private SignInManager $signInManager,
     ) {
     }
@@ -43,7 +42,7 @@ final readonly class LoginController
         }
 
         $result = $this->authenticateUser->execute(
-            new LoginCredentialsDTO($userLogin, $userPass, $request->body('code', ''))
+            new LoginCredentialsDTO($userLogin, $userPass, $request->body($this->captcha->fieldName(), ''))
         );
 
         return match ($result->status) {
@@ -125,7 +124,7 @@ final readonly class LoginController
             [
                 'title'      => __('Login'),
                 'page_title' => __('Login'),
-                'captcha'    => new Image($this->captcha->issue()),
+                'captcha'    => $this->captcha->challenge(AuthenticateUserUseCase::CAPTCHA_SCOPE),
                 'user_login' => $userLogin,
                 'user_pass'  => $userPass,
                 'remember'   => $this->remembered($request),

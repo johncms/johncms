@@ -1,7 +1,7 @@
 {#
     The verification code, asked for after several failed attempts.
 
-    @var string captcha    The image as a data URI.
+    @var \Johncms\Captcha\CaptchaChallenge captcha
     @var string user_login
     @var string user_pass
     @var bool   remember   Carried through, so the choice survives the verification step.
@@ -18,18 +18,7 @@
                         <img src="{{ asset('images/logo.svg') }}" alt="logo" style="max-width: 200px;" class="img-fluid">
                     </div>
 
-                    <img alt="{{ __('Verification code') }}" src="{{ captcha }}">
-                    <div class="form-group">
-                        <label for="code">{{ __('Enter verification code') }}</label>
-                        <input type="text"
-                               class="form-control"
-                               maxlength="5"
-                               name="code"
-                               id="code"
-                               required
-                               placeholder="{{ __('Verification code') }}"
-                        >
-                    </div>
+                    {% include '@theme/components/captcha.twig' with {captcha: captcha, errors: []} only %}
                     <input type="hidden" name="n" value="{{ user_login }}"/>
                     <input type="hidden" name="p" value="{{ user_pass }}"/>
                     {% if remember %}<input type="hidden" name="mem" value="1"/>{% endif %}

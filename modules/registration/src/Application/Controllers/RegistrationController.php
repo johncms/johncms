@@ -8,9 +8,9 @@ use Illuminate\Support\Str;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\CurrentUser;
 use Johncms\Auth\Session\SignInManager;
+use Johncms\Captcha\CaptchaManager;
 use Johncms\Http\Environment;
 use Johncms\Http\Request;
-use Johncms\Http\Session;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Consent\Application\Services\ConsentService;
 use Johncms\Modules\Registration\Application\DTO\RegistrationFormDTO;
@@ -26,15 +26,14 @@ use Johncms\Validator\Rules\InArray;
 use Johncms\Validator\Rules\ModelNotExists;
 use Johncms\Validator\Rules\StringLength;
 use Johncms\Validator\ValidatorInterface;
-use Mobicms\Captcha\Code;
-use Mobicms\Captcha\Image;
 
 final readonly class RegistrationController
 {
+    private const CAPTCHA_SCOPE = 'registration';
+
     public function __construct(
         private AccessCheckerInterface $accessChecker,
         private RegistrationSettings $settings,
-        private Session $session,
         private NavChain $navChain,
         private CurrentUser $currentUser,
         private RegisterUserUseCase $registerUser,
@@ -42,6 +41,7 @@ final readonly class RegistrationController
         private Environment $env,
         private ValidatorInterface $validator,
         private SignInManager $signInManager,
+        private CaptchaManager $captcha,
     ) {
     }
 
@@ -70,7 +70,7 @@ final readonly class RegistrationController
             'sex'      => $request->body('sex', ''),
             'imname'   => $request->body('imname', ''),
             'about'    => $request->body('about', ''),
-            'captcha'  => $request->body('captcha'),
+            'captcha'  => $request->body($this->captcha->fieldName(), ''),
             'email'    => $request->body('email', ''),
         ];
 
@@ -90,7 +90,7 @@ final readonly class RegistrationController
                 'name_lat' => [new ModelNotExists(model: User::class, field: 'name_lat', allowEmpty: true)],
                 'password' => [new StringLength(min: 6)],
                 'sex'      => [new InArray(haystack: ['m', 'zh'])],
-                'captcha'  => [new Captcha()],
+                'captcha'  => [new Captcha(scope: self::CAPTCHA_SCOPE)],
             ];
 
             if (! empty($config['user_email_required']) || ! empty($config['user_email_confirmation'])) {
@@ -153,11 +153,7 @@ final readonly class RegistrationController
             }
 
             $errors = $result->getErrors();
-            $this->session->remove('code');
         }
-
-        $code = (string) new Code();
-        $this->session->set('code', $code);
 
         return new ViewResponse(
             '@registration/public/index.twig',
@@ -166,7 +162,9 @@ final readonly class RegistrationController
                 'page_title'     => __('Registration'),
                 'errors'         => $errors,
                 'fields'         => $fields,
-                'captcha'        => (string) new Image($code),
+                // Issued last: checking an answer spends it, so a form shown again after a
+                // failed attempt has to carry a new one.
+                'captcha'        => $this->captcha->challenge(self::CAPTCHA_SCOPE),
                 'consents'       => $consents,
                 'needs_approval' => $this->settings->moderationEnabled(),
                 'email_required' => ! empty($config['user_email_required']) || ! empty($config['user_email_confirmation']),

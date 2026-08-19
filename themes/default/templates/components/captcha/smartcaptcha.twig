@@ -1,0 +1,11 @@
+{#
+    Yandex SmartCaptcha. Its script creates the field the answer is submitted in.
+
+    @var captcha \Johncms\Captcha\CaptchaChallenge
+    @var errors  array
+#}
+<div class="form-group">
+    <div class="smart-captcha {{ errors ? 'is-invalid' }}" data-sitekey="{{ captcha.params.site_key }}"></div>
+    {% include '@theme/components/field-errors.twig' with {errors: errors} only %}
+</div>
+<script src="https://smartcaptcha.yandexcloud.net/captcha.js" async defer></script>

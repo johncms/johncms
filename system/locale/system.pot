@@ -79,13 +79,13 @@ msgid "Library"
 msgstr ""
 
 #: config/places.global.php:21
-#: modules/login/src/Application/Controllers/LoginController.php:30
+#: modules/login/src/Application/Controllers/LoginController.php:29
+#: modules/login/src/Application/Controllers/LoginController.php:111
 #: modules/login/src/Application/Controllers/LoginController.php:112
-#: modules/login/src/Application/Controllers/LoginController.php:113
+#: modules/login/src/Application/Controllers/LoginController.php:125
 #: modules/login/src/Application/Controllers/LoginController.php:126
-#: modules/login/src/Application/Controllers/LoginController.php:127
+#: modules/login/src/Application/Controllers/LoginController.php:140
 #: modules/login/src/Application/Controllers/LoginController.php:141
-#: modules/login/src/Application/Controllers/LoginController.php:142
 #: modules/login/templates/public/login.twig:51
 #: system/src/Http/Controller/ExternalAuthController.php:312
 #: system/src/Http/Controller/ExternalAuthController.php:325
@@ -132,29 +132,30 @@ msgstr ""
 msgid "Apply"
 msgstr ""
 
-#: modules/login/src/Application/Controllers/LoginController.php:53
-#: system/src/Validator/Rules/Captcha.php:27
+#: modules/login/src/Application/Controllers/LoginController.php:52
+#: system/src/Captcha/CaptchaFailure.php:49
+#: system/src/Validator/Rules/Captcha.php:33
 msgid "The security code is not correct"
 msgstr ""
 
-#: modules/login/src/Application/Controllers/LoginController.php:58
+#: modules/login/src/Application/Controllers/LoginController.php:57
 #, php-format
 msgid "Too many attempts. Try again in %s."
 msgstr ""
 
-#: modules/login/src/Application/Controllers/LoginController.php:64
+#: modules/login/src/Application/Controllers/LoginController.php:63
 msgid "Authorization failed"
 msgstr ""
 
-#: modules/login/src/Application/Controllers/LoginController.php:76
+#: modules/login/src/Application/Controllers/LoginController.php:75
 msgid "You have not entered login"
 msgstr ""
 
-#: modules/login/src/Application/Controllers/LoginController.php:80
+#: modules/login/src/Application/Controllers/LoginController.php:79
 msgid "You have not entered password"
 msgstr ""
 
-#: modules/login/src/Application/Controllers/LoginController.php:94
+#: modules/login/src/Application/Controllers/LoginController.php:93
 #, php-format
 msgid "%d minute"
 msgid_plural "%d minutes"
@@ -172,16 +173,7 @@ msgstr ""
 msgid "Logout"
 msgstr ""
 
-#: modules/login/templates/public/captcha.twig:14
-#: modules/login/templates/public/captcha.twig:23
-msgid "Verification code"
-msgstr ""
-
-#: modules/login/templates/public/captcha.twig:16
-msgid "Enter verification code"
-msgstr ""
-
-#: modules/login/templates/public/captcha.twig:29
+#: modules/login/templates/public/captcha.twig:18
 #: themes/default/templates/pages/external-auth-profile.twig:39
 msgid "Continue"
 msgstr ""
@@ -531,6 +523,90 @@ msgstr ""
 msgid "You cannot browse as somebody who outranks you"
 msgstr ""
 
+#: system/src/Captcha/CaptchaFailure.php:50
+msgid "The verification has expired, please try again"
+msgstr ""
+
+#: system/src/Captcha/CaptchaFailure.php:51
+msgid "The verification did not pass, please try again"
+msgstr ""
+
+#: system/src/Captcha/CaptchaFailure.php:53
+msgid "The verification service is unavailable, please try again later"
+msgstr ""
+
+#: system/src/Captcha/Providers/AbstractRemoteCaptchaProvider.php:92
+msgid "The key of the widget. It is part of the page and is not a secret"
+msgstr ""
+
+#: system/src/Captcha/Providers/AbstractRemoteCaptchaProvider.php:98
+msgid "Used to check the answer. Never leaves the server"
+msgstr ""
+
+#: system/src/Captcha/Providers/AbstractRemoteCaptchaProvider.php:162
+msgid "Public key"
+msgstr ""
+
+#: system/src/Captcha/Providers/AbstractRemoteCaptchaProvider.php:167
+msgid "Secret key"
+msgstr ""
+
+#: system/src/Captcha/Providers/HCaptchaProvider.php:35
+msgid "hCaptcha"
+msgstr ""
+
+#: system/src/Captcha/Providers/ImageCaptchaProvider.php:56
+msgid "Picture with a code"
+msgstr ""
+
+#: system/src/Captcha/Providers/ImageCaptchaProvider.php:74
+msgid "Picture width"
+msgstr ""
+
+#: system/src/Captcha/Providers/ImageCaptchaProvider.php:76
+msgid "A narrow picture crowds the characters together and makes them hard to read"
+msgstr ""
+
+#: system/src/Captcha/Providers/ImageCaptchaProvider.php:81
+msgid "Picture height"
+msgstr ""
+
+#: system/src/Captcha/Providers/ImageCaptchaProvider.php:87
+msgid "Picture format"
+msgstr ""
+
+#: system/src/Captcha/Providers/ImageCaptchaProvider.php:94
+msgid "Minimum code length"
+msgstr ""
+
+#: system/src/Captcha/Providers/ImageCaptchaProvider.php:100
+msgid "Maximum code length"
+msgstr ""
+
+#: system/src/Captcha/Providers/RecaptchaV3Provider.php:48
+msgid "Google reCAPTCHA v3"
+msgstr ""
+
+#: system/src/Captcha/Providers/RecaptchaV3Provider.php:113
+msgid "Score threshold"
+msgstr ""
+
+#: system/src/Captcha/Providers/RecaptchaV3Provider.php:115
+msgid "Between 0 and 1. Submissions scored below it are refused; raising it stops more bots and more people"
+msgstr ""
+
+#: system/src/Captcha/Providers/SmartCaptchaProvider.php:38
+msgid "Yandex SmartCaptcha"
+msgstr ""
+
+#: system/src/Captcha/Providers/SmartCaptchaProvider.php:48
+msgid "Client key"
+msgstr ""
+
+#: system/src/Captcha/Providers/SmartCaptchaProvider.php:53
+msgid "Server key"
+msgstr ""
+
 #: system/src/Checker/SystemChecker.php:30
 msgid "PHP version"
 msgstr ""
@@ -691,11 +767,11 @@ msgstr ""
 msgid "Message already exists"
 msgstr ""
 
-#: system/src/Counters.php:191
+#: system/src/Counters.php:195
 msgid "Unread"
 msgstr ""
 
-#: system/src/Counters.php:197
+#: system/src/Counters.php:201
 msgid "Last activity"
 msgstr ""
 
@@ -826,17 +902,30 @@ msgid "'%hostname%' does not appear to have any valid MX or A records for the em
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:17
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:372
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:380
 #: themes/default/templates/components/sidebar-main-menu.twig:6
 #: themes/default/templates/components/sidebar-main-menu.twig:179
 msgid "Set Light Theme"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:17
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:371
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:379
 #: themes/default/templates/components/sidebar-main-menu.twig:6
 #: themes/default/templates/components/sidebar-main-menu.twig:178
 msgid "Set Dark Theme"
+msgstr ""
+
+#: themes/default/templates/components/captcha/image.twig:9
+#: themes/default/templates/components/captcha/image.twig:19
+msgid "Verification code"
+msgstr ""
+
+#: themes/default/templates/components/captcha/image.twig:11
+msgid "Enter verification code"
+msgstr ""
+
+#: themes/default/templates/components/captcha/image.twig:23
+msgid "If you cannot see the image code, enable graphics in your browser and refresh this page"
 msgstr ""
 
 #: themes/default/templates/components/comments-form.twig:21

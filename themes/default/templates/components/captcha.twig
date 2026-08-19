@@ -1,0 +1,10 @@
+{#
+    The verification a visitor has to pass, whichever provider the site uses.
+
+    What is drawn comes from the provider: the picture of the built-in one, the widget of a
+    remote service. A page includes this and never learns which of them answered.
+
+    @var captcha \Johncms\Captcha\CaptchaChallenge
+    @var errors  array Messages of the field, from the validation result.
+#}
+{% include captcha.template with {captcha: captcha, errors: errors} only %}

@@ -12,11 +12,11 @@ msgstr ""
 #: modules/registration/src/Application/Controllers/RegistrationController.php:62
 #: modules/registration/src/Application/Controllers/RegistrationController.php:144
 #: modules/registration/src/Application/Controllers/RegistrationController.php:145
-#: modules/registration/src/Application/Controllers/RegistrationController.php:165
-#: modules/registration/src/Application/Controllers/RegistrationController.php:166
+#: modules/registration/src/Application/Controllers/RegistrationController.php:161
+#: modules/registration/src/Application/Controllers/RegistrationController.php:162
 #: modules/registration/src/Application/Services/RegistrationPermissions.php:31
 #: modules/registration/templates/public/index.twig:16
-#: modules/registration/templates/public/index.twig:129
+#: modules/registration/templates/public/index.twig:113
 msgid "Registration"
 msgstr ""
 
@@ -93,19 +93,6 @@ msgstr ""
 
 #: modules/registration/templates/public/index.twig:97
 msgid "Tell us a little about yourself"
-msgstr ""
-
-#: modules/registration/templates/public/index.twig:102
-#: modules/registration/templates/public/index.twig:112
-msgid "Verification code"
-msgstr ""
-
-#: modules/registration/templates/public/index.twig:104
-msgid "Enter verification code"
-msgstr ""
-
-#: modules/registration/templates/public/index.twig:116
-msgid "If you cannot see the image code, enable graphics in your browser and refresh this page"
 msgstr ""
 
 #: modules/registration/templates/public/registration-closed.twig:7

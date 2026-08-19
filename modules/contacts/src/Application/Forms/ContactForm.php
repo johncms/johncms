@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Contacts\Application\Forms;
 
 use Johncms\Auth\CurrentUser;
+use Johncms\Captcha\CaptchaManager;
 use Johncms\Modules\Contacts\Domain\Models\ContactMessage;
 use Johncms\Http\Request;
 use Johncms\Security\ClientInfoDTO;
@@ -25,8 +26,11 @@ final readonly class ContactForm
      */
     public const HONEYPOT_FIELD = 'contact_link';
 
+    public const CAPTCHA_SCOPE = 'contacts';
+
     public function __construct(
         private CurrentUser $currentUser,
+        private CaptchaManager $captcha,
     ) {
     }
 
@@ -39,7 +43,9 @@ final readonly class ContactForm
             'name'                 => $request->body('name', ''),
             'email'                => $request->body('email', ''),
             'message'              => $request->body('message', ''),
-            'code'                 => $request->body('code', ''),
+            // The name of the field belongs to the captcha in use: the built-in one answers in
+            // `code`, a remote service in a field of its own.
+            'code'                 => $request->body($this->captcha->fieldName(), ''),
             self::HONEYPOT_FIELD   => $request->body(self::HONEYPOT_FIELD, ''),
         ];
 
@@ -86,7 +92,7 @@ final readonly class ContactForm
         ];
 
         if (! $this->currentUser->isValid()) {
-            $rules['code'] = [new Captcha()];
+            $rules['code'] = [new Captcha(scope: self::CAPTCHA_SCOPE)];
         }
 
         return $rules;

@@ -17,6 +17,7 @@ use Johncms\Auth\Events\AuthEventLoggerInterface;
 use Johncms\Auth\Events\AuthEventType;
 use Johncms\Auth\Password\PasswordHasherInterface;
 use Johncms\Auth\Throttling\LoginThrottleInterface;
+use Johncms\Captcha\CaptchaManager;
 use Johncms\Http\Environment;
 use Johncms\Users\User;
 
@@ -33,8 +34,14 @@ use Johncms\Users\User;
  */
 final readonly class AuthenticateUserUseCase
 {
+    /**
+     * The captcha of the sign-in screens. Both of them — the public one and the panel — ask for
+     * the same challenge, so it is named here rather than in either of them.
+     */
+    public const CAPTCHA_SCOPE = 'login';
+
     public function __construct(
-        private LoginCaptcha $captcha,
+        private CaptchaManager $captcha,
         private PasswordHasherInterface $hasher,
         private LoginThrottleInterface $throttle,
         private Environment $environment,
@@ -61,7 +68,13 @@ final readonly class AuthenticateUserUseCase
                 return new LoginResultDTO(LoginStatus::CaptchaRequired);
             }
 
-            if (! $this->captcha->verify($credentials->captchaAnswer)) {
+            $verification = $this->captcha->verify(
+                $credentials->captchaAnswer,
+                self::CAPTCHA_SCOPE,
+                $this->environment->getClientInfo()->ip,
+            );
+
+            if (! $verification->passed) {
                 $this->registerFailure($keys);
                 $this->logFailure($credentials->login, 'captcha_mismatch');
 

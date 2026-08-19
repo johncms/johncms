@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Profile\Application\Controllers;
 
+use Johncms\Captcha\CaptchaManager;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\Profile\Application\DTO\SendRecoveryCommand;
 use Johncms\Modules\Profile\Application\Exceptions\PasswordRecoveryException;
@@ -12,20 +13,19 @@ use Johncms\Modules\Profile\Application\UseCases\GetRecoveryContextUseCase;
 use Johncms\Modules\Profile\Application\UseCases\SendPasswordRecoveryUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\Http\Session;
 use Johncms\Validator\Rules\Captcha;
 use Johncms\Validator\ValidatorInterface;
-use Mobicms\Captcha\Code;
-use Mobicms\Captcha\Image;
 
 final readonly class RestorePasswordController
 {
+    private const CAPTCHA_SCOPE = 'password_recovery';
+
     public function __construct(
         private NavChain $navChain,
         private SendPasswordRecoveryUseCase $sendPasswordRecovery,
         private GetRecoveryContextUseCase $getRecoveryContext,
         private CompletePasswordRecoveryUseCase $completePasswordRecovery,
-        private Session $session,
+        private CaptchaManager $captcha,
         private ValidatorInterface $validator,
     ) {
     }
@@ -34,13 +34,10 @@ final readonly class RestorePasswordController
     {
         $this->navChain->add(__('Restore password'));
 
-        $code = (string) new Code();
-        $this->session->set('code', $code);
-
         return new ViewResponse(
             '@profile/public/restore-password.twig',
             [
-                'captcha' => new Image($code),
+                'captcha' => $this->captcha->challenge(self::CAPTCHA_SCOPE),
             ]
         );
     }
@@ -49,10 +46,14 @@ final readonly class RestorePasswordController
     {
         $this->navChain->add(__('Restore password'));
 
+        // The answer is spent by being checked, so a failed attempt cannot be replayed against
+        // the same picture; the form issues a new one.
         $captchaValid = $this->validator
-            ->validate(['captcha' => $request->body('code')], ['captcha' => [new Captcha()]])
+            ->validate(
+                ['captcha' => $request->body($this->captcha->fieldName(), '')],
+                ['captcha' => [new Captcha(scope: self::CAPTCHA_SCOPE)]]
+            )
             ->isValid();
-        $this->session->remove('code');
 
         if (! $captchaValid) {
             return $this->error(__('Incorrect code'));
