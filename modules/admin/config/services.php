@@ -94,10 +94,10 @@ return static function (ContainerConfigurator $container): void {
     $services->set(IpSearchRepositoryInterface::class, EloquentIpSearchRepository::class)->public();
     $services->set(BanListRepositoryInterface::class, EloquentBanListRepository::class)->public();
     $services->set(AuthLogRepositoryInterface::class, EloquentAuthLogRepository::class)->public();
-    $services->set(AuthConfigRepositoryInterface::class, FileSystemAuthConfigRepository::class)->public();
+    $services->set(AuthConfigRepositoryInterface::class, FileSystemAuthConfigRepository::class)->autowire()->public();
     $services->set(SystemConfigRepositoryInterface::class, FileSystemConfigRepository::class)->public();
     $services->set(MailConfigRepositoryInterface::class, FileMailConfigRepository::class)->public();
-    $services->set(CaptchaConfigRepositoryInterface::class, FileCaptchaConfigRepository::class)->public();
+    $services->set(CaptchaConfigRepositoryInterface::class, FileCaptchaConfigRepository::class)->autowire()->public();
     $services->set(ThemeListProviderInterface::class, FileSystemThemeListProvider::class)->public();
     $services->set(SmiliesScannerInterface::class, FileSystemSmiliesScanner::class)->autowire()->public();
     $services->set(SmiliesCacheRepositoryInterface::class, FileSmiliesCacheRepository::class)->public();
