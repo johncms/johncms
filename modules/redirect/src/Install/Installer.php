@@ -14,10 +14,6 @@ namespace Johncms\Modules\Redirect\Install;
 
 class Installer extends \Johncms\Modules\Installer
 {
-    public function install(): void
-    {
-    }
-
     public function uninstall(): void
     {
     }

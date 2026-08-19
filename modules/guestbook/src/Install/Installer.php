@@ -12,16 +12,10 @@ namespace Johncms\Modules\Guestbook\Install;
 
 use Gettext\TranslatorFunctions;
 use Illuminate\Database\Capsule\Manager as Capsule;
-use Illuminate\Database\Schema\Blueprint;
 use Johncms\System\i18n\Translator;
 
 class Installer extends \Johncms\Modules\Installer
 {
-    public function install(): void
-    {
-        $this->createTables();
-    }
-
     public function uninstall(): void
     {
     }
@@ -99,31 +93,5 @@ class Installer extends \Johncms\Modules\Installer
             // Keep the current default domain (e.g. 'install'); only add the guestbook catalog.
             $translator->addTranslationDomain('guestbook', MODULES_PATH . 'guestbook/locale', false);
         }
-    }
-
-    private function createTables(): void
-    {
-        $schema = Capsule::schema();
-        // Гостевая
-        $schema->create(
-            'guest',
-            static function (Blueprint $table) {
-                $table->increments('id');
-                $table->boolean('adm')->default(0)->index('adm');
-                $table->integer('time')->unsigned()->default(0)->index('time');
-                $table->integer('user_id')->unsigned()->default(0);
-                $table->string('name')->default('');
-                $table->text('text');
-                $table->bigInteger('ip')->default(0)->index('ip');
-                $table->string('browser')->default('');
-                $table->string('admin')->default('');
-                $table->text('otvet');
-                $table->integer('otime')->unsigned()->default(0);
-                $table->string('edit_who')->default('');
-                $table->integer('edit_time')->unsigned()->default(0);
-                $table->tinyInteger('edit_count')->unsigned()->default(0);
-                $table->longText('attached_files')->nullable();
-            }
-        );
     }
 }

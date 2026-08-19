@@ -257,7 +257,7 @@ return static function (ContainerConfigurator $container): void {
                 ROOT_PATH . 'system/src/Auth/Authorization/SystemRole.php',
                 ROOT_PATH . 'system/src/Auth/Authorization/LegacyRightsMigrationReport.php',
                 ROOT_PATH . 'system/src/Auth/SecureToken.php',
-                ROOT_PATH . 'system/src/Auth/Schema',
+                ROOT_PATH . 'system/src/Auth/AuthTables.php',
                 ROOT_PATH . 'system/src/Auth/Session/IssuedSession.php',
                 ROOT_PATH . 'system/src/Auth/Session/SessionRevocationReason.php',
                 ROOT_PATH . 'system/src/Auth/Events/AuthEventType.php',
@@ -284,7 +284,7 @@ return static function (ContainerConfigurator $container): void {
                 ROOT_PATH . 'system/src/Mail/RedirectAllMessages.php',
                 ROOT_PATH . 'system/src/Mail/Queue/QueuedEmailDTO.php',
                 ROOT_PATH . 'system/src/Mail/Exception',
-                ROOT_PATH . 'system/src/Mail/Schema',
+                ROOT_PATH . 'system/src/Mail/MailTables.php',
                 // The storage layer: settings and enums are value objects built by
                 // StorageSettingsFactory, and a disk carries the scalars of its configuration —
                 // StorageFactory assembles it, the container cannot.

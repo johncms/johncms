@@ -13,16 +13,18 @@ use Illuminate\Database\Schema\Blueprint;
 use Johncms\Auth\Authorization\RoleSeeder;
 use Johncms\Auth\Authorization\SystemRole;
 use Johncms\Auth\Infrastructure\Persistence\Repository\EloquentRoleRepository;
-use Johncms\Auth\Schema\AuthSchema;
+use Johncms\Auth\AuthTables;
 use Johncms\Modules\Admin\Application\UseCases\UpdateUserRolesUseCase;
 use Johncms\Users\User;
 use PHPUnit\Framework\TestCase;
 use Tests\Support\BootsInMemoryDatabase;
+use Tests\Support\RunsMigrations;
 use Tests\Support\RecordingAuthEventLogger;
 
 final class UpdateUserRolesUseCaseTest extends TestCase
 {
     use BootsInMemoryDatabase;
+    use RunsMigrations;
 
     private EloquentRoleRepository $roles;
 
@@ -36,7 +38,7 @@ final class UpdateUserRolesUseCaseTest extends TestCase
         // The built-in roles are named through the gettext helpers, which nothing has registered
         // in an isolated unit test.
         TranslatorFunctions::register(new Translator());
-        AuthSchema::create(Capsule::schema());
+        $this->migrate('system', 'initial_auth_schema');
         $this->createUsersTable();
 
         $this->roles = new EloquentRoleRepository();

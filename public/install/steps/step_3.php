@@ -11,14 +11,12 @@
 declare(strict_types=1);
 
 use Illuminate\Database\Capsule\Manager as Capsule;
-use Install\Database;
 use Johncms\Checker\DBChecker;
-use Johncms\Modules\ModuleInstaller;
-use Johncms\Modules\Modules;
+use Johncms\Config\ConfigLoader;
+use Johncms\Config\ConfigRepository;
+use Johncms\Database\Migrations\Migrator;
+use Johncms\Database\Schema\SchemaInterface;
 use Johncms\Http\Request;
-
-// The installer lives outside the composer autoload map, so its own classes are required directly.
-require_once dirname(__DIR__) . '/lib/Database.php';
 
 /** @var Request $request Built by the installer entry point, which includes this file. */
 
@@ -102,14 +100,19 @@ if ($request->getMethod() === 'POST') {
             (! $version_info['error'] || $request->body('anyway_continue') === 'yes') &&
             file_put_contents(CONFIG_PATH . 'autoload/database.local.php', $db_file)
         ) {
-            Database::createTables($version_info['error']);
+            // The connection details have just been written to disk. The configuration in memory
+            // was read before that file existed, and the migrator asks the container for the
+            // database, so it is read again.
+            ConfigRepository::init((new ConfigLoader(CONFIG_PATH . 'autoload'))->load());
 
-            // Installing modules
-            $modules = new Modules();
-            $installed_modules = $modules->getInstalled();
-            foreach ($installed_modules as $module) {
-                (new ModuleInstaller($module))->install();
+            // On MySQL below 5.7 a 255-character utf8mb4 column cannot be indexed.
+            if ($version_info['error']) {
+                di(SchemaInterface::class)->setDefaultStringLength(191);
             }
+
+            // The schema of the core and of every module, from the same migrations an existing
+            // site is brought up to date with: there is no second description to drift from.
+            di(Migrator::class)->run();
 
             header('Location: /install/?step=4');
             exit;

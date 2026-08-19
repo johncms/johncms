@@ -30,11 +30,6 @@ class ModuleInstaller
         }
     }
 
-    public function install(): void
-    {
-        $this->installer->install();
-    }
-
     public function uninstall(): void
     {
         $this->installer->uninstall();

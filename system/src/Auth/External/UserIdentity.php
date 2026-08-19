@@ -14,7 +14,7 @@ namespace Johncms\Auth\External;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Johncms\Auth\Schema\AuthSchema;
+use Johncms\Auth\AuthTables;
 
 /**
  * One account of an external service linked to an account of the site.
@@ -32,7 +32,7 @@ use Johncms\Auth\Schema\AuthSchema;
  */
 class UserIdentity extends Model
 {
-    protected $table = AuthSchema::USER_IDENTITIES;
+    protected $table = AuthTables::USER_IDENTITIES;
 
     public $timestamps = false;
 

@@ -8,6 +8,38 @@ Detailed change can see in the [repository log](https://github.com/johncms/johnc
 ## 10.0 - Unreleased
 
 #### Breaking changes
+- **Схема базы данных переехала в миграции.** Установщик больше не создаёт таблицы сам: и свежая установка, и обновление существующего сайта идут одним путём — через миграции.
+
+  Миграции лежат в `system/migrations/` (ядро) и `modules/<модуль>/migrations/` (модули). Файл возвращает анонимный класс, унаследованный от `Johncms\Database\Migrations\Migration`, и получает только схему и соединение — ни моделей, ни репозиториев, ни сервисов: миграция обязана отработать без изменений и через несколько лет.
+
+  ```php
+  return new class extends Migration {
+      public function up(): void
+      {
+          $this->schema->create('widgets', static function (TableDefinition $table): void {
+              $table->increments('id');
+              $table->string('name');
+              $table->timestamps();
+          });
+      }
+  };
+  ```
+
+  Команды:
+
+  ```bash
+  php system/bin/console migrate                 # применить неприменённое
+  php system/bin/console migrate:status          # что применено, что ждёт
+  php system/bin/console migrate:rollback        # откатить последний прогон (для разработки)
+  php system/bin/console make:migration <источник> <имя> [--table=] [--create]
+  ```
+
+  Журнал применённого — таблица `migrations` в самой базе, а не файл: восстановленный дамп приносит с собой ровно то состояние, которому соответствует.
+
+  Что нужно сделать при обновлении: выполнить `php system/bin/console migrate`. Команды `auth:upgrade-schema` и `mail:upgrade-schema` удалены — их работу делает `migrate`.
+
+  Авторам модулей: метод `install()` у `Johncms\Modules\Installer` удалён, таблицы модуля описываются его миграциями. `installDemoData()` и `uninstall()` не изменились. Классы `Johncms\Auth\Schema\AuthSchema` и `Johncms\Mail\Schema\MailSchema` удалены; имена таблиц, которые они держали, переехали в `Johncms\Auth\AuthTables` и `Johncms\Mail\MailTables`.
+
 - **Шаблоны переведены на Twig, движок Plates удалён.** Файлы `.phtml` больше не рендерятся, пакет `mobicms/render` исключён из зависимостей, вместе с ним удалены `Johncms\System\View\Render`, его расширения (`Assets`, `Avatar`, `Vite`, `Formatter`) и переменные шаблонов `$this->e()`, `$this->layout()`, `$this->fetch()`, `$user`, `$config`, `$tools`.
 
   Своя тема потребует переписывания. Что меняется:

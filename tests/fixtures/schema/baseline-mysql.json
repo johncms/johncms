@@ -1,0 +1,356 @@
+{
+    "album": {
+        "cms_album_cat": [
+            "create table `cms_album_cat` (`id` int unsigned not null auto_increment primary key, `user_id` int unsigned not null, `sort` int unsigned not null default '0', `name` varchar(255) not null, `description` text not null, `password` varchar(255) null, `access` int null) default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `cms_album_cat` add index `user_id`(`user_id`)",
+            "alter table `cms_album_cat` add index `access`(`access`)"
+        ],
+        "cms_album_comments": [
+            "create table `cms_album_comments` (`id` int unsigned not null auto_increment primary key, `sub_id` int unsigned not null default '0', `time` int unsigned not null default '0', `user_id` int unsigned not null default '0', `text` text not null, `reply` text not null, `attributes` text not null) default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `cms_album_comments` add index `sub_id`(`sub_id`)",
+            "alter table `cms_album_comments` add index `user_id`(`user_id`)"
+        ],
+        "cms_album_downloads": [
+            "create table `cms_album_downloads` (`user_id` int unsigned not null default '0', `file_id` int unsigned not null default '0', `time` int unsigned not null default '0', primary key (`user_id`, `file_id`)) default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC"
+        ],
+        "cms_album_files": [
+            "create table `cms_album_files` (`id` int unsigned not null auto_increment primary key, `user_id` int unsigned not null, `album_id` int unsigned not null, `description` text not null, `img_name` varchar(255) not null default '', `tmb_name` varchar(255) not null default '', `time` int unsigned not null default '0', `comments` tinyint(1) not null default '1', `comm_count` int unsigned not null default '0', `access` tinyint unsigned not null default '0', `vote_plus` int not null default '0', `vote_minus` int not null default '0', `views` int unsigned not null default '0', `downloads` int unsigned not null default '0', `unread_comments` tinyint(1) not null default '0') default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `cms_album_files` add index `user_id`(`user_id`)",
+            "alter table `cms_album_files` add index `album_id`(`album_id`)",
+            "alter table `cms_album_files` add index `access`(`access`)"
+        ],
+        "cms_album_views": [
+            "create table `cms_album_views` (`user_id` int unsigned not null default '0', `file_id` int unsigned not null default '0', `time` int unsigned not null default '0', primary key (`user_id`, `file_id`)) default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC"
+        ],
+        "cms_album_votes": [
+            "create table `cms_album_votes` (`id` int unsigned not null auto_increment primary key, `user_id` int unsigned not null default '0', `file_id` int unsigned not null default '0', `vote` tinyint not null) default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `cms_album_votes` add index `user_id`(`user_id`)",
+            "alter table `cms_album_votes` add index `file_id`(`file_id`)"
+        ]
+    },
+    "collections": {
+        "collection_fields": [
+            "create table `collection_fields` (`id` int unsigned not null auto_increment primary key, `collection_id` int unsigned not null, `code` varchar(255) not null, `name` varchar(255) not null, `type` varchar(255) not null, `required` tinyint(1) not null default '0', `multiple` tinyint(1) not null default '0', `sort` int not null default '100', `settings` json null, `created_at` timestamp null, `updated_at` timestamp null) default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `collection_fields` add unique `collection_field_code`(`collection_id`, `code`)",
+            "alter table `collection_fields` add constraint `collection_fields_collection_id_foreign` foreign key (`collection_id`) references `collections` (`id`) on delete cascade on update cascade",
+            "alter table `collection_fields` add index `collection_fields_collection_id_index`(`collection_id`)"
+        ],
+        "collection_item_values": [
+            "create table `collection_item_values` (`id` int unsigned not null auto_increment primary key, `item_id` int unsigned not null, `field_id` int unsigned not null, `value_string` varchar(255) null, `value_int` bigint null, `value_double` double null, `value_date` datetime null, `value_text` longtext null, `sort` int not null default '0') default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `collection_item_values` add index `collection_value_item_field`(`item_id`, `field_id`)",
+            "alter table `collection_item_values` add index `collection_value_field_int`(`field_id`, `value_int`)",
+            "alter table `collection_item_values` add index `collection_value_field_string`(`field_id`, `value_string`)",
+            "alter table `collection_item_values` add index `collection_value_field_date`(`field_id`, `value_date`)",
+            "alter table `collection_item_values` add constraint `collection_item_values_item_id_foreign` foreign key (`item_id`) references `collection_items` (`id`) on delete cascade on update cascade",
+            "alter table `collection_item_values` add constraint `collection_item_values_field_id_foreign` foreign key (`field_id`) references `collection_fields` (`id`) on delete cascade on update cascade",
+            "alter table `collection_item_values` add index `collection_item_values_item_id_index`(`item_id`)",
+            "alter table `collection_item_values` add index `collection_item_values_field_id_index`(`field_id`)"
+        ],
+        "collection_items": [
+            "create table `collection_items` (`id` int unsigned not null auto_increment primary key, `collection_id` int unsigned not null, `section_id` int unsigned null, `name` varchar(255) not null, `code` varchar(255) not null, `active` tinyint(1) not null default '1', `active_from` datetime null, `active_to` datetime null, `sort` int not null default '100', `preview_text` text null, `detail_text` longtext null, `view_count` int null, `created_by` int null, `updated_by` int null, `created_at` timestamp null, `updated_at` timestamp null) default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `collection_items` add unique `collection_item_code`(`collection_id`, `section_id`, `code`)",
+            "alter table `collection_items` add index `collection_item_listing`(`collection_id`, `active`, `sort`)",
+            "alter table `collection_items` add constraint `collection_items_collection_id_foreign` foreign key (`collection_id`) references `collections` (`id`) on delete cascade on update cascade",
+            "alter table `collection_items` add constraint `collection_items_section_id_foreign` foreign key (`section_id`) references `collection_sections` (`id`) on delete set null on update cascade",
+            "alter table `collection_items` add index `collection_items_collection_id_index`(`collection_id`)",
+            "alter table `collection_items` add index `collection_items_section_id_index`(`section_id`)",
+            "alter table `collection_items` add index `collection_items_code_index`(`code`)"
+        ],
+        "collection_sections": [
+            "create table `collection_sections` (`id` int unsigned not null auto_increment primary key, `collection_id` int unsigned not null, `parent` int unsigned null, `name` varchar(255) not null, `code` varchar(255) not null, `description` text null, `active` tinyint(1) not null default '1', `sort` int not null default '100', `created_at` timestamp null, `updated_at` timestamp null) default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `collection_sections` add unique `collection_section_code`(`collection_id`, `parent`, `code`)",
+            "alter table `collection_sections` add constraint `collection_sections_collection_id_foreign` foreign key (`collection_id`) references `collections` (`id`) on delete cascade on update cascade",
+            "alter table `collection_sections` add index `collection_sections_collection_id_index`(`collection_id`)",
+            "alter table `collection_sections` add index `collection_sections_parent_index`(`parent`)",
+            "alter table `collection_sections` add index `collection_sections_code_index`(`code`)",
+            "alter table `collection_sections` add constraint `collection_sections_parent_foreign` foreign key (`parent`) references `collection_sections` (`id`) on delete cascade on update cascade"
+        ],
+        "collections": [
+            "create table `collections` (`id` int unsigned not null auto_increment primary key, `code` varchar(255) not null, `name` varchar(255) not null, `description` text null, `settings` json null, `sort` int not null default '100', `active` tinyint(1) not null default '1', `public` tinyint(1) not null default '1', `created_at` timestamp null, `updated_at` timestamp null) default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `collections` add unique `collections_code_unique`(`code`)"
+        ]
+    },
+    "consent": {
+        "consent_log": [
+            "create table `consent_log` (`id` int unsigned not null auto_increment primary key, `user_id` int unsigned null, `consent_id` int unsigned not null, `version` varchar(255) not null, `ip_address` varchar(45) not null, `accepted_at` datetime not null) default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `consent_log` add index `consent_log_user_id_index`(`user_id`)",
+            "alter table `consent_log` add index `consent_log_consent_id_index`(`consent_id`)"
+        ],
+        "consents": [
+            "create table `consents` (`id` int unsigned not null auto_increment primary key, `context` varchar(255) not null, `language` varchar(5) not null, `title` text not null, `text` longtext not null, `version` varchar(255) not null, `is_required` tinyint(1) not null default '1', `is_active` tinyint(1) not null default '1', `created_at` timestamp null, `updated_at` timestamp null) default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `consents` add index `consents_context_index`(`context`)",
+            "alter table `consents` add index `consents_language_index`(`language`)"
+        ]
+    },
+    "contacts": {
+        "contact_messages": [
+            "create table `contact_messages` (`id` int unsigned not null auto_increment primary key, `user_id` int unsigned null, `name` varchar(255) not null, `email` varchar(255) not null, `message` text not null, `status` varchar(20) not null default 'new', `ip_address` varchar(45) not null, `user_agent` varchar(255) null, `processed_at` datetime null, `created_at` timestamp null, `updated_at` timestamp null) default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `contact_messages` add index `contact_messages_user_id_index`(`user_id`)",
+            "alter table `contact_messages` add index `contact_messages_status_index`(`status`)"
+        ]
+    },
+    "downloads": {
+        "download__bookmark": [
+            "create table `download__bookmark` (`id` int unsigned not null auto_increment primary key, `user_id` int not null, `file_id` int not null) default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `download__bookmark` add index `user_id`(`user_id`)",
+            "alter table `download__bookmark` add index `file_id`(`file_id`)"
+        ],
+        "download__category": [
+            "create table `download__category` (`id` int unsigned not null auto_increment primary key, `refid` int unsigned not null default '0', `dir` text not null, `sort` int not null default '0', `name` text not null, `slug` varchar(255) null, `total` int unsigned not null default '0', `rus_name` text not null, `text` text not null, `field` int unsigned not null default '0', `desc` text not null) default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `download__category` add unique `download__category_refid_slug_unique`(`refid`, `slug`)",
+            "alter table `download__category` add index `refid`(`refid`)",
+            "alter table `download__category` add index `total`(`total`)"
+        ],
+        "download__comments": [
+            "create table `download__comments` (`id` int unsigned not null auto_increment primary key, `sub_id` int unsigned not null, `time` int not null, `user_id` int unsigned not null, `text` text not null, `reply` text not null, `attributes` text not null) default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `download__comments` add index `sub_id`(`sub_id`)",
+            "alter table `download__comments` add index `user_id`(`user_id`)"
+        ],
+        "download__files": [
+            "create table `download__files` (`id` int unsigned not null auto_increment primary key, `refid` int unsigned not null default '0', `dir` text not null, `time` int unsigned not null default '0', `name` text not null, `type` int unsigned not null default '0', `user_id` int unsigned not null default '0', `rus_name` text not null, `slug` varchar(255) null, `text` text not null, `field` int unsigned not null default '0', `rate` varchar(255) not null default '0|0', `about` text not null, `desc` text not null, `comm_count` int unsigned not null default '0') default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `download__files` add unique `download__files_refid_slug_unique`(`refid`, `slug`)",
+            "alter table `download__files` add index `refid`(`refid`)",
+            "alter table `download__files` add index `time`(`time`)",
+            "alter table `download__files` add index `type`(`type`)",
+            "alter table `download__files` add index `user_id`(`user_id`)",
+            "alter table `download__files` add index `comm_count`(`comm_count`)"
+        ],
+        "download__more": [
+            "create table `download__more` (`id` int unsigned not null auto_increment primary key, `refid` int unsigned not null default '0', `time` int unsigned not null default '0', `name` text not null, `rus_name` text not null, `size` int unsigned not null default '0') default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `download__more` add index `refid`(`refid`)",
+            "alter table `download__more` add index `time`(`time`)"
+        ]
+    },
+    "forum": {
+        "cms_forum_files": [
+            "create table `cms_forum_files` (`id` int unsigned not null auto_increment primary key, `cat` int unsigned not null default '0', `subcat` int unsigned not null default '0', `topic` int unsigned not null default '0', `post` int unsigned not null default '0', `time` int unsigned not null default '0', `filename` text not null, `filetype` tinyint unsigned not null default '0', `dlcount` int unsigned not null default '0', `del` tinyint(1) not null default '0') default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `cms_forum_files` add index `cat`(`cat`)",
+            "alter table `cms_forum_files` add index `subcat`(`subcat`)",
+            "alter table `cms_forum_files` add index `topic`(`topic`)",
+            "alter table `cms_forum_files` add index `post`(`post`)"
+        ],
+        "cms_forum_rdm": [
+            "create table `cms_forum_rdm` (`topic_id` int unsigned not null default '0', `user_id` int unsigned not null default '0', `time` int unsigned not null default '0', primary key (`topic_id`, `user_id`)) default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `cms_forum_rdm` add index `time`(`time`)"
+        ],
+        "cms_forum_vote": [
+            "create table `cms_forum_vote` (`id` int unsigned not null auto_increment primary key, `type` int not null default '0', `time` int unsigned not null default '0', `topic` int unsigned not null default '0', `name` varchar(255) not null, `count` int unsigned not null default '0') default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `cms_forum_vote` add index `type_topic`(`type`, `topic`)",
+            "alter table `cms_forum_vote` add index `type`(`type`)",
+            "alter table `cms_forum_vote` add index `topic`(`topic`)"
+        ],
+        "cms_forum_vote_users": [
+            "create table `cms_forum_vote_users` (`id` int unsigned not null auto_increment primary key, `user` int not null default '0', `topic` int not null, `vote` int not null) default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `cms_forum_vote_users` add index `topic_user`(`topic`, `user`)",
+            "alter table `cms_forum_vote_users` add index `topic`(`topic`)"
+        ],
+        "forum_message_files": [
+            "create table `forum_message_files` (`id` bigint unsigned not null auto_increment primary key, `message_id` bigint unsigned not null, `file_id` bigint unsigned not null, `created_at` datetime null) default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `forum_message_files` add unique `forum_message_files_message_file_unique`(`message_id`, `file_id`)",
+            "alter table `forum_message_files` add index `forum_message_files_message_id`(`message_id`)",
+            "alter table `forum_message_files` add index `forum_message_files_file_id`(`file_id`)"
+        ],
+        "forum_messages": [
+            "create table `forum_messages` (`id` bigint unsigned not null auto_increment primary key, `topic_id` int not null, `text` longtext not null, `date` int null, `user_id` int unsigned not null, `user_name` varchar(255) null, `user_agent` varchar(255) null, `ip` bigint null, `ip_via_proxy` bigint null, `pinned` tinyint(1) null, `editor_name` varchar(255) null, `edit_time` int null, `edit_count` int null, `deleted` tinyint(1) null, `deleted_by` varchar(255) null) default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `forum_messages` add index `topic_id`(`topic_id`)",
+            "alter table `forum_messages` add index `deleted`(`deleted`)",
+            "ALTER TABLE `forum_messages` ADD FULLTEXT `text` (`text`)"
+        ],
+        "forum_sections": [
+            "create table `forum_sections` (`id` int unsigned not null auto_increment primary key, `parent` int null, `name` varchar(255) not null, `slug` varchar(255) null, `description` text null, `meta_description` text null, `meta_keywords` varchar(255) null, `sort` int not null default '100', `access` int null, `section_type` int null) default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `forum_sections` add unique `forum_sections_parent_slug_unique`(`parent`, `slug`)",
+            "alter table `forum_sections` add index `parent`(`parent`)"
+        ],
+        "forum_topic": [
+            "create table `forum_topic` (`id` int unsigned not null auto_increment primary key, `section_id` int unsigned null, `name` varchar(255) not null, `slug` varchar(255) null, `description` text null, `meta_description` text null, `meta_keywords` varchar(255) null, `view_count` int null, `user_id` int unsigned not null, `user_name` varchar(255) null, `created_at` datetime null, `post_count` int null, `mod_post_count` int null, `last_post_date` int null, `last_post_author` int unsigned null, `last_post_author_name` varchar(255) null, `last_message_id` bigint null, `mod_last_post_date` int null, `mod_last_post_author` int unsigned null, `mod_last_post_author_name` varchar(255) null, `mod_last_message_id` bigint null, `closed` tinyint(1) null, `closed_by` varchar(255) null, `deleted` tinyint(1) null, `deleted_by` varchar(255) null, `curators` mediumtext null, `pinned` tinyint(1) null, `has_poll` tinyint(1) null) default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `forum_topic` add unique `forum_topic_section_slug_unique`(`section_id`, `slug`)",
+            "alter table `forum_topic` add index `deleted`(`deleted`)"
+        ]
+    },
+    "guestbook": {
+        "guest": [
+            "create table `guest` (`id` int unsigned not null auto_increment primary key, `adm` tinyint(1) not null default '0', `time` int unsigned not null default '0', `user_id` int unsigned not null default '0', `name` varchar(255) not null default '', `text` text not null, `ip` bigint not null default '0', `browser` varchar(255) not null default '', `admin` varchar(255) not null default '', `otvet` text not null, `otime` int unsigned not null default '0', `edit_who` varchar(255) not null default '', `edit_time` int unsigned not null default '0', `edit_count` tinyint unsigned not null default '0', `attached_files` longtext null) default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `guest` add index `adm`(`adm`)",
+            "alter table `guest` add index `time`(`time`)",
+            "alter table `guest` add index `ip`(`ip`)"
+        ]
+    },
+    "library": {
+        "cms_library_comments": [
+            "create table `cms_library_comments` (`id` int unsigned not null auto_increment primary key, `sub_id` int unsigned not null default '0', `time` int not null default '0', `user_id` int unsigned not null default '0', `text` text not null, `reply` text not null, `attributes` text not null) default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `cms_library_comments` add index `sub_id`(`sub_id`)",
+            "alter table `cms_library_comments` add index `user_id`(`user_id`)"
+        ],
+        "cms_library_rating": [
+            "create table `cms_library_rating` (`id` int unsigned not null auto_increment primary key, `user_id` int unsigned not null, `st_id` int unsigned not null, `point` tinyint not null) default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `cms_library_rating` add index `user_article`(`user_id`, `st_id`)"
+        ],
+        "library_cats": [
+            "create table `library_cats` (`id` int unsigned not null auto_increment primary key, `parent` int unsigned not null default '0', `name` varchar(255) not null default '', `slug` varchar(255) null, `description` text not null, `dir` tinyint(1) not null default '0', `pos` int unsigned not null default '0', `user_add` tinyint(1) not null default '0') default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `library_cats` add unique `library_cats_parent_slug_unique`(`parent`, `slug`)"
+        ],
+        "library_tags": [
+            "create table `library_tags` (`id` int unsigned not null auto_increment primary key, `lib_text_id` int unsigned not null default '0', `tag_name` varchar(255) not null default '') default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `library_tags` add index `lib_text_id`(`lib_text_id`)",
+            "alter table `library_tags` add index `tag_name`(`tag_name`)"
+        ],
+        "library_texts": [
+            "create table `library_texts` (`id` int unsigned not null auto_increment primary key, `cat_id` int unsigned not null default '0', `text` mediumtext not null, `name` varchar(255) not null default '', `slug` varchar(255) null, `announce` text not null, `uploader` varchar(255) not null default '', `uploader_id` int unsigned not null default '0', `count_views` int unsigned not null default '0', `premod` tinyint(1) not null default '0', `comments` tinyint(1) not null default '0', `comm_count` int unsigned not null default '0', `time` int unsigned not null default '0') default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `library_texts` add index `name`(`name`)",
+            "ALTER TABLE `library_texts` ADD FULLTEXT `text` (`text`)",
+            "ALTER TABLE `library_texts` ADD FULLTEXT `idx_name` (`name`)"
+        ]
+    },
+    "mail": {
+        "cms_contact": [
+            "create table `cms_contact` (`id` int unsigned not null auto_increment primary key, `user_id` int unsigned not null default '0', `from_id` int unsigned not null default '0', `time` int unsigned not null default '0', `type` tinyint unsigned not null default '1', `friends` tinyint unsigned not null default '0', `ban` tinyint unsigned not null default '0', `man` tinyint unsigned not null default '0') default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `cms_contact` add unique `id_user`(`user_id`, `from_id`)",
+            "alter table `cms_contact` add index `time`(`time`)",
+            "alter table `cms_contact` add index `ban`(`ban`)"
+        ],
+        "cms_mail": [
+            "create table `cms_mail` (`id` int unsigned not null auto_increment primary key, `user_id` int unsigned not null default '0', `from_id` int unsigned not null default '0', `text` text not null, `time` int unsigned not null default '0', `read` tinyint(1) not null default '0', `sys` tinyint(1) not null default '0', `delete` int unsigned not null default '0', `file_name` varchar(255) not null default '', `count` int not null default '0', `size` int not null default '0', `them` varchar(255) not null default '', `spam` tinyint(1) not null default '0') default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `cms_mail` add index `user_id`(`user_id`)",
+            "alter table `cms_mail` add index `from_id`(`from_id`)",
+            "alter table `cms_mail` add index `time`(`time`)",
+            "alter table `cms_mail` add index `read`(`read`)",
+            "alter table `cms_mail` add index `sys`(`sys`)",
+            "alter table `cms_mail` add index `delete`(`delete`)"
+        ]
+    },
+    "news": {
+        "news_articles": [
+            "create table `news_articles` (`id` int unsigned not null auto_increment primary key, `section_id` int unsigned null, `active` tinyint(1) null, `active_from` datetime null, `active_to` datetime null, `name` varchar(255) not null, `page_title` varchar(255) null, `code` varchar(255) not null, `keywords` text null, `description` text null, `preview_text` text null, `text` longtext not null, `view_count` int null, `tags` varchar(255) null, `created_by` int null, `updated_by` int null, `attached_files` longtext null, `created_at` timestamp null, `updated_at` timestamp null, `deleted_at` timestamp null) default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `news_articles` add unique `section_code`(`section_id`, `code`)",
+            "alter table `news_articles` add index `news_articles_section_id_index`(`section_id`)",
+            "alter table `news_articles` add index `news_articles_code_index`(`code`)",
+            "alter table `news_articles` add index `news_articles_tags_index`(`tags`)"
+        ],
+        "news_comments": [
+            "create table `news_comments` (`id` int unsigned not null auto_increment primary key, `article_id` int unsigned not null, `user_id` int unsigned not null, `text` longtext not null, `user_data` text not null, `created_at` datetime not null, `attached_files` longtext null, `deleted_at` timestamp null) default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `news_comments` add constraint `news_comments_article_id_foreign` foreign key (`article_id`) references `news_articles` (`id`) on delete cascade on update cascade",
+            "alter table `news_comments` add index `news_comments_article_id_index`(`article_id`)"
+        ],
+        "news_search_index": [
+            "create table `news_search_index` (`id` int unsigned not null auto_increment primary key, `article_id` int unsigned not null, `text` longtext not null) default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `news_search_index` add constraint `news_search_index_article_id_foreign` foreign key (`article_id`) references `news_articles` (`id`) on delete cascade on update cascade",
+            "alter table `news_search_index` add index `news_search_index_article_id_index`(`article_id`)"
+        ],
+        "news_sections": [
+            "create table `news_sections` (`id` int unsigned not null auto_increment primary key, `parent` int null, `name` varchar(255) not null, `code` varchar(255) null, `text` text null, `keywords` text null, `description` text null, `created_at` timestamp null, `updated_at` timestamp null, `deleted_at` timestamp null) default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `news_sections` add index `news_sections_parent_index`(`parent`)",
+            "alter table `news_sections` add index `news_sections_code_index`(`code`)"
+        ],
+        "news_votes": [
+            "create table `news_votes` (`id` int unsigned not null auto_increment primary key, `article_id` int unsigned not null, `user_id` int unsigned not null, `vote` int not null) default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `news_votes` add unique `article_user`(`article_id`, `user_id`)",
+            "alter table `news_votes` add constraint `news_votes_article_id_foreign` foreign key (`article_id`) references `news_articles` (`id`) on delete cascade on update cascade"
+        ]
+    },
+    "notifications": {
+        "notifications": [
+            "create table `notifications` (`id` int unsigned not null auto_increment primary key, `module` varchar(255) not null comment 'Module name', `event_type` varchar(255) not null comment 'Event type', `user_id` int unsigned not null comment 'User identifier', `sender_id` int unsigned null comment 'Sender identifier', `entity_id` int unsigned null comment 'Entity identifier', `fields` text null comment 'Event fields', `read_at` timestamp null comment 'Read date', `created_at` timestamp null, `updated_at` timestamp null) default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `notifications` add constraint `notifications_user_id_foreign` foreign key (`user_id`) references `users` (`id`) on delete cascade on update cascade",
+            "alter table `notifications` add index `user_module_type_entity`(`user_id`, `module`, `event_type`, `entity_id`)",
+            "alter table `notifications` add index `notifications_user_id_index`(`user_id`)"
+        ]
+    },
+    "system": {
+        "auth_events": [
+            "create table `auth_events` (`id` int unsigned not null auto_increment primary key, `user_id` int unsigned null, `actor_id` int unsigned null, `event` varchar(64) not null, `ip` varchar(45) not null default '', `user_agent` varchar(255) not null default '', `context` json null, `created_at` int unsigned not null) default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `auth_events` add index `auth_events_user_id_index`(`user_id`)",
+            "alter table `auth_events` add index `auth_events_actor_id_index`(`actor_id`)",
+            "alter table `auth_events` add index `auth_events_event_index`(`event`)",
+            "alter table `auth_events` add index `auth_events_created_at_index`(`created_at`)"
+        ],
+        "auth_sessions": [
+            "create table `auth_sessions` (`id` int unsigned not null auto_increment primary key, `user_id` int unsigned not null, `token_hash` varchar(64) not null, `created_at` int unsigned not null, `last_used_at` int unsigned not null, `expires_at` int unsigned not null, `absolute_expires_at` int unsigned null, `remember` tinyint(1) not null default '0', `ip` varchar(45) not null default '', `user_agent` varchar(255) not null default '', `revoked_at` int unsigned null, `revoked_reason` varchar(32) null, `impersonator_id` int unsigned null, `parent_session_id` int unsigned null) default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `auth_sessions` add index `auth_sessions_user_id_index`(`user_id`)",
+            "alter table `auth_sessions` add unique `auth_sessions_token_hash_unique`(`token_hash`)",
+            "alter table `auth_sessions` add index `auth_sessions_last_used_at_index`(`last_used_at`)",
+            "alter table `auth_sessions` add index `auth_sessions_expires_at_index`(`expires_at`)"
+        ],
+        "cms_ads": [
+            "create table `cms_ads` (`id` int unsigned not null auto_increment primary key, `type` tinyint unsigned null default '0', `view` tinyint unsigned null default '0', `layout` tinyint unsigned null default '0', `count` int unsigned null default '0', `count_link` int unsigned null default '0', `name` text not null, `link` text not null, `to` int unsigned null default '0', `color` varchar(255) null default '', `time` int unsigned null default '0', `day` int unsigned null default '0', `mesto` tinyint unsigned null default '0', `bold` tinyint unsigned null default '0', `italic` tinyint unsigned null default '0', `underline` tinyint unsigned null default '0', `show` tinyint unsigned null default '0') default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC"
+        ],
+        "cms_ban_ip": [
+            "create table `cms_ban_ip` (`id` int unsigned not null auto_increment primary key, `ip1` bigint not null default '0', `ip2` bigint not null default '0', `ban_type` tinyint not null default '0', `link` varchar(255) not null default '', `who` varchar(255) not null default '', `reason` text not null, `date` int not null default '0') default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `cms_ban_ip` add unique `ip1`(`ip1`)",
+            "alter table `cms_ban_ip` add unique `ip2`(`ip2`)"
+        ],
+        "cms_ban_users": [
+            "create table `cms_ban_users` (`id` int unsigned not null auto_increment primary key, `user_id` int not null default '0', `ban_time` int not null default '0', `ban_while` int not null default '0', `ban_type` tinyint not null default '1', `ban_who` varchar(255) not null default '', `ban_ref` int not null default '0', `ban_reason` text not null, `ban_raz` varchar(255) not null default '') default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `cms_ban_users` add index `user_id`(`user_id`)",
+            "alter table `cms_ban_users` add index `ban_time`(`ban_time`)"
+        ],
+        "cms_counters": [
+            "create table `cms_counters` (`id` int unsigned not null auto_increment primary key, `sort` int not null default '1', `name` varchar(255) not null default '', `link1` text not null, `link2` text not null, `mode` tinyint not null default '1', `switch` tinyint(1) not null default '0', `require_cookie_consent` tinyint(1) not null default '0') default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC"
+        ],
+        "cms_sessions": [
+            "create table `cms_sessions` (`session_id` char(32) not null default '', `ip` bigint not null default '0', `ip_via_proxy` bigint not null default '0', `browser` varchar(255) not null default '', `lastdate` int unsigned not null default '0', `sestime` int unsigned not null default '0', `views` int unsigned not null default '0', `movings` smallint unsigned not null default '0', `place` text not null, primary key (`session_id`)) default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `cms_sessions` add index `lastdate`(`lastdate`)"
+        ],
+        "cms_users_data": [
+            "create table `cms_users_data` (`id` int unsigned not null auto_increment primary key, `user_id` int unsigned not null default '0', `key` varchar(255) not null default '', `val` text not null) default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `cms_users_data` add index `user_id`(`user_id`)",
+            "alter table `cms_users_data` add index `key`(`key`)"
+        ],
+        "cms_users_guestbook": [
+            "create table `cms_users_guestbook` (`id` int unsigned not null auto_increment primary key, `sub_id` int unsigned not null, `time` int not null, `user_id` int unsigned not null, `text` text not null, `reply` text not null, `attributes` text not null) default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `cms_users_guestbook` add index `sub_id`(`sub_id`)",
+            "alter table `cms_users_guestbook` add index `user_id`(`user_id`)"
+        ],
+        "cms_users_iphistory": [
+            "create table `cms_users_iphistory` (`id` bigint unsigned not null auto_increment primary key, `user_id` int unsigned not null, `ip` bigint not null default '0', `ip_via_proxy` bigint not null default '0', `time` int unsigned not null) default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `cms_users_iphistory` add index `user_id`(`user_id`)",
+            "alter table `cms_users_iphistory` add index `user_ip`(`ip`)"
+        ],
+        "email_messages": [
+            "create table `email_messages` (`id` bigint unsigned not null auto_increment primary key, `priority` int null comment 'Priority of sending the message', `locale` varchar(8) not null comment 'The language used for displaying the message', `template` varchar(255) not null comment 'Template name', `fields` text null comment 'Event fields', `sent_at` timestamp null comment 'The time when the message was sent', `created_at` timestamp null, `updated_at` timestamp null, `attempts` int unsigned not null default '0', `last_error` text null, `available_at` timestamp null, `failed_at` timestamp null, `locked_at` timestamp null, `locked_by` varchar(64) null) default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `email_messages` add index `email_messages_queue_index`(`sent_at`, `failed_at`, `priority`)"
+        ],
+        "files": [
+            "create table `files` (`id` bigint unsigned not null auto_increment primary key, `storage` varchar(255) not null, `name` varchar(255) not null, `path` varchar(255) not null, `size` int unsigned null, `md5` varchar(32) null, `sha1` varchar(40) null, `created_at` timestamp null, `updated_at` timestamp null, `deleted_at` timestamp null) default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `files` add index `files_storage_index`(`storage`)"
+        ],
+        "karma_users": [
+            "create table `karma_users` (`id` int unsigned not null auto_increment primary key, `user_id` int unsigned not null default '0', `name` varchar(255) not null default '', `karma_user` int unsigned not null default '0', `points` tinyint unsigned not null default '0', `type` tinyint unsigned not null default '0', `time` int unsigned not null default '0', `text` text not null) default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `karma_users` add index `user_id`(`user_id`)",
+            "alter table `karma_users` add index `karma_user`(`karma_user`)",
+            "alter table `karma_users` add index `type`(`type`)"
+        ],
+        "password_reset_tokens": [
+            "create table `password_reset_tokens` (`id` int unsigned not null auto_increment primary key, `user_id` int unsigned not null, `token_hash` varchar(64) not null, `expires_at` int unsigned not null, `used_at` int unsigned null, `created_at` int unsigned not null) default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `password_reset_tokens` add index `password_reset_tokens_user_id_index`(`user_id`)",
+            "alter table `password_reset_tokens` add unique `password_reset_tokens_token_hash_unique`(`token_hash`)",
+            "alter table `password_reset_tokens` add index `password_reset_tokens_expires_at_index`(`expires_at`)",
+            "alter table `password_reset_tokens` add index `password_reset_tokens_created_at_index`(`created_at`)"
+        ],
+        "role_permissions": [
+            "create table `role_permissions` (`id` int unsigned not null auto_increment primary key, `role_id` int unsigned not null, `permission` varchar(128) not null) default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `role_permissions` add unique `role_permissions_role_id_permission_unique`(`role_id`, `permission`)",
+            "alter table `role_permissions` add index `role_permissions_role_id_index`(`role_id`)"
+        ],
+        "roles": [
+            "create table `roles` (`id` int unsigned not null auto_increment primary key, `slug` varchar(64) not null, `name` varchar(191) not null default '', `level` smallint unsigned not null default '0', `is_system` tinyint(1) not null default '0', `is_default` tinyint(1) not null default '0', `is_guest` tinyint(1) not null default '0', `created_at` int unsigned not null default '0', `updated_at` int unsigned not null default '0') default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `roles` add unique `roles_slug_unique`(`slug`)"
+        ],
+        "user_identities": [
+            "create table `user_identities` (`id` int unsigned not null auto_increment primary key, `user_id` int unsigned not null, `provider` varchar(32) not null, `provider_user_id` varchar(191) not null, `email` varchar(191) null, `nickname` varchar(191) null, `avatar_url` text null, `linked_at` int unsigned not null, `last_login_at` int unsigned null) default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `user_identities` add unique `user_identities_provider_provider_user_id_unique`(`provider`, `provider_user_id`)",
+            "alter table `user_identities` add unique `user_identities_user_id_provider_unique`(`user_id`, `provider`)",
+            "alter table `user_identities` add index `user_identities_user_id_index`(`user_id`)"
+        ],
+        "user_roles": [
+            "create table `user_roles` (`id` int unsigned not null auto_increment primary key, `user_id` int unsigned not null, `role_id` int unsigned not null, `granted_by` int unsigned null, `granted_at` int unsigned not null default '0', `expires_at` int unsigned null) default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `user_roles` add unique `user_roles_user_id_role_id_unique`(`user_id`, `role_id`)",
+            "alter table `user_roles` add index `user_roles_user_id_index`(`user_id`)",
+            "alter table `user_roles` add index `user_roles_role_id_index`(`role_id`)"
+        ],
+        "users": [
+            "create table `users` (`id` int unsigned not null auto_increment primary key, `name` varchar(100) not null default '', `name_lat` varchar(100) not null default '', `password` varchar(255) not null default '', `imname` varchar(255) not null default '', `sex` varchar(5) not null default '', `komm` int unsigned not null default '0', `postforum` int unsigned not null default '0', `postguest` int unsigned not null default '0', `yearofbirth` int unsigned not null default '0', `datereg` int unsigned not null default '0', `lastdate` int unsigned not null default '0', `mail` varchar(255) not null default '', `icq` int unsigned not null default '0', `skype` varchar(255) not null default '', `jabber` varchar(255) not null default '', `www` varchar(255) not null default '', `about` text null, `live` varchar(255) not null default '', `mibile` varchar(255) not null default '', `status` varchar(255) not null default '', `ip` bigint not null default '0', `ip_via_proxy` bigint not null default '0', `browser` text not null, `preg` tinyint(1) not null default '0', `regadm` varchar(255) not null default '', `mailvis` tinyint(1) not null default '0', `dayb` int not null default '0', `monthb` int not null default '0', `sestime` int unsigned not null default '0', `total_on_site` int unsigned not null default '0', `lastpost` int unsigned not null default '0', `movings` int unsigned not null default '0', `place` text null, `set_user` text null, `set_forum` text null, `set_mail` text null, `karma_plus` int not null default '0', `karma_minus` int not null default '0', `karma_time` int unsigned not null default '0', `karma_off` tinyint(1) not null default '0', `comm_count` int unsigned not null default '0', `comm_old` int unsigned not null default '0', `smileys` text null, `notification_settings` text null, `email_confirmed` tinyint(1) null, `confirmation_code` varchar(255) null, `new_email` varchar(255) null, `admin_notes` text null) default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine = InnoDB ROW_FORMAT=DYNAMIC",
+            "alter table `users` add index `name_lat`(`name_lat`)",
+            "alter table `users` add index `lastdate`(`lastdate`)"
+        ]
+    }
+}

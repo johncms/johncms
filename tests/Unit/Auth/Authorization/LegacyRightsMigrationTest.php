@@ -15,14 +15,16 @@ use Johncms\Auth\Authorization\RoleSeeder;
 use Johncms\Auth\Authorization\SystemRole;
 use Johncms\Auth\Authorization\UserRole;
 use Johncms\Auth\Infrastructure\Persistence\Repository\EloquentRoleRepository;
-use Johncms\Auth\Schema\AuthSchema;
+use Johncms\Auth\AuthTables;
 use Johncms\Users\User;
 use PHPUnit\Framework\TestCase;
 use Tests\Support\BootsInMemoryDatabase;
+use Tests\Support\RunsMigrations;
 
 final class LegacyRightsMigrationTest extends TestCase
 {
     use BootsInMemoryDatabase;
+    use RunsMigrations;
 
     private EloquentRoleRepository $roles;
 
@@ -34,7 +36,7 @@ final class LegacyRightsMigrationTest extends TestCase
         // The seeder names the roles through the gettext helpers, which nothing has registered
         // in an isolated unit test.
         TranslatorFunctions::register(new Translator());
-        AuthSchema::create(Capsule::schema());
+        $this->migrate('system', 'initial_auth_schema');
         $this->createUsersTable();
 
         $this->roles = new EloquentRoleRepository();

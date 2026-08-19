@@ -14,7 +14,7 @@ namespace Johncms\Auth\Session;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Johncms\Auth\Schema\AuthSchema;
+use Johncms\Auth\AuthTables;
 
 /**
  * One signed-in device: the digest of the cookie it holds, when it was last seen and when it
@@ -43,7 +43,7 @@ use Johncms\Auth\Schema\AuthSchema;
  */
 class AuthSession extends Model
 {
-    protected $table = AuthSchema::AUTH_SESSIONS;
+    protected $table = AuthTables::AUTH_SESSIONS;
 
     public $timestamps = false;
 

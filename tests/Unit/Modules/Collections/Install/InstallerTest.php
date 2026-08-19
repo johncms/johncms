@@ -10,10 +10,12 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 use Johncms\Modules\Collections\Install\Installer;
 use PHPUnit\Framework\TestCase;
 use Tests\Support\BootsInMemoryDatabase;
+use Tests\Support\RunsMigrations;
 
 final class InstallerTest extends TestCase
 {
     use BootsInMemoryDatabase;
+    use RunsMigrations;
 
     private const TABLES = [
         'collections',
@@ -41,7 +43,7 @@ final class InstallerTest extends TestCase
 
     public function testInstallCreatesAllTables(): void
     {
-        (new Installer('collections'))->install();
+        $this->migrate('collections');
 
         $schema = Capsule::schema();
         foreach (self::TABLES as $table) {
@@ -51,7 +53,7 @@ final class InstallerTest extends TestCase
 
     public function testInstalledTablesHaveExpectedColumns(): void
     {
-        (new Installer('collections'))->install();
+        $this->migrate('collections');
 
         $schema = Capsule::schema();
 
@@ -64,9 +66,8 @@ final class InstallerTest extends TestCase
 
     public function testInstallDemoDataSeedsBlogCollection(): void
     {
-        $installer = new Installer('collections');
-        $installer->install();
-        $installer->installDemoData();
+        $this->migrate('collections');
+        (new Installer('collections'))->installDemoData();
 
         $collection = Capsule::table('collections')->where('code', 'blog')->first();
         self::assertNotNull($collection);
@@ -79,9 +80,8 @@ final class InstallerTest extends TestCase
 
     public function testInstallDemoDataWritesValuesIntoTypedColumns(): void
     {
-        $installer = new Installer('collections');
-        $installer->install();
-        $installer->installDemoData();
+        $this->migrate('collections');
+        (new Installer('collections'))->installDemoData();
 
         $authorFieldId = Capsule::table('collection_fields')->where('code', 'author')->value('id');
         $ratingFieldId = Capsule::table('collection_fields')->where('code', 'rating')->value('id');
@@ -98,9 +98,8 @@ final class InstallerTest extends TestCase
 
     public function testUninstallDropsAllTables(): void
     {
-        $installer = new Installer('collections');
-        $installer->install();
-        $installer->uninstall();
+        $this->migrate('collections');
+        (new Installer('collections'))->uninstall();
 
         $schema = Capsule::schema();
         foreach (self::TABLES as $table) {

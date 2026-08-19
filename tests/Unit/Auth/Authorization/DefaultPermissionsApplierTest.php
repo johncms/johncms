@@ -15,13 +15,15 @@ use Johncms\Auth\Authorization\PermissionRegistry;
 use Johncms\Auth\Authorization\RoleSeeder;
 use Johncms\Auth\Authorization\SystemRole;
 use Johncms\Auth\Infrastructure\Persistence\Repository\EloquentRoleRepository;
-use Johncms\Auth\Schema\AuthSchema;
+use Johncms\Auth\AuthTables;
 use PHPUnit\Framework\TestCase;
 use Tests\Support\BootsInMemoryDatabase;
+use Tests\Support\RunsMigrations;
 
 final class DefaultPermissionsApplierTest extends TestCase
 {
     use BootsInMemoryDatabase;
+    use RunsMigrations;
 
     private EloquentRoleRepository $roles;
 
@@ -33,7 +35,7 @@ final class DefaultPermissionsApplierTest extends TestCase
         // The built-in roles are named through the gettext helpers, which nothing has registered
         // in an isolated unit test.
         TranslatorFunctions::register(new Translator());
-        AuthSchema::create(Capsule::schema());
+        $this->migrate('system', 'initial_auth_schema');
 
         $this->roles = new EloquentRoleRepository();
         $this->applier = new DefaultPermissionsApplier($this->roles, $this->defaults());

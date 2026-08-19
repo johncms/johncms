@@ -11,6 +11,9 @@
 namespace Johncms\Modules;
 
 /**
+ * What a module does at installation beyond its tables. The tables themselves come from its
+ * migrations, so nothing here creates one.
+ *
  * @psalm-consistent-constructor
  */
 abstract class Installer
@@ -22,8 +25,6 @@ abstract class Installer
     {
         $this->module_name = $module_name;
     }
-
-    abstract public function install(): void;
 
     abstract public function uninstall(): void;
 

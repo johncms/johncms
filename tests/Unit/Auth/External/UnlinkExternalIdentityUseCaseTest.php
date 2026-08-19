@@ -12,10 +12,11 @@ use Johncms\Auth\External\ExternalAuthException;
 use Johncms\Auth\External\UnlinkExternalIdentityUseCase;
 use Johncms\Auth\External\UserIdentity;
 use Johncms\Auth\Infrastructure\Persistence\Repository\EloquentUserIdentityRepository;
-use Johncms\Auth\Schema\AuthSchema;
+use Johncms\Auth\AuthTables;
 use Johncms\Users\User;
 use PHPUnit\Framework\TestCase;
 use Tests\Support\BootsInMemoryDatabase;
+use Tests\Support\RunsMigrations;
 use Tests\Support\FakeUserRepository;
 use Tests\Support\RecordingAuthEventLogger;
 
@@ -25,6 +26,7 @@ use Tests\Support\RecordingAuthEventLogger;
 final class UnlinkExternalIdentityUseCaseTest extends TestCase
 {
     use BootsInMemoryDatabase;
+    use RunsMigrations;
 
     private UnlinkExternalIdentityUseCase $useCase;
 
@@ -36,7 +38,7 @@ final class UnlinkExternalIdentityUseCaseTest extends TestCase
     {
         $this->bootDatabase();
         TranslatorFunctions::register(new Translator());
-        AuthSchema::create(Capsule::schema());
+        $this->migrate('system', 'initial_auth_schema');
         $this->createUsersTable();
 
         $this->user = new User();

@@ -11,13 +11,14 @@ use Johncms\Mail\MailFactory;
 use Johncms\Mail\MailRenderer;
 use Johncms\Mail\Queue\EloquentEmailQueue;
 use Johncms\Mail\Queue\MailQueueSettings;
-use Johncms\Mail\Schema\MailSchema;
+use Johncms\Mail\MailTables;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\NullLogger;
 use Symfony\Component\Mailer\Exception\TransportException;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Mime\HtmlToTextConverter\DefaultHtmlToTextConverter;
 use Tests\Support\BootsInMemoryDatabase;
+use Tests\Support\RunsMigrations;
 use Twig\Environment;
 use Twig\Loader\ArrayLoader;
 
@@ -29,6 +30,7 @@ use Twig\Loader\ArrayLoader;
 final class EmailSenderTest extends TestCase
 {
     use BootsInMemoryDatabase;
+    use RunsMigrations;
 
     private const TEMPLATE = 'welcome.twig';
 
@@ -43,7 +45,7 @@ final class EmailSenderTest extends TestCase
     protected function setUp(): void
     {
         $this->bootDatabase();
-        MailSchema::create(Capsule::schema());
+        $this->migrate('system', 'initial_mail_schema');
         $this->delivered = [];
     }
 

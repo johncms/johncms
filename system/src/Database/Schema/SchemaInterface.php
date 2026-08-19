@@ -44,6 +44,17 @@ interface SchemaInterface
     public function hasIndex(string $table, string $index): bool;
 
     /**
+     * Whether the table already has the named foreign key.
+     *
+     * A separate question from hasIndex(): a database is free to satisfy a foreign key with an
+     * index that is already there, and then the constraint exists under a name no index carries.
+     *
+     * A database that does not name its foreign keys — SQLite is one — cannot answer this, and
+     * says no. A migration guarded by it therefore repeats its work on such a database.
+     */
+    public function hasForeignKey(string $table, string $name): bool;
+
+    /**
      * The type of a column as the database itself reports it, or null when there is no such
      * column. The spelling belongs to the database, so a caller compares loosely — with
      * str_contains(), not with an equality against a type name it made up.

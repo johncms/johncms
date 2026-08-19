@@ -14,7 +14,7 @@ namespace Johncms\Auth\Authorization;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Johncms\Auth\Schema\AuthSchema;
+use Johncms\Auth\AuthTables;
 
 /**
  * A role granted to one account, beyond the default ones everybody has.
@@ -29,7 +29,7 @@ use Johncms\Auth\Schema\AuthSchema;
  */
 class UserRole extends Model
 {
-    protected $table = AuthSchema::USER_ROLES;
+    protected $table = AuthTables::USER_ROLES;
 
     public $timestamps = false;
 

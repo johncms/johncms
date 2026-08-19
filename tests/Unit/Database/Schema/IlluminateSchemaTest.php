@@ -189,6 +189,48 @@ final class IlluminateSchemaTest extends TestCase
         self::assertFalse($this->schema->hasIndex('sessions', 'sessions_token_index'));
     }
 
+    /**
+     * SQLite has no word index, so the description is carried out without it instead of failing:
+     * a search that needs one does not work on such a database anyway.
+     */
+    public function testAWordIndexIsLeftOutWhereTheDatabaseHasNone(): void
+    {
+        $this->schema->create('articles_text', static function (TableDefinition $table): void {
+            $table->increments('id');
+            $table->text('body');
+            $table->fullText('body', 'body_fulltext');
+        });
+
+        self::assertTrue($this->schema->hasTable('articles_text'));
+        self::assertFalse($this->schema->hasIndex('articles_text', 'body_fulltext'));
+    }
+
+    /**
+     * A separate question from hasIndex(): a database may satisfy a foreign key with an index it
+     * already has, and then no index carries the name of the constraint.
+     *
+     * SQLite does not name its foreign keys at all, so here the answer is no even for the key
+     * that was just created — which is what the interface says such a database answers. What the
+     * question is actually for is MySQL, where the name is what identifies the constraint.
+     */
+    public function testAForeignKeyIsAskedAboutByName(): void
+    {
+        $this->schema->create('owners', static function (TableDefinition $table): void {
+            $table->increments('id');
+        });
+
+        self::assertFalse($this->schema->hasForeignKey('owners', 'anything'));
+        self::assertFalse($this->schema->hasForeignKey('not_a_table', 'anything'));
+
+        $this->schema->create('owned', static function (TableDefinition $table): void {
+            $table->increments('id');
+            $table->integer('owner_id')->unsigned();
+            $table->foreign('owner_id', 'owned_owner_id_foreign')->references('id')->on('owners');
+        });
+
+        self::assertFalse($this->schema->hasForeignKey('owned', 'owned_owner_id_foreign'));
+    }
+
     public function testTableIsRenamedDroppedAndAskedAbout(): void
     {
         self::assertFalse($this->schema->hasTable('before'));

@@ -22,7 +22,7 @@ use Johncms\Auth\Authorization\PermissionResolver;
 use Johncms\Auth\Authorization\RoleLevels;
 use Johncms\Auth\Authorization\RoleSeeder;
 use Johncms\Auth\Authorization\SystemRole;
-use Johncms\Auth\Schema\AuthSchema;
+use Johncms\Auth\AuthTables;
 use Johncms\Auth\Session\AuthCookieFactory;
 use Johncms\Auth\Session\AuthSession;
 use Johncms\Auth\Session\AuthSessionManager;
@@ -39,6 +39,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Tests\Support\BootsInMemoryDatabase;
+use Tests\Support\RunsMigrations;
 use Tests\Support\FakeAccessChecker;
 use Tests\Support\FakeAuthenticator;
 use Tests\Support\FakeUserRepository;
@@ -50,6 +51,7 @@ use Tests\Support\RecordingAuthEventLogger;
 final class ImpersonationManagerTest extends TestCase
 {
     use BootsInMemoryDatabase;
+    use RunsMigrations;
 
     private const COOKIE = 'jc_auth';
 
@@ -69,7 +71,7 @@ final class ImpersonationManagerTest extends TestCase
     {
         $this->bootDatabase();
         TranslatorFunctions::register(new Translator());
-        AuthSchema::create(Capsule::schema());
+        $this->migrate('system', 'initial_auth_schema');
         $this->createUsersTable();
 
         $this->sessions = new AuthSessionManager(new EloquentAuthSessionRepository(), new SessionSettings());

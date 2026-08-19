@@ -12,23 +12,25 @@ use Johncms\Auth\Events\AuthEventLogger;
 use Johncms\Auth\Events\AuthEventType;
 use Johncms\Auth\Identity;
 use Johncms\Auth\Infrastructure\Persistence\Repository\EloquentAuthEventRepository;
-use Johncms\Auth\Schema\AuthSchema;
+use Johncms\Auth\AuthTables;
 use Johncms\Http\Environment;
 use Johncms\Http\Request;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Tests\Support\BootsInMemoryDatabase;
+use Tests\Support\RunsMigrations;
 use Tests\Support\CurrentUserFactory;
 use Tests\Support\IdentityFactory;
 
 final class AuthEventLoggerTest extends TestCase
 {
     use BootsInMemoryDatabase;
+    use RunsMigrations;
 
     protected function setUp(): void
     {
         $this->bootDatabase();
-        AuthSchema::create(Capsule::schema());
+        $this->migrate('system', 'initial_auth_schema');
     }
 
     protected function tearDown(): void

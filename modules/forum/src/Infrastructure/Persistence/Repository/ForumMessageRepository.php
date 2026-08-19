@@ -7,7 +7,7 @@ namespace Johncms\Modules\Forum\Infrastructure\Persistence\Repository;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Johncms\Auth\Authorization\UserRole;
-use Johncms\Auth\Schema\AuthSchema;
+use Johncms\Auth\AuthTables;
 use Johncms\Modules\Forum\Domain\Models\ForumMessage;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
 
@@ -246,11 +246,11 @@ class ForumMessageRepository implements ForumMessageRepositoryInterface
 
         /** @var Builder<UserRole> $query */
         $query = UserRole::query();
-        $query->whereColumn(AuthSchema::USER_ROLES . '.user_id', 'users.id');
+        $query->whereColumn(AuthTables::USER_ROLES . '.user_id', 'users.id');
         $query->where(
             static function (Builder $builder) use ($now): void {
-                $builder->whereNull(AuthSchema::USER_ROLES . '.expires_at')
-                    ->orWhere(AuthSchema::USER_ROLES . '.expires_at', '>', $now);
+                $builder->whereNull(AuthTables::USER_ROLES . '.expires_at')
+                    ->orWhere(AuthTables::USER_ROLES . '.expires_at', '>', $now);
             }
         );
 

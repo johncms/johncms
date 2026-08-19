@@ -15,13 +15,15 @@ use Johncms\Auth\Authorization\Role;
 use Johncms\Auth\Authorization\RoleSeeder;
 use Johncms\Auth\Authorization\SystemRole;
 use Johncms\Auth\Infrastructure\Persistence\Repository\EloquentRoleRepository;
-use Johncms\Auth\Schema\AuthSchema;
+use Johncms\Auth\AuthTables;
 use PHPUnit\Framework\TestCase;
 use Tests\Support\BootsInMemoryDatabase;
+use Tests\Support\RunsMigrations;
 
 final class RoleSeederTest extends TestCase
 {
     use BootsInMemoryDatabase;
+    use RunsMigrations;
 
     private EloquentRoleRepository $roles;
 
@@ -33,7 +35,7 @@ final class RoleSeederTest extends TestCase
         // The seeder names the roles through the gettext helpers, which nothing has registered
         // in an isolated unit test.
         TranslatorFunctions::register(new Translator());
-        AuthSchema::create(Capsule::schema());
+        $this->migrate('system', 'initial_auth_schema');
 
         $this->roles = new EloquentRoleRepository();
         $this->seeder = new RoleSeeder($this->roles, $this->defaults());

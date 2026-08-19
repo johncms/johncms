@@ -12,7 +12,7 @@ use Johncms\Auth\Infrastructure\Persistence\Repository\EloquentAuthSessionReposi
 use Johncms\Auth\Infrastructure\Persistence\Repository\EloquentPasswordResetTokenRepository;
 use Johncms\Auth\Password\PasswordResetToken;
 use Johncms\Auth\Password\PasswordResetTokens;
-use Johncms\Auth\Schema\AuthSchema;
+use Johncms\Auth\AuthTables;
 use Johncms\Auth\Session\AuthSession;
 use Johncms\Auth\Session\AuthSessionManager;
 use Johncms\Auth\Session\ExpiredAuthDataCleaner;
@@ -21,10 +21,12 @@ use Johncms\Auth\Session\SessionSettings;
 use Johncms\Security\ClientInfoDTO;
 use PHPUnit\Framework\TestCase;
 use Tests\Support\BootsInMemoryDatabase;
+use Tests\Support\RunsMigrations;
 
 final class ExpiredAuthDataCleanerTest extends TestCase
 {
     use BootsInMemoryDatabase;
+    use RunsMigrations;
 
     private const DAY = 86400;
 
@@ -39,7 +41,7 @@ final class ExpiredAuthDataCleanerTest extends TestCase
     protected function setUp(): void
     {
         $this->bootDatabase();
-        AuthSchema::create(Capsule::schema());
+        $this->migrate('system', 'initial_auth_schema');
 
         $sessionRepository = new EloquentAuthSessionRepository();
         $tokenRepository = new EloquentPasswordResetTokenRepository();

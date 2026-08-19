@@ -8,21 +8,23 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 use Johncms\Auth\Infrastructure\Persistence\Repository\EloquentPasswordResetTokenRepository;
 use Johncms\Auth\Password\PasswordResetToken;
 use Johncms\Auth\Password\PasswordResetTokens;
-use Johncms\Auth\Schema\AuthSchema;
+use Johncms\Auth\AuthTables;
 use Johncms\Auth\SecureToken;
 use PHPUnit\Framework\TestCase;
 use Tests\Support\BootsInMemoryDatabase;
+use Tests\Support\RunsMigrations;
 
 final class PasswordResetTokensTest extends TestCase
 {
     use BootsInMemoryDatabase;
+    use RunsMigrations;
 
     private PasswordResetTokens $tokens;
 
     protected function setUp(): void
     {
         $this->bootDatabase();
-        AuthSchema::create(Capsule::schema());
+        $this->migrate('system', 'initial_auth_schema');
 
         $this->tokens = new PasswordResetTokens(new EloquentPasswordResetTokenRepository());
     }
@@ -34,14 +36,14 @@ final class PasswordResetTokensTest extends TestCase
 
     public function testTheSchemaCanBeBuiltOnItsOwn(): void
     {
-        self::assertTrue(Capsule::schema()->hasTable(AuthSchema::PASSWORD_RESET_TOKENS));
+        self::assertTrue(Capsule::schema()->hasTable(AuthTables::PASSWORD_RESET_TOKENS));
     }
 
     public function testCreatingTheSchemaTwiceIsHarmless(): void
     {
-        AuthSchema::create(Capsule::schema());
+        $this->migrate('system', 'initial_auth_schema');
 
-        self::assertTrue(Capsule::schema()->hasTable(AuthSchema::PASSWORD_RESET_TOKENS));
+        self::assertTrue(Capsule::schema()->hasTable(AuthTables::PASSWORD_RESET_TOKENS));
     }
 
     public function testAnIssuedTokenIdentifiesItsUser(): void

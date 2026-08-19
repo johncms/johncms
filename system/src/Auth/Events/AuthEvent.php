@@ -14,7 +14,7 @@ namespace Johncms\Auth\Events;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Johncms\Auth\Schema\AuthSchema;
+use Johncms\Auth\AuthTables;
 
 /**
  * One entry of the audit trail: what happened to an account, who did it and from where.
@@ -34,7 +34,7 @@ use Johncms\Auth\Schema\AuthSchema;
  */
 class AuthEvent extends Model
 {
-    protected $table = AuthSchema::AUTH_EVENTS;
+    protected $table = AuthTables::AUTH_EVENTS;
 
     public $timestamps = false;
 

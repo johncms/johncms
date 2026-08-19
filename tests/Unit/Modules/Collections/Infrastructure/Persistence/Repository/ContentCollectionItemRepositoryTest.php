@@ -15,13 +15,14 @@ use Johncms\Modules\Collections\Domain\Query\OrderByDTO;
 use Johncms\Modules\Collections\Infrastructure\Persistence\Query\ContentCollectionItemQueryCompiler;
 use Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionFieldRepository;
 use Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionItemRepository;
-use Johncms\Modules\Collections\Install\Installer;
 use PHPUnit\Framework\TestCase;
 use Tests\Support\BootsInMemoryDatabase;
+use Tests\Support\RunsMigrations;
 
 final class ContentCollectionItemRepositoryTest extends TestCase
 {
     use BootsInMemoryDatabase;
+    use RunsMigrations;
 
     private ContentCollectionItemRepository $repository;
 
@@ -38,7 +39,7 @@ final class ContentCollectionItemRepositoryTest extends TestCase
     protected function setUp(): void
     {
         $this->bootDatabase();
-        (new Installer('collections'))->install();
+        $this->migrate('collections');
 
         $this->repository = new ContentCollectionItemRepository(
             new ContentCollectionFieldRepository(),

@@ -28,6 +28,9 @@ use Johncms\Database\Schema\TableDefinition;
  */
 final readonly class IlluminateSchema implements SchemaInterface
 {
+    /** The databases whose schema builder can write a word index. */
+    private const array DRIVERS_WITH_FULL_TEXT = ['mysql', 'mariadb'];
+
     public function __construct(
         private Builder $builder,
         private BlueprintCompiler $compiler = new BlueprintCompiler(),
@@ -39,7 +42,7 @@ final readonly class IlluminateSchema implements SchemaInterface
         $description = $this->describe($table, $definition);
 
         $this->builder->create($table, function (Blueprint $blueprint) use ($description): void {
-            $this->compiler->compile($description, $blueprint);
+            $this->compiler->compile($description, $blueprint, $this->supportsFullText());
         });
     }
 
@@ -48,7 +51,7 @@ final readonly class IlluminateSchema implements SchemaInterface
         $description = $this->describe($table, $definition);
 
         $this->builder->table($table, function (Blueprint $blueprint) use ($description): void {
-            $this->compiler->compile($description, $blueprint);
+            $this->compiler->compile($description, $blueprint, $this->supportsFullText());
         });
     }
 
@@ -82,6 +85,21 @@ final readonly class IlluminateSchema implements SchemaInterface
         return $this->builder->hasIndex($table, $index);
     }
 
+    public function hasForeignKey(string $table, string $name): bool
+    {
+        if (! $this->builder->hasTable($table)) {
+            return false;
+        }
+
+        foreach ($this->builder->getForeignKeys($table) as $foreignKey) {
+            if ($foreignKey['name'] === $name) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public function getColumnType(string $table, string $column): ?string
     {
         if (! $this->builder->hasTable($table)) {
@@ -100,6 +118,11 @@ final readonly class IlluminateSchema implements SchemaInterface
     public function setDefaultStringLength(int $length): void
     {
         Builder::defaultStringLength($length);
+    }
+
+    private function supportsFullText(): bool
+    {
+        return in_array($this->builder->getConnection()->getDriverName(), self::DRIVERS_WITH_FULL_TEXT, true);
     }
 
     /**

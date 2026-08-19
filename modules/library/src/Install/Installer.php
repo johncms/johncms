@@ -12,17 +12,11 @@ namespace Johncms\Modules\Library\Install;
 
 use Gettext\TranslatorFunctions;
 use Illuminate\Database\Capsule\Manager as Capsule;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Str;
 use Johncms\System\i18n\Translator;
 
 class Installer extends \Johncms\Modules\Installer
 {
-    public function install(): void
-    {
-        $this->createTables();
-    }
-
     public function uninstall(): void
     {
     }
@@ -179,85 +173,5 @@ class Installer extends \Johncms\Modules\Installer
             // Keep the current default domain (e.g. 'install'); only add the library catalog.
             $translator->addTranslationDomain('library', MODULES_PATH . 'library/locale', false);
         }
-    }
-
-    private function createTables(): void
-    {
-        $schema = Capsule::schema();
-        $connection = Capsule::connection();
-
-        // Библиотека
-        if (! $schema->hasTable('library_cats')) {
-            $schema->create(
-                'library_cats',
-                static function (Blueprint $table) {
-                    $table->increments('id');
-                    $table->integer('parent')->unsigned()->default(0);
-                    $table->string('name')->default('');
-                    $table->string('slug')->nullable();
-                    $table->text('description');
-                    $table->boolean('dir')->default(0);
-                    $table->integer('pos')->unsigned()->default(0);
-                    $table->boolean('user_add')->default(0);
-                    $table->unique(['parent', 'slug'], 'library_cats_parent_slug_unique');
-                }
-            );
-        }
-
-        if (! $schema->hasTable('library_texts')) {
-            $schema->create(
-                'library_texts',
-                static function (Blueprint $table) {
-                    $table->increments('id');
-                    $table->integer('cat_id')->unsigned()->default(0);
-                    $table->mediumText('text');
-                    $table->string('name')->default('')->index('name');
-                    $table->string('slug')->nullable();
-                    $table->text('announce');
-                    $table->string('uploader')->default('');
-                    $table->integer('uploader_id')->unsigned()->default(0);
-                    $table->integer('count_views')->unsigned()->default(0);
-                    $table->boolean('premod')->default(0);
-                    $table->boolean('comments')->default(0);
-                    $table->integer('comm_count')->unsigned()->default(0);
-                    $table->integer('time')->unsigned()->default(0);
-                }
-            );
-            $connection->statement('ALTER TABLE `library_texts` ADD FULLTEXT `text` (`text`)');
-            $connection->statement('ALTER TABLE `library_texts` ADD FULLTEXT `idx_name` (`name`)');
-        }
-
-        $schema->create(
-            'library_tags',
-            static function (Blueprint $table) {
-                $table->increments('id');
-                $table->integer('lib_text_id')->unsigned()->default(0)->index('lib_text_id');
-                $table->string('tag_name')->default('')->index('tag_name');
-            }
-        );
-
-        $schema->create(
-            'cms_library_comments',
-            static function (Blueprint $table) {
-                $table->increments('id');
-                $table->integer('sub_id')->unsigned()->default(0)->index('sub_id');
-                $table->integer('time')->default(0);
-                $table->integer('user_id')->unsigned()->default(0)->index('user_id');
-                $table->text('text');
-                $table->text('reply');
-                $table->text('attributes');
-            }
-        );
-
-        $schema->create(
-            'cms_library_rating',
-            static function (Blueprint $table) {
-                $table->increments('id');
-                $table->integer('user_id')->unsigned();
-                $table->integer('st_id')->unsigned();
-                $table->tinyInteger('point');
-                $table->index(['user_id', 'st_id'], 'user_article');
-            }
-        );
     }
 }

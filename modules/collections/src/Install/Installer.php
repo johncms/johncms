@@ -6,17 +6,11 @@ namespace Johncms\Modules\Collections\Install;
 
 use Gettext\TranslatorFunctions;
 use Illuminate\Database\Capsule\Manager as Capsule;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Str;
 use Johncms\System\i18n\Translator;
 
 class Installer extends \Johncms\Modules\Installer
 {
-    public function install(): void
-    {
-        $this->createTables();
-    }
-
     public function uninstall(): void
     {
         $schema = Capsule::schema();
@@ -139,151 +133,5 @@ class Installer extends \Johncms\Modules\Installer
         if ($translator instanceof Translator) {
             $translator->addTranslationDomain('collections', MODULES_PATH . 'collections/locale', false);
         }
-    }
-
-    private function createTables(): void
-    {
-        $schema = Capsule::schema();
-
-        $schema->create(
-            'collections',
-            static function (Blueprint $table) {
-                $table->increments('id');
-                $table->string('code')->unique();
-                $table->string('name');
-                $table->text('description')->nullable();
-                $table->json('settings')->nullable();
-                $table->integer('sort')->default(100);
-                $table->boolean('active')->default(true);
-                // Whether the collection is reachable by a public URL / sitemap.
-                // A private collection stays fully manageable and API-readable, it just mints no front URL.
-                $table->boolean('public')->default(true);
-                $table->timestamps();
-            }
-        );
-
-        $schema->create(
-            'collection_fields',
-            static function (Blueprint $table) {
-                $table->increments('id');
-                $table->integer('collection_id')->unsigned()->index();
-                $table->string('code');
-                $table->string('name');
-                $table->string('type');
-                $table->boolean('required')->default(false);
-                $table->boolean('multiple')->default(false);
-                $table->integer('sort')->default(100);
-                $table->json('settings')->nullable();
-                $table->timestamps();
-
-                $table->unique(['collection_id', 'code'], 'collection_field_code');
-
-                $table->foreign('collection_id')
-                    ->references('id')
-                    ->on('collections')
-                    ->onUpdate('cascade')
-                    ->onDelete('cascade');
-            }
-        );
-
-        $schema->create(
-            'collection_sections',
-            static function (Blueprint $table) {
-                $table->increments('id');
-                $table->integer('collection_id')->unsigned()->index();
-                $table->integer('parent')->unsigned()->nullable()->index();
-                $table->string('name');
-                $table->string('code')->index();
-                $table->text('description')->nullable();
-                $table->boolean('active')->default(true);
-                $table->integer('sort')->default(100);
-                $table->timestamps();
-
-                $table->unique(['collection_id', 'parent', 'code'], 'collection_section_code');
-
-                $table->foreign('collection_id')
-                    ->references('id')
-                    ->on('collections')
-                    ->onUpdate('cascade')
-                    ->onDelete('cascade');
-            }
-        );
-
-        // Self-referencing FK added after creation to avoid self-reference issues in CREATE TABLE.
-        $schema->table('collection_sections', static function (Blueprint $table) {
-            $table->foreign('parent')
-                ->references('id')
-                ->on('collection_sections')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
-        });
-
-        $schema->create(
-            'collection_items',
-            static function (Blueprint $table) {
-                $table->increments('id');
-                $table->integer('collection_id')->unsigned()->index();
-                $table->integer('section_id')->unsigned()->nullable()->index();
-                $table->string('name');
-                $table->string('code')->index();
-                $table->boolean('active')->default(true);
-                $table->dateTime('active_from')->nullable();
-                $table->dateTime('active_to')->nullable();
-                $table->integer('sort')->default(100);
-                $table->text('preview_text')->nullable();
-                $table->longText('detail_text')->nullable();
-                $table->integer('view_count')->nullable();
-                $table->integer('created_by')->nullable();
-                $table->integer('updated_by')->nullable();
-                $table->timestamps();
-
-                $table->unique(['collection_id', 'section_id', 'code'], 'collection_item_code');
-                $table->index(['collection_id', 'active', 'sort'], 'collection_item_listing');
-
-                $table->foreign('collection_id')
-                    ->references('id')
-                    ->on('collections')
-                    ->onUpdate('cascade')
-                    ->onDelete('cascade');
-
-                $table->foreign('section_id')
-                    ->references('id')
-                    ->on('collection_sections')
-                    ->onUpdate('cascade')
-                    ->onDelete('set null');
-            }
-        );
-
-        $schema->create(
-            'collection_item_values',
-            static function (Blueprint $table) {
-                $table->increments('id');
-                $table->integer('item_id')->unsigned()->index();
-                $table->integer('field_id')->unsigned()->index();
-                $table->string('value_string')->nullable();
-                $table->bigInteger('value_int')->nullable();
-                $table->double('value_double')->nullable();
-                $table->dateTime('value_date')->nullable();
-                $table->longText('value_text')->nullable();
-                $table->integer('sort')->default(0);
-
-                $table->index(['item_id', 'field_id'], 'collection_value_item_field');
-                $table->index(['field_id', 'value_int'], 'collection_value_field_int');
-                $table->index(['field_id', 'value_string'], 'collection_value_field_string');
-                $table->index(['field_id', 'value_date'], 'collection_value_field_date');
-
-                $table->foreign('item_id')
-                    ->references('id')
-                    ->on('collection_items')
-                    ->onUpdate('cascade')
-                    ->onDelete('cascade');
-
-                $table->foreign('field_id')
-                    ->references('id')
-                    ->on('collection_fields')
-                    ->onUpdate('cascade')
-                    ->onDelete('cascade');
-            }
-        );
     }
 }

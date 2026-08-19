@@ -11,14 +11,15 @@ use Johncms\Modules\Collections\Application\UseCases\GetPublicItemUseCase;
 use Johncms\Modules\Collections\Infrastructure\Persistence\Query\ContentCollectionItemQueryCompiler;
 use Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionFieldRepository;
 use Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionItemRepository;
-use Johncms\Modules\Collections\Install\Installer;
 use Johncms\Security\HtmlSanitizerInterface;
 use PHPUnit\Framework\TestCase;
 use Tests\Support\BootsInMemoryDatabase;
+use Tests\Support\RunsMigrations;
 
 final class GetPublicItemUseCaseTest extends TestCase
 {
     use BootsInMemoryDatabase;
+    use RunsMigrations;
 
     private GetPublicItemUseCase $useCase;
     private int $collectionId;
@@ -26,7 +27,7 @@ final class GetPublicItemUseCaseTest extends TestCase
     protected function setUp(): void
     {
         $this->bootDatabase();
-        (new Installer('collections'))->install();
+        $this->migrate('collections');
 
         $fieldRepository = new ContentCollectionFieldRepository();
         $itemRepository = new ContentCollectionItemRepository($fieldRepository, new ContentCollectionItemQueryCompiler());

@@ -15,7 +15,7 @@ namespace Johncms\Auth\Authorization;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Johncms\Auth\Schema\AuthSchema;
+use Johncms\Auth\AuthTables;
 
 /**
  * A named set of permissions.
@@ -35,7 +35,7 @@ use Johncms\Auth\Schema\AuthSchema;
  */
 class Role extends Model
 {
-    protected $table = AuthSchema::ROLES;
+    protected $table = AuthTables::ROLES;
 
     public $timestamps = false;
 

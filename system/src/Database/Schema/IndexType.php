@@ -19,4 +19,10 @@ enum IndexType: string
     case Unique = 'unique';
 
     case Primary = 'primary';
+
+    /**
+     * A word index, for the searches written as MATCH ... AGAINST. Only some databases have
+     * one at all; on the others the adapter leaves it out — see SchemaInterface.
+     */
+    case FullText = 'fulltext';
 }

@@ -8,7 +8,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 use Johncms\Auth\Authentication\SessionCookieAuthenticator;
 use Johncms\Auth\AuthMethod;
 use Johncms\Auth\Infrastructure\Persistence\Repository\EloquentAuthSessionRepository;
-use Johncms\Auth\Schema\AuthSchema;
+use Johncms\Auth\AuthTables;
 use Johncms\Auth\Impersonation\ImpersonationSettings;
 use Johncms\Auth\Session\AuthCookieFactory;
 use Johncms\Auth\Session\AuthSession;
@@ -20,10 +20,12 @@ use Johncms\Http\Request;
 use Johncms\Security\ClientInfoDTO;
 use PHPUnit\Framework\TestCase;
 use Tests\Support\BootsInMemoryDatabase;
+use Tests\Support\RunsMigrations;
 
 final class SessionCookieAuthenticatorTest extends TestCase
 {
     use BootsInMemoryDatabase;
+    use RunsMigrations;
 
     private const DAY = 86400;
 
@@ -36,7 +38,7 @@ final class SessionCookieAuthenticatorTest extends TestCase
     protected function setUp(): void
     {
         $this->bootDatabase();
-        AuthSchema::create(Capsule::schema());
+        $this->migrate('system', 'initial_auth_schema');
 
         $settings = new SessionSettings();
         $this->sessions = new AuthSessionManager(new EloquentAuthSessionRepository(), $settings);

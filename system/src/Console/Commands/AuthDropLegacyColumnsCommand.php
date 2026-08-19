@@ -7,7 +7,7 @@ namespace Johncms\Console\Commands;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Schema\Builder;
 use Johncms\AdminTasks\AsAdminTask;
-use Johncms\Auth\Schema\AuthSchema;
+use Johncms\Auth\AuthTables;
 use Johncms\Console\OneTimeTaskTracker;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -51,7 +51,7 @@ final class AuthDropLegacyColumnsCommand extends Command
             'rest_code',
             'rest_time',
         ],
-        AuthSchema::ROLES => [
+        AuthTables::ROLES => [
             // Which number a role stood for. Only the migration of the numbers needed it.
             'legacy_rights',
         ],

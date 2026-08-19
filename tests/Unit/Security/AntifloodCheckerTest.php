@@ -9,22 +9,24 @@ use Illuminate\Database\Schema\Blueprint;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Auth\Identity;
-use Johncms\Auth\Schema\AuthSchema;
+use Johncms\Auth\AuthTables;
 use Johncms\Config\ConfigRepository;
 use Johncms\Security\AntifloodChecker;
 use Johncms\Users\User;
 use PHPUnit\Framework\TestCase;
 use Tests\Support\BootsInMemoryDatabase;
+use Tests\Support\RunsMigrations;
 use Tests\Support\CurrentUserFactory;
 
 final class AntifloodCheckerTest extends TestCase
 {
     use BootsInMemoryDatabase;
+    use RunsMigrations;
 
     protected function setUp(): void
     {
         $this->bootDatabase();
-        AuthSchema::create(Capsule::schema());
+        $this->migrate('system', 'initial_auth_schema');
         $this->createUsersTable();
     }
 
@@ -63,7 +65,7 @@ final class AntifloodCheckerTest extends TestCase
         self::assertSame(300, $checker->getRemainingSeconds(), 'Nobody of the staff is online');
 
         $moderator = $this->createUser(lastdate: time());
-        Capsule::table(AuthSchema::USER_ROLES)->insert(
+        Capsule::table(AuthTables::USER_ROLES)->insert(
             ['user_id' => $moderator->id, 'role_id' => 3, 'granted_at' => time()]
         );
 
@@ -74,7 +76,7 @@ final class AntifloodCheckerTest extends TestCase
     {
         $this->configureAntiflood(day: 10, night: 300, mode: 1);
         $moderator = $this->createUser(lastdate: time());
-        Capsule::table(AuthSchema::USER_ROLES)->insert(
+        Capsule::table(AuthTables::USER_ROLES)->insert(
             [
                 'user_id'    => $moderator->id,
                 'role_id'    => 3,

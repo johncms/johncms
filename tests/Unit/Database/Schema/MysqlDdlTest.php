@@ -124,6 +124,19 @@ final class MysqlDdlTest extends TestCase
         );
     }
 
+    public function testAWordIndexBecomesAFullTextOne(): void
+    {
+        $description = new TableDefinition('probe');
+        $description->increments('id');
+        $description->longText('text');
+        $description->fullText('text', 'text');
+
+        self::assertSame(
+            'alter table `probe` add fulltext `text`(`text`)',
+            $this->createStatements($description)[1]
+        );
+    }
+
     /**
      * An auto-incrementing column is unsigned by definition, and asking for it again used to
      * produce "int unsigned unsigned" on some grammars.

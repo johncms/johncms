@@ -7,7 +7,7 @@ namespace Johncms\Modules\Community\Infrastructure\Persistence\Repository;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Johncms\Auth\Authorization\UserRole;
-use Johncms\Auth\Schema\AuthSchema;
+use Johncms\Auth\AuthTables;
 use Johncms\Modules\Community\Domain\Repository\CommunityUserRepositoryInterface;
 use Johncms\Users\User;
 
@@ -77,11 +77,11 @@ final class CommunityUserRepository implements CommunityUserRepositoryInterface
 
         /** @var Builder<UserRole> $query */
         $query = UserRole::query();
-        $query->whereColumn(AuthSchema::USER_ROLES . '.user_id', 'users.id');
+        $query->whereColumn(AuthTables::USER_ROLES . '.user_id', 'users.id');
         $query->where(
             static function (Builder $builder) use ($now): void {
-                $builder->whereNull(AuthSchema::USER_ROLES . '.expires_at')
-                    ->orWhere(AuthSchema::USER_ROLES . '.expires_at', '>', $now);
+                $builder->whereNull(AuthTables::USER_ROLES . '.expires_at')
+                    ->orWhere(AuthTables::USER_ROLES . '.expires_at', '>', $now);
             }
         );
 
@@ -94,8 +94,8 @@ final class CommunityUserRepository implements CommunityUserRepositoryInterface
     private function highestLevel(): Builder
     {
         $query = $this->grants();
-        $query->join(AuthSchema::ROLES, AuthSchema::ROLES . '.id', '=', AuthSchema::USER_ROLES . '.role_id');
-        $query->selectRaw('MAX(' . AuthSchema::ROLES . '.level)');
+        $query->join(AuthTables::ROLES, AuthTables::ROLES . '.id', '=', AuthTables::USER_ROLES . '.role_id');
+        $query->selectRaw('MAX(' . AuthTables::ROLES . '.level)');
 
         return $query;
     }

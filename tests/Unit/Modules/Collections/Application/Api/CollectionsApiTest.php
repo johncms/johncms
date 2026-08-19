@@ -16,13 +16,14 @@ use Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCol
 use Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionItemRepository;
 use Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionItemValueRepository;
 use Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionRepository;
-use Johncms\Modules\Collections\Install\Installer;
 use PHPUnit\Framework\TestCase;
 use Tests\Support\BootsInMemoryDatabase;
+use Tests\Support\RunsMigrations;
 
 final class CollectionsApiTest extends TestCase
 {
     use BootsInMemoryDatabase;
+    use RunsMigrations;
 
     private CollectionsApi $api;
     private int $collectionId;
@@ -30,7 +31,7 @@ final class CollectionsApiTest extends TestCase
     protected function setUp(): void
     {
         $this->bootDatabase();
-        (new Installer('collections'))->install();
+        $this->migrate('collections');
 
         $fieldRepository = new ContentCollectionFieldRepository();
         $valueRepository = new ContentCollectionItemValueRepository();

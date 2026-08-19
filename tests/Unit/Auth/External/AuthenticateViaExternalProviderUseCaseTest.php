@@ -19,12 +19,13 @@ use Johncms\Auth\Authorization\RoleSeeder;
 use Johncms\Auth\Authorization\Voters\RolePermissionVoter;
 use Johncms\Auth\Infrastructure\Persistence\Repository\EloquentRoleRepository;
 use Johncms\Auth\Infrastructure\Persistence\Repository\EloquentUserIdentityRepository;
-use Johncms\Auth\Schema\AuthSchema;
+use Johncms\Auth\AuthTables;
 use Johncms\Users\User;
 use Gettext\Translator;
 use Gettext\TranslatorFunctions;
 use PHPUnit\Framework\TestCase;
 use Tests\Support\BootsInMemoryDatabase;
+use Tests\Support\RunsMigrations;
 use Tests\Support\CurrentUserFactory;
 use Tests\Support\RecordingAuthEventLogger;
 
@@ -37,6 +38,7 @@ use Tests\Support\RecordingAuthEventLogger;
 final class AuthenticateViaExternalProviderUseCaseTest extends TestCase
 {
     use BootsInMemoryDatabase;
+    use RunsMigrations;
 
     private const PROVIDER = 'github';
 
@@ -47,7 +49,7 @@ final class AuthenticateViaExternalProviderUseCaseTest extends TestCase
         $this->bootDatabase();
         // The built-in roles are named through the gettext helpers.
         TranslatorFunctions::register(new Translator());
-        AuthSchema::create(Capsule::schema());
+        $this->migrate('system', 'initial_auth_schema');
         $this->createUsersTable();
 
         $this->eventLogger = new RecordingAuthEventLogger();

@@ -193,6 +193,20 @@ final class TableDefinition
     }
 
     /**
+     * A word index, for searching inside a text column.
+     *
+     * Not every database has one, and the ones that do disagree about how it is written. Where
+     * there is none the index is left out rather than approximated: a search that needs it does
+     * not work on such a database anyway.
+     *
+     * @param string|list<string> $columns
+     */
+    public function fullText(string|array $columns, ?string $name = null): void
+    {
+        $this->indexes[] = new IndexDefinition(IndexType::FullText, $this->columnList($columns), $name);
+    }
+
+    /**
      * @param string|list<string> $columns
      */
     public function foreign(string|array $columns, ?string $name = null): ForeignKeyDefinition

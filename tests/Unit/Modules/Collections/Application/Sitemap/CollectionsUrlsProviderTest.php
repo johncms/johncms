@@ -13,14 +13,15 @@ use Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCol
 use Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionItemRepository;
 use Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionRepository;
 use Johncms\Modules\Collections\Infrastructure\Persistence\Repository\ContentCollectionSectionRepository;
-use Johncms\Modules\Collections\Install\Installer;
 use Johncms\Sitemap\SitemapUrlEntry;
 use PHPUnit\Framework\TestCase;
 use Tests\Support\BootsInMemoryDatabase;
+use Tests\Support\RunsMigrations;
 
 final class CollectionsUrlsProviderTest extends TestCase
 {
     use BootsInMemoryDatabase;
+    use RunsMigrations;
 
     private CollectionsUrlsProvider $provider;
     private ContentCollectionItemRepositoryInterface $itemRepository;
@@ -28,7 +29,7 @@ final class CollectionsUrlsProviderTest extends TestCase
     protected function setUp(): void
     {
         $this->bootDatabase();
-        (new Installer('collections'))->install();
+        $this->migrate('collections');
 
         $fieldRepository = new ContentCollectionFieldRepository();
         $this->itemRepository = new ContentCollectionItemRepository($fieldRepository, new ContentCollectionItemQueryCompiler());

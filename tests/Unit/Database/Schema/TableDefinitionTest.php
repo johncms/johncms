@@ -89,6 +89,19 @@ final class TableDefinitionTest extends TestCase
         self::assertSame('user_role', $index->name);
     }
 
+    public function testAWordIndexIsRecordedLikeAnyOtherKey(): void
+    {
+        $table = new TableDefinition('forum_messages');
+        $table->longText('text');
+        $table->fullText('text', 'text');
+
+        $index = $table->getIndexes()[0];
+
+        self::assertSame(IndexType::FullText, $index->type);
+        self::assertSame(['text'], $index->columns);
+        self::assertSame('text', $index->name);
+    }
+
     public function testTimestampsAddTwoNullableColumns(): void
     {
         $table = new TableDefinition('news_articles');

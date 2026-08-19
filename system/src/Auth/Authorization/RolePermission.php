@@ -14,7 +14,7 @@ namespace Johncms\Auth\Authorization;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Johncms\Auth\Schema\AuthSchema;
+use Johncms\Auth\AuthTables;
 
 /**
  * One permission granted to one role.
@@ -26,7 +26,7 @@ use Johncms\Auth\Schema\AuthSchema;
  */
 class RolePermission extends Model
 {
-    protected $table = AuthSchema::ROLE_PERMISSIONS;
+    protected $table = AuthTables::ROLE_PERMISSIONS;
 
     public $timestamps = false;
 

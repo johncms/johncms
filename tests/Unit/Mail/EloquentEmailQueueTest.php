@@ -11,19 +11,21 @@ use Johncms\Mail\Exception\InvalidEmailAddressException;
 use Johncms\Mail\Queue\EloquentEmailQueue;
 use Johncms\Mail\Queue\MailQueueSettings;
 use Johncms\Mail\Queue\QueuedEmailDTO;
-use Johncms\Mail\Schema\MailSchema;
+use Johncms\Mail\MailTables;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Tests\Support\BootsInMemoryDatabase;
+use Tests\Support\RunsMigrations;
 
 final class EloquentEmailQueueTest extends TestCase
 {
     use BootsInMemoryDatabase;
+    use RunsMigrations;
 
     protected function setUp(): void
     {
         $this->bootDatabase();
-        MailSchema::create(Capsule::schema());
+        $this->migrate('system', 'initial_mail_schema');
     }
 
     protected function tearDown(): void
@@ -65,10 +67,10 @@ final class EloquentEmailQueueTest extends TestCase
 
     public function testTheSchemaCanBeBuiltOnItsOwnAndTwice(): void
     {
-        MailSchema::create(Capsule::schema());
+        $this->migrate('system', 'initial_mail_schema');
 
-        self::assertTrue(Capsule::schema()->hasTable(MailSchema::EMAIL_MESSAGES));
-        self::assertTrue(Capsule::schema()->hasColumn(MailSchema::EMAIL_MESSAGES, 'attempts'));
+        self::assertTrue(Capsule::schema()->hasTable(MailTables::EMAIL_MESSAGES));
+        self::assertTrue(Capsule::schema()->hasColumn(MailTables::EMAIL_MESSAGES, 'attempts'));
     }
 
     // -----------------------------------------------------------------------------------

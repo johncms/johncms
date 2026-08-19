@@ -14,7 +14,7 @@ namespace Johncms\Auth\Password;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Johncms\Auth\Schema\AuthSchema;
+use Johncms\Auth\AuthTables;
 
 /**
  * A password recovery request: the digest of the link that was e-mailed, when it stops working
@@ -30,7 +30,7 @@ use Johncms\Auth\Schema\AuthSchema;
  */
 class PasswordResetToken extends Model
 {
-    protected $table = AuthSchema::PASSWORD_RESET_TOKENS;
+    protected $table = AuthTables::PASSWORD_RESET_TOKENS;
 
     public $timestamps = false;
 

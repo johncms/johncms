@@ -9,6 +9,7 @@ parameters:
         - modules
         - public
         - system/src
+        - system/migrations
         - system/bootstrap.php
         - system/helpers.php
         - tests

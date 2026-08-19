@@ -10,16 +10,18 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Schema\Blueprint;
 use Johncms\Auth\Events\AuthEventType;
 use Johncms\Auth\Infrastructure\Persistence\Repository\EloquentAuthEventRepository;
-use Johncms\Auth\Schema\AuthSchema;
+use Johncms\Auth\AuthTables;
 use Johncms\Modules\Admin\Application\UseCases\GetAuthLogUseCase;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentAuthLogRepository;
 use Johncms\Users\User;
 use PHPUnit\Framework\TestCase;
 use Tests\Support\BootsInMemoryDatabase;
+use Tests\Support\RunsMigrations;
 
 final class GetAuthLogUseCaseTest extends TestCase
 {
     use BootsInMemoryDatabase;
+    use RunsMigrations;
 
     private EloquentAuthEventRepository $events;
 
@@ -31,7 +33,7 @@ final class GetAuthLogUseCaseTest extends TestCase
         // The event labels are named through the gettext helpers, which nothing has registered in
         // an isolated unit test.
         TranslatorFunctions::register(new Translator());
-        AuthSchema::create(Capsule::schema());
+        $this->migrate('system', 'initial_auth_schema');
         $this->createUsersTable();
 
         $this->events = new EloquentAuthEventRepository();

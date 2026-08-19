@@ -12,10 +12,6 @@ namespace Johncms\Modules\Help\Install;
 
 class Installer extends \Johncms\Modules\Installer
 {
-    public function install(): void
-    {
-    }
-
     public function uninstall(): void
     {
     }
