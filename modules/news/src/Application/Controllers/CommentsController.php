@@ -87,8 +87,8 @@ final readonly class CommentsController
                         ];
                     }
 
-                    // A JSON payload, so the markup is handed over as a string: Markup is an
-                    // object and json_encode() would write it out as an empty one.
+                    // A JSON payload carries the text as a string. Markup serializes to one on
+                    // its own, but the cast keeps the type of the field obvious where it is read.
                     $text = (string) $content->render(
                         (string) $comment->text,
                         new ContentContext(
