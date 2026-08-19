@@ -25,6 +25,7 @@ use Johncms\Modules\Forum\Infrastructure\Persistence\Repository\ForumTopicReposi
 use Johncms\Modules\Forum\Infrastructure\Persistence\Repository\ForumUnreadRepository;
 use Johncms\Modules\Forum\Infrastructure\Persistence\Repository\ForumVoteRepository;
 use Johncms\Modules\Forum\Infrastructure\Persistence\Repository\ForumWhoRepository;
+use Johncms\Modules\Forum\Infrastructure\Storage\ForumAttachmentStorage;
 
 return static function (ContainerConfigurator $container): void {
     $services = $container->services();
@@ -51,6 +52,12 @@ return static function (ContainerConfigurator $container): void {
     )
         ->autowire()
         ->autoconfigure();
+
+    // Fetched at runtime with di() by classes the container does not build — an Eloquent
+    // model, a legacy service, an installer. A private definition is inlined into its
+    // consumers when the container is compiled and then no longer answers to a name, so
+    // asking for it takes the page down; public keeps it in the container.
+    $services->set(ForumAttachmentStorage::class)->autowire()->public();
 
     $services->set(ForumMessageRepositoryInterface::class, ForumMessageRepository::class)->public();
     $services->set(ForumMessageFileRepositoryInterface::class, ForumMessageFileRepository::class)->public();

@@ -12,6 +12,7 @@ use Johncms\Modules\Album\Infrastructure\Persistence\Repository\EloquentAlbumCom
 use Johncms\Modules\Album\Infrastructure\Persistence\Repository\EloquentAlbumPhotoRepository;
 use Johncms\Modules\Album\Infrastructure\Persistence\Repository\EloquentAlbumRepository;
 use Johncms\Modules\Album\Infrastructure\Persistence\Repository\EloquentAlbumVoteRepository;
+use Johncms\Modules\Album\Infrastructure\Storage\AlbumPhotoStorage;
 
 return static function (ContainerConfigurator $container): void {
     $services = $container->services();
@@ -39,6 +40,12 @@ return static function (ContainerConfigurator $container): void {
     )
         ->autowire()
         ->autoconfigure();
+
+    // Fetched at runtime with di() by classes the container does not build — an Eloquent
+    // model, a legacy service, an installer. A private definition is inlined into its
+    // consumers when the container is compiled and then no longer answers to a name, so
+    // asking for it takes the page down; public keeps it in the container.
+    $services->set(AlbumPhotoStorage::class)->autowire()->public();
 
     $services->set(AlbumRepositoryInterface::class, EloquentAlbumRepository::class)->public();
     $services->set(AlbumPhotoRepositoryInterface::class, EloquentAlbumPhotoRepository::class)->public();

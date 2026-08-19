@@ -12,6 +12,7 @@ use Johncms\Modules\Library\Application\Services\LibrarySlugService;
 use Johncms\Modules\Library\Application\Sitemap\LibraryUrlsProvider;
 use Johncms\Modules\Library\Domain\Repository\LibraryTextRepositoryInterface;
 use Johncms\Modules\Library\Infrastructure\Persistence\Repository\LibraryTextRepository;
+use Johncms\Modules\Library\Infrastructure\Storage\LibraryCoverStorage;
 
 return static function (ContainerConfigurator $container): void {
     $services = $container->services();
@@ -44,6 +45,12 @@ return static function (ContainerConfigurator $container): void {
     )
         ->autowire()
         ->autoconfigure();
+
+    // Fetched at runtime with di() by classes the container does not build — an Eloquent
+    // model, a legacy service, an installer. A private definition is inlined into its
+    // consumers when the container is compiled and then no longer answers to a name, so
+    // asking for it takes the page down; public keeps it in the container.
+    $services->set(LibraryCoverStorage::class)->autowire()->public();
 
     $services->set(LibraryTextRepositoryInterface::class, LibraryTextRepository::class)->public();
 };
