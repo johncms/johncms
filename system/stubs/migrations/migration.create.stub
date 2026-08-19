@@ -1,0 +1,21 @@
+<?php
+
+declare(strict_types=1);
+
+use Johncms\Database\Migrations\Migration;
+use Johncms\Database\Schema\TableDefinition;
+
+return new class extends Migration {
+    public function up(): void
+    {
+        $this->schema->create('{{ table }}', static function (TableDefinition $table): void {
+            $table->increments('id');
+            $table->timestamps();
+        });
+    }
+
+    public function down(): void
+    {
+        $this->schema->dropIfExists('{{ table }}');
+    }
+};

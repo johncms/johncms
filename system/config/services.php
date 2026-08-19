@@ -47,6 +47,13 @@ use Johncms\Counters;
 use Johncms\CountersFactory;
 use Illuminate\Database\Schema\Builder as SchemaBuilder;
 use Johncms\Database\ConnectionInterface;
+use Johncms\Database\Migrations\DatabaseMigrationRepository;
+use Johncms\Database\Migrations\MigrationGenerator;
+use Johncms\Database\Migrations\MigrationLocator;
+use Johncms\Database\Migrations\MigrationRepositoryInterface;
+use Johncms\Database\Migrations\Migrator;
+use Johncms\Database\Migrations\ModuleMigrationSourceProvider;
+use Johncms\Database\Migrations\SystemMigrationSourceProvider;
 use Johncms\Database\PdoConnection;
 use Johncms\Database\PdoFactory;
 use Johncms\Database\Schema\Adapters\BlueprintCompiler;
@@ -200,6 +207,10 @@ return static function (ContainerConfigurator $container): void {
                 // and a length, an enum per kind, and the two adapters that read them. The
                 // adapters are registered by hand below; the description is never a service.
                 ROOT_PATH . 'system/src/Database/Schema',
+                // The migration machinery: value objects, the base class every migration
+                // extends, and a reporter built around the output of one command. What is a
+                // service here is registered by hand below.
+                ROOT_PATH . 'system/src/Database/Migrations',
                 ROOT_PATH . 'system/src/Image/ImageProcessingException.php',
                 ROOT_PATH . 'system/src/Files',
                 ROOT_PATH . 'system/src/Modules',
@@ -327,6 +338,22 @@ return static function (ContainerConfigurator $container): void {
     $services->alias(ConnectionInterface::class, PdoConnection::class);
     $services->set(BlueprintCompiler::class);
     $services->set(SchemaInterface::class, IlluminateSchema::class);
+
+    // Where migrations are looked for. The core is asked first and the modules after it, because
+    // a module may point at the tables of the core and the core points at nobody's. A package
+    // that ships tables of its own implements MigrationSourceProviderInterface and is tagged by
+    // PSRContainerFactory, which puts it after both.
+    $services->set(SystemMigrationSourceProvider::class)
+        ->autoconfigure(false)
+        ->tag('johncms.migration_source', ['priority' => 100]);
+    $services->set(ModuleMigrationSourceProvider::class)
+        ->autoconfigure(false)
+        ->tag('johncms.migration_source', ['priority' => 50]);
+    $services->set(MigrationLocator::class)
+        ->arg('$providers', tagged_iterator('johncms.migration_source'));
+    $services->set(MigrationRepositoryInterface::class, DatabaseMigrationRepository::class);
+    $services->set(Migrator::class);
+    $services->set(MigrationGenerator::class);
     $services->set(\Johncms\Users\Repository\UserRepositoryInterface::class, \Johncms\Users\Repository\EloquentUserRepository::class);
 
     // The authenticators are asked in the order they are tagged, and the order is a decision:
