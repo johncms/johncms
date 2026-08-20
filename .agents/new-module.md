@@ -5,11 +5,19 @@ How to wire a new module with the layered architecture. For layer responsibiliti
 ## Directory Structure
 
 ```
-modules/<module>/src/
-├── Application/{Controllers,UseCases,DTO,Services,Middlewares}
-├── Domain/{Models,Repository,Entities,Enums}
-└── Infrastructure/Persistence/Repository
+modules/<module>/
+├── config/          services.php, routes.php
+├── locale/          the gettext domain of the module
+├── migrations/      its tables — see .agents/migrations.md
+├── templates/       public/ and admin/
+└── src/
+    ├── Application/{Controllers,UseCases,DTO,Services,Middlewares}
+    ├── Domain/{Models,Repository,Entities,Enums}
+    └── Infrastructure/Persistence/Repository
 ```
+
+Tables are described by migrations and nowhere else. `src/Install/Installer.php` is for demo data
+only — it has no `install()` and creates nothing.
 
 **Create subdirectories on demand, not all upfront.** Only the three top-level folders (`Application`, `Domain`, `Infrastructure`) must exist immediately. Create each nested folder (`Controllers`, `UseCases`, `DTO`, `Repository`, …) only when its first class appears.
 

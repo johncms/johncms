@@ -14,6 +14,7 @@ guide first:
 * Actions with access checks (guard → context → action), exception mapping → read `.agents/access-guard.md`
 * Paginated lists, page titles / meta description → read `.agents/pagination.md`
 * Caching values, cache tags and invalidation → read `.agents/caching.md`
+* Changing the database schema, moving data, migrations → read `.agents/migrations.md`
 * Rendering a user's text (posts, comments, articles), embedding media, adding a step to the content pipeline → read `.agents/content-pipeline.md`
 * Resizing pictures, thumbnails, previews of an upload → read `.agents/images.md`
 * Storing or deleting files, uploads, disks, the `files` table → read `.agents/storage.md`
