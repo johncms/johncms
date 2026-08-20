@@ -40,7 +40,7 @@ Detailed change can see in the [repository log](https://github.com/johncms/johnc
 
   Без консоли обойтись тоже можно: на странице **Обслуживание** (`/admin/maintenance`) появилась задача «Update the database», она выполняется в фоне планировщиком. А если база отстала от файлов, админ-панель говорит об этом баннером на каждой странице — забыть про обновление больше не выйдет.
 
-  Разовые команды `library:generate-slugs` и `downloads:generate-slugs` удалены. Они переводили на слаги сайты, обновлявшиеся с 9.8 на 9.9, а на 10.0 можно перейти только с 9.9 — где слаги уже есть у всех: инсталлятор 9.9 создавал их сам, а обновлявшимся их проставляли эти самые команды.
+  Разовые команды `library:generate-slugs`, `downloads:generate-slugs` и `forum:normalize-message-links` удалены. Все три конвертировали данные при переходе с 9.8 на 9.9, а перейти на 10.0 можно только с 9.9 — где эта работа уже сделана. Вместе с последней удалён служивший ей `Johncms\Modules\Forum\Application\Services\ForumMessageLinkNormalizer`.
 
   Авторам модулей: метод `install()` у `Johncms\Modules\Installer` удалён, таблицы модуля описываются его миграциями. `installDemoData()` и `uninstall()` не изменились. Классы `Johncms\Auth\Schema\AuthSchema` и `Johncms\Mail\Schema\MailSchema` удалены; имена таблиц, которые они держали, переехали в `Johncms\Auth\AuthTables` и `Johncms\Mail\MailTables`.
 
