@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace Johncms\Console\Commands;
 
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Database\Schema\Builder;
 use Johncms\AdminTasks\AsAdminTask;
-use Johncms\Auth\AuthTables;
-use Johncms\Console\OneTimeTaskTracker;
+use Johncms\Database\ConnectionInterface;
+use Johncms\Database\Schema\SchemaInterface;
+use Johncms\Database\Schema\TableDefinition;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -20,9 +19,8 @@ use Throwable;
  * Drops the columns of the access system that was replaced by the roles.
  *
  * The last step of the update, and the only one that cannot be undone: it deletes data. It
- * refuses to run before auth:migrate-rights has turned the numbers into role assignments —
- * dropping users.rights first would leave a site with no staff and no way to work out who they
- * had been.
+ * refuses while any member of staff still has an access level and no role — dropping the column
+ * then would leave a site with no staff and no way to work out who they had been.
  */
 #[AsCommand(
     name: 'auth:drop-legacy-columns',
@@ -30,18 +28,13 @@ use Throwable;
 )]
 #[AsAdminTask(
     title: 'Drop the columns of the old access system',
-    description: 'Deletes users.rights and the other leftovers of the numeric access levels. Run it after the access levels have been migrated to roles.',
+    description: 'Deletes users.rights and the other leftovers of the numeric access levels. Refuses while anyone still has an access level and no role.',
 )]
 final class AuthDropLegacyColumnsCommand extends Command
 {
-    /**
-     * The migration that has to have happened first: it is the one that reads users.rights.
-     */
-    private const REQUIRES = 'auth:migrate-rights';
-
     /** @var array<string, list<string>> Columns to drop, per table. */
-    private const COLUMNS = [
-        'users'          => [
+    private const array COLUMNS = [
+        'users' => [
             // The access level itself, and the mirror of it that kept the two systems in step.
             'rights',
             // Counted the failed sign-in attempts of an account; the throttle counts them per
@@ -51,15 +44,11 @@ final class AuthDropLegacyColumnsCommand extends Command
             'rest_code',
             'rest_time',
         ],
-        AuthTables::ROLES => [
-            // Which number a role stood for. Only the migration of the numbers needed it.
-            'legacy_rights',
-        ],
     ];
 
     public function __construct(
-        private readonly OneTimeTaskTracker $tracker,
-        private readonly Builder $schema,
+        private readonly SchemaInterface $schema,
+        private readonly ConnectionInterface $db,
     ) {
         parent::__construct();
     }
@@ -68,11 +57,14 @@ final class AuthDropLegacyColumnsCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        if (! $this->tracker->isCompleted(self::REQUIRES)) {
+        $unconverted = $this->unconvertedStaff();
+
+        if ($unconverted > 0) {
             $io->error(
                 sprintf(
-                    'Run %s first: it is what turns the numbers of this column into roles, and it cannot be run afterwards.',
-                    self::REQUIRES
+                    'Run auth:migrate-legacy-access first: %d account(s) still have an access level and no role, and'
+                    . ' the column that says which one is what would be deleted here.',
+                    $unconverted
                 )
             );
 
@@ -80,8 +72,7 @@ final class AuthDropLegacyColumnsCommand extends Command
         }
 
         try {
-            $dropped = $this->drop($this->schema);
-            $this->tracker->markCompleted((string) $this->getName());
+            $dropped = $this->drop();
         } catch (Throwable $exception) {
             $io->error('Could not drop the columns: ' . $exception->getMessage());
 
@@ -104,28 +95,47 @@ final class AuthDropLegacyColumnsCommand extends Command
     }
 
     /**
+     * Members of staff the conversion has not reached: they have an access level above an
+     * ordinary user and hold no role at all.
+     */
+    private function unconvertedStaff(): int
+    {
+        if (! $this->schema->hasColumn('users', 'rights')) {
+            return 0;
+        }
+
+        $row = $this->db->selectOne(
+            'SELECT COUNT(*) AS total FROM users'
+            . ' LEFT JOIN user_roles ON user_roles.user_id = users.id'
+            . ' WHERE users.rights > 0 AND user_roles.user_id IS NULL'
+        );
+
+        return (int) ($row['total'] ?? 0);
+    }
+
+    /**
      * @return array<string, list<string>> What was actually dropped, per table.
      */
-    private function drop(Builder $schema): array
+    private function drop(): array
     {
         $dropped = [];
 
         foreach (self::COLUMNS as $table => $columns) {
-            if (! $schema->hasTable($table)) {
+            if (! $this->schema->hasTable($table)) {
                 continue;
             }
 
             $present = array_values(array_filter(
                 $columns,
-                static fn (string $column): bool => $schema->hasColumn($table, $column)
+                fn (string $column): bool => $this->schema->hasColumn($table, $column)
             ));
 
             if ($present === []) {
                 continue;
             }
 
-            $schema->table($table, static function (Blueprint $blueprint) use ($present): void {
-                $blueprint->dropColumn($present);
+            $this->schema->alter($table, static function (TableDefinition $definition) use ($present): void {
+                $definition->dropColumn(...$present);
             });
 
             $dropped[$table] = $present;

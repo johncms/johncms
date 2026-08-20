@@ -48,7 +48,7 @@ return [
         'mod_lib_comm'            => true,
         'mod_down_comm'           => true,
         // Deprecated: who may open a module and write in it is a permission of the guest and the
-        // user roles. Kept only so that auth:migrate-module-access can read what a site had; they
+        // user roles. Kept only so that auth:migrate-legacy-access can read what a site had; they
         // are read nowhere else and disappear with the numeric access levels.
         'mod_reg'                 => 2,
         'mod_forum'               => 2,

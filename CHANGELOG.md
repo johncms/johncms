@@ -42,6 +42,10 @@ Detailed change can see in the [repository log](https://github.com/johncms/johnc
 
   Разовые команды `library:generate-slugs`, `downloads:generate-slugs` и `forum:normalize-message-links` удалены. Все три конвертировали данные при переходе с 9.8 на 9.9, а перейти на 10.0 можно только с 9.9 — где эта работа уже сделана. Вместе с последней удалён служивший ей `Johncms\Modules\Forum\Application\Services\ForumMessageLinkNormalizer`.
 
+  **Мост с 9.9 на роли сжат с четырёх команд до двух.** `auth:migrate-rights` и `auth:migrate-module-access` объединены в `auth:migrate-legacy-access`: она сама создаёт встроенные роли, раздаёт должности и переносит настройки `mod_*`. Нужно ли что-то делать, определяется по самой базе — пока колонка `users.rights` на месте, перенос не завершён, — поэтому файл `config/autoload/one_time_tasks.local.php` и класс `Johncms\Console\OneTimeTaskTracker` больше не нужны и удалены; файл можно удалить руками.
+
+  `auth:apply-default-permissions` заменена на `auth:sync-roles` — её стоит выполнять после **каждого** обновления, а не однократно: новая версия или новый модуль могут объявить роль или право, которых у сайта ещё нет. Она только добавляет и ничего не отнимает. `auth:drop-legacy-columns` осталась отдельной командой и теперь отказывается работать, пока хоть у кого-то есть прежняя должность и нет роли.
+
   Авторам модулей: метод `install()` у `Johncms\Modules\Installer` удалён, таблицы модуля описываются его миграциями. `installDemoData()` и `uninstall()` не изменились. Классы `Johncms\Auth\Schema\AuthSchema` и `Johncms\Mail\Schema\MailSchema` удалены; имена таблиц, которые они держали, переехали в `Johncms\Auth\AuthTables` и `Johncms\Mail\MailTables`.
 
 - **Шаблоны переведены на Twig, движок Plates удалён.** Файлы `.phtml` больше не рендерятся, пакет `mobicms/render` исключён из зависимостей, вместе с ним удалены `Johncms\System\View\Render`, его расширения (`Assets`, `Avatar`, `Vite`, `Formatter`) и переменные шаблонов `$this->e()`, `$this->layout()`, `$this->fetch()`, `$user`, `$config`, `$tools`.
