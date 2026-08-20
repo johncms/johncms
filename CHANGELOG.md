@@ -40,6 +40,8 @@ Detailed change can see in the [repository log](https://github.com/johncms/johnc
 
   Без консоли обойтись тоже можно: на странице **Обслуживание** (`/admin/maintenance`) появилась задача «Update the database», она выполняется в фоне планировщиком. А если база отстала от файлов, админ-панель говорит об этом баннером на каждой странице — забыть про обновление больше не выйдет.
 
+  Разовые команды `library:generate-slugs` и `downloads:generate-slugs` удалены — то, что они делали, стало миграциями этих модулей и выполняется само. `forum:normalize-message-links` осталась командой: она зависит от настроек сайта (`--domain`) и от сервисов модуля, а миграция обязана работать одинаково через годы и не может зависеть ни от того, ни от другого.
+
   Авторам модулей: метод `install()` у `Johncms\Modules\Installer` удалён, таблицы модуля описываются его миграциями. `installDemoData()` и `uninstall()` не изменились. Классы `Johncms\Auth\Schema\AuthSchema` и `Johncms\Mail\Schema\MailSchema` удалены; имена таблиц, которые они держали, переехали в `Johncms\Auth\AuthTables` и `Johncms\Mail\MailTables`.
 
 - **Шаблоны переведены на Twig, движок Plates удалён.** Файлы `.phtml` больше не рендерятся, пакет `mobicms/render` исключён из зависимостей, вместе с ним удалены `Johncms\System\View\Render`, его расширения (`Assets`, `Avatar`, `Vite`, `Formatter`) и переменные шаблонов `$this->e()`, `$this->layout()`, `$this->fetch()`, `$user`, `$config`, `$tools`.

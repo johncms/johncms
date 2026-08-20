@@ -36,6 +36,9 @@ final class BaselineSchemaParityTest extends TestCase
 {
     private const string FIXTURE = ROOT_PATH . 'tests/fixtures/schema/baseline-mysql.json';
 
+    /** What the snapshot migrations of a source are named. */
+    private const string BASELINE_PREFIX = 'initial_';
+
     #[DataProvider('sources')]
     public function testTheMigrationsOfASourceBuildTheSchemaTheyReplaced(string $source): void
     {
@@ -46,15 +49,19 @@ final class BaselineSchemaParityTest extends TestCase
     }
 
     /**
-     * Every source that used to create tables still does, and no source has quietly appeared.
+     * Every source that used to create tables still has a baseline, and no source has quietly
+     * appeared with one.
      */
     public function testTheSourcesAreTheOnesThatUsedToCreateTables(): void
     {
         $withTables = [];
 
         foreach ($this->locator()->sources() as $source) {
-            if ($this->locator()->locate($source->name) !== []) {
-                $withTables[] = $source->name;
+            foreach ($this->locator()->locate($source->name) as $file) {
+                if (str_starts_with($file->name, self::BASELINE_PREFIX)) {
+                    $withTables[] = $source->name;
+                    break;
+                }
             }
         }
 
@@ -87,6 +94,10 @@ final class BaselineSchemaParityTest extends TestCase
     }
 
     /**
+     * Only the baseline of the source, which is what the fixture is a record of. A migration
+     * written after it is meant to take the schema somewhere the old code never went, and would
+     * have nothing to be compared against.
+     *
      * @return array<string, list<string>>
      */
     private function schemaBuiltBy(string $source): array
@@ -98,6 +109,10 @@ final class BaselineSchemaParityTest extends TestCase
         $connection = new PdoConnection(new PDO('sqlite::memory:'));
 
         foreach ($this->locator()->locate($source) as $file) {
+            if (! str_starts_with($file->name, self::BASELINE_PREFIX)) {
+                continue;
+            }
+
             $migration = require $file->path;
 
             self::assertInstanceOf(Migration::class, $migration, $file->path);
