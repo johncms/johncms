@@ -11,8 +11,8 @@
         <testsuite name="unit">
             <directory>tests/Unit</directory>
         </testsuite>
-        <!-- Drives real requests through Kernel::handle(); needs the database of the local
-             stand, and skips itself when it is not reachable (see FunctionalTestCase). -->
+        <!-- Drives real requests through Kernel::handle(), against SQLite in memory built by
+             the migrations. Needs no server and no installed site (see FunctionalTestCase). -->
         <testsuite name="functional">
             <directory>tests/Functional</directory>
         </testsuite>

@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Functional\Http;
 
+use Johncms\Modules\News\Application\Services\NewsPermissions;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouteCollection;
 use Tests\Functional\FunctionalTestCase;
+use Tests\Support\FunctionalUserFactory;
 
 /**
  * The gate a route declares with Route::permission(), end to end.
@@ -39,6 +41,28 @@ final class RoutePermissionTest extends FunctionalTestCase
             'news.manage',
             $routes->get('news.admin.index')->getDefault('_permission')
         );
+    }
+
+    public function testTheOneHoldingThePermissionIsLetIn(): void
+    {
+        $editor = FunctionalUserFactory::createWithPermissions([NewsPermissions::MANAGE]);
+
+        $response = $this->handleRequest('/admin/news', cookies: $this->actingAs($editor));
+
+        self::assertSame(Response::HTTP_OK, $response->getStatusCode());
+    }
+
+    /**
+     * A signed-in visitor who does not hold it is refused rather than sent to sign in: there is
+     * nothing to sign in as that would help.
+     */
+    public function testASignedInVisitorWithoutThePermissionIsRefused(): void
+    {
+        $visitor = FunctionalUserFactory::create();
+
+        $response = $this->handleRequest('/admin/news', cookies: $this->actingAs($visitor));
+
+        self::assertSame(Response::HTTP_FORBIDDEN, $response->getStatusCode());
     }
 
     /**
