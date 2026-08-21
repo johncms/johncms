@@ -101,6 +101,42 @@ final class IlluminateSchemaTest extends TestCase
         self::assertTrue($this->schema->hasIndex('votes', 'topic_position'));
     }
 
+    /**
+     * The names come from 9.x, where a table names its key after the column it covers, so a
+     * dozen of them have an index called `user_id`. MySQL keeps such a name per table; SQLite
+     * keeps it per database, and creating the second table used to fail. The table is part of
+     * the name there, and a migration keeps asking for the name it wrote.
+     */
+    public function testTwoTablesMayNameTheirIndexTheSameWay(): void
+    {
+        $index = static function (TableDefinition $table): void {
+            $table->increments('id');
+            $table->integer('user_id');
+            $table->index('user_id', 'user_id');
+        };
+
+        $this->schema->create('posts', $index);
+        $this->schema->create('comments', $index);
+
+        self::assertTrue($this->schema->hasIndex('posts', 'user_id'));
+        self::assertTrue($this->schema->hasIndex('comments', 'user_id'));
+    }
+
+    public function testANamedIndexIsDroppedAgain(): void
+    {
+        $this->schema->create('bookmarks', static function (TableDefinition $table): void {
+            $table->increments('id');
+            $table->integer('user_id');
+            $table->index('user_id', 'user_id');
+        });
+
+        $this->schema->alter('bookmarks', static function (TableDefinition $table): void {
+            $table->dropIndex('user_id');
+        });
+
+        self::assertFalse($this->schema->hasIndex('bookmarks', 'user_id'));
+    }
+
     public function testForeignKeyIsCreated(): void
     {
         $this->schema->create('articles', static function (TableDefinition $table): void {

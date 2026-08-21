@@ -35,8 +35,11 @@ final readonly class BlueprintCompiler
      * The order is not cosmetic: a column is renamed before it is described, a key is dropped
      * before the column it covers, and a key is added only once its columns exist.
      */
-    public function compile(TableDefinition $description, Blueprint $blueprint, bool $fullTextSupported = true): void
-    {
+    public function compile(
+        TableDefinition $description,
+        Blueprint $blueprint,
+        SchemaPlatform $platform = new SchemaPlatform(),
+    ): void {
         foreach ($description->getRenamedColumns() as $rename) {
             $blueprint->renameColumn($rename['from'], $rename['to']);
         }
@@ -50,11 +53,11 @@ final readonly class BlueprintCompiler
         }
 
         foreach ($description->getDroppedIndexes() as $index) {
-            $this->compileDroppedIndex($index, $blueprint);
+            $this->compileDroppedIndex($index, $blueprint, $platform);
         }
 
         foreach ($description->getIndexes() as $index) {
-            $this->compileIndex($index, $blueprint, $fullTextSupported);
+            $this->compileIndex($index, $blueprint, $platform);
         }
 
         foreach ($description->getForeignKeys() as $foreignKey) {
@@ -117,35 +120,39 @@ final readonly class BlueprintCompiler
         };
     }
 
-    private function compileIndex(IndexDefinition $index, Blueprint $blueprint, bool $fullTextSupported): void
+    private function compileIndex(IndexDefinition $index, Blueprint $blueprint, SchemaPlatform $platform): void
     {
         if ($index->columns === []) {
             throw new SchemaDefinitionException(sprintf('A %s key covers no columns.', $index->type->value));
         }
 
-        if ($index->type === IndexType::FullText && ! $fullTextSupported) {
+        if ($index->type === IndexType::FullText && ! $platform->supportsFullText) {
             return;
         }
 
+        $name = $platform->indexName($blueprint->getTable(), $index->name);
+
         match ($index->type) {
-            IndexType::Index    => $blueprint->index($index->columns, $index->name),
-            IndexType::Unique   => $blueprint->unique($index->columns, $index->name),
-            IndexType::Primary  => $blueprint->primary($index->columns, $index->name),
-            IndexType::FullText => $blueprint->fullText($index->columns, $index->name),
+            IndexType::Index    => $blueprint->index($index->columns, $name),
+            IndexType::Unique   => $blueprint->unique($index->columns, $name),
+            IndexType::Primary  => $blueprint->primary($index->columns, $name),
+            IndexType::FullText => $blueprint->fullText($index->columns, $name),
         };
     }
 
-    private function compileDroppedIndex(IndexDefinition $index, Blueprint $blueprint): void
+    private function compileDroppedIndex(IndexDefinition $index, Blueprint $blueprint, SchemaPlatform $platform): void
     {
         if ($index->type !== IndexType::Primary && $index->name === null) {
             throw new SchemaDefinitionException(sprintf('A dropped %s key has to be named.', $index->type->value));
         }
 
+        $name = $platform->indexName($blueprint->getTable(), $index->name);
+
         match ($index->type) {
-            IndexType::Index    => $blueprint->dropIndex((string) $index->name),
-            IndexType::Unique   => $blueprint->dropUnique((string) $index->name),
-            IndexType::Primary  => $blueprint->dropPrimary($index->name),
-            IndexType::FullText => $blueprint->dropFullText((string) $index->name),
+            IndexType::Index    => $blueprint->dropIndex((string) $name),
+            IndexType::Unique   => $blueprint->dropUnique((string) $name),
+            IndexType::Primary  => $blueprint->dropPrimary($name),
+            IndexType::FullText => $blueprint->dropFullText((string) $name),
         };
     }
 

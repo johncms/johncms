@@ -28,9 +28,6 @@ use Johncms\Database\Schema\TableDefinition;
  */
 final readonly class IlluminateSchema implements SchemaInterface
 {
-    /** The databases whose schema builder can write a word index. */
-    private const array DRIVERS_WITH_FULL_TEXT = ['mysql', 'mariadb'];
-
     public function __construct(
         private Builder $builder,
         private BlueprintCompiler $compiler = new BlueprintCompiler(),
@@ -42,7 +39,7 @@ final readonly class IlluminateSchema implements SchemaInterface
         $description = $this->describe($table, $definition);
 
         $this->builder->create($table, function (Blueprint $blueprint) use ($description): void {
-            $this->compiler->compile($description, $blueprint, $this->supportsFullText());
+            $this->compiler->compile($description, $blueprint, $this->platform());
         });
     }
 
@@ -51,7 +48,7 @@ final readonly class IlluminateSchema implements SchemaInterface
         $description = $this->describe($table, $definition);
 
         $this->builder->table($table, function (Blueprint $blueprint) use ($description): void {
-            $this->compiler->compile($description, $blueprint, $this->supportsFullText());
+            $this->compiler->compile($description, $blueprint, $this->platform());
         });
     }
 
@@ -82,7 +79,7 @@ final readonly class IlluminateSchema implements SchemaInterface
 
     public function hasIndex(string $table, string $index): bool
     {
-        return $this->builder->hasIndex($table, $index);
+        return $this->builder->hasIndex($table, $this->platform()->indexName($table, $index));
     }
 
     public function hasForeignKey(string $table, string $name): bool
@@ -120,9 +117,9 @@ final readonly class IlluminateSchema implements SchemaInterface
         Builder::defaultStringLength($length);
     }
 
-    private function supportsFullText(): bool
+    private function platform(): SchemaPlatform
     {
-        return in_array($this->builder->getConnection()->getDriverName(), self::DRIVERS_WITH_FULL_TEXT, true);
+        return SchemaPlatform::fromDriver($this->builder->getConnection()->getDriverName());
     }
 
     /**
