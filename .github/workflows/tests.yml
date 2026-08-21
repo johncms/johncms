@@ -75,6 +75,21 @@ jobs:
           extensions: pdo_sqlite
           coverage: none
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24.x
+          cache: npm
+
+      # The suite renders real pages, and a layout asks for the entry point of its theme: without
+      # the compiled bundle every page fails on the missing Vite manifest.
+      - name: Build the assets
+        run: |
+          npm ci
+          npm run build
+        env:
+          CI: true
+
       - name: Get composer cache directory
         id: composer-cache
         run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT

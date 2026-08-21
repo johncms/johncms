@@ -9,7 +9,9 @@ docker exec $(docker ps -q -f name=johncms.php-fpm) composer test:functional # t
 ```
 
 Neither needs a server or an installed site: both run against SQLite in memory, which is why
-CI runs them.
+CI runs them. The functional suite renders real pages, so the assets have to be built once
+(`npm run build`) — a layout asks Vite for the entry point of its theme, and without the
+compiled bundle every page fails on the missing manifest.
 
 ## Unit
 
