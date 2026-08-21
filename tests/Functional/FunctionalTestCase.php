@@ -4,30 +4,36 @@ declare(strict_types=1);
 
 namespace Tests\Functional;
 
-use Johncms\Auth\Session\AuthSession;
+use Illuminate\Database\Capsule\Manager as Capsule;
+use Johncms\Auth\Authorization\RoleSeeder;
 use Johncms\Auth\Session\AuthSessionManager;
+use Johncms\Config\ConfigRepository;
 use Johncms\Container\PSRContainerFactory;
 use Johncms\Http\Kernel;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
 use Johncms\Security\ClientInfoDTO;
+use Johncms\Users\User;
 use PDO;
-use PDOException;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Tests\Support\RunsMigrations;
 
 /**
- * Harness for the functional suite: boots the application once and drives real
- * requests through Kernel::handle().
+ * Harness for the functional suite: boots the application once and drives real requests through
+ * Kernel::handle().
  *
- * Two things to know before adding tests here:
+ * Three things to know before adding tests here:
  *
- * 1. It runs against the database of the local stand (config/autoload/database.local.php).
- *    Without a reachable database every test is skipped, which is why CI — which runs
- *    `composer test:unit` — stays green without one. Assert on statuses and structural
- *    fragments, never on the content of a particular install.
- * 2. Several requests may be driven through one process, including several through the same
+ * 1. The database is SQLite in memory, built by the migrations of the core and of every module,
+ *    with the system roles seeded into it. It belongs to the process and nothing else reads it,
+ *    so a test states the data it needs — FunctionalUserFactory writes the accounts — instead of
+ *    looking for what an installation happens to have. No stand and no server are involved, which
+ *    is why the suite runs in CI.
+ * 2. Every test runs inside a transaction that is rolled back afterwards, so whatever a test
+ *    writes is gone by the next one. Nothing has to be cleaned up by hand.
+ * 3. Several requests may be driven through one process, including several through the same
  *    controller: nothing holds a request beyond the cycle it belongs to, and the kernel resets the
  *    shared services that cache per-request state. RequestIsolationTest is what guards that.
  *    Render is the exception — the page title is still process state, so do not assert on it
@@ -35,16 +41,15 @@ use Symfony\Component\HttpFoundation\Response;
  */
 abstract class FunctionalTestCase extends TestCase
 {
+    use RunsMigrations;
+
     private static bool $booted = false;
-
-    private static ?string $bootFailure = null;
-
-    /** @var list<int> Sessions opened by actingAs(), removed again in tearDown(). */
-    private array $openedSessionIds = [];
 
     protected function setUp(): void
     {
         $this->bootApplication();
+
+        Capsule::connection()->beginTransaction();
 
         // The container is booted once per process, so the session facade is shared by every test
         // in the class. Under CONSOLE_MODE it holds in-memory storage (SessionFactory), and
@@ -54,7 +59,7 @@ abstract class FunctionalTestCase extends TestCase
 
     protected function tearDown(): void
     {
-        $this->signOutAll();
+        Capsule::connection()->rollBack();
 
         parent::tearDown();
     }
@@ -85,32 +90,20 @@ abstract class FunctionalTestCase extends TestCase
      *
      * Opens a real session and lets the request go through the real authenticator, so what the
      * test exercises is the path live visitors take — no test-only seam has to exist in
-     * production code for this. The rows are removed again in tearDown().
+     * production code for this.
      *
      * @return array<string, string> Cookies for handleRequest().
      */
-    protected function actingAs(int $userId, bool $remember = true): array
+    protected function actingAs(User|int $user, bool $remember = true): array
     {
         $sessions = $this->container()->get(AuthSessionManager::class);
-        $issued = $sessions->start($userId, $remember, new ClientInfoDTO('127.0.0.1', '', 'phpunit'));
-
-        $this->openedSessionIds[] = $issued->session->id;
+        $issued = $sessions->start(
+            $user instanceof User ? $user->id : $user,
+            $remember,
+            new ClientInfoDTO('127.0.0.1', '', 'phpunit')
+        );
 
         return [$sessions->settings()->cookieName => $issued->token];
-    }
-
-    /**
-     * Removes the sessions opened by actingAs(). The functional suite runs against the database
-     * of the local stand, so it has to leave it as it found it.
-     */
-    protected function signOutAll(): void
-    {
-        if ($this->openedSessionIds === []) {
-            return;
-        }
-
-        AuthSession::query()->whereIn('id', $this->openedSessionIds)->delete();
-        $this->openedSessionIds = [];
     }
 
     protected function container(): ContainerInterface
@@ -121,19 +114,10 @@ abstract class FunctionalTestCase extends TestCase
     private function bootApplication(): void
     {
         if (self::$booted) {
-            if (self::$bootFailure !== null) {
-                self::markTestSkipped(self::$bootFailure);
-            }
-
             return;
         }
 
         self::$booted = true;
-
-        if (! is_file(CONFIG_PATH . 'autoload' . DS . 'database.local.php')) {
-            self::$bootFailure = 'The application is not installed: config/autoload/database.local.php is missing.';
-            self::markTestSkipped(self::$bootFailure);
-        }
 
         // Skips the web-only part of the bootstrap: sessions, headers, the ban check, the
         // cleanup job and the output buffer. Everything the kernel needs — config, container,
@@ -146,11 +130,27 @@ abstract class FunctionalTestCase extends TestCase
         restore_error_handler();
         restore_exception_handler();
 
-        try {
-            $this->container()->get(PDO::class)->query('SELECT 1');
-        } catch (PDOException $exception) {
-            self::$bootFailure = 'The database of the local stand is not reachable: ' . $exception->getMessage();
-            self::markTestSkipped(self::$bootFailure);
-        }
+        $this->useInMemoryDatabase();
+        $this->migrateEverything();
+        $this->container()->get(RoleSeeder::class)->seed();
+    }
+
+    /**
+     * Points the application at SQLite before anything asks for the connection.
+     *
+     * Nothing has read the configuration of the database yet: under CONSOLE_MODE the bootstrap
+     * builds no PDO, and PdoFactory reads pdo.db_driver when the container is first asked for
+     * one — which happens here, so that the connection every later service gets is this one.
+     */
+    private function useInMemoryDatabase(): void
+    {
+        ConfigRepository::init(
+            array_replace(
+                ConfigRepository::all(),
+                ['pdo' => ['db_driver' => 'sqlite', 'db_name' => ':memory:']]
+            )
+        );
+
+        $this->container()->get(PDO::class);
     }
 }

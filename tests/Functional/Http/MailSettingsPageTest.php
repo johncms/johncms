@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace Tests\Functional\Http;
 
-use Illuminate\Database\Capsule\Manager as Capsule;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouteCollection;
 use Tests\Functional\FunctionalTestCase;
+use Tests\Support\FunctionalUserFactory;
 
 /**
  * The mail settings screen, end to end.
  *
  * Read-only on purpose: saving writes mail.local.php and drops the compiled container, which is
- * the configuration of the stand the rest of the suite runs against. What is worth checking here
- * is that the screen is reachable only by whoever may change the site, and that it shows the
- * settings actually in force.
+ * the configuration the rest of the suite runs with. What is worth checking here is that the
+ * screen is reachable only by whoever may change the site, and that it shows the settings
+ * actually in force.
  */
 final class MailSettingsPageTest extends FunctionalTestCase
 {
@@ -42,12 +42,15 @@ final class MailSettingsPageTest extends FunctionalTestCase
 
     public function testTheAdministratorSeesTheSettingsInForce(): void
     {
-        $response = $this->handleRequest(self::URL, cookies: $this->actingAs($this->supervisorId()));
+        $response = $this->handleRequest(
+            self::URL,
+            cookies: $this->actingAs(FunctionalUserFactory::createSupervisor())
+        );
 
         self::assertSame(Response::HTTP_OK, $response->getStatusCode());
 
         $content = (string) $response->getContent();
-        // The fields of the form, and the transport the stand is configured with.
+        // The fields of the form, and the transport in force.
         self::assertStringContainsString('name="dsn"', $content);
         self::assertStringContainsString('name="transport"', $content);
         self::assertStringContainsString('name="redirect_to"', $content);
@@ -56,23 +59,5 @@ final class MailSettingsPageTest extends FunctionalTestCase
             sprintf('value="%s" selected="selected"', (string) (config('mail')['transport'] ?? 'sendmail')),
             $content
         );
-    }
-
-    /**
-     * The account of the local stand that may change the settings of the site.
-     */
-    private function supervisorId(): int
-    {
-        $id = Capsule::connection()
-            ->table('user_roles')
-            ->join('roles', 'roles.id', '=', 'user_roles.role_id')
-            ->where('roles.slug', '=', 'supervisor')
-            ->value('user_roles.user_id');
-
-        if ($id === null) {
-            self::markTestSkipped('The stand has no account holding the supervisor role.');
-        }
-
-        return (int) $id;
     }
 }

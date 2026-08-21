@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Tests\Functional\Users;
 
 use Johncms\Auth\CurrentUser;
-use PDO;
 use Tests\Functional\FunctionalTestCase;
+use Tests\Support\FunctionalUserFactory;
 
 /**
  * The current-user service is shared, and hundreds of controllers take it in their constructor —
@@ -19,19 +19,6 @@ use Tests\Functional\FunctionalTestCase;
  */
 final class CurrentUserPerRequestTest extends FunctionalTestCase
 {
-    private ?int $userId = null;
-
-    protected function tearDown(): void
-    {
-        if ($this->userId !== null) {
-            $this->container()->get(PDO::class)
-                ->exec('DELETE FROM `users` WHERE `id` = ' . $this->userId);
-            $this->userId = null;
-        }
-
-        parent::tearDown();
-    }
-
     public function testTheVisitorOfEachRequestIsTheOneAnswered(): void
     {
         $userId = $this->createUser();
@@ -72,33 +59,6 @@ final class CurrentUserPerRequestTest extends FunctionalTestCase
      */
     private function createUser(): int
     {
-        $db = $this->container()->get(PDO::class);
-        $name = 'phpunit-per-request-' . bin2hex(random_bytes(4));
-
-        $statement = $db->prepare(
-            'INSERT INTO `users` SET
-                `name` = :name, `name_lat` = :name_lat, `password` = :password,
-                `imname` = "", `sex` = "m", `mail` = "", `skype` = "", `jabber` = "", `www` = "",
-                `live` = "", `mibile` = "", `status` = "", `browser` = "", `regadm` = "",
-                `set_user` = "a:0:{}", `ip` = :ip, `ip_via_proxy` = 0,
-                `preg` = 1, `mailvis` = 0,
-                `dayb` = 0, `monthb` = 0, `karma_plus` = 0, `karma_minus` = 0, `karma_off` = 0,
-                `datereg` = :datereg, `lastdate` = :lastdate, `email_confirmed` = 1'
-        );
-
-        $statement->execute(
-            [
-                'name'     => $name,
-                'name_lat' => $name,
-                'password' => md5(md5('per-request-user')),
-                'ip'       => sprintf('%u', ip2long('127.0.0.1')),
-                'datereg'  => time(),
-                'lastdate' => time(),
-            ]
-        );
-
-        $this->userId = (int) $db->lastInsertId();
-
-        return $this->userId;
+        return FunctionalUserFactory::create(['ip' => sprintf('%u', ip2long('127.0.0.1'))])->id;
     }
 }

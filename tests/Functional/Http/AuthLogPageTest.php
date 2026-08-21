@@ -9,6 +9,7 @@ use Johncms\Auth\Events\AuthEventType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouteCollection;
 use Tests\Functional\FunctionalTestCase;
+use Tests\Support\FunctionalUserFactory;
 
 /**
  * The sign-in log screen, end to end.
@@ -20,19 +21,6 @@ use Tests\Functional\FunctionalTestCase;
 final class AuthLogPageTest extends FunctionalTestCase
 {
     private const URL = '/admin/auth-log';
-
-    /** @var list<int> Entries written by this test, removed again in tearDown(). */
-    private array $storedIds = [];
-
-    protected function tearDown(): void
-    {
-        if ($this->storedIds !== []) {
-            AuthEvent::query()->whereIn('id', $this->storedIds)->delete();
-            $this->storedIds = [];
-        }
-
-        parent::tearDown();
-    }
 
     public function testAGuestIsSentToSignIn(): void
     {
@@ -55,9 +43,9 @@ final class AuthLogPageTest extends FunctionalTestCase
 
     public function testTheAdministratorSeesTheEntries(): void
     {
-        $userId = $this->supervisorId();
-        // Asserted through the context rather than through the name of the event: the stand runs
-        // in its own language, and the label is translated.
+        $userId = FunctionalUserFactory::createSupervisor()->id;
+        // Asserted through the context rather than through the name of the event: the label of an
+        // event is translated, and the language depends on the configuration.
         $this->store(AuthEventType::LoginSuccess, $userId, ['marker' => 'functional_test_entry']);
 
         $response = $this->handleRequest(self::URL, cookies: $this->actingAs($userId));
@@ -72,7 +60,7 @@ final class AuthLogPageTest extends FunctionalTestCase
      */
     public function testTheListCanBeNarrowedToOneKindOfEvent(): void
     {
-        $userId = $this->supervisorId();
+        $userId = FunctionalUserFactory::createSupervisor()->id;
         $this->store(AuthEventType::LoginFailed, $userId, ['reason' => 'functional_test_marker']);
         $this->store(AuthEventType::LoginSuccess, $userId);
 
@@ -89,7 +77,7 @@ final class AuthLogPageTest extends FunctionalTestCase
      */
     private function store(AuthEventType $event, int $userId, array $context = []): void
     {
-        $entry = AuthEvent::query()->create(
+        AuthEvent::query()->create(
             [
                 'user_id'    => $userId,
                 'event'      => $event->value,
@@ -99,28 +87,5 @@ final class AuthLogPageTest extends FunctionalTestCase
                 'created_at' => time(),
             ]
         );
-
-        $this->storedIds[] = $entry->id;
-    }
-
-    /**
-     * The account of the local stand that may read the log. Without one there is nothing to check
-     * the screen with, and inventing an administrator would mean writing roles into the database
-     * of the stand.
-     */
-    private function supervisorId(): int
-    {
-        $id = AuthEvent::query()
-            ->getConnection()
-            ->table('user_roles')
-            ->join('roles', 'roles.id', '=', 'user_roles.role_id')
-            ->where('roles.slug', '=', 'supervisor')
-            ->value('user_roles.user_id');
-
-        if ($id === null) {
-            self::markTestSkipped('The stand has no account holding the supervisor role.');
-        }
-
-        return (int) $id;
     }
 }

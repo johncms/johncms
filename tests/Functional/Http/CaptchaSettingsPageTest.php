@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\Functional\Http;
 
-use Illuminate\Database\Capsule\Manager as Capsule;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouteCollection;
 use Tests\Functional\FunctionalTestCase;
+use Tests\Support\FunctionalUserFactory;
 
 /**
  * The captcha settings screen, end to end.
@@ -41,7 +41,10 @@ final class CaptchaSettingsPageTest extends FunctionalTestCase
 
     public function testTheAdministratorSeesEveryProviderWithItsOwnFields(): void
     {
-        $response = $this->handleRequest(self::URL, cookies: $this->actingAs($this->supervisorId()));
+        $response = $this->handleRequest(
+            self::URL,
+            cookies: $this->actingAs(FunctionalUserFactory::createSupervisor())
+        );
 
         self::assertSame(Response::HTTP_OK, $response->getStatusCode());
 
@@ -55,23 +58,5 @@ final class CaptchaSettingsPageTest extends FunctionalTestCase
         self::assertStringContainsString('name="providers[recaptcha_v3][score_threshold]"', $content);
         // A secret is asked for, never sent back.
         self::assertStringContainsString('name="providers[smartcaptcha][secret_key]" value=""', $content);
-    }
-
-    /**
-     * The account of the local stand that may change the settings of the site.
-     */
-    private function supervisorId(): int
-    {
-        $id = Capsule::connection()
-            ->table('user_roles')
-            ->join('roles', 'roles.id', '=', 'user_roles.role_id')
-            ->where('roles.slug', '=', 'supervisor')
-            ->value('user_roles.user_id');
-
-        if ($id === null) {
-            self::markTestSkipped('The stand has no account holding the supervisor role.');
-        }
-
-        return (int) $id;
     }
 }

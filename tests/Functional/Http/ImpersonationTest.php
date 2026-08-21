@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace Tests\Functional\Http;
 
-use Johncms\Auth\Events\AuthEvent;
-use Johncms\Auth\Events\AuthEventType;
 use Johncms\Auth\Session\AuthSession;
 use Johncms\Auth\Session\SessionSettings;
 use Johncms\Security\Csrf;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouteCollection;
 use Tests\Functional\FunctionalTestCase;
+use Tests\Support\FunctionalUserFactory;
 
 /**
  * Browsing as another user, driven through the real pipeline.
@@ -22,27 +21,6 @@ use Tests\Functional\FunctionalTestCase;
  */
 final class ImpersonationTest extends FunctionalTestCase
 {
-    /** @var list<int> Sessions opened by this test, removed again in tearDown(). */
-    private array $openedSessionIds = [];
-
-    /** @var list<int> Audit entries written by this test. */
-    private array $storedEventIds = [];
-
-    protected function tearDown(): void
-    {
-        if ($this->openedSessionIds !== []) {
-            AuthSession::query()->whereIn('id', $this->openedSessionIds)->delete();
-            $this->openedSessionIds = [];
-        }
-
-        if ($this->storedEventIds !== []) {
-            AuthEvent::query()->whereIn('id', $this->storedEventIds)->delete();
-            $this->storedEventIds = [];
-        }
-
-        parent::tearDown();
-    }
-
     public function testAGuestCannotStartBrowsingAsSomebody(): void
     {
         $response = $this->handleRequest('/impersonation/start/1', 'POST', $this->withToken());
@@ -64,8 +42,10 @@ final class ImpersonationTest extends FunctionalTestCase
 
     public function testAnAdministratorBrowsesAsAUserAndComesBack(): void
     {
-        $adminId = $this->supervisorId();
-        $targetId = $this->ordinaryUserId($adminId);
+        $adminId = FunctionalUserFactory::createSupervisor()->id;
+        // An account holding nothing beyond the default role, so browsing as it is allowed by the
+        // hierarchy.
+        $targetId = FunctionalUserFactory::create()->id;
         $adminCookies = $this->actingAs($adminId);
 
         $started = $this->handleRequest(
@@ -83,8 +63,6 @@ final class ImpersonationTest extends FunctionalTestCase
             ->whereNotNull('impersonator_id')
             ->latest('id')
             ->firstOrFail();
-        $this->openedSessionIds[] = $session->id;
-        $this->rememberEventsOf($targetId);
 
         self::assertSame($adminId, $session->impersonator_id);
 
@@ -132,58 +110,4 @@ final class ImpersonationTest extends FunctionalTestCase
         return $this->container()->get(SessionSettings::class)->cookieName;
     }
 
-    private function rememberEventsOf(int $userId): void
-    {
-        $ids = AuthEvent::query()
-            ->where('user_id', '=', $userId)
-            ->whereIn('event', [
-                AuthEventType::ImpersonationStart->value,
-                AuthEventType::ImpersonationStop->value,
-                AuthEventType::ImpersonatedAction->value,
-            ])
-            ->pluck('id')
-            ->all();
-
-        foreach ($ids as $id) {
-            $this->storedEventIds[] = (int) $id;
-        }
-    }
-
-    private function supervisorId(): int
-    {
-        $id = AuthSession::query()
-            ->getConnection()
-            ->table('user_roles')
-            ->join('roles', 'roles.id', '=', 'user_roles.role_id')
-            ->where('roles.slug', '=', 'supervisor')
-            ->value('user_roles.user_id');
-
-        if ($id === null) {
-            self::markTestSkipped('The stand has no account holding the supervisor role.');
-        }
-
-        return (int) $id;
-    }
-
-    /**
-     * An account of the stand holding nothing beyond the default role, so browsing as it is
-     * allowed by the hierarchy.
-     */
-    private function ordinaryUserId(int $exceptId): int
-    {
-        $id = AuthSession::query()
-            ->getConnection()
-            ->table('users')
-            ->whereNotIn('id', function ($query): void {
-                $query->select('user_id')->from('user_roles');
-            })
-            ->where('id', '!=', $exceptId)
-            ->value('id');
-
-        if ($id === null) {
-            self::markTestSkipped('The stand has no account without granted roles.');
-        }
-
-        return (int) $id;
-    }
 }
