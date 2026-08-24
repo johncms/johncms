@@ -8,9 +8,20 @@
  * @link      https://johncms.com JohnCMS Project
  */
 
+declare(strict_types=1);
+
 return [
     'modules' => [
-        'installed_modules' => [
+        /*
+         * The modules this release ships with. A site installs them all and may switch some off
+         * afterwards; what it has done is recorded in modules.local.php, which this file knows
+         * nothing about.
+         *
+         * Which of them may not be switched off at all is a property of the module — the "system"
+         * field of its module.php — and is not repeated here.
+         */
+        'bundled' => [
+            'johncms/admin',
             'johncms/album',
             'johncms/collections',
             'johncms/community',
@@ -31,9 +42,6 @@ return [
             'johncms/profile',
             'johncms/redirect',
             'johncms/registration',
-        ],
-        'system_modules'    => [
-            'johncms/admin',
         ],
     ],
 ];

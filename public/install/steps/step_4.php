@@ -18,8 +18,9 @@ use Johncms\Console\Commands\CacheClearCommand;
 use Johncms\Modules\Admin\Application\UseCases\RebuildSmiliesCacheUseCase;
 use Johncms\Modules\Admin\Domain\Services\LanguageFilesManagerInterface;
 use Johncms\Http\Environment;
+use Johncms\Console\Commands\ModuleSyncCommand;
 use Johncms\Modules\ModuleInstaller;
-use Johncms\Modules\Modules;
+use Johncms\Modules\ModuleRegistryFactory;
 use Johncms\Http\Request;
 use Johncms\Users\User;
 use Johncms\Validator\Rules\EmailAddress;
@@ -161,11 +162,15 @@ if ($request->getMethod() === 'POST') {
                     $demoModel->save();
                 }
 
-                $modules = new Modules();
-                foreach ($modules->getInstalled() as $module) {
-                    (new ModuleInstaller($module))->installDemoData();
+                foreach (ModuleRegistryFactory::registry()->enabled() as $manifest) {
+                    (new ModuleInstaller($manifest->alias))->installDemoData();
                 }
             }
+
+            // Write down what this installation put in. Without it the site still runs — a module
+            // of the release counts as installed until the state file says otherwise — but the
+            // record every later install, update and removal is written against would be missing.
+            di(ModuleSyncCommand::class)->run(new ArrayInput([]), new NullOutput());
 
             // Drop cached counters so freshly seeded data is reflected right away.
             (new CacheClearCommand())->run(new ArrayInput([]), new NullOutput());

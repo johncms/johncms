@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Unit\View\Twig;
 
+use Johncms\Modules\Manifest\ModuleManifest;
+use Johncms\Modules\ModuleRegistry;
+use Johncms\Modules\ModuleRepositoryInterface;
+use Johncms\Modules\ModuleStateRecord;
+use Johncms\Modules\ModuleStateStore;
 use Johncms\View\Theme\FilesystemThemeRepository;
 use Johncms\View\Theme\ThemeChainResolver;
 use Johncms\View\Twig\TemplatePathProviderInterface;
@@ -116,6 +121,52 @@ final class TemplatePathRegistryTest extends TestCase
             ],
             $this->normalize($this->registry([$provider])->paths('child')['news'])
         );
+    }
+
+    /**
+     * A namespace is registered for a module the registry loads, and for no other: the templates
+     * of a module that was switched off are still on disk, and a page of it answering would be a
+     * page of a module this site is not running.
+     */
+    public function testOnlyTheModulesTheRegistryLoadsGetANamespace(): void
+    {
+        $modules = new class implements ModuleRepositoryInterface {
+            public function all(): array
+            {
+                return [
+                    'johncms/news'  => $this->manifest('johncms/news', 'news'),
+                    'johncms/admin' => $this->manifest('johncms/admin', 'admin'),
+                ];
+            }
+
+            public function find(string $key): ?ModuleManifest
+            {
+                return $this->all()[$key] ?? null;
+            }
+
+            private function manifest(string $key, string $alias): ModuleManifest
+            {
+                return new ModuleManifest($key, $alias, MODULES_PATH . $key, ucfirst($alias));
+            }
+        };
+
+        $stateFile = $this->root . 'state.php';
+        $store = new ModuleStateStore($stateFile);
+        $store->save(['johncms/news' => new ModuleStateRecord('johncms/news', 'news', enabled: false)]);
+
+        $registry = new TemplatePathRegistry(
+            new ThemeChainResolver(new FilesystemThemeRepository($this->root . 'themes' . DS)),
+            [],
+            $this->root . 'themes' . DS,
+            $this->root . 'modules' . DS,
+            null,
+            new ModuleRegistry($modules, $store, ['johncms/news', 'johncms/admin']),
+        );
+
+        $paths = $registry->paths('child');
+
+        self::assertArrayHasKey('admin', $paths);
+        self::assertArrayNotHasKey('news', $paths, 'The switched-off module keeps its files and loses its namespace.');
     }
 
     /**

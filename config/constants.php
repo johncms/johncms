@@ -32,6 +32,11 @@ const CACHE_CONTAINER = false;
 // of on every request. Remove the data/cache/routes.php file after changing a route.
 const CACHE_ROUTES = false;
 
+// Safe mode for modules: only the system ones are loaded, everything else is left out.
+// The way back into a site that a module takes down — switch it on, remove the module in the
+// admin panel, switch it back off.
+const MODULES_SAFE_MODE = false;
+
 // Включаем режим отладки
 const DEBUG = true;
 

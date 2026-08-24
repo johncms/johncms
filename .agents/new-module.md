@@ -163,8 +163,9 @@ Add a `<lang>.po` in `modules/johncms/<module>/locale/` for each language you we
 
 ## IDE Template Navigation
 
-A module listed in `config/autoload/modules.global.php` gets the Twig namespace `@<module>`
-without registering anything. The IDE cannot infer that convention, so regenerate the file it
+A module the registry loads gets the Twig namespace of its alias without registering anything —
+a module of the release is listed in `config/autoload/modules.global.php`, anything else is
+recorded in the generated `modules.local.php`. The IDE cannot infer that convention, so regenerate the file it
 reads after adding the module:
 
 ```bash

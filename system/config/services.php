@@ -122,6 +122,10 @@ use Johncms\Console\Commands\TwigLintCommand;
 use Johncms\View\ColorScheme;
 use Johncms\View\RendererInterface;
 use Johncms\View\Theme\FilesystemThemeRepository;
+use Johncms\Modules\FilesystemModuleRepository;
+use Johncms\Modules\ModuleRegistry;
+use Johncms\Modules\ModuleRegistryFactory;
+use Johncms\Modules\ModuleRepositoryInterface;
 use Johncms\View\Theme\ThemeRepositoryInterface;
 use Johncms\View\Twig\AppVariable;
 use Johncms\View\Twig\Extension\AppExtension;
@@ -214,7 +218,18 @@ return static function (ContainerConfigurator $container): void {
                 ROOT_PATH . 'system/src/Database/Migrations',
                 ROOT_PATH . 'system/src/Image/ImageProcessingException.php',
                 ROOT_PATH . 'system/src/Files',
-                ROOT_PATH . 'system/src/Modules',
+                // The manifest and the state of a module are value objects, and the two
+                // remaining pieces of the old installer take the name of a module as a string.
+                // What is a service here — the repository, the loader, the state store and the
+                // registry — is either autowired from what follows or registered by hand below.
+                ROOT_PATH . 'system/src/Modules/Installer.php',
+                ROOT_PATH . 'system/src/Modules/ModuleInstaller.php',
+                ROOT_PATH . 'system/src/Modules/ModuleRegistry.php',
+                ROOT_PATH . 'system/src/Modules/ModuleState.php',
+                ROOT_PATH . 'system/src/Modules/ModuleStateRecord.php',
+                ROOT_PATH . 'system/src/Modules/ModuleStatus.php',
+                ROOT_PATH . 'system/src/Modules/Exceptions',
+                ROOT_PATH . 'system/src/Modules/Manifest/ModuleManifest.php',
                 ROOT_PATH . 'system/src/Router/Route.php',
                 ROOT_PATH . 'system/src/Router/RouteCollection.php',
                 ROOT_PATH . 'system/src/Router/RouteRequirements.php',
@@ -446,6 +461,12 @@ return static function (ContainerConfigurator $container): void {
     $services->set(SymfonyRouteMatcher::class);
     // Every page of the site is a Twig template now; the installer builds an engine of its own.
     $services->alias(RendererInterface::class, TwigRenderer::class);
+
+    // The registry the boot already built: the container is compiled from the modules it names,
+    // so it cannot be the thing that creates it.
+    $services->set(ModuleRegistry::class)
+        ->factory([ModuleRegistryFactory::class, 'registry']);
+    $services->set(ModuleRepositoryInterface::class, FilesystemModuleRepository::class);
 
     $services->set(ThemeRepositoryInterface::class, FilesystemThemeRepository::class);
     $services->set(TemplatePathRegistry::class)

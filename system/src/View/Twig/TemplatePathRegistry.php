@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\View\Twig;
 
+use Johncms\Modules\ModuleRegistry;
+use Johncms\Modules\ModuleRegistryFactory;
 use Johncms\View\Theme\ThemeChainResolver;
 
 /**
@@ -30,9 +32,9 @@ final readonly class TemplatePathRegistry
 
     /**
      * @param iterable<TemplatePathProviderInterface> $providers
-     * @param array<string>|null                      $modules Keys of the installed modules
+     * @param array<string>|null                      $modules Keys of the modules to register
      *                                                             (`johncms/news`). Defaults to
-     *                                                             what the configuration lists.
+     *                                                             the ones the registry loads.
      */
     public function __construct(
         private ThemeChainResolver $themeChain,
@@ -40,6 +42,7 @@ final readonly class TemplatePathRegistry
         private string $themesPath = THEMES_PATH,
         private string $modulesPath = MODULES_PATH,
         private ?array $modules = null,
+        private ?ModuleRegistry $registry = null,
     ) {
     }
 
@@ -81,10 +84,13 @@ final readonly class TemplatePathRegistry
      */
     private function installedModules(): array
     {
-        return $this->modules ?? array_merge(
-            (array) config('modules.installed_modules', []),
-            (array) config('modules.system_modules', [])
-        );
+        if ($this->modules !== null) {
+            return $this->modules;
+        }
+
+        // A switched-off module keeps its templates on disk, and they must stop resolving with it:
+        // a namespace that still answers is a page of a module the site is not running.
+        return array_keys(($this->registry ?? ModuleRegistryFactory::registry())->enabled());
     }
 
     /**
