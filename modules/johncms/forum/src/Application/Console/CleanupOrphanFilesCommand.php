@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Johncms\Console\Commands;
+namespace Johncms\Modules\Forum\Application\Console;
 
 use Johncms\Modules\Forum\Application\UseCases\CleanupOrphanForumFilesUseCase;
 use Johncms\Scheduler\AsScheduledTask;
@@ -18,7 +18,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
     description: 'Delete orphaned forum files from storage',
 )]
 #[AsScheduledTask(expression: '0 * * * *', withoutOverlapping: true)]
-final class CronCleanupForumFilesCommand extends Command
+final class CleanupOrphanFilesCommand extends Command
 {
     public function __construct(
         private readonly CleanupOrphanForumFilesUseCase $cleanupOrphanForumFilesUseCase,

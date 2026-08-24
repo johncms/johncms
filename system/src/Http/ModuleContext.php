@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Http;
 
+use Johncms\Modules\ModuleRegistry;
 use Johncms\System\i18n\Translator;
 
 /**
@@ -18,14 +19,17 @@ use Johncms\System\i18n\Translator;
  */
 final readonly class ModuleContext
 {
-    public function __construct(private Translator $translator)
-    {
+    public function __construct(
+        private Translator $translator,
+        private ModuleRegistry $registry,
+    ) {
     }
 
     /**
-     * The module arrives as its key — `johncms/forum`. The translation domain is the name alone,
-     * because that is what `d__('forum', …)` says in the code and what the dictionary files are
-     * generated for; the vendor is part of the path and of nothing else.
+     * The module arrives as its key — `johncms/forum`. The domain is its alias, because that is
+     * what `d__('forum', …)` says in the code and what the dictionaries are generated for, and the
+     * registry is what knows the alias: a module keeps the one it was installed under, whatever
+     * its manifest says today.
      */
     public function enter(?string $module): void
     {
@@ -33,6 +37,18 @@ final readonly class ModuleContext
             return;
         }
 
-        $this->translator->addTranslationDomain(basename($module), MODULES_PATH . $module . '/locale');
+        $state = $this->registry->find($module);
+
+        // Only a loaded module has routes, so this cannot happen while one is being served. It
+        // can while something else calls in — and a page without its own domain still renders,
+        // in the system one.
+        if ($state === null || $state->manifest === null) {
+            return;
+        }
+
+        $this->translator->addTranslationDomain(
+            $state->alias,
+            $state->manifest->path . DIRECTORY_SEPARATOR . 'locale'
+        );
     }
 }

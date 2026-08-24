@@ -42,6 +42,11 @@ final class FileSystemLanguageFilesManager implements LanguageFilesManagerInterf
     }
 
     /**
+     * Every file of a language, found on disk rather than through the module registry on purpose:
+     * removing a language has to take the dictionaries of every module whose files are there, the
+     * switched-off and the never-installed ones included. Leaving theirs behind would bring the
+     * language half back the moment such a module is switched on.
+     *
      * @return list<string>
      */
     private function files(string $code): array

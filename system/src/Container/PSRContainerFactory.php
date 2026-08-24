@@ -12,6 +12,7 @@ use Johncms\Captcha\CaptchaProviderInterface;
 use Johncms\Content\Embed\EmbedProviderInterface;
 use Johncms\Content\Transformer\ContentTransformerInterface;
 use Johncms\Database\Migrations\MigrationSourceProviderInterface;
+use Johncms\Modules\ModuleRegistryFactory;
 use Johncms\Security\HtmlPolicyProviderInterface;
 use Psr\Container\ContainerInterface as PsrContainerInterface;
 use Symfony\Component\Config\FileLocator;
@@ -115,9 +116,21 @@ class PSRContainerFactory
         $loader->load('services.php');
     }
 
+    /**
+     * The services of the modules the registry loads — not of every directory lying in modules/.
+     * A module that was switched off, or one merely dropped in and never installed, declares
+     * nothing: its services would be built from tables that may not exist, and its controllers
+     * would answer routes it does not have.
+     */
     private function loadModuleServices(ContainerBuilder $container): void
     {
-        foreach (glob(MODULES_PATH . '*/*/config/services.php') as $file) {
+        foreach (ModuleRegistryFactory::registry()->enabled() as $manifest) {
+            $file = $manifest->path . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'services.php';
+
+            if (! is_file($file)) {
+                continue;
+            }
+
             $loader = new PhpFileLoader(
                 $container,
                 new FileLocator(\dirname($file))

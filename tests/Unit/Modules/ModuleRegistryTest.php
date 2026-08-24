@@ -122,23 +122,29 @@ final class ModuleRegistryTest extends TestCase
     }
 
     /**
-     * Safe mode is the way back into a site a module has taken down: the panel and what it needs,
-     * nothing else. Nothing is uninstalled by it — the modules come back when it is switched off.
+     * Safe mode is the way back into a site a third-party module has taken down: what the CMS
+     * ships stays, everything else is left out. Cutting it down to the system modules would not
+     * help — the admin panel is built against several modules of the release, and dropping them
+     * takes the panel down with them.
+     *
+     * Nothing is uninstalled by it: the modules come back when it is switched off.
      */
-    public function testSafeModeLeavesTheSystemModulesOnly(): void
+    public function testSafeModeLeavesTheModulesOfTheReleaseOnly(): void
     {
         $registry = $this->registry(
             onDisk: [
                 'johncms/admin' => $this->manifest('johncms/admin', 'admin', system: true),
                 'johncms/news'  => $this->manifest('johncms/news', 'news'),
+                'vasya/blog'    => $this->manifest('vasya/blog', 'blog'),
             ],
             bundled: ['johncms/admin', 'johncms/news'],
+            state: ['vasya/blog' => new ModuleStateRecord('vasya/blog', 'blog')],
             safeMode: true,
         );
 
-        self::assertSame(['johncms/admin'], array_keys($registry->enabled()));
+        self::assertSame(['johncms/admin', 'johncms/news'], array_keys($registry->enabled()));
         self::assertSame(
-            ['johncms/admin', 'johncms/news'],
+            ['johncms/admin', 'johncms/news', 'vasya/blog'],
             array_keys($registry->installed()),
             'Safe mode does not uninstall anything.'
         );

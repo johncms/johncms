@@ -31,6 +31,28 @@ Infrastructure
 * Implement repository contracts in **Infrastructure**.
 * Inject interfaces into services, use cases, and controllers.
 
+### The core never depends on a module
+
+`system/src/` may not reference a class of a module. A module can be switched off, and the
+container is compiled from the modules that are loaded: a core service autowired against
+`Johncms\Modules\Forum\…` stops the whole site from booting the moment the forum is switched off,
+with an error about a service that does not exist.
+
+That applies to console commands as well, and it is where the rule is easiest to break:
+`forum:cleanup-orphan-files` used to live in `system/src/Console/Commands` and take a use case of
+the forum. **A command that works on the data of a module belongs to that module** —
+`modules/<vendor>/<module>/src/Application/Console/` — and is registered by the `services.php` of
+the module, which already tags every `Command` it declares.
+
+The other direction is allowed and normal: a module depends on the core.
+
+**Between modules the rule is softer, but the cost is the same.** A module that autowires a
+service of another module cannot be switched on without it. Today `admin` is built against
+`forum`, `consent`, `guestbook` and `registration` — those four cannot be switched off — and
+`profile`, `online` and `notifications` reach into other modules as well. New code should not add
+to that list; where a module legitimately extends another, the way in is a tagged extension point,
+not a constructor argument.
+
 ### HTTP types stay in the HTTP layer
 
 * HTTP request/response types (`Johncms\Http\Request`, `Response`, and the framework

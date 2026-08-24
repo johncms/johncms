@@ -12,11 +12,17 @@ declare(strict_types=1);
 
 namespace Johncms\Router;
 
+use Johncms\Modules\ModuleRegistry;
+use Johncms\Modules\ModuleRegistryFactory;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Routing\RouteCollection as SymfonyRouteCollection;
 
 class RouteCollectorFactory
 {
+    public function __construct(private readonly ?ModuleRegistry $registry = null)
+    {
+    }
+
     /**
      * The collection does not depend on who is asking: a route closed to the visitor is declared
      * all the same and its gate is a middleware. That is what makes the collection dumpable and
@@ -38,15 +44,25 @@ class RouteCollectorFactory
     }
 
     /**
-     * Every route a module declares is stamped with the key of that module — vendor and name,
-     * taken from the path of the file declaring it. That is what lets the request pipeline set up
-     * the module context of the page, instead of each controller naming its own module.
+     * The routes of the modules the registry loads, and of no others: a module that is switched
+     * off answers nothing, rather than answering with pages whose templates and services are no
+     * longer registered.
+     *
+     * Every route is stamped with the key of its module. That is what lets the request pipeline
+     * set up the module context of the page, instead of each controller naming its own module.
      */
     private function addModuleRoutes(RouteCollection $router): void
     {
-        foreach (glob(MODULES_PATH . '*/*/config/routes.php') as $file) {
-            $moduleDirectory = dirname($file, 2);
-            $router->setModule(basename(dirname($moduleDirectory)) . '/' . basename($moduleDirectory));
+        $registry = $this->registry ?? ModuleRegistryFactory::registry();
+
+        foreach ($registry->enabled() as $key => $manifest) {
+            $file = $manifest->path . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'routes.php';
+
+            if (! is_file($file)) {
+                continue;
+            }
+
+            $router->setModule($key);
 
             $registerRoutes = require $file;
             $registerRoutes($router);

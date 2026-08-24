@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Router;
 
+use Johncms\Modules\FilesystemModuleRepository;
+use Johncms\Modules\ModuleRegistry;
+use Johncms\Modules\ModuleStateRecord;
+use Johncms\Modules\ModuleStateStore;
 use Johncms\Router\RouteCollectorFactory;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
@@ -57,6 +61,31 @@ final class RouteCollectorFactoryTest extends TestCase
             'johncms/guestbook',
             $this->findRouteByPath($routes, '/guestbook/clean')?->getDefault('_module')
         );
+    }
+
+    /**
+     * A module that is switched off answers nothing. Its routes are what would otherwise reach a
+     * controller that is no longer a service and a template whose namespace is gone — a 500 where
+     * the honest answer is that the page does not exist.
+     */
+    public function testTheRoutesOfASwitchedOffModuleAreNotCollected(): void
+    {
+        $stateFile = sys_get_temp_dir() . DS . 'johncms-routes-' . uniqid() . '.php';
+        $store = new ModuleStateStore($stateFile);
+        $store->save(['johncms/forum' => new ModuleStateRecord('johncms/forum', 'forum', enabled: false)]);
+
+        $registry = new ModuleRegistry(
+            new FilesystemModuleRepository(),
+            $store,
+            ['johncms/forum', 'johncms/guestbook'],
+        );
+
+        $routes = (new RouteCollectorFactory($registry))($this->container);
+
+        @unlink($stateFile);
+
+        self::assertNull($this->findRouteByPath($routes, '/forum/download-file/{id}'));
+        self::assertNotNull($this->findRouteByPath($routes, '/guestbook/clean'));
     }
 
     private function findRouteByPath(RouteCollection $routes, string $path): ?\Symfony\Component\Routing\Route

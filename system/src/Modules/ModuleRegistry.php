@@ -39,7 +39,7 @@ final class ModuleRegistry
         private readonly ModuleRepositoryInterface $modules,
         private readonly ModuleStateStore $state,
         private readonly array $bundled = [],
-        /** Loads system modules only: the way back into a site a module has taken down. */
+        /** Loads the modules of the release only: the way back into a site a module has taken down. */
         private readonly bool $safeMode = false,
     ) {
     }
@@ -189,9 +189,11 @@ final class ModuleRegistry
             return ModuleStatus::Discovered;
         }
 
-        // Safe mode leaves the system modules and nothing else: enough to reach the admin panel
-        // and switch off whatever is at fault.
-        if ($this->safeMode && ! $manifest->system) {
+        // Safe mode leaves the modules of the release and drops everything else. That is the
+        // situation it exists for: a third-party module takes the site down and there is no way
+        // into the admin panel to remove it. Leaving only the system modules would be no help —
+        // the panel itself is built against several modules of the release.
+        if ($this->safeMode && ! in_array($manifest->key, $this->bundled, true)) {
             return ModuleStatus::Disabled;
         }
 

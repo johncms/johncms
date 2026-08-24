@@ -14,8 +14,8 @@ namespace Johncms\Database\Migrations;
 
 /**
  * Where a set of migrations comes from: the core, a module, or something a third party added.
- * The name is written into the journal, so it is the directory name of the module and must not
- * change once its migrations have run anywhere.
+ * The name is written into the journal, so it is the alias of the module — `forum`, never
+ * `johncms/forum` — and must not change once its migrations have run anywhere.
  */
 final readonly class MigrationSource
 {
