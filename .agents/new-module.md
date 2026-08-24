@@ -7,14 +7,39 @@ How to wire a new module with the layered architecture. For layer responsibiliti
 Modules lie under a vendor directory: everything shipped with the CMS is
 `modules/johncms/<module>/`, and a third-party module is `modules/<vendor>/<module>/`.
 
-The **name** of the module — the last path segment — is what everything else is keyed by: the
-Twig namespace (`@news`), the gettext domain (`d__('news', …)`) and the source of its migrations
-(`migrate --source=news`). The vendor exists on disk and nowhere else.
+The **key** of a module is `vendor/name` — where it lies, and what it is called as a package. The
+**alias** is the flat name everything that cannot hold a slash uses: the Twig namespace (`@news`),
+the gettext domain (`d__('news', …)`) and the source of its migrations (`migrate --source=news`).
+A module shipped with the CMS declares its name as the alias; one that declares none gets
+`vendor.name`.
+
+## Manifest
+
+Every module carries `module.php` next to its `config/` — that is what makes a directory a module:
+
+```php
+<?php
+
+declare(strict_types=1);
+
+return [
+    'key'   => 'johncms/<module>',
+    'alias' => '<module>',
+    'name'  => 'What to call it in an interface',
+];
+```
+
+* `key` must match the directory the file lies in, or the module is refused with an error.
+* `alias` may only hold lowercase letters, digits, dots, hyphens and underscores — never a slash.
+  **It is fixed once released**: the journal of migrations is written under it.
+* `version` — omit it in a module shipped with the CMS; its version is the version of the CMS.
+* `system` — `true` only for a module that must never be switched off (the admin panel).
 
 ## Directory Structure
 
 ```
 modules/johncms/<module>/
+├── module.php       manifest: key, alias, name
 ├── config/          services.php, routes.php
 ├── locale/          the gettext domain of the module
 ├── migrations/      its tables — see .agents/migrations.md
