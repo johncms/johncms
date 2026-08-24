@@ -35,6 +35,25 @@ return [
 * `version` — omit it in a module shipped with the CMS; its version is the version of the CMS.
 * `system` — `true` only for a module that must never be switched off (the admin panel).
 * `autoload` — omit it in a module shipped with the CMS (see below).
+* `requires` — what the module cannot run without:
+
+  ```php
+  'requires' => [
+      'php'     => '^8.4',
+      'johncms' => '^10.0',
+      'modules' => ['johncms/forum' => '^10.0'],
+  ],
+  ```
+
+  Constraints are Composer constraints, read by composer/semver. A module of the release declares
+  no `php` and no `johncms` — it ships with the CMS — but **does** declare the modules whose
+  services it is built against, because those can be switched off. Get that wrong and switching
+  the other module off fails to compile the container instead of reporting a problem.
+
+  A module whose requirement is not met is not loaded, and neither is anything built on it. The
+  exception is a module a **system** module needs: it stays loaded, and the listing says who is
+  holding it — obeying a configuration that takes the admin panel down would leave nobody able to
+  put it back.
 
 ## Directory Structure
 

@@ -62,6 +62,7 @@ final readonly class ModuleManifestLoader
             version: $this->string($manifest, 'version', $file),
             system: $this->bool($manifest, 'system', $file),
             autoload: $this->autoload($manifest, $file),
+            requires: $this->requirements($manifest, $file),
         );
     }
 
@@ -123,6 +124,39 @@ final readonly class ModuleManifestLoader
         }
 
         return $alias;
+    }
+
+    /**
+     * @param array<mixed> $manifest
+     */
+    private function requirements(array $manifest, string $file): ModuleRequirements
+    {
+        $requires = $manifest['requires'] ?? null;
+
+        if ($requires === null) {
+            return new ModuleRequirements();
+        }
+
+        if (! is_array($requires)) {
+            throw new InvalidModuleManifestException(sprintf('"%s": the "requires" field must be an array.', $file));
+        }
+
+        $modules = [];
+        foreach ((array) ($requires['modules'] ?? []) as $key => $constraint) {
+            if (! is_string($key) || ! is_string($constraint)) {
+                throw new InvalidModuleManifestException(
+                    sprintf('"%s": every required module maps a key to a version constraint.', $file)
+                );
+            }
+
+            $modules[$key] = $constraint;
+        }
+
+        return new ModuleRequirements(
+            php: $this->string($requires, 'php', $file),
+            johncms: $this->string($requires, 'johncms', $file),
+            modules: $modules,
+        );
     }
 
     /**

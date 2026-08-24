@@ -29,4 +29,7 @@ enum ModuleStatus: string
 
     /** Recorded as installed, but unusable: the files are gone, or something makes it unloadable. */
     case Broken = 'broken';
+
+    /** Installed, but this site cannot run it: the version of PHP, of the CMS, or a module it needs. */
+    case Incompatible = 'incompatible';
 }

@@ -41,6 +41,7 @@ final class ModuleRegistry
         private readonly array $bundled = [],
         /** Loads the modules of the release only: the way back into a site a module has taken down. */
         private readonly bool $safeMode = false,
+        private readonly ModuleCompatibilityChecker $compatibility = new ModuleCompatibilityChecker(),
     ) {
     }
 
@@ -135,7 +136,121 @@ final class ModuleRegistry
 
         ksort($states);
 
-        return $this->states = array_values($states);
+        return $this->states = array_values($this->withCompatibility($this->heldBySystemModules($states)));
+    }
+
+    /**
+     * Switches back on what a system module cannot do without.
+     *
+     * The admin panel is built against several modules of the release, so switching one of them
+     * off in the configuration would take the panel down — and with it the only way to switch it
+     * back on. Rather than obey into that corner, the registry keeps such a module loaded and says
+     * in the listing who is holding it.
+     *
+     * It applies to installed modules only: something that was never installed cannot be held on,
+     * and a system module needing it is a broken installation, reported by the pass below.
+     *
+     * @param array<string, ModuleState> $states
+     * @return array<string, ModuleState>
+     */
+    private function heldBySystemModules(array $states): array
+    {
+        $holders = [];
+        $queue = [];
+
+        foreach ($states as $key => $state) {
+            if ($state->system && $state->manifest !== null && $state->status !== ModuleStatus::Discovered) {
+                $queue[] = $key;
+            }
+        }
+
+        while ($queue !== []) {
+            $current = array_shift($queue);
+            $manifest = $states[$current]->manifest ?? null;
+
+            if ($manifest === null) {
+                continue;
+            }
+
+            foreach (array_keys($manifest->requires->modules) as $required) {
+                if (isset($holders[$required]) || ! isset($states[$required])) {
+                    continue;
+                }
+
+                $holders[$required] = $current;
+                $queue[] = $required;
+            }
+        }
+
+        foreach ($holders as $key => $holder) {
+            $state = $states[$key];
+
+            if ($state->status !== ModuleStatus::Disabled) {
+                continue;
+            }
+
+            $states[$key] = new ModuleState(
+                key: $state->key,
+                alias: $state->alias,
+                name: $state->name,
+                status: ModuleStatus::Enabled,
+                version: $state->version,
+                system: $state->system,
+                manifest: $state->manifest,
+                problem: sprintf('Switched off in the configuration, but kept loaded: "%s" needs it.', $holder),
+            );
+        }
+
+        return $states;
+    }
+
+    /**
+     * Takes out the modules this site cannot run, and then the ones that needed them.
+     *
+     * The pass repeats until nothing changes, because requirements chain: a module built on the
+     * forum stops being loadable the moment the forum does, and so does whatever was built on
+     * that module. Doing it once would leave a module loaded against a dependency that is not
+     * there — which is the container failing to compile, on a page nobody expected to break.
+     *
+     * @param array<string, ModuleState> $states
+     * @return array<string, ModuleState>
+     */
+    private function withCompatibility(array $states): array
+    {
+        do {
+            $loaded = [];
+            foreach ($states as $key => $state) {
+                if ($state->status === ModuleStatus::Enabled) {
+                    $loaded[$key] = $state->version ?? CMS_VERSION;
+                }
+            }
+
+            $refused = false;
+            foreach ($states as $key => $state) {
+                if ($state->status !== ModuleStatus::Enabled || $state->manifest === null) {
+                    continue;
+                }
+
+                $problem = $this->compatibility->check($state->manifest, $loaded);
+                if ($problem === null) {
+                    continue;
+                }
+
+                $states[$key] = new ModuleState(
+                    key: $state->key,
+                    alias: $state->alias,
+                    name: $state->name,
+                    status: ModuleStatus::Incompatible,
+                    version: $state->version,
+                    system: $state->system,
+                    manifest: $state->manifest,
+                    problem: $problem,
+                );
+                $refused = true;
+            }
+        } while ($refused);
+
+        return $states;
     }
 
     public function find(string $key): ?ModuleState
@@ -172,11 +287,29 @@ final class ModuleRegistry
 
         $claimed[$alias] = $manifest->key;
 
+        $status = $this->statusOf($manifest, $record);
+
+        // "system" means what it says: the module cannot be switched off. Obeying a configuration
+        // that switches off the admin panel would leave nobody able to switch it back on, and the
+        // half of the CMS built against it unable to compile.
+        if ($manifest->system && $status === ModuleStatus::Disabled) {
+            return new ModuleState(
+                key: $manifest->key,
+                alias: $alias,
+                name: $manifest->name,
+                status: ModuleStatus::Enabled,
+                version: $version,
+                system: true,
+                manifest: $manifest,
+                problem: 'Switched off in the configuration, but a system module cannot be switched off.',
+            );
+        }
+
         return new ModuleState(
             key: $manifest->key,
             alias: $alias,
             name: $manifest->name,
-            status: $this->statusOf($manifest, $record),
+            status: $status,
             version: $version,
             system: $manifest->system,
             manifest: $manifest,

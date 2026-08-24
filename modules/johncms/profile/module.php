@@ -16,4 +16,13 @@ return [
     'key'   => 'johncms/profile',
     'alias' => 'profile',
     'name'  => 'Profile',
+
+    // Modules whose services this one is built against: it cannot be loaded without them.
+    'requires' => [
+        'modules' => [
+            'johncms/forum' => '^10.0',
+            'johncms/guestbook' => '^10.0',
+            'johncms/mail' => '^10.0',
+        ],
+    ],
 ];

@@ -16,4 +16,11 @@ return [
     'key'   => 'johncms/contacts',
     'alias' => 'contacts',
     'name'  => 'Contacts',
+
+    // Modules whose services this one is built against: it cannot be loaded without them.
+    'requires' => [
+        'modules' => [
+            'johncms/consent' => '^10.0',
+        ],
+    ],
 ];

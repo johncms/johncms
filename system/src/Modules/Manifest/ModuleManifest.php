@@ -42,6 +42,7 @@ final readonly class ModuleManifest
         public bool $system = false,
         /** Empty for a module of the release: its namespace lives in the root composer.json. */
         public ModuleAutoload $autoload = new ModuleAutoload(),
+        public ModuleRequirements $requires = new ModuleRequirements(),
     ) {
     }
 }

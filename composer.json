@@ -39,6 +39,7 @@
         "ext-simplexml": "*",
         "ext-zip": "*",
         "compolomus/pagination": "^1.2",
+        "composer/semver": "^3.4",
         "dragonmantank/cron-expression": "^3.4",
         "ezyang/htmlpurifier": "^4.13",
         "gettext/translator": "^1.0",

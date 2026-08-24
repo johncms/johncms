@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Modules;
 
 use Johncms\Modules\Manifest\ModuleManifest;
+use Johncms\Modules\Manifest\ModuleRequirements;
 use Johncms\Modules\ModuleRegistry;
 use Johncms\Modules\ModuleRepositoryInterface;
 use Johncms\Modules\ModuleStateRecord;
@@ -166,6 +167,74 @@ final class ModuleRegistryTest extends TestCase
     }
 
     /**
+     * A module built against another one stops being loadable the moment that one is, and so does
+     * whatever was built on it. Loading it anyway is the container failing to compile — on a page
+     * nobody expected to break.
+     */
+    public function testAModuleWhoseDependencyIsGoneIsNotLoadedEither(): void
+    {
+        $registry = $this->registry(
+            onDisk: [
+                'johncms/mail'    => $this->manifest('johncms/mail', 'mail'),
+                'johncms/profile' => $this->manifest('johncms/profile', 'profile', requires: ['johncms/mail' => '^10.0']),
+                'vasya/widget'    => $this->manifest('vasya/widget', 'widget', requires: ['johncms/profile' => '^10.0']),
+            ],
+            bundled: ['johncms/mail', 'johncms/profile'],
+            state: [
+                'johncms/mail' => new ModuleStateRecord('johncms/mail', 'mail', enabled: false),
+                'vasya/widget' => new ModuleStateRecord('vasya/widget', 'widget'),
+            ],
+        );
+
+        self::assertSame([], array_keys($registry->enabled()));
+
+        $profile = $registry->find('johncms/profile');
+        self::assertNotNull($profile);
+        self::assertSame(ModuleStatus::Incompatible, $profile->status);
+        self::assertStringContainsString('Requires the module "johncms/mail"', (string) $profile->problem);
+
+        // And the module that was built on the profile goes with it.
+        self::assertSame(ModuleStatus::Incompatible, $registry->find('vasya/widget')?->status);
+    }
+
+    /**
+     * The admin panel is built against several modules of the release. Obeying a configuration
+     * that switches one of them off would take the panel down, and with it the only way to switch
+     * it back on — so the registry keeps it loaded and says who is holding it.
+     */
+    public function testAModuleASystemModuleNeedsIsKeptLoaded(): void
+    {
+        $registry = $this->registry(
+            onDisk: [
+                'johncms/admin' => $this->manifest('johncms/admin', 'admin', system: true, requires: ['johncms/forum' => '^10.0']),
+                'johncms/forum' => $this->manifest('johncms/forum', 'forum'),
+            ],
+            bundled: ['johncms/admin', 'johncms/forum'],
+            state: ['johncms/forum' => new ModuleStateRecord('johncms/forum', 'forum', enabled: false)],
+        );
+
+        self::assertSame(['johncms/admin', 'johncms/forum'], array_keys($registry->enabled()));
+
+        $forum = $registry->find('johncms/forum');
+        self::assertStringContainsString('"johncms/admin" needs it', (string) $forum?->problem);
+    }
+
+    public function testASystemModuleCannotBeSwitchedOff(): void
+    {
+        $registry = $this->registry(
+            onDisk: ['johncms/admin' => $this->manifest('johncms/admin', 'admin', system: true)],
+            bundled: ['johncms/admin'],
+            state: ['johncms/admin' => new ModuleStateRecord('johncms/admin', 'admin', enabled: false)],
+        );
+
+        $admin = $registry->find('johncms/admin');
+
+        self::assertNotNull($admin);
+        self::assertSame(ModuleStatus::Enabled, $admin->status);
+        self::assertStringContainsString('a system module cannot be switched off', (string) $admin->problem);
+    }
+
+    /**
      * @param array<string, ModuleManifest> $onDisk
      * @param list<string>                  $bundled
      * @param array<string, ModuleStateRecord> $state
@@ -197,7 +266,10 @@ final class ModuleRegistryTest extends TestCase
         return new ModuleRegistry($repository, $store, $bundled, $safeMode);
     }
 
-    private function manifest(string $key, string $alias, bool $system = false): ModuleManifest
+    /**
+     * @param array<string, string> $requires
+     */
+    private function manifest(string $key, string $alias, bool $system = false, array $requires = []): ModuleManifest
     {
         return new ModuleManifest(
             key: $key,
@@ -205,6 +277,7 @@ final class ModuleRegistryTest extends TestCase
             path: MODULES_PATH . str_replace('/', DS, $key),
             name: ucfirst(basename($key)),
             system: $system,
+            requires: new ModuleRequirements(modules: $requires),
         );
     }
 }

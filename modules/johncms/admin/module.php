@@ -20,4 +20,12 @@ return [
     // The panel the site is administered from: switching it off would leave nobody able
     // to switch it back on.
     'system' => true,
+
+    // Modules whose services this one is built against: it cannot be loaded without them.
+    'requires' => [
+        'modules' => [
+            'johncms/forum' => '^10.0',
+            'johncms/registration' => '^10.0',
+        ],
+    ],
 ];

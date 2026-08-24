@@ -22,7 +22,7 @@ const PUBLIC_THEMES_PATH = PUBLIC_PATH . 'themes' . DS;
 
 const ASSETS_PATH = PUBLIC_PATH . 'assets' . DS;
 const UPLOAD_PATH = PUBLIC_PATH . 'upload' . DS;
-const CMS_VERSION = '9.9';
+const CMS_VERSION = '10.0';
 
 // Cache container. Recommended for production mode.
 // Remove the data/cache/container.php file to clear the cache. It creates automatically.
