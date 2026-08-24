@@ -61,6 +61,7 @@ final readonly class ModuleManifestLoader
             name: $this->string($manifest, 'name', $file) ?? ucfirst($name),
             version: $this->string($manifest, 'version', $file),
             system: $this->bool($manifest, 'system', $file),
+            autoload: $this->autoload($manifest, $file),
         );
     }
 
@@ -122,6 +123,53 @@ final readonly class ModuleManifestLoader
         }
 
         return $alias;
+    }
+
+    /**
+     * What a module of the release leaves out: its namespace is registered in the root
+     * composer.json, and repeating it here would mean two places to keep in step.
+     *
+     * @param array<mixed> $manifest
+     */
+    private function autoload(array $manifest, string $file): ModuleAutoload
+    {
+        $autoload = $manifest['autoload'] ?? null;
+
+        if ($autoload === null) {
+            return new ModuleAutoload();
+        }
+
+        if (! is_array($autoload)) {
+            throw new InvalidModuleManifestException(sprintf('"%s": the "autoload" field must be an array.', $file));
+        }
+
+        $psr4 = [];
+        foreach ((array) ($autoload['psr-4'] ?? []) as $prefix => $directory) {
+            if (! is_string($prefix) || ! is_string($directory)) {
+                throw new InvalidModuleManifestException(
+                    sprintf('"%s": every psr-4 entry maps a namespace prefix to a directory.', $file)
+                );
+            }
+
+            if (! str_ends_with($prefix, '\\')) {
+                throw new InvalidModuleManifestException(
+                    sprintf('"%s": the psr-4 prefix "%s" must end with a backslash.', $file, $prefix)
+                );
+            }
+
+            $psr4[$prefix] = trim($directory, '/');
+        }
+
+        $files = [];
+        foreach ((array) ($autoload['files'] ?? []) as $required) {
+            if (! is_string($required)) {
+                throw new InvalidModuleManifestException(sprintf('"%s": every autoload file is a path.', $file));
+            }
+
+            $files[] = ltrim($required, '/');
+        }
+
+        return new ModuleAutoload($psr4, $files);
     }
 
     /**

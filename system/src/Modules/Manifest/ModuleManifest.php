@@ -40,6 +40,8 @@ final readonly class ModuleManifest
         public ?string $version = null,
         /** A system module cannot be switched off or removed. */
         public bool $system = false,
+        /** Empty for a module of the release: its namespace lives in the root composer.json. */
+        public ModuleAutoload $autoload = new ModuleAutoload(),
     ) {
     }
 }

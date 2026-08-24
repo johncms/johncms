@@ -128,6 +128,62 @@ final class ModuleManifestLoaderTest extends TestCase
         (new ModuleManifestLoader())->load($directory);
     }
 
+    /**
+     * A module installed into a site cannot put its namespace in the root composer.json, so it
+     * says here what to register. A module of the release declares nothing and stays in Composer.
+     */
+    public function testAModuleMayDeclareWhatToAutoload(): void
+    {
+        $directory = $this->module('vasya', 'blog', [
+            'key'      => 'vasya/blog',
+            'autoload' => [
+                'psr-4' => ['Vasya\\Blog\\' => 'src/'],
+                'files' => ['/vendor/autoload.php'],
+            ],
+        ]);
+
+        $autoload = (new ModuleManifestLoader())->load($directory)->autoload;
+
+        // Both are stored relative to the module, without the leading or trailing slash.
+        self::assertSame(['Vasya\\Blog\\' => 'src'], $autoload->psr4);
+        self::assertSame(['vendor/autoload.php'], $autoload->files);
+        self::assertFalse($autoload->isEmpty());
+    }
+
+    public function testAModuleThatDeclaresNoAutoloadCarriesNone(): void
+    {
+        $directory = $this->module('johncms', 'news', ['key' => 'johncms/news']);
+
+        self::assertTrue((new ModuleManifestLoader())->load($directory)->autoload->isEmpty());
+    }
+
+    /**
+     * PSR-4 resolves a prefix to a directory by cutting it off the class name, and a prefix
+     * without its trailing separator cuts off one character too few.
+     */
+    public function testAPsr4PrefixWithoutATrailingBackslashIsRefused(): void
+    {
+        $directory = $this->module('vasya', 'blog', [
+            'key'      => 'vasya/blog',
+            'autoload' => ['psr-4' => ['Vasya\\Blog' => 'src/']],
+        ]);
+
+        $this->expectException(InvalidModuleManifestException::class);
+        $this->expectExceptionMessage('must end with a backslash');
+
+        (new ModuleManifestLoader())->load($directory);
+    }
+
+    public function testAnAutoloadThatIsNotAnArrayIsRefused(): void
+    {
+        $directory = $this->module('vasya', 'blog', ['key' => 'vasya/blog', 'autoload' => 'src/']);
+
+        $this->expectException(InvalidModuleManifestException::class);
+        $this->expectExceptionMessage('the "autoload" field must be an array');
+
+        (new ModuleManifestLoader())->load($directory);
+    }
+
     public function testAFieldOfTheWrongTypeIsRefused(): void
     {
         $directory = $this->module('vasya', 'blog', ['key' => 'vasya/blog', 'system' => 'yes']);

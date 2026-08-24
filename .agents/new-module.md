@@ -34,6 +34,7 @@ return [
   **It is fixed once released**: the journal of migrations is written under it.
 * `version` — omit it in a module shipped with the CMS; its version is the version of the CMS.
 * `system` — `true` only for a module that must never be switched off (the admin panel).
+* `autoload` — omit it in a module shipped with the CMS (see below).
 
 ## Directory Structure
 
@@ -67,17 +68,31 @@ Empty directories are not tracked by git, but they must exist on disk — otherw
 
 ## Autoload
 
-Update `composer.json` with PSR-4 autoload:
+A module of the release goes in the root `composer.json`, where Composer can build it into an
+optimised classmap:
 
 ```json
 "Johncms\\Modules\\<Module>\\": "modules/johncms/<module>/src/"
 ```
 
-Run `composer dump-autoload` in the php-fpm container:
-
 ```bash
 docker exec $(docker ps -q -f name=johncms.php-fpm) composer dump-autoload
 ```
+
+A module installed into a site cannot go there — the root `composer.json` belongs to the release,
+and an upgrade would overwrite it. Such a module declares what to load in its own manifest, and
+`ModuleAutoloader` registers it at boot:
+
+```php
+'autoload' => [
+    'psr-4' => ['Vendor\\Module\\' => 'src/'],
+    // Only if the package brings dependencies of its own.
+    'files' => ['vendor/autoload.php'],
+],
+```
+
+Its classes are registered while the module is switched on and disappear when it is switched off —
+which is what makes switching one off mean anything.
 
 ## Services Configuration
 

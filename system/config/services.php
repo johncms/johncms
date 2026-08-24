@@ -224,11 +224,13 @@ return static function (ContainerConfigurator $container): void {
                 // registry — is either autowired from what follows or registered by hand below.
                 ROOT_PATH . 'system/src/Modules/Installer.php',
                 ROOT_PATH . 'system/src/Modules/ModuleInstaller.php',
+                ROOT_PATH . 'system/src/Modules/ModuleAutoloader.php',
                 ROOT_PATH . 'system/src/Modules/ModuleRegistry.php',
                 ROOT_PATH . 'system/src/Modules/ModuleState.php',
                 ROOT_PATH . 'system/src/Modules/ModuleStateRecord.php',
                 ROOT_PATH . 'system/src/Modules/ModuleStatus.php',
                 ROOT_PATH . 'system/src/Modules/Exceptions',
+                ROOT_PATH . 'system/src/Modules/Manifest/ModuleAutoload.php',
                 ROOT_PATH . 'system/src/Modules/Manifest/ModuleManifest.php',
                 ROOT_PATH . 'system/src/Router/Route.php',
                 ROOT_PATH . 'system/src/Router/RouteCollection.php',

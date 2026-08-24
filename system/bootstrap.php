@@ -17,7 +17,8 @@ if (! is_file(dirname(__DIR__) . '/vendor/autoload.php')) {
 define('START_MEMORY', memory_get_usage());
 define('START_TIME', microtime(true));
 
-require dirname(__DIR__) . '/vendor/autoload.php';
+/** @var \Composer\Autoload\ClassLoader $composerLoader */
+$composerLoader = require dirname(__DIR__) . '/vendor/autoload.php';
 
 defined('_IN_JOHNCMS') || die('Error: restricted access');
 
@@ -32,6 +33,13 @@ error_reporting(DEBUG ? E_ALL : E_ALL & ~E_DEPRECATED);
 ini_set('display_errors', DEBUG ? 'On' : 'Off');
 ini_set('log_errors', 'On');
 ini_set('error_log', \Johncms\Logs\LoggerFactory::currentFile());
+
+// The classes of the installed modules, before the container is compiled out of them. Modules
+// of the release are already in the Composer autoloader; this is for everything installed since.
+(new \Johncms\Modules\ModuleAutoloader(
+    $composerLoader,
+    \Johncms\Modules\ModuleRegistryFactory::registry()
+))->register();
 
 $container = \Johncms\Container\PSRContainerFactory::getContainer();
 
