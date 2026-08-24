@@ -41,19 +41,20 @@ final class RouteCollectorFactoryTest extends TestCase
     }
 
     /**
-     * Every route a module declares is stamped with that module, taken from the path of the file
-     * declaring it — that is what the kernel enters the module context from.
+     * Every route a module declares is stamped with the key of that module — vendor and name,
+     * taken from the path of the file declaring it. That is what the kernel enters the module
+     * context from, and what tells it where the dictionaries of the module lie.
      */
     public function testModuleRoutesAreStampedWithTheirModule(): void
     {
         $routes = (new RouteCollectorFactory())($this->container);
 
         self::assertSame(
-            'forum',
+            'johncms/forum',
             $this->findRouteByPath($routes, '/forum/download-file/{id}')?->getDefault('_module')
         );
         self::assertSame(
-            'guestbook',
+            'johncms/guestbook',
             $this->findRouteByPath($routes, '/guestbook/clean')?->getDefault('_module')
         );
     }

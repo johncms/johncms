@@ -62,7 +62,7 @@ final class RouteCollectionTest extends TestCase
      */
     public function testRoutesCarryTheModuleTheyWereDeclaredFor(): void
     {
-        $collection = (new RouteCollection())->setModule('forum');
+        $collection = (new RouteCollection())->setModule('johncms/forum');
         $collection->get('/forum', 'handler')->setName('forum.index');
         $collection->group('/forum', static function (RouteCollection $group): void {
             $group->get('/rules', 'rules_handler')->setName('forum.rules');
@@ -70,8 +70,8 @@ final class RouteCollectionTest extends TestCase
 
         $compiled = $collection->compile();
 
-        self::assertSame('forum', $compiled->get('forum.index')?->getDefault('_module'));
-        self::assertSame('forum', $compiled->get('forum.rules')?->getDefault('_module'));
+        self::assertSame('johncms/forum', $compiled->get('forum.index')?->getDefault('_module'));
+        self::assertSame('johncms/forum', $compiled->get('forum.rules')?->getDefault('_module'));
     }
 
     public function testRoutesOfTheCoreCarryNoModule(): void

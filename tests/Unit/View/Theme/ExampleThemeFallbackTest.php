@@ -40,7 +40,7 @@ final class ExampleThemeFallbackTest extends TestCase
     public function testTheDefaultThemeServesTheTemplateOfTheModuleItself(): void
     {
         self::assertSame(
-            MODULES_PATH . 'homepage' . DS . 'templates' . DS . 'public' . DS . 'index.twig',
+            MODULES_PATH . 'johncms' . DS . 'homepage' . DS . 'templates' . DS . 'public' . DS . 'index.twig',
             $this->loader('default')->getSourceContext('@homepage/public/index.twig')->getPath()
         );
     }
@@ -49,7 +49,7 @@ final class ExampleThemeFallbackTest extends TestCase
     {
         $registry = new TemplatePathRegistry(
             themeChain: new ThemeChainResolver(new FilesystemThemeRepository()),
-            modules: ['homepage'],
+            modules: ['johncms/homepage'],
         );
 
         $loader = new FilesystemLoader();

@@ -10,87 +10,87 @@
         },
         {
             "namespace": "admin",
-            "path": "modules/admin/templates"
+            "path": "modules/johncms/admin/templates"
         },
         {
             "namespace": "album",
-            "path": "modules/album/templates"
+            "path": "modules/johncms/album/templates"
         },
         {
             "namespace": "collections",
-            "path": "modules/collections/templates"
+            "path": "modules/johncms/collections/templates"
         },
         {
             "namespace": "community",
-            "path": "modules/community/templates"
+            "path": "modules/johncms/community/templates"
         },
         {
             "namespace": "consent",
-            "path": "modules/consent/templates"
+            "path": "modules/johncms/consent/templates"
         },
         {
             "namespace": "contacts",
-            "path": "modules/contacts/templates"
+            "path": "modules/johncms/contacts/templates"
         },
         {
             "namespace": "downloads",
-            "path": "modules/downloads/templates"
+            "path": "modules/johncms/downloads/templates"
         },
         {
             "namespace": "forum",
-            "path": "modules/forum/templates"
+            "path": "modules/johncms/forum/templates"
         },
         {
             "namespace": "guestbook",
-            "path": "modules/guestbook/templates"
+            "path": "modules/johncms/guestbook/templates"
         },
         {
             "namespace": "help",
-            "path": "modules/help/templates"
+            "path": "modules/johncms/help/templates"
         },
         {
             "namespace": "homepage",
-            "path": "modules/homepage/templates"
+            "path": "modules/johncms/homepage/templates"
         },
         {
             "namespace": "language",
-            "path": "modules/language/templates"
+            "path": "modules/johncms/language/templates"
         },
         {
             "namespace": "library",
-            "path": "modules/library/templates"
+            "path": "modules/johncms/library/templates"
         },
         {
             "namespace": "login",
-            "path": "modules/login/templates"
+            "path": "modules/johncms/login/templates"
         },
         {
             "namespace": "mail",
-            "path": "modules/mail/templates"
+            "path": "modules/johncms/mail/templates"
         },
         {
             "namespace": "news",
-            "path": "modules/news/templates"
+            "path": "modules/johncms/news/templates"
         },
         {
             "namespace": "notifications",
-            "path": "modules/notifications/templates"
+            "path": "modules/johncms/notifications/templates"
         },
         {
             "namespace": "online",
-            "path": "modules/online/templates"
+            "path": "modules/johncms/online/templates"
         },
         {
             "namespace": "profile",
-            "path": "modules/profile/templates"
+            "path": "modules/johncms/profile/templates"
         },
         {
             "namespace": "redirect",
-            "path": "modules/redirect/templates"
+            "path": "modules/johncms/redirect/templates"
         },
         {
             "namespace": "registration",
-            "path": "modules/registration/templates"
+            "path": "modules/johncms/registration/templates"
         },
         {
             "namespace": "install",

@@ -5,9 +5,9 @@ The view layer is Twig only. Read `escaping.md` and `localization.md` before wri
 ## Where a template lives
 
 ```
-modules/<module>/templates/public/<page>.twig     → @<module>/public/<page>.twig
-modules/<module>/templates/public/components/…    → partials of that module
-modules/<module>/templates/admin/<page>.twig      → @<module>/admin/<page>.twig
+modules/<vendor>/<module>/templates/public/<page>.twig  → @<module>/public/<page>.twig
+modules/<vendor>/<module>/templates/public/components/… → partials of that module
+modules/<vendor>/<module>/templates/admin/<page>.twig   → @<module>/admin/<page>.twig
 themes/<theme>/templates/…                        → @theme/…
 themes/<theme>/templates/admin/…                  → @admin/…
 themes/<theme>/templates/emails/…                 → @theme/emails/… (the mail environment)
@@ -83,7 +83,7 @@ runtime.
 `{% include '@theme/components/x.twig' with {…} only %}` — always with `only`, so a component
 never reads the context around it. Shared ones live in `themes/<theme>/templates/components/`
 (alert, breadcrumbs, editor, field-errors, pagination, user-row, …), a component used by one
-module lives in `modules/<module>/templates/*/components/`.
+module lives in `modules/<vendor>/<module>/templates/*/components/`.
 
 Before writing a wrapper for something, look for an existing component: the ckeditor wrapper
 was copied into five modules before it became `@theme/components/editor.twig`.

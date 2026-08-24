@@ -11,7 +11,7 @@ PHP/twig sources → composer translate-scan → <domain>.pot → <lang>.po → 
 Crowdin is synced **manually, via CLI commands only**. There is no automatic sync: nothing is pushed or pulled in the background, and no CI job updates the repo. The repository is the source of truth — a `.po` edited and committed here stays as-is until someone explicitly runs a Crowdin command.
 
 * `composer translate-scan` (`i18n:scan`) — scans sources per domain from `translate.xml` / `translate.xml.dist` and regenerates `<domain>.pot` templates.
-* `composer translate` (`i18n:translate`) — converts every `.po` file (`system/locale/*.po`, `modules/*/locale/*.po`, `public/install/locale/*.po`) into `.lng.php` dictionaries used at runtime.
+* `composer translate` (`i18n:translate`) — converts every `.po` file (`system/locale/*.po`, `modules/*/*/locale/*.po`, `public/install/locale/*.po`) into `.lng.php` dictionaries used at runtime.
 
 Run both via the php-fpm container:
 
@@ -73,7 +73,7 @@ Rules:
 
 ## Domains
 
-* Each module has its own domain named after the module (`forum`, `mail`, …) with files in `modules/<module>/locale/`.
+* Each module has its own domain named after the module — the name alone, without the vendor (`forum`, `mail`, …) — with files in `modules/<vendor>/<module>/locale/`.
 * The `system` domain (`system/locale/`) covers `system/src`, shared templates, and a few small modules (login, language, notifications, redirect) — see `translate.xml.dist`.
 * A new module needs **two** registrations, otherwise its strings silently stay untranslated:
   1. a `<domain>` entry in `translate.xml.dist` (`name`, `target` locale dir, `sourceDir`) — without it `translate-scan` produces no `.pot`;

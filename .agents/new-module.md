@@ -2,10 +2,19 @@
 
 How to wire a new module with the layered architecture. For layer responsibilities and repository rules, read `.agents/architecture.md`.
 
+## Where a module lives
+
+Modules lie under a vendor directory: everything shipped with the CMS is
+`modules/johncms/<module>/`, and a third-party module is `modules/<vendor>/<module>/`.
+
+The **name** of the module — the last path segment — is what everything else is keyed by: the
+Twig namespace (`@news`), the gettext domain (`d__('news', …)`) and the source of its migrations
+(`migrate --source=news`). The vendor exists on disk and nowhere else.
+
 ## Directory Structure
 
 ```
-modules/<module>/
+modules/johncms/<module>/
 ├── config/          services.php, routes.php
 ├── locale/          the gettext domain of the module
 ├── migrations/      its tables — see .agents/migrations.md
@@ -26,7 +35,7 @@ only — it has no `install()` and creates nothing.
 Create the three top-level folders immediately even if they are empty:
 
 ```bash
-mkdir -p modules/<name>/src/Application modules/<name>/src/Domain modules/<name>/src/Infrastructure
+mkdir -p modules/johncms/<name>/src/Application modules/johncms/<name>/src/Domain modules/johncms/<name>/src/Infrastructure
 ```
 
 Empty directories are not tracked by git, but they must exist on disk — otherwise Symfony DI will fail when loading `services.php`.
@@ -36,7 +45,7 @@ Empty directories are not tracked by git, but they must exist on disk — otherw
 Update `composer.json` with PSR-4 autoload:
 
 ```json
-"Johncms\\Modules\\<Module>\\": "modules/<module>/src/"
+"Johncms\\Modules\\<Module>\\": "modules/johncms/<module>/src/"
 ```
 
 Run `composer dump-autoload` in the php-fpm container:
@@ -55,7 +64,7 @@ return static function (ContainerConfigurator $container): void {
 
     $services->load(
         'Johncms\\Modules\\<Module>\\Application\\',
-        MODULES_PATH . '<module>/src/Application'
+        MODULES_PATH . 'johncms/<module>/src/Application'
     )
         // Add ->exclude([...]) for DTO and Exceptions directories only when they exist
         ->autowire()
@@ -106,16 +115,16 @@ A new module gets its own gettext domain, named after the module. Register it in
    ```xml
    <domain>
        <name><module></name>
-       <target>modules/<module>/locale</target>
-       <sourceDir>modules/<module></sourceDir>
+       <target>modules/johncms/<module>/locale</target>
+       <sourceDir>modules/johncms/<module></sourceDir>
    </domain>
    ```
 
 2. `crowdin.yml` — a `files` entry, otherwise the domain never reaches Crowdin:
 
    ```yaml
-   - source: /modules/<module>/locale/<module>.pot
-     translation: /modules/<module>/locale/%two_letters_code%.po
+   - source: /modules/johncms/<module>/locale/<module>.pot
+     translation: /modules/johncms/<module>/locale/%two_letters_code%.po
    ```
 
 Then generate the template and the runtime dictionaries:
@@ -125,7 +134,7 @@ docker exec $(docker ps -q -f name=johncms.php-fpm) composer translate-scan
 docker exec $(docker ps -q -f name=johncms.php-fpm) composer translate
 ```
 
-Add a `<lang>.po` in `modules/<module>/locale/` for each language you were asked to translate. For the full pipeline and Crowdin commands, read `.agents/localization.md`.
+Add a `<lang>.po` in `modules/johncms/<module>/locale/` for each language you were asked to translate. For the full pipeline and Crowdin commands, read `.agents/localization.md`.
 
 ## IDE Template Navigation
 
@@ -142,7 +151,7 @@ fails while the file is stale.
 
 ## Template Notes
 
-Templates live in `modules/<module>/templates/{public,admin}/` and are reachable as
+Templates live in `modules/johncms/<module>/templates/{public,admin}/` and are reachable as
 `@<module>/public/<page>.twig`. A controller returns `ViewResponse` with the template name and
 the data; the page extends `@theme/layouts/default.twig` (or `@admin/layouts/default.twig` in
 the panel) and fills `{% block content %}`.

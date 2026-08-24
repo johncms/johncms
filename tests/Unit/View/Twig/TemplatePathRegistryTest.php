@@ -28,8 +28,8 @@ final class TemplatePathRegistryTest extends TestCase
             'themes/base/templates',
             'themes/child/templates',
             'themes/child/templates/news',
-            'modules/news/templates',
-            'modules/admin/templates',
+            'modules/johncms/news/templates',
+            'modules/johncms/admin/templates',
         ]);
 
         file_put_contents($this->root . 'themes/base/theme.php', "<?php return ['parent' => 'default'];");
@@ -46,7 +46,7 @@ final class TemplatePathRegistryTest extends TestCase
         self::assertSame(
             [
                 $this->root . 'themes/child/templates/news',
-                $this->root . 'modules/news/templates',
+                $this->root . 'modules/johncms/news/templates',
             ],
             $this->normalize($this->registry()->paths('child')['news'])
         );
@@ -72,7 +72,7 @@ final class TemplatePathRegistryTest extends TestCase
         self::assertSame(
             [
                 $this->root . 'themes/default/templates/admin',
-                $this->root . 'modules/admin/templates',
+                $this->root . 'modules/johncms/admin/templates',
             ],
             $this->normalize($paths['admin'])
         );
@@ -87,7 +87,7 @@ final class TemplatePathRegistryTest extends TestCase
         self::assertSame(
             [
                 $this->root . 'themes/default/templates/admin',
-                $this->root . 'modules/admin/templates',
+                $this->root . 'modules/johncms/admin/templates',
             ],
             $this->normalize($this->registry()->paths('child')['admin'])
         );
@@ -95,7 +95,7 @@ final class TemplatePathRegistryTest extends TestCase
 
     public function testAProviderAddsPathsBehindTheOnesFromTheConvention(): void
     {
-        $this->makeDirectories(['modules/news/extra-templates']);
+        $this->makeDirectories(['modules/johncms/news/extra-templates']);
 
         $provider = new class ($this->root) implements TemplatePathProviderInterface {
             public function __construct(private readonly string $root)
@@ -104,15 +104,15 @@ final class TemplatePathRegistryTest extends TestCase
 
             public function paths(): array
             {
-                return ['news' => [$this->root . 'modules/news/extra-templates']];
+                return ['news' => [$this->root . 'modules/johncms/news/extra-templates']];
             }
         };
 
         self::assertSame(
             [
                 $this->root . 'themes/child/templates/news',
-                $this->root . 'modules/news/templates',
-                $this->root . 'modules/news/extra-templates',
+                $this->root . 'modules/johncms/news/templates',
+                $this->root . 'modules/johncms/news/extra-templates',
             ],
             $this->normalize($this->registry([$provider])->paths('child')['news'])
         );
@@ -128,7 +128,7 @@ final class TemplatePathRegistryTest extends TestCase
             $providers,
             $this->root . 'themes' . DS,
             $this->root . 'modules' . DS,
-            ['news', 'admin'],
+            ['johncms/news', 'johncms/admin'],
         );
     }
 

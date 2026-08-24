@@ -117,7 +117,7 @@ class PSRContainerFactory
 
     private function loadModuleServices(ContainerBuilder $container): void
     {
-        foreach (glob(MODULES_PATH . '*/config/services.php') as $file) {
+        foreach (glob(MODULES_PATH . '*/*/config/services.php') as $file) {
             $loader = new PhpFileLoader(
                 $container,
                 new FileLocator(\dirname($file))

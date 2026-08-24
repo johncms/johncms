@@ -22,12 +22,17 @@ final readonly class ModuleContext
     {
     }
 
+    /**
+     * The module arrives as its key — `johncms/forum`. The translation domain is the name alone,
+     * because that is what `d__('forum', …)` says in the code and what the dictionary files are
+     * generated for; the vendor is part of the path and of nothing else.
+     */
     public function enter(?string $module): void
     {
         if ($module === null || $module === '') {
             return;
         }
 
-        $this->translator->addTranslationDomain($module, MODULES_PATH . $module . '/locale');
+        $this->translator->addTranslationDomain(basename($module), MODULES_PATH . $module . '/locale');
     }
 }

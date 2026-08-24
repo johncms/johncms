@@ -96,7 +96,7 @@ final class SettingsFieldTemplateTest extends TestCase
     private function render(CaptchaSettingRowDTO $field): string
     {
         $loader = new FilesystemLoader();
-        $loader->addPath(MODULES_PATH . 'admin/templates', 'admin');
+        $loader->addPath(MODULES_PATH . 'johncms/admin/templates', 'admin');
 
         $twig = new Environment($loader, ['autoescape' => 'html', 'cache' => false, 'strict_variables' => true]);
         $twig->addExtension(new I18nExtension());

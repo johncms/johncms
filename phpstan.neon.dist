@@ -17,7 +17,7 @@ parameters:
     excludePaths:
         analyseAndScan:
             # Generated translation catalogues: huge literal arrays, no logic.
-            - modules/*/locale/*.lng.php
+            - modules/*/*/locale/*.lng.php
             - config/autoload/*.local.php
 
     # Constants (ROOT_PATH, CACHE_PATH, ...) and the global helpers (di(), config()) arrive

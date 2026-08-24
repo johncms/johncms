@@ -52,7 +52,7 @@ final class PublicTemplateIsolationTest extends TestCase
             }
         }
 
-        foreach ((array) glob(MODULES_PATH . '*' . DS . 'templates' . DS . 'public', GLOB_ONLYDIR) as $directory) {
+        foreach ((array) glob(MODULES_PATH . '*' . DS . '*' . DS . 'templates' . DS . 'public', GLOB_ONLYDIR) as $directory) {
             $files = array_merge($files, $this->templatesUnder((string) $directory));
         }
 

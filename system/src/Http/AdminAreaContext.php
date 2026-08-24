@@ -28,7 +28,7 @@ final readonly class AdminAreaContext
 
     public function enter(): void
     {
-        $this->translator->addTranslationDomain('admin', MODULES_PATH . 'admin/locale', false);
+        $this->translator->addTranslationDomain('admin', MODULES_PATH . 'johncms/admin/locale', false);
 
         $this->navChain->add(d__('admin', 'Admin Panel'), '/admin/');
     }

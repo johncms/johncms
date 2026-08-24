@@ -21,13 +21,13 @@
     <source>
         <include>
             <directory suffix=".php">system/src</directory>
-            <directory suffix=".php">modules/guestbook/src</directory>
-            <directory suffix=".php">modules/admin/src</directory>
-            <directory suffix=".php">modules/homepage/src</directory>
-            <directory suffix=".php">modules/news/src</directory>
-            <directory suffix=".php">modules/forum/src</directory>
-            <directory suffix=".php">modules/community/src</directory>
-            <directory suffix=".php">modules/collections/src</directory>
+            <directory suffix=".php">modules/johncms/guestbook/src</directory>
+            <directory suffix=".php">modules/johncms/admin/src</directory>
+            <directory suffix=".php">modules/johncms/homepage/src</directory>
+            <directory suffix=".php">modules/johncms/news/src</directory>
+            <directory suffix=".php">modules/johncms/forum/src</directory>
+            <directory suffix=".php">modules/johncms/community/src</directory>
+            <directory suffix=".php">modules/johncms/collections/src</directory>
         </include>
     </source>
 </phpunit>

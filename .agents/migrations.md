@@ -7,7 +7,7 @@ installer of a fresh site and the upgrade of an existing one run the same files.
 
 ```
 system/migrations/                  the core
-modules/<module>/migrations/        a module
+modules/<vendor>/<module>/migrations/   a module (the CMS ships its own under johncms/)
 ```
 
 Outside `src/` on purpose — a file under `src/` is picked up by the directory load of the
@@ -99,7 +99,9 @@ message says so. A migration that only moves data may ask for a transaction with
 ## Tables of a new module
 
 Nothing is created in `Install/Installer` — it is for demo data only. Add
-`modules/<module>/migrations/` and describe the tables there; the source is named after the
+`modules/<vendor>/<module>/migrations/` and describe the tables there; the source is named
+after the name of the module — `forum`, never `johncms/forum` — and must not be renamed once its
+migrations have run anywhere. The source is named after the
 directory of the module and must not be renamed once its migrations have run anywhere.
 
 ## In tests

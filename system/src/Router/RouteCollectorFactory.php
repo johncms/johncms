@@ -38,14 +38,15 @@ class RouteCollectorFactory
     }
 
     /**
-     * Every route a module declares is stamped with the name of that module, taken from the path
-     * of the file declaring it. That is what lets the request pipeline set up the module context
-     * of the page, instead of each controller naming its own module.
+     * Every route a module declares is stamped with the key of that module — vendor and name,
+     * taken from the path of the file declaring it. That is what lets the request pipeline set up
+     * the module context of the page, instead of each controller naming its own module.
      */
     private function addModuleRoutes(RouteCollection $router): void
     {
-        foreach (glob(MODULES_PATH . '*/config/routes.php') as $file) {
-            $router->setModule(basename(dirname($file, 2)));
+        foreach (glob(MODULES_PATH . '*/*/config/routes.php') as $file) {
+            $moduleDirectory = dirname($file, 2);
+            $router->setModule(basename(dirname($moduleDirectory)) . '/' . basename($moduleDirectory));
 
             $registerRoutes = require $file;
             $registerRoutes($router);

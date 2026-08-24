@@ -13,7 +13,10 @@ declare(strict_types=1);
 namespace Johncms\Database\Migrations;
 
 /**
- * The migrations of the modules, one source per module, named after its directory.
+ * The migrations of the modules, one source per module, named after the directory of the module
+ * itself — `forum`, not `johncms/forum`. The name is what the journal records, and it must stay
+ * what it has always been: the vendor level is a fact about where the files lie, not about the
+ * history the database has been through.
  *
  * Modules are found on disk rather than read out of the installed list, because that is already
  * how the rest of the system finds them: the container loads the services of every module lying
@@ -31,7 +34,7 @@ final readonly class ModuleMigrationSourceProvider implements MigrationSourcePro
 
     public function sources(): array
     {
-        $directories = glob($this->modulesPath . '*', GLOB_ONLYDIR) ?: [];
+        $directories = glob($this->modulesPath . '*/*', GLOB_ONLYDIR) ?: [];
         sort($directories);
 
         $sources = [];

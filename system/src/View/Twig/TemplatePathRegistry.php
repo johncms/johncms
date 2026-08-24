@@ -13,8 +13,11 @@ use Johncms\View\Theme\ThemeChainResolver;
  * nothing about Twig is configured per module.
  *
  *     @theme    themes/<chain>/templates
- *     @admin    themes/<chain>/templates/admin  +  modules/admin/templates
- *     @<module> themes/<chain>/templates/<module>  +  modules/<module>/templates
+ *     @admin    themes/<chain>/templates/admin  +  modules/johncms/admin/templates
+ *     @<name>   themes/<chain>/templates/<name>  +  modules/<vendor>/<name>/templates
+ *
+ * A module is listed by its key (`johncms/news`), but its namespace is the name alone (`news`):
+ * that is what templates say, and a theme overriding them carries a directory of that name.
  *
  * The theme chain comes first everywhere, which is what lets a theme override a template of a
  * module without touching it.
@@ -27,7 +30,9 @@ final readonly class TemplatePathRegistry
 
     /**
      * @param iterable<TemplatePathProviderInterface> $providers
-     * @param array<string>|null                      $modules Defaults to the installed modules.
+     * @param array<string>|null                      $modules Keys of the installed modules
+     *                                                             (`johncms/news`). Defaults to
+     *                                                             what the configuration lists.
      */
     public function __construct(
         private ThemeChainResolver $themeChain,
@@ -54,9 +59,10 @@ final readonly class TemplatePathRegistry
         ];
 
         foreach ($this->installedModules() as $module) {
-            $paths[$module] = array_merge(
-                $paths[$module] ?? [],
-                $this->suffixed($themeDirectories, $module),
+            $namespace = basename($module);
+            $paths[$namespace] = array_merge(
+                $paths[$namespace] ?? [],
+                $this->suffixed($themeDirectories, $namespace),
                 [$this->modulesPath . $module . DS . 'templates']
             );
         }

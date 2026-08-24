@@ -62,7 +62,7 @@ Tech stack:
 
 ## Project Structure
 
-* `modules/` — application modules
+* `modules/` — application modules, one directory per vendor (`modules/johncms/<module>/`)
 * `system/src/` — primary application code
 * `themes/` — themes: templates and asset sources
 * `config/` — configuration files

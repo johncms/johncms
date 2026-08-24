@@ -4,2575 +4,2575 @@ parameters:
 			message: '#^Using nullsafe property access "\?\-\>type" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
 			identifier: nullsafe.neverNull
 			count: 3
-			path: modules/admin/src/Application/Controllers/Settings/AdsController.php
+			path: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php
 
 		-
 			message: '#^Using nullsafe property access "\?\-\>link1" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
 			identifier: nullsafe.neverNull
 			count: 1
-			path: modules/admin/src/Application/Controllers/Settings/CountersController.php
+			path: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php
 
 		-
 			message: '#^Using nullsafe property access "\?\-\>link2" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
 			identifier: nullsafe.neverNull
 			count: 1
-			path: modules/admin/src/Application/Controllers/Settings/CountersController.php
+			path: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php
 
 		-
 			message: '#^Using nullsafe property access "\?\-\>mode" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
 			identifier: nullsafe.neverNull
 			count: 1
-			path: modules/admin/src/Application/Controllers/Settings/CountersController.php
+			path: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php
 
 		-
 			message: '#^Using nullsafe property access "\?\-\>name" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
 			identifier: nullsafe.neverNull
 			count: 1
-			path: modules/admin/src/Application/Controllers/Settings/CountersController.php
+			path: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php
 
 		-
 			message: '#^Using nullsafe property access "\?\-\>require_cookie_consent" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
 			identifier: nullsafe.neverNull
 			count: 1
-			path: modules/admin/src/Application/Controllers/Settings/CountersController.php
+			path: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Users\\User\:\:\$bancount\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/admin/src/Application/Services/BanListRowMapper.php
+			path: modules/johncms/admin/src/Application/Services/BanListRowMapper.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Users\\User\:\:\$bantime\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/admin/src/Application/Services/BanListRowMapper.php
+			path: modules/johncms/admin/src/Application/Services/BanListRowMapper.php
 
 		-
 			message: '#^Using nullsafe property access "\?\-\>output" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
 			identifier: nullsafe.neverNull
 			count: 1
-			path: modules/admin/src/Application/UseCases/GetMaintenanceTasksUseCase.php
+			path: modules/johncms/admin/src/Application/UseCases/GetMaintenanceTasksUseCase.php
 
 		-
 			message: '#^Parameter \#2 \$neighbor of method Johncms\\Modules\\Admin\\Infrastructure\\Persistence\\Repository\\EloquentAdRepository\:\:swapPlace\(\) expects Johncms\\Modules\\Admin\\Domain\\Models\\Ad\|null, stdClass\|null given\.$#'
 			identifier: argument.type
 			count: 2
-			path: modules/admin/src/Infrastructure/Persistence/Repository/EloquentAdRepository.php
+			path: modules/johncms/admin/src/Infrastructure/Persistence/Repository/EloquentAdRepository.php
 
 		-
 			message: '#^Call to an undefined static method Illuminate\\Database\\Capsule\\Manager\:\:raw\(\)\.$#'
 			identifier: staticMethod.notFound
 			count: 4
-			path: modules/admin/src/Infrastructure/Persistence/Repository/EloquentBanListRepository.php
+			path: modules/johncms/admin/src/Infrastructure/Persistence/Repository/EloquentBanListRepository.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Admin\\Infrastructure\\Persistence\\Repository\\EloquentBanListRepository\:\:baseQuery\(\) should return Illuminate\\Database\\Eloquent\\Builder\<Johncms\\Users\\User\> but returns Illuminate\\Database\\Query\\Builder\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/admin/src/Infrastructure/Persistence/Repository/EloquentBanListRepository.php
+			path: modules/johncms/admin/src/Infrastructure/Persistence/Repository/EloquentBanListRepository.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Admin\\Infrastructure\\Persistence\\Repository\\EloquentCounterRepository\:\:all\(\) should return Illuminate\\Support\\Collection\<int, Johncms\\Modules\\Admin\\Domain\\Models\\Counter\> but returns Illuminate\\Support\\Collection\<int, stdClass\>\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/admin/src/Infrastructure/Persistence/Repository/EloquentCounterRepository.php
+			path: modules/johncms/admin/src/Infrastructure/Persistence/Repository/EloquentCounterRepository.php
 
 		-
 			message: '#^Parameter \#2 \$neighbor of method Johncms\\Modules\\Admin\\Infrastructure\\Persistence\\Repository\\EloquentCounterRepository\:\:swapSort\(\) expects Johncms\\Modules\\Admin\\Domain\\Models\\Counter\|null, stdClass\|null given\.$#'
 			identifier: argument.type
 			count: 2
-			path: modules/admin/src/Infrastructure/Persistence/Repository/EloquentCounterRepository.php
+			path: modules/johncms/admin/src/Infrastructure/Persistence/Repository/EloquentCounterRepository.php
 
 		-
 			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Builder\<Johncms\\Users\\User\>\:\:approved\(\)\.$#'
 			identifier: method.notFound
 			count: 1
-			path: modules/admin/src/Infrastructure/Persistence/Repository/EloquentDashboardRepository.php
+			path: modules/johncms/admin/src/Infrastructure/Persistence/Repository/EloquentDashboardRepository.php
 
 		-
 			message: '#^Call to an undefined method Illuminate\\Database\\Query\\Builder\:\:withCount\(\)\.$#'
 			identifier: method.notFound
 			count: 2
-			path: modules/admin/src/Infrastructure/Persistence/Repository/EloquentForumStructureRepository.php
+			path: modules/johncms/admin/src/Infrastructure/Persistence/Repository/EloquentForumStructureRepository.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Admin\\Infrastructure\\Persistence\\Repository\\EloquentForumStructureRepository\:\:categoriesForMove\(\) should return Illuminate\\Support\\Collection\<int, Johncms\\Modules\\Forum\\Domain\\Models\\ForumSection\> but returns Illuminate\\Support\\Collection\<int, stdClass\>\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/admin/src/Infrastructure/Persistence/Repository/EloquentForumStructureRepository.php
+			path: modules/johncms/admin/src/Infrastructure/Persistence/Repository/EloquentForumStructureRepository.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Admin\\Infrastructure\\Persistence\\Repository\\EloquentForumStructureRepository\:\:sectionsForMove\(\) should return Illuminate\\Support\\Collection\<int, Johncms\\Modules\\Forum\\Domain\\Models\\ForumSection\> but returns Illuminate\\Support\\Collection\<int, stdClass\>\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/admin/src/Infrastructure/Persistence/Repository/EloquentForumStructureRepository.php
+			path: modules/johncms/admin/src/Infrastructure/Persistence/Repository/EloquentForumStructureRepository.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Admin\\Infrastructure\\Persistence\\Repository\\EloquentForumStructureRepository\:\:topLevelExcept\(\) should return Illuminate\\Support\\Collection\<int, Johncms\\Modules\\Forum\\Domain\\Models\\ForumSection\> but returns Illuminate\\Support\\Collection\<int, stdClass\>\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/admin/src/Infrastructure/Persistence/Repository/EloquentForumStructureRepository.php
+			path: modules/johncms/admin/src/Infrastructure/Persistence/Repository/EloquentForumStructureRepository.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Admin\\Infrastructure\\Persistence\\Repository\\EloquentIpBanRepository\:\:findByIp\(\) never returns Johncms\\Modules\\Admin\\Domain\\Models\\BanIp so it can be removed from the return type\.$#'
 			identifier: return.unusedType
 			count: 1
-			path: modules/admin/src/Infrastructure/Persistence/Repository/EloquentIpBanRepository.php
+			path: modules/johncms/admin/src/Infrastructure/Persistence/Repository/EloquentIpBanRepository.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Admin\\Infrastructure\\Persistence\\Repository\\EloquentIpBanRepository\:\:findByIp\(\) should return Johncms\\Modules\\Admin\\Domain\\Models\\BanIp\|null but returns stdClass\|null\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/admin/src/Infrastructure/Persistence/Repository/EloquentIpBanRepository.php
+			path: modules/johncms/admin/src/Infrastructure/Persistence/Repository/EloquentIpBanRepository.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Admin\\Infrastructure\\Persistence\\Repository\\EloquentIpBanRepository\:\:findConflicts\(\) should return Illuminate\\Support\\Collection\<int, Johncms\\Modules\\Admin\\Domain\\Models\\BanIp\> but returns Illuminate\\Support\\Collection\<int, stdClass\>\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/admin/src/Infrastructure/Persistence/Repository/EloquentIpBanRepository.php
+			path: modules/johncms/admin/src/Infrastructure/Persistence/Repository/EloquentIpBanRepository.php
 
 		-
 			message: '#^Call to an undefined static method Illuminate\\Database\\Capsule\\Manager\:\:raw\(\)\.$#'
 			identifier: staticMethod.notFound
 			count: 3
-			path: modules/admin/src/Infrastructure/Persistence/Repository/EloquentIpSearchRepository.php
+			path: modules/johncms/admin/src/Infrastructure/Persistence/Repository/EloquentIpSearchRepository.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Admin\\Infrastructure\\Persistence\\Repository\\EloquentIpSearchRepository\:\:historyQuery\(\) should return Illuminate\\Database\\Eloquent\\Builder\<Johncms\\Users\\User\> but returns Illuminate\\Database\\Query\\Builder\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/admin/src/Infrastructure/Persistence/Repository/EloquentIpSearchRepository.php
+			path: modules/johncms/admin/src/Infrastructure/Persistence/Repository/EloquentIpSearchRepository.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Album\\Domain\\Models\\Album\:\:\$photos_count\.$#'
 			identifier: property.notFound
 			count: 2
-			path: modules/album/src/Application/Controllers/UserAlbumsController.php
+			path: modules/johncms/album/src/Application/Controllers/UserAlbumsController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Users\\User\:\:\$count\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/album/src/Application/UseCases/GetUsersListUseCase.php
+			path: modules/johncms/album/src/Application/UseCases/GetUsersListUseCase.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Album\\Infrastructure\\Persistence\\Repository\\EloquentAlbumPhotoRepository\:\:getPhotoByAlbumOffset\(\) never returns Johncms\\Modules\\Album\\Domain\\Models\\AlbumPhoto so it can be removed from the return type\.$#'
 			identifier: return.unusedType
 			count: 1
-			path: modules/album/src/Infrastructure/Persistence/Repository/EloquentAlbumPhotoRepository.php
+			path: modules/johncms/album/src/Infrastructure/Persistence/Repository/EloquentAlbumPhotoRepository.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Album\\Infrastructure\\Persistence\\Repository\\EloquentAlbumPhotoRepository\:\:getPhotoByAlbumOffset\(\) should return Johncms\\Modules\\Album\\Domain\\Models\\AlbumPhoto\|null but returns stdClass\|null\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/album/src/Infrastructure/Persistence/Repository/EloquentAlbumPhotoRepository.php
+			path: modules/johncms/album/src/Infrastructure/Persistence/Repository/EloquentAlbumPhotoRepository.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Album\\Infrastructure\\Persistence\\Repository\\EloquentAlbumPhotoRepository\:\:topQuery\(\) should return Illuminate\\Database\\Eloquent\\Builder\<Johncms\\Modules\\Album\\Domain\\Models\\AlbumPhoto\> but returns Illuminate\\Database\\Query\\Builder\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/album/src/Infrastructure/Persistence/Repository/EloquentAlbumPhotoRepository.php
+			path: modules/johncms/album/src/Infrastructure/Persistence/Repository/EloquentAlbumPhotoRepository.php
 
 		-
 			message: '#^Parameter \#1 \$query of method Johncms\\Modules\\Album\\Infrastructure\\Persistence\\Repository\\EloquentAlbumPhotoRepository\:\:applyTopFilter\(\) expects Illuminate\\Database\\Eloquent\\Builder, Illuminate\\Database\\Query\\Builder given\.$#'
 			identifier: argument.type
 			count: 1
-			path: modules/album/src/Infrastructure/Persistence/Repository/EloquentAlbumPhotoRepository.php
+			path: modules/johncms/album/src/Infrastructure/Persistence/Repository/EloquentAlbumPhotoRepository.php
 
 		-
 			message: '#^Call to an undefined method Illuminate\\Database\\Query\\Builder\:\:getQuery\(\)\.$#'
 			identifier: method.notFound
 			count: 2
-			path: modules/album/src/Infrastructure/Persistence/Repository/EloquentAlbumRepository.php
+			path: modules/johncms/album/src/Infrastructure/Persistence/Repository/EloquentAlbumRepository.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Album\\Infrastructure\\Persistence\\Repository\\EloquentAlbumRepository\:\:findNextBySort\(\) never returns Johncms\\Modules\\Album\\Domain\\Models\\Album so it can be removed from the return type\.$#'
 			identifier: return.unusedType
 			count: 1
-			path: modules/album/src/Infrastructure/Persistence/Repository/EloquentAlbumRepository.php
+			path: modules/johncms/album/src/Infrastructure/Persistence/Repository/EloquentAlbumRepository.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Album\\Infrastructure\\Persistence\\Repository\\EloquentAlbumRepository\:\:findNextBySort\(\) should return Johncms\\Modules\\Album\\Domain\\Models\\Album\|null but returns stdClass\|null\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/album/src/Infrastructure/Persistence/Repository/EloquentAlbumRepository.php
+			path: modules/johncms/album/src/Infrastructure/Persistence/Repository/EloquentAlbumRepository.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Album\\Infrastructure\\Persistence\\Repository\\EloquentAlbumRepository\:\:findPreviousBySort\(\) never returns Johncms\\Modules\\Album\\Domain\\Models\\Album so it can be removed from the return type\.$#'
 			identifier: return.unusedType
 			count: 1
-			path: modules/album/src/Infrastructure/Persistence/Repository/EloquentAlbumRepository.php
+			path: modules/johncms/album/src/Infrastructure/Persistence/Repository/EloquentAlbumRepository.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Album\\Infrastructure\\Persistence\\Repository\\EloquentAlbumRepository\:\:findPreviousBySort\(\) should return Johncms\\Modules\\Album\\Domain\\Models\\Album\|null but returns stdClass\|null\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/album/src/Infrastructure/Persistence/Repository/EloquentAlbumRepository.php
+			path: modules/johncms/album/src/Infrastructure/Persistence/Repository/EloquentAlbumRepository.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Album\\Infrastructure\\Persistence\\Repository\\EloquentAlbumRepository\:\:ownersQuery\(\) should return Illuminate\\Database\\Eloquent\\Builder\<Johncms\\Users\\User\> but returns Illuminate\\Database\\Query\\Builder\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/album/src/Infrastructure/Persistence/Repository/EloquentAlbumRepository.php
+			path: modules/johncms/album/src/Infrastructure/Persistence/Repository/EloquentAlbumRepository.php
 
 		-
 			message: '#^Parameter \#1 \$callback of method Illuminate\\Support\\Collection\<int,stdClass\>\:\:map\(\) expects callable\(stdClass, int\)\: int, Closure\(Johncms\\Users\\User\)\: int given\.$#'
 			identifier: argument.type
 			count: 1
-			path: modules/album/src/Infrastructure/Persistence/Repository/EloquentAlbumRepository.php
+			path: modules/johncms/album/src/Infrastructure/Persistence/Repository/EloquentAlbumRepository.php
 
 		-
 			message: '#^Strict comparison using \!\=\= between non\-empty\-string and '''' will always evaluate to true\.$#'
 			identifier: notIdentical.alwaysTrue
 			count: 1
-			path: modules/collections/src/Application/Services/ReservedCodeChecker.php
+			path: modules/johncms/collections/src/Application/Services/ReservedCodeChecker.php
 
 		-
 			message: '#^Cannot call method sortBy\(\) on array\<Johncms\\Modules\\Collections\\Domain\\Models\\ContentCollectionItemValue\>\.$#'
 			identifier: method.nonObject
 			count: 1
-			path: modules/collections/src/Domain/Models/ContentCollectionItem.php
+			path: modules/johncms/collections/src/Domain/Models/ContentCollectionItem.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Collections\\Infrastructure\\Persistence\\Repository\\ContentCollectionItemRepository\:\:getVisibleForSitemap\(\) should return iterable\<Johncms\\Modules\\Collections\\Domain\\Models\\ContentCollectionItem\> but returns Illuminate\\Support\\LazyCollection\<int, stdClass\>\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/collections/src/Infrastructure/Persistence/Repository/ContentCollectionItemRepository.php
+			path: modules/johncms/collections/src/Infrastructure/Persistence/Repository/ContentCollectionItemRepository.php
 
 		-
 			message: '#^Parameter \#4 \$tabs of class Johncms\\Modules\\Community\\Application\\DTO\\CommunityTopResultDTO constructor expects array\<int, array\{name\: string, url\: string, active\: bool\}\>, array\{forum\: array\{active\: true\}\|array\{name\: string, url\: ''/community/top/''\|''/community/top/comm/''\|''/community/top…'', active\: bool\}, guest\: array\{active\: true\}\|array\{name\: string, url\: ''/community/top/''\|''/community/top/comm/''\|''/community/top…'', active\: bool\}, comm\: array\{active\: true\}\|array\{name\: string, url\: ''/community/top/''\|''/community/top/comm/''\|''/community/top…'', active\: bool\}, karma\?\: array\{active\: true\}\|array\{name\: string, url\: ''/community/top/''\|''/community/top/comm/''\|''/community/top…'', active\: true\}\} given\.$#'
 			identifier: argument.type
 			count: 1
-			path: modules/community/src/Application/UseCases/ViewTopUseCase.php
+			path: modules/johncms/community/src/Application/UseCases/ViewTopUseCase.php
 
 		-
 			message: '#^Parameter \#5 \$list of class Johncms\\Modules\\Community\\Application\\DTO\\CommunityTopResultDTO constructor expects array\<int, Johncms\\Users\\User\>, array\<Illuminate\\Database\\Eloquent\\Model\> given\.$#'
 			identifier: argument.type
 			count: 1
-			path: modules/community/src/Application/UseCases/ViewTopUseCase.php
+			path: modules/johncms/community/src/Application/UseCases/ViewTopUseCase.php
 
 		-
 			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Builder\<Johncms\\Users\\User\>\:\:approved\(\)\.$#'
 			identifier: method.notFound
 			count: 8
-			path: modules/community/src/Infrastructure/Persistence/Repository/CommunityUserRepository.php
+			path: modules/johncms/community/src/Infrastructure/Persistence/Repository/CommunityUserRepository.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Community\\Infrastructure\\Persistence\\Repository\\CommunityUserRepository\:\:getTopCommentUsers\(\) should return Illuminate\\Database\\Eloquent\\Collection but returns Illuminate\\Support\\Collection\<int, stdClass\>\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/community/src/Infrastructure/Persistence/Repository/CommunityUserRepository.php
+			path: modules/johncms/community/src/Infrastructure/Persistence/Repository/CommunityUserRepository.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Community\\Infrastructure\\Persistence\\Repository\\CommunityUserRepository\:\:getTopForumUsers\(\) should return Illuminate\\Database\\Eloquent\\Collection but returns Illuminate\\Support\\Collection\<int, stdClass\>\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/community/src/Infrastructure/Persistence/Repository/CommunityUserRepository.php
+			path: modules/johncms/community/src/Infrastructure/Persistence/Repository/CommunityUserRepository.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Community\\Infrastructure\\Persistence\\Repository\\CommunityUserRepository\:\:getTopGuestbookUsers\(\) should return Illuminate\\Database\\Eloquent\\Collection but returns Illuminate\\Support\\Collection\<int, stdClass\>\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/community/src/Infrastructure/Persistence/Repository/CommunityUserRepository.php
+			path: modules/johncms/community/src/Infrastructure/Persistence/Repository/CommunityUserRepository.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Community\\Infrastructure\\Persistence\\Repository\\CommunityUserRepository\:\:getTopKarmaUsers\(\) should return Illuminate\\Database\\Eloquent\\Collection but returns Illuminate\\Support\\Collection\<int, stdClass\>\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/community/src/Infrastructure/Persistence/Repository/CommunityUserRepository.php
+			path: modules/johncms/community/src/Infrastructure/Persistence/Repository/CommunityUserRepository.php
 
 		-
 			message: '#^Using nullsafe property access "\?\-\>version" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
 			identifier: nullsafe.neverNull
 			count: 1
-			path: modules/consent/src/Application/Services/ConsentService.php
+			path: modules/johncms/consent/src/Application/Services/ConsentService.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Consent\\Infrastructure\\Persistence\\Repository\\ConsentLogRepository\:\:getPage\(\) should return Illuminate\\Support\\Collection\<int, Johncms\\Modules\\Consent\\Domain\\Models\\ConsentLog\> but returns Illuminate\\Support\\Collection\<int, stdClass\>\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/consent/src/Infrastructure/Persistence/Repository/ConsentLogRepository.php
+			path: modules/johncms/consent/src/Infrastructure/Persistence/Repository/ConsentLogRepository.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Consent\\Infrastructure\\Persistence\\Repository\\ConsentRepository\:\:getActiveByContext\(\) should return Illuminate\\Support\\Collection\<int, Johncms\\Modules\\Consent\\Domain\\Models\\Consent\> but returns Illuminate\\Support\\Collection\<int, stdClass\>\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/consent/src/Infrastructure/Persistence/Repository/ConsentRepository.php
+			path: modules/johncms/consent/src/Infrastructure/Persistence/Repository/ConsentRepository.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Consent\\Infrastructure\\Persistence\\Repository\\ConsentRepository\:\:getPage\(\) should return Illuminate\\Support\\Collection\<int, Johncms\\Modules\\Consent\\Domain\\Models\\Consent\> but returns Illuminate\\Support\\Collection\<int, stdClass\>\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/consent/src/Infrastructure/Persistence/Repository/ConsentRepository.php
+			path: modules/johncms/consent/src/Infrastructure/Persistence/Repository/ConsentRepository.php
 
 		-
 			message: '#^Call to function is_string\(\) with string will always evaluate to true\.$#'
 			identifier: function.alreadyNarrowedType
 			count: 1
-			path: modules/contacts/src/Application/Controllers/Admin/ContactMessageListController.php
+			path: modules/johncms/contacts/src/Application/Controllers/Admin/ContactMessageListController.php
 
 		-
 			message: '#^Using nullsafe property access "\?\-\>value" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
 			identifier: nullsafe.neverNull
 			count: 1
-			path: modules/contacts/src/Application/Controllers/Admin/ContactMessageListController.php
+			path: modules/johncms/contacts/src/Application/Controllers/Admin/ContactMessageListController.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Contacts\\Infrastructure\\Persistence\\Repository\\ContactMessageRepository\:\:getPage\(\) should return Illuminate\\Support\\Collection\<int, Johncms\\Modules\\Contacts\\Domain\\Models\\ContactMessage\> but returns Illuminate\\Support\\Collection\<int, stdClass\>\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/contacts/src/Infrastructure/Persistence/Repository/ContactMessageRepository.php
+			path: modules/johncms/contacts/src/Infrastructure/Persistence/Repository/ContactMessageRepository.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$dir\.$#'
 			identifier: property.notFound
 			count: 6
-			path: modules/downloads/src/Application/Controllers/AdditionalFilesController.php
+			path: modules/johncms/downloads/src/Application/Controllers/AdditionalFilesController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$rus_name\.$#'
 			identifier: property.notFound
 			count: 4
-			path: modules/downloads/src/Application/Controllers/AdditionalFilesController.php
+			path: modules/johncms/downloads/src/Application/Controllers/AdditionalFilesController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadMoreFile\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 3
-			path: modules/downloads/src/Application/Controllers/AdditionalFilesController.php
+			path: modules/johncms/downloads/src/Application/Controllers/AdditionalFilesController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadMoreFile\:\:\$name\.$#'
 			identifier: property.notFound
 			count: 3
-			path: modules/downloads/src/Application/Controllers/AdditionalFilesController.php
+			path: modules/johncms/downloads/src/Application/Controllers/AdditionalFilesController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadMoreFile\:\:\$rus_name\.$#'
 			identifier: property.notFound
 			count: 2
-			path: modules/downloads/src/Application/Controllers/AdditionalFilesController.php
+			path: modules/johncms/downloads/src/Application/Controllers/AdditionalFilesController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadMoreFile\:\:\$size\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/Controllers/AdditionalFilesController.php
+			path: modules/johncms/downloads/src/Application/Controllers/AdditionalFilesController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadMoreFile\:\:\$time\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/Controllers/AdditionalFilesController.php
+			path: modules/johncms/downloads/src/Application/Controllers/AdditionalFilesController.php
 
 		-
 			message: '#^Anonymous function has an unused use \$id\.$#'
 			identifier: closure.unusedUse
 			count: 1
-			path: modules/downloads/src/Application/Controllers/AdditionalFilesController.php
+			path: modules/johncms/downloads/src/Application/Controllers/AdditionalFilesController.php
 
 		-
 			message: '#^Parameter \#1 \$callback of method Illuminate\\Database\\Eloquent\\Collection\<int,Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadMoreFile\>\:\:map\(\) contains unresolvable type\.$#'
 			identifier: argument.unresolvableType
 			count: 1
-			path: modules/downloads/src/Application/Controllers/AdditionalFilesController.php
+			path: modules/johncms/downloads/src/Application/Controllers/AdditionalFilesController.php
 
 		-
 			message: '#^Parameter \#1 \$file of method Johncms\\Modules\\Downloads\\Application\\Services\\DownloadFilePathService\:\:getFileUrl\(\) expects Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile, stdClass given\.$#'
 			identifier: argument.type
 			count: 1
-			path: modules/downloads/src/Application/Controllers/AdditionalFilesController.php
+			path: modules/johncms/downloads/src/Application/Controllers/AdditionalFilesController.php
 
 		-
 			message: '#^Parameter \#2 \$file of method Johncms\\Modules\\Downloads\\Application\\Controllers\\AdditionalFilesController\:\:showList\(\) expects Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile, stdClass given\.$#'
 			identifier: argument.type
 			count: 1
-			path: modules/downloads/src/Application/Controllers/AdditionalFilesController.php
+			path: modules/johncms/downloads/src/Application/Controllers/AdditionalFilesController.php
 
 		-
 			message: '#^Parameter \#3 \$file of method Johncms\\Modules\\Downloads\\Application\\Controllers\\AdditionalFilesController\:\:handleDelete\(\) expects Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile, stdClass given\.$#'
 			identifier: argument.type
 			count: 1
-			path: modules/downloads/src/Application/Controllers/AdditionalFilesController.php
+			path: modules/johncms/downloads/src/Application/Controllers/AdditionalFilesController.php
 
 		-
 			message: '#^Parameter \#3 \$file of method Johncms\\Modules\\Downloads\\Application\\Controllers\\AdditionalFilesController\:\:handleEdit\(\) expects Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile, stdClass given\.$#'
 			identifier: argument.type
 			count: 1
-			path: modules/downloads/src/Application/Controllers/AdditionalFilesController.php
+			path: modules/johncms/downloads/src/Application/Controllers/AdditionalFilesController.php
 
 		-
 			message: '#^Parameter \#3 \$file of method Johncms\\Modules\\Downloads\\Application\\Controllers\\AdditionalFilesController\:\:handleUpload\(\) expects Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile, stdClass given\.$#'
 			identifier: argument.type
 			count: 1
-			path: modules/downloads/src/Application/Controllers/AdditionalFilesController.php
+			path: modules/johncms/downloads/src/Application/Controllers/AdditionalFilesController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$dir\.$#'
 			identifier: property.notFound
 			count: 2
-			path: modules/downloads/src/Application/Controllers/CreateCategoryController.php
+			path: modules/johncms/downloads/src/Application/Controllers/CreateCategoryController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$refid\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/Controllers/DeleteCategoryController.php
+			path: modules/johncms/downloads/src/Application/Controllers/DeleteCategoryController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$rus_name\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/Controllers/DeleteCategoryController.php
+			path: modules/johncms/downloads/src/Application/Controllers/DeleteCategoryController.php
 
 		-
 			message: '#^Parameter \#1 \$file of method Johncms\\Modules\\Downloads\\Application\\Services\\DownloadFilePathService\:\:getFileUrl\(\) expects Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile, stdClass given\.$#'
 			identifier: argument.type
 			count: 2
-			path: modules/downloads/src/Application/Controllers/DeleteFileController.php
+			path: modules/johncms/downloads/src/Application/Controllers/DeleteFileController.php
 
 		-
 			message: '#^Using nullsafe property access "\?\-\>refid" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
 			identifier: nullsafe.neverNull
 			count: 1
-			path: modules/downloads/src/Application/Controllers/DeleteFileController.php
+			path: modules/johncms/downloads/src/Application/Controllers/DeleteFileController.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Collection\<int, Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\>\|Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$refid\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/Controllers/DownloadCategoryController.php
+			path: modules/johncms/downloads/src/Application/Controllers/DownloadCategoryController.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Collection\<int, Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\>\|Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$rus_name\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/Controllers/DownloadCategoryController.php
+			path: modules/johncms/downloads/src/Application/Controllers/DownloadCategoryController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$desc\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/Controllers/DownloadCategoryController.php
+			path: modules/johncms/downloads/src/Application/Controllers/DownloadCategoryController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$dir\.$#'
 			identifier: property.notFound
 			count: 2
-			path: modules/downloads/src/Application/Controllers/DownloadCategoryController.php
+			path: modules/johncms/downloads/src/Application/Controllers/DownloadCategoryController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$field\.$#'
 			identifier: property.notFound
 			count: 2
-			path: modules/downloads/src/Application/Controllers/DownloadCategoryController.php
+			path: modules/johncms/downloads/src/Application/Controllers/DownloadCategoryController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 10
-			path: modules/downloads/src/Application/Controllers/DownloadCategoryController.php
+			path: modules/johncms/downloads/src/Application/Controllers/DownloadCategoryController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$rus_name\.$#'
 			identifier: property.notFound
 			count: 3
-			path: modules/downloads/src/Application/Controllers/DownloadCategoryController.php
+			path: modules/johncms/downloads/src/Application/Controllers/DownloadCategoryController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$text\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/Controllers/DownloadCategoryController.php
+			path: modules/johncms/downloads/src/Application/Controllers/DownloadCategoryController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$total\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/Controllers/DownloadCategoryController.php
+			path: modules/johncms/downloads/src/Application/Controllers/DownloadCategoryController.php
 
 		-
 			message: '#^Parameter \#1 \$callback of method Illuminate\\Database\\Query\\Builder\:\:each\(\) expects callable\(stdClass, int\)\: mixed, Closure\(Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\)\: void given\.$#'
 			identifier: argument.type
 			count: 1
-			path: modules/downloads/src/Application/Controllers/DownloadCategoryController.php
+			path: modules/johncms/downloads/src/Application/Controllers/DownloadCategoryController.php
 
 		-
 			message: '#^Parameter \#1 \$file of method Johncms\\Modules\\Downloads\\Application\\FilePresenter\:\:present\(\) expects Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile, stdClass given\.$#'
 			identifier: argument.type
 			count: 1
-			path: modules/downloads/src/Application/Controllers/DownloadCategoryController.php
+			path: modules/johncms/downloads/src/Application/Controllers/DownloadCategoryController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$desc\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/Controllers/EditCategoryController.php
+			path: modules/johncms/downloads/src/Application/Controllers/EditCategoryController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$dir\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/Controllers/EditCategoryController.php
+			path: modules/johncms/downloads/src/Application/Controllers/EditCategoryController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$field\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/Controllers/EditCategoryController.php
+			path: modules/johncms/downloads/src/Application/Controllers/EditCategoryController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$refid\.$#'
 			identifier: property.notFound
 			count: 3
-			path: modules/downloads/src/Application/Controllers/EditCategoryController.php
+			path: modules/johncms/downloads/src/Application/Controllers/EditCategoryController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$rus_name\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/Controllers/EditCategoryController.php
+			path: modules/johncms/downloads/src/Application/Controllers/EditCategoryController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$sort\.$#'
 			identifier: property.notFound
 			count: 3
-			path: modules/downloads/src/Application/Controllers/EditCategoryController.php
+			path: modules/johncms/downloads/src/Application/Controllers/EditCategoryController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$text\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/Controllers/EditCategoryController.php
+			path: modules/johncms/downloads/src/Application/Controllers/EditCategoryController.php
 
 		-
 			message: '#^Cannot call method save\(\) on stdClass\.$#'
 			identifier: method.nonObject
 			count: 1
-			path: modules/downloads/src/Application/Controllers/EditCategoryController.php
+			path: modules/johncms/downloads/src/Application/Controllers/EditCategoryController.php
 
 		-
 			message: '#^Expression on left side of \?\? is not nullable\.$#'
 			identifier: nullCoalesce.expr
 			count: 1
-			path: modules/downloads/src/Application/Controllers/EditCategoryController.php
+			path: modules/johncms/downloads/src/Application/Controllers/EditCategoryController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$dir\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/Controllers/EditFileController.php
+			path: modules/johncms/downloads/src/Application/Controllers/EditFileController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$name\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/Controllers/EditFileController.php
+			path: modules/johncms/downloads/src/Application/Controllers/EditFileController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$refid\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/Controllers/EditFileController.php
+			path: modules/johncms/downloads/src/Application/Controllers/EditFileController.php
 
 		-
 			message: '#^Parameter \#1 \$file of method Johncms\\Modules\\Downloads\\Application\\Services\\DownloadFilePathService\:\:getFileUrl\(\) expects Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile, stdClass given\.$#'
 			identifier: argument.type
 			count: 2
-			path: modules/downloads/src/Application/Controllers/EditFileController.php
+			path: modules/johncms/downloads/src/Application/Controllers/EditFileController.php
 
 		-
 			message: '#^Parameter \#3 \$file of method Johncms\\Modules\\Downloads\\Application\\Controllers\\EditFileController\:\:handleSave\(\) expects Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile, stdClass given\.$#'
 			identifier: argument.type
 			count: 1
-			path: modules/downloads/src/Application/Controllers/EditFileController.php
+			path: modules/johncms/downloads/src/Application/Controllers/EditFileController.php
 
 		-
 			message: '#^Parameter \#1 \$file of method Johncms\\Modules\\Downloads\\Application\\Services\\DownloadFilePathService\:\:getFileUrl\(\) expects Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile, stdClass given\.$#'
 			identifier: argument.type
 			count: 2
-			path: modules/downloads/src/Application/Controllers/EditScreenController.php
+			path: modules/johncms/downloads/src/Application/Controllers/EditScreenController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$dir\.$#'
 			identifier: property.notFound
 			count: 2
-			path: modules/downloads/src/Application/Controllers/FileCommentsController.php
+			path: modules/johncms/downloads/src/Application/Controllers/FileCommentsController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$name\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/Controllers/FileCommentsController.php
+			path: modules/johncms/downloads/src/Application/Controllers/FileCommentsController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$rus_name\.$#'
 			identifier: property.notFound
 			count: 4
-			path: modules/downloads/src/Application/Controllers/FileCommentsController.php
+			path: modules/johncms/downloads/src/Application/Controllers/FileCommentsController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$type\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/Controllers/FileCommentsController.php
+			path: modules/johncms/downloads/src/Application/Controllers/FileCommentsController.php
 
 		-
 			message: '#^Parameter \#1 \$file of method Johncms\\Modules\\Downloads\\Application\\FilePresenter\:\:present\(\) expects Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile, stdClass given\.$#'
 			identifier: argument.type
 			count: 1
-			path: modules/downloads/src/Application/Controllers/FilesModerationController.php
+			path: modules/johncms/downloads/src/Application/Controllers/FilesModerationController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$dir\.$#'
 			identifier: property.notFound
 			count: 2
-			path: modules/downloads/src/Application/Controllers/FilesUploadController.php
+			path: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$field\.$#'
 			identifier: property.notFound
 			count: 2
-			path: modules/downloads/src/Application/Controllers/FilesUploadController.php
+			path: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$text\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/Controllers/FilesUploadController.php
+			path: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 3
-			path: modules/downloads/src/Application/Controllers/FilesUploadController.php
+			path: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php
 
 		-
 			message: '#^Strict comparison using \!\=\= between int\<min, \-1\>\|int\<1, max\> and '''' will always evaluate to true\.$#'
 			identifier: notIdentical.alwaysTrue
 			count: 1
-			path: modules/downloads/src/Application/Controllers/FilesUploadController.php
+			path: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$dir\.$#'
 			identifier: property.notFound
 			count: 4
-			path: modules/downloads/src/Application/Controllers/ImportFileController.php
+			path: modules/johncms/downloads/src/Application/Controllers/ImportFileController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$field\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/Controllers/ImportFileController.php
+			path: modules/johncms/downloads/src/Application/Controllers/ImportFileController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$text\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/Controllers/ImportFileController.php
+			path: modules/johncms/downloads/src/Application/Controllers/ImportFileController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 2
-			path: modules/downloads/src/Application/Controllers/ImportFileController.php
+			path: modules/johncms/downloads/src/Application/Controllers/ImportFileController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$desc\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/Controllers/IndexController.php
+			path: modules/johncms/downloads/src/Application/Controllers/IndexController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$field\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/Controllers/IndexController.php
+			path: modules/johncms/downloads/src/Application/Controllers/IndexController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 5
-			path: modules/downloads/src/Application/Controllers/IndexController.php
+			path: modules/johncms/downloads/src/Application/Controllers/IndexController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$rus_name\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/Controllers/IndexController.php
+			path: modules/johncms/downloads/src/Application/Controllers/IndexController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$text\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/Controllers/IndexController.php
+			path: modules/johncms/downloads/src/Application/Controllers/IndexController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$total\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/Controllers/IndexController.php
+			path: modules/johncms/downloads/src/Application/Controllers/IndexController.php
 
 		-
 			message: '#^Parameter \#1 \$callback of method Illuminate\\Database\\Query\\Builder\:\:each\(\) expects callable\(stdClass, int\)\: mixed, Closure\(Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\)\: void given\.$#'
 			identifier: argument.type
 			count: 1
-			path: modules/downloads/src/Application/Controllers/IndexController.php
+			path: modules/johncms/downloads/src/Application/Controllers/IndexController.php
 
 		-
 			message: '#^Parameter \#1 \$file of method Johncms\\Modules\\Downloads\\Application\\FilePresenter\:\:present\(\) expects Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile, stdClass given\.$#'
 			identifier: argument.type
 			count: 1
-			path: modules/downloads/src/Application/Controllers/IndexController.php
+			path: modules/johncms/downloads/src/Application/Controllers/IndexController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadMoreFile\:\:\$name\.$#'
 			identifier: property.notFound
 			count: 2
-			path: modules/downloads/src/Application/Controllers/LoadFileController.php
+			path: modules/johncms/downloads/src/Application/Controllers/LoadFileController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 3
-			path: modules/downloads/src/Application/Controllers/MoveFileController.php
+			path: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$rus_name\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/Controllers/MoveFileController.php
+			path: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$refid\.$#'
 			identifier: property.notFound
 			count: 3
-			path: modules/downloads/src/Application/Controllers/MoveFileController.php
+			path: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$rus_name\.$#'
 			identifier: property.notFound
 			count: 2
-			path: modules/downloads/src/Application/Controllers/MoveFileController.php
+			path: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php
 
 		-
 			message: '#^Anonymous function has an unused use \$id\.$#'
 			identifier: closure.unusedUse
 			count: 1
-			path: modules/downloads/src/Application/Controllers/MoveFileController.php
+			path: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php
 
 		-
 			message: '#^Expression on left side of \?\? is not nullable\.$#'
 			identifier: nullCoalesce.expr
 			count: 2
-			path: modules/downloads/src/Application/Controllers/MoveFileController.php
+			path: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php
 
 		-
 			message: '#^Parameter \#1 \$callback of method Illuminate\\Database\\Eloquent\\Collection\<int,Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\>\:\:map\(\) contains unresolvable type\.$#'
 			identifier: argument.unresolvableType
 			count: 1
-			path: modules/downloads/src/Application/Controllers/MoveFileController.php
+			path: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php
 
 		-
 			message: '#^Parameter \#1 \$file of method Johncms\\Modules\\Downloads\\Application\\Services\\DownloadFilePathService\:\:getFileUrl\(\) expects Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile, stdClass given\.$#'
 			identifier: argument.type
 			count: 1
-			path: modules/downloads/src/Application/Controllers/MoveFileController.php
+			path: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php
 
 		-
 			message: '#^Parameter \#2 \$file of method Johncms\\Modules\\Downloads\\Application\\Controllers\\MoveFileController\:\:showBrowser\(\) expects Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile, stdClass given\.$#'
 			identifier: argument.type
 			count: 1
-			path: modules/downloads/src/Application/Controllers/MoveFileController.php
+			path: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php
 
 		-
 			message: '#^Parameter \#3 \$file of method Johncms\\Modules\\Downloads\\Application\\Controllers\\MoveFileController\:\:handleTransfer\(\) expects Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile, stdClass given\.$#'
 			identifier: argument.type
 			count: 1
-			path: modules/downloads/src/Application/Controllers/MoveFileController.php
+			path: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$dir\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/Controllers/RecountController.php
+			path: modules/johncms/downloads/src/Application/Controllers/RecountController.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Collection\<int, Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\>\|Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$dir\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/Controllers/ScanDirectoryController.php
+			path: modules/johncms/downloads/src/Application/Controllers/ScanDirectoryController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$dir\.$#'
 			identifier: property.notFound
 			count: 6
-			path: modules/downloads/src/Application/Controllers/ScanDirectoryController.php
+			path: modules/johncms/downloads/src/Application/Controllers/ScanDirectoryController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 3
-			path: modules/downloads/src/Application/Controllers/ScanDirectoryController.php
+			path: modules/johncms/downloads/src/Application/Controllers/ScanDirectoryController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$dir\.$#'
 			identifier: property.notFound
 			count: 3
-			path: modules/downloads/src/Application/Controllers/ScanDirectoryController.php
+			path: modules/johncms/downloads/src/Application/Controllers/ScanDirectoryController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 10
-			path: modules/downloads/src/Application/Controllers/ScanDirectoryController.php
+			path: modules/johncms/downloads/src/Application/Controllers/ScanDirectoryController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$name\.$#'
 			identifier: property.notFound
 			count: 2
-			path: modules/downloads/src/Application/Controllers/ScanDirectoryController.php
+			path: modules/johncms/downloads/src/Application/Controllers/ScanDirectoryController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadMoreFile\:\:\$name\.$#'
 			identifier: property.notFound
 			count: 2
-			path: modules/downloads/src/Application/Controllers/ScanDirectoryController.php
+			path: modules/johncms/downloads/src/Application/Controllers/ScanDirectoryController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadMoreFile\:\:\$refid\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/Controllers/ScanDirectoryController.php
+			path: modules/johncms/downloads/src/Application/Controllers/ScanDirectoryController.php
 
 		-
 			message: '#^Expression on left side of \?\? is not nullable\.$#'
 			identifier: nullCoalesce.expr
 			count: 1
-			path: modules/downloads/src/Application/Controllers/ScanDirectoryController.php
+			path: modules/johncms/downloads/src/Application/Controllers/ScanDirectoryController.php
 
 		-
 			message: '#^Parameter \#1 \$callback of method Illuminate\\Database\\Query\\Builder\:\:each\(\) expects callable\(stdClass, int\)\: mixed, Closure\(Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\)\: void given\.$#'
 			identifier: argument.type
 			count: 1
-			path: modules/downloads/src/Application/Controllers/ScanDirectoryController.php
+			path: modules/johncms/downloads/src/Application/Controllers/ScanDirectoryController.php
 
 		-
 			message: '#^Parameter \#1 \$callback of method Illuminate\\Database\\Query\\Builder\:\:each\(\) expects callable\(stdClass, int\)\: mixed, Closure\(Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\)\: void given\.$#'
 			identifier: argument.type
 			count: 1
-			path: modules/downloads/src/Application/Controllers/ScanDirectoryController.php
+			path: modules/johncms/downloads/src/Application/Controllers/ScanDirectoryController.php
 
 		-
 			message: '#^Parameter \#1 \$file of method Johncms\\Modules\\Downloads\\Application\\FilePresenter\:\:present\(\) expects Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile, Illuminate\\Database\\Eloquent\\Model given\.$#'
 			identifier: argument.type
 			count: 1
-			path: modules/downloads/src/Application/Controllers/TopFilesController.php
+			path: modules/johncms/downloads/src/Application/Controllers/TopFilesController.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Collection\<int, Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\>\|Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$refid\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/Controllers/ViewFileController.php
+			path: modules/johncms/downloads/src/Application/Controllers/ViewFileController.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Collection\<int, Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\>\|Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$rus_name\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/Controllers/ViewFileController.php
+			path: modules/johncms/downloads/src/Application/Controllers/ViewFileController.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/Controllers/ViewFileController.php
+			path: modules/johncms/downloads/src/Application/Controllers/ViewFileController.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$name\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/Controllers/ViewFileController.php
+			path: modules/johncms/downloads/src/Application/Controllers/ViewFileController.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$rus_name\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/Controllers/ViewFileController.php
+			path: modules/johncms/downloads/src/Application/Controllers/ViewFileController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$rus_name\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/Controllers/ViewFileController.php
+			path: modules/johncms/downloads/src/Application/Controllers/ViewFileController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$about_html\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/Controllers/ViewFileController.php
+			path: modules/johncms/downloads/src/Application/Controllers/ViewFileController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$category\.$#'
 			identifier: property.notFound
 			count: 2
-			path: modules/downloads/src/Application/Controllers/ViewFileController.php
+			path: modules/johncms/downloads/src/Application/Controllers/ViewFileController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$dir\.$#'
 			identifier: property.notFound
 			count: 5
-			path: modules/downloads/src/Application/Controllers/ViewFileController.php
+			path: modules/johncms/downloads/src/Application/Controllers/ViewFileController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$name\.$#'
 			identifier: property.notFound
 			count: 4
-			path: modules/downloads/src/Application/Controllers/ViewFileController.php
+			path: modules/johncms/downloads/src/Application/Controllers/ViewFileController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$refid\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/Controllers/ViewFileController.php
+			path: modules/johncms/downloads/src/Application/Controllers/ViewFileController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$rus_name\.$#'
 			identifier: property.notFound
 			count: 3
-			path: modules/downloads/src/Application/Controllers/ViewFileController.php
+			path: modules/johncms/downloads/src/Application/Controllers/ViewFileController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$size\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/Controllers/ViewFileController.php
+			path: modules/johncms/downloads/src/Application/Controllers/ViewFileController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$type\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/Controllers/ViewFileController.php
+			path: modules/johncms/downloads/src/Application/Controllers/ViewFileController.php
 
 		-
 			message: '#^Property Johncms\\Modules\\Downloads\\Application\\Controllers\\ViewFileController\:\:\$filePresenter is never read, only written\.$#'
 			identifier: property.onlyWritten
 			count: 1
-			path: modules/downloads/src/Application/Controllers/ViewFileController.php
+			path: modules/johncms/downloads/src/Application/Controllers/ViewFileController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$about\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/FilePresenter.php
+			path: modules/johncms/downloads/src/Application/FilePresenter.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/FilePresenter.php
+			path: modules/johncms/downloads/src/Application/FilePresenter.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$name\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/FilePresenter.php
+			path: modules/johncms/downloads/src/Application/FilePresenter.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$rate\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/FilePresenter.php
+			path: modules/johncms/downloads/src/Application/FilePresenter.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$time\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/FilePresenter.php
+			path: modules/johncms/downloads/src/Application/FilePresenter.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$rus_name\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/Services/CategoryNavService.php
+			path: modules/johncms/downloads/src/Application/Services/CategoryNavService.php
 
 		-
 			message: '#^Parameter \#1 \$callback of method Illuminate\\Database\\Query\\Builder\:\:each\(\) expects callable\(stdClass, int\)\: mixed, Closure\(Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\)\: void given\.$#'
 			identifier: argument.type
 			count: 1
-			path: modules/downloads/src/Application/Services/CategoryNavService.php
+			path: modules/johncms/downloads/src/Application/Services/CategoryNavService.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 4
-			path: modules/downloads/src/Application/Services/DownloadCategoryPathService.php
+			path: modules/johncms/downloads/src/Application/Services/DownloadCategoryPathService.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$slug\.$#'
 			identifier: property.notFound
 			count: 2
-			path: modules/downloads/src/Application/Services/DownloadCategoryPathService.php
+			path: modules/johncms/downloads/src/Application/Services/DownloadCategoryPathService.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$category\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/Services/DownloadFilePathService.php
+			path: modules/johncms/downloads/src/Application/Services/DownloadFilePathService.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 4
-			path: modules/downloads/src/Application/Services/DownloadFilePathService.php
+			path: modules/johncms/downloads/src/Application/Services/DownloadFilePathService.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$refid\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/Services/DownloadFilePathService.php
+			path: modules/johncms/downloads/src/Application/Services/DownloadFilePathService.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$slug\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/Services/DownloadFilePathService.php
+			path: modules/johncms/downloads/src/Application/Services/DownloadFilePathService.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/Services/DownloadSlugService.php
+			path: modules/johncms/downloads/src/Application/Services/DownloadSlugService.php
 
 		-
 			message: '#^Using nullsafe property access on non\-nullable type Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\. Use \-\> instead\.$#'
 			identifier: nullsafe.neverNull
 			count: 1
-			path: modules/downloads/src/Application/Services/DownloadSlugService.php
+			path: modules/johncms/downloads/src/Application/Services/DownloadSlugService.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$dir\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/UseCases/DeleteCategoryUseCase.php
+			path: modules/johncms/downloads/src/Application/UseCases/DeleteCategoryUseCase.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 2
-			path: modules/downloads/src/Application/UseCases/DeleteCategoryUseCase.php
+			path: modules/johncms/downloads/src/Application/UseCases/DeleteCategoryUseCase.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$dir\.$#'
 			identifier: property.notFound
 			count: 2
-			path: modules/downloads/src/Application/UseCases/DeleteCategoryUseCase.php
+			path: modules/johncms/downloads/src/Application/UseCases/DeleteCategoryUseCase.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 6
-			path: modules/downloads/src/Application/UseCases/DeleteCategoryUseCase.php
+			path: modules/johncms/downloads/src/Application/UseCases/DeleteCategoryUseCase.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$name\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/UseCases/DeleteCategoryUseCase.php
+			path: modules/johncms/downloads/src/Application/UseCases/DeleteCategoryUseCase.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadMoreFile\:\:\$name\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/UseCases/DeleteCategoryUseCase.php
+			path: modules/johncms/downloads/src/Application/UseCases/DeleteCategoryUseCase.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadMoreFile\:\:\$name\.$#'
 			identifier: property.notFound
 			count: 2
-			path: modules/downloads/src/Application/UseCases/DeleteFileUseCase.php
+			path: modules/johncms/downloads/src/Application/UseCases/DeleteFileUseCase.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$dir\.$#'
 			identifier: property.notFound
 			count: 4
-			path: modules/downloads/src/Application/UseCases/MoveFileUseCase.php
+			path: modules/johncms/downloads/src/Application/UseCases/MoveFileUseCase.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/UseCases/MoveFileUseCase.php
+			path: modules/johncms/downloads/src/Application/UseCases/MoveFileUseCase.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$dir\.$#'
 			identifier: property.notFound
 			count: 4
-			path: modules/downloads/src/Application/UseCases/MoveFileUseCase.php
+			path: modules/johncms/downloads/src/Application/UseCases/MoveFileUseCase.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/UseCases/MoveFileUseCase.php
+			path: modules/johncms/downloads/src/Application/UseCases/MoveFileUseCase.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$name\.$#'
 			identifier: property.notFound
 			count: 4
-			path: modules/downloads/src/Application/UseCases/MoveFileUseCase.php
+			path: modules/johncms/downloads/src/Application/UseCases/MoveFileUseCase.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadMoreFile\:\:\$name\.$#'
 			identifier: property.notFound
 			count: 3
-			path: modules/downloads/src/Application/UseCases/MoveFileUseCase.php
+			path: modules/johncms/downloads/src/Application/UseCases/MoveFileUseCase.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$user_id\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Application/UseCases/ViewFileUseCase.php
+			path: modules/johncms/downloads/src/Application/UseCases/ViewFileUseCase.php
 
 		-
 			message: '#^Parameter \#3 \$uploadUser of class Johncms\\Modules\\Downloads\\Application\\DTO\\ViewFileResultDTO constructor expects Johncms\\Users\\User\|null, stdClass\|null given\.$#'
 			identifier: argument.type
 			count: 1
-			path: modules/downloads/src/Application/UseCases/ViewFileUseCase.php
+			path: modules/johncms/downloads/src/Application/UseCases/ViewFileUseCase.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$dir\.$#'
 			identifier: property.notFound
 			count: 2
-			path: modules/downloads/src/Application/UseCases/ViewNewFilesUseCase.php
+			path: modules/johncms/downloads/src/Application/UseCases/ViewNewFilesUseCase.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\:\:\$about\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/downloads/src/Domain/Models/DownloadFile.php
+			path: modules/johncms/downloads/src/Domain/Models/DownloadFile.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Downloads\\Infrastructure\\Persistence\\Repository\\DownloadFileRepository\:\:findAdditionalFiles\(\) should return Illuminate\\Database\\Eloquent\\Collection but returns Illuminate\\Support\\Collection\<int, stdClass\>\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/downloads/src/Infrastructure/Persistence/Repository/DownloadFileRepository.php
+			path: modules/johncms/downloads/src/Infrastructure/Persistence/Repository/DownloadFileRepository.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Downloads\\Infrastructure\\Persistence\\Repository\\DownloadFileRepository\:\:findFile\(\) never returns Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile so it can be removed from the return type\.$#'
 			identifier: return.unusedType
 			count: 1
-			path: modules/downloads/src/Infrastructure/Persistence/Repository/DownloadFileRepository.php
+			path: modules/johncms/downloads/src/Infrastructure/Persistence/Repository/DownloadFileRepository.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Downloads\\Infrastructure\\Persistence\\Repository\\DownloadFileRepository\:\:findFile\(\) should return Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\|null but returns stdClass\|null\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/downloads/src/Infrastructure/Persistence/Repository/DownloadFileRepository.php
+			path: modules/johncms/downloads/src/Infrastructure/Persistence/Repository/DownloadFileRepository.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Downloads\\Infrastructure\\Persistence\\Repository\\DownloadFileRepository\:\:findFileWithCategory\(\) never returns Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile so it can be removed from the return type\.$#'
 			identifier: return.unusedType
 			count: 1
-			path: modules/downloads/src/Infrastructure/Persistence/Repository/DownloadFileRepository.php
+			path: modules/johncms/downloads/src/Infrastructure/Persistence/Repository/DownloadFileRepository.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Downloads\\Infrastructure\\Persistence\\Repository\\DownloadFileRepository\:\:findFileWithCategory\(\) should return Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadFile\|null but returns stdClass\|null\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/downloads/src/Infrastructure/Persistence/Repository/DownloadFileRepository.php
+			path: modules/johncms/downloads/src/Infrastructure/Persistence/Repository/DownloadFileRepository.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Downloads\\Infrastructure\\Persistence\\Repository\\DownloadFileRepository\:\:getTopFiles\(\) should return Illuminate\\Database\\Eloquent\\Collection but returns Illuminate\\Support\\Collection\<int, stdClass\>\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/downloads/src/Infrastructure/Persistence/Repository/DownloadFileRepository.php
+			path: modules/johncms/downloads/src/Infrastructure/Persistence/Repository/DownloadFileRepository.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Downloads\\Infrastructure\\Persistence\\Repository\\DownloadFileRepository\:\:getTopUsers\(\) should return Illuminate\\Support\\Collection\<int, Johncms\\Users\\User\> but returns Illuminate\\Support\\Collection\<int, stdClass\|null\>\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/downloads/src/Infrastructure/Persistence/Repository/DownloadFileRepository.php
+			path: modules/johncms/downloads/src/Infrastructure/Persistence/Repository/DownloadFileRepository.php
 
 		-
 			message: '#^Call to function is_array\(\) with array will always evaluate to true\.$#'
 			identifier: function.alreadyNarrowedType
 			count: 1
-			path: modules/forum/src/Application/Controllers/CuratorsController.php
+			path: modules/johncms/forum/src/Application/Controllers/CuratorsController.php
 
 		-
 			message: '#^Call to function is_array\(\) with array will always evaluate to true\.$#'
 			identifier: function.alreadyNarrowedType
 			count: 1
-			path: modules/forum/src/Application/Controllers/SetFilterByAuthorController.php
+			path: modules/johncms/forum/src/Application/Controllers/SetFilterByAuthorController.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Collection\<int, Illuminate\\Database\\Eloquent\\Model\>\|Illuminate\\Database\\Eloquent\\Model\:\:\$name\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/forum/src/Application/ForumUtils.php
+			path: modules/johncms/forum/src/Application/ForumUtils.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Forum\\Domain\\Models\\ForumUnread\:\:\$time\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/forum/src/Application/UseCases/CreateTopicUseCase.php
+			path: modules/johncms/forum/src/Application/UseCases/CreateTopicUseCase.php
 
 		-
 			message: '#^Argument of an invalid type Johncms\\Modules\\Forum\\Domain\\Models\\ForumVote supplied for foreach, only iterables are supported\.$#'
 			identifier: foreach.nonIterable
 			count: 1
-			path: modules/forum/src/Application/UseCases/ViewForumTopicUseCase.php
+			path: modules/johncms/forum/src/Application/UseCases/ViewForumTopicUseCase.php
 
 		-
 			message: '#^Argument of an invalid type Johncms\\Modules\\Forum\\Domain\\Models\\ForumFile supplied for foreach, only iterables are supported\.$#'
 			identifier: foreach.nonIterable
 			count: 1
-			path: modules/forum/src/Application/UseCases/ViewPostUseCase.php
+			path: modules/johncms/forum/src/Application/UseCases/ViewPostUseCase.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Forum\\Domain\\Models\\ForumMessage\:\:\$datereg\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/forum/src/Domain/Models/ForumMessage.php
+			path: modules/johncms/forum/src/Domain/Models/ForumMessage.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Forum\\Domain\\Models\\ForumMessage\:\:\$lastdate\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/forum/src/Domain/Models/ForumMessage.php
+			path: modules/johncms/forum/src/Domain/Models/ForumMessage.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Forum\\Domain\\Models\\ForumMessage\:\:\$status\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/forum/src/Domain/Models/ForumMessage.php
+			path: modules/johncms/forum/src/Domain/Models/ForumMessage.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Forum\\Domain\\Models\\ForumMessage\:\:scopeUsers\(\) should return Illuminate\\Database\\Eloquent\\Builder but returns Illuminate\\Database\\Query\\Builder\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/forum/src/Domain/Models/ForumMessage.php
+			path: modules/johncms/forum/src/Domain/Models/ForumMessage.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Forum\\Domain\\Models\\ForumTopic\:\:scopeRead\(\) should return Illuminate\\Database\\Eloquent\\Builder but returns Illuminate\\Database\\Query\\Builder\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/forum/src/Domain/Models/ForumTopic.php
+			path: modules/johncms/forum/src/Domain/Models/ForumTopic.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Forum\\Domain\\Models\\ForumVote\:\:answers\(\) should return Illuminate\\Database\\Eloquent\\Relations\\HasMany but returns Illuminate\\Database\\Query\\Builder\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/forum/src/Domain/Models/ForumVote.php
+			path: modules/johncms/forum/src/Domain/Models/ForumVote.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Forum\\Domain\\Models\\ForumVote\:\:scopeVoteUser\(\) should return Illuminate\\Database\\Eloquent\\Builder but returns Illuminate\\Database\\Query\\Builder\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/forum/src/Domain/Models/ForumVote.php
+			path: modules/johncms/forum/src/Domain/Models/ForumVote.php
 
 		-
 			message: '#^Call to an undefined method Illuminate\\Database\\Query\\Builder\:\:toBase\(\)\.$#'
 			identifier: method.notFound
 			count: 2
-			path: modules/forum/src/Infrastructure/Persistence/Repository/ForumFileRepository.php
+			path: modules/johncms/forum/src/Infrastructure/Persistence/Repository/ForumFileRepository.php
 
 		-
 			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Builder\<Johncms\\Modules\\Forum\\Domain\\Models\\ForumMessage\>\:\:users\(\)\.$#'
 			identifier: method.notFound
 			count: 3
-			path: modules/forum/src/Infrastructure/Persistence/Repository/ForumMessageRepository.php
+			path: modules/johncms/forum/src/Infrastructure/Persistence/Repository/ForumMessageRepository.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Forum\\Infrastructure\\Persistence\\Repository\\ForumMessageRepository\:\:findFirstByTopicId\(\) should return Johncms\\Modules\\Forum\\Domain\\Models\\ForumMessage\|null but returns stdClass\|null\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/forum/src/Infrastructure/Persistence/Repository/ForumMessageRepository.php
+			path: modules/johncms/forum/src/Infrastructure/Persistence/Repository/ForumMessageRepository.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Forum\\Infrastructure\\Persistence\\Repository\\ForumMessageRepository\:\:findLastByTopicId\(\) should return Johncms\\Modules\\Forum\\Domain\\Models\\ForumMessage\|null but returns stdClass\|null\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/forum/src/Infrastructure/Persistence/Repository/ForumMessageRepository.php
+			path: modules/johncms/forum/src/Infrastructure/Persistence/Repository/ForumMessageRepository.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Forum\\Infrastructure\\Persistence\\Repository\\ForumMessageRepository\:\:findLastMessageByUser\(\) should return Johncms\\Modules\\Forum\\Domain\\Models\\ForumMessage\|null but returns stdClass\|null\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/forum/src/Infrastructure/Persistence/Repository/ForumMessageRepository.php
+			path: modules/johncms/forum/src/Infrastructure/Persistence/Repository/ForumMessageRepository.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Forum\\Infrastructure\\Persistence\\Repository\\ForumMessageRepository\:\:findLastMessageInTopic\(\) should return Johncms\\Modules\\Forum\\Domain\\Models\\ForumMessage\|null but returns stdClass\|null\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/forum/src/Infrastructure/Persistence/Repository/ForumMessageRepository.php
+			path: modules/johncms/forum/src/Infrastructure/Persistence/Repository/ForumMessageRepository.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Forum\\Infrastructure\\Persistence\\Repository\\ForumSectionRepository\:\:getAllForSitemap\(\) should return Illuminate\\Support\\Collection\<int, Johncms\\Modules\\Forum\\Domain\\Models\\ForumSection\> but returns Illuminate\\Support\\Collection\<int, stdClass\>\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/forum/src/Infrastructure/Persistence/Repository/ForumSectionRepository.php
+			path: modules/johncms/forum/src/Infrastructure/Persistence/Repository/ForumSectionRepository.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Forum\\Infrastructure\\Persistence\\Repository\\ForumSectionRepository\:\:getAllOrdered\(\) should return Illuminate\\Support\\Collection\<int, Johncms\\Modules\\Forum\\Domain\\Models\\ForumSection\> but returns Illuminate\\Support\\Collection\<int, stdClass\>\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/forum/src/Infrastructure/Persistence/Repository/ForumSectionRepository.php
+			path: modules/johncms/forum/src/Infrastructure/Persistence/Repository/ForumSectionRepository.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Forum\\Infrastructure\\Persistence\\Repository\\ForumSectionRepository\:\:getChildrenWithCounts\(\) should return Illuminate\\Support\\Collection\<int, Johncms\\Modules\\Forum\\Domain\\Models\\ForumSection\> but returns Illuminate\\Support\\Collection\<int, stdClass\>\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/forum/src/Infrastructure/Persistence/Repository/ForumSectionRepository.php
+			path: modules/johncms/forum/src/Infrastructure/Persistence/Repository/ForumSectionRepository.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Forum\\Infrastructure\\Persistence\\Repository\\ForumSectionRepository\:\:getOtherCategories\(\) should return array\<Johncms\\Modules\\Forum\\Domain\\Models\\ForumSection\> but returns array\<int, stdClass\>\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/forum/src/Infrastructure/Persistence/Repository/ForumSectionRepository.php
+			path: modules/johncms/forum/src/Infrastructure/Persistence/Repository/ForumSectionRepository.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Forum\\Infrastructure\\Persistence\\Repository\\ForumSectionRepository\:\:getRootSectionsWithSubsections\(\) should return Illuminate\\Support\\Collection\<int, Johncms\\Modules\\Forum\\Domain\\Models\\ForumSection\> but returns Illuminate\\Support\\Collection\<int, stdClass\>\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/forum/src/Infrastructure/Persistence/Repository/ForumSectionRepository.php
+			path: modules/johncms/forum/src/Infrastructure/Persistence/Repository/ForumSectionRepository.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Forum\\Infrastructure\\Persistence\\Repository\\ForumSectionRepository\:\:getTopicSectionsByCategory\(\) should return array\<Johncms\\Modules\\Forum\\Domain\\Models\\ForumSection\> but returns array\<int, stdClass\>\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/forum/src/Infrastructure/Persistence/Repository/ForumSectionRepository.php
+			path: modules/johncms/forum/src/Infrastructure/Persistence/Repository/ForumSectionRepository.php
 
 		-
 			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Builder\<Johncms\\Modules\\Forum\\Domain\\Models\\ForumTopic\>\:\:read\(\)\.$#'
 			identifier: method.notFound
 			count: 2
-			path: modules/forum/src/Infrastructure/Persistence/Repository/ForumTopicRepository.php
+			path: modules/johncms/forum/src/Infrastructure/Persistence/Repository/ForumTopicRepository.php
 
 		-
 			message: '#^Call to an undefined method Illuminate\\Database\\Query\\Builder\:\:toBase\(\)\.$#'
 			identifier: method.notFound
 			count: 5
-			path: modules/forum/src/Infrastructure/Persistence/Repository/ForumTopicRepository.php
+			path: modules/johncms/forum/src/Infrastructure/Persistence/Repository/ForumTopicRepository.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Forum\\Infrastructure\\Persistence\\Repository\\ForumTopicRepository\:\:getCursorForSitemap\(\) should return iterable\<int, Johncms\\Modules\\Forum\\Domain\\Models\\ForumTopic\> but returns Illuminate\\Support\\LazyCollection\<int, stdClass\>\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/forum/src/Infrastructure/Persistence/Repository/ForumTopicRepository.php
+			path: modules/johncms/forum/src/Infrastructure/Persistence/Repository/ForumTopicRepository.php
 
 		-
 			message: '#^Call to an undefined method Illuminate\\Database\\Query\\Builder\:\:toBase\(\)\.$#'
 			identifier: method.notFound
 			count: 1
-			path: modules/forum/src/Infrastructure/Persistence/Repository/ForumUnreadRepository.php
+			path: modules/johncms/forum/src/Infrastructure/Persistence/Repository/ForumUnreadRepository.php
 
 		-
 			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Builder\<Johncms\\Modules\\Forum\\Domain\\Models\\ForumVote\>\:\:voteUser\(\)\.$#'
 			identifier: method.notFound
 			count: 1
-			path: modules/forum/src/Infrastructure/Persistence/Repository/ForumVoteRepository.php
+			path: modules/johncms/forum/src/Infrastructure/Persistence/Repository/ForumVoteRepository.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Forum\\Infrastructure\\Persistence\\Repository\\ForumVoteRepository\:\:getAnswersByTopic\(\) should return array\<Johncms\\Modules\\Forum\\Domain\\Models\\ForumVote\> but returns array\<int, stdClass\>\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/forum/src/Infrastructure/Persistence/Repository/ForumVoteRepository.php
+			path: modules/johncms/forum/src/Infrastructure/Persistence/Repository/ForumVoteRepository.php
 
 		-
 			message: '#^Parameter \#1 \$callback of method Illuminate\\Support\\Collection\<int,stdClass\>\:\:map\(\) expects callable\(stdClass, int\)\: array, Closure\(Johncms\\Modules\\Forum\\Domain\\Models\\ForumVoteUser\)\: array given\.$#'
 			identifier: argument.type
 			count: 1
-			path: modules/forum/src/Infrastructure/Persistence/Repository/ForumVoteRepository.php
+			path: modules/johncms/forum/src/Infrastructure/Persistence/Repository/ForumVoteRepository.php
 
 		-
 			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Builder\<Johncms\\Users\\GuestSession\>\:\:online\(\)\.$#'
 			identifier: method.notFound
 			count: 4
-			path: modules/forum/src/Infrastructure/Persistence/Repository/ForumWhoRepository.php
+			path: modules/johncms/forum/src/Infrastructure/Persistence/Repository/ForumWhoRepository.php
 
 		-
 			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Builder\<Johncms\\Users\\User\>\:\:online\(\)\.$#'
 			identifier: method.notFound
 			count: 4
-			path: modules/forum/src/Infrastructure/Persistence/Repository/ForumWhoRepository.php
+			path: modules/johncms/forum/src/Infrastructure/Persistence/Repository/ForumWhoRepository.php
 
 		-
 			message: '#^Parameter \$createdAt of class Johncms\\Modules\\Guestbook\\Application\\DTO\\GuestbookEntryDTO constructor expects string, int given\.$#'
 			identifier: argument.type
 			count: 1
-			path: modules/guestbook/src/Application/UseCases/ListGuestbookEntriesUseCase.php
+			path: modules/johncms/guestbook/src/Application/UseCases/ListGuestbookEntriesUseCase.php
 
 		-
 			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Builder\:\:active\(\)\.$#'
 			identifier: method.notFound
 			count: 1
-			path: modules/homepage/src/Controllers/HomepageController.php
+			path: modules/johncms/homepage/src/Controllers/HomepageController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$cat_id\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/ArticleCommentsController.php
+			path: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$name\.$#'
 			identifier: property.notFound
 			count: 4
-			path: modules/library/src/Application/Controllers/ArticleCommentsController.php
+			path: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$uploader_id\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/ArticleCommentsController.php
+			path: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php
 
 		-
 			message: '#^Call to protected method increment\(\) of class Illuminate\\Database\\Eloquent\\Model\.$#'
 			identifier: method.protected
 			count: 1
-			path: modules/library/src/Application/Controllers/ArticleCommentsController.php
+			path: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$cat_id\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/ArticleController.php
+			path: modules/johncms/library/src/Application/Controllers/ArticleController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$comm_count\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/ArticleController.php
+			path: modules/johncms/library/src/Application/Controllers/ArticleController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$comments\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/ArticleController.php
+			path: modules/johncms/library/src/Application/Controllers/ArticleController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$count_views\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/ArticleController.php
+			path: modules/johncms/library/src/Application/Controllers/ArticleController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/ArticleController.php
+			path: modules/johncms/library/src/Application/Controllers/ArticleController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$name\.$#'
 			identifier: property.notFound
 			count: 2
-			path: modules/library/src/Application/Controllers/ArticleController.php
+			path: modules/johncms/library/src/Application/Controllers/ArticleController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$premod\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/ArticleController.php
+			path: modules/johncms/library/src/Application/Controllers/ArticleController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$text\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/ArticleController.php
+			path: modules/johncms/library/src/Application/Controllers/ArticleController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$time\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/ArticleController.php
+			path: modules/johncms/library/src/Application/Controllers/ArticleController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$uploader\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/ArticleController.php
+			path: modules/johncms/library/src/Application/Controllers/ArticleController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$uploader_id\.$#'
 			identifier: property.notFound
 			count: 2
-			path: modules/library/src/Application/Controllers/ArticleController.php
+			path: modules/johncms/library/src/Application/Controllers/ArticleController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$url\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/ArticleController.php
+			path: modules/johncms/library/src/Application/Controllers/ArticleController.php
 
 		-
 			message: '#^Call to protected method increment\(\) of class Illuminate\\Database\\Eloquent\\Model\.$#'
 			identifier: method.protected
 			count: 1
-			path: modules/library/src/Application/Controllers/ArticleController.php
+			path: modules/johncms/library/src/Application/Controllers/ArticleController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/CreateArticleController.php
+			path: modules/johncms/library/src/Application/Controllers/CreateArticleController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$cat_id\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/DeleteArticleController.php
+			path: modules/johncms/library/src/Application/Controllers/DeleteArticleController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$name\.$#'
 			identifier: property.notFound
 			count: 2
-			path: modules/library/src/Application/Controllers/DeleteArticleController.php
+			path: modules/johncms/library/src/Application/Controllers/DeleteArticleController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$url\.$#'
 			identifier: property.notFound
 			count: 2
-			path: modules/library/src/Application/Controllers/DeleteArticleController.php
+			path: modules/johncms/library/src/Application/Controllers/DeleteArticleController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$cat_id\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/DeleteArticleImageController.php
+			path: modules/johncms/library/src/Application/Controllers/DeleteArticleImageController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$name\.$#'
 			identifier: property.notFound
 			count: 2
-			path: modules/library/src/Application/Controllers/DeleteArticleImageController.php
+			path: modules/johncms/library/src/Application/Controllers/DeleteArticleImageController.php
 
 		-
 			message: '#^Using nullsafe property access "\?\-\>cat_id" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
 			identifier: nullsafe.neverNull
 			count: 1
-			path: modules/library/src/Application/Controllers/DeleteArticleImageController.php
+			path: modules/johncms/library/src/Application/Controllers/DeleteArticleImageController.php
 
 		-
 			message: '#^Using nullsafe property access "\?\-\>name" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
 			identifier: nullsafe.neverNull
 			count: 1
-			path: modules/library/src/Application/Controllers/DeleteArticleImageController.php
+			path: modules/johncms/library/src/Application/Controllers/DeleteArticleImageController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryCategory\:\:\$dir\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/DeleteSectionController.php
+			path: modules/johncms/library/src/Application/Controllers/DeleteSectionController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryCategory\:\:\$name\.$#'
 			identifier: property.notFound
 			count: 2
-			path: modules/library/src/Application/Controllers/DeleteSectionController.php
+			path: modules/johncms/library/src/Application/Controllers/DeleteSectionController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/DownloadArticleController.php
+			path: modules/johncms/library/src/Application/Controllers/DownloadArticleController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$name\.$#'
 			identifier: property.notFound
 			count: 2
-			path: modules/library/src/Application/Controllers/DownloadArticleController.php
+			path: modules/johncms/library/src/Application/Controllers/DownloadArticleController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$text\.$#'
 			identifier: property.notFound
 			count: 2
-			path: modules/library/src/Application/Controllers/DownloadArticleController.php
+			path: modules/johncms/library/src/Application/Controllers/DownloadArticleController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$cat_id\.$#'
 			identifier: property.notFound
 			count: 4
-			path: modules/library/src/Application/Controllers/EditArticleController.php
+			path: modules/johncms/library/src/Application/Controllers/EditArticleController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$comments\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/EditArticleController.php
+			path: modules/johncms/library/src/Application/Controllers/EditArticleController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$count_views\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/EditArticleController.php
+			path: modules/johncms/library/src/Application/Controllers/EditArticleController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$name\.$#'
 			identifier: property.notFound
 			count: 3
-			path: modules/library/src/Application/Controllers/EditArticleController.php
+			path: modules/johncms/library/src/Application/Controllers/EditArticleController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$premod\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/EditArticleController.php
+			path: modules/johncms/library/src/Application/Controllers/EditArticleController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$text\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/EditArticleController.php
+			path: modules/johncms/library/src/Application/Controllers/EditArticleController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$uploader_id\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/EditArticleController.php
+			path: modules/johncms/library/src/Application/Controllers/EditArticleController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$url\.$#'
 			identifier: property.notFound
 			count: 3
-			path: modules/library/src/Application/Controllers/EditArticleController.php
+			path: modules/johncms/library/src/Application/Controllers/EditArticleController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryCategory\:\:\$dir\.$#'
 			identifier: property.notFound
 			count: 2
-			path: modules/library/src/Application/Controllers/EditSectionController.php
+			path: modules/johncms/library/src/Application/Controllers/EditSectionController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryCategory\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/EditSectionController.php
+			path: modules/johncms/library/src/Application/Controllers/EditSectionController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryCategory\:\:\$name\.$#'
 			identifier: property.notFound
 			count: 3
-			path: modules/library/src/Application/Controllers/EditSectionController.php
+			path: modules/johncms/library/src/Application/Controllers/EditSectionController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryCategory\:\:\$parent\.$#'
 			identifier: property.notFound
 			count: 3
-			path: modules/library/src/Application/Controllers/EditSectionController.php
+			path: modules/johncms/library/src/Application/Controllers/EditSectionController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryCategory\:\:\$url\.$#'
 			identifier: property.notFound
 			count: 2
-			path: modules/library/src/Application/Controllers/EditSectionController.php
+			path: modules/johncms/library/src/Application/Controllers/EditSectionController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryCategory\:\:\$user_add\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/EditSectionController.php
+			path: modules/johncms/library/src/Application/Controllers/EditSectionController.php
 
 		-
 			message: '#^Property Johncms\\Modules\\Library\\Application\\Controllers\\EditSectionController\:\:\$categoryPathService is never read, only written\.$#'
 			identifier: property.onlyWritten
 			count: 1
-			path: modules/library/src/Application/Controllers/EditSectionController.php
+			path: modules/johncms/library/src/Application/Controllers/EditSectionController.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Collection\<int, Johncms\\Modules\\Library\\Domain\\Models\\LibraryCategory\>\|Johncms\\Modules\\Library\\Domain\\Models\\LibraryCategory\:\:\$name\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/NewArticlesController.php
+			path: modules/johncms/library/src/Application/Controllers/NewArticlesController.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Collection\<int, Johncms\\Modules\\Library\\Domain\\Models\\LibraryCategory\>\|Johncms\\Modules\\Library\\Domain\\Models\\LibraryCategory\:\:\$url\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/NewArticlesController.php
+			path: modules/johncms/library/src/Application/Controllers/NewArticlesController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$announce\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/NewArticlesController.php
+			path: modules/johncms/library/src/Application/Controllers/NewArticlesController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$cat_id\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/NewArticlesController.php
+			path: modules/johncms/library/src/Application/Controllers/NewArticlesController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$comm_count\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/NewArticlesController.php
+			path: modules/johncms/library/src/Application/Controllers/NewArticlesController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$comments\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/NewArticlesController.php
+			path: modules/johncms/library/src/Application/Controllers/NewArticlesController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 2
-			path: modules/library/src/Application/Controllers/NewArticlesController.php
+			path: modules/johncms/library/src/Application/Controllers/NewArticlesController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$name\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/NewArticlesController.php
+			path: modules/johncms/library/src/Application/Controllers/NewArticlesController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$time\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/NewArticlesController.php
+			path: modules/johncms/library/src/Application/Controllers/NewArticlesController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$uploader\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/NewArticlesController.php
+			path: modules/johncms/library/src/Application/Controllers/NewArticlesController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$uploader_id\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/NewArticlesController.php
+			path: modules/johncms/library/src/Application/Controllers/NewArticlesController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$url\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/NewArticlesController.php
+			path: modules/johncms/library/src/Application/Controllers/NewArticlesController.php
 
 		-
 			message: '#^Using nullsafe property access "\?\-\>name" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
 			identifier: nullsafe.neverNull
 			count: 1
-			path: modules/library/src/Application/Controllers/NewArticlesController.php
+			path: modules/johncms/library/src/Application/Controllers/NewArticlesController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$name\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/PremodController.php
+			path: modules/johncms/library/src/Application/Controllers/PremodController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$count_views\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/SearchController.php
+			path: modules/johncms/library/src/Application/Controllers/SearchController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/SearchController.php
+			path: modules/johncms/library/src/Application/Controllers/SearchController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$name\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/SearchController.php
+			path: modules/johncms/library/src/Application/Controllers/SearchController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$text\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/SearchController.php
+			path: modules/johncms/library/src/Application/Controllers/SearchController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$time\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/SearchController.php
+			path: modules/johncms/library/src/Application/Controllers/SearchController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$uploader\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/SearchController.php
+			path: modules/johncms/library/src/Application/Controllers/SearchController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$uploader_id\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/SearchController.php
+			path: modules/johncms/library/src/Application/Controllers/SearchController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$url\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/SearchController.php
+			path: modules/johncms/library/src/Application/Controllers/SearchController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryCategory\:\:\$dir\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/SectionController.php
+			path: modules/johncms/library/src/Application/Controllers/SectionController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryCategory\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 3
-			path: modules/library/src/Application/Controllers/SectionController.php
+			path: modules/johncms/library/src/Application/Controllers/SectionController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryCategory\:\:\$name\.$#'
 			identifier: property.notFound
 			count: 4
-			path: modules/library/src/Application/Controllers/SectionController.php
+			path: modules/johncms/library/src/Application/Controllers/SectionController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryCategory\:\:\$user_add\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/SectionController.php
+			path: modules/johncms/library/src/Application/Controllers/SectionController.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Collection\<int, Johncms\\Modules\\Library\\Domain\\Models\\LibraryCategory\>\|Johncms\\Modules\\Library\\Domain\\Models\\LibraryCategory\:\:\$name\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/TopController.php
+			path: modules/johncms/library/src/Application/Controllers/TopController.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Collection\<int, Johncms\\Modules\\Library\\Domain\\Models\\LibraryCategory\>\|Johncms\\Modules\\Library\\Domain\\Models\\LibraryCategory\:\:\$url\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/TopController.php
+			path: modules/johncms/library/src/Application/Controllers/TopController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$announce\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/TopController.php
+			path: modules/johncms/library/src/Application/Controllers/TopController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$cat_id\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/TopController.php
+			path: modules/johncms/library/src/Application/Controllers/TopController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$comm_count\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/TopController.php
+			path: modules/johncms/library/src/Application/Controllers/TopController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$comments\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/TopController.php
+			path: modules/johncms/library/src/Application/Controllers/TopController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 2
-			path: modules/library/src/Application/Controllers/TopController.php
+			path: modules/johncms/library/src/Application/Controllers/TopController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$name\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/TopController.php
+			path: modules/johncms/library/src/Application/Controllers/TopController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$time\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/TopController.php
+			path: modules/johncms/library/src/Application/Controllers/TopController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$uploader\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/TopController.php
+			path: modules/johncms/library/src/Application/Controllers/TopController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$uploader_id\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/TopController.php
+			path: modules/johncms/library/src/Application/Controllers/TopController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$url\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Controllers/TopController.php
+			path: modules/johncms/library/src/Application/Controllers/TopController.php
 
 		-
 			message: '#^Using nullsafe property access "\?\-\>name" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
 			identifier: nullsafe.neverNull
 			count: 1
-			path: modules/library/src/Application/Controllers/TopController.php
+			path: modules/johncms/library/src/Application/Controllers/TopController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$cat_id\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Services/LibraryArticlePathService.php
+			path: modules/johncms/library/src/Application/Services/LibraryArticlePathService.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 2
-			path: modules/library/src/Application/Services/LibraryArticlePathService.php
+			path: modules/johncms/library/src/Application/Services/LibraryArticlePathService.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$slug\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/library/src/Application/Services/LibraryArticlePathService.php
+			path: modules/johncms/library/src/Application/Services/LibraryArticlePathService.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryCategory\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 4
-			path: modules/library/src/Application/Services/LibraryCategoryPathService.php
+			path: modules/johncms/library/src/Application/Services/LibraryCategoryPathService.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryCategory\:\:\$slug\.$#'
 			identifier: property.notFound
 			count: 2
-			path: modules/library/src/Application/Services/LibraryCategoryPathService.php
+			path: modules/johncms/library/src/Application/Services/LibraryCategoryPathService.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$read\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/mail/src/Application/UseCases/GetIncomingConversationsUseCase.php
+			path: modules/johncms/mail/src/Application/UseCases/GetIncomingConversationsUseCase.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$text\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/mail/src/Application/UseCases/GetIncomingConversationsUseCase.php
+			path: modules/johncms/mail/src/Application/UseCases/GetIncomingConversationsUseCase.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$time\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/mail/src/Application/UseCases/GetIncomingConversationsUseCase.php
+			path: modules/johncms/mail/src/Application/UseCases/GetIncomingConversationsUseCase.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$read\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/mail/src/Application/UseCases/GetOutgoingConversationsUseCase.php
+			path: modules/johncms/mail/src/Application/UseCases/GetOutgoingConversationsUseCase.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$text\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/mail/src/Application/UseCases/GetOutgoingConversationsUseCase.php
+			path: modules/johncms/mail/src/Application/UseCases/GetOutgoingConversationsUseCase.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$time\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/mail/src/Application/UseCases/GetOutgoingConversationsUseCase.php
+			path: modules/johncms/mail/src/Application/UseCases/GetOutgoingConversationsUseCase.php
 
 		-
 			message: '#^Call to an undefined method Illuminate\\Database\\Query\\Builder\:\:with\(\)\.$#'
 			identifier: method.notFound
 			count: 1
-			path: modules/mail/src/Infrastructure/Persistence/Repository/EloquentContactRepository.php
+			path: modules/johncms/mail/src/Infrastructure/Persistence/Repository/EloquentContactRepository.php
 
 		-
 			message: '#^Property Johncms\\Modules\\Mail\\Domain\\Models\\Contact\:\:\$ban \(bool\) does not accept int\.$#'
 			identifier: assign.propertyType
 			count: 1
-			path: modules/mail/src/Infrastructure/Persistence/Repository/EloquentContactRepository.php
+			path: modules/johncms/mail/src/Infrastructure/Persistence/Repository/EloquentContactRepository.php
 
 		-
 			message: '#^Call to an undefined static method Illuminate\\Database\\Capsule\\Manager\:\:raw\(\)\.$#'
 			identifier: staticMethod.notFound
 			count: 2
-			path: modules/mail/src/Infrastructure/Persistence/Repository/EloquentMailMessageRepository.php
+			path: modules/johncms/mail/src/Infrastructure/Persistence/Repository/EloquentMailMessageRepository.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Mail\\Infrastructure\\Persistence\\Repository\\EloquentMailMessageRepository\:\:getLastMessageBetween\(\) should return Johncms\\Modules\\Mail\\Domain\\Models\\MailMessage\|null but returns stdClass\|null\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/mail/src/Infrastructure/Persistence/Repository/EloquentMailMessageRepository.php
+			path: modules/johncms/mail/src/Infrastructure/Persistence/Repository/EloquentMailMessageRepository.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Mail\\Infrastructure\\Persistence\\Repository\\EloquentMailMessageRepository\:\:hydrateConversationUsers\(\) should return Illuminate\\Support\\Collection\<int, Johncms\\Users\\User\> but returns Illuminate\\Support\\Collection\<int, stdClass\|null\>\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/mail/src/Infrastructure/Persistence/Repository/EloquentMailMessageRepository.php
+			path: modules/johncms/mail/src/Infrastructure/Persistence/Repository/EloquentMailMessageRepository.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Mail\\Infrastructure\\Persistence\\Repository\\EloquentMailMessageRepository\:\:notBannedContactScope\(\) should return Illuminate\\Database\\Eloquent\\Builder but returns Illuminate\\Database\\Query\\Builder\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/mail/src/Infrastructure/Persistence/Repository/EloquentMailMessageRepository.php
+			path: modules/johncms/mail/src/Infrastructure/Persistence/Repository/EloquentMailMessageRepository.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 2
-			path: modules/news/src/Application/Article.php
+			path: modules/johncms/news/src/Application/Article.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$name\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/news/src/Application/Article.php
+			path: modules/johncms/news/src/Application/Article.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$url\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/news/src/Application/Article.php
+			path: modules/johncms/news/src/Application/Article.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$view_count\.$#'
 			identifier: property.notFound
 			count: 2
-			path: modules/news/src/Application/Article.php
+			path: modules/johncms/news/src/Application/Article.php
 
 		-
 			message: '#^Method Johncms\\Modules\\News\\Application\\Article\:\:getArticle\(\) should return Johncms\\Modules\\News\\Domain\\Models\\NewsArticle but returns Illuminate\\Database\\Eloquent\\Model\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/news/src/Application/Article.php
+			path: modules/johncms/news/src/Application/Article.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$active\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/news/src/Application/Controllers/Admin/AdminArticleController.php
+			path: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$attached_files\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/news/src/Application/Controllers/Admin/AdminArticleController.php
+			path: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$code\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/news/src/Application/Controllers/Admin/AdminArticleController.php
+			path: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$description\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/news/src/Application/Controllers/Admin/AdminArticleController.php
+			path: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 5
-			path: modules/news/src/Application/Controllers/Admin/AdminArticleController.php
+			path: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$keywords\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/news/src/Application/Controllers/Admin/AdminArticleController.php
+			path: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$name\.$#'
 			identifier: property.notFound
 			count: 3
-			path: modules/news/src/Application/Controllers/Admin/AdminArticleController.php
+			path: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$page_title\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/news/src/Application/Controllers/Admin/AdminArticleController.php
+			path: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$parentSection\.$#'
 			identifier: property.notFound
 			count: 2
-			path: modules/news/src/Application/Controllers/Admin/AdminArticleController.php
+			path: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$preview_text\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/news/src/Application/Controllers/Admin/AdminArticleController.php
+			path: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$section_id\.$#'
 			identifier: property.notFound
 			count: 4
-			path: modules/news/src/Application/Controllers/Admin/AdminArticleController.php
+			path: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$tags\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/news/src/Application/Controllers/Admin/AdminArticleController.php
+			path: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$text\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/news/src/Application/Controllers/Admin/AdminArticleController.php
+			path: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$name\.$#'
 			identifier: property.notFound
 			count: 2
-			path: modules/news/src/Application/Controllers/Admin/AdminController.php
+			path: modules/johncms/news/src/Application/Controllers/Admin/AdminController.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$parentSection\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/news/src/Application/Controllers/Admin/AdminController.php
+			path: modules/johncms/news/src/Application/Controllers/Admin/AdminController.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$code\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/news/src/Application/Controllers/Admin/AdminSectionController.php
+			path: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$description\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/news/src/Application/Controllers/Admin/AdminSectionController.php
+			path: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/news/src/Application/Controllers/Admin/AdminSectionController.php
+			path: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$keywords\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/news/src/Application/Controllers/Admin/AdminSectionController.php
+			path: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$name\.$#'
 			identifier: property.notFound
 			count: 2
-			path: modules/news/src/Application/Controllers/Admin/AdminSectionController.php
+			path: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$parent\.$#'
 			identifier: property.notFound
 			count: 4
-			path: modules/news/src/Application/Controllers/Admin/AdminSectionController.php
+			path: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$parentSection\.$#'
 			identifier: property.notFound
 			count: 2
-			path: modules/news/src/Application/Controllers/Admin/AdminSectionController.php
+			path: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$text\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/news/src/Application/Controllers/Admin/AdminSectionController.php
+			path: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php
 
 		-
 			message: '#^Parameter \#1 \$section of method Johncms\\Modules\\News\\Application\\Section\:\:getCachedSubsections\(\) expects Johncms\\Modules\\News\\Domain\\Models\\NewsSection\|null, Illuminate\\Database\\Eloquent\\Model given\.$#'
 			identifier: argument.type
 			count: 1
-			path: modules/news/src/Application/Controllers/Admin/AdminSectionController.php
+			path: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Collection\<int, Illuminate\\Database\\Eloquent\\Model\>\|Illuminate\\Database\\Eloquent\\Model\:\:\$user_id\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/news/src/Application/Controllers/CommentsController.php
+			path: modules/johncms/news/src/Application/Controllers/CommentsController.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 2
-			path: modules/news/src/Application/Controllers/CommentsController.php
+			path: modules/johncms/news/src/Application/Controllers/CommentsController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\News\\Domain\\Models\\NewsComments\:\:\$created_at\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/news/src/Application/Controllers/CommentsController.php
+			path: modules/johncms/news/src/Application/Controllers/CommentsController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\News\\Domain\\Models\\NewsComments\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/news/src/Application/Controllers/CommentsController.php
+			path: modules/johncms/news/src/Application/Controllers/CommentsController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\News\\Domain\\Models\\NewsComments\:\:\$text\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/news/src/Application/Controllers/CommentsController.php
+			path: modules/johncms/news/src/Application/Controllers/CommentsController.php
 
 		-
 			message: '#^Parameter \#1 \$callback of method Illuminate\\Support\\Collection\<int,stdClass\>\:\:map\(\) contains unresolvable type\.$#'
 			identifier: argument.unresolvableType
 			count: 1
-			path: modules/news/src/Application/Controllers/CommentsController.php
+			path: modules/johncms/news/src/Application/Controllers/CommentsController.php
 
 		-
 			message: '#^Parameter \#1 \$callback of method Illuminate\\Support\\Collection\<int,stdClass\>\:\:map\(\) expects callable\(stdClass, int\)\: \(array\{id\: mixed, created_at\: mixed, text\: string, user\: array\{\}\|array\{id\: int, user_name\: string, status\: string, is_online\: bool, rights_name\: string, profile_url\: string, avatar\: string\}, can_delete\: true, can_quote\: false, can_reply\: false, user_agent\: mixed, ip\: mixed, search_ip_url\: non\-falsy\-string, ip_via_proxy\: mixed, search_ip_via_proxy_url\: non\-falsy\-string\}\|array\{id\: mixed, created_at\: mixed, text\: string, user\: array\{\}\|array\{id\: int, user_name\: string, status\: string, is_online\: bool, rights_name\: string, profile_url\: string, avatar\: string\}, can_delete\: true, can_quote\: true, can_reply\: true, user_agent\: mixed, ip\: mixed, search_ip_url\: non\-falsy\-string, ip_via_proxy\: mixed, search_ip_via_proxy_url\: non\-falsy\-string\}\|array\{id\: mixed, created_at\: mixed, text\: string, user\: array\{\}\|array\{id\: int, user_name\: string, status\: string, is_online\: bool, rights_name\: string, profile_url\: string, avatar\: string\}, can_delete\?\: true, can_quote\: false, can_reply\: false\}\|array\{id\: mixed, created_at\: mixed, text\: string, user\: array\{\}\|array\{id\: int, user_name\: string, status\: string, is_online\: bool, rights_name\: string, profile_url\: string, avatar\: string\}, can_delete\?\: true, can_quote\: true, can_reply\: true\}\), Closure\(Johncms\\Modules\\News\\Domain\\Models\\NewsComments\)\: \(array\{id\: mixed, created_at\: mixed, text\: string, user\: array\{\}\|array\{id\: int, user_name\: string, status\: string, is_online\: bool, rights_name\: string, profile_url\: string, avatar\: string\}, can_delete\: true, can_quote\: false, can_reply\: false, user_agent\: mixed, ip\: mixed, search_ip_url\: non\-falsy\-string, ip_via_proxy\: mixed, search_ip_via_proxy_url\: non\-falsy\-string\}\|array\{id\: mixed, created_at\: mixed, text\: string, user\: array\{\}\|array\{id\: int, user_name\: string, status\: string, is_online\: bool, rights_name\: string, profile_url\: string, avatar\: string\}, can_delete\: true, can_quote\: true, can_reply\: true, user_agent\: mixed, ip\: mixed, search_ip_url\: non\-falsy\-string, ip_via_proxy\: mixed, search_ip_via_proxy_url\: non\-falsy\-string\}\|array\{id\: mixed, created_at\: mixed, text\: string, user\: array\{\}\|array\{id\: int, user_name\: string, status\: string, is_online\: bool, rights_name\: string, profile_url\: string, avatar\: string\}, can_delete\?\: true, can_quote\: false, can_reply\: false\}\|array\{id\: mixed, created_at\: mixed, text\: string, user\: array\{\}\|array\{id\: int, user_name\: string, status\: string, is_online\: bool, rights_name\: string, profile_url\: string, avatar\: string\}, can_delete\?\: true, can_quote\: true, can_reply\: true\}\) given\.$#'
 			identifier: argument.type
 			count: 1
-			path: modules/news/src/Application/Controllers/CommentsController.php
+			path: modules/johncms/news/src/Application/Controllers/CommentsController.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$current_vote\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/news/src/Application/Controllers/VoteController.php
+			path: modules/johncms/news/src/Application/Controllers/VoteController.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$rating\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/news/src/Application/Controllers/VoteController.php
+			path: modules/johncms/news/src/Application/Controllers/VoteController.php
 
 		-
 			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Model\:\:votes\(\)\.$#'
 			identifier: method.notFound
 			count: 1
-			path: modules/news/src/Application/Controllers/VoteController.php
+			path: modules/johncms/news/src/Application/Controllers/VoteController.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$code\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/news/src/Application/Section.php
+			path: modules/johncms/news/src/Application/Section.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/news/src/Application/Section.php
+			path: modules/johncms/news/src/Application/Section.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$name\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/news/src/Application/Section.php
+			path: modules/johncms/news/src/Application/Section.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$parentSection\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/news/src/Application/Section.php
+			path: modules/johncms/news/src/Application/Section.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$url\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/news/src/Application/Section.php
+			path: modules/johncms/news/src/Application/Section.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\News\\Domain\\Models\\NewsSection\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 5
-			path: modules/news/src/Application/Section.php
+			path: modules/johncms/news/src/Application/Section.php
 
 		-
 			message: '#^Argument of an invalid type Johncms\\Modules\\News\\Domain\\Models\\NewsSection supplied for foreach, only iterables are supported\.$#'
 			identifier: foreach.nonIterable
 			count: 1
-			path: modules/news/src/Application/Section.php
+			path: modules/johncms/news/src/Application/Section.php
 
 		-
 			message: '#^Method Johncms\\Modules\\News\\Application\\Section\:\:checkPath\(\) should return array\<Johncms\\Modules\\News\\Domain\\Models\\NewsSection\> but returns list\<Illuminate\\Database\\Eloquent\\Model\>\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/news/src/Application/Section.php
+			path: modules/johncms/news/src/Application/Section.php
 
 		-
 			message: '#^Property Johncms\\Modules\\News\\Application\\Section\:\:\$path \(array\<Johncms\\Modules\\News\\Domain\\Models\\NewsSection\>\) does not accept array\<Illuminate\\Database\\Eloquent\\Model\>\.$#'
 			identifier: assign.propertyType
 			count: 1
-			path: modules/news/src/Application/Section.php
+			path: modules/johncms/news/src/Application/Section.php
 
 		-
 			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Builder\<Johncms\\Modules\\News\\Domain\\Models\\NewsArticle\>\:\:active\(\)\.$#'
 			identifier: method.notFound
 			count: 1
-			path: modules/news/src/Application/Sitemap/NewsUrlsProvider.php
+			path: modules/johncms/news/src/Application/Sitemap/NewsUrlsProvider.php
 
 		-
 			message: '#^Cannot call method getRawOriginal\(\) on stdClass\.$#'
 			identifier: method.nonObject
 			count: 2
-			path: modules/news/src/Application/Sitemap/NewsUrlsProvider.php
+			path: modules/johncms/news/src/Application/Sitemap/NewsUrlsProvider.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/news/src/Application/Utils/Helpers.php
+			path: modules/johncms/news/src/Application/Utils/Helpers.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\News\\Domain\\Models\\NewsSection\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/news/src/Application/Utils/Helpers.php
+			path: modules/johncms/news/src/Application/Utils/Helpers.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\News\\Domain\\Models\\NewsSection\:\:\$name\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/news/src/Application/Utils/Helpers.php
+			path: modules/johncms/news/src/Application/Utils/Helpers.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\News\\Domain\\Models\\NewsArticle\:\:\$code\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/news/src/Domain/Models/NewsArticle.php
+			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\News\\Domain\\Models\\NewsArticle\:\:\$created_at\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/news/src/Domain/Models/NewsArticle.php
+			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\News\\Domain\\Models\\NewsArticle\:\:\$preview_text\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/news/src/Domain/Models/NewsArticle.php
+			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\News\\Domain\\Models\\NewsArticle\:\:\$text\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/news/src/Domain/Models/NewsArticle.php
+			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\News\\Domain\\Models\\NewsArticle\:\:\$votes_sum_vote\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/news/src/Domain/Models/NewsArticle.php
+			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\News\\Domain\\Models\\NewsVote\:\:\$vote\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/news/src/Domain/Models/NewsArticle.php
+			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
 
 		-
 			message: '#^Method Johncms\\Modules\\News\\Domain\\Models\\NewsArticle\:\:scopeSearch\(\) should return Illuminate\\Database\\Eloquent\\Builder but returns Illuminate\\Database\\Query\\Builder\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/news/src/Domain/Models/NewsArticle.php
+			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
 
 		-
 			message: '#^PHPDoc tag @property has invalid value \(\$active \- Активность\)\: Unexpected token "\$active", expected type at offset 149 on line 6$#'
 			identifier: phpDoc.parseError
 			count: 1
-			path: modules/news/src/Domain/Models/NewsArticle.php
+			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
 
 		-
 			message: '#^PHPDoc tag @property has invalid value \(\$active_from \- Дата начала активности\)\: Unexpected token "\$active_from", expected type at offset 193 on line 7$#'
 			identifier: phpDoc.parseError
 			count: 1
-			path: modules/news/src/Domain/Models/NewsArticle.php
+			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
 
 		-
 			message: '#^PHPDoc tag @property has invalid value \(\$active_to \- Дата завершения активности\)\: Unexpected token "\$active_to", expected type at offset 264 on line 8$#'
 			identifier: phpDoc.parseError
 			count: 1
-			path: modules/news/src/Domain/Models/NewsArticle.php
+			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
 
 		-
 			message: '#^PHPDoc tag @property has invalid value \(\$code \- Символьный код\)\: Unexpected token "\$code", expected type at offset 442 on line 11$#'
 			identifier: phpDoc.parseError
 			count: 1
-			path: modules/news/src/Domain/Models/NewsArticle.php
+			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
 
 		-
 			message: '#^PHPDoc tag @property has invalid value \(\$comments_count\)\: Unexpected token "\$comments_count", expected type at offset 1686 on line 33$#'
 			identifier: phpDoc.parseError
 			count: 1
-			path: modules/news/src/Domain/Models/NewsArticle.php
+			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
 
 		-
 			message: '#^PHPDoc tag @property has invalid value \(\$created_at \- Дата создания\)\: Unexpected token "\$created_at", expected type at offset 1048 on line 20$#'
 			identifier: phpDoc.parseError
 			count: 1
-			path: modules/news/src/Domain/Models/NewsArticle.php
+			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
 
 		-
 			message: '#^PHPDoc tag @property has invalid value \(\$created_by \- Автор\)\: Unexpected token "\$created_by", expected type at offset 1156 on line 22$#'
 			identifier: phpDoc.parseError
 			count: 1
-			path: modules/news/src/Domain/Models/NewsArticle.php
+			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
 
 		-
 			message: '#^PHPDoc tag @property has invalid value \(\$current_vote \- The user''s current vote\.\)\: Unexpected token "\$current_vote", expected type at offset 1632 on line 32$#'
 			identifier: phpDoc.parseError
 			count: 1
-			path: modules/news/src/Domain/Models/NewsArticle.php
+			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
 
 		-
 			message: '#^PHPDoc tag @property has invalid value \(\$description \- Описание\)\: Unexpected token "\$description", expected type at offset 977 on line 18$#'
 			identifier: phpDoc.parseError
 			count: 1
-			path: modules/news/src/Domain/Models/NewsArticle.php
+			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
 
 		-
 			message: '#^PHPDoc tag @property has invalid value \(\$display_date\)\: Unexpected token "\$display_date", expected type at offset 1744 on line 35$#'
 			identifier: phpDoc.parseError
 			count: 1
-			path: modules/news/src/Domain/Models/NewsArticle.php
+			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
 
 		-
 			message: '#^PHPDoc tag @property has invalid value \(\$id \- Идентификатор\)\: Unexpected token "\$id", expected type at offset 38 on line 4$#'
 			identifier: phpDoc.parseError
 			count: 1
-			path: modules/news/src/Domain/Models/NewsArticle.php
+			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
 
 		-
 			message: '#^PHPDoc tag @property has invalid value \(\$keywords \- Ключевые слова\)\: Unexpected token "\$keywords", expected type at offset 924 on line 17$#'
 			identifier: phpDoc.parseError
 			count: 1
-			path: modules/news/src/Domain/Models/NewsArticle.php
+			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
 
 		-
 			message: '#^PHPDoc tag @property has invalid value \(\$name \- Название\)\: Unexpected token "\$name", expected type at offset 341 on line 9$#'
 			identifier: phpDoc.parseError
 			count: 1
-			path: modules/news/src/Domain/Models/NewsArticle.php
+			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
 
 		-
 			message: '#^PHPDoc tag @property has invalid value \(\$page_title \- Заголовок страницы\)\: Unexpected token "\$page_title", expected type at offset 379 on line 10$#'
 			identifier: phpDoc.parseError
 			count: 1
-			path: modules/news/src/Domain/Models/NewsArticle.php
+			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
 
 		-
 			message: '#^PHPDoc tag @property has invalid value \(\$preview_text \- Краткое описание статьи в списке\)\: Unexpected token "\$preview_text", expected type at offset 491 on line 12$#'
 			identifier: phpDoc.parseError
 			count: 1
-			path: modules/news/src/Domain/Models/NewsArticle.php
+			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
 
 		-
 			message: '#^PHPDoc tag @property has invalid value \(\$preview_text_safe \- Краткое описание статьи в списке в безопасном виде\)\: Unexpected token "\$preview_text_safe", expected type at offset 581 on line 13$#'
 			identifier: phpDoc.parseError
 			count: 1
-			path: modules/news/src/Domain/Models/NewsArticle.php
+			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
 
 		-
 			message: '#^PHPDoc tag @property has invalid value \(\$rating \- Article rating\)\: Unexpected token "\$rating", expected type at offset 1594 on line 31$#'
 			identifier: phpDoc.parseError
 			count: 1
-			path: modules/news/src/Domain/Models/NewsArticle.php
+			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
 
 		-
 			message: '#^PHPDoc tag @property has invalid value \(\$section_id \- Родительский раздел\)\: Unexpected token "\$section_id", expected type at offset 84 on line 5$#'
 			identifier: phpDoc.parseError
 			count: 1
-			path: modules/news/src/Domain/Models/NewsArticle.php
+			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
 
 		-
 			message: '#^PHPDoc tag @property has invalid value \(\$tags \- Tags\)\: Unexpected token "\$tags", expected type at offset 1022 on line 19$#'
 			identifier: phpDoc.parseError
 			count: 1
-			path: modules/news/src/Domain/Models/NewsArticle.php
+			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
 
 		-
 			message: '#^PHPDoc tag @property has invalid value \(\$text \- Текст с описанием\)\: Unexpected token "\$text", expected type at offset 709 on line 14$#'
 			identifier: phpDoc.parseError
 			count: 1
-			path: modules/news/src/Domain/Models/NewsArticle.php
+			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
 
 		-
 			message: '#^PHPDoc tag @property has invalid value \(\$text_safe \- Текст с описанием в безопасном виде\)\: Unexpected token "\$text_safe", expected type at offset 763 on line 15$#'
 			identifier: phpDoc.parseError
 			count: 1
-			path: modules/news/src/Domain/Models/NewsArticle.php
+			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
 
 		-
 			message: '#^PHPDoc tag @property has invalid value \(\$updated_at \- Дата изменения\)\: Unexpected token "\$updated_at", expected type at offset 1101 on line 21$#'
 			identifier: phpDoc.parseError
 			count: 1
-			path: modules/news/src/Domain/Models/NewsArticle.php
+			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
 
 		-
 			message: '#^PHPDoc tag @property has invalid value \(\$updated_by \- Пользователь, изменивший запись\)\: Unexpected token "\$updated_by", expected type at offset 1194 on line 23$#'
 			identifier: phpDoc.parseError
 			count: 1
-			path: modules/news/src/Domain/Models/NewsArticle.php
+			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
 
 		-
 			message: '#^PHPDoc tag @property has invalid value \(\$url \- URL адрес страницы просмотра статьи\)\: Unexpected token "\$url", expected type at offset 1510 on line 30$#'
 			identifier: phpDoc.parseError
 			count: 1
-			path: modules/news/src/Domain/Models/NewsArticle.php
+			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
 
 		-
 			message: '#^PHPDoc tag @property has invalid value \(\$view_count \- Количество просмотров\)\: Unexpected token "\$view_count", expected type at offset 855 on line 16$#'
 			identifier: phpDoc.parseError
 			count: 1
-			path: modules/news/src/Domain/Models/NewsArticle.php
+			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
 
 		-
 			message: '#^PHPDoc tag @property has invalid value \(\$votes_sum_vote\)\: Unexpected token "\$votes_sum_vote", expected type at offset 1715 on line 34$#'
 			identifier: phpDoc.parseError
 			count: 1
-			path: modules/news/src/Domain/Models/NewsArticle.php
+			path: modules/johncms/news/src/Domain/Models/NewsArticle.php
 
 		-
 			message: '#^PHPDoc tag @property has invalid value \(\$article_id \- Статья\)\: Unexpected token "\$article_id", expected type at offset 84 on line 5$#'
 			identifier: phpDoc.parseError
 			count: 1
-			path: modules/news/src/Domain/Models/NewsComments.php
+			path: modules/johncms/news/src/Domain/Models/NewsComments.php
 
 		-
 			message: '#^PHPDoc tag @property has invalid value \(\$created_at \- Дата создания\)\: Unexpected token "\$created_at", expected type at offset 343 on line 9$#'
 			identifier: phpDoc.parseError
 			count: 1
-			path: modules/news/src/Domain/Models/NewsComments.php
+			path: modules/johncms/news/src/Domain/Models/NewsComments.php
 
 		-
 			message: '#^PHPDoc tag @property has invalid value \(\$id \- Идентификатор\)\: Unexpected token "\$id", expected type at offset 38 on line 4$#'
 			identifier: phpDoc.parseError
 			count: 1
-			path: modules/news/src/Domain/Models/NewsComments.php
+			path: modules/johncms/news/src/Domain/Models/NewsComments.php
 
 		-
 			message: '#^PHPDoc tag @property has invalid value \(\$text \- Текст с описанием\)\: Unexpected token "\$text", expected type at offset 200 on line 7$#'
 			identifier: phpDoc.parseError
 			count: 1
-			path: modules/news/src/Domain/Models/NewsComments.php
+			path: modules/johncms/news/src/Domain/Models/NewsComments.php
 
 		-
 			message: '#^PHPDoc tag @property has invalid value \(\$user_id \- Идентификатор пользователя\)\: Unexpected token "\$user_id", expected type at offset 124 on line 6$#'
 			identifier: phpDoc.parseError
 			count: 1
-			path: modules/news/src/Domain/Models/NewsComments.php
+			path: modules/johncms/news/src/Domain/Models/NewsComments.php
 
 		-
 			message: '#^PHPDoc tag @property has invalid value \(\$article_id \- Идентификатор\)\: Unexpected token "\$article_id", expected type at offset 84 on line 5$#'
 			identifier: phpDoc.parseError
 			count: 1
-			path: modules/news/src/Domain/Models/NewsSearchIndex.php
+			path: modules/johncms/news/src/Domain/Models/NewsSearchIndex.php
 
 		-
 			message: '#^PHPDoc tag @property has invalid value \(\$id \- Идентификатор\)\: Unexpected token "\$id", expected type at offset 38 on line 4$#'
 			identifier: phpDoc.parseError
 			count: 1
-			path: modules/news/src/Domain/Models/NewsSearchIndex.php
+			path: modules/johncms/news/src/Domain/Models/NewsSearchIndex.php
 
 		-
 			message: '''
@@ -2582,151 +2582,151 @@ parameters:
 			'''
 			identifier: phpDoc.parseError
 			count: 1
-			path: modules/news/src/Domain/Models/NewsSearchIndex.php
+			path: modules/johncms/news/src/Domain/Models/NewsSearchIndex.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\News\\Domain\\Models\\NewsSection\:\:\$code\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/news/src/Domain/Models/NewsSection.php
+			path: modules/johncms/news/src/Domain/Models/NewsSection.php
 
 		-
 			message: '#^PHPDoc tag @property has invalid value \(\$code \- Символьный код раздела\)\: Unexpected token "\$code", expected type at offset 198 on line 7$#'
 			identifier: phpDoc.parseError
 			count: 1
-			path: modules/news/src/Domain/Models/NewsSection.php
+			path: modules/johncms/news/src/Domain/Models/NewsSection.php
 
 		-
 			message: '#^PHPDoc tag @property has invalid value \(\$created_at \- Дата создания\)\: Unexpected token "\$created_at", expected type at offset 414 on line 11$#'
 			identifier: phpDoc.parseError
 			count: 1
-			path: modules/news/src/Domain/Models/NewsSection.php
+			path: modules/johncms/news/src/Domain/Models/NewsSection.php
 
 		-
 			message: '#^PHPDoc tag @property has invalid value \(\$description \- Описание\)\: Unexpected token "\$description", expected type at offset 369 on line 10$#'
 			identifier: phpDoc.parseError
 			count: 1
-			path: modules/news/src/Domain/Models/NewsSection.php
+			path: modules/johncms/news/src/Domain/Models/NewsSection.php
 
 		-
 			message: '#^PHPDoc tag @property has invalid value \(\$id \- Идентификатор\)\: Unexpected token "\$id", expected type at offset 38 on line 4$#'
 			identifier: phpDoc.parseError
 			count: 1
-			path: modules/news/src/Domain/Models/NewsSection.php
+			path: modules/johncms/news/src/Domain/Models/NewsSection.php
 
 		-
 			message: '#^PHPDoc tag @property has invalid value \(\$keywords \- Ключевые слова\)\: Unexpected token "\$keywords", expected type at offset 316 on line 9$#'
 			identifier: phpDoc.parseError
 			count: 1
-			path: modules/news/src/Domain/Models/NewsSection.php
+			path: modules/johncms/news/src/Domain/Models/NewsSection.php
 
 		-
 			message: '#^PHPDoc tag @property has invalid value \(\$name \- Название раздела\)\: Unexpected token "\$name", expected type at offset 145 on line 6$#'
 			identifier: phpDoc.parseError
 			count: 1
-			path: modules/news/src/Domain/Models/NewsSection.php
+			path: modules/johncms/news/src/Domain/Models/NewsSection.php
 
 		-
 			message: '#^PHPDoc tag @property has invalid value \(\$parent \- Родительский раздел\)\: Unexpected token "\$parent", expected type at offset 84 on line 5$#'
 			identifier: phpDoc.parseError
 			count: 1
-			path: modules/news/src/Domain/Models/NewsSection.php
+			path: modules/johncms/news/src/Domain/Models/NewsSection.php
 
 		-
 			message: '#^PHPDoc tag @property has invalid value \(\$text \- Текст с описанием\)\: Unexpected token "\$text", expected type at offset 262 on line 8$#'
 			identifier: phpDoc.parseError
 			count: 1
-			path: modules/news/src/Domain/Models/NewsSection.php
+			path: modules/johncms/news/src/Domain/Models/NewsSection.php
 
 		-
 			message: '#^PHPDoc tag @property has invalid value \(\$updated_at \- Дата изменения\)\: Unexpected token "\$updated_at", expected type at offset 467 on line 12$#'
 			identifier: phpDoc.parseError
 			count: 1
-			path: modules/news/src/Domain/Models/NewsSection.php
+			path: modules/johncms/news/src/Domain/Models/NewsSection.php
 
 		-
 			message: '#^PHPDoc tag @property has invalid value \(\$url \- Ссылка на страницу просмотра раздела\)\: Unexpected token "\$url", expected type at offset 677 on line 16$#'
 			identifier: phpDoc.parseError
 			count: 1
-			path: modules/news/src/Domain/Models/NewsSection.php
+			path: modules/johncms/news/src/Domain/Models/NewsSection.php
 
 		-
 			message: '#^PHPDoc tag @property has invalid value \(\$article_id \- Идентификатор статьи\)\: Unexpected token "\$article_id", expected type at offset 84 on line 5$#'
 			identifier: phpDoc.parseError
 			count: 1
-			path: modules/news/src/Domain/Models/NewsVote.php
+			path: modules/johncms/news/src/Domain/Models/NewsVote.php
 
 		-
 			message: '#^PHPDoc tag @property has invalid value \(\$id \- Идентификатор\)\: Unexpected token "\$id", expected type at offset 38 on line 4$#'
 			identifier: phpDoc.parseError
 			count: 1
-			path: modules/news/src/Domain/Models/NewsVote.php
+			path: modules/johncms/news/src/Domain/Models/NewsVote.php
 
 		-
 			message: '#^PHPDoc tag @property has invalid value \(\$user_id \- Идентификатор пользователя\)\: Unexpected token "\$user_id", expected type at offset 151 on line 6$#'
 			identifier: phpDoc.parseError
 			count: 1
-			path: modules/news/src/Domain/Models/NewsVote.php
+			path: modules/johncms/news/src/Domain/Models/NewsVote.php
 
 		-
 			message: '#^PHPDoc tag @property has invalid value \(\$vote \- Голос\)\: Unexpected token "\$vote", expected type at offset 227 on line 7$#'
 			identifier: phpDoc.parseError
 			count: 1
-			path: modules/news/src/Domain/Models/NewsVote.php
+			path: modules/johncms/news/src/Domain/Models/NewsVote.php
 
 		-
 			message: '#^Call to an undefined method Illuminate\\Database\\Query\\Builder\:\:unread\(\)\.$#'
 			identifier: method.notFound
 			count: 1
-			path: modules/notifications/src/Infrastructure/Persistence/Repository/EloquentNotificationRepository.php
+			path: modules/johncms/notifications/src/Infrastructure/Persistence/Repository/EloquentNotificationRepository.php
 
 		-
 			message: '#^Property Johncms\\Modules\\Profile\\Application\\Controllers\\ChangePasswordController\:\:\$currentUser is never read, only written\.$#'
 			identifier: property.onlyWritten
 			count: 1
-			path: modules/profile/src/Application/Controllers/ChangePasswordController.php
+			path: modules/johncms/profile/src/Application/Controllers/ChangePasswordController.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Forum\\Domain\\Models\\ForumSection\:\:\$parentSection\.$#'
 			identifier: property.notFound
 			count: 2
-			path: modules/profile/src/Application/UseCases/GetActivityUseCase.php
+			path: modules/johncms/profile/src/Application/UseCases/GetActivityUseCase.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Profile\\Infrastructure\\Persistence\\Repository\\EloquentProfileActivityRepository\:\:findFirstTopicMessage\(\) never returns Johncms\\Modules\\Forum\\Domain\\Models\\ForumMessage so it can be removed from the return type\.$#'
 			identifier: return.unusedType
 			count: 1
-			path: modules/profile/src/Infrastructure/Persistence/Repository/EloquentProfileActivityRepository.php
+			path: modules/johncms/profile/src/Infrastructure/Persistence/Repository/EloquentProfileActivityRepository.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Profile\\Infrastructure\\Persistence\\Repository\\EloquentProfileActivityRepository\:\:findFirstTopicMessage\(\) should return Johncms\\Modules\\Forum\\Domain\\Models\\ForumMessage\|null but returns stdClass\|null\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/profile/src/Infrastructure/Persistence/Repository/EloquentProfileActivityRepository.php
+			path: modules/johncms/profile/src/Infrastructure/Persistence/Repository/EloquentProfileActivityRepository.php
 
 		-
 			message: '#^Parameter \#1 \$query of method Johncms\\Modules\\Profile\\Infrastructure\\Persistence\\Repository\\EloquentProfileActivityRepository\:\:applyNotDeleted\(\) expects Illuminate\\Database\\Eloquent\\Builder, Illuminate\\Database\\Query\\Builder given\.$#'
 			identifier: argument.type
 			count: 1
-			path: modules/profile/src/Infrastructure/Persistence/Repository/EloquentProfileActivityRepository.php
+			path: modules/johncms/profile/src/Infrastructure/Persistence/Repository/EloquentProfileActivityRepository.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Redirect\\Domain\\Models\\Ads\:\:\$link\.$#'
 			identifier: property.notFound
 			count: 1
-			path: modules/redirect/src/Application/UseCases/RedirectByIdUseCase.php
+			path: modules/johncms/redirect/src/Application/UseCases/RedirectByIdUseCase.php
 
 		-
 			message: '#^Call to protected method increment\(\) of class Illuminate\\Database\\Eloquent\\Model\.$#'
 			identifier: method.protected
 			count: 1
-			path: modules/redirect/src/Infrastructure/Persistence/Repository/EloquentAdsRepository.php
+			path: modules/johncms/redirect/src/Infrastructure/Persistence/Repository/EloquentAdsRepository.php
 
 		-
 			message: '#^Property Johncms\\Users\\User\:\:\$confirmation_code \(string\) does not accept null\.$#'
 			identifier: assign.propertyType
 			count: 1
-			path: modules/registration/src/Application/Controllers/ConfirmEmailController.php
+			path: modules/johncms/registration/src/Application/Controllers/ConfirmEmailController.php
 
 		-
 			message: '#^Comparison operation "\<" between int\<80400, 80599\> and 80400 is always false\.$#'

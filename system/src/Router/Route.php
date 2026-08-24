@@ -45,8 +45,9 @@ final class Route
     }
 
     /**
-     * The module this route belongs to. Travels to the request as the _module attribute, where
-     * ModuleContextMiddleware turns it into the translation domain of the page.
+     * The module this route belongs to, as its key: `johncms/forum`. Travels to the request as the
+     * _module attribute, where ModuleContext turns it into the translation domain of the page —
+     * the name alone, without the vendor.
      */
     public function module(string $module): self
     {

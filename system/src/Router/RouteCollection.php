@@ -13,9 +13,10 @@ final class RouteCollection
     private ?string $namePrefix = null;
 
     /**
-     * The module the routes declared from here belong to. Stamped on every route so the request
-     * pipeline can set up the module context — its translation domain — without the controller
-     * naming its own module. Null for the routes of the core, which own no module.
+     * The module the routes declared from here belong to, as its key: `johncms/forum`. Stamped on
+     * every route so the request pipeline can set up the module context — its translation domain —
+     * without the controller naming its own module. Null for the routes of the core, which own no
+     * module.
      */
     private ?string $module = null;
 

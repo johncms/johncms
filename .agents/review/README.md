@@ -63,8 +63,8 @@ SEVERITY | ./path/to/file.php:42 | what rule is violated | rule source
 Example:
 
 ```
-BLOCKER | ./modules/forum/src/Infrastructure/TopicRepository.php:57 | access check inside repository | .agents/architecture.md — Repository Rules
-MAJOR   | ./modules/forum/templates/public/topic.twig:18 | user data printed with |raw | .agents/escaping.md
+BLOCKER | ./modules/johncms/forum/src/Infrastructure/TopicRepository.php:57 | access check inside repository | .agents/architecture.md — Repository Rules
+MAJOR   | ./modules/johncms/forum/templates/public/topic.twig:18 | user data printed with |raw | .agents/escaping.md
 ```
 
 Always cite the rule source. A finding that cannot be traced to a rule in `.agents/` or
