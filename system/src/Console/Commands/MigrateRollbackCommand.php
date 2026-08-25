@@ -46,6 +46,11 @@ final class MigrateRollbackCommand extends Command
                 default: '1'
             )
             ->addOption(
+                name: 'all',
+                mode: InputOption::VALUE_NONE,
+                description: 'Undo everything this source ever applied (--source is then required)'
+            )
+            ->addOption(
                 name: 'force',
                 mode: InputOption::VALUE_NONE,
                 description: 'Roll back even though this site is not in debug mode'
@@ -72,7 +77,8 @@ final class MigrateRollbackCommand extends Command
             $rolledBack = $this->migrator->rollback(
                 is_string($source) && $source !== '' ? $source : null,
                 max(1, $step),
-                new ConsoleMigrationReporter($io)
+                new ConsoleMigrationReporter($io),
+                $input->getOption('all') === true
             );
         } catch (Throwable $exception) {
             $io->error($exception->getMessage());

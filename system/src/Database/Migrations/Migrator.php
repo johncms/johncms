@@ -18,7 +18,9 @@ use Johncms\Database\Migrations\Exceptions\IrreversibleMigrationException;
 use Johncms\Database\Migrations\Exceptions\MigrationFailedException;
 use Johncms\Database\Migrations\Exceptions\MigrationsLockedException;
 use Johncms\Database\Schema\SchemaInterface;
+use InvalidArgumentException;
 use Johncms\Scheduler\ScheduleMutexInterface;
+use ReflectionMethod;
 use Throwable;
 
 /**
@@ -29,7 +31,7 @@ use Throwable;
  * failed one is not recorded: on a database that rolls back DDL it did nothing, and on one that
  * does not the exception says so.
  */
-final readonly class Migrator
+final readonly class Migrator implements MigrationRunnerInterface
 {
     private const string LOCK_KEY = 'johncms.migrations';
 
@@ -101,9 +103,17 @@ final readonly class Migrator
      * @throws IrreversibleMigrationException
      * @throws InvalidMigrationFileException
      */
-    public function rollback(?string $source = null, int $steps = 1, MigrationReporterInterface $reporter = new NullMigrationReporter()): array
-    {
-        $target = $this->rollbackTargets($source, $steps);
+    public function rollback(
+        ?string $source = null,
+        int $steps = 1,
+        MigrationReporterInterface $reporter = new NullMigrationReporter(),
+        bool $all = false,
+    ): array {
+        if ($all && ($source === null || $source === '')) {
+            throw new InvalidArgumentException('Rolling everything back is only allowed for one source at a time.');
+        }
+
+        $target = $this->rollbackTargets($source, $steps, $all);
         if ($target === []) {
             return [];
         }
@@ -123,6 +133,39 @@ final readonly class Migrator
         } finally {
             $this->mutex->release($lock);
         }
+    }
+
+    /**
+     * The applied migrations of a source that refuse to be undone — the ones that never said how.
+     *
+     * Asked before a module is uninstalled with its data: rolling back half a module and stopping
+     * at the first migration that will not go back leaves a schema nobody can describe. Better to
+     * refuse while nothing has happened, naming what would have been left behind.
+     *
+     * @return list<MigrationFile>
+     */
+    public function irreversible(string $source): array
+    {
+        $applied = [];
+        foreach ($this->applied() as $record) {
+            if ($record->source === $source) {
+                $applied[$record->id()] = true;
+            }
+        }
+
+        $irreversible = [];
+        foreach ($this->locator->locate($source) as $file) {
+            if (! isset($applied[$file->id()])) {
+                continue;
+            }
+
+            $declaring = (new ReflectionMethod($this->load($file), 'down'))->getDeclaringClass()->getName();
+            if ($declaring === Migration::class) {
+                $irreversible[] = $file;
+            }
+        }
+
+        return $irreversible;
     }
 
     /**
@@ -175,14 +218,16 @@ final readonly class Migrator
      * @return list<array{file: MigrationFile, applied: AppliedMigration}>
      * @throws InvalidMigrationFileException
      */
-    private function rollbackTargets(?string $source, int $steps): array
+    private function rollbackTargets(?string $source, int $steps, bool $all = false): array
     {
         $lastBatch = $this->repository->lastBatch();
         if ($lastBatch === 0) {
             return [];
         }
 
-        $firstBatch = max(1, $lastBatch - max(1, $steps) + 1);
+        // Undoing a source completely ignores the batches: what is being undone is not the last
+        // step forward but everything a module ever did to this database.
+        $firstBatch = $all ? 1 : max(1, $lastBatch - max(1, $steps) + 1);
 
         $wanted = [];
         foreach ($this->applied() as $record) {

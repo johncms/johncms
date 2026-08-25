@@ -79,6 +79,16 @@ final class ModuleStateStore
         return $this->records = $records;
     }
 
+    /**
+     * Reads the file again next time. The registry has a store of its own — it is built before the
+     * container exists — so when something else writes the state, this one is holding what the
+     * file said a moment ago.
+     */
+    public function forget(): void
+    {
+        $this->records = null;
+    }
+
     public function find(string $key): ?ModuleStateRecord
     {
         return $this->all()[$key] ?? null;

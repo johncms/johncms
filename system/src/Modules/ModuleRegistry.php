@@ -253,6 +253,17 @@ final class ModuleRegistry
         return $states;
     }
 
+    /**
+     * Throws away what was worked out, so the next question is answered from the files and the
+     * state as they are now. Installing a module changes both while the registry is already in
+     * memory, and everything after that — the migrations of the module above all — has to see it.
+     */
+    public function forget(): void
+    {
+        $this->states = null;
+        $this->state->forget();
+    }
+
     public function find(string $key): ?ModuleState
     {
         foreach ($this->states() as $state) {

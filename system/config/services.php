@@ -51,6 +51,7 @@ use Johncms\Database\Migrations\DatabaseMigrationRepository;
 use Johncms\Database\Migrations\MigrationGenerator;
 use Johncms\Database\Migrations\MigrationLocator;
 use Johncms\Database\Migrations\MigrationRepositoryInterface;
+use Johncms\Database\Migrations\MigrationRunnerInterface;
 use Johncms\Database\Migrations\Migrator;
 use Johncms\Database\Migrations\PendingMigrations;
 use Johncms\Database\Migrations\ModuleMigrationSourceProvider;
@@ -223,9 +224,9 @@ return static function (ContainerConfigurator $container): void {
                 // What is a service here — the repository, the loader, the state store and the
                 // registry — is either autowired from what follows or registered by hand below.
                 ROOT_PATH . 'system/src/Modules/Installer.php',
-                ROOT_PATH . 'system/src/Modules/ModuleInstaller.php',
                 ROOT_PATH . 'system/src/Modules/ModuleAutoloader.php',
                 ROOT_PATH . 'system/src/Modules/ModuleDependencyGraph.php',
+                ROOT_PATH . 'system/src/Modules/ModuleOperationResult.php',
                 ROOT_PATH . 'system/src/Modules/ModuleRegistry.php',
                 ROOT_PATH . 'system/src/Modules/ModuleState.php',
                 ROOT_PATH . 'system/src/Modules/ModuleStateRecord.php',
@@ -373,6 +374,7 @@ return static function (ContainerConfigurator $container): void {
         ->arg('$providers', tagged_iterator('johncms.migration_source'));
     $services->set(MigrationRepositoryInterface::class, DatabaseMigrationRepository::class);
     $services->set(Migrator::class);
+    $services->alias(MigrationRunnerInterface::class, Migrator::class);
     $services->set(MigrationGenerator::class);
     $services->set(PendingMigrations::class);
     $services->set(\Johncms\Users\Repository\UserRepositoryInterface::class, \Johncms\Users\Repository\EloquentUserRepository::class);

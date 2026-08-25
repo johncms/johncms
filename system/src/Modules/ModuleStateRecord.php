@@ -33,6 +33,22 @@ final readonly class ModuleStateRecord
     }
 
     /**
+     * The same record with one or two fields changed. Nothing else about it moves — the alias and
+     * the date of installation belong to the installation that happened, not to the edit.
+     */
+    public function with(?bool $enabled = null, ?string $version = null): self
+    {
+        return new self(
+            key: $this->key,
+            alias: $this->alias,
+            installed: $this->installed,
+            enabled: $enabled ?? $this->enabled,
+            version: $version ?? $this->version,
+            installedAt: $this->installedAt,
+        );
+    }
+
+    /**
      * @return array<string, scalar|null>
      */
     public function toArray(): array

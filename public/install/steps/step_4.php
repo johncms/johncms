@@ -19,7 +19,7 @@ use Johncms\Modules\Admin\Application\UseCases\RebuildSmiliesCacheUseCase;
 use Johncms\Modules\Admin\Domain\Services\LanguageFilesManagerInterface;
 use Johncms\Http\Environment;
 use Johncms\Console\Commands\ModuleSyncCommand;
-use Johncms\Modules\ModuleInstaller;
+use Johncms\Modules\Installer;
 use Johncms\Modules\ModuleRegistryFactory;
 use Johncms\Http\Request;
 use Johncms\Users\User;
@@ -163,7 +163,11 @@ if ($request->getMethod() === 'POST') {
                 }
 
                 foreach (ModuleRegistryFactory::registry()->enabled() as $manifest) {
-                    (new ModuleInstaller($manifest->alias))->installDemoData();
+                    $installerClass = 'Johncms\\Modules\\' . ucfirst(basename($manifest->key)) . '\\Install\\Installer';
+
+                    if (is_a($installerClass, Installer::class, true)) {
+                        (new $installerClass($manifest->alias))->installDemoData();
+                    }
                 }
             }
 

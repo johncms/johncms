@@ -70,8 +70,32 @@ modules/johncms/<module>/
     └── Infrastructure/Persistence/Repository
 ```
 
-Tables are described by migrations and nowhere else. `src/Install/Installer.php` is for demo data
-only — it has no `install()` and creates nothing.
+Tables are described by migrations and nowhere else — `src/Install/Installer.php` creates none.
+What it does have is four hooks around them, every one of which must be safe to run twice:
+
+| | when |
+|---|---|
+| `install()` | after the migrations of a fresh installation: settings, reference data, directories |
+| `update(string $from, string $to)` | after the migrations of an update |
+| `uninstall()` | while the module is still loaded, before it is taken off the site: uploaded files, rows in tables of the core, its own settings |
+| `installDemoData()` | when the installer of the site was asked for demo data |
+
+## Lifecycle
+
+```bash
+php system/bin/console module:install <vendor>/<name> [--demo]
+php system/bin/console module:enable|disable <vendor>/<name>
+php system/bin/console module:update <vendor>/<name>     # after its files were replaced
+php system/bin/console module:uninstall <vendor>/<name> [--purge]
+```
+
+Installing runs the migrations of the module, then `install()`. Uninstalling runs `uninstall()`
+and forgets the module, **keeping its tables** — `--purge` is what actually undoes the migrations
+and deletes the data, and it refuses outright if any migration of the module never said how to be
+undone.
+
+Switching off is not uninstalling: the tables stay, and so does the module in `migrate:status`.
+What cannot be switched off is a system module, or one another installed module requires.
 
 **Create subdirectories on demand, not all upfront.** Only the three top-level folders (`Application`, `Domain`, `Infrastructure`) must exist immediately. Create each nested folder (`Controllers`, `UseCases`, `DTO`, `Repository`, …) only when its first class appears.
 
