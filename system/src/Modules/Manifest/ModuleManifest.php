@@ -46,4 +46,25 @@ final readonly class ModuleManifest
         public ModuleAssets $assets = new ModuleAssets(),
     ) {
     }
+
+    /**
+     * The namespace prefixes the classes of this module live under.
+     *
+     * A module installed into a site declares them itself; one shipped with the CMS is in the root
+     * composer.json instead, under the convention its name follows. Used to tell what belongs to a
+     * module when only a class name is at hand — which permission it declared, which installer is
+     * its own.
+     *
+     * @return list<string>
+     */
+    public function namespaces(): array
+    {
+        $declared = array_keys($this->autoload->psr4);
+
+        if ($declared !== []) {
+            return $declared;
+        }
+
+        return ['Johncms\\Modules\\' . ucfirst(basename($this->key)) . '\\'];
+    }
 }

@@ -4,6 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Modules;
 
+use Illuminate\Support\Collection;
+use Johncms\Auth\Authorization\DefaultPermissions;
+use Johncms\Auth\Authorization\DefaultPermissionsApplier;
+use Johncms\Auth\Authorization\PermissionRegistry;
+use Johncms\Auth\Authorization\RolePermissionPurger;
+use Johncms\Auth\Authorization\RoleRepositoryInterface;
 use Johncms\Database\Migrations\MigrationFile;
 use Johncms\Database\Migrations\MigrationRunnerInterface;
 use Johncms\Modules\Manifest\ModuleManifest;
@@ -260,6 +266,11 @@ final class ModuleInstallServiceTest extends TestCase
             $store->save($state);
         }
 
+        // Roles are not what these tests are about: the operations only ever hand permissions to
+        // the two services below, and both are given a repository that holds nothing.
+        $roles = $this->createStub(RoleRepositoryInterface::class);
+        $roles->method('all')->willReturn(new Collection());
+
         $this->migrator = $this->createMock(MigrationRunnerInterface::class);
         $this->migratorCalls = [];
         $this->migrator->method('run')->willReturnCallback(function (?string $source = null): array {
@@ -286,6 +297,8 @@ final class ModuleInstallServiceTest extends TestCase
             $this->migrator,
             new ModuleCacheInvalidator($this->root . 'cache' . DS),
             new ModuleAssetPublisher($this->root . 'public' . DS),
+            new RolePermissionPurger([], $roles, $this->root . 'backups'),
+            new DefaultPermissionsApplier($roles, new DefaultPermissions(new PermissionRegistry())),
         );
     }
 }

@@ -12,6 +12,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules;
 
+use Johncms\Auth\Authorization\DefaultPermissionsApplier;
+use Johncms\Auth\Authorization\RolePermissionPurger;
 use Johncms\Database\Migrations\MigrationRunnerInterface;
 use Johncms\Modules\Manifest\ModuleManifest;
 use Throwable;
@@ -36,6 +38,8 @@ final readonly class ModuleInstallService
         private MigrationRunnerInterface $migrator,
         private ModuleCacheInvalidator $cache,
         private ModuleAssetPublisher $assets,
+        private RolePermissionPurger $permissions,
+        private DefaultPermissionsApplier $defaultPermissions,
         private ModuleCompatibilityChecker $compatibility = new ModuleCompatibilityChecker(),
     ) {
     }
@@ -83,6 +87,7 @@ final readonly class ModuleInstallService
             $result->done('run the installer of the module');
 
             $this->publishAssets($manifest, $result);
+            $this->grantDefaultPermissions($result);
 
             if ($withDemoData) {
                 $this->installer($manifest)?->installDemoData();
@@ -203,6 +208,7 @@ final readonly class ModuleInstallService
             $result->done('run the update hook', sprintf('%s -> %s', $from, $to));
 
             $this->publishAssets($manifest, $result);
+            $this->grantDefaultPermissions($result);
 
             $this->write($key, $record->with(version: $manifest->version));
             $result->done('record the new version', $to);
@@ -274,6 +280,20 @@ final readonly class ModuleInstallService
             $this->assets->unpublish($record->alias);
             $result->done('take its assets out of the document root');
 
+            // While the module is still loaded: its permission providers are what says which
+            // permissions are its own, and in a moment there will be nobody left to ask.
+            if ($purge && $manifest !== null) {
+                $revoked = $this->permissions->purge($manifest);
+                $revoked === 0
+                    ? $result->skipped('take back its permissions', 'no role held any')
+                    : $result->done('take back its permissions', sprintf('%d grants, backed up first', $revoked));
+            } else {
+                $result->skipped(
+                    'take back its permissions',
+                    'kept, like the data — they come back with the module'
+                );
+            }
+
             $records = $this->state->all();
             unset($records[$key]);
             $this->state->save($records);
@@ -286,6 +306,23 @@ final readonly class ModuleInstallService
         }
 
         return $result;
+    }
+
+    /**
+     * Gives the built-in roles the permissions this version declares and they do not have yet.
+     *
+     * Only adds, and only what the container knows about: the services of a module installed a
+     * moment ago were not there when it was compiled, so its own permissions arrive on the next
+     * run — which is why `auth:sync-roles` exists and why the documentation says to run it after
+     * installing a module.
+     */
+    private function grantDefaultPermissions(ModuleOperationResult $result): void
+    {
+        $granted = $this->defaultPermissions->apply();
+
+        $granted === []
+            ? $result->skipped('grant the default permissions', 'run auth:sync-roles once the module is loaded')
+            : $result->done('grant the default permissions', sprintf('%d roles updated', count($granted)));
     }
 
     /**

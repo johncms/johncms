@@ -115,6 +115,12 @@ undone.
 Switching off is not uninstalling: the tables stay, and so does the module in `migrate:status`.
 What cannot be switched off is a system module, or one another installed module requires.
 
+**Permissions.** A module declaring them gets them granted by `auth:sync-roles`, and installing it
+prints a reminder to run that — the container was compiled before the module existed, so its
+providers are not in it yet. `--purge` takes them back out of every role, after writing what it
+removes to `data/backups/permissions-<vendor>-<name>-<date>.json`; a plain uninstall keeps them,
+the same way it keeps the tables.
+
 **Create subdirectories on demand, not all upfront.** Only the three top-level folders (`Application`, `Domain`, `Infrastructure`) must exist immediately. Create each nested folder (`Controllers`, `UseCases`, `DTO`, `Repository`, …) only when its first class appears.
 
 ### Empty `src/` subdirectories

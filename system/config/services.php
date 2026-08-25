@@ -17,6 +17,7 @@ use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\Authorization\AccessVoterInterface;
 use Johncms\Auth\Authorization\PermissionProviderInterface;
 use Johncms\Auth\Authorization\PermissionRegistry;
+use Johncms\Auth\Authorization\RolePermissionPurger;
 use Johncms\Auth\Authorization\RoleRepositoryInterface;
 use Johncms\Auth\Events\AuthEventLogger;
 use Johncms\Auth\Events\AuthEventLoggerInterface;
@@ -389,6 +390,8 @@ return static function (ContainerConfigurator $container): void {
     $services->set(PermissionRegistry::class)
         ->arg('$providers', tagged_iterator('johncms.auth.permissions'))
         ->arg('$definitions', []);
+    $services->set(RolePermissionPurger::class)
+        ->arg('$providers', tagged_iterator('johncms.auth.permissions'));
     $services->set(PasswordResetTokenRepositoryInterface::class, EloquentPasswordResetTokenRepository::class);
     $services->set(AuthEventRepositoryInterface::class, EloquentAuthEventRepository::class);
     $services->set(AuthEventLoggerInterface::class, AuthEventLogger::class);
