@@ -43,6 +43,7 @@ final readonly class ModuleManifest
         /** Empty for a module of the release: its namespace lives in the root composer.json. */
         public ModuleAutoload $autoload = new ModuleAutoload(),
         public ModuleRequirements $requires = new ModuleRequirements(),
+        public ModuleAssets $assets = new ModuleAssets(),
     ) {
     }
 }

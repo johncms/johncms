@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\View\Twig\Runtime;
 
+use Johncms\Modules\ModuleAssetRegistry;
 use Johncms\Users\UserImages;
 use Johncms\View\Asset\AssetResolver;
 use Johncms\View\Asset\ThemeEntryResolver;
@@ -18,6 +19,7 @@ final readonly class AssetRuntime implements RuntimeExtensionInterface
         private Vite $vite,
         private ThemeEntryResolver $entries,
         private UserImages $userImages,
+        private ModuleAssetRegistry $moduleAssets,
     ) {
     }
 
@@ -51,5 +53,34 @@ final readonly class AssetRuntime implements RuntimeExtensionInterface
     public function vite(string $area = 'public', bool $rtl = false): Markup
     {
         return new Markup($this->vite->tags($this->entries->entry($area), $rtl), 'UTF-8');
+    }
+
+    /**
+     * One published file of one module: module_asset('blog', 'js/app.js').
+     *
+     * For a template of the module itself, which knows what it ships. What every page needs is
+     * module_assets() below.
+     */
+    public function moduleAsset(string $alias, string $asset): string
+    {
+        return $this->moduleAssets->url($alias, $asset);
+    }
+
+    /**
+     * The tags of every module switched on for this area.
+     *
+     * The layout prints this next to vite(): without it a module could ship a script and have no
+     * way of getting it onto a page, short of the theme being edited for it.
+     */
+    public function moduleAssets(string $area = 'public'): Markup
+    {
+        $tags = '';
+        foreach ($this->moduleAssets->urls($area) as $url) {
+            $tags .= str_ends_with(explode('?', $url)[0], '.css')
+                ? sprintf('<link rel="stylesheet" href="%s">', htmlspecialchars($url, ENT_QUOTES))
+                : sprintf('<script src="%s" defer></script>', htmlspecialchars($url, ENT_QUOTES));
+        }
+
+        return new Markup($tags, 'UTF-8');
     }
 }

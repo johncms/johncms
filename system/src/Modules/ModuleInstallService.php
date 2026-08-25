@@ -35,6 +35,7 @@ final readonly class ModuleInstallService
         private ModuleStateStore $state,
         private MigrationRunnerInterface $migrator,
         private ModuleCacheInvalidator $cache,
+        private ModuleAssetPublisher $assets,
         private ModuleCompatibilityChecker $compatibility = new ModuleCompatibilityChecker(),
     ) {
     }
@@ -81,6 +82,8 @@ final readonly class ModuleInstallService
             $this->installer($manifest)?->install();
             $result->done('run the installer of the module');
 
+            $this->publishAssets($manifest, $result);
+
             if ($withDemoData) {
                 $this->installer($manifest)?->installDemoData();
                 $result->done('install the demo data');
@@ -117,6 +120,8 @@ final readonly class ModuleInstallService
         $this->write($key, $record->with(enabled: true));
         $result->done('switch the module on');
 
+        $this->publishAssets($manifest, $result);
+
         return $result;
     }
 
@@ -149,6 +154,9 @@ final readonly class ModuleInstallService
 
         $this->write($key, $record->with(enabled: false));
         $result->done('switch the module off', 'its tables and data are untouched');
+
+        $this->assets->unpublish($record->alias);
+        $result->done('take its assets out of the document root');
 
         return $result;
     }
@@ -193,6 +201,8 @@ final readonly class ModuleInstallService
 
             $this->installer($manifest)?->update($from, $to);
             $result->done('run the update hook', sprintf('%s -> %s', $from, $to));
+
+            $this->publishAssets($manifest, $result);
 
             $this->write($key, $record->with(version: $manifest->version));
             $result->done('record the new version', $to);
@@ -261,6 +271,9 @@ final readonly class ModuleInstallService
                 $result->skipped('undo the migrations', 'the tables and the data of the module are kept');
             }
 
+            $this->assets->unpublish($record->alias);
+            $result->done('take its assets out of the document root');
+
             $records = $this->state->all();
             unset($records[$key]);
             $this->state->save($records);
@@ -273,6 +286,19 @@ final readonly class ModuleInstallService
         }
 
         return $result;
+    }
+
+    /**
+     * Copies what the module ships into the document root. A module without assets is not a
+     * failure — most have none.
+     */
+    private function publishAssets(ModuleManifest $manifest, ModuleOperationResult $result): void
+    {
+        $published = $this->assets->publish($manifest);
+
+        $published === 0
+            ? $result->skipped('publish the assets', 'the module ships none')
+            : $result->done('publish the assets', sprintf('%d files', $published));
     }
 
     /**

@@ -40,6 +40,7 @@
     {% endif %}
     <meta name="theme-color" content="#586776">
     {% block vite %}{{ vite('admin', app.locale == 'ar') }}{% endblock %}
+    {% block module_assets %}{{ module_assets('admin') }}{% endblock %}
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700,700i&display=swap">
     <link rel="shortcut icon" href="{{ asset('images/favicon.ico') }}">
     {% block styles %}{% endblock %}

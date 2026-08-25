@@ -8,6 +8,7 @@ use Johncms\Database\Migrations\MigrationFile;
 use Johncms\Database\Migrations\MigrationRunnerInterface;
 use Johncms\Modules\Manifest\ModuleManifest;
 use Johncms\Modules\Manifest\ModuleRequirements;
+use Johncms\Modules\ModuleAssetPublisher;
 use Johncms\Modules\ModuleCacheInvalidator;
 use Johncms\Modules\ModuleInstallService;
 use Johncms\Modules\ModuleRegistry;
@@ -284,6 +285,7 @@ final class ModuleInstallServiceTest extends TestCase
             $store,
             $this->migrator,
             new ModuleCacheInvalidator($this->root . 'cache' . DS),
+            new ModuleAssetPublisher($this->root . 'public' . DS),
         );
     }
 }

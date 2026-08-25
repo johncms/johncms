@@ -16,6 +16,8 @@ final class AssetExtension extends AbstractExtension
             new TwigFunction('asset', [AssetRuntime::class, 'url']),
             new TwigFunction('asset_exists', [AssetRuntime::class, 'exists']),
             new TwigFunction('vite', [AssetRuntime::class, 'vite']),
+            new TwigFunction('module_asset', [AssetRuntime::class, 'moduleAsset']),
+            new TwigFunction('module_assets', [AssetRuntime::class, 'moduleAssets']),
             new TwigFunction('avatar', [AssetRuntime::class, 'avatar']),
         ];
     }

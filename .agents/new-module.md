@@ -35,6 +35,24 @@ return [
 * `version` — omit it in a module shipped with the CMS; its version is the version of the CMS.
 * `system` — `true` only for a module that must never be switched off (the admin panel).
 * `autoload` — omit it in a module shipped with the CMS (see below).
+* `assets` — the built styles and scripts the module ships:
+
+  ```php
+  'assets' => [
+      // Directory inside the module. "public" by default.
+      'source'  => 'public',
+      // What every page of that area loads, relative to the source directory.
+      'entries' => ['public' => ['js/blog.js', 'css/blog.css'], 'admin' => []],
+  ],
+  ```
+
+  They are shipped **built**: there is no Vite on a site that only runs the CMS. Installing the
+  module copies them to `public/modules/<alias>/`, switching it off takes them out again, and only
+  files a browser loads are copied — a `.php` among them would be code the module put where anyone
+  can run it.
+
+  A template of the module addresses one file with `module_asset('blog', 'js/app.js')`; everything
+  in `entries` is printed by the layout on its own.
 * `requires` — what the module cannot run without:
 
   ```php

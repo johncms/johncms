@@ -38,6 +38,7 @@
     {% endif %}
     <meta name="theme-color" content="#586776">
     {% block vite %}{{ vite('public', app.locale == 'ar') }}{% endblock %}
+    {% block module_assets %}{{ module_assets('public') }}{% endblock %}
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700,700i&display=swap">
     <link rel="icon" type="image/svg+xml" href="{{ asset('images/icon.svg') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/favicon-32x32.png') }}">

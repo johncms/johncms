@@ -63,6 +63,7 @@ final readonly class ModuleManifestLoader
             system: $this->bool($manifest, 'system', $file),
             autoload: $this->autoload($manifest, $file),
             requires: $this->requirements($manifest, $file),
+            assets: $this->assets($manifest, $file),
         );
     }
 
@@ -124,6 +125,44 @@ final readonly class ModuleManifestLoader
         }
 
         return $alias;
+    }
+
+    /**
+     * @param array<mixed> $manifest
+     */
+    private function assets(array $manifest, string $file): ModuleAssets
+    {
+        $assets = $manifest['assets'] ?? null;
+
+        if ($assets === null) {
+            return new ModuleAssets();
+        }
+
+        if (! is_array($assets)) {
+            throw new InvalidModuleManifestException(sprintf('"%s": the "assets" field must be an array.', $file));
+        }
+
+        $entries = [];
+        foreach ((array) ($assets['entries'] ?? []) as $area => $files) {
+            if (! is_string($area) || ! is_array($files)) {
+                throw new InvalidModuleManifestException(
+                    sprintf('"%s": asset entries are lists of files, keyed by area.', $file)
+                );
+            }
+
+            foreach ($files as $asset) {
+                if (! is_string($asset)) {
+                    throw new InvalidModuleManifestException(sprintf('"%s": every asset entry is a path.', $file));
+                }
+
+                $entries[$area][] = ltrim($asset, '/');
+            }
+        }
+
+        return new ModuleAssets(
+            source: trim($this->string($assets, 'source', $file) ?? 'public', '/'),
+            entries: $entries,
+        );
     }
 
     /**
