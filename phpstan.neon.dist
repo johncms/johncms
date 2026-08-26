@@ -19,6 +19,10 @@ parameters:
             # Generated translation catalogues: huge literal arrays, no logic.
             - modules/*/*/locale/*.lng.php
             - config/autoload/*.local.php
+            # Runs inside the Composer process, against classes of Composer itself. Composer is
+            # not a dependency of this project and should not become one for the sake of one
+            # file, so there is nothing here to analyse against.
+            - system/src/Modules/Composer/ComposerHooks.php
 
     # Constants (ROOT_PATH, CACHE_PATH, ...) and the global helpers (di(), config()) arrive
     # through Composer's "files" autoload, which PHPStan already executes — listing them as

@@ -123,6 +123,9 @@
         "test:unit": "phpunit --testsuite unit --colors=always",
         "test:functional": "phpunit --testsuite functional --colors=always",
         "translate": "php system/bin/console i18n:translate",
-        "translate-scan": "php system/bin/console i18n:scan"
+        "translate-scan": "php system/bin/console i18n:scan",
+        "post-package-install": "Johncms\\Modules\\Composer\\ComposerHooks::afterInstall",
+        "post-package-update": "Johncms\\Modules\\Composer\\ComposerHooks::afterUpdate",
+        "pre-package-uninstall": "Johncms\\Modules\\Composer\\ComposerHooks::beforeUninstall"
     }
 }

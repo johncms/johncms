@@ -98,6 +98,28 @@ What it does have is four hooks around them, every one of which must be safe to 
 | `uninstall()` | while the module is still loaded, before it is taken off the site: uploaded files, rows in tables of the core, its own settings |
 | `installDemoData()` | when the installer of the site was asked for demo data |
 
+## Publishing a module
+
+A module distributed to other sites is an ordinary Composer package with one line that matters:
+
+```json
+{
+    "name": "vasya/blog",
+    "type": "johncms-module",
+    "require": { "php": "^8.4" },
+    "autoload": { "psr-4": { "Vasya\\Blog\\": "src/" } }
+}
+```
+
+`composer require vasya/blog` puts it in `vendor/vasya/blog`, and the CMS finds it there — the
+Composer runtime is asked which packages of that type are installed, so no plugin is needed and
+nothing moves the files. Composer then prints what to run next; installing is still a separate
+step, because that is what runs the migrations.
+
+The package also carries `module.php`. Its `key` must match the package name, and both `composer.json`
+and the manifest declare the same PSR-4 prefix: Composer registers it for the package in vendor/,
+the manifest for a copy unpacked into `modules/` from an archive.
+
 ## Lifecycle
 
 ```bash

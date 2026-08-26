@@ -228,6 +228,7 @@ return static function (ContainerConfigurator $container): void {
                 // What is a service here — the repository, the loader, the state store and the
                 // registry — is either autowired from what follows or registered by hand below.
                 ROOT_PATH . 'system/src/Modules/Installer.php',
+                ROOT_PATH . 'system/src/Modules/ChainModuleRepository.php',
                 ROOT_PATH . 'system/src/Modules/ModuleAutoloader.php',
                 ROOT_PATH . 'system/src/Modules/ModuleDependencyGraph.php',
                 ROOT_PATH . 'system/src/Modules/ModuleOperationResult.php',

@@ -27,7 +27,7 @@ final class ModuleRegistryFactory
 {
     private static ?ModuleRegistry $instance = null;
 
-    private static ?FilesystemModuleRepository $modules = null;
+    private static ?ModuleRepositoryInterface $modules = null;
 
     private static ?ModuleStateStore $state = null;
 
@@ -51,9 +51,14 @@ final class ModuleRegistryFactory
      * module, and the other keeps answering with what it read a moment earlier — which is how an
      * installed module ends up invisible to the very code installing it.
      */
-    public static function modules(): FilesystemModuleRepository
+    public static function modules(): ModuleRepositoryInterface
     {
-        return self::$modules ??= new FilesystemModuleRepository();
+        // modules/ first: a module a person unpacked there wins over a package of the same name
+        // that Composer happens to have in vendor/.
+        return self::$modules ??= new ChainModuleRepository([
+            new FilesystemModuleRepository(),
+            new ComposerModuleRepository(),
+        ]);
     }
 
     public static function state(): ModuleStateStore
