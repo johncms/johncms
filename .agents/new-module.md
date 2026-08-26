@@ -115,6 +115,31 @@ undone.
 Switching off is not uninstalling: the tables stay, and so does the module in `migrate:status`.
 What cannot be switched off is a system module, or one another installed module requires.
 
+## Getting into the menus
+
+A module that nobody can find is a module nobody uses, and both menus are templates of the theme.
+So a module declares its lines and the theme draws them — implement `MenuItemProviderInterface`,
+the container tags it:
+
+```php
+final class BlogMenu implements MenuItemProviderInterface
+{
+    public function menuItems(): iterable
+    {
+        return [
+            new MenuItem(MenuArea::Main, d__('blog', 'Blog'), '/blog/', icon: 'book', weight: 50),
+            new MenuItem(MenuArea::Admin, d__('blog', 'Blog'), '/admin/blog', permission: 'blog.manage'),
+        ];
+    }
+}
+```
+
+* The title is already translated — the menu is drawn long after the domain of the page was decided.
+* `permission` filters the line: an item the visitor may not open never reaches the template.
+* `icon` is an id in the sprite of the theme (`book`), or the address of an image the module ships
+  (`/modules/blog/img/icon.svg`).
+* `weight` orders them: lighter floats up, equal weights fall back to the title.
+
 **Permissions.** A module declaring them gets them granted by `auth:sync-roles`, and installing it
 prints a reminder to run that — the container was compiled before the module existed, so its
 providers are not in it yet. `--purge` takes them back out of every role, after writing what it

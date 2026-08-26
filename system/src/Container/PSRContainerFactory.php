@@ -13,6 +13,7 @@ use Johncms\Content\Embed\EmbedProviderInterface;
 use Johncms\Content\Transformer\ContentTransformerInterface;
 use Johncms\Database\Migrations\MigrationSourceProviderInterface;
 use Johncms\Modules\ModuleRegistryFactory;
+use Johncms\View\Menu\MenuItemProviderInterface;
 use Johncms\Security\HtmlPolicyProviderInterface;
 use Psr\Container\ContainerInterface as PsrContainerInterface;
 use Symfony\Component\Config\FileLocator;
@@ -79,12 +80,14 @@ class PSRContainerFactory
      * visitor, a rule about what is allowed, the permissions a module declares, the HTML policy
      * its own kind of content is cleaned by, the way visitors are told from bots, the two halves
      * of the content pipeline — a step that edits a rendered text and a media site whose links
-     * become players — and a directory of migrations the database is taken through.
+     * become players — a directory of migrations the database is taken through, and a line the
+     * module puts into a menu.
      *
      * Registered on the builder rather than as an instanceof rule of a services file, because
      * such a rule only reaches the services declared in that same file. A module would have to
      * repeat it in its own services.php, and one that forgot would compile fine and simply never
-     * be asked anything — a voter that never votes and permissions that never reach the editor.
+     * be asked anything — a voter that never votes, permissions that never reach the editor, a
+     * menu item nobody draws.
      */
     private function registerExtensionPoints(ContainerBuilder $container): void
     {
@@ -98,6 +101,7 @@ class PSRContainerFactory
             ContentTransformerInterface::class  => 'johncms.content_transformer',
             EmbedProviderInterface::class       => 'johncms.embed_provider',
             MigrationSourceProviderInterface::class => 'johncms.migration_source',
+            MenuItemProviderInterface::class        => 'johncms.menu_provider',
         ];
 
         foreach ($tags as $interface => $tag) {

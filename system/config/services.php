@@ -128,6 +128,7 @@ use Johncms\Modules\FilesystemModuleRepository;
 use Johncms\Modules\ModuleRegistry;
 use Johncms\Modules\ModuleRegistryFactory;
 use Johncms\Modules\ModuleRepositoryInterface;
+use Johncms\View\Menu\MenuRegistry;
 use Johncms\View\Theme\ThemeRepositoryInterface;
 use Johncms\View\Twig\AppVariable;
 use Johncms\View\Twig\Extension\AppExtension;
@@ -135,6 +136,7 @@ use Johncms\View\Twig\Extension\AssetExtension;
 use Johncms\View\Twig\Extension\AuthExtension;
 use Johncms\View\Twig\Extension\FormatExtension;
 use Johncms\View\Twig\Extension\MailExtension;
+use Johncms\View\Twig\Extension\MenuExtension;
 use Johncms\View\Twig\Extension\I18nExtension;
 use Johncms\View\Twig\Extension\SiteExtension;
 use Johncms\View\Twig\TemplatePathRegistry;
@@ -228,6 +230,10 @@ return static function (ContainerConfigurator $container): void {
                 ROOT_PATH . 'system/src/Modules/ModuleAutoloader.php',
                 ROOT_PATH . 'system/src/Modules/ModuleDependencyGraph.php',
                 ROOT_PATH . 'system/src/Modules/ModuleOperationResult.php',
+                // A menu item is a value object describing one line of a menu; the enum of the two
+                // menus goes with it.
+                ROOT_PATH . 'system/src/View/Menu/MenuItem.php',
+                ROOT_PATH . 'system/src/View/Menu/MenuArea.php',
                 ROOT_PATH . 'system/src/Modules/ModuleRegistry.php',
                 ROOT_PATH . 'system/src/Modules/ModuleState.php',
                 ROOT_PATH . 'system/src/Modules/ModuleStateRecord.php',
@@ -475,6 +481,10 @@ return static function (ContainerConfigurator $container): void {
     // so it cannot be the thing that creates it.
     $services->set(ModuleRegistry::class)
         ->factory([ModuleRegistryFactory::class, 'registry']);
+    // What the modules add to the two menus. Tagged by PSRContainerFactory, like the other
+    // extension points, so a module only has to implement the interface.
+    $services->set(MenuRegistry::class)
+        ->arg('$providers', tagged_iterator('johncms.menu_provider'));
     $services->set(ModuleRepositoryInterface::class, FilesystemModuleRepository::class);
 
     $services->set(ThemeRepositoryInterface::class, FilesystemThemeRepository::class);
@@ -535,6 +545,8 @@ return static function (ContainerConfigurator $container): void {
     $services->set(AssetExtension::class)
         ->tag('johncms.twig_extension')
         ->tag('johncms.twig_extension.install');
+    // Not for mail or the installer: neither has a menu, and neither has a visitor to filter it by.
+    $services->set(MenuExtension::class)->tag('johncms.twig_extension');
     $services->set(FormatExtension::class)
         ->tag('johncms.twig_extension')
         ->tag('johncms.twig_extension.mail');

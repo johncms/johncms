@@ -14,6 +14,7 @@ use Johncms\Modules\Admin\Application\Services\AdminPermissions;
 use Johncms\Http\Environment;
 use Johncms\Http\Session;
 use Johncms\NavChain;
+use Johncms\View\Menu\MenuRegistry;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -78,6 +79,8 @@ final class ContainerCompilationTest extends TestCase
                 Environment::class,
                 Session::class,
                 NavChain::class,
+                // Holds the menu items this visitor may open, which is a fact about one request.
+                MenuRegistry::class,
             ],
             $tagged
         );

@@ -139,6 +139,25 @@
                 </a>
             </li>
         {% endif %}
+    
+        {# What the installed modules add. A module has no business editing a theme, so it declares
+           a MenuItem and this draws it; items the visitor may not open never get here. #}
+        {% for item in menu_items('main') %}
+            <li>
+                <a href="{{ item.url }}">
+                    {% if item.icon %}
+                        {% if item.hasImageIcon %}
+                            <img class="icon" src="{{ item.icon }}" alt="">
+                        {% else %}
+                            <svg class="icon">
+                                <use xlink:href="{{ asset('icons/sprite.svg') }}#{{ item.icon }}"/>
+                            </svg>
+                        {% endif %}
+                    {% endif %}
+                    <span class="flex-grow-1">{{ item.title }}</span>
+                </a>
+            </li>
+        {% endfor %}
     </ul>
     <div class="border-bottom"></div>
 </div>
