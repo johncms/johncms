@@ -1,0 +1,117 @@
+{#
+    The modules of this site: what is installed, what is lying in the directory waiting to be, and
+    what is wrong with the rest.
+
+    @var array  installed       Rows: key, alias, name, version, status_label, status_class, can_*.
+    @var array  available       The same, for modules that are on disk but not installed.
+    @var array  problems        The same, for broken and incompatible ones; each carries "problem".
+    @var string action_url
+    @var array  operation_steps Steps of the operation that has just run, if any.
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% macro actions(module, action_url) %}
+    <div class="d-flex flex-wrap gap-2">
+        {% if module.can_install %}
+            <a class="btn btn-sm btn-primary" href="/admin/modules/confirm?module={{ module.key|url_encode }}&operation=install">
+                {{ __('Install') }}
+            </a>
+        {% endif %}
+        {% if module.can_enable %}
+            <a class="btn btn-sm btn-success" href="/admin/modules/confirm?module={{ module.key|url_encode }}&operation=enable">
+                {{ __('Switch on') }}
+            </a>
+        {% endif %}
+        {% if module.can_disable %}
+            <a class="btn btn-sm btn-outline-secondary" href="/admin/modules/confirm?module={{ module.key|url_encode }}&operation=disable">
+                {{ __('Switch off') }}
+            </a>
+        {% endif %}
+        {% if module.can_update %}
+            <a class="btn btn-sm btn-outline-primary" href="/admin/modules/confirm?module={{ module.key|url_encode }}&operation=update">
+                {{ __('Update') }}
+            </a>
+        {% endif %}
+        {% if module.can_remove %}
+            <a class="btn btn-sm btn-outline-danger" href="/admin/modules/confirm?module={{ module.key|url_encode }}&operation=uninstall">
+                {{ __('Remove') }}
+            </a>
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{% macro card(module, action_url) %}
+    <div class="card mb-3 shadow border-0">
+        <div class="card-body">
+            <div class="d-flex flex-wrap align-items-center gap-2">
+                <h5 class="card-title mb-0 me-auto">{{ module.name }}</h5>
+                {% if module.system %}
+                    <span class="badge bg-dark">{{ __('System') }}</span>
+                {% endif %}
+                <span class="badge {{ module.status_class }}">{{ module.status_label }}</span>
+            </div>
+            <div class="text-muted small mt-1">
+                <code>{{ module.key }}</code> &middot; {{ __('Version') }}: {{ module.version }}
+                &middot; {{ __('Short name') }}: <code>{{ module.alias }}</code>
+            </div>
+            {% if module.problem %}
+                <div class="alert alert-warning mt-2 mb-0 py-2">{{ module.problem }}</div>
+            {% endif %}
+            <div class="mt-3">{{ _self.actions(module, action_url) }}</div>
+        </div>
+    </div>
+{% endmacro %}
+
+{% block content %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger shadow border-0', alert: error_message} only %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success shadow border-0', alert: success_message} only %}
+
+    {% if operation_steps %}
+        <div class="card mb-3 shadow border-0">
+            <div class="card-body">
+                <h6 class="card-title">{{ __('What was done') }}</h6>
+                <ul class="list-unstyled mb-0 small">
+                    {% for step in operation_steps %}
+                        <li>
+                            {% if step.outcome == 'done' %}
+                                <span class="text-success">✓</span>
+                            {% elseif step.outcome == 'skipped' %}
+                                <span class="text-muted">–</span>
+                            {% else %}
+                                <span class="text-danger">✗</span>
+                            {% endif %}
+                            {{ step.step }}{% if step.detail %}: {{ step.detail }}{% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="mb-3">
+        <a class="btn btn-primary" href="/admin/modules/upload">{{ __('Install a module from a file') }}</a>
+    </div>
+
+    {% if available %}
+        <div class="alert alert-info shadow border-0">
+            {{ __('New modules were found in the modules directory. They are not running until they are installed.') }}
+        </div>
+        {% for module in available %}
+            {{ _self.card(module, action_url) }}
+        {% endfor %}
+    {% endif %}
+
+    {% if problems %}
+        <h5 class="mt-4 mb-3">{{ __('Need attention') }}</h5>
+        {% for module in problems %}
+            {{ _self.card(module, action_url) }}
+        {% endfor %}
+    {% endif %}
+
+    <h5 class="mt-4 mb-3">{{ __('Installed') }}</h5>
+    {% for module in installed %}
+        {{ _self.card(module, action_url) }}
+    {% else %}
+        <div class="alert alert-warning shadow border-0">{{ __('No modules are installed.') }}</div>
+    {% endfor %}
+{% endblock %}

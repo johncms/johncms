@@ -1,0 +1,34 @@
+{#
+    Installing a module out of an archive.
+
+    @var string action_url
+    @var string error_message
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger shadow border-0', alert: error_message} only %}
+
+    <div class="alert alert-warning shadow border-0">
+        {{ __('A module is code that runs on your site with the rights of your site. Install only what you trust.') }}
+    </div>
+
+    <div class="card shadow border-0">
+        <div class="card-body">
+            <form action="{{ action_url }}" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+
+                <div class="mb-3">
+                    <label class="form-label" for="package">{{ __('Zip archive with the module') }}</label>
+                    <input class="form-control" type="file" name="package" id="package" accept=".zip" required>
+                    <div class="form-text">
+                        {{ __('The archive holds one directory with a module.php inside it. A module that is already installed is updated.') }}
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">{{ __('Install') }}</button>
+                <a class="btn btn-outline-secondary" href="{{ back_url }}">{{ __('Cancel') }}</a>
+            </form>
+        </div>
+    </div>
+{% endblock %}

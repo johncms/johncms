@@ -37,6 +37,8 @@ use Johncms\Modules\Admin\Application\Controllers\Users\UserCleanupController;
 use Johncms\Modules\Admin\Application\Controllers\Users\UserListController;
 use Johncms\Modules\Admin\Application\Controllers\Users\UsersController;
 use Johncms\Modules\Admin\Application\Middlewares\AdminAccessMiddleware;
+use Johncms\Modules\Admin\Application\Controllers\Modules\ModulesController;
+use Johncms\Modules\Admin\Application\Controllers\Modules\ModuleUploadController;
 use Johncms\Modules\Admin\Application\Middlewares\SuperAdminAccessMiddleware;
 use Johncms\Modules\Admin\Application\Services\AdminPermissions;
 use Johncms\Router\RouteCollection;
@@ -125,6 +127,25 @@ return static function (RouteCollection $router): void {
         $r->post('/admin/forum/hidden-topics/delete', [HiddenTopicsController::class, 'deleteAll'])->name('admin.forum.hidden_topics.delete');
         $r->get('/admin/forum/hidden-posts', [HiddenPostsController::class, 'index'])->name('admin.forum.hidden_posts');
         $r->post('/admin/forum/hidden-posts/delete', [HiddenPostsController::class, 'deleteAll'])->name('admin.forum.hidden_posts.delete');
+        // The modules of the site. Deliberately outside the super-admin group: installing a
+        // module is running its code here, which is a permission of its own, and requiring
+        // admin.settings.manage on top would mean it cannot be handed out separately.
+        $r->get('/admin/modules', [ModulesController::class, 'index'])
+            ->name('admin.modules')
+            ->permission(CorePermissions::MODULES_MANAGE);
+        $r->get('/admin/modules/confirm', [ModulesController::class, 'confirm'])
+            ->name('admin.modules.confirm')
+            ->permission(CorePermissions::MODULES_MANAGE);
+        $r->post('/admin/modules/run', [ModulesController::class, 'run'])
+            ->name('admin.modules.run')
+            ->permission(CorePermissions::MODULES_MANAGE);
+        $r->get('/admin/modules/upload', [ModuleUploadController::class, 'form'])
+            ->name('admin.modules.upload')
+            ->permission(CorePermissions::MODULES_MANAGE);
+        $r->post('/admin/modules/upload', [ModuleUploadController::class, 'upload'])
+            ->name('admin.modules.upload.store')
+            ->permission(CorePermissions::MODULES_MANAGE);
+
         $r->get('/admin/emoticons', [EmoticonsController::class, 'index'])->name('admin.emoticons');
         $r->post('/admin/emoticons', [EmoticonsController::class, 'rebuild'])->name('admin.emoticons.rebuild');
 

@@ -1,0 +1,57 @@
+{#
+    Confirming one operation on one module. Nothing has happened yet at this point.
+
+    @var array  module     The row of the module, as on the list.
+    @var string operation  install | enable | disable | update | uninstall
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    <div class="card shadow border-0">
+        <div class="card-body">
+            <h5 class="card-title">{{ module.name }}</h5>
+            <div class="text-muted small mb-3"><code>{{ module.key }}</code> &middot; {{ module.version }}</div>
+
+            {% if operation == 'uninstall' %}
+                <div class="alert alert-warning">
+                    {{ __('The module will be taken off the site. Its files stay where they are, and its tables are kept unless you ask for them to be removed.') }}
+                </div>
+            {% elseif operation == 'disable' %}
+                <div class="alert alert-info">
+                    {{ __('The module stops working: no pages, no menu items. Its tables and data are untouched.') }}
+                </div>
+            {% elseif operation == 'install' %}
+                <div class="alert alert-info">
+                    {{ __('The migrations of the module will be applied and its installer run.') }}
+                </div>
+            {% endif %}
+
+            <form action="{{ action_url }}" method="post">
+                <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                <input type="hidden" name="module" value="{{ module.key }}">
+                <input type="hidden" name="operation" value="{{ operation }}">
+
+                {% if operation == 'install' %}
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" name="demo" value="1" id="demo">
+                        <label class="form-check-label" for="demo">{{ __('Also install the demo data') }}</label>
+                    </div>
+                {% endif %}
+
+                {% if operation == 'uninstall' %}
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" name="purge" value="1" id="purge">
+                        <label class="form-check-label" for="purge">
+                            {{ __('Also delete its tables, data and permissions. This cannot be undone.') }}
+                        </label>
+                    </div>
+                {% endif %}
+
+                <button type="submit" class="btn {{ operation == 'uninstall' ? 'btn-danger' : 'btn-primary' }}">
+                    {{ __('Continue') }}
+                </button>
+                <a class="btn btn-outline-secondary" href="{{ back_url }}">{{ __('Cancel') }}</a>
+            </form>
+        </div>
+    </div>
+{% endblock %}

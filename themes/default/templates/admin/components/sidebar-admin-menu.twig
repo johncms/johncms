@@ -216,6 +216,16 @@
                 </li>
             {% endif %}
         
+            {% if can('system.modules.manage') %}
+                <li class="{{ module_menu.modules|default(false) ? 'active' : '' }}">
+                    <a href="/admin/modules">
+                        <svg class="icon">
+                            <use xlink:href="{{ sprite }}#shopping-cart"/>
+                        </svg>
+                        <span class="flex-grow-1">{{ d__('admin', 'Manage modules') }}</span>
+                    </a>
+                </li>
+            {% endif %}
         {# What the installed modules add. A module has no business editing a theme, so it declares
            a MenuItem and this draws it; items the visitor may not open never get here. #}
         {% for item in menu_items('admin') %}

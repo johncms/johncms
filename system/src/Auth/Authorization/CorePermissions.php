@@ -51,6 +51,15 @@ final class CorePermissions implements PermissionProviderInterface
     /** Reply to, edit and delete the comments the modules keep in the shared engine. */
     public const COMMENTS_MODERATE = 'system.comments.moderate';
 
+    /**
+     * Install, update, switch off and remove modules.
+     *
+     * Installing a module is running its code on this site, so no built-in role carries this:
+     * the supervisor is allowed everything by SuperAdminVoter, and anybody else has to be given
+     * it deliberately.
+     */
+    public const MODULES_MANAGE = 'system.modules.manage';
+
     public function permissions(): iterable
     {
         $adminGroup = d__('system', 'Admin panel');
@@ -114,6 +123,13 @@ final class CorePermissions implements PermissionProviderInterface
                 d__('system', 'Moderate the comments of the modules'),
                 $systemGroup,
                 [SystemRole::SuperModerator->value, SystemRole::Admin->value]
+            ),
+            // No default roles: whoever holds this can put arbitrary code on the site.
+            new PermissionDefinition(
+                self::MODULES_MANAGE,
+                self::SYSTEM_GROUP,
+                d__('system', 'Install and remove modules'),
+                $systemGroup
             ),
             new PermissionDefinition(
                 self::USERS_ORIGIN_VIEW,
