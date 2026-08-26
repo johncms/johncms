@@ -10,6 +10,7 @@ use Johncms\Modules\ModuleRegistry;
 use Johncms\Modules\ModuleStatus;
 use Johncms\Modules\Package\ModulePackageException;
 use Johncms\Modules\Package\ModulePackageInstaller;
+use Johncms\AdminTasks\AsAdminTask;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -19,6 +20,15 @@ use Symfony\Component\Console\Output\OutputInterface;
 #[AsCommand(
     name: 'module:install',
     description: 'Install a module: one lying in the modules directory, or one from a zip archive',
+)]
+// Queued from the modules section when the operation is asked to run in the background: a module
+// with heavy migrations does not fit into the time a web request is given on a modest host.
+// Not listed on the maintenance screen — it needs to be told which module.
+#[AsAdminTask(
+    title: 'Install a module',
+    description: 'Runs the migrations of a module and its installer.',
+    background: true,
+    listed: false,
 )]
 final class ModuleInstallCommand extends ModuleLifecycleCommand
 {

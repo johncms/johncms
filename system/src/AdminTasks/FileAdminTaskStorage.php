@@ -23,7 +23,12 @@ final class FileAdminTaskStorage
     ) {
     }
 
-    public function queue(string $commandName): void
+    /**
+     * @param array<string, scalar> $arguments Kept with the task: the scheduler runs it later, in
+     *                                         another process, and "install the blog module" is
+     *                                         not the same task as "install the shop module".
+     */
+    public function queue(string $commandName, array $arguments = []): void
     {
         $this->write(new AdminTaskState(
             commandName: $commandName,
@@ -33,6 +38,7 @@ final class FileAdminTaskStorage
             queuedAt: $this->now(),
             startedAt: null,
             finishedAt: null,
+            arguments: $arguments,
         ));
     }
 
@@ -74,17 +80,23 @@ final class FileAdminTaskStorage
     /**
      * @return list<string>
      */
+    /**
+     * The whole state rather than the name: the arguments a task was queued with are part of it,
+     * and whoever runs it needs them.
+     *
+     * @return list<AdminTaskState>
+     */
     public function getQueued(): array
     {
         $queued = [];
 
         foreach ($this->allStates() as $state) {
             if ($state->status === AdminTaskStatus::Queued) {
-                $queued[] = $state->commandName;
+                $queued[] = $state;
             }
         }
 
-        sort($queued);
+        usort($queued, static fn (AdminTaskState $a, AdminTaskState $b): int => $a->commandName <=> $b->commandName);
 
         return $queued;
     }

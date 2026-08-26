@@ -47,6 +47,15 @@
                     </div>
                 {% endif %}
 
+                {% if operation in ['install', 'update', 'uninstall'] %}
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" name="background" value="1" id="background">
+                        <label class="form-check-label" for="background">
+                            {{ __('Run in the background (for a module with heavy migrations; the scheduler starts it within a minute)') }}
+                        </label>
+                    </div>
+                {% endif %}
+
                 <button type="submit" class="btn {{ operation == 'uninstall' ? 'btn-danger' : 'btn-primary' }}">
                     {{ __('Continue') }}
                 </button>

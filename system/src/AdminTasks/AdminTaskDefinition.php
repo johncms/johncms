@@ -12,6 +12,8 @@ final readonly class AdminTaskDefinition
         public string $title,
         public ?string $description,
         public bool $background,
+        /** A task that needs arguments has nothing to offer a screen of buttons. */
+        public bool $listed = true,
     ) {
     }
 

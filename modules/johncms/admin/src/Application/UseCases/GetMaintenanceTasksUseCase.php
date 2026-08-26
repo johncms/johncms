@@ -26,6 +26,11 @@ final readonly class GetMaintenanceTasksUseCase
         $tasks = [];
 
         foreach ($this->registry->all() as $definition) {
+            // A task that needs arguments is queued from the screen that has them, not from here.
+            if (! $definition->listed) {
+                continue;
+            }
+
             $state = $this->storage->getState($definition->commandName);
 
             $tasks[] = new MaintenanceTaskDTO(

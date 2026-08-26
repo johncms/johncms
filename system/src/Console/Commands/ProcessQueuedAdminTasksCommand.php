@@ -43,7 +43,8 @@ final class ProcessQueuedAdminTasksCommand extends Command
 
         $hasFailures = false;
 
-        foreach ($this->storage->getQueued() as $commandName) {
+        foreach ($this->storage->getQueued() as $queued) {
+            $commandName = $queued->commandName;
             $task = $this->registry->find($commandName);
             if ($task === null) {
                 $this->storage->storeResult($commandName, 1, 'Unknown command.');
@@ -53,7 +54,7 @@ final class ProcessQueuedAdminTasksCommand extends Command
             }
 
             try {
-                $state = $this->runner->run($task, $application);
+                $state = $this->runner->run($task, $application, $queued->arguments);
             } catch (AdminTaskBusyException) {
                 // Leave the task queued; it will be retried on the next run.
                 $output->writeln(sprintf('<comment>Skipped %s (already running).</comment>', $commandName));

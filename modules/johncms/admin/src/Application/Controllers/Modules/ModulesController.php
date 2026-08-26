@@ -7,7 +7,9 @@ namespace Johncms\Modules\Admin\Application\Controllers\Modules;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
 use Johncms\Http\View\ViewResponse;
+use Johncms\Modules\Admin\Application\Exceptions\MaintenanceTaskNotFoundException;
 use Johncms\Modules\Admin\Application\UseCases\GetModulesOverviewUseCase;
+use Johncms\Modules\Admin\Application\UseCases\QueueMaintenanceTaskUseCase;
 use Johncms\Modules\ModuleInstallService;
 use Johncms\Modules\ModuleOperationResult;
 use Johncms\Modules\ModuleRegistry;
@@ -36,6 +38,7 @@ final readonly class ModulesController
         private ModuleRegistry $registry,
         private Session $session,
         private LoggerInterface $logger,
+        private QueueMaintenanceTaskUseCase $queueTask,
     ) {
     }
 
@@ -99,6 +102,12 @@ final readonly class ModulesController
         $withData = $request->body('purge') !== '';
         $withDemo = $request->body('demo') !== '';
 
+        // A module with heavy migrations does not fit into the time a web request is given on a
+        // modest host, so the operation can be handed to the scheduler instead.
+        if ($request->body('background') !== '' && $this->queue($key, $operation, $withData, $withDemo)) {
+            redirect(self::URL);
+        }
+
         $result = match ($operation) {
             'install'   => $this->modules->install($key, $withDemo),
             'enable'    => $this->modules->enable($key),
@@ -122,6 +131,50 @@ final readonly class ModulesController
             : $this->session->flash('error_message', (string) $result->error());
 
         redirect(self::URL);
+    }
+
+    /**
+     * Hands the operation to the scheduler. Only the ones that can take a while are queued —
+     * switching a module on or off is a line in a file and is done here and now.
+     */
+    private function queue(string $key, string $operation, bool $withData, bool $withDemo): bool
+    {
+        $command = match ($operation) {
+            'install'   => 'module:install',
+            'update'    => 'module:update',
+            'uninstall' => 'module:uninstall',
+            default     => null,
+        };
+
+        if ($command === null || $this->registry->find($key) === null) {
+            $this->session->flash('error_message', __('Wrong data'));
+
+            return true;
+        }
+
+        $arguments = ['module' => $key];
+        if ($operation === 'install' && $withDemo) {
+            $arguments['--demo'] = true;
+        }
+        if ($operation === 'uninstall' && $withData) {
+            $arguments['--purge'] = true;
+        }
+
+        try {
+            $this->queueTask->execute($command, $arguments);
+        } catch (MaintenanceTaskNotFoundException) {
+            $this->session->flash('error_message', __('Wrong data'));
+
+            return true;
+        }
+
+        $this->logger->info('Module operation queued.', ['module' => $key, 'operation' => $operation]);
+        $this->session->flash(
+            'success_message',
+            __('The task has been queued and will start within a minute')
+        );
+
+        return true;
     }
 
     private function record(string $operation, string $key, ModuleOperationResult $result): void

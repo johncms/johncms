@@ -27,7 +27,10 @@ final readonly class AdminTaskRunner
      *
      * @throws AdminTaskBusyException
      */
-    public function run(AdminTaskDefinition $task, Application $application): ?AdminTaskState
+    /**
+     * @param array<string, scalar> $arguments
+     */
+    public function run(AdminTaskDefinition $task, Application $application, array $arguments = []): ?AdminTaskState
     {
         $lock = $this->mutex->acquire($task->lockKey());
         if ($lock === null) {
@@ -41,7 +44,7 @@ final readonly class AdminTaskRunner
 
             try {
                 $command = $application->find($task->commandName);
-                $input = new ArrayInput(['command' => $task->commandName]);
+                $input = new ArrayInput(['command' => $task->commandName] + $arguments);
                 $input->setInteractive(false);
 
                 $exitCode = $command->run($input, $output);

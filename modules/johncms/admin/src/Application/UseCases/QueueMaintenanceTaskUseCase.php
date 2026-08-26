@@ -19,15 +19,19 @@ final readonly class QueueMaintenanceTaskUseCase
     /**
      * Queue a background maintenance task for the scheduler.
      *
+     * @param array<string, scalar> $arguments What the command needs: an argument by name, an
+     *                                         option by "--name". The caller is what knows them —
+     *                                         the maintenance screen has none, the modules screen
+     *                                         has the module being installed.
      * @throws MaintenanceTaskNotFoundException
      */
-    public function execute(string $commandName): void
+    public function execute(string $commandName, array $arguments = []): void
     {
         $task = $this->registry->find($commandName);
         if ($task === null || ! $task->background) {
             throw new MaintenanceTaskNotFoundException(sprintf('Background task "%s" is not registered.', $commandName));
         }
 
-        $this->storage->queue($task->commandName);
+        $this->storage->queue($task->commandName, $arguments);
     }
 }

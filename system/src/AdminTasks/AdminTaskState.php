@@ -6,6 +6,11 @@ namespace Johncms\AdminTasks;
 
 final readonly class AdminTaskState
 {
+    /**
+     * @param array<string, scalar> $arguments What the command was queued with: an argument by
+     *                                         name, an option by "--name". Empty for a task that
+     *                                         takes none, which is most of them.
+     */
     public function __construct(
         public string $commandName,
         public AdminTaskStatus $status,
@@ -14,6 +19,7 @@ final readonly class AdminTaskState
         public ?string $queuedAt,
         public ?string $startedAt,
         public ?string $finishedAt,
+        public array $arguments = [],
     ) {
     }
 
@@ -37,6 +43,7 @@ final readonly class AdminTaskState
             queuedAt: isset($data['queuedAt']) ? (string) $data['queuedAt'] : null,
             startedAt: isset($data['startedAt']) ? (string) $data['startedAt'] : null,
             finishedAt: isset($data['finishedAt']) ? (string) $data['finishedAt'] : null,
+            arguments: is_array($data['arguments'] ?? null) ? array_filter($data['arguments'], is_scalar(...)) : [],
         );
     }
 
@@ -53,6 +60,7 @@ final readonly class AdminTaskState
             'queuedAt'   => $this->queuedAt,
             'startedAt'  => $this->startedAt,
             'finishedAt' => $this->finishedAt,
+            'arguments'  => $this->arguments,
         ];
     }
 }

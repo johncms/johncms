@@ -44,6 +44,7 @@ final readonly class AdminTaskRegistry
                 title: $adminTask->title ?? $commandName,
                 description: $adminTask->description ?? $command->getDescription(),
                 background: $adminTask->background,
+                listed: $adminTask->listed,
             );
         }
 
