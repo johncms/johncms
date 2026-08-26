@@ -262,6 +262,7 @@ final class ModuleRegistry
     {
         $this->states = null;
         $this->state->forget();
+        $this->modules->forget();
     }
 
     public function find(string $key): ?ModuleState

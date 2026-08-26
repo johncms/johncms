@@ -32,6 +32,45 @@ final readonly class ModuleManifestLoader
     private const string ALIAS_PATTERN = '/^[a-z0-9][a-z0-9_.-]*$/';
 
     /**
+     * The key a manifest claims, without asking where the file lies.
+     *
+     * For an archive that has just been unpacked into a temporary directory: the key is what says
+     * where the module belongs, so it has to be read before the files are moved there. Everything
+     * else about the manifest is checked afterwards, by load(), in the place it names.
+     *
+     * @throws InvalidModuleManifestException
+     */
+    public function keyOf(string $directory): string
+    {
+        $file = rtrim($directory, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . self::MANIFEST;
+
+        if (! is_file($file)) {
+            throw new InvalidModuleManifestException(sprintf('The module in "%s" has no %s.', $directory, self::MANIFEST));
+        }
+
+        /** @psalm-suppress UnresolvableInclude */
+        $manifest = require $file;
+
+        if (! is_array($manifest)) {
+            throw new InvalidModuleManifestException(sprintf('"%s" must return an array.', $file));
+        }
+
+        $key = $this->string($manifest, 'key', $file);
+
+        if ($key === null) {
+            throw new InvalidModuleManifestException(sprintf('"%s" declares no key.', $file));
+        }
+
+        if (preg_match(self::KEY_PATTERN, $key) !== 1) {
+            throw new InvalidModuleManifestException(
+                sprintf('"%s" declares the key "%s", which is not of the form vendor/name.', $file, $key)
+            );
+        }
+
+        return $key;
+    }
+
+    /**
      * @param string $directory The module directory, the one holding module.php.
      * @throws InvalidModuleManifestException
      */

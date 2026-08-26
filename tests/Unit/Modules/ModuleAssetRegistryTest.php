@@ -104,6 +104,10 @@ final class ModuleAssetRegistryTest extends TestCase
             {
                 return $this->modules[$key] ?? null;
             }
+
+            public function forget(): void
+            {
+            }
         };
 
         $store = new ModuleStateStore($this->stateFile);

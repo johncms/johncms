@@ -144,6 +144,10 @@ final class TemplatePathRegistryTest extends TestCase
                 return $this->all()[$key] ?? null;
             }
 
+            public function forget(): void
+            {
+            }
+
             private function manifest(string $key, string $alias): ModuleManifest
             {
                 return new ModuleManifest($key, $alias, MODULES_PATH . $key, ucfirst($alias));

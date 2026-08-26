@@ -261,6 +261,10 @@ final class ModuleRegistryTest extends TestCase
             {
                 return $this->modules[$key] ?? null;
             }
+
+            public function forget(): void
+            {
+            }
         };
 
         return new ModuleRegistry($repository, $store, $bundled, $safeMode);

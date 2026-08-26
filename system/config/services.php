@@ -128,6 +128,7 @@ use Johncms\Modules\FilesystemModuleRepository;
 use Johncms\Modules\ModuleRegistry;
 use Johncms\Modules\ModuleRegistryFactory;
 use Johncms\Modules\ModuleRepositoryInterface;
+use Johncms\Modules\ModuleStateStore;
 use Johncms\View\Menu\MenuRegistry;
 use Johncms\View\Theme\ThemeRepositoryInterface;
 use Johncms\View\Twig\AppVariable;
@@ -485,7 +486,10 @@ return static function (ContainerConfigurator $container): void {
     // extension points, so a module only has to implement the interface.
     $services->set(MenuRegistry::class)
         ->arg('$providers', tagged_iterator('johncms.menu_provider'));
-    $services->set(ModuleRepositoryInterface::class, FilesystemModuleRepository::class);
+    $services->set(ModuleRepositoryInterface::class)
+        ->factory([ModuleRegistryFactory::class, 'modules']);
+    $services->set(ModuleStateStore::class)
+        ->factory([ModuleRegistryFactory::class, 'state']);
 
     $services->set(ThemeRepositoryInterface::class, FilesystemThemeRepository::class);
     $services->set(TemplatePathRegistry::class)

@@ -259,6 +259,10 @@ final class ModuleInstallServiceTest extends TestCase
             {
                 return $this->modules[$key] ?? null;
             }
+
+            public function forget(): void
+            {
+            }
         };
 
         $store = new ModuleStateStore($this->stateFile);

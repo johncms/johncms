@@ -29,4 +29,10 @@ interface ModuleRepositoryInterface
     public function all(): array;
 
     public function find(string $key): ?ModuleManifest;
+
+    /**
+     * Reads the directory again next time. Installing a module from an archive puts files there
+     * while the answer to all() is already in memory.
+     */
+    public function forget(): void;
 }

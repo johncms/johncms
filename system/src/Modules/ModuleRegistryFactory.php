@@ -27,6 +27,10 @@ final class ModuleRegistryFactory
 {
     private static ?ModuleRegistry $instance = null;
 
+    private static ?FilesystemModuleRepository $modules = null;
+
+    private static ?ModuleStateStore $state = null;
+
     public static function registry(): ModuleRegistry
     {
         if (self::$instance !== null) {
@@ -34,11 +38,27 @@ final class ModuleRegistryFactory
         }
 
         return self::$instance = new ModuleRegistry(
-            modules: new FilesystemModuleRepository(),
-            state: new ModuleStateStore(),
+            modules: self::modules(),
+            state: self::state(),
             bundled: self::bundled(),
             safeMode: defined('MODULES_SAFE_MODE') && constant('MODULES_SAFE_MODE') === true,
         );
+    }
+
+    /**
+     * The container is given these rather than building its own, so that everything in the process
+     * shares them. Two instances mean two caches: one of them writes the state file or unpacks a
+     * module, and the other keeps answering with what it read a moment earlier — which is how an
+     * installed module ends up invisible to the very code installing it.
+     */
+    public static function modules(): FilesystemModuleRepository
+    {
+        return self::$modules ??= new FilesystemModuleRepository();
+    }
+
+    public static function state(): ModuleStateStore
+    {
+        return self::$state ??= new ModuleStateStore();
     }
 
     public function __invoke(): ModuleRegistry
@@ -52,6 +72,8 @@ final class ModuleRegistryFactory
     public static function reset(): void
     {
         self::$instance = null;
+        self::$modules = null;
+        self::$state = null;
     }
 
     /**

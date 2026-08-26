@@ -61,4 +61,9 @@ final class FilesystemModuleRepository implements ModuleRepositoryInterface
     {
         return $this->all()[$key] ?? null;
     }
+
+    public function forget(): void
+    {
+        $this->modules = null;
+    }
 }

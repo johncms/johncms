@@ -101,11 +101,18 @@ What it does have is four hooks around them, every one of which must be safe to 
 ## Lifecycle
 
 ```bash
+php system/bin/console module:install --from=<archive.zip>   # unpack and install, or update
 php system/bin/console module:install <vendor>/<name> [--demo]
 php system/bin/console module:enable|disable <vendor>/<name>
 php system/bin/console module:update <vendor>/<name>     # after its files were replaced
 php system/bin/console module:uninstall <vendor>/<name> [--purge]
 ```
+
+An archive holds one directory with a `module.php` inside it; where the module ends up is
+decided by the key in that manifest, not by the name of the directory. It is unpacked into
+`data/tmp/`, never straight into `modules/`, and a previous version is moved into `data/backups/`
+before the new one takes its place. An archive of a module the site already has is treated as an
+update.
 
 Installing runs the migrations of the module, then `install()`. Uninstalling runs `uninstall()`
 and forgets the module, **keeping its tables** — `--purge` is what actually undoes the migrations
