@@ -44,7 +44,7 @@ return static function (RouteCollection $router): void {
         $router->get('/admin/collections/{collection_id:number}/items/{id:number}/delete', [CollectionItemsAdminController::class, 'deleteConfirm'])->name('collections.admin.items.delete_confirm');
         $router->post('/admin/collections/{collection_id:number}/items/{id:number}/delete', [CollectionItemsAdminController::class, 'delete'])->name('collections.admin.items.delete');
     });
-    $admin->permission(CollectionsPermissions::MANAGE);
+    $admin->permission(CollectionsPermissions::MANAGE)->adminArea();
 
     // Public output. Low-priority catch-all that maps root URLs to collections;
     // real module routes have higher priority and win first. The custom

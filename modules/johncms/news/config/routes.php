@@ -38,7 +38,7 @@ return static function (RouteCollection $router): void {
         $router->map(['GET', 'POST'], '/admin/news/del_section/{section_id:number}', [AdminSectionController::class, 'del'])->name('news.admin.delete_section');
         $router->map(['GET', 'POST'], '/admin/news/upload_file', [AdminArticleController::class, 'loadFile'])->name('news.admin.upload_file');
     });
-    $admin->permission(NewsPermissions::MANAGE);
+    $admin->permission(NewsPermissions::MANAGE)->adminArea();
 
     $router->map(['GET', 'POST'], '/news/{category:path}', [SectionController::class, 'index'])->name('news.section')->defaults(['category' => null]);
     $router->map(['GET', 'POST'], '/news/{category:path}/{article_code:slug}.html', [ArticleController::class, 'index'])->name('news.article');

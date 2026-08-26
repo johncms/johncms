@@ -45,11 +45,14 @@ use Johncms\Router\RouteCollection;
 
 return static function (RouteCollection $router): void {
     // Public route: the admin login screen (no access guard).
-    $router->map(['GET', 'POST'], '/admin/login', [UsersController::class, 'login'])->name('admin.login');
+    $router->map(['GET', 'POST'], '/admin/login', [UsersController::class, 'login'])
+        ->name('admin.login')
+        ->adminArea();
 
     $router->map(['GET', 'POST'], '/admin/system_check', [SystemCheckController::class, 'index'])
         ->name('admin.system_check')
-        ->permission(AdminPermissions::SYSTEM_CHECK);
+        ->permission(AdminPermissions::SYSTEM_CHECK)
+        ->adminArea();
 
     // Routes migrated to the new architecture. The whole group is behind AdminAccessMiddleware,
     // which asks admin.access; screens that need more than that add their own gate.
@@ -214,7 +217,7 @@ return static function (RouteCollection $router): void {
             $sr->post('/admin/languages/update', [LanguagesController::class, 'update'])->name('admin.languages.update');
             $sr->post('/admin/languages/delete', [LanguagesController::class, 'delete'])->name('admin.languages.delete');
         });
-        $superGroup->addMiddleware(SuperAdminAccessMiddleware::class);
+        $superGroup->addMiddleware(SuperAdminAccessMiddleware::class)->adminArea();
     });
-    $adminGroup->addMiddleware(AdminAccessMiddleware::class);
+    $adminGroup->addMiddleware(AdminAccessMiddleware::class)->adminArea();
 };

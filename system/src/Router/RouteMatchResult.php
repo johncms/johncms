@@ -29,6 +29,8 @@ final class RouteMatchResult
         public readonly ?string $permission = null,
         /** Whether a refusal of that permission answers 404 rather than 403. */
         public readonly bool $permissionHidden = false,
+        /** Whether the route is a page of the admin panel, declared with Route::adminArea(). */
+        public readonly bool $adminArea = false,
     ) {
     }
 }

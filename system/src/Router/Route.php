@@ -9,6 +9,8 @@ use Symfony\Component\Routing\Route as SymfonyRoute;
 final class Route
 {
     public const MODULE_ATTRIBUTE = '_module';
+
+    public const ADMIN_AREA_ATTRIBUTE = '_admin_area';
     public const CSRF_EXEMPT_ATTRIBUTE = '_csrf_exempt';
     public const PERMISSION_ATTRIBUTE = '_permission';
     public const PERMISSION_HIDDEN_ATTRIBUTE = '_permission_hidden';
@@ -88,6 +90,29 @@ final class Route
         }
 
         return $this;
+    }
+
+    /**
+     * Marks the route as a page of the admin panel.
+     *
+     * What that buys is the panel context: the translations its layout and menu are written in,
+     * and the first link of the navigation chain. A module with a section of its own declares
+     * this — otherwise its pages render the menu of the panel in the source English, which is
+     * exactly what happened to the news section.
+     */
+    public function adminArea(): self
+    {
+        $this->defaults[Route::ADMIN_AREA_ATTRIBUTE] = true;
+
+        return $this;
+    }
+
+    /**
+     * The admin area of the surrounding group.
+     */
+    public function inheritAdminArea(): self
+    {
+        return $this->adminArea();
     }
 
     /**

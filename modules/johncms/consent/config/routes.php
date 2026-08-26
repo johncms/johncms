@@ -26,5 +26,5 @@ return static function (RouteCollection $router): void {
         // Admin: cookie banner settings.
         $r->get('/admin/cookie-banner', [CookieBannerController::class, 'form'])->name('admin.cookie_banner');
         $r->post('/admin/cookie-banner', [CookieBannerController::class, 'save'])->name('admin.cookie_banner.save');
-    })->addMiddleware(AdminAccessMiddleware::class);
+    })->addMiddleware(AdminAccessMiddleware::class)->adminArea();
 };

@@ -6,7 +6,6 @@ namespace Johncms\Modules\Admin\Application\Controllers\System;
 
 use Johncms\Auth\Password\LegacyPasswordAudit;
 use Johncms\Checker\SystemChecker;
-use Johncms\Http\AdminAreaContext;
 use Johncms\Http\View\ViewResponse;
 use Johncms\NavChain;
 use Twig\Markup;
@@ -14,7 +13,6 @@ use Twig\Markup;
 final readonly class SystemCheckController
 {
     public function __construct(
-        private AdminAreaContext $adminArea,
         private NavChain $navChain,
     ) {
     }
@@ -23,7 +21,6 @@ final readonly class SystemCheckController
     {
         // This route is registered outside the guarded admin group (it answers before the panel is
         // usable), so nothing else enters the area context its layout is rendered in.
-        $this->adminArea->enter();
 
         $title = __('System check');
         $this->navChain->add($title);

@@ -23,5 +23,5 @@ return static function (RouteCollection $router): void {
             ->name('admin.contacts.messages.view');
         $r->map(['GET', 'POST'], '/admin/contacts/messages/{id:number}/delete', ContactMessageDeleteController::class)
             ->name('admin.contacts.messages.delete');
-    })->addMiddleware(AdminAccessMiddleware::class);
+    })->addMiddleware(AdminAccessMiddleware::class)->adminArea();
 };

@@ -75,6 +75,7 @@ final readonly class Kernel implements HttpKernelInterface, TerminableInterface
         private LocaleResolver $localeResolver,
         private Translator $translator,
         private ModuleContext $moduleContext,
+        private AdminAreaContext $adminAreaContext,
         /** @var iterable<ResetInterface> Shared services caching something that belongs to one request. */
         private iterable $resettableServices,
     ) {
@@ -237,6 +238,14 @@ final readonly class Kernel implements HttpKernelInterface, TerminableInterface
         // cycle rather than to the controller: controllers are built per request only because of
         // work like this, and a guard rejecting the request must answer in the right language too.
         $this->moduleContext->enter($match->module);
+
+        // A page of the admin panel is written in the translations of the panel, whichever module
+        // it belongs to. Declared by the route rather than guessed from the path, and entered here
+        // rather than by a guard, so that a section of a module gets it too — the news section did
+        // not, and rendered the whole menu in the source English.
+        if ($match->adminArea) {
+            $this->adminAreaContext->enter();
+        }
 
         // The handler passed to the pipeline already returns a Response: normalizing here, before
         // the middleware stack runs, is what lets MiddlewareInterface::handle() be typed to

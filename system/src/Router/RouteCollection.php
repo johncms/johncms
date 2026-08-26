@@ -20,6 +20,9 @@ final class RouteCollection
      */
     private ?string $module = null;
 
+    /** Whether the routes declared from here are pages of the admin panel. */
+    private bool $adminArea = false;
+
     /** @var list<mixed> */
     private array $middlewares = [];
 
@@ -136,6 +139,16 @@ final class RouteCollection
         return $this;
     }
 
+    /**
+     * Every route of this group is a page of the admin panel.
+     */
+    public function adminArea(bool $adminArea = true): self
+    {
+        $this->adminArea = $adminArea;
+
+        return $this;
+    }
+
     public function group(string $prefix, callable $group): RouteCollection
     {
         $collection = new self($this->routeRequirements);
@@ -166,6 +179,10 @@ final class RouteCollection
 
             if ($this->permission !== null) {
                 $route->inheritPermission($this->permission, $this->permissionHidden);
+            }
+
+            if ($this->adminArea) {
+                $route->inheritAdminArea();
             }
 
             $name = $route->getName() ?? 'legacy_route_' . ++$this->autoRouteIndex;

@@ -144,6 +144,24 @@ undone.
 Switching off is not uninstalling: the tables stay, and so does the module in `migrate:status`.
 What cannot be switched off is a system module, or one another installed module requires.
 
+## A section in the admin panel
+
+Declare the routes of the section `->adminArea()` — on the group, or on the route:
+
+```php
+$admin = $router->group('', function (RouteCollection $r): void {
+    $r->get('/admin/blog', [BlogAdminController::class, 'index'])->name('blog.admin.index');
+});
+$admin->permission(BlogPermissions::MANAGE)->adminArea();
+```
+
+That is what gives the page the translations the panel layout and its menu are written in, plus
+the first link of the navigation chain. Without it the page renders, and the whole menu comes out
+in the source English — which is exactly what the news section did until this existed.
+
+Group settings do **not** propagate into a nested group: a group inside a group declares its own
+`->adminArea()`, the same way it declares its own middleware.
+
 ## Getting into the menus
 
 A module that nobody can find is a module nobody uses, and both menus are templates of the theme.

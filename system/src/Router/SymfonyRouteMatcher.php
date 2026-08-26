@@ -53,6 +53,7 @@ final class SymfonyRouteMatcher
                 ? $attributes[Route::PERMISSION_ATTRIBUTE]
                 : null;
             $permissionHidden = ($attributes[Route::PERMISSION_HIDDEN_ATTRIBUTE] ?? false) === true;
+            $adminArea = ($attributes[Route::ADMIN_AREA_ATTRIBUTE] ?? false) === true;
             unset(
                 $attributes['_handler'],
                 $attributes['_middlewares'],
@@ -62,6 +63,7 @@ final class SymfonyRouteMatcher
                 $attributes[Route::CSRF_EXEMPT_ATTRIBUTE],
                 $attributes[Route::PERMISSION_ATTRIBUTE],
                 $attributes[Route::PERMISSION_HIDDEN_ATTRIBUTE],
+                $attributes[Route::ADMIN_AREA_ATTRIBUTE],
             );
 
             return new RouteMatchResult(
@@ -73,6 +75,7 @@ final class SymfonyRouteMatcher
                 csrfExempt: $csrfExempt,
                 permission: $permission,
                 permissionHidden: $permissionHidden,
+                adminArea: $adminArea,
             );
         } catch (MethodNotAllowedException $exception) {
             return new RouteMatchResult(

@@ -8,7 +8,6 @@ use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Auth\CurrentUser;
 use Johncms\Router\MiddlewareInterface;
-use Johncms\Http\AdminAreaContext;
 use Johncms\Http\Request;
 use Johncms\System\i18n\Translator;
 use Johncms\View\RendererInterface;
@@ -28,7 +27,6 @@ final readonly class SuperAdminAccessMiddleware implements MiddlewareInterface
         private AccessCheckerInterface $accessChecker,
         private RendererInterface $renderer,
         private Translator $translator,
-        private AdminAreaContext $adminArea,
     ) {
     }
 
@@ -41,8 +39,6 @@ final readonly class SuperAdminAccessMiddleware implements MiddlewareInterface
         if (! $this->accessChecker->allows(CorePermissions::ADMIN_SETTINGS_MANAGE)) {
             return $this->renderForbidden();
         }
-
-        $this->adminArea->enter();
 
         return $next($request);
     }
