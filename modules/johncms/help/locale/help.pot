@@ -2,289 +2,289 @@ msgid ""
 msgstr ""
 "X-Domain: help\n"
 
-#: modules/help/src/Application/Controllers/AdminSmiliesController.php:42
-#: modules/help/src/Application/Controllers/AdminSmiliesController.php:50
-#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:54
+#: modules/johncms/help/src/Application/Controllers/AdminSmiliesController.php:42
+#: modules/johncms/help/src/Application/Controllers/AdminSmiliesController.php:50
+#: modules/johncms/help/src/Application/Controllers/SmiliesCatalogController.php:54
 msgid "For administration"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/AdminSmiliesController.php:44
+#: modules/johncms/help/src/Application/Controllers/AdminSmiliesController.php:44
 msgid "Access forbidden"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/AdminSmiliesController.php:52
-#: modules/help/src/Application/Controllers/AvatarCatalogController.php:29
-#: modules/help/src/Application/Controllers/AvatarListController.php:50
-#: modules/help/src/Application/Controllers/ForumRulesController.php:29
-#: modules/help/src/Application/Controllers/HelpIndexController.php:32
-#: modules/help/src/Application/Controllers/MySmiliesController.php:53
-#: modules/help/src/Application/Controllers/SetAvatarController.php:63
-#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:36
-#: modules/help/src/Application/Controllers/UserSmiliesController.php:53
+#: modules/johncms/help/src/Application/Controllers/AdminSmiliesController.php:52
+#: modules/johncms/help/src/Application/Controllers/AvatarCatalogController.php:29
+#: modules/johncms/help/src/Application/Controllers/AvatarListController.php:50
+#: modules/johncms/help/src/Application/Controllers/ForumRulesController.php:29
+#: modules/johncms/help/src/Application/Controllers/HelpIndexController.php:32
+#: modules/johncms/help/src/Application/Controllers/MySmiliesController.php:53
+#: modules/johncms/help/src/Application/Controllers/SetAvatarController.php:63
+#: modules/johncms/help/src/Application/Controllers/SmiliesCatalogController.php:36
+#: modules/johncms/help/src/Application/Controllers/UserSmiliesController.php:53
 msgid "Information, FAQ"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/AdminSmiliesController.php:53
-#: modules/help/src/Application/Controllers/AdminSmiliesController.php:63
-#: modules/help/src/Application/Controllers/MySmiliesController.php:54
-#: modules/help/src/Application/Controllers/MySmiliesController.php:64
-#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:34
-#: modules/help/src/Application/Controllers/UserSmiliesController.php:54
-#: modules/help/src/Application/Controllers/UserSmiliesController.php:64
+#: modules/johncms/help/src/Application/Controllers/AdminSmiliesController.php:53
+#: modules/johncms/help/src/Application/Controllers/AdminSmiliesController.php:63
+#: modules/johncms/help/src/Application/Controllers/MySmiliesController.php:54
+#: modules/johncms/help/src/Application/Controllers/MySmiliesController.php:64
+#: modules/johncms/help/src/Application/Controllers/SmiliesCatalogController.php:34
+#: modules/johncms/help/src/Application/Controllers/UserSmiliesController.php:54
+#: modules/johncms/help/src/Application/Controllers/UserSmiliesController.php:64
 msgid "Smiles"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/AvatarCatalogController.php:27
-#: modules/help/src/Application/Controllers/AvatarListController.php:51
-#: modules/help/src/Application/Controllers/SetAvatarController.php:64
-#: modules/help/templates/public/index.twig:11
+#: modules/johncms/help/src/Application/Controllers/AvatarCatalogController.php:27
+#: modules/johncms/help/src/Application/Controllers/AvatarListController.php:51
+#: modules/johncms/help/src/Application/Controllers/SetAvatarController.php:64
+#: modules/johncms/help/templates/public/index.twig:11
 msgid "Avatars"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/AvatarListController.php:38
-#: modules/help/src/Application/Controllers/SetAvatarController.php:51
-#: modules/help/src/Application/Controllers/UserSmiliesController.php:41
+#: modules/johncms/help/src/Application/Controllers/AvatarListController.php:38
+#: modules/johncms/help/src/Application/Controllers/SetAvatarController.php:51
+#: modules/johncms/help/src/Application/Controllers/UserSmiliesController.php:41
 msgid "Wrong data"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/AvatarListController.php:40
-#: modules/help/src/Application/Controllers/UserSmiliesController.php:43
+#: modules/johncms/help/src/Application/Controllers/AvatarListController.php:40
+#: modules/johncms/help/src/Application/Controllers/UserSmiliesController.php:43
 msgid "The directory does not exist"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/AvatarListController.php:42
-#: modules/help/src/Application/Controllers/MySmiliesController.php:45
-#: modules/help/src/Application/Controllers/SetAvatarController.php:39
-#: modules/help/src/Application/Controllers/SetAvatarController.php:55
-#: modules/help/src/Application/Controllers/SetAvatarController.php:89
-#: modules/help/src/Application/Controllers/SetMySmiliesController.php:44
-#: modules/help/src/Application/Controllers/UserSmiliesController.php:45
-#: modules/help/templates/public/catalog.twig:25
-#: modules/help/templates/public/components/list-footer.twig:19
-#: modules/help/templates/public/forum-rules.twig:41
-#: modules/help/templates/public/index.twig:15
+#: modules/johncms/help/src/Application/Controllers/AvatarListController.php:42
+#: modules/johncms/help/src/Application/Controllers/MySmiliesController.php:45
+#: modules/johncms/help/src/Application/Controllers/SetAvatarController.php:39
+#: modules/johncms/help/src/Application/Controllers/SetAvatarController.php:55
+#: modules/johncms/help/src/Application/Controllers/SetAvatarController.php:89
+#: modules/johncms/help/src/Application/Controllers/SetMySmiliesController.php:44
+#: modules/johncms/help/src/Application/Controllers/UserSmiliesController.php:45
+#: modules/johncms/help/templates/public/catalog.twig:25
+#: modules/johncms/help/templates/public/components/list-footer.twig:19
+#: modules/johncms/help/templates/public/forum-rules.twig:41
+#: modules/johncms/help/templates/public/index.twig:15
 msgid "Back"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/ForumRulesController.php:27
-#: modules/help/templates/public/index.twig:10
+#: modules/johncms/help/src/Application/Controllers/ForumRulesController.php:27
+#: modules/johncms/help/templates/public/index.twig:10
 msgid "Forum rules"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/MySmiliesController.php:41
-#: modules/help/src/Application/Controllers/SetAvatarController.php:35
-#: modules/help/src/Application/Controllers/SetMySmiliesController.php:40
+#: modules/johncms/help/src/Application/Controllers/MySmiliesController.php:41
+#: modules/johncms/help/src/Application/Controllers/SetAvatarController.php:35
+#: modules/johncms/help/src/Application/Controllers/SetMySmiliesController.php:40
 msgid "Access denied"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/MySmiliesController.php:43
-#: modules/help/src/Application/Controllers/SetAvatarController.php:37
-#: modules/help/src/Application/Controllers/SetMySmiliesController.php:42
+#: modules/johncms/help/src/Application/Controllers/MySmiliesController.php:43
+#: modules/johncms/help/src/Application/Controllers/SetAvatarController.php:37
+#: modules/johncms/help/src/Application/Controllers/SetMySmiliesController.php:42
 msgid "You are not logged in"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/MySmiliesController.php:51
-#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:46
-#: modules/help/templates/public/smilies-list.twig:24
+#: modules/johncms/help/src/Application/Controllers/MySmiliesController.php:51
+#: modules/johncms/help/src/Application/Controllers/SmiliesCatalogController.php:46
+#: modules/johncms/help/templates/public/smilies-list.twig:24
 msgid "My smilies"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/SetAvatarController.php:53
+#: modules/johncms/help/src/Application/Controllers/SetAvatarController.php:53
 msgid "File does not exist"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/SetAvatarController.php:61
+#: modules/johncms/help/src/Application/Controllers/SetAvatarController.php:61
 msgid "Set to Profile"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/SetAvatarController.php:75
+#: modules/johncms/help/src/Application/Controllers/SetAvatarController.php:75
 msgid "Avatar has been successfully applied"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/SetAvatarController.php:77
+#: modules/johncms/help/src/Application/Controllers/SetAvatarController.php:77
 msgid "Continue"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/SetAvatarController.php:87
+#: modules/johncms/help/src/Application/Controllers/SetAvatarController.php:87
 msgid "An error occurred"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/SetAvatarController.php:100
+#: modules/johncms/help/src/Application/Controllers/SetAvatarController.php:100
 msgid "Are you sure you want to set yourself this avatar?"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/SetAvatarController.php:103
+#: modules/johncms/help/src/Application/Controllers/SetAvatarController.php:103
 msgid "Save"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:89
-#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:84
+#: modules/johncms/help/src/Application/Controllers/SmiliesCatalogController.php:89
+#: modules/johncms/help/src/Application/UseCases/GetUserSmiliesUseCase.php:84
 msgid "Animals"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:90
-#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:85
+#: modules/johncms/help/src/Application/Controllers/SmiliesCatalogController.php:90
+#: modules/johncms/help/src/Application/UseCases/GetUserSmiliesUseCase.php:85
 msgid "Brawl, Weapons"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:91
-#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:86
+#: modules/johncms/help/src/Application/Controllers/SmiliesCatalogController.php:91
+#: modules/johncms/help/src/Application/UseCases/GetUserSmiliesUseCase.php:86
 msgid "Emotions"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:92
-#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:87
+#: modules/johncms/help/src/Application/Controllers/SmiliesCatalogController.php:92
+#: modules/johncms/help/src/Application/UseCases/GetUserSmiliesUseCase.php:87
 msgid "Flowers"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:93
-#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:88
+#: modules/johncms/help/src/Application/Controllers/SmiliesCatalogController.php:93
+#: modules/johncms/help/src/Application/UseCases/GetUserSmiliesUseCase.php:88
 msgid "Food, Alcohol"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:94
-#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:89
+#: modules/johncms/help/src/Application/Controllers/SmiliesCatalogController.php:94
+#: modules/johncms/help/src/Application/UseCases/GetUserSmiliesUseCase.php:89
 msgid "Gestures"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:95
-#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:90
+#: modules/johncms/help/src/Application/Controllers/SmiliesCatalogController.php:95
+#: modules/johncms/help/src/Application/UseCases/GetUserSmiliesUseCase.php:90
 msgid "Holidays"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:96
-#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:91
+#: modules/johncms/help/src/Application/Controllers/SmiliesCatalogController.php:96
+#: modules/johncms/help/src/Application/UseCases/GetUserSmiliesUseCase.php:91
 msgid "Love"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:97
-#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:92
+#: modules/johncms/help/src/Application/Controllers/SmiliesCatalogController.php:97
+#: modules/johncms/help/src/Application/UseCases/GetUserSmiliesUseCase.php:92
 msgid "Miscellaneous"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:98
-#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:93
+#: modules/johncms/help/src/Application/Controllers/SmiliesCatalogController.php:98
+#: modules/johncms/help/src/Application/UseCases/GetUserSmiliesUseCase.php:93
 msgid "Music, Dancing"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:99
-#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:94
+#: modules/johncms/help/src/Application/Controllers/SmiliesCatalogController.php:99
+#: modules/johncms/help/src/Application/UseCases/GetUserSmiliesUseCase.php:94
 msgid "Sports"
 msgstr ""
 
-#: modules/help/src/Application/Controllers/SmiliesCatalogController.php:100
-#: modules/help/src/Application/UseCases/GetUserSmiliesUseCase.php:95
+#: modules/johncms/help/src/Application/Controllers/SmiliesCatalogController.php:100
+#: modules/johncms/help/src/Application/UseCases/GetUserSmiliesUseCase.php:95
 msgid "Technology"
 msgstr ""
 
-#: modules/help/templates/public/avatar-list.twig:13
-#: modules/help/templates/public/catalog.twig:13
-#: modules/help/templates/public/my-smilies-list.twig:14
-#: modules/help/templates/public/smilies-list.twig:16
+#: modules/johncms/help/templates/public/avatar-list.twig:13
+#: modules/johncms/help/templates/public/catalog.twig:13
+#: modules/johncms/help/templates/public/my-smilies-list.twig:14
+#: modules/johncms/help/templates/public/smilies-list.twig:16
 msgid "The list is empty"
 msgstr ""
 
-#: modules/help/templates/public/components/list-footer.twig:15
+#: modules/johncms/help/templates/public/components/list-footer.twig:15
 msgid "Total:"
 msgstr ""
 
-#: modules/help/templates/public/confirm.twig:28
+#: modules/johncms/help/templates/public/confirm.twig:28
 msgid "Cancel"
 msgstr ""
 
-#: modules/help/templates/public/forum-rules.twig:8
+#: modules/johncms/help/templates/public/forum-rules.twig:8
 msgid "FORBIDDEN"
 msgstr ""
 
-#: modules/help/templates/public/forum-rules.twig:10
+#: modules/johncms/help/templates/public/forum-rules.twig:10
 msgid "Advertising messages"
 msgstr ""
 
-#: modules/help/templates/public/forum-rules.twig:11
+#: modules/johncms/help/templates/public/forum-rules.twig:11
 msgid "The messages containing direct propagation of racial, national and religious animosity"
 msgstr ""
 
-#: modules/help/templates/public/forum-rules.twig:12
+#: modules/johncms/help/templates/public/forum-rules.twig:12
 msgid "Any abusive, obscene, vulgar, slanderous, hateful, threatening and sexually-oriented messages or any other material that may violate any applicable laws"
 msgstr ""
 
-#: modules/help/templates/public/forum-rules.twig:13
+#: modules/johncms/help/templates/public/forum-rules.twig:13
 msgid "The messages obviously offending someone, espcially forum users"
 msgstr ""
 
-#: modules/help/templates/public/forum-rules.twig:14
+#: modules/johncms/help/templates/public/forum-rules.twig:14
 msgid "Purposely to deform a writing of nicknames of other users for the purpose of giving to the message an offensive shade"
 msgstr ""
 
-#: modules/help/templates/public/forum-rules.twig:15
+#: modules/johncms/help/templates/public/forum-rules.twig:15
 msgid "Publishing deleted by moderator messages repeatedly"
 msgstr ""
 
-#: modules/help/templates/public/forum-rules.twig:16
+#: modules/johncms/help/templates/public/forum-rules.twig:16
 msgid "Post messages not related to the topic"
 msgstr ""
 
-#: modules/help/templates/public/forum-rules.twig:17
+#: modules/johncms/help/templates/public/forum-rules.twig:17
 msgid "Continuing topics that have been closed by moderator"
 msgstr ""
 
-#: modules/help/templates/public/forum-rules.twig:20
+#: modules/johncms/help/templates/public/forum-rules.twig:20
 msgid "ABSOLUTELY FORBIDDEN"
 msgstr ""
 
-#: modules/help/templates/public/forum-rules.twig:22
+#: modules/johncms/help/templates/public/forum-rules.twig:22
 msgid "Writing in the public topics a discontent with inappropriate actions of other users and discussing about moderators working. Use private messages for this purpose"
 msgstr ""
 
-#: modules/help/templates/public/forum-rules.twig:23
+#: modules/johncms/help/templates/public/forum-rules.twig:23
 msgid "Register the nicknames having offensive tone for other users"
 msgstr ""
 
-#: modules/help/templates/public/forum-rules.twig:26
+#: modules/johncms/help/templates/public/forum-rules.twig:26
 msgid "UNACCEPTABLE"
 msgstr ""
 
-#: modules/help/templates/public/forum-rules.twig:28
+#: modules/johncms/help/templates/public/forum-rules.twig:28
 msgid "Quote full messages of the previous user and quote the messages already containing other quotes"
 msgstr ""
 
-#: modules/help/templates/public/forum-rules.twig:29
+#: modules/johncms/help/templates/public/forum-rules.twig:29
 msgid "Post messages only contains external link"
 msgstr ""
 
-#: modules/help/templates/public/forum-rules.twig:30
+#: modules/johncms/help/templates/public/forum-rules.twig:30
 msgid "Post messages written in translite"
 msgstr ""
 
-#: modules/help/templates/public/forum-rules.twig:31
+#: modules/johncms/help/templates/public/forum-rules.twig:31
 msgid "Posting of purposeless messages: consisting of smileys only or posts like \"Ok\", \"What?\", \"Who is there?\", etc."
 msgstr ""
 
-#: modules/help/templates/public/forum-rules.twig:36
+#: modules/johncms/help/templates/public/forum-rules.twig:36
 msgid "Message posted despite the above warnings will be changed or deleted."
 msgstr ""
 
-#: modules/help/templates/public/forum-rules.twig:37
+#: modules/johncms/help/templates/public/forum-rules.twig:37
 msgid "This rule applies to all members and moderators, repeated actions will make you get ban or even lose your account."
 msgstr ""
 
-#: modules/help/templates/public/index.twig:12
+#: modules/johncms/help/templates/public/index.twig:12
 msgid "Smilies"
 msgstr ""
 
-#: modules/help/templates/public/my-smilies-list.twig:15
+#: modules/johncms/help/templates/public/my-smilies-list.twig:15
 msgid "Add Smilies"
 msgstr ""
 
-#: modules/help/templates/public/my-smilies-list.twig:34
-#: modules/help/templates/public/smilies-list.twig:41
+#: modules/johncms/help/templates/public/my-smilies-list.twig:34
+#: modules/johncms/help/templates/public/smilies-list.twig:41
 msgid "or"
 msgstr ""
 
-#: modules/help/templates/public/my-smilies-list.twig:43
+#: modules/johncms/help/templates/public/my-smilies-list.twig:43
 msgid "Delete"
 msgstr ""
 
-#: modules/help/templates/public/smilies-list.twig:50
+#: modules/johncms/help/templates/public/smilies-list.twig:50
 msgid "Add"
 msgstr ""

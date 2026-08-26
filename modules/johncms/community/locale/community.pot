@@ -2,134 +2,134 @@ msgid ""
 msgstr ""
 "X-Domain: community\n"
 
-#: modules/community/src/Application/Controllers/AdministrationController.php:26
-#: modules/community/src/Application/Controllers/CommunityBirthdaysController.php:26
-#: modules/community/src/Application/Controllers/CommunityIndexController.php:21
-#: modules/community/src/Application/Controllers/CommunitySearchController.php:27
-#: modules/community/src/Application/Controllers/CommunityTopController.php:22
-#: modules/community/src/Application/Controllers/CommunityUsersController.php:26
-#: modules/community/src/Application/Services/CommunityPermissions.php:28
-#: modules/community/src/Application/UseCases/ViewIndexUseCase.php:21
+#: modules/johncms/community/src/Application/Controllers/AdministrationController.php:26
+#: modules/johncms/community/src/Application/Controllers/CommunityBirthdaysController.php:26
+#: modules/johncms/community/src/Application/Controllers/CommunityIndexController.php:21
+#: modules/johncms/community/src/Application/Controllers/CommunitySearchController.php:27
+#: modules/johncms/community/src/Application/Controllers/CommunityTopController.php:22
+#: modules/johncms/community/src/Application/Controllers/CommunityUsersController.php:26
+#: modules/johncms/community/src/Application/Services/CommunityPermissions.php:28
+#: modules/johncms/community/src/Application/UseCases/ViewIndexUseCase.php:21
 msgid "Community"
 msgstr ""
 
-#: modules/community/src/Application/Controllers/AdministrationController.php:30
-#: modules/community/templates/public/index.twig:32
+#: modules/johncms/community/src/Application/Controllers/AdministrationController.php:30
+#: modules/johncms/community/templates/public/index.twig:32
 msgid "Administration"
 msgstr ""
 
-#: modules/community/src/Application/Controllers/CommunityBirthdaysController.php:30
-#: modules/community/templates/public/index.twig:37
+#: modules/johncms/community/src/Application/Controllers/CommunityBirthdaysController.php:30
+#: modules/johncms/community/templates/public/index.twig:37
 msgid "Birthdays"
 msgstr ""
 
-#: modules/community/src/Application/Controllers/CommunitySearchController.php:31
-#: modules/community/templates/public/components/back-links.twig:4
+#: modules/johncms/community/src/Application/Controllers/CommunitySearchController.php:31
+#: modules/johncms/community/templates/public/components/back-links.twig:4
 msgid "User Search"
 msgstr ""
 
-#: modules/community/src/Application/Controllers/CommunityUsersController.php:30
+#: modules/johncms/community/src/Application/Controllers/CommunityUsersController.php:30
 msgid "List of users"
 msgstr ""
 
-#: modules/community/src/Application/Services/CommunityPermissions.php:27
+#: modules/johncms/community/src/Application/Services/CommunityPermissions.php:27
 msgid "Open the lists of the community"
 msgstr ""
 
-#: modules/community/src/Application/UseCases/ViewSearchUseCase.php:25
-#: modules/community/templates/public/index.twig:14
+#: modules/johncms/community/src/Application/UseCases/ViewSearchUseCase.php:25
+#: modules/johncms/community/templates/public/index.twig:14
 msgid "Nickname"
 msgstr ""
 
-#: modules/community/src/Application/UseCases/ViewSearchUseCase.php:25
+#: modules/johncms/community/src/Application/UseCases/ViewSearchUseCase.php:25
 msgid "Invalid length"
 msgstr ""
 
-#: modules/community/src/Application/UseCases/ViewTopUseCase.php:22
+#: modules/johncms/community/src/Application/UseCases/ViewTopUseCase.php:22
 msgid "Forum"
 msgstr ""
 
-#: modules/community/src/Application/UseCases/ViewTopUseCase.php:27
+#: modules/johncms/community/src/Application/UseCases/ViewTopUseCase.php:27
 msgid "Guestbook"
 msgstr ""
 
-#: modules/community/src/Application/UseCases/ViewTopUseCase.php:32
+#: modules/johncms/community/src/Application/UseCases/ViewTopUseCase.php:32
 msgid "Comments"
 msgstr ""
 
-#: modules/community/src/Application/UseCases/ViewTopUseCase.php:41
+#: modules/johncms/community/src/Application/UseCases/ViewTopUseCase.php:41
 msgid "Karma"
 msgstr ""
 
-#: modules/community/src/Application/UseCases/ViewTopUseCase.php:50
+#: modules/johncms/community/src/Application/UseCases/ViewTopUseCase.php:50
 msgid "Most active in Guestbook"
 msgstr ""
 
-#: modules/community/src/Application/UseCases/ViewTopUseCase.php:56
+#: modules/johncms/community/src/Application/UseCases/ViewTopUseCase.php:56
 msgid "Most commentators"
 msgstr ""
 
-#: modules/community/src/Application/UseCases/ViewTopUseCase.php:63
+#: modules/johncms/community/src/Application/UseCases/ViewTopUseCase.php:63
 msgid "Best Karma"
 msgstr ""
 
-#: modules/community/src/Application/UseCases/ViewTopUseCase.php:68
-#: modules/community/src/Application/UseCases/ViewTopUseCase.php:74
+#: modules/johncms/community/src/Application/UseCases/ViewTopUseCase.php:68
+#: modules/johncms/community/src/Application/UseCases/ViewTopUseCase.php:74
 msgid "Most active in Forum"
 msgstr ""
 
-#: modules/community/templates/public/components/back-links.twig:7
-#: modules/community/templates/public/top.twig:22
+#: modules/johncms/community/templates/public/components/back-links.twig:7
+#: modules/johncms/community/templates/public/top.twig:22
 msgid "Back"
 msgstr ""
 
-#: modules/community/templates/public/components/user-list.twig:16
+#: modules/johncms/community/templates/public/components/user-list.twig:16
 msgid "List is empty"
 msgstr ""
 
-#: modules/community/templates/public/components/user-list.twig:23
+#: modules/johncms/community/templates/public/components/user-list.twig:23
 msgid "Total"
 msgstr ""
 
-#: modules/community/templates/public/components/user-row.twig:53
-#: modules/community/templates/public/components/user-row.twig:62
+#: modules/johncms/community/templates/public/components/user-row.twig:53
+#: modules/johncms/community/templates/public/components/user-row.twig:62
 msgid "post"
 msgid_plural "posts"
 msgstr[0] ""
 
-#: modules/community/templates/public/components/user-row.twig:55
+#: modules/johncms/community/templates/public/components/user-row.twig:55
 msgid "comment"
 msgid_plural "comments"
 msgstr[0] ""
 
-#: modules/community/templates/public/components/user-row.twig:60
+#: modules/johncms/community/templates/public/components/user-row.twig:60
 msgid "point"
 msgid_plural "points"
 msgstr[0] ""
 
-#: modules/community/templates/public/index.twig:12
-#: modules/community/templates/public/search.twig:29
+#: modules/johncms/community/templates/public/index.twig:12
+#: modules/johncms/community/templates/public/search.twig:29
 msgid "Look for the User"
 msgstr ""
 
-#: modules/community/templates/public/index.twig:16
-#: modules/community/templates/public/search.twig:33
+#: modules/johncms/community/templates/public/index.twig:16
+#: modules/johncms/community/templates/public/search.twig:33
 msgid "Search"
 msgstr ""
 
-#: modules/community/templates/public/index.twig:19
-#: modules/community/templates/public/search.twig:36
+#: modules/johncms/community/templates/public/index.twig:19
+#: modules/johncms/community/templates/public/search.twig:36
 msgid "The search is performed by Nickname and are case-insensitive."
 msgstr ""
 
-#: modules/community/templates/public/index.twig:23
+#: modules/johncms/community/templates/public/index.twig:23
 msgid "Users"
 msgstr ""
 
-#: modules/community/templates/public/index.twig:42
+#: modules/johncms/community/templates/public/index.twig:42
 msgid "Top Activity"
 msgstr ""
 
-#: modules/community/templates/public/search.twig:31
+#: modules/johncms/community/templates/public/search.twig:31
 msgid "Username"
 msgstr ""

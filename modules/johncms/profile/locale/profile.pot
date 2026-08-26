@@ -2,1263 +2,1263 @@ msgid ""
 msgstr ""
 "X-Domain: profile\n"
 
-#: modules/profile/src/Application/Controllers/AccountController.php:23
-#: modules/profile/src/Application/Controllers/SettingsController.php:160
+#: modules/johncms/profile/src/Application/Controllers/AccountController.php:23
+#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:160
 msgid "My Account"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/ActivityController.php:61
-#: modules/profile/src/Application/Controllers/ActivityController.php:68
-#: modules/profile/src/Application/Controllers/ActivityController.php:71
-#: modules/profile/templates/public/statistics.twig:33
-#: modules/profile/templates/public/view.twig:236
+#: modules/johncms/profile/src/Application/Controllers/ActivityController.php:61
+#: modules/johncms/profile/src/Application/Controllers/ActivityController.php:68
+#: modules/johncms/profile/src/Application/Controllers/ActivityController.php:71
+#: modules/johncms/profile/templates/public/statistics.twig:33
+#: modules/johncms/profile/templates/public/view.twig:236
 msgid "Activity"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/ActivityController.php:98
+#: modules/johncms/profile/src/Application/Controllers/ActivityController.php:98
 msgid "Messages"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/ActivityController.php:103
+#: modules/johncms/profile/src/Application/Controllers/ActivityController.php:103
 msgid "Themes"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/ActivityController.php:108
-#: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:45
-#: modules/profile/templates/public/ban.twig:33
-#: modules/profile/templates/public/statistics.twig:37
+#: modules/johncms/profile/src/Application/Controllers/ActivityController.php:108
+#: modules/johncms/profile/src/Application/UseCases/GetBanHistoryUseCase.php:45
+#: modules/johncms/profile/templates/public/ban.twig:33
+#: modules/johncms/profile/templates/public/statistics.twig:37
 msgid "Comments"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/AvatarController.php:51
-#: modules/profile/src/Application/Controllers/PhotoController.php:51
+#: modules/johncms/profile/src/Application/Controllers/AvatarController.php:51
+#: modules/johncms/profile/src/Application/Controllers/PhotoController.php:51
 msgid "An error occurred"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/AvatarController.php:58
-#: modules/profile/src/Application/Controllers/AvatarController.php:70
-#: modules/profile/src/Application/Controllers/AvatarController.php:81
-#: modules/profile/src/Application/Controllers/AvatarController.php:114
+#: modules/johncms/profile/src/Application/Controllers/AvatarController.php:58
+#: modules/johncms/profile/src/Application/Controllers/AvatarController.php:70
+#: modules/johncms/profile/src/Application/Controllers/AvatarController.php:81
+#: modules/johncms/profile/src/Application/Controllers/AvatarController.php:114
 msgid "Upload Avatar"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/AvatarController.php:62
-#: modules/profile/src/Application/Controllers/ChangePasswordController.php:86
-#: modules/profile/src/Application/Controllers/PhotoController.php:62
+#: modules/johncms/profile/src/Application/Controllers/AvatarController.php:62
+#: modules/johncms/profile/src/Application/Controllers/ChangePasswordController.php:86
+#: modules/johncms/profile/src/Application/Controllers/PhotoController.php:62
 msgid "Repeat"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/AvatarController.php:72
+#: modules/johncms/profile/src/Application/Controllers/AvatarController.php:72
 msgid "The avatar is successfully uploaded"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/AvatarController.php:74
-#: modules/profile/src/Application/Controllers/ChangePasswordController.php:105
-#: modules/profile/src/Application/Controllers/KarmaController.php:125
-#: modules/profile/src/Application/Controllers/PhotoController.php:74
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:120
-#: modules/profile/templates/public/restore-password-set.twig:14
-#: modules/profile/templates/public/restore-password.twig:33
+#: modules/johncms/profile/src/Application/Controllers/AvatarController.php:74
+#: modules/johncms/profile/src/Application/Controllers/ChangePasswordController.php:105
+#: modules/johncms/profile/src/Application/Controllers/KarmaController.php:125
+#: modules/johncms/profile/src/Application/Controllers/PhotoController.php:74
+#: modules/johncms/profile/src/Application/Controllers/RestorePasswordController.php:120
+#: modules/johncms/profile/templates/public/restore-password-set.twig:14
+#: modules/johncms/profile/templates/public/restore-password.twig:33
 msgid "Continue"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/AvatarController.php:83
-#: modules/profile/src/Application/Controllers/EditProfileController.php:165
-#: modules/profile/src/Application/Controllers/PhotoController.php:83
-#: modules/profile/src/Application/UseCases/GetProfileViewUseCase.php:94
+#: modules/johncms/profile/src/Application/Controllers/AvatarController.php:83
+#: modules/johncms/profile/src/Application/Controllers/EditProfileController.php:165
+#: modules/johncms/profile/src/Application/Controllers/PhotoController.php:83
+#: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:94
 msgid "My Profile"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/AvatarController.php:83
-#: modules/profile/src/Application/Controllers/EditProfileController.php:165
-#: modules/profile/src/Application/Controllers/GuestbookController.php:44
-#: modules/profile/src/Application/Controllers/PhotoController.php:83
-#: modules/profile/templates/public/account.twig:13
+#: modules/johncms/profile/src/Application/Controllers/AvatarController.php:83
+#: modules/johncms/profile/src/Application/Controllers/EditProfileController.php:165
+#: modules/johncms/profile/src/Application/Controllers/GuestbookController.php:44
+#: modules/johncms/profile/src/Application/Controllers/PhotoController.php:83
+#: modules/johncms/profile/templates/public/account.twig:13
 msgid "Profile"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:102
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:102
 msgid "User banned"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:114
-#: modules/profile/src/Application/Controllers/BanController.php:137
-#: modules/profile/src/Application/Controllers/BanController.php:156
-#: modules/profile/src/Application/Controllers/BanController.php:177
-#: modules/profile/src/Application/Controllers/BanController.php:303
-#: modules/profile/src/Application/Controllers/BanController.php:315
-#: modules/profile/src/Application/Controllers/KarmaController.php:140
-#: modules/profile/src/Application/Controllers/KarmaController.php:162
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:114
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:137
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:156
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:177
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:303
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:315
+#: modules/johncms/profile/src/Application/Controllers/KarmaController.php:140
+#: modules/johncms/profile/src/Application/Controllers/KarmaController.php:162
 msgid "Wrong data"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:120
-#: modules/profile/src/Application/Controllers/BanController.php:144
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:120
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:144
 msgid "Ban termination"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:121
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:121
 msgid "Ban time is going to the end. Infrigement will be saved in the bans history"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:122
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:122
 msgid "Terminate Ban"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:144
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:144
 msgid "Ban terminated"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:160
-#: modules/profile/src/Application/Controllers/BanController.php:182
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:160
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:182
 msgid "Delete ban"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:161
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:161
 msgid "Removing ban along with a record in the bans history"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:162
-#: modules/profile/src/Application/UseCases/GetProfileViewUseCase.php:203
-#: modules/profile/templates/public/confirm-delete.twig:18
-#: modules/profile/templates/public/edit.twig:82
-#: modules/profile/templates/public/edit.twig:102
-#: modules/profile/templates/public/karma.twig:47
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:162
+#: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:203
+#: modules/johncms/profile/templates/public/confirm-delete.twig:18
+#: modules/johncms/profile/templates/public/edit.twig:82
+#: modules/johncms/profile/templates/public/edit.twig:102
+#: modules/johncms/profile/templates/public/karma.twig:47
 msgid "Delete"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:182
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:182
 msgid "Ban deleted"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:187
-#: modules/profile/src/Application/Controllers/BanController.php:202
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:187
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:202
 msgid "Violations history can be cleared by Supervisor only"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:192
-#: modules/profile/src/Application/Controllers/BanController.php:208
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:192
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:208
 msgid "Violations history"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:193
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:193
 msgid "Are you sure want to clean entire history of user violations?"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:194
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:194
 msgid "Clear"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:208
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:208
 msgid "Violations history cleared"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:213
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:213
 msgid "Violations History"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:215
-#: modules/profile/src/Application/Controllers/BanController.php:237
-#: modules/profile/src/Application/Controllers/KarmaController.php:198
-#: modules/profile/src/Application/Controllers/KarmaController.php:220
-#: modules/profile/src/Application/Controllers/KarmaController.php:241
-#: modules/profile/src/Application/Controllers/ProfileController.php:28
-#: modules/profile/src/Application/UseCases/GetProfileViewUseCase.php:94
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:215
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:237
+#: modules/johncms/profile/src/Application/Controllers/KarmaController.php:198
+#: modules/johncms/profile/src/Application/Controllers/KarmaController.php:220
+#: modules/johncms/profile/src/Application/Controllers/KarmaController.php:241
+#: modules/johncms/profile/src/Application/Controllers/ProfileController.php:28
+#: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:94
 msgid "User Profile"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/BanController.php:235
-#: modules/profile/src/Application/Controllers/BanController.php:276
-#: modules/profile/src/Application/Controllers/BanController.php:289
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:235
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:276
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:289
 msgid "Ban the User"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/ChangePasswordController.php:37
-#: modules/profile/src/Application/Controllers/ChangePasswordController.php:39
-#: modules/profile/src/Application/Controllers/ChangePasswordController.php:44
-#: modules/profile/src/Application/Controllers/ChangePasswordController.php:63
-#: modules/profile/src/Application/Controllers/ChangePasswordController.php:65
-#: modules/profile/src/Application/Controllers/ChangePasswordController.php:112
-#: modules/profile/templates/public/account.twig:68
-#: modules/profile/templates/public/edit.twig:234
+#: modules/johncms/profile/src/Application/Controllers/ChangePasswordController.php:37
+#: modules/johncms/profile/src/Application/Controllers/ChangePasswordController.php:39
+#: modules/johncms/profile/src/Application/Controllers/ChangePasswordController.php:44
+#: modules/johncms/profile/src/Application/Controllers/ChangePasswordController.php:63
+#: modules/johncms/profile/src/Application/Controllers/ChangePasswordController.php:65
+#: modules/johncms/profile/src/Application/Controllers/ChangePasswordController.php:112
+#: modules/johncms/profile/templates/public/account.twig:68
+#: modules/johncms/profile/templates/public/edit.twig:234
 msgid "Change Password"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/ChangePasswordController.php:103
+#: modules/johncms/profile/src/Application/Controllers/ChangePasswordController.php:103
 msgid "Password successfully changed"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/ConfirmNewEmailController.php:23
+#: modules/johncms/profile/src/Application/Controllers/ConfirmNewEmailController.php:23
 msgid "Email confirmation"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/EditProfileController.php:66
+#: modules/johncms/profile/src/Application/Controllers/EditProfileController.php:66
 msgid "Data saved"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/EditProfileController.php:78
+#: modules/johncms/profile/src/Application/Controllers/EditProfileController.php:78
 msgid "Avatar is successfully removed"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/EditProfileController.php:90
+#: modules/johncms/profile/src/Application/Controllers/EditProfileController.php:90
 msgid "Photo is successfully removed"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/EditProfileController.php:163
-#: modules/profile/src/Application/Controllers/EditProfileController.php:197
-#: modules/profile/templates/public/account.twig:67
+#: modules/johncms/profile/src/Application/Controllers/EditProfileController.php:163
+#: modules/johncms/profile/src/Application/Controllers/EditProfileController.php:197
+#: modules/johncms/profile/templates/public/account.twig:67
 msgid "Edit Profile"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/GuestbookController.php:37
-#: modules/profile/src/Application/Controllers/GuestbookController.php:45
-#: modules/profile/src/Application/Controllers/GuestbookController.php:59
-#: modules/profile/src/Application/Controllers/GuestbookController.php:74
-#: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:47
-#: modules/profile/templates/public/account.twig:23
-#: modules/profile/templates/public/ban.twig:37
-#: modules/profile/templates/public/statistics.twig:36
-#: modules/profile/templates/public/view.twig:239
+#: modules/johncms/profile/src/Application/Controllers/GuestbookController.php:37
+#: modules/johncms/profile/src/Application/Controllers/GuestbookController.php:45
+#: modules/johncms/profile/src/Application/Controllers/GuestbookController.php:59
+#: modules/johncms/profile/src/Application/Controllers/GuestbookController.php:74
+#: modules/johncms/profile/src/Application/UseCases/GetBanHistoryUseCase.php:47
+#: modules/johncms/profile/templates/public/account.twig:23
+#: modules/johncms/profile/templates/public/ban.twig:37
+#: modules/johncms/profile/templates/public/statistics.twig:36
+#: modules/johncms/profile/templates/public/view.twig:239
 msgid "Guestbook"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/IpHistoryController.php:29
-#: modules/profile/templates/public/view.twig:74
+#: modules/johncms/profile/src/Application/Controllers/IpHistoryController.php:29
+#: modules/johncms/profile/templates/public/view.twig:74
 msgid "IP History"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/KarmaController.php:65
-#: modules/profile/src/Application/Controllers/KarmaController.php:121
-#: modules/profile/src/Application/Controllers/KarmaController.php:199
-#: modules/profile/src/Application/Controllers/KarmaController.php:218
-#: modules/profile/src/Application/Controllers/KarmaController.php:221
-#: modules/profile/src/Application/Controllers/KarmaController.php:239
-#: modules/profile/src/Application/Controllers/KarmaController.php:242
-#: modules/profile/src/Application/Controllers/KarmaController.php:261
-#: modules/profile/src/Application/Controllers/KarmaController.php:275
-#: modules/profile/templates/public/view.twig:107
+#: modules/johncms/profile/src/Application/Controllers/KarmaController.php:65
+#: modules/johncms/profile/src/Application/Controllers/KarmaController.php:121
+#: modules/johncms/profile/src/Application/Controllers/KarmaController.php:199
+#: modules/johncms/profile/src/Application/Controllers/KarmaController.php:218
+#: modules/johncms/profile/src/Application/Controllers/KarmaController.php:221
+#: modules/johncms/profile/src/Application/Controllers/KarmaController.php:239
+#: modules/johncms/profile/src/Application/Controllers/KarmaController.php:242
+#: modules/johncms/profile/src/Application/Controllers/KarmaController.php:261
+#: modules/johncms/profile/src/Application/Controllers/KarmaController.php:275
+#: modules/johncms/profile/templates/public/view.twig:107
 msgid "Karma"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/KarmaController.php:81
+#: modules/johncms/profile/src/Application/Controllers/KarmaController.php:81
 msgid "New responses"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/KarmaController.php:123
+#: modules/johncms/profile/src/Application/Controllers/KarmaController.php:123
 msgid "You have successfully voted"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/KarmaController.php:146
+#: modules/johncms/profile/src/Application/Controllers/KarmaController.php:146
 msgid "Do you really want to delete comment?"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/KarmaController.php:178
+#: modules/johncms/profile/src/Application/Controllers/KarmaController.php:178
 msgid "Do you really want to delete all reviews about user?"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/KarmaController.php:230
+#: modules/johncms/profile/src/Application/Controllers/KarmaController.php:230
 msgid "Vote for"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/KarmaController.php:265
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:134
-#: modules/profile/templates/public/ban-history.twig:81
-#: modules/profile/templates/public/components/list-footer.twig:18
-#: modules/profile/templates/public/statistics.twig:41
+#: modules/johncms/profile/src/Application/Controllers/KarmaController.php:265
+#: modules/johncms/profile/src/Application/Controllers/RestorePasswordController.php:134
+#: modules/johncms/profile/templates/public/ban-history.twig:81
+#: modules/johncms/profile/templates/public/components/list-footer.twig:18
+#: modules/johncms/profile/templates/public/statistics.twig:41
 msgid "Back"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/KarmaController.php:286
+#: modules/johncms/profile/src/Application/Controllers/KarmaController.php:286
 msgid "Access forbidden"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/LinkedAccountsController.php:34
+#: modules/johncms/profile/src/Application/Controllers/LinkedAccountsController.php:34
 msgid "Linked accounts"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/LinkedAccountsController.php:35
-#: modules/profile/src/Application/Controllers/SessionsController.php:40
+#: modules/johncms/profile/src/Application/Controllers/LinkedAccountsController.php:35
+#: modules/johncms/profile/src/Application/Controllers/SessionsController.php:40
 msgid "Personal"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/LinkedAccountsController.php:58
+#: modules/johncms/profile/src/Application/Controllers/LinkedAccountsController.php:58
 msgid "The service has been detached"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/PhotoController.php:58
-#: modules/profile/src/Application/Controllers/PhotoController.php:70
-#: modules/profile/src/Application/Controllers/PhotoController.php:81
-#: modules/profile/src/Application/Controllers/PhotoController.php:114
+#: modules/johncms/profile/src/Application/Controllers/PhotoController.php:58
+#: modules/johncms/profile/src/Application/Controllers/PhotoController.php:70
+#: modules/johncms/profile/src/Application/Controllers/PhotoController.php:81
+#: modules/johncms/profile/src/Application/Controllers/PhotoController.php:114
 msgid "Upload Photo"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/PhotoController.php:72
+#: modules/johncms/profile/src/Application/Controllers/PhotoController.php:72
 msgid "The photo is successfully uploaded"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/ResetSettingsController.php:26
+#: modules/johncms/profile/src/Application/Controllers/ResetSettingsController.php:26
 msgid "Reset user settings"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/ResetSettingsController.php:46
+#: modules/johncms/profile/src/Application/Controllers/ResetSettingsController.php:46
 #, php-format
 msgid "For user %s default settings were set."
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:35
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:47
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:77
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:86
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:104
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:116
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:130
-#: modules/profile/templates/public/restore-password.twig:11
+#: modules/johncms/profile/src/Application/Controllers/RestorePasswordController.php:35
+#: modules/johncms/profile/src/Application/Controllers/RestorePasswordController.php:47
+#: modules/johncms/profile/src/Application/Controllers/RestorePasswordController.php:77
+#: modules/johncms/profile/src/Application/Controllers/RestorePasswordController.php:86
+#: modules/johncms/profile/src/Application/Controllers/RestorePasswordController.php:104
+#: modules/johncms/profile/src/Application/Controllers/RestorePasswordController.php:116
+#: modules/johncms/profile/src/Application/Controllers/RestorePasswordController.php:130
+#: modules/johncms/profile/templates/public/restore-password.twig:11
 msgid "Restore password"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:59
+#: modules/johncms/profile/src/Application/Controllers/RestorePasswordController.php:59
 msgid "Incorrect code"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:79
+#: modules/johncms/profile/src/Application/Controllers/RestorePasswordController.php:79
 msgid "Check your e-mail for further information"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/RestorePasswordController.php:118
+#: modules/johncms/profile/src/Application/Controllers/RestorePasswordController.php:118
 msgid "Password successfully changed.<br>New password sent to your E-mail address."
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/SessionsController.php:39
-#: modules/profile/templates/public/account.twig:69
+#: modules/johncms/profile/src/Application/Controllers/SessionsController.php:39
+#: modules/johncms/profile/templates/public/account.twig:69
 msgid "My Devices"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/SessionsController.php:67
+#: modules/johncms/profile/src/Application/Controllers/SessionsController.php:67
 msgid "The device has been signed out"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/SessionsController.php:82
+#: modules/johncms/profile/src/Application/Controllers/SessionsController.php:82
 #, php-format
 msgid "%d device has been signed out"
 msgid_plural "%d devices have been signed out"
 msgstr[0] ""
 
-#: modules/profile/src/Application/Controllers/SettingsController.php:51
-#: modules/profile/src/Application/Controllers/SettingsController.php:181
+#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:51
+#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:181
 msgid "General setting"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/SettingsController.php:97
-#: modules/profile/src/Application/Controllers/SettingsController.php:118
-#: modules/profile/src/Application/Controllers/SettingsController.php:200
+#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:97
+#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:118
+#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:200
 msgid "Settings saved successfully"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/SettingsController.php:102
-#: modules/profile/src/Application/Controllers/SettingsController.php:204
+#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:102
+#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:204
 msgid "Default settings are set"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/SettingsController.php:128
-#: modules/profile/src/Application/Controllers/SettingsController.php:186
-#: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:46
-#: modules/profile/templates/public/ban.twig:43
-#: modules/profile/templates/public/statistics.twig:35
+#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:128
+#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:186
+#: modules/johncms/profile/src/Application/UseCases/GetBanHistoryUseCase.php:46
+#: modules/johncms/profile/templates/public/ban.twig:43
+#: modules/johncms/profile/templates/public/statistics.twig:35
 msgid "Forum"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/SettingsController.php:145
-#: modules/profile/src/Application/Controllers/SettingsController.php:191
+#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:145
+#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:191
 msgid "Mail"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/SettingsController.php:161
-#: modules/profile/templates/public/account.twig:64
+#: modules/johncms/profile/src/Application/Controllers/SettingsController.php:161
+#: modules/johncms/profile/templates/public/account.twig:64
 msgid "Settings"
 msgstr ""
 
-#: modules/profile/src/Application/Controllers/StatisticsController.php:28
-#: modules/profile/src/Application/Controllers/StatisticsController.php:35
-#: modules/profile/src/Application/Controllers/StatisticsController.php:38
-#: modules/profile/templates/public/statistics.twig:9
-#: modules/profile/templates/public/view.twig:237
+#: modules/johncms/profile/src/Application/Controllers/StatisticsController.php:28
+#: modules/johncms/profile/src/Application/Controllers/StatisticsController.php:35
+#: modules/johncms/profile/src/Application/Controllers/StatisticsController.php:38
+#: modules/johncms/profile/templates/public/statistics.twig:9
+#: modules/johncms/profile/templates/public/view.twig:237
 msgid "Statistic"
 msgstr ""
 
-#: modules/profile/src/Application/Services/ProfilePermissions.php:76
+#: modules/johncms/profile/src/Application/Services/ProfilePermissions.php:76
 msgid "Open an account awaiting confirmation"
 msgstr ""
 
-#: modules/profile/src/Application/Services/ProfilePermissions.php:83
+#: modules/johncms/profile/src/Application/Services/ProfilePermissions.php:83
 msgid "Edit the profile of another account"
 msgstr ""
 
-#: modules/profile/src/Application/Services/ProfilePermissions.php:90
+#: modules/johncms/profile/src/Application/Services/ProfilePermissions.php:90
 msgid "Change the password of another account"
 msgstr ""
 
-#: modules/profile/src/Application/Services/ProfilePermissions.php:97
+#: modules/johncms/profile/src/Application/Services/ProfilePermissions.php:97
 msgid "Reset the settings of another account"
 msgstr ""
 
-#: modules/profile/src/Application/Services/ProfilePermissions.php:104
+#: modules/johncms/profile/src/Application/Services/ProfilePermissions.php:104
 msgid "Read the notes the staff keep about an account"
 msgstr ""
 
-#: modules/profile/src/Application/Services/ProfilePermissions.php:111
+#: modules/johncms/profile/src/Application/Services/ProfilePermissions.php:111
 msgid "Read the e-mail address of an account that hides it"
 msgstr ""
 
-#: modules/profile/src/Application/Services/ProfilePermissions.php:118
+#: modules/johncms/profile/src/Application/Services/ProfilePermissions.php:118
 msgid "Ban from the site, private messages, comments and the guestbook"
 msgstr ""
 
-#: modules/profile/src/Application/Services/ProfilePermissions.php:125
+#: modules/johncms/profile/src/Application/Services/ProfilePermissions.php:125
 msgid "Ban from the forum"
 msgstr ""
 
-#: modules/profile/src/Application/Services/ProfilePermissions.php:132
+#: modules/johncms/profile/src/Application/Services/ProfilePermissions.php:132
 msgid "Ban from the library"
 msgstr ""
 
-#: modules/profile/src/Application/Services/ProfilePermissions.php:139
+#: modules/johncms/profile/src/Application/Services/ProfilePermissions.php:139
 msgid "Ban without an end date and lift a ban"
 msgstr ""
 
-#: modules/profile/src/Application/Services/ProfilePermissions.php:146
+#: modules/johncms/profile/src/Application/Services/ProfilePermissions.php:146
 msgid "Delete the record of a ban"
 msgstr ""
 
-#: modules/profile/src/Application/Services/ProfilePermissions.php:151
+#: modules/johncms/profile/src/Application/Services/ProfilePermissions.php:151
 msgid "Delete a karma entry"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/BanUserUseCase.php:34
+#: modules/johncms/profile/src/Application/UseCases/BanUserUseCase.php:34
 msgid "Reason not specified"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/BanUserUseCase.php:41
+#: modules/johncms/profile/src/Application/UseCases/BanUserUseCase.php:41
 msgid "There is no required data"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/BanUserUseCase.php:45
+#: modules/johncms/profile/src/Application/UseCases/BanUserUseCase.php:45
 msgid "You have no rights to ban in this section"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/BanUserUseCase.php:49
+#: modules/johncms/profile/src/Application/UseCases/BanUserUseCase.php:49
 msgid "Ban already active"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/BanUserUseCase.php:64
+#: modules/johncms/profile/src/Application/UseCases/BanUserUseCase.php:64
 msgid "System"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/BanUserUseCase.php:64
-#: modules/profile/src/Application/UseCases/GetProfileViewUseCase.php:206
+#: modules/johncms/profile/src/Application/UseCases/BanUserUseCase.php:64
+#: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:206
 msgid "Ban"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/CancelBanUseCase.php:34
+#: modules/johncms/profile/src/Application/UseCases/CancelBanUseCase.php:34
 msgid "Ban not active"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/ChangePasswordUseCase.php:38
-#: modules/profile/src/Application/UseCases/ChangePasswordUseCase.php:41
+#: modules/johncms/profile/src/Application/UseCases/ChangePasswordUseCase.php:38
+#: modules/johncms/profile/src/Application/UseCases/ChangePasswordUseCase.php:41
 msgid "It is necessary to fill in all fields"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/ChangePasswordUseCase.php:45
+#: modules/johncms/profile/src/Application/UseCases/ChangePasswordUseCase.php:45
 msgid "Old password entered incorrectly"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/ChangePasswordUseCase.php:49
+#: modules/johncms/profile/src/Application/UseCases/ChangePasswordUseCase.php:49
 msgid "The password confirmation you entered is wrong"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/ChangePasswordUseCase.php:53
+#: modules/johncms/profile/src/Application/UseCases/ChangePasswordUseCase.php:53
 msgid "The password must contain at least 3 characters"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/CompletePasswordRecoveryUseCase.php:42
-#: modules/profile/src/Application/UseCases/GetRecoveryContextUseCase.php:29
+#: modules/johncms/profile/src/Application/UseCases/CompletePasswordRecoveryUseCase.php:42
+#: modules/johncms/profile/src/Application/UseCases/GetRecoveryContextUseCase.php:29
 msgid "Time allotted for the password recovery has been exceeded"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/CompletePasswordRecoveryUseCase.php:54
+#: modules/johncms/profile/src/Application/UseCases/CompletePasswordRecoveryUseCase.php:54
 msgid "Your new password"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/GetBanFormContextUseCase.php:43
+#: modules/johncms/profile/src/Application/UseCases/GetBanFormContextUseCase.php:43
 msgid "You do not have enought rights to ban this user"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:42
-#: modules/profile/templates/public/ban.twig:25
+#: modules/johncms/profile/src/Application/UseCases/GetBanHistoryUseCase.php:42
+#: modules/johncms/profile/templates/public/ban.twig:25
 msgid "Full block"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:43
-#: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:44
-#: modules/profile/templates/public/ban.twig:29
+#: modules/johncms/profile/src/Application/UseCases/GetBanHistoryUseCase.php:43
+#: modules/johncms/profile/src/Application/UseCases/GetBanHistoryUseCase.php:44
+#: modules/johncms/profile/templates/public/ban.twig:29
 msgid "Private messages"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:48
-#: modules/profile/templates/public/ban.twig:49
+#: modules/johncms/profile/src/Application/UseCases/GetBanHistoryUseCase.php:48
+#: modules/johncms/profile/templates/public/ban.twig:49
 msgid "Library"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:67
+#: modules/johncms/profile/src/Application/UseCases/GetBanHistoryUseCase.php:67
 msgid "Cancel Ban"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:70
+#: modules/johncms/profile/src/Application/UseCases/GetBanHistoryUseCase.php:70
 msgid "Delete Ban"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/GetBanHistoryUseCase.php:77
-#: modules/profile/templates/public/ban.twig:75
+#: modules/johncms/profile/src/Application/UseCases/GetBanHistoryUseCase.php:77
+#: modules/johncms/profile/templates/public/ban.twig:75
 msgid "Till cancel"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/GetEditContextUseCase.php:45
+#: modules/johncms/profile/src/Application/UseCases/GetEditContextUseCase.php:45
 msgid "You cannot edit profile of higher administration"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/GetKarmaListUseCase.php:66
+#: modules/johncms/profile/src/Application/UseCases/GetKarmaListUseCase.php:66
 msgid "All"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/GetKarmaListUseCase.php:67
-#: modules/profile/templates/public/karma-vote.twig:24
-#: modules/profile/templates/public/view.twig:122
+#: modules/johncms/profile/src/Application/UseCases/GetKarmaListUseCase.php:67
+#: modules/johncms/profile/templates/public/karma-vote.twig:24
+#: modules/johncms/profile/templates/public/view.twig:122
 msgid "Positive"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/GetKarmaListUseCase.php:68
-#: modules/profile/templates/public/karma-vote.twig:28
-#: modules/profile/templates/public/view.twig:128
+#: modules/johncms/profile/src/Application/UseCases/GetKarmaListUseCase.php:68
+#: modules/johncms/profile/templates/public/karma-vote.twig:28
+#: modules/johncms/profile/templates/public/view.twig:128
 msgid "Negative"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/GetProfileViewUseCase.php:170
-#: modules/profile/templates/public/statistics.twig:15
+#: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:170
+#: modules/johncms/profile/templates/public/statistics.twig:15
 msgid "Pending confirmation"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/GetProfileViewUseCase.php:173
+#: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:173
 msgid "E-mail address is not confirmed"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/GetProfileViewUseCase.php:193
+#: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:193
 msgid "Add to Contacts"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/GetProfileViewUseCase.php:194
+#: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:194
 msgid "Remove from Contacts"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/GetProfileViewUseCase.php:200
+#: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:200
 msgid "Edit"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/GetRecoveryContextUseCase.php:35
-#: modules/profile/src/Application/UseCases/SendPasswordRecoveryUseCase.php:40
+#: modules/johncms/profile/src/Application/UseCases/GetRecoveryContextUseCase.php:35
+#: modules/johncms/profile/src/Application/UseCases/SendPasswordRecoveryUseCase.php:40
 msgid "User does not exists"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/GetVoteContextUseCase.php:39
+#: modules/johncms/profile/src/Application/UseCases/GetVoteContextUseCase.php:39
 msgid "You are not allowed to vote for users"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/GetVoteContextUseCase.php:46
+#: modules/johncms/profile/src/Application/UseCases/GetVoteContextUseCase.php:46
 msgid "It is forbidden to vote for administration"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/GetVoteContextUseCase.php:50
+#: modules/johncms/profile/src/Application/UseCases/GetVoteContextUseCase.php:50
 msgid "Cheating karma is forbidden"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/GetVoteContextUseCase.php:55
+#: modules/johncms/profile/src/Application/UseCases/GetVoteContextUseCase.php:55
 #, php-format
 msgid "Users can take part in voting if they have stayed on a site not less %s and their score on the forum %d posts."
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/GetVoteContextUseCase.php:56
+#: modules/johncms/profile/src/Application/UseCases/GetVoteContextUseCase.php:56
 msgid "days"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/GetVoteContextUseCase.php:63
+#: modules/johncms/profile/src/Application/UseCases/GetVoteContextUseCase.php:63
 msgid "You can vote for single user just one time for 24 hours"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/GetVoteContextUseCase.php:69
+#: modules/johncms/profile/src/Application/UseCases/GetVoteContextUseCase.php:69
 #, php-format
 msgid "You have exceeded the limit of votes. New voices will be added %s"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/SendPasswordRecoveryUseCase.php:35
+#: modules/johncms/profile/src/Application/UseCases/SendPasswordRecoveryUseCase.php:35
 msgid "The required fields are not filled"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/SendPasswordRecoveryUseCase.php:44
+#: modules/johncms/profile/src/Application/UseCases/SendPasswordRecoveryUseCase.php:44
 msgid "Invalid Email address"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/SendPasswordRecoveryUseCase.php:48
+#: modules/johncms/profile/src/Application/UseCases/SendPasswordRecoveryUseCase.php:48
 msgid "Password can be recovered 1 time per day"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/SendPasswordRecoveryUseCase.php:61
+#: modules/johncms/profile/src/Application/UseCases/SendPasswordRecoveryUseCase.php:61
 msgid "Password recovery"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/UpdateProfileUseCase.php:112
+#: modules/johncms/profile/src/Application/UseCases/UpdateProfileUseCase.php:112
 msgid "Confirm email change"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/UpdateProfileUseCase.php:129
+#: modules/johncms/profile/src/Application/UseCases/UpdateProfileUseCase.php:129
 msgid "The procedure for changing the email address was started"
 msgstr ""
 
-#: modules/profile/src/Application/UseCases/UploadAvatarUseCase.php:29
-#: modules/profile/src/Application/UseCases/UploadPhotoUseCase.php:31
+#: modules/johncms/profile/src/Application/UseCases/UploadAvatarUseCase.php:29
+#: modules/johncms/profile/src/Application/UseCases/UploadPhotoUseCase.php:31
 msgid "The weight of the file exceeds"
 msgstr ""
 
-#: modules/profile/templates/public/account.twig:9
+#: modules/johncms/profile/templates/public/account.twig:9
 msgid "My Pages"
 msgstr ""
 
-#: modules/profile/templates/public/account.twig:16
+#: modules/johncms/profile/templates/public/account.twig:16
 msgid "Statistics"
 msgstr ""
 
-#: modules/profile/templates/public/account.twig:19
-#: modules/profile/templates/public/view.twig:238
+#: modules/johncms/profile/templates/public/account.twig:19
+#: modules/johncms/profile/templates/public/view.twig:238
 msgid "Photo Album"
 msgstr ""
 
-#: modules/profile/templates/public/account.twig:28
+#: modules/johncms/profile/templates/public/account.twig:28
 msgid "My Mailbox"
 msgstr ""
 
-#: modules/profile/templates/public/account.twig:32
+#: modules/johncms/profile/templates/public/account.twig:32
 msgid "Received"
 msgstr ""
 
-#: modules/profile/templates/public/account.twig:39
+#: modules/johncms/profile/templates/public/account.twig:39
 msgid "Sent"
 msgstr ""
 
-#: modules/profile/templates/public/account.twig:46
+#: modules/johncms/profile/templates/public/account.twig:46
 msgid "Files"
 msgstr ""
 
-#: modules/profile/templates/public/account.twig:51
-#: modules/profile/templates/public/account.twig:55
-#: modules/profile/templates/public/edit.twig:160
-#: modules/profile/templates/public/view.twig:190
+#: modules/johncms/profile/templates/public/account.twig:51
+#: modules/johncms/profile/templates/public/account.twig:55
+#: modules/johncms/profile/templates/public/edit.twig:160
+#: modules/johncms/profile/templates/public/view.twig:190
 msgid "Contacts"
 msgstr ""
 
-#: modules/profile/templates/public/account.twig:59
+#: modules/johncms/profile/templates/public/account.twig:59
 msgid "Blocked"
 msgstr ""
 
-#: modules/profile/templates/public/account.twig:70
+#: modules/johncms/profile/templates/public/account.twig:70
 msgid "System Settings"
 msgstr ""
 
-#: modules/profile/templates/public/activity.twig:20
-#: modules/profile/templates/public/ip-history.twig:27
-#: modules/profile/templates/public/karma.twig:23
+#: modules/johncms/profile/templates/public/activity.twig:20
+#: modules/johncms/profile/templates/public/ip-history.twig:27
+#: modules/johncms/profile/templates/public/karma.twig:23
 msgid "The list is empty"
 msgstr ""
 
-#: modules/profile/templates/public/ban-cancel.twig:19
-#: modules/profile/templates/public/ban.twig:86
-#: modules/profile/templates/public/confirm-delete.twig:19
-#: modules/profile/templates/public/edit.twig:261
-#: modules/profile/templates/public/forum-settings.twig:51
-#: modules/profile/templates/public/images.twig:35
-#: modules/profile/templates/public/karma-vote.twig:48
-#: modules/profile/templates/public/mail-settings.twig:32
-#: modules/profile/templates/public/password.twig:48
-#: modules/profile/templates/public/settings.twig:90
+#: modules/johncms/profile/templates/public/ban-cancel.twig:19
+#: modules/johncms/profile/templates/public/ban.twig:86
+#: modules/johncms/profile/templates/public/confirm-delete.twig:19
+#: modules/johncms/profile/templates/public/edit.twig:261
+#: modules/johncms/profile/templates/public/forum-settings.twig:51
+#: modules/johncms/profile/templates/public/images.twig:35
+#: modules/johncms/profile/templates/public/karma-vote.twig:48
+#: modules/johncms/profile/templates/public/mail-settings.twig:32
+#: modules/johncms/profile/templates/public/password.twig:48
+#: modules/johncms/profile/templates/public/settings.twig:90
 msgid "Cancel"
 msgstr ""
 
-#: modules/profile/templates/public/ban-history.twig:14
+#: modules/johncms/profile/templates/public/ban-history.twig:14
 msgid "User:"
 msgstr ""
 
-#: modules/profile/templates/public/ban-history.twig:25
+#: modules/johncms/profile/templates/public/ban-history.twig:25
 msgid "Active"
 msgstr ""
 
-#: modules/profile/templates/public/ban-history.twig:34
+#: modules/johncms/profile/templates/public/ban-history.twig:34
 msgid "Blocked by:"
 msgstr ""
 
-#: modules/profile/templates/public/ban-history.twig:38
+#: modules/johncms/profile/templates/public/ban-history.twig:38
 msgid "Time:"
 msgstr ""
 
-#: modules/profile/templates/public/ban-history.twig:42
+#: modules/johncms/profile/templates/public/ban-history.twig:42
 msgid "Remains:"
 msgstr ""
 
-#: modules/profile/templates/public/ban-history.twig:59
+#: modules/johncms/profile/templates/public/ban-history.twig:59
 msgid "List is empty"
 msgstr ""
 
-#: modules/profile/templates/public/ban-history.twig:66
+#: modules/johncms/profile/templates/public/ban-history.twig:66
 msgid "Total"
 msgstr ""
 
-#: modules/profile/templates/public/ban-history.twig:75
+#: modules/johncms/profile/templates/public/ban-history.twig:75
 msgid "Clear history"
 msgstr ""
 
-#: modules/profile/templates/public/ban.twig:19
+#: modules/johncms/profile/templates/public/ban.twig:19
 msgid "Ban:"
 msgstr ""
 
-#: modules/profile/templates/public/ban.twig:21
+#: modules/johncms/profile/templates/public/ban.twig:21
 msgid "Ban type"
 msgstr ""
 
-#: modules/profile/templates/public/ban.twig:53
+#: modules/johncms/profile/templates/public/ban.twig:53
 msgid "Ban time"
 msgstr ""
 
-#: modules/profile/templates/public/ban.twig:55
+#: modules/johncms/profile/templates/public/ban.twig:55
 msgid "Time"
 msgstr ""
 
-#: modules/profile/templates/public/ban.twig:60
+#: modules/johncms/profile/templates/public/ban.twig:60
 msgid "Minutes (60 max.)"
 msgstr ""
 
-#: modules/profile/templates/public/ban.twig:64
+#: modules/johncms/profile/templates/public/ban.twig:64
 msgid "Hours (24 max.)"
 msgstr ""
 
-#: modules/profile/templates/public/ban.twig:69
+#: modules/johncms/profile/templates/public/ban.twig:69
 msgid "Days (30 max.)"
 msgstr ""
 
-#: modules/profile/templates/public/ban.twig:80
+#: modules/johncms/profile/templates/public/ban.twig:80
 msgid "Reason"
 msgstr ""
 
-#: modules/profile/templates/public/ban.twig:85
+#: modules/johncms/profile/templates/public/ban.twig:85
 msgid "Apply Ban"
 msgstr ""
 
-#: modules/profile/templates/public/components/list-footer.twig:13
+#: modules/johncms/profile/templates/public/components/list-footer.twig:13
 msgid "Total:"
 msgstr ""
 
-#: modules/profile/templates/public/components/message-row.twig:18
+#: modules/johncms/profile/templates/public/components/message-row.twig:18
 msgid "To message"
 msgstr ""
 
-#: modules/profile/templates/public/confirm-new-email.twig:10
+#: modules/johncms/profile/templates/public/confirm-new-email.twig:10
 msgid "Thanks! Your e-mail has been successfully confirmed."
 msgstr ""
 
-#: modules/profile/templates/public/confirm-new-email.twig:12
+#: modules/johncms/profile/templates/public/confirm-new-email.twig:12
 msgid "Error when confirming e-mail. Invalid confirmation code."
 msgstr ""
 
-#: modules/profile/templates/public/edit.twig:30
-#: modules/profile/templates/public/restore-password.twig:13
-#: modules/profile/templates/public/restore-password.twig:19
+#: modules/johncms/profile/templates/public/edit.twig:30
+#: modules/johncms/profile/templates/public/restore-password.twig:13
+#: modules/johncms/profile/templates/public/restore-password.twig:19
 msgid "Username"
 msgstr ""
 
-#: modules/profile/templates/public/edit.twig:35
-#: modules/profile/templates/public/edit.twig:42
-#: modules/profile/templates/public/edit.twig:51
+#: modules/johncms/profile/templates/public/edit.twig:35
+#: modules/johncms/profile/templates/public/edit.twig:42
+#: modules/johncms/profile/templates/public/edit.twig:51
 msgid "Nickname"
 msgstr ""
 
-#: modules/profile/templates/public/edit.twig:47
+#: modules/johncms/profile/templates/public/edit.twig:47
 msgid "Min.2, Max. 20"
 msgstr ""
 
-#: modules/profile/templates/public/edit.twig:55
-#: modules/profile/templates/public/edit.twig:61
-#: modules/profile/templates/public/view.twig:153
+#: modules/johncms/profile/templates/public/edit.twig:55
+#: modules/johncms/profile/templates/public/edit.twig:61
+#: modules/johncms/profile/templates/public/view.twig:153
 msgid "Status"
 msgstr ""
 
-#: modules/profile/templates/public/edit.twig:65
+#: modules/johncms/profile/templates/public/edit.twig:65
 msgid "Max. 50"
 msgstr ""
 
-#: modules/profile/templates/public/edit.twig:69
+#: modules/johncms/profile/templates/public/edit.twig:69
 msgid "Avatar"
 msgstr ""
 
-#: modules/profile/templates/public/edit.twig:77
-#: modules/profile/templates/public/edit.twig:100
+#: modules/johncms/profile/templates/public/edit.twig:77
+#: modules/johncms/profile/templates/public/edit.twig:100
 msgid "Upload"
 msgstr ""
 
-#: modules/profile/templates/public/edit.twig:79
+#: modules/johncms/profile/templates/public/edit.twig:79
 msgid "Select in Catalog"
 msgstr ""
 
-#: modules/profile/templates/public/edit.twig:89
-#: modules/profile/templates/public/edit.twig:93
-#: modules/profile/templates/public/view.twig:145
+#: modules/johncms/profile/templates/public/edit.twig:89
+#: modules/johncms/profile/templates/public/edit.twig:93
+#: modules/johncms/profile/templates/public/view.twig:145
 msgid "Photo"
 msgstr ""
 
-#: modules/profile/templates/public/edit.twig:107
+#: modules/johncms/profile/templates/public/edit.twig:107
 msgid "Personal info"
 msgstr ""
 
-#: modules/profile/templates/public/edit.twig:110
-#: modules/profile/templates/public/edit.twig:116
+#: modules/johncms/profile/templates/public/edit.twig:110
+#: modules/johncms/profile/templates/public/edit.twig:116
 msgid "Your name"
 msgstr ""
 
-#: modules/profile/templates/public/edit.twig:122
+#: modules/johncms/profile/templates/public/edit.twig:122
 msgid "Date of birth (d.m.y)"
 msgstr ""
 
-#: modules/profile/templates/public/edit.twig:125
+#: modules/johncms/profile/templates/public/edit.twig:125
 msgid "Day"
 msgstr ""
 
-#: modules/profile/templates/public/edit.twig:131
+#: modules/johncms/profile/templates/public/edit.twig:131
 msgid "Month"
 msgstr ""
 
-#: modules/profile/templates/public/edit.twig:137
+#: modules/johncms/profile/templates/public/edit.twig:137
 msgid "Year"
 msgstr ""
 
-#: modules/profile/templates/public/edit.twig:145
-#: modules/profile/templates/public/edit.twig:151
-#: modules/profile/templates/public/view.twig:177
+#: modules/johncms/profile/templates/public/edit.twig:145
+#: modules/johncms/profile/templates/public/edit.twig:151
+#: modules/johncms/profile/templates/public/view.twig:177
 msgid "City, Country"
 msgstr ""
 
-#: modules/profile/templates/public/edit.twig:156
+#: modules/johncms/profile/templates/public/edit.twig:156
 msgid "About myself"
 msgstr ""
 
-#: modules/profile/templates/public/edit.twig:162
-#: modules/profile/templates/public/edit.twig:168
-#: modules/profile/templates/public/view.twig:193
+#: modules/johncms/profile/templates/public/edit.twig:162
+#: modules/johncms/profile/templates/public/edit.twig:168
+#: modules/johncms/profile/templates/public/view.twig:193
 msgid "Phone number"
 msgstr ""
 
-#: modules/profile/templates/public/edit.twig:173
-#: modules/profile/templates/public/edit.twig:179
-#: modules/profile/templates/public/view.twig:199
+#: modules/johncms/profile/templates/public/edit.twig:173
+#: modules/johncms/profile/templates/public/edit.twig:179
+#: modules/johncms/profile/templates/public/view.twig:199
 msgid "E-mail"
 msgstr ""
 
-#: modules/profile/templates/public/edit.twig:184
+#: modules/johncms/profile/templates/public/edit.twig:184
 msgid "The new email address is:"
 msgstr ""
 
-#: modules/profile/templates/public/edit.twig:185
+#: modules/johncms/profile/templates/public/edit.twig:185
 msgid "Please check your email and confirm it."
 msgstr ""
 
-#: modules/profile/templates/public/edit.twig:192
+#: modules/johncms/profile/templates/public/edit.twig:192
 msgid "Show in Profile"
 msgstr ""
 
-#: modules/profile/templates/public/edit.twig:194
+#: modules/johncms/profile/templates/public/edit.twig:194
 msgid "Warning! Write your e-mail correctly. Your password will be sent to the email address on record for this account."
 msgstr ""
 
-#: modules/profile/templates/public/edit.twig:197
-#: modules/profile/templates/public/edit.twig:203
-#: modules/profile/templates/public/view.twig:208
+#: modules/johncms/profile/templates/public/edit.twig:197
+#: modules/johncms/profile/templates/public/edit.twig:203
+#: modules/johncms/profile/templates/public/view.twig:208
 msgid "Skype"
 msgstr ""
 
-#: modules/profile/templates/public/edit.twig:209
-#: modules/profile/templates/public/edit.twig:215
-#: modules/profile/templates/public/view.twig:215
+#: modules/johncms/profile/templates/public/edit.twig:209
+#: modules/johncms/profile/templates/public/edit.twig:215
+#: modules/johncms/profile/templates/public/view.twig:215
 msgid "Site"
 msgstr ""
 
-#: modules/profile/templates/public/edit.twig:221
+#: modules/johncms/profile/templates/public/edit.twig:221
 msgid "Administrative Functions"
 msgstr ""
 
-#: modules/profile/templates/public/edit.twig:224
+#: modules/johncms/profile/templates/public/edit.twig:224
 msgid "Admin notes"
 msgstr ""
 
-#: modules/profile/templates/public/edit.twig:231
+#: modules/johncms/profile/templates/public/edit.twig:231
 msgid "Prohibit Karma"
 msgstr ""
 
-#: modules/profile/templates/public/edit.twig:236
+#: modules/johncms/profile/templates/public/edit.twig:236
 msgid "Reset User options to default"
 msgstr ""
 
-#: modules/profile/templates/public/edit.twig:240
+#: modules/johncms/profile/templates/public/edit.twig:240
 msgid "Select gender"
 msgstr ""
 
-#: modules/profile/templates/public/edit.twig:243
-#: modules/profile/templates/public/view.twig:167
+#: modules/johncms/profile/templates/public/edit.twig:243
+#: modules/johncms/profile/templates/public/view.twig:167
 msgid "Man"
 msgstr ""
 
-#: modules/profile/templates/public/edit.twig:247
-#: modules/profile/templates/public/view.twig:169
+#: modules/johncms/profile/templates/public/edit.twig:247
+#: modules/johncms/profile/templates/public/view.twig:169
 msgid "Woman"
 msgstr ""
 
-#: modules/profile/templates/public/edit.twig:252
+#: modules/johncms/profile/templates/public/edit.twig:252
 msgid "Position on the Site"
 msgstr ""
 
-#: modules/profile/templates/public/edit.twig:254
+#: modules/johncms/profile/templates/public/edit.twig:254
 msgid "Roles of the account"
 msgstr ""
 
-#: modules/profile/templates/public/edit.twig:260
-#: modules/profile/templates/public/forum-settings.twig:50
-#: modules/profile/templates/public/images.twig:34
-#: modules/profile/templates/public/mail-settings.twig:31
-#: modules/profile/templates/public/password.twig:47
-#: modules/profile/templates/public/settings.twig:89
+#: modules/johncms/profile/templates/public/edit.twig:260
+#: modules/johncms/profile/templates/public/forum-settings.twig:50
+#: modules/johncms/profile/templates/public/images.twig:34
+#: modules/johncms/profile/templates/public/mail-settings.twig:31
+#: modules/johncms/profile/templates/public/password.twig:47
+#: modules/johncms/profile/templates/public/settings.twig:89
 msgid "Save"
 msgstr ""
 
-#: modules/profile/templates/public/forum-settings.twig:19
+#: modules/johncms/profile/templates/public/forum-settings.twig:19
 msgid "Basic settings"
 msgstr ""
 
-#: modules/profile/templates/public/forum-settings.twig:23
+#: modules/johncms/profile/templates/public/forum-settings.twig:23
 msgid "Inverse sorting"
 msgstr ""
 
-#: modules/profile/templates/public/forum-settings.twig:27
+#: modules/johncms/profile/templates/public/forum-settings.twig:27
 msgid "Use the form of a quick answer"
 msgstr ""
 
-#: modules/profile/templates/public/forum-settings.twig:31
+#: modules/johncms/profile/templates/public/forum-settings.twig:31
 msgid "Preview of messages"
 msgstr ""
 
-#: modules/profile/templates/public/forum-settings.twig:34
+#: modules/johncms/profile/templates/public/forum-settings.twig:34
 msgid "Attach first post"
 msgstr ""
 
-#: modules/profile/templates/public/forum-settings.twig:38
+#: modules/johncms/profile/templates/public/forum-settings.twig:38
 msgid "Always"
 msgstr ""
 
-#: modules/profile/templates/public/forum-settings.twig:42
+#: modules/johncms/profile/templates/public/forum-settings.twig:42
 msgid "In unread topics"
 msgstr ""
 
-#: modules/profile/templates/public/forum-settings.twig:46
+#: modules/johncms/profile/templates/public/forum-settings.twig:46
 msgid "Never"
 msgstr ""
 
-#: modules/profile/templates/public/forum-settings.twig:52
-#: modules/profile/templates/public/settings.twig:93
+#: modules/johncms/profile/templates/public/forum-settings.twig:52
+#: modules/johncms/profile/templates/public/settings.twig:93
 msgid "Reset Settings"
 msgstr ""
 
-#: modules/profile/templates/public/images.twig:25
+#: modules/johncms/profile/templates/public/images.twig:25
 msgid "Choose file"
 msgstr ""
 
-#: modules/profile/templates/public/images.twig:29
+#: modules/johncms/profile/templates/public/images.twig:29
 msgid "Allowed image formats: JPG, PNG, GIF. File size should not exceed %d kb.<br>The new image will replace old (if was)."
 msgstr ""
 
-#: modules/profile/templates/public/ip-history.twig:19
-#: modules/profile/templates/public/sessions.twig:31
+#: modules/johncms/profile/templates/public/ip-history.twig:19
+#: modules/johncms/profile/templates/public/sessions.twig:31
 msgid "IP address"
 msgstr ""
 
-#: modules/profile/templates/public/ip-history.twig:20
+#: modules/johncms/profile/templates/public/ip-history.twig:20
 msgid "Date"
 msgstr ""
 
-#: modules/profile/templates/public/karma-vote.twig:21
+#: modules/johncms/profile/templates/public/karma-vote.twig:21
 msgid "Type of vote"
 msgstr ""
 
-#: modules/profile/templates/public/karma-vote.twig:32
+#: modules/johncms/profile/templates/public/karma-vote.twig:32
 msgid "Votes quantity"
 msgstr ""
 
-#: modules/profile/templates/public/karma-vote.twig:41
+#: modules/johncms/profile/templates/public/karma-vote.twig:41
 msgid "Comment"
 msgstr ""
 
-#: modules/profile/templates/public/karma-vote.twig:43
+#: modules/johncms/profile/templates/public/karma-vote.twig:43
 msgid "Min. 2, Max. 500 characters"
 msgstr ""
 
-#: modules/profile/templates/public/karma-vote.twig:47
-#: modules/profile/templates/public/view.twig:134
+#: modules/johncms/profile/templates/public/karma-vote.twig:47
+#: modules/johncms/profile/templates/public/view.twig:134
 msgid "Vote"
 msgstr ""
 
-#: modules/profile/templates/public/karma.twig:54
+#: modules/johncms/profile/templates/public/karma.twig:54
 msgid "Reset Karma"
 msgstr ""
 
-#: modules/profile/templates/public/linked-accounts.twig:24
+#: modules/johncms/profile/templates/public/linked-accounts.twig:24
 msgid "Unavailable"
 msgstr ""
 
-#: modules/profile/templates/public/linked-accounts.twig:29
+#: modules/johncms/profile/templates/public/linked-accounts.twig:29
 msgid "Linked"
 msgstr ""
 
-#: modules/profile/templates/public/linked-accounts.twig:35
+#: modules/johncms/profile/templates/public/linked-accounts.twig:35
 msgid "Detach"
 msgstr ""
 
-#: modules/profile/templates/public/linked-accounts.twig:39
+#: modules/johncms/profile/templates/public/linked-accounts.twig:39
 msgid "No services are linked to your account"
 msgstr ""
 
-#: modules/profile/templates/public/linked-accounts.twig:44
+#: modules/johncms/profile/templates/public/linked-accounts.twig:44
 msgid "Link another service"
 msgstr ""
 
-#: modules/profile/templates/public/mail-settings.twig:19
+#: modules/johncms/profile/templates/public/mail-settings.twig:19
 msgid "Who can write you?"
 msgstr ""
 
-#: modules/profile/templates/public/mail-settings.twig:23
+#: modules/johncms/profile/templates/public/mail-settings.twig:23
 msgid "All can write"
 msgstr ""
 
-#: modules/profile/templates/public/mail-settings.twig:27
+#: modules/johncms/profile/templates/public/mail-settings.twig:27
 msgid "Only my contacts"
 msgstr ""
 
-#: modules/profile/templates/public/password.twig:15
-#: modules/profile/templates/public/password.twig:21
+#: modules/johncms/profile/templates/public/password.twig:15
+#: modules/johncms/profile/templates/public/password.twig:21
 msgid "Enter old password"
 msgstr ""
 
-#: modules/profile/templates/public/password.twig:27
-#: modules/profile/templates/public/password.twig:33
+#: modules/johncms/profile/templates/public/password.twig:27
+#: modules/johncms/profile/templates/public/password.twig:33
 msgid "Enter new password"
 msgstr ""
 
-#: modules/profile/templates/public/password.twig:37
-#: modules/profile/templates/public/password.twig:43
+#: modules/johncms/profile/templates/public/password.twig:37
+#: modules/johncms/profile/templates/public/password.twig:43
 msgid "Repeat password"
 msgstr ""
 
-#: modules/profile/templates/public/restore-password-set.twig:12
+#: modules/johncms/profile/templates/public/restore-password-set.twig:12
 msgid "A new password will be generated and sent to the E-mail address specified in your profile."
 msgstr ""
 
-#: modules/profile/templates/public/restore-password.twig:23
-#: modules/profile/templates/public/restore-password.twig:29
+#: modules/johncms/profile/templates/public/restore-password.twig:23
+#: modules/johncms/profile/templates/public/restore-password.twig:29
 msgid "Your E-mail"
 msgstr ""
 
-#: modules/profile/templates/public/restore-password.twig:37
+#: modules/johncms/profile/templates/public/restore-password.twig:37
 msgid "Password will be send to E-mail address specified in your profile.<br />WARNING !! If E-mail address has not been specified in your profile, you will not be able to recover your password."
 msgstr ""
 
-#: modules/profile/templates/public/sessions.twig:16
+#: modules/johncms/profile/templates/public/sessions.twig:16
 msgid "Here are the devices your account is currently signed in on. Sign out any of them if you do not recognise it."
 msgstr ""
 
-#: modules/profile/templates/public/sessions.twig:25
+#: modules/johncms/profile/templates/public/sessions.twig:25
 msgid "Unknown device"
 msgstr ""
 
-#: modules/profile/templates/public/sessions.twig:27
+#: modules/johncms/profile/templates/public/sessions.twig:27
 msgid "This device"
 msgstr ""
 
-#: modules/profile/templates/public/sessions.twig:32
+#: modules/johncms/profile/templates/public/sessions.twig:32
 msgid "Last activity"
 msgstr ""
 
-#: modules/profile/templates/public/sessions.twig:33
+#: modules/johncms/profile/templates/public/sessions.twig:33
 msgid "Signed in"
 msgstr ""
 
-#: modules/profile/templates/public/sessions.twig:40
+#: modules/johncms/profile/templates/public/sessions.twig:40
 msgid "Sign out"
 msgstr ""
 
-#: modules/profile/templates/public/sessions.twig:40
+#: modules/johncms/profile/templates/public/sessions.twig:40
 msgid "Close"
 msgstr ""
 
-#: modules/profile/templates/public/sessions.twig:46
+#: modules/johncms/profile/templates/public/sessions.twig:46
 msgid "No active devices"
 msgstr ""
 
-#: modules/profile/templates/public/sessions.twig:54
+#: modules/johncms/profile/templates/public/sessions.twig:54
 msgid "Sign out on all other devices"
 msgstr ""
 
-#: modules/profile/templates/public/settings.twig:23
+#: modules/johncms/profile/templates/public/settings.twig:23
 msgid "Time settings"
 msgstr ""
 
-#: modules/profile/templates/public/settings.twig:25
-#: modules/profile/templates/public/settings.twig:33
+#: modules/johncms/profile/templates/public/settings.twig:25
+#: modules/johncms/profile/templates/public/settings.twig:33
 msgid "Shift of time"
 msgstr ""
 
-#: modules/profile/templates/public/settings.twig:36
+#: modules/johncms/profile/templates/public/settings.twig:36
 msgid "System time"
 msgstr ""
 
-#: modules/profile/templates/public/settings.twig:40
+#: modules/johncms/profile/templates/public/settings.twig:40
 msgid "System Functions"
 msgstr ""
 
-#: modules/profile/templates/public/settings.twig:43
+#: modules/johncms/profile/templates/public/settings.twig:43
 msgid "Direct URL"
 msgstr ""
 
-#: modules/profile/templates/public/settings.twig:47
+#: modules/johncms/profile/templates/public/settings.twig:47
 msgid "Youtube Player"
 msgstr ""
 
-#: modules/profile/templates/public/settings.twig:50
+#: modules/johncms/profile/templates/public/settings.twig:50
 msgid "Text entering"
 msgstr ""
 
-#: modules/profile/templates/public/settings.twig:52
-#: modules/profile/templates/public/settings.twig:59
+#: modules/johncms/profile/templates/public/settings.twig:52
+#: modules/johncms/profile/templates/public/settings.twig:59
 msgid "Height of field"
 msgstr ""
 
-#: modules/profile/templates/public/settings.twig:63
+#: modules/johncms/profile/templates/public/settings.twig:63
 msgid "Appearance"
 msgstr ""
 
-#: modules/profile/templates/public/settings.twig:65
-#: modules/profile/templates/public/settings.twig:72
+#: modules/johncms/profile/templates/public/settings.twig:65
+#: modules/johncms/profile/templates/public/settings.twig:72
 msgid "Size of Lists"
 msgstr ""
 
-#: modules/profile/templates/public/settings.twig:77
-#: modules/profile/templates/public/settings.twig:79
+#: modules/johncms/profile/templates/public/settings.twig:77
+#: modules/johncms/profile/templates/public/settings.twig:79
 msgid "Select Language"
 msgstr ""
 
-#: modules/profile/templates/public/settings.twig:82
+#: modules/johncms/profile/templates/public/settings.twig:82
 msgid "Site Default"
 msgstr ""
 
-#: modules/profile/templates/public/statistics.twig:17
+#: modules/johncms/profile/templates/public/statistics.twig:17
 msgid "Registration confirmed"
 msgstr ""
 
-#: modules/profile/templates/public/statistics.twig:19
+#: modules/johncms/profile/templates/public/statistics.twig:19
 msgid "Free registration"
 msgstr ""
 
-#: modules/profile/templates/public/statistics.twig:24
+#: modules/johncms/profile/templates/public/statistics.twig:24
 msgid "Registered"
 msgstr ""
 
-#: modules/profile/templates/public/statistics.twig:28
-#: modules/profile/templates/public/view.twig:32
-#: modules/profile/templates/public/view.twig:57
+#: modules/johncms/profile/templates/public/statistics.twig:28
+#: modules/johncms/profile/templates/public/view.twig:32
+#: modules/johncms/profile/templates/public/view.twig:57
 msgid "Last visit"
 msgstr ""
 
-#: modules/profile/templates/public/view.twig:32
+#: modules/johncms/profile/templates/public/view.twig:32
 msgid "Online"
 msgstr ""
 
-#: modules/profile/templates/public/view.twig:44
+#: modules/johncms/profile/templates/public/view.twig:44
 msgid "User is banned"
 msgstr ""
 
-#: modules/profile/templates/public/view.twig:47
+#: modules/johncms/profile/templates/public/view.twig:47
 msgid "Reason:"
 msgstr ""
 
-#: modules/profile/templates/public/view.twig:53
+#: modules/johncms/profile/templates/public/view.twig:53
 msgid "Violations"
 msgstr ""
 
-#: modules/profile/templates/public/view.twig:62
+#: modules/johncms/profile/templates/public/view.twig:62
 msgid "User Agent"
 msgstr ""
 
-#: modules/profile/templates/public/view.twig:64
+#: modules/johncms/profile/templates/public/view.twig:64
 msgid "Ip"
 msgstr ""
 
-#: modules/profile/templates/public/view.twig:65
-#: modules/profile/templates/public/view.twig:68
+#: modules/johncms/profile/templates/public/view.twig:65
+#: modules/johncms/profile/templates/public/view.twig:68
 msgid "Whois"
 msgstr ""
 
-#: modules/profile/templates/public/view.twig:83
+#: modules/johncms/profile/templates/public/view.twig:83
 msgid "Write"
 msgstr ""
 
-#: modules/profile/templates/public/view.twig:86
+#: modules/johncms/profile/templates/public/view.twig:86
 msgid "Unblock"
 msgstr ""
 
-#: modules/profile/templates/public/view.twig:88
+#: modules/johncms/profile/templates/public/view.twig:88
 msgid "Block"
 msgstr ""
 
-#: modules/profile/templates/public/view.twig:92
+#: modules/johncms/profile/templates/public/view.twig:92
 msgid "Actions"
 msgstr ""
 
-#: modules/profile/templates/public/view.twig:101
+#: modules/johncms/profile/templates/public/view.twig:101
 msgid "Edit profile"
 msgstr ""
 
-#: modules/profile/templates/public/view.twig:114
+#: modules/johncms/profile/templates/public/view.twig:114
 msgid "vote"
 msgid_plural "votes"
 msgstr[0] ""
 
-#: modules/profile/templates/public/view.twig:142
+#: modules/johncms/profile/templates/public/view.twig:142
 msgid "Information"
 msgstr ""
 
-#: modules/profile/templates/public/view.twig:159
+#: modules/johncms/profile/templates/public/view.twig:159
 msgid "Birthday"
 msgstr ""
 
-#: modules/profile/templates/public/view.twig:164
+#: modules/johncms/profile/templates/public/view.twig:164
 msgid "Gender"
 msgstr ""
 
-#: modules/profile/templates/public/view.twig:171
+#: modules/johncms/profile/templates/public/view.twig:171
 msgid "Not specified"
 msgstr ""
 
-#: modules/profile/templates/public/view.twig:202
+#: modules/johncms/profile/templates/public/view.twig:202
 msgid "hidden"
 msgstr ""
 
-#: modules/profile/templates/public/view.twig:226
+#: modules/johncms/profile/templates/public/view.twig:226
 msgid "Admin Notes"
 msgstr ""

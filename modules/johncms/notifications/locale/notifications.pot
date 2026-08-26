@@ -2,78 +2,78 @@ msgid ""
 msgstr ""
 "X-Domain: notifications\n"
 
-#: modules/notifications/src/Application/Controllers/ClearController.php:22
+#: modules/johncms/notifications/src/Application/Controllers/ClearController.php:22
 msgid "Notifications are cleared!"
 msgstr ""
 
-#: modules/notifications/src/Application/Controllers/IndexController.php:26
-#: modules/notifications/src/Application/Controllers/IndexController.php:37
-#: modules/notifications/src/Application/Controllers/IndexController.php:43
-#: modules/notifications/src/Application/Controllers/SettingsController.php:30
+#: modules/johncms/notifications/src/Application/Controllers/IndexController.php:26
+#: modules/johncms/notifications/src/Application/Controllers/IndexController.php:37
+#: modules/johncms/notifications/src/Application/Controllers/IndexController.php:43
+#: modules/johncms/notifications/src/Application/Controllers/SettingsController.php:30
 msgid "Notifications"
 msgstr ""
 
-#: modules/notifications/src/Application/Controllers/SettingsController.php:28
-#: modules/notifications/templates/public/index.twig:72
+#: modules/johncms/notifications/src/Application/Controllers/SettingsController.php:28
+#: modules/johncms/notifications/templates/public/index.twig:72
 msgid "Settings"
 msgstr ""
 
-#: modules/notifications/src/Application/Controllers/SettingsController.php:36
+#: modules/johncms/notifications/src/Application/Controllers/SettingsController.php:36
 msgid "Settings saved!"
 msgstr ""
 
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:56
+#: modules/johncms/notifications/src/Application/UseCases/GetNotificationListUseCase.php:56
 msgid "Users on registration"
 msgstr ""
 
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:65
+#: modules/johncms/notifications/src/Application/UseCases/GetNotificationListUseCase.php:65
 msgid "Articles on moderation"
 msgstr ""
 
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:74
+#: modules/johncms/notifications/src/Application/UseCases/GetNotificationListUseCase.php:74
 msgid "Downloads on moderation"
 msgstr ""
 
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:83
+#: modules/johncms/notifications/src/Application/UseCases/GetNotificationListUseCase.php:83
 msgid "Ban"
 msgstr ""
 
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:92
+#: modules/johncms/notifications/src/Application/UseCases/GetNotificationListUseCase.php:92
 msgid "New forum posts"
 msgstr ""
 
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:101
+#: modules/johncms/notifications/src/Application/UseCases/GetNotificationListUseCase.php:101
 msgid "Mail"
 msgstr ""
 
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:110
+#: modules/johncms/notifications/src/Application/UseCases/GetNotificationListUseCase.php:110
 msgid "Guestbook"
 msgstr ""
 
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:119
+#: modules/johncms/notifications/src/Application/UseCases/GetNotificationListUseCase.php:119
 msgid "Comments"
 msgstr ""
 
-#: modules/notifications/templates/public/index.twig:17
+#: modules/johncms/notifications/templates/public/index.twig:17
 msgid "All notifications have already been read"
 msgstr ""
 
-#: modules/notifications/templates/public/index.twig:59
+#: modules/johncms/notifications/templates/public/index.twig:59
 msgid "Total"
 msgstr ""
 
-#: modules/notifications/templates/public/index.twig:67
+#: modules/johncms/notifications/templates/public/index.twig:67
 msgid "Clear notifications"
 msgstr ""
 
-#: modules/notifications/templates/public/settings.twig:27
+#: modules/johncms/notifications/templates/public/settings.twig:27
 msgid "Display the number of unread messages in the forum"
 msgstr ""
 
-#: modules/notifications/templates/public/settings.twig:31
+#: modules/johncms/notifications/templates/public/settings.twig:31
 msgid "Save"
 msgstr ""
 
-#: modules/notifications/templates/public/settings.twig:32
+#: modules/johncms/notifications/templates/public/settings.twig:32
 msgid "Cancel"
 msgstr ""

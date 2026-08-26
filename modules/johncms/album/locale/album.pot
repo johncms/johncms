@@ -2,568 +2,568 @@ msgid ""
 msgstr ""
 "X-Domain: album\n"
 
-#: modules/album/src/Application/Controllers/AlbumIndexController.php:25
-#: modules/album/src/Application/Controllers/DeleteAlbumController.php:38
-#: modules/album/src/Application/Controllers/DeleteAlbumController.php:98
-#: modules/album/src/Application/Controllers/DeletePhotoController.php:37
-#: modules/album/src/Application/Controllers/DownloadPhotoController.php:44
-#: modules/album/src/Application/Controllers/DownloadPhotoController.php:48
-#: modules/album/src/Application/Controllers/EditAlbumController.php:163
-#: modules/album/src/Application/Controllers/EditAlbumController.php:195
-#: modules/album/src/Application/Controllers/EditPhotoController.php:65
-#: modules/album/src/Application/Controllers/MovePhotoController.php:61
-#: modules/album/src/Application/Controllers/PhotoCommentsController.php:46
-#: modules/album/src/Application/Controllers/ShowAlbumController.php:61
-#: modules/album/src/Application/Controllers/ShowAlbumController.php:83
-#: modules/album/src/Application/Controllers/ShowAlbumController.php:101
-#: modules/album/src/Application/Controllers/ShowPhotoController.php:48
-#: modules/album/src/Application/Controllers/ShowPhotoController.php:76
-#: modules/album/src/Application/Controllers/SortAlbumController.php:67
-#: modules/album/src/Application/Controllers/TopController.php:30
-#: modules/album/src/Application/Controllers/UploadPhotoController.php:80
-#: modules/album/src/Application/Controllers/UserAlbumsController.php:35
-#: modules/album/src/Application/Controllers/UserAlbumsController.php:70
-#: modules/album/src/Application/Controllers/UsersListController.php:33
-#: modules/album/src/Application/Controllers/VotePhotoController.php:51
-#: modules/album/templates/public/index.twig:20
+#: modules/johncms/album/src/Application/Controllers/AlbumIndexController.php:25
+#: modules/johncms/album/src/Application/Controllers/DeleteAlbumController.php:38
+#: modules/johncms/album/src/Application/Controllers/DeleteAlbumController.php:98
+#: modules/johncms/album/src/Application/Controllers/DeletePhotoController.php:37
+#: modules/johncms/album/src/Application/Controllers/DownloadPhotoController.php:44
+#: modules/johncms/album/src/Application/Controllers/DownloadPhotoController.php:48
+#: modules/johncms/album/src/Application/Controllers/EditAlbumController.php:163
+#: modules/johncms/album/src/Application/Controllers/EditAlbumController.php:195
+#: modules/johncms/album/src/Application/Controllers/EditPhotoController.php:65
+#: modules/johncms/album/src/Application/Controllers/MovePhotoController.php:61
+#: modules/johncms/album/src/Application/Controllers/PhotoCommentsController.php:46
+#: modules/johncms/album/src/Application/Controllers/ShowAlbumController.php:61
+#: modules/johncms/album/src/Application/Controllers/ShowAlbumController.php:83
+#: modules/johncms/album/src/Application/Controllers/ShowAlbumController.php:101
+#: modules/johncms/album/src/Application/Controllers/ShowPhotoController.php:48
+#: modules/johncms/album/src/Application/Controllers/ShowPhotoController.php:76
+#: modules/johncms/album/src/Application/Controllers/SortAlbumController.php:67
+#: modules/johncms/album/src/Application/Controllers/TopController.php:30
+#: modules/johncms/album/src/Application/Controllers/UploadPhotoController.php:80
+#: modules/johncms/album/src/Application/Controllers/UserAlbumsController.php:35
+#: modules/johncms/album/src/Application/Controllers/UserAlbumsController.php:70
+#: modules/johncms/album/src/Application/Controllers/UsersListController.php:33
+#: modules/johncms/album/src/Application/Controllers/VotePhotoController.php:51
+#: modules/johncms/album/templates/public/index.twig:20
 msgid "Albums"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/DeleteAlbumController.php:36
+#: modules/johncms/album/src/Application/Controllers/DeleteAlbumController.php:36
 msgid "Delete album:"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/DeleteAlbumController.php:39
-#: modules/album/src/Application/Controllers/DeletePhotoController.php:38
-#: modules/album/src/Application/Controllers/EditAlbumController.php:164
-#: modules/album/src/Application/Controllers/EditPhotoController.php:66
-#: modules/album/src/Application/Controllers/MovePhotoController.php:62
-#: modules/album/src/Application/Controllers/PhotoCommentsController.php:47
-#: modules/album/src/Application/Controllers/ShowAlbumController.php:63
-#: modules/album/src/Application/Controllers/ShowPhotoController.php:49
-#: modules/album/src/Application/Controllers/UploadPhotoController.php:81
-#: modules/album/src/Application/Controllers/UserAlbumsController.php:68
-#: modules/album/src/Application/Controllers/UserAlbumsController.php:71
+#: modules/johncms/album/src/Application/Controllers/DeleteAlbumController.php:39
+#: modules/johncms/album/src/Application/Controllers/DeletePhotoController.php:38
+#: modules/johncms/album/src/Application/Controllers/EditAlbumController.php:164
+#: modules/johncms/album/src/Application/Controllers/EditPhotoController.php:66
+#: modules/johncms/album/src/Application/Controllers/MovePhotoController.php:62
+#: modules/johncms/album/src/Application/Controllers/PhotoCommentsController.php:47
+#: modules/johncms/album/src/Application/Controllers/ShowAlbumController.php:63
+#: modules/johncms/album/src/Application/Controllers/ShowPhotoController.php:49
+#: modules/johncms/album/src/Application/Controllers/UploadPhotoController.php:81
+#: modules/johncms/album/src/Application/Controllers/UserAlbumsController.php:68
+#: modules/johncms/album/src/Application/Controllers/UserAlbumsController.php:71
 msgid "Your albums"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/DeleteAlbumController.php:39
-#: modules/album/src/Application/Controllers/DeletePhotoController.php:38
-#: modules/album/src/Application/Controllers/EditAlbumController.php:164
-#: modules/album/src/Application/Controllers/EditPhotoController.php:66
-#: modules/album/src/Application/Controllers/MovePhotoController.php:62
-#: modules/album/src/Application/Controllers/PhotoCommentsController.php:47
-#: modules/album/src/Application/Controllers/ShowAlbumController.php:63
-#: modules/album/src/Application/Controllers/ShowPhotoController.php:49
-#: modules/album/src/Application/Controllers/UploadPhotoController.php:81
-#: modules/album/src/Application/Controllers/UserAlbumsController.php:71
+#: modules/johncms/album/src/Application/Controllers/DeleteAlbumController.php:39
+#: modules/johncms/album/src/Application/Controllers/DeletePhotoController.php:38
+#: modules/johncms/album/src/Application/Controllers/EditAlbumController.php:164
+#: modules/johncms/album/src/Application/Controllers/EditPhotoController.php:66
+#: modules/johncms/album/src/Application/Controllers/MovePhotoController.php:62
+#: modules/johncms/album/src/Application/Controllers/PhotoCommentsController.php:47
+#: modules/johncms/album/src/Application/Controllers/ShowAlbumController.php:63
+#: modules/johncms/album/src/Application/Controllers/ShowPhotoController.php:49
+#: modules/johncms/album/src/Application/Controllers/UploadPhotoController.php:81
+#: modules/johncms/album/src/Application/Controllers/UserAlbumsController.php:71
 msgid "User albums"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/DeleteAlbumController.php:49
+#: modules/johncms/album/src/Application/Controllers/DeleteAlbumController.php:49
 msgid "Are you sure you want to delete this album? If it contains photos, they also will be deleted."
 msgstr ""
 
-#: modules/album/src/Application/Controllers/DeleteAlbumController.php:71
+#: modules/johncms/album/src/Application/Controllers/DeleteAlbumController.php:71
 msgid "Delete album"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/DeleteAlbumController.php:73
+#: modules/johncms/album/src/Application/Controllers/DeleteAlbumController.php:73
 msgid "Album deleted"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/DeletePhotoController.php:35
-#: modules/album/src/Application/Controllers/DeletePhotoController.php:70
-#: modules/album/src/Application/Controllers/DeletePhotoController.php:97
+#: modules/johncms/album/src/Application/Controllers/DeletePhotoController.php:35
+#: modules/johncms/album/src/Application/Controllers/DeletePhotoController.php:70
+#: modules/johncms/album/src/Application/Controllers/DeletePhotoController.php:97
 msgid "Delete image"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/DeletePhotoController.php:41
-#: modules/album/src/Application/Controllers/EditPhotoController.php:69
-#: modules/album/src/Application/Controllers/MovePhotoController.php:65
-#: modules/album/src/Application/Controllers/PhotoCommentsController.php:50
-#: modules/album/templates/public/show-one.twig:24
+#: modules/johncms/album/src/Application/Controllers/DeletePhotoController.php:41
+#: modules/johncms/album/src/Application/Controllers/EditPhotoController.php:69
+#: modules/johncms/album/src/Application/Controllers/MovePhotoController.php:65
+#: modules/johncms/album/src/Application/Controllers/PhotoCommentsController.php:50
+#: modules/johncms/album/templates/public/show-one.twig:24
 msgid "Photo"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/DeletePhotoController.php:49
+#: modules/johncms/album/src/Application/Controllers/DeletePhotoController.php:49
 msgid "Are you sure you want to delete this image?"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/DeletePhotoController.php:72
+#: modules/johncms/album/src/Application/Controllers/DeletePhotoController.php:72
 msgid "Image successfully deleted"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/DownloadPhotoController.php:28
-#: modules/album/src/Application/Controllers/PhotoCommentsController.php:36
-#: modules/album/src/Application/Controllers/ShowAlbumController.php:50
-#: modules/album/src/Application/Controllers/ShowPhotoController.php:36
-#: modules/album/src/Application/Controllers/VotePhotoController.php:29
-#: modules/album/src/Application/Controllers/VotePhotoController.php:36
-#: modules/album/src/Application/UseCases/SaveAlbumUseCase.php:42
+#: modules/johncms/album/src/Application/Controllers/DownloadPhotoController.php:28
+#: modules/johncms/album/src/Application/Controllers/PhotoCommentsController.php:36
+#: modules/johncms/album/src/Application/Controllers/ShowAlbumController.php:50
+#: modules/johncms/album/src/Application/Controllers/ShowPhotoController.php:36
+#: modules/johncms/album/src/Application/Controllers/VotePhotoController.php:29
+#: modules/johncms/album/src/Application/Controllers/VotePhotoController.php:36
+#: modules/johncms/album/src/Application/UseCases/SaveAlbumUseCase.php:42
 msgid "Wrong data"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/DownloadPhotoController.php:30
-#: modules/album/src/Application/Controllers/PhotoCommentsController.php:38
+#: modules/johncms/album/src/Application/Controllers/DownloadPhotoController.php:30
+#: modules/johncms/album/src/Application/Controllers/PhotoCommentsController.php:38
 msgid "Access forbidden"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/DownloadPhotoController.php:32
+#: modules/johncms/album/src/Application/Controllers/DownloadPhotoController.php:32
 msgid "File does not exist"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/EditAlbumController.php:86
+#: modules/johncms/album/src/Application/Controllers/EditAlbumController.php:86
 msgid "Album successfully changed"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/EditAlbumController.php:86
+#: modules/johncms/album/src/Application/Controllers/EditAlbumController.php:86
 msgid "Album successfully created"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/EditAlbumController.php:187
+#: modules/johncms/album/src/Application/Controllers/EditAlbumController.php:187
 msgid "Edit Album"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/EditAlbumController.php:187
-#: modules/album/templates/public/list.twig:17
+#: modules/johncms/album/src/Application/Controllers/EditAlbumController.php:187
+#: modules/johncms/album/templates/public/list.twig:17
 msgid "Create Album"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/EditPhotoController.php:52
-#: modules/album/src/Application/Controllers/EditPhotoController.php:63
-#: modules/album/src/Application/Controllers/EditPhotoController.php:105
+#: modules/johncms/album/src/Application/Controllers/EditPhotoController.php:52
+#: modules/johncms/album/src/Application/Controllers/EditPhotoController.php:63
+#: modules/johncms/album/src/Application/Controllers/EditPhotoController.php:105
 msgid "Edit image"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/EditPhotoController.php:54
+#: modules/johncms/album/src/Application/Controllers/EditPhotoController.php:54
 msgid "Image successfully changed"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/EditPhotoController.php:56
-#: modules/album/src/Application/Controllers/MovePhotoController.php:47
-#: modules/album/src/Application/Controllers/MovePhotoController.php:102
-#: modules/album/src/Application/Controllers/UploadPhotoController.php:68
+#: modules/johncms/album/src/Application/Controllers/EditPhotoController.php:56
+#: modules/johncms/album/src/Application/Controllers/MovePhotoController.php:47
+#: modules/johncms/album/src/Application/Controllers/MovePhotoController.php:102
+#: modules/johncms/album/src/Application/Controllers/UploadPhotoController.php:68
 msgid "Continue"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/MovePhotoController.php:43
-#: modules/album/src/Application/Controllers/MovePhotoController.php:60
-#: modules/album/src/Application/Controllers/MovePhotoController.php:98
-#: modules/album/src/Application/Controllers/MovePhotoController.php:126
+#: modules/johncms/album/src/Application/Controllers/MovePhotoController.php:43
+#: modules/johncms/album/src/Application/Controllers/MovePhotoController.php:60
+#: modules/johncms/album/src/Application/Controllers/MovePhotoController.php:98
+#: modules/johncms/album/src/Application/Controllers/MovePhotoController.php:126
 msgid "Move image"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/MovePhotoController.php:45
+#: modules/johncms/album/src/Application/Controllers/MovePhotoController.php:45
 msgid "You must create at least one additional album in order to move the image"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/MovePhotoController.php:100
+#: modules/johncms/album/src/Application/Controllers/MovePhotoController.php:100
 msgid "Image successfully moved to the selected album"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/PhotoCommentsController.php:51
-#: modules/album/src/Application/Controllers/PhotoCommentsController.php:60
-#: modules/album/src/Application/Controllers/PhotoCommentsController.php:76
-#: modules/album/src/Application/Controllers/PhotoCommentsController.php:94
-#: modules/album/templates/public/show-one.twig:65
+#: modules/johncms/album/src/Application/Controllers/PhotoCommentsController.php:51
+#: modules/johncms/album/src/Application/Controllers/PhotoCommentsController.php:60
+#: modules/johncms/album/src/Application/Controllers/PhotoCommentsController.php:76
+#: modules/johncms/album/src/Application/Controllers/PhotoCommentsController.php:94
+#: modules/johncms/album/templates/public/show-one.twig:65
 msgid "Comments"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/PhotoCommentsController.php:98
-#: modules/album/src/Application/Controllers/ShowAlbumController.php:55
-#: modules/album/src/Application/Controllers/ShowPhotoController.php:41
-#: modules/album/templates/public/show-one.twig:102
+#: modules/johncms/album/src/Application/Controllers/PhotoCommentsController.php:98
+#: modules/johncms/album/src/Application/Controllers/ShowAlbumController.php:55
+#: modules/johncms/album/src/Application/Controllers/ShowPhotoController.php:41
+#: modules/johncms/album/templates/public/show-one.twig:102
 msgid "Album List"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/ShowAlbumController.php:53
-#: modules/album/src/Application/Controllers/ShowPhotoController.php:39
+#: modules/johncms/album/src/Application/Controllers/ShowAlbumController.php:53
+#: modules/johncms/album/src/Application/Controllers/ShowPhotoController.php:39
 msgid "Access denied"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/ShowAlbumController.php:91
-#: modules/album/src/Application/Controllers/ShowPhotoController.php:84
+#: modules/johncms/album/src/Application/Controllers/ShowAlbumController.php:91
+#: modules/johncms/album/src/Application/Controllers/ShowPhotoController.php:84
 msgid "Incorrect Password"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/ShowPhotoController.php:47
-#: modules/album/src/Application/Controllers/ShowPhotoController.php:94
+#: modules/johncms/album/src/Application/Controllers/ShowPhotoController.php:47
+#: modules/johncms/album/src/Application/Controllers/ShowPhotoController.php:94
 msgid "View photo"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/UploadPhotoController.php:54
+#: modules/johncms/album/src/Application/Controllers/UploadPhotoController.php:54
 msgid "An error occurred"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/UploadPhotoController.php:64
-#: modules/album/src/Application/Controllers/UploadPhotoController.php:78
-#: modules/album/src/Application/Controllers/UploadPhotoController.php:119
+#: modules/johncms/album/src/Application/Controllers/UploadPhotoController.php:64
+#: modules/johncms/album/src/Application/Controllers/UploadPhotoController.php:78
+#: modules/johncms/album/src/Application/Controllers/UploadPhotoController.php:119
 msgid "Upload image"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/UploadPhotoController.php:66
+#: modules/johncms/album/src/Application/Controllers/UploadPhotoController.php:66
 msgid "Image uploaded"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/UserAlbumsController.php:68
+#: modules/johncms/album/src/Application/Controllers/UserAlbumsController.php:68
 msgid "User albums:"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/UsersListController.php:32
+#: modules/johncms/album/src/Application/Controllers/UsersListController.php:32
 msgid "List of users"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/UsersListController.php:67
+#: modules/johncms/album/src/Application/Controllers/UsersListController.php:67
 msgid "All"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/UsersListController.php:68
-#: modules/album/templates/public/index.twig:24
+#: modules/johncms/album/src/Application/Controllers/UsersListController.php:68
+#: modules/johncms/album/templates/public/index.twig:24
 msgid "Guys"
 msgstr ""
 
-#: modules/album/src/Application/Controllers/UsersListController.php:69
-#: modules/album/templates/public/index.twig:28
+#: modules/johncms/album/src/Application/Controllers/UsersListController.php:69
+#: modules/johncms/album/templates/public/index.twig:28
 msgid "Girls"
 msgstr ""
 
-#: modules/album/src/Application/Services/AlbumPermissions.php:29
+#: modules/johncms/album/src/Application/Services/AlbumPermissions.php:29
 msgid "Photo albums"
 msgstr ""
 
-#: modules/album/src/Application/Services/AlbumPermissions.php:35
+#: modules/johncms/album/src/Application/Services/AlbumPermissions.php:35
 msgid "Manage the albums and the photos of another account"
 msgstr ""
 
-#: modules/album/src/Application/Services/AlbumPermissions.php:42
+#: modules/johncms/album/src/Application/Services/AlbumPermissions.php:42
 msgid "Read the comments of the photos while they are switched off"
 msgstr ""
 
-#: modules/album/src/Application/UseCases/GetPhotoViewUseCase.php:61
+#: modules/johncms/album/src/Application/UseCases/GetPhotoViewUseCase.php:61
 msgid "Photo added to the profile"
 msgstr ""
 
-#: modules/album/src/Application/UseCases/SaveAlbumUseCase.php:32
-#: modules/album/templates/public/album-form.twig:18
+#: modules/johncms/album/src/Application/UseCases/SaveAlbumUseCase.php:32
+#: modules/johncms/album/templates/public/album-form.twig:18
 msgid "Title"
 msgstr ""
 
-#: modules/album/src/Application/UseCases/SaveAlbumUseCase.php:32
-#: modules/album/src/Application/UseCases/SaveAlbumUseCase.php:38
+#: modules/johncms/album/src/Application/UseCases/SaveAlbumUseCase.php:32
+#: modules/johncms/album/src/Application/UseCases/SaveAlbumUseCase.php:38
 msgid "Invalid length"
 msgstr ""
 
-#: modules/album/src/Application/UseCases/SaveAlbumUseCase.php:36
+#: modules/johncms/album/src/Application/UseCases/SaveAlbumUseCase.php:36
 msgid "You have not entered password"
 msgstr ""
 
-#: modules/album/src/Application/UseCases/SaveAlbumUseCase.php:38
-#: modules/album/templates/public/album-form.twig:26
-#: modules/album/templates/public/enter-password.twig:18
+#: modules/johncms/album/src/Application/UseCases/SaveAlbumUseCase.php:38
+#: modules/johncms/album/templates/public/album-form.twig:26
+#: modules/johncms/album/templates/public/enter-password.twig:18
 msgid "Password"
 msgstr ""
 
-#: modules/album/src/Application/UseCases/SaveAlbumUseCase.php:47
+#: modules/johncms/album/src/Application/UseCases/SaveAlbumUseCase.php:47
 msgid "The album already exists"
 msgstr ""
 
-#: modules/album/src/Application/UseCases/UploadPhotoUseCase.php:35
+#: modules/johncms/album/src/Application/UseCases/UploadPhotoUseCase.php:35
 msgid "The weight of the file exceeds"
 msgstr ""
 
-#: modules/album/src/Domain/Enums/TopFilter.php:43
+#: modules/johncms/album/src/Domain/Enums/TopFilter.php:43
 msgid "New photos"
 msgstr ""
 
-#: modules/album/src/Domain/Enums/TopFilter.php:44
+#: modules/johncms/album/src/Domain/Enums/TopFilter.php:44
 msgid "Recent comments"
 msgstr ""
 
-#: modules/album/src/Domain/Enums/TopFilter.php:45
-#: modules/album/templates/public/index.twig:41
+#: modules/johncms/album/src/Domain/Enums/TopFilter.php:45
+#: modules/johncms/album/templates/public/index.twig:41
 msgid "Top Views"
 msgstr ""
 
-#: modules/album/src/Domain/Enums/TopFilter.php:46
-#: modules/album/templates/public/index.twig:40
+#: modules/johncms/album/src/Domain/Enums/TopFilter.php:46
+#: modules/johncms/album/templates/public/index.twig:40
 msgid "Top Downloads"
 msgstr ""
 
-#: modules/album/src/Domain/Enums/TopFilter.php:47
-#: modules/album/templates/public/index.twig:42
+#: modules/johncms/album/src/Domain/Enums/TopFilter.php:47
+#: modules/johncms/album/templates/public/index.twig:42
 msgid "Top Comments"
 msgstr ""
 
-#: modules/album/src/Domain/Enums/TopFilter.php:48
-#: modules/album/templates/public/index.twig:39
+#: modules/johncms/album/src/Domain/Enums/TopFilter.php:48
+#: modules/johncms/album/templates/public/index.twig:39
 msgid "Top Votes"
 msgstr ""
 
-#: modules/album/src/Domain/Enums/TopFilter.php:49
-#: modules/album/templates/public/index.twig:43
+#: modules/johncms/album/src/Domain/Enums/TopFilter.php:49
+#: modules/johncms/album/templates/public/index.twig:43
 msgid "Top Worst"
 msgstr ""
 
-#: modules/album/src/Domain/Enums/TopFilter.php:50
+#: modules/johncms/album/src/Domain/Enums/TopFilter.php:50
 msgid "Unread Comments"
 msgstr ""
 
-#: modules/album/src/Install/Installer.php:59
+#: modules/johncms/album/src/Install/Installer.php:59
 msgid "Nature"
 msgstr ""
 
-#: modules/album/src/Install/Installer.php:60
+#: modules/johncms/album/src/Install/Installer.php:60
 msgid "Landscapes and nature views"
 msgstr ""
 
-#: modules/album/src/Install/Installer.php:64
+#: modules/johncms/album/src/Install/Installer.php:64
 msgid "A mountain lake surrounded by peaks"
 msgstr ""
 
-#: modules/album/src/Install/Installer.php:65
+#: modules/johncms/album/src/Install/Installer.php:65
 msgid "A tiny bird chick in the grass"
 msgstr ""
 
-#: modules/album/src/Install/Installer.php:71
+#: modules/johncms/album/src/Install/Installer.php:71
 msgid "Animals"
 msgstr ""
 
-#: modules/album/src/Install/Installer.php:72
+#: modules/johncms/album/src/Install/Installer.php:72
 msgid "Photos of animals and insects"
 msgstr ""
 
-#: modules/album/src/Install/Installer.php:76
+#: modules/johncms/album/src/Install/Installer.php:76
 msgid "A bright rooster in close-up"
 msgstr ""
 
-#: modules/album/src/Install/Installer.php:77
+#: modules/johncms/album/src/Install/Installer.php:77
 msgid "A red squirrel on a tree branch"
 msgstr ""
 
-#: modules/album/src/Install/Installer.php:83
+#: modules/johncms/album/src/Install/Installer.php:83
 msgid "My photos"
 msgstr ""
 
-#: modules/album/src/Install/Installer.php:84
+#: modules/johncms/album/src/Install/Installer.php:84
 msgid "A personal collection of favorite shots"
 msgstr ""
 
-#: modules/album/src/Install/Installer.php:88
+#: modules/johncms/album/src/Install/Installer.php:88
 msgid "A butterfly on a flower"
 msgstr ""
 
-#: modules/album/src/Install/Installer.php:89
+#: modules/johncms/album/src/Install/Installer.php:89
 msgid "A grasshopper on a plant"
 msgstr ""
 
-#: modules/album/src/Install/Installer.php:95
+#: modules/johncms/album/src/Install/Installer.php:95
 msgid "Private album"
 msgstr ""
 
-#: modules/album/src/Install/Installer.php:96
+#: modules/johncms/album/src/Install/Installer.php:96
 msgid "A private album visible to its owner only"
 msgstr ""
 
-#: modules/album/src/Install/Installer.php:100
+#: modules/johncms/album/src/Install/Installer.php:100
 msgid "A shot from a private album"
 msgstr ""
 
-#: modules/album/src/Install/Installer.php:106
+#: modules/johncms/album/src/Install/Installer.php:106
 msgid "Password-protected album"
 msgstr ""
 
-#: modules/album/src/Install/Installer.php:107
+#: modules/johncms/album/src/Install/Installer.php:107
 msgid "An album protected by a password (password: demo)"
 msgstr ""
 
-#: modules/album/src/Install/Installer.php:111
+#: modules/johncms/album/src/Install/Installer.php:111
 msgid "A password-protected photo"
 msgstr ""
 
-#: modules/album/src/Install/Installer.php:221
+#: modules/johncms/album/src/Install/Installer.php:221
 msgid "A beautiful lake, such an atmospheric shot!"
 msgstr ""
 
-#: modules/album/src/Install/Installer.php:222
+#: modules/johncms/album/src/Install/Installer.php:222
 msgid "I would love to visit this place."
 msgstr ""
 
-#: modules/album/src/Install/Installer.php:223
+#: modules/johncms/album/src/Install/Installer.php:223
 msgid "Great shot of the squirrel!"
 msgstr ""
 
-#: modules/album/src/Install/Installer.php:224
+#: modules/johncms/album/src/Install/Installer.php:224
 msgid "A lovely butterfly."
 msgstr ""
 
-#: modules/album/templates/public/add-photo.twig:21
+#: modules/johncms/album/templates/public/add-photo.twig:21
 msgid "Choose file"
 msgstr ""
 
-#: modules/album/templates/public/add-photo.twig:25
+#: modules/johncms/album/templates/public/add-photo.twig:25
 msgid "Allowed format image JPG, JPEG, PNG, GIF<br>File size should not exceed %d kb."
 msgstr ""
 
-#: modules/album/templates/public/add-photo.twig:29
-#: modules/album/templates/public/album-form.twig:22
-#: modules/album/templates/public/edit-photo.twig:20
+#: modules/johncms/album/templates/public/add-photo.twig:29
+#: modules/johncms/album/templates/public/album-form.twig:22
+#: modules/johncms/album/templates/public/edit-photo.twig:20
 msgid "Description"
 msgstr ""
 
-#: modules/album/templates/public/add-photo.twig:33
-#: modules/album/templates/public/album-form.twig:47
-#: modules/album/templates/public/edit-photo.twig:24
+#: modules/johncms/album/templates/public/add-photo.twig:33
+#: modules/johncms/album/templates/public/album-form.twig:47
+#: modules/johncms/album/templates/public/edit-photo.twig:24
 msgid "Save"
 msgstr ""
 
-#: modules/album/templates/public/add-photo.twig:34
-#: modules/album/templates/public/album-form.twig:48
-#: modules/album/templates/public/confirm-delete.twig:19
-#: modules/album/templates/public/edit-photo.twig:25
-#: modules/album/templates/public/enter-password.twig:25
-#: modules/album/templates/public/move-photo.twig:24
+#: modules/johncms/album/templates/public/add-photo.twig:34
+#: modules/johncms/album/templates/public/album-form.twig:48
+#: modules/johncms/album/templates/public/confirm-delete.twig:19
+#: modules/johncms/album/templates/public/edit-photo.twig:25
+#: modules/johncms/album/templates/public/enter-password.twig:25
+#: modules/johncms/album/templates/public/move-photo.twig:24
 msgid "Cancel"
 msgstr ""
 
-#: modules/album/templates/public/album-form.twig:30
+#: modules/johncms/album/templates/public/album-form.twig:30
 msgid "Access"
 msgstr ""
 
-#: modules/album/templates/public/album-form.twig:35
+#: modules/johncms/album/templates/public/album-form.twig:35
 msgid "Everyone"
 msgstr ""
 
-#: modules/album/templates/public/album-form.twig:39
+#: modules/johncms/album/templates/public/album-form.twig:39
 msgid "With Password"
 msgstr ""
 
-#: modules/album/templates/public/album-form.twig:43
+#: modules/johncms/album/templates/public/album-form.twig:43
 msgid "Only for me"
 msgstr ""
 
-#: modules/album/templates/public/components/photo-card.twig:18
+#: modules/johncms/album/templates/public/components/photo-card.twig:18
 msgid "User:"
 msgstr ""
 
-#: modules/album/templates/public/components/photo-card.twig:21
+#: modules/johncms/album/templates/public/components/photo-card.twig:21
 msgid "Album:"
 msgstr ""
 
-#: modules/album/templates/public/components/photo-grid.twig:9
-#: modules/album/templates/public/show-one.twig:15
-#: modules/album/templates/public/users.twig:19
+#: modules/johncms/album/templates/public/components/photo-grid.twig:9
+#: modules/johncms/album/templates/public/show-one.twig:15
+#: modules/johncms/album/templates/public/users.twig:19
 msgid "The list is empty"
 msgstr ""
 
-#: modules/album/templates/public/components/photo-grid.twig:25
-#: modules/album/templates/public/show-one.twig:97
+#: modules/johncms/album/templates/public/components/photo-grid.twig:25
+#: modules/johncms/album/templates/public/show-one.twig:97
 msgid "Total"
 msgstr ""
 
-#: modules/album/templates/public/components/user-row.twig:23
+#: modules/johncms/album/templates/public/components/user-row.twig:23
 msgid "album"
 msgid_plural "albums"
 msgstr[0] ""
 
-#: modules/album/templates/public/components/user-row.twig:24
+#: modules/johncms/album/templates/public/components/user-row.twig:24
 msgid "photo"
 msgid_plural "photos"
 msgstr[0] ""
 
-#: modules/album/templates/public/confirm-delete.twig:18
-#: modules/album/templates/public/list.twig:45
-#: modules/album/templates/public/show-one.twig:83
+#: modules/johncms/album/templates/public/confirm-delete.twig:18
+#: modules/johncms/album/templates/public/list.twig:45
+#: modules/johncms/album/templates/public/show-one.twig:83
 msgid "Delete"
 msgstr ""
 
-#: modules/album/templates/public/enter-password.twig:16
+#: modules/johncms/album/templates/public/enter-password.twig:16
 msgid "You must type a password to view this album"
 msgstr ""
 
-#: modules/album/templates/public/enter-password.twig:24
+#: modules/johncms/album/templates/public/enter-password.twig:24
 msgid "Enter"
 msgstr ""
 
-#: modules/album/templates/public/index.twig:12
+#: modules/johncms/album/templates/public/index.twig:12
 msgid "New Photos"
 msgstr ""
 
-#: modules/album/templates/public/index.twig:16
+#: modules/johncms/album/templates/public/index.twig:16
 msgid "New Comments"
 msgstr ""
 
-#: modules/album/templates/public/index.twig:32
+#: modules/johncms/album/templates/public/index.twig:32
 msgid "My Album"
 msgstr ""
 
-#: modules/album/templates/public/index.twig:36
-#: modules/album/templates/public/show-one.twig:47
+#: modules/johncms/album/templates/public/index.twig:36
+#: modules/johncms/album/templates/public/show-one.twig:47
 msgid "Rating"
 msgstr ""
 
-#: modules/album/templates/public/list.twig:38
+#: modules/johncms/album/templates/public/list.twig:38
 msgid "Up"
 msgstr ""
 
-#: modules/album/templates/public/list.twig:42
+#: modules/johncms/album/templates/public/list.twig:42
 msgid "Down"
 msgstr ""
 
-#: modules/album/templates/public/list.twig:44
-#: modules/album/templates/public/show-one.twig:81
+#: modules/johncms/album/templates/public/list.twig:44
+#: modules/johncms/album/templates/public/show-one.twig:81
 msgid "Edit"
 msgstr ""
 
-#: modules/album/templates/public/move-photo.twig:14
+#: modules/johncms/album/templates/public/move-photo.twig:14
 msgid "Select Album"
 msgstr ""
 
-#: modules/album/templates/public/move-photo.twig:23
-#: modules/album/templates/public/show-one.twig:82
+#: modules/johncms/album/templates/public/move-photo.twig:23
+#: modules/johncms/album/templates/public/show-one.twig:82
 msgid "Move"
 msgstr ""
 
-#: modules/album/templates/public/show-one.twig:37
+#: modules/johncms/album/templates/public/show-one.twig:37
 msgid "Views"
 msgstr ""
 
-#: modules/album/templates/public/show-one.twig:38
+#: modules/johncms/album/templates/public/show-one.twig:38
 msgid "Downloads"
 msgstr ""
 
-#: modules/album/templates/public/show-one.twig:39
+#: modules/johncms/album/templates/public/show-one.twig:39
 msgid "Date"
 msgstr ""
 
-#: modules/album/templates/public/show-one.twig:41
+#: modules/johncms/album/templates/public/show-one.twig:41
 msgid "User"
 msgstr ""
 
-#: modules/album/templates/public/show-one.twig:44
+#: modules/johncms/album/templates/public/show-one.twig:44
 msgid "Album"
 msgstr ""
 
-#: modules/album/templates/public/show-one.twig:57
+#: modules/johncms/album/templates/public/show-one.twig:57
 msgid "Download"
 msgstr ""
 
-#: modules/album/templates/public/show-one.twig:73
+#: modules/johncms/album/templates/public/show-one.twig:73
 msgid "Actions"
 msgstr ""
 
-#: modules/album/templates/public/show-one.twig:78
+#: modules/johncms/album/templates/public/show-one.twig:78
 msgid "Add to Profile"
 msgstr ""
 
-#: modules/album/templates/public/show-one.twig:101
+#: modules/johncms/album/templates/public/show-one.twig:101
 msgid "Back"
 msgstr ""
 
-#: modules/album/templates/public/show.twig:15
+#: modules/johncms/album/templates/public/show.twig:15
 msgid "Add image"
 msgstr ""
 
-#: modules/album/templates/public/users.twig:31
+#: modules/johncms/album/templates/public/users.twig:31
 msgid "Total:"
 msgstr ""

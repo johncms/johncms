@@ -5,7 +5,7 @@ msgstr ""
 #: config/notifications.global.php:14
 #: config/places.global.php:17
 #: themes/default/templates/components/sidebar-main-menu.twig:34
-#: modules/homepage/templates/public/index.twig:42
+#: modules/johncms/homepage/templates/public/index.twig:42
 msgid "Forum"
 msgstr ""
 
@@ -39,9 +39,9 @@ msgid "Watching the photo album"
 msgstr ""
 
 #: config/places.global.php:14
-#: system/src/Auth/Authorization/CorePermissions.php:58
+#: system/src/Auth/Authorization/CorePermissions.php:67
 #: themes/default/templates/components/sidebar-main-menu.twig:85
-#: modules/homepage/templates/public/index.twig:46
+#: modules/johncms/homepage/templates/public/index.twig:46
 msgid "Users"
 msgstr ""
 
@@ -57,14 +57,14 @@ msgstr ""
 #: system/src/Comments.php:337
 #: system/src/Comments.php:364
 #: themes/default/templates/components/sidebar-main-menu.twig:60
-#: modules/homepage/templates/public/index.twig:44
+#: modules/johncms/homepage/templates/public/index.twig:44
 msgid "Downloads"
 msgstr ""
 
 #: config/places.global.php:18
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:110
+#: modules/johncms/notifications/src/Application/UseCases/GetNotificationListUseCase.php:110
 #: themes/default/templates/components/sidebar-main-menu.twig:47
-#: modules/homepage/templates/public/index.twig:43
+#: modules/johncms/homepage/templates/public/index.twig:43
 msgid "Guestbook"
 msgstr ""
 
@@ -74,19 +74,19 @@ msgstr ""
 
 #: config/places.global.php:20
 #: themes/default/templates/components/sidebar-main-menu.twig:73
-#: modules/homepage/templates/public/index.twig:45
+#: modules/johncms/homepage/templates/public/index.twig:45
 msgid "Library"
 msgstr ""
 
 #: config/places.global.php:21
-#: modules/login/src/Application/Controllers/LoginController.php:29
-#: modules/login/src/Application/Controllers/LoginController.php:111
-#: modules/login/src/Application/Controllers/LoginController.php:112
-#: modules/login/src/Application/Controllers/LoginController.php:125
-#: modules/login/src/Application/Controllers/LoginController.php:126
-#: modules/login/src/Application/Controllers/LoginController.php:140
-#: modules/login/src/Application/Controllers/LoginController.php:141
-#: modules/login/templates/public/login.twig:51
+#: modules/johncms/login/src/Application/Controllers/LoginController.php:29
+#: modules/johncms/login/src/Application/Controllers/LoginController.php:111
+#: modules/johncms/login/src/Application/Controllers/LoginController.php:112
+#: modules/johncms/login/src/Application/Controllers/LoginController.php:125
+#: modules/johncms/login/src/Application/Controllers/LoginController.php:126
+#: modules/johncms/login/src/Application/Controllers/LoginController.php:140
+#: modules/johncms/login/src/Application/Controllers/LoginController.php:141
+#: modules/johncms/login/templates/public/login.twig:51
 #: system/src/Http/Controller/ExternalAuthController.php:312
 #: system/src/Http/Controller/ExternalAuthController.php:325
 #: themes/default/templates/components/sidebar-user-menu.twig:69
@@ -124,205 +124,205 @@ msgstr ""
 msgid "Who is online?"
 msgstr ""
 
-#: modules/language/templates/public/index.twig:8
+#: modules/johncms/language/templates/public/index.twig:8
 msgid "Select language"
 msgstr ""
 
-#: modules/language/templates/public/index.twig:27
+#: modules/johncms/language/templates/public/index.twig:27
 msgid "Apply"
 msgstr ""
 
-#: modules/login/src/Application/Controllers/LoginController.php:52
+#: modules/johncms/login/src/Application/Controllers/LoginController.php:52
 #: system/src/Captcha/CaptchaFailure.php:49
 #: system/src/Validator/Rules/Captcha.php:33
 msgid "The security code is not correct"
 msgstr ""
 
-#: modules/login/src/Application/Controllers/LoginController.php:57
+#: modules/johncms/login/src/Application/Controllers/LoginController.php:57
 #, php-format
 msgid "Too many attempts. Try again in %s."
 msgstr ""
 
-#: modules/login/src/Application/Controllers/LoginController.php:63
+#: modules/johncms/login/src/Application/Controllers/LoginController.php:63
 msgid "Authorization failed"
 msgstr ""
 
-#: modules/login/src/Application/Controllers/LoginController.php:75
+#: modules/johncms/login/src/Application/Controllers/LoginController.php:75
 msgid "You have not entered login"
 msgstr ""
 
-#: modules/login/src/Application/Controllers/LoginController.php:79
+#: modules/johncms/login/src/Application/Controllers/LoginController.php:79
 msgid "You have not entered password"
 msgstr ""
 
-#: modules/login/src/Application/Controllers/LoginController.php:93
+#: modules/johncms/login/src/Application/Controllers/LoginController.php:93
 #, php-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] ""
 
-#: modules/login/src/Application/Controllers/LogoutController.php:39
+#: modules/johncms/login/src/Application/Controllers/LogoutController.php:39
 #: themes/default/templates/components/sidebar-user-menu.twig:52
 msgid "Personal"
 msgstr ""
 
-#: modules/login/src/Application/Controllers/LogoutController.php:40
-#: modules/login/src/Application/Controllers/LogoutController.php:45
-#: modules/login/src/Application/Controllers/LogoutController.php:46
-#: modules/login/templates/public/logout.twig:13
+#: modules/johncms/login/src/Application/Controllers/LogoutController.php:40
+#: modules/johncms/login/src/Application/Controllers/LogoutController.php:45
+#: modules/johncms/login/src/Application/Controllers/LogoutController.php:46
+#: modules/johncms/login/templates/public/logout.twig:13
 msgid "Logout"
 msgstr ""
 
-#: modules/login/templates/public/captcha.twig:18
+#: modules/johncms/login/templates/public/captcha.twig:18
 #: themes/default/templates/pages/external-auth-profile.twig:39
 msgid "Continue"
 msgstr ""
 
-#: modules/login/templates/public/confirm.twig:12
+#: modules/johncms/login/templates/public/confirm.twig:12
 msgid "You didn't confirm your email address. Please check your email and follow the instructions in it."
 msgstr ""
 
-#: modules/login/templates/public/confirm.twig:17
+#: modules/johncms/login/templates/public/confirm.twig:17
 msgid "Sorry, but your request for registration is not considered yet. Please, be patient."
 msgstr ""
 
-#: modules/login/templates/public/login.twig:13
+#: modules/johncms/login/templates/public/login.twig:13
 msgid "Authorization"
 msgstr ""
 
-#: modules/login/templates/public/login.twig:18
-#: modules/login/templates/public/login.twig:26
+#: modules/johncms/login/templates/public/login.twig:18
+#: modules/johncms/login/templates/public/login.twig:26
 #: themes/default/templates/pages/external-auth-profile.twig:23
 msgid "Username"
 msgstr ""
 
-#: modules/login/templates/public/login.twig:30
-#: modules/login/templates/public/login.twig:38
+#: modules/johncms/login/templates/public/login.twig:30
+#: modules/johncms/login/templates/public/login.twig:38
 msgid "Password"
 msgstr ""
 
-#: modules/login/templates/public/login.twig:49
+#: modules/johncms/login/templates/public/login.twig:49
 msgid "Remember me"
 msgstr ""
 
-#: modules/login/templates/public/login.twig:52
+#: modules/johncms/login/templates/public/login.twig:52
 msgid "Forgot password?"
 msgstr ""
 
-#: modules/login/templates/public/login.twig:54
+#: modules/johncms/login/templates/public/login.twig:54
 #: system/src/Http/Controller/ExternalAuthController.php:181
 #: themes/default/templates/components/sidebar-user-menu.twig:77
 msgid "Registration"
 msgstr ""
 
-#: modules/login/templates/public/logout.twig:10
+#: modules/johncms/login/templates/public/logout.twig:10
 msgid "Are you sure you want to leave the site?"
 msgstr ""
 
-#: modules/login/templates/public/logout.twig:14
-#: modules/notifications/templates/public/settings.twig:32
+#: modules/johncms/login/templates/public/logout.twig:14
+#: modules/johncms/notifications/templates/public/settings.twig:32
 #: themes/default/templates/pages/comments-delete.twig:18
 msgid "Cancel"
 msgstr ""
 
-#: modules/notifications/src/Application/Controllers/ClearController.php:22
+#: modules/johncms/notifications/src/Application/Controllers/ClearController.php:22
 msgid "Notifications are cleared!"
 msgstr ""
 
-#: modules/notifications/src/Application/Controllers/IndexController.php:26
-#: modules/notifications/src/Application/Controllers/IndexController.php:37
-#: modules/notifications/src/Application/Controllers/IndexController.php:43
-#: modules/notifications/src/Application/Controllers/SettingsController.php:30
+#: modules/johncms/notifications/src/Application/Controllers/IndexController.php:26
+#: modules/johncms/notifications/src/Application/Controllers/IndexController.php:37
+#: modules/johncms/notifications/src/Application/Controllers/IndexController.php:43
+#: modules/johncms/notifications/src/Application/Controllers/SettingsController.php:30
 #: themes/default/templates/components/sidebar-user-menu.twig:41
 msgid "Notifications"
 msgstr ""
 
-#: modules/notifications/src/Application/Controllers/SettingsController.php:28
-#: modules/notifications/templates/public/index.twig:72
+#: modules/johncms/notifications/src/Application/Controllers/SettingsController.php:28
+#: modules/johncms/notifications/templates/public/index.twig:72
 msgid "Settings"
 msgstr ""
 
-#: modules/notifications/src/Application/Controllers/SettingsController.php:36
+#: modules/johncms/notifications/src/Application/Controllers/SettingsController.php:36
 msgid "Settings saved!"
 msgstr ""
 
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:56
+#: modules/johncms/notifications/src/Application/UseCases/GetNotificationListUseCase.php:56
 msgid "Users on registration"
 msgstr ""
 
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:65
+#: modules/johncms/notifications/src/Application/UseCases/GetNotificationListUseCase.php:65
 msgid "Articles on moderation"
 msgstr ""
 
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:74
+#: modules/johncms/notifications/src/Application/UseCases/GetNotificationListUseCase.php:74
 msgid "Downloads on moderation"
 msgstr ""
 
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:83
+#: modules/johncms/notifications/src/Application/UseCases/GetNotificationListUseCase.php:83
 msgid "Ban"
 msgstr ""
 
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:92
+#: modules/johncms/notifications/src/Application/UseCases/GetNotificationListUseCase.php:92
 msgid "New forum posts"
 msgstr ""
 
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:101
+#: modules/johncms/notifications/src/Application/UseCases/GetNotificationListUseCase.php:101
 msgid "Mail"
 msgstr ""
 
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:119
+#: modules/johncms/notifications/src/Application/UseCases/GetNotificationListUseCase.php:119
 msgid "Comments"
 msgstr ""
 
-#: modules/notifications/templates/public/index.twig:17
+#: modules/johncms/notifications/templates/public/index.twig:17
 msgid "All notifications have already been read"
 msgstr ""
 
-#: modules/notifications/templates/public/index.twig:59
+#: modules/johncms/notifications/templates/public/index.twig:59
 msgid "Total"
 msgstr ""
 
-#: modules/notifications/templates/public/index.twig:67
+#: modules/johncms/notifications/templates/public/index.twig:67
 msgid "Clear notifications"
 msgstr ""
 
-#: modules/notifications/templates/public/settings.twig:27
+#: modules/johncms/notifications/templates/public/settings.twig:27
 msgid "Display the number of unread messages in the forum"
 msgstr ""
 
-#: modules/notifications/templates/public/settings.twig:31
+#: modules/johncms/notifications/templates/public/settings.twig:31
 msgid "Save"
 msgstr ""
 
-#: modules/redirect/src/Application/Controllers/RedirectController.php:57
+#: modules/johncms/redirect/src/Application/Controllers/RedirectController.php:57
 msgid "Redirect to an external link"
 msgstr ""
 
-#: modules/redirect/templates/public/index.twig:13
+#: modules/johncms/redirect/templates/public/index.twig:13
 msgid "External Link"
 msgstr ""
 
-#: modules/redirect/templates/public/index.twig:14
+#: modules/johncms/redirect/templates/public/index.twig:14
 msgid "ATTENTION!"
 msgstr ""
 
-#: modules/redirect/templates/public/index.twig:16
+#: modules/johncms/redirect/templates/public/index.twig:16
 msgid "You are going to leave our site and go to an external link"
 msgstr ""
 
-#: modules/redirect/templates/public/index.twig:20
+#: modules/johncms/redirect/templates/public/index.twig:20
 msgid "Administration of our site is not responsible for the content of external sites"
 msgstr ""
 
-#: modules/redirect/templates/public/index.twig:22
+#: modules/johncms/redirect/templates/public/index.twig:22
 msgid "It is recommended not to specify your data, relating to %s (Login, Password), on third party sites"
 msgstr ""
 
-#: modules/redirect/templates/public/index.twig:27
+#: modules/johncms/redirect/templates/public/index.twig:27
 msgid "Go to Link"
 msgstr ""
 
-#: modules/redirect/templates/public/index.twig:31
+#: modules/johncms/redirect/templates/public/index.twig:31
 #: system/src/Comments.php:210
 #: system/src/Comments.php:247
 #: system/src/Comments.php:264
@@ -337,47 +337,51 @@ msgstr ""
 msgid "Back"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:56
+#: system/src/Auth/Authorization/CorePermissions.php:65
 msgid "Admin panel"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:57
+#: system/src/Auth/Authorization/CorePermissions.php:66
 msgid "System"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:73
+#: system/src/Auth/Authorization/CorePermissions.php:82
 msgid "Access the admin panel"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:80
+#: system/src/Auth/Authorization/CorePermissions.php:89
 msgid "Change system settings"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:86
+#: system/src/Auth/Authorization/CorePermissions.php:95
 msgid "Manage roles and permissions"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:93
+#: system/src/Auth/Authorization/CorePermissions.php:102
 msgid "See error details and the developer panel"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:100
+#: system/src/Auth/Authorization/CorePermissions.php:109
 msgid "Post without waiting out the full antiflood delay"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:107
+#: system/src/Auth/Authorization/CorePermissions.php:116
 msgid "Use the smilies kept for the staff"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:114
+#: system/src/Auth/Authorization/CorePermissions.php:123
 msgid "Moderate the comments of the modules"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:121
+#: system/src/Auth/Authorization/CorePermissions.php:131
+msgid "Install and remove modules"
+msgstr ""
+
+#: system/src/Auth/Authorization/CorePermissions.php:137
 msgid "See where a visitor is on the site and where they came from"
 msgstr ""
 
-#: system/src/Auth/Authorization/CorePermissions.php:128
+#: system/src/Auth/Authorization/CorePermissions.php:144
 msgid "Browse the site as another user"
 msgstr ""
 
@@ -821,11 +825,11 @@ msgid "Bad Request"
 msgstr ""
 
 #: system/src/Http/PageMeta.php:18
-#: modules/forum/src/Application/Controllers/ForumSearchController.php:87
-#: modules/forum/src/Application/Controllers/ForumSearchController.php:96
-#: modules/forum/src/Application/Controllers/ForumTopicController.php:155
-#: modules/forum/src/Application/Controllers/ForumTopicController.php:164
-#: modules/forum/src/Application/UseCases/ViewForumFilesUseCase.php:406
+#: modules/johncms/forum/src/Application/Controllers/ForumSearchController.php:87
+#: modules/johncms/forum/src/Application/Controllers/ForumSearchController.php:96
+#: modules/johncms/forum/src/Application/Controllers/ForumTopicController.php:155
+#: modules/johncms/forum/src/Application/Controllers/ForumTopicController.php:164
+#: modules/johncms/forum/src/Application/UseCases/ViewForumFilesUseCase.php:406
 msgid "Page"
 msgstr ""
 
@@ -902,16 +906,16 @@ msgid "'%hostname%' does not appear to have any valid MX or A records for the em
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:17
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:380
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:409
 #: themes/default/templates/components/sidebar-main-menu.twig:6
-#: themes/default/templates/components/sidebar-main-menu.twig:179
+#: themes/default/templates/components/sidebar-main-menu.twig:198
 msgid "Set Light Theme"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:17
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:379
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:408
 #: themes/default/templates/components/sidebar-main-menu.twig:6
-#: themes/default/templates/components/sidebar-main-menu.twig:178
+#: themes/default/templates/components/sidebar-main-menu.twig:197
 msgid "Set Dark Theme"
 msgstr ""
 
@@ -989,7 +993,7 @@ msgid "Admin Chat"
 msgstr ""
 
 #: themes/default/templates/components/sidebar-user-menu.twig:24
-#: modules/registration/templates/public/email-confirmed.twig:15
+#: modules/johncms/registration/templates/public/email-confirmed.twig:15
 msgid "Log In"
 msgstr ""
 

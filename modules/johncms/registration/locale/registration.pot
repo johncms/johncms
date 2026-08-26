@@ -2,131 +2,131 @@ msgid ""
 msgstr ""
 "X-Domain: registration\n"
 
-#: modules/registration/src/Application/Controllers/ConfirmEmailController.php:31
-#: modules/registration/src/Application/Controllers/ConfirmEmailController.php:32
+#: modules/johncms/registration/src/Application/Controllers/ConfirmEmailController.php:31
+#: modules/johncms/registration/src/Application/Controllers/ConfirmEmailController.php:32
 msgid "Email confirmation"
 msgstr ""
 
-#: modules/registration/src/Application/Controllers/RegistrationController.php:56
-#: modules/registration/src/Application/Controllers/RegistrationController.php:57
-#: modules/registration/src/Application/Controllers/RegistrationController.php:62
-#: modules/registration/src/Application/Controllers/RegistrationController.php:144
-#: modules/registration/src/Application/Controllers/RegistrationController.php:145
-#: modules/registration/src/Application/Controllers/RegistrationController.php:161
-#: modules/registration/src/Application/Controllers/RegistrationController.php:162
-#: modules/registration/src/Application/Services/RegistrationPermissions.php:31
-#: modules/registration/templates/public/index.twig:16
-#: modules/registration/templates/public/index.twig:113
+#: modules/johncms/registration/src/Application/Controllers/RegistrationController.php:56
+#: modules/johncms/registration/src/Application/Controllers/RegistrationController.php:57
+#: modules/johncms/registration/src/Application/Controllers/RegistrationController.php:62
+#: modules/johncms/registration/src/Application/Controllers/RegistrationController.php:144
+#: modules/johncms/registration/src/Application/Controllers/RegistrationController.php:145
+#: modules/johncms/registration/src/Application/Controllers/RegistrationController.php:161
+#: modules/johncms/registration/src/Application/Controllers/RegistrationController.php:162
+#: modules/johncms/registration/src/Application/Services/RegistrationPermissions.php:31
+#: modules/johncms/registration/templates/public/index.twig:16
+#: modules/johncms/registration/templates/public/index.twig:113
 msgid "Registration"
 msgstr ""
 
-#: modules/registration/src/Application/Controllers/RegistrationController.php:108
+#: modules/johncms/registration/src/Application/Controllers/RegistrationController.php:108
 msgid "You must accept the consent to continue"
 msgstr ""
 
-#: modules/registration/src/Application/Services/RegistrationPermissions.php:30
+#: modules/johncms/registration/src/Application/Services/RegistrationPermissions.php:30
 msgid "Register an account"
 msgstr ""
 
-#: modules/registration/src/Application/UseCases/RegisterUserUseCase.php:69
+#: modules/johncms/registration/src/Application/UseCases/RegisterUserUseCase.php:69
 msgid "Registration on the website"
 msgstr ""
 
-#: modules/registration/templates/public/email-confirmed.twig:10
+#: modules/johncms/registration/templates/public/email-confirmed.twig:10
 msgid "User is not found"
 msgstr ""
 
-#: modules/registration/templates/public/email-confirmed.twig:12
+#: modules/johncms/registration/templates/public/email-confirmed.twig:12
 msgid "Thanks! Your e-mail has been successfully confirmed."
 msgstr ""
 
-#: modules/registration/templates/public/email-confirmed.twig:19
+#: modules/johncms/registration/templates/public/email-confirmed.twig:19
 msgid "Error when confirming e-mail. Invalid confirmation code."
 msgstr ""
 
-#: modules/registration/templates/public/index.twig:19
+#: modules/johncms/registration/templates/public/index.twig:19
 msgid "You can get authorized on the site after confirmation of your registration."
 msgstr ""
 
-#: modules/registration/templates/public/index.twig:27
+#: modules/johncms/registration/templates/public/index.twig:27
 msgid "Please, do not register names like 111, shhhh, uuuu, etc. They will be deleted. <br /> Also all the profiles registered via proxy servers will be deleted"
 msgstr ""
 
-#: modules/registration/templates/public/index.twig:31
+#: modules/johncms/registration/templates/public/index.twig:31
 msgid "Choose Nickname"
 msgstr ""
 
-#: modules/registration/templates/public/index.twig:40
+#: modules/johncms/registration/templates/public/index.twig:40
 msgid "Username"
 msgstr ""
 
-#: modules/registration/templates/public/index.twig:44
+#: modules/johncms/registration/templates/public/index.twig:44
 msgid "Min. 2, Max. 20 characters.<br />Allowed letters of the russian and latin alphabets, numbers and symbols - = @ ! ? ~ _ ( ) [ ] . * (Except zero)"
 msgstr ""
 
-#: modules/registration/templates/public/index.twig:48
-#: modules/registration/templates/public/index.twig:57
+#: modules/johncms/registration/templates/public/index.twig:48
+#: modules/johncms/registration/templates/public/index.twig:57
 msgid "Assign a password"
 msgstr ""
 
-#: modules/registration/templates/public/index.twig:63
-#: modules/registration/templates/public/index.twig:70
+#: modules/johncms/registration/templates/public/index.twig:63
+#: modules/johncms/registration/templates/public/index.twig:70
 msgid "E-mail"
 msgstr ""
 
-#: modules/registration/templates/public/index.twig:76
+#: modules/johncms/registration/templates/public/index.twig:76
 msgid "Select Gender"
 msgstr ""
 
-#: modules/registration/templates/public/index.twig:79
+#: modules/johncms/registration/templates/public/index.twig:79
 msgid "Man"
 msgstr ""
 
-#: modules/registration/templates/public/index.twig:80
+#: modules/johncms/registration/templates/public/index.twig:80
 msgid "Woman"
 msgstr ""
 
-#: modules/registration/templates/public/index.twig:85
-#: modules/registration/templates/public/index.twig:92
+#: modules/johncms/registration/templates/public/index.twig:85
+#: modules/johncms/registration/templates/public/index.twig:92
 msgid "Your name"
 msgstr ""
 
-#: modules/registration/templates/public/index.twig:97
+#: modules/johncms/registration/templates/public/index.twig:97
 msgid "Tell us a little about yourself"
 msgstr ""
 
-#: modules/registration/templates/public/registration-closed.twig:7
+#: modules/johncms/registration/templates/public/registration-closed.twig:7
 msgid "Registration is temporarily closed"
 msgstr ""
 
-#: modules/registration/templates/public/registration-result.twig:13
+#: modules/johncms/registration/templates/public/registration-result.twig:13
 msgid "Your registration data"
 msgstr ""
 
-#: modules/registration/templates/public/registration-result.twig:15
+#: modules/johncms/registration/templates/public/registration-result.twig:15
 msgid "Congratulations! You have successfully registered on the site."
 msgstr ""
 
-#: modules/registration/templates/public/registration-result.twig:18
+#: modules/johncms/registration/templates/public/registration-result.twig:18
 msgid "Your ID"
 msgstr ""
 
-#: modules/registration/templates/public/registration-result.twig:19
+#: modules/johncms/registration/templates/public/registration-result.twig:19
 msgid "Your Username"
 msgstr ""
 
-#: modules/registration/templates/public/registration-result.twig:20
+#: modules/johncms/registration/templates/public/registration-result.twig:20
 msgid "Your Password"
 msgstr ""
 
-#: modules/registration/templates/public/registration-result.twig:23
+#: modules/johncms/registration/templates/public/registration-result.twig:23
 msgid "Now you just need to confirm your email address.<br> Please check your email and follow the instructions in it."
 msgstr ""
 
-#: modules/registration/templates/public/registration-result.twig:25
+#: modules/johncms/registration/templates/public/registration-result.twig:25
 msgid "Please, wait until a moderator approves your registration"
 msgstr ""
 
-#: modules/registration/templates/public/registration-result.twig:27
+#: modules/johncms/registration/templates/public/registration-result.twig:27
 msgid "Enter"
 msgstr ""

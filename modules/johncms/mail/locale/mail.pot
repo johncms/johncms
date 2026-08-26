@@ -2,365 +2,365 @@ msgid ""
 msgstr ""
 "X-Domain: mail\n"
 
-#: modules/mail/src/Application/Controllers/AddContactController.php:32
-#: modules/mail/src/Application/Controllers/BlockUserController.php:39
-#: modules/mail/src/Application/Controllers/BlocklistIndexController.php:23
-#: modules/mail/src/Application/Controllers/ClearConversationController.php:30
-#: modules/mail/src/Application/Controllers/ContactController.php:35
-#: modules/mail/src/Application/Controllers/DeleteContactController.php:30
-#: modules/mail/src/Application/Controllers/DeleteMessageController.php:30
-#: modules/mail/src/Application/Controllers/FilesController.php:35
-#: modules/mail/src/Application/Controllers/IncomingConversationsController.php:35
-#: modules/mail/src/Application/Controllers/OutgoingConversationsController.php:35
-#: modules/mail/src/Application/Controllers/UnblockUserController.php:34
-#: modules/mail/src/Application/Controllers/WriteController.php:95
+#: modules/johncms/mail/src/Application/Controllers/AddContactController.php:32
+#: modules/johncms/mail/src/Application/Controllers/BlockUserController.php:39
+#: modules/johncms/mail/src/Application/Controllers/BlocklistIndexController.php:23
+#: modules/johncms/mail/src/Application/Controllers/ClearConversationController.php:30
+#: modules/johncms/mail/src/Application/Controllers/ContactController.php:35
+#: modules/johncms/mail/src/Application/Controllers/DeleteContactController.php:30
+#: modules/johncms/mail/src/Application/Controllers/DeleteMessageController.php:30
+#: modules/johncms/mail/src/Application/Controllers/FilesController.php:35
+#: modules/johncms/mail/src/Application/Controllers/IncomingConversationsController.php:35
+#: modules/johncms/mail/src/Application/Controllers/OutgoingConversationsController.php:35
+#: modules/johncms/mail/src/Application/Controllers/UnblockUserController.php:34
+#: modules/johncms/mail/src/Application/Controllers/WriteController.php:95
 msgid "My Account"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/AddContactController.php:33
-#: modules/mail/src/Application/Controllers/BlockUserController.php:40
-#: modules/mail/src/Application/Controllers/BlocklistIndexController.php:24
-#: modules/mail/src/Application/Controllers/ClearConversationController.php:31
-#: modules/mail/src/Application/Controllers/ContactController.php:36
-#: modules/mail/src/Application/Controllers/DeleteContactController.php:31
-#: modules/mail/src/Application/Controllers/DeleteMessageController.php:31
-#: modules/mail/src/Application/Controllers/DownloadFileController.php:27
-#: modules/mail/src/Application/Controllers/FilesController.php:36
-#: modules/mail/src/Application/Controllers/IncomingConversationsController.php:36
-#: modules/mail/src/Application/Controllers/OutgoingConversationsController.php:36
-#: modules/mail/src/Application/Controllers/UnblockUserController.php:35
-#: modules/mail/src/Application/Controllers/WriteController.php:58
-#: modules/mail/src/Application/Controllers/WriteController.php:85
-#: modules/mail/src/Application/Controllers/WriteController.php:96
+#: modules/johncms/mail/src/Application/Controllers/AddContactController.php:33
+#: modules/johncms/mail/src/Application/Controllers/BlockUserController.php:40
+#: modules/johncms/mail/src/Application/Controllers/BlocklistIndexController.php:24
+#: modules/johncms/mail/src/Application/Controllers/ClearConversationController.php:31
+#: modules/johncms/mail/src/Application/Controllers/ContactController.php:36
+#: modules/johncms/mail/src/Application/Controllers/DeleteContactController.php:31
+#: modules/johncms/mail/src/Application/Controllers/DeleteMessageController.php:31
+#: modules/johncms/mail/src/Application/Controllers/DownloadFileController.php:27
+#: modules/johncms/mail/src/Application/Controllers/FilesController.php:36
+#: modules/johncms/mail/src/Application/Controllers/IncomingConversationsController.php:36
+#: modules/johncms/mail/src/Application/Controllers/OutgoingConversationsController.php:36
+#: modules/johncms/mail/src/Application/Controllers/UnblockUserController.php:35
+#: modules/johncms/mail/src/Application/Controllers/WriteController.php:58
+#: modules/johncms/mail/src/Application/Controllers/WriteController.php:85
+#: modules/johncms/mail/src/Application/Controllers/WriteController.php:96
 msgid "Mail"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/AddContactController.php:34
-#: modules/mail/src/Application/Controllers/ContactController.php:37
-#: modules/mail/src/Application/Controllers/ContactController.php:39
-#: modules/mail/src/Application/Controllers/DeleteContactController.php:32
-#: modules/mail/templates/public/components/nav.twig:10
+#: modules/johncms/mail/src/Application/Controllers/AddContactController.php:34
+#: modules/johncms/mail/src/Application/Controllers/ContactController.php:37
+#: modules/johncms/mail/src/Application/Controllers/ContactController.php:39
+#: modules/johncms/mail/src/Application/Controllers/DeleteContactController.php:32
+#: modules/johncms/mail/templates/public/components/nav.twig:10
 msgid "Contacts"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/AddContactController.php:35
-#: modules/mail/src/Application/Controllers/AddContactController.php:47
-#: modules/mail/src/Application/Controllers/AddContactController.php:48
-#: modules/mail/src/Application/Controllers/AddContactController.php:65
-#: modules/mail/src/Application/Controllers/AddContactController.php:79
+#: modules/johncms/mail/src/Application/Controllers/AddContactController.php:35
+#: modules/johncms/mail/src/Application/Controllers/AddContactController.php:47
+#: modules/johncms/mail/src/Application/Controllers/AddContactController.php:48
+#: modules/johncms/mail/src/Application/Controllers/AddContactController.php:65
+#: modules/johncms/mail/src/Application/Controllers/AddContactController.php:79
 msgid "Add Contact"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/AddContactController.php:39
+#: modules/johncms/mail/src/Application/Controllers/AddContactController.php:39
 msgid "You really want to add contact?"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/AddContactController.php:41
+#: modules/johncms/mail/src/Application/Controllers/AddContactController.php:41
 msgid "Add"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/AddContactController.php:67
+#: modules/johncms/mail/src/Application/Controllers/AddContactController.php:67
 msgid "User has been added to your contact list"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/AddContactController.php:69
-#: modules/mail/src/Application/Services/MailMessagePreviewService.php:39
+#: modules/johncms/mail/src/Application/Controllers/AddContactController.php:69
+#: modules/johncms/mail/src/Application/Services/MailMessagePreviewService.php:39
 msgid "Continue"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/BlockUserController.php:28
+#: modules/johncms/mail/src/Application/Controllers/BlockUserController.php:28
 msgid "User blocked successfully"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/BlockUserController.php:41
-#: modules/mail/src/Application/Controllers/BlocklistIndexController.php:25
-#: modules/mail/src/Application/Controllers/BlocklistIndexController.php:30
-#: modules/mail/src/Application/Controllers/BlocklistIndexController.php:31
-#: modules/mail/src/Application/Controllers/UnblockUserController.php:36
-#: modules/mail/templates/public/components/nav.twig:11
+#: modules/johncms/mail/src/Application/Controllers/BlockUserController.php:41
+#: modules/johncms/mail/src/Application/Controllers/BlocklistIndexController.php:25
+#: modules/johncms/mail/src/Application/Controllers/BlocklistIndexController.php:30
+#: modules/johncms/mail/src/Application/Controllers/BlocklistIndexController.php:31
+#: modules/johncms/mail/src/Application/Controllers/UnblockUserController.php:36
+#: modules/johncms/mail/templates/public/components/nav.twig:11
 msgid "Blacklist"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/BlockUserController.php:42
-#: modules/mail/src/Application/Controllers/BlockUserController.php:54
-#: modules/mail/src/Application/Controllers/BlockUserController.php:55
+#: modules/johncms/mail/src/Application/Controllers/BlockUserController.php:42
+#: modules/johncms/mail/src/Application/Controllers/BlockUserController.php:54
+#: modules/johncms/mail/src/Application/Controllers/BlockUserController.php:55
 msgid "Block user"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/BlockUserController.php:46
+#: modules/johncms/mail/src/Application/Controllers/BlockUserController.php:46
 msgid "You really want to block contact?"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/BlockUserController.php:48
+#: modules/johncms/mail/src/Application/Controllers/BlockUserController.php:48
 msgid "Block"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/ClearConversationController.php:32
-#: modules/mail/src/Application/Controllers/ClearConversationController.php:44
-#: modules/mail/src/Application/Controllers/ClearConversationController.php:45
-#: modules/mail/src/Application/Controllers/ClearConversationController.php:62
-#: modules/mail/src/Application/Controllers/ClearConversationController.php:76
-#: modules/mail/templates/public/messages.twig:161
+#: modules/johncms/mail/src/Application/Controllers/ClearConversationController.php:32
+#: modules/johncms/mail/src/Application/Controllers/ClearConversationController.php:44
+#: modules/johncms/mail/src/Application/Controllers/ClearConversationController.php:45
+#: modules/johncms/mail/src/Application/Controllers/ClearConversationController.php:62
+#: modules/johncms/mail/src/Application/Controllers/ClearConversationController.php:76
+#: modules/johncms/mail/templates/public/messages.twig:161
 msgid "Clear messages"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/ClearConversationController.php:36
+#: modules/johncms/mail/src/Application/Controllers/ClearConversationController.php:36
 msgid "Confirm the deletion of messages"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/ClearConversationController.php:38
-#: modules/mail/src/Application/Controllers/DeleteContactController.php:39
-#: modules/mail/src/Application/Controllers/DeleteContactController.php:45
-#: modules/mail/src/Application/Controllers/DeleteContactController.php:46
-#: modules/mail/src/Application/Controllers/DeleteContactController.php:63
-#: modules/mail/src/Application/Controllers/DeleteContactController.php:77
-#: modules/mail/src/Application/Controllers/DeleteMessageController.php:38
-#: modules/mail/src/Application/UseCases/GetContactListUseCase.php:91
-#: modules/mail/src/Application/UseCases/GetIncomingConversationsUseCase.php:86
-#: modules/mail/src/Application/UseCases/GetOutgoingConversationsUseCase.php:86
-#: modules/mail/templates/public/blocklist.twig:42
-#: modules/mail/templates/public/messages.twig:152
+#: modules/johncms/mail/src/Application/Controllers/ClearConversationController.php:38
+#: modules/johncms/mail/src/Application/Controllers/DeleteContactController.php:39
+#: modules/johncms/mail/src/Application/Controllers/DeleteContactController.php:45
+#: modules/johncms/mail/src/Application/Controllers/DeleteContactController.php:46
+#: modules/johncms/mail/src/Application/Controllers/DeleteContactController.php:63
+#: modules/johncms/mail/src/Application/Controllers/DeleteContactController.php:77
+#: modules/johncms/mail/src/Application/Controllers/DeleteMessageController.php:38
+#: modules/johncms/mail/src/Application/UseCases/GetContactListUseCase.php:91
+#: modules/johncms/mail/src/Application/UseCases/GetIncomingConversationsUseCase.php:86
+#: modules/johncms/mail/src/Application/UseCases/GetOutgoingConversationsUseCase.php:86
+#: modules/johncms/mail/templates/public/blocklist.twig:42
+#: modules/johncms/mail/templates/public/messages.twig:152
 msgid "Delete"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/ClearConversationController.php:64
+#: modules/johncms/mail/src/Application/Controllers/ClearConversationController.php:64
 msgid "Messages are deleted"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/ClearConversationController.php:66
-#: modules/mail/src/Application/Controllers/DeleteContactController.php:67
-#: modules/mail/src/Application/Controllers/DeleteMessageController.php:66
-#: modules/mail/src/Application/Controllers/WriteController.php:62
-#: modules/mail/templates/public/contacts.twig:65
-#: modules/mail/templates/public/conversations.twig:85
-#: modules/mail/templates/public/files.twig:55
-#: modules/mail/templates/public/messages.twig:176
+#: modules/johncms/mail/src/Application/Controllers/ClearConversationController.php:66
+#: modules/johncms/mail/src/Application/Controllers/DeleteContactController.php:67
+#: modules/johncms/mail/src/Application/Controllers/DeleteMessageController.php:66
+#: modules/johncms/mail/src/Application/Controllers/WriteController.php:62
+#: modules/johncms/mail/templates/public/contacts.twig:65
+#: modules/johncms/mail/templates/public/conversations.twig:85
+#: modules/johncms/mail/templates/public/files.twig:55
+#: modules/johncms/mail/templates/public/messages.twig:176
 msgid "Back"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/ClearConversationController.php:78
-#: modules/mail/src/Application/Controllers/WriteController.php:87
-#: modules/mail/src/Application/UseCases/SendMessageUseCase.php:43
+#: modules/johncms/mail/src/Application/Controllers/ClearConversationController.php:78
+#: modules/johncms/mail/src/Application/Controllers/WriteController.php:87
+#: modules/johncms/mail/src/Application/UseCases/SendMessageUseCase.php:43
 msgid "User does not exists"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/DeleteContactController.php:33
+#: modules/johncms/mail/src/Application/Controllers/DeleteContactController.php:33
 msgid "Delete contact"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/DeleteContactController.php:37
+#: modules/johncms/mail/src/Application/Controllers/DeleteContactController.php:37
 msgid "When you delete a contact is deleted and all correspondence with him.<br>Are you sure you want to delete?"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/DeleteContactController.php:65
+#: modules/johncms/mail/src/Application/Controllers/DeleteContactController.php:65
 msgid "Contact deleted"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/DeleteMessageController.php:32
+#: modules/johncms/mail/src/Application/Controllers/DeleteMessageController.php:32
 msgid "Delete message"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/DeleteMessageController.php:36
+#: modules/johncms/mail/src/Application/Controllers/DeleteMessageController.php:36
 msgid "You really want to remove the message?"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/DeleteMessageController.php:44
-#: modules/mail/src/Application/Controllers/DeleteMessageController.php:45
-#: modules/mail/src/Application/Controllers/DeleteMessageController.php:62
-#: modules/mail/src/Application/Controllers/DeleteMessageController.php:76
+#: modules/johncms/mail/src/Application/Controllers/DeleteMessageController.php:44
+#: modules/johncms/mail/src/Application/Controllers/DeleteMessageController.php:45
+#: modules/johncms/mail/src/Application/Controllers/DeleteMessageController.php:62
+#: modules/johncms/mail/src/Application/Controllers/DeleteMessageController.php:76
 msgid "Deleting messages"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/DeleteMessageController.php:64
+#: modules/johncms/mail/src/Application/Controllers/DeleteMessageController.php:64
 msgid "Message deleted"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/DownloadFileController.php:29
+#: modules/johncms/mail/src/Application/Controllers/DownloadFileController.php:29
 msgid "Such file does not exist"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/FilesController.php:37
-#: modules/mail/src/Application/Controllers/FilesController.php:39
-#: modules/mail/templates/public/components/nav.twig:9
+#: modules/johncms/mail/src/Application/Controllers/FilesController.php:37
+#: modules/johncms/mail/src/Application/Controllers/FilesController.php:39
+#: modules/johncms/mail/templates/public/components/nav.twig:9
 msgid "Files"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/IncomingConversationsController.php:38
-#: modules/mail/templates/public/components/nav.twig:7
+#: modules/johncms/mail/src/Application/Controllers/IncomingConversationsController.php:38
+#: modules/johncms/mail/templates/public/components/nav.twig:7
 msgid "Incoming messages"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/OutgoingConversationsController.php:37
-#: modules/mail/src/Application/Controllers/OutgoingConversationsController.php:39
-#: modules/mail/templates/public/components/nav.twig:8
+#: modules/johncms/mail/src/Application/Controllers/OutgoingConversationsController.php:37
+#: modules/johncms/mail/src/Application/Controllers/OutgoingConversationsController.php:39
+#: modules/johncms/mail/templates/public/components/nav.twig:8
 msgid "Sent messages"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/UnblockUserController.php:27
+#: modules/johncms/mail/src/Application/Controllers/UnblockUserController.php:27
 msgid "User unblocked successfully"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/UnblockUserController.php:37
-#: modules/mail/src/Application/Controllers/UnblockUserController.php:49
-#: modules/mail/src/Application/Controllers/UnblockUserController.php:50
+#: modules/johncms/mail/src/Application/Controllers/UnblockUserController.php:37
+#: modules/johncms/mail/src/Application/Controllers/UnblockUserController.php:49
+#: modules/johncms/mail/src/Application/Controllers/UnblockUserController.php:50
 msgid "Unblock user"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/UnblockUserController.php:41
+#: modules/johncms/mail/src/Application/Controllers/UnblockUserController.php:41
 msgid "You really want to unblock contact?"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/UnblockUserController.php:43
-#: modules/mail/templates/public/blocklist.twig:43
+#: modules/johncms/mail/src/Application/Controllers/UnblockUserController.php:43
+#: modules/johncms/mail/templates/public/blocklist.twig:43
 msgid "Unblock"
 msgstr ""
 
-#: modules/mail/src/Application/Controllers/WriteController.php:93
+#: modules/johncms/mail/src/Application/Controllers/WriteController.php:93
 msgid "New message"
 msgstr ""
 
-#: modules/mail/src/Application/UseCases/BlockUserUseCase.php:27
+#: modules/johncms/mail/src/Application/UseCases/BlockUserUseCase.php:27
 msgid "You cannot block yourself"
 msgstr ""
 
-#: modules/mail/src/Application/UseCases/GetContactListUseCase.php:35
+#: modules/johncms/mail/src/Application/UseCases/GetContactListUseCase.php:35
 msgid "My Contacts"
 msgstr ""
 
-#: modules/mail/src/Application/UseCases/GetContactListUseCase.php:40
+#: modules/johncms/mail/src/Application/UseCases/GetContactListUseCase.php:40
 msgid "Blocklist"
 msgstr ""
 
-#: modules/mail/src/Application/UseCases/GetContactListUseCase.php:87
-#: modules/mail/src/Application/UseCases/GetIncomingConversationsUseCase.php:82
-#: modules/mail/src/Application/UseCases/GetOutgoingConversationsUseCase.php:82
-#: modules/mail/templates/public/blocklist.twig:41
+#: modules/johncms/mail/src/Application/UseCases/GetContactListUseCase.php:87
+#: modules/johncms/mail/src/Application/UseCases/GetIncomingConversationsUseCase.php:82
+#: modules/johncms/mail/src/Application/UseCases/GetOutgoingConversationsUseCase.php:82
+#: modules/johncms/mail/templates/public/blocklist.twig:41
 msgid "Correspondence"
 msgstr ""
 
-#: modules/mail/src/Application/UseCases/GetContactListUseCase.php:95
-#: modules/mail/src/Application/UseCases/GetIncomingConversationsUseCase.php:90
-#: modules/mail/src/Application/UseCases/GetOutgoingConversationsUseCase.php:90
+#: modules/johncms/mail/src/Application/UseCases/GetContactListUseCase.php:95
+#: modules/johncms/mail/src/Application/UseCases/GetIncomingConversationsUseCase.php:90
+#: modules/johncms/mail/src/Application/UseCases/GetOutgoingConversationsUseCase.php:90
 msgid "Block User"
 msgstr ""
 
-#: modules/mail/src/Application/UseCases/SendMessageUseCase.php:38
+#: modules/johncms/mail/src/Application/UseCases/SendMessageUseCase.php:38
 msgid "Access forbidden"
 msgstr ""
 
-#: modules/mail/src/Application/UseCases/SendMessageUseCase.php:48
+#: modules/johncms/mail/src/Application/UseCases/SendMessageUseCase.php:48
 msgid "Message cannot be empty"
 msgstr ""
 
-#: modules/mail/src/Application/UseCases/SendMessageUseCase.php:52
+#: modules/johncms/mail/src/Application/UseCases/SendMessageUseCase.php:52
 msgid "You cannot send messages to yourself"
 msgstr ""
 
-#: modules/mail/src/Application/UseCases/SendMessageUseCase.php:58
+#: modules/johncms/mail/src/Application/UseCases/SendMessageUseCase.php:58
 #, php-format
 msgid "You cannot add the message so often. Please, wait %d sec."
 msgstr ""
 
-#: modules/mail/src/Application/UseCases/SendMessageUseCase.php:65
+#: modules/johncms/mail/src/Application/UseCases/SendMessageUseCase.php:65
 msgid "The user at your ignore list. Sending the message is impossible."
 msgstr ""
 
-#: modules/mail/src/Application/UseCases/SendMessageUseCase.php:68
+#: modules/johncms/mail/src/Application/UseCases/SendMessageUseCase.php:68
 msgid "The user added you in the ignore list. Sending the message isn't possible."
 msgstr ""
 
-#: modules/mail/src/Application/UseCases/SendMessageUseCase.php:79
+#: modules/johncms/mail/src/Application/UseCases/SendMessageUseCase.php:79
 msgid "Message already exists"
 msgstr ""
 
-#: modules/mail/src/Application/UseCases/SendMessageUseCase.php:89
-#: modules/mail/src/Application/UseCases/SendMessageUseCase.php:143
+#: modules/johncms/mail/src/Application/UseCases/SendMessageUseCase.php:89
+#: modules/johncms/mail/src/Application/UseCases/SendMessageUseCase.php:143
 msgid "Error uploading file"
 msgstr ""
 
-#: modules/mail/src/Application/UseCases/SendMessageUseCase.php:129
+#: modules/johncms/mail/src/Application/UseCases/SendMessageUseCase.php:129
 msgid "To this user can write only contacts"
 msgstr ""
 
-#: modules/mail/src/Application/UseCases/SendMessageUseCase.php:133
+#: modules/johncms/mail/src/Application/UseCases/SendMessageUseCase.php:133
 msgid "To this user can write only friends"
 msgstr ""
 
-#: modules/mail/src/Application/UseCases/SendMessageUseCase.php:149
+#: modules/johncms/mail/src/Application/UseCases/SendMessageUseCase.php:149
 msgid "It is forbidden to upload files without a name"
 msgstr ""
 
-#: modules/mail/src/Application/UseCases/SendMessageUseCase.php:153
+#: modules/johncms/mail/src/Application/UseCases/SendMessageUseCase.php:153
 msgid "It is forbidden to upload files without extension"
 msgstr ""
 
-#: modules/mail/src/Application/UseCases/SendMessageUseCase.php:159
+#: modules/johncms/mail/src/Application/UseCases/SendMessageUseCase.php:159
 msgid "The size of the file exceeds the maximum allowable upload"
 msgstr ""
 
-#: modules/mail/src/Application/UseCases/SendMessageUseCase.php:163
+#: modules/johncms/mail/src/Application/UseCases/SendMessageUseCase.php:163
 msgid "File name contains invalid characters"
 msgstr ""
 
-#: modules/mail/src/Application/UseCases/SendMessageUseCase.php:168
+#: modules/johncms/mail/src/Application/UseCases/SendMessageUseCase.php:168
 msgid "Forbidden file type! By uploading permitted only files with the following extension"
 msgstr ""
 
-#: modules/mail/templates/public/blocklist.twig:15
-#: modules/mail/templates/public/contacts.twig:12
-#: modules/mail/templates/public/conversations.twig:12
-#: modules/mail/templates/public/files.twig:12
-#: modules/mail/templates/public/messages.twig:52
+#: modules/johncms/mail/templates/public/blocklist.twig:15
+#: modules/johncms/mail/templates/public/contacts.twig:12
+#: modules/johncms/mail/templates/public/conversations.twig:12
+#: modules/johncms/mail/templates/public/files.twig:12
+#: modules/johncms/mail/templates/public/messages.twig:52
 msgid "The list is empty"
 msgstr ""
 
-#: modules/mail/templates/public/blocklist.twig:38
+#: modules/johncms/mail/templates/public/blocklist.twig:38
 msgid "User since:"
 msgstr ""
 
-#: modules/mail/templates/public/confirm.twig:22
+#: modules/johncms/mail/templates/public/confirm.twig:22
 msgid "Cancel"
 msgstr ""
 
-#: modules/mail/templates/public/contacts.twig:34
-#: modules/mail/templates/public/conversations.twig:41
+#: modules/johncms/mail/templates/public/contacts.twig:34
+#: modules/johncms/mail/templates/public/conversations.twig:41
 msgid "message"
 msgid_plural "messages"
 msgstr[0] ""
 
-#: modules/mail/templates/public/contacts.twig:36
+#: modules/johncms/mail/templates/public/contacts.twig:36
 msgid "unread message"
 msgid_plural "unread messages"
 msgstr[0] ""
 
-#: modules/mail/templates/public/contacts.twig:61
-#: modules/mail/templates/public/conversations.twig:81
-#: modules/mail/templates/public/files.twig:51
-#: modules/mail/templates/public/messages.twig:172
+#: modules/johncms/mail/templates/public/contacts.twig:61
+#: modules/johncms/mail/templates/public/conversations.twig:81
+#: modules/johncms/mail/templates/public/files.twig:51
+#: modules/johncms/mail/templates/public/messages.twig:172
 msgid "Total:"
 msgstr ""
 
-#: modules/mail/templates/public/conversations.twig:44
+#: modules/johncms/mail/templates/public/conversations.twig:44
 msgid "Last:"
 msgstr ""
 
-#: modules/mail/templates/public/messages.twig:21
-#: modules/mail/templates/public/messages.twig:29
+#: modules/johncms/mail/templates/public/messages.twig:21
+#: modules/johncms/mail/templates/public/messages.twig:29
 msgid "To Whom"
 msgstr ""
 
-#: modules/mail/templates/public/messages.twig:36
+#: modules/johncms/mail/templates/public/messages.twig:36
 msgid "Message"
 msgstr ""
 
-#: modules/mail/templates/public/messages.twig:43
+#: modules/johncms/mail/templates/public/messages.twig:43
 msgid "Choose file"
 msgstr ""
 
-#: modules/mail/templates/public/messages.twig:46
+#: modules/johncms/mail/templates/public/messages.twig:46
 msgid "Send"
 msgstr ""
 
-#: modules/mail/templates/public/messages.twig:104
+#: modules/johncms/mail/templates/public/messages.twig:104
 msgid "Attached files"
 msgstr ""

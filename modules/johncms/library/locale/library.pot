@@ -2,748 +2,748 @@ msgid ""
 msgstr ""
 "X-Domain: library\n"
 
-#: modules/library/src/Application/Controllers/ArticleCommentsController.php:33
-#: modules/library/src/Application/Controllers/ArticleCommentsController.php:49
-#: modules/library/src/Application/Controllers/ArticleCommentsController.php:67
-#: modules/library/src/Application/Controllers/ArticleCommentsController.php:71
-#: modules/library/src/Application/Controllers/ArticleCommentsController.php:94
+#: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php:33
+#: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php:49
+#: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php:67
+#: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php:71
+#: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php:94
 msgid "Comments"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/ArticleCommentsController.php:35
-#: modules/library/src/Application/Controllers/ArticleCommentsController.php:51
-#: modules/library/src/Application/Controllers/DeleteArticleController.php:33
-#: modules/library/src/Application/Controllers/DeleteArticleImageController.php:33
-#: modules/library/src/Application/Controllers/DeleteSectionController.php:33
-#: modules/library/src/Application/Controllers/EditArticleController.php:63
-#: modules/library/src/Application/Controllers/EditSectionController.php:40
-#: modules/library/src/Application/Controllers/PremodController.php:40
-#: modules/library/src/Application/Middlewares/LibraryAccessMiddleware.php:31
+#: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php:35
+#: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php:51
+#: modules/johncms/library/src/Application/Controllers/DeleteArticleController.php:33
+#: modules/johncms/library/src/Application/Controllers/DeleteArticleImageController.php:33
+#: modules/johncms/library/src/Application/Controllers/DeleteSectionController.php:33
+#: modules/johncms/library/src/Application/Controllers/EditArticleController.php:63
+#: modules/johncms/library/src/Application/Controllers/EditSectionController.php:40
+#: modules/johncms/library/src/Application/Controllers/PremodController.php:40
+#: modules/johncms/library/src/Application/Middlewares/LibraryAccessMiddleware.php:31
 msgid "Access forbidden"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/ArticleCommentsController.php:37
-#: modules/library/src/Application/Controllers/ArticleCommentsController.php:53
-#: modules/library/src/Application/Controllers/ArticleCommentsController.php:67
-#: modules/library/src/Application/Controllers/ArticleController.php:58
-#: modules/library/src/Application/Controllers/ArticleController.php:88
-#: modules/library/src/Application/Controllers/ArticleController.php:95
-#: modules/library/src/Application/Controllers/CreateArticleController.php:43
-#: modules/library/src/Application/Controllers/CreateArticleController.php:56
-#: modules/library/src/Application/Controllers/CreateSectionController.php:39
-#: modules/library/src/Application/Controllers/CreateSectionController.php:48
-#: modules/library/src/Application/Controllers/DeleteArticleController.php:49
-#: modules/library/src/Application/Controllers/DeleteArticleImageController.php:41
-#: modules/library/src/Application/Controllers/DeleteSectionController.php:49
-#: modules/library/src/Application/Controllers/EditArticleController.php:69
-#: modules/library/src/Application/Controllers/EditSectionController.php:60
-#: modules/library/src/Application/Controllers/LatestCommentsController.php:23
-#: modules/library/src/Application/Controllers/LibraryIndexController.php:30
-#: modules/library/src/Application/Controllers/LibraryIndexController.php:54
-#: modules/library/src/Application/Controllers/LibraryIndexController.php:55
-#: modules/library/src/Application/Controllers/NewArticlesController.php:39
-#: modules/library/src/Application/Controllers/NewArticlesController.php:41
-#: modules/library/src/Application/Controllers/PremodController.php:46
-#: modules/library/src/Application/Controllers/SearchController.php:32
-#: modules/library/src/Application/Controllers/SearchController.php:44
-#: modules/library/src/Application/Controllers/SearchController.php:70
-#: modules/library/src/Application/Controllers/SectionController.php:45
-#: modules/library/src/Application/Controllers/SectionController.php:55
-#: modules/library/src/Application/Controllers/SectionController.php:80
-#: modules/library/src/Application/Controllers/SectionController.php:126
-#: modules/library/src/Application/Controllers/TagsController.php:30
-#: modules/library/src/Application/Controllers/TagsController.php:68
-#: modules/library/src/Application/Controllers/TopController.php:31
-#: modules/library/src/Application/Controllers/TopController.php:33
-#: modules/library/src/Application/Middlewares/LibraryAccessMiddleware.php:37
-#: modules/library/src/Application/Services/LibraryPermissions.php:34
-#: modules/library/src/Application/Services/LibraryPermissions.php:41
+#: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php:37
+#: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php:53
+#: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php:67
+#: modules/johncms/library/src/Application/Controllers/ArticleController.php:58
+#: modules/johncms/library/src/Application/Controllers/ArticleController.php:88
+#: modules/johncms/library/src/Application/Controllers/ArticleController.php:95
+#: modules/johncms/library/src/Application/Controllers/CreateArticleController.php:43
+#: modules/johncms/library/src/Application/Controllers/CreateArticleController.php:56
+#: modules/johncms/library/src/Application/Controllers/CreateSectionController.php:39
+#: modules/johncms/library/src/Application/Controllers/CreateSectionController.php:48
+#: modules/johncms/library/src/Application/Controllers/DeleteArticleController.php:49
+#: modules/johncms/library/src/Application/Controllers/DeleteArticleImageController.php:41
+#: modules/johncms/library/src/Application/Controllers/DeleteSectionController.php:49
+#: modules/johncms/library/src/Application/Controllers/EditArticleController.php:69
+#: modules/johncms/library/src/Application/Controllers/EditSectionController.php:60
+#: modules/johncms/library/src/Application/Controllers/LatestCommentsController.php:23
+#: modules/johncms/library/src/Application/Controllers/LibraryIndexController.php:30
+#: modules/johncms/library/src/Application/Controllers/LibraryIndexController.php:54
+#: modules/johncms/library/src/Application/Controllers/LibraryIndexController.php:55
+#: modules/johncms/library/src/Application/Controllers/NewArticlesController.php:39
+#: modules/johncms/library/src/Application/Controllers/NewArticlesController.php:41
+#: modules/johncms/library/src/Application/Controllers/PremodController.php:46
+#: modules/johncms/library/src/Application/Controllers/SearchController.php:32
+#: modules/johncms/library/src/Application/Controllers/SearchController.php:44
+#: modules/johncms/library/src/Application/Controllers/SearchController.php:70
+#: modules/johncms/library/src/Application/Controllers/SectionController.php:45
+#: modules/johncms/library/src/Application/Controllers/SectionController.php:55
+#: modules/johncms/library/src/Application/Controllers/SectionController.php:80
+#: modules/johncms/library/src/Application/Controllers/SectionController.php:126
+#: modules/johncms/library/src/Application/Controllers/TagsController.php:30
+#: modules/johncms/library/src/Application/Controllers/TagsController.php:68
+#: modules/johncms/library/src/Application/Controllers/TopController.php:31
+#: modules/johncms/library/src/Application/Controllers/TopController.php:33
+#: modules/johncms/library/src/Application/Middlewares/LibraryAccessMiddleware.php:37
+#: modules/johncms/library/src/Application/Services/LibraryPermissions.php:34
+#: modules/johncms/library/src/Application/Services/LibraryPermissions.php:41
 msgid "Library"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/ArticleController.php:60
-#: modules/library/src/Application/Controllers/DeleteArticleController.php:45
-#: modules/library/src/Application/Controllers/EditArticleController.php:47
+#: modules/johncms/library/src/Application/Controllers/ArticleController.php:60
+#: modules/johncms/library/src/Application/Controllers/DeleteArticleController.php:45
+#: modules/johncms/library/src/Application/Controllers/EditArticleController.php:47
 msgid "Articles do not exist"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/CreateArticleController.php:44
-#: modules/library/src/Application/Controllers/CreateArticleController.php:52
-#: modules/library/src/Application/Controllers/CreateArticleController.php:179
-#: modules/library/src/Application/Controllers/CreateArticleController.php:180
-#: modules/library/templates/public/articles.twig:49
+#: modules/johncms/library/src/Application/Controllers/CreateArticleController.php:44
+#: modules/johncms/library/src/Application/Controllers/CreateArticleController.php:52
+#: modules/johncms/library/src/Application/Controllers/CreateArticleController.php:179
+#: modules/johncms/library/src/Application/Controllers/CreateArticleController.php:180
+#: modules/johncms/library/templates/public/articles.twig:49
 msgid "Write Article"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/CreateArticleController.php:54
-#: modules/library/src/Application/Controllers/CreateSectionController.php:37
+#: modules/johncms/library/src/Application/Controllers/CreateArticleController.php:54
+#: modules/johncms/library/src/Application/Controllers/CreateSectionController.php:37
 msgid "Access denied"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/CreateArticleController.php:84
+#: modules/johncms/library/src/Application/Controllers/CreateArticleController.php:84
 #, php-format
 msgid "You cannot add the Article so often<br>Please, wait %d sec."
 msgstr ""
 
-#: modules/library/src/Application/Controllers/CreateArticleController.php:89
-#: modules/library/src/Application/Controllers/CreateSectionController.php:67
+#: modules/johncms/library/src/Application/Controllers/CreateArticleController.php:89
+#: modules/johncms/library/src/Application/Controllers/CreateSectionController.php:67
 msgid "You have not entered the name"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/CreateArticleController.php:105
+#: modules/johncms/library/src/Application/Controllers/CreateArticleController.php:105
 msgid "The file is invalid encoding, preferably UTF-8"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/CreateArticleController.php:109
+#: modules/johncms/library/src/Application/Controllers/CreateArticleController.php:109
 msgid "Invalid file format allowed * .txt"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/CreateArticleController.php:114
+#: modules/johncms/library/src/Application/Controllers/CreateArticleController.php:114
 msgid "You have not entered text"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/CreateArticleController.php:144
+#: modules/johncms/library/src/Application/Controllers/CreateArticleController.php:144
 msgid "Photo uploading error"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/CreateSectionController.php:35
-#: modules/library/src/Application/Controllers/CreateSectionController.php:49
-#: modules/library/src/Application/Controllers/CreateSectionController.php:65
-#: modules/library/src/Application/Controllers/CreateSectionController.php:95
-#: modules/library/src/Application/Controllers/CreateSectionController.php:96
-#: modules/library/templates/public/index.twig:56
+#: modules/johncms/library/src/Application/Controllers/CreateSectionController.php:35
+#: modules/johncms/library/src/Application/Controllers/CreateSectionController.php:49
+#: modules/johncms/library/src/Application/Controllers/CreateSectionController.php:65
+#: modules/johncms/library/src/Application/Controllers/CreateSectionController.php:95
+#: modules/johncms/library/src/Application/Controllers/CreateSectionController.php:96
+#: modules/johncms/library/templates/public/index.twig:56
 msgid "Create Section"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/CreateSectionController.php:69
+#: modules/johncms/library/src/Application/Controllers/CreateSectionController.php:69
 msgid "Repeat"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/DeleteArticleController.php:31
-#: modules/library/src/Application/Controllers/DeleteArticleController.php:43
-#: modules/library/src/Application/Controllers/DeleteArticleImageController.php:31
-#: modules/library/src/Application/Controllers/DeleteSectionController.php:31
-#: modules/library/src/Application/Controllers/DeleteSectionController.php:43
-#: modules/library/templates/public/article.twig:88
-#: modules/library/templates/public/articles.twig:52
-#: modules/library/templates/public/components/section-admin-panel.twig:16
-#: modules/library/templates/public/premod.twig:38
-#: modules/library/templates/public/sections.twig:55
+#: modules/johncms/library/src/Application/Controllers/DeleteArticleController.php:31
+#: modules/johncms/library/src/Application/Controllers/DeleteArticleController.php:43
+#: modules/johncms/library/src/Application/Controllers/DeleteArticleImageController.php:31
+#: modules/johncms/library/src/Application/Controllers/DeleteSectionController.php:31
+#: modules/johncms/library/src/Application/Controllers/DeleteSectionController.php:43
+#: modules/johncms/library/templates/public/article.twig:88
+#: modules/johncms/library/templates/public/articles.twig:52
+#: modules/johncms/library/templates/public/components/section-admin-panel.twig:16
+#: modules/johncms/library/templates/public/premod.twig:38
+#: modules/johncms/library/templates/public/sections.twig:55
 msgid "Delete"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/DeleteArticleController.php:54
-#: modules/library/src/Application/Controllers/DeleteArticleController.php:65
-#: modules/library/src/Application/Controllers/DeleteArticleController.php:66
+#: modules/johncms/library/src/Application/Controllers/DeleteArticleController.php:54
+#: modules/johncms/library/src/Application/Controllers/DeleteArticleController.php:65
+#: modules/johncms/library/src/Application/Controllers/DeleteArticleController.php:66
 msgid "Delete Article"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/DeleteArticleImageController.php:48
-#: modules/library/src/Application/Controllers/DeleteArticleImageController.php:58
-#: modules/library/src/Application/Controllers/DeleteArticleImageController.php:59
-#: modules/library/templates/public/edit-article.twig:33
+#: modules/johncms/library/src/Application/Controllers/DeleteArticleImageController.php:48
+#: modules/johncms/library/src/Application/Controllers/DeleteArticleImageController.php:58
+#: modules/johncms/library/src/Application/Controllers/DeleteArticleImageController.php:59
+#: modules/johncms/library/templates/public/edit-article.twig:33
 msgid "Delete Cover Image"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/DeleteSectionController.php:45
-#: modules/library/src/Application/Controllers/EditSectionController.php:54
-#: modules/library/src/Application/Controllers/SectionController.php:47
+#: modules/johncms/library/src/Application/Controllers/DeleteSectionController.php:45
+#: modules/johncms/library/src/Application/Controllers/EditSectionController.php:54
+#: modules/johncms/library/src/Application/Controllers/SectionController.php:47
 msgid "Section does not exist"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/DeleteSectionController.php:53
-#: modules/library/src/Application/Controllers/DeleteSectionController.php:140
-#: modules/library/src/Application/Controllers/DeleteSectionController.php:141
+#: modules/johncms/library/src/Application/Controllers/DeleteSectionController.php:53
+#: modules/johncms/library/src/Application/Controllers/DeleteSectionController.php:140
+#: modules/johncms/library/src/Application/Controllers/DeleteSectionController.php:141
 msgid "Delete Section"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/DownloadArticleController.php:89
+#: modules/johncms/library/src/Application/Controllers/DownloadArticleController.php:89
 msgid "Author name"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/DownloadArticleController.php:89
+#: modules/johncms/library/src/Application/Controllers/DownloadArticleController.php:89
 msgid "Author last name"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/DownloadArticleController.php:91
+#: modules/johncms/library/src/Application/Controllers/DownloadArticleController.php:91
 msgid "Date"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/EditArticleController.php:45
-#: modules/library/src/Application/Controllers/EditArticleController.php:61
-#: modules/library/src/Application/Controllers/EditArticleController.php:74
-#: modules/library/src/Application/Controllers/EditArticleController.php:77
-#: modules/library/src/Application/Controllers/EditArticleController.php:78
+#: modules/johncms/library/src/Application/Controllers/EditArticleController.php:45
+#: modules/johncms/library/src/Application/Controllers/EditArticleController.php:61
+#: modules/johncms/library/src/Application/Controllers/EditArticleController.php:74
+#: modules/johncms/library/src/Application/Controllers/EditArticleController.php:77
+#: modules/johncms/library/src/Application/Controllers/EditArticleController.php:78
 msgid "Edit Article"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/EditSectionController.php:38
-#: modules/library/src/Application/Controllers/EditSectionController.php:52
-#: modules/library/src/Application/Controllers/EditSectionController.php:64
-#: modules/library/src/Application/Controllers/EditSectionController.php:67
-#: modules/library/src/Application/Controllers/EditSectionController.php:68
+#: modules/johncms/library/src/Application/Controllers/EditSectionController.php:38
+#: modules/johncms/library/src/Application/Controllers/EditSectionController.php:52
+#: modules/johncms/library/src/Application/Controllers/EditSectionController.php:64
+#: modules/johncms/library/src/Application/Controllers/EditSectionController.php:67
+#: modules/johncms/library/src/Application/Controllers/EditSectionController.php:68
 msgid "Edit Section"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/LatestCommentsController.php:24
-#: modules/library/src/Application/Controllers/LatestCommentsController.php:60
-#: modules/library/src/Application/Controllers/LatestCommentsController.php:61
-#: modules/library/templates/public/index.twig:21
+#: modules/johncms/library/src/Application/Controllers/LatestCommentsController.php:24
+#: modules/johncms/library/src/Application/Controllers/LatestCommentsController.php:60
+#: modules/johncms/library/src/Application/Controllers/LatestCommentsController.php:61
+#: modules/johncms/library/templates/public/index.twig:21
 msgid "Latest comments"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/NewArticlesController.php:38
-#: modules/library/templates/public/index.twig:16
+#: modules/johncms/library/src/Application/Controllers/NewArticlesController.php:38
+#: modules/johncms/library/templates/public/index.twig:16
 msgid "New Articles"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/PremodController.php:38
-#: modules/library/src/Application/Controllers/PremodController.php:47
-#: modules/library/src/Application/Controllers/PremodController.php:98
-#: modules/library/src/Application/Controllers/PremodController.php:99
-#: modules/library/templates/public/index.twig:59
+#: modules/johncms/library/src/Application/Controllers/PremodController.php:38
+#: modules/johncms/library/src/Application/Controllers/PremodController.php:47
+#: modules/johncms/library/src/Application/Controllers/PremodController.php:98
+#: modules/johncms/library/src/Application/Controllers/PremodController.php:99
+#: modules/johncms/library/templates/public/index.twig:59
 msgid "Moderation Articles"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/SearchController.php:33
-#: modules/library/src/Application/Controllers/SearchController.php:44
-#: modules/library/src/Application/Controllers/SearchController.php:48
-#: modules/library/templates/public/index.twig:19
-#: modules/library/templates/public/search.twig:25
+#: modules/johncms/library/src/Application/Controllers/SearchController.php:33
+#: modules/johncms/library/src/Application/Controllers/SearchController.php:44
+#: modules/johncms/library/src/Application/Controllers/SearchController.php:48
+#: modules/johncms/library/templates/public/index.twig:19
+#: modules/johncms/library/templates/public/search.twig:25
 msgid "Search"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/SearchController.php:69
+#: modules/johncms/library/src/Application/Controllers/SearchController.php:69
 #, php-format
 msgid "Search results for: %s"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/TagsController.php:31
-#: modules/library/src/Application/Controllers/TagsController.php:39
-#: modules/library/src/Application/Controllers/TagsController.php:52
-#: modules/library/templates/public/create-article.twig:62
-#: modules/library/templates/public/edit-article.twig:64
+#: modules/johncms/library/src/Application/Controllers/TagsController.php:31
+#: modules/johncms/library/src/Application/Controllers/TagsController.php:39
+#: modules/johncms/library/src/Application/Controllers/TagsController.php:52
+#: modules/johncms/library/templates/public/create-article.twig:62
+#: modules/johncms/library/templates/public/edit-article.twig:64
 msgid "Tags"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/TagsController.php:41
-#: modules/library/src/Application/Controllers/TagsController.php:54
-#: modules/library/src/Application/Services/Hashtags.php:182
-#: modules/library/templates/public/articles.twig:38
-#: modules/library/templates/public/index.twig:51
-#: modules/library/templates/public/latest-comments.twig:28
-#: modules/library/templates/public/search.twig:55
-#: modules/library/templates/public/sections.twig:42
-#: modules/library/templates/public/top.twig:25
+#: modules/johncms/library/src/Application/Controllers/TagsController.php:41
+#: modules/johncms/library/src/Application/Controllers/TagsController.php:54
+#: modules/johncms/library/src/Application/Services/Hashtags.php:182
+#: modules/johncms/library/templates/public/articles.twig:38
+#: modules/johncms/library/templates/public/index.twig:51
+#: modules/johncms/library/templates/public/latest-comments.twig:28
+#: modules/johncms/library/templates/public/search.twig:55
+#: modules/johncms/library/templates/public/sections.twig:42
+#: modules/johncms/library/templates/public/top.twig:25
 msgid "The list is empty"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/TagsController.php:67
+#: modules/johncms/library/src/Application/Controllers/TagsController.php:67
 #, php-format
 msgid "Articles tagged: %s"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/TopController.php:30
-#: modules/library/templates/public/index.twig:20
+#: modules/johncms/library/src/Application/Controllers/TopController.php:30
+#: modules/johncms/library/templates/public/index.twig:20
 msgid "Rating articles"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/TopController.php:37
+#: modules/johncms/library/src/Application/Controllers/TopController.php:37
 msgid "Most readings"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/TopController.php:38
+#: modules/johncms/library/src/Application/Controllers/TopController.php:38
 msgid "By rating"
 msgstr ""
 
-#: modules/library/src/Application/Controllers/TopController.php:39
+#: modules/johncms/library/src/Application/Controllers/TopController.php:39
 msgid "By comments"
 msgstr ""
 
-#: modules/library/src/Application/Middlewares/LibraryAccessMiddleware.php:31
+#: modules/johncms/library/src/Application/Middlewares/LibraryAccessMiddleware.php:31
 msgid "Library is closed"
 msgstr ""
 
-#: modules/library/src/Application/Services/LibraryPermissions.php:33
+#: modules/johncms/library/src/Application/Services/LibraryPermissions.php:33
 msgid "Read the library"
 msgstr ""
 
-#: modules/library/src/Application/Services/LibraryPermissions.php:40
+#: modules/johncms/library/src/Application/Services/LibraryPermissions.php:40
 msgid "Manage the sections and the articles"
 msgstr ""
 
-#: modules/library/src/Install/Installer.php:35
+#: modules/johncms/library/src/Install/Installer.php:35
 msgid "Programming"
 msgstr ""
 
-#: modules/library/src/Install/Installer.php:36
+#: modules/johncms/library/src/Install/Installer.php:36
 msgid "Articles and guides on development"
 msgstr ""
 
-#: modules/library/src/Install/Installer.php:38
+#: modules/johncms/library/src/Install/Installer.php:38
 msgid "Materials on the PHP language"
 msgstr ""
 
-#: modules/library/src/Install/Installer.php:40
+#: modules/johncms/library/src/Install/Installer.php:40
 msgid "Materials on JavaScript"
 msgstr ""
 
-#: modules/library/src/Install/Installer.php:41
+#: modules/johncms/library/src/Install/Installer.php:41
 msgid "Prose"
 msgstr ""
 
-#: modules/library/src/Install/Installer.php:42
+#: modules/johncms/library/src/Install/Installer.php:42
 msgid "Short stories and essays"
 msgstr ""
 
-#: modules/library/src/Install/Installer.php:43
+#: modules/johncms/library/src/Install/Installer.php:43
 msgid "User articles"
 msgstr ""
 
-#: modules/library/src/Install/Installer.php:44
+#: modules/johncms/library/src/Install/Installer.php:44
 msgid "A section where visitors can publish their own articles"
 msgstr ""
 
-#: modules/library/src/Install/Installer.php:72
+#: modules/johncms/library/src/Install/Installer.php:72
 msgid "Getting started with PHP"
 msgstr ""
 
-#: modules/library/src/Install/Installer.php:73
+#: modules/johncms/library/src/Install/Installer.php:73
 msgid "Installing PHP and your first script"
 msgstr ""
 
-#: modules/library/src/Install/Installer.php:74
+#: modules/johncms/library/src/Install/Installer.php:74
 msgid "<p>PHP is a popular language for web development. In this article we cover installing the interpreter and running your first script.</p>"
 msgstr ""
 
-#: modules/library/src/Install/Installer.php:76
+#: modules/johncms/library/src/Install/Installer.php:76
 msgid "Arrays in PHP"
 msgstr ""
 
-#: modules/library/src/Install/Installer.php:77
+#: modules/johncms/library/src/Install/Installer.php:77
 msgid "Indexed and associative arrays"
 msgstr ""
 
-#: modules/library/src/Install/Installer.php:78
+#: modules/johncms/library/src/Install/Installer.php:78
 msgid "<p>Arrays in PHP can be indexed or associative. Let us look at the main functions for working with them.</p>"
 msgstr ""
 
-#: modules/library/src/Install/Installer.php:80
+#: modules/johncms/library/src/Install/Installer.php:80
 msgid "JavaScript basics"
 msgstr ""
 
-#: modules/library/src/Install/Installer.php:81
+#: modules/johncms/library/src/Install/Installer.php:81
 msgid "Variables and functions"
 msgstr ""
 
-#: modules/library/src/Install/Installer.php:82
+#: modules/johncms/library/src/Install/Installer.php:82
 msgid "<p>JavaScript runs in the browser and makes pages interactive. Let us start with variables and functions.</p>"
 msgstr ""
 
-#: modules/library/src/Install/Installer.php:84
+#: modules/johncms/library/src/Install/Installer.php:84
 msgid "An autumn evening"
 msgstr ""
 
-#: modules/library/src/Install/Installer.php:85
+#: modules/johncms/library/src/Install/Installer.php:85
 msgid "A short story"
 msgstr ""
 
-#: modules/library/src/Install/Installer.php:86
+#: modules/johncms/library/src/Install/Installer.php:86
 msgid "<p>A warm autumn rain fell outside the window, and the city slowly sank into the evening twilight.</p>"
 msgstr ""
 
-#: modules/library/src/Install/Installer.php:89
+#: modules/johncms/library/src/Install/Installer.php:89
 msgid "My first article"
 msgstr ""
 
-#: modules/library/src/Install/Installer.php:90
+#: modules/johncms/library/src/Install/Installer.php:90
 msgid "An example of a user publication"
 msgstr ""
 
-#: modules/library/src/Install/Installer.php:91
+#: modules/johncms/library/src/Install/Installer.php:91
 msgid "<p>This is an example of an article added by a user. In this section anyone can publish their own material.</p>"
 msgstr ""
 
-#: modules/library/src/Install/Installer.php:116
+#: modules/johncms/library/src/Install/Installer.php:116
 msgid "<p>Great introduction, straight to the point!</p>"
 msgstr ""
 
-#: modules/library/src/Install/Installer.php:117
+#: modules/johncms/library/src/Install/Installer.php:117
 msgid "<p>Thanks, I bookmarked the article.</p>"
 msgstr ""
 
-#: modules/library/src/Install/Installer.php:118
+#: modules/johncms/library/src/Install/Installer.php:118
 msgid "<p>It is great that you can publish your own materials.</p>"
 msgstr ""
 
-#: modules/library/templates/public/article.twig:37
+#: modules/johncms/library/templates/public/article.twig:37
 msgid "Download file"
 msgstr ""
 
-#: modules/library/templates/public/article.twig:45
+#: modules/johncms/library/templates/public/article.twig:45
 msgid "The Tags:"
 msgstr ""
 
-#: modules/library/templates/public/article.twig:50
+#: modules/johncms/library/templates/public/article.twig:50
 msgid "Who added:"
 msgstr ""
 
-#: modules/library/templates/public/article.twig:60
-#: modules/library/templates/public/articles.twig:29
-#: modules/library/templates/public/components/article-row.twig:22
+#: modules/johncms/library/templates/public/article.twig:60
+#: modules/johncms/library/templates/public/articles.twig:29
+#: modules/johncms/library/templates/public/components/article-row.twig:22
 msgid "Rating:"
 msgstr ""
 
-#: modules/library/templates/public/article.twig:66
-#: modules/library/templates/public/search.twig:42
-#: modules/library/templates/public/tags.twig:28
+#: modules/johncms/library/templates/public/article.twig:66
+#: modules/johncms/library/templates/public/search.twig:42
+#: modules/johncms/library/templates/public/tags.twig:28
 msgid "Number of readings:"
 msgstr ""
 
-#: modules/library/templates/public/article.twig:71
-#: modules/library/templates/public/components/article-row.twig:27
-#: modules/library/templates/public/tags.twig:32
+#: modules/johncms/library/templates/public/article.twig:71
+#: modules/johncms/library/templates/public/components/article-row.twig:27
+#: modules/johncms/library/templates/public/tags.twig:32
 msgid "Comments:"
 msgstr ""
 
-#: modules/library/templates/public/article.twig:87
-#: modules/library/templates/public/articles.twig:51
-#: modules/library/templates/public/components/section-admin-panel.twig:15
-#: modules/library/templates/public/sections.twig:54
+#: modules/johncms/library/templates/public/article.twig:87
+#: modules/johncms/library/templates/public/articles.twig:51
+#: modules/johncms/library/templates/public/components/section-admin-panel.twig:15
+#: modules/johncms/library/templates/public/sections.twig:54
 msgid "Edit"
 msgstr ""
 
-#: modules/library/templates/public/articles.twig:21
-#: modules/library/templates/public/components/article-row.twig:14
-#: modules/library/templates/public/latest-comments.twig:16
-#: modules/library/templates/public/premod.twig:28
-#: modules/library/templates/public/search.twig:34
-#: modules/library/templates/public/tags.twig:20
+#: modules/johncms/library/templates/public/articles.twig:21
+#: modules/johncms/library/templates/public/components/article-row.twig:14
+#: modules/johncms/library/templates/public/latest-comments.twig:16
+#: modules/johncms/library/templates/public/premod.twig:28
+#: modules/johncms/library/templates/public/search.twig:34
+#: modules/johncms/library/templates/public/tags.twig:20
 msgid "Author:"
 msgstr ""
 
-#: modules/library/templates/public/articles.twig:42
-#: modules/library/templates/public/new.twig:14
-#: modules/library/templates/public/premod.twig:43
-#: modules/library/templates/public/search.twig:47
-#: modules/library/templates/public/sections.twig:47
-#: modules/library/templates/public/tags.twig:40
+#: modules/johncms/library/templates/public/articles.twig:42
+#: modules/johncms/library/templates/public/new.twig:14
+#: modules/johncms/library/templates/public/premod.twig:43
+#: modules/johncms/library/templates/public/search.twig:47
+#: modules/johncms/library/templates/public/sections.twig:47
+#: modules/johncms/library/templates/public/tags.twig:40
 msgid "Total"
 msgstr ""
 
-#: modules/library/templates/public/components/article-row.twig:11
+#: modules/johncms/library/templates/public/components/article-row.twig:11
 msgid "Section:"
 msgstr ""
 
-#: modules/library/templates/public/components/rating-vote.twig:9
+#: modules/johncms/library/templates/public/components/rating-vote.twig:9
 msgid "Select a rating:"
 msgstr ""
 
-#: modules/library/templates/public/components/rating-vote.twig:15
+#: modules/johncms/library/templates/public/components/rating-vote.twig:15
 msgid "Vote"
 msgstr ""
 
-#: modules/library/templates/public/components/section-admin-panel.twig:10
+#: modules/johncms/library/templates/public/components/section-admin-panel.twig:10
 msgid "Up"
 msgstr ""
 
-#: modules/library/templates/public/components/section-admin-panel.twig:13
+#: modules/johncms/library/templates/public/components/section-admin-panel.twig:13
 msgid "Down"
 msgstr ""
 
-#: modules/library/templates/public/create-article.twig:20
+#: modules/johncms/library/templates/public/create-article.twig:20
 msgid "Article added"
 msgstr ""
 
-#: modules/library/templates/public/create-article.twig:22
+#: modules/johncms/library/templates/public/create-article.twig:22
 msgid "To Article"
 msgstr ""
 
-#: modules/library/templates/public/create-article.twig:24
+#: modules/johncms/library/templates/public/create-article.twig:24
 msgid "Thank you for what we have written. After checking moderated, your Article will be published in the library."
 msgstr ""
 
-#: modules/library/templates/public/create-article.twig:25
-#: modules/library/templates/public/create-section.twig:15
+#: modules/johncms/library/templates/public/create-article.twig:25
+#: modules/johncms/library/templates/public/create-section.twig:15
 msgid "To Section"
 msgstr ""
 
-#: modules/library/templates/public/create-article.twig:32
-#: modules/library/templates/public/create-article.twig:33
-#: modules/library/templates/public/create-section.twig:21
-#: modules/library/templates/public/create-section.twig:22
-#: modules/library/templates/public/edit-article.twig:42
-#: modules/library/templates/public/edit-article.twig:45
-#: modules/library/templates/public/edit-section.twig:26
-#: modules/library/templates/public/edit-section.twig:29
+#: modules/johncms/library/templates/public/create-article.twig:32
+#: modules/johncms/library/templates/public/create-article.twig:33
+#: modules/johncms/library/templates/public/create-section.twig:21
+#: modules/johncms/library/templates/public/create-section.twig:22
+#: modules/johncms/library/templates/public/edit-article.twig:42
+#: modules/johncms/library/templates/public/edit-article.twig:45
+#: modules/johncms/library/templates/public/edit-section.twig:26
+#: modules/johncms/library/templates/public/edit-section.twig:29
 msgid "Title"
 msgstr ""
 
-#: modules/library/templates/public/create-article.twig:37
-#: modules/library/templates/public/edit-article.twig:49
+#: modules/johncms/library/templates/public/create-article.twig:37
+#: modules/johncms/library/templates/public/edit-article.twig:49
 msgid "Announce"
 msgstr ""
 
-#: modules/library/templates/public/create-article.twig:42
-#: modules/library/templates/public/edit-article.twig:56
+#: modules/johncms/library/templates/public/create-article.twig:42
+#: modules/johncms/library/templates/public/edit-article.twig:56
 msgid "Text"
 msgstr ""
 
-#: modules/library/templates/public/create-article.twig:47
-#: modules/library/templates/public/edit-article.twig:88
+#: modules/johncms/library/templates/public/create-article.twig:47
+#: modules/johncms/library/templates/public/edit-article.twig:88
 msgid "Commenting on the Article"
 msgstr ""
 
-#: modules/library/templates/public/create-article.twig:52
-#: modules/library/templates/public/edit-article.twig:37
+#: modules/johncms/library/templates/public/create-article.twig:52
+#: modules/johncms/library/templates/public/edit-article.twig:37
 msgid "To upload a photo"
 msgstr ""
 
-#: modules/library/templates/public/create-article.twig:57
+#: modules/johncms/library/templates/public/create-article.twig:57
 msgid "Select the text file"
 msgstr ""
 
-#: modules/library/templates/public/create-article.twig:58
+#: modules/johncms/library/templates/public/create-article.twig:58
 msgid "Text entry field will be ignored"
 msgstr ""
 
-#: modules/library/templates/public/create-article.twig:67
-#: modules/library/templates/public/create-section.twig:41
-#: modules/library/templates/public/edit-article.twig:98
-#: modules/library/templates/public/edit-section.twig:79
+#: modules/johncms/library/templates/public/create-article.twig:67
+#: modules/johncms/library/templates/public/create-section.twig:41
+#: modules/johncms/library/templates/public/edit-article.twig:98
+#: modules/johncms/library/templates/public/edit-section.twig:79
 msgid "Save"
 msgstr ""
 
-#: modules/library/templates/public/create-article.twig:68
-#: modules/library/templates/public/create-section.twig:42
-#: modules/library/templates/public/delete-article-image.twig:21
-#: modules/library/templates/public/delete-article.twig:22
-#: modules/library/templates/public/delete-section.twig:30
-#: modules/library/templates/public/delete-section.twig:45
-#: modules/library/templates/public/delete-section.twig:97
-#: modules/library/templates/public/edit-article.twig:99
-#: modules/library/templates/public/edit-section.twig:80
+#: modules/johncms/library/templates/public/create-article.twig:68
+#: modules/johncms/library/templates/public/create-section.twig:42
+#: modules/johncms/library/templates/public/delete-article-image.twig:21
+#: modules/johncms/library/templates/public/delete-article.twig:22
+#: modules/johncms/library/templates/public/delete-section.twig:30
+#: modules/johncms/library/templates/public/delete-section.twig:45
+#: modules/johncms/library/templates/public/delete-section.twig:97
+#: modules/johncms/library/templates/public/edit-article.twig:99
+#: modules/johncms/library/templates/public/edit-section.twig:80
 msgid "Cancel"
 msgstr ""
 
-#: modules/library/templates/public/create-section.twig:13
+#: modules/johncms/library/templates/public/create-section.twig:13
 msgid "Section created"
 msgstr ""
 
-#: modules/library/templates/public/create-section.twig:26
-#: modules/library/templates/public/edit-section.twig:33
+#: modules/johncms/library/templates/public/create-section.twig:26
+#: modules/johncms/library/templates/public/edit-section.twig:33
 msgid "Section description"
 msgstr ""
 
-#: modules/library/templates/public/create-section.twig:30
-#: modules/library/templates/public/edit-section.twig:39
+#: modules/johncms/library/templates/public/create-section.twig:30
+#: modules/johncms/library/templates/public/edit-section.twig:39
 msgid "Section type"
 msgstr ""
 
-#: modules/library/templates/public/create-section.twig:33
-#: modules/library/templates/public/edit-section.twig:42
+#: modules/johncms/library/templates/public/create-section.twig:33
+#: modules/johncms/library/templates/public/edit-section.twig:42
 msgid "Articles"
 msgstr ""
 
-#: modules/library/templates/public/create-section.twig:37
-#: modules/library/templates/public/edit-section.twig:46
+#: modules/johncms/library/templates/public/create-section.twig:37
+#: modules/johncms/library/templates/public/edit-section.twig:46
 msgid "Sections"
 msgstr ""
 
-#: modules/library/templates/public/delete-article-image.twig:12
+#: modules/johncms/library/templates/public/delete-article-image.twig:12
 msgid "Cover image for article \"%s\" has been deleted."
 msgstr ""
 
-#: modules/library/templates/public/delete-article-image.twig:14
-#: modules/library/templates/public/edit-article.twig:26
+#: modules/johncms/library/templates/public/delete-article-image.twig:14
+#: modules/johncms/library/templates/public/edit-article.twig:26
 msgid "Back to Article"
 msgstr ""
 
-#: modules/library/templates/public/delete-article-image.twig:18
+#: modules/johncms/library/templates/public/delete-article-image.twig:18
 msgid "Are you sure you want to delete the cover image for article \"%s\"?"
 msgstr ""
 
-#: modules/library/templates/public/delete-article-image.twig:20
-#: modules/library/templates/public/delete-article.twig:21
-#: modules/library/templates/public/delete-section.twig:29
+#: modules/johncms/library/templates/public/delete-article-image.twig:20
+#: modules/johncms/library/templates/public/delete-article.twig:21
+#: modules/johncms/library/templates/public/delete-section.twig:29
 msgid "Yes, Delete"
 msgstr ""
 
-#: modules/library/templates/public/delete-article.twig:13
+#: modules/johncms/library/templates/public/delete-article.twig:13
 msgid "Article \"%s\" has been deleted."
 msgstr ""
 
-#: modules/library/templates/public/delete-article.twig:15
-#: modules/library/templates/public/delete-section.twig:23
-#: modules/library/templates/public/delete-section.twig:73
-#: modules/library/templates/public/delete-section.twig:90
+#: modules/johncms/library/templates/public/delete-article.twig:15
+#: modules/johncms/library/templates/public/delete-section.twig:23
+#: modules/johncms/library/templates/public/delete-section.twig:73
+#: modules/johncms/library/templates/public/delete-section.twig:90
 msgid "Back to Library"
 msgstr ""
 
-#: modules/library/templates/public/delete-article.twig:19
+#: modules/johncms/library/templates/public/delete-article.twig:19
 msgid "Are you sure you want to delete the article \"%s\"? This action cannot be undone."
 msgstr ""
 
-#: modules/library/templates/public/delete-section.twig:21
+#: modules/johncms/library/templates/public/delete-section.twig:21
 msgid "Section \"%s\" has been deleted."
 msgstr ""
 
-#: modules/library/templates/public/delete-section.twig:27
+#: modules/johncms/library/templates/public/delete-section.twig:27
 msgid "Are you sure you want to delete the section \"%s\"? This action cannot be undone."
 msgstr ""
 
-#: modules/library/templates/public/delete-section.twig:36
+#: modules/johncms/library/templates/public/delete-section.twig:36
 msgid "Contents of section \"%s\" have been moved successfully."
 msgstr ""
 
-#: modules/library/templates/public/delete-section.twig:38
+#: modules/johncms/library/templates/public/delete-section.twig:38
 msgid "Go to Target Section"
 msgstr ""
 
-#: modules/library/templates/public/delete-section.twig:42
+#: modules/johncms/library/templates/public/delete-section.twig:42
 msgid "Move all contents of section \"%s\" to the selected section and delete it?"
 msgstr ""
 
-#: modules/library/templates/public/delete-section.twig:44
+#: modules/johncms/library/templates/public/delete-section.twig:44
 msgid "Yes, Move and Delete"
 msgstr ""
 
-#: modules/library/templates/public/delete-section.twig:55
+#: modules/johncms/library/templates/public/delete-section.twig:55
 msgid "Move contents of \"%s\" to:"
 msgstr ""
 
-#: modules/library/templates/public/delete-section.twig:66
-#: modules/library/templates/public/premod.twig:37
+#: modules/johncms/library/templates/public/delete-section.twig:66
+#: modules/johncms/library/templates/public/premod.twig:37
 msgid "Approve"
 msgstr ""
 
-#: modules/library/templates/public/delete-section.twig:71
+#: modules/johncms/library/templates/public/delete-section.twig:71
 msgid "No sections available to move the contents of \"%s\" to."
 msgstr ""
 
-#: modules/library/templates/public/delete-section.twig:80
+#: modules/johncms/library/templates/public/delete-section.twig:80
 msgid "Successfully deleted:<br>Directories: (%d)<br>Articles: (%d)<br>Tags: (%d)<br>Comments: (%d)<br>Images: (%d)"
 msgstr ""
 
-#: modules/library/templates/public/delete-section.twig:94
+#: modules/johncms/library/templates/public/delete-section.twig:94
 msgid "Are you sure you want to delete section \"%s\" along with ALL its contents? This action cannot be undone."
 msgstr ""
 
-#: modules/library/templates/public/delete-section.twig:96
+#: modules/johncms/library/templates/public/delete-section.twig:96
 msgid "Yes, Delete Everything"
 msgstr ""
 
-#: modules/library/templates/public/delete-section.twig:104
+#: modules/johncms/library/templates/public/delete-section.twig:104
 msgid "Section \"%s\" contains subsections or articles. Choose how to delete it:"
 msgstr ""
 
-#: modules/library/templates/public/delete-section.twig:109
+#: modules/johncms/library/templates/public/delete-section.twig:109
 msgid "Move contents to another section, then delete"
 msgstr ""
 
-#: modules/library/templates/public/delete-section.twig:113
+#: modules/johncms/library/templates/public/delete-section.twig:113
 msgid "Delete section and all its contents"
 msgstr ""
 
-#: modules/library/templates/public/delete-section.twig:116
+#: modules/johncms/library/templates/public/delete-section.twig:116
 msgid "Continue"
 msgstr ""
 
-#: modules/library/templates/public/edit-article.twig:25
-#: modules/library/templates/public/edit-section.twig:20
+#: modules/johncms/library/templates/public/edit-article.twig:25
+#: modules/johncms/library/templates/public/edit-section.twig:20
 msgid "Changes saved successfully."
 msgstr ""
 
-#: modules/library/templates/public/edit-article.twig:59
+#: modules/johncms/library/templates/public/edit-article.twig:59
 msgid "The text of the Article can not be edited, a large amount of data !!!"
 msgstr ""
 
-#: modules/library/templates/public/edit-article.twig:71
-#: modules/library/templates/public/edit-section.twig:64
+#: modules/johncms/library/templates/public/edit-article.twig:71
+#: modules/johncms/library/templates/public/edit-section.twig:64
 msgid "Move to Section"
 msgstr ""
 
-#: modules/library/templates/public/edit-article.twig:84
+#: modules/johncms/library/templates/public/edit-article.twig:84
 msgid "Verified"
 msgstr ""
 
-#: modules/library/templates/public/edit-article.twig:91
+#: modules/johncms/library/templates/public/edit-article.twig:91
 msgid "Number of readings"
 msgstr ""
 
-#: modules/library/templates/public/edit-section.twig:21
+#: modules/johncms/library/templates/public/edit-section.twig:21
 msgid "Back to Section"
 msgstr ""
 
-#: modules/library/templates/public/edit-section.twig:51
+#: modules/johncms/library/templates/public/edit-section.twig:51
 msgid "Allow users to add their Articles?"
 msgstr ""
 
-#: modules/library/templates/public/edit-section.twig:54
+#: modules/johncms/library/templates/public/edit-section.twig:54
 msgid "Yes"
 msgstr ""
 
-#: modules/library/templates/public/edit-section.twig:58
+#: modules/johncms/library/templates/public/edit-section.twig:58
 msgid "No"
 msgstr ""
 
-#: modules/library/templates/public/edit-section.twig:67
+#: modules/johncms/library/templates/public/edit-section.twig:67
 msgid "The ROOT"
 msgstr ""
 
-#: modules/library/templates/public/latest-comments.twig:33
-#: modules/library/templates/public/top.twig:29
+#: modules/johncms/library/templates/public/latest-comments.twig:33
+#: modules/johncms/library/templates/public/top.twig:29
 msgid "Back"
 msgstr ""
 
-#: modules/library/templates/public/new.twig:19
-#: modules/library/templates/public/premod.twig:51
-#: modules/library/templates/public/search.twig:70
-#: modules/library/templates/public/tags.twig:44
+#: modules/johncms/library/templates/public/new.twig:19
+#: modules/johncms/library/templates/public/premod.twig:51
+#: modules/johncms/library/templates/public/search.twig:70
+#: modules/johncms/library/templates/public/tags.twig:44
 msgid "To Library"
 msgstr ""
 
-#: modules/library/templates/public/premod.twig:14
+#: modules/johncms/library/templates/public/premod.twig:14
 msgid "All Articles added in database"
 msgstr ""
 
-#: modules/library/templates/public/premod.twig:17
+#: modules/johncms/library/templates/public/premod.twig:17
 msgid "Article"
 msgstr ""
 
-#: modules/library/templates/public/premod.twig:17
+#: modules/johncms/library/templates/public/premod.twig:17
 msgid "Added to the database"
 msgstr ""
 
-#: modules/library/templates/public/premod.twig:47
+#: modules/johncms/library/templates/public/premod.twig:47
 msgid "Approve all"
 msgstr ""
 
-#: modules/library/templates/public/premod.twig:49
+#: modules/johncms/library/templates/public/premod.twig:49
 msgid "No articles pending moderation."
 msgstr ""
 
-#: modules/library/templates/public/search.twig:15
-#: modules/library/templates/public/search.twig:16
+#: modules/johncms/library/templates/public/search.twig:15
+#: modules/johncms/library/templates/public/search.twig:16
 msgid "Search query"
 msgstr ""
 
-#: modules/library/templates/public/search.twig:22
+#: modules/johncms/library/templates/public/search.twig:22
 msgid "Search in titles Articles"
 msgstr ""
 
-#: modules/library/templates/public/search.twig:61
+#: modules/johncms/library/templates/public/search.twig:61
 msgid "Length of query: 4 min 64 max<br>Search is case-insensitive letters<br>Results are sorted by relevance"
 msgstr ""
 
-#: modules/library/templates/public/search.twig:68
+#: modules/johncms/library/templates/public/search.twig:68
 msgid "New Search"
 msgstr ""
 
-#: modules/library/templates/public/sections.twig:53
+#: modules/johncms/library/templates/public/sections.twig:53
 msgid "Create"
 msgstr ""
 
-#: modules/library/templates/public/top.twig:12
+#: modules/johncms/library/templates/public/top.twig:12
 msgid "Sort"
 msgstr ""
