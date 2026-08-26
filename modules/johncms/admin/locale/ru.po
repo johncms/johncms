@@ -2260,3 +2260,99 @@ msgstr[3] "Файлы сайта ожидают %d изменений, кото�
 
 msgid "Update the database"
 msgstr "Обновить базу данных"
+
+msgid "Manage modules"
+msgstr "Управление модулями"
+
+msgid "Install a module from a file"
+msgstr "Установить модуль из файла"
+
+msgid "Install the module"
+msgstr "Установка модуля"
+
+msgid "Switch the module on"
+msgstr "Включение модуля"
+
+msgid "Switch the module off"
+msgstr "Выключение модуля"
+
+msgid "Update the module"
+msgstr "Обновление модуля"
+
+msgid "Remove the module"
+msgstr "Удаление модуля"
+
+msgid "Switch on"
+msgstr "Включить"
+
+msgid "Switch off"
+msgstr "Выключить"
+
+msgid "Remove"
+msgstr "Удалить"
+
+msgid "Switched on"
+msgstr "Включён"
+
+msgid "Switched off"
+msgstr "Выключен"
+
+msgid "Broken"
+msgstr "Сломан"
+
+msgid "Incompatible"
+msgstr "Несовместим"
+
+msgid "Version"
+msgstr "Версия"
+
+msgid "Short name"
+msgstr "Короткое имя"
+
+msgid "Need attention"
+msgstr "Требуют внимания"
+
+msgid "What was done"
+msgstr "Что было сделано"
+
+msgid "Done"
+msgstr "Готово"
+
+msgid "An error occurred"
+msgstr "Произошла ошибка"
+
+msgid "No modules are installed."
+msgstr "Ни одного модуля не установлено."
+
+msgid "New modules were found in the modules directory. They are not running until they are installed."
+msgstr "В папке модулей найдены новые модули. Пока они не установлены, они не работают."
+
+msgid "Also install the demo data"
+msgstr "Заодно установить демонстрационные данные"
+
+msgid "Also delete its tables, data and permissions. This cannot be undone."
+msgstr "Заодно удалить его таблицы, данные и права доступа. Отменить это будет нельзя."
+
+msgid "Run in the background (for a module with heavy migrations; the scheduler starts it within a minute)"
+msgstr "Выполнить в фоне (для модуля с тяжёлыми миграциями; планировщик запустит задачу в течение минуты)"
+
+msgid "The module will be taken off the site. Its files stay where they are, and its tables are kept unless you ask for them to be removed."
+msgstr "Модуль будет снят с сайта. Его файлы останутся на месте, а таблицы сохранятся, если не попросить удалить и их."
+
+msgid "The module stops working: no pages, no menu items. Its tables and data are untouched."
+msgstr "Модуль перестанет работать: ни страниц, ни пунктов меню. Таблицы и данные останутся нетронутыми."
+
+msgid "The migrations of the module will be applied and its installer run."
+msgstr "Будут выполнены миграции модуля и запущен его установщик."
+
+msgid "A module is code that runs on your site with the rights of your site. Install only what you trust."
+msgstr "Модуль — это код, который выполняется на вашем сайте с правами вашего сайта. Устанавливайте только то, чему доверяете."
+
+msgid "Zip archive with the module"
+msgstr "Zip-архив с модулем"
+
+msgid "Choose a zip file with the module"
+msgstr "Выберите zip-файл с модулем"
+
+msgid "The archive holds one directory with a module.php inside it. A module that is already installed is updated."
+msgstr "В архиве одна папка, внутри которой лежит module.php. Уже установленный модуль будет обновлён."

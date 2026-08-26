@@ -72,6 +72,20 @@ final class ModuleRegistryFactory
     }
 
     /**
+     * Only for tests: which modules the suite runs against.
+     *
+     * The state file belongs to the site, and a developer who switched a module off on their own
+     * installation would otherwise see the suite fail — the functional tests drive real requests
+     * through the real registry. Pointed at a file that does not exist, the registry falls back to
+     * the modules of the release, which is what a fresh site has and what CI runs.
+     */
+    public static function useState(ModuleStateStore $state): void
+    {
+        self::$state = $state;
+        self::$instance = null;
+    }
+
+    /**
      * Only for tests: the next call builds a registry again.
      */
     public static function reset(): void

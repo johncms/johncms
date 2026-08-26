@@ -299,6 +299,11 @@ The number is shown so that support for the old scheme is not removed while it i
       'Used to check the answer. Never leaves the server' => 'Используется для проверки ответа. Никогда не покидает сервер',
       'Score threshold' => 'Пороговое значение оценки',
       'Between 0 and 1. Submissions scored below it are refused; raising it stops more bots and more people' => 'От 0 до 1. Отправки с оценкой ниже отклоняются; чем выше значение, тем больше отсеивается и ботов, и людей',
+      'Install and remove modules' => 'Устанавливать и удалять модули',
+      'Google reCAPTCHA v3' => 'Google reCAPTCHA v3',
+      'hCaptcha' => 'hCaptcha',
+      'Yandex SmartCaptcha' => 'Yandex SmartCaptcha',
+      'If you cannot see the image code, enable graphics in your browser and refresh this page' => 'Если код с картинки не виден, включите отображение картинок в браузере и обновите страницу',
     ),
   ),
 );

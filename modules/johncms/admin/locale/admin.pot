@@ -86,9 +86,9 @@ msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:141
 #: modules/johncms/admin/src/Application/Controllers/Modules/ModuleUploadController.php:44
-#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:44
-#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:80
-#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:143
+#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:47
+#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:83
+#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:196
 #: modules/johncms/admin/templates/settings.twig:54
 msgid "Modules"
 msgstr ""
@@ -352,8 +352,10 @@ msgstr ""
 
 #: modules/johncms/admin/src/Application/Controllers/Forum/ForumStructureController.php:245
 #: modules/johncms/admin/src/Application/Controllers/Forum/ForumStructureController.php:264
-#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:75
-#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:112
+#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:78
+#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:121
+#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:150
+#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:166
 #: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:76
 #: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:120
 #: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:44
@@ -548,7 +550,7 @@ msgid "Choose a zip file with the module"
 msgstr ""
 
 #: modules/johncms/admin/src/Application/Controllers/Modules/ModuleUploadController.php:92
-#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:121
+#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:130
 msgid "Done"
 msgstr ""
 
@@ -556,44 +558,49 @@ msgstr ""
 msgid "An error occurred"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:138
+#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:174
+#: modules/johncms/admin/src/Application/Controllers/System/MaintenanceTasksController.php:50
+msgid "The task has been queued and will start within a minute"
+msgstr ""
+
+#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:191
 msgid "Install the module"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:139
+#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:192
 msgid "Switch the module on"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:140
+#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:193
 msgid "Switch the module off"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:141
+#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:194
 msgid "Update the module"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:142
+#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:195
 msgid "Remove the module"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:153
+#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:206
 msgid "Switched on"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:154
+#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:207
 msgid "Switched off"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:155
+#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:208
 #: modules/johncms/admin/templates/languages-manage.twig:43
 msgid "Not installed"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:156
+#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:209
 msgid "Broken"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:157
+#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:210
 msgid "Incompatible"
 msgstr ""
 
@@ -813,10 +820,6 @@ msgstr ""
 
 #: modules/johncms/admin/src/Application/Controllers/System/FileIntegrityController.php:83
 msgid "Snapshot successfully created"
-msgstr ""
-
-#: modules/johncms/admin/src/Application/Controllers/System/MaintenanceTasksController.php:50
-msgid "The task has been queued and will start within a minute"
 msgstr ""
 
 #: modules/johncms/admin/src/Application/Controllers/System/MaintenanceTasksController.php:54
@@ -1078,7 +1081,7 @@ msgstr ""
 #: modules/johncms/admin/templates/ip-ban-search.twig:24
 #: modules/johncms/admin/templates/karma-clear-confirm.twig:22
 #: modules/johncms/admin/templates/karma.twig:44
-#: modules/johncms/admin/templates/modules-confirm.twig:53
+#: modules/johncms/admin/templates/modules-confirm.twig:62
 #: modules/johncms/admin/templates/modules-upload.twig:30
 #: modules/johncms/admin/templates/role-delete-confirm.twig:25
 #: modules/johncms/admin/templates/role-form.twig:121
@@ -1940,7 +1943,7 @@ msgid "Update List"
 msgstr ""
 
 #: modules/johncms/admin/templates/login-captcha.twig:25
-#: modules/johncms/admin/templates/modules-confirm.twig:51
+#: modules/johncms/admin/templates/modules-confirm.twig:60
 msgid "Continue"
 msgstr ""
 
@@ -2089,6 +2092,10 @@ msgstr ""
 
 #: modules/johncms/admin/templates/modules-confirm.twig:45
 msgid "Also delete its tables, data and permissions. This cannot be undone."
+msgstr ""
+
+#: modules/johncms/admin/templates/modules-confirm.twig:54
+msgid "Run in the background (for a module with heavy migrations; the scheduler starts it within a minute)"
 msgstr ""
 
 #: modules/johncms/admin/templates/modules-upload.twig:13

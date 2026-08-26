@@ -1184,3 +1184,18 @@ msgstr "Пороговое значение оценки"
 
 msgid "Between 0 and 1. Submissions scored below it are refused; raising it stops more bots and more people"
 msgstr "От 0 до 1. Отправки с оценкой ниже отклоняются; чем выше значение, тем больше отсеивается и ботов, и людей"
+
+msgid "Install and remove modules"
+msgstr "Устанавливать и удалять модули"
+
+msgid "Google reCAPTCHA v3"
+msgstr "Google reCAPTCHA v3"
+
+msgid "hCaptcha"
+msgstr "hCaptcha"
+
+msgid "Yandex SmartCaptcha"
+msgstr "Yandex SmartCaptcha"
+
+msgid "If you cannot see the image code, enable graphics in your browser and refresh this page"
+msgstr "Если код с картинки не виден, включите отображение картинок в браузере и обновите страницу"
