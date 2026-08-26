@@ -85,6 +85,7 @@ php system/bin/console migrate --source=forum  # one source only
 php system/bin/console migrate --dry-run       # say what would run
 php system/bin/console migrate:status          # applied, waiting, and files edited after they ran
 php system/bin/console migrate:rollback        # undo the last batch (development)
+php system/bin/console migrate:rollback --source=forum --all   # undo everything that source applied
 ```
 
 An administrator without a shell runs `migrate` from **Maintenance** in the admin panel, where it
@@ -98,11 +99,17 @@ message says so. A migration that only moves data may ask for a transaction with
 
 ## Tables of a new module
 
-Nothing is created in `Install/Installer` — it is for demo data only. Add
-`modules/<vendor>/<module>/migrations/` and describe the tables there; the source is named
-after the name of the module — `forum`, never `johncms/forum` — and must not be renamed once its
-migrations have run anywhere. The source is named after the
-directory of the module and must not be renamed once its migrations have run anywhere.
+Add `modules/<vendor>/<module>/migrations/` and describe the tables there. `Install/Installer`
+creates none — it is for the data around them (see `.agents/new-module.md`).
+
+The source is the **alias** of the module — `forum`, never `johncms/forum` — and must not be
+renamed once its migrations have run anywhere: the journal is written under it, and a module that
+renames itself is cut off from its own history. Installing a module runs its source; uninstalling
+it with `--purge` undoes the whole of it, which is refused outright if any migration of the module
+never said how to be rolled back.
+
+A module that is switched off keeps its source: its tables are still there, and `migrate:status`
+has to say so. One that was never installed has no source at all — nothing of it has run.
 
 ## In tests
 
