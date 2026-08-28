@@ -67,8 +67,6 @@ msgstr ""
 
 #: modules/johncms/forum/src/Application/Controllers/AddFileController.php:89
 #: modules/johncms/forum/src/Application/Controllers/AddFileController.php:90
-#: modules/johncms/forum/src/Application/Controllers/UploadFileController.php:53
-#: modules/johncms/forum/src/Application/Controllers/UploadFileController.php:86
 #: modules/johncms/forum/src/Application/Exceptions/ForumErrorCode.php:55
 #: modules/johncms/forum/src/Application/UseCases/AttachFileToPostUseCase.php:49
 #: modules/johncms/forum/src/Application/UseCases/AttachFileToPostUseCase.php:75
@@ -477,15 +475,6 @@ msgstr ""
 
 #: modules/johncms/forum/src/Application/Controllers/TopicsPeriodController.php:64
 msgid "There is nothing new in this forum for selected period"
-msgstr ""
-
-#: modules/johncms/forum/src/Application/Controllers/UploadFileController.php:38
-#: modules/johncms/forum/src/Application/Controllers/UploadFileController.php:47
-msgid "Access denied"
-msgstr ""
-
-#: modules/johncms/forum/src/Application/Controllers/UploadFileController.php:60
-msgid "Only images are allowed"
 msgstr ""
 
 #: modules/johncms/forum/src/Application/Controllers/ViewForumVisitorsController.php:48

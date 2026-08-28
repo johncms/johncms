@@ -222,6 +222,11 @@ return static function (ContainerConfigurator $container): void {
                 // service here is registered by hand below.
                 ROOT_PATH . 'system/src/Database/Migrations',
                 ROOT_PATH . 'system/src/Image/ImageProcessingException.php',
+                // The settings of the editor uploads are a service; the format they name, the
+                // facts read off a picture and the refusal of an upload are value objects.
+                ROOT_PATH . 'system/src/Image/EditorImageFormat.php',
+                ROOT_PATH . 'system/src/Image/EditorImageInfo.php',
+                ROOT_PATH . 'system/src/Image/EditorImageUploadException.php',
                 ROOT_PATH . 'system/src/Files',
                 // The manifest and the state of a module are value objects, and the two
                 // remaining pieces of the old installer take the name of a module as a string.

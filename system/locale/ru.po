@@ -1199,3 +1199,16 @@ msgstr "Yandex SmartCaptcha"
 
 msgid "If you cannot see the image code, enable graphics in your browser and refresh this page"
 msgstr "Если код с картинки не виден, включите отображение картинок в браузере и обновите страницу"
+
+msgid "The file is too large for the server to accept"
+msgstr "Файл слишком большой, сервер не может его принять"
+
+msgid "Error uploading file"
+msgstr "Ошибка при загрузке файла"
+
+msgid "Only images are allowed"
+msgstr "Разрешены только изображения"
+
+#, php-format
+msgid "The file is larger than %d KB"
+msgstr "Файл больше %d КБ"

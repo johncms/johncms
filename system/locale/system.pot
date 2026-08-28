@@ -415,6 +415,7 @@ msgid "This is the only way to sign in to the account. Set a password first."
 msgstr ""
 
 #: system/src/Auth/Impersonation/ImpersonationManager.php:160
+#: system/src/Http/EditorImageUploadResponder.php:92
 #: system/src/Http/ExceptionResponseFactory.php:128
 msgid "Access denied"
 msgstr ""
@@ -642,6 +643,7 @@ msgstr ""
 
 #: system/src/Comments.php:274
 #: system/src/Comments.php:366
+#: system/src/Http/EditorImageUploadResponder.php:60
 msgid "Wrong data"
 msgstr ""
 
@@ -710,6 +712,17 @@ msgstr ""
 msgid "Finish signing up"
 msgstr ""
 
+#: system/src/Http/EditorImageUploadResponder.php:59
+msgid "The file is too large for the server to accept"
+msgstr ""
+
+#: system/src/Http/EditorImageUploadResponder.php:77
+#: system/src/Image/StoreEditorImageUseCase.php:111
+#: system/src/Image/StoreEditorImageUseCase.php:132
+#: system/src/Image/StoreEditorImageUseCase.php:184
+msgid "Error uploading file"
+msgstr ""
+
 #: system/src/Http/ExceptionResponseFactory.php:48
 msgid "Method Not Allowed"
 msgstr ""
@@ -745,6 +758,15 @@ msgstr ""
 #: modules/johncms/forum/src/Application/Controllers/ForumTopicController.php:164
 #: modules/johncms/forum/src/Application/UseCases/ViewForumFilesUseCase.php:406
 msgid "Page"
+msgstr ""
+
+#: system/src/Image/StoreEditorImageUseCase.php:154
+msgid "Only images are allowed"
+msgstr ""
+
+#: system/src/Image/StoreEditorImageUseCase.php:203
+#, php-format
+msgid "The file is larger than %d KB"
 msgstr ""
 
 #: system/src/NavChain.php:76
@@ -820,14 +842,14 @@ msgid "'%hostname%' does not appear to have any valid MX or A records for the em
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:17
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:409
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:417
 #: themes/default/templates/components/sidebar-main-menu.twig:6
 #: themes/default/templates/components/sidebar-main-menu.twig:198
 msgid "Set Light Theme"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:17
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:408
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:416
 #: themes/default/templates/components/sidebar-main-menu.twig:6
 #: themes/default/templates/components/sidebar-main-menu.twig:197
 msgid "Set Dark Theme"

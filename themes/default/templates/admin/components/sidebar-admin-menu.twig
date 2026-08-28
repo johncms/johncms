@@ -280,6 +280,14 @@
                     <span class="flex-grow-1">{{ d__('admin', 'Mail Settings') }}</span>
                 </a>
             </li>
+            <li class="{{ sys_menu.editor_images|default(false) ? 'active' : '' }}">
+                <a href="/admin/settings/images">
+                    <svg class="icon">
+                        <use xlink:href="{{ sprite }}#picasa"/>
+                    </svg>
+                    <span class="flex-grow-1">{{ d__('admin', 'Images in the editor') }}</span>
+                </a>
+            </li>
             <li class="{{ sys_menu.captcha_settings|default(false) ? 'active' : '' }}">
                 <a href="/admin/settings/captcha">
                     <svg class="icon">

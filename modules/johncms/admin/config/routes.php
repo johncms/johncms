@@ -21,6 +21,7 @@ use Johncms\Modules\Admin\Application\Controllers\Settings\AdsController;
 use Johncms\Modules\Admin\Application\Controllers\Settings\AntifloodSettingsController;
 use Johncms\Modules\Admin\Application\Controllers\Settings\CountersController;
 use Johncms\Modules\Admin\Application\Controllers\Settings\CaptchaSettingsController;
+use Johncms\Modules\Admin\Application\Controllers\Settings\EditorImageSettingsController;
 use Johncms\Modules\Admin\Application\Controllers\Settings\MailSettingsController;
 use Johncms\Modules\Admin\Application\Controllers\Settings\SystemSettingsController;
 use Johncms\Modules\Admin\Application\Controllers\System\EmoticonsController;
@@ -161,6 +162,10 @@ return static function (RouteCollection $router): void {
             $sr->get('/admin/settings/mail', [MailSettingsController::class, 'form'])->name('admin.settings.mail');
             $sr->post('/admin/settings/mail', [MailSettingsController::class, 'save'])->name('admin.settings.mail.save');
             $sr->post('/admin/settings/mail/test', [MailSettingsController::class, 'test'])->name('admin.settings.mail.test');
+            $sr->get('/admin/settings/images', [EditorImageSettingsController::class, 'form'])
+                ->name('admin.settings.images');
+            $sr->post('/admin/settings/images', [EditorImageSettingsController::class, 'save'])
+                ->name('admin.settings.images.save');
             $sr->get('/admin/settings/captcha', [CaptchaSettingsController::class, 'form'])->name('admin.settings.captcha');
             $sr->post('/admin/settings/captcha', [CaptchaSettingsController::class, 'save'])
                 ->name('admin.settings.captcha.save');

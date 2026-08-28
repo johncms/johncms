@@ -24,7 +24,6 @@ msgstr ""
 #: modules/johncms/guestbook/src/Application/Controllers/DeleteEntryController.php:56
 #: modules/johncms/guestbook/src/Application/Controllers/EditEntryController.php:48
 #: modules/johncms/guestbook/src/Application/Controllers/ReplyController.php:50
-#: modules/johncms/guestbook/src/Application/Controllers/UploadFileController.php:30
 msgid "Wrong data"
 msgstr ""
 
@@ -72,10 +71,6 @@ msgstr ""
 
 #: modules/johncms/guestbook/src/Application/Controllers/ReplyController.php:70
 msgid "Your reply to the message was saved"
-msgstr ""
-
-#: modules/johncms/guestbook/src/Application/Controllers/UploadFileController.php:43
-msgid "Only images are allowed"
 msgstr ""
 
 #: modules/johncms/guestbook/src/Application/Services/GuestbookPermissions.php:51

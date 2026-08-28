@@ -157,46 +157,51 @@ msgid "Mail Settings"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:288
+#: modules/johncms/admin/src/Application/Controllers/Settings/EditorImageSettingsController.php:61
+msgid "Images in the editor"
+msgstr ""
+
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:296
 #: modules/johncms/admin/src/Application/Controllers/Settings/CaptchaSettingsController.php:60
 msgid "Captcha"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:296
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:304
 msgid "Update Smilies"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:304
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:312
 msgid "Language Settings"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:312
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:320
 #: modules/johncms/admin/src/Application/Controllers/System/SystemCheckController.php:25
 msgid "System check"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:320
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:328
 #: modules/johncms/admin/src/Application/Controllers/System/MaintenanceTasksController.php:68
 msgid "Maintenance"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:332
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:340
 #: modules/johncms/admin/src/Application/Controllers/System/SystemCheckController.php:38
 msgid "Security"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:349
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:357
 #: modules/johncms/admin/src/Application/Controllers/Access/ExternalProvidersController.php:37
 msgid "Sign-in services"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:358
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:366
 #: modules/johncms/admin/src/Application/Controllers/System/FileIntegrityController.php:29
 #: modules/johncms/admin/src/Application/Controllers/System/FileIntegrityController.php:42
 #: modules/johncms/admin/src/Application/Controllers/System/FileIntegrityController.php:71
 msgid "Anti-Spyware"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:366
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:374
 #: modules/johncms/admin/src/Application/Controllers/Ip/IpBanController.php:50
 #: modules/johncms/admin/src/Application/Controllers/Ip/IpBanController.php:74
 #: modules/johncms/admin/src/Application/Controllers/Ip/IpBanController.php:126
@@ -272,6 +277,7 @@ msgstr ""
 #: modules/johncms/admin/src/Application/Controllers/Languages/LanguagesController.php:53
 #: modules/johncms/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:39
 #: modules/johncms/admin/src/Application/Controllers/Settings/CaptchaSettingsController.php:53
+#: modules/johncms/admin/src/Application/Controllers/Settings/EditorImageSettingsController.php:44
 #: modules/johncms/admin/src/Application/Controllers/Settings/MailSettingsController.php:46
 #: modules/johncms/admin/src/Application/Controllers/Settings/SystemSettingsController.php:43
 #: modules/johncms/admin/src/Application/Controllers/Users/KarmaController.php:48
@@ -509,6 +515,7 @@ msgstr ""
 #: modules/johncms/admin/src/Application/Controllers/Languages/LanguagesController.php:113
 #: modules/johncms/admin/src/Application/Controllers/Languages/LanguagesController.php:128
 #: modules/johncms/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:36
+#: modules/johncms/admin/src/Application/Controllers/Settings/EditorImageSettingsController.php:41
 #: modules/johncms/admin/src/Application/Controllers/Settings/SystemSettingsController.php:40
 #: modules/johncms/admin/src/Application/Controllers/Users/KarmaController.php:45
 msgid "ERROR: Can not write file `system.local.php`"
@@ -758,6 +765,22 @@ msgstr ""
 
 #: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:196
 msgid "On the main showing option 1, on the other pages option 2"
+msgstr ""
+
+#: modules/johncms/admin/src/Application/Controllers/Settings/EditorImageSettingsController.php:107
+msgid "Keep the original format"
+msgstr ""
+
+#: modules/johncms/admin/src/Application/Controllers/Settings/EditorImageSettingsController.php:108
+msgid "A picture within the bounds is stored exactly as it was uploaded."
+msgstr ""
+
+#: modules/johncms/admin/src/Application/Controllers/Settings/EditorImageSettingsController.php:113
+msgid "The lightest of the three. Every upload is re-encoded."
+msgstr ""
+
+#: modules/johncms/admin/src/Application/Controllers/Settings/EditorImageSettingsController.php:118
+msgid "Every upload is re-encoded. A transparent background turns into a solid one."
 msgstr ""
 
 #: modules/johncms/admin/src/Application/Controllers/Settings/MailSettingsController.php:41
@@ -1067,6 +1090,7 @@ msgstr ""
 #: modules/johncms/admin/templates/counter-delete-confirm.twig:22
 #: modules/johncms/admin/templates/counter-form.twig:76
 #: modules/johncms/admin/templates/counter-preview.twig:52
+#: modules/johncms/admin/templates/editor-images.twig:65
 #: modules/johncms/admin/templates/file-integrity-snapshot-confirm.twig:22
 #: modules/johncms/admin/templates/forum-hidden-posts.twig:18
 #: modules/johncms/admin/templates/forum-hidden-topics.twig:18
@@ -1161,6 +1185,7 @@ msgstr ""
 #: modules/johncms/admin/templates/antiflood.twig:49
 #: modules/johncms/admin/templates/captcha-settings.twig:45
 #: modules/johncms/admin/templates/counter-preview.twig:51
+#: modules/johncms/admin/templates/editor-images.twig:64
 #: modules/johncms/admin/templates/external-providers.twig:59
 #: modules/johncms/admin/templates/forum-section-edit.twig:76
 #: modules/johncms/admin/templates/forum-settings.twig:58
@@ -1451,6 +1476,50 @@ msgstr ""
 #: modules/johncms/admin/templates/ip-bans.twig:54
 #: modules/johncms/admin/templates/roles.twig:63
 msgid "Add"
+msgstr ""
+
+#: modules/johncms/admin/templates/editor-images.twig:21
+msgid "Upload limit"
+msgstr ""
+
+#: modules/johncms/admin/templates/editor-images.twig:23
+msgid "Max. picture size"
+msgstr ""
+
+#: modules/johncms/admin/templates/editor-images.twig:26
+msgid "The server accepts up to %s."
+msgstr ""
+
+#: modules/johncms/admin/templates/editor-images.twig:31
+msgid "The limit is above what the server accepts, so an upload larger than the server limit fails before the site sees it. Raise upload_max_filesize and post_max_size in php.ini, or lower this value."
+msgstr ""
+
+#: modules/johncms/admin/templates/editor-images.twig:35
+msgid "Resolution"
+msgstr ""
+
+#: modules/johncms/admin/templates/editor-images.twig:36
+msgid "A larger picture is scaled down to fit these bounds, keeping its proportions. A smaller one is left alone. Zero leaves the side unconstrained."
+msgstr ""
+
+#: modules/johncms/admin/templates/editor-images.twig:38
+msgid "Max. width"
+msgstr ""
+
+#: modules/johncms/admin/templates/editor-images.twig:42
+msgid "Max. height"
+msgstr ""
+
+#: modules/johncms/admin/templates/editor-images.twig:46
+msgid "Storage format"
+msgstr ""
+
+#: modules/johncms/admin/templates/editor-images.twig:58
+msgid "Quality"
+msgstr ""
+
+#: modules/johncms/admin/templates/editor-images.twig:60
+msgid "Applied when a picture is scaled down or re-encoded."
 msgstr ""
 
 #: modules/johncms/admin/templates/external-providers.twig:33

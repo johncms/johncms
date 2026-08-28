@@ -304,6 +304,10 @@ The number is shown so that support for the old scheme is not removed while it i
       'hCaptcha' => 'hCaptcha',
       'Yandex SmartCaptcha' => 'Yandex SmartCaptcha',
       'If you cannot see the image code, enable graphics in your browser and refresh this page' => 'Если код с картинки не виден, включите отображение картинок в браузере и обновите страницу',
+      'The file is too large for the server to accept' => 'Файл слишком большой, сервер не может его принять',
+      'Error uploading file' => 'Ошибка при загрузке файла',
+      'Only images are allowed' => 'Разрешены только изображения',
+      'The file is larger than %d KB' => 'Файл больше %d КБ',
     ),
   ),
 );

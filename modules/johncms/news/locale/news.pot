@@ -6,8 +6,8 @@ msgstr ""
 msgid "The requested article was not found."
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:51
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:306
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:48
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:303
 #: modules/johncms/news/src/Application/Controllers/Admin/AdminController.php:32
 #: modules/johncms/news/src/Application/Controllers/Admin/AdminController.php:34
 #: modules/johncms/news/src/Application/Controllers/Admin/AdminController.php:42
@@ -23,52 +23,42 @@ msgstr ""
 msgid "News"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:52
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:49
 #: modules/johncms/news/src/Application/Controllers/Admin/AdminController.php:44
 #: modules/johncms/news/src/Application/Controllers/Admin/AdminSectionController.php:42
 msgid "Section list"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:66
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:81
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:63
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:78
 #: modules/johncms/news/templates/admin/content.twig:36
 msgid "Add article"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:113
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:213
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:110
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:210
 msgid "The article name cannot be empty"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:143
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:140
 msgid "The article was created successfully"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:146
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:243
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:143
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:240
 msgid "An article with this code already exists"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:166
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:163
 msgid "Edit article"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:240
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:237
 msgid "The article was updated successfully"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:292
+#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:289
 msgid "The article was successfully deleted"
-msgstr ""
-
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:315
-#: modules/johncms/news/src/Application/Controllers/CommentsController.php:217
-msgid "Wrong data"
-msgstr ""
-
-#: modules/johncms/news/src/Application/Controllers/Admin/AdminArticleController.php:325
-#: modules/johncms/news/src/Application/Controllers/CommentsController.php:227
-msgid "Only images are allowed"
 msgstr ""
 
 #: modules/johncms/news/src/Application/Controllers/Admin/AdminController.php:99
@@ -114,31 +104,31 @@ msgstr ""
 msgid "The section was successfully deleted"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/CommentsController.php:49
+#: modules/johncms/news/src/Application/Controllers/CommentsController.php:46
 msgid "Bad Request"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/CommentsController.php:146
+#: modules/johncms/news/src/Application/Controllers/CommentsController.php:143
 msgid "You have a ban!"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/CommentsController.php:150
+#: modules/johncms/news/src/Application/Controllers/CommentsController.php:147
 msgid "You are not logged in"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/CommentsController.php:177
+#: modules/johncms/news/src/Application/Controllers/CommentsController.php:174
 msgid "The comment was added successfully"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/CommentsController.php:180
+#: modules/johncms/news/src/Application/Controllers/CommentsController.php:177
 msgid "Enter the comment text"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/CommentsController.php:200
+#: modules/johncms/news/src/Application/Controllers/CommentsController.php:197
 msgid "The comment was deleted successfully"
 msgstr ""
 
-#: modules/johncms/news/src/Application/Controllers/CommentsController.php:206
+#: modules/johncms/news/src/Application/Controllers/CommentsController.php:203
 msgid "Access denied"
 msgstr ""
 

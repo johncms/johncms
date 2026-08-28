@@ -5,13 +5,11 @@ declare(strict_types=1);
 namespace Johncms\Modules\News\Application\Controllers\Admin;
 
 use Carbon\Carbon;
-use Exception;
 use Johncms\Auth\CurrentUser;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
-use Johncms\FileInfo;
 use Johncms\Files\FileStore;
+use Johncms\Http\EditorImageUploadResponder;
 use Johncms\Http\ExceptionResponseFactory;
 use Johncms\Logs\DebugDetailsPolicy;
 use Johncms\Modules\News\Application\Utils\Helpers;
@@ -21,7 +19,6 @@ use Johncms\Modules\News\Domain\Models\NewsSection;
 use Johncms\Http\Session;
 use Johncms\NavChain;
 use Johncms\Http\Request;
-use Johncms\Http\UploadedFileMapper;
 use Johncms\Http\View\ViewResponse;
 use Johncms\System\Utility\EditorContentNormalizer;
 use Johncms\Users\User;
@@ -307,38 +304,9 @@ final readonly class AdminArticleController
         );
     }
 
-    public function loadFile(Request $request, FileStore $files, UploadedFileMapper $uploadedFileMapper): JsonResponse
+    public function loadFile(Request $request, EditorImageUploadResponder $responder): JsonResponse
     {
-        try {
-            $upload = $request->files->get('upload');
-            if (! $upload instanceof UploadedFile) {
-                return new JsonResponse(['errors' => __('Wrong data')], Response::HTTP_UNPROCESSABLE_ENTITY);
-            }
-
-            $uploadedFile = $uploadedFileMapper->fromUploadedFile($upload);
-
-            $file_info = new FileInfo((string) $uploadedFile->clientName);
-            if (! $file_info->isImage()) {
-                return new JsonResponse(
-                    [
-                        'error' => [
-                            'message' => __('Only images are allowed'),
-                        ],
-                    ]
-                );
-            }
-
-            $file = $files->storeUpload($uploadedFile, 'news');
-            $file_array = [
-                'id'       => $file->id,
-                'name'     => $file->name,
-                'uploaded' => 1,
-                'url'      => $file->url,
-            ];
-            return new JsonResponse($file_array);
-        } catch (Exception $e) {
-            return new JsonResponse(['errors' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
+        return $responder->store($request, 'news', 'news');
     }
 
     /**

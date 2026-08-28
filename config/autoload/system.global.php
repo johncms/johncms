@@ -13,6 +13,16 @@ return [
             'dayto'   => 22,
         ],
         'clean_time'              => 0,
+        // What happens to a picture uploaded into the text editor. `max_width` / `max_height`
+        // are the bounds it is scaled down to fit in, zero leaving a side unconstrained;
+        // `convert` is 'original', 'jpeg' or 'webp'.
+        'editor_images'           => [
+            'max_size'   => 5120,
+            'max_width'  => 1600,
+            'max_height' => 1600,
+            'quality'    => 82,
+            'convert'    => 'original',
+        ],
         'copyright'               => 'JohnCMS',
         'email'                   => 'no-reply@example.com',
         'flsz'                    => 1000,

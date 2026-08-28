@@ -2356,3 +2356,51 @@ msgstr "Выберите zip-файл с модулем"
 
 msgid "The archive holds one directory with a module.php inside it. A module that is already installed is updated."
 msgstr "В архиве одна папка, внутри которой лежит module.php. Уже установленный модуль будет обновлён."
+
+msgid "Images in the editor"
+msgstr "Изображения в редакторе"
+
+msgid "Upload limit"
+msgstr "Ограничение загрузки"
+
+msgid "Max. picture size"
+msgstr "Макс. размер изображения"
+
+msgid "The server accepts up to %s."
+msgstr "Сервер принимает не более %s."
+
+msgid "The limit is above what the server accepts, so an upload larger than the server limit fails before the site sees it. Raise upload_max_filesize and post_max_size in php.ini, or lower this value."
+msgstr "Ограничение больше того, что принимает сервер: загрузка сверх серверного лимита завершится ошибкой ещё до того, как её увидит сайт. Увеличьте upload_max_filesize и post_max_size в php.ini или уменьшите это значение."
+
+msgid "Resolution"
+msgstr "Разрешение"
+
+msgid "A larger picture is scaled down to fit these bounds, keeping its proportions. A smaller one is left alone. Zero leaves the side unconstrained."
+msgstr "Изображение больше указанных границ уменьшается с сохранением пропорций. Меньшее остаётся без изменений. Ноль снимает ограничение по стороне."
+
+msgid "Max. width"
+msgstr "Макс. ширина"
+
+msgid "Max. height"
+msgstr "Макс. высота"
+
+msgid "Storage format"
+msgstr "Формат хранения"
+
+msgid "Keep the original format"
+msgstr "Сохранять исходный формат"
+
+msgid "A picture within the bounds is stored exactly as it was uploaded."
+msgstr "Изображение, укладывающееся в ограничения, сохраняется точно таким, каким было загружено."
+
+msgid "The lightest of the three. Every upload is re-encoded."
+msgstr "Самый лёгкий из трёх. Каждая загрузка перекодируется."
+
+msgid "Every upload is re-encoded. A transparent background turns into a solid one."
+msgstr "Каждая загрузка перекодируется. Прозрачный фон становится сплошным."
+
+msgid "Quality"
+msgstr "Качество"
+
+msgid "Applied when a picture is scaled down or re-encoded."
+msgstr "Применяется при уменьшении или перекодировании изображения."

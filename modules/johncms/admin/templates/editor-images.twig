@@ -1,0 +1,68 @@
+{#
+    What the site does with a picture uploaded into the text editor.
+
+    @var array  settings        Current values: max_size, max_width, max_height, quality, convert.
+    @var array  format_options  Formats to store in: value, label, hint.
+    @var int    server_limit    The largest upload PHP accepts, in bytes; zero when it sets none.
+    @var bool   exceeds_server  Whether the configured limit is above what PHP accepts.
+    @var string form_action
+    @var string error_message   Empty unless the last save failed.
+    @var string success_message Empty unless a save has just succeeded.
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-danger shadow border-0', alert: error_message} only %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success shadow border-0', alert: success_message} only %}
+
+    <form action="{{ form_action }}" method="post">
+        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+
+        <h3>{{ __('Upload limit') }}</h3>
+        <div class="form-group">
+            <label for="max_size">{{ __('Max. picture size') }} (kb)</label>
+            <input type="number" min="1" name="max_size" class="form-control" id="max_size" value="{{ settings.max_size }}">
+            {% if server_limit %}
+                <div class="form-text">{{ __('The server accepts up to %s.')|format(server_limit|format_size) }}</div>
+            {% endif %}
+        </div>
+        {% if exceeds_server %}
+            <div class="alert alert-warning py-2">
+                {{ __('The limit is above what the server accepts, so an upload larger than the server limit fails before the site sees it. Raise upload_max_filesize and post_max_size in php.ini, or lower this value.') }}
+            </div>
+        {% endif %}
+
+        <h3 class="mt-3">{{ __('Resolution') }}</h3>
+        <p class="text-muted">{{ __('A larger picture is scaled down to fit these bounds, keeping its proportions. A smaller one is left alone. Zero leaves the side unconstrained.') }}</p>
+        <div class="form-group">
+            <label for="max_width">{{ __('Max. width') }} (px)</label>
+            <input type="number" min="0" name="max_width" class="form-control" id="max_width" value="{{ settings.max_width }}">
+        </div>
+        <div class="form-group">
+            <label for="max_height">{{ __('Max. height') }} (px)</label>
+            <input type="number" min="0" name="max_height" class="form-control" id="max_height" value="{{ settings.max_height }}">
+        </div>
+
+        <h3 class="mt-3">{{ __('Storage format') }}</h3>
+        {% for option in format_options %}
+            <div class="form-check">
+                <input type="radio" class="form-check-input" name="convert" value="{{ option.value }}" id="convert_{{ option.value }}"{% if settings.convert == option.value %} checked{% endif %}>
+                <label class="form-check-label" for="convert_{{ option.value }}">{{ option.label }}</label>
+                {% if option.hint %}
+                    <div class="text-muted small">{{ option.hint }}</div>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        <div class="form-group mt-3">
+            <label for="quality">{{ __('Quality') }} (%)</label>
+            <input type="number" min="1" max="100" name="quality" class="form-control" id="quality" value="{{ settings.quality }}">
+            <div class="form-text">{{ __('Applied when a picture is scaled down or re-encoded.') }}</div>
+        </div>
+
+        <div class="mt-3">
+            <input type="submit" name="submit" value="{{ __('Save') }}" class="btn btn-primary"/>
+            <a href="/admin/" class="btn btn-secondary">{{ __('Cancel') }}</a>
+        </div>
+    </form>
+{% endblock %}

@@ -69,9 +69,10 @@ abstract class FunctionalTestCase extends TestCase
         string $method = 'GET',
         array $parameters = [],
         array $server = [],
-        array $cookies = []
+        array $cookies = [],
+        array $files = []
     ): Response {
-        $request = Request::create($uri, $method, $parameters, $cookies, [], $server);
+        $request = Request::create($uri, $method, $parameters, $cookies, $files, $server);
 
         // Legacy code still reads the superglobals directly — checkRedirect() through
         // pageNotFound() and UserStat. Keep them in sync with the request under test until all of
