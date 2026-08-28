@@ -1,0 +1,232 @@
+msgid ""
+msgstr ""
+"X-Domain: auth\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Project-ID: 383801\n"
+"X-Crowdin-Language: id\n"
+"X-Crowdin-File: /[johncms.johncms] 9.x/modules/registration/locale/registration.pot\n"
+"X-Crowdin-File-ID: 500\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Indonesian\n"
+"Language: id_ID\n"
+"PO-Revision-Date: 2026-07-12 12:41\n"
+
+#: modules/registration/src/Application/Controllers/RegistrationController.php:46
+#: modules/registration/templates/index.phtml:4
+#: modules/registration/templates/index.phtml:5
+#: modules/registration/templates/index.phtml:10
+#: modules/registration/templates/index.phtml:151
+#: modules/registration/templates/registration_closed.phtml:4
+#: modules/registration/templates/registration_closed.phtml:5
+#: modules/registration/templates/registration_result.phtml:4
+#: modules/registration/templates/registration_result.phtml:5
+msgid "Registration"
+msgstr "Pendaftaran"
+
+#: modules/registration/src/Application/Controllers/RegistrationController.php:104
+msgid "You must accept the consent to continue"
+msgstr ""
+
+#: modules/registration/src/Application/UseCases/RegisterUserUseCase.php:62
+msgid "Registration on the website"
+msgstr ""
+
+#: modules/registration/templates/email_confirmed.phtml:11
+#: modules/registration/templates/email_confirmed.phtml:12
+msgid "Email confirmation"
+msgstr ""
+
+#: modules/registration/templates/email_confirmed.phtml:17
+msgid "User is not found"
+msgstr ""
+
+#: modules/registration/templates/email_confirmed.phtml:19
+msgid "Thanks! Your e-mail has been successfully confirmed."
+msgstr ""
+
+#: modules/registration/templates/email_confirmed.phtml:26
+msgid "Error when confirming e-mail. Invalid confirmation code."
+msgstr ""
+
+#: modules/registration/templates/index.phtml:13
+msgid "You can get authorized on the site after confirmation of your registration."
+msgstr "Anda bisa masuk setelah Pendaftaran Anda dikonfirmasi."
+
+#: modules/registration/templates/index.phtml:21
+msgid "Please, do not register names like 111, shhhh, uuuu, etc. They will be deleted. <br /> Also all the profiles registered via proxy servers will be deleted"
+msgstr "Mohon, tidak menggunakan nama seperti 111, shhhh, uuuu, dll dan mendaftar dengan server proxy atau akun akan dihapus"
+
+#: modules/registration/templates/index.phtml:25
+msgid "Choose Nickname"
+msgstr "Nama pengguna"
+
+#: modules/registration/templates/index.phtml:34
+msgid "Username"
+msgstr "Nama pengguna"
+
+#: modules/registration/templates/index.phtml:40
+msgid "Min. 2, Max. 20 characters.<br />Allowed letters of the russian and latin alphabets, numbers and symbols - = @ ! ? ~ _ ( ) [ ] . * (Except zero)"
+msgstr "Min. 2, Maks. 20 karakter <br />Hanya gunakan huruf alfabet, angka dan simbol - = @ ! ? ~ _ ( ) [ ] . * (Kecuali angka Nol)"
+
+#: modules/registration/templates/index.phtml:44
+#: modules/registration/templates/index.phtml:53
+msgid "Assign a password"
+msgstr "Tetapkan kata sandi"
+
+#: modules/registration/templates/index.phtml:61
+#: modules/registration/templates/index.phtml:68
+msgid "E-mail"
+msgstr ""
+
+#: modules/registration/templates/index.phtml:76
+msgid "Select Gender"
+msgstr "Pilih Jenis Kelamin"
+
+#: modules/registration/templates/index.phtml:79
+msgid "Man"
+msgstr "Pria"
+
+#: modules/registration/templates/index.phtml:80
+msgid "Woman"
+msgstr "Wanita"
+
+#: modules/registration/templates/index.phtml:87
+#: modules/registration/templates/index.phtml:94
+msgid "Your name"
+msgstr "Nama Anda"
+
+#: modules/registration/templates/index.phtml:101
+msgid "Tell us a little about yourself"
+msgstr "Ceritakan sedikit tentang diri Anda"
+
+#: modules/registration/templates/index.phtml:108
+#: modules/registration/templates/index.phtml:118
+msgid "Verification code"
+msgstr "Kode verifikasi"
+
+#: modules/registration/templates/index.phtml:110
+msgid "Enter verification code"
+msgstr "Masukkan kode verifikasi"
+
+#: modules/registration/templates/index.phtml:124
+msgid "If you cannot see the image code, enable graphics in your browser and refresh this page"
+msgstr "Jika gambar verifikasi tidak tampil, aktifkan fitur gambar di browser dan muat ulang halaman ini"
+
+#: modules/registration/templates/registration_closed.phtml:12
+msgid "Registration is temporarily closed"
+msgstr "Registrasi ditutup sementara"
+
+#: modules/registration/templates/registration_result.phtml:9
+msgid "Your registration data"
+msgstr ""
+
+#: modules/registration/templates/registration_result.phtml:11
+msgid "Congratulations! You have successfully registered on the site."
+msgstr ""
+
+#: modules/registration/templates/registration_result.phtml:14
+msgid "Your ID"
+msgstr "ID Anda"
+
+#: modules/registration/templates/registration_result.phtml:15
+msgid "Your Username"
+msgstr "Nama Pengguna"
+
+#: modules/registration/templates/registration_result.phtml:16
+msgid "Your Password"
+msgstr "Kata Sandi"
+
+#: modules/registration/templates/registration_result.phtml:19
+msgid "Now you just need to confirm your email address.<br> Please check your email and follow the instructions in it."
+msgstr ""
+
+#: modules/registration/templates/registration_result.phtml:21
+msgid "Please, wait until a moderator approves your registration"
+msgstr "Mohon tunggu hingga Moderator menerima Pendaftaran Anda"
+
+#: modules/registration/templates/registration_result.phtml:23
+msgid "Enter"
+msgstr "Masuk"
+
+msgid "Login"
+msgstr "Masuk"
+
+msgid "You have not entered login"
+msgstr "Anda belum memasukkan login"
+
+msgid "You have not entered password"
+msgstr "Ands belum memasukkan kata sandi"
+
+msgid "Personal"
+msgstr "Pribadi"
+
+msgid "Authorization failed"
+msgstr "Otorisasi gagal"
+
+msgid "The security code is not correct"
+msgstr "Kode verifikasi salah"
+
+msgid "Continue"
+msgstr "Lanjutkan"
+
+msgid "Sorry, but your request for registration is not considered yet. Please, be patient."
+msgstr "Maaf, tapi permintaan anda untuk pendaftaran tidak dianggap belum. Mohon, bersabarlah."
+
+msgid "Authorization"
+msgstr "Otorisasi"
+
+msgid "Password"
+msgstr "Kata sandi"
+
+msgid "Forgot password?"
+msgstr "Lupa password?"
+
+msgid "Are you sure you want to leave the site?"
+msgstr "Apakah anda yakin ingin meninggalkan situs?"
+
+msgid "Cancel"
+msgstr "Batal"
+
+msgid "Back"
+msgstr "Kembali"
+
+msgid "Restore password"
+msgstr "Mengembalikan password"
+
+msgid "Incorrect code"
+msgstr "Kode verifikasi salah"
+
+msgid "Check your e-mail for further information"
+msgstr "Cek email untuk informasi lebih lanjut"
+
+msgid "Password successfully changed.<br>New password sent to your E-mail address."
+msgstr "Kata sandi berhasil diganti<br>Kata sandi berhasil dikirim ke alamat email Anda."
+
+msgid "Your new password"
+msgstr "Kata sandi baru"
+
+msgid "User does not exists"
+msgstr "Pengguna tidak ada"
+
+msgid "Time allotted for the password recovery has been exceeded"
+msgstr "Waktu untuk konfirmasi pemulihan kata sandi telah habis"
+
+msgid "The required fields are not filled"
+msgstr "Kolom yang diperlukan kosong"
+
+msgid "Invalid Email address"
+msgstr "Alamat email tidak valid"
+
+msgid "Password can be recovered 1 time per day"
+msgstr "Kata sandi hanya dapat dipulihkan satu kali dalam sehari"
+
+msgid "Password recovery"
+msgstr "Lupa kata sandi"
+
+msgid "Your E-mail"
+msgstr "Email Anda"
+
+msgid "Password will be send to E-mail address specified in your profile.<br />WARNING !! If E-mail address has not been specified in your profile, you will not be able to recover your password."
+msgstr "Kata sandi akan dikirim ke alamat Email yang telah Anda cantumkan di profl<br />Peringatan! Jika Anda belum mencantumkan alamat email di profil, Anda tidak bisa memulihkan kata sandi."

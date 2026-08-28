@@ -79,16 +79,8 @@ msgid "Library"
 msgstr ""
 
 #: config/places.global.php:21
-#: modules/johncms/login/src/Application/Controllers/LoginController.php:29
-#: modules/johncms/login/src/Application/Controllers/LoginController.php:111
-#: modules/johncms/login/src/Application/Controllers/LoginController.php:112
-#: modules/johncms/login/src/Application/Controllers/LoginController.php:125
-#: modules/johncms/login/src/Application/Controllers/LoginController.php:126
-#: modules/johncms/login/src/Application/Controllers/LoginController.php:140
-#: modules/johncms/login/src/Application/Controllers/LoginController.php:141
-#: modules/johncms/login/templates/public/login.twig:51
-#: system/src/Http/Controller/ExternalAuthController.php:312
-#: system/src/Http/Controller/ExternalAuthController.php:325
+#: system/src/Http/Controller/ExternalAuthController.php:314
+#: system/src/Http/Controller/ExternalAuthController.php:327
 #: themes/default/templates/components/sidebar-user-menu.twig:69
 msgid "Login"
 msgstr ""
@@ -130,99 +122,6 @@ msgstr ""
 
 #: modules/johncms/language/templates/public/index.twig:27
 msgid "Apply"
-msgstr ""
-
-#: modules/johncms/login/src/Application/Controllers/LoginController.php:52
-#: system/src/Captcha/CaptchaFailure.php:49
-#: system/src/Validator/Rules/Captcha.php:33
-msgid "The security code is not correct"
-msgstr ""
-
-#: modules/johncms/login/src/Application/Controllers/LoginController.php:57
-#, php-format
-msgid "Too many attempts. Try again in %s."
-msgstr ""
-
-#: modules/johncms/login/src/Application/Controllers/LoginController.php:63
-msgid "Authorization failed"
-msgstr ""
-
-#: modules/johncms/login/src/Application/Controllers/LoginController.php:75
-msgid "You have not entered login"
-msgstr ""
-
-#: modules/johncms/login/src/Application/Controllers/LoginController.php:79
-msgid "You have not entered password"
-msgstr ""
-
-#: modules/johncms/login/src/Application/Controllers/LoginController.php:93
-#, php-format
-msgid "%d minute"
-msgid_plural "%d minutes"
-msgstr[0] ""
-
-#: modules/johncms/login/src/Application/Controllers/LogoutController.php:39
-#: themes/default/templates/components/sidebar-user-menu.twig:52
-msgid "Personal"
-msgstr ""
-
-#: modules/johncms/login/src/Application/Controllers/LogoutController.php:40
-#: modules/johncms/login/src/Application/Controllers/LogoutController.php:45
-#: modules/johncms/login/src/Application/Controllers/LogoutController.php:46
-#: modules/johncms/login/templates/public/logout.twig:13
-msgid "Logout"
-msgstr ""
-
-#: modules/johncms/login/templates/public/captcha.twig:18
-#: themes/default/templates/pages/external-auth-profile.twig:39
-msgid "Continue"
-msgstr ""
-
-#: modules/johncms/login/templates/public/confirm.twig:12
-msgid "You didn't confirm your email address. Please check your email and follow the instructions in it."
-msgstr ""
-
-#: modules/johncms/login/templates/public/confirm.twig:17
-msgid "Sorry, but your request for registration is not considered yet. Please, be patient."
-msgstr ""
-
-#: modules/johncms/login/templates/public/login.twig:13
-msgid "Authorization"
-msgstr ""
-
-#: modules/johncms/login/templates/public/login.twig:18
-#: modules/johncms/login/templates/public/login.twig:26
-#: themes/default/templates/pages/external-auth-profile.twig:23
-msgid "Username"
-msgstr ""
-
-#: modules/johncms/login/templates/public/login.twig:30
-#: modules/johncms/login/templates/public/login.twig:38
-msgid "Password"
-msgstr ""
-
-#: modules/johncms/login/templates/public/login.twig:49
-msgid "Remember me"
-msgstr ""
-
-#: modules/johncms/login/templates/public/login.twig:52
-msgid "Forgot password?"
-msgstr ""
-
-#: modules/johncms/login/templates/public/login.twig:54
-#: system/src/Http/Controller/ExternalAuthController.php:181
-#: themes/default/templates/components/sidebar-user-menu.twig:77
-msgid "Registration"
-msgstr ""
-
-#: modules/johncms/login/templates/public/logout.twig:10
-msgid "Are you sure you want to leave the site?"
-msgstr ""
-
-#: modules/johncms/login/templates/public/logout.twig:14
-#: modules/johncms/notifications/templates/public/settings.twig:32
-#: themes/default/templates/pages/comments-delete.twig:18
-msgid "Cancel"
 msgstr ""
 
 #: modules/johncms/notifications/src/Application/Controllers/ClearController.php:22
@@ -292,6 +191,11 @@ msgstr ""
 
 #: modules/johncms/notifications/templates/public/settings.twig:31
 msgid "Save"
+msgstr ""
+
+#: modules/johncms/notifications/templates/public/settings.twig:32
+#: themes/default/templates/pages/comments-delete.twig:18
+msgid "Cancel"
 msgstr ""
 
 #: modules/johncms/redirect/src/Application/Controllers/RedirectController.php:57
@@ -491,9 +395,9 @@ msgstr ""
 
 #: system/src/Auth/External/OAuthStateStorage.php:96
 #: system/src/Auth/External/OAuthStateStorage.php:104
-#: system/src/Http/Controller/ExternalAuthController.php:129
-#: system/src/Http/Controller/ExternalAuthController.php:140
-#: system/src/Http/Controller/ExternalAuthController.php:216
+#: system/src/Http/Controller/ExternalAuthController.php:131
+#: system/src/Http/Controller/ExternalAuthController.php:142
+#: system/src/Http/Controller/ExternalAuthController.php:218
 msgid "The sign-in attempt has expired, please try again"
 msgstr ""
 
@@ -502,7 +406,7 @@ msgid "The sign-in attempt could not be verified, please try again"
 msgstr ""
 
 #: system/src/Auth/External/Providers/VkProvider.php:79
-#: system/src/Http/Controller/ExternalAuthController.php:110
+#: system/src/Http/Controller/ExternalAuthController.php:112
 msgid "The service did not return an account identifier"
 msgstr ""
 
@@ -525,6 +429,11 @@ msgstr ""
 
 #: system/src/Auth/Impersonation/ImpersonationManager.php:176
 msgid "You cannot browse as somebody who outranks you"
+msgstr ""
+
+#: system/src/Captcha/CaptchaFailure.php:49
+#: system/src/Validator/Rules/Captcha.php:33
+msgid "The security code is not correct"
 msgstr ""
 
 #: system/src/Captcha/CaptchaFailure.php:50
@@ -779,20 +688,25 @@ msgstr ""
 msgid "Last activity"
 msgstr ""
 
-#: system/src/Http/Controller/ExternalAuthController.php:72
-#: system/src/Http/Controller/ExternalAuthController.php:92
+#: system/src/Http/Controller/ExternalAuthController.php:74
+#: system/src/Http/Controller/ExternalAuthController.php:94
 msgid "This sign-in service is not available"
 msgstr ""
 
-#: system/src/Http/Controller/ExternalAuthController.php:181
+#: system/src/Http/Controller/ExternalAuthController.php:183
+#: themes/default/templates/components/sidebar-user-menu.twig:77
+msgid "Registration"
+msgstr ""
+
+#: system/src/Http/Controller/ExternalAuthController.php:183
 msgid "Your account is awaiting approval"
 msgstr ""
 
-#: system/src/Http/Controller/ExternalAuthController.php:199
+#: system/src/Http/Controller/ExternalAuthController.php:201
 msgid "Registration is closed on this site"
 msgstr ""
 
-#: system/src/Http/Controller/ExternalAuthController.php:279
+#: system/src/Http/Controller/ExternalAuthController.php:281
 msgid "Finish signing up"
 msgstr ""
 
@@ -993,8 +907,12 @@ msgid "Admin Chat"
 msgstr ""
 
 #: themes/default/templates/components/sidebar-user-menu.twig:24
-#: modules/johncms/registration/templates/public/email-confirmed.twig:15
+#: modules/johncms/auth/templates/public/registration-email-confirmed.twig:15
 msgid "Log In"
+msgstr ""
+
+#: themes/default/templates/components/sidebar-user-menu.twig:52
+msgid "Personal"
 msgstr ""
 
 #: themes/default/templates/components/sidebar-user-menu.twig:60
@@ -1214,6 +1132,14 @@ msgstr ""
 msgid "Almost done. Choose a username to finish creating your account."
 msgstr ""
 
+#: themes/default/templates/pages/external-auth-profile.twig:23
+msgid "Username"
+msgstr ""
+
 #: themes/default/templates/pages/external-auth-profile.twig:31
 msgid "E-mail"
+msgstr ""
+
+#: themes/default/templates/pages/external-auth-profile.twig:39
+msgid "Continue"
 msgstr ""

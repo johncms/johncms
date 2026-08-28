@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Application\Controllers\Settings;
 
+use Johncms\Auth\RegistrationSettings;
 use Johncms\Http\Session;
 use Johncms\Modules\Admin\Application\DTO\SystemSettingsDTO;
 use Johncms\Modules\Admin\Application\UseCases\UpdateSystemSettingsUseCase;
 use Johncms\Modules\Admin\Domain\Exceptions\ConfigWriteException;
 use Johncms\Modules\Admin\Domain\Services\ThemeListProviderInterface;
-use Johncms\Modules\Registration\Application\Services\RegistrationSettings;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;

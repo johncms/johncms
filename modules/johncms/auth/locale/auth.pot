@@ -1,0 +1,302 @@
+msgid ""
+msgstr ""
+"X-Domain: auth\n"
+
+#: modules/johncms/auth/src/Application/Controllers/ConfirmEmailChangeController.php:23
+#: modules/johncms/auth/src/Application/Controllers/ConfirmRegistrationEmailController.php:31
+#: modules/johncms/auth/src/Application/Controllers/ConfirmRegistrationEmailController.php:32
+msgid "Email confirmation"
+msgstr ""
+
+#: modules/johncms/auth/src/Application/Controllers/LoginController.php:29
+#: modules/johncms/auth/src/Application/Controllers/LoginController.php:111
+#: modules/johncms/auth/src/Application/Controllers/LoginController.php:112
+#: modules/johncms/auth/src/Application/Controllers/LoginController.php:125
+#: modules/johncms/auth/src/Application/Controllers/LoginController.php:126
+#: modules/johncms/auth/src/Application/Controllers/LoginController.php:140
+#: modules/johncms/auth/src/Application/Controllers/LoginController.php:141
+#: modules/johncms/auth/templates/public/login.twig:51
+msgid "Login"
+msgstr ""
+
+#: modules/johncms/auth/src/Application/Controllers/LoginController.php:52
+msgid "The security code is not correct"
+msgstr ""
+
+#: modules/johncms/auth/src/Application/Controllers/LoginController.php:57
+#, php-format
+msgid "Too many attempts. Try again in %s."
+msgstr ""
+
+#: modules/johncms/auth/src/Application/Controllers/LoginController.php:63
+msgid "Authorization failed"
+msgstr ""
+
+#: modules/johncms/auth/src/Application/Controllers/LoginController.php:75
+msgid "You have not entered login"
+msgstr ""
+
+#: modules/johncms/auth/src/Application/Controllers/LoginController.php:79
+msgid "You have not entered password"
+msgstr ""
+
+#: modules/johncms/auth/src/Application/Controllers/LoginController.php:93
+#, php-format
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] ""
+
+#: modules/johncms/auth/src/Application/Controllers/LogoutController.php:39
+msgid "Personal"
+msgstr ""
+
+#: modules/johncms/auth/src/Application/Controllers/LogoutController.php:40
+#: modules/johncms/auth/src/Application/Controllers/LogoutController.php:45
+#: modules/johncms/auth/src/Application/Controllers/LogoutController.php:46
+#: modules/johncms/auth/templates/public/logout.twig:13
+msgid "Logout"
+msgstr ""
+
+#: modules/johncms/auth/src/Application/Controllers/RegistrationController.php:56
+#: modules/johncms/auth/src/Application/Controllers/RegistrationController.php:57
+#: modules/johncms/auth/src/Application/Controllers/RegistrationController.php:62
+#: modules/johncms/auth/src/Application/Controllers/RegistrationController.php:144
+#: modules/johncms/auth/src/Application/Controllers/RegistrationController.php:145
+#: modules/johncms/auth/src/Application/Controllers/RegistrationController.php:161
+#: modules/johncms/auth/src/Application/Controllers/RegistrationController.php:162
+#: modules/johncms/auth/src/Application/Services/RegistrationPermissions.php:31
+#: modules/johncms/auth/templates/public/login.twig:54
+#: modules/johncms/auth/templates/public/registration.twig:16
+#: modules/johncms/auth/templates/public/registration.twig:113
+msgid "Registration"
+msgstr ""
+
+#: modules/johncms/auth/src/Application/Controllers/RegistrationController.php:108
+msgid "You must accept the consent to continue"
+msgstr ""
+
+#: modules/johncms/auth/src/Application/Controllers/RestorePasswordController.php:35
+#: modules/johncms/auth/src/Application/Controllers/RestorePasswordController.php:40
+#: modules/johncms/auth/src/Application/Controllers/RestorePasswordController.php:41
+#: modules/johncms/auth/src/Application/Controllers/RestorePasswordController.php:49
+#: modules/johncms/auth/src/Application/Controllers/RestorePasswordController.php:79
+#: modules/johncms/auth/src/Application/Controllers/RestorePasswordController.php:88
+#: modules/johncms/auth/src/Application/Controllers/RestorePasswordController.php:99
+#: modules/johncms/auth/src/Application/Controllers/RestorePasswordController.php:100
+#: modules/johncms/auth/src/Application/Controllers/RestorePasswordController.php:108
+#: modules/johncms/auth/src/Application/Controllers/RestorePasswordController.php:120
+#: modules/johncms/auth/src/Application/Controllers/RestorePasswordController.php:134
+msgid "Restore password"
+msgstr ""
+
+#: modules/johncms/auth/src/Application/Controllers/RestorePasswordController.php:61
+msgid "Incorrect code"
+msgstr ""
+
+#: modules/johncms/auth/src/Application/Controllers/RestorePasswordController.php:81
+msgid "Check your e-mail for further information"
+msgstr ""
+
+#: modules/johncms/auth/src/Application/Controllers/RestorePasswordController.php:122
+msgid "Password successfully changed.<br>New password sent to your E-mail address."
+msgstr ""
+
+#: modules/johncms/auth/src/Application/Controllers/RestorePasswordController.php:124
+#: modules/johncms/auth/templates/public/login-captcha.twig:18
+#: modules/johncms/auth/templates/public/restore-password-set.twig:14
+#: modules/johncms/auth/templates/public/restore-password.twig:32
+msgid "Continue"
+msgstr ""
+
+#: modules/johncms/auth/src/Application/Controllers/RestorePasswordController.php:138
+msgid "Back"
+msgstr ""
+
+#: modules/johncms/auth/src/Application/Services/RegistrationPermissions.php:30
+msgid "Register an account"
+msgstr ""
+
+#: modules/johncms/auth/src/Application/UseCases/CompletePasswordRecoveryUseCase.php:42
+#: modules/johncms/auth/src/Application/UseCases/GetRecoveryContextUseCase.php:29
+msgid "Time allotted for the password recovery has been exceeded"
+msgstr ""
+
+#: modules/johncms/auth/src/Application/UseCases/CompletePasswordRecoveryUseCase.php:54
+msgid "Your new password"
+msgstr ""
+
+#: modules/johncms/auth/src/Application/UseCases/GetRecoveryContextUseCase.php:35
+#: modules/johncms/auth/src/Application/UseCases/SendPasswordRecoveryUseCase.php:40
+msgid "User does not exists"
+msgstr ""
+
+#: modules/johncms/auth/src/Application/UseCases/RegisterUserUseCase.php:69
+msgid "Registration on the website"
+msgstr ""
+
+#: modules/johncms/auth/src/Application/UseCases/SendPasswordRecoveryUseCase.php:35
+msgid "The required fields are not filled"
+msgstr ""
+
+#: modules/johncms/auth/src/Application/UseCases/SendPasswordRecoveryUseCase.php:44
+msgid "Invalid Email address"
+msgstr ""
+
+#: modules/johncms/auth/src/Application/UseCases/SendPasswordRecoveryUseCase.php:48
+msgid "Password can be recovered 1 time per day"
+msgstr ""
+
+#: modules/johncms/auth/src/Application/UseCases/SendPasswordRecoveryUseCase.php:61
+msgid "Password recovery"
+msgstr ""
+
+#: modules/johncms/auth/templates/public/email-change-confirmed.twig:10
+#: modules/johncms/auth/templates/public/registration-email-confirmed.twig:12
+msgid "Thanks! Your e-mail has been successfully confirmed."
+msgstr ""
+
+#: modules/johncms/auth/templates/public/email-change-confirmed.twig:12
+#: modules/johncms/auth/templates/public/registration-email-confirmed.twig:19
+msgid "Error when confirming e-mail. Invalid confirmation code."
+msgstr ""
+
+#: modules/johncms/auth/templates/public/login-confirmation-required.twig:12
+msgid "You didn't confirm your email address. Please check your email and follow the instructions in it."
+msgstr ""
+
+#: modules/johncms/auth/templates/public/login-confirmation-required.twig:17
+msgid "Sorry, but your request for registration is not considered yet. Please, be patient."
+msgstr ""
+
+#: modules/johncms/auth/templates/public/login.twig:13
+msgid "Authorization"
+msgstr ""
+
+#: modules/johncms/auth/templates/public/login.twig:18
+#: modules/johncms/auth/templates/public/login.twig:26
+#: modules/johncms/auth/templates/public/registration.twig:40
+#: modules/johncms/auth/templates/public/restore-password.twig:12
+#: modules/johncms/auth/templates/public/restore-password.twig:18
+msgid "Username"
+msgstr ""
+
+#: modules/johncms/auth/templates/public/login.twig:30
+#: modules/johncms/auth/templates/public/login.twig:38
+msgid "Password"
+msgstr ""
+
+#: modules/johncms/auth/templates/public/login.twig:49
+msgid "Remember me"
+msgstr ""
+
+#: modules/johncms/auth/templates/public/login.twig:52
+msgid "Forgot password?"
+msgstr ""
+
+#: modules/johncms/auth/templates/public/logout.twig:10
+msgid "Are you sure you want to leave the site?"
+msgstr ""
+
+#: modules/johncms/auth/templates/public/logout.twig:14
+msgid "Cancel"
+msgstr ""
+
+#: modules/johncms/auth/templates/public/registration-closed.twig:7
+msgid "Registration is temporarily closed"
+msgstr ""
+
+#: modules/johncms/auth/templates/public/registration-email-confirmed.twig:10
+msgid "User is not found"
+msgstr ""
+
+#: modules/johncms/auth/templates/public/registration-result.twig:13
+msgid "Your registration data"
+msgstr ""
+
+#: modules/johncms/auth/templates/public/registration-result.twig:15
+msgid "Congratulations! You have successfully registered on the site."
+msgstr ""
+
+#: modules/johncms/auth/templates/public/registration-result.twig:18
+msgid "Your ID"
+msgstr ""
+
+#: modules/johncms/auth/templates/public/registration-result.twig:19
+msgid "Your Username"
+msgstr ""
+
+#: modules/johncms/auth/templates/public/registration-result.twig:20
+msgid "Your Password"
+msgstr ""
+
+#: modules/johncms/auth/templates/public/registration-result.twig:23
+msgid "Now you just need to confirm your email address.<br> Please check your email and follow the instructions in it."
+msgstr ""
+
+#: modules/johncms/auth/templates/public/registration-result.twig:25
+msgid "Please, wait until a moderator approves your registration"
+msgstr ""
+
+#: modules/johncms/auth/templates/public/registration-result.twig:27
+msgid "Enter"
+msgstr ""
+
+#: modules/johncms/auth/templates/public/registration.twig:19
+msgid "You can get authorized on the site after confirmation of your registration."
+msgstr ""
+
+#: modules/johncms/auth/templates/public/registration.twig:27
+msgid "Please, do not register names like 111, shhhh, uuuu, etc. They will be deleted. <br /> Also all the profiles registered via proxy servers will be deleted"
+msgstr ""
+
+#: modules/johncms/auth/templates/public/registration.twig:31
+msgid "Choose Nickname"
+msgstr ""
+
+#: modules/johncms/auth/templates/public/registration.twig:44
+msgid "Min. 2, Max. 20 characters.<br />Allowed letters of the russian and latin alphabets, numbers and symbols - = @ ! ? ~ _ ( ) [ ] . * (Except zero)"
+msgstr ""
+
+#: modules/johncms/auth/templates/public/registration.twig:48
+#: modules/johncms/auth/templates/public/registration.twig:57
+msgid "Assign a password"
+msgstr ""
+
+#: modules/johncms/auth/templates/public/registration.twig:63
+#: modules/johncms/auth/templates/public/registration.twig:70
+msgid "E-mail"
+msgstr ""
+
+#: modules/johncms/auth/templates/public/registration.twig:76
+msgid "Select Gender"
+msgstr ""
+
+#: modules/johncms/auth/templates/public/registration.twig:79
+msgid "Man"
+msgstr ""
+
+#: modules/johncms/auth/templates/public/registration.twig:80
+msgid "Woman"
+msgstr ""
+
+#: modules/johncms/auth/templates/public/registration.twig:85
+#: modules/johncms/auth/templates/public/registration.twig:92
+msgid "Your name"
+msgstr ""
+
+#: modules/johncms/auth/templates/public/registration.twig:97
+msgid "Tell us a little about yourself"
+msgstr ""
+
+#: modules/johncms/auth/templates/public/restore-password-set.twig:12
+msgid "A new password will be generated and sent to the E-mail address specified in your profile."
+msgstr ""
+
+#: modules/johncms/auth/templates/public/restore-password.twig:22
+#: modules/johncms/auth/templates/public/restore-password.twig:28
+msgid "Your E-mail"
+msgstr ""
+
+#: modules/johncms/auth/templates/public/restore-password.twig:36
+msgid "Password will be send to E-mail address specified in your profile.<br />WARNING !! If E-mail address has not been specified in your profile, you will not be able to recover your password."
+msgstr ""

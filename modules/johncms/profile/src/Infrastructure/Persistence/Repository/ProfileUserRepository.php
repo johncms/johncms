@@ -14,23 +14,9 @@ final class ProfileUserRepository implements ProfileUserRepositoryInterface
         return User::query()->find($id);
     }
 
-    public function findByNameLat(string $nameLat): ?User
-    {
-        return User::query()->where('name_lat', '=', $nameLat)->first();
-    }
-
     public function markGuestbookSeen(int $userId, int $commCount): void
     {
         User::query()->where('id', '=', $userId)->update(['comm_old' => $commCount]);
-    }
-
-    public function confirmNewEmail(int $id, string $newEmail): void
-    {
-        User::query()->where('id', '=', $id)->update([
-            'mail'              => $newEmail,
-            'new_email'         => null,
-            'confirmation_code' => null,
-        ]);
     }
 
     public function updatePassword(int $id, string $hashedPassword): void

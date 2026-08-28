@@ -2726,7 +2726,7 @@ parameters:
 			message: '#^Property Johncms\\Users\\User\:\:\$confirmation_code \(string\) does not accept null\.$#'
 			identifier: assign.propertyType
 			count: 1
-			path: modules/johncms/registration/src/Application/Controllers/ConfirmEmailController.php
+			path: modules/johncms/auth/src/Application/Controllers/ConfirmRegistrationEmailController.php
 
 		-
 			message: '#^Comparison operation "\<" between int\<80400, 80599\> and 80400 is always false\.$#'

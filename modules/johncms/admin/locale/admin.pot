@@ -170,7 +170,7 @@ msgid "Language Settings"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:312
-#: modules/johncms/admin/src/Application/Controllers/System/SystemCheckController.php:28
+#: modules/johncms/admin/src/Application/Controllers/System/SystemCheckController.php:25
 msgid "System check"
 msgstr ""
 
@@ -180,7 +180,7 @@ msgid "Maintenance"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:332
-#: modules/johncms/admin/src/Application/Controllers/System/SystemCheckController.php:41
+#: modules/johncms/admin/src/Application/Controllers/System/SystemCheckController.php:38
 msgid "Security"
 msgstr ""
 
@@ -369,8 +369,8 @@ msgstr ""
 
 #: modules/johncms/admin/src/Application/Controllers/Forum/ForumStructureController.php:253
 #: modules/johncms/admin/src/Application/Controllers/Users/UsersController.php:119
-#: modules/johncms/admin/src/Application/Middlewares/AdminAccessMiddleware.php:58
-#: modules/johncms/admin/src/Application/Middlewares/SuperAdminAccessMiddleware.php:58
+#: modules/johncms/admin/src/Application/Middlewares/AdminAccessMiddleware.php:54
+#: modules/johncms/admin/src/Application/Middlewares/SuperAdminAccessMiddleware.php:54
 #: modules/johncms/admin/src/Application/UseCases/EnsureRoleManagementAccessUseCase.php:37
 msgid "Access denied"
 msgstr ""
@@ -850,15 +850,15 @@ msgstr ""
 msgid "Failed"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/System/SystemCheckController.php:38
+#: modules/johncms/admin/src/Application/Controllers/System/SystemCheckController.php:35
 msgid "Required parameters"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/System/SystemCheckController.php:39
+#: modules/johncms/admin/src/Application/Controllers/System/SystemCheckController.php:36
 msgid "Database"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/System/SystemCheckController.php:40
+#: modules/johncms/admin/src/Application/Controllers/System/SystemCheckController.php:37
 msgid "Recommended parameters"
 msgstr ""
 

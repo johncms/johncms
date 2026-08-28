@@ -56,9 +56,6 @@ msgstr ""
 #: modules/johncms/profile/src/Application/Controllers/ChangePasswordController.php:105
 #: modules/johncms/profile/src/Application/Controllers/KarmaController.php:125
 #: modules/johncms/profile/src/Application/Controllers/PhotoController.php:74
-#: modules/johncms/profile/src/Application/Controllers/RestorePasswordController.php:120
-#: modules/johncms/profile/templates/public/restore-password-set.twig:14
-#: modules/johncms/profile/templates/public/restore-password.twig:33
 msgid "Continue"
 msgstr ""
 
@@ -188,10 +185,6 @@ msgstr ""
 msgid "Password successfully changed"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/Controllers/ConfirmNewEmailController.php:23
-msgid "Email confirmation"
-msgstr ""
-
 #: modules/johncms/profile/src/Application/Controllers/EditProfileController.php:66
 msgid "Data saved"
 msgstr ""
@@ -261,7 +254,6 @@ msgid "Vote for"
 msgstr ""
 
 #: modules/johncms/profile/src/Application/Controllers/KarmaController.php:265
-#: modules/johncms/profile/src/Application/Controllers/RestorePasswordController.php:134
 #: modules/johncms/profile/templates/public/ban-history.twig:81
 #: modules/johncms/profile/templates/public/components/list-footer.twig:18
 #: modules/johncms/profile/templates/public/statistics.twig:41
@@ -303,29 +295,6 @@ msgstr ""
 #: modules/johncms/profile/src/Application/Controllers/ResetSettingsController.php:46
 #, php-format
 msgid "For user %s default settings were set."
-msgstr ""
-
-#: modules/johncms/profile/src/Application/Controllers/RestorePasswordController.php:35
-#: modules/johncms/profile/src/Application/Controllers/RestorePasswordController.php:47
-#: modules/johncms/profile/src/Application/Controllers/RestorePasswordController.php:77
-#: modules/johncms/profile/src/Application/Controllers/RestorePasswordController.php:86
-#: modules/johncms/profile/src/Application/Controllers/RestorePasswordController.php:104
-#: modules/johncms/profile/src/Application/Controllers/RestorePasswordController.php:116
-#: modules/johncms/profile/src/Application/Controllers/RestorePasswordController.php:130
-#: modules/johncms/profile/templates/public/restore-password.twig:11
-msgid "Restore password"
-msgstr ""
-
-#: modules/johncms/profile/src/Application/Controllers/RestorePasswordController.php:59
-msgid "Incorrect code"
-msgstr ""
-
-#: modules/johncms/profile/src/Application/Controllers/RestorePasswordController.php:79
-msgid "Check your e-mail for further information"
-msgstr ""
-
-#: modules/johncms/profile/src/Application/Controllers/RestorePasswordController.php:118
-msgid "Password successfully changed.<br>New password sent to your E-mail address."
 msgstr ""
 
 #: modules/johncms/profile/src/Application/Controllers/SessionsController.php:39
@@ -479,15 +448,6 @@ msgstr ""
 msgid "The password must contain at least 3 characters"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/UseCases/CompletePasswordRecoveryUseCase.php:42
-#: modules/johncms/profile/src/Application/UseCases/GetRecoveryContextUseCase.php:29
-msgid "Time allotted for the password recovery has been exceeded"
-msgstr ""
-
-#: modules/johncms/profile/src/Application/UseCases/CompletePasswordRecoveryUseCase.php:54
-msgid "Your new password"
-msgstr ""
-
 #: modules/johncms/profile/src/Application/UseCases/GetBanFormContextUseCase.php:43
 msgid "You do not have enought rights to ban this user"
 msgstr ""
@@ -562,11 +522,6 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/UseCases/GetRecoveryContextUseCase.php:35
-#: modules/johncms/profile/src/Application/UseCases/SendPasswordRecoveryUseCase.php:40
-msgid "User does not exists"
-msgstr ""
-
 #: modules/johncms/profile/src/Application/UseCases/GetVoteContextUseCase.php:39
 msgid "You are not allowed to vote for users"
 msgstr ""
@@ -595,22 +550,6 @@ msgstr ""
 #: modules/johncms/profile/src/Application/UseCases/GetVoteContextUseCase.php:69
 #, php-format
 msgid "You have exceeded the limit of votes. New voices will be added %s"
-msgstr ""
-
-#: modules/johncms/profile/src/Application/UseCases/SendPasswordRecoveryUseCase.php:35
-msgid "The required fields are not filled"
-msgstr ""
-
-#: modules/johncms/profile/src/Application/UseCases/SendPasswordRecoveryUseCase.php:44
-msgid "Invalid Email address"
-msgstr ""
-
-#: modules/johncms/profile/src/Application/UseCases/SendPasswordRecoveryUseCase.php:48
-msgid "Password can be recovered 1 time per day"
-msgstr ""
-
-#: modules/johncms/profile/src/Application/UseCases/SendPasswordRecoveryUseCase.php:61
-msgid "Password recovery"
 msgstr ""
 
 #: modules/johncms/profile/src/Application/UseCases/UpdateProfileUseCase.php:112
@@ -765,17 +704,7 @@ msgstr ""
 msgid "To message"
 msgstr ""
 
-#: modules/johncms/profile/templates/public/confirm-new-email.twig:10
-msgid "Thanks! Your e-mail has been successfully confirmed."
-msgstr ""
-
-#: modules/johncms/profile/templates/public/confirm-new-email.twig:12
-msgid "Error when confirming e-mail. Invalid confirmation code."
-msgstr ""
-
 #: modules/johncms/profile/templates/public/edit.twig:30
-#: modules/johncms/profile/templates/public/restore-password.twig:13
-#: modules/johncms/profile/templates/public/restore-password.twig:19
 msgid "Username"
 msgstr ""
 
@@ -1064,19 +993,6 @@ msgstr ""
 #: modules/johncms/profile/templates/public/password.twig:37
 #: modules/johncms/profile/templates/public/password.twig:43
 msgid "Repeat password"
-msgstr ""
-
-#: modules/johncms/profile/templates/public/restore-password-set.twig:12
-msgid "A new password will be generated and sent to the E-mail address specified in your profile."
-msgstr ""
-
-#: modules/johncms/profile/templates/public/restore-password.twig:23
-#: modules/johncms/profile/templates/public/restore-password.twig:29
-msgid "Your E-mail"
-msgstr ""
-
-#: modules/johncms/profile/templates/public/restore-password.twig:37
-msgid "Password will be send to E-mail address specified in your profile.<br />WARNING !! If E-mail address has not been specified in your profile, you will not be able to recover your password."
 msgstr ""
 
 #: modules/johncms/profile/templates/public/sessions.twig:16

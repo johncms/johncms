@@ -1,0 +1,238 @@
+msgid ""
+msgstr ""
+"X-Domain: auth\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Project-ID: 383801\n"
+"X-Crowdin-Language: az\n"
+"X-Crowdin-File: /[johncms.johncms] 9.x/modules/registration/locale/registration.pot\n"
+"X-Crowdin-File-ID: 500\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Azerbaijani\n"
+"Language: az_AZ\n"
+"PO-Revision-Date: 2026-07-12 12:41\n"
+
+#: modules/registration/src/Application/Controllers/RegistrationController.php:46
+#: modules/registration/templates/index.phtml:4
+#: modules/registration/templates/index.phtml:5
+#: modules/registration/templates/index.phtml:10
+#: modules/registration/templates/index.phtml:151
+#: modules/registration/templates/registration_closed.phtml:4
+#: modules/registration/templates/registration_closed.phtml:5
+#: modules/registration/templates/registration_result.phtml:4
+#: modules/registration/templates/registration_result.phtml:5
+msgid "Registration"
+msgstr "Qeydiyyat"
+
+#: modules/registration/src/Application/Controllers/RegistrationController.php:104
+msgid "You must accept the consent to continue"
+msgstr ""
+
+#: modules/registration/src/Application/UseCases/RegisterUserUseCase.php:62
+msgid "Registration on the website"
+msgstr "Qeydiyyatın veb saytında qeydiyyat"
+
+#: modules/registration/templates/email_confirmed.phtml:11
+#: modules/registration/templates/email_confirmed.phtml:12
+msgid "Email confirmation"
+msgstr "Gözləyərkən təsdiq"
+
+#: modules/registration/templates/email_confirmed.phtml:17
+msgid "User is not found"
+msgstr "İstifadəçi tapılmadı."
+
+#: modules/registration/templates/email_confirmed.phtml:19
+msgid "Thanks! Your e-mail has been successfully confirmed."
+msgstr "Təşəkkür edirik! Sizin e-mail uğurla təsdiq olunmuşdur."
+
+#: modules/registration/templates/email_confirmed.phtml:26
+msgid "Error when confirming e-mail. Invalid confirmation code."
+msgstr "Səhv zamanı təsdiq e-poçt göndərin. Səhv kodu təsdiq etmək."
+
+#: modules/registration/templates/index.phtml:13
+msgid "You can get authorized on the site after confirmation of your registration."
+msgstr "Nə etmək olar icazə saytında təsdiq edildikdən sonra, sizin qeydiyyatı."
+
+#: modules/registration/templates/index.phtml:21
+msgid "Please, do not register names like 111, shhhh, uuuu, etc. They will be deleted. <br /> Also all the profiles registered via proxy servers will be deleted"
+msgstr "Xahiş edirik регистрируйте kimi adlar 111, тсссс, уууу və s. Onlar silinəcək. <br /> də bütün profillər, qeydə alınmış vasitəsilə proxy-server silinəcək"
+
+#: modules/registration/templates/index.phtml:25
+msgid "Choose Nickname"
+msgstr "Ləqəbi dəyişdir"
+
+#: modules/registration/templates/index.phtml:34
+msgid "Username"
+msgstr "İstifadəçi adı"
+
+#: modules/registration/templates/index.phtml:40
+msgid "Min. 2, Max. 20 characters.<br />Allowed letters of the russian and latin alphabets, numbers and symbols - = @ ! ? ~ _ ( ) [ ] . * (Except zero)"
+msgstr "Min. 2, maksimum. 20 simvol.<br />həll məktublar, rus və latın əlifbalar, rəqəmlər və işarələr - = @ ! ? ~ _ ( ) [ ] . * (Başqa null)"
+
+#: modules/registration/templates/index.phtml:44
+#: modules/registration/templates/index.phtml:53
+msgid "Assign a password"
+msgstr "şifrə təyin et"
+
+#: modules/registration/templates/index.phtml:61
+#: modules/registration/templates/index.phtml:68
+msgid "E-mail"
+msgstr "E-poçt"
+
+#: modules/registration/templates/index.phtml:76
+msgid "Select Gender"
+msgstr "Cins seçin"
+
+#: modules/registration/templates/index.phtml:79
+msgid "Man"
+msgstr "Kişi"
+
+#: modules/registration/templates/index.phtml:80
+msgid "Woman"
+msgstr "Qadın"
+
+#: modules/registration/templates/index.phtml:87
+#: modules/registration/templates/index.phtml:94
+msgid "Your name"
+msgstr "Adınız"
+
+#: modules/registration/templates/index.phtml:101
+msgid "Tell us a little about yourself"
+msgstr "Özünüz haqqında biraz yazın"
+
+#: modules/registration/templates/index.phtml:108
+#: modules/registration/templates/index.phtml:118
+msgid "Verification code"
+msgstr "Təhlükəsizlik kodu"
+
+#: modules/registration/templates/index.phtml:110
+msgid "Enter verification code"
+msgstr "Yazın, təhlükəsizlik kodu"
+
+#: modules/registration/templates/index.phtml:124
+msgid "If you cannot see the image code, enable graphics in your browser and refresh this page"
+msgstr "Əgər siz kodu görmürsüzsə brauzerinizdə görüntü aktiv edin"
+
+#: modules/registration/templates/registration_closed.phtml:12
+msgid "Registration is temporarily closed"
+msgstr "Qeydiyyat müvəqqəti bağlanıb"
+
+#: modules/registration/templates/registration_result.phtml:9
+msgid "Your registration data"
+msgstr "Sizin qeydiyyat məlumatları"
+
+#: modules/registration/templates/registration_result.phtml:11
+msgid "Congratulations! You have successfully registered on the site."
+msgstr "Təbriklər siz uğurla qeydiyyatdan keçdiniz"
+
+#: modules/registration/templates/registration_result.phtml:14
+msgid "Your ID"
+msgstr "Sizin ID"
+
+#: modules/registration/templates/registration_result.phtml:15
+msgid "Your Username"
+msgstr "Sənin istifadəçi adın"
+
+#: modules/registration/templates/registration_result.phtml:16
+msgid "Your Password"
+msgstr "Şifrəniz"
+
+#: modules/registration/templates/registration_result.phtml:19
+msgid "Now you just need to confirm your email address.<br> Please check your email and follow the instructions in it."
+msgstr "Siz təsdiq e-poçt ünvanınızı. Edin, edin və e-poçt və təlimatlara əməl edin ona."
+
+#: modules/registration/templates/registration_result.phtml:21
+msgid "Please, wait until a moderator approves your registration"
+msgstr "Lütfən, gözləyin moderator təsdiq sizin qeydiyyatı"
+
+#: modules/registration/templates/registration_result.phtml:23
+msgid "Enter"
+msgstr "Daxil edin"
+
+msgid "Login"
+msgstr "Daxil ol"
+
+msgid "You have not entered login"
+msgstr "Siz mətni daxil etmədiniz"
+
+msgid "You have not entered password"
+msgstr "Parolu daxil etmədiniz"
+
+msgid "Personal"
+msgstr "Şəxsi"
+
+msgid "Logout"
+msgstr "Çıxış"
+
+msgid "Authorization failed"
+msgstr "Səhv avtorizasiya"
+
+msgid "The security code is not correct"
+msgstr "Təhlükəsizlik kodu düzgün deyil"
+
+msgid "Continue"
+msgstr "Davam"
+
+msgid "You didn't confirm your email address. Please check your email and follow the instructions in it."
+msgstr "Siz təsdiq e-poçt ünvanınızı. Edin, edin və e-poçt və təlimatlara əməl edin ona."
+
+msgid "Sorry, but your request for registration is not considered yet. Please, be patient."
+msgstr "Bağışlayın, amma sizin üçün ərizə qeydiyyata hələ baxdığı məsələ. Səbr edin."
+
+msgid "Authorization"
+msgstr "Avtorizasiya"
+
+msgid "Password"
+msgstr "Parol"
+
+msgid "Forgot password?"
+msgstr "Şifrəni unutmusunuz?"
+
+msgid "Are you sure you want to leave the site?"
+msgstr "Siz əmin deyilsinizsə tərk sayta?"
+
+msgid "Cancel"
+msgstr "Ləğv et"
+
+msgid "Back"
+msgstr "Geri"
+
+msgid "Restore password"
+msgstr "Bərpa parol"
+
+msgid "Incorrect code"
+msgstr "Yanlış PIN kod"
+
+msgid "Check your e-mail for further information"
+msgstr "Yeni təlimat almaq üçün e-poçtunuzu yoxlayın."
+
+msgid "Password successfully changed.<br>New password sent to your E-mail address."
+msgstr "Parol uğurla dəyişib.<br>yeni bir şifrə göndəriləcək sizin e-mail ünvanı."
+
+msgid "Your new password"
+msgstr "Yeni parolunuz"
+
+msgid "User does not exists"
+msgstr "İstifadəçi mövcud deyil"
+
+msgid "Time allotted for the password recovery has been exceeded"
+msgstr "Zamanda, bunun üçün parol bərpa edilib keçib"
+
+msgid "The required fields are not filled"
+msgstr "Tələb olunan sahələr doldurulmayıb"
+
+msgid "Invalid Email address"
+msgstr "Etibarsız e-poçt ünvanı"
+
+msgid "Password can be recovered 1 time per day"
+msgstr "Parol almaq olar gündə 1 dəfə"
+
+msgid "Password recovery"
+msgstr "Şifrənin bərpa edilməsi"
+
+msgid "Your E-mail"
+msgstr "E-poçtunuz"
+
+msgid "Password will be send to E-mail address specified in your profile.<br />WARNING !! If E-mail address has not been specified in your profile, you will not be able to recover your password."
+msgstr "Parol göndəriləcək göstərilən e-mail ünvanı göstərilən sizin profil.<br />diqqət !! Əgər e-mail ünvanı yazmamışdılar sizin profil, siz bilməzsiniz bərpa parolu."

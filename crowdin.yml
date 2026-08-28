@@ -26,6 +26,8 @@ files:
     translation: /modules/johncms/admin/locale/%two_letters_code%.po
   - source: /modules/johncms/album/locale/album.pot
     translation: /modules/johncms/album/locale/%two_letters_code%.po
+  - source: /modules/johncms/auth/locale/auth.pot
+    translation: /modules/johncms/auth/locale/%two_letters_code%.po
   - source: /modules/johncms/collections/locale/collections.pot
     translation: /modules/johncms/collections/locale/%two_letters_code%.po
   - source: /modules/johncms/community/locale/community.pot
@@ -56,8 +58,6 @@ files:
     translation: /modules/johncms/online/locale/%two_letters_code%.po
   - source: /modules/johncms/profile/locale/profile.pot
     translation: /modules/johncms/profile/locale/%two_letters_code%.po
-  - source: /modules/johncms/registration/locale/registration.pot
-    translation: /modules/johncms/registration/locale/%two_letters_code%.po
   - source: /system/locale/system.pot
     translation: /system/locale/%two_letters_code%.po
   - source: /public/install/locale/install.pot

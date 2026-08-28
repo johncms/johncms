@@ -1,0 +1,218 @@
+msgid ""
+msgstr ""
+"X-Domain: auth\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Project-ID: 383801\n"
+"X-Crowdin-Language: kk\n"
+"X-Crowdin-File: /[johncms.johncms] 9.x/modules/registration/locale/registration.pot\n"
+"X-Crowdin-File-ID: 500\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Kazakh\n"
+"Language: kk_KZ\n"
+"PO-Revision-Date: 2026-07-12 12:41\n"
+
+#: modules/registration/src/Application/Controllers/RegistrationController.php:46
+#: modules/registration/templates/index.phtml:4
+#: modules/registration/templates/index.phtml:5
+#: modules/registration/templates/index.phtml:10
+#: modules/registration/templates/index.phtml:151
+#: modules/registration/templates/registration_closed.phtml:4
+#: modules/registration/templates/registration_closed.phtml:5
+#: modules/registration/templates/registration_result.phtml:4
+#: modules/registration/templates/registration_result.phtml:5
+msgid "Registration"
+msgstr "Тіркелу"
+
+#: modules/registration/src/Application/Controllers/RegistrationController.php:104
+msgid "You must accept the consent to continue"
+msgstr ""
+
+#: modules/registration/src/Application/UseCases/RegisterUserUseCase.php:62
+msgid "Registration on the website"
+msgstr "Сайтқа тіркелу"
+
+#: modules/registration/templates/email_confirmed.phtml:11
+#: modules/registration/templates/email_confirmed.phtml:12
+msgid "Email confirmation"
+msgstr "Электрондық поштаны растау"
+
+#: modules/registration/templates/email_confirmed.phtml:17
+msgid "User is not found"
+msgstr "Қолданушы табылған жоқ"
+
+#: modules/registration/templates/email_confirmed.phtml:19
+msgid "Thanks! Your e-mail has been successfully confirmed."
+msgstr "Рахмет! Сіздің электрондық поштаңыз сәтті расталды."
+
+#: modules/registration/templates/email_confirmed.phtml:26
+msgid "Error when confirming e-mail. Invalid confirmation code."
+msgstr "Электрондық поштаны растау кезінде қате шықты. Растау коды қате."
+
+#: modules/registration/templates/index.phtml:13
+msgid "You can get authorized on the site after confirmation of your registration."
+msgstr "Сіз сайттың бөлімдеріне тек тіркелуді растағаннан кейін ғана кіре аласыз "
+
+#: modules/registration/templates/index.phtml:21
+msgid "Please, do not register names like 111, shhhh, uuuu, etc. They will be deleted. <br /> Also all the profiles registered via proxy servers will be deleted"
+msgstr "111, ггг, uuuu сияқты қолданушы атымен тіркелмеуіңізді сұраймыз. Ондай қолданушылар бірден жойылады. <br>\n"
+"Оған қоса прокси сервер арқылы тіркелген "
+
+#: modules/registration/templates/index.phtml:25
+msgid "Choose Nickname"
+msgstr "Қолданушы лақап атын таңдаңыз"
+
+#: modules/registration/templates/index.phtml:34
+msgid "Username"
+msgstr "Қолданушы аты"
+
+#: modules/registration/templates/index.phtml:40
+msgid "Min. 2, Max. 20 characters.<br />Allowed letters of the russian and latin alphabets, numbers and symbols - = @ ! ? ~ _ ( ) [ ] . * (Except zero)"
+msgstr "Мин. 2, макс. 20 символ.<br>Орыс және Латын әліппесінің әріптері, цифрлер (нөлден басқа) және - = @ ! ? ~ _ ( ) [ ] * таңбалары рұқсат етілген."
+
+#: modules/registration/templates/index.phtml:44
+#: modules/registration/templates/index.phtml:53
+msgid "Assign a password"
+msgstr "Құпиясөз енгізіңіз"
+
+#: modules/registration/templates/index.phtml:61
+#: modules/registration/templates/index.phtml:68
+msgid "E-mail"
+msgstr ""
+
+#: modules/registration/templates/index.phtml:76
+msgid "Select Gender"
+msgstr "Жынысыңызды таңдаңыз"
+
+#: modules/registration/templates/index.phtml:79
+msgid "Man"
+msgstr "Ер адам"
+
+#: modules/registration/templates/index.phtml:80
+msgid "Woman"
+msgstr "Әйел адам"
+
+#: modules/registration/templates/index.phtml:87
+#: modules/registration/templates/index.phtml:94
+msgid "Your name"
+msgstr "Сіздің атыңыз"
+
+#: modules/registration/templates/index.phtml:101
+msgid "Tell us a little about yourself"
+msgstr "Өзіңіз туралы біраз жазып кетіңіз"
+
+#: modules/registration/templates/index.phtml:108
+#: modules/registration/templates/index.phtml:118
+msgid "Verification code"
+msgstr "Растау коды"
+
+#: modules/registration/templates/index.phtml:110
+msgid "Enter verification code"
+msgstr "Растау кодын енгізіңіз"
+
+#: modules/registration/templates/index.phtml:124
+msgid "If you cannot see the image code, enable graphics in your browser and refresh this page"
+msgstr "Егер сіз коды бар суретті көріп тұрмасаңыз, браузердің параметрлеріне кіріп, графиканы қолдауды қосып, парақты жаңартыңыз"
+
+#: modules/registration/templates/registration_closed.phtml:12
+msgid "Registration is temporarily closed"
+msgstr "Тіркелу уақытша жабық"
+
+#: modules/registration/templates/registration_result.phtml:9
+msgid "Your registration data"
+msgstr "Сіздің тіркелу деректеріңіз"
+
+#: modules/registration/templates/registration_result.phtml:11
+msgid "Congratulations! You have successfully registered on the site."
+msgstr "Құттықтаймыз! Сіз сайтқа сәтті тіркелдіңіз."
+
+#: modules/registration/templates/registration_result.phtml:14
+msgid "Your ID"
+msgstr "Сіздің ID"
+
+#: modules/registration/templates/registration_result.phtml:15
+msgid "Your Username"
+msgstr "Сіздің Логин"
+
+#: modules/registration/templates/registration_result.phtml:16
+msgid "Your Password"
+msgstr "Сіздің Құпиясөзіңіз"
+
+#: modules/registration/templates/registration_result.phtml:19
+msgid "Now you just need to confirm your email address.<br> Please check your email and follow the instructions in it."
+msgstr "Енді сізге электрондық поштаны растау керек.<br> Өтініш, электрондық поштаңызды тексеріп, келген хаттағы нұсқауларды орындаңыз."
+
+#: modules/registration/templates/registration_result.phtml:21
+msgid "Please, wait until a moderator approves your registration"
+msgstr "Өтініш, модератор сіздің тіркелуіңізді растауын күтуді сұраймыз."
+
+#: modules/registration/templates/registration_result.phtml:23
+msgid "Enter"
+msgstr "Кіру"
+
+msgid "Login"
+msgstr "Кіру"
+
+msgid "You have not entered login"
+msgstr "Сіз никті енгізбедіңіз"
+
+msgid "You have not entered password"
+msgstr "Сіз құпия сөзді енгізбедіңіз"
+
+msgid "Personal"
+msgstr "Жеке"
+
+msgid "Logout"
+msgstr "Шығу"
+
+msgid "Authorization failed"
+msgstr "Авторизация қатесі"
+
+msgid "The security code is not correct"
+msgstr "Тексеру коды дұрыс емес терілді"
+
+msgid "Continue"
+msgstr "Жалғастыру"
+
+msgid "You didn't confirm your email address. Please check your email and follow the instructions in it."
+msgstr "Енді сізге электрондық поштаны растау керек. Өтініш, электрондық поштаңызды тексеріп, келген хаттағы нұсқауларды орындаңыз."
+
+msgid "Sorry, but your request for registration is not considered yet. Please, be patient."
+msgstr "Кешіріңіз, бірақ сіздің тіркеуге арналған өтінім әлі қаралған жоқ. Өтінеміз, шыдамды болыңыз."
+
+msgid "Authorization"
+msgstr "Авторизация"
+
+msgid "Password"
+msgstr "Құпия сөз"
+
+msgid "Forgot password?"
+msgstr "Құпия сөзіңізді ұмыттыңыз ба?"
+
+msgid "Are you sure you want to leave the site?"
+msgstr "Осы сайттан кеткіңіз келетініне сенімдісіз бе?"
+
+msgid "Cancel"
+msgstr "Бас тарту"
+
+msgid "Back"
+msgstr "Артқа"
+
+msgid "Your new password"
+msgstr "Сіздің Құпиясөзіңіз"
+
+msgid "User does not exists"
+msgstr "Ондай қолданушы жоқ"
+
+msgid "The required fields are not filled"
+msgstr "Міндетті жолдар толтырылмаған"
+
+msgid "Invalid Email address"
+msgstr "Емейл мекені жарамсыз"
+
+msgid "Password recovery"
+msgstr "Кілтсөзді қалпына келтіру"
+
+msgid "Your E-mail"
+msgstr "Сіздің Электрондық поштаңыз"

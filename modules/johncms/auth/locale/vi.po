@@ -1,0 +1,238 @@
+msgid ""
+msgstr ""
+"X-Domain: auth\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Project-ID: 383801\n"
+"X-Crowdin-Language: vi\n"
+"X-Crowdin-File: /[johncms.johncms] 9.x/modules/registration/locale/registration.pot\n"
+"X-Crowdin-File-ID: 500\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Vietnamese\n"
+"Language: vi_VN\n"
+"PO-Revision-Date: 2026-07-12 12:41\n"
+
+#: modules/registration/src/Application/Controllers/RegistrationController.php:46
+#: modules/registration/templates/index.phtml:4
+#: modules/registration/templates/index.phtml:5
+#: modules/registration/templates/index.phtml:10
+#: modules/registration/templates/index.phtml:151
+#: modules/registration/templates/registration_closed.phtml:4
+#: modules/registration/templates/registration_closed.phtml:5
+#: modules/registration/templates/registration_result.phtml:4
+#: modules/registration/templates/registration_result.phtml:5
+msgid "Registration"
+msgstr "Đăng ký"
+
+#: modules/registration/src/Application/Controllers/RegistrationController.php:104
+msgid "You must accept the consent to continue"
+msgstr ""
+
+#: modules/registration/src/Application/UseCases/RegisterUserUseCase.php:62
+msgid "Registration on the website"
+msgstr "Đăng ký trên trang web"
+
+#: modules/registration/templates/email_confirmed.phtml:11
+#: modules/registration/templates/email_confirmed.phtml:12
+msgid "Email confirmation"
+msgstr "Xác nhận email"
+
+#: modules/registration/templates/email_confirmed.phtml:17
+msgid "User is not found"
+msgstr "Không tìm thấy người dùng"
+
+#: modules/registration/templates/email_confirmed.phtml:19
+msgid "Thanks! Your e-mail has been successfully confirmed."
+msgstr "Cảm ơn! E-mail của bạn đã được xác nhận."
+
+#: modules/registration/templates/email_confirmed.phtml:26
+msgid "Error when confirming e-mail. Invalid confirmation code."
+msgstr "Lỗi khi xác nhận e-mail. Không hợp lệ mã xác nhận."
+
+#: modules/registration/templates/index.phtml:13
+msgid "You can get authorized on the site after confirmation of your registration."
+msgstr "Bạn có thể nhận được ủy quyền trên trang web sau khi xác nhận đăng ký của bạn."
+
+#: modules/registration/templates/index.phtml:21
+msgid "Please, do not register names like 111, shhhh, uuuu, etc. They will be deleted. <br /> Also all the profiles registered via proxy servers will be deleted"
+msgstr "Xin vui lòng đăng ký với tên gồm các kí tự là 0 đến 9, a đến z, các ký tự khác không được phép sử dụng. <br> Cũng loại bỏ tất cả cấu hình đã được đăng ký sử dụng máy chủ proxy"
+
+#: modules/registration/templates/index.phtml:25
+msgid "Choose Nickname"
+msgstr "Chọn Nickname"
+
+#: modules/registration/templates/index.phtml:34
+msgid "Username"
+msgstr "Tên tài khoản"
+
+#: modules/registration/templates/index.phtml:40
+msgid "Min. 2, Max. 20 characters.<br />Allowed letters of the russian and latin alphabets, numbers and symbols - = @ ! ? ~ _ ( ) [ ] . * (Except zero)"
+msgstr "Tối thiểu là 2, tối đa là 15 ký tự.<br>Được sử dụng chữ cái Latin, số và các ký hiệu khác - = @ ! ? ~ _ ( ) [ ] . * (Ngoại trừ số 0)"
+
+#: modules/registration/templates/index.phtml:44
+#: modules/registration/templates/index.phtml:53
+msgid "Assign a password"
+msgstr "Chỉ định một mật khẩu"
+
+#: modules/registration/templates/index.phtml:61
+#: modules/registration/templates/index.phtml:68
+msgid "E-mail"
+msgstr ""
+
+#: modules/registration/templates/index.phtml:76
+msgid "Select Gender"
+msgstr "Chọn Giới tính"
+
+#: modules/registration/templates/index.phtml:79
+msgid "Man"
+msgstr "Hot Boy"
+
+#: modules/registration/templates/index.phtml:80
+msgid "Woman"
+msgstr "Hot Girl"
+
+#: modules/registration/templates/index.phtml:87
+#: modules/registration/templates/index.phtml:94
+msgid "Your name"
+msgstr "Tên của bạn"
+
+#: modules/registration/templates/index.phtml:101
+msgid "Tell us a little about yourself"
+msgstr "Cho chúng tôi biết một chút về bản thân"
+
+#: modules/registration/templates/index.phtml:108
+#: modules/registration/templates/index.phtml:118
+msgid "Verification code"
+msgstr "Mã xác minh"
+
+#: modules/registration/templates/index.phtml:110
+msgid "Enter verification code"
+msgstr "Nhập mã xác minh"
+
+#: modules/registration/templates/index.phtml:124
+msgid "If you cannot see the image code, enable graphics in your browser and refresh this page"
+msgstr "Có thể không nhìn thấy mã hình ảnh, hãy làm mới trang này"
+
+#: modules/registration/templates/registration_closed.phtml:12
+msgid "Registration is temporarily closed"
+msgstr "Đăng ký tạm thời đóng cửa"
+
+#: modules/registration/templates/registration_result.phtml:9
+msgid "Your registration data"
+msgstr "Thông tin bạn đăng ký"
+
+#: modules/registration/templates/registration_result.phtml:11
+msgid "Congratulations! You have successfully registered on the site."
+msgstr "Chúc mừng! Bạn đã thành công đăng ký trên trang web."
+
+#: modules/registration/templates/registration_result.phtml:14
+msgid "Your ID"
+msgstr "ID của bạn"
+
+#: modules/registration/templates/registration_result.phtml:15
+msgid "Your Username"
+msgstr "Tên tài khoản"
+
+#: modules/registration/templates/registration_result.phtml:16
+msgid "Your Password"
+msgstr "Mật khẩu của bạn"
+
+#: modules/registration/templates/registration_result.phtml:19
+msgid "Now you just need to confirm your email address.<br> Please check your email and follow the instructions in it."
+msgstr "Bây giờ bạn chỉ cần để xác nhận địa chỉ email của bạn.<br> Xin vui lòng kiểm tra email, và làm theo những hướng dẫn trong đó."
+
+#: modules/registration/templates/registration_result.phtml:21
+msgid "Please, wait until a moderator approves your registration"
+msgstr "Tài khoản của bạn đang chờ xác nhận đăng ký của quản trị viên bằng cách kiểm duyệt"
+
+#: modules/registration/templates/registration_result.phtml:23
+msgid "Enter"
+msgstr "Xác nhận"
+
+msgid "Login"
+msgstr "Đăng nhập"
+
+msgid "You have not entered login"
+msgstr "Bạn chưa nhập đủ thông tin"
+
+msgid "You have not entered password"
+msgstr "Bạn chưa nhập mật khẩu"
+
+msgid "Personal"
+msgstr "Cá nhân"
+
+msgid "Logout"
+msgstr "Đăng xuất"
+
+msgid "Authorization failed"
+msgstr "Xác thực thất bại."
+
+msgid "The security code is not correct"
+msgstr "Mã bảo mật không đúng"
+
+msgid "Continue"
+msgstr "Tiếp tục"
+
+msgid "You didn't confirm your email address. Please check your email and follow the instructions in it."
+msgstr "Bạn chưa xác nhận email. Vui lòng kiểm tra email và làm theo hướng dẫn"
+
+msgid "Sorry, but your request for registration is not considered yet. Please, be patient."
+msgstr "Xin lỗi, nhưng yêu cầu đăng ký của bạn không được chấp thuận. Xin vui lòng thử lại sau."
+
+msgid "Authorization"
+msgstr "Xác thực"
+
+msgid "Password"
+msgstr "Mật khẩu"
+
+msgid "Forgot password?"
+msgstr "Quên mật khẩu?"
+
+msgid "Are you sure you want to leave the site?"
+msgstr "Bạn có chắc chắn muốn rời khỏi trang này không?"
+
+msgid "Cancel"
+msgstr "Hủy bỏ"
+
+msgid "Back"
+msgstr "Quay lại"
+
+msgid "Restore password"
+msgstr "Khôi phục mật khẩu"
+
+msgid "Incorrect code"
+msgstr "Mã không chính xác"
+
+msgid "Check your e-mail for further information"
+msgstr "Kiểm tra email của bạn để biết thêm thông tin"
+
+msgid "Password successfully changed.<br>New password sent to your E-mail address."
+msgstr "Mật khẩu thay đổi thành công.<br>New mật khẩu gửi đến địa chỉ E-mail."
+
+msgid "Your new password"
+msgstr "Mật khẩu mới"
+
+msgid "User does not exists"
+msgstr "Người dùng không tồn tại"
+
+msgid "Time allotted for the password recovery has been exceeded"
+msgstr "Thời gian được phân bổ cho việc phục hồi mật khẩu đã được vượt quá"
+
+msgid "The required fields are not filled"
+msgstr "Chưa Nhập Nội Dung"
+
+msgid "Invalid Email address"
+msgstr "Địa chỉ e-mail không hợp lệ"
+
+msgid "Password can be recovered 1 time per day"
+msgstr "Mật khẩu có thể được phục hồi 1 lần mỗi ngày"
+
+msgid "Password recovery"
+msgstr "Khôi phục mật khẩu"
+
+msgid "Your E-mail"
+msgstr "Email của bạn"
+
+msgid "Password will be send to E-mail address specified in your profile.<br />WARNING !! If E-mail address has not been specified in your profile, you will not be able to recover your password."
+msgstr "Mật khẩu sẽ được gửi đến địa chỉ E-mail ghi trong hồ sơ của bạn.<br />WARNING !! Nếu địa chỉ E-mail đã không được ghi trong hồ sơ của bạn, bạn sẽ không thể khôi phục mật khẩu."

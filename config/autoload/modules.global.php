@@ -23,6 +23,7 @@ return [
         'bundled' => [
             'johncms/admin',
             'johncms/album',
+            'johncms/auth',
             'johncms/collections',
             'johncms/community',
             'johncms/consent',
@@ -34,14 +35,12 @@ return [
             'johncms/homepage',
             'johncms/language',
             'johncms/library',
-            'johncms/login',
             'johncms/mail',
             'johncms/news',
             'johncms/notifications',
             'johncms/online',
             'johncms/profile',
             'johncms/redirect',
-            'johncms/registration',
         ],
     ],
 ];

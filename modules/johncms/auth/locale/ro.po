@@ -1,0 +1,235 @@
+msgid ""
+msgstr ""
+"X-Domain: auth\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100>0 && n%100<20)) ? 1 : 2);\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Project-ID: 383801\n"
+"X-Crowdin-Language: ro\n"
+"X-Crowdin-File: /[johncms.johncms] 9.x/modules/registration/locale/registration.pot\n"
+"X-Crowdin-File-ID: 500\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Romanian\n"
+"Language: ro_RO\n"
+"PO-Revision-Date: 2026-07-12 12:41\n"
+
+#: modules/registration/src/Application/Controllers/RegistrationController.php:46
+#: modules/registration/templates/index.phtml:4
+#: modules/registration/templates/index.phtml:5
+#: modules/registration/templates/index.phtml:10
+#: modules/registration/templates/index.phtml:151
+#: modules/registration/templates/registration_closed.phtml:4
+#: modules/registration/templates/registration_closed.phtml:5
+#: modules/registration/templates/registration_result.phtml:4
+#: modules/registration/templates/registration_result.phtml:5
+msgid "Registration"
+msgstr "Inregistrare"
+
+#: modules/registration/src/Application/Controllers/RegistrationController.php:104
+msgid "You must accept the consent to continue"
+msgstr ""
+
+#: modules/registration/src/Application/UseCases/RegisterUserUseCase.php:62
+msgid "Registration on the website"
+msgstr "Inregistrare pe site"
+
+#: modules/registration/templates/email_confirmed.phtml:11
+#: modules/registration/templates/email_confirmed.phtml:12
+msgid "Email confirmation"
+msgstr "Confirma Email"
+
+#: modules/registration/templates/email_confirmed.phtml:17
+msgid "User is not found"
+msgstr "Utilizatorul nu a fost gasit"
+
+#: modules/registration/templates/email_confirmed.phtml:19
+msgid "Thanks! Your e-mail has been successfully confirmed."
+msgstr "Multumesc! Adresa dvs. de e-mail a fost confirmata cu succes."
+
+#: modules/registration/templates/email_confirmed.phtml:26
+msgid "Error when confirming e-mail. Invalid confirmation code."
+msgstr "Eroare la confirmarea e-mailului. Cod de confirmare invalid."
+
+#: modules/registration/templates/index.phtml:13
+msgid "You can get authorized on the site after confirmation of your registration."
+msgstr "Te poti loga pe site dupa ce iti confirmi inregistrarea"
+
+#: modules/registration/templates/index.phtml:21
+msgid "Please, do not register names like 111, shhhh, uuuu, etc. They will be deleted. <br /> Also all the profiles registered via proxy servers will be deleted"
+msgstr "Nu folosi nume precum 111, shhhh, uuuu etc. Contul va fi sters. <br/>De asemenea,orice cont inregistrat cu servere proxy vor fi sterse."
+
+#: modules/registration/templates/index.phtml:25
+msgid "Choose Nickname"
+msgstr "Alege un nume de utilizator"
+
+#: modules/registration/templates/index.phtml:34
+msgid "Username"
+msgstr "Nume"
+
+#: modules/registration/templates/index.phtml:40
+msgid "Min. 2, Max. 20 characters.<br />Allowed letters of the russian and latin alphabets, numbers and symbols - = @ ! ? ~ _ ( ) [ ] . * (Except zero)"
+msgstr "Min. 2, Max. 20 de caractere.<br>Sunt premise doar litere din alfabetul roman, numere si simbolurile - = @ ! ? ~ _ ( ) [ ] . * (Fara 0 (zero) )"
+
+#: modules/registration/templates/index.phtml:44
+#: modules/registration/templates/index.phtml:53
+msgid "Assign a password"
+msgstr "Alege o parola"
+
+#: modules/registration/templates/index.phtml:61
+#: modules/registration/templates/index.phtml:68
+msgid "E-mail"
+msgstr ""
+
+#: modules/registration/templates/index.phtml:76
+msgid "Select Gender"
+msgstr "Alege SEX"
+
+#: modules/registration/templates/index.phtml:79
+msgid "Man"
+msgstr "Barbat"
+
+#: modules/registration/templates/index.phtml:80
+msgid "Woman"
+msgstr "Femeie"
+
+#: modules/registration/templates/index.phtml:87
+#: modules/registration/templates/index.phtml:94
+msgid "Your name"
+msgstr "Numele tau"
+
+#: modules/registration/templates/index.phtml:101
+msgid "Tell us a little about yourself"
+msgstr "Spune ceva despre tine"
+
+#: modules/registration/templates/index.phtml:108
+#: modules/registration/templates/index.phtml:118
+msgid "Verification code"
+msgstr "Codul de verificare"
+
+#: modules/registration/templates/index.phtml:110
+msgid "Enter verification code"
+msgstr "Introduceți codul de verificare"
+
+#: modules/registration/templates/index.phtml:124
+msgid "If you cannot see the image code, enable graphics in your browser and refresh this page"
+msgstr "Daca nu poti vedea codul din imagine, activeaza grafica in browser si reincarca pagina"
+
+#: modules/registration/templates/registration_closed.phtml:12
+msgid "Registration is temporarily closed"
+msgstr "Inregistrarile sunt inchise"
+
+#: modules/registration/templates/registration_result.phtml:9
+msgid "Your registration data"
+msgstr "Datele tale de inregistrare"
+
+#: modules/registration/templates/registration_result.phtml:11
+msgid "Congratulations! You have successfully registered on the site."
+msgstr "Felicitari, v-ati inregistrat cu succes in"
+
+#: modules/registration/templates/registration_result.phtml:14
+msgid "Your ID"
+msgstr "ID-ul tau"
+
+#: modules/registration/templates/registration_result.phtml:15
+msgid "Your Username"
+msgstr "Numele de utilizator"
+
+#: modules/registration/templates/registration_result.phtml:16
+msgid "Your Password"
+msgstr "Parola"
+
+#: modules/registration/templates/registration_result.phtml:19
+msgid "Now you just need to confirm your email address.<br> Please check your email and follow the instructions in it."
+msgstr "Acum trebuie doar sa confirmati adresa dvs. de e-mail.<br> Va rugam sa va verificati e-mailul si sa urmati instructiunile din acesta."
+
+#: modules/registration/templates/registration_result.phtml:21
+msgid "Please, wait until a moderator approves your registration"
+msgstr "Te rugam sa astept pana cand un moderator va valida contul"
+
+#: modules/registration/templates/registration_result.phtml:23
+msgid "Enter"
+msgstr "Intra"
+
+msgid "Login"
+msgstr "Logare"
+
+msgid "You have not entered login"
+msgstr "Nu ați introdus autentificarea"
+
+msgid "You have not entered password"
+msgstr "Nu ai introdus nici o parola"
+
+msgid "Logout"
+msgstr "Deconectare"
+
+msgid "Authorization failed"
+msgstr "Autorizarea a eșuat"
+
+msgid "The security code is not correct"
+msgstr "Codul de securitate este incorect"
+
+msgid "Continue"
+msgstr "Continua"
+
+msgid "You didn't confirm your email address. Please check your email and follow the instructions in it."
+msgstr "Acum trebuie doar sa confirmati adresa dvs. de e-mail. Va rugam sa va verificati e-mailul si sa urmati instructiunile din acesta."
+
+msgid "Sorry, but your request for registration is not considered yet. Please, be patient."
+msgstr "Ne pare rău, dar solicitarea dvs. de înregistrare nu este încă luată în considerare. Vă rugăm să aveți răbdare."
+
+msgid "Authorization"
+msgstr "Autorizare"
+
+msgid "Password"
+msgstr "Parola"
+
+msgid "Forgot password?"
+msgstr "Ai uitat parola?"
+
+msgid "Are you sure you want to leave the site?"
+msgstr "Ești sigur că vrei să părăsești site-ul?"
+
+msgid "Cancel"
+msgstr "Anuleaza"
+
+msgid "Back"
+msgstr "Inapoi"
+
+msgid "Restore password"
+msgstr "Restaurează parola"
+
+msgid "Incorrect code"
+msgstr "Codul este incorect"
+
+msgid "Check your e-mail for further information"
+msgstr "Verifica e-mail pentru mai multe informatii"
+
+msgid "Password successfully changed.<br>New password sent to your E-mail address."
+msgstr "Parola a fost schimbata.<br>Noua parola va fi trimisa pe adresa ta de E-mail."
+
+msgid "Your new password"
+msgstr "Parola ta noua"
+
+msgid "User does not exists"
+msgstr "Utilizatorul nu exista"
+
+msgid "Time allotted for the password recovery has been exceeded"
+msgstr "Timpul alocat pentru recuperarea parolei a fost depasit"
+
+msgid "The required fields are not filled"
+msgstr "Campurile necesare nu au fost completate"
+
+msgid "Invalid Email address"
+msgstr "Adresa de e-mail invalida"
+
+msgid "Password can be recovered 1 time per day"
+msgstr "Parola poate fi recuperate doar o data pe zi"
+
+msgid "Password recovery"
+msgstr "Recuperare parola"
+
+msgid "Your E-mail"
+msgstr "Adresa ta de E-mail"
+
+msgid "Password will be send to E-mail address specified in your profile.<br />WARNING !! If E-mail address has not been specified in your profile, you will not be able to recover your password."
+msgstr "Parola va fi trimisa la adresa de e-mail specificata in profilul tau.<br />ATENTIE !! Daca adresa de e-mail nu a fost specificata in profil, nu iti poti recupera parola."

@@ -48,8 +48,8 @@ The other direction is allowed and normal: a module depends on the core.
 
 **Between modules the rule is softer, but the cost is the same.** A module that autowires a
 service of another module cannot be switched on without it. Today `admin` is built against
-`forum`, `consent`, `guestbook` and `registration` — those four cannot be switched off — and
-`profile`, `online` and `notifications` reach into other modules as well. New code should not add
+`forum` — which therefore cannot be switched off — and `profile`, `online` and `notifications`
+reach into other modules as well. New code should not add
 to that list; where a module legitimately extends another, the way in is a tagged extension point,
 not a constructor argument.
 

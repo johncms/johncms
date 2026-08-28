@@ -7,7 +7,6 @@
         <name>system</name>
         <target>system/locale</target>
         <sourceDir>modules/johncms/language</sourceDir>
-        <sourceDir>modules/johncms/login</sourceDir>
         <sourceDir>modules/johncms/notifications</sourceDir>
         <sourceDir>modules/johncms/redirect</sourceDir>
         <sourceDir>system/src</sourceDir>
@@ -30,6 +29,13 @@
         <name>album</name>
         <target>modules/johncms/album/locale</target>
         <sourceDir>modules/johncms/album</sourceDir>
+    </domain>
+
+    <!-- Authentication module -->
+    <domain>
+        <name>auth</name>
+        <target>modules/johncms/auth/locale</target>
+        <sourceDir>modules/johncms/auth</sourceDir>
     </domain>
 
     <!-- Collections module -->
@@ -130,12 +136,6 @@
     </domain>
 
     <!-- Registration module -->
-    <domain>
-        <name>registration</name>
-        <target>modules/johncms/registration/locale</target>
-        <sourceDir>modules/johncms/registration</sourceDir>
-    </domain>
-
     <!-- Notifications module -->
     <domain>
         <name>notifications</name>

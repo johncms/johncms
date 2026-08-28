@@ -13,6 +13,7 @@ use Johncms\Auth\External\ExternalIdentityDTO;
 use Johncms\Auth\External\ExternalIdentityProviderRegistry;
 use Johncms\Auth\External\OAuthStateStorage;
 use Johncms\Auth\External\RegisterViaExternalProviderUseCase;
+use Johncms\Auth\RegistrationSettings;
 use Johncms\Auth\Session\SignInManager;
 use Johncms\Http\Environment;
 use Johncms\Http\Request;
@@ -57,6 +58,7 @@ final readonly class ExternalAuthController
         private Environment $environment,
         private ValidatorInterface $validator,
         private SiteBaseUrl $siteUrl,
+        private RegistrationSettings $registrationSettings,
     ) {
     }
 
@@ -170,7 +172,7 @@ final readonly class ExternalAuthController
             $fields['name'],
             $fields['email'],
             $this->environment->getClientInfo(),
-            (bool) config('johncms.registration_moderation', false)
+            $this->registrationSettings->moderationEnabled()
         );
 
         $this->session->remove(self::PENDING_KEY);

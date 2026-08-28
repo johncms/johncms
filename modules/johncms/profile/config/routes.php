@@ -7,7 +7,6 @@ use Johncms\Modules\Profile\Application\Controllers\ActivityController;
 use Johncms\Modules\Profile\Application\Controllers\AvatarController;
 use Johncms\Modules\Profile\Application\Controllers\BanController;
 use Johncms\Modules\Profile\Application\Controllers\ChangePasswordController;
-use Johncms\Modules\Profile\Application\Controllers\ConfirmNewEmailController;
 use Johncms\Modules\Profile\Application\Controllers\EditProfileController;
 use Johncms\Modules\Profile\Application\Controllers\GuestbookController;
 use Johncms\Modules\Profile\Application\Controllers\IpHistoryController;
@@ -15,7 +14,6 @@ use Johncms\Modules\Profile\Application\Controllers\KarmaController;
 use Johncms\Modules\Profile\Application\Controllers\PhotoController;
 use Johncms\Modules\Profile\Application\Controllers\ProfileController;
 use Johncms\Modules\Profile\Application\Controllers\ResetSettingsController;
-use Johncms\Modules\Profile\Application\Controllers\RestorePasswordController;
 use Johncms\Modules\Profile\Application\Controllers\LinkedAccountsController;
 use Johncms\Modules\Profile\Application\Controllers\SessionsController;
 use Johncms\Modules\Profile\Application\Controllers\SettingsController;
@@ -78,11 +76,4 @@ return static function (RouteCollection $router): void {
         $r->get('/profile/{id:number}', ProfileController::class)->name('profile.view');
     });
     $profileGroup->addMiddleware(AuthorizedUserMiddleware::class);
-
-    // Public routes (no authentication required, access is granted by the code from the email link)
-    $router->get('/profile/confirm-email/{id:number}/{code}', ConfirmNewEmailController::class)->name('profile.confirm-email');
-    $router->get('/profile/password-recovery', [RestorePasswordController::class, 'form'])->name('profile.password-recovery');
-    $router->post('/profile/password-recovery', [RestorePasswordController::class, 'send'])->name('profile.password-recovery.send');
-    $router->get('/profile/password-recovery/set/{id:number}/{code}', [RestorePasswordController::class, 'setForm'])->name('profile.password-recovery.set');
-    $router->post('/profile/password-recovery/set/{id:number}/{code}', [RestorePasswordController::class, 'set'])->name('profile.password-recovery.set.submit');
 };

@@ -25,7 +25,6 @@ return [
     'requires' => [
         'modules' => [
             'johncms/forum' => '^10.0',
-            'johncms/registration' => '^10.0',
         ],
     ],
 ];

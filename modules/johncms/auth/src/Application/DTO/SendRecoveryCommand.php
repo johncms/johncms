@@ -1,0 +1,14 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Johncms\Modules\Auth\Application\DTO;
+
+final readonly class SendRecoveryCommand
+{
+    public function __construct(
+        public string $nick,
+        public string $email,
+    ) {
+    }
+}

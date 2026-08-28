@@ -1,0 +1,243 @@
+msgid ""
+msgstr ""
+"X-Domain: auth\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Project-ID: 383801\n"
+"X-Crowdin-Language: ky\n"
+"X-Crowdin-File: /[johncms.johncms] 9.x/modules/registration/locale/registration.pot\n"
+"X-Crowdin-File-ID: 500\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Kyrgyz\n"
+"Language: ky_KG\n"
+"PO-Revision-Date: 2026-07-12 12:41\n"
+
+#: modules/registration/src/Application/Controllers/RegistrationController.php:46
+#: modules/registration/templates/index.phtml:4
+#: modules/registration/templates/index.phtml:5
+#: modules/registration/templates/index.phtml:10
+#: modules/registration/templates/index.phtml:151
+#: modules/registration/templates/registration_closed.phtml:4
+#: modules/registration/templates/registration_closed.phtml:5
+#: modules/registration/templates/registration_result.phtml:4
+#: modules/registration/templates/registration_result.phtml:5
+msgid "Registration"
+msgstr "Катталуу"
+
+#: modules/registration/src/Application/Controllers/RegistrationController.php:104
+#, fuzzy
+msgid "You must accept the consent to continue"
+msgstr "Улантуу үчүн макулдукту кабыл алышыңыз керек"
+
+#: modules/registration/src/Application/UseCases/RegisterUserUseCase.php:62
+msgid "Registration on the website"
+msgstr "Сайтка катталуу"
+
+#: modules/registration/templates/email_confirmed.phtml:11
+#: modules/registration/templates/email_confirmed.phtml:12
+msgid "Email confirmation"
+msgstr "Электрондук почта тастыктоосу"
+
+#: modules/registration/templates/email_confirmed.phtml:17
+msgid "User is not found"
+msgstr "Колдонуучу табылган жок"
+
+#: modules/registration/templates/email_confirmed.phtml:19
+msgid "Thanks! Your e-mail has been successfully confirmed."
+msgstr "Рахмат! Сиздин электрондук почта дарегиңиз ийгиликтүү тастыкталды."
+
+#: modules/registration/templates/email_confirmed.phtml:26
+msgid "Error when confirming e-mail. Invalid confirmation code."
+msgstr "Электрондук почта билдирүүсүн ырастоо катасы. Ырастоо коду жараксыз."
+
+#: modules/registration/templates/index.phtml:13
+msgid "You can get authorized on the site after confirmation of your registration."
+msgstr "Сиз каттоону ырастагандан кийин, сайттын бөлүмдөрүнө кире аласыз."
+
+#: modules/registration/templates/index.phtml:21
+msgid "Please, do not register names like 111, shhhh, uuuu, etc. They will be deleted. <br /> Also all the profiles registered via proxy servers will be deleted"
+msgstr "Сураныч, 111, yyyy, uuuu сыяктуу ылакап аттарды каттоодон өткөрбөңүз, алар дароо жок кылынат.<br>Прокси серверлеринде катталган баардык профилдер дагы жок кылынат."
+
+#: modules/registration/templates/index.phtml:25
+msgid "Choose Nickname"
+msgstr "Ысым тандаңыз"
+
+#: modules/registration/templates/index.phtml:34
+msgid "Username"
+msgstr "Сиздин ысымыңыз"
+
+#: modules/registration/templates/index.phtml:40
+msgid "Min. 2, Max. 20 characters.<br />Allowed letters of the russian and latin alphabets, numbers and symbols - = @ ! ? ~ _ ( ) [ ] . * (Except zero)"
+msgstr "Эң аз - 2, эң көп - 20 символ<br />уруксат берилген, Орус жана Латын алфавиттердин тамгалары, сандар жана символдор - = @ ! ? ~ _ ( ) [ ] . * (нөлдөн тышкары)"
+
+#: modules/registration/templates/index.phtml:44
+#: modules/registration/templates/index.phtml:53
+msgid "Assign a password"
+msgstr "Сыр сөз жазыңыз"
+
+#: modules/registration/templates/index.phtml:61
+#: modules/registration/templates/index.phtml:68
+msgid "E-mail"
+msgstr "Электрондук почта"
+
+#: modules/registration/templates/index.phtml:76
+msgid "Select Gender"
+msgstr "Жынысыңызды белгилеңиз"
+
+#: modules/registration/templates/index.phtml:79
+msgid "Man"
+msgstr "Эркек"
+
+#: modules/registration/templates/index.phtml:80
+msgid "Woman"
+msgstr "Аял"
+
+#: modules/registration/templates/index.phtml:87
+#: modules/registration/templates/index.phtml:94
+msgid "Your name"
+msgstr "Сиздин аты-жөнүңүз"
+
+#: modules/registration/templates/index.phtml:101
+msgid "Tell us a little about yourself"
+msgstr "Бир аз өзүңүз жөнүндө жаза кетиңиз"
+
+#: modules/registration/templates/index.phtml:108
+#: modules/registration/templates/index.phtml:118
+msgid "Verification code"
+msgstr "Коопсуздук коду"
+
+#: modules/registration/templates/index.phtml:110
+msgid "Enter verification code"
+msgstr "Коопсуздук кодун териңиз"
+
+#: modules/registration/templates/index.phtml:124
+msgid "If you cannot see the image code, enable graphics in your browser and refresh this page"
+msgstr "Эгер сиз код менен сүрөттү көрбөсөңүз, анда браузериңиздеги жөндөөлөрдөн графикалык колдоо көрсөтүп, баракчаны жаңылаңыз"
+
+#: modules/registration/templates/registration_closed.phtml:12
+msgid "Registration is temporarily closed"
+msgstr "Каттоо убактылуу жабык"
+
+#: modules/registration/templates/registration_result.phtml:9
+msgid "Your registration data"
+msgstr "Сиздин каттоо маалыматыңыз"
+
+#: modules/registration/templates/registration_result.phtml:11
+msgid "Congratulations! You have successfully registered on the site."
+msgstr "Куттуктайбыз! Сиз сайтта ийгиликтүү катталдыңыз."
+
+#: modules/registration/templates/registration_result.phtml:14
+msgid "Your ID"
+msgstr "Сиздин ID"
+
+#: modules/registration/templates/registration_result.phtml:15
+msgid "Your Username"
+msgstr "Сиздин ысымыңыз"
+
+#: modules/registration/templates/registration_result.phtml:16
+msgid "Your Password"
+msgstr "Сиздин сыр сөзүңүз"
+
+#: modules/registration/templates/registration_result.phtml:19
+msgid "Now you just need to confirm your email address.<br> Please check your email and follow the instructions in it."
+msgstr "Эми сиз электрондук почта дарегиңизди ырасташыңыз керек. <br>Сураныч, электрондук почтаңызды текшерип, алынган каттагы көрсөтмөлөрдү аткарыңыз."
+
+#: modules/registration/templates/registration_result.phtml:21
+msgid "Please, wait until a moderator approves your registration"
+msgstr "Сураныч, модератор сиздин каттоону ырастаганга чейин күтө туруңуз"
+
+#: modules/registration/templates/registration_result.phtml:23
+msgid "Enter"
+msgstr "Кириңиз"
+
+msgid "Login"
+msgstr "Кирүү"
+
+msgid "You have not entered login"
+msgstr "Сиз ысымды жазган жоксуз"
+
+msgid "You have not entered password"
+msgstr "Сиз сыр сөздү жазган жоксуз"
+
+msgid "Personal"
+msgstr "Жеке"
+
+msgid "Logout"
+msgstr "Чыгуу"
+
+msgid "Authorization failed"
+msgstr "Кирүүдө катачылык"
+
+msgid "The security code is not correct"
+msgstr "Коопсуздук коду туура эмес"
+
+msgid "Continue"
+msgstr "Улантуу"
+
+msgid "You didn't confirm your email address. Please check your email and follow the instructions in it."
+msgstr "Эми сиз электрондук почта дарегиңизди ырасташыңыз керек. Сураныч, электрондук почтаңызды текшерип, алынган каттагы көрсөтмөлөрдү аткарыңыз.\n"
+"Вы не подтвердили ваш адрес электронной почты."
+
+msgid "Sorry, but your request for registration is not considered yet. Please, be patient."
+msgstr "Кечиресиз, сиздин каттоодон өткөнүңүз дагы да каралбай жатканы үчүн. Кичипейилдикке, күтө туруңуз."
+
+msgid "Authorization"
+msgstr "Сайтка кирүү"
+
+msgid "Password"
+msgstr "Сыр сөзүңүз"
+
+msgid "Forgot password?"
+msgstr "Сыр сөзүңүздү унуттуңузбу?"
+
+msgid "Are you sure you want to leave the site?"
+msgstr "Сиз чындап эле сайттан чыгасызбы?"
+
+msgid "Cancel"
+msgstr "Токтотуу"
+
+msgid "Back"
+msgstr "Артка"
+
+msgid "Restore password"
+msgstr "Сырсөздү калыбына келтирүү"
+
+msgid "Incorrect code"
+msgstr "Коопсуздук коду туура эмес терилген"
+
+msgid "Check your e-mail for further information"
+msgstr "Сырсөздү калыбына келтирүү боюнча көрсөтмөлөр сиздин электрондук почтанын дарегине жөнөтүлдү"
+
+msgid "Password successfully changed.<br>New password sent to your E-mail address."
+msgstr "Сырсөз ийгиликтүү өзгөртүлдү. <br> Электрондук почта дарегиңизге жаңы сырсөз жөнөтүлдү."
+
+msgid "Your new password"
+msgstr "Сиздин жаңы сыр сөзүңүз"
+
+msgid "User does not exists"
+msgstr "Мындай колдонуучу жок"
+
+msgid "Time allotted for the password recovery has been exceeded"
+msgstr "Сырсөздү калыбына келтирүү убакыты өттү"
+
+msgid "The required fields are not filled"
+msgstr "Милдеттүү талаалар толтурулган эмес"
+
+msgid "Invalid Email address"
+msgstr "Электрондук почта дареги жараксыз"
+
+msgid "Password can be recovered 1 time per day"
+msgstr "Сырсөздү күнүнө 1 жолудан көп эмес калыбына келтирүүгө болот"
+
+msgid "Password recovery"
+msgstr "Сыр сөздү калыбына келтирүү"
+
+msgid "Your E-mail"
+msgstr "Сиздин электрондук почтанын дареги"
+
+msgid "Password will be send to E-mail address specified in your profile.<br />WARNING !! If E-mail address has not been specified in your profile, you will not be able to recover your password."
+msgstr "Сырсөз профилиңизде көрсөтүлгөн электрондук почта дарегине жөнөтүлөт. <br> КӨҢҮЛ БУРГУЛА! Эгер электрондук почта дареги анкетада көрсөтүлбөсө, анда сырсөздү калыбына келтире албайсыз"
+
+msgid "A new password will be generated and sent to the E-mail address specified in your profile."
+msgstr "Жаңы сыр сөз түзүлүп, профилиңизде көрсөтүлгөн E-mail дарегине жөнөтүлөт."

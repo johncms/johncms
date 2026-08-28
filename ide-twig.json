@@ -17,6 +17,10 @@
             "path": "modules/johncms/album/templates"
         },
         {
+            "namespace": "auth",
+            "path": "modules/johncms/auth/templates"
+        },
+        {
             "namespace": "collections",
             "path": "modules/johncms/collections/templates"
         },
@@ -61,10 +65,6 @@
             "path": "modules/johncms/library/templates"
         },
         {
-            "namespace": "login",
-            "path": "modules/johncms/login/templates"
-        },
-        {
             "namespace": "mail",
             "path": "modules/johncms/mail/templates"
         },
@@ -87,10 +87,6 @@
         {
             "namespace": "redirect",
             "path": "modules/johncms/redirect/templates"
-        },
-        {
-            "namespace": "registration",
-            "path": "modules/johncms/registration/templates"
         },
         {
             "namespace": "install",

@@ -74,7 +74,7 @@ Rules:
 ## Domains
 
 * Each module has its own domain named after the module — the name alone, without the vendor (`forum`, `mail`, …) — with files in `modules/<vendor>/<module>/locale/`.
-* The `system` domain (`system/locale/`) covers `system/src`, shared templates, and a few small modules (login, language, notifications, redirect) — see `translate.xml.dist`.
+* The `system` domain (`system/locale/`) covers `system/src`, shared templates, and a few small modules (language, notifications, redirect) — see `translate.xml.dist`.
 * A new module needs **two** registrations, otherwise its strings silently stay untranslated:
   1. a `<domain>` entry in `translate.xml.dist` (`name`, `target` locale dir, `sourceDir`) — without it `translate-scan` produces no `.pot`;
   2. a `files` entry in `crowdin.yml` (`source: <domain>.pot`, `translation: %two_letters_code%.po`) — without it the domain never reaches Crowdin.

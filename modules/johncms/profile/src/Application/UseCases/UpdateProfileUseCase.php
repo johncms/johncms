@@ -101,7 +101,7 @@ final readonly class UpdateProfileUseCase
 
     private function sendEmailChangeMessages(User $profileUser, string $newEmail, string $confirmationCode, string $homeUrl): void
     {
-        $link = $homeUrl . '/profile/confirm-email/' . $profileUser->id . '/' . $confirmationCode;
+        $link = $homeUrl . '/confirm-email/' . $profileUser->id . '/' . $confirmationCode;
 
         $this->mailQueue->push(
             new QueuedEmailDTO(

@@ -81,6 +81,7 @@
         ],
         "psr-4": {
             "Johncms\\": "system/src/",
+            "Johncms\\Modules\\Auth\\": "modules/johncms/auth/src/",
             "Johncms\\Modules\\Album\\": "modules/johncms/album/src/",
             "Johncms\\Modules\\Collections\\": "modules/johncms/collections/src/",
             "Johncms\\Modules\\Guestbook\\": "modules/johncms/guestbook/src/",
@@ -99,9 +100,7 @@
             "Johncms\\Modules\\Profile\\": "modules/johncms/profile/src/",
             "Johncms\\Modules\\Notifications\\": "modules/johncms/notifications/src/",
             "Johncms\\Modules\\Language\\": "modules/johncms/language/src/",
-            "Johncms\\Modules\\Login\\": "modules/johncms/login/src/",
-            "Johncms\\Modules\\Redirect\\": "modules/johncms/redirect/src/",
-            "Johncms\\Modules\\Registration\\": "modules/johncms/registration/src/"
+            "Johncms\\Modules\\Redirect\\": "modules/johncms/redirect/src/"
         }
     },
     "autoload-dev": {

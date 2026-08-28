@@ -1,0 +1,232 @@
+msgid ""
+msgstr ""
+"X-Domain: auth\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"X-Crowdin-Project: johncms\n"
+"X-Crowdin-Project-ID: 383801\n"
+"X-Crowdin-Language: pl\n"
+"X-Crowdin-File: /[johncms.johncms] 9.x/modules/registration/locale/registration.pot\n"
+"X-Crowdin-File-ID: 500\n"
+"Project-Id-Version: johncms\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Polish\n"
+"Language: pl_PL\n"
+"PO-Revision-Date: 2026-07-12 12:41\n"
+
+#: modules/registration/src/Application/Controllers/RegistrationController.php:46
+#: modules/registration/templates/index.phtml:4
+#: modules/registration/templates/index.phtml:5
+#: modules/registration/templates/index.phtml:10
+#: modules/registration/templates/index.phtml:151
+#: modules/registration/templates/registration_closed.phtml:4
+#: modules/registration/templates/registration_closed.phtml:5
+#: modules/registration/templates/registration_result.phtml:4
+#: modules/registration/templates/registration_result.phtml:5
+msgid "Registration"
+msgstr "Rejestracja"
+
+#: modules/registration/src/Application/Controllers/RegistrationController.php:104
+msgid "You must accept the consent to continue"
+msgstr ""
+
+#: modules/registration/src/Application/UseCases/RegisterUserUseCase.php:62
+msgid "Registration on the website"
+msgstr ""
+
+#: modules/registration/templates/email_confirmed.phtml:11
+#: modules/registration/templates/email_confirmed.phtml:12
+msgid "Email confirmation"
+msgstr ""
+
+#: modules/registration/templates/email_confirmed.phtml:17
+msgid "User is not found"
+msgstr ""
+
+#: modules/registration/templates/email_confirmed.phtml:19
+msgid "Thanks! Your e-mail has been successfully confirmed."
+msgstr ""
+
+#: modules/registration/templates/email_confirmed.phtml:26
+msgid "Error when confirming e-mail. Invalid confirmation code."
+msgstr ""
+
+#: modules/registration/templates/index.phtml:13
+msgid "You can get authorized on the site after confirmation of your registration."
+msgstr "Możesz dostać się do witryny tylko po potwierdzeniu rejestracji."
+
+#: modules/registration/templates/index.phtml:21
+msgid "Please, do not register names like 111, shhhh, uuuu, etc. They will be deleted. <br /> Also all the profiles registered via proxy servers will be deleted"
+msgstr "Proszę nie rejestrować nazw typu 12345, 2222, gkkkk, sssss, nr. telefonu, etc. Będą usuwane. <br> Również wszystkie profile rejestrowane przez serwery proxy lub Tora zostaną usunięte!"
+
+#: modules/registration/templates/index.phtml:25
+msgid "Choose Nickname"
+msgstr "Zmiana Nicku"
+
+#: modules/registration/templates/index.phtml:34
+msgid "Username"
+msgstr "Nazwa użytkownika"
+
+#: modules/registration/templates/index.phtml:40
+msgid "Min. 2, Max. 20 characters.<br />Allowed letters of the russian and latin alphabets, numbers and symbols - = @ ! ? ~ _ ( ) [ ] . * (Except zero)"
+msgstr "Min. 2, Max. 15 znaków.<br>Dozwolona jest cyrylica, alfabet łaciński, cyfry i symbole - = @ ! ? ~ _ ( ) [ ] . * (bez zera)"
+
+#: modules/registration/templates/index.phtml:44
+#: modules/registration/templates/index.phtml:53
+msgid "Assign a password"
+msgstr "Przypisz hasło"
+
+#: modules/registration/templates/index.phtml:61
+#: modules/registration/templates/index.phtml:68
+msgid "E-mail"
+msgstr ""
+
+#: modules/registration/templates/index.phtml:76
+msgid "Select Gender"
+msgstr "Wybierz płeć"
+
+#: modules/registration/templates/index.phtml:79
+msgid "Man"
+msgstr "Mężczyzna"
+
+#: modules/registration/templates/index.phtml:80
+msgid "Woman"
+msgstr "Kobieta"
+
+#: modules/registration/templates/index.phtml:87
+#: modules/registration/templates/index.phtml:94
+msgid "Your name"
+msgstr "Twój nick"
+
+#: modules/registration/templates/index.phtml:101
+msgid "Tell us a little about yourself"
+msgstr "Opowiedz nam trochę o sobie"
+
+#: modules/registration/templates/index.phtml:108
+#: modules/registration/templates/index.phtml:118
+msgid "Verification code"
+msgstr "Kod weryfikacyjny"
+
+#: modules/registration/templates/index.phtml:110
+msgid "Enter verification code"
+msgstr "Wprowadź kod weryfikacyjny"
+
+#: modules/registration/templates/index.phtml:124
+msgid "If you cannot see the image code, enable graphics in your browser and refresh this page"
+msgstr "Jeżeli nie widzisz nic na obrazku, włącz grafikę w przeglądarce i odśwież stronę"
+
+#: modules/registration/templates/registration_closed.phtml:12
+msgid "Registration is temporarily closed"
+msgstr "Rejestracja tymczasowo zamknięta"
+
+#: modules/registration/templates/registration_result.phtml:9
+msgid "Your registration data"
+msgstr ""
+
+#: modules/registration/templates/registration_result.phtml:11
+msgid "Congratulations! You have successfully registered on the site."
+msgstr ""
+
+#: modules/registration/templates/registration_result.phtml:14
+msgid "Your ID"
+msgstr "Twoje ID"
+
+#: modules/registration/templates/registration_result.phtml:15
+msgid "Your Username"
+msgstr "Twoja nazwa użytkownika"
+
+#: modules/registration/templates/registration_result.phtml:16
+msgid "Your Password"
+msgstr "Twoje hasło"
+
+#: modules/registration/templates/registration_result.phtml:19
+msgid "Now you just need to confirm your email address.<br> Please check your email and follow the instructions in it."
+msgstr ""
+
+#: modules/registration/templates/registration_result.phtml:21
+msgid "Please, wait until a moderator approves your registration"
+msgstr "Proszę poczekaj, aż moderator zatwierdzi rejestrację"
+
+#: modules/registration/templates/registration_result.phtml:23
+msgid "Enter"
+msgstr "Wejdź"
+
+msgid "You have not entered login"
+msgstr "Nie podałeś loginu"
+
+msgid "You have not entered password"
+msgstr "Nie wpisałeś hasła"
+
+msgid "Personal"
+msgstr "Panel"
+
+msgid "Logout"
+msgstr "Wyloguj"
+
+msgid "Authorization failed"
+msgstr "Autoryzacja nie powiodła się"
+
+msgid "The security code is not correct"
+msgstr "Kod zabezpieczający nie jest poprawny"
+
+msgid "Continue"
+msgstr "Kontynuuj"
+
+msgid "Sorry, but your request for registration is not considered yet. Please, be patient."
+msgstr "Przepraszamy, ale Twoja prośba o rejestrację jest jeszcze rozpatrywana. Prosimy o cierpliwość."
+
+msgid "Authorization"
+msgstr "Autoryzacja"
+
+msgid "Password"
+msgstr "Hasło"
+
+msgid "Forgot password?"
+msgstr "Zapomniałeś hasła?"
+
+msgid "Are you sure you want to leave the site?"
+msgstr "Na pewno chcesz opuścić tę witrynę?"
+
+msgid "Cancel"
+msgstr "Anuluj"
+
+msgid "Back"
+msgstr "Powrót"
+
+msgid "Restore password"
+msgstr "Przywróć hasło"
+
+msgid "Incorrect code"
+msgstr "Błędny kod"
+
+msgid "Check your e-mail for further information"
+msgstr "Sprawdź pocztę w celu uzyskania dalszych informacji"
+
+msgid "Password successfully changed.<br>New password sent to your E-mail address."
+msgstr "Hasło zostało zmienione pomyślnie.<br>Nowe hasło wysłano na Twój adres e-mail."
+
+msgid "Your new password"
+msgstr "Twoje nowe hasło"
+
+msgid "User does not exists"
+msgstr "Użytkownik nie istnieje"
+
+msgid "Time allotted for the password recovery has been exceeded"
+msgstr "Twój czas na odzyskanie hasła minął"
+
+msgid "The required fields are not filled"
+msgstr "Wymagane pola nie są wypełnione"
+
+msgid "Invalid Email address"
+msgstr "Nieprawidłowy adres e-mail"
+
+msgid "Password can be recovered 1 time per day"
+msgstr "Hasło można odzyskać 1 raz dziennie"
+
+msgid "Password recovery"
+msgstr "Odzyskiwanie hasła"
+
+msgid "Your E-mail"
+msgstr "Twój E-mail"
+
+msgid "Password will be send to E-mail address specified in your profile.<br />WARNING !! If E-mail address has not been specified in your profile, you will not be able to recover your password."
+msgstr "Hasło zostanie wysłane na adres e-mail podany w twoim profilu.<br>UWAGA!! Jeśli adres e-mail nie został podany w profilu, nie będziesz w stanie odzyskać hasła."
