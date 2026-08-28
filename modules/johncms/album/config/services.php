@@ -22,12 +22,12 @@ return static function (ContainerConfigurator $container): void {
 
     $services->load(
         'Johncms\\Modules\\Album\\Application\\',
-        MODULES_PATH . 'johncms/album/src/Application'
+        dirname(__DIR__) . '/src/Application'
     )
         ->exclude(
             [
-                MODULES_PATH . 'johncms/album/src/Application/DTO',
-                MODULES_PATH . 'johncms/album/src/Application/Exceptions',
+                dirname(__DIR__) . '/src/Application/DTO',
+                dirname(__DIR__) . '/src/Application/Exceptions',
             ]
         )
         ->autowire()
@@ -36,7 +36,7 @@ return static function (ContainerConfigurator $container): void {
 
     $services->load(
         'Johncms\\Modules\\Album\\Infrastructure\\',
-        MODULES_PATH . 'johncms/album/src/Infrastructure'
+        dirname(__DIR__) . '/src/Infrastructure'
     )
         ->autowire()
         ->autoconfigure();

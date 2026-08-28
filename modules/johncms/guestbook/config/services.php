@@ -13,12 +13,12 @@ return static function (ContainerConfigurator $container): void {
 
     $services->load(
         'Johncms\\Modules\\Guestbook\\Application\\',
-        MODULES_PATH . 'johncms/guestbook/src/Application'
+        dirname(__DIR__) . '/src/Application'
     )
         ->exclude(
             [
-                MODULES_PATH . 'johncms/guestbook/src/Application/DTO',
-                MODULES_PATH . 'johncms/guestbook/src/Application/Exceptions',
+                dirname(__DIR__) . '/src/Application/DTO',
+                dirname(__DIR__) . '/src/Application/Exceptions',
             ]
         )
         ->autowire()
@@ -27,7 +27,7 @@ return static function (ContainerConfigurator $container): void {
 
     $services->load(
         'Johncms\\Modules\\Guestbook\\Infrastructure\\',
-        MODULES_PATH . 'johncms/guestbook/src/Infrastructure'
+        dirname(__DIR__) . '/src/Infrastructure'
     )
         ->autowire()
         ->autoconfigure();

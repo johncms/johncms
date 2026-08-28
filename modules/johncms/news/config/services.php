@@ -12,7 +12,7 @@ return static function (ContainerConfigurator $container): void {
 
     $services->load(
         'Johncms\\Modules\\News\\Application\\',
-        MODULES_PATH . 'johncms/news/src/Application'
+        dirname(__DIR__) . '/src/Application'
     )
         ->autowire()
         ->autoconfigure()

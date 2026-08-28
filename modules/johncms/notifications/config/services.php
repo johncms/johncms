@@ -12,11 +12,11 @@ return static function (ContainerConfigurator $container): void {
 
     $services->load(
         'Johncms\\Modules\\Notifications\\Application\\',
-        MODULES_PATH . 'johncms/notifications/src/Application'
+        dirname(__DIR__) . '/src/Application'
     )
         ->exclude(
             [
-                MODULES_PATH . 'johncms/notifications/src/Application/DTO',
+                dirname(__DIR__) . '/src/Application/DTO',
             ]
         )
         ->autowire()
@@ -25,7 +25,7 @@ return static function (ContainerConfigurator $container): void {
 
     $services->load(
         'Johncms\\Modules\\Notifications\\Infrastructure\\',
-        MODULES_PATH . 'johncms/notifications/src/Infrastructure'
+        dirname(__DIR__) . '/src/Infrastructure'
     )
         ->autowire()
         ->autoconfigure();

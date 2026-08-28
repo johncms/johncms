@@ -19,7 +19,7 @@ Detailed change can see in the [repository log](https://github.com/johncms/johnc
   | Было                                     | Стало                                            |
   |------------------------------------------|--------------------------------------------------|
   | `modules/blog/`                          | `modules/<вендор>/blog/`                         |
-  | `MODULES_PATH . 'blog/src/Application'`  | `MODULES_PATH . '<вендор>/blog/src/Application'` |
+  | `MODULES_PATH . 'blog/src/Application'`  | `dirname(__DIR__) . '/src/Application'`          |
   | `"Johncms\\Modules\\Blog\\": "modules/blog/src/"` | `"...": "modules/<вендор>/blog/src/"`            |
   | `@blog/public/index.twig`                | без изменений                                    |
   | `d__('blog', ...)`                       | без изменений                                    |

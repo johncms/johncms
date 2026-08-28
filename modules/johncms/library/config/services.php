@@ -22,9 +22,9 @@ return static function (ContainerConfigurator $container): void {
 
     $services->load(
         'Johncms\\Modules\\Library\\Application\\',
-        MODULES_PATH . 'johncms/library/src/Application'
+        dirname(__DIR__) . '/src/Application'
     )
-        ->exclude([MODULES_PATH . 'johncms/library/src/Application/Services'])
+        ->exclude([dirname(__DIR__) . '/src/Application/Services'])
         ->autowire()
         ->autoconfigure()
         ->public();
@@ -41,7 +41,7 @@ return static function (ContainerConfigurator $container): void {
 
     $services->load(
         'Johncms\\Modules\\Library\\Infrastructure\\',
-        MODULES_PATH . 'johncms/library/src/Infrastructure'
+        dirname(__DIR__) . '/src/Infrastructure'
     )
         ->autowire()
         ->autoconfigure();

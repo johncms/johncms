@@ -17,12 +17,12 @@ return static function (ContainerConfigurator $container): void {
 
     $services->load(
         'Johncms\\Modules\\Mail\\Application\\',
-        MODULES_PATH . 'johncms/mail/src/Application'
+        dirname(__DIR__) . '/src/Application'
     )
         ->exclude(
             [
-                MODULES_PATH . 'johncms/mail/src/Application/DTO',
-                MODULES_PATH . 'johncms/mail/src/Application/Exceptions',
+                dirname(__DIR__) . '/src/Application/DTO',
+                dirname(__DIR__) . '/src/Application/Exceptions',
             ]
         )
         ->autowire()
@@ -31,7 +31,7 @@ return static function (ContainerConfigurator $container): void {
 
     $services->load(
         'Johncms\\Modules\\Mail\\Infrastructure\\',
-        MODULES_PATH . 'johncms/mail/src/Infrastructure'
+        dirname(__DIR__) . '/src/Infrastructure'
     )
         ->autowire()
         ->autoconfigure();

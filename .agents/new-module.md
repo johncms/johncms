@@ -243,7 +243,7 @@ return static function (ContainerConfigurator $container): void {
 
     $services->load(
         'Johncms\\Modules\\<Module>\\Application\\',
-        MODULES_PATH . 'johncms/<module>/src/Application'
+        dirname(__DIR__) . '/src/Application'
     )
         // Add ->exclude([...]) for DTO and Exceptions directories only when they exist
         ->autowire()
@@ -253,6 +253,10 @@ return static function (ContainerConfigurator $container): void {
     $services->set(ContactRepositoryInterface::class, EloquentContactRepository::class)->public();
 };
 ```
+
+Paths are relative to the file (`dirname(__DIR__)` is the module directory), never
+`MODULES_PATH . '<vendor>/<module>'`: a module Composer installed stays in `vendor/`, and an
+absolute path built from the modules directory would point at nothing.
 
 ## Routes & Middleware
 

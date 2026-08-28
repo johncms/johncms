@@ -15,11 +15,11 @@ return static function (ContainerConfigurator $container): void {
 
     $services->load(
         'Johncms\\Modules\\Consent\\Application\\',
-        MODULES_PATH . 'johncms/consent/src/Application'
+        dirname(__DIR__) . '/src/Application'
     )
         ->exclude(
             [
-                MODULES_PATH . 'johncms/consent/src/Application/DTO',
+                dirname(__DIR__) . '/src/Application/DTO',
             ]
         )
         ->autowire()
@@ -28,7 +28,7 @@ return static function (ContainerConfigurator $container): void {
 
     $services->load(
         'Johncms\\Modules\\Consent\\Infrastructure\\',
-        MODULES_PATH . 'johncms/consent/src/Infrastructure'
+        dirname(__DIR__) . '/src/Infrastructure'
     )
         ->autowire()
         ->autoconfigure();
