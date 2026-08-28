@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\View\Theme;
 
+use Johncms\Modules\Manifest\ModuleManifest;
 use Johncms\View\Theme\FilesystemThemeRepository;
 use Johncms\View\Theme\ThemeChainResolver;
 use Johncms\View\Twig\TemplatePathRegistry;
@@ -49,7 +50,9 @@ final class ExampleThemeFallbackTest extends TestCase
     {
         $registry = new TemplatePathRegistry(
             themeChain: new ThemeChainResolver(new FilesystemThemeRepository()),
-            modules: ['johncms/homepage'],
+            modules: [
+                new ModuleManifest('johncms/homepage', 'homepage', MODULES_PATH . 'johncms/homepage', 'Homepage'),
+            ],
         );
 
         $loader = new FilesystemLoader();

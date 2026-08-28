@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\View\Twig;
 
+use Johncms\Modules\Manifest\ModuleManifest;
 use Johncms\Modules\ModuleRegistry;
 use Johncms\Modules\ModuleRegistryFactory;
 use Johncms\View\Theme\ThemeChainResolver;
@@ -16,10 +17,13 @@ use Johncms\View\Theme\ThemeChainResolver;
  *
  *     @theme    themes/<chain>/templates
  *     @admin    themes/<chain>/templates/admin  +  modules/johncms/admin/templates
- *     @<name>   themes/<chain>/templates/<name>  +  modules/<vendor>/<name>/templates
+ *     @<alias>  themes/<chain>/templates/<alias>  +  <directory of the module>/templates
  *
- * A module is listed by its key (`johncms/news`), but its namespace is the name alone (`news`):
- * that is what templates say, and a theme overriding them carries a directory of that name.
+ * The namespace is the alias of the module — the flat name it also uses for its gettext domain and
+ * for the source of its migrations — and the directory is the one its manifest was read from. So a
+ * module Composer put in vendor/ is reachable exactly like one lying in modules/, and a module
+ * whose alias is shorter than its directory (`vasya/old-guestbook` answering to `@guestbook`) is
+ * addressed by the short name everywhere.
  *
  * The theme chain comes first everywhere, which is what lets a theme override a template of a
  * module without touching it.
@@ -32,15 +36,13 @@ final readonly class TemplatePathRegistry
 
     /**
      * @param iterable<TemplatePathProviderInterface> $providers
-     * @param array<string>|null                      $modules Keys of the modules to register
-     *                                                             (`johncms/news`). Defaults to
-     *                                                             the ones the registry loads.
+     * @param array<ModuleManifest>|null              $modules   The modules to register. Defaults
+     *                                                           to the ones the registry loads.
      */
     public function __construct(
         private ThemeChainResolver $themeChain,
         private iterable $providers = [],
         private string $themesPath = THEMES_PATH,
-        private string $modulesPath = MODULES_PATH,
         private ?array $modules = null,
         private ?ModuleRegistry $registry = null,
     ) {
@@ -61,12 +63,12 @@ final readonly class TemplatePathRegistry
             self::ADMIN_NAMESPACE => $this->suffixed($themeDirectories, self::ADMIN_NAMESPACE),
         ];
 
-        foreach ($this->installedModules() as $module) {
-            $namespace = basename($module);
+        foreach ($this->enabledModules() as $manifest) {
+            $namespace = $manifest->alias;
             $paths[$namespace] = array_merge(
                 $paths[$namespace] ?? [],
                 $this->suffixed($themeDirectories, $namespace),
-                [$this->modulesPath . $module . DS . 'templates']
+                [$manifest->path . DS . 'templates']
             );
         }
 
@@ -80,9 +82,9 @@ final readonly class TemplatePathRegistry
     }
 
     /**
-     * @return array<string>
+     * @return array<ModuleManifest>
      */
-    private function installedModules(): array
+    private function enabledModules(): array
     {
         if ($this->modules !== null) {
             return $this->modules;
@@ -90,7 +92,7 @@ final readonly class TemplatePathRegistry
 
         // A switched-off module keeps its templates on disk, and they must stop resolving with it:
         // a namespace that still answers is a page of a module the site is not running.
-        return array_keys(($this->registry ?? ModuleRegistryFactory::registry())->enabled());
+        return ($this->registry ?? ModuleRegistryFactory::registry())->enabled();
     }
 
     /**

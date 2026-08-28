@@ -130,27 +130,29 @@ final class TemplatePathRegistryTest extends TestCase
      */
     public function testOnlyTheModulesTheRegistryLoadsGetANamespace(): void
     {
-        $modules = new class implements ModuleRepositoryInterface {
+        $manifests = [
+            'johncms/news'  => $this->manifest('johncms/news', 'news'),
+            'johncms/admin' => $this->manifest('johncms/admin', 'admin'),
+        ];
+
+        $modules = new class ($manifests) implements ModuleRepositoryInterface {
+            /** @param array<string, ModuleManifest> $manifests */
+            public function __construct(private readonly array $manifests)
+            {
+            }
+
             public function all(): array
             {
-                return [
-                    'johncms/news'  => $this->manifest('johncms/news', 'news'),
-                    'johncms/admin' => $this->manifest('johncms/admin', 'admin'),
-                ];
+                return $this->manifests;
             }
 
             public function find(string $key): ?ModuleManifest
             {
-                return $this->all()[$key] ?? null;
+                return $this->manifests[$key] ?? null;
             }
 
             public function forget(): void
             {
-            }
-
-            private function manifest(string $key, string $alias): ModuleManifest
-            {
-                return new ModuleManifest($key, $alias, MODULES_PATH . $key, ucfirst($alias));
             }
         };
 
@@ -162,7 +164,6 @@ final class TemplatePathRegistryTest extends TestCase
             new ThemeChainResolver(new FilesystemThemeRepository($this->root . 'themes' . DS)),
             [],
             $this->root . 'themes' . DS,
-            $this->root . 'modules' . DS,
             null,
             new ModuleRegistry($modules, $store, ['johncms/news', 'johncms/admin']),
         );
@@ -174,16 +175,75 @@ final class TemplatePathRegistryTest extends TestCase
     }
 
     /**
-     * @param array<TemplatePathProviderInterface> $providers
+     * The namespace is the alias, not the directory: that is what makes a short name possible for
+     * a module whose package is called something longer.
      */
-    private function registry(array $providers = []): TemplatePathRegistry
+    public function testTheNamespaceIsTheAliasOfTheModule(): void
+    {
+        $this->makeDirectories(['modules/vasya/old-guestbook/templates', 'themes/child/templates/guestbook']);
+
+        $paths = $this->registry([], [$this->manifest('vasya/old-guestbook', 'guestbook')])->paths('child');
+
+        self::assertSame(
+            [
+                $this->root . 'themes/child/templates/guestbook',
+                $this->root . 'modules/vasya/old-guestbook/templates',
+            ],
+            $this->normalize($paths['guestbook'])
+        );
+        self::assertArrayNotHasKey('old-guestbook', $paths);
+    }
+
+    /**
+     * The directory comes from the manifest, so a module Composer put in vendor/ is reachable the
+     * same way as one lying in modules/ — nothing moves its files. The theme still comes first,
+     * which is what lets a theme override a template of such a module; the pages it does not
+     * carry keep falling back to the package.
+     */
+    public function testAModuleInstalledByComposerIsFoundWhereItLies(): void
+    {
+        $this->makeDirectories(['vendor/vasya/blog/templates', 'themes/child/templates/blog']);
+
+        $manifest = new ModuleManifest(
+            'vasya/blog',
+            'blog',
+            $this->root . 'vendor' . DS . 'vasya' . DS . 'blog',
+            'Blog'
+        );
+
+        self::assertSame(
+            [
+                $this->root . 'themes/child/templates/blog',
+                $this->root . 'vendor/vasya/blog/templates',
+            ],
+            $this->normalize($this->registry([], [$manifest])->paths('child')['blog'])
+        );
+    }
+
+    /**
+     * @param array<TemplatePathProviderInterface> $providers
+     * @param array<ModuleManifest>|null           $modules
+     */
+    private function registry(array $providers = [], ?array $modules = null): TemplatePathRegistry
     {
         return new TemplatePathRegistry(
             new ThemeChainResolver(new FilesystemThemeRepository($this->root . 'themes' . DS)),
             $providers,
             $this->root . 'themes' . DS,
-            $this->root . 'modules' . DS,
-            ['johncms/news', 'johncms/admin'],
+            $modules ?? [
+                $this->manifest('johncms/news', 'news'),
+                $this->manifest('johncms/admin', 'admin'),
+            ],
+        );
+    }
+
+    private function manifest(string $key, string $alias): ModuleManifest
+    {
+        return new ModuleManifest(
+            $key,
+            $alias,
+            $this->root . 'modules' . DS . str_replace('/', DS, $key),
+            ucfirst($alias)
         );
     }
 
