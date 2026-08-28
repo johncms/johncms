@@ -266,16 +266,18 @@ return static function (RouteCollection $router): void {
 };
 ```
 
-Authorization middleware lives in `src/Application/Middlewares/`:
+A gate of the module lives in `src/Application/Middlewares/`. `MiddlewareInterface::handle()`
+returns a `Response` — the pipeline normalises the answer of the action before the stack runs, so
+nothing here is typed `mixed`:
 
 ```php
-final readonly class AuthorizedUserMiddleware implements MiddlewareInterface
+final readonly class SubscriberMiddleware implements MiddlewareInterface
 {
-    public function __construct(private User $user) {}
+    public function __construct(private CurrentUser $currentUser) {}
 
-    public function handle(Request $request, callable $next): mixed
+    public function handle(Request $request, callable $next): Response
     {
-        if (! $this->user->isValid()) {
+        if (! $this->currentUser->isValid()) {
             pageNotFound();
         }
         return $next($request);
@@ -283,7 +285,11 @@ final readonly class AuthorizedUserMiddleware implements MiddlewareInterface
 }
 ```
 
-**Trailing slash convention:** define routes *without* a trailing slash (`/downloads/search`), but use a trailing slash in template and controller links (`/downloads/search/`). `index.php` normalises URIs with `rtrim` before matching, so both variants work at runtime.
+Plain "must be signed in" needs no middleware of the module: the core ships
+`Johncms\Http\Middleware\RequireAuthMiddleware`, and a whole route is closed by a permission with
+`->permission(...)`.
+
+**Trailing slash convention:** define routes *without* a trailing slash (`/downloads/search`), but use a trailing slash in template and controller links (`/downloads/search/`). `RequestPathNormalizer` decodes the path and strips the trailing slash before matching, so both variants work at runtime.
 
 ## Localization
 
@@ -331,8 +337,9 @@ fails while the file is stale.
 
 ## Template Notes
 
-Templates live in `modules/johncms/<module>/templates/{public,admin}/` and are reachable as
-`@<module>/public/<page>.twig`. A controller returns `ViewResponse` with the template name and
+Templates live in `<module directory>/templates/{public,admin}/` and are reachable as
+`@<alias>/public/<page>.twig` — the namespace is the alias and the directory is the one the
+manifest was read from, so a module Composer left in `vendor/` is reachable the same way. A controller returns `ViewResponse` with the template name and
 the data; the page extends `@theme/layouts/default.twig` (or `@admin/layouts/default.twig` in
 the panel) and fills `{% block content %}`.
 
