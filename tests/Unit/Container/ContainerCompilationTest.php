@@ -11,6 +11,10 @@ use Johncms\Auth\CurrentUser;
 use Johncms\Container\PSRContainerFactory;
 use Johncms\Http\CookieQueue;
 use Johncms\Modules\Admin\Application\Services\AdminPermissions;
+use Johncms\Modules\Consent\Application\View\CookieBannerExtension;
+use Johncms\Modules\Forum\Application\Console\CleanupOrphanFilesCommand;
+use Johncms\Modules\News\Application\Sitemap\NewsUrlsProvider;
+use Johncms\View\Twig\Extension\MailExtension;
 use Johncms\Http\Environment;
 use Johncms\Http\Session;
 use Johncms\NavChain;
@@ -112,11 +116,68 @@ final class ContainerCompilationTest extends TestCase
         $container = (new PSRContainerFactory())();
         self::assertInstanceOf(ContainerBuilder::class, $container);
 
-        foreach (['johncms.auth.voter', 'johncms.auth.permissions', 'johncms.auth.authenticator'] as $tag) {
+        $tags = [
+            'johncms.auth.voter',
+            'johncms.auth.permissions',
+            'johncms.auth.authenticator',
+            'johncms.console_command',
+            'johncms.sitemap_provider',
+            'johncms.twig_extension',
+            'johncms.resettable',
+            'johncms.validator.rule_factory',
+        ];
+
+        foreach ($tags as $tag) {
             foreach ($container->findTaggedServiceIds($tag) as $id => $attributes) {
                 self::assertCount(1, $attributes, $id . ' carries ' . $tag . ' more than once');
             }
         }
+    }
+
+    /**
+     * A console command and a group of sitemap addresses are extension points like a permission:
+     * the module implements the interface and the tag is applied by autoconfiguration. Before
+     * that, every module shipping a command repeated an instanceof rule in its own services.php —
+     * five of the six that carried it had no command at all, and the one that did would have lost
+     * its command the day somebody tidied the line away.
+     */
+    public function testACommandAndASitemapProviderDeclaredByAModuleAreCollectedToo(): void
+    {
+        $container = (new PSRContainerFactory())();
+        self::assertInstanceOf(ContainerBuilder::class, $container);
+
+        self::assertContains(
+            CleanupOrphanFilesCommand::class,
+            array_keys($container->findTaggedServiceIds('johncms.console_command'))
+        );
+        self::assertContains(
+            NewsUrlsProvider::class,
+            array_keys($container->findTaggedServiceIds('johncms.sitemap_provider'))
+        );
+    }
+
+    /**
+     * Twig has three environments here, and autoconfiguration knows only the web one: every
+     * extension is tagged for it, and what belongs to mail or to the installer says so by hand.
+     * MailExtension belongs to mail alone — a message is read outside the site and prints
+     * absolute addresses — so it opts out of autoconfiguration, and this is what says it stayed
+     * out.
+     */
+    public function testTheMailTwigExtensionStaysOutOfTheWebEnvironment(): void
+    {
+        $container = (new PSRContainerFactory())();
+        self::assertInstanceOf(ContainerBuilder::class, $container);
+
+        $web = array_keys($container->findTaggedServiceIds('johncms.twig_extension'));
+
+        self::assertNotContains(MailExtension::class, $web);
+        self::assertContains(
+            MailExtension::class,
+            array_keys($container->findTaggedServiceIds('johncms.twig_extension.mail'))
+        );
+        // And the other direction: an extension a module ships reaches the pages without the
+        // module tagging it.
+        self::assertContains(CookieBannerExtension::class, $web);
     }
 
     private function containerInstanceProperty(): \ReflectionProperty

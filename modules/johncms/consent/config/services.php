@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use Johncms\Modules\Consent\Application\View\CookieBannerExtension;
 use Johncms\Modules\Consent\Domain\Repository\ConsentLogRepositoryInterface;
 use Johncms\Modules\Consent\Domain\Repository\ConsentRepositoryInterface;
 use Johncms\Modules\Consent\Infrastructure\Persistence\Repository\ConsentLogRepository;
@@ -32,8 +31,6 @@ return static function (ContainerConfigurator $container): void {
     )
         ->autowire()
         ->autoconfigure();
-
-    $services->set(CookieBannerExtension::class)->tag('johncms.twig_extension');
 
     $services->set(ConsentRepositoryInterface::class, ConsentRepository::class)->public();
     $services->set(ConsentLogRepositoryInterface::class, ConsentLogRepository::class)->public();

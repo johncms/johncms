@@ -10,7 +10,6 @@ use Johncms\Modules\Collections\Application\Services\CollectionCodeCache;
 use Johncms\Modules\Collections\Application\Services\CollectionCodeCacheInterface;
 use Johncms\Modules\Collections\Application\Services\ReservedCodeChecker;
 use Johncms\Modules\Collections\Application\Services\ReservedCodeCheckerInterface;
-use Johncms\Modules\Collections\Application\Sitemap\CollectionsUrlsProvider;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionFieldRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemRepositoryInterface;
 use Johncms\Modules\Collections\Domain\Repository\ContentCollectionItemValueRepositoryInterface;
@@ -53,6 +52,5 @@ return static function (ContainerConfigurator $container): void {
     $services->set(ContentCollectionItemValueRepositoryInterface::class, ContentCollectionItemValueRepository::class)->public();
     $services->set(CollectionCodeCacheInterface::class, CollectionCodeCache::class)->autowire()->public();
     $services->set(ReservedCodeCheckerInterface::class, ReservedCodeChecker::class)->autowire()->public();
-    $services->set(CollectionsUrlsProvider::class, CollectionsUrlsProvider::class)->autowire()->tag('johncms.sitemap_provider')->public();
     $services->set(CollectionsApiInterface::class, CollectionsApi::class)->autowire()->public();
 };

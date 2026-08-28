@@ -13,14 +13,19 @@ use Johncms\Content\Embed\EmbedProviderInterface;
 use Johncms\Content\Transformer\ContentTransformerInterface;
 use Johncms\Database\Migrations\MigrationSourceProviderInterface;
 use Johncms\Modules\ModuleRegistryFactory;
+use Johncms\Sitemap\SitemapUrlProviderInterface;
+use Johncms\Validator\RuleConstraintFactoryInterface;
 use Johncms\View\Menu\MenuItemProviderInterface;
 use Johncms\Security\HtmlPolicyProviderInterface;
 use Psr\Container\ContainerInterface as PsrContainerInterface;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
 use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
+use Symfony\Contracts\Service\ResetInterface;
+use Twig\Extension\ExtensionInterface;
 
 class PSRContainerFactory
 {
@@ -80,8 +85,10 @@ class PSRContainerFactory
      * visitor, a rule about what is allowed, the permissions a module declares, the HTML policy
      * its own kind of content is cleaned by, the way visitors are told from bots, the two halves
      * of the content pipeline — a step that edits a rendered text and a media site whose links
-     * become players — a directory of migrations the database is taken through, and a line the
-     * module puts into a menu.
+     * become players — a directory of migrations the database is taken through, a line the module
+     * puts into a menu, a console command, a group of addresses in the sitemap, a function its
+     * templates call, a service the kernel clears between requests and a rule the validator can
+     * be asked for.
      *
      * Registered on the builder rather than as an instanceof rule of a services file, because
      * such a rule only reaches the services declared in that same file. A module would have to
@@ -102,6 +109,14 @@ class PSRContainerFactory
             EmbedProviderInterface::class       => 'johncms.embed_provider',
             MigrationSourceProviderInterface::class => 'johncms.migration_source',
             MenuItemProviderInterface::class        => 'johncms.menu_provider',
+            Command::class                          => 'johncms.console_command',
+            SitemapUrlProviderInterface::class      => 'johncms.sitemap_provider',
+            // The web environment. A template of mail or of the installer is served by an
+            // environment of its own, and what belongs there is tagged by hand — see the
+            // extensions at the end of services.php.
+            ExtensionInterface::class               => 'johncms.twig_extension',
+            ResetInterface::class                   => 'johncms.resettable',
+            RuleConstraintFactoryInterface::class   => 'johncms.validator.rule_factory',
         ];
 
         foreach ($tags as $interface => $tag) {

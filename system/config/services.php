@@ -101,7 +101,6 @@ use Johncms\Storage\StorageSettings;
 use Johncms\Storage\StorageSettingsFactory;
 use Johncms\Utils\DateFormatter;
 use Johncms\Validator\RuleCompiler;
-use Johncms\Validator\RuleConstraintFactoryInterface;
 use Johncms\Validator\SymfonyValidator;
 use Johncms\Validator\SymfonyValidatorFactory;
 use Johncms\Validator\ValidatorInterface;
@@ -148,13 +147,11 @@ use Twig\Environment as TwigEnvironment;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Application;
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Routing\Matcher\UrlMatcherInterface;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
-use Symfony\Contracts\Service\ResetInterface;
 use Symfony\Component\Routing\RouteCollection;
 
 return static function (ContainerConfigurator $container): void {
@@ -164,30 +161,19 @@ return static function (ContainerConfigurator $container): void {
         ->autoconfigure()
         ->public();
 
-    // Any Symfony Console Command service is auto-registered in the CLI application.
-    $services->instanceof(Command::class)->tag('johncms.console_command');
+    // A console command, a service the kernel clears between requests and a validation rule are
+    // extension points like the rest: PSRContainerFactory tags them by autoconfiguration, so a
+    // module joins by implementing the interface and nothing here has to be repeated in its
+    // services.php.
 
-    // Defined before the ResetInterface rule below on purpose: instanceof conditionals apply to
-    // the definitions that follow them, and the console application implements ResetInterface.
-    // Tagged as resettable it would have the kernel build the whole console application, every
-    // command included, on every HTTP request just to reset it — while an HTTP cycle never
-    // touches it and it holds nothing belonging to a request.
+    // The one service that has to opt out of autoconfiguration. The console application
+    // implements ResetInterface, and tagged as resettable it would have the kernel build the
+    // whole CLI application, every command included, on every HTTP request just to reset it —
+    // while an HTTP cycle never touches it and it holds nothing belonging to a request.
     $services->set(Application::class)
+        ->autoconfigure(false)
         ->factory(service(\Johncms\Console\ConsoleApplicationFactory::class))
         ->arg('$commands', tagged_iterator('johncms.console_command'));
-
-    // A shared service that caches something belonging to one request implements ResetInterface;
-    // the kernel clears every one of them before it starts serving the next request.
-    $services->instanceof(ResetInterface::class)->tag('johncms.resettable');
-
-    // A module adds a validation rule of its own by registering a factory with this tag — the
-    // core is not touched, the way the addRule() of the previous validator allowed. Declared
-    // before the directory load below, since an instanceof rule only applies to what follows it.
-    $services->instanceof(RuleConstraintFactoryInterface::class)->tag('johncms.validator.rule_factory');
-
-    // The authentication and authorization extension points are tagged by PSRContainerFactory
-    // instead: an instanceof rule here would reach the services of this file only, and a module
-    // declaring a voter or a permission would be silently ignored.
 
     $services->load(
         'Johncms\\',
@@ -526,7 +512,12 @@ return static function (ContainerConfigurator $container): void {
         ->factory([service(TwigEnvironmentFactory::class), 'create'])
         ->arg('$environment', ViewEnvironment::Mail)
         ->arg('$extensions', tagged_iterator('johncms.twig_extension.mail'));
-    $services->set(MailExtension::class)->tag('johncms.twig_extension.mail');
+    // Out of autoconfiguration: every Twig extension is tagged for the web environment, and this
+    // one belongs to mail alone — a message is read outside the site and prints absolute
+    // addresses, which a page has no use for.
+    $services->set(MailExtension::class)
+        ->autoconfigure(false)
+        ->tag('johncms.twig_extension.mail');
 
     // The installer environment: it runs before there is a site, so it has no request and no
     // modules either — only the theme it ships with.
@@ -546,22 +537,19 @@ return static function (ContainerConfigurator $container): void {
         ->arg('$currentUser', service(\Johncms\Auth\CurrentUser::class))
         ->arg('$csrf', service_closure(Csrf::class));
     $services->set(AppExtension::class)
-        ->arg('$app', service_closure(AppVariable::class))
-        ->tag('johncms.twig_extension');
+        ->arg('$app', service_closure(AppVariable::class));
     $services->set(I18nExtension::class)
-        ->tag('johncms.twig_extension')
         ->tag('johncms.twig_extension.mail')
         ->tag('johncms.twig_extension.install');
     $services->set(AssetExtension::class)
-        ->tag('johncms.twig_extension')
         ->tag('johncms.twig_extension.install');
-    // Not for mail or the installer: neither has a menu, and neither has a visitor to filter it by.
-    $services->set(MenuExtension::class)->tag('johncms.twig_extension');
+    // Not for mail or the installer: neither has a menu, and neither has a visitor to filter it
+    // by. The web tag it does carry comes from autoconfiguration.
+    $services->set(MenuExtension::class);
     $services->set(FormatExtension::class)
-        ->tag('johncms.twig_extension')
         ->tag('johncms.twig_extension.mail');
-    $services->set(SiteExtension::class)->tag('johncms.twig_extension');
-    $services->set(AuthExtension::class)->tag('johncms.twig_extension');
+    $services->set(SiteExtension::class);
+    $services->set(AuthExtension::class);
     // The renderer is handed over as a closure: a controller that returns a string or a Response
     // of its own must not have the template environment assembled behind it.
     $services->set(ResponseNormalizer::class)->arg('$renderer', service_closure(RendererInterface::class));

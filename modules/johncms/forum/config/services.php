@@ -14,7 +14,6 @@ use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumUnreadRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumVoteRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumWhoRepositoryInterface;
-use Johncms\Modules\Forum\Application\Sitemap\ForumUrlsProvider;
 use Johncms\Modules\Forum\Infrastructure\Persistence\Repository\ForumFileRepository;
 use Johncms\Modules\Forum\Infrastructure\Persistence\Repository\ForumMessageFileRepository;
 use Johncms\Modules\Forum\Infrastructure\Persistence\Repository\ForumMessageRepository;
@@ -29,8 +28,6 @@ use Johncms\Modules\Forum\Infrastructure\Storage\ForumAttachmentStorage;
 
 return static function (ContainerConfigurator $container): void {
     $services = $container->services();
-
-    $services->instanceof(\Symfony\Component\Console\Command\Command::class)->tag('johncms.console_command');
 
     $services->load(
         'Johncms\\Modules\\Forum\\Application\\',
@@ -69,5 +66,4 @@ return static function (ContainerConfigurator $container): void {
     $services->set(ForumUnreadRepositoryInterface::class, ForumUnreadRepository::class)->public();
     $services->set(ForumVoteRepositoryInterface::class, ForumVoteRepository::class)->public();
     $services->set(ForumWhoRepositoryInterface::class, ForumWhoRepository::class)->public();
-    $services->set(ForumUrlsProvider::class, ForumUrlsProvider::class)->autowire()->tag('johncms.sitemap_provider')->public();
 };

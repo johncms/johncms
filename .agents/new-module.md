@@ -258,6 +258,28 @@ Paths are relative to the file (`dirname(__DIR__)` is the module directory), nev
 `MODULES_PATH . '<vendor>/<module>'`: a module Composer installed stays in `vendor/`, and an
 absolute path built from the modules directory would point at nothing.
 
+`autoconfigure()` is what joins the extension points: a class of the module is tagged by the
+interface it implements, and nothing is registered by hand. A class declared with its own `set()`
+line is **not** autoconfigured unless the line says so — add `->autoconfigure()` there, or the
+service compiles fine and is never asked anything.
+
+| Implement | And the module gets |
+|---|---|
+| `AuthenticatorInterface`, `AccessVoterInterface`, `PermissionProviderInterface` | a way to identify the visitor, a rule about what is allowed, permissions of its own |
+| `ExternalIdentityProviderInterface`, `CaptchaProviderInterface` | a sign-in service, a way to tell a visitor from a bot |
+| `ContentTransformerInterface`, `EmbedProviderInterface`, `HtmlPolicyProviderInterface` | a step of the content pipeline, a media site whose links become players, a policy its HTML is cleaned by |
+| `MigrationSourceProviderInterface` | a directory of migrations besides its own |
+| `MenuItemProviderInterface` | a line in the main or the admin menu |
+| `SitemapUrlProviderInterface` | a group of addresses in the sitemap |
+| `Symfony\...\Console\Command` | a command of `system/bin/console` |
+| `Twig\Extension\ExtensionInterface` | a function or filter its templates call |
+| `RuleConstraintFactoryInterface` | a rule the validator can be asked for |
+| `ResetInterface` | a service the kernel clears between requests |
+
+The two Twig environments a page does not use — mail and the installer — are not autoconfigured:
+an extension meant for one of them is tagged by hand with `johncms.twig_extension.mail` or
+`johncms.twig_extension.install`.
+
 ## Routes & Middleware
 
 ```php
