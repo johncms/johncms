@@ -17,8 +17,9 @@ use Johncms\Modules\Manifest\ModuleManifest;
 /**
  * Who needs whom.
  *
- * Two questions are asked of it, and they are the same edges read in opposite directions: in which
- * order a set of modules may be installed, and who would break if this one were switched off.
+ * One question is asked of it: who would break if this module were switched off. The edges are
+ * read against their direction — a module names what it requires, and the answer is everything
+ * that named this one.
  */
 final readonly class ModuleDependencyGraph
 {
@@ -63,61 +64,5 @@ final readonly class ModuleDependencyGraph
         sort($dependents);
 
         return $dependents;
-    }
-
-    /**
-     * The order the given modules may be installed in: everything a module requires comes before
-     * it. Modules that require nothing of each other keep their alphabetical order, so the answer
-     * is the same on every run.
-     *
-     * A cycle cannot be ordered. It is reported rather than broken silently — the modules of a
-     * cycle are appended at the end, where an installer will fail on the first of them with an
-     * error naming what is missing.
-     *
-     * @param list<string> $keys
-     * @return list<string>
-     */
-    public function installationOrder(array $keys): array
-    {
-        sort($keys);
-
-        $ordered = [];
-        $visiting = [];
-
-        foreach ($keys as $key) {
-            $this->visit($key, $keys, $ordered, $visiting);
-        }
-
-        return array_keys($ordered);
-    }
-
-    /**
-     * @param list<string>          $keys
-     * @param array<string, true>   $ordered
-     * @param array<string, true>   $visiting
-     */
-    private function visit(string $key, array $keys, array &$ordered, array &$visiting): void
-    {
-        if (isset($ordered[$key]) || isset($visiting[$key])) {
-            return;
-        }
-
-        $visiting[$key] = true;
-
-        $manifest = $this->modules[$key] ?? null;
-        if ($manifest !== null) {
-            $required = array_keys($manifest->requires->modules);
-            sort($required);
-
-            foreach ($required as $dependency) {
-                if (in_array($dependency, $keys, true)) {
-                    $this->visit($dependency, $keys, $ordered, $visiting);
-                }
-            }
-        }
-
-        unset($visiting[$key]);
-
-        $ordered[$key] = true;
     }
 }

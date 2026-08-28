@@ -24,9 +24,9 @@ use Composer\Package\PackageInterface;
  * migrating whatever database the configuration happened to point at, and an error in a migration
  * failing Composer rather than the installation.
  *
- * So the files arrive, and the site is told about them the next time somebody looks — by this
- * message in the terminal, and by the note that puts the module into the "found on disk" list of
- * the admin panel.
+ * So the files arrive, and the site is told about them the next time somebody looks: by this
+ * message in the terminal, and by the modules section of the admin panel, which lists what lies
+ * on disk and was never installed.
  */
 final class ComposerHooks
 {
@@ -40,8 +40,6 @@ final class ComposerHooks
         if ($package === null) {
             return;
         }
-
-        self::note($package->getPrettyName(), $event);
 
         $event->getIO()->write(sprintf(
             '<info>%s</info> is now on disk. Finish with: <comment>php system/bin/console module:install %s</comment>',
@@ -104,29 +102,5 @@ final class ComposerHooks
         }
 
         return $package;
-    }
-
-    /**
-     * Leaves the key where the site will find it: the admin panel lists a module that appeared on
-     * disk, and this is what tells it one appeared through Composer rather than by hand.
-     */
-    private static function note(string $key, PackageEvent $event): void
-    {
-        $root = dirname($event->getComposer()->getConfig()->get('vendor-dir'));
-        $file = $root . '/data/tmp/modules-pending.json';
-
-        if (! is_dir(dirname($file)) && ! mkdir(dirname($file), 0o755, true) && ! is_dir(dirname($file))) {
-            return;
-        }
-
-        $pending = [];
-        if (is_file($file)) {
-            $decoded = json_decode((string) file_get_contents($file), true);
-            $pending = is_array($decoded) ? array_filter($decoded, is_string(...)) : [];
-        }
-
-        $pending[] = $key;
-
-        @file_put_contents($file, json_encode(array_values(array_unique($pending)), JSON_PRETTY_PRINT));
     }
 }
