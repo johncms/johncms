@@ -208,6 +208,7 @@ final readonly class ModulesController
             ModuleStatus::Discovered->value   => ['label' => __('Not installed'), 'class' => 'bg-info'],
             ModuleStatus::Broken->value       => ['label' => __('Broken'), 'class' => 'bg-danger'],
             ModuleStatus::Incompatible->value => ['label' => __('Incompatible'), 'class' => 'bg-warning text-dark'],
+            ModuleStatus::Installing->value   => ['label' => __('Installation unfinished'), 'class' => 'bg-warning text-dark'],
         ];
 
         return [
@@ -222,10 +223,15 @@ final readonly class ModulesController
             'problem'     => $state->problem,
             'can_enable'  => $state->status === ModuleStatus::Disabled,
             'can_disable' => $state->status === ModuleStatus::Enabled && ! $state->system,
-            'can_install' => $state->status === ModuleStatus::Discovered,
+            // Installing again is what finishes an installation that stopped halfway, so the
+            // button is offered for both.
+            'can_install' => in_array($state->status, [ModuleStatus::Discovered, ModuleStatus::Installing], true),
             'can_update'  => in_array($state->status, [ModuleStatus::Enabled, ModuleStatus::Disabled], true),
-            'can_remove'  => in_array($state->status, [ModuleStatus::Enabled, ModuleStatus::Disabled], true)
-                && ! $state->system,
+            'can_remove'  => in_array(
+                $state->status,
+                [ModuleStatus::Enabled, ModuleStatus::Disabled, ModuleStatus::Installing],
+                true
+            ) && ! $state->system,
         ];
     }
 }

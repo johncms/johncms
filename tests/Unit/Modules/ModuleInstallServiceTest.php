@@ -22,6 +22,7 @@ use Johncms\Modules\ModuleRepositoryInterface;
 use Johncms\Modules\ModuleStateRecord;
 use Johncms\Modules\ModuleStateStore;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 
 /**
  * The operations themselves. What they refuse is as much the point as what they do: every refusal
@@ -35,6 +36,12 @@ final class ModuleInstallServiceTest extends TestCase
 
     /** @var list<string> */
     private array $irreversibleMigrations = [];
+
+    /** When set, the migrator throws instead of running: the failure halfway an install must survive. */
+    private ?string $migrationFailure = null;
+
+    /** The modules on disk, as the last service() built them: a test that checks the registry needs the same view. */
+    private ?ModuleRepositoryInterface $repository = null;
 
     protected function setUp(): void
     {
@@ -244,6 +251,77 @@ final class ModuleInstallServiceTest extends TestCase
     }
 
     /**
+     * The record has to exist before the migrations run — a module's migrations are found through
+     * it — so a migration that fails leaves a module the site has written down. What it must not
+     * leave is a module the site loads: services and routes built against half a schema is the
+     * "installed it and got a 500" that has no obvious way back, because installing again used to
+     * answer "already installed".
+     */
+    public function testAnInstallationThatFailedHalfwayLeavesTheModuleUnloaded(): void
+    {
+        $this->migrationFailure = 'Table blog_posts already exists';
+        $service = $this->service(['vasya/blog' => []]);
+
+        $result = $service->install('vasya/blog');
+
+        self::assertFalse($result->isSuccessful());
+        self::assertStringContainsString('Table blog_posts already exists', (string) $result->error());
+
+        $record = (new ModuleStateStore($this->stateFile))->find('vasya/blog');
+        self::assertNotNull($record);
+        self::assertTrue($record->installing, 'The unfinished installation is written down.');
+
+        self::assertNotNull($this->repository);
+        $registry = new ModuleRegistry($this->repository, new ModuleStateStore($this->stateFile));
+        self::assertArrayNotHasKey('vasya/blog', $registry->enabled(), 'Nothing of it is loaded.');
+        self::assertArrayHasKey(
+            'vasya/blog',
+            $registry->installed(),
+            'Its migrations are still a source: that is how the job gets finished.'
+        );
+    }
+
+    /**
+     * And the way out is to run the same command again, which the "already installed" guard used
+     * to refuse.
+     */
+    public function testAnInstallationThatFailedCanBeRunAgain(): void
+    {
+        $this->migrationFailure = 'Deadlock found when trying to get lock';
+        $service = $this->service(['vasya/blog' => []]);
+        $service->install('vasya/blog');
+
+        $this->migrationFailure = null;
+        $result = $service->install('vasya/blog');
+
+        self::assertTrue($result->isSuccessful());
+
+        $record = (new ModuleStateStore($this->stateFile))->find('vasya/blog');
+        self::assertNotNull($record);
+        self::assertFalse($record->installing);
+        self::assertTrue($record->enabled);
+    }
+
+    /**
+     * Switching such a module on would be building on a schema nobody can describe. Uninstalling
+     * it is deliberately still allowed — it is the way out when installing again cannot help.
+     */
+    public function testAModuleWhoseInstallationDidNotFinishCannotBeSwitchedOn(): void
+    {
+        $service = $this->service(
+            ['vasya/blog' => []],
+            ['vasya/blog' => new ModuleStateRecord(key: 'vasya/blog', alias: 'blog', installing: true)],
+        );
+
+        $result = $service->enable('vasya/blog');
+
+        self::assertFalse($result->isSuccessful());
+        self::assertStringContainsString('did not finish', (string) $result->error());
+
+        self::assertTrue($service->uninstall('vasya/blog')->isSuccessful());
+    }
+
+    /**
      * @param array<string, array<string, mixed>> $modules
      * @param array<string, ModuleStateRecord>    $state
      */
@@ -298,6 +376,10 @@ final class ModuleInstallServiceTest extends TestCase
         $this->migrator->method('run')->willReturnCallback(function (?string $source = null): array {
             $this->migratorCalls[] = ['run', $source];
 
+            if ($this->migrationFailure !== null) {
+                throw new RuntimeException($this->migrationFailure);
+            }
+
             return [];
         });
         $this->migrator->method('rollback')->willReturnCallback(function (?string $source = null): array {
@@ -311,6 +393,8 @@ final class ModuleInstallServiceTest extends TestCase
                 $this->irreversibleMigrations
             )
         );
+
+        $this->repository = $repository;
 
         return new ModuleInstallService(
             new ModuleRegistry($repository, new ModuleStateStore($this->stateFile), reserved: $reserved),

@@ -29,6 +29,16 @@ final readonly class ModuleStateRecord
         public bool $enabled = true,
         public ?string $version = null,
         public ?int $installedAt = null,
+        /**
+         * The installation of this module was begun and did not finish.
+         *
+         * Written before the migrations run, because the migrations of a module are only found
+         * through a record saying it is installed, and cleared once its installer has returned.
+         * Whatever lies between — a migration that failed, a request that timed out on a modest
+         * host — leaves it standing, and a module with it standing is not loaded: half a schema
+         * behind a full set of routes is how "installed it and got a 500" happens.
+         */
+        public bool $installing = false,
     ) {
     }
 
@@ -36,7 +46,7 @@ final readonly class ModuleStateRecord
      * The same record with one or two fields changed. Nothing else about it moves — the alias and
      * the date of installation belong to the installation that happened, not to the edit.
      */
-    public function with(?bool $enabled = null, ?string $version = null): self
+    public function with(?bool $enabled = null, ?string $version = null, ?bool $installing = null): self
     {
         return new self(
             key: $this->key,
@@ -45,20 +55,30 @@ final readonly class ModuleStateRecord
             enabled: $enabled ?? $this->enabled,
             version: $version ?? $this->version,
             installedAt: $this->installedAt,
+            installing: $installing ?? $this->installing,
         );
     }
 
     /**
+     * The field of an unfinished installation is written only while it is true, so the state file
+     * of a site where nothing went wrong reads exactly as it did before it existed.
+     *
      * @return array<string, scalar|null>
      */
     public function toArray(): array
     {
-        return [
+        $fields = [
             'alias'        => $this->alias,
             'installed'    => $this->installed,
             'enabled'      => $this->enabled,
             'version'      => $this->version,
             'installed_at' => $this->installedAt,
         ];
+
+        if ($this->installing) {
+            $fields['installing'] = true;
+        }
+
+        return $fields;
     }
 }

@@ -71,6 +71,9 @@ final class ModuleStateStore
                 enabled: (bool) ($values['enabled'] ?? true),
                 version: is_string($values['version'] ?? null) ? $values['version'] : null,
                 installedAt: is_int($values['installed_at'] ?? null) ? $values['installed_at'] : null,
+                // Absent in every file written before unfinished installations were recorded, and
+                // in every file of a site where none ever failed.
+                installing: (bool) ($values['installing'] ?? false),
             );
         }
 

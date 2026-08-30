@@ -94,4 +94,26 @@ final class ModuleStateStoreTest extends TestCase
 
         self::assertSame('vasya.blog', (new ModuleStateStore($this->file))->all()['vasya/blog']->alias);
     }
+
+    /**
+     * The mark of an unfinished installation is written only while it stands, so the file of a
+     * site where nothing ever failed reads exactly as it did before the field existed — and a file
+     * written by an older release, which has no such key, is read as "nothing was interrupted".
+     */
+    public function testAnUnfinishedInstallationSurvivesTheRoundTripAndIsAbsentOtherwise(): void
+    {
+        $store = new ModuleStateStore($this->file);
+        $store->save([
+            'vasya/blog' => new ModuleStateRecord(key: 'vasya/blog', alias: 'blog', installing: true),
+            'vasya/shop' => new ModuleStateRecord(key: 'vasya/shop', alias: 'shop'),
+        ]);
+
+        self::assertStringContainsString("'installing' => true", (string) file_get_contents($this->file));
+        self::assertSame(1, substr_count((string) file_get_contents($this->file), 'installing'));
+
+        $read = (new ModuleStateStore($this->file))->all();
+
+        self::assertTrue($read['vasya/blog']->installing);
+        self::assertFalse($read['vasya/shop']->installing);
+    }
 }

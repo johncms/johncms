@@ -30,7 +30,9 @@ final readonly class GetModulesOverviewUseCase
             match ($state->status) {
                 ModuleStatus::Enabled, ModuleStatus::Disabled => $installed[] = $state,
                 ModuleStatus::Discovered                      => $available[] = $state,
-                ModuleStatus::Broken, ModuleStatus::Incompatible => $problems[] = $state,
+                // An unfinished installation needs somebody to act on it, so it belongs with the
+                // problems rather than among the modules that are running.
+                ModuleStatus::Broken, ModuleStatus::Incompatible, ModuleStatus::Installing => $problems[] = $state,
             };
         }
 

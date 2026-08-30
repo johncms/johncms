@@ -4,7 +4,8 @@
 
     @var array  installed       Rows: key, alias, name, version, status_label, status_class, can_*.
     @var array  available       The same, for modules that are on disk but not installed.
-    @var array  problems        The same, for broken and incompatible ones; each carries "problem".
+    @var array  problems        The same, for the ones needing attention — broken, incompatible,
+                                or an installation that did not finish; each carries "problem".
     @var string action_url
     @var array  operation_steps Steps of the operation that has just run, if any.
 #}

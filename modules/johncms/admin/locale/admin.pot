@@ -142,7 +142,7 @@ msgid "Manage modules"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:256
-#: modules/johncms/admin/templates/modules.twig:49
+#: modules/johncms/admin/templates/modules.twig:50
 msgid "System"
 msgstr ""
 
@@ -548,7 +548,7 @@ msgid "The language was successfully deleted"
 msgstr ""
 
 #: modules/johncms/admin/src/Application/Controllers/Modules/ModuleUploadController.php:43
-#: modules/johncms/admin/templates/modules.twig:92
+#: modules/johncms/admin/templates/modules.twig:93
 msgid "Install a module from a file"
 msgstr ""
 
@@ -609,6 +609,10 @@ msgstr ""
 
 #: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:210
 msgid "Incompatible"
+msgstr ""
+
+#: modules/johncms/admin/src/Application/Controllers/Modules/ModulesController.php:211
+msgid "Installation unfinished"
 msgstr ""
 
 #: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:94
@@ -1984,7 +1988,7 @@ msgid "New version:"
 msgstr ""
 
 #: modules/johncms/admin/templates/languages-manage.twig:41
-#: modules/johncms/admin/templates/modules.twig:111
+#: modules/johncms/admin/templates/modules.twig:112
 msgid "Installed"
 msgstr ""
 
@@ -1994,12 +1998,12 @@ msgstr ""
 
 #: modules/johncms/admin/templates/languages-manage.twig:53
 #: modules/johncms/admin/templates/modules-upload.twig:29
-#: modules/johncms/admin/templates/modules.twig:17
+#: modules/johncms/admin/templates/modules.twig:18
 msgid "Install"
 msgstr ""
 
 #: modules/johncms/admin/templates/languages-manage.twig:56
-#: modules/johncms/admin/templates/modules.twig:32
+#: modules/johncms/admin/templates/modules.twig:33
 msgid "Update"
 msgstr ""
 
@@ -2179,39 +2183,39 @@ msgstr ""
 msgid "The archive holds one directory with a module.php inside it. A module that is already installed is updated."
 msgstr ""
 
-#: modules/johncms/admin/templates/modules.twig:72
+#: modules/johncms/admin/templates/modules.twig:73
 msgid "What was done"
 msgstr ""
 
-#: modules/johncms/admin/templates/modules.twig:97
+#: modules/johncms/admin/templates/modules.twig:98
 msgid "New modules were found in the modules directory. They are not running until they are installed."
 msgstr ""
 
-#: modules/johncms/admin/templates/modules.twig:105
+#: modules/johncms/admin/templates/modules.twig:106
 msgid "Need attention"
 msgstr ""
 
-#: modules/johncms/admin/templates/modules.twig:115
+#: modules/johncms/admin/templates/modules.twig:116
 msgid "No modules are installed."
 msgstr ""
 
-#: modules/johncms/admin/templates/modules.twig:22
+#: modules/johncms/admin/templates/modules.twig:23
 msgid "Switch on"
 msgstr ""
 
-#: modules/johncms/admin/templates/modules.twig:27
+#: modules/johncms/admin/templates/modules.twig:28
 msgid "Switch off"
 msgstr ""
 
-#: modules/johncms/admin/templates/modules.twig:37
+#: modules/johncms/admin/templates/modules.twig:38
 msgid "Remove"
 msgstr ""
 
-#: modules/johncms/admin/templates/modules.twig:54
+#: modules/johncms/admin/templates/modules.twig:55
 msgid "Version"
 msgstr ""
 
-#: modules/johncms/admin/templates/modules.twig:55
+#: modules/johncms/admin/templates/modules.twig:56
 msgid "Short name"
 msgstr ""
 

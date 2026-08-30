@@ -54,7 +54,7 @@ final readonly class ModuleInstallService
         }
 
         $record = $this->state->find($key);
-        if ($record?->installed === true) {
+        if ($record?->installed === true && ! $record->installing) {
             return $result->failed('install', sprintf('The module "%s" is already installed.', $key));
         }
 
@@ -63,12 +63,17 @@ final readonly class ModuleInstallService
             return $result->failed('check the requirements', $problem);
         }
 
+        // Recorded before the migrations, because a module's migrations are found through a record
+        // saying it is installed — and recorded as unfinished, so that a failure halfway leaves a
+        // module the site does not load rather than one whose routes answer out of half a schema.
+        // Running install again is what finishes it, which is why the guard above lets it through.
         $records = $this->state->all();
-        $records[$key] = new ModuleStateRecord(
+        $records[$key] = $record?->with(installing: true) ?? new ModuleStateRecord(
             key: $key,
             alias: $manifest->alias,
             version: $manifest->version,
             installedAt: time(),
+            installing: true,
         );
 
         try {
@@ -85,6 +90,12 @@ final readonly class ModuleInstallService
 
             $this->installer($manifest)?->install();
             $result->done('run the installer of the module');
+
+            // The module works from here on: its tables are there and it has been asked to set
+            // itself up. What follows can fail without making it unusable, so the mark comes off
+            // now rather than at the end.
+            $this->write($key, $records[$key]->with(installing: false));
+            $result->done('finish the installation');
 
             $this->publishAssets($manifest, $result);
             $this->grantDefaultPermissions($result);
@@ -113,6 +124,10 @@ final readonly class ModuleInstallService
             return $result->failed('enable', sprintf('The module "%s" is not installed.', $key));
         }
 
+        if ($record->installing) {
+            return $result->failed('enable', $this->unfinished($key));
+        }
+
         if ($record->enabled) {
             return $result->skipped('enable', sprintf('The module "%s" is already switched on.', $key));
         }
@@ -139,6 +154,10 @@ final readonly class ModuleInstallService
 
         if ($manifest === null || $record?->installed !== true) {
             return $result->failed('disable', sprintf('The module "%s" is not installed.', $key));
+        }
+
+        if ($record->installing) {
+            return $result->failed('disable', $this->unfinished($key));
         }
 
         if ($manifest->system) {
@@ -178,6 +197,10 @@ final readonly class ModuleInstallService
 
         if ($manifest === null || $record?->installed !== true) {
             return $result->failed('update', sprintf('The module "%s" is not installed.', $key));
+        }
+
+        if ($record->installing) {
+            return $result->failed('update', $this->unfinished($key));
         }
 
         if ($manifest->alias !== $record->alias) {
@@ -348,6 +371,21 @@ final readonly class ModuleInstallService
         $installed = $this->registry->installed();
 
         return (new ModuleDependencyGraph($installed))->dependentsOf($key);
+    }
+
+    /**
+     * What to say about a module whose installation was begun and never finished.
+     *
+     * Switching such a module on or updating it would be building on a schema nobody can describe.
+     * Uninstalling is deliberately not refused: it is the way out when installing again cannot
+     * fix whatever stopped it.
+     */
+    private function unfinished(string $key): string
+    {
+        return sprintf(
+            'The installation of "%s" did not finish. Install it again, or uninstall it.',
+            $key
+        );
     }
 
     /**

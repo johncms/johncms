@@ -27,6 +27,13 @@ enum ModuleStatus: string
     /** Lying in modules/ and never installed. Nothing of it is loaded. */
     case Discovered = 'discovered';
 
+    /**
+     * Its installation was begun and did not finish: the record is there so its migrations can be
+     * found, and nothing of it is loaded until they have run through. Installing it again is what
+     * finishes the job.
+     */
+    case Installing = 'installing';
+
     /** Recorded as installed, but unusable: the files are gone, or something makes it unloadable. */
     case Broken = 'broken';
 

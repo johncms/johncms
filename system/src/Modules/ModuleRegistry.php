@@ -84,8 +84,9 @@ final class ModuleRegistry
     }
 
     /**
-     * Everything installed here, switched off included. Their tables exist, so the migrations of a
-     * disabled module are still part of the schema of this site.
+     * Everything installed here, switched off included, and everything whose installation was
+     * begun. Their tables exist — or are about to — so their migrations are part of the schema of
+     * this site and of what a migration command has to see.
      *
      * @return array<string, ModuleManifest>
      */
@@ -97,7 +98,13 @@ final class ModuleRegistry
                 continue;
             }
 
-            if ($state->status === ModuleStatus::Enabled || $state->status === ModuleStatus::Disabled) {
+            // An unfinished installation is here as well, and has to be: the migrations of a
+            // module are found through its record, and finishing the job means running them.
+            if (
+                $state->status === ModuleStatus::Enabled
+                || $state->status === ModuleStatus::Disabled
+                || $state->status === ModuleStatus::Installing
+            ) {
                 $installed[$state->key] = $state->manifest;
             }
         }
@@ -373,6 +380,12 @@ final class ModuleRegistry
         // the panel itself is built against several modules of the release.
         if ($this->safeMode && ! in_array($manifest->key, $this->bundled, true)) {
             return ModuleStatus::Disabled;
+        }
+
+        // Recorded, but the installation never got to the end. Not loaded: its services would be
+        // built against tables that may be half there.
+        if ($record !== null && $record->installing) {
+            return ModuleStatus::Installing;
         }
 
         return $record === null || $record->enabled ? ModuleStatus::Enabled : ModuleStatus::Disabled;
