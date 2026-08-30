@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms\Database\Migrations;
 
+use Johncms\Database\Migrations\Exceptions\DuplicateMigrationSourceException;
 use Johncms\Database\Migrations\Exceptions\InvalidMigrationFileException;
 
 /**
@@ -30,13 +31,35 @@ final readonly class MigrationLocator
     }
 
     /**
+     * Every source, and no two of them under one name.
+     *
+     * The name is what the journal of migrations records. Two directories answering to it would be
+     * one history describing both, and rolling that source back would walk through the migrations
+     * of whoever else claimed the name — a module whose alias is "system" would be asking the CMS
+     * to undo its own schema. Refused here, before a single file is read.
+     *
      * @return list<MigrationSource>
+     * @throws DuplicateMigrationSourceException
      */
     public function sources(): array
     {
         $sources = [];
+        $seen = [];
+
         foreach ($this->providers as $provider) {
             foreach ($provider->sources() as $source) {
+                if (isset($seen[$source->name])) {
+                    throw new DuplicateMigrationSourceException(
+                        sprintf(
+                            'Two sources of migrations answer to "%s": "%s" and "%s".',
+                            $source->name,
+                            $seen[$source->name],
+                            $source->directory
+                        )
+                    );
+                }
+
+                $seen[$source->name] = $source->directory;
                 $sources[] = $source;
             }
         }

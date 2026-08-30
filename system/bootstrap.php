@@ -85,8 +85,8 @@ if (! defined('CONSOLE_MODE') || CONSOLE_MODE === false) {
 
 // Register the system languages domain and folder
 $translator = di(Translator::class);
-$translator->addTranslationDomain('system', __DIR__ . '/locale');
-$translator->defaultDomain('system');
+$translator->addTranslationDomain(Translator::SYSTEM_DOMAIN, __DIR__ . '/locale');
+$translator->defaultDomain(Translator::SYSTEM_DOMAIN);
 // Register language helpers
 Gettext\TranslatorFunctions::register($translator);
 

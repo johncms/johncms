@@ -22,10 +22,10 @@ use Johncms\Modules\Manifest\ModuleManifest;
  * loaded when it is on disk and either belongs to the release and was not switched off, or was
  * installed here and is switched on.
  *
- * Nothing here raises. A module recorded as installed whose files are gone, and a module whose
- * alias another one already holds, are reported as broken and left out of the loading — a site
- * must not be taken down by what happened to a directory. Installing is where such a thing is an
- * error worth refusing.
+ * Nothing here raises. A module recorded as installed whose files are gone, one whose alias
+ * another module already holds, and one whose alias names something the core holds are reported
+ * as broken and left out of the loading — a site must not be taken down by what happened to a
+ * directory. Installing is where such a thing is an error worth refusing.
  */
 final class ModuleRegistry
 {
@@ -42,7 +42,26 @@ final class ModuleRegistry
         /** Loads the modules of the release only: the way back into a site a module has taken down. */
         private readonly bool $safeMode = false,
         private readonly ModuleCompatibilityChecker $compatibility = new ModuleCompatibilityChecker(),
+        /**
+         * Names an alias may not take, mapped to what already holds each. Not modules: the CMS and
+         * the theme engine answer to names of their own, and the check below compares a module
+         * against other modules only.
+         *
+         * @var array<string, string>
+         */
+        private readonly array $reserved = [],
     ) {
+    }
+
+    /**
+     * What holds this name, when it is not a module that does.
+     *
+     * Asked by the install service, so that the refusal to install says the same thing the listing
+     * says about a module already on disk.
+     */
+    public function reservedHolderOf(string $alias): ?string
+    {
+        return $this->reserved[$alias] ?? null;
     }
 
     /**
@@ -283,6 +302,20 @@ final class ModuleRegistry
     {
         $alias = $record !== null ? $record->alias : $manifest->alias;
         $version = $record !== null ? $record->version : $manifest->version;
+
+        $holder = $this->reservedHolderOf($alias);
+        if ($holder !== null) {
+            return new ModuleState(
+                key: $manifest->key,
+                alias: $alias,
+                name: $manifest->name,
+                status: ModuleStatus::Broken,
+                version: $version,
+                system: $manifest->system,
+                manifest: $manifest,
+                problem: sprintf('The alias "%s" is reserved: it names %s.', $alias, $holder),
+            );
+        }
 
         if (isset($claimed[$alias])) {
             return new ModuleState(

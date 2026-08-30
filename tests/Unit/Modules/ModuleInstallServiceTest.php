@@ -226,10 +226,28 @@ final class ModuleInstallServiceTest extends TestCase
     private array $migratorCalls = [];
 
     /**
+     * The registry marks such a module broken and leaves the site running; installing is where it
+     * is an error worth refusing, and the refusal says the same sentence the listing shows.
+     */
+    public function testAModuleWhoseAliasNamesSomethingTheCoreHoldsIsRefused(): void
+    {
+        $service = $this->service(
+            ['vasya/blog' => ['alias' => 'system']],
+            reserved: ['system' => 'the migrations and the translations of the CMS'],
+        );
+
+        $result = $service->install('vasya/blog');
+
+        self::assertFalse($result->isSuccessful());
+        self::assertStringContainsString('is reserved', (string) $result->error());
+        self::assertSame([], $this->migratorCalls);
+    }
+
+    /**
      * @param array<string, array<string, mixed>> $modules
      * @param array<string, ModuleStateRecord>    $state
      */
-    private function service(array $modules, array $state = []): ModuleInstallService
+    private function service(array $modules, array $state = [], array $reserved = []): ModuleInstallService
     {
         $manifests = [];
         foreach ($modules as $key => $options) {
@@ -295,7 +313,7 @@ final class ModuleInstallServiceTest extends TestCase
         );
 
         return new ModuleInstallService(
-            new ModuleRegistry($repository, new ModuleStateStore($this->stateFile)),
+            new ModuleRegistry($repository, new ModuleStateStore($this->stateFile), reserved: $reserved),
             $repository,
             $store,
             $this->migrator,

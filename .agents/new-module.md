@@ -31,7 +31,10 @@ return [
 
 * `key` must match the directory the file lies in, or the module is refused with an error.
 * `alias` may only hold lowercase letters, digits, dots, hyphens and underscores — never a slash.
-  **It is fixed once released**: the journal of migrations is written under it.
+  **It is fixed once released**: the journal of migrations is written under it. It must also be
+  free: not held by another module, and not `system` or `theme`, which the CMS and the theme
+  engine answer to. A module taking `system` would have its migrations merge into the history of
+  the core, where a rollback undoes the schema of the site.
 * `version` — omit it in a module shipped with the CMS; its version is the version of the CMS.
 * `system` — `true` only for a module that must never be switched off (the admin panel).
 * `autoload` — omit it in a module shipped with the CMS (see below).

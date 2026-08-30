@@ -16,6 +16,14 @@ use Gettext\Translator as Gettext;
 
 class Translator extends Gettext
 {
+    /**
+     * The domain of the CMS itself, the one every string outside a module is written in.
+     *
+     * A constant because it is a name held by the core, and a module may not take it: the registry
+     * refuses an alias that names it, the way it refuses an alias another module already holds.
+     */
+    public const string SYSTEM_DOMAIN = 'system';
+
     /** @var string */
     private $locale = 'ru';
 

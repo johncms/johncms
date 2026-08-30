@@ -355,6 +355,11 @@ final readonly class ModuleInstallService
      */
     private function refusalToLoad(ModuleManifest $manifest): ?string
     {
+        $holder = $this->registry->reservedHolderOf($manifest->alias);
+        if ($holder !== null) {
+            return sprintf('The alias "%s" is reserved: it names %s.', $manifest->alias, $holder);
+        }
+
         foreach ($this->registry->states() as $state) {
             if ($state->key !== $manifest->key && $state->alias === $manifest->alias && $state->manifest !== null) {
                 return sprintf('The alias "%s" is already held by the module "%s".', $manifest->alias, $state->key);

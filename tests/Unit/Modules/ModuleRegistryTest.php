@@ -235,12 +235,70 @@ final class ModuleRegistryTest extends TestCase
     }
 
     /**
+     * An alias is a key in several registries at once, and not every holder is a module: the CMS
+     * answers to "system" as a source of migrations and as a domain of translations. The check
+     * between modules never saw that, so a module could take the name and have its migrations
+     * merge into the history of the core — where a rollback would undo the schema of the site.
+     */
+    public function testAModuleCannotTakeANameTheCoreHolds(): void
+    {
+        $registry = $this->registry(
+            onDisk: ['vasya/blog' => $this->manifest('vasya/blog', 'system')],
+            state: ['vasya/blog' => new ModuleStateRecord(key: 'vasya/blog', alias: 'system')],
+            reserved: ['system' => 'the migrations and the translations of the CMS'],
+        );
+
+        $state = $registry->find('vasya/blog');
+
+        self::assertNotNull($state);
+        self::assertSame(ModuleStatus::Broken, $state->status);
+        self::assertStringContainsString('reserved', (string) $state->problem);
+        self::assertSame([], $registry->enabled());
+    }
+
+    /**
+     * The listing and the install service have to say the same thing about the same module, so the
+     * map lives in one place and both ask it.
+     */
+    public function testTheHolderOfAReservedNameIsAnswered(): void
+    {
+        $registry = $this->registry(reserved: ['theme' => 'the templates of the theme']);
+
+        self::assertSame('the templates of the theme', $registry->reservedHolderOf('theme'));
+        self::assertNull($registry->reservedHolderOf('blog'));
+    }
+
+    /**
+     * "admin" is not reserved: the namespace is the templates of the theme and of the admin module
+     * merged, and the two are meant to meet there. The name is held by a module, and the check
+     * between modules is what covers it.
+     */
+    public function testANameAModuleLegitimatelyHoldsIsNotReserved(): void
+    {
+        $registry = $this->registry(
+            onDisk: ['johncms/admin' => $this->manifest('johncms/admin', 'admin', system: true)],
+            bundled: ['johncms/admin'],
+            reserved: ['system' => 'the migrations and the translations of the CMS'],
+        );
+
+        $state = $registry->find('johncms/admin');
+
+        self::assertNotNull($state);
+        self::assertSame(ModuleStatus::Enabled, $state->status);
+    }
+
+    /**
      * @param array<string, ModuleManifest> $onDisk
      * @param list<string>                  $bundled
      * @param array<string, ModuleStateRecord> $state
      */
-    private function registry(array $onDisk = [], array $bundled = [], array $state = [], bool $safeMode = false): ModuleRegistry
-    {
+    private function registry(
+        array $onDisk = [],
+        array $bundled = [],
+        array $state = [],
+        bool $safeMode = false,
+        array $reserved = [],
+    ): ModuleRegistry {
         $store = new ModuleStateStore($this->stateFile);
         if ($state !== []) {
             $store->save($state);
@@ -267,7 +325,13 @@ final class ModuleRegistryTest extends TestCase
             }
         };
 
-        return new ModuleRegistry($repository, $store, $bundled, $safeMode);
+        return new ModuleRegistry(
+            $repository,
+            $store,
+            $bundled,
+            $safeMode,
+            reserved: $reserved,
+        );
     }
 
     /**

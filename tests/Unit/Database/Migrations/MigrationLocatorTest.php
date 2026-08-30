@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Database\Migrations;
 
+use Johncms\Database\Migrations\Exceptions\DuplicateMigrationSourceException;
 use Johncms\Database\Migrations\Exceptions\InvalidMigrationFileException;
 use Johncms\Database\Migrations\MigrationLocator;
 use Johncms\Database\Migrations\MigrationSource;
@@ -111,6 +112,24 @@ final class MigrationLocatorTest extends TestCase
         $this->write('forum', '2026_09_01_120000_create_topics.php');
 
         self::assertCount(2, $this->locator(['system', 'forum'])->locate());
+    }
+
+    /**
+     * The name of a source is what the journal records, so two directories behind one name would
+     * be a single history describing both — and rolling that source back would walk through the
+     * migrations of whoever else claimed the name. A module whose alias is "system" would be
+     * asking the CMS to undo its own schema, so this is refused before a file is read.
+     */
+    public function testTwoSourcesCannotAnswerToOneName(): void
+    {
+        $this->write('system', '2026_08_01_090000_create_files.php');
+
+        $locator = $this->locator(['system', 'system']);
+
+        $this->expectException(DuplicateMigrationSourceException::class);
+        $this->expectExceptionMessage('Two sources of migrations answer to "system"');
+
+        $locator->sources();
     }
 
     /**

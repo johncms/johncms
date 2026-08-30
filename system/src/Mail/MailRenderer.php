@@ -35,7 +35,7 @@ final readonly class MailRenderer
 
         $translator = new Translator();
         $translator->setLocale($locale);
-        $translator->addTranslationDomain('system', ROOT_PATH . 'system/locale');
+        $translator->addTranslationDomain(Translator::SYSTEM_DOMAIN, ROOT_PATH . 'system/locale');
         TranslatorFunctions::register($translator);
 
         $context = $data + ['locale' => $locale];

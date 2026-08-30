@@ -12,6 +12,10 @@ declare(strict_types=1);
 
 namespace Johncms\Modules;
 
+use Johncms\Database\Migrations\SystemMigrationSourceProvider;
+use Johncms\System\i18n\Translator;
+use Johncms\View\Twig\TemplatePathRegistry;
+
 /**
  * Builds the registry, and hands out the same one to everybody.
  *
@@ -42,6 +46,7 @@ final class ModuleRegistryFactory
             state: self::state(),
             bundled: self::bundled(),
             safeMode: defined('MODULES_SAFE_MODE') && constant('MODULES_SAFE_MODE') === true,
+            reserved: self::reserved(),
         );
     }
 
@@ -93,6 +98,39 @@ final class ModuleRegistryFactory
         self::$instance = null;
         self::$modules = null;
         self::$state = null;
+    }
+
+    /**
+     * The names an alias may not take, and what already holds each of them.
+     *
+     * An alias is a key in several registries at once, and not every holder is a module: the CMS
+     * itself answers to "system" as a source of migrations and as a domain of translations, and
+     * the theme engine answers to "theme" as a namespace of templates. The check the registry
+     * already had compares a module against other modules, so it never saw those.
+     *
+     * Assembled here rather than inside ModuleRegistry, because this is where the registry is put
+     * together and the only place that may reach across into the view and the database without
+     * the module subsystem depending on them.
+     *
+     * "admin" is deliberately absent. It is a namespace of the theme as well, but there the two
+     * are meant to meet — @admin is the templates of the theme and of the admin module merged —
+     * and reserving the name would mark a module of the release as broken. It is held by that
+     * module, and the check between modules covers it. The day the admin panel becomes a module a
+     * site can remove, this is the comment to come back to.
+     *
+     * @return array<string, string> Name to what holds it, in a sentence a person can act on.
+     */
+    private static function reserved(): array
+    {
+        return array_merge(
+            // One name, two holders in the core: the same "system" names the migrations of the CMS
+            // and the domain its strings are written in.
+            array_fill_keys(
+                [SystemMigrationSourceProvider::NAME, Translator::SYSTEM_DOMAIN],
+                'the migrations and the translations of the CMS'
+            ),
+            [TemplatePathRegistry::THEME_NAMESPACE => 'the templates of the theme'],
+        );
     }
 
     /**
