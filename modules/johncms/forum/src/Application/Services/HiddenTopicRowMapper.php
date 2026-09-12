@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Johncms\Modules\Admin\Application\Services;
+namespace Johncms\Modules\Forum\Application\Services;
 
 use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\Services\ForumTopicPathService;

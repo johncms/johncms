@@ -24,13 +24,6 @@ msgstr "Administratoriaus panele"
 msgid "Dashboard"
 msgstr "Prietaisų skydelio"
 
-#: modules/admin/src/Application/Controllers/Forum/ForumDashboardController.php:27
-#: modules/admin/src/Application/Controllers/Forum/ForumSettingsController.php:74
-#: modules/admin/src/Application/Controllers/Forum/HiddenPostsController.php:52
-#: modules/admin/src/Application/Controllers/Forum/HiddenTopicsController.php:52
-msgid "Forum Management"
-msgstr "Forumo Vadovavimas"
-
 #: modules/admin/src/Application/Controllers/Forum/ForumSettingsController.php:38
 #: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:108
 #: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:226
@@ -63,10 +56,6 @@ msgstr "Forumo Vadovavimas"
 msgid "Wrong data"
 msgstr "Klaidingi duomenys"
 
-#: modules/admin/src/Application/Controllers/Forum/ForumSettingsController.php:54
-msgid "ERROR: Can not write file `forum.local.php`"
-msgstr ""
-
 #: modules/admin/src/Application/Controllers/Forum/ForumSettingsController.php:57
 #: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:61
 #: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:47
@@ -75,44 +64,6 @@ msgstr ""
 #: modules/admin/src/Application/Controllers/Users/KarmaController.php:56
 msgid "Settings are saved successfully"
 msgstr "Nustatymai išsaugoti sėkmingai"
-
-#: modules/admin/src/Application/Controllers/Forum/ForumSettingsController.php:73
-msgid "Forum Settings"
-msgstr ""
-
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:48
-msgid "List of sections"
-msgstr "Skyrių sąrašas"
-
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:52
-msgid "List of categories"
-msgstr "Kategoriju sarašas"
-
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:57
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:91
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:190
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:276
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:349
-#: modules/admin/templates/forum/index.phtml:26
-msgid "Forum structure"
-msgstr "Forumo struktūra"
-
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:85
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:143
-msgid "Invalid ID"
-msgstr "Netinkamas ID"
-
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:90
-msgid "Add Section"
-msgstr "Pridėti skyrių"
-
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:90
-msgid "Add Category"
-msgstr "Pridėti kategoriją"
-
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:117
-msgid "You have not entered Title"
-msgstr "Jus neįvedėte Temos"
 
 #: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:119
 #: modules/admin/templates/ads_add.phtml:38
@@ -127,26 +78,6 @@ msgstr "Jus neįvedėte Temos"
 msgid "Title"
 msgstr "Tema"
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:119
-msgid "Invalid length"
-msgstr "Neleistinas ilgis"
-
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:122
-msgid "Description should be at least 2 characters in length"
-msgstr "Aprašymas turi būti ne mažiau kaip 2 simbolių ilgio"
-
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:171
-msgid "Please select a valid parent"
-msgstr "Prašome, pasirinkite galiojantį tėvų"
-
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:189
-msgid "Delete section"
-msgstr "Trinti skyri"
-
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:189
-msgid "Delete category"
-msgstr "Trinti kategorija"
-
 #: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:256
 #: modules/admin/src/Application/Middlewares/AdminAccessMiddleware.php:54
 #: modules/admin/src/Application/Middlewares/SuperAdminAccessMiddleware.php:53
@@ -157,37 +88,6 @@ msgstr "Trinti kategorija"
 #: modules/admin/templates/access.phtml:136
 msgid "Access denied"
 msgstr "Prieiga nesuteikta"
-
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:275
-msgid "Edit Section"
-msgstr "Redaguoti skyrių"
-
-#: modules/admin/src/Application/Controllers/Forum/HiddenPostsController.php:51
-#: modules/admin/templates/forum/index.phtml:27
-msgid "Hidden posts"
-msgstr "Paslėpti pranešimai"
-
-#: modules/admin/src/Application/Controllers/Forum/HiddenPostsController.php:92
-#: modules/admin/src/Application/Services/HiddenPostRowMapper.php:70
-msgid "by topic"
-msgstr "pagal temą"
-
-#: modules/admin/src/Application/Controllers/Forum/HiddenPostsController.php:97
-#: modules/admin/src/Application/Controllers/Forum/HiddenTopicsController.php:92
-#: modules/admin/src/Application/Services/HiddenPostRowMapper.php:71
-#: modules/admin/src/Application/Services/HiddenTopicRowMapper.php:76
-msgid "by author"
-msgstr "pagal autorių"
-
-#: modules/admin/src/Application/Controllers/Forum/HiddenTopicsController.php:51
-#: modules/admin/templates/forum/index.phtml:28
-msgid "Hidden topics"
-msgstr "Paslėptos temos"
-
-#: modules/admin/src/Application/Controllers/Forum/HiddenTopicsController.php:97
-#: modules/admin/src/Application/Services/HiddenTopicRowMapper.php:77
-msgid "by section"
-msgstr "pagal skyriu"
 
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:54
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:76
@@ -1230,14 +1130,6 @@ msgstr ""
 msgid "Update cache"
 msgstr ""
 
-#: modules/admin/templates/forum/add.phtml:23
-msgid "Parent section:"
-msgstr "Tėvų skyriuje:"
-
-#: modules/admin/templates/forum/add.phtml:28
-msgid "Min. 2, Max. 30 characters"
-msgstr "Min. 2, Max. 30 simbolių"
-
 #: modules/admin/templates/forum/add.phtml:32
 #: modules/admin/templates/forum/edit.phtml:40
 #: modules/admin/templates/settings.phtml:80
@@ -1249,156 +1141,6 @@ msgstr "Min. 2, Max. 30 simbolių"
 #: modules/admin/templates/system/system_check.phtml:57
 msgid "Description"
 msgstr "Aprašymas"
-
-#: modules/admin/templates/forum/add.phtml:34
-#: modules/admin/templates/forum/edit.phtml:42
-msgid "Optional field"
-msgstr "Neprivalomas laukas"
-
-#: modules/admin/templates/forum/add.phtml:34
-#: modules/admin/templates/forum/edit.phtml:42
-msgid "Min. 2, Max. 500 characters"
-msgstr "Min. 2, Maks. 500 simbolių"
-
-#: modules/admin/templates/forum/add.phtml:38
-#: modules/admin/templates/forum/add.phtml:41
-#: modules/admin/templates/forum/edit.phtml:54
-#: modules/admin/templates/forum/edit.phtml:55
-msgid "Common access"
-msgstr "Bendros prieigos"
-
-#: modules/admin/templates/forum/add.phtml:45
-#: modules/admin/templates/forum/edit.phtml:55
-msgid "Assign the newly created authors as curators"
-msgstr "Priskirti naujai sukurtą autoriai, kaip kuratorių,"
-
-#: modules/admin/templates/forum/add.phtml:49
-#: modules/admin/templates/forum/edit.phtml:55
-msgid "Allow authors to edit the 1st post"
-msgstr "Leisti autoriams redaguoti 1st post"
-
-#: modules/admin/templates/forum/add.phtml:53
-#: modules/admin/templates/forum/edit.phtml:55
-msgid "Only for reading"
-msgstr "Tik skaitymui"
-
-#: modules/admin/templates/forum/add.phtml:57
-#: modules/admin/templates/forum/edit.phtml:62
-msgid "Section type"
-msgstr "Skyriaus tipas"
-
-#: modules/admin/templates/forum/add.phtml:60
-#: modules/admin/templates/forum/edit.phtml:65
-msgid "For subsections"
-msgstr "Už poskyrių"
-
-#: modules/admin/templates/forum/add.phtml:64
-#: modules/admin/templates/forum/edit.phtml:69
-msgid "For topics"
-msgstr "Už temos"
-
-#: modules/admin/templates/forum/del_confirm_move.phtml:18
-msgid "<h3>WARNING!</h3>There are subsections. Move them to another category."
-msgstr "<h3>DĖMESIO!</h3>yra poskyrių. Jas perkelti į kitą kategoriją."
-
-#: modules/admin/templates/forum/del_confirm_move.phtml:25
-#: modules/admin/templates/forum/edit.phtml:73
-msgid "Category"
-msgstr "Kategorija"
-
-#: modules/admin/templates/forum/del_confirm_move.phtml:32
-msgid "All categories, topics, and files will be moved into selected category. Old category will be removed."
-msgstr "Visų kategorijų, temų, ir failai bus perkelti į pasirinktos kategorijos. Sena kategorija bus pašalintas."
-
-#: modules/admin/templates/forum/del_confirm_move.phtml:35
-#: modules/admin/templates/forum/del_confirm_move_topics.phtml:42
-msgid "Move"
-msgstr "Perkelti"
-
-#: modules/admin/templates/forum/del_confirm_move.phtml:41
-#: modules/admin/templates/forum/del_confirm_move_topics.phtml:46
-msgid "Complete removal"
-msgstr "Visiškai pašalinus"
-
-#: modules/admin/templates/forum/del_confirm_move.phtml:43
-msgid "If you want to destroy all the information, first remove"
-msgstr "Jei norite sunaikinti visą informaciją, pirmiausia pašalinti"
-
-#: modules/admin/templates/forum/del_confirm_move.phtml:44
-msgid "subsections"
-msgstr "poskirsniuose"
-
-#: modules/admin/templates/forum/del_confirm_move_topics.phtml:19
-msgid "<h3>WARNING!</h3>There are topics in the section. You must move them to another section."
-msgstr "<h3>DĖMESIO!</h3>yra temų šiame skyriuje. Jūs turite perkelti juos į kitą skyrių."
-
-#: modules/admin/templates/forum/del_confirm_move_topics.phtml:25
-msgid "Select section"
-msgstr "Pasirinkite skyrius"
-
-#: modules/admin/templates/forum/del_confirm_move_topics.phtml:32
-msgid "Other category"
-msgstr "Kitos kategorijos"
-
-#: modules/admin/templates/forum/del_confirm_move_topics.phtml:39
-msgid "All the topics and files will be moved to selected section. Old section will be deleted."
-msgstr "Visos temos ir failai bus perkelti į pasirinktą skirsnį. Senoji dalis bus ištrinta."
-
-#: modules/admin/templates/forum/del_confirm_move_topics.phtml:47
-msgid "WARNING! All the information will be deleted"
-msgstr "DĖMESIO! Visa informacija bus ištrinta"
-
-#: modules/admin/templates/forum/edit.phtml:30
-msgid "Min. 2, Max. 150 characters"
-msgstr ""
-
-#: modules/admin/templates/forum/edit.phtml:34
-#: modules/admin/templates/forum/edit.phtml:35
-msgid "Order"
-msgstr "Užsakymo"
-
-#: modules/admin/templates/forum/edit.phtml:36
-msgid "Only numbers"
-msgstr "Tik skaičiai"
-
-#: modules/admin/templates/forum/edit.phtml:46
-msgid "Meta description"
-msgstr ""
-
-#: modules/admin/templates/forum/edit.phtml:50
-msgid "Meta keywords"
-msgstr ""
-
-#: modules/admin/templates/forum/hidden_posts.phtml:20
-#: modules/admin/templates/forum/hidden_topics.phtml:20
-msgid "Filtered:"
-msgstr "Filtruotas:"
-
-#: modules/admin/templates/forum/hidden_posts.phtml:39
-msgid "Go to page"
-msgstr "Eikite į puslapio"
-
-#: modules/admin/templates/forum/hidden_posts.phtml:52
-#: modules/admin/templates/forum/hidden_topics.phtml:47
-msgid "Topic:"
-msgstr "Tema"
-
-#: modules/admin/templates/forum/hidden_posts.phtml:76
-msgid "Edited:"
-msgstr "Redaguoti:"
-
-#: modules/admin/templates/forum/hidden_posts.phtml:79
-msgid "Post deleted:"
-msgstr "Po išbraukta:"
-
-#: modules/admin/templates/forum/hidden_posts.phtml:81
-msgid "Post restored by:"
-msgstr "Po atkurta:"
-
-#: modules/admin/templates/forum/hidden_posts.phtml:84
-#: modules/admin/templates/forum/hidden_topics.phtml:80
-msgid "Filter:"
-msgstr "Filtruoti"
 
 #: modules/admin/templates/forum/hidden_posts.phtml:104
 #: modules/admin/templates/forum/hidden_topics.phtml:100
@@ -1412,99 +1154,6 @@ msgstr "Ištrinti visas"
 #: modules/admin/templates/userlist.phtml:36
 msgid "Total"
 msgstr "Viso"
-
-#: modules/admin/templates/forum/hidden_topics.phtml:51
-msgid "Path:"
-msgstr "Kelias:"
-
-#: modules/admin/templates/forum/hidden_topics.phtml:77
-msgid "Topic deleted:"
-msgstr "Tema ištrinta:"
-
-#: modules/admin/templates/forum/index.phtml:12
-msgid "Statistic"
-msgstr "Statistika"
-
-#: modules/admin/templates/forum/index.phtml:14
-msgid "Categories"
-msgstr "Kategorijos"
-
-#: modules/admin/templates/forum/index.phtml:15
-#: modules/admin/templates/forum/settings.phtml:41
-msgid "Sections"
-msgstr "Skyriai"
-
-#: modules/admin/templates/forum/index.phtml:16
-#: modules/admin/templates/forum/settings.phtml:52
-msgid "Topics"
-msgstr "Tema"
-
-#: modules/admin/templates/forum/index.phtml:17
-msgid "Messages"
-msgstr "Žinutės"
-
-#: modules/admin/templates/forum/index.phtml:18
-msgid "Files"
-msgstr "Failai"
-
-#: modules/admin/templates/forum/index.phtml:19
-msgid "Votes"
-msgstr "Balsų"
-
-#: modules/admin/templates/forum/index.phtml:21
-#: modules/admin/templates/forum/index.phtml:24
-msgid "Settings"
-msgstr "Nustatymai"
-
-#: modules/admin/templates/forum/settings.phtml:25
-msgid "Common settings"
-msgstr ""
-
-#: modules/admin/templates/forum/settings.phtml:28
-msgid "Show file counters"
-msgstr ""
-
-#: modules/admin/templates/forum/settings.phtml:32
-msgid "SEO settings"
-msgstr ""
-
-#: modules/admin/templates/forum/settings.phtml:34
-msgid "Forum keywords"
-msgstr ""
-
-#: modules/admin/templates/forum/settings.phtml:38
-msgid "Forum description"
-msgstr ""
-
-#: modules/admin/templates/forum/settings.phtml:43
-msgid "Section keywords"
-msgstr ""
-
-#: modules/admin/templates/forum/settings.phtml:45
-#: modules/admin/templates/forum/settings.phtml:50
-msgid "Macros available: #name#, #description#"
-msgstr ""
-
-#: modules/admin/templates/forum/settings.phtml:48
-msgid "Section description"
-msgstr ""
-
-#: modules/admin/templates/forum/settings.phtml:54
-msgid "Topic keywords"
-msgstr ""
-
-#: modules/admin/templates/forum/settings.phtml:56
-#: modules/admin/templates/forum/settings.phtml:61
-msgid "Macros available: #name#"
-msgstr ""
-
-#: modules/admin/templates/forum/settings.phtml:59
-msgid "Topic description"
-msgstr ""
-
-#: modules/admin/templates/forum/structure.phtml:27
-msgid "View"
-msgstr "Peržiūrėti"
 
 #: modules/admin/templates/index.phtml:4
 msgid "Show admin menu"

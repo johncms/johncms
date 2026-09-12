@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Johncms\Modules\Admin\Application\Controllers\Forum;
+namespace Johncms\Modules\Forum\Application\Controllers\Admin;
 
-use Johncms\Modules\Admin\Application\DTO\ForumSettingsDTO;
-use Johncms\Modules\Admin\Application\UseCases\UpdateForumSettingsUseCase;
 use Johncms\Modules\Admin\Domain\Exceptions\ConfigWriteException;
+use Johncms\Modules\Forum\Application\DTO\ForumSettingsDTO;
+use Johncms\Modules\Forum\Application\UseCases\UpdateForumSettingsUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
@@ -56,7 +56,7 @@ final readonly class ForumSettingsController
         $this->navChain->add(__('Forum Management'), '/admin/forum');
         $this->navChain->add($title);
 
-        return new ViewResponse('@admin/forum-settings.twig', [
+        return new ViewResponse('@forum/admin/settings.twig', [
             'title'           => $title,
             'page_title'      => $title,
             'module_menu'     => ['forum' => true],

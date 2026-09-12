@@ -1267,3 +1267,174 @@ msgstr "Pengguna"
 msgid "Guests"
 msgstr "Tamu"
 
+
+msgid "Forum Management"
+msgstr "Pengelola Forum"
+
+msgid "Settings are saved successfully"
+msgstr "Pengaturan berhasil disimpan"
+
+msgid "List of categories"
+msgstr "Daftar kategori"
+
+msgid "Forum structure"
+msgstr "Struktur Forum"
+
+msgid "Invalid ID"
+msgstr "Tidak valid ID"
+
+msgid "Add Section"
+msgstr "Tambahkan Kategori"
+
+msgid "Add Category"
+msgstr "Tambahkan Kategori"
+
+msgid "You have not entered Title"
+msgstr "Anda belum memasukkan judul"
+
+msgid "Description should be at least 2 characters in length"
+msgstr "Panjang deskripsi harus minimal 2 karakter"
+
+msgid "Please select a valid parent"
+msgstr "Silahkan pilih induk yang valid"
+
+msgid "Delete section"
+msgstr "Hapus bagian"
+
+msgid "Delete category"
+msgstr "Hapus kategori"
+
+msgid "Access denied"
+msgstr "Akses ditolak"
+
+msgid "Edit Section"
+msgstr "Sunting Bagian"
+
+msgid "Hidden posts"
+msgstr "Pos tersembunyi"
+
+msgid "by topic"
+msgstr "berdasarkan topik"
+
+msgid "by author"
+msgstr "berdasarkan penulis"
+
+msgid "Hidden topics"
+msgstr "Topik tersembunyi"
+
+msgid "by section"
+msgstr "berdasarkan bagian"
+
+msgid "Add"
+msgstr "Tambahkan"
+
+msgid "Parent section:"
+msgstr "Bagian induk:"
+
+msgid "Min. 2, Max. 30 characters"
+msgstr "Min. 2, Maks. 30 karakter"
+
+msgid "Description"
+msgstr "Deskripsi"
+
+msgid "Optional field"
+msgstr "Kolom tidak wajib"
+
+msgid "Min. 2, Max. 500 characters"
+msgstr "Min. 2, maks. 500 karakter"
+
+msgid "Common access"
+msgstr "Akses umum"
+
+msgid "Assign the newly created authors as curators"
+msgstr "Menetapkan penulis baru sebagai curators"
+
+msgid "Allow authors to edit the 1st post"
+msgstr "Izinkan penulis menyunting pos pertama"
+
+msgid "Only for reading"
+msgstr "Hanya untuk dibaca"
+
+msgid "Section type"
+msgstr "Tipe Bagian"
+
+msgid "For subsections"
+msgstr "Untuk subbagian"
+
+msgid "For topics"
+msgstr "Untuk topik-topik"
+
+msgid "<h3>WARNING!</h3>There are subsections. Move them to another category."
+msgstr "<h3>PERHATIAN!</h3>Ada subbagian. Pindahkan ke kategori yang lain."
+
+msgid "All categories, topics, and files will be moved into selected category. Old category will be removed."
+msgstr "Semua kategori, topik, dan berkas akan dipindahkan ke kategori yang dipilih. Kategori Lama akan dihapus."
+
+msgid "Complete removal"
+msgstr "Penghapusan lengkap"
+
+msgid "If you want to destroy all the information, first remove"
+msgstr "Jika kamu ingin menghancurkan semua infomasi, hapus terlebih dahulu"
+
+msgid "subsections"
+msgstr "subbagian"
+
+msgid "<h3>WARNING!</h3>There are topics in the section. You must move them to another section."
+msgstr "<h3>PERINGATAN!</h3>Terdapat topik yang sama di kategori ini. Kamu harus pindahkan ke kategori yang lain."
+
+msgid "Select section"
+msgstr "Pilih bagian"
+
+msgid "Other category"
+msgstr "Kategori lain"
+
+msgid "All the topics and files will be moved to selected section. Old section will be deleted."
+msgstr "Semua Topik dan file akan dipindahkan ke Katogori yang dipilih. Kategori yang lama akan di hapus."
+
+msgid "WARNING! All the information will be deleted"
+msgstr "PERHATIAN! Semua Infomasi akan dihapus"
+
+msgid "Only numbers"
+msgstr "Hanya angka"
+
+msgid "Filtered:"
+msgstr "Disaring:"
+
+msgid "Go to page"
+msgstr "Pergi ke halaman"
+
+msgid "Topic:"
+msgstr "Topik"
+
+msgid "Filter:"
+msgstr "Saring"
+
+msgid "Delete all"
+msgstr "Hapus semua"
+
+msgid "Topic deleted:"
+msgstr "Topik dihapus"
+
+msgid "Statistic"
+msgstr "Statistik"
+
+msgid "Categories"
+msgstr "Kategori"
+
+msgid "Sections"
+msgstr "Bagian"
+
+msgid "Topics"
+msgstr "Topik"
+
+msgid "Messages"
+msgstr "Pesan"
+
+msgid "Votes"
+msgstr "Penilaian"
+
+msgid "Settings"
+msgstr "Pengaturan"
+
+msgid "View"
+msgstr "Lihat"

@@ -94,25 +94,25 @@ parameters:
 			message: '#^Call to an undefined method Illuminate\\Database\\Query\\Builder\:\:withCount\(\)\.$#'
 			identifier: method.notFound
 			count: 2
-			path: modules/johncms/admin/src/Infrastructure/Persistence/Repository/EloquentForumStructureRepository.php
+			path: modules/johncms/forum/src/Infrastructure/Persistence/Repository/ForumStructureRepository.php
 
 		-
-			message: '#^Method Johncms\\Modules\\Admin\\Infrastructure\\Persistence\\Repository\\EloquentForumStructureRepository\:\:categoriesForMove\(\) should return Illuminate\\Support\\Collection\<int, Johncms\\Modules\\Forum\\Domain\\Models\\ForumSection\> but returns Illuminate\\Support\\Collection\<int, stdClass\>\.$#'
+			message: '#^Method Johncms\\Modules\\Forum\\Infrastructure\\Persistence\\Repository\\ForumStructureRepository\:\:categoriesForMove\(\) should return Illuminate\\Support\\Collection\<int, Johncms\\Modules\\Forum\\Domain\\Models\\ForumSection\> but returns Illuminate\\Support\\Collection\<int, stdClass\>\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/johncms/admin/src/Infrastructure/Persistence/Repository/EloquentForumStructureRepository.php
+			path: modules/johncms/forum/src/Infrastructure/Persistence/Repository/ForumStructureRepository.php
 
 		-
-			message: '#^Method Johncms\\Modules\\Admin\\Infrastructure\\Persistence\\Repository\\EloquentForumStructureRepository\:\:sectionsForMove\(\) should return Illuminate\\Support\\Collection\<int, Johncms\\Modules\\Forum\\Domain\\Models\\ForumSection\> but returns Illuminate\\Support\\Collection\<int, stdClass\>\.$#'
+			message: '#^Method Johncms\\Modules\\Forum\\Infrastructure\\Persistence\\Repository\\ForumStructureRepository\:\:sectionsForMove\(\) should return Illuminate\\Support\\Collection\<int, Johncms\\Modules\\Forum\\Domain\\Models\\ForumSection\> but returns Illuminate\\Support\\Collection\<int, stdClass\>\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/johncms/admin/src/Infrastructure/Persistence/Repository/EloquentForumStructureRepository.php
+			path: modules/johncms/forum/src/Infrastructure/Persistence/Repository/ForumStructureRepository.php
 
 		-
-			message: '#^Method Johncms\\Modules\\Admin\\Infrastructure\\Persistence\\Repository\\EloquentForumStructureRepository\:\:topLevelExcept\(\) should return Illuminate\\Support\\Collection\<int, Johncms\\Modules\\Forum\\Domain\\Models\\ForumSection\> but returns Illuminate\\Support\\Collection\<int, stdClass\>\.$#'
+			message: '#^Method Johncms\\Modules\\Forum\\Infrastructure\\Persistence\\Repository\\ForumStructureRepository\:\:topLevelExcept\(\) should return Illuminate\\Support\\Collection\<int, Johncms\\Modules\\Forum\\Domain\\Models\\ForumSection\> but returns Illuminate\\Support\\Collection\<int, stdClass\>\.$#'
 			identifier: return.type
 			count: 1
-			path: modules/johncms/admin/src/Infrastructure/Persistence/Repository/EloquentForumStructureRepository.php
+			path: modules/johncms/forum/src/Infrastructure/Persistence/Repository/ForumStructureRepository.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Admin\\Infrastructure\\Persistence\\Repository\\EloquentIpBanRepository\:\:findByIp\(\) never returns Johncms\\Modules\\Admin\\Domain\\Models\\BanIp so it can be removed from the return type\.$#'

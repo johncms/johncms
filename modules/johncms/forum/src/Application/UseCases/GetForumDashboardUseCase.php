@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Johncms\Modules\Admin\Application\UseCases;
+namespace Johncms\Modules\Forum\Application\UseCases;
 
-use Johncms\Modules\Admin\Domain\Repository\ForumAdminRepositoryInterface;
+use Johncms\Modules\Forum\Domain\Repository\ForumAdminRepositoryInterface;
 
 final readonly class GetForumDashboardUseCase
 {

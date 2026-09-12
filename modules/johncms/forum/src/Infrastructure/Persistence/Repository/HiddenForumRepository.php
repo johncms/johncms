@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Johncms\Modules\Admin\Infrastructure\Persistence\Repository;
+namespace Johncms\Modules\Forum\Infrastructure\Persistence\Repository;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
-use Johncms\Modules\Admin\Domain\Repository\HiddenForumRepositoryInterface;
+use Johncms\Modules\Forum\Domain\Repository\HiddenForumRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Models\ForumFile;
 use Johncms\Modules\Forum\Domain\Models\ForumMessage;
 use Johncms\Modules\Forum\Domain\Models\ForumTopic;
 
-final class EloquentHiddenForumRepository implements HiddenForumRepositoryInterface
+final class HiddenForumRepository implements HiddenForumRepositoryInterface
 {
     public function countTopics(?int $userId, ?int $sectionId): int
     {

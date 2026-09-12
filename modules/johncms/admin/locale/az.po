@@ -24,13 +24,6 @@ msgstr "Admin Paneli"
 msgid "Dashboard"
 msgstr "İdarəetmə Paneli"
 
-#: modules/admin/src/Application/Controllers/Forum/ForumDashboardController.php:27
-#: modules/admin/src/Application/Controllers/Forum/ForumSettingsController.php:74
-#: modules/admin/src/Application/Controllers/Forum/HiddenPostsController.php:52
-#: modules/admin/src/Application/Controllers/Forum/HiddenTopicsController.php:52
-msgid "Forum Management"
-msgstr "İdarə Forum"
-
 #: modules/admin/src/Application/Controllers/Forum/ForumSettingsController.php:38
 #: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:108
 #: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:226
@@ -63,10 +56,6 @@ msgstr "İdarə Forum"
 msgid "Wrong data"
 msgstr "Səhv məlumatlar"
 
-#: modules/admin/src/Application/Controllers/Forum/ForumSettingsController.php:54
-msgid "ERROR: Can not write file `forum.local.php`"
-msgstr ""
-
 #: modules/admin/src/Application/Controllers/Forum/ForumSettingsController.php:57
 #: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:61
 #: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:47
@@ -75,44 +64,6 @@ msgstr ""
 #: modules/admin/src/Application/Controllers/Users/KarmaController.php:56
 msgid "Settings are saved successfully"
 msgstr "Ayarlar saxlanıldı"
-
-#: modules/admin/src/Application/Controllers/Forum/ForumSettingsController.php:73
-msgid "Forum Settings"
-msgstr "Parametrlər Forum"
-
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:48
-msgid "List of sections"
-msgstr "Bölmələr siyahısı"
-
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:52
-msgid "List of categories"
-msgstr "Boş kateqoriyaların siyahısı:"
-
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:57
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:91
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:190
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:276
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:349
-#: modules/admin/templates/forum/index.phtml:26
-msgid "Forum structure"
-msgstr "Forumun strukturu"
-
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:85
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:143
-msgid "Invalid ID"
-msgstr "Yalnış İD"
-
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:90
-msgid "Add Section"
-msgstr "Bölməyi Redaktə et"
-
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:90
-msgid "Add Category"
-msgstr "Kateqoriya Əlavə Et"
-
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:117
-msgid "You have not entered Title"
-msgstr "Siz adınızı daxil etmədiniz"
 
 #: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:119
 #: modules/admin/templates/ads_add.phtml:38
@@ -127,26 +78,6 @@ msgstr "Siz adınızı daxil etmədiniz"
 msgid "Title"
 msgstr "Başlıq"
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:119
-msgid "Invalid length"
-msgstr "Yanlış vaxtölçən müddəti"
-
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:122
-msgid "Description should be at least 2 characters in length"
-msgstr "Təsviri az olmamalıdır 2 simvol"
-
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:171
-msgid "Please select a valid parent"
-msgstr "Buyurun, seçin, düzgün valideyn"
-
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:189
-msgid "Delete section"
-msgstr "Bölmə sil"
-
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:189
-msgid "Delete category"
-msgstr "Kateqoriyanı sil"
-
 #: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:256
 #: modules/admin/src/Application/Middlewares/AdminAccessMiddleware.php:54
 #: modules/admin/src/Application/Middlewares/SuperAdminAccessMiddleware.php:53
@@ -157,37 +88,6 @@ msgstr "Kateqoriyanı sil"
 #: modules/admin/templates/access.phtml:136
 msgid "Access denied"
 msgstr "Giris engellendi"
-
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:275
-msgid "Edit Section"
-msgstr "Bölməyi Redaktə et"
-
-#: modules/admin/src/Application/Controllers/Forum/HiddenPostsController.php:51
-#: modules/admin/templates/forum/index.phtml:27
-msgid "Hidden posts"
-msgstr "Hidden Posts"
-
-#: modules/admin/src/Application/Controllers/Forum/HiddenPostsController.php:92
-#: modules/admin/src/Application/Services/HiddenPostRowMapper.php:70
-msgid "by topic"
-msgstr "mövzu üzrə"
-
-#: modules/admin/src/Application/Controllers/Forum/HiddenPostsController.php:97
-#: modules/admin/src/Application/Controllers/Forum/HiddenTopicsController.php:92
-#: modules/admin/src/Application/Services/HiddenPostRowMapper.php:71
-#: modules/admin/src/Application/Services/HiddenTopicRowMapper.php:76
-msgid "by author"
-msgstr "Müəllif tərəfindən"
-
-#: modules/admin/src/Application/Controllers/Forum/HiddenTopicsController.php:51
-#: modules/admin/templates/forum/index.phtml:28
-msgid "Hidden topics"
-msgstr "Gizli mövzular"
-
-#: modules/admin/src/Application/Controllers/Forum/HiddenTopicsController.php:97
-#: modules/admin/src/Application/Services/HiddenTopicRowMapper.php:77
-msgid "by section"
-msgstr "Bölməyə"
 
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:54
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:76
@@ -1230,14 +1130,6 @@ msgstr ""
 msgid "Update cache"
 msgstr ""
 
-#: modules/admin/templates/forum/add.phtml:23
-msgid "Parent section:"
-msgstr "Bölmə valideynlər üçün:"
-
-#: modules/admin/templates/forum/add.phtml:28
-msgid "Min. 2, Max. 30 characters"
-msgstr "Min. 2, Max. 30 simvol"
-
 #: modules/admin/templates/forum/add.phtml:32
 #: modules/admin/templates/forum/edit.phtml:40
 #: modules/admin/templates/settings.phtml:80
@@ -1249,156 +1141,6 @@ msgstr "Min. 2, Max. 30 simvol"
 #: modules/admin/templates/system/system_check.phtml:57
 msgid "Description"
 msgstr "Açıqlama"
-
-#: modules/admin/templates/forum/add.phtml:34
-#: modules/admin/templates/forum/edit.phtml:42
-msgid "Optional field"
-msgstr "Lazimi sahe"
-
-#: modules/admin/templates/forum/add.phtml:34
-#: modules/admin/templates/forum/edit.phtml:42
-msgid "Min. 2, Max. 500 characters"
-msgstr "Min. 2, Max. 30 simvol"
-
-#: modules/admin/templates/forum/add.phtml:38
-#: modules/admin/templates/forum/add.phtml:41
-#: modules/admin/templates/forum/edit.phtml:54
-#: modules/admin/templates/forum/edit.phtml:55
-msgid "Common access"
-msgstr "Ümumi giriş"
-
-#: modules/admin/templates/forum/add.phtml:45
-#: modules/admin/templates/forum/edit.phtml:55
-msgid "Assign the newly created authors as curators"
-msgstr "Azərbaycan yeni yaradılmış müəllifləri kimi кураторов"
-
-#: modules/admin/templates/forum/add.phtml:49
-#: modules/admin/templates/forum/edit.phtml:55
-msgid "Allow authors to edit the 1st post"
-msgstr "Muelliflere 1-ci postu editlemeye imkan vee"
-
-#: modules/admin/templates/forum/add.phtml:53
-#: modules/admin/templates/forum/edit.phtml:55
-msgid "Only for reading"
-msgstr "Yalnız oxumaq üçün"
-
-#: modules/admin/templates/forum/add.phtml:57
-#: modules/admin/templates/forum/edit.phtml:62
-msgid "Section type"
-msgstr "Bölmə növü"
-
-#: modules/admin/templates/forum/add.phtml:60
-#: modules/admin/templates/forum/edit.phtml:65
-msgid "For subsections"
-msgstr "Üçün alt"
-
-#: modules/admin/templates/forum/add.phtml:64
-#: modules/admin/templates/forum/edit.phtml:69
-msgid "For topics"
-msgstr "Basliqlar ucun"
-
-#: modules/admin/templates/forum/del_confirm_move.phtml:18
-msgid "<h3>WARNING!</h3>There are subsections. Move them to another category."
-msgstr "<h3>diqqət!</h3>var подразделы. Onların hərəkət və başqa bir kateqoriya."
-
-#: modules/admin/templates/forum/del_confirm_move.phtml:25
-#: modules/admin/templates/forum/edit.phtml:73
-msgid "Category"
-msgstr "Kateqoriya"
-
-#: modules/admin/templates/forum/del_confirm_move.phtml:32
-msgid "All categories, topics, and files will be moved into selected category. Old category will be removed."
-msgstr "Bütün kateqoriyalar bölmələr və fayllar köçürülüb seçilmiş kateqoriya. Köhnə kateqoriyalar silinəcək."
-
-#: modules/admin/templates/forum/del_confirm_move.phtml:35
-#: modules/admin/templates/forum/del_confirm_move_topics.phtml:42
-msgid "Move"
-msgstr "Yerini dəyiş"
-
-#: modules/admin/templates/forum/del_confirm_move.phtml:41
-#: modules/admin/templates/forum/del_confirm_move_topics.phtml:46
-msgid "Complete removal"
-msgstr "Tam aradan qaldırılması"
-
-#: modules/admin/templates/forum/del_confirm_move.phtml:43
-msgid "If you want to destroy all the information, first remove"
-msgstr "Əgər siz məhv etmək üçün bütün məlumat, əvvəlcə sil"
-
-#: modules/admin/templates/forum/del_confirm_move.phtml:44
-msgid "subsections"
-msgstr "Üçün alt"
-
-#: modules/admin/templates/forum/del_confirm_move_topics.phtml:19
-msgid "<h3>WARNING!</h3>There are topics in the section. You must move them to another section."
-msgstr "<h3>diqqət!</h3>var mövzular bölməsində. Siz onları hərəkət etməlidir, digər bölmə."
-
-#: modules/admin/templates/forum/del_confirm_move_topics.phtml:25
-msgid "Select section"
-msgstr "Hərəkət seçin"
-
-#: modules/admin/templates/forum/del_confirm_move_topics.phtml:32
-msgid "Other category"
-msgstr "Digər qruplar"
-
-#: modules/admin/templates/forum/del_confirm_move_topics.phtml:39
-msgid "All the topics and files will be moved to selected section. Old section will be deleted."
-msgstr "Bütün kateqoriyalar bölmələr və fayllar köçürülüb seçilmiş kateqoriya. Köhnə kateqoriyalar silinəcək."
-
-#: modules/admin/templates/forum/del_confirm_move_topics.phtml:47
-msgid "WARNING! All the information will be deleted"
-msgstr "Diqqət! Bütün məlumatları silinəcək"
-
-#: modules/admin/templates/forum/edit.phtml:30
-msgid "Min. 2, Max. 150 characters"
-msgstr ""
-
-#: modules/admin/templates/forum/edit.phtml:34
-#: modules/admin/templates/forum/edit.phtml:35
-msgid "Order"
-msgstr ""
-
-#: modules/admin/templates/forum/edit.phtml:36
-msgid "Only numbers"
-msgstr "Yalnız rəqəmlər"
-
-#: modules/admin/templates/forum/edit.phtml:46
-msgid "Meta description"
-msgstr ""
-
-#: modules/admin/templates/forum/edit.phtml:50
-msgid "Meta keywords"
-msgstr ""
-
-#: modules/admin/templates/forum/hidden_posts.phtml:20
-#: modules/admin/templates/forum/hidden_topics.phtml:20
-msgid "Filtered:"
-msgstr "Filter:"
-
-#: modules/admin/templates/forum/hidden_posts.phtml:39
-msgid "Go to page"
-msgstr "Səhifəyə keçin"
-
-#: modules/admin/templates/forum/hidden_posts.phtml:52
-#: modules/admin/templates/forum/hidden_topics.phtml:47
-msgid "Topic:"
-msgstr "Mövzular"
-
-#: modules/admin/templates/forum/hidden_posts.phtml:76
-msgid "Edited:"
-msgstr "Redaktə:"
-
-#: modules/admin/templates/forum/hidden_posts.phtml:79
-msgid "Post deleted:"
-msgstr "Post silindi:"
-
-#: modules/admin/templates/forum/hidden_posts.phtml:81
-msgid "Post restored by:"
-msgstr "Post bərpa:"
-
-#: modules/admin/templates/forum/hidden_posts.phtml:84
-#: modules/admin/templates/forum/hidden_topics.phtml:80
-msgid "Filter:"
-msgstr ""
 
 #: modules/admin/templates/forum/hidden_posts.phtml:104
 #: modules/admin/templates/forum/hidden_topics.phtml:100
@@ -1412,99 +1154,6 @@ msgstr "Hamısını sil"
 #: modules/admin/templates/userlist.phtml:36
 msgid "Total"
 msgstr "Cəmi:"
-
-#: modules/admin/templates/forum/hidden_topics.phtml:51
-msgid "Path:"
-msgstr "Yol"
-
-#: modules/admin/templates/forum/hidden_topics.phtml:77
-msgid "Topic deleted:"
-msgstr "Mövzu silindi"
-
-#: modules/admin/templates/forum/index.phtml:12
-msgid "Statistic"
-msgstr "Statistikalar"
-
-#: modules/admin/templates/forum/index.phtml:14
-msgid "Categories"
-msgstr "Kateqoriyalar"
-
-#: modules/admin/templates/forum/index.phtml:15
-#: modules/admin/templates/forum/settings.phtml:41
-msgid "Sections"
-msgstr "Bölmələr"
-
-#: modules/admin/templates/forum/index.phtml:16
-#: modules/admin/templates/forum/settings.phtml:52
-msgid "Topics"
-msgstr "Mövzular"
-
-#: modules/admin/templates/forum/index.phtml:17
-msgid "Messages"
-msgstr "Mesajlar"
-
-#: modules/admin/templates/forum/index.phtml:18
-msgid "Files"
-msgstr "Faylları"
-
-#: modules/admin/templates/forum/index.phtml:19
-msgid "Votes"
-msgstr "Səslər"
-
-#: modules/admin/templates/forum/index.phtml:21
-#: modules/admin/templates/forum/index.phtml:24
-msgid "Settings"
-msgstr "Parametrlər"
-
-#: modules/admin/templates/forum/settings.phtml:25
-msgid "Common settings"
-msgstr "Ümumi parametrlər"
-
-#: modules/admin/templates/forum/settings.phtml:28
-msgid "Show file counters"
-msgstr "Göstərmək fayl sayğacları"
-
-#: modules/admin/templates/forum/settings.phtml:32
-msgid "SEO settings"
-msgstr "Parametrlər SEO"
-
-#: modules/admin/templates/forum/settings.phtml:34
-msgid "Forum keywords"
-msgstr "Forum açar sözlər"
-
-#: modules/admin/templates/forum/settings.phtml:38
-msgid "Forum description"
-msgstr "Təsviri forum"
-
-#: modules/admin/templates/forum/settings.phtml:43
-msgid "Section keywords"
-msgstr "Bölmə sorğular"
-
-#: modules/admin/templates/forum/settings.phtml:45
-#: modules/admin/templates/forum/settings.phtml:50
-msgid "Macros available: #name#, #description#"
-msgstr "Makro: #name#, #description#"
-
-#: modules/admin/templates/forum/settings.phtml:48
-msgid "Section description"
-msgstr "Bölmənin təsviri"
-
-#: modules/admin/templates/forum/settings.phtml:54
-msgid "Topic keywords"
-msgstr "Mövzu sorğular"
-
-#: modules/admin/templates/forum/settings.phtml:56
-#: modules/admin/templates/forum/settings.phtml:61
-msgid "Macros available: #name#"
-msgstr "Makro: #name#"
-
-#: modules/admin/templates/forum/settings.phtml:59
-msgid "Topic description"
-msgstr "Mövzunun təsviri"
-
-#: modules/admin/templates/forum/structure.phtml:27
-msgid "View"
-msgstr "Göstər"
 
 #: modules/admin/templates/index.phtml:4
 msgid "Show admin menu"

@@ -24,13 +24,6 @@ msgstr "Админ панели"
 msgid "Dashboard"
 msgstr "Башкаруу панели"
 
-#: modules/admin/src/Application/Controllers/Forum/ForumDashboardController.php:27
-#: modules/admin/src/Application/Controllers/Forum/ForumSettingsController.php:74
-#: modules/admin/src/Application/Controllers/Forum/HiddenPostsController.php:52
-#: modules/admin/src/Application/Controllers/Forum/HiddenTopicsController.php:52
-msgid "Forum Management"
-msgstr "Форумду башкаруу"
-
 #: modules/admin/src/Application/Controllers/Forum/ForumSettingsController.php:38
 #: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:108
 #: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:226
@@ -63,11 +56,6 @@ msgstr "Форумду башкаруу"
 msgid "Wrong data"
 msgstr "Туура эмес маалымат"
 
-#: modules/admin/src/Application/Controllers/Forum/ForumSettingsController.php:54
-#, fuzzy
-msgid "ERROR: Can not write file `forum.local.php`"
-msgstr "КАТА: `forum.local.php` файлын жазуу мүмкүн эмес"
-
 #: modules/admin/src/Application/Controllers/Forum/ForumSettingsController.php:57
 #: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:61
 #: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:47
@@ -76,44 +64,6 @@ msgstr "КАТА: `forum.local.php` файлын жазуу мүмкүн эме�
 #: modules/admin/src/Application/Controllers/Users/KarmaController.php:56
 msgid "Settings are saved successfully"
 msgstr "Орнотуулар ийгиликтүү сакталды"
-
-#: modules/admin/src/Application/Controllers/Forum/ForumSettingsController.php:73
-msgid "Forum Settings"
-msgstr "Форумдун орнотуулары"
-
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:48
-msgid "List of sections"
-msgstr "Бөлүктөрдүн тизмеси"
-
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:52
-msgid "List of categories"
-msgstr "Бөлүмдөрдүн тизмеси"
-
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:57
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:91
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:190
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:276
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:349
-#: modules/admin/templates/forum/index.phtml:26
-msgid "Forum structure"
-msgstr "Форумдун түзүлүшү"
-
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:85
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:143
-msgid "Invalid ID"
-msgstr "Туура эмес ID"
-
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:90
-msgid "Add Section"
-msgstr "Бөлүктү кошуу"
-
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:90
-msgid "Add Category"
-msgstr "Бөлүмдү кошуу"
-
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:117
-msgid "You have not entered Title"
-msgstr "Сиз Аталышын киргизген жоксуз"
 
 #: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:119
 #: modules/admin/templates/ads_add.phtml:38
@@ -128,26 +78,6 @@ msgstr "Сиз Аталышын киргизген жоксуз"
 msgid "Title"
 msgstr "Аталышы"
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:119
-msgid "Invalid length"
-msgstr "Узундугу туура эмес"
-
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:122
-msgid "Description should be at least 2 characters in length"
-msgstr "Сүрөттөлүшүн узундугу 2 белгиден кем эмес болушу керек"
-
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:171
-msgid "Please select a valid parent"
-msgstr "Сураныч, туура жогорку бөлүктү тандоо"
-
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:189
-msgid "Delete section"
-msgstr "Бөлүктү өчүрүү"
-
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:189
-msgid "Delete category"
-msgstr "Бөлүмдү өчүрүү"
-
 #: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:256
 #: modules/admin/src/Application/Middlewares/AdminAccessMiddleware.php:54
 #: modules/admin/src/Application/Middlewares/SuperAdminAccessMiddleware.php:53
@@ -158,37 +88,6 @@ msgstr "Бөлүмдү өчүрүү"
 #: modules/admin/templates/access.phtml:136
 msgid "Access denied"
 msgstr "Кирүүгө тыюу салынган"
-
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:275
-msgid "Edit Section"
-msgstr "Бөлүктү өзгөртүү"
-
-#: modules/admin/src/Application/Controllers/Forum/HiddenPostsController.php:51
-#: modules/admin/templates/forum/index.phtml:27
-msgid "Hidden posts"
-msgstr "Жашырылган билдирүүлөр"
-
-#: modules/admin/src/Application/Controllers/Forum/HiddenPostsController.php:92
-#: modules/admin/src/Application/Services/HiddenPostRowMapper.php:70
-msgid "by topic"
-msgstr "тема боюнча"
-
-#: modules/admin/src/Application/Controllers/Forum/HiddenPostsController.php:97
-#: modules/admin/src/Application/Controllers/Forum/HiddenTopicsController.php:92
-#: modules/admin/src/Application/Services/HiddenPostRowMapper.php:71
-#: modules/admin/src/Application/Services/HiddenTopicRowMapper.php:76
-msgid "by author"
-msgstr "автору боюнча"
-
-#: modules/admin/src/Application/Controllers/Forum/HiddenTopicsController.php:51
-#: modules/admin/templates/forum/index.phtml:28
-msgid "Hidden topics"
-msgstr "Жашырылган темалар"
-
-#: modules/admin/src/Application/Controllers/Forum/HiddenTopicsController.php:97
-#: modules/admin/src/Application/Services/HiddenTopicRowMapper.php:77
-msgid "by section"
-msgstr "бөлүгү боюнча"
 
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:54
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:76
@@ -1241,14 +1140,6 @@ msgstr "assets/emoticons каталогуна смайликтерди кошк�
 msgid "Update cache"
 msgstr "Кэшти жаңыртуу"
 
-#: modules/admin/templates/forum/add.phtml:23
-msgid "Parent section:"
-msgstr "Жогорку бөлүгү:"
-
-#: modules/admin/templates/forum/add.phtml:28
-msgid "Min. 2, Max. 30 characters"
-msgstr "Min 2 макс 30 белгиден"
-
 #: modules/admin/templates/forum/add.phtml:32
 #: modules/admin/templates/forum/edit.phtml:40
 #: modules/admin/templates/settings.phtml:80
@@ -1260,156 +1151,6 @@ msgstr "Min 2 макс 30 белгиден"
 #: modules/admin/templates/system/system_check.phtml:57
 msgid "Description"
 msgstr "Сүрөттөмө"
-
-#: modules/admin/templates/forum/add.phtml:34
-#: modules/admin/templates/forum/edit.phtml:42
-msgid "Optional field"
-msgstr "Ыктыярдуу талаа"
-
-#: modules/admin/templates/forum/add.phtml:34
-#: modules/admin/templates/forum/edit.phtml:42
-msgid "Min. 2, Max. 500 characters"
-msgstr "Min 2 макс 500 белгиден"
-
-#: modules/admin/templates/forum/add.phtml:38
-#: modules/admin/templates/forum/add.phtml:41
-#: modules/admin/templates/forum/edit.phtml:54
-#: modules/admin/templates/forum/edit.phtml:55
-msgid "Common access"
-msgstr "Жалпы мүмкүнчүлүк"
-
-#: modules/admin/templates/forum/add.phtml:45
-#: modules/admin/templates/forum/edit.phtml:55
-msgid "Assign the newly created authors as curators"
-msgstr "Жаратуучуларды куратор катары дайындаңыз"
-
-#: modules/admin/templates/forum/add.phtml:49
-#: modules/admin/templates/forum/edit.phtml:55
-msgid "Allow authors to edit the 1st post"
-msgstr "Авторлорго 1-жазманы түзөтүүгө уруксат бериңиз"
-
-#: modules/admin/templates/forum/add.phtml:53
-#: modules/admin/templates/forum/edit.phtml:55
-msgid "Only for reading"
-msgstr "Окуу үчүн гана"
-
-#: modules/admin/templates/forum/add.phtml:57
-#: modules/admin/templates/forum/edit.phtml:62
-msgid "Section type"
-msgstr "Бөлүктүн түрү"
-
-#: modules/admin/templates/forum/add.phtml:60
-#: modules/admin/templates/forum/edit.phtml:65
-msgid "For subsections"
-msgstr "Бөлүкчөлөр үчүн"
-
-#: modules/admin/templates/forum/add.phtml:64
-#: modules/admin/templates/forum/edit.phtml:69
-msgid "For topics"
-msgstr "Темалар үчүн"
-
-#: modules/admin/templates/forum/del_confirm_move.phtml:18
-msgid "<h3>WARNING!</h3>There are subsections. Move them to another category."
-msgstr "<h3>ЭСКЕРТҮҮ!</h3>Баш ийген бөлүктөр бар. Аларды башка бөлүмдөргө которулушу керек."
-
-#: modules/admin/templates/forum/del_confirm_move.phtml:25
-#: modules/admin/templates/forum/edit.phtml:73
-msgid "Category"
-msgstr "Бөлүмдөр"
-
-#: modules/admin/templates/forum/del_confirm_move.phtml:32
-msgid "All categories, topics, and files will be moved into selected category. Old category will be removed."
-msgstr "Бардык бөлүктөр, темалар жана файлдар тандалган бөлүмдөргө өткөрүлүп берилет. Эски бөлүмдөр өчүрүлөт"
-
-#: modules/admin/templates/forum/del_confirm_move.phtml:35
-#: modules/admin/templates/forum/del_confirm_move_topics.phtml:42
-msgid "Move"
-msgstr "Жылдыруу"
-
-#: modules/admin/templates/forum/del_confirm_move.phtml:41
-#: modules/admin/templates/forum/del_confirm_move_topics.phtml:46
-msgid "Complete removal"
-msgstr "Толугу менен өчүрүү"
-
-#: modules/admin/templates/forum/del_confirm_move.phtml:43
-msgid "If you want to destroy all the information, first remove"
-msgstr "Бардык маалыматты жок кылгыңыз келсе, алгач өчүрүңүз"
-
-#: modules/admin/templates/forum/del_confirm_move.phtml:44
-msgid "subsections"
-msgstr "баш ийген бөлүктөр"
-
-#: modules/admin/templates/forum/del_confirm_move_topics.phtml:19
-msgid "<h3>WARNING!</h3>There are topics in the section. You must move them to another section."
-msgstr "<h3>ЭСКЕРТҮҮ!</h3> Бөлүктө бир нече тема бар. <br>Алар башка бөлүккө өтүшү керек."
-
-#: modules/admin/templates/forum/del_confirm_move_topics.phtml:25
-msgid "Select section"
-msgstr "Бөлүктү тандаңыз"
-
-#: modules/admin/templates/forum/del_confirm_move_topics.phtml:32
-msgid "Other category"
-msgstr "Башка бөлүмдөрү"
-
-#: modules/admin/templates/forum/del_confirm_move_topics.phtml:39
-msgid "All the topics and files will be moved to selected section. Old section will be deleted."
-msgstr "Бардык темалар жана файлдар тандалган бөлүккө жылдырылат. Эски бөлүк өчүрүлөт"
-
-#: modules/admin/templates/forum/del_confirm_move_topics.phtml:47
-msgid "WARNING! All the information will be deleted"
-msgstr "ЭСКЕРТҮҮ! Бардык маалыматтар өчүрүлдү"
-
-#: modules/admin/templates/forum/edit.phtml:30
-msgid "Min. 2, Max. 150 characters"
-msgstr "Min 2 макс 150 белгиден"
-
-#: modules/admin/templates/forum/edit.phtml:34
-#: modules/admin/templates/forum/edit.phtml:35
-msgid "Order"
-msgstr "Тартип"
-
-#: modules/admin/templates/forum/edit.phtml:36
-msgid "Only numbers"
-msgstr "Сандар гана"
-
-#: modules/admin/templates/forum/edit.phtml:46
-msgid "Meta description"
-msgstr "Сүрөттөмө (Мета)"
-
-#: modules/admin/templates/forum/edit.phtml:50
-msgid "Meta keywords"
-msgstr "Ачкыч сөздөр (Мета)"
-
-#: modules/admin/templates/forum/hidden_posts.phtml:20
-#: modules/admin/templates/forum/hidden_topics.phtml:20
-msgid "Filtered:"
-msgstr "Чыпкаланган:"
-
-#: modules/admin/templates/forum/hidden_posts.phtml:39
-msgid "Go to page"
-msgstr "Баракка өтүңүз"
-
-#: modules/admin/templates/forum/hidden_posts.phtml:52
-#: modules/admin/templates/forum/hidden_topics.phtml:47
-msgid "Topic:"
-msgstr "Тема:"
-
-#: modules/admin/templates/forum/hidden_posts.phtml:76
-msgid "Edited:"
-msgstr "Өзгөртүлгөн"
-
-#: modules/admin/templates/forum/hidden_posts.phtml:79
-msgid "Post deleted:"
-msgstr "Билдирүү өчүрүлгөн:"
-
-#: modules/admin/templates/forum/hidden_posts.phtml:81
-msgid "Post restored by:"
-msgstr "Билдирүү калыбына келтирилди:"
-
-#: modules/admin/templates/forum/hidden_posts.phtml:84
-#: modules/admin/templates/forum/hidden_topics.phtml:80
-msgid "Filter:"
-msgstr "Чыпкалоо:"
 
 #: modules/admin/templates/forum/hidden_posts.phtml:104
 #: modules/admin/templates/forum/hidden_topics.phtml:100
@@ -1423,99 +1164,6 @@ msgstr "Баарын өчүрүү"
 #: modules/admin/templates/userlist.phtml:36
 msgid "Total"
 msgstr "Баары"
-
-#: modules/admin/templates/forum/hidden_topics.phtml:51
-msgid "Path:"
-msgstr "Жолу:"
-
-#: modules/admin/templates/forum/hidden_topics.phtml:77
-msgid "Topic deleted:"
-msgstr "Тема өчүрүлдү:"
-
-#: modules/admin/templates/forum/index.phtml:12
-msgid "Statistic"
-msgstr "Статистика"
-
-#: modules/admin/templates/forum/index.phtml:14
-msgid "Categories"
-msgstr "Бөлүмдөр"
-
-#: modules/admin/templates/forum/index.phtml:15
-#: modules/admin/templates/forum/settings.phtml:41
-msgid "Sections"
-msgstr "Бөлүктөр"
-
-#: modules/admin/templates/forum/index.phtml:16
-#: modules/admin/templates/forum/settings.phtml:52
-msgid "Topics"
-msgstr "Темалар"
-
-#: modules/admin/templates/forum/index.phtml:17
-msgid "Messages"
-msgstr "Билдирүүлөр"
-
-#: modules/admin/templates/forum/index.phtml:18
-msgid "Files"
-msgstr "Файлдар"
-
-#: modules/admin/templates/forum/index.phtml:19
-msgid "Votes"
-msgstr "Добуштар"
-
-#: modules/admin/templates/forum/index.phtml:21
-#: modules/admin/templates/forum/index.phtml:24
-msgid "Settings"
-msgstr "Орнотуулар"
-
-#: modules/admin/templates/forum/settings.phtml:25
-msgid "Common settings"
-msgstr "Жалпы орнотуулар"
-
-#: modules/admin/templates/forum/settings.phtml:28
-msgid "Show file counters"
-msgstr "Файл эсептегичтерин көрсөтүү"
-
-#: modules/admin/templates/forum/settings.phtml:32
-msgid "SEO settings"
-msgstr "SEO орнотуулары"
-
-#: modules/admin/templates/forum/settings.phtml:34
-msgid "Forum keywords"
-msgstr "Форумдун ачкыч сөздөрү"
-
-#: modules/admin/templates/forum/settings.phtml:38
-msgid "Forum description"
-msgstr "Форумдун сүрөттөлүшү"
-
-#: modules/admin/templates/forum/settings.phtml:43
-msgid "Section keywords"
-msgstr "Бөлүктүн ачкыч сөздөрү"
-
-#: modules/admin/templates/forum/settings.phtml:45
-#: modules/admin/templates/forum/settings.phtml:50
-msgid "Macros available: #name#, #description#"
-msgstr "Жеткиликтүү макростор: #name#, #description#"
-
-#: modules/admin/templates/forum/settings.phtml:48
-msgid "Section description"
-msgstr "Бөлүктүн сүрөттөлүшү"
-
-#: modules/admin/templates/forum/settings.phtml:54
-msgid "Topic keywords"
-msgstr "Теманын ачкыч сөздөрү"
-
-#: modules/admin/templates/forum/settings.phtml:56
-#: modules/admin/templates/forum/settings.phtml:61
-msgid "Macros available: #name#"
-msgstr "Жеткиликтүү макростор: #name#"
-
-#: modules/admin/templates/forum/settings.phtml:59
-msgid "Topic description"
-msgstr "Теманын сүрөттөлүшү"
-
-#: modules/admin/templates/forum/structure.phtml:27
-msgid "View"
-msgstr "Кароолор"
 
 #: modules/admin/templates/index.phtml:4
 msgid "Show admin menu"

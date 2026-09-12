@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Johncms\Modules\Admin\Domain\Repository;
+namespace Johncms\Modules\Forum\Domain\Repository;
 
 use Johncms\Modules\Admin\Domain\Exceptions\ConfigWriteException;
 

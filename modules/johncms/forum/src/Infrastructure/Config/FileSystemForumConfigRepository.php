@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Johncms\Modules\Admin\Infrastructure\Config;
+namespace Johncms\Modules\Forum\Infrastructure\Config;
 
 use Johncms\Modules\Admin\Domain\Exceptions\ConfigWriteException;
-use Johncms\Modules\Admin\Domain\Repository\ForumConfigRepositoryInterface;
+use Johncms\Modules\Forum\Domain\Repository\ForumConfigRepositoryInterface;
 
 final class FileSystemForumConfigRepository implements ForumConfigRepositoryInterface
 {

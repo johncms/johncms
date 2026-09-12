@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Johncms\Modules\Admin\Domain\Repository;
+namespace Johncms\Modules\Forum\Domain\Repository;
 
 use Illuminate\Support\Collection;
 use Johncms\Modules\Forum\Domain\Models\ForumSection;
@@ -10,14 +10,14 @@ use Johncms\Modules\Forum\Domain\Models\ForumSection;
 interface ForumStructureRepositoryInterface
 {
     /**
-     * Категории верхнего уровня (parent = 0/null) со счётчиком подразделов.
+     * The top-level categories (parent = 0 or null), each with the number of sections in it.
      *
      * @return Collection<int, ForumSection>
      */
     public function categories(): Collection;
 
     /**
-     * Подразделы указанной категории со счётчиком вложенных разделов.
+     * The sections of one category, each with the number of sections nested in it.
      *
      * @return Collection<int, ForumSection>
      */
@@ -39,21 +39,21 @@ interface ForumStructureRepositoryInterface
     public function countTopics(int $sectionId): int;
 
     /**
-     * Категории-цели для переноса (section_type != 1), кроме указанной.
+     * Where a category can be moved to: every category but the one being moved.
      *
      * @return Collection<int, ForumSection>
      */
     public function categoriesForMove(int $excludeId): Collection;
 
     /**
-     * Разделы для переноса тем (тот же родитель), кроме указанного.
+     * Where the topics of a section can go: the other sections of the same category.
      *
      * @return Collection<int, ForumSection>
      */
     public function sectionsForMove(int $parentRef, int $excludeId): Collection;
 
     /**
-     * Категории верхнего уровня, кроме указанной.
+     * The top-level categories, except the one given.
      *
      * @return Collection<int, ForumSection>
      */
@@ -66,15 +66,15 @@ interface ForumStructureRepositoryInterface
     public function deleteSection(int $id): void;
 
     /**
-     * Имена прикреплённых файлов раздела (для физического удаления).
+     * The names of the files attached inside a section, so they can be taken off the disk.
      *
      * @return list<string>
      */
     public function attachedFilenames(int $sectionId): array;
 
     /**
-     * Полностью удаляет раздел со всем содержимым (файлы-записи, посты,
-     * голосования, отметки прочтения, темы, сам раздел).
+     * Deletes a section with everything in it: the file rows, the posts, the polls, the read
+     * marks, the topics, and the section itself.
      */
     public function deleteSectionCascade(int $id): void;
 }

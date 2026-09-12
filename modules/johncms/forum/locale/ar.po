@@ -1267,3 +1267,177 @@ msgstr "الاعضاء"
 msgid "Guests"
 msgstr "الضيوف"
 
+
+msgid "Forum Management"
+msgstr "إدارة المنتدى"
+
+msgid "Settings are saved successfully"
+msgstr "تم حفظ الاعدادات بنجاح"
+
+msgid "List of categories"
+msgstr "قائمة الفئات"
+
+msgid "Forum structure"
+msgstr "هيكل المنتدى"
+
+msgid "Add Section"
+msgstr "إضافة أقسام"
+
+msgid "Add Category"
+msgstr "اضافة فئة"
+
+msgid "You have not entered Title"
+msgstr "لم تقم بإدخال العنوان"
+
+msgid "Description should be at least 2 characters in length"
+msgstr "يجب أن يكون الوصف على الأقل 2 حرفاً في الطول"
+
+msgid "Please select a valid parent"
+msgstr "الرجاء تحديد والد صالح"
+
+msgid "Delete section"
+msgstr "حذف القسم"
+
+msgid "Delete category"
+msgstr "حذف فئة"
+
+msgid "Access denied"
+msgstr "الوصول مرفوض"
+
+msgid "Edit Section"
+msgstr "تعديل القسم"
+
+msgid "Hidden posts"
+msgstr "المشاركات المخفية"
+
+msgid "by topic"
+msgstr "حسب الموضوع"
+
+msgid "by author"
+msgstr "حسب الكاتب"
+
+msgid "Hidden topics"
+msgstr "المواضيع المخفية"
+
+msgid "by section"
+msgstr "قسم"
+
+msgid "Add"
+msgstr "اضافة"
+
+msgid "Parent section:"
+msgstr "القسم الأصل:"
+
+msgid "Min. 2, Max. 30 characters"
+msgstr "الحد الأدنى 2، الحد الاقصى. 500 حرف"
+
+msgid "Description"
+msgstr "الوصف"
+
+msgid "Optional field"
+msgstr "حقل اختياري"
+
+msgid "Min. 2, Max. 500 characters"
+msgstr "الحد الأدنى 2، الحد الاقصى. 500 حرف"
+
+msgid "Common access"
+msgstr "الوصول المشترك"
+
+msgid "Assign the newly created authors as curators"
+msgstr "تعيين الكتاب الذي تم إنشاؤه حديثا كأمناء المتاحف"
+
+msgid "Allow authors to edit the 1st post"
+msgstr "السماح للكتاب لتحرير الوظيفة الأولى"
+
+msgid "Only for reading"
+msgstr "للقراءة فقط"
+
+msgid "Section type"
+msgstr "نوع القسم"
+
+msgid "For subsections"
+msgstr "للمقالات الفرعية"
+
+msgid "For topics"
+msgstr "للمواضيع"
+
+msgid "<h3>WARNING!</h3>There are subsections. Move them to another category."
+msgstr "<h3>تحذير!</h3> وهناك أجزاء فرعية. نقلها إلى فئة أخرى."
+
+msgid "All categories, topics, and files will be moved into selected category. Old category will be removed."
+msgstr "سيتم نقل جميع الفئات والمواضيع والملفات ضمن الفئة المحددة. سيتم إزالة الفئة القديمة."
+
+msgid "Complete removal"
+msgstr "إزالة كاملة"
+
+msgid "If you want to destroy all the information, first remove"
+msgstr "إذا كنت تريد أن تدمر جميع المعلومات، قم أولاً بإزالة"
+
+msgid "subsections"
+msgstr "الأقسام الفرعية"
+
+msgid "<h3>WARNING!</h3>There are topics in the section. You must move them to another section."
+msgstr "<h3>تحذير!</h3> وهناك مواضيع في القسم. ويجب نقلها إلى قسم آخر."
+
+msgid "Select section"
+msgstr "حذف القسم"
+
+msgid "Other category"
+msgstr "والفئة الأخرى"
+
+msgid "All the topics and files will be moved to selected section. Old section will be deleted."
+msgstr "جميع المواضيع و الملفات التي سيتم نقلها إلى الجزء المحدد. القسم القديم سيتم حذف."
+
+msgid "WARNING! All the information will be deleted"
+msgstr "تحذير! سيتم حذف جميع المعلومات"
+
+msgid "Order"
+msgstr "طلب"
+
+msgid "Only numbers"
+msgstr "الأرقام فقط"
+
+msgid "Filtered:"
+msgstr "تصفية:"
+
+msgid "Go to page"
+msgstr "الذهاب إلى الصفحة"
+
+msgid "Topic:"
+msgstr "مواضيع"
+
+msgid "Filter:"
+msgstr "فلترة"
+
+msgid "Delete all"
+msgstr "حذف جميع"
+
+msgid "Path:"
+msgstr "المسار:"
+
+msgid "Topic deleted:"
+msgstr "تم حذف الموضوع"
+
+msgid "Statistic"
+msgstr "الإحصائيات"
+
+msgid "Categories"
+msgstr "التصنيفات"
+
+msgid "Sections"
+msgstr "الأقسام"
+
+msgid "Topics"
+msgstr "مواضيع"
+
+msgid "Messages"
+msgstr "الرسائل"
+
+msgid "Votes"
+msgstr "الأصوات"
+
+msgid "Settings"
+msgstr "الإعدادات"
+
+msgid "View"
+msgstr "عرض"

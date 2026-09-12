@@ -1297,3 +1297,225 @@ msgstr "Читать форум"
 
 msgid "Write in the forum"
 msgstr "Писать на форуме"
+
+msgid "Forum Management"
+msgstr "Управление Форумом"
+
+msgid "ERROR: Can not write file `forum.local.php`"
+msgstr "ОШИБКА: Невозможно записать forum.local.php"
+
+msgid "Settings are saved successfully"
+msgstr "Настройки успешно сохранены"
+
+msgid "Forum Settings"
+msgstr "Настройки форума"
+
+msgid "List of categories"
+msgstr "Список категорий"
+
+msgid "Forum structure"
+msgstr "Структура форума"
+
+msgid "Invalid ID"
+msgstr "Неверный ID"
+
+msgid "Add Section"
+msgstr "Добавить раздел"
+
+msgid "Add Category"
+msgstr "Добавить категорию"
+
+msgid "You have not entered Title"
+msgstr "Вы не ввели название"
+
+msgid "Description should be at least 2 characters in length"
+msgstr "Длина описания должна быть не менее 2-х символов"
+
+msgid "Please select a valid parent"
+msgstr "Пожалуйста, выберите корректный родительский раздел"
+
+msgid "Delete section"
+msgstr "Удалить раздел"
+
+msgid "Delete category"
+msgstr "Удалить категорию"
+
+msgid "Edit Section"
+msgstr "Редактировать раздел"
+
+msgid "Hidden posts"
+msgstr "Скрытые посты"
+
+msgid "by topic"
+msgstr "по теме"
+
+msgid "by author"
+msgstr "по автору"
+
+msgid "Hidden topics"
+msgstr "Скрытые темы"
+
+msgid "by section"
+msgstr "по разделу"
+
+msgid "Add"
+msgstr "Добавить"
+
+msgid "Parent section:"
+msgstr "Родительский раздел:"
+
+msgid "Min. 2, Max. 30 characters"
+msgstr "Мин. 2, макс. 30 символов"
+
+msgid "Description"
+msgstr "Описание"
+
+msgid "Optional field"
+msgstr "Необязательное поле"
+
+msgid "Min. 2, Max. 500 characters"
+msgstr "Мин. 2, макс. 500 символов"
+
+msgid "Common access"
+msgstr "Общий доступ"
+
+msgid "Assign the newly created authors as curators"
+msgstr "Назначать создателей тем кураторами"
+
+msgid "Allow authors to edit the 1st post"
+msgstr "Разрешить авторам редактировать 1-й пост"
+
+msgid "Only for reading"
+msgstr "Только для чтения"
+
+msgid "Section type"
+msgstr "Тип раздела"
+
+msgid "For subsections"
+msgstr "Для подразделов"
+
+msgid "For topics"
+msgstr "Для тем"
+
+msgid "<h3>WARNING!</h3>There are subsections. Move them to another category."
+msgstr "<h3>ВНИМАНИЕ!</h3>Есть подчиненные разделы.<br>Их необходимо переместить в другую категорию"
+
+msgid "All categories, topics, and files will be moved into selected category. Old category will be removed."
+msgstr "Все разделы, темы и файлы будут перемещены в выбранную категорию. Старая категория будет удалена"
+
+msgid "Complete removal"
+msgstr "Полное удаление"
+
+msgid "If you want to destroy all the information, first remove"
+msgstr "Если хотите уничтожить всю информацию, вначале удалите"
+
+msgid "subsections"
+msgstr "подразделы"
+
+msgid "<h3>WARNING!</h3>There are topics in the section. You must move them to another section."
+msgstr "<h3>ВНИМАНИЕ!</h3>В разделе есть темы.<br>Их необходимо переместить в другой раздел"
+
+msgid "Select section"
+msgstr "Выберать раздел"
+
+msgid "Other category"
+msgstr "Другая категория"
+
+msgid "All the topics and files will be moved to selected section. Old section will be deleted."
+msgstr "Все темы и файлы будут перемещены в выбранный раздел. Старый раздел будет удален"
+
+msgid "WARNING! All the information will be deleted"
+msgstr "ВНИМАНИЕ! Будет удалена вся информация"
+
+msgid "Min. 2, Max. 150 characters"
+msgstr "Минимум 2, Макс. 150 символов"
+
+msgid "Order"
+msgstr "Порядок"
+
+msgid "Only numbers"
+msgstr "Только цифры"
+
+msgid "Filtered:"
+msgstr "Отфильтровано:"
+
+msgid "Go to page"
+msgstr "Перейти на страницу"
+
+msgid "Topic:"
+msgstr "Тема:"
+
+msgid "Filter:"
+msgstr "Фильтр:"
+
+msgid "Delete all"
+msgstr "Удалить все"
+
+msgid "Path:"
+msgstr "Путь:"
+
+msgid "Topic deleted:"
+msgstr "Тему удалил:"
+
+msgid "Statistic"
+msgstr "Статистика"
+
+msgid "Categories"
+msgstr "Категории"
+
+msgid "Sections"
+msgstr "Разделы"
+
+msgid "Topics"
+msgstr "Темы "
+
+msgid "Messages"
+msgstr "Сообщения"
+
+msgid "Votes"
+msgstr "Голосования"
+
+msgid "Settings"
+msgstr "Настройки"
+
+msgid "Common settings"
+msgstr "Общие настройки"
+
+msgid "Show file counters"
+msgstr "Показать счетчики файлов"
+
+msgid "SEO settings"
+msgstr "Настройки SEO"
+
+msgid "Forum keywords"
+msgstr "Ключевые слова форума"
+
+msgid "Forum description"
+msgstr "Описание форума"
+
+msgid "Section keywords"
+msgstr "Ключевые слова раздела"
+
+msgid "Macros available: #name#, #description#"
+msgstr "Доступные макросы: #name#, #description#"
+
+msgid "Section description"
+msgstr "Описание раздела"
+
+msgid "Topic keywords"
+msgstr "Ключевые слова топиков"
+
+msgid "Macros available: #name#"
+msgstr "Доступные макросы: #name#"
+
+msgid "Topic description"
+msgstr "Описание топиков"
+
+msgid "View"
+msgstr "Просмотреть"
+
+msgid "Delete a forum section with everything in it"
+msgstr "Удалять раздел форума вместе со всем содержимым"
+
+msgid "Empty the lists of hidden topics and posts"
+msgstr "Очищать списки скрытых тем и сообщений"

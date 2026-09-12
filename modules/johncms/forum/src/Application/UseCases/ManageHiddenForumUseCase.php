@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Johncms\Modules\Admin\Application\UseCases;
+namespace Johncms\Modules\Forum\Application\UseCases;
 
 use Illuminate\Database\Eloquent\Collection;
-use Johncms\Modules\Admin\Domain\Repository\HiddenForumRepositoryInterface;
+use Johncms\Modules\Forum\Domain\Repository\HiddenForumRepositoryInterface;
 use Johncms\Modules\Forum\Infrastructure\Storage\ForumAttachmentStorage;
 
 final readonly class ManageHiddenForumUseCase

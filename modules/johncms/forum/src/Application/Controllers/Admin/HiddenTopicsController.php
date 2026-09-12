@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Johncms\Modules\Admin\Application\Controllers\Forum;
+namespace Johncms\Modules\Forum\Application\Controllers\Admin;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
-use Johncms\Modules\Admin\Application\Services\AdminPermissions;
+use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
-use Johncms\Modules\Admin\Application\Services\HiddenTopicRowMapper;
-use Johncms\Modules\Admin\Application\UseCases\ManageHiddenForumUseCase;
+use Johncms\Modules\Forum\Application\Services\HiddenTopicRowMapper;
+use Johncms\Modules\Forum\Application\UseCases\ManageHiddenForumUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
@@ -49,7 +49,7 @@ final readonly class HiddenTopicsController
 
         $meta = new PageMeta($title, $pagination->getCurrentPage());
 
-        return new ViewResponse('@admin/forum-hidden-topics.twig', [
+        return new ViewResponse('@forum/admin/hidden-topics.twig', [
             'title'        => $meta->title,
             'page_title'   => $title,
             'module_menu'  => ['forum' => true],
@@ -58,14 +58,14 @@ final readonly class HiddenTopicsController
             'per_page'     => $pagination->getPerPage(),
             'filtered_by'  => (string) $filteredBy,
             'reset_filter' => self::URL,
-            'del_all_url'  => $this->accessChecker->allows(AdminPermissions::FORUM_HIDDEN_PURGE) && $total > 0 ? self::URL . '/delete' . $filterLink : '',
+            'del_all_url'  => $this->accessChecker->allows(ForumPermissions::HIDDEN_PURGE) && $total > 0 ? self::URL . '/delete' . $filterLink : '',
             'pagination'   => $pagination->render(),
         ]);
     }
 
     public function deleteAll(Request $request): ViewResponse
     {
-        if (! $this->accessChecker->allows(AdminPermissions::FORUM_HIDDEN_PURGE)) {
+        if (! $this->accessChecker->allows(ForumPermissions::HIDDEN_PURGE)) {
             redirect(self::URL);
         }
 

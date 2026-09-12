@@ -24,13 +24,6 @@ msgstr "Админ панель"
 msgid "Dashboard"
 msgstr "Панель управления"
 
-#: modules/admin/src/Application/Controllers/Forum/ForumDashboardController.php:27
-#: modules/admin/src/Application/Controllers/Forum/ForumSettingsController.php:74
-#: modules/admin/src/Application/Controllers/Forum/HiddenPostsController.php:52
-#: modules/admin/src/Application/Controllers/Forum/HiddenTopicsController.php:52
-msgid "Forum Management"
-msgstr "Управление Форумом"
-
 #: modules/admin/src/Application/Controllers/Forum/ForumSettingsController.php:38
 #: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:108
 #: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:226
@@ -63,10 +56,6 @@ msgstr "Управление Форумом"
 msgid "Wrong data"
 msgstr "Неверные данные"
 
-#: modules/admin/src/Application/Controllers/Forum/ForumSettingsController.php:54
-msgid "ERROR: Can not write file `forum.local.php`"
-msgstr "ОШИБКА: Невозможно записать forum.local.php"
-
 #: modules/admin/src/Application/Controllers/Forum/ForumSettingsController.php:57
 #: modules/admin/src/Application/Controllers/Languages/LanguagesController.php:61
 #: modules/admin/src/Application/Controllers/Settings/AntifloodSettingsController.php:47
@@ -75,44 +64,6 @@ msgstr "ОШИБКА: Невозможно записать forum.local.php"
 #: modules/admin/src/Application/Controllers/Users/KarmaController.php:56
 msgid "Settings are saved successfully"
 msgstr "Настройки успешно сохранены"
-
-#: modules/admin/src/Application/Controllers/Forum/ForumSettingsController.php:73
-msgid "Forum Settings"
-msgstr "Настройки форума"
-
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:48
-msgid "List of sections"
-msgstr "Список разделов"
-
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:52
-msgid "List of categories"
-msgstr "Список категорий"
-
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:57
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:91
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:190
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:276
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:349
-#: modules/admin/templates/forum/index.phtml:26
-msgid "Forum structure"
-msgstr "Структура форума"
-
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:85
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:143
-msgid "Invalid ID"
-msgstr "Неверный ID"
-
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:90
-msgid "Add Section"
-msgstr "Добавить раздел"
-
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:90
-msgid "Add Category"
-msgstr "Добавить категорию"
-
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:117
-msgid "You have not entered Title"
-msgstr "Вы не ввели название"
 
 #: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:119
 #: modules/admin/templates/ads_add.phtml:38
@@ -127,26 +78,6 @@ msgstr "Вы не ввели название"
 msgid "Title"
 msgstr "Заголовок"
 
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:119
-msgid "Invalid length"
-msgstr "Недопустимая длина"
-
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:122
-msgid "Description should be at least 2 characters in length"
-msgstr "Длина описания должна быть не менее 2-х символов"
-
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:171
-msgid "Please select a valid parent"
-msgstr "Пожалуйста, выберите корректный родительский раздел"
-
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:189
-msgid "Delete section"
-msgstr "Удалить раздел"
-
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:189
-msgid "Delete category"
-msgstr "Удалить категорию"
-
 #: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:256
 #: modules/admin/src/Application/Middlewares/AdminAccessMiddleware.php:54
 #: modules/admin/src/Application/Middlewares/SuperAdminAccessMiddleware.php:53
@@ -157,37 +88,6 @@ msgstr "Удалить категорию"
 #: modules/admin/templates/access.phtml:136
 msgid "Access denied"
 msgstr "Доступ закрыт"
-
-#: modules/admin/src/Application/Controllers/Forum/ForumStructureController.php:275
-msgid "Edit Section"
-msgstr "Редактировать раздел"
-
-#: modules/admin/src/Application/Controllers/Forum/HiddenPostsController.php:51
-#: modules/admin/templates/forum/index.phtml:27
-msgid "Hidden posts"
-msgstr "Скрытые посты"
-
-#: modules/admin/src/Application/Controllers/Forum/HiddenPostsController.php:92
-#: modules/admin/src/Application/Services/HiddenPostRowMapper.php:70
-msgid "by topic"
-msgstr "по теме"
-
-#: modules/admin/src/Application/Controllers/Forum/HiddenPostsController.php:97
-#: modules/admin/src/Application/Controllers/Forum/HiddenTopicsController.php:92
-#: modules/admin/src/Application/Services/HiddenPostRowMapper.php:71
-#: modules/admin/src/Application/Services/HiddenTopicRowMapper.php:76
-msgid "by author"
-msgstr "по автору"
-
-#: modules/admin/src/Application/Controllers/Forum/HiddenTopicsController.php:51
-#: modules/admin/templates/forum/index.phtml:28
-msgid "Hidden topics"
-msgstr "Скрытые темы"
-
-#: modules/admin/src/Application/Controllers/Forum/HiddenTopicsController.php:97
-#: modules/admin/src/Application/Services/HiddenTopicRowMapper.php:77
-msgid "by section"
-msgstr "по разделу"
 
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:54
 #: modules/admin/src/Application/Controllers/Ip/IpBanController.php:76
@@ -1230,14 +1130,6 @@ msgstr "Перестроить кэш смайликов после добавл
 msgid "Update cache"
 msgstr "Обновить кэш"
 
-#: modules/admin/templates/forum/add.phtml:23
-msgid "Parent section:"
-msgstr "Родительский раздел:"
-
-#: modules/admin/templates/forum/add.phtml:28
-msgid "Min. 2, Max. 30 characters"
-msgstr "Мин. 2, макс. 30 символов"
-
 #: modules/admin/templates/forum/add.phtml:32
 #: modules/admin/templates/forum/edit.phtml:40
 #: modules/admin/templates/settings.phtml:80
@@ -1249,156 +1141,6 @@ msgstr "Мин. 2, макс. 30 символов"
 #: modules/admin/templates/system/system_check.phtml:57
 msgid "Description"
 msgstr "Описание"
-
-#: modules/admin/templates/forum/add.phtml:34
-#: modules/admin/templates/forum/edit.phtml:42
-msgid "Optional field"
-msgstr "Необязательное поле"
-
-#: modules/admin/templates/forum/add.phtml:34
-#: modules/admin/templates/forum/edit.phtml:42
-msgid "Min. 2, Max. 500 characters"
-msgstr "Мин. 2, макс. 500 символов"
-
-#: modules/admin/templates/forum/add.phtml:38
-#: modules/admin/templates/forum/add.phtml:41
-#: modules/admin/templates/forum/edit.phtml:54
-#: modules/admin/templates/forum/edit.phtml:55
-msgid "Common access"
-msgstr "Общий доступ"
-
-#: modules/admin/templates/forum/add.phtml:45
-#: modules/admin/templates/forum/edit.phtml:55
-msgid "Assign the newly created authors as curators"
-msgstr "Назначать создателей тем кураторами"
-
-#: modules/admin/templates/forum/add.phtml:49
-#: modules/admin/templates/forum/edit.phtml:55
-msgid "Allow authors to edit the 1st post"
-msgstr "Разрешить авторам редактировать 1-й пост"
-
-#: modules/admin/templates/forum/add.phtml:53
-#: modules/admin/templates/forum/edit.phtml:55
-msgid "Only for reading"
-msgstr "Только для чтения"
-
-#: modules/admin/templates/forum/add.phtml:57
-#: modules/admin/templates/forum/edit.phtml:62
-msgid "Section type"
-msgstr "Тип раздела"
-
-#: modules/admin/templates/forum/add.phtml:60
-#: modules/admin/templates/forum/edit.phtml:65
-msgid "For subsections"
-msgstr "Для подразделов"
-
-#: modules/admin/templates/forum/add.phtml:64
-#: modules/admin/templates/forum/edit.phtml:69
-msgid "For topics"
-msgstr "Для тем"
-
-#: modules/admin/templates/forum/del_confirm_move.phtml:18
-msgid "<h3>WARNING!</h3>There are subsections. Move them to another category."
-msgstr "<h3>ВНИМАНИЕ!</h3>Есть подчиненные разделы.<br>Их необходимо переместить в другую категорию"
-
-#: modules/admin/templates/forum/del_confirm_move.phtml:25
-#: modules/admin/templates/forum/edit.phtml:73
-msgid "Category"
-msgstr "Категория"
-
-#: modules/admin/templates/forum/del_confirm_move.phtml:32
-msgid "All categories, topics, and files will be moved into selected category. Old category will be removed."
-msgstr "Все разделы, темы и файлы будут перемещены в выбранную категорию. Старая категория будет удалена"
-
-#: modules/admin/templates/forum/del_confirm_move.phtml:35
-#: modules/admin/templates/forum/del_confirm_move_topics.phtml:42
-msgid "Move"
-msgstr "Переместить"
-
-#: modules/admin/templates/forum/del_confirm_move.phtml:41
-#: modules/admin/templates/forum/del_confirm_move_topics.phtml:46
-msgid "Complete removal"
-msgstr "Полное удаление"
-
-#: modules/admin/templates/forum/del_confirm_move.phtml:43
-msgid "If you want to destroy all the information, first remove"
-msgstr "Если хотите уничтожить всю информацию, вначале удалите"
-
-#: modules/admin/templates/forum/del_confirm_move.phtml:44
-msgid "subsections"
-msgstr "подразделы"
-
-#: modules/admin/templates/forum/del_confirm_move_topics.phtml:19
-msgid "<h3>WARNING!</h3>There are topics in the section. You must move them to another section."
-msgstr "<h3>ВНИМАНИЕ!</h3>В разделе есть темы.<br>Их необходимо переместить в другой раздел"
-
-#: modules/admin/templates/forum/del_confirm_move_topics.phtml:25
-msgid "Select section"
-msgstr "Выберать раздел"
-
-#: modules/admin/templates/forum/del_confirm_move_topics.phtml:32
-msgid "Other category"
-msgstr "Другая категория"
-
-#: modules/admin/templates/forum/del_confirm_move_topics.phtml:39
-msgid "All the topics and files will be moved to selected section. Old section will be deleted."
-msgstr "Все темы и файлы будут перемещены в выбранный раздел. Старый раздел будет удален"
-
-#: modules/admin/templates/forum/del_confirm_move_topics.phtml:47
-msgid "WARNING! All the information will be deleted"
-msgstr "ВНИМАНИЕ! Будет удалена вся информация"
-
-#: modules/admin/templates/forum/edit.phtml:30
-msgid "Min. 2, Max. 150 characters"
-msgstr "Минимум 2, Макс. 150 символов"
-
-#: modules/admin/templates/forum/edit.phtml:34
-#: modules/admin/templates/forum/edit.phtml:35
-msgid "Order"
-msgstr "Порядок"
-
-#: modules/admin/templates/forum/edit.phtml:36
-msgid "Only numbers"
-msgstr "Только цифры"
-
-#: modules/admin/templates/forum/edit.phtml:46
-msgid "Meta description"
-msgstr "Описание (Meta)"
-
-#: modules/admin/templates/forum/edit.phtml:50
-msgid "Meta keywords"
-msgstr "Ключевые слова (Meta)"
-
-#: modules/admin/templates/forum/hidden_posts.phtml:20
-#: modules/admin/templates/forum/hidden_topics.phtml:20
-msgid "Filtered:"
-msgstr "Отфильтровано:"
-
-#: modules/admin/templates/forum/hidden_posts.phtml:39
-msgid "Go to page"
-msgstr "Перейти на страницу"
-
-#: modules/admin/templates/forum/hidden_posts.phtml:52
-#: modules/admin/templates/forum/hidden_topics.phtml:47
-msgid "Topic:"
-msgstr "Тема:"
-
-#: modules/admin/templates/forum/hidden_posts.phtml:76
-msgid "Edited:"
-msgstr "Изменен"
-
-#: modules/admin/templates/forum/hidden_posts.phtml:79
-msgid "Post deleted:"
-msgstr "Пост удален:"
-
-#: modules/admin/templates/forum/hidden_posts.phtml:81
-msgid "Post restored by:"
-msgstr "Пост восстановил:"
-
-#: modules/admin/templates/forum/hidden_posts.phtml:84
-#: modules/admin/templates/forum/hidden_topics.phtml:80
-msgid "Filter:"
-msgstr "Фильтр:"
 
 #: modules/admin/templates/forum/hidden_posts.phtml:104
 #: modules/admin/templates/forum/hidden_topics.phtml:100
@@ -1412,99 +1154,6 @@ msgstr "Удалить все"
 #: modules/admin/templates/userlist.phtml:36
 msgid "Total"
 msgstr "Всего"
-
-#: modules/admin/templates/forum/hidden_topics.phtml:51
-msgid "Path:"
-msgstr "Путь:"
-
-#: modules/admin/templates/forum/hidden_topics.phtml:77
-msgid "Topic deleted:"
-msgstr "Тему удалил:"
-
-#: modules/admin/templates/forum/index.phtml:12
-msgid "Statistic"
-msgstr "Статистика"
-
-#: modules/admin/templates/forum/index.phtml:14
-msgid "Categories"
-msgstr "Категории"
-
-#: modules/admin/templates/forum/index.phtml:15
-#: modules/admin/templates/forum/settings.phtml:41
-msgid "Sections"
-msgstr "Разделы"
-
-#: modules/admin/templates/forum/index.phtml:16
-#: modules/admin/templates/forum/settings.phtml:52
-msgid "Topics"
-msgstr "Темы "
-
-#: modules/admin/templates/forum/index.phtml:17
-msgid "Messages"
-msgstr "Сообщения"
-
-#: modules/admin/templates/forum/index.phtml:18
-msgid "Files"
-msgstr "Файлы"
-
-#: modules/admin/templates/forum/index.phtml:19
-msgid "Votes"
-msgstr "Голосования"
-
-#: modules/admin/templates/forum/index.phtml:21
-#: modules/admin/templates/forum/index.phtml:24
-msgid "Settings"
-msgstr "Настройки"
-
-#: modules/admin/templates/forum/settings.phtml:25
-msgid "Common settings"
-msgstr "Общие настройки"
-
-#: modules/admin/templates/forum/settings.phtml:28
-msgid "Show file counters"
-msgstr "Показать счетчики файлов"
-
-#: modules/admin/templates/forum/settings.phtml:32
-msgid "SEO settings"
-msgstr "Настройки SEO"
-
-#: modules/admin/templates/forum/settings.phtml:34
-msgid "Forum keywords"
-msgstr "Ключевые слова форума"
-
-#: modules/admin/templates/forum/settings.phtml:38
-msgid "Forum description"
-msgstr "Описание форума"
-
-#: modules/admin/templates/forum/settings.phtml:43
-msgid "Section keywords"
-msgstr "Ключевые слова раздела"
-
-#: modules/admin/templates/forum/settings.phtml:45
-#: modules/admin/templates/forum/settings.phtml:50
-msgid "Macros available: #name#, #description#"
-msgstr "Доступные макросы: #name#, #description#"
-
-#: modules/admin/templates/forum/settings.phtml:48
-msgid "Section description"
-msgstr "Описание раздела"
-
-#: modules/admin/templates/forum/settings.phtml:54
-msgid "Topic keywords"
-msgstr "Ключевые слова топиков"
-
-#: modules/admin/templates/forum/settings.phtml:56
-#: modules/admin/templates/forum/settings.phtml:61
-msgid "Macros available: #name#"
-msgstr "Доступные макросы: #name#"
-
-#: modules/admin/templates/forum/settings.phtml:59
-msgid "Topic description"
-msgstr "Описание топиков"
-
-#: modules/admin/templates/forum/structure.phtml:27
-msgid "View"
-msgstr "Просмотреть"
 
 #: modules/admin/templates/index.phtml:4
 msgid "Show admin menu"
@@ -2088,12 +1737,6 @@ msgstr "Полный доступ"
 
 msgid "A role of this level is allowed everything, whatever is ticked, so the permissions are not shown for it. That is what keeps a site from locking itself out of its own admin panel."
 msgstr "Роль такого уровня может всё, независимо от отмеченных прав, поэтому список прав для неё не показывается. Именно это не даёт сайту закрыть самому себе доступ в админ панель."
-
-msgid "Delete a forum section with everything in it"
-msgstr "Удалять раздел форума вместе со всем содержимым"
-
-msgid "Empty the lists of hidden topics and posts"
-msgstr "Очищать списки скрытых тем и сообщений"
 
 msgid "Open the report on the state of the installation"
 msgstr "Открывать отчёт о состоянии установки"

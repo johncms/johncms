@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Johncms\Modules\Admin\Application\UseCases;
+namespace Johncms\Modules\Forum\Application\UseCases;
 
-use Johncms\Modules\Admin\Application\Services\ForumSlugGenerator;
-use Johncms\Modules\Admin\Domain\Repository\ForumStructureRepositoryInterface;
+use Johncms\Modules\Forum\Application\Services\ForumSlugGenerator;
+use Johncms\Modules\Forum\Domain\Repository\ForumStructureRepositoryInterface;
 
 final readonly class AddForumSectionUseCase
 {

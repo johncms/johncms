@@ -1267,3 +1267,210 @@ msgstr "İstifadəçilər"
 msgid "Guests"
 msgstr "Qonaqlar"
 
+
+msgid "Forum Management"
+msgstr "İdarə Forum"
+
+msgid "Settings are saved successfully"
+msgstr "Ayarlar saxlanıldı"
+
+msgid "Forum Settings"
+msgstr "Parametrlər Forum"
+
+msgid "List of categories"
+msgstr "Boş kateqoriyaların siyahısı:"
+
+msgid "Forum structure"
+msgstr "Forumun strukturu"
+
+msgid "Invalid ID"
+msgstr "Yalnış İD"
+
+msgid "Add Section"
+msgstr "Bölməyi Redaktə et"
+
+msgid "Add Category"
+msgstr "Kateqoriya Əlavə Et"
+
+msgid "You have not entered Title"
+msgstr "Siz adınızı daxil etmədiniz"
+
+msgid "Description should be at least 2 characters in length"
+msgstr "Təsviri az olmamalıdır 2 simvol"
+
+msgid "Please select a valid parent"
+msgstr "Buyurun, seçin, düzgün valideyn"
+
+msgid "Delete section"
+msgstr "Bölmə sil"
+
+msgid "Delete category"
+msgstr "Kateqoriyanı sil"
+
+msgid "Access denied"
+msgstr "Giris engellendi"
+
+msgid "Edit Section"
+msgstr "Bölməyi Redaktə et"
+
+msgid "Hidden posts"
+msgstr "Hidden Posts"
+
+msgid "by topic"
+msgstr "mövzu üzrə"
+
+msgid "by author"
+msgstr "Müəllif tərəfindən"
+
+msgid "Hidden topics"
+msgstr "Gizli mövzular"
+
+msgid "by section"
+msgstr "Bölməyə"
+
+msgid "Add"
+msgstr "Əlavə et"
+
+msgid "Parent section:"
+msgstr "Bölmə valideynlər üçün:"
+
+msgid "Min. 2, Max. 30 characters"
+msgstr "Min. 2, Max. 30 simvol"
+
+msgid "Description"
+msgstr "Açıqlama"
+
+msgid "Optional field"
+msgstr "Lazimi sahe"
+
+msgid "Min. 2, Max. 500 characters"
+msgstr "Min. 2, Max. 30 simvol"
+
+msgid "Common access"
+msgstr "Ümumi giriş"
+
+msgid "Assign the newly created authors as curators"
+msgstr "Azərbaycan yeni yaradılmış müəllifləri kimi кураторов"
+
+msgid "Allow authors to edit the 1st post"
+msgstr "Muelliflere 1-ci postu editlemeye imkan vee"
+
+msgid "Only for reading"
+msgstr "Yalnız oxumaq üçün"
+
+msgid "Section type"
+msgstr "Bölmə növü"
+
+msgid "For subsections"
+msgstr "Üçün alt"
+
+msgid "For topics"
+msgstr "Basliqlar ucun"
+
+msgid "<h3>WARNING!</h3>There are subsections. Move them to another category."
+msgstr "<h3>diqqət!</h3>var подразделы. Onların hərəkət və başqa bir kateqoriya."
+
+msgid "All categories, topics, and files will be moved into selected category. Old category will be removed."
+msgstr "Bütün kateqoriyalar bölmələr və fayllar köçürülüb seçilmiş kateqoriya. Köhnə kateqoriyalar silinəcək."
+
+msgid "Complete removal"
+msgstr "Tam aradan qaldırılması"
+
+msgid "If you want to destroy all the information, first remove"
+msgstr "Əgər siz məhv etmək üçün bütün məlumat, əvvəlcə sil"
+
+msgid "subsections"
+msgstr "Üçün alt"
+
+msgid "<h3>WARNING!</h3>There are topics in the section. You must move them to another section."
+msgstr "<h3>diqqət!</h3>var mövzular bölməsində. Siz onları hərəkət etməlidir, digər bölmə."
+
+msgid "Select section"
+msgstr "Hərəkət seçin"
+
+msgid "Other category"
+msgstr "Digər qruplar"
+
+msgid "All the topics and files will be moved to selected section. Old section will be deleted."
+msgstr "Bütün kateqoriyalar bölmələr və fayllar köçürülüb seçilmiş kateqoriya. Köhnə kateqoriyalar silinəcək."
+
+msgid "WARNING! All the information will be deleted"
+msgstr "Diqqət! Bütün məlumatları silinəcək"
+
+msgid "Only numbers"
+msgstr "Yalnız rəqəmlər"
+
+msgid "Filtered:"
+msgstr "Filter:"
+
+msgid "Go to page"
+msgstr "Səhifəyə keçin"
+
+msgid "Topic:"
+msgstr "Mövzular"
+
+msgid "Delete all"
+msgstr "Hamısını sil"
+
+msgid "Path:"
+msgstr "Yol"
+
+msgid "Topic deleted:"
+msgstr "Mövzu silindi"
+
+msgid "Statistic"
+msgstr "Statistikalar"
+
+msgid "Categories"
+msgstr "Kateqoriyalar"
+
+msgid "Sections"
+msgstr "Bölmələr"
+
+msgid "Topics"
+msgstr "Mövzular"
+
+msgid "Messages"
+msgstr "Mesajlar"
+
+msgid "Votes"
+msgstr "Səslər"
+
+msgid "Settings"
+msgstr "Parametrlər"
+
+msgid "Common settings"
+msgstr "Ümumi parametrlər"
+
+msgid "Show file counters"
+msgstr "Göstərmək fayl sayğacları"
+
+msgid "SEO settings"
+msgstr "Parametrlər SEO"
+
+msgid "Forum keywords"
+msgstr "Forum açar sözlər"
+
+msgid "Forum description"
+msgstr "Təsviri forum"
+
+msgid "Section keywords"
+msgstr "Bölmə sorğular"
+
+msgid "Macros available: #name#, #description#"
+msgstr "Makro: #name#, #description#"
+
+msgid "Section description"
+msgstr "Bölmənin təsviri"
+
+msgid "Topic keywords"
+msgstr "Mövzu sorğular"
+
+msgid "Macros available: #name#"
+msgstr "Makro: #name#"
+
+msgid "Topic description"
+msgstr "Mövzunun təsviri"
+
+msgid "View"
+msgstr "Göstər"

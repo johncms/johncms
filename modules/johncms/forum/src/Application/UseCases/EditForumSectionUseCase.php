@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Johncms\Modules\Admin\Application\UseCases;
+namespace Johncms\Modules\Forum\Application\UseCases;
 
-use Johncms\Modules\Admin\Application\Services\ForumSlugGenerator;
-use Johncms\Modules\Admin\Domain\Repository\ForumStructureRepositoryInterface;
+use Johncms\Modules\Forum\Application\Services\ForumSlugGenerator;
+use Johncms\Modules\Forum\Domain\Repository\ForumStructureRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Models\ForumFile;
 use Johncms\Modules\Forum\Domain\Models\ForumSection;
 
@@ -18,7 +18,7 @@ final readonly class EditForumSectionUseCase
     }
 
     /**
-     * Нельзя назначить родителем сам раздел или его потомка.
+     * A section cannot become its own parent, nor the child of one of its own descendants.
      */
     public function wouldCreateCycle(int $sectionId, int $newParentId): bool
     {

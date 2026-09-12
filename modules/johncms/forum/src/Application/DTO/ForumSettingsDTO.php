@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Johncms\Modules\Admin\Application\DTO;
+namespace Johncms\Modules\Forum\Application\DTO;
 
 final readonly class ForumSettingsDTO
 {

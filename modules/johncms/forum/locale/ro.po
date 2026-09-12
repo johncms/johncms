@@ -1267,3 +1267,216 @@ msgstr "Utilizatori"
 msgid "Guests"
 msgstr "Oaspeti"
 
+
+msgid "Forum Management"
+msgstr "Administrare Forum"
+
+msgid "Settings are saved successfully"
+msgstr "Setarile au fost salvate cu sucess"
+
+msgid "Forum Settings"
+msgstr "Setari forum"
+
+msgid "List of categories"
+msgstr "Lisa de categorii"
+
+msgid "Forum structure"
+msgstr "Structura forum"
+
+msgid "Add Section"
+msgstr "Adauga sectiune"
+
+msgid "Add Category"
+msgstr "Adauga categorie"
+
+msgid "You have not entered Title"
+msgstr "Nu ai introdus nici un titlu"
+
+msgid "Description should be at least 2 characters in length"
+msgstr "Descriere trebuie sa fie de cel putin 2 caractere"
+
+msgid "Please select a valid parent"
+msgstr "Vă rugăm să selectați un părinte valid"
+
+msgid "Delete section"
+msgstr "Șterge sectiune"
+
+msgid "Delete category"
+msgstr "Șterge categorie"
+
+msgid "Access denied"
+msgstr "Acess interzis"
+
+msgid "Edit Section"
+msgstr "Editeaza sectiune"
+
+msgid "Hidden posts"
+msgstr "Postari ascunse"
+
+msgid "by topic"
+msgstr "dupa topic"
+
+msgid "by author"
+msgstr "in functie de autor"
+
+msgid "Hidden topics"
+msgstr "Topicuri ascunse"
+
+msgid "by section"
+msgstr "in functie de sectiune"
+
+msgid "Add"
+msgstr "Adauga"
+
+msgid "Parent section:"
+msgstr "Secțiune părinte:"
+
+msgid "Min. 2, Max. 30 characters"
+msgstr "Min. 2, Max. 30 de caractere"
+
+msgid "Description"
+msgstr "Descriere"
+
+msgid "Optional field"
+msgstr "Camp optional"
+
+msgid "Min. 2, Max. 500 characters"
+msgstr "Min. 2, Max. 500 de caractere"
+
+msgid "Common access"
+msgstr "Acces comun"
+
+msgid "Assign the newly created authors as curators"
+msgstr "Atribuiți autorii noi creati ca custode"
+
+msgid "Allow authors to edit the 1st post"
+msgstr "Permite autorilor sa editeze prima postare"
+
+msgid "Only for reading"
+msgstr "Doar pentru citit"
+
+msgid "Section type"
+msgstr "Tip Sectiune"
+
+msgid "For subsections"
+msgstr "Pentru subsectiuni"
+
+msgid "For topics"
+msgstr "Pentru subiecte"
+
+msgid "<h3>WARNING!</h3>There are subsections. Move them to another category."
+msgstr "<h3>ATENTIE</h3> Exista subsectiuni. Muta-le in alta categorie."
+
+msgid "All categories, topics, and files will be moved into selected category. Old category will be removed."
+msgstr "Toate categoriile, topicurile și fișierele vor fi mutate în categoria selectată. Categoria veche va fi eliminată."
+
+msgid "Complete removal"
+msgstr "Îndepărtare completa"
+
+msgid "If you want to destroy all the information, first remove"
+msgstr "Dacă doriți ca să distrugeti toate informațiile, mai întâi eliminațile"
+
+msgid "subsections"
+msgstr "subsecțiuni"
+
+msgid "<h3>WARNING!</h3>There are topics in the section. You must move them to another section."
+msgstr "<hr3>ATENTIE!</h3> Exista topicuri in sectiune. Va trebui sa le muti in alta sectiune."
+
+msgid "Select section"
+msgstr "Selecteaza sectiune"
+
+msgid "Other category"
+msgstr "Alta categorie"
+
+msgid "All the topics and files will be moved to selected section. Old section will be deleted."
+msgstr "Toate topicurile si fisierele vor fi mutate in sectiunea selectata. Sectiunea veche va fi stearsa."
+
+msgid "WARNING! All the information will be deleted"
+msgstr "ATENTIE! Toate informatiile vor fi sterse"
+
+msgid "Min. 2, Max. 150 characters"
+msgstr "Min. 2, Max. 150 de caractere"
+
+msgid "Order"
+msgstr "Comanda"
+
+msgid "Only numbers"
+msgstr "Doar numere"
+
+msgid "Filtered:"
+msgstr "Filtre:"
+
+msgid "Go to page"
+msgstr "Mergi la pagina"
+
+msgid "Topic:"
+msgstr "Subiect:"
+
+msgid "Filter:"
+msgstr "Filtru:"
+
+msgid "Delete all"
+msgstr "Sterge tot"
+
+msgid "Path:"
+msgstr "Cale:"
+
+msgid "Topic deleted:"
+msgstr "Topic sters"
+
+msgid "Statistic"
+msgstr "Statistici"
+
+msgid "Categories"
+msgstr "Categorii"
+
+msgid "Sections"
+msgstr "Sectiuni"
+
+msgid "Topics"
+msgstr "Topicuri"
+
+msgid "Messages"
+msgstr "Mesaje"
+
+msgid "Votes"
+msgstr "Voturi"
+
+msgid "Settings"
+msgstr "Setari"
+
+msgid "Common settings"
+msgstr "Setari comune"
+
+msgid "Show file counters"
+msgstr "Arată contoarele de fisiere"
+
+msgid "SEO settings"
+msgstr "Setari SEO"
+
+msgid "Forum keywords"
+msgstr "Cuvinte cheie forum"
+
+msgid "Forum description"
+msgstr "Descriere forum"
+
+msgid "Section keywords"
+msgstr "Cuvinte cheie"
+
+msgid "Macros available: #name#, #description#"
+msgstr "Macrocomenzi disponibile: #name#, #description#"
+
+msgid "Section description"
+msgstr "Descriere sectiune"
+
+msgid "Topic keywords"
+msgstr "Cuvinte cheie topic"
+
+msgid "Macros available: #name#"
+msgstr "Macrocomenzi disponibile: #name#"
+
+msgid "Topic description"
+msgstr "Descriere topic"
+
+msgid "View"
+msgstr "Vizualizări"

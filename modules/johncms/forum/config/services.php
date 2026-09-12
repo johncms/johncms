@@ -4,26 +4,34 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
+use Johncms\Modules\Forum\Domain\Repository\ForumAdminRepositoryInterface;
+use Johncms\Modules\Forum\Domain\Repository\ForumConfigRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumFileRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageFileRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumSectionRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumSearchHistoryRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumSearchRepositoryInterface;
+use Johncms\Modules\Forum\Domain\Repository\ForumStructureRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumUnreadRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumVoteRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumWhoRepositoryInterface;
+use Johncms\Modules\Forum\Domain\Repository\HiddenForumRepositoryInterface;
+use Johncms\Modules\Forum\Infrastructure\Config\FileSystemForumConfigRepository;
+use Johncms\Modules\Forum\Infrastructure\Persistence\Repository\ForumAdminRepository;
 use Johncms\Modules\Forum\Infrastructure\Persistence\Repository\ForumFileRepository;
 use Johncms\Modules\Forum\Infrastructure\Persistence\Repository\ForumMessageFileRepository;
 use Johncms\Modules\Forum\Infrastructure\Persistence\Repository\ForumMessageRepository;
 use Johncms\Modules\Forum\Infrastructure\Persistence\Repository\ForumSectionRepository;
 use Johncms\Modules\Forum\Infrastructure\Persistence\Repository\ForumSearchHistoryRepository;
 use Johncms\Modules\Forum\Infrastructure\Persistence\Repository\ForumSearchRepository;
+use Johncms\Modules\Forum\Infrastructure\Persistence\Repository\ForumStructureRepository;
 use Johncms\Modules\Forum\Infrastructure\Persistence\Repository\ForumTopicRepository;
 use Johncms\Modules\Forum\Infrastructure\Persistence\Repository\ForumUnreadRepository;
 use Johncms\Modules\Forum\Infrastructure\Persistence\Repository\ForumVoteRepository;
 use Johncms\Modules\Forum\Infrastructure\Persistence\Repository\ForumWhoRepository;
+use Johncms\Modules\Forum\Infrastructure\Persistence\Repository\HiddenForumRepository;
 use Johncms\Modules\Forum\Infrastructure\Storage\ForumAttachmentStorage;
 
 return static function (ContainerConfigurator $container): void {
@@ -66,4 +74,10 @@ return static function (ContainerConfigurator $container): void {
     $services->set(ForumUnreadRepositoryInterface::class, ForumUnreadRepository::class)->public();
     $services->set(ForumVoteRepositoryInterface::class, ForumVoteRepository::class)->public();
     $services->set(ForumWhoRepositoryInterface::class, ForumWhoRepository::class)->public();
+
+    // The screens of the admin panel.
+    $services->set(ForumAdminRepositoryInterface::class, ForumAdminRepository::class)->public();
+    $services->set(ForumConfigRepositoryInterface::class, FileSystemForumConfigRepository::class)->public();
+    $services->set(ForumStructureRepositoryInterface::class, ForumStructureRepository::class)->public();
+    $services->set(HiddenForumRepositoryInterface::class, HiddenForumRepository::class)->public();
 };

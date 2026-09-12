@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Johncms\Modules\Admin\Application\Controllers\Forum;
+namespace Johncms\Modules\Forum\Application\Controllers\Admin;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\Authorization\CorePermissions;
-use Johncms\Modules\Admin\Application\UseCases\GetForumDashboardUseCase;
+use Johncms\Modules\Forum\Application\UseCases\GetForumDashboardUseCase;
 use Johncms\NavChain;
 use Johncms\Http\View\ViewResponse;
 
@@ -24,7 +24,7 @@ final readonly class ForumDashboardController
         $title = __('Forum Management');
         $this->navChain->add($title, '/admin/forum');
 
-        return new ViewResponse('@admin/forum.twig', [
+        return new ViewResponse('@forum/admin/dashboard.twig', [
             'title'         => $title,
             'page_title'    => $title,
             'module_menu'   => ['forum' => true],

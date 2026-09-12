@@ -1267,3 +1267,177 @@ msgstr "Użytkownicy"
 msgid "Guests"
 msgstr "Goście"
 
+
+msgid "Forum Management"
+msgstr "Zarzadzanie forum"
+
+msgid "Settings are saved successfully"
+msgstr "Ustawienia zapisane pomyślnie"
+
+msgid "List of categories"
+msgstr "Przeglądanie kategorii"
+
+msgid "Forum structure"
+msgstr "Struktura forum"
+
+msgid "Invalid ID"
+msgstr "Nieprawidłowy identyfikator"
+
+msgid "Add Section"
+msgstr "Dodaj sekcję"
+
+msgid "Add Category"
+msgstr "Dodaj kategorie"
+
+msgid "You have not entered Title"
+msgstr "Nie wpisałeś tytułu"
+
+msgid "Description should be at least 2 characters in length"
+msgstr "Opis powinien zawierać co najmniej 2 znaki"
+
+msgid "Please select a valid parent"
+msgstr "Wybierz prawidłowy nadrzędny"
+
+msgid "Delete section"
+msgstr "Usuń sekcję"
+
+msgid "Delete category"
+msgstr "Usuń kategorię"
+
+msgid "Access denied"
+msgstr "Odmowa dostępu"
+
+msgid "Edit Section"
+msgstr "Edytuj sekcję"
+
+msgid "Hidden posts"
+msgstr "Ukryj posty"
+
+msgid "by topic"
+msgstr "według tematu"
+
+msgid "by author"
+msgstr "według autora"
+
+msgid "Hidden topics"
+msgstr "Ukryj tematy"
+
+msgid "by section"
+msgstr "według sekcji"
+
+msgid "Add"
+msgstr "Dodaj"
+
+msgid "Parent section:"
+msgstr "Sekcja nadrzędna:"
+
+msgid "Min. 2, Max. 30 characters"
+msgstr "Min. 2, Max. 30 znaków"
+
+msgid "Description"
+msgstr "Opis"
+
+msgid "Optional field"
+msgstr "Opcjonalnie"
+
+msgid "Min. 2, Max. 500 characters"
+msgstr "Min. 2, Max. 500 znaków"
+
+msgid "Common access"
+msgstr "Dostęp otwarty"
+
+msgid "Assign the newly created authors as curators"
+msgstr "Przypisać nowo utworzony przez autorów jako kuratorów"
+
+msgid "Allow authors to edit the 1st post"
+msgstr "Pozwól autorom edytować 1 post"
+
+msgid "Only for reading"
+msgstr "Tylko do odczytu"
+
+msgid "Section type"
+msgstr "Typ sekcji"
+
+msgid "For subsections"
+msgstr "Dla podsekcji"
+
+msgid "For topics"
+msgstr "Dla tematów"
+
+msgid "<h3>WARNING!</h3>There are subsections. Move them to another category."
+msgstr "<h3>OSTRZEŻENIE!</h3> Istnieją podsekcje. Przenieś je do innej kategorii."
+
+msgid "All categories, topics, and files will be moved into selected category. Old category will be removed."
+msgstr "Wszystkie kategorie, tematy i pliki zostaną przeniesione do wybranej kategorii. Stare kategorie zostaną usunięte."
+
+msgid "Complete removal"
+msgstr "Usuń wszystko"
+
+msgid "If you want to destroy all the information, first remove"
+msgstr "Jeśli chcesz, usunąć wszystkie informacje, najpierw usuń"
+
+msgid "subsections"
+msgstr "podsekcje"
+
+msgid "<h3>WARNING!</h3>There are topics in the section. You must move them to another section."
+msgstr "<h3>OSTRZEŻENIE!</h3>Istnieją tematy, w sekcji.<br>Należy je przenieść do innej sekcji."
+
+msgid "Select section"
+msgstr "Wybierz sekcję"
+
+msgid "Other category"
+msgstr "Inne kategorie"
+
+msgid "All the topics and files will be moved to selected section. Old section will be deleted."
+msgstr "Wszystkie tematy i pliki zostaną przeniesione do wybranej sekcji. Stare sekcje zostaną usunięte."
+
+msgid "WARNING! All the information will be deleted"
+msgstr "OSTRZEŻENIE! Wszystkie informacje zostaną usunięte"
+
+msgid "Order"
+msgstr "Kolejność"
+
+msgid "Only numbers"
+msgstr "Tylko cyfry"
+
+msgid "Filtered:"
+msgstr "Filtr:"
+
+msgid "Go to page"
+msgstr "Idź do strony"
+
+msgid "Topic:"
+msgstr "Temat:"
+
+msgid "Delete all"
+msgstr "Usuń wszystkie"
+
+msgid "Path:"
+msgstr "Scieżka:"
+
+msgid "Topic deleted:"
+msgstr "Temat usunięty:"
+
+msgid "Statistic"
+msgstr "Statystyka"
+
+msgid "Categories"
+msgstr "Kategorie"
+
+msgid "Sections"
+msgstr "Sekcje"
+
+msgid "Topics"
+msgstr "Tematy"
+
+msgid "Messages"
+msgstr "Wiadomości"
+
+msgid "Votes"
+msgstr "Głosy"
+
+msgid "Settings"
+msgstr "Ustawienia"
+
+msgid "View"
+msgstr "Widok"

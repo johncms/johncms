@@ -1267,3 +1267,180 @@ msgstr "Vartotojai"
 msgid "Guests"
 msgstr "Svečiai"
 
+
+msgid "Forum Management"
+msgstr "Forumo Vadovavimas"
+
+msgid "Settings are saved successfully"
+msgstr "Nustatymai išsaugoti sėkmingai"
+
+msgid "List of categories"
+msgstr "Kategoriju sarašas"
+
+msgid "Forum structure"
+msgstr "Forumo struktūra"
+
+msgid "Invalid ID"
+msgstr "Netinkamas ID"
+
+msgid "Add Section"
+msgstr "Pridėti skyrių"
+
+msgid "Add Category"
+msgstr "Pridėti kategoriją"
+
+msgid "You have not entered Title"
+msgstr "Jus neįvedėte Temos"
+
+msgid "Description should be at least 2 characters in length"
+msgstr "Aprašymas turi būti ne mažiau kaip 2 simbolių ilgio"
+
+msgid "Please select a valid parent"
+msgstr "Prašome, pasirinkite galiojantį tėvų"
+
+msgid "Delete section"
+msgstr "Trinti skyri"
+
+msgid "Delete category"
+msgstr "Trinti kategorija"
+
+msgid "Access denied"
+msgstr "Prieiga nesuteikta"
+
+msgid "Edit Section"
+msgstr "Redaguoti skyrių"
+
+msgid "Hidden posts"
+msgstr "Paslėpti pranešimai"
+
+msgid "by topic"
+msgstr "pagal temą"
+
+msgid "by author"
+msgstr "pagal autorių"
+
+msgid "Hidden topics"
+msgstr "Paslėptos temos"
+
+msgid "by section"
+msgstr "pagal skyriu"
+
+msgid "Add"
+msgstr "Pridėti"
+
+msgid "Parent section:"
+msgstr "Tėvų skyriuje:"
+
+msgid "Min. 2, Max. 30 characters"
+msgstr "Min. 2, Max. 30 simbolių"
+
+msgid "Description"
+msgstr "Aprašymas"
+
+msgid "Optional field"
+msgstr "Neprivalomas laukas"
+
+msgid "Min. 2, Max. 500 characters"
+msgstr "Min. 2, Maks. 500 simbolių"
+
+msgid "Common access"
+msgstr "Bendros prieigos"
+
+msgid "Assign the newly created authors as curators"
+msgstr "Priskirti naujai sukurtą autoriai, kaip kuratorių,"
+
+msgid "Allow authors to edit the 1st post"
+msgstr "Leisti autoriams redaguoti 1st post"
+
+msgid "Only for reading"
+msgstr "Tik skaitymui"
+
+msgid "Section type"
+msgstr "Skyriaus tipas"
+
+msgid "For subsections"
+msgstr "Už poskyrių"
+
+msgid "For topics"
+msgstr "Už temos"
+
+msgid "<h3>WARNING!</h3>There are subsections. Move them to another category."
+msgstr "<h3>DĖMESIO!</h3>yra poskyrių. Jas perkelti į kitą kategoriją."
+
+msgid "All categories, topics, and files will be moved into selected category. Old category will be removed."
+msgstr "Visų kategorijų, temų, ir failai bus perkelti į pasirinktos kategorijos. Sena kategorija bus pašalintas."
+
+msgid "Complete removal"
+msgstr "Visiškai pašalinus"
+
+msgid "If you want to destroy all the information, first remove"
+msgstr "Jei norite sunaikinti visą informaciją, pirmiausia pašalinti"
+
+msgid "subsections"
+msgstr "poskirsniuose"
+
+msgid "<h3>WARNING!</h3>There are topics in the section. You must move them to another section."
+msgstr "<h3>DĖMESIO!</h3>yra temų šiame skyriuje. Jūs turite perkelti juos į kitą skyrių."
+
+msgid "Select section"
+msgstr "Pasirinkite skyrius"
+
+msgid "Other category"
+msgstr "Kitos kategorijos"
+
+msgid "All the topics and files will be moved to selected section. Old section will be deleted."
+msgstr "Visos temos ir failai bus perkelti į pasirinktą skirsnį. Senoji dalis bus ištrinta."
+
+msgid "WARNING! All the information will be deleted"
+msgstr "DĖMESIO! Visa informacija bus ištrinta"
+
+msgid "Order"
+msgstr "Užsakymo"
+
+msgid "Only numbers"
+msgstr "Tik skaičiai"
+
+msgid "Filtered:"
+msgstr "Filtruotas:"
+
+msgid "Go to page"
+msgstr "Eikite į puslapio"
+
+msgid "Topic:"
+msgstr "Tema"
+
+msgid "Filter:"
+msgstr "Filtruoti"
+
+msgid "Delete all"
+msgstr "Ištrinti visas"
+
+msgid "Path:"
+msgstr "Kelias:"
+
+msgid "Topic deleted:"
+msgstr "Tema ištrinta:"
+
+msgid "Statistic"
+msgstr "Statistika"
+
+msgid "Categories"
+msgstr "Kategorijos"
+
+msgid "Sections"
+msgstr "Skyriai"
+
+msgid "Topics"
+msgstr "Tema"
+
+msgid "Messages"
+msgstr "Žinutės"
+
+msgid "Votes"
+msgstr "Balsų"
+
+msgid "Settings"
+msgstr "Nustatymai"
+
+msgid "View"
+msgstr "Peržiūrėti"

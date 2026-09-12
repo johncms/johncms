@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Johncms\Modules\Admin\Infrastructure\Persistence\Repository;
+namespace Johncms\Modules\Forum\Infrastructure\Persistence\Repository;
 
-use Johncms\Modules\Admin\Domain\Repository\ForumAdminRepositoryInterface;
+use Johncms\Modules\Forum\Domain\Repository\ForumAdminRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Models\ForumFile;
 use Johncms\Modules\Forum\Domain\Models\ForumMessage;
 use Johncms\Modules\Forum\Domain\Models\ForumSection;
 use Johncms\Modules\Forum\Domain\Models\ForumTopic;
 use Johncms\Modules\Forum\Domain\Models\ForumVote;
 
-final class EloquentForumAdminRepository implements ForumAdminRepositoryInterface
+final class ForumAdminRepository implements ForumAdminRepositoryInterface
 {
     public function dashboardCounters(): array
     {

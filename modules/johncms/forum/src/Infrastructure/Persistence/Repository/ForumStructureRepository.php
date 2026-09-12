@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Johncms\Modules\Admin\Infrastructure\Persistence\Repository;
+namespace Johncms\Modules\Forum\Infrastructure\Persistence\Repository;
 
 use Illuminate\Support\Collection;
-use Johncms\Modules\Admin\Domain\Repository\ForumStructureRepositoryInterface;
+use Johncms\Modules\Forum\Domain\Repository\ForumStructureRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Models\ForumFile;
 use Johncms\Modules\Forum\Domain\Models\ForumMessage;
 use Johncms\Modules\Forum\Domain\Models\ForumSection;
@@ -14,7 +14,7 @@ use Johncms\Modules\Forum\Domain\Models\ForumUnread;
 use Johncms\Modules\Forum\Domain\Models\ForumVote;
 use Johncms\Modules\Forum\Domain\Models\ForumVoteUser;
 
-final class EloquentForumStructureRepository implements ForumStructureRepositoryInterface
+final class ForumStructureRepository implements ForumStructureRepositoryInterface
 {
     public function categories(): Collection
     {

@@ -1267,3 +1267,156 @@ msgstr "Қолданушылар"
 msgid "Guests"
 msgstr "Қонақтар"
 
+
+msgid "Forum Management"
+msgstr "Форумды Басқару"
+
+msgid "Settings are saved successfully"
+msgstr "Параметрлер сәтті сақталды"
+
+msgid "Forum Settings"
+msgstr "Форум Баптаулары"
+
+msgid "List of categories"
+msgstr "Санаттар тізімі"
+
+msgid "Forum structure"
+msgstr "Форумның құрылымы"
+
+msgid "Invalid ID"
+msgstr "Жарамсыз ID"
+
+msgid "Add Section"
+msgstr "Бөлімді қосу"
+
+msgid "Add Category"
+msgstr "Санат қосу"
+
+msgid "You have not entered Title"
+msgstr "Сіз ат енгізген жоқсыз"
+
+msgid "Description should be at least 2 characters in length"
+msgstr "Сипаттама кемінде 2 таңбадан тұруы керек"
+
+msgid "Please select a valid parent"
+msgstr "Өтінеміз, жарамды ата-ана бөлігін таңдаңыз"
+
+msgid "Delete section"
+msgstr "Бөлімді өшіру"
+
+msgid "Delete category"
+msgstr "Санатты жою"
+
+msgid "Access denied"
+msgstr "Рұқсат жоқ"
+
+msgid "Edit Section"
+msgstr "Бөлімді өзгерту"
+
+msgid "Hidden posts"
+msgstr "Жасырын жазбалар"
+
+msgid "by topic"
+msgstr "тақырыбы бойынша"
+
+msgid "by author"
+msgstr "Автор бойынша"
+
+msgid "Hidden topics"
+msgstr "Жасырын тақырыптар"
+
+msgid "by section"
+msgstr "бөлім бойынша"
+
+msgid "Add"
+msgstr "Қосу"
+
+msgid "Parent section:"
+msgstr "Жоғарғы бөлім:"
+
+msgid "Min. 2, Max. 30 characters"
+msgstr "Мин. 2, Макс. 30 рәміздер"
+
+msgid "Description"
+msgstr "Сипаттамасы"
+
+msgid "Optional field"
+msgstr "Толтыру міндетті емес"
+
+msgid "Min. 2, Max. 500 characters"
+msgstr "Мин. 2, Макс. 500 рәміздер"
+
+msgid "Common access"
+msgstr "Ортақ пайдалану"
+
+msgid "Section type"
+msgstr "Бөлімнің түрі"
+
+msgid "For topics"
+msgstr "Тақырыптар үшін"
+
+msgid "subsections"
+msgstr "бағынысты бөлімдер"
+
+msgid "Select section"
+msgstr "Бөлімін таңдаңыз"
+
+msgid "Other category"
+msgstr "Басқа санат"
+
+msgid "All the topics and files will be moved to selected section. Old section will be deleted."
+msgstr "Барлық тақырыптар мен файлдар таңдалған бөлімге ауыстырылады. Ескі бөлім жойылады"
+
+msgid "WARNING! All the information will be deleted"
+msgstr "Ескерту! Барлық ақпарат жойылады"
+
+msgid "Order"
+msgstr "Тәртібі"
+
+msgid "Only numbers"
+msgstr "Тек сандар"
+
+msgid "Filtered:"
+msgstr "Сүзілген:"
+
+msgid "Go to page"
+msgstr "Бетіне өту"
+
+msgid "Topic:"
+msgstr "Тақырып:"
+
+msgid "Filter:"
+msgstr "Сүзгі:"
+
+msgid "Delete all"
+msgstr "Барлығын өшіру"
+
+msgid "Path:"
+msgstr "Жолы:"
+
+msgid "Topic deleted:"
+msgstr "Тақырып жойылды:"
+
+msgid "Statistic"
+msgstr "Статистика"
+
+msgid "Categories"
+msgstr "Бөлімдер"
+
+msgid "Sections"
+msgstr "Бөлімдер"
+
+msgid "Topics"
+msgstr "Тақырыптар"
+
+msgid "Messages"
+msgstr "Хабарламалар"
+
+msgid "Votes"
+msgstr "Day'ys bery'"
+
+msgid "Settings"
+msgstr "Баптаулар"
+
+msgid "View"
+msgstr "Қараулар"

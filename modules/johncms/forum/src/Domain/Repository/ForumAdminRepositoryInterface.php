@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Johncms\Modules\Admin\Domain\Repository;
+namespace Johncms\Modules\Forum\Domain\Repository;
 
 interface ForumAdminRepositoryInterface
 {
     /**
-     * Счётчики для дашборда управления форумом.
+     * The totals shown on the forum dashboard of the panel.
      *
      * @return array{
      *     total_cat: int, total_sub: int, total_thm: int, total_thm_del: int,

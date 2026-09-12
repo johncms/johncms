@@ -6,10 +6,6 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
 use Johncms\Modules\Admin\Domain\Repository\CounterRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\DashboardRepositoryInterface;
-use Johncms\Modules\Admin\Domain\Repository\ForumAdminRepositoryInterface;
-use Johncms\Modules\Admin\Domain\Repository\ForumConfigRepositoryInterface;
-use Johncms\Modules\Admin\Domain\Repository\ForumStructureRepositoryInterface;
-use Johncms\Modules\Admin\Domain\Repository\HiddenForumRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\StaffRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\AdRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\BanAmnestyRepositoryInterface;
@@ -39,15 +35,11 @@ use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentAuthLogR
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentBanListRepository;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentCounterRepository;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentDashboardRepository;
-use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentForumAdminRepository;
-use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentForumStructureRepository;
-use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentHiddenForumRepository;
 use Johncms\Modules\Admin\Infrastructure\Cache\FileSmiliesCacheRepository;
 use Johncms\Modules\Admin\Infrastructure\Config\FileSystemAuthConfigRepository;
 use Johncms\Modules\Admin\Infrastructure\Config\FileCaptchaConfigRepository;
 use Johncms\Modules\Admin\Infrastructure\Config\FileMailConfigRepository;
 use Johncms\Modules\Admin\Infrastructure\Config\FileSystemConfigRepository;
-use Johncms\Modules\Admin\Infrastructure\Config\FileSystemForumConfigRepository;
 use Johncms\Modules\Admin\Infrastructure\Language\FileSystemLanguageFilesManager;
 use Johncms\Modules\Admin\Infrastructure\Language\HttpLanguageCatalog;
 use Johncms\Modules\Admin\Infrastructure\Smilies\FileSystemSmiliesScanner;
@@ -111,9 +103,5 @@ return static function (ContainerConfigurator $container): void {
     $services->set(KarmaRepositoryInterface::class, EloquentKarmaRepository::class)->public();
     $services->set(CounterRepositoryInterface::class, EloquentCounterRepository::class)->public();
     $services->set(AdRepositoryInterface::class, EloquentAdRepository::class)->public();
-    $services->set(ForumAdminRepositoryInterface::class, EloquentForumAdminRepository::class)->public();
-    $services->set(ForumConfigRepositoryInterface::class, FileSystemForumConfigRepository::class)->public();
-    $services->set(ForumStructureRepositoryInterface::class, EloquentForumStructureRepository::class)->public();
-    $services->set(HiddenForumRepositoryInterface::class, EloquentHiddenForumRepository::class)->public();
     $services->set(FileIntegrityScannerInterface::class, CrcFileIntegrityScanner::class)->public();
 };

@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Johncms\Modules\Admin\Application\Services;
+namespace Johncms\Modules\Forum\Application\Services;
 
 use Illuminate\Support\Str;
-use Johncms\Modules\Admin\Domain\Repository\ForumStructureRepositoryInterface;
+use Johncms\Modules\Forum\Domain\Repository\ForumStructureRepositoryInterface;
 
 /**
- * Генерирует уникальный в пределах родителя slug раздела форума,
- * избегая зарезервированных под маршруты форума слов.
+ * The slug of a forum section: unique among the children of its parent, and never one of the
+ * words the routes of the forum have already taken.
  */
 final readonly class ForumSlugGenerator
 {

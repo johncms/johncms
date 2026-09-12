@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Johncms\Modules\Admin\Application\Controllers\Forum;
+namespace Johncms\Modules\Forum\Application\Controllers\Admin;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\CurrentUser;
-use Johncms\Modules\Admin\Application\Services\AdminPermissions;
-use Johncms\Modules\Admin\Application\UseCases\AddForumSectionUseCase;
-use Johncms\Modules\Admin\Application\UseCases\DeleteForumSectionUseCase;
-use Johncms\Modules\Admin\Application\UseCases\EditForumSectionUseCase;
-use Johncms\Modules\Admin\Domain\Repository\ForumStructureRepositoryInterface;
+use Johncms\Modules\Forum\Application\Services\ForumPermissions;
+use Johncms\Modules\Forum\Application\UseCases\AddForumSectionUseCase;
+use Johncms\Modules\Forum\Application\UseCases\DeleteForumSectionUseCase;
+use Johncms\Modules\Forum\Application\UseCases\EditForumSectionUseCase;
+use Johncms\Modules\Forum\Domain\Repository\ForumStructureRepositoryInterface;
 use Johncms\Modules\Forum\Application\Services\ForumSectionTreeService;
 use Johncms\Modules\Forum\Domain\Models\ForumSection;
 use Johncms\NavChain;
@@ -69,7 +69,7 @@ final readonly class ForumStructureController
             'delete_url'  => self::URL . '/' . $section->id . '/delete',
         ])->all();
 
-        return new ViewResponse('@admin/forum-structure.twig', $this->menu($title) + [
+        return new ViewResponse('@forum/admin/structure.twig', $this->menu($title) + [
             'items'        => $items,
             'add_form_url' => self::URL . '/new' . ($parentId ? '?parent=' . $parentId : ''),
             'back_url'     => $backUrl,
@@ -95,7 +95,7 @@ final readonly class ForumStructureController
         $this->navChain->add(__('Forum structure'), self::URL);
         $this->navChain->add($title);
 
-        return new ViewResponse('@admin/forum-section-form.twig', $this->menu($title) + [
+        return new ViewResponse('@forum/admin/section-form.twig', $this->menu($title) + [
             'parent_id'           => $parentId ?: null,
             'parent_section_name' => $parentName,
             'form_action'         => self::URL . '/new' . ($parentId ? '?parent=' . $parentId : ''),
@@ -193,31 +193,31 @@ final readonly class ForumStructureController
         $this->navChain->add($title);
 
         if (! $hasChildren) {
-            return new ViewResponse('@admin/forum-section-delete-confirm.twig', $this->menu($title) + [
+            return new ViewResponse('@forum/admin/section-delete-confirm.twig', $this->menu($title) + [
                 'form_action' => self::URL . '/' . $id . '/delete',
                 'back_url'    => self::URL,
             ]);
         }
 
         if (! $isTopicSection) {
-            return new ViewResponse('@admin/forum-section-move-sections.twig', $this->menu($title) + [
+            return new ViewResponse('@forum/admin/section-move-sections.twig', $this->menu($title) + [
                 'id'          => $id,
                 'categories'  => $this->moveOptions($this->repository->categoriesForMove($id), $section->parent),
                 'form_action' => self::URL . '/' . $id . '/delete',
                 'back_url'    => self::URL,
-                'can_destroy' => $this->accessChecker->allows(AdminPermissions::FORUM_STRUCTURE_DESTROY),
+                'can_destroy' => $this->accessChecker->allows(ForumPermissions::STRUCTURE_DESTROY),
             ]);
         }
 
         $ref = $request->queryInt('cat') ?: (int) $section->parent;
 
-        return new ViewResponse('@admin/forum-section-move-topics.twig', $this->menu($title) + [
+        return new ViewResponse('@forum/admin/section-move-topics.twig', $this->menu($title) + [
             'id'          => $id,
             'sections'    => $this->sectionRows($this->repository->sectionsForMove($ref, $id)),
             'categories'  => $this->sectionRows($this->repository->topLevelExcept($ref)),
             'form_action' => self::URL . '/' . $id . '/delete',
             'back_url'    => self::URL,
-            'can_destroy' => $this->accessChecker->allows(AdminPermissions::FORUM_STRUCTURE_DESTROY),
+            'can_destroy' => $this->accessChecker->allows(ForumPermissions::STRUCTURE_DESTROY),
         ]);
     }
 
@@ -249,7 +249,7 @@ final readonly class ForumStructureController
         }
 
         if ($request->hasBody('delete')) {
-            if (! $this->accessChecker->allows(AdminPermissions::FORUM_STRUCTURE_DESTROY)) {
+            if (! $this->accessChecker->allows(ForumPermissions::STRUCTURE_DESTROY)) {
                 return $this->error(__('Access denied'));
             }
             foreach ($this->deleteSection->deleteWithContent($id) as $filename) {
@@ -282,7 +282,7 @@ final readonly class ForumStructureController
             ];
         }
 
-        return new ViewResponse('@admin/forum-section-edit.twig', $this->menu($title) + [
+        return new ViewResponse('@forum/admin/section-edit.twig', $this->menu($title) + [
             'item'           => $fields,
             'errors'         => $errors,
             'categories'     => $categories,

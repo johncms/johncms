@@ -49,6 +49,12 @@ final class ForumPermissions implements PermissionProviderInterface
     /** Fill in the keywords and the description of a topic. */
     public const TOPIC_META_MANAGE = 'forum.topic.meta.manage';
 
+    /** Delete a section of the forum together with the topics and the posts inside it. */
+    public const STRUCTURE_DESTROY = 'forum.structure.destroy';
+
+    /** Empty the lists of hidden topics and posts for good. */
+    public const HIDDEN_PURGE = 'forum.hidden.purge';
+
     public function permissions(): iterable
     {
         $group = d__('forum', 'Forum');
@@ -133,6 +139,18 @@ final class ForumPermissions implements PermissionProviderInterface
                 d__('forum', 'Fill in the keywords and the description of a topic'),
                 $group,
                 $moderators
+            ),
+            new PermissionDefinition(
+                self::STRUCTURE_DESTROY,
+                self::GROUP,
+                d__('forum', 'Delete a forum section with everything in it'),
+                $group
+            ),
+            new PermissionDefinition(
+                self::HIDDEN_PURGE,
+                self::GROUP,
+                d__('forum', 'Empty the lists of hidden topics and posts'),
+                $group
             ),
         ];
     }

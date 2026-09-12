@@ -3,6 +3,13 @@
 declare(strict_types=1);
 
 use Johncms\Http\Middleware\RequireAuthMiddleware;
+use Johncms\Modules\Admin\Application\Middlewares\AdminAccessMiddleware;
+use Johncms\Modules\Admin\Application\Middlewares\SuperAdminAccessMiddleware;
+use Johncms\Modules\Forum\Application\Controllers\Admin\ForumDashboardController;
+use Johncms\Modules\Forum\Application\Controllers\Admin\ForumSettingsController;
+use Johncms\Modules\Forum\Application\Controllers\Admin\ForumStructureController;
+use Johncms\Modules\Forum\Application\Controllers\Admin\HiddenPostsController;
+use Johncms\Modules\Forum\Application\Controllers\Admin\HiddenTopicsController;
 use Johncms\Modules\Forum\Application\Controllers\AddFileController;
 use Johncms\Modules\Forum\Application\Controllers\AddVoteController;
 use Johncms\Modules\Forum\Application\Controllers\BulkDeletePostsController;
@@ -46,6 +53,34 @@ use Johncms\Modules\Forum\Application\Middlewares\ForumAccessMiddleware;
 use Johncms\Router\RouteCollection;
 
 return static function (RouteCollection $router): void {
+    // The forum as it is managed from the panel. Behind the gates of the panel rather than
+    // behind ForumAccessMiddleware: what these screens ask is "may this visitor administer the
+    // site", not "may this visitor read the forum".
+    $adminGroup = $router->group('', function (RouteCollection $r): void {
+        $r->get('/admin/forum', ForumDashboardController::class)->name('admin.forum');
+        $r->get('/admin/forum/structure', [ForumStructureController::class, 'structure'])->name('admin.forum.structure');
+        $r->get('/admin/forum/structure/new', [ForumStructureController::class, 'addForm'])->name('admin.forum.structure.new');
+        $r->post('/admin/forum/structure/new', [ForumStructureController::class, 'add'])->name('admin.forum.structure.add');
+        $r->get('/admin/forum/structure/{id:number}/edit', [ForumStructureController::class, 'editForm'])->name('admin.forum.structure.edit');
+        $r->post('/admin/forum/structure/{id:number}/edit', [ForumStructureController::class, 'edit'])->name('admin.forum.structure.update');
+        $r->get('/admin/forum/structure/{id:number}/delete', [ForumStructureController::class, 'deleteConfirm'])->name('admin.forum.structure.delete_confirm');
+        $r->post('/admin/forum/structure/{id:number}/delete', [ForumStructureController::class, 'delete'])->name('admin.forum.structure.delete');
+        $r->get('/admin/forum/hidden-topics', [HiddenTopicsController::class, 'index'])->name('admin.forum.hidden_topics');
+        $r->post('/admin/forum/hidden-topics/delete', [HiddenTopicsController::class, 'deleteAll'])->name('admin.forum.hidden_topics.delete');
+        $r->get('/admin/forum/hidden-posts', [HiddenPostsController::class, 'index'])->name('admin.forum.hidden_posts');
+        $r->post('/admin/forum/hidden-posts/delete', [HiddenPostsController::class, 'deleteAll'])->name('admin.forum.hidden_posts.delete');
+
+        // The settings change the site as a whole, so they ask for more than "may open the
+        // panel". Group settings do not propagate into a nested group: this one declares its
+        // own middleware and its own admin area.
+        $settingsGroup = $r->group('', function (RouteCollection $sr): void {
+            $sr->get('/admin/forum/settings', [ForumSettingsController::class, 'form'])->name('admin.forum.settings');
+            $sr->post('/admin/forum/settings', [ForumSettingsController::class, 'save'])->name('admin.forum.settings.save');
+        });
+        $settingsGroup->addMiddleware(SuperAdminAccessMiddleware::class)->adminArea();
+    });
+    $adminGroup->addMiddleware(AdminAccessMiddleware::class)->adminArea();
+
     // Upload file is a JSON API endpoint and keeps its own access check.
     $router->post('/forum/upload_file', UploadFileController::class)
         ->name('forum.upload_file')

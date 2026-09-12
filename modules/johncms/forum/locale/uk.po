@@ -1267,3 +1267,219 @@ msgstr "Користувачі"
 msgid "Guests"
 msgstr "Гості"
 
+
+msgid "Forum Management"
+msgstr "Управління форумом"
+
+msgid "ERROR: Can not write file `forum.local.php`"
+msgstr "ПОМИЛКА: Не вдалося записати файл `forum.local.php`"
+
+msgid "Settings are saved successfully"
+msgstr "Налаштування успішно збережено"
+
+msgid "Forum Settings"
+msgstr "Настройки форума"
+
+msgid "List of categories"
+msgstr "Список категорій"
+
+msgid "Forum structure"
+msgstr "Структура форуму"
+
+msgid "Invalid ID"
+msgstr "Неправильний ID"
+
+msgid "Add Section"
+msgstr "Додати розділ"
+
+msgid "Add Category"
+msgstr "Додати категорію"
+
+msgid "You have not entered Title"
+msgstr "Ви не ввели назву"
+
+msgid "Description should be at least 2 characters in length"
+msgstr "Опис має бути не менше 2 символів"
+
+msgid "Please select a valid parent"
+msgstr "Будь ласка, оберіть правильний батьківський елемент"
+
+msgid "Delete section"
+msgstr "Видалити розділ"
+
+msgid "Delete category"
+msgstr "Видалити категорію"
+
+msgid "Edit Section"
+msgstr "Редагувати розділ"
+
+msgid "Hidden posts"
+msgstr "Приховані повідомлення"
+
+msgid "by topic"
+msgstr "по темі"
+
+msgid "by author"
+msgstr "по авторові"
+
+msgid "Hidden topics"
+msgstr "Приховані теми"
+
+msgid "by section"
+msgstr "по розділу"
+
+msgid "Add"
+msgstr "Додати"
+
+msgid "Parent section:"
+msgstr "Батьківський розділ:"
+
+msgid "Min. 2, Max. 30 characters"
+msgstr "Мін. 2, макс. 30 символів"
+
+msgid "Description"
+msgstr "Опис"
+
+msgid "Optional field"
+msgstr "Необов'язкове поле"
+
+msgid "Min. 2, Max. 500 characters"
+msgstr "Мін. 2, макс. 500 символів"
+
+msgid "Common access"
+msgstr "Загальний доступ"
+
+msgid "Assign the newly created authors as curators"
+msgstr "Призначати кураторами нових авторів"
+
+msgid "Allow authors to edit the 1st post"
+msgstr "Дозволити авторам редагувати перший пост"
+
+msgid "Only for reading"
+msgstr "Тільки для читання"
+
+msgid "Section type"
+msgstr "Тип розділу"
+
+msgid "For subsections"
+msgstr "Для підрозділів"
+
+msgid "For topics"
+msgstr "Для тем"
+
+msgid "<h3>WARNING!</h3>There are subsections. Move them to another category."
+msgstr "<h3>УВАГА!</h3>Є підрозділи. Їх необхідно перемістити в іншу категорію."
+
+msgid "All categories, topics, and files will be moved into selected category. Old category will be removed."
+msgstr "Всі розділи, теми і файли будуть переміщені у вибрану категорію. Стара категорія буде видалена."
+
+msgid "Complete removal"
+msgstr "Повне видалення"
+
+msgid "If you want to destroy all the information, first remove"
+msgstr "Якщо Ви хочете знищити всю інформацію, спочатку видаліть"
+
+msgid "subsections"
+msgstr "підрозділи"
+
+msgid "<h3>WARNING!</h3>There are topics in the section. You must move them to another section."
+msgstr "<h3>УВАГА!</h3>У розділі є теми. Їх необхідно перемістити в інший розділ."
+
+msgid "Select section"
+msgstr "Виберіть розділ"
+
+msgid "Other category"
+msgstr "Інша категорія"
+
+msgid "All the topics and files will be moved to selected section. Old section will be deleted."
+msgstr "Всі теми і файли будуть переміщені у вибраний розділ. Старий розділ буде видалено."
+
+msgid "WARNING! All the information will be deleted"
+msgstr "УВАГА! Вся інформація буде видалена"
+
+msgid "Min. 2, Max. 150 characters"
+msgstr "Мін. 2, Макс. 150 символів"
+
+msgid "Order"
+msgstr "Сортування"
+
+msgid "Only numbers"
+msgstr "Тільки цифри"
+
+msgid "Filtered:"
+msgstr "Відфільтровано:"
+
+msgid "Go to page"
+msgstr "Перейти на сторінку"
+
+msgid "Topic:"
+msgstr "Тема:"
+
+msgid "Filter:"
+msgstr "Фільтр:"
+
+msgid "Delete all"
+msgstr "Видалити всі"
+
+msgid "Path:"
+msgstr "Шлях:"
+
+msgid "Topic deleted:"
+msgstr "Тему видалив:"
+
+msgid "Statistic"
+msgstr "Статистика"
+
+msgid "Categories"
+msgstr "Категорії"
+
+msgid "Sections"
+msgstr "Розділи"
+
+msgid "Topics"
+msgstr "Теми"
+
+msgid "Messages"
+msgstr "Повідомлення"
+
+msgid "Votes"
+msgstr "Голоси"
+
+msgid "Settings"
+msgstr "Налаштування"
+
+msgid "Common settings"
+msgstr "Загальні налаштування"
+
+msgid "Show file counters"
+msgstr "Показувати кількість файлів"
+
+msgid "SEO settings"
+msgstr "Налаштування SEO"
+
+msgid "Forum keywords"
+msgstr "Ключові слова форуму"
+
+msgid "Forum description"
+msgstr "Опис форуму"
+
+msgid "Section keywords"
+msgstr "Ключові слова розділу"
+
+msgid "Macros available: #name#, #description#"
+msgstr "Доступні макроси: #name#, #description#"
+
+msgid "Section description"
+msgstr "Опис розділу"
+
+msgid "Topic keywords"
+msgstr "Ключові слова теми"
+
+msgid "Macros available: #name#"
+msgstr "Доступні макроси: #name#"
+
+msgid "Topic description"
+msgstr "Опис теми"
+
+msgid "View"
+msgstr "Переглянути"

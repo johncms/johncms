@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Johncms\Modules\Admin\Application\UseCases;
+namespace Johncms\Modules\Forum\Application\UseCases;
 
-use Johncms\Modules\Admin\Domain\Repository\ForumStructureRepositoryInterface;
+use Johncms\Modules\Forum\Domain\Repository\ForumStructureRepositoryInterface;
 
 final readonly class DeleteForumSectionUseCase
 {
@@ -29,8 +29,8 @@ final readonly class DeleteForumSectionUseCase
     }
 
     /**
-     * Полное удаление раздела со всем содержимым (rights 9). Возвращает имена
-     * прикреплённых файлов, удалённых из БД, — чтобы контроллер стёр их физически.
+     * Deletes a section together with everything inside it. The rows go here; the names of the
+     * attached files are handed back so that the caller can take them off the disk as well.
      *
      * @return list<string>
      */

@@ -49,6 +49,10 @@ msgstr ""
 #: modules/johncms/forum/src/Application/Controllers/SetFilterByAuthorController.php:52
 #: modules/johncms/forum/src/Application/Controllers/SubmitVoteController.php:36
 #: modules/johncms/forum/src/Application/Controllers/SubmitVoteController.php:52
+#: modules/johncms/forum/templates/admin/dashboard.twig:29
+#: modules/johncms/forum/templates/admin/hidden-posts.twig:111
+#: modules/johncms/forum/templates/admin/hidden-topics.twig:107
+#: modules/johncms/forum/templates/admin/structure.twig:44
 #: modules/johncms/forum/templates/public/edit-post.twig:26
 #: modules/johncms/forum/templates/public/new-topic.twig:72
 #: modules/johncms/forum/templates/public/reply-message.twig:34
@@ -102,6 +106,8 @@ msgid "Add Poll"
 msgstr ""
 
 #: modules/johncms/forum/src/Application/Controllers/AddVoteController.php:44
+#: modules/johncms/forum/src/Application/Controllers/Admin/ForumStructureController.php:245
+#: modules/johncms/forum/src/Application/Controllers/Admin/ForumStructureController.php:264
 #: modules/johncms/forum/src/Application/Controllers/ChangeTopicController.php:39
 #: modules/johncms/forum/src/Application/Controllers/ClearFilterByAuthorController.php:35
 #: modules/johncms/forum/src/Application/Controllers/DeleteVoteController.php:43
@@ -140,6 +146,151 @@ msgstr ""
 #: modules/johncms/forum/src/Application/Controllers/EditVoteController.php:129
 #: modules/johncms/forum/src/Application/Controllers/EditVoteController.php:141
 msgid "Answer"
+msgstr ""
+
+#: modules/johncms/forum/src/Application/Controllers/Admin/ForumDashboardController.php:24
+#: modules/johncms/forum/src/Application/Controllers/Admin/ForumSettingsController.php:56
+#: modules/johncms/forum/src/Application/Controllers/Admin/HiddenPostsController.php:47
+#: modules/johncms/forum/src/Application/Controllers/Admin/HiddenTopicsController.php:47
+msgid "Forum Management"
+msgstr ""
+
+#: modules/johncms/forum/src/Application/Controllers/Admin/ForumSettingsController.php:46
+msgid "ERROR: Can not write file `forum.local.php`"
+msgstr ""
+
+#: modules/johncms/forum/src/Application/Controllers/Admin/ForumSettingsController.php:49
+msgid "Settings are saved successfully"
+msgstr ""
+
+#: modules/johncms/forum/src/Application/Controllers/Admin/ForumSettingsController.php:55
+msgid "Forum Settings"
+msgstr ""
+
+#: modules/johncms/forum/src/Application/Controllers/Admin/ForumStructureController.php:50
+#: modules/johncms/forum/src/Application/UseCases/ViewForumFilesUseCase.php:187
+msgid "List of sections"
+msgstr ""
+
+#: modules/johncms/forum/src/Application/Controllers/Admin/ForumStructureController.php:54
+msgid "List of categories"
+msgstr ""
+
+#: modules/johncms/forum/src/Application/Controllers/Admin/ForumStructureController.php:59
+#: modules/johncms/forum/src/Application/Controllers/Admin/ForumStructureController.php:95
+#: modules/johncms/forum/src/Application/Controllers/Admin/ForumStructureController.php:192
+#: modules/johncms/forum/src/Application/Controllers/Admin/ForumStructureController.php:273
+#: modules/johncms/forum/src/Application/Controllers/Admin/ForumStructureController.php:381
+#: modules/johncms/forum/templates/admin/dashboard.twig:24
+msgid "Forum structure"
+msgstr ""
+
+#: modules/johncms/forum/src/Application/Controllers/Admin/ForumStructureController.php:89
+#: modules/johncms/forum/src/Application/Controllers/Admin/ForumStructureController.php:144
+msgid "Invalid ID"
+msgstr ""
+
+#: modules/johncms/forum/src/Application/Controllers/Admin/ForumStructureController.php:94
+msgid "Add Section"
+msgstr ""
+
+#: modules/johncms/forum/src/Application/Controllers/Admin/ForumStructureController.php:94
+msgid "Add Category"
+msgstr ""
+
+#: modules/johncms/forum/src/Application/Controllers/Admin/ForumStructureController.php:118
+msgid "You have not entered Title"
+msgstr ""
+
+#: modules/johncms/forum/src/Application/Controllers/Admin/ForumStructureController.php:120
+#: modules/johncms/forum/templates/admin/section-edit.twig:21
+#: modules/johncms/forum/templates/admin/section-edit.twig:22
+#: modules/johncms/forum/templates/admin/section-form.twig:24
+#: modules/johncms/forum/templates/admin/section-form.twig:25
+#: modules/johncms/forum/templates/public/new-topic.twig:35
+msgid "Title"
+msgstr ""
+
+#: modules/johncms/forum/src/Application/Controllers/Admin/ForumStructureController.php:120
+#: modules/johncms/forum/src/Application/Controllers/ForumSearchController.php:48
+msgid "Invalid length"
+msgstr ""
+
+#: modules/johncms/forum/src/Application/Controllers/Admin/ForumStructureController.php:123
+msgid "Description should be at least 2 characters in length"
+msgstr ""
+
+#: modules/johncms/forum/src/Application/Controllers/Admin/ForumStructureController.php:173
+msgid "Please select a valid parent"
+msgstr ""
+
+#: modules/johncms/forum/src/Application/Controllers/Admin/ForumStructureController.php:191
+msgid "Delete section"
+msgstr ""
+
+#: modules/johncms/forum/src/Application/Controllers/Admin/ForumStructureController.php:191
+msgid "Delete category"
+msgstr ""
+
+#: modules/johncms/forum/src/Application/Controllers/Admin/ForumStructureController.php:253
+msgid "Access denied"
+msgstr ""
+
+#: modules/johncms/forum/src/Application/Controllers/Admin/ForumStructureController.php:272
+msgid "Edit Section"
+msgstr ""
+
+#: modules/johncms/forum/src/Application/Controllers/Admin/ForumStructureController.php:349
+#: modules/johncms/forum/templates/admin/section-edit.twig:50
+#: modules/johncms/forum/templates/admin/section-form.twig:36
+msgid "Common access"
+msgstr ""
+
+#: modules/johncms/forum/src/Application/Controllers/Admin/ForumStructureController.php:350
+msgid "Assign the newly created authors as curators"
+msgstr ""
+
+#: modules/johncms/forum/src/Application/Controllers/Admin/ForumStructureController.php:351
+msgid "Allow authors to edit the 1st post"
+msgstr ""
+
+#: modules/johncms/forum/src/Application/Controllers/Admin/ForumStructureController.php:352
+msgid "Only for reading"
+msgstr ""
+
+#: modules/johncms/forum/src/Application/Controllers/Admin/ForumStructureController.php:362
+msgid "For subsections"
+msgstr ""
+
+#: modules/johncms/forum/src/Application/Controllers/Admin/ForumStructureController.php:363
+msgid "For topics"
+msgstr ""
+
+#: modules/johncms/forum/src/Application/Controllers/Admin/HiddenPostsController.php:46
+#: modules/johncms/forum/templates/admin/dashboard.twig:25
+msgid "Hidden posts"
+msgstr ""
+
+#: modules/johncms/forum/src/Application/Controllers/Admin/HiddenPostsController.php:85
+#: modules/johncms/forum/src/Application/Services/HiddenPostRowMapper.php:77
+msgid "by topic"
+msgstr ""
+
+#: modules/johncms/forum/src/Application/Controllers/Admin/HiddenPostsController.php:90
+#: modules/johncms/forum/src/Application/Controllers/Admin/HiddenTopicsController.php:85
+#: modules/johncms/forum/src/Application/Services/HiddenPostRowMapper.php:78
+#: modules/johncms/forum/src/Application/Services/HiddenTopicRowMapper.php:81
+msgid "by author"
+msgstr ""
+
+#: modules/johncms/forum/src/Application/Controllers/Admin/HiddenTopicsController.php:46
+#: modules/johncms/forum/templates/admin/dashboard.twig:26
+msgid "Hidden topics"
+msgstr ""
+
+#: modules/johncms/forum/src/Application/Controllers/Admin/HiddenTopicsController.php:90
+#: modules/johncms/forum/src/Application/Services/HiddenTopicRowMapper.php:82
+msgid "by section"
 msgstr ""
 
 #: modules/johncms/forum/src/Application/Controllers/BulkDeletePostsController.php:45
@@ -253,7 +404,7 @@ msgstr ""
 #: modules/johncms/forum/src/Application/Controllers/ViewTopicVisitorsController.php:72
 #: modules/johncms/forum/src/Application/Controllers/ViewTopicVisitorsController.php:79
 #: modules/johncms/forum/src/Application/Exceptions/ForumErrorCode.php:36
-#: modules/johncms/forum/src/Application/Services/ForumPermissions.php:54
+#: modules/johncms/forum/src/Application/Services/ForumPermissions.php:60
 #: modules/johncms/forum/templates/public/files-list.twig:143
 #: modules/johncms/forum/templates/public/search.twig:87
 #: modules/johncms/forum/templates/public/show-post.twig:141
@@ -333,10 +484,6 @@ msgstr ""
 msgid "Forum Files"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Controllers/ForumSearchController.php:48
-msgid "Invalid length"
-msgstr ""
-
 #: modules/johncms/forum/src/Application/Controllers/ForumSearchController.php:59
 #, php-format
 msgid "Search results for: %s"
@@ -350,6 +497,9 @@ msgstr ""
 #: modules/johncms/forum/src/Application/Controllers/UnreadTopicsController.php:58
 #: modules/johncms/forum/src/Application/Controllers/ViewForumVisitorsController.php:59
 #: modules/johncms/forum/src/Application/Controllers/ViewTopicVisitorsController.php:89
+#: modules/johncms/forum/templates/admin/hidden-posts.twig:25
+#: modules/johncms/forum/templates/admin/hidden-topics.twig:25
+#: modules/johncms/forum/templates/admin/structure.twig:13
 #: modules/johncms/forum/templates/public/curators.twig:21
 #: modules/johncms/forum/templates/public/files-list.twig:26
 #: modules/johncms/forum/templates/public/files-sections.twig:35
@@ -503,44 +653,52 @@ msgstr ""
 msgid "Search query must be between 2 and 64 characters"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Services/ForumPermissions.php:70
+#: modules/johncms/forum/src/Application/Services/ForumPermissions.php:76
 msgid "Read the forum"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Services/ForumPermissions.php:79
+#: modules/johncms/forum/src/Application/Services/ForumPermissions.php:85
 msgid "Write in the forum"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Services/ForumPermissions.php:86
+#: modules/johncms/forum/src/Application/Services/ForumPermissions.php:92
 msgid "Moderate topics: close, pin, move, edit, restore"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Services/ForumPermissions.php:93
+#: modules/johncms/forum/src/Application/Services/ForumPermissions.php:99
 msgid "Manage the poll of a topic"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Services/ForumPermissions.php:100
+#: modules/johncms/forum/src/Application/Services/ForumPermissions.php:106
 msgid "See deleted topics and posts"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Services/ForumPermissions.php:107
+#: modules/johncms/forum/src/Application/Services/ForumPermissions.php:113
 msgid "Appoint the curators of a topic"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Services/ForumPermissions.php:114
+#: modules/johncms/forum/src/Application/Services/ForumPermissions.php:120
 msgid "See who voted in a poll"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Services/ForumPermissions.php:121
+#: modules/johncms/forum/src/Application/Services/ForumPermissions.php:127
 msgid "Delete a topic for good"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Services/ForumPermissions.php:127
+#: modules/johncms/forum/src/Application/Services/ForumPermissions.php:133
 msgid "Delete a post for good"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Services/ForumPermissions.php:133
+#: modules/johncms/forum/src/Application/Services/ForumPermissions.php:139
 msgid "Fill in the keywords and the description of a topic"
+msgstr ""
+
+#: modules/johncms/forum/src/Application/Services/ForumPermissions.php:146
+msgid "Delete a forum section with everything in it"
+msgstr ""
+
+#: modules/johncms/forum/src/Application/Services/ForumPermissions.php:152
+msgid "Empty the lists of hidden topics and posts"
 msgstr ""
 
 #: modules/johncms/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:93
@@ -634,10 +792,6 @@ msgstr ""
 msgid "New Files"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/UseCases/ViewForumFilesUseCase.php:187
-msgid "List of sections"
-msgstr ""
-
 #: modules/johncms/forum/src/Application/UseCases/ViewForumFilesUseCase.php:305
 msgid "Windows applications"
 msgstr ""
@@ -714,6 +868,317 @@ msgstr ""
 msgid "<p>We are glad to welcome you to our website :)</p><p>Let's get acquainted!</p>"
 msgstr ""
 
+#: modules/johncms/forum/templates/admin/dashboard.twig:10
+msgid "Statistic"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/dashboard.twig:12
+msgid "Categories"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/dashboard.twig:13
+#: modules/johncms/forum/templates/admin/settings.twig:35
+msgid "Sections"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/dashboard.twig:14
+#: modules/johncms/forum/templates/admin/settings.twig:46
+msgid "Topics"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/dashboard.twig:15
+msgid "Messages"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/dashboard.twig:16
+#: modules/johncms/forum/templates/public/index.twig:16
+msgid "Files"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/dashboard.twig:17
+msgid "Votes"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/dashboard.twig:19
+#: modules/johncms/forum/templates/admin/dashboard.twig:22
+msgid "Settings"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/hidden-posts.twig:17
+#: modules/johncms/forum/templates/admin/hidden-topics.twig:17
+msgid "Filtered:"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/hidden-posts.twig:18
+#: modules/johncms/forum/templates/admin/hidden-topics.twig:18
+#: modules/johncms/forum/templates/admin/section-delete-confirm.twig:19
+#: modules/johncms/forum/templates/admin/section-edit.twig:77
+#: modules/johncms/forum/templates/admin/section-form.twig:55
+#: modules/johncms/forum/templates/admin/section-move-sections.twig:33
+#: modules/johncms/forum/templates/admin/section-move-topics.twig:48
+#: modules/johncms/forum/templates/public/bulk-delete-posts.twig:23
+#: modules/johncms/forum/templates/public/clear-search-history.twig:17
+#: modules/johncms/forum/templates/public/delete-poll-answer.twig:16
+#: modules/johncms/forum/templates/public/delete-poll.twig:16
+#: modules/johncms/forum/templates/public/delete-post-file.twig:18
+#: modules/johncms/forum/templates/public/delete-post.twig:28
+#: modules/johncms/forum/templates/public/delete-topic.twig:32
+#: modules/johncms/forum/templates/public/restore-post.twig:18
+msgid "Cancel"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/hidden-posts.twig:43
+msgid "Go to page"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/hidden-posts.twig:56
+#: modules/johncms/forum/templates/admin/hidden-topics.twig:51
+msgid "Topic:"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/hidden-posts.twig:76
+#: modules/johncms/forum/templates/public/components/message.twig:53
+#: modules/johncms/forum/templates/public/show-post.twig:55
+msgid "Edited:"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/hidden-posts.twig:79
+#: modules/johncms/forum/templates/public/components/message.twig:62
+msgid "Post deleted:"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/hidden-posts.twig:81
+#: modules/johncms/forum/templates/public/components/message.twig:69
+msgid "Post restored by:"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/hidden-posts.twig:84
+#: modules/johncms/forum/templates/admin/hidden-topics.twig:80
+msgid "Filter:"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/hidden-posts.twig:97
+#: modules/johncms/forum/templates/admin/hidden-topics.twig:93
+msgid "Delete all"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/hidden-posts.twig:104
+#: modules/johncms/forum/templates/admin/hidden-topics.twig:100
+#: modules/johncms/forum/templates/public/files-list.twig:134
+#: modules/johncms/forum/templates/public/poll-voters.twig:24
+#: modules/johncms/forum/templates/public/search.twig:66
+#: modules/johncms/forum/templates/public/topic-list.twig:86
+#: modules/johncms/forum/templates/public/topic.twig:261
+#: modules/johncms/forum/templates/public/topics.twig:98
+#: modules/johncms/forum/templates/public/visitors.twig:38
+msgid "Total"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/hidden-topics.twig:55
+msgid "Path:"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/hidden-topics.twig:77
+msgid "Topic deleted:"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/section-delete-confirm.twig:12
+#: modules/johncms/forum/templates/public/bulk-delete-posts.twig:13
+#: modules/johncms/forum/templates/public/delete-post-file.twig:12
+#: modules/johncms/forum/templates/public/delete-post.twig:19
+#: modules/johncms/forum/templates/public/delete-topic.twig:15
+msgid "Do you really want to delete?"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/section-delete-confirm.twig:17
+#: modules/johncms/forum/templates/admin/section-move-topics.twig:46
+#: modules/johncms/forum/templates/admin/structure.twig:35
+#: modules/johncms/forum/templates/public/bulk-delete-posts.twig:22
+#: modules/johncms/forum/templates/public/components/message.twig:126
+#: modules/johncms/forum/templates/public/components/message.twig:171
+#: modules/johncms/forum/templates/public/delete-poll-answer.twig:15
+#: modules/johncms/forum/templates/public/delete-poll.twig:15
+#: modules/johncms/forum/templates/public/delete-post-file.twig:17
+#: modules/johncms/forum/templates/public/delete-post.twig:24
+#: modules/johncms/forum/templates/public/delete-topic.twig:25
+msgid "Delete"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/section-edit.twig:26
+msgid "Min. 2, Max. 150 characters"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/section-edit.twig:30
+#: modules/johncms/forum/templates/admin/section-edit.twig:31
+msgid "Order"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/section-edit.twig:32
+msgid "Only numbers"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/section-edit.twig:36
+#: modules/johncms/forum/templates/admin/section-form.twig:30
+msgid "Description"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/section-edit.twig:38
+#: modules/johncms/forum/templates/admin/section-form.twig:32
+msgid "Optional field"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/section-edit.twig:38
+#: modules/johncms/forum/templates/admin/section-form.twig:32
+msgid "Min. 2, Max. 500 characters"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/section-edit.twig:42
+#: modules/johncms/forum/templates/public/change-topic.twig:33
+#: modules/johncms/forum/templates/public/new-topic.twig:53
+msgid "Meta description"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/section-edit.twig:46
+#: modules/johncms/forum/templates/public/change-topic.twig:26
+#: modules/johncms/forum/templates/public/new-topic.twig:57
+msgid "Meta keywords"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/section-edit.twig:58
+#: modules/johncms/forum/templates/admin/section-form.twig:45
+msgid "Section type"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/section-edit.twig:67
+#: modules/johncms/forum/templates/admin/section-move-sections.twig:22
+#: modules/johncms/forum/templates/public/move-topic.twig:17
+msgid "Category"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/section-edit.twig:76
+#: modules/johncms/forum/templates/admin/settings.twig:58
+#: modules/johncms/forum/templates/public/add-poll.twig:42
+#: modules/johncms/forum/templates/public/change-topic.twig:40
+#: modules/johncms/forum/templates/public/edit-poll.twig:53
+#: modules/johncms/forum/templates/public/edit-post.twig:23
+msgid "Save"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/section-form.twig:21
+msgid "Parent section:"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/section-form.twig:26
+msgid "Min. 2, Max. 30 characters"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/section-form.twig:54
+#: modules/johncms/forum/templates/admin/structure.twig:41
+msgid "Add"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/section-move-sections.twig:15
+msgid "<h3>WARNING!</h3>There are subsections. Move them to another category."
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/section-move-sections.twig:29
+msgid "All categories, topics, and files will be moved into selected category. Old category will be removed."
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/section-move-sections.twig:32
+#: modules/johncms/forum/templates/admin/section-move-topics.twig:39
+#: modules/johncms/forum/templates/public/move-topic.twig:35
+msgid "Move"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/section-move-sections.twig:38
+#: modules/johncms/forum/templates/admin/section-move-topics.twig:43
+msgid "Complete removal"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/section-move-sections.twig:40
+msgid "If you want to destroy all the information, first remove"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/section-move-sections.twig:41
+msgid "subsections"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/section-move-topics.twig:16
+msgid "<h3>WARNING!</h3>There are topics in the section. You must move them to another section."
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/section-move-topics.twig:22
+msgid "Select section"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/section-move-topics.twig:29
+msgid "Other category"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/section-move-topics.twig:36
+msgid "All the topics and files will be moved to selected section. Old section will be deleted."
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/section-move-topics.twig:44
+msgid "WARNING! All the information will be deleted"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/settings.twig:19
+msgid "Common settings"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/settings.twig:22
+msgid "Show file counters"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/settings.twig:26
+msgid "SEO settings"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/settings.twig:28
+msgid "Forum keywords"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/settings.twig:32
+msgid "Forum description"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/settings.twig:37
+msgid "Section keywords"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/settings.twig:39
+#: modules/johncms/forum/templates/admin/settings.twig:44
+msgid "Macros available: #name#, #description#"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/settings.twig:42
+msgid "Section description"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/settings.twig:48
+msgid "Topic keywords"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/settings.twig:50
+#: modules/johncms/forum/templates/admin/settings.twig:55
+msgid "Macros available: #name#"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/settings.twig:53
+msgid "Topic description"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/structure.twig:27
+msgid "View"
+msgstr ""
+
+#: modules/johncms/forum/templates/admin/structure.twig:34
+#: modules/johncms/forum/templates/public/components/message.twig:170
+msgid "Edit"
+msgstr ""
+
 #: modules/johncms/forum/templates/public/add-file.twig:14
 msgid "File attached"
 msgstr ""
@@ -778,55 +1243,9 @@ msgstr ""
 msgid "Delete last"
 msgstr ""
 
-#: modules/johncms/forum/templates/public/add-poll.twig:42
-#: modules/johncms/forum/templates/public/change-topic.twig:40
-#: modules/johncms/forum/templates/public/edit-poll.twig:53
-#: modules/johncms/forum/templates/public/edit-post.twig:23
-msgid "Save"
-msgstr ""
-
-#: modules/johncms/forum/templates/public/bulk-delete-posts.twig:13
-#: modules/johncms/forum/templates/public/delete-post-file.twig:12
-#: modules/johncms/forum/templates/public/delete-post.twig:19
-#: modules/johncms/forum/templates/public/delete-topic.twig:15
-msgid "Do you really want to delete?"
-msgstr ""
-
-#: modules/johncms/forum/templates/public/bulk-delete-posts.twig:22
-#: modules/johncms/forum/templates/public/components/message.twig:126
-#: modules/johncms/forum/templates/public/components/message.twig:171
-#: modules/johncms/forum/templates/public/delete-poll-answer.twig:15
-#: modules/johncms/forum/templates/public/delete-poll.twig:15
-#: modules/johncms/forum/templates/public/delete-post-file.twig:17
-#: modules/johncms/forum/templates/public/delete-post.twig:24
-#: modules/johncms/forum/templates/public/delete-topic.twig:25
-msgid "Delete"
-msgstr ""
-
-#: modules/johncms/forum/templates/public/bulk-delete-posts.twig:23
-#: modules/johncms/forum/templates/public/clear-search-history.twig:17
-#: modules/johncms/forum/templates/public/delete-poll-answer.twig:16
-#: modules/johncms/forum/templates/public/delete-poll.twig:16
-#: modules/johncms/forum/templates/public/delete-post-file.twig:18
-#: modules/johncms/forum/templates/public/delete-post.twig:28
-#: modules/johncms/forum/templates/public/delete-topic.twig:32
-#: modules/johncms/forum/templates/public/restore-post.twig:18
-msgid "Cancel"
-msgstr ""
-
 #: modules/johncms/forum/templates/public/change-topic.twig:18
 #: modules/johncms/forum/templates/public/change-topic.twig:19
 msgid "Topic name"
-msgstr ""
-
-#: modules/johncms/forum/templates/public/change-topic.twig:26
-#: modules/johncms/forum/templates/public/new-topic.twig:57
-msgid "Meta keywords"
-msgstr ""
-
-#: modules/johncms/forum/templates/public/change-topic.twig:33
-#: modules/johncms/forum/templates/public/new-topic.twig:53
-msgid "Meta description"
 msgstr ""
 
 #: modules/johncms/forum/templates/public/clear-search-history.twig:13
@@ -863,26 +1282,13 @@ msgstr ""
 msgid "Link to post"
 msgstr ""
 
-#: modules/johncms/forum/templates/public/components/message.twig:53
-#: modules/johncms/forum/templates/public/show-post.twig:55
-msgid "Edited:"
-msgstr ""
-
 #: modules/johncms/forum/templates/public/components/message.twig:54
 #: modules/johncms/forum/templates/public/show-post.twig:56
 msgid "Edited"
 msgstr ""
 
-#: modules/johncms/forum/templates/public/components/message.twig:62
-msgid "Post deleted:"
-msgstr ""
-
 #: modules/johncms/forum/templates/public/components/message.twig:63
 msgid "Deleted"
-msgstr ""
-
-#: modules/johncms/forum/templates/public/components/message.twig:69
-msgid "Post restored by:"
 msgstr ""
 
 #: modules/johncms/forum/templates/public/components/message.twig:70
@@ -902,10 +1308,6 @@ msgstr ""
 #: modules/johncms/forum/templates/public/components/message.twig:159
 #: modules/johncms/forum/templates/public/show-post.twig:132
 msgid "Quote"
-msgstr ""
-
-#: modules/johncms/forum/templates/public/components/message.twig:170
-msgid "Edit"
 msgstr ""
 
 #: modules/johncms/forum/templates/public/components/message.twig:173
@@ -969,16 +1371,6 @@ msgstr ""
 msgid "To topic"
 msgstr ""
 
-#: modules/johncms/forum/templates/public/files-list.twig:134
-#: modules/johncms/forum/templates/public/poll-voters.twig:24
-#: modules/johncms/forum/templates/public/search.twig:66
-#: modules/johncms/forum/templates/public/topic-list.twig:86
-#: modules/johncms/forum/templates/public/topic.twig:261
-#: modules/johncms/forum/templates/public/topics.twig:98
-#: modules/johncms/forum/templates/public/visitors.twig:38
-msgid "Total"
-msgstr ""
-
 #: modules/johncms/forum/templates/public/filter-by-author.twig:24
 msgid "Filter will be display posts from selected authors only"
 msgstr ""
@@ -993,14 +1385,6 @@ msgstr ""
 msgid "Cancel Filter"
 msgstr ""
 
-#: modules/johncms/forum/templates/public/index.twig:16
-msgid "Files"
-msgstr ""
-
-#: modules/johncms/forum/templates/public/move-topic.twig:17
-msgid "Category"
-msgstr ""
-
 #: modules/johncms/forum/templates/public/move-topic.twig:22
 msgid "New section"
 msgstr ""
@@ -1009,16 +1393,8 @@ msgstr ""
 msgid "Category is empty"
 msgstr ""
 
-#: modules/johncms/forum/templates/public/move-topic.twig:35
-msgid "Move"
-msgstr ""
-
 #: modules/johncms/forum/templates/public/move-topic.twig:40
 msgid "Other categories"
-msgstr ""
-
-#: modules/johncms/forum/templates/public/new-topic.twig:35
-msgid "Title"
 msgstr ""
 
 #: modules/johncms/forum/templates/public/new-topic.twig:66

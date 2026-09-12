@@ -8,11 +8,6 @@ use Johncms\Modules\Admin\Application\Controllers\Access\ExternalProvidersContro
 use Johncms\Modules\Admin\Application\Controllers\Access\RolesController;
 use Johncms\Modules\Admin\Application\Controllers\Access\UserRolesController;
 use Johncms\Modules\Admin\Application\Controllers\DashboardController;
-use Johncms\Modules\Admin\Application\Controllers\Forum\ForumDashboardController;
-use Johncms\Modules\Admin\Application\Controllers\Forum\ForumSettingsController;
-use Johncms\Modules\Admin\Application\Controllers\Forum\ForumStructureController;
-use Johncms\Modules\Admin\Application\Controllers\Forum\HiddenPostsController;
-use Johncms\Modules\Admin\Application\Controllers\Forum\HiddenTopicsController;
 use Johncms\Modules\Admin\Application\Controllers\Ip\IpBanController;
 use Johncms\Modules\Admin\Application\Controllers\Ip\IpSearchController;
 use Johncms\Modules\Admin\Application\Controllers\Ip\IpWhoisController;
@@ -119,18 +114,6 @@ return static function (RouteCollection $router): void {
         $r->post('/admin/ads/{id:number}/toggle', [AdsController::class, 'toggle'])->name('admin.ads.toggle');
         $r->get('/admin/ads/{id:number}/delete', [AdsController::class, 'deleteConfirm'])->name('admin.ads.delete_confirm');
         $r->post('/admin/ads/{id:number}/delete', [AdsController::class, 'delete'])->name('admin.ads.delete');
-        $r->get('/admin/forum', ForumDashboardController::class)->name('admin.forum');
-        $r->get('/admin/forum/structure', [ForumStructureController::class, 'structure'])->name('admin.forum.structure');
-        $r->get('/admin/forum/structure/new', [ForumStructureController::class, 'addForm'])->name('admin.forum.structure.new');
-        $r->post('/admin/forum/structure/new', [ForumStructureController::class, 'add'])->name('admin.forum.structure.add');
-        $r->get('/admin/forum/structure/{id:number}/edit', [ForumStructureController::class, 'editForm'])->name('admin.forum.structure.edit');
-        $r->post('/admin/forum/structure/{id:number}/edit', [ForumStructureController::class, 'edit'])->name('admin.forum.structure.update');
-        $r->get('/admin/forum/structure/{id:number}/delete', [ForumStructureController::class, 'deleteConfirm'])->name('admin.forum.structure.delete_confirm');
-        $r->post('/admin/forum/structure/{id:number}/delete', [ForumStructureController::class, 'delete'])->name('admin.forum.structure.delete');
-        $r->get('/admin/forum/hidden-topics', [HiddenTopicsController::class, 'index'])->name('admin.forum.hidden_topics');
-        $r->post('/admin/forum/hidden-topics/delete', [HiddenTopicsController::class, 'deleteAll'])->name('admin.forum.hidden_topics.delete');
-        $r->get('/admin/forum/hidden-posts', [HiddenPostsController::class, 'index'])->name('admin.forum.hidden_posts');
-        $r->post('/admin/forum/hidden-posts/delete', [HiddenPostsController::class, 'deleteAll'])->name('admin.forum.hidden_posts.delete');
         // The modules of the site. Deliberately outside the super-admin group: installing a
         // module is running its code here, which is a permission of its own, and requiring
         // admin.settings.manage on top would mean it cannot be handed out separately.
@@ -200,9 +183,6 @@ return static function (RouteCollection $router): void {
             $sr->get('/admin/file-integrity/scan', [FileIntegrityController::class, 'scan'])->name('admin.file_integrity.scan');
             $sr->get('/admin/file-integrity/snapshot', [FileIntegrityController::class, 'snapshotConfirm'])->name('admin.file_integrity.snapshot');
             $sr->post('/admin/file-integrity/snapshot', [FileIntegrityController::class, 'createSnapshot'])->name('admin.file_integrity.snapshot.create');
-
-            $sr->get('/admin/forum/settings', [ForumSettingsController::class, 'form'])->name('admin.forum.settings');
-            $sr->post('/admin/forum/settings', [ForumSettingsController::class, 'save'])->name('admin.forum.settings.save');
 
             $sr->get('/admin/karma', [KarmaController::class, 'index'])->name('admin.karma');
             $sr->post('/admin/karma', [KarmaController::class, 'save'])->name('admin.karma.save');

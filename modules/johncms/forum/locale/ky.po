@@ -1279,3 +1279,219 @@ msgstr "Колдонуучулар"
 msgid "Guests"
 msgstr "Коноктор"
 
+
+msgid "Forum Management"
+msgstr "Форумду башкаруу"
+
+msgid "ERROR: Can not write file `forum.local.php`"
+msgstr "КАТА: `forum.local.php` файлын жазуу мүмкүн эмес"
+
+msgid "Settings are saved successfully"
+msgstr "Орнотуулар ийгиликтүү сакталды"
+
+msgid "Forum Settings"
+msgstr "Форумдун орнотуулары"
+
+msgid "List of categories"
+msgstr "Бөлүмдөрдүн тизмеси"
+
+msgid "Forum structure"
+msgstr "Форумдун түзүлүшү"
+
+msgid "Invalid ID"
+msgstr "Туура эмес ID"
+
+msgid "Add Section"
+msgstr "Бөлүктү кошуу"
+
+msgid "Add Category"
+msgstr "Бөлүмдү кошуу"
+
+msgid "You have not entered Title"
+msgstr "Сиз Аталышын киргизген жоксуз"
+
+msgid "Description should be at least 2 characters in length"
+msgstr "Сүрөттөлүшүн узундугу 2 белгиден кем эмес болушу керек"
+
+msgid "Please select a valid parent"
+msgstr "Сураныч, туура жогорку бөлүктү тандоо"
+
+msgid "Delete section"
+msgstr "Бөлүктү өчүрүү"
+
+msgid "Delete category"
+msgstr "Бөлүмдү өчүрүү"
+
+msgid "Edit Section"
+msgstr "Бөлүктү өзгөртүү"
+
+msgid "Hidden posts"
+msgstr "Жашырылган билдирүүлөр"
+
+msgid "by topic"
+msgstr "тема боюнча"
+
+msgid "by author"
+msgstr "автору боюнча"
+
+msgid "Hidden topics"
+msgstr "Жашырылган темалар"
+
+msgid "by section"
+msgstr "бөлүгү боюнча"
+
+msgid "Add"
+msgstr "Кошуу"
+
+msgid "Parent section:"
+msgstr "Жогорку бөлүгү:"
+
+msgid "Min. 2, Max. 30 characters"
+msgstr "Min 2 макс 30 белгиден"
+
+msgid "Description"
+msgstr "Сүрөттөмө"
+
+msgid "Optional field"
+msgstr "Ыктыярдуу талаа"
+
+msgid "Min. 2, Max. 500 characters"
+msgstr "Min 2 макс 500 белгиден"
+
+msgid "Common access"
+msgstr "Жалпы мүмкүнчүлүк"
+
+msgid "Assign the newly created authors as curators"
+msgstr "Жаратуучуларды куратор катары дайындаңыз"
+
+msgid "Allow authors to edit the 1st post"
+msgstr "Авторлорго 1-жазманы түзөтүүгө уруксат бериңиз"
+
+msgid "Only for reading"
+msgstr "Окуу үчүн гана"
+
+msgid "Section type"
+msgstr "Бөлүктүн түрү"
+
+msgid "For subsections"
+msgstr "Бөлүкчөлөр үчүн"
+
+msgid "For topics"
+msgstr "Темалар үчүн"
+
+msgid "<h3>WARNING!</h3>There are subsections. Move them to another category."
+msgstr "<h3>ЭСКЕРТҮҮ!</h3>Баш ийген бөлүктөр бар. Аларды башка бөлүмдөргө которулушу керек."
+
+msgid "All categories, topics, and files will be moved into selected category. Old category will be removed."
+msgstr "Бардык бөлүктөр, темалар жана файлдар тандалган бөлүмдөргө өткөрүлүп берилет. Эски бөлүмдөр өчүрүлөт"
+
+msgid "Complete removal"
+msgstr "Толугу менен өчүрүү"
+
+msgid "If you want to destroy all the information, first remove"
+msgstr "Бардык маалыматты жок кылгыңыз келсе, алгач өчүрүңүз"
+
+msgid "subsections"
+msgstr "баш ийген бөлүктөр"
+
+msgid "<h3>WARNING!</h3>There are topics in the section. You must move them to another section."
+msgstr "<h3>ЭСКЕРТҮҮ!</h3> Бөлүктө бир нече тема бар. <br>Алар башка бөлүккө өтүшү керек."
+
+msgid "Select section"
+msgstr "Бөлүктү тандаңыз"
+
+msgid "Other category"
+msgstr "Башка бөлүмдөрү"
+
+msgid "All the topics and files will be moved to selected section. Old section will be deleted."
+msgstr "Бардык темалар жана файлдар тандалган бөлүккө жылдырылат. Эски бөлүк өчүрүлөт"
+
+msgid "WARNING! All the information will be deleted"
+msgstr "ЭСКЕРТҮҮ! Бардык маалыматтар өчүрүлдү"
+
+msgid "Min. 2, Max. 150 characters"
+msgstr "Min 2 макс 150 белгиден"
+
+msgid "Order"
+msgstr "Тартип"
+
+msgid "Only numbers"
+msgstr "Сандар гана"
+
+msgid "Filtered:"
+msgstr "Чыпкаланган:"
+
+msgid "Go to page"
+msgstr "Баракка өтүңүз"
+
+msgid "Topic:"
+msgstr "Тема:"
+
+msgid "Filter:"
+msgstr "Чыпкалоо:"
+
+msgid "Delete all"
+msgstr "Баарын өчүрүү"
+
+msgid "Path:"
+msgstr "Жолу:"
+
+msgid "Topic deleted:"
+msgstr "Тема өчүрүлдү:"
+
+msgid "Statistic"
+msgstr "Статистика"
+
+msgid "Categories"
+msgstr "Бөлүмдөр"
+
+msgid "Sections"
+msgstr "Бөлүктөр"
+
+msgid "Topics"
+msgstr "Темалар"
+
+msgid "Messages"
+msgstr "Билдирүүлөр"
+
+msgid "Votes"
+msgstr "Добуштар"
+
+msgid "Settings"
+msgstr "Орнотуулар"
+
+msgid "Common settings"
+msgstr "Жалпы орнотуулар"
+
+msgid "Show file counters"
+msgstr "Файл эсептегичтерин көрсөтүү"
+
+msgid "SEO settings"
+msgstr "SEO орнотуулары"
+
+msgid "Forum keywords"
+msgstr "Форумдун ачкыч сөздөрү"
+
+msgid "Forum description"
+msgstr "Форумдун сүрөттөлүшү"
+
+msgid "Section keywords"
+msgstr "Бөлүктүн ачкыч сөздөрү"
+
+msgid "Macros available: #name#, #description#"
+msgstr "Жеткиликтүү макростор: #name#, #description#"
+
+msgid "Section description"
+msgstr "Бөлүктүн сүрөттөлүшү"
+
+msgid "Topic keywords"
+msgstr "Теманын ачкыч сөздөрү"
+
+msgid "Macros available: #name#"
+msgstr "Жеткиликтүү макростор: #name#"
+
+msgid "Topic description"
+msgstr "Теманын сүрөттөлүшү"
+
+msgid "View"
+msgstr "Кароолор"

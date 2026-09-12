@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Johncms\Modules\Admin\Application\UseCases;
+namespace Johncms\Modules\Forum\Application\UseCases;
 
-use Johncms\Modules\Admin\Application\DTO\ForumSettingsDTO;
 use Johncms\Modules\Admin\Domain\Exceptions\ConfigWriteException;
-use Johncms\Modules\Admin\Domain\Repository\ForumConfigRepositoryInterface;
+use Johncms\Modules\Forum\Application\DTO\ForumSettingsDTO;
+use Johncms\Modules\Forum\Domain\Repository\ForumConfigRepositoryInterface;
 
 final readonly class UpdateForumSettingsUseCase
 {

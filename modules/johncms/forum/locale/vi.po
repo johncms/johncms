@@ -1267,3 +1267,219 @@ msgstr "Thành viên"
 msgid "Guests"
 msgstr "Khách"
 
+
+msgid "Forum Management"
+msgstr "Quản lý diễn đàn"
+
+msgid "Settings are saved successfully"
+msgstr "Lưu Cài Đặt Thành Công"
+
+msgid "Forum Settings"
+msgstr "Cài đặt diễn đàn"
+
+msgid "List of categories"
+msgstr "Danh sách các loại"
+
+msgid "Forum structure"
+msgstr "Cấu trúc diễn đàn"
+
+msgid "Invalid ID"
+msgstr "ID không hợp lệ"
+
+msgid "Add Section"
+msgstr "Thêm phần"
+
+msgid "Add Category"
+msgstr "Thêm hạng mục"
+
+msgid "You have not entered Title"
+msgstr "Bạn chưa nhập vào tiêu đề"
+
+msgid "Description should be at least 2 characters in length"
+msgstr "Chiều dài của mô tả shoul có ít nhất 2 ký tự"
+
+msgid "Please select a valid parent"
+msgstr "Vui lòng chọn một thư mục cha hợp lệ"
+
+msgid "Delete section"
+msgstr "Xoá mục"
+
+msgid "Delete category"
+msgstr "Xoá danh mục"
+
+msgid "Access denied"
+msgstr "Truy cập bị từ chối"
+
+msgid "Edit Section"
+msgstr "Chỉnh sửa mục"
+
+msgid "Hidden posts"
+msgstr "Bài viết được ẩn"
+
+msgid "by topic"
+msgstr "trong chủ đề"
+
+msgid "by author"
+msgstr "của tác giả"
+
+msgid "Hidden topics"
+msgstr "Chủ đề được ẩn"
+
+msgid "by section"
+msgstr "trong phần"
+
+msgid "Add"
+msgstr "Thêm"
+
+msgid "Parent section:"
+msgstr "Chủ đề cha:"
+
+msgid "Min. 2, Max. 30 characters"
+msgstr "Ít nhất. 2, nhiều nhất. 30 ký tự"
+
+msgid "Description"
+msgstr "Mô tả"
+
+msgid "Optional field"
+msgstr "Tùy chọn trường"
+
+msgid "Min. 2, Max. 500 characters"
+msgstr "Ít nhất. 2, nhiều nhất. 500 ký tự"
+
+msgid "Common access"
+msgstr "Chung truy cập"
+
+msgid "Assign the newly created authors as curators"
+msgstr "Gán mới được tạo tác giả như tuyển"
+
+msgid "Allow authors to edit the 1st post"
+msgstr "Cho phép tác giả để chỉnh sửa 1 bài"
+
+msgid "Only for reading"
+msgstr "Chỉ đọc sách"
+
+msgid "Section type"
+msgstr "Loại tuỳ chọn"
+
+msgid "For subsections"
+msgstr "Cho phần phụ"
+
+msgid "For topics"
+msgstr "Cho các chủ đề"
+
+msgid "<h3>WARNING!</h3>There are subsections. Move them to another category."
+msgstr "<h3>Lỗi!</h3>Có phần cấp dưới <br> Bạn cần chuyển nó sang thể loại khác."
+
+msgid "All categories, topics, and files will be moved into selected category. Old category will be removed."
+msgstr "Tất cả các thể loại, chủ đề, và các tập tin sẽ được chuyển sang thể loại mới được lựa chọn. Thể loại sẽ bị xóa tất cả"
+
+msgid "Complete removal"
+msgstr "Loại bỏ hoàn toàn"
+
+msgid "If you want to destroy all the information, first remove"
+msgstr "Nếu bạn muốn xóa tất cả các bài viết, đầu tiên gỡ bỏ"
+
+msgid "subsections"
+msgstr "Phần phụ"
+
+msgid "<h3>WARNING!</h3>There are topics in the section. You must move them to another section."
+msgstr "<h3>Lỗi</h3>Các chủ đề sau <br>. Bạn cần di chuyển đến phần khác."
+
+msgid "Select section"
+msgstr "Chọn phần"
+
+msgid "Other category"
+msgstr "Các thể loại"
+
+msgid "All the topics and files will be moved to selected section. Old section will be deleted."
+msgstr "Tất cả các chủ đề và các tập tin sẽ được chuyển đến phần cũ mà bạn chọn. Nó sẽ được gỡ bỏ hoàn toàn."
+
+msgid "WARNING! All the information will be deleted"
+msgstr "CẢNH BÁO! Điều này sẽ loại bỏ tất cả bài viết"
+
+msgid "Min. 2, Max. 150 characters"
+msgstr "Ít nhất. 2, nhiều nhất. 150 ký tự"
+
+msgid "Order"
+msgstr "Đặt hàng"
+
+msgid "Only numbers"
+msgstr "Chỉ số"
+
+msgid "Filtered:"
+msgstr "Lọc:"
+
+msgid "Go to page"
+msgstr "Đi đến trang"
+
+msgid "Topic:"
+msgstr "Chủ đề:"
+
+msgid "Filter:"
+msgstr "Lọc:"
+
+msgid "Delete all"
+msgstr "Xóa tất cả"
+
+msgid "Path:"
+msgstr "Đường dẫn:"
+
+msgid "Topic deleted:"
+msgstr "Chủ đề đã bị xóa:"
+
+msgid "Statistic"
+msgstr "Số liệu thống kê"
+
+msgid "Categories"
+msgstr "Hạng mục"
+
+msgid "Sections"
+msgstr "Phòng"
+
+msgid "Topics"
+msgstr "Các chủ đề"
+
+msgid "Messages"
+msgstr "Tin nhắn"
+
+msgid "Votes"
+msgstr "Lượt bình chọn"
+
+msgid "Settings"
+msgstr "Tùy chọn Thiết lập"
+
+msgid "Common settings"
+msgstr "Cài đặt chung"
+
+msgid "Show file counters"
+msgstr "Hiển thị số tệp"
+
+msgid "SEO settings"
+msgstr "Cài đặt SEO"
+
+msgid "Forum keywords"
+msgstr "Từ khóa diễn đàn"
+
+msgid "Forum description"
+msgstr "Mô tả diễn đàn"
+
+msgid "Section keywords"
+msgstr "Phần từ khóa"
+
+msgid "Macros available: #name#, #description#"
+msgstr "Macro có sẵn: #name#, #description#"
+
+msgid "Section description"
+msgstr "Phần mô tả"
+
+msgid "Topic keywords"
+msgstr "Từ khóa chủ đề"
+
+msgid "Macros available: #name#"
+msgstr "Macro có sẵn: #name#"
+
+msgid "Topic description"
+msgstr "Mô tả chủ đề"
+
+msgid "View"
+msgstr "Xem"

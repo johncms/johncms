@@ -1270,3 +1270,216 @@ msgstr "Azolar"
 msgid "Guests"
 msgstr "Mehmonlar"
 
+
+msgid "Forum Management"
+msgstr "Forum boshqaruvi"
+
+msgid "Settings are saved successfully"
+msgstr "Sozlamalar muvaffaqiyatli saqlandi"
+
+msgid "Forum Settings"
+msgstr "Forumlar sozlanmasi"
+
+msgid "List of categories"
+msgstr "Toifalar ro'yxati"
+
+msgid "Forum structure"
+msgstr "Forum tuzilishi"
+
+msgid "Invalid ID"
+msgstr "Identifikator noto‘g‘ri"
+
+msgid "Add Section"
+msgstr "Bo'lim qo'shish"
+
+msgid "Add Category"
+msgstr "Kategoriya qo'shish"
+
+msgid "You have not entered Title"
+msgstr "Siz sarlavha kiritmadingiz"
+
+msgid "Description should be at least 2 characters in length"
+msgstr "Ta'rif kamida 2 ta belgidan iborat bo'lishi kerak"
+
+msgid "Please select a valid parent"
+msgstr "Iltimos  tegishlisini tanlang"
+
+msgid "Delete section"
+msgstr "Bo'limni o'chirish"
+
+msgid "Delete category"
+msgstr "Kategoriyani o'chirish"
+
+msgid "Access denied"
+msgstr "Kirish rad etildi"
+
+msgid "Edit Section"
+msgstr "Bo'lim tahrir."
+
+msgid "Hidden posts"
+msgstr "Yashirin xabarlar"
+
+msgid "by topic"
+msgstr "mavzu bo'yicha"
+
+msgid "by author"
+msgstr "muallif bo'yicha"
+
+msgid "Hidden topics"
+msgstr "Yashirin mavzular"
+
+msgid "by section"
+msgstr "boʻlim bo'yicha"
+
+msgid "Add"
+msgstr "Qo'shish"
+
+msgid "Parent section:"
+msgstr "Ota-qism:"
+
+msgid "Min. 2, Max. 30 characters"
+msgstr "Min. 2, Max. 30 belgilar"
+
+msgid "Description"
+msgstr "Tavsif"
+
+msgid "Optional field"
+msgstr "Ixtiyoriy maydon"
+
+msgid "Min. 2, Max. 500 characters"
+msgstr "Min. 2, Max. 500 belgilar"
+
+msgid "Common access"
+msgstr "Barchaga ruhsat"
+
+msgid "Assign the newly created authors as curators"
+msgstr "Mavzu yaratuvchilarni kurator sifatida tayinlash"
+
+msgid "Allow authors to edit the 1st post"
+msgstr "Mualliflarga 1-postni tahrirlashga ruxsat berish"
+
+msgid "Only for reading"
+msgstr "Faqat o'qish uchun"
+
+msgid "Section type"
+msgstr "Bo'lim turi"
+
+msgid "For subsections"
+msgstr "Bo'limlar uchun"
+
+msgid "For topics"
+msgstr "Mavzular uchun"
+
+msgid "<h3>WARNING!</h3>There are subsections. Move them to another category."
+msgstr "<h3> DIQQAT! </h3> bo'limlar mavjud. Ularni boshqa toifaga o'tkazing."
+
+msgid "All categories, topics, and files will be moved into selected category. Old category will be removed."
+msgstr "Barcha toifalar, mavzular va fayllar tanlangan toifaga o'tkaziladi. Eski kategoriya olib tashlanadi."
+
+msgid "Complete removal"
+msgstr "To'liq o'chirish"
+
+msgid "If you want to destroy all the information, first remove"
+msgstr "Agar siz barcha ma'lumotlarni yo'q qilmoqchi bo'lsangiz, avval o'chirib tashlang"
+
+msgid "subsections"
+msgstr "Bo'limlar uchun"
+
+msgid "<h3>WARNING!</h3>There are topics in the section. You must move them to another section."
+msgstr "<h3> DIQQAT! </h3> Bo'limda mavzular mavjud. Siz ularni boshqa qismga o'tkazishingiz kerak."
+
+msgid "Select section"
+msgstr "Bo'limni tanlash"
+
+msgid "Other category"
+msgstr "Boshqa kategoriya"
+
+msgid "All the topics and files will be moved to selected section. Old section will be deleted."
+msgstr "Barcha mavzular va fayllar tanlangan qismga o'tkaziladi. Eski bo'lim o'chiriladi."
+
+msgid "WARNING! All the information will be deleted"
+msgstr "DIQQAT! Barcha ma'lumotlar o'chiriladi"
+
+msgid "Order"
+msgstr "Saralash"
+
+msgid "Only numbers"
+msgstr "Faqat raqamlar"
+
+msgid "Filtered:"
+msgstr "Tartiblash:"
+
+msgid "Go to page"
+msgstr "Sahifaga o'tish"
+
+msgid "Topic:"
+msgstr "Mavzu"
+
+msgid "Filter:"
+msgstr "Filtr:"
+
+msgid "Delete all"
+msgstr "Hammasini o'chirish"
+
+msgid "Path:"
+msgstr "Yo'li"
+
+msgid "Topic deleted:"
+msgstr "Mavzu o'chirildi:"
+
+msgid "Statistic"
+msgstr "Statistika"
+
+msgid "Categories"
+msgstr "Kategoriyalar"
+
+msgid "Sections"
+msgstr "Bo'limlar"
+
+msgid "Topics"
+msgstr "Mavzular"
+
+msgid "Messages"
+msgstr "Xabarlar"
+
+msgid "Votes"
+msgstr "Ovozlar"
+
+msgid "Settings"
+msgstr "Sozlovlar"
+
+msgid "Common settings"
+msgstr "Umumiy Sozlash"
+
+msgid "Show file counters"
+msgstr "Fayllar sonini ko'rish"
+
+msgid "SEO settings"
+msgstr "SEO sozlanmasi"
+
+msgid "Forum keywords"
+msgstr "Forum kalit so'zi"
+
+msgid "Forum description"
+msgstr "Forum haqida"
+
+msgid "Section keywords"
+msgstr "Bo'lim kalit so'zi"
+
+msgid "Macros available: #name#, #description#"
+msgstr "Mavjud makros: #name#, #description#"
+
+msgid "Section description"
+msgstr "Bo'lim haqida"
+
+msgid "Topic keywords"
+msgstr "Bo'lim kalit so'zi"
+
+msgid "Macros available: #name#"
+msgstr "Mavjud makros: #name#"
+
+msgid "Topic description"
+msgstr "Bo'lim haqida"
+
+msgid "View"
+msgstr "Ko'rish"
