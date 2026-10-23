@@ -10,7 +10,9 @@
 
 declare(strict_types=1);
 
+use Johncms\Auth\Authorization\RoleRepositoryInterface;
 use Johncms\Auth\Authorization\RoleSeeder;
+use Johncms\Auth\Authorization\SystemRole;
 use Johncms\Auth\Password\PasswordHasherInterface;
 use Johncms\Auth\Session\AuthCookieFactory;
 use Johncms\Auth\Session\AuthSessionManager;
@@ -93,7 +95,6 @@ if ($request->getMethod() === 'POST') {
                     'www'             => $fields['homeurl'],
                     'datereg'         => time(),
                     'lastdate'        => time(),
-                    'rights'          => 9,
                     // The `ip` attribute is cast via Johncms\Casts\Ip, which expects a string IP and converts it itself.
                     'ip'              => $_SERVER['REMOTE_ADDR'],
                     'browser'         => htmlentities($_SERVER['HTTP_USER_AGENT']),
@@ -109,6 +110,13 @@ if ($request->getMethod() === 'POST') {
             );
             $user->password = $hasher->hash($fields['admin_password']);
             $user->save();
+
+            // Whoever installs the site runs it: the role that stands above every other, which the
+            // seeder above has just created.
+            $roles = di(RoleRepositoryInterface::class);
+            $supervisor = $roles->findBySlug(SystemRole::Supervisor->value)
+                ?? throw new RuntimeException('The seeder did not create the supervisor role.');
+            $roles->grant($user->id, $supervisor->id, null, time());
 
             // Signs the new administrator in. The installer answers outside the kernel, so the
             // cookie is emitted directly instead of being queued — its attributes still come from
@@ -144,7 +152,6 @@ if ($request->getMethod() === 'POST') {
                             'www'             => '',
                             'datereg'         => time(),
                             'lastdate'        => time(),
-                            'rights'          => 0,
                             // The `ip` attribute is cast via Johncms\Casts\Ip, which expects a string IP and converts it itself.
                             'ip'              => $demoUser['ip'],
                             'browser'         => htmlentities($_SERVER['HTTP_USER_AGENT']),
