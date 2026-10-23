@@ -20,6 +20,8 @@ use Johncms\Security\HtmlPolicyProviderInterface;
 use Psr\Container\ContainerInterface as PsrContainerInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\DependencyInjection\AddConsoleCommandPass;
+use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
@@ -109,7 +111,8 @@ class PSRContainerFactory
             EmbedProviderInterface::class       => 'johncms.embed_provider',
             MigrationSourceProviderInterface::class => 'johncms.migration_source',
             MenuItemProviderInterface::class        => 'johncms.menu_provider',
-            Command::class                          => 'johncms.console_command',
+            // The tag of Symfony itself: AddConsoleCommandPass below reads it.
+            Command::class                          => 'console.command',
             SitemapUrlProviderInterface::class      => 'johncms.sitemap_provider',
             // The web environment. A template of mail or of the installer is served by an
             // environment of its own, and what belongs there is tagged by hand — see the
@@ -122,6 +125,11 @@ class PSRContainerFactory
         foreach ($tags as $interface => $tag) {
             $container->registerForAutoconfiguration($interface)->addTag($tag);
         }
+
+        // Lists the commands by #[AsCommand] and hands the console a loader that builds one only
+        // when it is run — see ConsoleApplicationFactory. It has to see the tags autoconfiguration
+        // applies, and those land during optimization, hence the stage it runs at.
+        $container->addCompilerPass(new AddConsoleCommandPass(), PassConfig::TYPE_BEFORE_REMOVING);
     }
 
     private function loadCoreServices(ContainerBuilder $container): void

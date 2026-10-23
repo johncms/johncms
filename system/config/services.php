@@ -173,7 +173,8 @@ return static function (ContainerConfigurator $container): void {
     $services->set(Application::class)
         ->autoconfigure(false)
         ->factory(service(\Johncms\Console\ConsoleApplicationFactory::class))
-        ->arg('$commands', tagged_iterator('johncms.console_command'));
+        ->arg('$commandLoader', service('console.command_loader'))
+        ->arg('$container', service('service_container'));
 
     $services->load(
         'Johncms\\',
@@ -576,9 +577,9 @@ return static function (ContainerConfigurator $container): void {
     $services->set(ColorScheme::class);
     $services->set(\Johncms\Scheduler\ScheduleMutexInterface::class, \Johncms\Scheduler\FileScheduleMutex::class);
     $services->set(\Johncms\Scheduler\ScheduledTaskRegistry::class)
-        ->arg('$commands', tagged_iterator('johncms.console_command'));
+        ->arg('$commands', tagged_iterator('console.command'));
     $services->set(\Johncms\AdminTasks\AdminTaskRegistry::class)
-        ->arg('$commands', tagged_iterator('johncms.console_command'));
+        ->arg('$commands', tagged_iterator('console.command'));
     $services->set(\Johncms\AdminTasks\AdminTaskRunner::class)
         ->arg('$mutex', service(\Johncms\AdminTasks\FileAdminTaskMutex::class));
 };

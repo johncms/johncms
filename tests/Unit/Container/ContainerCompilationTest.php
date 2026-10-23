@@ -8,6 +8,7 @@ use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Auth\Authorization\StaffTitles;
 use Johncms\Auth\Authorization\Voters\BanVoter;
 use Johncms\Auth\CurrentUser;
+use Johncms\Console\Commands\TwigLintCommand;
 use Johncms\Container\PSRContainerFactory;
 use Johncms\Http\CookieQueue;
 use Johncms\Modules\Admin\Application\Services\AdminPermissions;
@@ -21,6 +22,7 @@ use Johncms\NavChain;
 use Johncms\View\Menu\MenuRegistry;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
+use Symfony\Component\Console\Application;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use ReflectionClass;
 
@@ -120,7 +122,7 @@ final class ContainerCompilationTest extends TestCase
             'johncms.auth.voter',
             'johncms.auth.permissions',
             'johncms.auth.authenticator',
-            'johncms.console_command',
+            'console.command',
             'johncms.sitemap_provider',
             'johncms.twig_extension',
             'johncms.resettable',
@@ -148,12 +150,35 @@ final class ContainerCompilationTest extends TestCase
 
         self::assertContains(
             CleanupOrphanFilesCommand::class,
-            array_keys($container->findTaggedServiceIds('johncms.console_command'))
+            array_keys($container->findTaggedServiceIds('console.command'))
         );
         self::assertContains(
             NewsUrlsProvider::class,
             array_keys($container->findTaggedServiceIds('johncms.sitemap_provider'))
         );
+    }
+
+    /**
+     * The console lists its commands without building them and builds only the one it runs. A
+     * command built ahead of time builds whatever it depends on, the connection to the database
+     * included, and then no command works where there is no database — twig:lint and cache:clear
+     * among them, and CI runs the first one exactly there.
+     */
+    public function testTheConsoleBuildsNoCommandUntilOneIsRun(): void
+    {
+        $container = (new PSRContainerFactory())();
+        self::assertInstanceOf(ContainerBuilder::class, $container);
+
+        $application = $container->get(Application::class);
+        self::assertInstanceOf(Application::class, $application);
+        $application->all();
+
+        $commands = array_keys($container->findTaggedServiceIds('console.command'));
+        self::assertContains(TwigLintCommand::class, $commands);
+
+        foreach ($commands as $id) {
+            self::assertFalse($container->initialized($id), $id . ' was built before anything ran it');
+        }
     }
 
     /**
