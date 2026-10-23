@@ -2,29 +2,29 @@ msgid ""
 msgstr ""
 "X-Domain: online\n"
 
-#: modules/johncms/online/src/Application/Controllers/GuestController.php:32
+#: modules/johncms/online/src/Application/Controllers/GuestController.php:28
 #: modules/johncms/online/src/Application/FiltersBuilder.php:25
 msgid "Guests"
 msgstr ""
 
-#: modules/johncms/online/src/Application/Controllers/GuestController.php:34
-#: modules/johncms/online/src/Application/Controllers/GuestController.php:56
-#: modules/johncms/online/src/Application/Controllers/HistoryController.php:34
-#: modules/johncms/online/src/Application/Controllers/HistoryController.php:56
-#: modules/johncms/online/src/Application/Controllers/IndexController.php:34
-#: modules/johncms/online/src/Application/Controllers/IndexController.php:56
+#: modules/johncms/online/src/Application/Controllers/GuestController.php:30
+#: modules/johncms/online/src/Application/Controllers/GuestController.php:41
+#: modules/johncms/online/src/Application/Controllers/HistoryController.php:30
+#: modules/johncms/online/src/Application/Controllers/HistoryController.php:41
+#: modules/johncms/online/src/Application/Controllers/IndexController.php:30
+#: modules/johncms/online/src/Application/Controllers/IndexController.php:41
 #: modules/johncms/online/src/Application/Controllers/IpController.php:31
 #: modules/johncms/online/src/Application/Controllers/IpController.php:42
 #: modules/johncms/online/src/Application/Middlewares/OnlineAdminMiddleware.php:27
 msgid "Online"
 msgstr ""
 
-#: modules/johncms/online/src/Application/Controllers/HistoryController.php:32
+#: modules/johncms/online/src/Application/Controllers/HistoryController.php:28
 #: modules/johncms/online/src/Application/FiltersBuilder.php:21
 msgid "History"
 msgstr ""
 
-#: modules/johncms/online/src/Application/Controllers/IndexController.php:32
+#: modules/johncms/online/src/Application/Controllers/IndexController.php:28
 msgid "Who is online?"
 msgstr ""
 
@@ -41,7 +41,7 @@ msgstr ""
 msgid "Access denied"
 msgstr ""
 
-#: modules/johncms/online/src/Application/UseCases/GetOnlineGuestsUseCase.php:36
+#: modules/johncms/online/src/Application/UseCases/GetOnlineGuestsUseCase.php:34
 msgid "Guest"
 msgstr ""
 
