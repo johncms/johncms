@@ -28,13 +28,8 @@
     <source>
         <include>
             <directory suffix=".php">system/src</directory>
-            <directory suffix=".php">modules/johncms/guestbook/src</directory>
-            <directory suffix=".php">modules/johncms/admin/src</directory>
-            <directory suffix=".php">modules/johncms/homepage/src</directory>
-            <directory suffix=".php">modules/johncms/news/src</directory>
-            <directory suffix=".php">modules/johncms/forum/src</directory>
-            <directory suffix=".php">modules/johncms/community/src</directory>
-            <directory suffix=".php">modules/johncms/collections/src</directory>
+            <!-- Every module of every vendor, so a module added later is measured as well. -->
+            <directory suffix=".php">modules/*/*/src</directory>
         </include>
     </source>
 </phpunit>

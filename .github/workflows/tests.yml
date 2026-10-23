@@ -13,7 +13,8 @@ jobs:
         with:
           php-version: '8.4'
           extensions: pdo_sqlite
-          coverage: none
+          coverage: pcov
+          ini-values: pcov.directory=.
 
       - name: Setup Node.js
         uses: actions/setup-node@v7
@@ -49,6 +50,14 @@ jobs:
       # analysis, both test suites and the templates. None of it needs a database.
       - name: Run the checks
         run: composer -v check
+
+      # A map of where tests are missing, in the summary of the run. No threshold: the number is
+      # there to be read, not to be gamed.
+      - name: Measure the coverage
+        run: vendor/bin/phpunit --no-progress --coverage-clover=coverage.xml
+
+      - name: Summarize the coverage
+        run: php .github/scripts/coverage-summary.php coverage.xml >> "$GITHUB_STEP_SUMMARY"
 
   # The suite above runs on SQLite. This one runs the functional suite once more against the
   # servers a site really has — the oldest the system check accepts and a current one of each

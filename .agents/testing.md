@@ -20,6 +20,18 @@ process state a test relies on without setting it — a static property, `Config
 trusted proxies of `Request`. The seed is printed at the top of the run; repeat it with
 `--random-order-seed=<seed>`, and make the test set that state in `setUp()` itself.
 
+### Coverage
+
+CI measures line coverage on every push and lists it by area in the summary of the run, the least
+covered first. It is a map of where tests are missing, not a threshold. The same table locally:
+
+```bash
+docker exec -e XDEBUG_MODE=coverage $(docker ps -q -f name=johncms.php-fpm) \
+    vendor/bin/phpunit --coverage-clover=data/cache/coverage.xml
+docker exec $(docker ps -q -f name=johncms.php-fpm) \
+    php .github/scripts/coverage-summary.php data/cache/coverage.xml
+```
+
 ### Against MySQL
 
 CI runs the functional suite once more against MySQL 5.7 and 8.4 and MariaDB 10.2 and 11. Point
