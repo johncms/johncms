@@ -20,6 +20,25 @@ process state a test relies on without setting it — a static property, `Config
 trusted proxies of `Request`. The seed is printed at the top of the run; repeat it with
 `--random-order-seed=<seed>`, and make the test set that state in `setUp()` itself.
 
+### The installer
+
+`InstallerTest` installs a site from scratch: it serves `public/` with the built-in server of PHP,
+goes through the steps of the installer as a browser would, then opens the home page and the panel
+as the administrator the installer created. The installer writes `config/autoload/*.local.php` and
+works with MySQL only, so the test needs a fresh checkout and `TEST_DATABASE_URL`, and skips itself
+anywhere else — the checkout of the stack included. CI runs it on every server of the matrix.
+
+To run it locally, give it a checkout of its own:
+
+```bash
+git worktree add /tmp/johncms-install HEAD
+cp -r vendor /tmp/johncms-install/ && cp -r public/build /tmp/johncms-install/public/
+docker run --rm --network johncms_app_network -v /tmp/johncms-install:/app -w /app \
+    -e TEST_DATABASE_URL=mysql://root:password@mariadb:3306/johncms_install_test \
+    johncms-php-fpm composer test:install
+git worktree remove --force /tmp/johncms-install
+```
+
 ### Coverage
 
 CI measures line coverage on every push and lists it by area in the summary of the run, the least

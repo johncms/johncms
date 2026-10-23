@@ -129,3 +129,8 @@ jobs:
 
       - name: Run the functional suite
         run: composer test:functional
+
+      # The checkout of a job is the fresh one the installer expects: it builds a site from scratch
+      # on this server and opens it as the administrator it created (tests/Install).
+      - name: Install a site from scratch
+        run: composer test:install
