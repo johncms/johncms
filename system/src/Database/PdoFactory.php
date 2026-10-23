@@ -50,7 +50,11 @@ class PdoFactory
         try {
             return $capsule->getDatabaseManager()->getPdo();
         } catch (Exception $exception) {
-            die('<b>Error connecting to the database server:</b><br>' . $exception->getMessage());
+            echo '<b>Error connecting to the database server:</b><br>' . $exception->getMessage();
+
+            // Not die() with the message: that ends the process with status 0, and a console
+            // command or a test run that lost its database would report success.
+            exit(1);
         }
     }
 }
