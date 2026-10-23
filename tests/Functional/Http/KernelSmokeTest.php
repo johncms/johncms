@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\Functional\Http;
 
-use Johncms\Security\Csrf;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\Functional\FunctionalTestCase;
@@ -196,7 +195,7 @@ final class KernelSmokeTest extends FunctionalTestCase
         $response = $this->handleRequest(
             '/guestbook',
             'POST',
-            ['csrf_token' => $this->container()->get(Csrf::class)->getToken()],
+            $this->withCsrfToken(),
             ['CONTENT_TYPE' => 'application/json']
         );
 

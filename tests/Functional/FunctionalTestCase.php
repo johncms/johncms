@@ -13,6 +13,7 @@ use Johncms\Http\Kernel;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
 use Johncms\Security\ClientInfoDTO;
+use Johncms\Security\Csrf;
 use Johncms\Users\User;
 use PDO;
 use PHPUnit\Framework\TestCase;
@@ -102,6 +103,17 @@ abstract class FunctionalTestCase extends TestCase
 
         // Without catching, the exception behind a 500 reaches the test instead of the log.
         return $this->container()->get(Kernel::class)->handle($request, catch: $catch);
+    }
+
+    /**
+     * The parameters of a form as the browser posts them: with the CSRF token the page put in.
+     *
+     * @param array<string, mixed> $parameters
+     * @return array<string, mixed>
+     */
+    protected function withCsrfToken(array $parameters = []): array
+    {
+        return ['csrf_token' => $this->container()->get(Csrf::class)->getToken()] + $parameters;
     }
 
     /**

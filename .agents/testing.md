@@ -62,6 +62,12 @@ $response = $this->handleRequest('/admin/news', cookies: $this->actingAs($user))
 `actingAs()` opens a real session and answers with the cookies to drive requests with, so the
 visitor is authenticated the way a live one is.
 
+A form that posts carries the CSRF token the page put into it, and the check refuses it otherwise:
+
+```php
+$response = $this->handleRequest('/guestbook', 'POST', $this->withCsrfToken(['text' => 'Hello']));
+```
+
 ### The visitor
 
 `Tests\Support\FunctionalUserFactory` writes the account, and the test says what it may do:

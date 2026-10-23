@@ -6,7 +6,6 @@ namespace Tests\Functional\Uploads;
 
 use Johncms\Config\ConfigRepository;
 use Johncms\Files\FileStore;
-use Johncms\Security\Csrf;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\Functional\FunctionalTestCase;
@@ -88,7 +87,7 @@ final class EditorImageUploadTest extends FunctionalTestCase
         return $this->handleRequest(
             self::URL,
             'POST',
-            ['csrf_token' => $this->container()->get(Csrf::class)->getToken()],
+            $this->withCsrfToken(),
             cookies: $this->actingAs(FunctionalUserFactory::create()),
             files: ['upload' => new UploadedFile($path, $name, $mimeType, null, true)]
         );

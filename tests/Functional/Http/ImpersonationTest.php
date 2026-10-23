@@ -6,7 +6,6 @@ namespace Tests\Functional\Http;
 
 use Johncms\Auth\Session\AuthSession;
 use Johncms\Auth\Session\SessionSettings;
-use Johncms\Security\Csrf;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouteCollection;
 use Tests\Functional\FunctionalTestCase;
@@ -23,7 +22,7 @@ final class ImpersonationTest extends FunctionalTestCase
 {
     public function testAGuestCannotStartBrowsingAsSomebody(): void
     {
-        $response = $this->handleRequest('/impersonation/start/1', 'POST', $this->withToken());
+        $response = $this->handleRequest('/impersonation/start/1', 'POST', $this->withCsrfToken());
 
         self::assertSame(Response::HTTP_FOUND, $response->getStatusCode());
         self::assertSame('/login', $response->headers->get('Location'));
@@ -51,7 +50,7 @@ final class ImpersonationTest extends FunctionalTestCase
         $started = $this->handleRequest(
             '/impersonation/start/' . $targetId,
             'POST',
-            $this->withToken(),
+            $this->withCsrfToken(),
             cookies: $adminCookies
         );
 
@@ -71,7 +70,7 @@ final class ImpersonationTest extends FunctionalTestCase
         $page = $this->handleRequest('/', cookies: $cookies);
         self::assertStringContainsString('/impersonation/stop', (string) $page->getContent());
 
-        $stopped = $this->handleRequest('/impersonation/stop', 'POST', $this->withToken(), cookies: $cookies);
+        $stopped = $this->handleRequest('/impersonation/stop', 'POST', $this->withCsrfToken(), cookies: $cookies);
 
         self::assertSame(Response::HTTP_FOUND, $stopped->getStatusCode());
         self::assertNotNull(AuthSession::query()->findOrFail($session->id)->revoked_at);
@@ -79,14 +78,6 @@ final class ImpersonationTest extends FunctionalTestCase
             $adminCookies[$this->sessionCookieName()],
             $this->cookiesOf($stopped)[$this->sessionCookieName()] ?? null
         );
-    }
-
-    /**
-     * @return array<string, string>
-     */
-    private function withToken(): array
-    {
-        return ['csrf_token' => $this->container()->get(Csrf::class)->getToken()];
     }
 
     /**
