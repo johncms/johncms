@@ -14,7 +14,6 @@ namespace Johncms\Checker;
 
 use Illuminate\Database\Capsule\Manager;
 use Illuminate\Database\Connection;
-use Illuminate\Database\Schema\Blueprint;
 
 class DBChecker
 {
@@ -72,27 +71,14 @@ class DBChecker
     /**
      * Checking whether the correct types are returned from the database.
      *
-     * @return bool
+     * A number selected without a table tells as much about the driver as one read back from a
+     * table, and asks for no right to create tables — nor commits the open transaction, which DDL
+     * does in MySQL.
      */
     public function checkMysqlnd(): bool
     {
-        $check_result = false;
-        $tmp_table = 'mysqlnd_test_neceicegfbij';
-        $schema = Manager::schema();
-        $schema->dropIfExists($tmp_table);
-        $schema->create(
-            $tmp_table,
-            static function (Blueprint $table) {
-                $table->string('test_string_col');
-                $table->integer('test_int_col');
-            }
-        );
-        $this->connection->table($tmp_table)->insert(['test_string_col' => 'String value', 'test_int_col' => 666]);
-        $row = $this->connection->table($tmp_table)->first();
-        if ($row !== null && is_int($row->test_int_col)) {
-            $check_result = true;
-        }
-        $schema->drop($tmp_table);
-        return $check_result;
+        $row = $this->connection->selectOne('SELECT 666 AS test_int_col');
+
+        return $row !== null && is_int($row->test_int_col);
     }
 }
