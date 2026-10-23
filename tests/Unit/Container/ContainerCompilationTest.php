@@ -182,6 +182,42 @@ final class ContainerCompilationTest extends TestCase
     }
 
     /**
+     * A definition that names its class without the arguments its constructor requires compiles
+     * fine and fails only when something asks for the service — on the page that needs it. The
+     * usual way to get one is a set() line after a load() of the same directory: it replaces the
+     * autowired definition with a bare one.
+     */
+    public function testEveryServiceIsGivenTheArgumentsItsConstructorRequires(): void
+    {
+        $container = (new PSRContainerFactory())();
+        self::assertInstanceOf(ContainerBuilder::class, $container);
+
+        $short = [];
+
+        foreach ($container->getDefinitions() as $id => $definition) {
+            $class = $definition->getClass();
+
+            if (
+                $class === null
+                || $definition->isAbstract()
+                || $definition->isSynthetic()
+                || $definition->getFactory() !== null
+                || ! class_exists($class)
+            ) {
+                continue;
+            }
+
+            $constructor = (new ReflectionClass($class))->getConstructor();
+
+            if ($constructor !== null && count($definition->getArguments()) < $constructor->getNumberOfRequiredParameters()) {
+                $short[] = $id;
+            }
+        }
+
+        self::assertSame([], $short, 'These services are built without the arguments they require.');
+    }
+
+    /**
      * Twig has three environments here, and autoconfiguration knows only the web one: every
      * extension is tagged for it, and what belongs to mail or to the installer says so by hand.
      * MailExtension belongs to mail alone — a message is read outside the site and prints

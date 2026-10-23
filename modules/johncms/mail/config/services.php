@@ -36,5 +36,4 @@ return static function (ContainerConfigurator $container): void {
 
     $services->set(MailMessageRepositoryInterface::class, EloquentMailMessageRepository::class)->public();
     $services->set(ContactRepositoryInterface::class, EloquentContactRepository::class)->public();
-    $services->set(\Johncms\Modules\Mail\Application\Services\MailFileService::class)->public();
 };
