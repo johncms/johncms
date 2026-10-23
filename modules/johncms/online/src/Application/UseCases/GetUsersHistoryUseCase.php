@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Online\Application\UseCases;
 
-use Johncms\Modules\Forum\Application\Services\ForumVisitorPlaceFormatter;
 use Johncms\Modules\Online\Application\DTO\OnlineItemDTO;
 use Johncms\Modules\Online\Domain\Repository\OnlineUserRepositoryInterface;
 use Johncms\Users\User;
 use Johncms\Users\UserPlaceFormatterInterface;
-use Twig\Markup;
 use Johncms\Utils\DateFormatterInterface;
 
 final readonly class GetUsersHistoryUseCase
@@ -29,7 +27,7 @@ final readonly class GetUsersHistoryUseCase
     /**
      * @return list<OnlineItemDTO>
      */
-    public function getPage(int $limit, int $offset, ?ForumVisitorPlaceFormatter $placeFormatter): array
+    public function getPage(int $limit, int $offset): array
     {
         return $this->repository->getHistory($limit, $offset)->map(
             fn (User $user): OnlineItemDTO => new OnlineItemDTO(
@@ -38,7 +36,7 @@ final readonly class GetUsersHistoryUseCase
                 isOnline:            $user->is_online,
                 profileUrl:          $user->profile_url,
                 displayDate:         $this->dateFormatter->format($user->sestime),
-                placeName:           $this->placeName((string) $user->place, $placeFormatter),
+                placeName:           $this->userPlaceFormatter->format((string) $user->place),
                 ip:                  $user->ip,
                 searchIpUrl:         $user->search_ip_url,
                 ipViaProxy:          $user->ip_via_proxy,
@@ -46,12 +44,5 @@ final readonly class GetUsersHistoryUseCase
                 browser:             $user->browser,
             )
         )->all();
-    }
-
-    private function placeName(string $place, ?ForumVisitorPlaceFormatter $placeFormatter): ?Markup
-    {
-        return $placeFormatter !== null && str_starts_with($place, '/forum')
-            ? $placeFormatter->format($place)
-            : $this->userPlaceFormatter->format($place);
     }
 }

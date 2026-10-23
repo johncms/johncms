@@ -43,7 +43,7 @@ final class GetUsersHistoryUseCaseTest extends TestCase
             ->with(10, 20)
             ->willReturn(new Collection());
 
-        self::assertCount(0, $this->makeUseCase()->getPage(10, 20, null));
+        self::assertCount(0, $this->makeUseCase()->getPage(10, 20));
     }
 
     public function testGetPageUsesDisplayDateForHistory(): void
@@ -55,7 +55,7 @@ final class GetUsersHistoryUseCaseTest extends TestCase
             ->willReturnCallback(static fn (?string $place): Markup => new Markup((string) $place, 'UTF-8'));
         $this->dateFormatter->expects(self::once())->method('format')->with(100)->willReturn('DD');
 
-        $result = $this->makeUseCase()->getPage(10, 0, null);
+        $result = $this->makeUseCase()->getPage(10, 0);
 
         self::assertInstanceOf(OnlineItemDTO::class, $result[0]);
         self::assertSame('/some/place', (string) $result[0]->placeName);

@@ -40,7 +40,7 @@ final class GetOnlineUsersUseCaseTest extends TestCase
             ->with(10, 20)
             ->willReturn(new Collection());
 
-        self::assertCount(0, $this->makeUseCase()->getPage(10, 20, null));
+        self::assertCount(0, $this->makeUseCase()->getPage(10, 20));
     }
 
     public function testGetPageMapsUserToDtoWithoutFormatter(): void
@@ -51,7 +51,7 @@ final class GetOnlineUsersUseCaseTest extends TestCase
         $this->placeFormatter->method('format')
             ->willReturnCallback(static fn (?string $place): Markup => new Markup((string) $place, 'UTF-8'));
 
-        $result = $this->makeUseCase()->getPage(10, 0, null);
+        $result = $this->makeUseCase()->getPage(10, 0);
 
         self::assertInstanceOf(OnlineItemDTO::class, $result[0]);
         self::assertSame(42, $result[0]->id);

@@ -423,7 +423,10 @@ return static function (ContainerConfigurator $container): void {
     $services->set(AntifloodCheckerInterface::class, AntifloodChecker::class)->autowire();
     $services->set(RequestRateLogInterface::class, FileRequestRateLog::class);
     $services->set(SmiliesRendererInterface::class, SmiliesRenderer::class);
-    $services->set(UserPlaceFormatterInterface::class, UserPlaceFormatter::class)->autowire();
+    $services->set(UserPlaceFormatter::class)
+        ->autowire()
+        ->arg('$providers', tagged_iterator('johncms.visitor_place_provider'));
+    $services->alias(UserPlaceFormatterInterface::class, UserPlaceFormatter::class);
     $services->set(IgnoreListCheckerInterface::class, IgnoreListChecker::class);
     $services->set(DateFormatterInterface::class, DateFormatter::class)->autowire();
     $services->set(NavChain::class)->factory([NavChain::class, 'create']);

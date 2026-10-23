@@ -59,8 +59,8 @@ system module (`'system' => true`, always on) and on the modules it requires —
 Where a module legitimately extends another, the better way in is a tagged extension point, not a
 constructor argument.
 
-`online` on `forum`, `notifications` on `downloads` and `library`, and `homepage` on `news` break
-this today without declaring it, and are in the baseline.
+`notifications` on `downloads` and `library`, and `homepage` on `news` break this today without
+declaring it, and are in the baseline.
 
 ### HTTP types stay in the HTTP layer
 

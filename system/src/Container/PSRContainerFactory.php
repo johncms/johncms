@@ -14,6 +14,7 @@ use Johncms\Content\Transformer\ContentTransformerInterface;
 use Johncms\Database\Migrations\MigrationSourceProviderInterface;
 use Johncms\Modules\ModuleRegistryFactory;
 use Johncms\Sitemap\SitemapUrlProviderInterface;
+use Johncms\Users\VisitorPlaceProviderInterface;
 use Johncms\Validator\RuleConstraintFactoryInterface;
 use Johncms\View\Menu\MenuItemProviderInterface;
 use Johncms\Security\HtmlPolicyProviderInterface;
@@ -88,9 +89,9 @@ class PSRContainerFactory
      * its own kind of content is cleaned by, the way visitors are told from bots, the two halves
      * of the content pipeline — a step that edits a rendered text and a media site whose links
      * become players — a directory of migrations the database is taken through, a line the module
-     * puts into a menu, a console command, a group of addresses in the sitemap, a function its
-     * templates call, a service the kernel clears between requests and a rule the validator can
-     * be asked for.
+     * puts into a menu, a console command, a group of addresses in the sitemap, the name of a page
+     * of its own when the site says where a visitor is, a function its templates call, a service
+     * the kernel clears between requests and a rule the validator can be asked for.
      *
      * Registered on the builder rather than as an instanceof rule of a services file, because
      * such a rule only reaches the services declared in that same file. A module would have to
@@ -114,6 +115,7 @@ class PSRContainerFactory
             // The tag of Symfony itself: AddConsoleCommandPass below reads it.
             Command::class                          => 'console.command',
             SitemapUrlProviderInterface::class      => 'johncms.sitemap_provider',
+            VisitorPlaceProviderInterface::class    => 'johncms.visitor_place_provider',
             // The web environment. A template of mail or of the installer is served by an
             // environment of its own, and what belongs there is tagged by hand — see the
             // extensions at the end of services.php.

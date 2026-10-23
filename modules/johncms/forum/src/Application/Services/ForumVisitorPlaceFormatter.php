@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\Services;
 
 use Johncms\Auth\CurrentUser;
+use Johncms\Users\VisitorPlaceProviderInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumMessageRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumSectionRepositoryInterface;
 use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
 use Twig\Markup;
 
-final readonly class ForumVisitorPlaceFormatter
+final readonly class ForumVisitorPlaceFormatter implements VisitorPlaceProviderInterface
 {
     public function __construct(
         private ForumSectionRepositoryInterface $sectionRepository,
@@ -20,6 +21,11 @@ final readonly class ForumVisitorPlaceFormatter
         private ForumMessageRepositoryInterface $messageRepository,
         private CurrentUser $currentUser,
     ) {
+    }
+
+    public function describe(string $place): ?Markup
+    {
+        return str_starts_with($place, '/forum') ? $this->format($place) : null;
     }
 
     /**

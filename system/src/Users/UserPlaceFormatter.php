@@ -19,19 +19,34 @@ use Twig\Markup;
 
 /**
  * Renders a human readable link for the page a user is currently on.
+ *
+ * The modules are asked first, each about the addresses of its own (VisitorPlaceProviderInterface);
+ * what none of them claims is looked up in the dictionary of places.
  */
 final class UserPlaceFormatter implements UserPlaceFormatterInterface
 {
     /** @var array<string, string>|null */
     private ?array $places = null;
 
+    /**
+     * @param iterable<VisitorPlaceProviderInterface> $providers
+     */
     public function __construct(
         private readonly AccessCheckerInterface $accessChecker,
+        private readonly iterable $providers,
     ) {
     }
 
     public function format(?string $place): Markup
     {
+        foreach ($this->providers as $provider) {
+            $described = $provider->describe((string) $place);
+
+            if ($described !== null) {
+                return $described;
+            }
+        }
+
         $place = rtrim((string) $place, '/');
         if ($place === '') {
             $place = '/';

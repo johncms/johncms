@@ -2909,42 +2909,6 @@ parameters:
 			path: modules/johncms/notifications/src/Infrastructure/Persistence/Repository/EloquentNotificationRepository.php
 
 		-
-			message: '#^testEveryModuleDependsOnlyOnWhatItRequiresInOnline\: Johncms\\Modules\\Online\\Application\\Controllers\\GuestController should not depend on Johncms\\Modules\\Forum\\Application\\Services\\ForumVisitorPlaceFormatter$#'
-			identifier: phpat.testEveryModuleDependsOnlyOnWhatItRequiresInOnline
-			count: 1
-			path: modules/johncms/online/src/Application/Controllers/GuestController.php
-
-		-
-			message: '#^testEveryModuleDependsOnlyOnWhatItRequiresInOnline\: Johncms\\Modules\\Online\\Application\\Controllers\\HistoryController should not depend on Johncms\\Modules\\Forum\\Application\\Services\\ForumVisitorPlaceFormatter$#'
-			identifier: phpat.testEveryModuleDependsOnlyOnWhatItRequiresInOnline
-			count: 1
-			path: modules/johncms/online/src/Application/Controllers/HistoryController.php
-
-		-
-			message: '#^testEveryModuleDependsOnlyOnWhatItRequiresInOnline\: Johncms\\Modules\\Online\\Application\\Controllers\\IndexController should not depend on Johncms\\Modules\\Forum\\Application\\Services\\ForumVisitorPlaceFormatter$#'
-			identifier: phpat.testEveryModuleDependsOnlyOnWhatItRequiresInOnline
-			count: 1
-			path: modules/johncms/online/src/Application/Controllers/IndexController.php
-
-		-
-			message: '#^testEveryModuleDependsOnlyOnWhatItRequiresInOnline\: Johncms\\Modules\\Online\\Application\\UseCases\\GetOnlineGuestsUseCase should not depend on Johncms\\Modules\\Forum\\Application\\Services\\ForumVisitorPlaceFormatter$#'
-			identifier: phpat.testEveryModuleDependsOnlyOnWhatItRequiresInOnline
-			count: 2
-			path: modules/johncms/online/src/Application/UseCases/GetOnlineGuestsUseCase.php
-
-		-
-			message: '#^testEveryModuleDependsOnlyOnWhatItRequiresInOnline\: Johncms\\Modules\\Online\\Application\\UseCases\\GetOnlineUsersUseCase should not depend on Johncms\\Modules\\Forum\\Application\\Services\\ForumVisitorPlaceFormatter$#'
-			identifier: phpat.testEveryModuleDependsOnlyOnWhatItRequiresInOnline
-			count: 2
-			path: modules/johncms/online/src/Application/UseCases/GetOnlineUsersUseCase.php
-
-		-
-			message: '#^testEveryModuleDependsOnlyOnWhatItRequiresInOnline\: Johncms\\Modules\\Online\\Application\\UseCases\\GetUsersHistoryUseCase should not depend on Johncms\\Modules\\Forum\\Application\\Services\\ForumVisitorPlaceFormatter$#'
-			identifier: phpat.testEveryModuleDependsOnlyOnWhatItRequiresInOnline
-			count: 2
-			path: modules/johncms/online/src/Application/UseCases/GetUsersHistoryUseCase.php
-
-		-
 			message: '#^Property Johncms\\Modules\\Profile\\Application\\Controllers\\ChangePasswordController\:\:\$currentUser is never read, only written\.$#'
 			identifier: property.onlyWritten
 			count: 1

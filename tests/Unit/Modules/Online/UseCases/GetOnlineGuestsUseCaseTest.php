@@ -51,7 +51,7 @@ final class GetOnlineGuestsUseCaseTest extends TestCase
         $this->placeFormatter->method('format')
             ->willReturnCallback(static fn (?string $place): Markup => new Markup((string) $place, 'UTF-8'));
 
-        $result = $this->makeUseCase()->getPage(10, 0, null);
+        $result = $this->makeUseCase()->getPage(10, 0);
 
         self::assertInstanceOf(OnlineItemDTO::class, $result[0]);
         self::assertSame(0, $result[0]->id);
