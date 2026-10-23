@@ -101,6 +101,8 @@ Refactor in **small, safe steps** while preserving existing behavior.
 
 Guidelines:
 
+* Pin the behavior first: code without tests gets characterization tests before it is changed
+  (`.agents/testing.md`, "Before changing untested code").
 * Extract logic into use cases or services.
 * Move database logic out of controllers.
 * Introduce repository interfaces when persistence is involved.

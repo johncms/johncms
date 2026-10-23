@@ -97,6 +97,24 @@ MySQL still opens it.
 When a request answers 500, `handleRequest(..., catch: false)` hands the test the exception the
 kernel would have logged.
 
+## Before changing untested code
+
+Most of the legacy modules have no tests of their own. Before refactoring one, write tests that
+pin what it does now — the pages a visitor gets, the statuses, the redirects, the rows a form
+writes, the messages it shows — and commit them on their own, ahead of the refactoring:
+
+```
+test(library): record the current behaviour before moving the controllers
+refactor(library): ...
+```
+
+They describe what the code does, not what it should do: an odd answer is pinned as it is, with a
+comment saying so, and changed by a commit of its own that says why. Then the refactoring is
+checked by tests written before it, which is the only way a test says the behavior was kept.
+
+`LegacyValidatorCharacterizationTest` is an example: its cases name a rule and its options rather
+than the engine, so the same cases accepted the engine that replaced it.
+
 ## What not to assert
 
 * The page title across two requests in one test — `Render` still keeps it in process state.
