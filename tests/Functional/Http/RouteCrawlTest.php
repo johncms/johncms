@@ -15,6 +15,7 @@ use Symfony\Component\Routing\Exception\MissingMandatoryParametersException;
 use Symfony\Component\Routing\Generator\UrlGenerator;
 use Symfony\Component\Routing\RequestContext;
 use Tests\Functional\FunctionalTestCase;
+use Tests\Support\FunctionalDatabase;
 use Tests\Support\FunctionalUserFactory;
 use Throwable;
 
@@ -42,7 +43,7 @@ final class RouteCrawlTest extends FunctionalTestCase
 
     /**
      * Pages that ask MySQL itself for something, which SQLite cannot answer, by route name and
-     * the visitor who gets that far.
+     * the visitor who gets that far. Against MySQL they are opened like the rest.
      */
     private const array MYSQL_ONLY = [
         // Reads the version of the server with SELECT VERSION().
@@ -103,6 +104,7 @@ final class RouteCrawlTest extends FunctionalTestCase
         // nothing of it: the collection asks the container for nothing (RouteCollectorFactoryTest).
         $routes = (new RouteCollectorFactory())(self::noContainer());
         $urls = new UrlGenerator($routes, new RequestContext());
+        $onMysql = FunctionalDatabase::fromEnvironment()->isMysql();
 
         foreach ($routes->all() as $name => $route) {
             if ($route->getMethods() !== [] && ! in_array('GET', $route->getMethods(), true)) {
@@ -118,7 +120,7 @@ final class RouteCrawlTest extends FunctionalTestCase
             $panel = $route->getDefault(Route::ADMIN_AREA_ATTRIBUTE) === true;
 
             foreach ([self::GUEST, self::MEMBER, self::STAFF] as $visitor) {
-                if ((self::MYSQL_ONLY[$name] ?? null) === $visitor) {
+                if (! $onMysql && (self::MYSQL_ONLY[$name] ?? null) === $visitor) {
                     continue;
                 }
 

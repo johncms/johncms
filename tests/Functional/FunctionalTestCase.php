@@ -18,6 +18,7 @@ use PDO;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Tests\Support\FunctionalDatabase;
 use Tests\Support\RunsMigrations;
 
 /**
@@ -30,7 +31,8 @@ use Tests\Support\RunsMigrations;
  *    with the system roles seeded into it. It belongs to the process and nothing else reads it,
  *    so a test states the data it needs — FunctionalUserFactory writes the accounts — instead of
  *    looking for what an installation happens to have. No stand and no server are involved, which
- *    is why the suite runs in CI.
+ *    is why the suite runs in CI. CI runs it once more against MySQL and MariaDB, built the same
+ *    way in a database of its own (FunctionalDatabase).
  * 2. Every test runs inside a transaction that is rolled back afterwards, so whatever a test
  *    writes is gone by the next one. Nothing has to be cleaned up by hand.
  * 3. Several requests may be driven through one process, including several through the same
@@ -59,9 +61,23 @@ abstract class FunctionalTestCase extends TestCase
 
     protected function tearDown(): void
     {
-        Capsule::connection()->rollBack();
+        $connection = Capsule::connection();
+
+        // MySQL commits the open transaction on its own before DDL and TRUNCATE, and whatever the
+        // test wrote up to that point stays for every test after it. SQLite has no such statement,
+        // so only a run against MySQL can tell — and it has to say so rather than leak.
+        $committed = ! $connection->getPdo()->inTransaction();
+
+        $connection->rollBack();
 
         parent::tearDown();
+
+        if ($committed) {
+            self::fail(
+                'The transaction of the test was committed before it ended, so what the test wrote '
+                . 'stays in the database. Something ran a statement MySQL commits before — DDL or TRUNCATE.'
+            );
+        }
     }
 
     protected function handleRequest(
@@ -133,26 +149,24 @@ abstract class FunctionalTestCase extends TestCase
         restore_error_handler();
         restore_exception_handler();
 
-        $this->useInMemoryDatabase();
+        $this->useDatabase();
         $this->migrateEverything();
         $this->container()->get(RoleSeeder::class)->seed();
     }
 
     /**
-     * Points the application at SQLite before anything asks for the connection.
+     * Points the application at the database of the suite before anything asks for the connection.
      *
      * Nothing has read the configuration of the database yet: under CONSOLE_MODE the bootstrap
      * builds no PDO, and PdoFactory reads pdo.db_driver when the container is first asked for
      * one — which happens here, so that the connection every later service gets is this one.
      */
-    private function useInMemoryDatabase(): void
+    private function useDatabase(): void
     {
-        ConfigRepository::init(
-            array_replace(
-                ConfigRepository::all(),
-                ['pdo' => ['db_driver' => 'sqlite', 'db_name' => ':memory:']]
-            )
-        );
+        $database = FunctionalDatabase::fromEnvironment();
+        $database->prepare();
+
+        ConfigRepository::init(array_replace(ConfigRepository::all(), ['pdo' => $database->config()]));
 
         $this->container()->get(PDO::class);
     }

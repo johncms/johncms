@@ -13,6 +13,24 @@ CI runs them. The functional suite renders real pages, so the assets have to be 
 (`npm run build`) — a layout asks Vite for the entry point of its theme, and without the
 compiled bundle every page fails on the missing manifest.
 
+### Against MySQL
+
+CI runs the functional suite once more against MySQL 5.7 and 8.4 and MariaDB 10.2 and 11. Point
+it at the MariaDB of the stack to do the same locally:
+
+```bash
+docker exec -e TEST_DATABASE_URL=mysql://root:password@mariadb:3306/johncms_test \
+    $(docker ps -q -f name=johncms.php-fpm) composer test:functional
+```
+
+The password of root is `DB_PASSWORD` from `.env`. The suite drops the database it is given and
+builds the schema anew, which is why `FunctionalDatabase` refuses a name that does not end in
+`_test`.
+
+MySQL commits the open transaction before DDL and TRUNCATE, and what a test wrote until then
+would stay for every test after it. The harness fails such a test instead: a page or a test that
+alters a table during a request does not belong in the suite as it is.
+
 ## Unit
 
 One class, its collaborators doubled. A test that needs tables boots a database of its own:
@@ -73,7 +91,8 @@ the staff must be refused nothing. The list comes from the router, so a new page
 change to the test.
 
 A page that fails there is a bug of the page. The one exception is a page asking MySQL for
-something SQLite does not have: it goes to `MYSQL_ONLY` with the reason.
+something SQLite does not have: it goes to `MYSQL_ONLY` with the reason, and the run against
+MySQL still opens it.
 
 When a request answers 500, `handleRequest(..., catch: false)` hands the test the exception the
 kernel would have logged.
@@ -81,5 +100,6 @@ kernel would have logged.
 ## What not to assert
 
 * The page title across two requests in one test — `Render` still keeps it in process state.
-* Anything MySQL answers differently: the suites run on SQLite, so a full-text search or a
-  collation-dependent order belongs to a test that does not need a database at all.
+* Anything MySQL answers differently from SQLite: a functional test has to pass on both, so a
+  full-text search or a collation-dependent order belongs to a test that does not need a database
+  at all.

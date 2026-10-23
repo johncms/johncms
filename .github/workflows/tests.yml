@@ -49,3 +49,74 @@ jobs:
       # analysis, both test suites and the templates. None of it needs a database.
       - name: Run the checks
         run: composer -v check
+
+  # The suite above runs on SQLite. This one runs the functional suite once more against the
+  # servers a site really has — the oldest the system check accepts and a current one of each
+  # family — so a migration, a query or a page that only MySQL breaks on is caught here.
+  database:
+    name: Functional on ${{ matrix.database }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        database: ['mysql:5.7', 'mysql:8.4', 'mariadb:10.2', 'mariadb:11']
+    services:
+      database:
+        image: ${{ matrix.database }}
+        env:
+          MYSQL_ROOT_PASSWORD: root
+        ports:
+          - 3306:3306
+    env:
+      # The suite drops and creates this database (tests/Support/FunctionalDatabase.php).
+      TEST_DATABASE_URL: mysql://root:root@127.0.0.1:3306/johncms_test
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: pdo_mysql
+          coverage: none
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24.x
+          cache: npm
+
+      - name: Build the assets
+        run: |
+          npm ci
+          npm run build
+        env:
+          CI: true
+
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache composer dependencies
+        uses: actions/cache@v5
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+      - name: Install dependencies
+        run: composer install --no-progress --prefer-dist --no-interaction --ignore-platform-reqs
+
+      # The images ship different clients, so the wait goes through PHP, which every job has.
+      - name: Wait for the database
+        run: |
+          for attempt in $(seq 1 60); do
+            php -r 'new PDO("mysql:host=127.0.0.1;port=3306", "root", "root");' 2>/dev/null && exit 0
+            sleep 2
+          done
+          echo "The database did not come up." >&2
+          exit 1
+
+      - name: Run the functional suite
+        run: composer test:functional
