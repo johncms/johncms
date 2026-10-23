@@ -15,16 +15,23 @@ use Symfony\Component\HttpFoundation\Exception\SuspiciousOperationException;
  * Tests for the classic-FPM request factory.
  *
  * The factory mutates HttpFoundation global static state (the request factory, trusted proxies
- * and trusted hosts), so every test resets that state in tearDown to avoid leaking into others.
+ * and trusted hosts), and reads the configuration, which is process state as well. Every test
+ * starts from that state cleared and clears it again when it ends: a test that booted the
+ * application earlier in the run leaves the trusted proxies and the configuration of the site
+ * behind, and this one must not leave its own to the next.
  */
 final class RequestFactoryTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        self::clearProcessState();
+    }
+
     protected function tearDown(): void
     {
-        Request::setFactory(null);
-        Request::setTrustedProxies([], 0);
-        Request::setTrustedHosts([]);
-        ConfigRepository::init([]);
+        self::clearProcessState();
 
         parent::tearDown();
     }
@@ -154,5 +161,13 @@ final class RequestFactoryTest extends TestCase
         $request = Request::create('http://example.com/');
 
         self::assertSame('example.com', $request->getHost());
+    }
+
+    private static function clearProcessState(): void
+    {
+        Request::setFactory(null);
+        Request::setTrustedProxies([], 0);
+        Request::setTrustedHosts([]);
+        ConfigRepository::init([]);
     }
 }
