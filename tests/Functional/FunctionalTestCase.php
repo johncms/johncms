@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Tests\Functional;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
+use Johncms\Cache\CacheDriver;
+use Johncms\Cache\CacheInterface;
 use Johncms\Auth\Authorization\RoleSeeder;
 use Johncms\Auth\Session\AuthSessionManager;
 use Johncms\Config\ConfigRepository;
@@ -35,7 +37,9 @@ use Tests\Support\RunsMigrations;
  *    is why the suite runs in CI. CI runs it once more against MySQL and MariaDB, built the same
  *    way in a database of its own (FunctionalDatabase).
  * 2. Every test runs inside a transaction that is rolled back afterwards, so whatever a test
- *    writes is gone by the next one. Nothing has to be cleaned up by hand.
+ *    writes is gone by the next one. The cache lives in memory and is emptied before every test
+ *    too, so nothing counted against the rows of one test answers the next. Nothing has to be
+ *    cleaned up by hand.
  * 3. Several requests may be driven through one process, including several through the same
  *    controller: nothing holds a request beyond the cycle it belongs to, and the kernel resets the
  *    shared services that cache per-request state. RequestIsolationTest is what guards that.
@@ -53,6 +57,7 @@ abstract class FunctionalTestCase extends TestCase
         $this->bootApplication();
 
         Capsule::connection()->beginTransaction();
+        $this->container()->get(CacheInterface::class)->clear();
 
         // The container is booted once per process, so the session facade is shared by every test
         // in the class. Under CONSOLE_MODE it holds in-memory storage (SessionFactory), and
@@ -161,9 +166,24 @@ abstract class FunctionalTestCase extends TestCase
         restore_error_handler();
         restore_exception_handler();
 
+        $this->useMemoryCache();
         $this->useDatabase();
         $this->migrateEverything();
         $this->container()->get(RoleSeeder::class)->seed();
+    }
+
+    /**
+     * Keeps the cache of the suite in memory. The filesystem cache is data/cache/app, the one the
+     * stand serves its pages from: counts cached against the database of a test would show on the
+     * site for minutes, and what the site cached would answer the tests. Nothing has built the
+     * pool yet — it is made the first time something asks for the cache.
+     */
+    private function useMemoryCache(): void
+    {
+        $config = ConfigRepository::all();
+        $config['cache'] = ['driver' => CacheDriver::Memory->value] + ($config['cache'] ?? []);
+
+        ConfigRepository::init($config);
     }
 
     /**
