@@ -13,12 +13,18 @@ declare(strict_types=1);
 namespace Johncms\View\Menu;
 
 /**
- * Where a menu item belongs. Two menus, because there are two: the one a visitor navigates the
- * site by, and the one an administrator works in.
+ * Where a menu item belongs: the main menu a visitor navigates the site by, its own part for the
+ * staff, and the menu an administrator works in.
  */
 enum MenuArea: string
 {
     case Main = 'main';
+
+    /**
+     * The lines of the main menu kept for the staff — the panel, the chat of the administration —
+     * drawn apart from the sections of the site.
+     */
+    case Staff = 'staff';
 
     case Admin = 'admin';
 }

@@ -79,6 +79,29 @@ final class MenuRegistryTest extends TestCase
     }
 
     /**
+     * Collecting the items of a menu counts nothing: the number behind an item is worked out when
+     * a template asks for its badge, and an item without a counter has none.
+     */
+    public function testTheBadgeOfAnItemIsCountedOnlyWhenItIsAskedFor(): void
+    {
+        $counted = 0;
+        $registry = $this->registry([
+            new MenuItem(MenuArea::Main, 'Forum', '/forum/', counter: static function () use (&$counted): int {
+                $counted++;
+
+                return 3;
+            }),
+            new MenuItem(MenuArea::Main, 'Help', '/help/'),
+        ]);
+
+        [$forum, $help] = $registry->items(MenuArea::Main);
+
+        self::assertSame(0, $counted);
+        self::assertSame(3, $forum->badge());
+        self::assertSame(0, $help->badge());
+    }
+
+    /**
      * The registry serves one visitor at a time and is shared between requests, so what it worked
      * out for one of them must not be handed to the next.
      */

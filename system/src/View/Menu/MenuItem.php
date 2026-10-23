@@ -12,6 +12,8 @@ declare(strict_types=1);
 
 namespace Johncms\View\Menu;
 
+use Closure;
+
 /**
  * One line in a menu, as the module declaring it describes it.
  *
@@ -27,6 +29,9 @@ final readonly class MenuItem
      *                                an image the module ships. Null draws no icon.
      * @param string|null $permission The item is drawn only for a visitor holding this.
      * @param int         $weight     Lighter items float up; equal weights keep alphabetical order.
+     * @param (Closure(): int)|null $counter What is new behind the item — the number on its badge.
+     *                                Called only when the menu is drawn, so an item costs nothing
+     *                                on a page that has no menu.
      */
     public function __construct(
         public MenuArea $area,
@@ -35,7 +40,16 @@ final readonly class MenuItem
         public ?string $icon = null,
         public ?string $permission = null,
         public int $weight = 100,
+        private ?Closure $counter = null,
     ) {
+    }
+
+    /**
+     * The number on the badge of the item; 0 draws none.
+     */
+    public function badge(): int
+    {
+        return $this->counter === null ? 0 : ($this->counter)();
     }
 
     /**

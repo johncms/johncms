@@ -143,6 +143,7 @@
         {# What the installed modules add. A module has no business editing a theme, so it declares
            a MenuItem and this draws it; items the visitor may not open never get here. #}
         {% for item in menu_items('main') %}
+            {% set badge = item.badge %}
             <li>
                 <a href="{{ item.url }}">
                     {% if item.icon %}
@@ -155,6 +156,34 @@
                         {% endif %}
                     {% endif %}
                     <span class="flex-grow-1">{{ item.title }}</span>
+                    {% if badge > 0 %}
+                        <span class="badge rounded-pill bg-danger">+ {{ badge|format_number }}</span>
+                    {% endif %}
+                </a>
+            </li>
+        {% endfor %}
+
+        {# The part of the staff, drawn apart below a line. #}
+        {% for item in menu_items('staff') %}
+            {% set badge = item.badge %}
+            <li>
+                {% if loop.first %}
+                    <div class="border-bottom mt-3 mb-3"></div>
+                {% endif %}
+                <a href="{{ item.url }}">
+                    {% if item.icon %}
+                        {% if item.hasImageIcon %}
+                            <img class="icon" src="{{ item.icon }}" alt="">
+                        {% else %}
+                            <svg class="icon text-danger">
+                                <use xlink:href="{{ asset('icons/sprite.svg') }}#{{ item.icon }}"/>
+                            </svg>
+                        {% endif %}
+                    {% endif %}
+                    <span class="flex-grow-1 text-danger">{{ item.title }}</span>
+                    {% if badge > 0 %}
+                        <span class="badge rounded-pill bg-danger">{{ badge|format_number }}</span>
+                    {% endif %}
                 </a>
             </li>
         {% endfor %}

@@ -277,7 +277,7 @@ service compiles fine and is never asked anything.
 | `ExternalIdentityProviderInterface`, `CaptchaProviderInterface` | a sign-in service, a way to tell a visitor from a bot |
 | `ContentTransformerInterface`, `EmbedProviderInterface`, `HtmlPolicyProviderInterface` | a step of the content pipeline, a media site whose links become players, a policy its HTML is cleaned by |
 | `MigrationSourceProviderInterface` | a directory of migrations besides its own |
-| `MenuItemProviderInterface` | a line in the main or the admin menu |
+| `MenuItemProviderInterface` | a line in the main menu, its part for the staff or the admin menu, with a badge counted when the menu is drawn |
 | `SitemapUrlProviderInterface` | a group of addresses in the sitemap |
 | `VisitorPlaceProviderInterface` | the name of a page of its own where the site says where a visitor is |
 | `SystemNotificationProviderInterface` | something of its own waiting for a signed-in visitor: a line of the notifications page, a number in the badge of the header |
