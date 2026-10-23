@@ -25,11 +25,6 @@ msgstr "Pobierz"
 msgid "Documentation"
 msgstr "Dokumentacja"
 
-#: modules/homepage/templates/index.phtml:53
-#: modules/homepage/templates/index.phtml:137
-msgid "News"
-msgstr "Aktualności"
-
 #: modules/homepage/templates/index.phtml:163
 msgid "Features"
 msgstr "Funkcje"

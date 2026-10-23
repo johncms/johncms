@@ -25,11 +25,6 @@ msgstr "Скачать"
 msgid "Documentation"
 msgstr "Документация"
 
-#: modules/homepage/templates/index.phtml:53
-#: modules/homepage/templates/index.phtml:137
-msgid "News"
-msgstr "Новости"
-
 #: modules/homepage/templates/index.phtml:163
 msgid "Features"
 msgstr "Возможности"

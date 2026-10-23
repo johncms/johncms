@@ -230,6 +230,8 @@ return static function (ContainerConfigurator $container): void {
                 ROOT_PATH . 'system/src/View/Menu/MenuArea.php',
                 // A value object too: one thing a module says is waiting for the visitor.
                 ROOT_PATH . 'system/src/Notifications/SystemNotification.php',
+                // And one block a module puts on the home page.
+                ROOT_PATH . 'system/src/View/Homepage/HomepageBlock.php',
                 ROOT_PATH . 'system/src/Modules/ModuleRegistry.php',
                 ROOT_PATH . 'system/src/Modules/ModuleState.php',
                 ROOT_PATH . 'system/src/Modules/ModuleStateRecord.php',
@@ -574,6 +576,8 @@ return static function (ContainerConfigurator $container): void {
     $services->set(SitemapGenerator::class)->arg('$moduleProviders', tagged_iterator('johncms.sitemap_provider'));
     $services->set(\Johncms\Notifications\SystemNotifications::class)
         ->arg('$providers', tagged_iterator('johncms.system_notification_provider'));
+    $services->set(\Johncms\View\Homepage\HomepageBlocks::class)
+        ->arg('$providers', tagged_iterator('johncms.homepage_block_provider'));
     // The content pipeline. Both registries are handed the services a module tagged by simply
     // implementing the interface — see PSRContainerFactory::registerExtensionPoints().
     $services->set(ContentTransformerRegistry::class)

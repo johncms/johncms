@@ -25,11 +25,6 @@ msgstr "Завантаження"
 msgid "Documentation"
 msgstr "Документація"
 
-#: modules/homepage/templates/index.phtml:53
-#: modules/homepage/templates/index.phtml:137
-msgid "News"
-msgstr "Новини"
-
 #: modules/homepage/templates/index.phtml:163
 msgid "Features"
 msgstr "Можливості"

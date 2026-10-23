@@ -8,7 +8,6 @@
       'Free, Open Source content management system' => 'Erkin, Ochiq Manba kontentni boshqarish tizimi',
       'Download' => 'Yuklab olish',
       'Documentation' => 'Hujjatlar',
-      'News' => 'Yangiliklar',
       'Features' => 'Xususiyatlar',
       'Responsive Layout' => 'O\'zgaruvchanlik',
       'Your site will appear equally well on both computers and mobile devices.' => 'Kompyuter va mobilga moslashgan',

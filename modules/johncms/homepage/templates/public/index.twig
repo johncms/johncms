@@ -1,5 +1,5 @@
 {#
-    @param iterable news Latest published articles, empty when the news block is off.
+    @param list<HomepageBlock> blocks What the modules put on the home page, in order.
 #}
 {% extends '@theme/layouts/default.twig' %}
 
@@ -62,32 +62,10 @@
         </div>
     </div>
 
-    {% if news|length %}
-        <div class="mb-n3">
-            <h2 class="h1 fw-bold mt-4 mb-2">{{ __('News') }}</h2>
-            <div class="row row-cols-1">
-                {% for article in news %}
-                    <div class="col mb-3">
-                        <a class="h4 fw-bold" href="{{ article.url }}">{{ article.name }}</a>
-                        {% if article.preview_text_safe is not empty %}
-                            {# Sanitized by the news module, so it stays markup. #}
-                            <div class="mb-n3 mt-1">{{ article.preview_text_safe }}</div>
-                        {% endif %}
-                        <div class="text-muted small pt-1 link-no-underline">{{ article.display_date }},
-                            <svg class="icon ms-1" style="width: 13px; margin-top: -3px;">
-                                <use xlink:href="{{ asset('icons/sprite.svg') }}#rating"/>
-                            </svg> {{ article.rating }},
-                            <a href="{{ article.url }}#article-comments">
-                                <svg class="icon ms-2" style="width: 13px;">
-                                    <use xlink:href="{{ asset('icons/sprite.svg') }}#forum"/>
-                                </svg> {{ article.comments_count }}
-                            </a>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
-    {% endif %}
+    {# What the switched-on modules put on the home page, each block with its own template. #}
+    {% for block in blocks %}
+        {% include block.template with block.data only %}
+    {% endfor %}
 
     <h2 class="h1 fw-bold mt-4 mb-4">{{ __('Features') }}</h2>
     <dl class="ms-4">

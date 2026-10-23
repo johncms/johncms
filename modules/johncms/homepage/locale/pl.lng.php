@@ -8,7 +8,6 @@
       'Free, Open Source content management system' => 'Bezpłatny, otwarty system zarządzania treściami',
       'Download' => 'Pobierz',
       'Documentation' => 'Dokumentacja',
-      'News' => 'Aktualności',
       'Features' => 'Funkcje',
       'Responsive Layout' => 'Układ responsywny',
       'Your site will appear equally well on both computers and mobile devices.' => 'Twoja strona pojawi się równie dobrze zarówno na komputerach, jak i na urządzeniach mobilnych.',

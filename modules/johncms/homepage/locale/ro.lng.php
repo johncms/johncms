@@ -8,7 +8,6 @@
       'Free, Open Source content management system' => 'Sistem gratuit de gestionare a conținutului Open Source',
       'Download' => 'Descarcă',
       'Documentation' => 'Documentație',
-      'News' => 'Stiri',
       'Features' => 'Caracteristici',
       'Responsive Layout' => 'Aspect Responsive',
       'Your site will appear equally well on both computers and mobile devices.' => 'Site-ul dvs. va apărea la fel de bine pe calculatoare și dispozitive mobile.',

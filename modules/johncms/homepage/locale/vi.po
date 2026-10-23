@@ -25,11 +25,6 @@ msgstr "Tải xuống"
 msgid "Documentation"
 msgstr "Tài Liệu"
 
-#: modules/homepage/templates/index.phtml:53
-#: modules/homepage/templates/index.phtml:137
-msgid "News"
-msgstr "Tin tức"
-
 #: modules/homepage/templates/index.phtml:163
 msgid "Features"
 msgstr "Tính năng"

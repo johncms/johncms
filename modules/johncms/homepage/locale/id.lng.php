@@ -8,7 +8,6 @@
       'Free, Open Source content management system' => 'Gratis, Open Source sistem manajemen konten',
       'Download' => 'Unduh',
       'Documentation' => 'Dokumentasi',
-      'News' => 'Berita',
       'Features' => 'Fitur',
       'Responsive Layout' => 'Tata Letak Responsif',
       'Your site will appear equally well on both computers and mobile devices.' => 'Situs anda akan muncul sama dengan baik pada kedua komputer dan perangkat mobile.',

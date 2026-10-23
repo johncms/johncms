@@ -17,6 +17,7 @@ use Johncms\Notifications\SystemNotificationProviderInterface;
 use Johncms\Sitemap\SitemapUrlProviderInterface;
 use Johncms\Users\VisitorPlaceProviderInterface;
 use Johncms\Validator\RuleConstraintFactoryInterface;
+use Johncms\View\Homepage\HomepageBlockProviderInterface;
 use Johncms\View\Menu\MenuItemProviderInterface;
 use Johncms\Security\HtmlPolicyProviderInterface;
 use Psr\Container\ContainerInterface as PsrContainerInterface;
@@ -92,8 +93,8 @@ class PSRContainerFactory
      * become players — a directory of migrations the database is taken through, a line the module
      * puts into a menu, a console command, a group of addresses in the sitemap, the name of a page
      * of its own when the site says where a visitor is, something of the module waiting for a
-     * signed-in visitor, a function its templates call, a service the kernel clears between requests
-     * and a rule the validator can be asked for.
+     * signed-in visitor, a block of the home page, a function its templates call, a service the
+     * kernel clears between requests and a rule the validator can be asked for.
      *
      * Registered on the builder rather than as an instanceof rule of a services file, because
      * such a rule only reaches the services declared in that same file. A module would have to
@@ -119,6 +120,7 @@ class PSRContainerFactory
             SitemapUrlProviderInterface::class      => 'johncms.sitemap_provider',
             VisitorPlaceProviderInterface::class    => 'johncms.visitor_place_provider',
             SystemNotificationProviderInterface::class => 'johncms.system_notification_provider',
+            HomepageBlockProviderInterface::class      => 'johncms.homepage_block_provider',
             // The web environment. A template of mail or of the installer is served by an
             // environment of its own, and what belongs there is tagged by hand — see the
             // extensions at the end of services.php.

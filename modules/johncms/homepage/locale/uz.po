@@ -25,11 +25,6 @@ msgstr "Yuklab olish"
 msgid "Documentation"
 msgstr "Hujjatlar"
 
-#: modules/homepage/templates/index.phtml:53
-#: modules/homepage/templates/index.phtml:137
-msgid "News"
-msgstr "Yangiliklar"
-
 #: modules/homepage/templates/index.phtml:163
 msgid "Features"
 msgstr "Xususiyatlar"

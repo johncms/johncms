@@ -20,6 +20,7 @@ msgstr ""
 #: modules/johncms/news/src/Application/MetaTagsManager.php:105
 #: modules/johncms/news/src/Application/MetaTagsManager.php:106
 #: modules/johncms/news/src/Application/Services/NewsPermissions.php:29
+#: modules/johncms/news/templates/homepage/latest.twig:8
 msgid "News"
 msgstr ""
 

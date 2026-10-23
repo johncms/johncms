@@ -25,11 +25,6 @@ msgstr "Жүктеу"
 msgid "Documentation"
 msgstr "Құжаттама"
 
-#: modules/homepage/templates/index.phtml:53
-#: modules/homepage/templates/index.phtml:137
-msgid "News"
-msgstr "Жаңалықтар"
-
 #: modules/homepage/templates/index.phtml:163
 msgid "Features"
 msgstr "Мүмкіндіктер"

@@ -8,7 +8,6 @@
       'Free, Open Source content management system' => 'Nemokama, Atviro kodo turinio valdymo sistema',
       'Download' => 'Atsisiųsti',
       'Documentation' => 'Dokumentacija',
-      'News' => 'Naujienos',
       'Features' => 'Ypatybės',
       'Responsive Layout' => 'Adaptyvus išdėstymas',
       'Your site will appear equally well on both computers and mobile devices.' => 'Jūsų svetainė atrodys taip pat gerai ir ant kompiuterių ir ant mobiliųjų įrenginių.',

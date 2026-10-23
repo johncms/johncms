@@ -25,11 +25,6 @@ msgstr "Atsisiųsti"
 msgid "Documentation"
 msgstr "Dokumentacija"
 
-#: modules/homepage/templates/index.phtml:53
-#: modules/homepage/templates/index.phtml:137
-msgid "News"
-msgstr "Naujienos"
-
 #: modules/homepage/templates/index.phtml:163
 msgid "Features"
 msgstr "Ypatybės"

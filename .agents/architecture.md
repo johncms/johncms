@@ -57,9 +57,10 @@ cannot be switched on without it, so it says so in the `requires` of its `module
 what keeps the other one from being switched off under it. A module may depend on the core, on a
 system module (`'system' => true`, always on) and on the modules it requires — on nothing else.
 Where a module legitimately extends another, the better way in is a tagged extension point, not a
-constructor argument.
-
-`homepage` on `news` breaks this today without declaring it, and is in the baseline.
+constructor argument: the core declares the contract, the module that has something to show
+implements it, the module that shows it collects what the container tagged. The menus, the
+notifications, the place of a visitor and the blocks of the home page work this way — see the table
+of extension points in `.agents/new-module.md`.
 
 ### HTTP types stay in the HTTP layer
 

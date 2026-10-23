@@ -8,7 +8,6 @@
       'Free, Open Source content management system' => 'Mã nguồn mở miễn phí - Open Source content management system',
       'Download' => 'Tải xuống',
       'Documentation' => 'Tài Liệu',
-      'News' => 'Tin tức',
       'Features' => 'Tính năng',
       'Responsive Layout' => 'Giao diện thân thiện',
       'Your site will appear equally well on both computers and mobile devices.' => 'Trang web của bạn sẽ hiển thị tốt trên cả máy tính và thiết bị di động.',

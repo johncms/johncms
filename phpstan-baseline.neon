@@ -1549,18 +1549,6 @@ parameters:
 			path: modules/johncms/help/src/Application/HelpLegacyRedirectHandler.php
 
 		-
-			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Builder\:\:active\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: modules/johncms/homepage/src/Controllers/HomepageController.php
-
-		-
-			message: '#^testEveryModuleDependsOnlyOnWhatItRequiresInHomepage\: Johncms\\Modules\\Homepage\\Controllers\\HomepageController should not depend on Johncms\\Modules\\News\\Domain\\Models\\NewsArticle$#'
-			identifier: phpat.testEveryModuleDependsOnlyOnWhatItRequiresInHomepage
-			count: 1
-			path: modules/johncms/homepage/src/Controllers/HomepageController.php
-
-		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$cat_id\.$#'
 			identifier: property.notFound
 			count: 1

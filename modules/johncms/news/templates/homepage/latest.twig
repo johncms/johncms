@@ -1,0 +1,30 @@
+{#
+    The latest articles, as a block of the home page. The page belongs to another module, so the
+    strings name the domain of the news.
+
+    @param iterable<NewsArticle> news Never empty: no articles, no block.
+#}
+<div class="mb-n3">
+    <h2 class="h1 fw-bold mt-4 mb-2">{{ d__('news', 'News') }}</h2>
+    <div class="row row-cols-1">
+        {% for article in news %}
+            <div class="col mb-3">
+                <a class="h4 fw-bold" href="{{ article.url }}">{{ article.name }}</a>
+                {% if article.preview_text_safe is not empty %}
+                    {# Sanitized by the news module, so it stays markup. #}
+                    <div class="mb-n3 mt-1">{{ article.preview_text_safe }}</div>
+                {% endif %}
+                <div class="text-muted small pt-1 link-no-underline">{{ article.display_date }},
+                    <svg class="icon ms-1" style="width: 13px; margin-top: -3px;">
+                        <use xlink:href="{{ asset('icons/sprite.svg') }}#rating"/>
+                    </svg> {{ article.rating }},
+                    <a href="{{ article.url }}#article-comments">
+                        <svg class="icon ms-2" style="width: 13px;">
+                            <use xlink:href="{{ asset('icons/sprite.svg') }}#forum"/>
+                        </svg> {{ article.comments_count }}
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>

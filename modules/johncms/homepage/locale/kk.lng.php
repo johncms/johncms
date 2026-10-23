@@ -8,7 +8,6 @@
       'Free, Open Source content management system' => 'Тегін, бастапқы коды ашық контентті басқару жүйесі',
       'Download' => 'Жүктеу',
       'Documentation' => 'Құжаттама',
-      'News' => 'Жаңалықтар',
       'Features' => 'Мүмкіндіктер',
       'Responsive Layout' => 'Адаптивті макет',
       'Your site will appear equally well on both computers and mobile devices.' => 'Сіздің сайтыңыз компьютерлерде де, мобильдік құрылғыларда да бірдей жақсы көрсетілетін болады.',
