@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Johncms\System\i18n;
 
+use Closure;
 use Gettext\Translator as Gettext;
 
 class Translator extends Gettext
@@ -34,6 +35,28 @@ class Translator extends Gettext
      * @var array<string, array{path: string, default: bool}>
      */
     private array $domains = [];
+
+    /** @var (Closure(string): ?string)|null */
+    private ?Closure $domainLocator = null;
+
+    /** @var array<string, true> The domains the locator knew nothing of, not to be asked again. */
+    private array $unlocated = [];
+
+    /**
+     * Where to look for the dictionaries of a domain nobody has registered: the directory of its
+     * locales, or null when there is no such domain.
+     *
+     * A module shows its messages beyond its own pages — a place in "who is online", an item of a
+     * menu, a block of the home page — and the domain of a module is registered only on its own
+     * routes. With a locator, the dictionary of a domain is loaded the first time a message of it
+     * is asked for, wherever that happens.
+     *
+     * @param Closure(string): ?string $locator
+     */
+    public function locateDomainsWith(Closure $locator): void
+    {
+        $this->domainLocator = $locator;
+    }
 
     public function addTranslationDomain(string $domain, string $localesPath, bool $set_default = true): void
     {
@@ -75,6 +98,32 @@ class Translator extends Gettext
         if ($defaultDomain !== null) {
             $this->defaultDomain($defaultDomain);
         }
+    }
+
+    protected function getTranslation(?string $domain, ?string $context, string $original): ?array
+    {
+        if ($domain !== null && ! isset($this->domains[$domain])) {
+            $this->registerLocatedDomain($domain);
+        }
+
+        return parent::getTranslation($domain, $context, $original);
+    }
+
+    private function registerLocatedDomain(string $domain): void
+    {
+        if ($this->domainLocator === null || isset($this->unlocated[$domain])) {
+            return;
+        }
+
+        $localesPath = ($this->domainLocator)($domain);
+
+        if ($localesPath === null) {
+            $this->unlocated[$domain] = true;
+
+            return;
+        }
+
+        $this->addTranslationDomain($domain, $localesPath, false);
     }
 
     private function loadDomain(string $domain, string $localesPath, bool $setDefault): void

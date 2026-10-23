@@ -74,6 +74,36 @@ final class TranslatorTest extends TestCase
         self::assertSame('Forum', $translator->gettext('Forum'));
     }
 
+    public function testADomainNobodyRegisteredIsLoadedWhereTheLocatorSays(): void
+    {
+        $translator = $this->makeTranslator('ru');
+        $translator->locateDomainsWith(fn (string $domain): ?string => $domain === 'second' ? $this->localesRoot . '/second' : null);
+
+        self::assertSame('Форум второго домена', $translator->dgettext('second', 'Forum'));
+        // Registered as any other domain, not as the default one.
+        self::assertSame('Форум', $translator->gettext('Forum'));
+
+        $translator->setLocale('en');
+
+        self::assertSame('Forum of the second domain', $translator->dgettext('second', 'Forum'));
+    }
+
+    public function testADomainTheLocatorDoesNotKnowIsAskedForOnce(): void
+    {
+        $asked = 0;
+        $translator = $this->makeTranslator('ru');
+        $translator->locateDomainsWith(static function () use (&$asked): ?string {
+            $asked++;
+
+            return null;
+        });
+
+        $translator->dgettext('missing', 'Forum');
+
+        self::assertSame('Forum', $translator->dgettext('missing', 'Forum'));
+        self::assertSame(1, $asked);
+    }
+
     private function makeTranslator(string $locale): Translator
     {
         $translator = new Translator();
