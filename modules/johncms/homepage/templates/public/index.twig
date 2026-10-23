@@ -71,14 +71,14 @@
                 {% for article in news %}
                     <div class="col mb-3">
                         <a class="h4 fw-bold" href="{{ article.url }}">{{ article.name }}</a>
-                        {% if article.preview_text_safe %}
+                        {% if article.preview_text_safe is not empty %}
                             {# Sanitized by the news module, so it stays markup. #}
                             <div class="mb-n3 mt-1">{{ article.preview_text_safe }}</div>
                         {% endif %}
                         <div class="text-muted small pt-1 link-no-underline">{{ article.display_date }},
                             <svg class="icon ms-1" style="width: 13px; margin-top: -3px;">
                                 <use xlink:href="{{ asset('icons/sprite.svg') }}#rating"/>
-                            </svg> {{ article.votes_sum_vote|default(0) }},
+                            </svg> {{ article.rating }},
                             <a href="{{ article.url }}#article-comments">
                                 <svg class="icon ms-2" style="width: 13px;">
                                     <use xlink:href="{{ asset('icons/sprite.svg') }}#forum"/>

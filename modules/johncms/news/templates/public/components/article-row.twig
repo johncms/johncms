@@ -5,7 +5,7 @@
 #}
 <div class="new_post-item without_avatar">
     <a href="{{ article.url }}" class="post-title">{{ article.name }}</a>
-    {% if article.preview_text_safe %}
+    {% if article.preview_text_safe is not empty %}
         {# Sanitized by the model, with the media embedded, so it stays markup. #}
         <div class="post-body pt-2">{{ article.preview_text_safe }}</div>
     {% endif %}

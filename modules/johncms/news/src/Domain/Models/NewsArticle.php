@@ -182,11 +182,13 @@ class NewsArticle extends Model
     }
 
     /**
-     * The lead of the article, prepared the same way as the text.
+     * The lead of the article, prepared the same way as the text. Empty markup rather than null
+     * when there is none: Twig in debug mode takes an attribute of a model that is null for a
+     * missing one, and asking the model for it again ends in an exception.
      */
-    public function getPreviewTextSafeAttribute(): ?Markup
+    public function getPreviewTextSafeAttribute(): Markup
     {
-        return $this->markup($this->preview_text);
+        return $this->markup($this->preview_text) ?? new Markup('', 'UTF-8');
     }
 
     private function markup(?string $raw): ?Markup
@@ -223,6 +225,15 @@ class NewsArticle extends Model
     public function getRatingAttribute(): int
     {
         return (int) $this->votes_sum_vote;
+    }
+
+    /**
+     * A number even for an article nobody has opened yet, whose column is still null — Twig in
+     * debug mode takes a null attribute of a model for a missing one.
+     */
+    public function getViewCountAttribute(?int $views): int
+    {
+        return $views ?? 0;
     }
 
     /**
