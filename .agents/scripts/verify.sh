@@ -1,13 +1,27 @@
 #!/usr/bin/env sh
 #
-# Deterministic verification gate for the self-review protocol: coding standard + tests.
-# See .agents/review/README.md
+# Deterministic verification gate for the self-review protocol. See .agents/review/README.md
 #
-# All PHP/Composer commands run inside the php-fpm container (see AGENTS.md,
-# Docker Command Policy) so results do not depend on the host PHP version.
+# The checks themselves are `composer check` (composer.json), the same list CI runs, so the gate
+# and the pipeline cannot drift apart. This script only runs it inside the php-fpm container (see
+# AGENTS.md, Docker Command Policy), so results do not depend on the host PHP version.
 #
-# Fix style violations with:
-#   docker exec $(docker ps -q -f name=johncms.php-fpm) composer cs-fix
+# What `composer check` runs, and what to do when a step fails:
+#
+# * cs-check — the coding standard. Fix with:
+#     docker exec $(docker ps -q -f name=johncms.php-fpm) composer cs-fix
+# * phpstan — level 5 with a baseline (phpstan-baseline.neon) that accepts the existing legacy
+#   debt; only NEW findings fail. When a change legitimately shifts baselined code, regenerate with:
+#     docker exec $(docker ps -q -f name=johncms.php-fpm) composer phpstan-baseline
+#   and review the diff — a shrinking baseline is good, a growing one needs a reason.
+# * test — both PHPUnit suites. The functional one renders real pages and needs the built
+#   assets (`npm run build`).
+# * twig-lint — templates are covered by nothing else: a syntax error in one is valid PHP-free
+#   text to phpcs, phpstan and the tests, and only shows up as a broken page.
+# * twig-ide-check — ide-twig.json tells the IDE which directory a @namespace template name
+#   resolves to. It is generated from the same registry the loader uses, and a module added to
+#   the configuration leaves it stale, with template navigation quietly broken. Regenerate with:
+#     docker exec $(docker ps -q -f name=johncms.php-fpm) php system/bin/console twig:ide-config
 
 set -e
 
@@ -28,31 +42,7 @@ if [ -z "$CONTAINER" ]; then
     exit 1
 fi
 
-echo "==> composer cs-check"
-docker exec "$CONTAINER" composer cs-check
-
-# Static analysis: PHPStan level 5 with a baseline (phpstan-baseline.neon) that accepts the
-# existing legacy debt. Only NEW findings fail the gate. When a change legitimately shifts
-# baselined code, regenerate with:
-#   docker exec $(docker ps -q -f name=johncms.php-fpm) composer phpstan-baseline
-# and review the diff — a shrinking baseline is good, a growing one needs a reason.
-echo "==> composer phpstan"
-docker exec "$CONTAINER" composer phpstan
-
-echo "==> composer test"
-docker exec "$CONTAINER" composer test
-
-# Templates are covered by nothing else in the gate: a syntax error in one is valid PHP-free
-# text to phpcs, phpstan and the tests, and only shows up as a broken page.
-echo "==> twig:lint"
-docker exec "$CONTAINER" php system/bin/console twig:lint
-
-# ide-twig.json tells the IDE which directory a @namespace template name resolves to. It is
-# generated from the same registry the loader uses, and a module added to the configuration
-# leaves it stale — with template navigation quietly broken and nothing else to report it.
-# Regenerate with:
-#   docker exec $(docker ps -q -f name=johncms.php-fpm) php system/bin/console twig:ide-config
-echo "==> twig:ide-config --check"
-docker exec "$CONTAINER" php system/bin/console twig:ide-config --check
+# -v prints the name of every step before it runs, so a failure says which one it was.
+docker exec "$CONTAINER" composer -v check
 
 echo "==> verification gate passed"

@@ -112,7 +112,9 @@
         "check": [
             "@cs-check",
             "@phpstan",
-            "@test"
+            "@test",
+            "@twig-lint",
+            "@twig-ide-check"
         ],
         "cs-check": "phpcs",
         "cs-fix": "phpcbf",
@@ -121,6 +123,8 @@
         "test": "phpunit --colors=always",
         "test:unit": "phpunit --testsuite unit --colors=always",
         "test:functional": "phpunit --testsuite functional --colors=always",
+        "twig-lint": "php system/bin/console twig:lint",
+        "twig-ide-check": "php system/bin/console twig:ide-config --check",
         "translate": "php system/bin/console i18n:translate",
         "translate-scan": "php system/bin/console i18n:scan",
         "post-package-install": "Johncms\\Modules\\Composer\\ComposerHooks::afterInstall",

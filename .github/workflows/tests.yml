@@ -2,68 +2,8 @@ name: PHP-CI
 on: [push, pull_request]
 
 jobs:
-  coding-standard:
-    name: Coding Standard
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.4'
-          coverage: none
-
-      - name: Get composer cache directory
-        id: composer-cache
-        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
-
-      - name: Cache composer dependencies
-        uses: actions/cache@v5
-        with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-composer-
-
-      - name: Install dependencies
-        run: composer install --no-progress --no-suggest --prefer-dist --no-interaction --ignore-platform-reqs
-
-      - name: Check coding style
-        run: composer cs-check
-
-  unit-tests:
-    name: Unit Tests
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.4'
-          coverage: xdebug
-
-      - name: Get composer cache directory
-        id: composer-cache
-        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
-
-      - name: Cache composer dependencies
-        uses: actions/cache@v5
-        with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-composer-
-
-      - name: Install dependencies
-        run: composer install --no-progress --no-suggest --prefer-dist --no-interaction --ignore-platform-reqs
-
-      - name: Run unit tests
-        run: composer test:unit
-
-  functional-tests:
-    name: Functional Tests
+  check:
+    name: Checks
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -81,8 +21,8 @@ jobs:
           node-version: 24.x
           cache: npm
 
-      # The suite renders real pages, and a layout asks for the entry point of its theme: without
-      # the compiled bundle every page fails on the missing Vite manifest.
+      # The functional suite renders real pages, and a layout asks for the entry point of its
+      # theme: without the compiled bundle every page fails on the missing Vite manifest.
       - name: Build the assets
         run: |
           npm ci
@@ -103,7 +43,9 @@ jobs:
             ${{ runner.os }}-composer-
 
       - name: Install dependencies
-        run: composer install --no-progress --no-suggest --prefer-dist --no-interaction --ignore-platform-reqs
+        run: composer install --no-progress --prefer-dist --no-interaction --ignore-platform-reqs
 
-      - name: Run functional tests
-        run: composer test:functional
+      # The list the local gate runs too (.agents/scripts/verify.sh): the coding standard, static
+      # analysis, both test suites and the templates. None of it needs a database.
+      - name: Run the checks
+        run: composer -v check

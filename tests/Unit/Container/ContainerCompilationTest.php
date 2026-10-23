@@ -37,8 +37,8 @@ use ReflectionClass;
  * Relies on CACHE_CONTAINER being false (config/constants.php): with a dumped container the
  * factory would return the cached one and nothing would be compiled.
  *
- * Stays in the unit suite on purpose: it needs no database, and CI runs `composer test:unit`, so
- * this is the only place where a broken container definition fails the pipeline.
+ * Stays in the unit suite on purpose: it needs no database, so a broken definition fails here,
+ * long before a functional test boots the application around it.
  */
 final class ContainerCompilationTest extends TestCase
 {

@@ -28,7 +28,7 @@ automatically; `CLAUDE.md` is a symlink to it for Claude Code.
 | `captcha.md` | captcha: asking for one in a form, scopes, settings, adding a provider |
 | `testing.md` | writing a test: the two suites, the functional harness, accounts and fixtures |
 | `review/` | self-review protocol and checklists, run on demand (see below) |
-| `scripts/verify.sh` | the deterministic gate: `cs-check`, `phpstan`, `test` |
+| `scripts/verify.sh` | the deterministic gate: `composer check` (coding standard, phpstan, tests, Twig lint, `ide-twig.json`) in the container — the list CI runs |
 
 **`.claude/`** contains only thin wrappers that declare the reviewers and the
 `/review-self` command in Claude Code's format and then point at `.agents/`. No rule is

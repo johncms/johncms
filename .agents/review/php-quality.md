@@ -5,8 +5,8 @@ Follow the protocol in `.agents/review/README.md`.
 
 ## Deterministic Gate
 
-Report the outcome of `sh .agents/scripts/verify.sh` — `composer cs-check`, `composer phpstan`
-and `composer test`. Every failure is a `BLOCKER`. Quote the failing output, do not summarize it
+Report the outcome of `sh .agents/scripts/verify.sh` — `composer check`: the coding standard,
+PHPStan, both test suites, the Twig lint and the `ide-twig.json` check. Every failure is a `BLOCKER`. Quote the failing output, do not summarize it
 as "some tests fail".
 
 PHPStan runs at level 5 against a baseline (`phpstan-baseline.neon`) that accepts the existing

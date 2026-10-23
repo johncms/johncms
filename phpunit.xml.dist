@@ -7,6 +7,13 @@
          beStrictAboutOutputDuringTests="true"
          failOnRisky="true"
          failOnWarning="true">
+    <!-- Both suites share one process, and with cold caches its peak sits just under the 128M
+         most php.ini files default to: the same run would pass on a warm checkout and die in a
+         fresh one, which is what CI always is. -->
+    <php>
+        <ini name="memory_limit" value="512M"/>
+    </php>
+
     <testsuites>
         <testsuite name="unit">
             <directory>tests/Unit</directory>
