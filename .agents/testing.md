@@ -64,6 +64,20 @@ any table and fills in the columns the test did not mention. The tables of 9.x a
 NULL columns without a default, and naming them all would bury the two that the assertion is
 about.
 
+### Every page
+
+`RouteCrawlTest` opens every GET route that needs no placeholder filled as a guest, as a member
+and as the staff. Every page must answer without a server error, finish the document it starts
+and put the CSRF token into each form that posts; the panel must let nobody in but the staff, and
+the staff must be refused nothing. The list comes from the router, so a new page is covered with no
+change to the test.
+
+A page that fails there is a bug of the page. The one exception is a page asking MySQL for
+something SQLite does not have: it goes to `MYSQL_ONLY` with the reason.
+
+When a request answers 500, `handleRequest(..., catch: false)` hands the test the exception the
+kernel would have logged.
+
 ## What not to assert
 
 * The page title across two requests in one test — `Render` still keeps it in process state.

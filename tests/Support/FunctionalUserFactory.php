@@ -28,6 +28,12 @@ final class FunctionalUserFactory
     private static int $sequence = 0;
 
     /**
+     * Hashed once per process: bcrypt is slow by design, a tenth of a second here, and the suite
+     * creates hundreds of accounts that all share the one password anyway.
+     */
+    private static ?string $passwordHash = null;
+
+    /**
      * @param array<string, mixed> $attributes
      * @param list<string>         $roles Slugs of roles that already exist, system ones included.
      */
@@ -38,7 +44,7 @@ final class FunctionalUserFactory
         $attributes = array_merge(
             [
                 'name'     => 'Tester' . $number,
-                'password' => password_hash(self::PASSWORD, PASSWORD_DEFAULT),
+                'password' => self::$passwordHash ??= password_hash(self::PASSWORD, PASSWORD_DEFAULT),
                 'preg'     => 1,
                 'email_confirmed' => 1,
                 'datereg'  => time(),

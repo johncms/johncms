@@ -70,7 +70,8 @@ abstract class FunctionalTestCase extends TestCase
         array $parameters = [],
         array $server = [],
         array $cookies = [],
-        array $files = []
+        array $files = [],
+        bool $catch = true
     ): Response {
         $request = Request::create($uri, $method, $parameters, $cookies, $files, $server);
 
@@ -83,7 +84,8 @@ abstract class FunctionalTestCase extends TestCase
         $_POST = $request->request->all();
         $_COOKIE = $request->cookies->all();
 
-        return $this->container()->get(Kernel::class)->handle($request);
+        // Without catching, the exception behind a 500 reaches the test instead of the log.
+        return $this->container()->get(Kernel::class)->handle($request, catch: $catch);
     }
 
     /**
