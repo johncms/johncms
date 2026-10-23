@@ -2987,7 +2987,7 @@ parameters:
 			path: modules/johncms/redirect/src/Infrastructure/Persistence/Repository/EloquentAdsRepository.php
 
 		-
-			message: '#^Comparison operation "\<" between int\<80400, 80599\> and 80400 is always false\.$#'
+			message: '#^Comparison operation "\<" between int\<80400, 80699\> and 80400 is always false\.$#'
 			identifier: smaller.alwaysFalse
 			count: 1
 			path: public/install/index.php
@@ -3005,7 +3005,7 @@ parameters:
 			path: public/install/steps/step_1.php
 
 		-
-			message: '#^Comparison operation "\<" between int\<80400, 80599\> and 80400 is always false\.$#'
+			message: '#^Comparison operation "\<" between int\<80400, 80699\> and 80400 is always false\.$#'
 			identifier: smaller.alwaysFalse
 			count: 1
 			path: public/install/steps/step_2.php
@@ -3089,7 +3089,7 @@ parameters:
 			path: system/src/Casts/TimeToDate.php
 
 		-
-			message: '#^Comparison operation "\<" between int\<80400, 80599\> and 80400 is always false\.$#'
+			message: '#^Comparison operation "\<" between int\<80400, 80699\> and 80400 is always false\.$#'
 			identifier: smaller.alwaysFalse
 			count: 1
 			path: system/src/Checker/SystemChecker.php
@@ -3191,16 +3191,16 @@ parameters:
 			path: system/src/Users/User.php
 
 		-
-			message: '#^Property Johncms\\Users\\User\:\:\$active_bans \(Johncms\\Users\\Ban\) in empty\(\) is not falsy\.$#'
-			identifier: empty.property
-			count: 1
-			path: system/src/Users/User.php
-
-		-
 			message: '#^Unreachable statement \- code above always terminates\.$#'
 			identifier: deadCode.unreachable
 			count: 1
 			path: system/src/Users/User.php
+
+		-
+			message: '#^Property Johncms\\Users\\User\:\:\$active_bans \(Johncms\\Users\\Ban\) in empty\(\) is not falsy\.$#'
+			identifier: empty.property
+			count: 1
+			path: system/src/Users/UserMutators.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Collections\\Domain\\Models\\ContentCollectionSection\:\:\$child_sections_count\.$#'

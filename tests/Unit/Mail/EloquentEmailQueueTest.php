@@ -51,6 +51,11 @@ final class EloquentEmailQueueTest extends TestCase
         );
     }
 
+    /**
+     * The row as it is in the database now, read anew on every call.
+     *
+     * @phpstan-impure
+     */
     private function row(EmailMessage $message): EmailMessage
     {
         return EmailMessage::query()->findOrFail($message->id);

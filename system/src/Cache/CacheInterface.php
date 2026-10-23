@@ -27,6 +27,8 @@ interface CacheInterface extends SimpleCacheInterface
      *                                         invalidated by tag or the cache is cleared.
      * @param Closure                $callback Computes the value on a miss.
      * @param string[]               $tags     Tags the entry is filed under.
+     *
+     * @phpstan-impure
      */
     public function remember(string $key, int|DateInterval|null $ttl, Closure $callback, array $tags = []): mixed;
 
@@ -35,6 +37,8 @@ interface CacheInterface extends SimpleCacheInterface
      * the cache is cleared.
      *
      * @param string[] $tags
+     *
+     * @phpstan-impure
      */
     public function rememberForever(string $key, Closure $callback, array $tags = []): mixed;
 
