@@ -25,6 +25,12 @@ Infrastructure
 
 ## Dependency Rules
 
+What of this is about dependencies between classes is checked by PHPStan on every run, through
+phpat: `tests/Architecture/ArchitectureTest.php` holds one rule per paragraph below. A finding names
+the rule it breaks. The dependencies the code already had when a rule arrived are in
+`phpstan-baseline.neon`; paying one off is removing it from there, and adding one to it needs the
+same reason as any other growth of the baseline.
+
 * Prefer **Application → Domain** dependencies.
 * Controllers and use cases must not depend on infrastructure details.
 * Repository contracts must be defined in **Domain** as `*RepositoryInterface`.
@@ -46,12 +52,15 @@ the module, which already tags every `Command` it declares.
 
 The other direction is allowed and normal: a module depends on the core.
 
-**Between modules the rule is softer, but the cost is the same.** A module that autowires a
-service of another module cannot be switched on without it. Today `admin` is built against
-`forum` — which therefore cannot be switched off — and `profile`, `online` and `notifications`
-reach into other modules as well. New code should not add
-to that list; where a module legitimately extends another, the way in is a tagged extension point,
-not a constructor argument.
+**Between modules the cost is the same.** A module that autowires a service of another module
+cannot be switched on without it, so it says so in the `requires` of its `module.php`, which is
+what keeps the other one from being switched off under it. A module may depend on the core, on a
+system module (`'system' => true`, always on) and on the modules it requires — on nothing else.
+Where a module legitimately extends another, the better way in is a tagged extension point, not a
+constructor argument.
+
+`online` on `forum`, `notifications` on `downloads` and `library`, and `homepage` on `news` break
+this today without declaring it, and are in the baseline.
 
 ### HTTP types stay in the HTTP layer
 

@@ -1,5 +1,6 @@
 includes:
     - phpstan-baseline.neon
+    - vendor/phpat/phpat/extension.neon
 
 parameters:
     level: 5
@@ -55,3 +56,15 @@ parameters:
     treatPhpDocTypesAsCertain: false
 
     tmpDir: data/cache/.phpstan
+
+    # The dependency rules of .agents/architecture.md (tests/Architecture/ArchitectureTest.php).
+    # The name of the rule a finding breaks is printed with it.
+    phpat:
+        ignore_built_in_classes: true
+        show_rule_names: true
+
+services:
+    -
+        class: Tests\Architecture\ArchitectureTest
+        tags:
+            - phpat.test

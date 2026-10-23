@@ -5,6 +5,10 @@ verify, those files define the rules. Follow the protocol in `.agents/review/REA
 
 ## Layers & Dependencies
 
+PHPStan already fails on a class that depends on a forbidden layer, module or HTTP type
+(`tests/Architecture/ArchitectureTest.php`), so the gate has checked that much. What it cannot see
+is left here: which way a dependency ought to point, and whether a class sits in the right layer.
+
 * Application depends on Domain, not the other way round.
 * Controllers and use cases do not reference Infrastructure classes (repository
   implementations, adapters, Eloquent models) directly.

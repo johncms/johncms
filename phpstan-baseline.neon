@@ -91,30 +91,6 @@ parameters:
 			path: modules/johncms/admin/src/Infrastructure/Persistence/Repository/EloquentDashboardRepository.php
 
 		-
-			message: '#^Call to an undefined method Illuminate\\Database\\Query\\Builder\:\:withCount\(\)\.$#'
-			identifier: method.notFound
-			count: 2
-			path: modules/johncms/forum/src/Infrastructure/Persistence/Repository/ForumStructureRepository.php
-
-		-
-			message: '#^Method Johncms\\Modules\\Forum\\Infrastructure\\Persistence\\Repository\\ForumStructureRepository\:\:categoriesForMove\(\) should return Illuminate\\Support\\Collection\<int, Johncms\\Modules\\Forum\\Domain\\Models\\ForumSection\> but returns Illuminate\\Support\\Collection\<int, stdClass\>\.$#'
-			identifier: return.type
-			count: 1
-			path: modules/johncms/forum/src/Infrastructure/Persistence/Repository/ForumStructureRepository.php
-
-		-
-			message: '#^Method Johncms\\Modules\\Forum\\Infrastructure\\Persistence\\Repository\\ForumStructureRepository\:\:sectionsForMove\(\) should return Illuminate\\Support\\Collection\<int, Johncms\\Modules\\Forum\\Domain\\Models\\ForumSection\> but returns Illuminate\\Support\\Collection\<int, stdClass\>\.$#'
-			identifier: return.type
-			count: 1
-			path: modules/johncms/forum/src/Infrastructure/Persistence/Repository/ForumStructureRepository.php
-
-		-
-			message: '#^Method Johncms\\Modules\\Forum\\Infrastructure\\Persistence\\Repository\\ForumStructureRepository\:\:topLevelExcept\(\) should return Illuminate\\Support\\Collection\<int, Johncms\\Modules\\Forum\\Domain\\Models\\ForumSection\> but returns Illuminate\\Support\\Collection\<int, stdClass\>\.$#'
-			identifier: return.type
-			count: 1
-			path: modules/johncms/forum/src/Infrastructure/Persistence/Repository/ForumStructureRepository.php
-
-		-
 			message: '#^Method Johncms\\Modules\\Admin\\Infrastructure\\Persistence\\Repository\\EloquentIpBanRepository\:\:findByIp\(\) never returns Johncms\\Modules\\Admin\\Domain\\Models\\BanIp so it can be removed from the return type\.$#'
 			identifier: return.unusedType
 			count: 1
@@ -145,16 +121,58 @@ parameters:
 			path: modules/johncms/admin/src/Infrastructure/Persistence/Repository/EloquentIpSearchRepository.php
 
 		-
+			message: '#^testTheDomainAndTheApplicationDependOnNoInfrastructure\: Johncms\\Modules\\Album\\Application\\Controllers\\EditPhotoController should not depend on Johncms\\Modules\\Album\\Infrastructure\\Storage\\AlbumPhotoStorage$#'
+			identifier: phpat.testTheDomainAndTheApplicationDependOnNoInfrastructure
+			count: 1
+			path: modules/johncms/album/src/Application/Controllers/EditPhotoController.php
+
+		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Album\\Domain\\Models\\Album\:\:\$photos_count\.$#'
 			identifier: property.notFound
 			count: 2
 			path: modules/johncms/album/src/Application/Controllers/UserAlbumsController.php
 
 		-
+			message: '#^testTheDomainAndTheApplicationDependOnNoInfrastructure\: Johncms\\Modules\\Album\\Application\\Services\\PhotoPresenter should not depend on Johncms\\Modules\\Album\\Infrastructure\\Storage\\AlbumPhotoStorage$#'
+			identifier: phpat.testTheDomainAndTheApplicationDependOnNoInfrastructure
+			count: 1
+			path: modules/johncms/album/src/Application/Services/PhotoPresenter.php
+
+		-
+			message: '#^testTheDomainAndTheApplicationDependOnNoInfrastructure\: Johncms\\Modules\\Album\\Application\\UseCases\\DeleteAlbumUseCase should not depend on Johncms\\Modules\\Album\\Infrastructure\\Storage\\AlbumPhotoStorage$#'
+			identifier: phpat.testTheDomainAndTheApplicationDependOnNoInfrastructure
+			count: 1
+			path: modules/johncms/album/src/Application/UseCases/DeleteAlbumUseCase.php
+
+		-
+			message: '#^testTheDomainAndTheApplicationDependOnNoInfrastructure\: Johncms\\Modules\\Album\\Application\\UseCases\\DeletePhotoUseCase should not depend on Johncms\\Modules\\Album\\Infrastructure\\Storage\\AlbumPhotoStorage$#'
+			identifier: phpat.testTheDomainAndTheApplicationDependOnNoInfrastructure
+			count: 1
+			path: modules/johncms/album/src/Application/UseCases/DeletePhotoUseCase.php
+
+		-
+			message: '#^testTheDomainAndTheApplicationDependOnNoInfrastructure\: Johncms\\Modules\\Album\\Application\\UseCases\\DownloadPhotoUseCase should not depend on Johncms\\Modules\\Album\\Infrastructure\\Storage\\AlbumPhotoStorage$#'
+			identifier: phpat.testTheDomainAndTheApplicationDependOnNoInfrastructure
+			count: 1
+			path: modules/johncms/album/src/Application/UseCases/DownloadPhotoUseCase.php
+
+		-
+			message: '#^testTheDomainAndTheApplicationDependOnNoInfrastructure\: Johncms\\Modules\\Album\\Application\\UseCases\\GetPhotoViewUseCase should not depend on Johncms\\Modules\\Album\\Infrastructure\\Storage\\AlbumPhotoStorage$#'
+			identifier: phpat.testTheDomainAndTheApplicationDependOnNoInfrastructure
+			count: 1
+			path: modules/johncms/album/src/Application/UseCases/GetPhotoViewUseCase.php
+
+		-
 			message: '#^Access to an undefined property Johncms\\Users\\User\:\:\$count\.$#'
 			identifier: property.notFound
 			count: 1
 			path: modules/johncms/album/src/Application/UseCases/GetUsersListUseCase.php
+
+		-
+			message: '#^testTheDomainAndTheApplicationDependOnNoInfrastructure\: Johncms\\Modules\\Album\\Application\\UseCases\\UploadPhotoUseCase should not depend on Johncms\\Modules\\Album\\Infrastructure\\Storage\\AlbumPhotoStorage$#'
+			identifier: phpat.testTheDomainAndTheApplicationDependOnNoInfrastructure
+			count: 1
+			path: modules/johncms/album/src/Application/UseCases/UploadPhotoUseCase.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Album\\Infrastructure\\Persistence\\Repository\\EloquentAlbumPhotoRepository\:\:getPhotoByAlbumOffset\(\) never returns Johncms\\Modules\\Album\\Domain\\Models\\AlbumPhoto so it can be removed from the return type\.$#'
@@ -221,6 +239,12 @@ parameters:
 			identifier: argument.type
 			count: 1
 			path: modules/johncms/album/src/Infrastructure/Persistence/Repository/EloquentAlbumRepository.php
+
+		-
+			message: '#^Property Johncms\\Users\\User\:\:\$confirmation_code \(string\) does not accept null\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: modules/johncms/auth/src/Application/Controllers/ConfirmRegistrationEmailController.php
 
 		-
 			message: '#^Strict comparison using \!\=\= between non\-empty\-string and '''' will always evaluate to true\.$#'
@@ -317,6 +341,12 @@ parameters:
 			identifier: nullsafe.neverNull
 			count: 1
 			path: modules/johncms/contacts/src/Application/Controllers/Admin/ContactMessageListController.php
+
+		-
+			message: '#^testTheDomainAndTheApplicationStayOutOfHttp\: Johncms\\Modules\\Contacts\\Application\\Forms\\ContactForm should not depend on Johncms\\Http\\Request$#'
+			identifier: phpat.testTheDomainAndTheApplicationStayOutOfHttp
+			count: 1
+			path: modules/johncms/contacts/src/Application/Forms/ContactForm.php
 
 		-
 			message: '#^Method Johncms\\Modules\\Contacts\\Infrastructure\\Persistence\\Repository\\ContactMessageRepository\:\:getPage\(\) should return Illuminate\\Support\\Collection\<int, Johncms\\Modules\\Contacts\\Domain\\Models\\ContactMessage\> but returns Illuminate\\Support\\Collection\<int, stdClass\>\.$#'
@@ -1051,6 +1081,12 @@ parameters:
 			path: modules/johncms/downloads/src/Application/Services/DownloadSlugService.php
 
 		-
+			message: '#^testTheDomainAndTheApplicationStayOutOfHttp\: Johncms\\Modules\\Downloads\\Application\\Services\\DownloadsErrorRenderer should not depend on Symfony\\Component\\HttpFoundation\\Response$#'
+			identifier: phpat.testTheDomainAndTheApplicationStayOutOfHttp
+			count: 2
+			path: modules/johncms/downloads/src/Application/Services/DownloadsErrorRenderer.php
+
+		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$dir\.$#'
 			identifier: property.notFound
 			count: 1
@@ -1195,10 +1231,28 @@ parameters:
 			path: modules/johncms/downloads/src/Infrastructure/Persistence/Repository/DownloadFileRepository.php
 
 		-
+			message: '#^testTheDomainAndTheApplicationDependOnNoInfrastructure\: Johncms\\Modules\\Forum\\Application\\Controllers\\Admin\\ForumStructureController should not depend on Johncms\\Modules\\Forum\\Infrastructure\\Storage\\ForumAttachmentStorage$#'
+			identifier: phpat.testTheDomainAndTheApplicationDependOnNoInfrastructure
+			count: 1
+			path: modules/johncms/forum/src/Application/Controllers/Admin/ForumStructureController.php
+
+		-
 			message: '#^Call to function is_array\(\) with array will always evaluate to true\.$#'
 			identifier: function.alreadyNarrowedType
 			count: 1
 			path: modules/johncms/forum/src/Application/Controllers/CuratorsController.php
+
+		-
+			message: '#^testTheDomainAndTheApplicationDependOnNoInfrastructure\: Johncms\\Modules\\Forum\\Application\\Controllers\\DownloadFileController should not depend on Johncms\\Modules\\Forum\\Infrastructure\\Storage\\ForumAttachmentStorage$#'
+			identifier: phpat.testTheDomainAndTheApplicationDependOnNoInfrastructure
+			count: 1
+			path: modules/johncms/forum/src/Application/Controllers/DownloadFileController.php
+
+		-
+			message: '#^testTheDomainAndTheApplicationDependOnNoInfrastructure\: Johncms\\Modules\\Forum\\Application\\Controllers\\FilePreviewController should not depend on Johncms\\Modules\\Forum\\Infrastructure\\Storage\\ForumAttachmentStorage$#'
+			identifier: phpat.testTheDomainAndTheApplicationDependOnNoInfrastructure
+			count: 1
+			path: modules/johncms/forum/src/Application/Controllers/FilePreviewController.php
 
 		-
 			message: '#^Call to function is_array\(\) with array will always evaluate to true\.$#'
@@ -1213,10 +1267,52 @@ parameters:
 			path: modules/johncms/forum/src/Application/ForumUtils.php
 
 		-
+			message: '#^testTheDomainAndTheApplicationStayOutOfHttp\: Johncms\\Modules\\Forum\\Application\\Services\\ForumErrorRenderer should not depend on Symfony\\Component\\HttpFoundation\\Response$#'
+			identifier: phpat.testTheDomainAndTheApplicationStayOutOfHttp
+			count: 2
+			path: modules/johncms/forum/src/Application/Services/ForumErrorRenderer.php
+
+		-
+			message: '#^testTheDomainAndTheApplicationDependOnNoInfrastructure\: Johncms\\Modules\\Forum\\Application\\UseCases\\AttachFileToPostUseCase should not depend on Johncms\\Modules\\Forum\\Infrastructure\\Storage\\ForumAttachmentStorage$#'
+			identifier: phpat.testTheDomainAndTheApplicationDependOnNoInfrastructure
+			count: 1
+			path: modules/johncms/forum/src/Application/UseCases/AttachFileToPostUseCase.php
+
+		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Forum\\Domain\\Models\\ForumUnread\:\:\$time\.$#'
 			identifier: property.notFound
 			count: 1
 			path: modules/johncms/forum/src/Application/UseCases/CreateTopicUseCase.php
+
+		-
+			message: '#^testTheDomainAndTheApplicationDependOnNoInfrastructure\: Johncms\\Modules\\Forum\\Application\\UseCases\\DeletePostFileUseCase should not depend on Johncms\\Modules\\Forum\\Infrastructure\\Storage\\ForumAttachmentStorage$#'
+			identifier: phpat.testTheDomainAndTheApplicationDependOnNoInfrastructure
+			count: 1
+			path: modules/johncms/forum/src/Application/UseCases/DeletePostFileUseCase.php
+
+		-
+			message: '#^testTheDomainAndTheApplicationDependOnNoInfrastructure\: Johncms\\Modules\\Forum\\Application\\UseCases\\DeletePostUseCase should not depend on Johncms\\Modules\\Forum\\Infrastructure\\Storage\\ForumAttachmentStorage$#'
+			identifier: phpat.testTheDomainAndTheApplicationDependOnNoInfrastructure
+			count: 1
+			path: modules/johncms/forum/src/Application/UseCases/DeletePostUseCase.php
+
+		-
+			message: '#^testTheDomainAndTheApplicationDependOnNoInfrastructure\: Johncms\\Modules\\Forum\\Application\\UseCases\\DeleteTopicUseCase should not depend on Johncms\\Modules\\Forum\\Infrastructure\\Storage\\ForumAttachmentStorage$#'
+			identifier: phpat.testTheDomainAndTheApplicationDependOnNoInfrastructure
+			count: 1
+			path: modules/johncms/forum/src/Application/UseCases/DeleteTopicUseCase.php
+
+		-
+			message: '#^testTheDomainAndTheApplicationDependOnNoInfrastructure\: Johncms\\Modules\\Forum\\Application\\UseCases\\ManageHiddenForumUseCase should not depend on Johncms\\Modules\\Forum\\Infrastructure\\Storage\\ForumAttachmentStorage$#'
+			identifier: phpat.testTheDomainAndTheApplicationDependOnNoInfrastructure
+			count: 1
+			path: modules/johncms/forum/src/Application/UseCases/ManageHiddenForumUseCase.php
+
+		-
+			message: '#^testTheDomainAndTheApplicationDependOnNoInfrastructure\: Johncms\\Modules\\Forum\\Application\\UseCases\\ViewForumFilesUseCase should not depend on Johncms\\Modules\\Forum\\Infrastructure\\Storage\\ForumAttachmentStorage$#'
+			identifier: phpat.testTheDomainAndTheApplicationDependOnNoInfrastructure
+			count: 1
+			path: modules/johncms/forum/src/Application/UseCases/ViewForumFilesUseCase.php
 
 		-
 			message: '#^Argument of an invalid type Johncms\\Modules\\Forum\\Domain\\Models\\ForumVote supplied for foreach, only iterables are supported\.$#'
@@ -1229,6 +1325,12 @@ parameters:
 			identifier: foreach.nonIterable
 			count: 1
 			path: modules/johncms/forum/src/Application/UseCases/ViewPostUseCase.php
+
+		-
+			message: '#^testTheDomainAndTheApplicationDependOnNoInfrastructure\: Johncms\\Modules\\Forum\\Domain\\Models\\ForumFile should not depend on Johncms\\Modules\\Forum\\Infrastructure\\Storage\\ForumAttachmentStorage$#'
+			identifier: phpat.testTheDomainAndTheApplicationDependOnNoInfrastructure
+			count: 3
+			path: modules/johncms/forum/src/Domain/Models/ForumFile.php
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Forum\\Domain\\Models\\ForumMessage\:\:\$datereg\.$#'
@@ -1345,6 +1447,30 @@ parameters:
 			path: modules/johncms/forum/src/Infrastructure/Persistence/Repository/ForumSectionRepository.php
 
 		-
+			message: '#^Call to an undefined method Illuminate\\Database\\Query\\Builder\:\:withCount\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: modules/johncms/forum/src/Infrastructure/Persistence/Repository/ForumStructureRepository.php
+
+		-
+			message: '#^Method Johncms\\Modules\\Forum\\Infrastructure\\Persistence\\Repository\\ForumStructureRepository\:\:categoriesForMove\(\) should return Illuminate\\Support\\Collection\<int, Johncms\\Modules\\Forum\\Domain\\Models\\ForumSection\> but returns Illuminate\\Support\\Collection\<int, stdClass\>\.$#'
+			identifier: return.type
+			count: 1
+			path: modules/johncms/forum/src/Infrastructure/Persistence/Repository/ForumStructureRepository.php
+
+		-
+			message: '#^Method Johncms\\Modules\\Forum\\Infrastructure\\Persistence\\Repository\\ForumStructureRepository\:\:sectionsForMove\(\) should return Illuminate\\Support\\Collection\<int, Johncms\\Modules\\Forum\\Domain\\Models\\ForumSection\> but returns Illuminate\\Support\\Collection\<int, stdClass\>\.$#'
+			identifier: return.type
+			count: 1
+			path: modules/johncms/forum/src/Infrastructure/Persistence/Repository/ForumStructureRepository.php
+
+		-
+			message: '#^Method Johncms\\Modules\\Forum\\Infrastructure\\Persistence\\Repository\\ForumStructureRepository\:\:topLevelExcept\(\) should return Illuminate\\Support\\Collection\<int, Johncms\\Modules\\Forum\\Domain\\Models\\ForumSection\> but returns Illuminate\\Support\\Collection\<int, stdClass\>\.$#'
+			identifier: return.type
+			count: 1
+			path: modules/johncms/forum/src/Infrastructure/Persistence/Repository/ForumStructureRepository.php
+
+		-
 			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Builder\<Johncms\\Modules\\Forum\\Domain\\Models\\ForumTopic\>\:\:read\(\)\.$#'
 			identifier: method.notFound
 			count: 2
@@ -1399,14 +1525,38 @@ parameters:
 			path: modules/johncms/forum/src/Infrastructure/Persistence/Repository/ForumWhoRepository.php
 
 		-
+			message: '#^testTheDomainAndTheApplicationStayOutOfHttp\: Johncms\\Modules\\Guestbook\\Application\\Access\\GuestbookMode should not depend on Johncms\\Http\\Request$#'
+			identifier: phpat.testTheDomainAndTheApplicationStayOutOfHttp
+			count: 1
+			path: modules/johncms/guestbook/src/Application/Access/GuestbookMode.php
+
+		-
+			message: '#^testTheDomainAndTheApplicationStayOutOfHttp\: Johncms\\Modules\\Guestbook\\Application\\Forms\\GuestbookForm should not depend on Johncms\\Http\\Request$#'
+			identifier: phpat.testTheDomainAndTheApplicationStayOutOfHttp
+			count: 1
+			path: modules/johncms/guestbook/src/Application/Forms/GuestbookForm.php
+
+		-
 			message: '#^Parameter \$createdAt of class Johncms\\Modules\\Guestbook\\Application\\DTO\\GuestbookEntryDTO constructor expects string, int given\.$#'
 			identifier: argument.type
 			count: 1
 			path: modules/johncms/guestbook/src/Application/UseCases/ListGuestbookEntriesUseCase.php
 
 		-
+			message: '#^testTheDomainAndTheApplicationStayOutOfHttp\: Johncms\\Modules\\Help\\Application\\HelpLegacyRedirectHandler should not depend on Johncms\\Http\\Request$#'
+			identifier: phpat.testTheDomainAndTheApplicationStayOutOfHttp
+			count: 1
+			path: modules/johncms/help/src/Application/HelpLegacyRedirectHandler.php
+
+		-
 			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Builder\:\:active\(\)\.$#'
 			identifier: method.notFound
+			count: 1
+			path: modules/johncms/homepage/src/Controllers/HomepageController.php
+
+		-
+			message: '#^testEveryModuleDependsOnlyOnWhatItRequiresInHomepage\: Johncms\\Modules\\Homepage\\Controllers\\HomepageController should not depend on Johncms\\Modules\\News\\Domain\\Models\\NewsArticle$#'
+			identifier: phpat.testEveryModuleDependsOnlyOnWhatItRequiresInHomepage
 			count: 1
 			path: modules/johncms/homepage/src/Controllers/HomepageController.php
 
@@ -1513,6 +1663,18 @@ parameters:
 			path: modules/johncms/library/src/Application/Controllers/ArticleController.php
 
 		-
+			message: '#^testTheDomainAndTheApplicationDependOnNoInfrastructure\: Johncms\\Modules\\Library\\Application\\Controllers\\ArticleController should not depend on Johncms\\Modules\\Library\\Infrastructure\\Storage\\LibraryCoverSize$#'
+			identifier: phpat.testTheDomainAndTheApplicationDependOnNoInfrastructure
+			count: 1
+			path: modules/johncms/library/src/Application/Controllers/ArticleController.php
+
+		-
+			message: '#^testTheDomainAndTheApplicationDependOnNoInfrastructure\: Johncms\\Modules\\Library\\Application\\Controllers\\ArticleController should not depend on Johncms\\Modules\\Library\\Infrastructure\\Storage\\LibraryCoverStorage$#'
+			identifier: phpat.testTheDomainAndTheApplicationDependOnNoInfrastructure
+			count: 1
+			path: modules/johncms/library/src/Application/Controllers/ArticleController.php
+
+		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 1
@@ -1591,6 +1753,18 @@ parameters:
 			path: modules/johncms/library/src/Application/Controllers/DownloadArticleController.php
 
 		-
+			message: '#^testTheDomainAndTheApplicationDependOnNoInfrastructure\: Johncms\\Modules\\Library\\Application\\Controllers\\DownloadArticleController should not depend on Johncms\\Modules\\Library\\Infrastructure\\Storage\\LibraryCoverSize$#'
+			identifier: phpat.testTheDomainAndTheApplicationDependOnNoInfrastructure
+			count: 2
+			path: modules/johncms/library/src/Application/Controllers/DownloadArticleController.php
+
+		-
+			message: '#^testTheDomainAndTheApplicationDependOnNoInfrastructure\: Johncms\\Modules\\Library\\Application\\Controllers\\DownloadArticleController should not depend on Johncms\\Modules\\Library\\Infrastructure\\Storage\\LibraryCoverStorage$#'
+			identifier: phpat.testTheDomainAndTheApplicationDependOnNoInfrastructure
+			count: 1
+			path: modules/johncms/library/src/Application/Controllers/DownloadArticleController.php
+
+		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$cat_id\.$#'
 			identifier: property.notFound
 			count: 4
@@ -1636,6 +1810,18 @@ parameters:
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$url\.$#'
 			identifier: property.notFound
 			count: 3
+			path: modules/johncms/library/src/Application/Controllers/EditArticleController.php
+
+		-
+			message: '#^testTheDomainAndTheApplicationDependOnNoInfrastructure\: Johncms\\Modules\\Library\\Application\\Controllers\\EditArticleController should not depend on Johncms\\Modules\\Library\\Infrastructure\\Storage\\LibraryCoverSize$#'
+			identifier: phpat.testTheDomainAndTheApplicationDependOnNoInfrastructure
+			count: 1
+			path: modules/johncms/library/src/Application/Controllers/EditArticleController.php
+
+		-
+			message: '#^testTheDomainAndTheApplicationDependOnNoInfrastructure\: Johncms\\Modules\\Library\\Application\\Controllers\\EditArticleController should not depend on Johncms\\Modules\\Library\\Infrastructure\\Storage\\LibraryCoverStorage$#'
+			identifier: phpat.testTheDomainAndTheApplicationDependOnNoInfrastructure
+			count: 1
 			path: modules/johncms/library/src/Application/Controllers/EditArticleController.php
 
 		-
@@ -1915,6 +2101,12 @@ parameters:
 			path: modules/johncms/library/src/Application/Controllers/TopController.php
 
 		-
+			message: '#^testTheDomainAndTheApplicationStayOutOfHttp\: Johncms\\Modules\\Library\\Application\\LegacyRedirectHandler should not depend on Johncms\\Http\\Request$#'
+			identifier: phpat.testTheDomainAndTheApplicationStayOutOfHttp
+			count: 1
+			path: modules/johncms/library/src/Application/LegacyRedirectHandler.php
+
+		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Library\\Domain\\Models\\LibraryText\:\:\$cat_id\.$#'
 			identifier: property.notFound
 			count: 1
@@ -1943,6 +2135,30 @@ parameters:
 			identifier: property.notFound
 			count: 2
 			path: modules/johncms/library/src/Application/Services/LibraryCategoryPathService.php
+
+		-
+			message: '#^testTheDomainAndTheApplicationDependOnNoInfrastructure\: Johncms\\Modules\\Library\\Application\\Services\\Tree should not depend on Johncms\\Modules\\Library\\Infrastructure\\Storage\\LibraryCoverSize$#'
+			identifier: phpat.testTheDomainAndTheApplicationDependOnNoInfrastructure
+			count: 1
+			path: modules/johncms/library/src/Application/Services/Tree.php
+
+		-
+			message: '#^testTheDomainAndTheApplicationDependOnNoInfrastructure\: Johncms\\Modules\\Library\\Application\\Services\\Tree should not depend on Johncms\\Modules\\Library\\Infrastructure\\Storage\\LibraryCoverStorage$#'
+			identifier: phpat.testTheDomainAndTheApplicationDependOnNoInfrastructure
+			count: 1
+			path: modules/johncms/library/src/Application/Services/Tree.php
+
+		-
+			message: '#^testTheDomainAndTheApplicationDependOnNoInfrastructure\: Johncms\\Modules\\Library\\Application\\Services\\Utils should not depend on Johncms\\Modules\\Library\\Infrastructure\\Storage\\LibraryCoverSize$#'
+			identifier: phpat.testTheDomainAndTheApplicationDependOnNoInfrastructure
+			count: 3
+			path: modules/johncms/library/src/Application/Services/Utils.php
+
+		-
+			message: '#^testTheDomainAndTheApplicationDependOnNoInfrastructure\: Johncms\\Modules\\Library\\Application\\Services\\Utils should not depend on Johncms\\Modules\\Library\\Infrastructure\\Storage\\LibraryCoverStorage$#'
+			identifier: phpat.testTheDomainAndTheApplicationDependOnNoInfrastructure
+			count: 2
+			path: modules/johncms/library/src/Application/Services/Utils.php
 
 		-
 			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$read\.$#'
@@ -2675,10 +2891,58 @@ parameters:
 			path: modules/johncms/news/src/Domain/Models/NewsVote.php
 
 		-
+			message: '#^testEveryModuleDependsOnlyOnWhatItRequiresInNotifications\: Johncms\\Modules\\Notifications\\Application\\UseCases\\GetNotificationListUseCase should not depend on Johncms\\Modules\\Downloads\\Application\\Services\\DownloadsPermissions$#'
+			identifier: phpat.testEveryModuleDependsOnlyOnWhatItRequiresInNotifications
+			count: 1
+			path: modules/johncms/notifications/src/Application/UseCases/GetNotificationListUseCase.php
+
+		-
+			message: '#^testEveryModuleDependsOnlyOnWhatItRequiresInNotifications\: Johncms\\Modules\\Notifications\\Application\\UseCases\\GetNotificationListUseCase should not depend on Johncms\\Modules\\Library\\Application\\Services\\LibraryPermissions$#'
+			identifier: phpat.testEveryModuleDependsOnlyOnWhatItRequiresInNotifications
+			count: 1
+			path: modules/johncms/notifications/src/Application/UseCases/GetNotificationListUseCase.php
+
+		-
 			message: '#^Call to an undefined method Illuminate\\Database\\Query\\Builder\:\:unread\(\)\.$#'
 			identifier: method.notFound
 			count: 1
 			path: modules/johncms/notifications/src/Infrastructure/Persistence/Repository/EloquentNotificationRepository.php
+
+		-
+			message: '#^testEveryModuleDependsOnlyOnWhatItRequiresInOnline\: Johncms\\Modules\\Online\\Application\\Controllers\\GuestController should not depend on Johncms\\Modules\\Forum\\Application\\Services\\ForumVisitorPlaceFormatter$#'
+			identifier: phpat.testEveryModuleDependsOnlyOnWhatItRequiresInOnline
+			count: 1
+			path: modules/johncms/online/src/Application/Controllers/GuestController.php
+
+		-
+			message: '#^testEveryModuleDependsOnlyOnWhatItRequiresInOnline\: Johncms\\Modules\\Online\\Application\\Controllers\\HistoryController should not depend on Johncms\\Modules\\Forum\\Application\\Services\\ForumVisitorPlaceFormatter$#'
+			identifier: phpat.testEveryModuleDependsOnlyOnWhatItRequiresInOnline
+			count: 1
+			path: modules/johncms/online/src/Application/Controllers/HistoryController.php
+
+		-
+			message: '#^testEveryModuleDependsOnlyOnWhatItRequiresInOnline\: Johncms\\Modules\\Online\\Application\\Controllers\\IndexController should not depend on Johncms\\Modules\\Forum\\Application\\Services\\ForumVisitorPlaceFormatter$#'
+			identifier: phpat.testEveryModuleDependsOnlyOnWhatItRequiresInOnline
+			count: 1
+			path: modules/johncms/online/src/Application/Controllers/IndexController.php
+
+		-
+			message: '#^testEveryModuleDependsOnlyOnWhatItRequiresInOnline\: Johncms\\Modules\\Online\\Application\\UseCases\\GetOnlineGuestsUseCase should not depend on Johncms\\Modules\\Forum\\Application\\Services\\ForumVisitorPlaceFormatter$#'
+			identifier: phpat.testEveryModuleDependsOnlyOnWhatItRequiresInOnline
+			count: 2
+			path: modules/johncms/online/src/Application/UseCases/GetOnlineGuestsUseCase.php
+
+		-
+			message: '#^testEveryModuleDependsOnlyOnWhatItRequiresInOnline\: Johncms\\Modules\\Online\\Application\\UseCases\\GetOnlineUsersUseCase should not depend on Johncms\\Modules\\Forum\\Application\\Services\\ForumVisitorPlaceFormatter$#'
+			identifier: phpat.testEveryModuleDependsOnlyOnWhatItRequiresInOnline
+			count: 2
+			path: modules/johncms/online/src/Application/UseCases/GetOnlineUsersUseCase.php
+
+		-
+			message: '#^testEveryModuleDependsOnlyOnWhatItRequiresInOnline\: Johncms\\Modules\\Online\\Application\\UseCases\\GetUsersHistoryUseCase should not depend on Johncms\\Modules\\Forum\\Application\\Services\\ForumVisitorPlaceFormatter$#'
+			identifier: phpat.testEveryModuleDependsOnlyOnWhatItRequiresInOnline
+			count: 2
+			path: modules/johncms/online/src/Application/UseCases/GetUsersHistoryUseCase.php
 
 		-
 			message: '#^Property Johncms\\Modules\\Profile\\Application\\Controllers\\ChangePasswordController\:\:\$currentUser is never read, only written\.$#'
@@ -2721,12 +2985,6 @@ parameters:
 			identifier: method.protected
 			count: 1
 			path: modules/johncms/redirect/src/Infrastructure/Persistence/Repository/EloquentAdsRepository.php
-
-		-
-			message: '#^Property Johncms\\Users\\User\:\:\$confirmation_code \(string\) does not accept null\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: modules/johncms/auth/src/Application/Controllers/ConfirmRegistrationEmailController.php
 
 		-
 			message: '#^Comparison operation "\<" between int\<80400, 80599\> and 80400 is always false\.$#'
@@ -2871,6 +3129,36 @@ parameters:
 			identifier: assign.propertyType
 			count: 1
 			path: system/src/Container/PSRContainerFactory.php
+
+		-
+			message: '#^testTheCoreDependsOnNoModule\: Johncms\\Counters should not depend on Johncms\\Modules\\Album\\Application\\Services\\AlbumPermissions$#'
+			identifier: phpat.testTheCoreDependsOnNoModule
+			count: 2
+			path: system/src/Counters.php
+
+		-
+			message: '#^testTheCoreDependsOnNoModule\: Johncms\\Counters should not depend on Johncms\\Modules\\Downloads\\Application\\Services\\DownloadsPermissions$#'
+			identifier: phpat.testTheCoreDependsOnNoModule
+			count: 2
+			path: system/src/Counters.php
+
+		-
+			message: '#^testTheCoreDependsOnNoModule\: Johncms\\Counters should not depend on Johncms\\Modules\\Forum\\Application\\Services\\ForumPermissions$#'
+			identifier: phpat.testTheCoreDependsOnNoModule
+			count: 2
+			path: system/src/Counters.php
+
+		-
+			message: '#^testTheCoreDependsOnNoModule\: Johncms\\Counters should not depend on Johncms\\Modules\\Guestbook\\Application\\Services\\GuestbookPermissions$#'
+			identifier: phpat.testTheCoreDependsOnNoModule
+			count: 1
+			path: system/src/Counters.php
+
+		-
+			message: '#^testTheCoreDependsOnNoModule\: Johncms\\Counters should not depend on Johncms\\Modules\\Library\\Application\\Services\\LibraryPermissions$#'
+			identifier: phpat.testTheCoreDependsOnNoModule
+			count: 2
+			path: system/src/Counters.php
 
 		-
 			message: '#^Call to function in_array\(\) with arguments \(int\|string\), array\{\} and true will always evaluate to false\.$#'

@@ -65,6 +65,7 @@
         "gettext/gettext": "^5.5",
         "gettext/php-scanner": "^2.0",
         "league/flysystem-memory": "^3.29",
+        "phpat/phpat": "^0.12.5",
         "phpstan/phpstan": "^2.2",
         "phpunit/phpunit": "^11.5",
         "roave/security-advisories": "dev-master",
