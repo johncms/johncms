@@ -75,7 +75,9 @@ When you do begin working on your feature, here are some guidelines to consider:
 
 The following must pass before I will accept a pull request. If this does not
 pass, it will result in a complete build failure. Before you can run this, be
-sure to `composer install`.
+sure to `composer install` and to build the assets with `npm ci && npm run build`:
+the functional tests render real pages, and every page asks for the compiled
+bundle of its theme.
 
 To run all the tests and coding standards checks, execute the following from the
 command line, while in the project root directory (the same place as the
@@ -84,6 +86,10 @@ command line, while in the project root directory (the same place as the
 ```
 composer check
 ```
+
+It runs the coding standard, PHPStan, both test suites, the Twig lint and the
+check of `ide-twig.json` — the same list CI runs on every push and pull request.
+None of it needs a database.
 
 
 ## Using AI Coding Agents

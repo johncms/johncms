@@ -148,7 +148,7 @@ Before committing:
 
 * Changes are scoped to the task.
 * No unrelated files were modified.
-* The verification gate passes — style check, static analysis, and tests:
+* The verification gate passes — style check, static analysis, tests and the Twig checks (`composer check`, the same list CI runs):
 
 ```bash
 sh .agents/scripts/verify.sh
