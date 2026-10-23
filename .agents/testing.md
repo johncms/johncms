@@ -13,6 +13,13 @@ CI runs them. The functional suite renders real pages, so the assets have to be 
 (`npm run build`) — a layout asks Vite for the entry point of its theme, and without the
 compiled bundle every page fails on the missing manifest.
 
+### Order
+
+Tests run in random order, failed ones first. A failure that only some orders produce comes from
+process state a test relies on without setting it — a static property, `ConfigRepository`, the
+trusted proxies of `Request`. The seed is printed at the top of the run; repeat it with
+`--random-order-seed=<seed>`, and make the test set that state in `setUp()` itself.
+
 ### Against MySQL
 
 CI runs the functional suite once more against MySQL 5.7 and 8.4 and MariaDB 10.2 and 11. Point
