@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\Controllers;
 
+use Johncms\Modules\Forum\Application\Services\UnreadTopicsCounter;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\ForumUtils;
@@ -21,6 +22,7 @@ final readonly class ForumSectionController
         private NavChain $navChain,
         private ViewForumSectionUseCase $viewForumSectionUseCase,
         private PaginationFactory $paginationFactory,
+        private UnreadTopicsCounter $unreadTopics,
     ) {
     }
 
@@ -42,8 +44,6 @@ final readonly class ForumSectionController
         $this->navChain->add(__('Forum'), '/forum/');
         ForumUtils::buildBreadcrumbs($result->section->parent, $result->section->name, $result->section->url);
 
-        /** @var \Johncms\Counters $counters */
-        $counters = di('counters');
 
         $extra = [
             'canonical'    => $result->canonical,
@@ -59,7 +59,7 @@ final readonly class ForumSectionController
             'files_count'  => config('forum')['settings']['file_counters']
                 ? ShortNumberFormatter::format($result->filesCount)
                 : 0,
-            'unread_count' => ShortNumberFormatter::format($counters->forumUnreadCount()),
+            'unread_count' => ShortNumberFormatter::format($this->unreadTopics->count()),
         ];
 
         if ($result->template === '@forum/public/topics.twig') {

@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\Notifications;
 
-use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\CurrentUser;
-use Johncms\Modules\Forum\Application\Services\ForumPermissions;
-use Johncms\Modules\Forum\Domain\Repository\ForumTopicRepositoryInterface;
+use Johncms\Modules\Forum\Application\Services\UnreadTopicsCounter;
 use Johncms\Notifications\SystemNotification;
 use Johncms\Notifications\SystemNotificationProviderInterface;
 
@@ -19,8 +17,7 @@ final readonly class UnreadTopicsNotificationProvider implements SystemNotificat
 {
     public function __construct(
         private CurrentUser $currentUser,
-        private AccessCheckerInterface $accessChecker,
-        private ForumTopicRepositoryInterface $topics,
+        private UnreadTopicsCounter $unreadTopics,
     ) {
     }
 
@@ -32,10 +29,7 @@ final readonly class UnreadTopicsNotificationProvider implements SystemNotificat
             return;
         }
 
-        $count = $this->topics->countUnreadForUser(
-            $this->currentUser->id(),
-            $this->accessChecker->allows(ForumPermissions::DELETED_VIEW)
-        );
+        $count = $this->unreadTopics->count();
 
         if ($count > 0) {
             yield new SystemNotification('forum_new', d__('forum', 'New forum posts'), '/forum/?act=new', $count);

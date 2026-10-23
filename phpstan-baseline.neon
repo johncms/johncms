@@ -3083,36 +3083,6 @@ parameters:
 			path: system/src/Container/PSRContainerFactory.php
 
 		-
-			message: '#^testTheCoreDependsOnNoModule\: Johncms\\Counters should not depend on Johncms\\Modules\\Album\\Application\\Services\\AlbumPermissions$#'
-			identifier: phpat.testTheCoreDependsOnNoModule
-			count: 2
-			path: system/src/Counters.php
-
-		-
-			message: '#^testTheCoreDependsOnNoModule\: Johncms\\Counters should not depend on Johncms\\Modules\\Downloads\\Application\\Services\\DownloadsPermissions$#'
-			identifier: phpat.testTheCoreDependsOnNoModule
-			count: 1
-			path: system/src/Counters.php
-
-		-
-			message: '#^testTheCoreDependsOnNoModule\: Johncms\\Counters should not depend on Johncms\\Modules\\Forum\\Application\\Services\\ForumPermissions$#'
-			identifier: phpat.testTheCoreDependsOnNoModule
-			count: 2
-			path: system/src/Counters.php
-
-		-
-			message: '#^testTheCoreDependsOnNoModule\: Johncms\\Counters should not depend on Johncms\\Modules\\Guestbook\\Application\\Services\\GuestbookPermissions$#'
-			identifier: phpat.testTheCoreDependsOnNoModule
-			count: 1
-			path: system/src/Counters.php
-
-		-
-			message: '#^testTheCoreDependsOnNoModule\: Johncms\\Counters should not depend on Johncms\\Modules\\Library\\Application\\Services\\LibraryPermissions$#'
-			identifier: phpat.testTheCoreDependsOnNoModule
-			count: 1
-			path: system/src/Counters.php
-
-		-
 			message: '#^Call to function in_array\(\) with arguments \(int\|string\), array\{\} and true will always evaluate to false\.$#'
 			identifier: function.impossibleType
 			count: 1

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\Controllers;
 
+use Johncms\Modules\Forum\Application\Services\UnreadTopicsCounter;
 use Johncms\Modules\Forum\Application\Services\ForumLegacyRedirectResolver;
 use Johncms\Modules\Forum\Application\UseCases\ViewForumIndexUseCase;
 use Johncms\NavChain;
@@ -17,6 +18,7 @@ final readonly class ForumIndexController
         private NavChain $navChain,
         private ForumLegacyRedirectResolver $legacyRedirectResolver,
         private ViewForumIndexUseCase $viewForumIndexUseCase,
+        private UnreadTopicsCounter $unreadTopics,
     ) {
     }
 
@@ -27,8 +29,6 @@ final readonly class ForumIndexController
             redirect($legacyRedirectUrl, 301);
         }
 
-        /** @var \Johncms\Counters $counters */
-        $counters = di('counters');
         $result = $this->viewForumIndexUseCase->execute();
 
         $this->navChain->add(__('Forum'), '/forum/');
@@ -47,7 +47,7 @@ final readonly class ForumIndexController
                     'online_g' => $result->onlineGuests,
                 ],
                 'files_count'  => $result->showFileCounters ? ShortNumberFormatter::format($result->filesCount) : 0,
-                'unread_count' => ShortNumberFormatter::format($counters->forumUnreadCount()),
+                'unread_count' => ShortNumberFormatter::format($this->unreadTopics->count()),
             ]
         );
     }

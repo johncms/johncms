@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\Controllers;
 
+use Johncms\Modules\Forum\Application\Services\UnreadTopicsCounter;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Forum\Application\Services\ForumPermissions;
@@ -26,6 +27,7 @@ final readonly class ForumTopicController
         private ViewForumTopicUseCase $viewForumTopicUseCase,
         private PaginationFactory $paginationFactory,
         private AccessCheckerInterface $accessChecker,
+        private UnreadTopicsCounter $unreadTopics,
     ) {
     }
 
@@ -72,8 +74,6 @@ final readonly class ForumTopicController
         $this->navChain->add(__('Forum'), '/forum/');
         ForumUtils::buildBreadcrumbs($result->viewData['topic']->section_id, $result->title);
 
-        /** @var \Johncms\Counters $counters */
-        $counters = di('counters');
 
         $pagination = $this->paginationFactory->create(
             (int) $result->viewData['total'],
@@ -99,7 +99,7 @@ final readonly class ForumTopicController
                         $page
                     ),
                     'pagination'       => $pagination->hasPages() ? $pagination->render() : null,
-                    'unread_count'     => ShortNumberFormatter::format($counters->forumUnreadCount()),
+                    'unread_count'     => ShortNumberFormatter::format($this->unreadTopics->count()),
                     'reply_url'        => '/forum/new-message/' . $result->viewData['id'] . '/' . $filterSuffix,
                     'reply_above'      => ! empty($result->viewData['settings_forum']['upfp']),
                     'quick_reply'      => ! empty($result->viewData['settings_forum']['farea']),
