@@ -279,6 +279,7 @@ Anti-Spyware',
       'Delete user:' => 'Sterge utilizator',
       'Are you sure that you want to delete this user?' => 'Esti sigur ca vrei sa stergi acest utilizator?',
       'All threads and posts created by the user go in the hidden state' => 'Toate subiectele si postarile create de utilizator vor fi puse in modul ascuns',
+      'Users on registration' => 'Utilizatori la înregistrare',
     ),
   ),
 );

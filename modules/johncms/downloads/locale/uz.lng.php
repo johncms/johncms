@@ -153,6 +153,7 @@
       'Actions' => 'Harakatlar',
       'Remove from Favorites' => 'Sevimlilardan olib tashlash',
       'Add to Favorites' => 'Sevimlilarga qo\'sh',
+      'Downloads on moderation' => 'Tekshiruvdagi yuklamalar',
     ),
   ),
 );

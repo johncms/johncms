@@ -1648,3 +1648,5 @@ msgstr "Макулдуктар"
 msgid "Cookie banner"
 msgstr "Куки-баннер"
 
+msgid "Users on registration"
+msgstr "Катталган колдонуучулар"

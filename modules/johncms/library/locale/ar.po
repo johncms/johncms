@@ -775,3 +775,5 @@ msgstr "سحابة الكلمة الدلالية"
 msgid "Sort"
 msgstr "الترتيب"
 
+msgid "Articles on moderation"
+msgstr "مقالات عن الاعتدال"

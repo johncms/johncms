@@ -103,6 +103,7 @@
       'Actions' => 'Іс-әрекеттер',
       'Remove from Favorites' => 'Таңдаулылардан алу',
       'Add to Favorites' => 'Таңдаулыларға',
+      'Downloads on moderation' => 'Модерацияны жүктеу',
     ),
   ),
 );

@@ -258,6 +258,7 @@
       'Delete user:' => 'Panaikinti vartotojų:',
       'Are you sure that you want to delete this user?' => 'Ar esate tikri, kad norite ištrinti šį vartotoją?',
       'All threads and posts created by the user go in the hidden state' => 'Visas temas ir žinutes, sukurtas vartotojas, eikite paslėptas narė',
+      'Users on registration' => 'Vartotojų registracija',
     ),
   ),
 );

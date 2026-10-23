@@ -196,6 +196,7 @@
       'Decide who may upload into a folder and in which formats' => 'Определять, кто может загружать в папку и в каких форматах',
       'Read the comments of the files while they are switched off' => 'Читать комментарии к файлам, когда они отключены',
       'Open the downloads' => 'Открывать загрузки',
+      'Downloads on moderation' => 'Загрузки на модерации',
     ),
   ),
 );

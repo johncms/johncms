@@ -1078,3 +1078,5 @@ msgstr "Таңдаулылардан алу"
 msgid "Add to Favorites"
 msgstr "Таңдаулыларға"
 
+msgid "Downloads on moderation"
+msgstr "Модерацияны жүктеу"

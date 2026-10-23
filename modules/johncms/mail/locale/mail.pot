@@ -32,6 +32,7 @@ msgstr ""
 #: modules/johncms/mail/src/Application/Controllers/WriteController.php:58
 #: modules/johncms/mail/src/Application/Controllers/WriteController.php:85
 #: modules/johncms/mail/src/Application/Controllers/WriteController.php:96
+#: modules/johncms/mail/src/Application/Notifications/NewMailNotificationProvider.php:28
 msgid "Mail"
 msgstr ""
 

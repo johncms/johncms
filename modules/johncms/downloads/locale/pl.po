@@ -1078,3 +1078,5 @@ msgstr "Usuń z ulubionych"
 msgid "Add to Favorites"
 msgstr "Dodaj do ulubionych"
 
+msgid "Downloads on moderation"
+msgstr "Pliki w moderacji"

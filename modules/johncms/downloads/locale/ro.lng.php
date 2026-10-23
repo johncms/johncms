@@ -151,6 +151,7 @@
       'Actions' => 'Actiuni',
       'Remove from Favorites' => 'Sterge de la favorite',
       'Add to Favorites' => 'Adauga la favorite',
+      'Downloads on moderation' => 'Descărcări la moderare',
     ),
   ),
 );

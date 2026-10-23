@@ -245,34 +245,6 @@ msgstr "Parametrlər"
 msgid "Settings saved!"
 msgstr "Parametrlər yadda saxlanıldı."
 
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:49
-msgid "Users on registration"
-msgstr "İstifadəçilər qeydiyyat"
-
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:57
-msgid "Articles on moderation"
-msgstr "Məqalələr moderatsiya"
-
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:65
-msgid "Downloads on moderation"
-msgstr "Yuklmeme moderatsiya"
-
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:75
-msgid "Ban"
-msgstr ""
-
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:84
-msgid "New forum posts"
-msgstr "Forumdakı sonuncu xeberler"
-
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:93
-msgid "Mail"
-msgstr "E-poçt"
-
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:111
-msgid "Comments"
-msgstr "Şərhlər"
-
 #: modules/notifications/templates/index.phtml:20
 msgid "All notifications have already been read"
 msgstr "Bütün bildirişlər artıq oxunub"

@@ -256,6 +256,7 @@
       'Votes' => 'Głosy',
       'Settings' => 'Ustawienia',
       'View' => 'Widok',
+      'New forum posts' => 'Nowe posty na forum',
     ),
   ),
 );

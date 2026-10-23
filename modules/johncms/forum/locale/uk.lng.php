@@ -296,6 +296,7 @@
       'Macros available: #name#' => 'Доступні макроси: #name#',
       'Topic description' => 'Опис теми',
       'View' => 'Переглянути',
+      'New forum posts' => 'Нові повідомлення форуму',
     ),
   ),
 );

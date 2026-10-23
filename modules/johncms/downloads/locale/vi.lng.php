@@ -152,6 +152,7 @@
       'Actions' => 'Các hành động',
       'Remove from Favorites' => 'Bỏ khỏi mục Ưa thích',
       'Add to Favorites' => 'Thêm vào mục Ưa thích',
+      'Downloads on moderation' => 'Tệp tin cần kiểm duyệt',
     ),
   ),
 );

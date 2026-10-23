@@ -775,3 +775,5 @@ msgstr "Chmura tagów"
 msgid "Sort"
 msgstr "Sortuj"
 
+msgid "Articles on moderation"
+msgstr "Plik znajduje się w moderacji"

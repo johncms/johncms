@@ -33,38 +33,6 @@ msgstr "Cài đặt"
 msgid "Settings saved!"
 msgstr "Cài đặt đã được lưu!"
 
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:49
-msgid "Users on registration"
-msgstr "Người dùng đăng ký"
-
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:57
-msgid "Articles on moderation"
-msgstr "Bài viết cần kiểm duyệt"
-
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:65
-msgid "Downloads on moderation"
-msgstr "Tệp tin cần kiểm duyệt"
-
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:75
-msgid "Ban"
-msgstr "Cấm"
-
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:84
-msgid "New forum posts"
-msgstr "Bài đăng mới"
-
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:93
-msgid "Mail"
-msgstr "Thư"
-
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:102
-msgid "Guestbook"
-msgstr "Phòng trò truyện"
-
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:111
-msgid "Comments"
-msgstr "Bình luận"
-
 #: modules/notifications/templates/index.phtml:20
 msgid "All notifications have already been read"
 msgstr "Tất cả các thông báo đã được đọc"

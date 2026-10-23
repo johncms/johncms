@@ -474,69 +474,6 @@ class Counters
     }
 
     /**
-     * Уведомления
-     *
-     * @return array
-     */
-    public function notifications(): array
-    {
-        $notifications = [];
-
-        if (! $this->user->isValid()) {
-            return $notifications;
-        }
-
-        // Counted for whoever is shown it: the queue of the library belongs to the moderator of
-        // the library, not to everybody who was above a 7.
-        if ($this->accessChecker->allows(CorePermissions::ADMIN_ACCESS)) {
-            $notifications['reg_total'] = $this->db->query("SELECT COUNT(*) FROM `users` WHERE `preg`='0'")->fetchColumn();
-        }
-
-        if ($this->accessChecker->allows(LibraryPermissions::MODERATE)) {
-            $notifications['library_mod'] = $this->db->query('SELECT COUNT(*) FROM `library_texts` WHERE `premod` = 0')->fetchColumn();
-        }
-
-        if ($this->accessChecker->allows(DownloadsPermissions::MODERATE)) {
-            $notifications['downloads_mod'] = $this->db->query("SELECT COUNT(*) FROM `download__files` WHERE `type` = '3'")->fetchColumn();
-        }
-
-        if (! empty($this->user->user()->ban)) {
-            $notifications['ban'] = 1;
-        }
-
-        if ($this->user->user()->comm_count > $this->user->user()->comm_old) {
-            $notifications['guestbook_comments'] = ($this->user->user()->comm_count - $this->user->user()->comm_old);
-        }
-
-        $notifications['new_mail'] = $this->db->query(
-            "SELECT COUNT(*) FROM `cms_mail`
-                            LEFT JOIN `cms_contact` ON `cms_mail`.`user_id`=`cms_contact`.`from_id` AND `cms_contact`.`user_id`='" . $this->user->id() . "'
-                            WHERE `cms_mail`.`from_id`='" . $this->user->id() . "'
-                            AND `cms_mail`.`sys`='0'
-                            AND `cms_mail`.`read`='0'
-                            AND `cms_mail`.`delete`!='" . $this->user->id() . "'
-                            AND `cms_contact`.`ban`!='1'"
-        )->fetchColumn();
-
-        $notifications['new_album_comm'] = $this->db->query('SELECT COUNT(*) FROM `cms_album_files` WHERE `user_id` = \'' . $this->user->id() . '\' AND `unread_comments` = 1')->fetchColumn();
-
-        // The column is cast to an array by the model, so there is nothing to decode here.
-        $notification_settings = array_merge(
-            ['show_forum_unread' => false],
-            $this->user->user()->notification_settings ?? []
-        );
-        if ($notification_settings['show_forum_unread']) {
-            $forum_counters = $this->forumCounters();
-            $notifications['forum_new'] = $forum_counters['new_messages'];
-        }
-
-        $notifications['notifications'] = (new Notification())->unread()->count();
-        $notifications['all'] = array_sum($notifications);
-
-        return $notifications;
-    }
-
-    /**
      * Метод получает массив счетчиков различных систем аналитики
      *
      * @return array

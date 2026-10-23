@@ -191,6 +191,7 @@
       'Actions' => 'Иш-аракеттер',
       'Remove from Favorites' => 'Сүйүктүүлөрдөн алып салуу',
       'Add to Favorites' => 'Сүйүктүүлөргө',
+      'Downloads on moderation' => 'Жүктөө текшерилүүдө',
     ),
   ),
 );

@@ -245,34 +245,6 @@ msgstr "Sazlamalar"
 msgid "Settings saved!"
 msgstr "Sazlamalar saklanyldy!"
 
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:49
-msgid "Users on registration"
-msgstr "Agza bolmakçy agzalar"
-
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:57
-msgid "Articles on moderation"
-msgstr "Moderasiýadaky makalalar"
-
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:65
-msgid "Downloads on moderation"
-msgstr "Moderasiýadaky ýüklemeler"
-
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:75
-msgid "Ban"
-msgstr ""
-
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:84
-msgid "New forum posts"
-msgstr "Forumdaky täze postlar"
-
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:93
-msgid "Mail"
-msgstr "Poçta"
-
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:111
-msgid "Comments"
-msgstr "Teswirler"
-
 #: modules/notifications/templates/index.phtml:20
 msgid "All notifications have already been read"
 msgstr "Ähli bildirişler okalan"

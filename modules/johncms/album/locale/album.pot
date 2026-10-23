@@ -166,6 +166,7 @@ msgstr ""
 #: modules/johncms/album/src/Application/Controllers/PhotoCommentsController.php:60
 #: modules/johncms/album/src/Application/Controllers/PhotoCommentsController.php:76
 #: modules/johncms/album/src/Application/Controllers/PhotoCommentsController.php:94
+#: modules/johncms/album/src/Application/Notifications/UnreadCommentsNotificationProvider.php:28
 #: modules/johncms/album/templates/public/show-one.twig:65
 msgid "Comments"
 msgstr ""

@@ -90,6 +90,7 @@
       'Create' => 'Creeaza',
       'Tag Cloud' => 'Nor de etichete',
       'Sort' => 'Sorteaza',
+      'Articles on moderation' => 'Fisiere cu moderare',
     ),
   ),
 );

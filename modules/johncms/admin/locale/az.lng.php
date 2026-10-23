@@ -272,6 +272,7 @@
       'Delete user:' => 'İstifadəçi sil',
       'Are you sure that you want to delete this user?' => 'Bu istifadəçini silmək istədiyinizə əminsiniz?',
       'All threads and posts created by the user go in the hidden state' => 'Bütün mövzular və postlar yaradılmış istifadəçi keçin gizli vəziyyəti',
+      'Users on registration' => 'Qeydiyyatlı istifadəçilər',
     ),
   ),
 );

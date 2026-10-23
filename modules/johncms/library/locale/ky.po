@@ -815,3 +815,5 @@ msgstr "Белгилер топтому"
 msgid "Sort"
 msgstr "Сорттоо"
 
+msgid "Articles on moderation"
+msgstr "Макалалар текшерилүүдө"

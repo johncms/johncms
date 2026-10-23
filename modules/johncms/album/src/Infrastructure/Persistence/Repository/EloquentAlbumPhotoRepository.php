@@ -180,6 +180,11 @@ final class EloquentAlbumPhotoRepository implements AlbumPhotoRepositoryInterfac
         AlbumPhoto::query()->where('id', $photoId)->update(['unread_comments' => $unread]);
     }
 
+    public function countWithUnreadComments(int $userId): int
+    {
+        return AlbumPhoto::query()->where('user_id', $userId)->where('unread_comments', 1)->count();
+    }
+
     public function setAccessForAlbum(int $albumId, int $access): void
     {
         AlbumPhoto::query()->where('album_id', $albumId)->update(['access' => $access]);

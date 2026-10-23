@@ -775,3 +775,5 @@ msgstr "Žymių debesis"
 msgid "Sort"
 msgstr "Rūšiuoti"
 
+msgid "Articles on moderation"
+msgstr "Failas ant moderacijos"

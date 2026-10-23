@@ -191,6 +191,7 @@
       'Actions' => 'Дія',
       'Remove from Favorites' => 'Видалити з обраного',
       'Add to Favorites' => 'Додати в обране',
+      'Downloads on moderation' => 'Завантаження на модерації',
     ),
   ),
 );

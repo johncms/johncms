@@ -482,6 +482,7 @@
       'Every upload is re-encoded. A transparent background turns into a solid one.' => 'Каждая загрузка перекодируется. Прозрачный фон становится сплошным.',
       'Quality' => 'Качество',
       'Applied when a picture is scaled down or re-encoded.' => 'Применяется при уменьшении или перекодировании изображения.',
+      'Users on registration' => 'Пользователи на регистрации',
     ),
   ),
 );

@@ -91,6 +91,7 @@
       'Create' => 'Sukurti',
       'Tag Cloud' => 'Žymių debesis',
       'Sort' => 'Rūšiuoti',
+      'Articles on moderation' => 'Failas ant moderacijos',
     ),
   ),
 );

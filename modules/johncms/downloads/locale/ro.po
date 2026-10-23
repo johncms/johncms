@@ -1078,3 +1078,5 @@ msgstr "Sterge de la favorite"
 msgid "Add to Favorites"
 msgstr "Adauga la favorite"
 
+msgid "Downloads on moderation"
+msgstr "Descărcări la moderare"

@@ -245,34 +245,6 @@ msgstr "პარამეტრები"
 msgid "Settings saved!"
 msgstr "პარამეტრები შენახულია!"
 
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:49
-msgid "Users on registration"
-msgstr ""
-
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:57
-msgid "Articles on moderation"
-msgstr "სტატია გადის მოდერაციას"
-
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:65
-msgid "Downloads on moderation"
-msgstr "ჩამოტვირთვები გადის მოდერაციას"
-
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:75
-msgid "Ban"
-msgstr "ბანი"
-
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:84
-msgid "New forum posts"
-msgstr "ფორუმის ახალი პოსტები"
-
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:93
-msgid "Mail"
-msgstr "ელფოსტა"
-
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:111
-msgid "Comments"
-msgstr "კომენტარები"
-
 #: modules/notifications/templates/index.phtml:20
 msgid "All notifications have already been read"
 msgstr "ყველა შეტყობინება წაკითხულია"

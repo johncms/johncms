@@ -90,6 +90,7 @@
       'Section created' => 'Bölmə yaradılmışdır',
       'Create' => 'Yarat',
       'Sort' => 'sıralama',
+      'Articles on moderation' => 'Məqalələr moderatsiya',
     ),
   ),
 );

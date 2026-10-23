@@ -91,6 +91,7 @@
       'Create' => 'Yaratish',
       'Tag Cloud' => 'Teglar buluti',
       'Sort' => 'Saralash',
+      'Articles on moderation' => 'Tekshiruvdagi maqolalar',
     ),
   ),
 );

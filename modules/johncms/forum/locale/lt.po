@@ -1444,3 +1444,6 @@ msgstr "Nustatymai"
 
 msgid "View"
 msgstr "Peržiūrėti"
+
+msgid "New forum posts"
+msgstr "Nauji pranešimai forume"

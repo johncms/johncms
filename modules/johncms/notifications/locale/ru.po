@@ -33,38 +33,6 @@ msgstr "Настройки"
 msgid "Settings saved!"
 msgstr "Настройки сохранены!"
 
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:49
-msgid "Users on registration"
-msgstr "Пользователи на регистрации"
-
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:57
-msgid "Articles on moderation"
-msgstr "Статьи на модерации"
-
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:65
-msgid "Downloads on moderation"
-msgstr "Загрузки на модерации"
-
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:75
-msgid "Ban"
-msgstr "Бан"
-
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:84
-msgid "New forum posts"
-msgstr "Новые сообщения на форуме"
-
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:93
-msgid "Mail"
-msgstr "Почта"
-
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:102
-msgid "Guestbook"
-msgstr "Гостевая книга"
-
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:111
-msgid "Comments"
-msgstr "Комментарии"
-
 #: modules/notifications/templates/index.phtml:20
 msgid "All notifications have already been read"
 msgstr "Все уведомления уже прочитаны"

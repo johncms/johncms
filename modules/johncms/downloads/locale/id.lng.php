@@ -145,6 +145,7 @@
       'Actions' => 'Tindakan',
       'Remove from Favorites' => 'Hapus dari Favorit',
       'Add to Favorites' => 'Tambahkan ke Favorit',
+      'Downloads on moderation' => 'Popularitas di moderasi',
     ),
   ),
 );

@@ -2047,3 +2047,6 @@ msgstr "Качество"
 
 msgid "Applied when a picture is scaled down or re-encoded."
 msgstr "Применяется при уменьшении или перекодировании изображения."
+
+msgid "Users on registration"
+msgstr "Пользователи на регистрации"

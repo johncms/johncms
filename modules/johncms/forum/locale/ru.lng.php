@@ -308,6 +308,7 @@
       'View' => 'Просмотреть',
       'Delete a forum section with everything in it' => 'Удалять раздел форума вместе со всем содержимым',
       'Empty the lists of hidden topics and posts' => 'Очищать списки скрытых тем и сообщений',
+      'New forum posts' => 'Новые сообщения на форуме',
     ),
   ),
 );

@@ -1078,3 +1078,5 @@ msgstr "Hapus dari Favorit"
 msgid "Add to Favorites"
 msgstr "Tambahkan ke Favorit"
 
+msgid "Downloads on moderation"
+msgstr "Popularitas di moderasi"

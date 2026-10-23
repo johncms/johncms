@@ -263,6 +263,7 @@
       'Macros available: #name#' => 'Makro: #name#',
       'Topic description' => 'Mövzunun təsviri',
       'View' => 'Göstər',
+      'New forum posts' => 'Forumdakı sonuncu xeberler',
     ),
   ),
 );

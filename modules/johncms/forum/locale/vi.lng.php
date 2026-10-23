@@ -272,6 +272,7 @@
       'Macros available: #name#' => 'Macro có sẵn: #name#',
       'Topic description' => 'Mô tả chủ đề',
       'View' => 'Xem',
+      'New forum posts' => 'Bài đăng mới',
     ),
   ),
 );

@@ -91,6 +91,7 @@
       'Create' => 'Utwórz',
       'Tag Cloud' => 'Chmura tagów',
       'Sort' => 'Sortuj',
+      'Articles on moderation' => 'Plik znajduje się w moderacji',
     ),
   ),
 );

@@ -775,3 +775,5 @@ msgstr ""
 msgid "Sort"
 msgstr "sıralama"
 
+msgid "Articles on moderation"
+msgstr "Məqalələr moderatsiya"

@@ -1078,3 +1078,5 @@ msgstr "Bỏ khỏi mục Ưa thích"
 msgid "Add to Favorites"
 msgstr "Thêm vào mục Ưa thích"
 
+msgid "Downloads on moderation"
+msgstr "Tệp tin cần kiểm duyệt"

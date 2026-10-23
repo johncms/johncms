@@ -1628,3 +1628,6 @@ msgstr[0] "%d хвилину"
 msgstr[1] "%d хвилини"
 msgstr[2] "%d хвилин"
 msgstr[3] "%d хвилин"
+
+msgid "Users on registration"
+msgstr "Користувачі на реєстрації"

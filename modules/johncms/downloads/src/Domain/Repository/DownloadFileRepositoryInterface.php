@@ -15,6 +15,9 @@ interface DownloadFileRepositoryInterface
 {
     public function countNewFiles(?string $directoryPrefix = null): int;
 
+    /** The files a moderator has not let through yet. */
+    public function countAwaitingModeration(): int;
+
     /**
      * @return Collection<int, DownloadFile>
      */

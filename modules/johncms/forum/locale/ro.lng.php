@@ -274,6 +274,7 @@
       'Macros available: #name#' => 'Macrocomenzi disponibile: #name#',
       'Topic description' => 'Descriere topic',
       'View' => 'Vizualizări',
+      'New forum posts' => 'Postări noi pe forum',
     ),
   ),
 );

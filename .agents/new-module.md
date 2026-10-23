@@ -280,6 +280,7 @@ service compiles fine and is never asked anything.
 | `MenuItemProviderInterface` | a line in the main or the admin menu |
 | `SitemapUrlProviderInterface` | a group of addresses in the sitemap |
 | `VisitorPlaceProviderInterface` | the name of a page of its own where the site says where a visitor is |
+| `SystemNotificationProviderInterface` | something of its own waiting for a signed-in visitor: a line of the notifications page, a number in the badge of the header |
 | `Symfony\...\Console\Command` | a command of `system/bin/console`, tagged `console.command` — name and description go in `#[AsCommand]`, so it is listed without being built |
 | `Twig\Extension\ExtensionInterface` | a function or filter its templates call |
 | `RuleConstraintFactoryInterface` | a rule the validator can be asked for |

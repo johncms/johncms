@@ -152,6 +152,7 @@
       'Actions' => 'Fəaliyyət',
       'Remove from Favorites' => 'Seçilmişlərdən sil',
       'Add to Favorites' => 'Sevimlilərə Əlavə et',
+      'Downloads on moderation' => 'Yuklmeme moderatsiya',
     ),
   ),
 );

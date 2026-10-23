@@ -255,6 +255,7 @@
       'Votes' => 'Penilaian',
       'Settings' => 'Pengaturan',
       'View' => 'Lihat',
+      'New forum posts' => 'Baru posting forum',
     ),
   ),
 );

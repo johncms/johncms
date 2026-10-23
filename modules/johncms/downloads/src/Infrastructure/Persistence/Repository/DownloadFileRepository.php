@@ -23,6 +23,11 @@ final class DownloadFileRepository implements DownloadFileRepositoryInterface
         return $this->newFilesQuery($directoryPrefix)->count();
     }
 
+    public function countAwaitingModeration(): int
+    {
+        return DownloadFile::query()->where('type', 3)->count();
+    }
+
     /**
      * @return Collection<int, DownloadFile>
      */

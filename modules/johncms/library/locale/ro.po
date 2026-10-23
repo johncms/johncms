@@ -775,3 +775,5 @@ msgstr "Nor de etichete"
 msgid "Sort"
 msgstr "Sorteaza"
 
+msgid "Articles on moderation"
+msgstr "Fisiere cu moderare"

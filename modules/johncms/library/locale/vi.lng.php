@@ -91,6 +91,7 @@
       'Create' => 'Tạo mới',
       'Tag Cloud' => 'Tag Đám Mây',
       'Sort' => 'Săp xếp',
+      'Articles on moderation' => 'Bài viết cần kiểm duyệt',
     ),
   ),
 );

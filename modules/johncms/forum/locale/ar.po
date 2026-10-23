@@ -1441,3 +1441,6 @@ msgstr "الإعدادات"
 
 msgid "View"
 msgstr "عرض"
+
+msgid "New forum posts"
+msgstr "مشاركات منتدى جديدة"

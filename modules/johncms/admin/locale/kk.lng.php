@@ -274,6 +274,7 @@
       'Delete user:' => 'Пайдаланушыны жою',
       'Are you sure that you want to delete this user?' => 'Сіз осы пайдаланушыны шынымен жойғыңыз келе ме?',
       'All threads and posts created by the user go in the hidden state' => 'Пайдаланушы жасаған барлық тақырыптар мен жазбалар жасырын күйге өтеді',
+      'Users on registration' => 'Пайдаланушыларды тіркеу',
     ),
   ),
 );

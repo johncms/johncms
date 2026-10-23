@@ -1093,3 +1093,6 @@ msgstr "Читать комментарии к файлам, когда они �
 
 msgid "Open the downloads"
 msgstr "Открывать загрузки"
+
+msgid "Downloads on moderation"
+msgstr "Загрузки на модерации"

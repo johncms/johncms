@@ -129,6 +129,11 @@ interface AlbumPhotoRepositoryInterface
     public function setUnreadComments(int $photoId, bool $unread): void;
 
     /**
+     * The photos of a user that have comments their owner has not read.
+     */
+    public function countWithUnreadComments(int $userId): int;
+
+    /**
      * Cascade an album's access level to all of its photos.
      */
     public function setAccessForAlbum(int $albumId, int $access): void;

@@ -1078,3 +1078,5 @@ msgstr "Seçilmişlərdən sil"
 msgid "Add to Favorites"
 msgstr "Sevimlilərə Əlavə et"
 
+msgid "Downloads on moderation"
+msgstr "Yuklmeme moderatsiya"

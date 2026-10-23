@@ -264,6 +264,10 @@ msgstr ""
 msgid "Library is closed"
 msgstr ""
 
+#: modules/johncms/library/src/Application/Notifications/ModerationNotificationProvider.php:33
+msgid "Articles on moderation"
+msgstr ""
+
 #: modules/johncms/library/src/Application/Services/LibraryPermissions.php:33
 msgid "Read the library"
 msgstr ""

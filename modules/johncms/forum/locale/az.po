@@ -1474,3 +1474,6 @@ msgstr "Mövzunun təsviri"
 
 msgid "View"
 msgstr "Göstər"
+
+msgid "New forum posts"
+msgstr "Forumdakı sonuncu xeberler"

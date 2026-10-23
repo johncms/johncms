@@ -775,3 +775,5 @@ msgstr ""
 msgid "Sort"
 msgstr ""
 
+msgid "Articles on moderation"
+msgstr ""

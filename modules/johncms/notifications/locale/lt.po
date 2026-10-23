@@ -33,38 +33,6 @@ msgstr "Nustatymai"
 msgid "Settings saved!"
 msgstr "Nustatymai išsaugoti!"
 
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:49
-msgid "Users on registration"
-msgstr "Vartotojų registracija"
-
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:57
-msgid "Articles on moderation"
-msgstr "Failas ant moderacijos"
-
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:65
-msgid "Downloads on moderation"
-msgstr "Siuntiniai laukia moderacijos"
-
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:75
-msgid "Ban"
-msgstr "Bluokas"
-
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:84
-msgid "New forum posts"
-msgstr "Nauji pranešimai forume"
-
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:93
-msgid "Mail"
-msgstr "Paštas"
-
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:102
-msgid "Guestbook"
-msgstr "Svečių Knyga"
-
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:111
-msgid "Comments"
-msgstr "Komentarai"
-
 #: modules/notifications/templates/index.phtml:20
 msgid "All notifications have already been read"
 msgstr "Visi pranešimai perskaityti"

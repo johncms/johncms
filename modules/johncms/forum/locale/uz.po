@@ -1483,3 +1483,6 @@ msgstr "Bo'lim haqida"
 
 msgid "View"
 msgstr "Ko'rish"
+
+msgid "New forum posts"
+msgstr "Forumdagi yangi xabarlar"

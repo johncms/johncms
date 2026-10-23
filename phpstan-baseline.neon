@@ -2891,18 +2891,6 @@ parameters:
 			path: modules/johncms/news/src/Domain/Models/NewsVote.php
 
 		-
-			message: '#^testEveryModuleDependsOnlyOnWhatItRequiresInNotifications\: Johncms\\Modules\\Notifications\\Application\\UseCases\\GetNotificationListUseCase should not depend on Johncms\\Modules\\Downloads\\Application\\Services\\DownloadsPermissions$#'
-			identifier: phpat.testEveryModuleDependsOnlyOnWhatItRequiresInNotifications
-			count: 1
-			path: modules/johncms/notifications/src/Application/UseCases/GetNotificationListUseCase.php
-
-		-
-			message: '#^testEveryModuleDependsOnlyOnWhatItRequiresInNotifications\: Johncms\\Modules\\Notifications\\Application\\UseCases\\GetNotificationListUseCase should not depend on Johncms\\Modules\\Library\\Application\\Services\\LibraryPermissions$#'
-			identifier: phpat.testEveryModuleDependsOnlyOnWhatItRequiresInNotifications
-			count: 1
-			path: modules/johncms/notifications/src/Application/UseCases/GetNotificationListUseCase.php
-
-		-
 			message: '#^Call to an undefined method Illuminate\\Database\\Query\\Builder\:\:unread\(\)\.$#'
 			identifier: method.notFound
 			count: 1
@@ -3103,7 +3091,7 @@ parameters:
 		-
 			message: '#^testTheCoreDependsOnNoModule\: Johncms\\Counters should not depend on Johncms\\Modules\\Downloads\\Application\\Services\\DownloadsPermissions$#'
 			identifier: phpat.testTheCoreDependsOnNoModule
-			count: 2
+			count: 1
 			path: system/src/Counters.php
 
 		-
@@ -3121,7 +3109,7 @@ parameters:
 		-
 			message: '#^testTheCoreDependsOnNoModule\: Johncms\\Counters should not depend on Johncms\\Modules\\Library\\Application\\Services\\LibraryPermissions$#'
 			identifier: phpat.testTheCoreDependsOnNoModule
-			count: 2
+			count: 1
 			path: system/src/Counters.php
 
 		-

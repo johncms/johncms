@@ -260,6 +260,7 @@
       'Votes' => 'Balsų',
       'Settings' => 'Nustatymai',
       'View' => 'Peržiūrėti',
+      'New forum posts' => 'Nauji pranešimai forume',
     ),
   ),
 );

@@ -1483,3 +1483,6 @@ msgstr "Опис теми"
 
 msgid "View"
 msgstr "Переглянути"
+
+msgid "New forum posts"
+msgstr "Нові повідомлення форуму"

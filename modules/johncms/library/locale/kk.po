@@ -775,3 +775,5 @@ msgstr ""
 msgid "Sort"
 msgstr "Сұрыптау"
 
+msgid "Articles on moderation"
+msgstr "Модерация туралы мақалалар"

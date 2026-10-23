@@ -1420,3 +1420,6 @@ msgstr "Баптаулар"
 
 msgid "View"
 msgstr "Қараулар"
+
+msgid "New forum posts"
+msgstr "Форумдаға ең жаңа хаттар"

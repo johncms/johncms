@@ -149,6 +149,7 @@
       'Sort' => 'Сортировка',
       'Manage the sections and the articles' => 'Управлять разделами и статьями',
       'Read the library' => 'Читать библиотеку',
+      'Articles on moderation' => 'Статьи на модерации',
     ),
   ),
 );

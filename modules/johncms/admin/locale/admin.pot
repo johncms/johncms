@@ -851,6 +851,10 @@ msgstr ""
 msgid "Login"
 msgstr ""
 
+#: modules/johncms/admin/src/Application/Notifications/PendingRegistrationsNotificationProvider.php:33
+msgid "Users on registration"
+msgstr ""
+
 #: modules/johncms/admin/src/Application/Services/AdRowMapper.php:61
 #: modules/johncms/admin/src/Application/Services/AdRowMapper.php:76
 msgid "hits"

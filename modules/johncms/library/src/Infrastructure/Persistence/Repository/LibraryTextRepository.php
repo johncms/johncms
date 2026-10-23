@@ -52,6 +52,11 @@ class LibraryTextRepository implements LibraryTextRepositoryInterface
             ->count();
     }
 
+    public function countAwaitingModeration(): int
+    {
+        return LibraryText::query()->where('premod', 0)->count();
+    }
+
     public function getNew(int $page, int $perPage): Collection
     {
         return LibraryText::query()

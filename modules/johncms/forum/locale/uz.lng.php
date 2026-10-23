@@ -275,6 +275,7 @@ Ushbu xabar o‘chirilsa mavzu ham qo‘shib o‘chiriladi (yashiriladi)',
       'Macros available: #name#' => 'Mavjud makros: #name#',
       'Topic description' => 'Bo\'lim haqida',
       'View' => 'Ko\'rish',
+      'New forum posts' => 'Forumdagi yangi xabarlar',
     ),
   ),
 );

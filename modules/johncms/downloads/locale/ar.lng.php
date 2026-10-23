@@ -153,6 +153,7 @@
       'Actions' => 'الإجراءات',
       'Remove from Favorites' => 'إزالة من المفضلة',
       'Add to Favorites' => 'اضف إلى المفضلة',
+      'Downloads on moderation' => 'التنزيلات على الاعتدال',
     ),
   ),
 );

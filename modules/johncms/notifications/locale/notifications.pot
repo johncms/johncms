@@ -22,38 +22,6 @@ msgstr ""
 msgid "Settings saved!"
 msgstr ""
 
-#: modules/johncms/notifications/src/Application/UseCases/GetNotificationListUseCase.php:56
-msgid "Users on registration"
-msgstr ""
-
-#: modules/johncms/notifications/src/Application/UseCases/GetNotificationListUseCase.php:65
-msgid "Articles on moderation"
-msgstr ""
-
-#: modules/johncms/notifications/src/Application/UseCases/GetNotificationListUseCase.php:74
-msgid "Downloads on moderation"
-msgstr ""
-
-#: modules/johncms/notifications/src/Application/UseCases/GetNotificationListUseCase.php:83
-msgid "Ban"
-msgstr ""
-
-#: modules/johncms/notifications/src/Application/UseCases/GetNotificationListUseCase.php:92
-msgid "New forum posts"
-msgstr ""
-
-#: modules/johncms/notifications/src/Application/UseCases/GetNotificationListUseCase.php:101
-msgid "Mail"
-msgstr ""
-
-#: modules/johncms/notifications/src/Application/UseCases/GetNotificationListUseCase.php:110
-msgid "Guestbook"
-msgstr ""
-
-#: modules/johncms/notifications/src/Application/UseCases/GetNotificationListUseCase.php:119
-msgid "Comments"
-msgstr ""
-
 #: modules/johncms/notifications/templates/public/index.twig:17
 msgid "All notifications have already been read"
 msgstr ""

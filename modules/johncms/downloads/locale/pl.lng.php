@@ -151,6 +151,7 @@
       'Actions' => 'Akcje',
       'Remove from Favorites' => 'Usuń z ulubionych',
       'Add to Favorites' => 'Dodaj do ulubionych',
+      'Downloads on moderation' => 'Pliki w moderacji',
     ),
   ),
 );

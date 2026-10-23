@@ -1480,3 +1480,6 @@ msgstr "Descriere topic"
 
 msgid "View"
 msgstr "Vizualizări"
+
+msgid "New forum posts"
+msgstr "Postări noi pe forum"

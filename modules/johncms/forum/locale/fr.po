@@ -1267,3 +1267,5 @@ msgstr ""
 msgid "Guests"
 msgstr ""
 
+msgid "New forum posts"
+msgstr ""

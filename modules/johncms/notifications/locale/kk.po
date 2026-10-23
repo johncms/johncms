@@ -33,38 +33,6 @@ msgstr "Баптаулар"
 msgid "Settings saved!"
 msgstr "Баптаулар сақталады!"
 
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:49
-msgid "Users on registration"
-msgstr "Пайдаланушыларды тіркеу"
-
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:57
-msgid "Articles on moderation"
-msgstr "Модерация туралы мақалалар"
-
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:65
-msgid "Downloads on moderation"
-msgstr "Модерацияны жүктеу"
-
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:75
-msgid "Ban"
-msgstr "Тыйым салу"
-
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:84
-msgid "New forum posts"
-msgstr "Форумдаға ең жаңа хаттар"
-
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:93
-msgid "Mail"
-msgstr "Пошта"
-
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:102
-msgid "Guestbook"
-msgstr "Қонақ кітәпшасы"
-
-#: modules/notifications/src/Application/UseCases/GetNotificationListUseCase.php:111
-msgid "Comments"
-msgstr "Пікірлер"
-
 #: modules/notifications/templates/index.phtml:20
 msgid "All notifications have already been read"
 msgstr "Барлық хабарландырулар оқылған."

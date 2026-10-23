@@ -1078,3 +1078,5 @@ msgstr "Видалити з обраного"
 msgid "Add to Favorites"
 msgstr "Додати в обране"
 
+msgid "Downloads on moderation"
+msgstr "Завантаження на модерації"

@@ -150,6 +150,7 @@
       'Actions' => 'Veiksmai',
       'Remove from Favorites' => 'Pašalinti iš mėgstamų',
       'Add to Favorites' => 'Įtraukti į mėgstamus',
+      'Downloads on moderation' => 'Siuntiniai laukia moderacijos',
     ),
   ),
 );

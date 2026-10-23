@@ -7,6 +7,7 @@ namespace Johncms\View\Twig\Runtime;
 use Johncms\Ads;
 use Johncms\Counters;
 use Johncms\NavChain;
+use Johncms\Notifications\SystemNotifications;
 use Twig\Extension\RuntimeExtensionInterface;
 use Twig\Markup;
 
@@ -27,6 +28,7 @@ final class SiteRuntime implements RuntimeExtensionInterface
         private readonly Counters $counters,
         private readonly Ads $adsService,
         private readonly NavChain $navChain,
+        private readonly SystemNotifications $systemNotifications,
     ) {
     }
 
@@ -39,11 +41,13 @@ final class SiteRuntime implements RuntimeExtensionInterface
     }
 
     /**
+     * What waits for the visitor, by key, with the sum of it under "all".
+     *
      * @return array<string, int>
      */
     public function notifications(): array
     {
-        return $this->counters->notifications();
+        return $this->systemNotifications->counters();
     }
 
     /**

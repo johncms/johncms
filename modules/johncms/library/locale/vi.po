@@ -775,3 +775,5 @@ msgstr "Tag Đám Mây"
 msgid "Sort"
 msgstr "Săp xếp"
 
+msgid "Articles on moderation"
+msgstr "Bài viết cần kiểm duyệt"

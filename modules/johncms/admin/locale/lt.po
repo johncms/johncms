@@ -1618,3 +1618,5 @@ msgstr ""
 msgid "Cookie banner"
 msgstr ""
 
+msgid "Users on registration"
+msgstr "Vartotojų registracija"

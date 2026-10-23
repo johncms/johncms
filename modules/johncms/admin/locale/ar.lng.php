@@ -275,6 +275,7 @@
       'Delete user:' => 'حذف المستخدم',
       'Are you sure that you want to delete this user?' => 'هل أنت متأكد من أنك تريد حذف هذا المستخدم؟',
       'All threads and posts created by the user go in the hidden state' => 'جميع المواضيع والمشاركات التي تم إنشاؤها بواسطة المستخدم الذهاب في الدولة الخفية',
+      'Users on registration' => 'المستخدمون عند التسجيل',
     ),
   ),
 );

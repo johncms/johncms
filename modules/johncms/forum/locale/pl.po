@@ -1441,3 +1441,6 @@ msgstr "Ustawienia"
 
 msgid "View"
 msgstr "Widok"
+
+msgid "New forum posts"
+msgstr "Nowe posty na forum"

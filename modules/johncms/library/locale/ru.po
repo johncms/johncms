@@ -781,3 +781,6 @@ msgstr "Управлять разделами и статьями"
 
 msgid "Read the library"
 msgstr "Читать библиотеку"
+
+msgid "Articles on moderation"
+msgstr "Статьи на модерации"

@@ -477,6 +477,10 @@ msgstr ""
 msgid "Not found"
 msgstr ""
 
+#: modules/johncms/downloads/src/Application/Notifications/ModerationNotificationProvider.php:33
+msgid "Downloads on moderation"
+msgstr ""
+
 #: modules/johncms/downloads/src/Application/Services/DownloadsPermissions.php:51
 msgid "Open the downloads"
 msgstr ""

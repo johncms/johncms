@@ -1483,3 +1483,6 @@ msgstr "Mô tả chủ đề"
 
 msgid "View"
 msgstr "Xem"
+
+msgid "New forum posts"
+msgstr "Bài đăng mới"

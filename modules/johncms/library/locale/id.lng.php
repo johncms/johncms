@@ -88,6 +88,7 @@
       'Section created' => 'Bagian berhasil dibuat',
       'Create' => 'Buat',
       'Sort' => 'Urutan',
+      'Articles on moderation' => 'Artikel tentang moderasi',
     ),
   ),
 );

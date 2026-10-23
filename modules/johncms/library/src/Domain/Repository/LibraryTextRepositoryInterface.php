@@ -20,6 +20,9 @@ interface LibraryTextRepositoryInterface
 
     public function countNew(): int;
 
+    /** The articles a moderator has not let through yet. */
+    public function countAwaitingModeration(): int;
+
     /** @return Collection<int, \Johncms\Modules\Library\Domain\Models\LibraryText> */
     public function getNew(int $page, int $perPage): Collection;
 

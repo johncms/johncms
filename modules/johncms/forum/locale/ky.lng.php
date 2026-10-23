@@ -296,6 +296,7 @@
       'Macros available: #name#' => 'Жеткиликтүү макростор: #name#',
       'Topic description' => 'Теманын сүрөттөлүшү',
       'View' => 'Кароолор',
+      'New forum posts' => 'Форумда жаңы билдирүүлөр',
     ),
   ),
 );

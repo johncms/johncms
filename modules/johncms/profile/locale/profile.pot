@@ -207,6 +207,7 @@ msgstr ""
 #: modules/johncms/profile/src/Application/Controllers/GuestbookController.php:45
 #: modules/johncms/profile/src/Application/Controllers/GuestbookController.php:59
 #: modules/johncms/profile/src/Application/Controllers/GuestbookController.php:74
+#: modules/johncms/profile/src/Application/Notifications/GuestbookNotificationProvider.php:28
 #: modules/johncms/profile/src/Application/UseCases/GetBanHistoryUseCase.php:47
 #: modules/johncms/profile/templates/public/account.twig:23
 #: modules/johncms/profile/templates/public/ban.twig:37
@@ -354,6 +355,12 @@ msgstr ""
 msgid "Statistic"
 msgstr ""
 
+#: modules/johncms/profile/src/Application/Notifications/BanNotificationProvider.php:29
+#: modules/johncms/profile/src/Application/UseCases/BanUserUseCase.php:64
+#: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:206
+msgid "Ban"
+msgstr ""
+
 #: modules/johncms/profile/src/Application/Services/ProfilePermissions.php:76
 msgid "Open an account awaiting confirmation"
 msgstr ""
@@ -420,11 +427,6 @@ msgstr ""
 
 #: modules/johncms/profile/src/Application/UseCases/BanUserUseCase.php:64
 msgid "System"
-msgstr ""
-
-#: modules/johncms/profile/src/Application/UseCases/BanUserUseCase.php:64
-#: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:206
-msgid "Ban"
 msgstr ""
 
 #: modules/johncms/profile/src/Application/UseCases/CancelBanUseCase.php:34

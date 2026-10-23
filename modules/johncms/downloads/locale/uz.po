@@ -1078,3 +1078,5 @@ msgstr "Sevimlilardan olib tashlash"
 msgid "Add to Favorites"
 msgstr "Sevimlilarga qo'sh"
 
+msgid "Downloads on moderation"
+msgstr "Tekshiruvdagi yuklamalar"

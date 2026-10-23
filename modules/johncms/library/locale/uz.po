@@ -775,3 +775,5 @@ msgstr "Teglar buluti"
 msgid "Sort"
 msgstr "Saralash"
 
+msgid "Articles on moderation"
+msgstr "Tekshiruvdagi maqolalar"

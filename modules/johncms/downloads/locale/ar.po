@@ -1078,3 +1078,5 @@ msgstr "إزالة من المفضلة"
 msgid "Add to Favorites"
 msgstr "اضف إلى المفضلة"
 
+msgid "Downloads on moderation"
+msgstr "التنزيلات على الاعتدال"

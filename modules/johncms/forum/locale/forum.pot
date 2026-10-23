@@ -337,7 +337,7 @@ msgstr ""
 #: modules/johncms/forum/src/Application/Controllers/ForumSearchController.php:47
 #: modules/johncms/forum/src/Application/Controllers/ForumSearchController.php:56
 #: modules/johncms/forum/src/Application/Controllers/ForumSearchController.php:60
-#: modules/johncms/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:97
+#: modules/johncms/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:103
 msgid "Forum search"
 msgstr ""
 
@@ -653,6 +653,10 @@ msgstr ""
 msgid "Search query must be between 2 and 64 characters"
 msgstr ""
 
+#: modules/johncms/forum/src/Application/Notifications/UnreadTopicsNotificationProvider.php:41
+msgid "New forum posts"
+msgstr ""
+
 #: modules/johncms/forum/src/Application/Services/ForumPermissions.php:76
 msgid "Read the forum"
 msgstr ""
@@ -701,45 +705,45 @@ msgstr ""
 msgid "Empty the lists of hidden topics and posts"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:93
-#: modules/johncms/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:102
-#: modules/johncms/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:110
-#: modules/johncms/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:120
-#: modules/johncms/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:142
-#: modules/johncms/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:162
+#: modules/johncms/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:99
+#: modules/johncms/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:108
+#: modules/johncms/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:116
+#: modules/johncms/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:126
+#: modules/johncms/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:148
+#: modules/johncms/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:168
 msgid "In the forum Main"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:94
+#: modules/johncms/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:100
 msgid "Here, in the List"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:95
+#: modules/johncms/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:101
 msgid "Looking forum files"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:96
+#: modules/johncms/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:102
 msgid "In the unreads"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:113
+#: modules/johncms/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:119
 msgid "In the Category"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:123
+#: modules/johncms/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:129
 msgid "In the Section"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:148
+#: modules/johncms/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:154
 msgid "Answers in the Topic"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:152
+#: modules/johncms/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:158
 msgid "Writes in the Topic"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:155
-#: modules/johncms/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:165
+#: modules/johncms/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:161
+#: modules/johncms/forum/src/Application/Services/ForumVisitorPlaceFormatter.php:171
 msgid "In the Topic"
 msgstr ""
 

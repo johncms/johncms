@@ -775,3 +775,5 @@ msgstr "Хмара тегів"
 msgid "Sort"
 msgstr "Сортувати"
 
+msgid "Articles on moderation"
+msgstr "Статті на модерації"
