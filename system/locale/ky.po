@@ -480,14 +480,6 @@ msgstr "секунд"
 msgid "Message already exists"
 msgstr "Мындай билдирүү мурда болгон"
 
-#: system/src/Counters.php:160
-msgid "Unread"
-msgstr "Окула элек"
-
-#: system/src/Counters.php:166
-msgid "Last activity"
-msgstr "Акыркы аракет"
-
 #: system/src/Http/PageMeta.php:18
 #: modules/forum/src/Application/Controllers/ForumSearchController.php:100
 #: modules/forum/src/Application/Controllers/ForumSearchController.php:109

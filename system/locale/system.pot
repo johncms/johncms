@@ -643,14 +643,6 @@ msgstr ""
 msgid "Message already exists"
 msgstr ""
 
-#: system/src/Counters.php:195
-msgid "Unread"
-msgstr ""
-
-#: system/src/Counters.php:201
-msgid "Last activity"
-msgstr ""
-
 #: system/src/Http/Controller/ExternalAuthController.php:74
 #: system/src/Http/Controller/ExternalAuthController.php:94
 msgid "This sign-in service is not available"

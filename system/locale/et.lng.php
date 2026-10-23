@@ -46,8 +46,6 @@
       'Text is too short' => 'Tekst on liiga lühike',
       'seconds' => 'sekundit',
       'Message already exists' => 'Sõnum on juba olemas',
-      'Unread' => 'Lugemata',
-      'Last activity' => 'Viimane tegevus',
       'Home' => 'Avaleht',
       'Forum moderator' => 'Foorumi moderaator',
       'Download moderator' => 'Allalaadimiste moderaator',

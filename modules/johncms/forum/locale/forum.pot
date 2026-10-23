@@ -353,7 +353,7 @@ msgstr ""
 
 #: modules/johncms/forum/src/Application/Controllers/CuratorsController.php:42
 #: modules/johncms/forum/src/Application/Controllers/DeleteTopicController.php:54
-#: modules/johncms/forum/src/Application/Controllers/ForumTopicController.php:68
+#: modules/johncms/forum/src/Application/Controllers/ForumTopicController.php:70
 msgid "Topic has been deleted or does not exists"
 msgstr ""
 
@@ -385,9 +385,9 @@ msgstr ""
 #: modules/johncms/forum/src/Application/Controllers/ForumIndexController.php:42
 #: modules/johncms/forum/src/Application/Controllers/ForumIndexController.php:43
 #: modules/johncms/forum/src/Application/Controllers/ForumSearchController.php:55
-#: modules/johncms/forum/src/Application/Controllers/ForumSectionController.php:42
-#: modules/johncms/forum/src/Application/Controllers/ForumTopicController.php:67
-#: modules/johncms/forum/src/Application/Controllers/ForumTopicController.php:72
+#: modules/johncms/forum/src/Application/Controllers/ForumSectionController.php:44
+#: modules/johncms/forum/src/Application/Controllers/ForumTopicController.php:69
+#: modules/johncms/forum/src/Application/Controllers/ForumTopicController.php:74
 #: modules/johncms/forum/src/Application/Controllers/LatestTopicsController.php:24
 #: modules/johncms/forum/src/Application/Controllers/MarkAllTopicsReadController.php:41
 #: modules/johncms/forum/src/Application/Controllers/PollVotersController.php:57
@@ -404,7 +404,7 @@ msgstr ""
 #: modules/johncms/forum/src/Application/Controllers/ViewTopicVisitorsController.php:72
 #: modules/johncms/forum/src/Application/Controllers/ViewTopicVisitorsController.php:79
 #: modules/johncms/forum/src/Application/Exceptions/ForumErrorCode.php:36
-#: modules/johncms/forum/src/Application/Menu/ForumMenuItemProvider.php:32
+#: modules/johncms/forum/src/Application/Menu/ForumMenuItemProvider.php:27
 #: modules/johncms/forum/src/Application/Services/ForumPermissions.php:60
 #: modules/johncms/forum/templates/public/files-list.twig:143
 #: modules/johncms/forum/templates/public/search.twig:87
@@ -654,7 +654,7 @@ msgstr ""
 msgid "Search query must be between 2 and 64 characters"
 msgstr ""
 
-#: modules/johncms/forum/src/Application/Notifications/UnreadTopicsNotificationProvider.php:41
+#: modules/johncms/forum/src/Application/Notifications/UnreadTopicsNotificationProvider.php:35
 msgid "New forum posts"
 msgstr ""
 

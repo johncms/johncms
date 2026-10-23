@@ -478,14 +478,6 @@ msgstr "წამი"
 msgid "Message already exists"
 msgstr "მესიჯი უკვე არსებობს"
 
-#: system/src/Counters.php:160
-msgid "Unread"
-msgstr "წაუკითხავი"
-
-#: system/src/Counters.php:166
-msgid "Last activity"
-msgstr "უკანასკნელი აქტივობა"
-
 #: system/src/Http/PageMeta.php:18
 #: modules/forum/src/Application/Controllers/ForumSearchController.php:100
 #: modules/forum/src/Application/Controllers/ForumSearchController.php:109

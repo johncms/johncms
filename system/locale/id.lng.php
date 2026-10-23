@@ -73,8 +73,6 @@
       'You cannot add the message so often<br>Please, wait' => 'Anda tidak dapat menambahkan pesan sehingga sering<br>Mohon, tunggu',
       'seconds' => 'detik',
       'Message already exists' => 'Pesan sudah ada',
-      'Unread' => 'Belum dibaca',
-      'Last activity' => 'Aktivitas Terakhir',
       'Home' => 'Beranda',
       'Forum moderator' => 'Moderator Forum',
       'Download moderator' => 'Moderator Unduhan',

@@ -478,14 +478,6 @@ msgstr "sekundit"
 msgid "Message already exists"
 msgstr "Sõnum on juba olemas"
 
-#: system/src/Counters.php:160
-msgid "Unread"
-msgstr "Lugemata"
-
-#: system/src/Counters.php:166
-msgid "Last activity"
-msgstr "Viimane tegevus"
-
 #: system/src/Http/PageMeta.php:18
 #: modules/forum/src/Application/Controllers/ForumSearchController.php:100
 #: modules/forum/src/Application/Controllers/ForumSearchController.php:109

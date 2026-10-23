@@ -482,14 +482,6 @@ msgstr "ثواني"
 msgid "Message already exists"
 msgstr "الرسالة موجوده بالفعل"
 
-#: system/src/Counters.php:160
-msgid "Unread"
-msgstr "لم يُقرأ بعد"
-
-#: system/src/Counters.php:166
-msgid "Last activity"
-msgstr "آخر نشاط"
-
 #: system/src/Http/PageMeta.php:18
 #: modules/forum/src/Application/Controllers/ForumSearchController.php:100
 #: modules/forum/src/Application/Controllers/ForumSearchController.php:109

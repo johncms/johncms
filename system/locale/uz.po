@@ -479,14 +479,6 @@ msgstr "soniya"
 msgid "Message already exists"
 msgstr "Xabar allaqachon mavjud"
 
-#: system/src/Counters.php:160
-msgid "Unread"
-msgstr "O‘qilmagan"
-
-#: system/src/Counters.php:166
-msgid "Last activity"
-msgstr "Oxirgi faollik"
-
 #: system/src/Http/PageMeta.php:18
 #: modules/forum/src/Application/Controllers/ForumSearchController.php:100
 #: modules/forum/src/Application/Controllers/ForumSearchController.php:109

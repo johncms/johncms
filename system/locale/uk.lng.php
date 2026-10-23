@@ -107,8 +107,6 @@ PHP повинен працювати з драйвером за замовчу�
       'You cannot add the message so often<br>Please, wait' => 'Ви не можете так часто додавати повідомлення.<br>Будь ласка, зачекайте',
       'seconds' => 'секунд',
       'Message already exists' => 'Таке повідомлення уже було',
-      'Unread' => 'Непрочитане',
-      'Last activity' => 'Крайня активність',
       'Page' => 'Сторінка',
       'Home' => 'Головна',
       'Forum moderator' => 'Модератор форуму',

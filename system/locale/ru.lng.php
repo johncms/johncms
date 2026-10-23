@@ -108,8 +108,6 @@ PHP должен работать с драйвером по умолчанию:
       'You cannot add the message so often<br>Please, wait' => 'Вы не можете так часто добавлять сообщения.<br>Пожалуйста, подождите',
       'seconds' => 'секунд',
       'Message already exists' => 'Такое сообщение уже было',
-      'Unread' => 'Непрочитанное',
-      'Last activity' => 'Последняя активность',
       'Page' => 'Страница',
       'Home' => 'Главная',
       'Forum moderator' => 'Модератор Форума',

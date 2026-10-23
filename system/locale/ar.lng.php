@@ -90,8 +90,6 @@
       'You cannot add the message so often<br>Please, wait' => 'لا يمكنك إضافة هذه المادة في كثير من الأحيان <br>الرجاء الانتظار',
       'seconds' => 'ثواني',
       'Message already exists' => 'الرسالة موجوده بالفعل',
-      'Unread' => 'لم يُقرأ بعد',
-      'Last activity' => 'آخر نشاط',
       'Home' => 'الصفحة الرّئيسية',
       'Forum moderator' => 'مشرف المنتدى',
       'Download moderator' => 'تحميل مشرف',

@@ -96,8 +96,6 @@
       'Text is too short' => 'Мәтін тым қысқа',
       'seconds' => 'секунд',
       'Message already exists' => 'Бұл хабарлама бұрыннан болған',
-      'Unread' => 'Оқылмаған',
-      'Last activity' => 'Соңғы белсенділік',
       'Home' => 'Басты бет',
       'Forum moderator' => 'Форум модераторы',
       'Download moderator' => 'Жүктеулер модераторы',

@@ -82,8 +82,6 @@
       'You cannot add the message so often<br>Please, wait' => 'Jūs negalite papildyti straipsnius taip dažnai.<br> Prašome palaukti',
       'seconds' => 'sek',
       'Message already exists' => 'Tokia žinutė jau buvo',
-      'Unread' => 'Neperskaityti',
-      'Last activity' => 'Paskutinis aktyvumas',
       'Home' => 'Pradžia',
       'Forum moderator' => 'Forumo Moderatorius',
       'Download moderator' => 'Siuntinių moderatorius',

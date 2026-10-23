@@ -81,8 +81,6 @@
       'You cannot add the message so often<br>Please, wait' => 'Yeni mesaj yazmaq üçün gözləyin',
       'seconds' => 'saniyə',
       'Message already exists' => 'Email artıq mövcuddur',
-      'Unread' => 'Oxunmamış',
-      'Last activity' => 'Son Aktivlik',
       'Home' => 'Əsas Səhifə',
       'Download moderator' => 'Yuklmeme moderatsiya',
       'Library moderator' => 'Kitabxana moderator',

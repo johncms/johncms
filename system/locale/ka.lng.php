@@ -50,8 +50,6 @@
       'Text is too short' => 'ტექსტი ძალიან მოკლეა',
       'seconds' => 'წამი',
       'Message already exists' => 'მესიჯი უკვე არსებობს',
-      'Unread' => 'წაუკითხავი',
-      'Last activity' => 'უკანასკნელი აქტივობა',
       'Home' => 'საწყისი',
       'Forum moderator' => 'ფორუმის მოდერატორი',
       'Download moderator' => 'ჩამოტვირთვების მოდერატორი',

@@ -480,14 +480,6 @@ msgstr "sek"
 msgid "Message already exists"
 msgstr "Tokia žinutė jau buvo"
 
-#: system/src/Counters.php:160
-msgid "Unread"
-msgstr "Neperskaityti"
-
-#: system/src/Counters.php:166
-msgid "Last activity"
-msgstr "Paskutinis aktyvumas"
-
 #: system/src/Http/PageMeta.php:18
 #: modules/forum/src/Application/Controllers/ForumSearchController.php:100
 #: modules/forum/src/Application/Controllers/ForumSearchController.php:109
