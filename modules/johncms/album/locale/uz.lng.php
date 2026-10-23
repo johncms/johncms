@@ -100,6 +100,7 @@
         1 => 'Fotolar',
       ),
       'Total:' => 'Jami',
+      'Photo Albums' => 'Foto Albomlar',
     ),
   ),
 );

@@ -32,6 +32,11 @@ msgstr ""
 msgid "List of users"
 msgstr ""
 
+#: modules/johncms/community/src/Application/Menu/CommunityMenuItemProvider.php:25
+#: modules/johncms/community/templates/public/index.twig:23
+msgid "Users"
+msgstr ""
+
 #: modules/johncms/community/src/Application/Services/CommunityPermissions.php:27
 msgid "Open the lists of the community"
 msgstr ""
@@ -120,10 +125,6 @@ msgstr ""
 #: modules/johncms/community/templates/public/index.twig:19
 #: modules/johncms/community/templates/public/search.twig:36
 msgid "The search is performed by Nickname and are case-insensitive."
-msgstr ""
-
-#: modules/johncms/community/templates/public/index.twig:23
-msgid "Users"
 msgstr ""
 
 #: modules/johncms/community/templates/public/index.twig:42

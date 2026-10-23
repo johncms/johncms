@@ -13,6 +13,7 @@
       'Cancel' => 'Bekor qilish',
       'Edit' => 'Tahrir',
       'Title' => 'Sarlavha',
+      'News archive' => 'Yangiliklar arxivi',
     ),
   ),
 );

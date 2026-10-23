@@ -95,6 +95,7 @@
       'Search query' => 'Truy vấn tìm kiếm',
       'The search didn\'t yield any results.' => 'Tìm kiếm không có kết quả nào.',
       'Enter a tag' => ' Nhập thẻ tags',
+      'News archive' => 'Tin tức lưu trữ',
     ),
   ),
 );

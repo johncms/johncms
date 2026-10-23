@@ -100,6 +100,7 @@
         2 => 'fotografii',
       ),
       'Total:' => 'Total',
+      'Photo Albums' => 'Albume Foto',
     ),
   ),
 );

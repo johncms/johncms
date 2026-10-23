@@ -21,7 +21,6 @@ final class SiteExtension extends AbstractExtension
         return [
             new TwigFunction('breadcrumbs', [SiteRuntime::class, 'breadcrumbs']),
             new TwigFunction('notifications', [SiteRuntime::class, 'notifications']),
-            new TwigFunction('menu_counters', [SiteRuntime::class, 'menuCounters']),
             new TwigFunction('online', [SiteRuntime::class, 'online']),
             new TwigFunction('ads', [SiteRuntime::class, 'ads']),
             new TwigFunction('analytics', [SiteRuntime::class, 'analytics']),

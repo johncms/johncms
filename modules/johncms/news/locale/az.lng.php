@@ -13,6 +13,7 @@
       'Cancel' => 'Ləğv Et',
       'Edit' => 'Düzəliş edin',
       'Title' => 'Başlıq',
+      'News archive' => 'Arxiv xəbərlər',
     ),
   ),
 );

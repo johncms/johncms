@@ -93,6 +93,7 @@
       'Search query' => 'Interogare căutare',
       'The search didn\'t yield any results.' => 'Căutarea nu a generat niciun rezultat.',
       'Enter a tag' => 'Introduceți o etichetă',
+      'News archive' => 'Arhiva Stiri',
     ),
   ),
 );

@@ -26,6 +26,14 @@ final class EloquentAlbumPhotoRepository implements AlbumPhotoRepositoryInterfac
             ->count();
     }
 
+    public function countNewSharedSince(int $time): int
+    {
+        return AlbumPhoto::query()
+            ->where('time', '>', $time)
+            ->where('access', '>', AlbumAccess::Private->value)
+            ->count();
+    }
+
     public function findById(int $photoId): ?AlbumPhoto
     {
         return AlbumPhoto::query()->with(['album', 'user'])->find($photoId);

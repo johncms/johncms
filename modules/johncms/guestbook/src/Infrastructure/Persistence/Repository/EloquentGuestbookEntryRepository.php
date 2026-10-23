@@ -29,6 +29,14 @@ class EloquentGuestbookEntryRepository implements GuestbookEntryRepositoryInterf
             ->count();
     }
 
+    public function countEntriesSince(bool $adminClub, int $time): int
+    {
+        return GuestbookEntry::query()
+            ->where('adm', $adminClub ? 1 : 0)
+            ->where('time', '>', $time)
+            ->count();
+    }
+
     public function find(int $id): ?GuestbookEntry
     {
         return GuestbookEntry::query()->find($id);

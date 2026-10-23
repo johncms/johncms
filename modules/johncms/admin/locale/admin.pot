@@ -5,6 +5,7 @@ msgstr ""
 #: system/src/Http/AdminAreaContext.php:33
 #: modules/johncms/admin/src/Application/Controllers/DashboardController.php:22
 #: modules/johncms/admin/src/Application/Controllers/Ip/IpWhoisController.php:37
+#: modules/johncms/admin/src/Application/Menu/AdminPanelMenuItemProvider.php:21
 #: modules/johncms/admin/src/Application/Services/AdminPermissions.php:29
 msgid "Admin Panel"
 msgstr ""

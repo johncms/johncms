@@ -104,6 +104,7 @@
         3 => 'nuotraukos',
       ),
       'Total:' => 'Viso:',
+      'Photo Albums' => 'Nuotraukų Albumai',
     ),
   ),
 );

@@ -95,6 +95,7 @@
         3 => 'zdjęcia',
       ),
       'Total:' => 'Wszystkich:',
+      'Photo Albums' => 'Albumy zdjęć',
     ),
   ),
 );

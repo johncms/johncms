@@ -220,3 +220,5 @@ msgstr "Diedit"
 msgid "Edit"
 msgstr "Sunting"
 
+msgid "Admin Chat"
+msgstr "Admin obrolan"

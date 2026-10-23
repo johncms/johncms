@@ -4,8 +4,6 @@ msgstr ""
 
 #: config/notifications.global.php:14
 #: config/places.global.php:17
-#: themes/default/templates/components/sidebar-main-menu.twig:34
-#: modules/johncms/homepage/templates/public/index.twig:42
 msgid "Forum"
 msgstr ""
 
@@ -40,8 +38,6 @@ msgstr ""
 
 #: config/places.global.php:14
 #: system/src/Auth/Authorization/CorePermissions.php:67
-#: themes/default/templates/components/sidebar-main-menu.twig:85
-#: modules/johncms/homepage/templates/public/index.twig:46
 msgid "Users"
 msgstr ""
 
@@ -56,14 +52,10 @@ msgstr ""
 #: system/src/Comments.php:296
 #: system/src/Comments.php:337
 #: system/src/Comments.php:364
-#: themes/default/templates/components/sidebar-main-menu.twig:60
-#: modules/johncms/homepage/templates/public/index.twig:44
 msgid "Downloads"
 msgstr ""
 
 #: config/places.global.php:18
-#: themes/default/templates/components/sidebar-main-menu.twig:47
-#: modules/johncms/homepage/templates/public/index.twig:43
 msgid "Guestbook"
 msgstr ""
 
@@ -72,8 +64,6 @@ msgid "Reading the FAQ"
 msgstr ""
 
 #: config/places.global.php:20
-#: themes/default/templates/components/sidebar-main-menu.twig:73
-#: modules/johncms/homepage/templates/public/index.twig:45
 msgid "Library"
 msgstr ""
 
@@ -814,15 +804,15 @@ msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:17
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:417
-#: themes/default/templates/components/sidebar-main-menu.twig:6
-#: themes/default/templates/components/sidebar-main-menu.twig:198
+#: themes/default/templates/components/sidebar-main-menu.twig:5
+#: themes/default/templates/components/sidebar-main-menu.twig:100
 msgid "Set Light Theme"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:17
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:416
-#: themes/default/templates/components/sidebar-main-menu.twig:6
-#: themes/default/templates/components/sidebar-main-menu.twig:197
+#: themes/default/templates/components/sidebar-main-menu.twig:5
+#: themes/default/templates/components/sidebar-main-menu.twig:99
 msgid "Set Dark Theme"
 msgstr ""
 
@@ -873,30 +863,6 @@ msgstr ""
 
 #: themes/default/templates/components/impersonation-banner.twig:15
 msgid "Return to my account"
-msgstr ""
-
-#: themes/default/templates/components/sidebar-main-menu.twig:22
-msgid "News archive"
-msgstr ""
-
-#: themes/default/templates/components/sidebar-main-menu.twig:96
-msgid "Photo Albums"
-msgstr ""
-
-#: themes/default/templates/components/sidebar-main-menu.twig:107
-msgid "Information, FAQ"
-msgstr ""
-
-#: themes/default/templates/components/sidebar-main-menu.twig:115
-msgid "Contacts"
-msgstr ""
-
-#: themes/default/templates/components/sidebar-main-menu.twig:125
-msgid "Admin Panel"
-msgstr ""
-
-#: themes/default/templates/components/sidebar-main-menu.twig:135
-msgid "Admin Chat"
 msgstr ""
 
 #: themes/default/templates/components/sidebar-user-menu.twig:24

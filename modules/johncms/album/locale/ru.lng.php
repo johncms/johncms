@@ -132,6 +132,7 @@
       'Photo albums' => 'Фотоальбомы',
       'Manage the albums and the photos of another account' => 'Управлять альбомами и фотографиями другого аккаунта',
       'Read the comments of the photos while they are switched off' => 'Читать комментарии к фотографиям, когда они отключены',
+      'Photo Albums' => 'Фотоальбомы',
     ),
   ),
 );

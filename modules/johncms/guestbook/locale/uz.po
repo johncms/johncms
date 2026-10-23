@@ -220,3 +220,5 @@ msgstr "Tahrirlagan"
 msgid "Edit"
 msgstr "Tahrir"
 
+msgid "Admin Chat"
+msgstr ""

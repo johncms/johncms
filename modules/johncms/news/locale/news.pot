@@ -157,6 +157,10 @@ msgstr ""
 msgid "Your vote is accepted"
 msgstr ""
 
+#: modules/johncms/news/src/Application/Menu/NewsMenuItemProvider.php:22
+msgid "News archive"
+msgstr ""
+
 #: modules/johncms/news/src/Application/Section.php:79
 msgid "The requested section was not found."
 msgstr ""

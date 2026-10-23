@@ -578,3 +578,5 @@ msgstr[0] ""
 msgid "Total:"
 msgstr ""
 
+msgid "Photo Albums"
+msgstr ""

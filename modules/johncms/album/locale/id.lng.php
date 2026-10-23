@@ -89,6 +89,7 @@
       'album' => 'album',
       'photo' => 'foto',
       'Total:' => 'Total',
+      'Photo Albums' => 'Album Foto',
     ),
   ),
 );

@@ -697,26 +697,6 @@ msgstr "Установить светлую тему"
 msgid "Set Dark Theme"
 msgstr "Установить темную тему"
 
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:43
-msgid "News archive"
-msgstr "Архив новостей"
-
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:117
-msgid "Photo Albums"
-msgstr "Фотоальбомы"
-
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:128
-msgid "Information, FAQ"
-msgstr "Информация, FAQ"
-
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:139
-msgid "Admin Panel"
-msgstr "Админ панель"
-
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:148
-msgid "Admin Chat"
-msgstr "Админ Чат"
-
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:23
 #: modules/registration/templates/email_confirmed.phtml:22
 msgid "Log In"
@@ -893,10 +873,6 @@ msgstr "Изменено:"
 #: themes/default/templates/system/pages/comments_list.phtml:85
 msgid "Edited"
 msgstr "Изменен"
-
-
-msgid "Contacts"
-msgstr "Контакты"
 
 msgid "New message from the contact form"
 msgstr "Новое сообщение из формы обратной связи"

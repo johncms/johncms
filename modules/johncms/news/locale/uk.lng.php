@@ -114,6 +114,7 @@
       'Search query' => 'Пошуковий запит',
       'The search didn\'t yield any results.' => 'Пошук не дав жодних результатів.',
       'Enter a tag' => 'Введіть мітку',
+      'News archive' => 'Архів новин',
     ),
   ),
 );

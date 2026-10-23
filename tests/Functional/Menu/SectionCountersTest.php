@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Functional\Menu;
 
 use Dom\HTMLDocument;
+use Johncms\Config\ConfigRepository;
 use Johncms\Users\User;
 use Tests\Functional\FunctionalTestCase;
 use Tests\Support\Fixture;
@@ -12,7 +13,8 @@ use Tests\Support\FunctionalUserFactory;
 
 /**
  * The sections of the site as the main menu and the tiles of the home page show them: where each
- * leads, who sees it, and the badge with what is new in it.
+ * leads, who sees it, and the badge with what is new in it. Every section is declared by its own
+ * module, and the menu and the tiles draw the same lines.
  *
  * A section is told by the address it leads to, not by its words: the site answers in its own
  * language.
@@ -96,22 +98,38 @@ final class SectionCountersTest extends FunctionalTestCase
     }
 
     /**
-     * The menu has no badge for the news, whatever is new in them; the tile of the home page has.
+     * The news count as new for as many days as the home page keeps them; a site that keeps them
+     * there for no particular time counts none.
      */
-    public function testTheNewsHaveNoBadgeInTheMenu(): void
+    public function testTheNewsOfTheDaysTheHomePageKeepsThemAreCounted(): void
     {
         Fixture::insert('news_articles', ['name' => 'Fresh', 'code' => 'fresh', 'active' => 1, 'created_at' => date('Y-m-d H:i:s')]);
 
         self::assertNull($this->menu($this->page('/'))['/news/']);
+
+        $config = ConfigRepository::all();
+
+        try {
+            ConfigRepository::init(array_replace_recursive($config, ['news' => ['homepage_days' => 3]]));
+            $page = $this->page('/');
+        } finally {
+            ConfigRepository::init($config);
+        }
+
+        self::assertSame('+ 1', $this->menu($page)['/news/']);
+        self::assertSame('1', $this->tiles($page)['/news/']);
     }
 
-    public function testTheTilesOfTheHomePageLeadToTheMainSectionsWithTheirCounters(): void
+    /**
+     * The tiles are the sections of the main menu, in its order, with the same counters.
+     */
+    public function testTheTilesOfTheHomePageAreTheSectionsOfTheMainMenu(): void
     {
         Fixture::insert('download__files', ['name' => 'New', 'type' => 2, 'time' => time()]);
 
         $tiles = $this->tiles($this->page('/'));
 
-        self::assertSame(['/news/', '/forum/', '/guestbook/ga', '/downloads/', '/library/', '/community/'], array_keys($tiles));
+        self::assertSame(self::SECTIONS, array_keys($tiles));
         self::assertSame('1', $tiles['/downloads/']);
         self::assertNull($tiles['/forum/']);
     }

@@ -13,6 +13,7 @@
       'Cancel' => 'Anuluj',
       'Edit' => 'Edytuj',
       'Title' => 'Tytuł',
+      'News archive' => 'Archiwum aktualności',
     ),
   ),
 );

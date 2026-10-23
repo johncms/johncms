@@ -16,6 +16,8 @@ interface GuestbookEntryRepositoryInterface
 
     public function countEntries(bool $adminClub): int;
 
+    public function countEntriesSince(bool $adminClub, int $time): int;
+
     public function find(int $id): ?GuestbookEntry;
 
     /**

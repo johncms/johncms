@@ -603,3 +603,5 @@ msgstr[1] "сүрөттөр"
 msgid "Total:"
 msgstr "Баары"
 
+msgid "Photo Albums"
+msgstr "Сүрөт альбомдору"

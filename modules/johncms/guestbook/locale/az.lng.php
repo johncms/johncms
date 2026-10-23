@@ -39,6 +39,7 @@
       'Edited:' => 'Redaktə:',
       'Edited' => 'Redaktə',
       'Edit' => 'Düzəliş edin',
+      'Admin Chat' => 'Admin klubu',
     ),
   ),
 );

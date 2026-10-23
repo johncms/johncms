@@ -538,3 +538,6 @@ msgstr "Комментировать новости"
 
 msgid "Manage the news"
 msgstr "Управлять новостями"
+
+msgid "News archive"
+msgstr "Архив новостей"

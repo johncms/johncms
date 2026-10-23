@@ -529,3 +529,5 @@ msgstr "Tìm kiếm không có kết quả nào."
 msgid "Enter a tag"
 msgstr " Nhập thẻ tags"
 
+msgid "News archive"
+msgstr "Tin tức lưu trữ"

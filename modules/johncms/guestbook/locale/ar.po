@@ -220,3 +220,5 @@ msgstr "تحرير:"
 msgid "Edit"
 msgstr "تحرير"
 
+msgid "Admin Chat"
+msgstr "الدردشة الاداريه"

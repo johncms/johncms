@@ -692,26 +692,6 @@ msgstr ""
 msgid "Set Dark Theme"
 msgstr ""
 
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:43
-msgid "News archive"
-msgstr "Naujienų archyvas"
-
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:117
-msgid "Photo Albums"
-msgstr "Nuotraukų Albumai"
-
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:128
-msgid "Information, FAQ"
-msgstr "Informacija, klausimai ir atsakymai"
-
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:139
-msgid "Admin Panel"
-msgstr "Administravimo panelė"
-
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:148
-msgid "Admin Chat"
-msgstr "Admin pokalbiai"
-
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:23
 #: modules/registration/templates/email_confirmed.phtml:22
 msgid "Log In"

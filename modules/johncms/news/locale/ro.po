@@ -529,3 +529,5 @@ msgstr "Căutarea nu a generat niciun rezultat."
 msgid "Enter a tag"
 msgstr "Introduceți o etichetă"
 
+msgid "News archive"
+msgstr "Arhiva Stiri"

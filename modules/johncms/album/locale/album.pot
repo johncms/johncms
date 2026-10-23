@@ -229,6 +229,10 @@ msgstr ""
 msgid "Girls"
 msgstr ""
 
+#: modules/johncms/album/src/Application/Menu/AlbumMenuItemProvider.php:34
+msgid "Photo Albums"
+msgstr ""
+
 #: modules/johncms/album/src/Application/Services/AlbumPermissions.php:29
 msgid "Photo albums"
 msgstr ""

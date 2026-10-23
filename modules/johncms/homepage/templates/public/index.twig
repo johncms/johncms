@@ -1,6 +1,5 @@
 {#
-    @param array      counters Section counters shown on the tiles.
-    @param iterable   news     Latest published articles, empty when the news block is off.
+    @param iterable news Latest published articles, empty when the news block is off.
 #}
 {% extends '@theme/layouts/default.twig' %}
 
@@ -37,26 +36,25 @@
 
     <div class="d-block d-md-none mobile_tiles">
         <div class="row">
-            {% for tile in [
-                {url: '/news/', icon: 'book', label: __('News'), count: counters.news.new},
-                {url: '/forum/', icon: 'forum', label: d__('system', 'Forum'), count: counters.forum.new_messages},
-                {url: '/guestbook/ga', icon: 'chat', label: d__('system', 'Guestbook'), count: counters.guestbook.guestbook},
-                {url: '/downloads/', icon: 'download', label: d__('system', 'Downloads'), count: counters.downloads.new},
-                {url: '/library/', icon: 'text', label: d__('system', 'Library'), count: counters.library.new},
-                {url: '/community/', icon: 'users', label: d__('system', 'Users'), count: counters.users.new}
-            ] %}
+            {# The sections of the main menu, a tile each, with what is new in it. #}
+            {% for item in menu_items('main') %}
+                {% set badge = item.badge %}
                 <div class="col-6 col-sm-4 mt-3 tile">
-                    <a href="{{ tile.url }}" class="card border text-center">
+                    <a href="{{ item.url }}" class="card border text-center">
                         <div class="card-body">
                             <div class="icon_with_badge d-inline-block">
-                                <svg class="icon-40">
-                                    <use xlink:href="{{ asset('icons/sprite.svg') }}#{{ tile.icon }}"/>
-                                </svg>
-                                {% if tile.count > 0 %}
-                                    <span class="badge rounded-pill bg-danger ms-3 mt-1">{{ tile.count|format_number }}</span>
+                                {% if item.hasImageIcon %}
+                                    <img class="icon-40" src="{{ item.icon }}" alt="">
+                                {% elseif item.icon %}
+                                    <svg class="icon-40">
+                                        <use xlink:href="{{ asset('icons/sprite.svg') }}#{{ item.icon }}"/>
+                                    </svg>
+                                {% endif %}
+                                {% if badge > 0 %}
+                                    <span class="badge rounded-pill bg-danger ms-3 mt-1">{{ badge|format_number }}</span>
                                 {% endif %}
                             </div>
-                            <div class="mt-2 tile_name">{{ tile.label }}</div>
+                            <div class="mt-2 tile_name">{{ item.title }}</div>
                         </div>
                     </a>
                 </div>

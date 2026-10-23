@@ -39,6 +39,7 @@
       'Edited:' => 'Redaguoti:',
       'Edited' => 'Redaguoti:',
       'Edit' => 'Redaguoti',
+      'Admin Chat' => 'Admin pokalbiai',
     ),
   ),
 );

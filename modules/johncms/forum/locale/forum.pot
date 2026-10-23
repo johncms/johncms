@@ -404,6 +404,7 @@ msgstr ""
 #: modules/johncms/forum/src/Application/Controllers/ViewTopicVisitorsController.php:72
 #: modules/johncms/forum/src/Application/Controllers/ViewTopicVisitorsController.php:79
 #: modules/johncms/forum/src/Application/Exceptions/ForumErrorCode.php:36
+#: modules/johncms/forum/src/Application/Menu/ForumMenuItemProvider.php:32
 #: modules/johncms/forum/src/Application/Services/ForumPermissions.php:60
 #: modules/johncms/forum/templates/public/files-list.twig:143
 #: modules/johncms/forum/templates/public/search.twig:87

@@ -246,3 +246,6 @@ msgstr "Читать гостевую книгу"
 
 msgid "Leave an entry in the guestbook"
 msgstr "Оставлять записи в гостевой книге"
+
+msgid "Admin Chat"
+msgstr "Админ Чат"

@@ -39,6 +39,7 @@
       'Edited:' => 'Chỉnh sửa:',
       'Edited' => 'Đã sửa',
       'Edit' => 'Chỉnh sửa',
+      'Admin Chat' => 'Quản Trị Nói Chuyện',
     ),
   ),
 );

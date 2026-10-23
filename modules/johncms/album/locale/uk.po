@@ -584,3 +584,5 @@ msgstr[3] "фотографій"
 msgid "Total:"
 msgstr "Всього:"
 
+msgid "Photo Albums"
+msgstr "Фотоальбоми"

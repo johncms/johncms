@@ -90,6 +90,7 @@
       'album' => 'album',
       'photo' => 'ảnh',
       'Total:' => 'Tổng cộng:',
+      'Photo Albums' => 'Albums hình ảnh',
     ),
   ),
 );

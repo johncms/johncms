@@ -584,3 +584,5 @@ msgstr[3] "zdjęcia"
 msgid "Total:"
 msgstr "Wszystkich:"
 
+msgid "Photo Albums"
+msgstr "Albumy zdjęć"

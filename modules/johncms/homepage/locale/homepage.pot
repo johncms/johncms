@@ -2,71 +2,70 @@ msgid ""
 msgstr ""
 "X-Domain: homepage\n"
 
-#: modules/johncms/homepage/templates/public/index.twig:11
+#: modules/johncms/homepage/templates/public/index.twig:10
 msgid "Free, Open Source content management system"
 msgstr ""
 
-#: modules/johncms/homepage/templates/public/index.twig:18
+#: modules/johncms/homepage/templates/public/index.twig:17
 msgid "Download"
 msgstr ""
 
-#: modules/johncms/homepage/templates/public/index.twig:24
+#: modules/johncms/homepage/templates/public/index.twig:23
 msgid "Documentation"
 msgstr ""
 
-#: modules/johncms/homepage/templates/public/index.twig:41
-#: modules/johncms/homepage/templates/public/index.twig:69
+#: modules/johncms/homepage/templates/public/index.twig:67
 msgid "News"
 msgstr ""
 
-#: modules/johncms/homepage/templates/public/index.twig:94
+#: modules/johncms/homepage/templates/public/index.twig:92
 msgid "Features"
 msgstr ""
 
-#: modules/johncms/homepage/templates/public/index.twig:100
+#: modules/johncms/homepage/templates/public/index.twig:98
 msgid "Responsive Layout"
 msgstr ""
 
-#: modules/johncms/homepage/templates/public/index.twig:103
+#: modules/johncms/homepage/templates/public/index.twig:101
 msgid "Your site will appear equally well on both computers and mobile devices."
 msgstr ""
 
-#: modules/johncms/homepage/templates/public/index.twig:110
+#: modules/johncms/homepage/templates/public/index.twig:108
 msgid "Template System"
 msgstr ""
 
-#: modules/johncms/homepage/templates/public/index.twig:113
+#: modules/johncms/homepage/templates/public/index.twig:111
 msgid "Using templates, you can completely change the style of your site so that it becomes unique and not like the others."
 msgstr ""
 
-#: modules/johncms/homepage/templates/public/index.twig:120
+#: modules/johncms/homepage/templates/public/index.twig:118
 msgid "High Performance"
 msgstr ""
 
-#: modules/johncms/homepage/templates/public/index.twig:124
+#: modules/johncms/homepage/templates/public/index.twig:122
 msgid "When developing JohnCMS we pay special attention to system performance.<br>Your website will not require a powerful server for as long as possible."
 msgstr ""
 
-#: modules/johncms/homepage/templates/public/index.twig:131
+#: modules/johncms/homepage/templates/public/index.twig:129
 msgid "Multilingual"
 msgstr ""
 
-#: modules/johncms/homepage/templates/public/index.twig:134
+#: modules/johncms/homepage/templates/public/index.twig:132
 msgid "Reach the maximum audience in different languages. Several languages have already been built into the system.<br>And if you don't have the desired language, you can easily add it using advanced translation tools that support johnCMS."
 msgstr ""
 
-#: modules/johncms/homepage/templates/public/index.twig:141
+#: modules/johncms/homepage/templates/public/index.twig:139
 msgid "Modularity"
 msgstr ""
 
-#: modules/johncms/homepage/templates/public/index.twig:144
+#: modules/johncms/homepage/templates/public/index.twig:142
 msgid "The most popular modules are built into the system.<br>You can install ready-made additional modules, create them yourself or order development of new modules from other developers."
 msgstr ""
 
-#: modules/johncms/homepage/templates/public/index.twig:148
+#: modules/johncms/homepage/templates/public/index.twig:146
 msgid "Free License"
 msgstr ""
 
-#: modules/johncms/homepage/templates/public/index.twig:158
+#: modules/johncms/homepage/templates/public/index.twig:156
 msgid "The GNU GPL-3 license gives you the right to distribute and modify JohnCMS."
 msgstr ""

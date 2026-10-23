@@ -43,6 +43,7 @@ msgid "The message was saved"
 msgstr ""
 
 #: modules/johncms/guestbook/src/Application/Controllers/GuestbookController.php:46
+#: modules/johncms/guestbook/src/Application/Menu/GuestbookMenuItemProvider.php:29
 #: modules/johncms/guestbook/src/Application/Services/GuestbookPermissions.php:38
 msgid "Guestbook"
 msgstr ""
@@ -71,6 +72,10 @@ msgstr ""
 
 #: modules/johncms/guestbook/src/Application/Controllers/ReplyController.php:70
 msgid "Your reply to the message was saved"
+msgstr ""
+
+#: modules/johncms/guestbook/src/Application/Menu/GuestbookMenuItemProvider.php:39
+msgid "Admin Chat"
 msgstr ""
 
 #: modules/johncms/guestbook/src/Application/Services/GuestbookPermissions.php:51

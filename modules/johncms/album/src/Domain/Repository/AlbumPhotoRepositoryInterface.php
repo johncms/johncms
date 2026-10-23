@@ -16,6 +16,12 @@ interface AlbumPhotoRepositoryInterface
     public function countNewPublicSince(int $time): int;
 
     /**
+     * The photos added since then that their owner shares with somebody — openly or behind a
+     * password — which is what a moderator has to look at.
+     */
+    public function countNewSharedSince(int $time): int;
+
+    /**
      * Find a photo by id, eager-loading its album and user, or null when missing.
      */
     public function findById(int $photoId): ?AlbumPhoto;

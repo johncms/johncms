@@ -21,6 +21,7 @@ msgstr ""
 #: modules/johncms/help/src/Application/Controllers/SetAvatarController.php:63
 #: modules/johncms/help/src/Application/Controllers/SmiliesCatalogController.php:36
 #: modules/johncms/help/src/Application/Controllers/UserSmiliesController.php:53
+#: modules/johncms/help/src/Application/Menu/HelpMenuItemProvider.php:15
 msgid "Information, FAQ"
 msgstr ""
 

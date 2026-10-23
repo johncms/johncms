@@ -62,6 +62,7 @@ msgstr ""
 #: modules/johncms/downloads/src/Application/Controllers/ViewFileController.php:174
 #: modules/johncms/downloads/src/Application/Controllers/ViewFileController.php:210
 #: modules/johncms/downloads/src/Application/Exceptions/DownloadsErrorCode.php:19
+#: modules/johncms/downloads/src/Application/Menu/DownloadsMenuItemProvider.php:30
 #: modules/johncms/downloads/src/Application/Middlewares/DownloadsAdminMiddleware.php:27
 #: modules/johncms/downloads/src/Application/Middlewares/DownloadsAdminMiddleware.php:31
 #: modules/johncms/downloads/src/Application/Services/DownloadsPermissions.php:39

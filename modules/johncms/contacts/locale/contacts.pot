@@ -15,6 +15,7 @@ msgstr ""
 #: modules/johncms/contacts/src/Application/Controllers/Admin/ContactMessageViewController.php:41
 #: modules/johncms/contacts/src/Application/Controllers/Admin/ContactSettingsController.php:116
 #: modules/johncms/contacts/src/Application/Controllers/ContactsController.php:43
+#: modules/johncms/contacts/src/Application/Menu/ContactsMenuItemProvider.php:15
 msgid "Contacts"
 msgstr ""
 

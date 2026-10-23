@@ -114,6 +114,7 @@
       'Search query' => 'Издөө сурамы',
       'The search didn\'t yield any results.' => 'Издөө эч кандай жыйынтык бере элек.',
       'Enter a tag' => 'Белгини киргизиңиз',
+      'News archive' => 'Жаңылыктардын архиви',
     ),
   ),
 );

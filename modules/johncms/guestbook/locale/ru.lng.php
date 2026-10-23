@@ -73,6 +73,7 @@ Inserting links: <a href="https://johncms.com">https://johncms.com</a>, images, 
       'Enter the admin club' => 'Входить в клуб администрации',
       'Read the guestbook' => 'Читать гостевую книгу',
       'Leave an entry in the guestbook' => 'Оставлять записи в гостевой книге',
+      'Admin Chat' => 'Админ Чат',
     ),
   ),
 );

@@ -220,3 +220,5 @@ msgstr "Redaktə"
 msgid "Edit"
 msgstr "Düzəliş edin"
 
+msgid "Admin Chat"
+msgstr "Admin klubu"

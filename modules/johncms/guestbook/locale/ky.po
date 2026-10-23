@@ -224,3 +224,5 @@ msgstr "Өзгөртүүлөр"
 msgid "Edit"
 msgstr "Оңдоо"
 
+msgid "Admin Chat"
+msgstr "Админ Чат"

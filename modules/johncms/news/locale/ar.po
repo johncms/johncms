@@ -529,3 +529,5 @@ msgstr ""
 msgid "Enter a tag"
 msgstr ""
 
+msgid "News archive"
+msgstr "أرشيف الأخبار"

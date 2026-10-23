@@ -117,6 +117,7 @@
       'Delete the comments of other people' => 'Удалять комментарии других людей',
       'Comment on the news' => 'Комментировать новости',
       'Manage the news' => 'Управлять новостями',
+      'News archive' => 'Архив новостей',
     ),
   ),
 );

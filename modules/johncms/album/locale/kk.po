@@ -580,3 +580,5 @@ msgstr[1] "фото"
 msgid "Total:"
 msgstr "Барлығы:"
 
+msgid "Photo Albums"
+msgstr "Фотоальбом"

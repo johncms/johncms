@@ -13,6 +13,7 @@
       'Cancel' => 'Atšaukti',
       'Edit' => 'Redaguoti',
       'Title' => 'Pavadinimas',
+      'News archive' => 'Naujienų archyvas',
     ),
   ),
 );

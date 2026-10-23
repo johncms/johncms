@@ -693,26 +693,6 @@ msgstr ""
 msgid "Set Dark Theme"
 msgstr ""
 
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:43
-msgid "News archive"
-msgstr "Archiwum aktualności"
-
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:117
-msgid "Photo Albums"
-msgstr "Albumy zdjęć"
-
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:128
-msgid "Information, FAQ"
-msgstr "Informacje, pytania i odpowiedzi"
-
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:139
-msgid "Admin Panel"
-msgstr "Panel Administratora"
-
-#: themes/default/templates/system/app/sidebar-main-menu.phtml:148
-msgid "Admin Chat"
-msgstr "Czat administracyjny"
-
 #: themes/default/templates/system/app/sidebar-user-menu.phtml:23
 #: modules/registration/templates/email_confirmed.phtml:22
 msgid "Log In"

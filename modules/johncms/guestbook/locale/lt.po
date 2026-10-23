@@ -220,3 +220,5 @@ msgstr "Redaguoti:"
 msgid "Edit"
 msgstr "Redaguoti"
 
+msgid "Admin Chat"
+msgstr "Admin pokalbiai"

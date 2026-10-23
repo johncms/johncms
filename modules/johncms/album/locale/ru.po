@@ -593,3 +593,6 @@ msgstr "Управлять альбомами и фотографиями дру
 
 msgid "Read the comments of the photos while they are switched off"
 msgstr "Читать комментарии к фотографиям, когда они отключены"
+
+msgid "Photo Albums"
+msgstr "Фотоальбомы"

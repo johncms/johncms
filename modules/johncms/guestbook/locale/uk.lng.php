@@ -67,6 +67,7 @@ Inserting links: <a href="https://johncms.com">https://johncms.com</a>, images, 
       'Edited:' => 'Відредаговано:',
       'Edited' => 'Відредаговано',
       'Edit' => 'Редагувати',
+      'Admin Chat' => 'Адмін Чат',
     ),
   ),
 );

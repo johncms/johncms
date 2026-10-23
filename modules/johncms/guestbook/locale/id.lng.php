@@ -39,6 +39,7 @@
       'Edited:' => 'Diedit:',
       'Edited' => 'Diedit',
       'Edit' => 'Sunting',
+      'Admin Chat' => 'Admin obrolan',
     ),
   ),
 );

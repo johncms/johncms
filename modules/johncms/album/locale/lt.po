@@ -584,3 +584,5 @@ msgstr[3] "nuotraukos"
 msgid "Total:"
 msgstr "Viso:"
 
+msgid "Photo Albums"
+msgstr "Nuotraukų Albumai"

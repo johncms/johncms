@@ -550,3 +550,5 @@ msgstr "Издөө эч кандай жыйынтык бере элек."
 msgid "Enter a tag"
 msgstr "Белгини киргизиңиз"
 
+msgid "News archive"
+msgstr "Жаңылыктардын архиви"

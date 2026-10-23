@@ -55,6 +55,7 @@ msgstr ""
 #: modules/johncms/library/src/Application/Controllers/TagsController.php:68
 #: modules/johncms/library/src/Application/Controllers/TopController.php:31
 #: modules/johncms/library/src/Application/Controllers/TopController.php:33
+#: modules/johncms/library/src/Application/Menu/LibraryMenuItemProvider.php:30
 #: modules/johncms/library/src/Application/Middlewares/LibraryAccessMiddleware.php:37
 #: modules/johncms/library/src/Application/Services/LibraryPermissions.php:34
 #: modules/johncms/library/src/Application/Services/LibraryPermissions.php:41

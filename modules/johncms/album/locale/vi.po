@@ -578,3 +578,5 @@ msgstr[0] "ảnh"
 msgid "Total:"
 msgstr "Tổng cộng:"
 
+msgid "Photo Albums"
+msgstr "Albums hình ảnh"

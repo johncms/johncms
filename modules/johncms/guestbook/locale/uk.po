@@ -229,3 +229,5 @@ msgstr "Відредаговано"
 msgid "Edit"
 msgstr "Редагувати"
 
+msgid "Admin Chat"
+msgstr "Адмін Чат"

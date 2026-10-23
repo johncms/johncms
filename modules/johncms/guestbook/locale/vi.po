@@ -220,3 +220,5 @@ msgstr "Đã sửa"
 msgid "Edit"
 msgstr "Chỉnh sửa"
 
+msgid "Admin Chat"
+msgstr "Quản Trị Nói Chuyện"

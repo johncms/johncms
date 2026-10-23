@@ -529,3 +529,5 @@ msgstr "Пошук не дав жодних результатів."
 msgid "Enter a tag"
 msgstr "Введіть мітку"
 
+msgid "News archive"
+msgstr "Архів новин"

@@ -39,6 +39,7 @@
       'Edited:' => 'Edytowano:',
       'Edited' => 'Edytowane',
       'Edit' => 'Edytuj',
+      'Admin Chat' => 'Czat administracyjny',
     ),
   ),
 );

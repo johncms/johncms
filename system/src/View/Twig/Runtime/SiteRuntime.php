@@ -51,25 +51,6 @@ final class SiteRuntime implements RuntimeExtensionInterface
     }
 
     /**
-     * Everything the main menu shows a badge for, in one call: the menu prints all of them or
-     * none, so splitting them into a function each would only multiply the round trips.
-     *
-     * @return array<string, array<string, int>>
-     */
-    public function menuCounters(): array
-    {
-        return [
-            'news'      => $this->counters->news(),
-            'forum'     => $this->counters->forumCounters(),
-            'guestbook' => $this->counters->guestbookCounters(),
-            'downloads' => $this->counters->downloadsCounters(),
-            'library'   => $this->counters->libraryCounters(),
-            'users'     => $this->counters->usersCounters(),
-            'album'     => $this->counters->albumCounters(),
-        ];
-    }
-
-    /**
      * Visitors online, as "users / guests".
      */
     public function online(): string

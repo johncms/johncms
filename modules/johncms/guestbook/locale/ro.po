@@ -221,3 +221,5 @@ msgstr "Editat:"
 msgid "Edit"
 msgstr "Editeaza"
 
+msgid "Admin Chat"
+msgstr ""

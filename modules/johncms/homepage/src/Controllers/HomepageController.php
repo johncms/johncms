@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Homepage\Controllers;
 
-use Johncms\Counters;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
 use Johncms\Modules\News\Domain\Models\NewsArticle;
@@ -14,7 +13,6 @@ final readonly class HomepageController
 {
     public function __construct(
         private NavChain $navChain,
-        private Counters $counters,
     ) {
     }
 
@@ -30,12 +28,10 @@ final readonly class HomepageController
         $newsConfig = config('news');
 
         $news = [];
-        $newNewsCount = 0;
         if ($newsConfig['homepage_show']) {
             $query = (new NewsArticle())->withCount('comments')->withSum('votes', 'vote')->active();
             if ($newsConfig['homepage_days'] > 0) {
                 $query->lastDays($newsConfig['homepage_days']);
-                $newNewsCount = $query->count();
             }
             $news = $query->limit($newsConfig['homepage_quantity'])
                 ->orderByDesc('active_from')
@@ -51,14 +47,6 @@ final readonly class HomepageController
                 'keywords'    => $config['meta_key'],
                 'description' => $config['meta_desc'],
                 'news'        => $news,
-                'counters'    => [
-                    'forum'     => $this->counters->forumCounters(),
-                    'guestbook' => $this->counters->guestbookCounters(),
-                    'downloads' => $this->counters->downloadsCounters(),
-                    'library'   => $this->counters->libraryCounters(),
-                    'users'     => $this->counters->usersCounters(),
-                    'news'      => ['new' => $newNewsCount],
-                ],
             ]
         );
     }

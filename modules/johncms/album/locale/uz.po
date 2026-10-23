@@ -580,3 +580,5 @@ msgstr[1] "Fotolar"
 msgid "Total:"
 msgstr "Jami"
 
+msgid "Photo Albums"
+msgstr "Foto Albomlar"

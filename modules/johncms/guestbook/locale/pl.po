@@ -220,3 +220,5 @@ msgstr "Edytowane"
 msgid "Edit"
 msgstr "Edytuj"
 
+msgid "Admin Chat"
+msgstr "Czat administracyjny"

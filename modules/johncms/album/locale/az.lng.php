@@ -98,6 +98,7 @@
         1 => 'Fotolar',
       ),
       'Total:' => 'Cəmi:',
+      'Photo Albums' => 'Foto albom',
     ),
   ),
 );

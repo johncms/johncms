@@ -13,6 +13,7 @@
       'Cancel' => 'Batal',
       'Edit' => 'Sunting',
       'Title' => 'Judul',
+      'News archive' => 'Arsip berita',
     ),
   ),
 );
