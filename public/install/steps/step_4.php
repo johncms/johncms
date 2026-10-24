@@ -143,7 +143,7 @@ if ($request->getMethod() === 'POST') {
                 // Seed a couple of regular users referenced by module demo data (authors, commenters).
                 $demoUsers = [
                     ['name' => 'Alex', 'sex' => 'm', 'mail' => 'alex@example.com', 'ip' => '192.0.2.10'],
-                    ['name' => 'Maria', 'sex' => 'f', 'mail' => 'maria@example.com', 'ip' => '192.0.2.20'],
+                    ['name' => 'Maria', 'sex' => 'zh', 'mail' => 'maria@example.com', 'ip' => '192.0.2.20'],
                 ];
                 foreach ($demoUsers as $demoUser) {
                     $demoModel = new User();
