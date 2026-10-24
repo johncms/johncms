@@ -134,16 +134,19 @@ final class BanManagementTest extends FunctionalTestCase
     }
 
     /**
-     * Pinned as it is: a ban is given downwards only, but lifted by anybody holding the permission,
-     * so an administrator ends the ban the supervisor gave another administrator.
+     * A ban is lifted the way it is given, downwards only: an administrator does not end the ban
+     * the supervisor gave another administrator.
      */
-    public function testAnAdministratorLiftsABanOfAnotherAdministrator(): void
+    public function testABanIsLiftedOnlyBySomebodyStandingAbove(): void
     {
         $admin = FunctionalUserFactory::create([], [SystemRole::Admin->value]);
         $peer = FunctionalUserFactory::create([], [SystemRole::Admin->value]);
         $ban = $this->insertBan($peer, kind: 1);
 
-        $this->post($admin, '/profile/' . $peer->id . '/bans/' . $ban . '/cancel');
+        self::assertSame(403, $this->post($admin, '/profile/' . $peer->id . '/bans/' . $ban . '/cancel'));
+        self::assertTrue($this->onlyBanOf($peer)->is_active);
+
+        $this->post(FunctionalUserFactory::createSupervisor(), '/profile/' . $peer->id . '/bans/' . $ban . '/cancel');
 
         self::assertFalse($this->onlyBanOf($peer)->is_active);
     }
