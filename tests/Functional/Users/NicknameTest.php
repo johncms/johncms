@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\Functional\Users;
 
-use Johncms\Config\ConfigRepository;
 use Johncms\Modules\Auth\Application\DTO\SendRecoveryCommand;
 use Johncms\Modules\Auth\Application\Exceptions\PasswordRecoveryException;
 use Johncms\Modules\Auth\Application\UseCases\SendPasswordRecoveryUseCase;
@@ -64,19 +63,11 @@ final class NicknameTest extends FunctionalTestCase
         $supervisor = FunctionalUserFactory::createSupervisor();
 
         // Without a confirmation of addresses the profile may be saved without one.
-        $config = ConfigRepository::all();
-        ConfigRepository::init(array_replace_recursive($config, ['johncms' => ['user_email_confirmation' => 0]]));
-
-        try {
-            $response = $this->handleRequest(
-                '/profile/' . $member->id . '/edit',
-                'POST',
-                $this->withCsrfToken(['name' => 'Rock & Roll', 'sex' => 'm', 'imname' => 'Smeagol', 'dayb' => '1', 'monthb' => '1', 'yearofbirth' => '1990']),
-                cookies: $this->actingAs($supervisor)
-            );
-        } finally {
-            ConfigRepository::init($config);
-        }
+        $response = $this->withConfig(['johncms' => ['user_email_confirmation' => 0]], fn (): Response => $this->postForm(
+            '/profile/' . $member->id . '/edit',
+            ['name' => 'Rock & Roll', 'sex' => 'm', 'imname' => 'Smeagol', 'dayb' => '1', 'monthb' => '1', 'yearofbirth' => '1990'],
+            $supervisor
+        ));
 
         self::assertSame(Response::HTTP_FOUND, $response->getStatusCode());
         $member = User::query()->findOrFail($member->id);

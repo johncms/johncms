@@ -122,6 +122,39 @@ abstract class FunctionalTestCase extends TestCase
     }
 
     /**
+     * A form posted by the given user, with the CSRF token the page put in.
+     *
+     * @param array<string, mixed> $parameters
+     */
+    protected function postForm(string $uri, array $parameters, User|int $as): Response
+    {
+        return $this->handleRequest($uri, 'POST', $this->withCsrfToken($parameters), cookies: $this->actingAs($as));
+    }
+
+    /**
+     * Runs the test with some settings changed and puts them back however it ends. The settings
+     * belong to the process: a value left changed would answer every test after this one.
+     *
+     * @template T
+     * @param array<string, mixed> $overrides Merged into the settings level by level:
+     *                                        ['johncms' => ['karma' => ['on' => 1]]] changes that
+     *                                        one value and keeps the rest of the section.
+     * @param callable(): T        $test
+     * @return T
+     */
+    protected function withConfig(array $overrides, callable $test): mixed
+    {
+        $config = ConfigRepository::all();
+        ConfigRepository::init(array_replace_recursive($config, $overrides));
+
+        try {
+            return $test();
+        } finally {
+            ConfigRepository::init($config);
+        }
+    }
+
+    /**
      * Signs a test in as the given user and returns the cookies to drive requests with.
      *
      * Opens a real session and lets the request go through the real authenticator, so what the

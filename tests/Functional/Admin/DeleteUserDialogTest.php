@@ -89,11 +89,6 @@ final class DeleteUserDialogTest extends FunctionalTestCase
 
     private function delete(User $member, string $back): Response
     {
-        return $this->handleRequest(
-            '/admin/users/' . $member->id . '/delete',
-            'POST',
-            $this->withCsrfToken(['back' => $back]),
-            cookies: $this->actingAs(FunctionalUserFactory::createSupervisor())
-        );
+        return $this->postForm('/admin/users/' . $member->id . '/delete', ['back' => $back], FunctionalUserFactory::createSupervisor());
     }
 }

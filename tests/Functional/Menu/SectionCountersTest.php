@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\Functional\Menu;
 
 use Dom\HTMLDocument;
-use Johncms\Config\ConfigRepository;
 use Johncms\Users\User;
 use Tests\Functional\FunctionalTestCase;
 use Tests\Support\Fixture;
@@ -107,14 +106,7 @@ final class SectionCountersTest extends FunctionalTestCase
 
         self::assertNull($this->menu($this->page('/'))['/news/']);
 
-        $config = ConfigRepository::all();
-
-        try {
-            ConfigRepository::init(array_replace_recursive($config, ['news' => ['homepage_days' => 3]]));
-            $page = $this->page('/');
-        } finally {
-            ConfigRepository::init($config);
-        }
+        $page = $this->withConfig(['news' => ['homepage_days' => 3]], fn (): HTMLDocument => $this->page('/'));
 
         self::assertSame('+ 1', $this->menu($page)['/news/']);
         self::assertSame('1', $this->tiles($page)['/news/']);

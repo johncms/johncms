@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\Functional\Profile;
 
 use Johncms\Auth\Authorization\SystemRole;
-use Johncms\Config\ConfigRepository;
 use Johncms\Users\Ban;
 use Johncms\Users\Karma;
 use Johncms\Users\User;
@@ -315,16 +314,6 @@ final class BanManagementTest extends FunctionalTestCase
      */
     private function withKarma(callable $test): mixed
     {
-        $config = ConfigRepository::all();
-
-        $johncms = $config['johncms'];
-        $johncms['karma'] = array_replace((array) ($johncms['karma'] ?? []), ['on' => 1, 'karma_points' => 5]);
-        ConfigRepository::init(array_replace($config, ['johncms' => $johncms]));
-
-        try {
-            return $test();
-        } finally {
-            ConfigRepository::init($config);
-        }
+        return $this->withConfig(['johncms' => ['karma' => ['on' => 1, 'karma_points' => 5]]], $test);
     }
 }

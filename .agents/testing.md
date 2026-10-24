@@ -111,6 +111,19 @@ A form that posts carries the CSRF token the page put into it, and the check ref
 $response = $this->handleRequest('/guestbook', 'POST', $this->withCsrfToken(['text' => 'Hello']));
 ```
 
+Posted by a signed-in visitor, the two come together:
+
+```php
+$response = $this->postForm('/admin/users/' . $member->id . '/edit', ['name' => 'Gollum'], $supervisor);
+```
+
+A setting a test needs changed is changed for that test alone, and put back however it ends — the
+settings belong to the process, and a value left behind answers every test after it:
+
+```php
+$response = $this->withConfig(['johncms' => ['karma' => ['on' => 1]]], fn (): Response => $this->handleRequest('/'));
+```
+
 ### The visitor
 
 `Tests\Support\FunctionalUserFactory` writes the account, and the test says what it may do:

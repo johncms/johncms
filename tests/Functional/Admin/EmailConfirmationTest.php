@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\Functional\Admin;
 
-use Johncms\Config\ConfigRepository;
 use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\Functional\FunctionalTestCase;
@@ -31,12 +30,7 @@ final class EmailConfirmationTest extends FunctionalTestCase
         $member = FunctionalUserFactory::create(['email_confirmed' => null, 'confirmation_code' => 'abc']);
         $back = '/admin/users/' . $member->id;
 
-        $response = $this->withConfirmation(true, fn (): Response => $this->handleRequest(
-            '/admin/registrations/confirm-email',
-            'POST',
-            $this->withCsrfToken(['id' => (string) $member->id, 'back' => $back]),
-            cookies: $this->actingAs(FunctionalUserFactory::createSupervisor())
-        ));
+        $response = $this->withConfirmation(true, fn (): Response => $this->postForm('/admin/registrations/confirm-email', ['id' => (string) $member->id, 'back' => $back], FunctionalUserFactory::createSupervisor()));
 
         self::assertSame(Response::HTTP_FOUND, $response->getStatusCode());
         self::assertSame($back, $response->headers->get('Location'));
@@ -96,13 +90,6 @@ final class EmailConfirmationTest extends FunctionalTestCase
      */
     private function withConfirmation(bool $required, callable $test): mixed
     {
-        $config = ConfigRepository::all();
-        ConfigRepository::init(array_replace_recursive($config, ['johncms' => ['user_email_confirmation' => (int) $required]]));
-
-        try {
-            return $test();
-        } finally {
-            ConfigRepository::init($config);
-        }
+        return $this->withConfig(['johncms' => ['user_email_confirmation' => (int) $required]], $test);
     }
 }

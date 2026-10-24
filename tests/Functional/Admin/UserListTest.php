@@ -205,12 +205,7 @@ final class UserListTest extends FunctionalTestCase
     {
         $waiting = FunctionalUserFactory::create(['preg' => 0]);
 
-        $response = $this->handleRequest(
-            '/admin/registrations/approve',
-            'POST',
-            $this->withCsrfToken(['id' => $waiting->id]),
-            cookies: $this->actingAs(FunctionalUserFactory::createSupervisor())
-        );
+        $response = $this->postForm('/admin/registrations/approve', ['id' => $waiting->id], FunctionalUserFactory::createSupervisor());
 
         self::assertSame(Response::HTTP_FOUND, $response->getStatusCode());
         self::assertSame('/admin/users?status=pending', $response->headers->get('Location'));

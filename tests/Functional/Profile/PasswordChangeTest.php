@@ -34,11 +34,6 @@ final class PasswordChangeTest extends FunctionalTestCase
 
     private function change(User $owner, string $password): void
     {
-        $this->handleRequest(
-            '/profile/' . $owner->id . '/password',
-            'POST',
-            $this->withCsrfToken(['oldpass' => FunctionalUserFactory::PASSWORD, 'newpass' => $password, 'newconf' => $password]),
-            cookies: $this->actingAs($owner)
-        );
+        $this->postForm('/profile/' . $owner->id . '/password', ['oldpass' => FunctionalUserFactory::PASSWORD, 'newpass' => $password, 'newconf' => $password], $owner);
     }
 }

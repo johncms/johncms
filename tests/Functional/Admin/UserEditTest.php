@@ -66,12 +66,7 @@ final class UserEditTest extends FunctionalTestCase
         $form = (string) $this->handleRequest('/admin/users/' . $member->id . '/edit', cookies: $this->actingAs($editor))->getContent();
         self::assertStringNotContainsString('name="admin_notes"', $form);
 
-        $this->handleRequest(
-            '/admin/users/' . $member->id . '/edit',
-            'POST',
-            $this->withCsrfToken($this->profile(['name' => $member->name, 'admin_notes' => 'Nothing to see'])),
-            cookies: $this->actingAs($editor)
-        );
+        $this->postForm('/admin/users/' . $member->id . '/edit', $this->profile(['name' => $member->name, 'admin_notes' => 'Nothing to see']), $editor);
 
         self::assertSame('Keeps arguing in the guestbook', User::query()->findOrFail($member->id)->admin_notes);
     }
@@ -82,12 +77,7 @@ final class UserEditTest extends FunctionalTestCase
         Fixture::insert('cms_ban_users', ['user_id' => $editor->id, 'ban_time' => time() + 3600, 'ban_while' => time(), 'ban_type' => BanKind::SITE->value, 'ban_reason' => 'Spam', 'ban_who' => 'admin']);
         $member = FunctionalUserFactory::create(['name' => 'Bill']);
 
-        $this->handleRequest(
-            '/admin/users/' . $member->id . '/edit',
-            'POST',
-            $this->withCsrfToken($this->profile(['name' => 'Ferny'])),
-            cookies: $this->actingAs($editor)
-        );
+        $this->postForm('/admin/users/' . $member->id . '/edit', $this->profile(['name' => 'Ferny']), $editor);
 
         self::assertSame('Bill', User::query()->findOrFail($member->id)->name);
     }
@@ -129,12 +119,7 @@ final class UserEditTest extends FunctionalTestCase
     {
         $owner = FunctionalUserFactory::createWithPermissions([CorePermissions::ADMIN_ACCESS], ['name' => 'Bilbo']);
 
-        $this->handleRequest(
-            '/admin/users/' . $owner->id . '/edit',
-            'POST',
-            $this->withCsrfToken($this->profile(['name' => 'Baggins', 'karma_off' => '1', 'live' => 'Bag End'])),
-            cookies: $this->actingAs($owner)
-        );
+        $this->postForm('/admin/users/' . $owner->id . '/edit', $this->profile(['name' => 'Baggins', 'karma_off' => '1', 'live' => 'Bag End']), $owner);
 
         $owner = User::query()->findOrFail($owner->id);
         self::assertSame('Bilbo', $owner->name);
@@ -218,7 +203,7 @@ final class UserEditTest extends FunctionalTestCase
         $peer = FunctionalUserFactory::createWithPermissions($permissions, level: 20);
         $peer->update(['set_forum' => ['upfp' => 1]]);
 
-        $response = $this->handleRequest('/admin/users/' . $peer->id . '/reset-settings', 'POST', $this->withCsrfToken(), cookies: $this->actingAs($editor));
+        $response = $this->postForm('/admin/users/' . $peer->id . '/reset-settings', [], $editor);
 
         self::assertSame(Response::HTTP_FORBIDDEN, $response->getStatusCode());
         self::assertSame(['upfp' => 1], User::query()->findOrFail($peer->id)->set_forum);
@@ -255,11 +240,6 @@ final class UserEditTest extends FunctionalTestCase
      */
     private function post(string $uri, array $parameters): Response
     {
-        return $this->handleRequest(
-            $uri,
-            'POST',
-            $this->withCsrfToken($parameters),
-            cookies: $this->actingAs(FunctionalUserFactory::createSupervisor())
-        );
+        return $this->postForm($uri, $parameters, FunctionalUserFactory::createSupervisor());
     }
 }

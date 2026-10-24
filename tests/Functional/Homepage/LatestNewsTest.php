@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\Functional\Homepage;
 
-use Johncms\Config\ConfigRepository;
 use Tests\Functional\FunctionalTestCase;
 use Tests\Support\Fixture;
 
@@ -66,15 +65,7 @@ final class LatestNewsTest extends FunctionalTestCase
      */
     private function homePage(array $news = []): string
     {
-        $config = ConfigRepository::all();
-
-        try {
-            ConfigRepository::init(array_replace_recursive($config, ['news' => $news]));
-
-            return (string) $this->handleRequest('/')->getContent();
-        } finally {
-            ConfigRepository::init($config);
-        }
+        return $this->withConfig(['news' => $news], fn (): string => (string) $this->handleRequest('/')->getContent());
     }
 
     /**

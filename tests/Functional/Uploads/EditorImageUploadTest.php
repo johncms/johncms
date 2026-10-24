@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\Functional\Uploads;
 
-use Johncms\Config\ConfigRepository;
 use Johncms\Files\FileStore;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
@@ -103,17 +102,7 @@ final class EditorImageUploadTest extends FunctionalTestCase
      */
     private function withSetting(string $key, int $value, callable $test): mixed
     {
-        $config = ConfigRepository::all();
-
-        $johncms = $config['johncms'];
-        $johncms['editor_images'] = array_replace((array) ($johncms['editor_images'] ?? []), [$key => $value]);
-        ConfigRepository::init(array_replace($config, ['johncms' => $johncms]));
-
-        try {
-            return $test();
-        } finally {
-            ConfigRepository::init($config);
-        }
+        return $this->withConfig(['johncms' => ['editor_images' => [$key => $value]]], $test);
     }
 
     private function picture(int $width, int $height): string

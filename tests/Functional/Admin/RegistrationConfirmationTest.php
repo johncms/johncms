@@ -143,12 +143,7 @@ final class RegistrationConfirmationTest extends FunctionalTestCase
         $staff = FunctionalUserFactory::createWithPermissions([CorePermissions::ADMIN_ACCESS]);
         $waiting = FunctionalUserFactory::create(['preg' => 0]);
 
-        $response = $this->handleRequest(
-            '/admin/registrations/approve',
-            'POST',
-            $this->withCsrfToken(['id' => (string) $waiting->id, 'back' => '/admin/users?status=pending']),
-            cookies: $this->actingAs($staff)
-        );
+        $response = $this->postForm('/admin/registrations/approve', ['id' => (string) $waiting->id, 'back' => '/admin/users?status=pending'], $staff);
 
         self::assertSame(Response::HTTP_FOUND, $response->getStatusCode());
         self::assertTrue(User::query()->findOrFail($waiting->id)->preg);
@@ -179,12 +174,7 @@ final class RegistrationConfirmationTest extends FunctionalTestCase
      */
     private function post(string $uri, array $parameters): Response
     {
-        $response = $this->handleRequest(
-            $uri,
-            'POST',
-            $this->withCsrfToken($parameters),
-            cookies: $this->actingAs(FunctionalUserFactory::createSupervisor())
-        );
+        $response = $this->postForm($uri, $parameters, FunctionalUserFactory::createSupervisor());
 
         self::assertSame(Response::HTTP_FOUND, $response->getStatusCode());
 

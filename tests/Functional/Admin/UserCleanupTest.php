@@ -41,7 +41,7 @@ final class UserCleanupTest extends FunctionalTestCase
         $quietModerator = $this->forgotten();
         FunctionalUserFactory::grant($quietModerator->id, FunctionalUserFactory::createRole([], 20)->slug);
 
-        $response = $this->handleRequest('/admin/users/cleanup', 'POST', $this->withCsrfToken(), cookies: $this->actingAs(FunctionalUserFactory::createSupervisor()));
+        $response = $this->postForm('/admin/users/cleanup', [], FunctionalUserFactory::createSupervisor());
 
         self::assertSame(Response::HTTP_FOUND, $response->getStatusCode());
         self::assertNull(User::query()->find($forgotten->id));

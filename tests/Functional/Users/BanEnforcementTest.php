@@ -6,7 +6,6 @@ namespace Tests\Functional\Users;
 
 use Dom\HTMLDocument;
 use Johncms\Auth\Authorization\SystemRole;
-use Johncms\Config\ConfigRepository;
 use Johncms\Modules\Contacts\Domain\Models\ContactMessage;
 use Johncms\Modules\Guestbook\Application\Services\GuestbookPermissions;
 use Johncms\Users\User;
@@ -199,14 +198,7 @@ final class BanEnforcementTest extends FunctionalTestCase
      */
     private function withContactForm(callable $test): mixed
     {
-        $config = ConfigRepository::all();
-        ConfigRepository::init(array_replace_recursive($config, ['johncms' => ['contacts_form_enabled' => true]]));
-
-        try {
-            return $test();
-        } finally {
-            ConfigRepository::init($config);
-        }
+        return $this->withConfig(['johncms' => ['contacts_form_enabled' => true]], $test);
     }
 
     private function statusOf(string $path, User $user): int

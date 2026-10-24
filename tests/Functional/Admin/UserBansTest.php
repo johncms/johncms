@@ -128,11 +128,6 @@ final class UserBansTest extends FunctionalTestCase
      */
     private function post(string $uri, array $parameters): Response
     {
-        return $this->handleRequest(
-            $uri,
-            'POST',
-            $this->withCsrfToken($parameters),
-            cookies: $this->actingAs(FunctionalUserFactory::createSupervisor())
-        );
+        return $this->postForm($uri, $parameters, FunctionalUserFactory::createSupervisor());
     }
 }

@@ -66,12 +66,7 @@ final class UserRolesPageTest extends FunctionalTestCase
         $supervisor = FunctionalUserFactory::createSupervisor();
         $before = UserRole::query()->where('user_id', $supervisor->id)->count();
 
-        $response = $this->handleRequest(
-            '/admin/users/' . $supervisor->id . '/roles',
-            'POST',
-            $this->withCsrfToken([]),
-            cookies: $this->actingAs($manager)
-        );
+        $response = $this->postForm('/admin/users/' . $supervisor->id . '/roles', [], $manager);
 
         self::assertSame(Response::HTTP_FORBIDDEN, $response->getStatusCode());
         self::assertSame($before, UserRole::query()->where('user_id', $supervisor->id)->count());
@@ -82,11 +77,6 @@ final class UserRolesPageTest extends FunctionalTestCase
      */
     private function save(int $userId, array $parameters): Response
     {
-        return $this->handleRequest(
-            '/admin/users/' . $userId . '/roles',
-            'POST',
-            $this->withCsrfToken($parameters),
-            cookies: $this->actingAs(FunctionalUserFactory::createSupervisor())
-        );
+        return $this->postForm('/admin/users/' . $userId . '/roles', $parameters, FunctionalUserFactory::createSupervisor());
     }
 }
