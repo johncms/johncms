@@ -9,7 +9,6 @@ use Johncms\Captcha\CaptchaManager;
 use Johncms\Modules\Contacts\Domain\Models\ContactMessage;
 use Johncms\Http\Request;
 use Johncms\Security\ClientInfoDTO;
-use Johncms\Validator\Rules\Ban;
 use Johncms\Validator\Rules\Captcha;
 use Johncms\Validator\Rules\EmailAddress;
 use Johncms\Validator\Rules\Flood;
@@ -85,10 +84,9 @@ final readonly class ContactForm
             // Honeypot: any value here means the form was submitted by a bot, so the field is
             // expected to stay empty and must not be required.
             self::HONEYPOT_FIELD       => [new Identical(token: '', allowEmpty: true)],
-            ValidationResult::FORM_KEY => [
-                new Flood(),
-                new Ban(bans: [1, 13]),
-            ],
+            // No ban closes this form: it is where a ban is appealed, and a guest may write here
+            // anyway.
+            ValidationResult::FORM_KEY => [new Flood()],
         ];
 
         if (! $this->currentUser->isValid()) {

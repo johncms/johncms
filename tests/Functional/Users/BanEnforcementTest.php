@@ -6,6 +6,8 @@ namespace Tests\Functional\Users;
 
 use Dom\HTMLDocument;
 use Johncms\Auth\Authorization\SystemRole;
+use Johncms\Config\ConfigRepository;
+use Johncms\Modules\Contacts\Domain\Models\ContactMessage;
 use Johncms\Users\User;
 use LogicException;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -91,6 +93,21 @@ final class BanEnforcementTest extends FunctionalTestCase
         yield 'their own profile' => ['profile', [1]];
     }
 
+    #[DataProvider('kinds')]
+    public function testABannedMemberStillWritesToTheAdministration(int $kind): void
+    {
+        $member = $this->bannedMember($kind);
+
+        $this->withContactForm(fn () => $this->handleRequest(
+            '/contacts',
+            'POST',
+            $this->withCsrfToken(['email' => 'member@example.com', 'message' => 'Please have another look at my ban.']),
+            cookies: $this->actingAs($member)
+        ));
+
+        self::assertSame(1, ContactMessage::query()->where('user_id', '=', $member->id)->count());
+    }
+
     public function testAnAdministratorBannedFromTheForumKeepsThePanel(): void
     {
         $admin = FunctionalUserFactory::create([], [SystemRole::Admin->value]);
@@ -127,6 +144,26 @@ final class BanEnforcementTest extends FunctionalTestCase
             'cms_ban_users',
             ['user_id' => $user->id, 'ban_time' => time() + 3600, 'ban_while' => time(), 'ban_type' => $kind, 'ban_reason' => 'Spam']
         );
+    }
+
+    /**
+     * Runs the test with the contact form switched on, and puts the configuration back afterwards:
+     * the container is built once per process and every later test reads the same values.
+     *
+     * @template T
+     * @param callable(): T $test
+     * @return T
+     */
+    private function withContactForm(callable $test): mixed
+    {
+        $config = ConfigRepository::all();
+        ConfigRepository::init(array_replace_recursive($config, ['johncms' => ['contacts_form_enabled' => true]]));
+
+        try {
+            return $test();
+        } finally {
+            ConfigRepository::init($config);
+        }
     }
 
     private function statusOf(string $path, User $user): int
