@@ -1,0 +1,12 @@
+{# The items come from Johncms\Http\Pagination\Pagination; a controller hands them over as they are. #}
+<div class="pagination-no-padding">
+    {% include '@theme/components/pagination.twig' with {items: [
+        {type: 'prev', page: null, url: null, active: false},
+        {type: 'page', page: 1, url: null, active: true},
+        {type: 'page', page: 2, url: '#navigation', active: false},
+        {type: 'page', page: 3, url: '#navigation', active: false},
+        {type: 'ellipsis', page: null, url: null, active: false},
+        {type: 'page', page: 12, url: '#navigation', active: false},
+        {type: 'next', page: 2, url: '#navigation', active: false},
+    ]} only %}
+</div>

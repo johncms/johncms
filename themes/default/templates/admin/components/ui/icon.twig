@@ -1,0 +1,16 @@
+{#
+    An icon of the admin sprite. The sprite holds the Lucide icons listed in
+    themes/default/src/admin/icons/icons.json; after a change to the list it is rebuilt with
+    `npm run icons`.
+
+    @param string name  The name of the icon as Lucide spells it: "users", "chevron-down".
+    @param int    size  Width and height in pixels, 16 by default.
+    @param string class More classes for the <svg>.
+    @param string label What the icon says to a screen reader. Without it the icon is decorative
+                        and hidden from one, which is right next to a text that says the same.
+#}
+{% set size = size|default(16) %}
+<svg class="admin-icon {{ class|default('') }}" width="{{ size }}" height="{{ size }}" focusable="false"
+    {%- if label|default('') %} role="img" aria-label="{{ label }}"{% else %} aria-hidden="true"{% endif %}>
+    <use href="{{ asset('icons/admin.svg', true) }}#{{ name }}"/>
+</svg>

@@ -1,0 +1,64 @@
+<div class="card">
+    <div class="card-header">
+        <span class="flex-grow-1">{{ __('Users') }}</span>
+        <span class="badge text-bg-light">137</span>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">{{ __('Nickname') }}</th>
+                    <th scope="col">{{ __('Status') }}</th>
+                    <th scope="col">IP</th>
+                    <th scope="col" class="text-end"><span class="visually-hidden">{{ __('Edit') }}</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="font-monospace text-body-tertiary">#1024</td>
+                    <td class="fw-semibold">admin</td>
+                    <td><span class="badge rounded-pill bg-success-subtle text-success-emphasis badge-dot">{{ __('Online') }}</span></td>
+                    <td class="font-monospace text-body-secondary">192.168.0.1</td>
+                    <td class="text-end">
+                        <button type="button" class="btn btn-outline-secondary btn-icon btn-sm" aria-label="{{ __('Edit') }}" title="{{ __('Edit') }}">
+                            {% include '@admin/components/ui/icon.twig' with {name: 'pencil', size: 13} only %}
+                        </button>
+                    </td>
+                </tr>
+                {# A selected row: table-active. #}
+                <tr class="table-active">
+                    <td class="font-monospace text-body-tertiary">#1023</td>
+                    <td class="fw-semibold">navi</td>
+                    <td><span class="badge rounded-pill bg-danger-subtle text-danger-emphasis badge-dot">{{ __('Banned') }}</span></td>
+                    <td class="font-monospace text-body-secondary">10.0.0.12</td>
+                    <td class="text-end">
+                        <button type="button" class="btn btn-outline-secondary btn-icon btn-sm" aria-label="{{ __('Edit') }}" title="{{ __('Edit') }}">
+                            {% include '@admin/components/ui/icon.twig' with {name: 'pencil', size: 13} only %}
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="font-monospace text-body-tertiary">#1022</td>
+                    <td class="fw-semibold">mira</td>
+                    <td><span class="badge rounded-pill text-bg-light badge-dot">{{ __('Draft') }}</span></td>
+                    <td class="font-monospace text-body-secondary">172.16.4.2</td>
+                    <td class="text-end">
+                        <button type="button" class="btn btn-outline-secondary btn-icon btn-sm" aria-label="{{ __('Edit') }}" title="{{ __('Edit') }}">
+                            {% include '@admin/components/ui/icon.twig' with {name: 'pencil', size: 13} only %}
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="card-footer d-flex justify-content-center pagination-no-padding">
+        {% include '@theme/components/pagination.twig' with {items: [
+            {type: 'prev', page: 1, url: '#tables', active: false},
+            {type: 'page', page: 1, url: '#tables', active: false},
+            {type: 'page', page: 2, url: null, active: true},
+            {type: 'page', page: 3, url: '#tables', active: false},
+            {type: 'next', page: 3, url: '#tables', active: false},
+        ]} only %}
+    </div>
+</div>

@@ -1,0 +1,17 @@
+<div class="row g-3">
+    <div class="col-md-6">
+        <div class="input-group">
+            <span class="input-group-text">
+                {% include '@admin/components/ui/icon.twig' with {name: 'search', size: 14} only %}
+            </span>
+            <input type="search" class="form-control" placeholder="{{ __('Search') }}" aria-label="{{ __('Search') }}">
+            <button type="button" class="btn btn-secondary">{{ __('Search') }}</button>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="input-group">
+            <input type="number" class="form-control" value="25" aria-label="{{ __('Total') }}">
+            <span class="input-group-text">MB</span>
+        </div>
+    </div>
+</div>

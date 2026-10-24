@@ -1,0 +1,131 @@
+@use 'sass:map';
+
+// Form controls: sunken fields that light up with the accent while focused.
+
+.form-control,
+.form-select {
+  background-color: var(--bg-inset);
+  border-color: var(--border);
+  color: var(--fg);
+  letter-spacing: -0.005em;
+  transition: border-color 0.12s, background-color 0.12s, box-shadow 0.12s;
+
+  &::placeholder {
+    color: var(--fg-dim);
+  }
+
+  &:hover:not(:disabled, :focus) {
+    border-color: var(--border-strong);
+  }
+
+  &:focus {
+    background-color: var(--bg-elev);
+    border-color: var(--accent);
+    color: var(--fg);
+    box-shadow: 0 0 0 3px var(--bs-focus-ring-color);
+  }
+
+  &:disabled {
+    background-color: var(--bg-elev-2);
+    color: var(--fg-dim);
+  }
+}
+
+// A phone zooms into a field whose text is smaller than 16px, so on a phone it gets exactly that.
+@include media-breakpoint-down(md) {
+  .form-control,
+  .form-select {
+    font-size: 1rem;
+  }
+}
+
+.form-label {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--fg-dim);
+}
+
+.form-text {
+  color: var(--fg-dim);
+}
+
+.input-group-text {
+  background-color: var(--bg-elev-2);
+  border-color: var(--border);
+  color: var(--fg-muted);
+}
+
+.form-check-input {
+  background-color: var(--bg-inset);
+  border: 1.5px solid var(--border-strong);
+
+  &:checked,
+  &[type="checkbox"]:indeterminate {
+    background-color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  &:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--bs-focus-ring-color);
+  }
+}
+
+// The switch of the design is a little longer and taller than the one of Bootstrap.
+.form-switch {
+  padding-left: 2.75em;
+
+  .form-check-input {
+    width: 2.25em;
+    height: 1.25em;
+    margin-top: 0.125em;
+    margin-left: -2.75em;
+  }
+}
+
+// The marks inside the controls are SVG images, so they are drawn once per color scheme.
+@mixin ui-form-images($palette) {
+  $mark: ui-svg-color(map.get($palette, 'accent-ink'));
+  $idle: ui-svg-color(map.get($palette, 'fg-dim'));
+  $focus: ui-svg-color(map.get($palette, 'accent'));
+
+  .form-select {
+    --bs-form-select-bg-img: #{escape-svg(url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='#{$idle}' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/></svg>"))};
+  }
+
+  .form-check-input:checked[type="checkbox"] {
+    --bs-form-check-bg-image: #{escape-svg(url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path fill='none' stroke='#{$mark}' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/></svg>"))};
+  }
+
+  .form-check-input:checked[type="radio"] {
+    --bs-form-check-bg-image: #{escape-svg(url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='2' fill='#{$mark}'/></svg>"))};
+  }
+
+  .form-check-input[type="checkbox"]:indeterminate {
+    --bs-form-check-bg-image: #{escape-svg(url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path fill='none' stroke='#{$mark}' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10h8'/></svg>"))};
+  }
+
+  .form-switch .form-check-input {
+    --bs-form-switch-bg: #{escape-svg(url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='3' fill='#{$idle}'/></svg>"))};
+  }
+
+  .form-switch .form-check-input:focus {
+    --bs-form-switch-bg: #{escape-svg(url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='3' fill='#{$focus}'/></svg>"))};
+  }
+
+  .form-switch .form-check-input:checked {
+    --bs-form-switch-bg: #{escape-svg(url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='3' fill='#{$mark}'/></svg>"))};
+  }
+}
+
+@include ui-form-images($ui-light);
+
+body.dark {
+  @include ui-form-images($ui-dark);
+}
+
+@media (prefers-color-scheme: dark) {
+  body.auto {
+    @include ui-form-images($ui-dark);
+  }
+}

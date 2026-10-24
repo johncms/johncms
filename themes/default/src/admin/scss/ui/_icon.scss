@@ -1,0 +1,13 @@
+// The icons of the admin sprite (Lucide, see src/admin/icons/): outlines drawn in the color of
+// the text around them. The sprite carries only the shapes, the stroke is set here.
+
+.admin-icon {
+  display: inline-block;
+  flex-shrink: 0;
+  vertical-align: -0.125em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}

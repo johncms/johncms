@@ -22,6 +22,7 @@ use Johncms\Modules\Admin\Application\Controllers\Settings\SystemSettingsControl
 use Johncms\Modules\Admin\Application\Controllers\System\EmoticonsController;
 use Johncms\Modules\Admin\Application\Controllers\System\FileIntegrityController;
 use Johncms\Modules\Admin\Application\Controllers\System\MaintenanceTasksController;
+use Johncms\Modules\Admin\Application\Controllers\System\StyleGuideController;
 use Johncms\Modules\Admin\Application\Controllers\System\SystemCheckController;
 use Johncms\Modules\Admin\Application\Controllers\Users\AmnestyController;
 use Johncms\Modules\Admin\Application\Controllers\Users\BanListController;
@@ -135,6 +136,9 @@ return static function (RouteCollection $router): void {
 
         $r->get('/admin/emoticons', [EmoticonsController::class, 'index'])->name('admin.emoticons');
         $r->post('/admin/emoticons', [EmoticonsController::class, 'rebuild'])->name('admin.emoticons.rebuild');
+
+        // The components of the panel, for whoever builds a page of it: open to everyone let in.
+        $r->get('/admin/style-guide', StyleGuideController::class)->name('admin.style_guide');
 
         // Everything that changes the site as a whole. Group middleware does not propagate
         // into nested groups, so SuperAdminAccessMiddleware is self-contained and asks for

@@ -1,0 +1,16 @@
+{#
+    One example of the style guide: the markup rendered, and below it the source that renders it.
+    Both come from the same template, so the code shown is always the code that runs.
+
+    @param string name The example: a template of @admin/style-guide/examples/, without ".twig".
+#}
+{% set template = '@admin/style-guide/examples/' ~ name ~ '.twig' %}
+<div class="admin-guide__example">
+    <div class="admin-guide__demo">
+        {% include template only %}
+    </div>
+    <details class="admin-guide__code">
+        <summary>{{ __('Markup') }}</summary>
+        <pre><code>{{ source(template)|trim }}</code></pre>
+    </details>
+</div>

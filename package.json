@@ -21,11 +21,13 @@
     },
     "scripts": {
         "dev": "vite",
-        "build": "vite build"
+        "build": "vite build",
+        "icons": "node themes/default/src/admin/icons/build-sprite.js"
     },
     "devDependencies": {
         "@vitejs/plugin-vue": "^6.0.8",
         "laravel-vite-plugin": "^3.1.3",
+        "lucide-static": "^1.55.0",
         "rtlcss": "^4.3.0",
         "sass": "^1.101.0",
         "vite": "^8.1.5"

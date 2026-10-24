@@ -1,0 +1,17 @@
+// Alerts take their colors from the subtle Bootstrap properties of ui/_scheme.scss; only the
+// type is set here.
+
+.alert {
+  font-size: 0.8125rem;
+  line-height: 1.55;
+
+  .alert-link {
+    font-weight: 600;
+  }
+}
+
+.alert-heading {
+  font-size: 0.875rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}

@@ -1,0 +1,30 @@
+// Tables: hairline rows, a monospaced uppercase head. Put into a .card, a table gets the frame of
+// the design (see ui/_cards.scss).
+
+.table {
+  --bs-table-color: var(--fg);
+  --bs-table-bg: transparent;
+  --bs-table-border-color: var(--border);
+  --bs-table-striped-color: var(--fg);
+  --bs-table-striped-bg: color-mix(in oklab, var(--fg) 3%, transparent);
+  --bs-table-active-color: var(--fg);
+  --bs-table-active-bg: color-mix(in oklab, var(--accent) 10%, transparent);
+  --bs-table-hover-color: var(--fg);
+  --bs-table-hover-bg: var(--bg-elev-2);
+
+  font-size: 0.8125rem;
+
+  > thead > tr > th {
+    font-family: $ui-font-mono;
+    font-size: 0.65625rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+    white-space: nowrap;
+  }
+}
+
+// A selected row: the tint of .table-active and the accent along its left edge.
+.table > tbody > tr.table-active > :first-child {
+  box-shadow: inset 2px 0 0 var(--accent), inset 0 0 0 9999px var(--bs-table-bg-state, var(--bs-table-bg-type, var(--bs-table-accent-bg)));
+}

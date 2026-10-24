@@ -1,0 +1,51 @@
+// Type and the elements Bootstrap's reboot leaves to the theme.
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.005em;
+}
+
+h1, .h1,
+h2, .h2,
+h3, .h3 {
+  letter-spacing: -0.02em;
+}
+
+h1, .h1 {
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+}
+
+.font-monospace {
+  letter-spacing: 0;
+}
+
+// A small uppercase label above a group: the section names of the menu, the heads of a table.
+.text-caption {
+  font-size: 0.65625rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+hr {
+  border-color: var(--border);
+  opacity: 1;
+}
+
+kbd {
+  padding: 1px 6px;
+  border: 1px solid var(--border);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  background: var(--bg-inset);
+  color: var(--fg-muted);
+  font-size: 0.6875rem;
+}
+
+::selection {
+  background: color-mix(in oklab, var(--accent) 30%, transparent);
+}

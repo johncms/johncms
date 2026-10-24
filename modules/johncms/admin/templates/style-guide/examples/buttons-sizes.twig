@@ -1,0 +1,23 @@
+<div class="d-flex flex-wrap align-items-center gap-2">
+    <button type="button" class="btn btn-primary btn-sm">btn-sm</button>
+    <button type="button" class="btn btn-primary">btn</button>
+    <button type="button" class="btn btn-primary btn-lg">btn-lg</button>
+    <button type="button" class="btn btn-primary" disabled>disabled</button>
+</div>
+<div class="d-flex flex-wrap align-items-center gap-2 mt-2">
+    <button type="button" class="btn btn-primary">
+        {% include '@admin/components/ui/icon.twig' with {name: 'plus', size: 14} only %}
+        {{ __('Add') }}
+    </button>
+    <button type="button" class="btn btn-secondary">
+        {% include '@admin/components/ui/icon.twig' with {name: 'pencil', size: 14} only %}
+        {{ __('Edit') }}
+    </button>
+    {# An icon alone needs a name the screen reader can say: aria-label, and title for the pointer. #}
+    <button type="button" class="btn btn-secondary btn-icon" aria-label="{{ __('Delete') }}" title="{{ __('Delete') }}">
+        {% include '@admin/components/ui/icon.twig' with {name: 'trash-2', size: 14} only %}
+    </button>
+    <button type="button" class="btn btn-outline-secondary btn-icon btn-sm" aria-label="{{ __('Edit') }}" title="{{ __('Edit') }}">
+        {% include '@admin/components/ui/icon.twig' with {name: 'pencil', size: 13} only %}
+    </button>
+</div>

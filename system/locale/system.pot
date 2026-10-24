@@ -795,14 +795,14 @@ msgid "'%hostname%' does not appear to have any valid MX or A records for the em
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:17
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:417
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:425
 #: themes/default/templates/components/sidebar-main-menu.twig:5
 #: themes/default/templates/components/sidebar-main-menu.twig:100
 msgid "Set Light Theme"
 msgstr ""
 
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:17
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:416
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:424
 #: themes/default/templates/components/sidebar-main-menu.twig:5
 #: themes/default/templates/components/sidebar-main-menu.twig:99
 msgid "Set Dark Theme"

@@ -1,0 +1,20 @@
+<div class="row">
+    <div class="col-md-7 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                {% include '@admin/components/ui/icon.twig' with {name: 'settings', size: 15, class: 'text-body-tertiary'} only %}
+                <span class="flex-grow-1">{{ __('Settings') }}</span>
+                <span class="badge text-bg-light">3</span>
+            </div>
+            <div class="card-body">
+                <h3 class="card-title">{{ __('Title') }}</h3>
+                <p class="card-subtitle mb-2">card-subtitle</p>
+                <p class="card-text text-body-secondary">{{ __('The text of a page: a description, a hint, a paragraph of help. 14px, the system font of the device.') }}</p>
+            </div>
+            <div class="card-footer d-flex justify-content-end gap-2">
+                <button type="button" class="btn btn-secondary btn-sm">{{ __('Cancel') }}</button>
+                <button type="button" class="btn btn-primary btn-sm">{{ __('Save') }}</button>
+            </div>
+        </div>
+    </div>
+</div>

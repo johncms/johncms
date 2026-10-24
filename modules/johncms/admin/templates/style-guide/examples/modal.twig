@@ -1,0 +1,21 @@
+<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#guide-modal">
+    {{ __('Delete user') }}
+</button>
+
+<div class="modal fade" id="guide-modal" tabindex="-1" aria-labelledby="guide-modal-title" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="guide-modal-title">{{ __('Delete user') }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ __('Cancel') }}"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-danger mb-0">{{ __('The account and everything it wrote will be removed. This cannot be undone.') }}</div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('Cancel') }}</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">{{ __('Delete') }}</button>
+            </div>
+        </div>
+    </div>
+</div>

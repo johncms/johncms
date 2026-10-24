@@ -7,6 +7,7 @@ msgstr ""
 #: modules/johncms/admin/src/Application/Controllers/Ip/IpWhoisController.php:37
 #: modules/johncms/admin/src/Application/Menu/AdminPanelMenuItemProvider.php:21
 #: modules/johncms/admin/src/Application/Services/AdminPermissions.php:29
+#: modules/johncms/admin/templates/style-guide/examples/breadcrumbs.twig:5
 msgid "Admin Panel"
 msgstr ""
 
@@ -28,6 +29,10 @@ msgstr ""
 #: modules/johncms/admin/src/Application/Controllers/Access/UserRolesController.php:130
 #: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:306
 #: modules/johncms/admin/src/Application/Services/AdRowMapper.php:121
+#: modules/johncms/admin/templates/style-guide/examples/breadcrumbs.twig:6
+#: modules/johncms/admin/templates/style-guide/examples/list-group.twig:6
+#: modules/johncms/admin/templates/style-guide/examples/table.twig:3
+#: modules/johncms/admin/templates/style-guide/examples/tabs.twig:4
 msgid "Users"
 msgstr ""
 
@@ -37,6 +42,9 @@ msgstr ""
 #: modules/johncms/admin/templates/ip-bans.twig:57
 #: modules/johncms/admin/templates/ip-search.twig:28
 #: modules/johncms/admin/templates/ip-whois.twig:17
+#: modules/johncms/admin/templates/style-guide.twig:144
+#: modules/johncms/admin/templates/style-guide/examples/input-group.twig:7
+#: modules/johncms/admin/templates/style-guide/examples/input-group.twig:8
 msgid "Search"
 msgstr ""
 
@@ -56,6 +64,10 @@ msgstr ""
 #: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:322
 #: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:333
 #: modules/johncms/admin/src/Application/Services/AdminUserRowMapper.php:102
+#: modules/johncms/admin/templates/style-guide/examples/dropdown.twig:16
+#: modules/johncms/admin/templates/style-guide/examples/form-fields.twig:12
+#: modules/johncms/admin/templates/style-guide/examples/list-group.twig:10
+#: modules/johncms/admin/templates/style-guide/examples/tabs.twig:8
 msgid "Roles"
 msgstr ""
 
@@ -185,24 +197,29 @@ msgstr ""
 msgid "Maintenance"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:340
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:336
+#: modules/johncms/admin/src/Application/Controllers/System/StyleGuideController.php:23
+msgid "Style guide"
+msgstr ""
+
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:348
 #: modules/johncms/admin/src/Application/Controllers/System/SystemCheckController.php:38
 msgid "Security"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:357
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:365
 #: modules/johncms/admin/src/Application/Controllers/Access/ExternalProvidersController.php:37
 msgid "Sign-in services"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:366
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:374
 #: modules/johncms/admin/src/Application/Controllers/System/FileIntegrityController.php:29
 #: modules/johncms/admin/src/Application/Controllers/System/FileIntegrityController.php:42
 #: modules/johncms/admin/src/Application/Controllers/System/FileIntegrityController.php:71
 msgid "Anti-Spyware"
 msgstr ""
 
-#: themes/default/templates/admin/components/sidebar-admin-menu.twig:374
+#: themes/default/templates/admin/components/sidebar-admin-menu.twig:382
 #: modules/johncms/admin/src/Application/Controllers/Ip/IpBanController.php:50
 #: modules/johncms/admin/src/Application/Controllers/Ip/IpBanController.php:74
 #: modules/johncms/admin/src/Application/Controllers/Ip/IpBanController.php:126
@@ -217,6 +234,7 @@ msgstr ""
 #: modules/johncms/admin/src/Application/Controllers/Access/ExternalProvidersController.php:70
 #: modules/johncms/admin/src/Application/Controllers/Access/RolesController.php:195
 #: modules/johncms/admin/src/Application/Controllers/Access/UserRolesController.php:94
+#: modules/johncms/admin/templates/style-guide/examples/alerts.twig:1
 msgid "Changes saved successfully"
 msgstr ""
 
@@ -483,6 +501,8 @@ msgstr ""
 #: modules/johncms/admin/templates/registrations.twig:36
 #: modules/johncms/admin/templates/role-delete-confirm.twig:24
 #: modules/johncms/admin/templates/roles.twig:54
+#: modules/johncms/admin/templates/style-guide/examples/buttons-sizes.twig:17
+#: modules/johncms/admin/templates/style-guide/examples/modal.twig:17
 #: modules/johncms/admin/templates/user-delete-confirm.twig:39
 #: modules/johncms/admin/templates/users-cleanup.twig:25
 msgid "Delete"
@@ -759,6 +779,9 @@ msgstr ""
 
 #: modules/johncms/admin/src/Application/Controllers/Users/DeleteUserController.php:27
 #: modules/johncms/admin/src/Application/Controllers/Users/DeleteUserController.php:54
+#: modules/johncms/admin/templates/style-guide/examples/dropdown.twig:23
+#: modules/johncms/admin/templates/style-guide/examples/modal.twig:2
+#: modules/johncms/admin/templates/style-guide/examples/modal.twig:9
 msgid "Delete user"
 msgstr ""
 
@@ -809,6 +832,8 @@ msgid "List of Users"
 msgstr ""
 
 #: modules/johncms/admin/src/Application/Controllers/Users/UserListController.php:61
+#: modules/johncms/admin/templates/style-guide/examples/form-fields.twig:3
+#: modules/johncms/admin/templates/style-guide/examples/table.twig:11
 msgid "Nickname"
 msgstr ""
 
@@ -843,6 +868,7 @@ msgstr[0] ""
 #: modules/johncms/admin/src/Application/Middlewares/AdminAccessMiddleware.php:54
 #: modules/johncms/admin/src/Application/Middlewares/SuperAdminAccessMiddleware.php:54
 #: modules/johncms/admin/src/Application/UseCases/EnsureRoleManagementAccessUseCase.php:37
+#: modules/johncms/admin/templates/style-guide/examples/alerts.twig:7
 msgid "Access denied"
 msgstr ""
 
@@ -956,6 +982,9 @@ msgstr ""
 #: modules/johncms/admin/templates/role-delete-confirm.twig:25
 #: modules/johncms/admin/templates/role-form.twig:121
 #: modules/johncms/admin/templates/smilies.twig:21
+#: modules/johncms/admin/templates/style-guide/examples/card.twig:15
+#: modules/johncms/admin/templates/style-guide/examples/modal.twig:10
+#: modules/johncms/admin/templates/style-guide/examples/modal.twig:16
 #: modules/johncms/admin/templates/user-delete-confirm.twig:40
 #: modules/johncms/admin/templates/user-roles.twig:70
 #: modules/johncms/admin/templates/users-cleanup.twig:26
@@ -982,6 +1011,8 @@ msgstr ""
 #: modules/johncms/admin/templates/counter-view.twig:21
 #: modules/johncms/admin/templates/role-form.twig:53
 #: modules/johncms/admin/templates/settings.twig:85
+#: modules/johncms/admin/templates/style-guide/examples/card.twig:10
+#: modules/johncms/admin/templates/style-guide/examples/form-fields.twig:20
 msgid "Title"
 msgstr ""
 
@@ -1048,6 +1079,7 @@ msgstr ""
 #: modules/johncms/admin/templates/mail-settings.twig:104
 #: modules/johncms/admin/templates/role-form.twig:120
 #: modules/johncms/admin/templates/settings.twig:125
+#: modules/johncms/admin/templates/style-guide/examples/card.twig:16
 #: modules/johncms/admin/templates/user-roles.twig:69
 msgid "Save"
 msgstr ""
@@ -1111,6 +1143,14 @@ msgstr ""
 #: modules/johncms/admin/templates/counter-view.twig:50
 #: modules/johncms/admin/templates/counters.twig:38
 #: modules/johncms/admin/templates/roles.twig:52
+#: modules/johncms/admin/templates/style-guide/examples/buttons-sizes.twig:14
+#: modules/johncms/admin/templates/style-guide/examples/buttons-sizes.twig:20
+#: modules/johncms/admin/templates/style-guide/examples/dropdown.twig:3
+#: modules/johncms/admin/templates/style-guide/examples/dropdown.twig:10
+#: modules/johncms/admin/templates/style-guide/examples/table.twig:14
+#: modules/johncms/admin/templates/style-guide/examples/table.twig:24
+#: modules/johncms/admin/templates/style-guide/examples/table.twig:36
+#: modules/johncms/admin/templates/style-guide/examples/table.twig:47
 msgid "Edit"
 msgstr ""
 
@@ -1200,6 +1240,8 @@ msgid "Reset"
 msgstr ""
 
 #: modules/johncms/admin/templates/auth-log.twig:54
+#: modules/johncms/admin/templates/style-guide/examples/dropdown.twig:6
+#: modules/johncms/admin/templates/style-guide/examples/form-fields.twig:14
 msgid "User"
 msgstr ""
 
@@ -1318,6 +1360,7 @@ msgstr ""
 #: modules/johncms/admin/templates/counters.twig:48
 #: modules/johncms/admin/templates/ip-bans.twig:54
 #: modules/johncms/admin/templates/roles.twig:63
+#: modules/johncms/admin/templates/style-guide/examples/buttons-sizes.twig:10
 msgid "Add"
 msgstr ""
 
@@ -1547,6 +1590,7 @@ msgid "IP Address"
 msgstr ""
 
 #: modules/johncms/admin/templates/karma-clear-confirm.twig:20
+#: modules/johncms/admin/templates/style-guide/examples/alerts.twig:5
 msgid "Clear"
 msgstr ""
 
@@ -1941,6 +1985,7 @@ msgid "Comments in the downloads"
 msgstr ""
 
 #: modules/johncms/admin/templates/settings.twig:65
+#: modules/johncms/admin/templates/style-guide/examples/alerts.twig:2
 msgid "New accounts wait for confirmation"
 msgstr ""
 
@@ -1965,6 +2010,7 @@ msgid "Keywords"
 msgstr ""
 
 #: modules/johncms/admin/templates/settings.twig:93
+#: modules/johncms/admin/templates/style-guide/examples/form-fields.twig:25
 #: modules/johncms/admin/templates/system-check.twig:16
 #: modules/johncms/admin/templates/system-check.twig:24
 msgid "Description"
@@ -2004,6 +2050,258 @@ msgstr ""
 
 #: modules/johncms/admin/templates/smilies.twig:20
 msgid "Update cache"
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide.twig:15
+msgid "Colors"
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide.twig:16
+msgid "Every color is a custom property. The light and the dark scheme differ only in their values, so a page painted with them needs nothing for the dark one."
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide.twig:21
+msgid "Type"
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide.twig:22
+msgid "The system font of the device, and a monospaced one for code, identifiers and meta information."
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide.twig:27
+msgid "Icons"
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide.twig:28
+msgid "Lucide icons from the sprite of the panel. An icon takes the color of the text around it. Click one to copy its include."
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide.twig:33
+msgid "Buttons"
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide.twig:34
+msgid "One primary action per screen, secondary buttons for the rest, a danger button for what cannot be undone."
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide.twig:39
+msgid "Badges"
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide.twig:40
+msgid "A solid badge counts something, a soft one tells a state."
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide.twig:45
+msgid "Alerts"
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide.twig:46
+msgid "A message about the page or the result of an action."
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide.twig:51
+msgid "Cards"
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide.twig:52
+msgid "A raised surface for a group of content. A table or a list put straight into a card runs to its edges."
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide.twig:57
+msgid "Forms"
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide.twig:58
+msgid "A label above every field, the help and the errors below it."
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide.twig:63
+msgid "Tables"
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide.twig:64
+msgid "Records are listed in a table inside a card, with the pagination in its footer."
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide.twig:69
+msgid "Navigation"
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide.twig:70
+msgid "Tabs switch between the views of one page, pills filter a list."
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide.twig:75
+msgid "Menus and dialogs"
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide.twig:76
+msgid "Both open above the page and are Bootstrap components, driven by its data attributes."
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide.twig:81
+msgid "Lists and progress"
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide.twig:82
+msgid "A list of links or settings, and how far a long task has gone."
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide.twig:87
+msgid "The page"
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide.twig:88
+msgid "Cards, panels, menus"
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide.twig:89
+msgid "A raised surface under the pointer"
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide.twig:90
+msgid "Fields, code, sunken blocks"
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide.twig:91
+msgid "Text"
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide.twig:92
+msgid "Secondary text"
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide.twig:93
+msgid "Labels, meta information, placeholders"
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide.twig:94
+msgid "Hairlines and frames"
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide.twig:95
+msgid "A frame under the pointer, a menu"
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide.twig:96
+msgid "Main actions, links, focus"
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide.twig:97
+msgid "A tint of the accent"
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide.twig:98
+msgid "Text on the accent"
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide.twig:99
+msgid "Errors and deletion"
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide.twig:100
+msgid "Warnings, what is waiting"
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide.twig:101
+msgid "Neutral notices"
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide.twig:105
+msgid "Contents"
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide.twig:145
+msgid "Copy the include"
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide.twig:146
+msgid "Copied"
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide/example.twig:13
+msgid "Markup"
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide/examples/alerts.twig:4
+#: modules/johncms/admin/templates/style-guide/examples/icon.twig:5
+msgid "Warning"
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide/examples/alerts.twig:5
+msgid "The cache has not been cleared for a long time."
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide/examples/badges.twig:8
+msgid "Published"
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide/examples/badges.twig:9
+msgid "Scheduled"
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide/examples/badges.twig:10
+#: modules/johncms/admin/templates/style-guide/examples/list-group.twig:14
+#: modules/johncms/admin/templates/style-guide/examples/pills.twig:9
+#: modules/johncms/admin/templates/style-guide/examples/table.twig:33
+#: modules/johncms/admin/templates/style-guide/examples/tabs.twig:12
+msgid "Banned"
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide/examples/badges.twig:11
+#: modules/johncms/admin/templates/style-guide/examples/pills.twig:6
+#: modules/johncms/admin/templates/style-guide/examples/table.twig:21
+msgid "Online"
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide/examples/badges.twig:12
+#: modules/johncms/admin/templates/style-guide/examples/table.twig:44
+msgid "Draft"
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide/examples/card.twig:6
+msgid "Settings"
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide/examples/card.twig:12
+#: modules/johncms/admin/templates/style-guide/examples/type.twig:6
+msgid "The text of a page: a description, a hint, a paragraph of help. 14px, the system font of the device."
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide/examples/form-fields.twig:7
+msgid "Email"
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide/examples/form-fields.twig:9
+msgid "Nobody but the administration sees it."
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide/examples/form-fields.twig:15
+msgid "Moderator"
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide/examples/form-fields.twig:22
+msgid "Fill in the title"
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide/examples/input-group.twig:13
+#: modules/johncms/admin/templates/style-guide/examples/progress.twig:1
+#: modules/johncms/admin/templates/users-cleanup.twig:19
+#: modules/johncms/admin/templates/users.twig:28
+msgid "Total"
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide/examples/modal.twig:13
+msgid "The account and everything it wrote will be removed. This cannot be undone."
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide/examples/pills.twig:3
+msgid "All"
+msgstr ""
+
+#: modules/johncms/admin/templates/style-guide/examples/table.twig:12
+msgid "Status"
 msgstr ""
 
 #: modules/johncms/admin/templates/system-check.twig:14
@@ -2057,11 +2355,6 @@ msgstr ""
 
 #: modules/johncms/admin/templates/users-cleanup.twig:17
 msgid "This category includes profiles, recorded more than 6 months ago, with the date of last visit for more than 5 months ago and with zero activity.<br>Can safely remove them."
-msgstr ""
-
-#: modules/johncms/admin/templates/users-cleanup.twig:19
-#: modules/johncms/admin/templates/users.twig:28
-msgid "Total"
 msgstr ""
 
 #: modules/johncms/admin/templates/users.twig:36

@@ -1,0 +1,27 @@
+// Lists and progress bars.
+
+.list-group {
+  --bs-list-group-color: var(--fg);
+  --bs-list-group-bg: var(--bg-elev);
+  --bs-list-group-border-color: var(--border);
+  --bs-list-group-action-color: var(--fg);
+  --bs-list-group-action-hover-color: var(--fg);
+  --bs-list-group-action-hover-bg: var(--bg-elev-2);
+  --bs-list-group-action-active-color: var(--fg);
+  --bs-list-group-action-active-bg: var(--bg-inset);
+  --bs-list-group-disabled-color: var(--fg-dim);
+  --bs-list-group-disabled-bg: var(--bg-elev);
+  --bs-list-group-active-color: var(--fg);
+  --bs-list-group-active-bg: color-mix(in oklab, var(--accent) 12%, var(--bg-elev));
+  --bs-list-group-active-border-color: color-mix(in oklab, var(--accent) 35%, var(--border));
+
+  font-size: 0.8125rem;
+}
+
+.progress,
+.progress-stacked {
+  --bs-progress-bg: var(--bg-inset);
+  --bs-progress-bar-bg: var(--accent);
+  --bs-progress-bar-color: var(--accent-ink);
+  --bs-progress-border-radius: 100px;
+}

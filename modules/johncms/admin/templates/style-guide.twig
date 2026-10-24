@@ -1,0 +1,154 @@
+{#
+    The style guide of the panel: the colors, the type and the components, rendered live from the
+    bundle every page of the panel loads.
+
+    Every example is a template of its own in style-guide/examples/. The page renders it and
+    prints its source under it, so the markup shown is the markup that runs: to change an example
+    or to add one, edit or add a template there.
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    {% set sections = [
+        {
+            id: 'colors',
+            title: __('Colors'),
+            description: __('Every color is a custom property. The light and the dark scheme differ only in their values, so a page painted with them needs nothing for the dark one.'),
+            examples: [],
+        },
+        {
+            id: 'type',
+            title: __('Type'),
+            description: __('The system font of the device, and a monospaced one for code, identifiers and meta information.'),
+            examples: ['type'],
+        },
+        {
+            id: 'icons',
+            title: __('Icons'),
+            description: __('Lucide icons from the sprite of the panel. An icon takes the color of the text around it. Click one to copy its include.'),
+            examples: ['icon'],
+        },
+        {
+            id: 'buttons',
+            title: __('Buttons'),
+            description: __('One primary action per screen, secondary buttons for the rest, a danger button for what cannot be undone.'),
+            examples: ['buttons', 'buttons-sizes'],
+        },
+        {
+            id: 'badges',
+            title: __('Badges'),
+            description: __('A solid badge counts something, a soft one tells a state.'),
+            examples: ['badges'],
+        },
+        {
+            id: 'alerts',
+            title: __('Alerts'),
+            description: __('A message about the page or the result of an action.'),
+            examples: ['alerts'],
+        },
+        {
+            id: 'cards',
+            title: __('Cards'),
+            description: __('A raised surface for a group of content. A table or a list put straight into a card runs to its edges.'),
+            examples: ['card'],
+        },
+        {
+            id: 'forms',
+            title: __('Forms'),
+            description: __('A label above every field, the help and the errors below it.'),
+            examples: ['form-fields', 'form-choices', 'input-group'],
+        },
+        {
+            id: 'tables',
+            title: __('Tables'),
+            description: __('Records are listed in a table inside a card, with the pagination in its footer.'),
+            examples: ['table'],
+        },
+        {
+            id: 'navigation',
+            title: __('Navigation'),
+            description: __('Tabs switch between the views of one page, pills filter a list.'),
+            examples: ['tabs', 'pills', 'breadcrumbs', 'pagination'],
+        },
+        {
+            id: 'overlays',
+            title: __('Menus and dialogs'),
+            description: __('Both open above the page and are Bootstrap components, driven by its data attributes.'),
+            examples: ['dropdown', 'modal'],
+        },
+        {
+            id: 'lists',
+            title: __('Lists and progress'),
+            description: __('A list of links or settings, and how far a long task has gone.'),
+            examples: ['list-group', 'progress'],
+        },
+    ] %}
+    {% set tokens = [
+        {name: 'bg', description: __('The page')},
+        {name: 'bg-elev', description: __('Cards, panels, menus')},
+        {name: 'bg-elev-2', description: __('A raised surface under the pointer')},
+        {name: 'bg-inset', description: __('Fields, code, sunken blocks')},
+        {name: 'fg', description: __('Text')},
+        {name: 'fg-muted', description: __('Secondary text')},
+        {name: 'fg-dim', description: __('Labels, meta information, placeholders')},
+        {name: 'border', description: __('Hairlines and frames')},
+        {name: 'border-strong', description: __('A frame under the pointer, a menu')},
+        {name: 'accent', description: __('Main actions, links, focus')},
+        {name: 'accent-soft', description: __('A tint of the accent')},
+        {name: 'accent-ink', description: __('Text on the accent')},
+        {name: 'danger', description: __('Errors and deletion')},
+        {name: 'warn', description: __('Warnings, what is waiting')},
+        {name: 'info', description: __('Neutral notices')},
+    ] %}
+
+    <div class="admin-guide">
+        <nav class="admin-guide__toc" aria-label="{{ __('Contents') }}">
+            {% for section in sections %}
+                <a href="#{{ section.id }}">{{ '%02d'|format(loop.index) }} — {{ section.title }}</a>
+            {% endfor %}
+        </nav>
+
+        {% for section in sections %}
+            <section class="admin-guide__section" id="{{ section.id }}">
+                {% include '@admin/style-guide/section-head.twig' with {
+                    number: loop.index,
+                    title: section.title,
+                    description: section.description,
+                } only %}
+
+                {% if section.id == 'colors' %}
+                    <div class="admin-guide__swatches">
+                        {% for token in tokens %}
+                            <div class="admin-guide__swatch">
+                                <div class="admin-guide__swatch-color" style="--swatch: var(--{{ token.name }})"></div>
+                                <div class="admin-guide__swatch-body">
+                                    <div class="admin-guide__swatch-name">--{{ token.name }}</div>
+                                    <div class="admin-guide__swatch-desc">{{ token.description }}</div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                {% for example in section.examples %}
+                    {% include '@admin/style-guide/example.twig' with {name: example} only %}
+                {% endfor %}
+
+                {% if section.id == 'icons' %}
+                    {# The gallery is compiled by Vue from the markup, so it stays apart from the
+                       examples: the source they print would be read as Vue interpolation. #}
+                    <div class="admin-guide__example">
+                        <div class="admin-guide__demo vue_app">
+                            <icon-gallery
+                                sprite="{{ asset('icons/admin.svg', true) }}"
+                                search-label="{{ __('Search') }}"
+                                copy-label="{{ __('Copy the include') }}"
+                                copied-label="{{ __('Copied') }}"
+                            ></icon-gallery>
+                        </div>
+                    </div>
+                {% endif %}
+            </section>
+        {% endfor %}
+    </div>
+{% endblock %}

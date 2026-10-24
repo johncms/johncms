@@ -1,0 +1,27 @@
+<div class="dropdown">
+    <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+        {{ __('Edit') }}
+    </button>
+    <ul class="dropdown-menu">
+        <li><h6 class="dropdown-header">{{ __('User') }}</h6></li>
+        <li>
+            <a class="dropdown-item" href="#overlays">
+                {% include '@admin/components/ui/icon.twig' with {name: 'pencil', size: 14} only %}
+                {{ __('Edit') }}
+            </a>
+        </li>
+        <li>
+            <a class="dropdown-item active" href="#overlays" aria-current="true">
+                {% include '@admin/components/ui/icon.twig' with {name: 'key-round', size: 14} only %}
+                {{ __('Roles') }}
+            </a>
+        </li>
+        <li><hr class="dropdown-divider"></li>
+        <li>
+            <a class="dropdown-item text-danger" href="#overlays">
+                {% include '@admin/components/ui/icon.twig' with {name: 'trash-2', size: 14} only %}
+                {{ __('Delete user') }}
+            </a>
+        </li>
+    </ul>
+</div>

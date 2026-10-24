@@ -1,0 +1,12 @@
+{#
+    The heading of a section of the style guide.
+
+    @param int    number      The place of the section, printed as 01, 02, …
+    @param string title
+    @param string description
+#}
+<header class="admin-guide__head">
+    <div class="admin-guide__num">{{ '%02d'|format(number) }}</div>
+    <h2 class="admin-guide__title">{{ title }}</h2>
+    <p class="admin-guide__desc">{{ description }}</p>
+</header>

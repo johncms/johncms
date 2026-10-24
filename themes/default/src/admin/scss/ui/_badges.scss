@@ -1,0 +1,47 @@
+// Badges. A solid one (bg-danger, text-bg-success) counts something; a soft one, built from the
+// Bootstrap subtle utilities, tells a state:
+//
+//     <span class="badge rounded-pill bg-success-subtle text-success-emphasis badge-dot">Published</span>
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  letter-spacing: 0;
+}
+
+// Bootstrap picks the text of a solid badge while it is compiled, against the light scheme; the
+// ink is taken from the tokens instead, so it keeps its contrast in the dark one.
+.text-bg-primary,
+.text-bg-success {
+  color: var(--accent-ink) !important;
+}
+
+.text-bg-danger {
+  color: #fff !important;
+}
+
+.text-bg-warning {
+  color: oklch(0.22 0.04 80) !important;
+}
+
+.text-bg-info {
+  color: var(--bg-elev) !important;
+}
+
+// The neutral badge: a draft, a tag, a count nobody has to act on.
+.text-bg-light {
+  color: var(--fg-muted) !important;
+  background-color: var(--bg-inset) !important;
+  box-shadow: inset 0 0 0 1px var(--border);
+}
+
+// A dot in front of the text, in its color: the state of a row at a glance.
+.badge-dot::before {
+  content: '';
+  width: 0.5em;
+  height: 0.5em;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+}

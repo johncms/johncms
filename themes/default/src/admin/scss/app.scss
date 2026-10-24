@@ -37,3 +37,19 @@
 // Editor
 
 @import 'flatpickr/dist/flatpickr.css';
+
+// The design of the panel on top of Bootstrap: the color schemes first, then the components.
+// It comes last, so it wins over the older styles above at the same specificity.
+@import 'ui/scheme';
+@import 'ui/base';
+@import 'ui/icon';
+@import 'ui/buttons';
+@import 'ui/badges';
+@import 'ui/alerts';
+@import 'ui/cards';
+@import 'ui/forms';
+@import 'ui/tables';
+@import 'ui/navs';
+@import 'ui/overlays';
+@import 'ui/list-group';
+@import 'ui/style-guide';

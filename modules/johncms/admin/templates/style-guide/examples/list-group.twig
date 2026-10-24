@@ -1,0 +1,20 @@
+<div class="row">
+    <div class="col-md-7 col-lg-6">
+        <div class="list-group">
+            <a href="#lists" class="list-group-item list-group-item-action d-flex align-items-center gap-2 active" aria-current="true">
+                {% include '@admin/components/ui/icon.twig' with {name: 'users', size: 15} only %}
+                {{ __('Users') }}
+            </a>
+            <a href="#lists" class="list-group-item list-group-item-action d-flex align-items-center gap-2">
+                {% include '@admin/components/ui/icon.twig' with {name: 'key-round', size: 15} only %}
+                {{ __('Roles') }}
+            </a>
+            <a href="#lists" class="list-group-item list-group-item-action d-flex align-items-center gap-2">
+                {% include '@admin/components/ui/icon.twig' with {name: 'ban', size: 15} only %}
+                <span class="flex-grow-1">{{ __('Banned') }}</span>
+                <span class="badge text-bg-danger">2</span>
+            </a>
+            <span class="list-group-item disabled" aria-disabled="true">disabled</span>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,96 @@
+@use 'sass:map';
+
+// The Bootstrap colors and the tokens they are painted with. Success shares the accent: in the
+// panel green already means "done, published, allowed".
+$ui-theme-colors: (
+  'primary': 'accent',
+  'secondary': 'fg-muted',
+  'success': 'accent',
+  'info': 'info',
+  'warning': 'warn',
+  'danger': 'danger',
+);
+
+// Prints one color scheme: the tokens of the design (--bg, --fg, --accent, …) and the Bootstrap
+// properties that follow them.
+//
+// The whole set is printed for every scheme, the derived properties included: a custom property
+// that refers to another one is resolved where it is declared, so a --bs-primary-bg-subtle
+// computed on :root would keep the light accent inside a dark body.
+@mixin ui-scheme($palette, $scheme) {
+  color-scheme: $scheme;
+
+  @each $name, $value in $palette {
+    --#{$name}: #{$value};
+  }
+
+  --bs-body-bg: var(--bg);
+  --bs-body-bg-rgb: #{ui-rgb(map.get($palette, 'bg'))};
+  --bs-body-color: var(--fg);
+  --bs-body-color-rgb: #{ui-rgb(map.get($palette, 'fg'))};
+  --bs-emphasis-color: var(--fg);
+  --bs-emphasis-color-rgb: #{ui-rgb(map.get($palette, 'fg'))};
+  --bs-heading-color: var(--fg);
+  --bs-secondary-color: var(--fg-muted);
+  --bs-secondary-color-rgb: #{ui-rgb(map.get($palette, 'fg-muted'))};
+  --bs-secondary-bg: var(--bg-elev-2);
+  --bs-secondary-bg-rgb: #{ui-rgb(map.get($palette, 'bg-elev-2'))};
+  --bs-tertiary-color: var(--fg-dim);
+  --bs-tertiary-color-rgb: #{ui-rgb(map.get($palette, 'fg-dim'))};
+  --bs-tertiary-bg: var(--bg-inset);
+  --bs-tertiary-bg-rgb: #{ui-rgb(map.get($palette, 'bg-inset'))};
+  --bs-border-color: var(--border);
+  --bs-border-color-translucent: var(--border);
+
+  --bs-link-color: var(--accent);
+  --bs-link-color-rgb: #{ui-rgb(map.get($palette, 'accent'))};
+  --bs-link-hover-color: #{ui-link-hover($palette)};
+  --bs-link-hover-color-rgb: #{ui-rgb(ui-link-hover($palette))};
+
+  --bs-code-color: var(--accent);
+  --bs-highlight-color: var(--fg);
+  --bs-highlight-bg: color-mix(in oklab, var(--warn) 30%, transparent);
+  --bs-focus-ring-color: color-mix(in oklab, var(--accent) 35%, transparent);
+  --bs-form-valid-color: var(--accent);
+  --bs-form-valid-border-color: var(--accent);
+  --bs-form-invalid-color: var(--danger);
+  --bs-form-invalid-border-color: var(--danger);
+
+  @each $color, $token in $ui-theme-colors {
+    --bs-#{$color}: var(--#{$token});
+    --bs-#{$color}-rgb: #{ui-rgb(map.get($palette, $token))};
+    --bs-#{$color}-text-emphasis: color-mix(in oklab, var(--#{$token}) 75%, var(--fg));
+    --bs-#{$color}-bg-subtle: color-mix(in oklab, var(--#{$token}) 14%, var(--bg-elev));
+    --bs-#{$color}-border-subtle: color-mix(in oklab, var(--#{$token}) 35%, var(--border));
+  }
+}
+
+// Rules for the dark scheme only, for what a custom property cannot carry: an image painted in
+// the colors of the scheme, a filter.
+@mixin ui-when-dark {
+  body.dark & {
+    @content;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    body.auto & {
+      @content;
+    }
+  }
+}
+
+// The scheme follows the class the layout puts on <body>: light, dark, or auto for the
+// preference of the operating system.
+:root {
+  @include ui-scheme($ui-light, light);
+}
+
+body.dark {
+  @include ui-scheme($ui-dark, dark);
+}
+
+@media (prefers-color-scheme: dark) {
+  body.auto {
+    @include ui-scheme($ui-dark, dark);
+  }
+}

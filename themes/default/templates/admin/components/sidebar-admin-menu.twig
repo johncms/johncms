@@ -328,6 +328,14 @@
                     <span class="flex-grow-1">{{ d__('admin', 'Maintenance') }}</span>
                 </a>
             </li>
+            <li class="{{ sys_menu.style_guide|default(false) ? 'active' : '' }}">
+                <a href="/admin/style-guide">
+                    <svg class="icon">
+                        <use xlink:href="{{ sprite }}#book-open"/>
+                    </svg>
+                    <span class="flex-grow-1">{{ d__('admin', 'Style guide') }}</span>
+                </a>
+            </li>
         </ul>
     </div>
     <div class="border-bottom"></div>

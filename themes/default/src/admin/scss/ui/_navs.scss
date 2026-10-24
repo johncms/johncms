@@ -1,0 +1,101 @@
+// Tabs, pills, the breadcrumbs and the pagination.
+
+// Tabs are a row of labels over a hairline, the open one underlined with the accent.
+.nav-tabs {
+  --bs-nav-link-color: var(--fg-muted);
+  --bs-nav-link-hover-color: var(--fg);
+  --bs-nav-link-disabled-color: var(--fg-dim);
+  --bs-nav-tabs-border-color: var(--border);
+  --bs-nav-tabs-link-hover-border-color: transparent;
+  --bs-nav-tabs-link-active-color: var(--fg);
+  --bs-nav-tabs-link-active-bg: transparent;
+  --bs-nav-tabs-link-active-border-color: transparent;
+
+  gap: 2px;
+
+  .nav-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    &.active::after {
+      content: '';
+      position: absolute;
+      left: 0.75rem;
+      right: 0.75rem;
+      bottom: -1px;
+      height: 2px;
+      border-radius: 2px 2px 0 0;
+      background: var(--accent);
+    }
+  }
+}
+
+// Pills are the chips of a filter: the chosen one is tinted with the accent.
+.nav-pills {
+  --bs-nav-link-color: var(--fg-muted);
+  --bs-nav-link-hover-color: var(--fg);
+  --bs-nav-link-padding-y: 0.375rem;
+  --bs-nav-link-padding-x: 0.75rem;
+  --bs-nav-pills-border-radius: 0.375rem;
+  --bs-nav-pills-link-active-color: var(--accent);
+  --bs-nav-pills-link-active-bg: var(--accent-soft);
+
+  gap: 4px;
+
+  .nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+  }
+}
+
+.breadcrumb {
+  --bs-breadcrumb-divider-color: var(--fg-dim);
+  --bs-breadcrumb-item-active-color: var(--fg);
+
+  font-family: $ui-font-mono;
+  letter-spacing: 0.02em;
+
+  a {
+    color: var(--fg-muted);
+
+    &:hover {
+      color: var(--fg);
+      text-decoration: none;
+    }
+  }
+}
+
+// The pages are separate buttons rather than one bar; the current one is filled with the accent.
+.pagination {
+  --bs-pagination-color: var(--fg-muted);
+  --bs-pagination-bg: transparent;
+  --bs-pagination-border-color: transparent;
+  --bs-pagination-hover-color: var(--fg);
+  --bs-pagination-hover-bg: var(--bg-elev-2);
+  --bs-pagination-hover-border-color: transparent;
+  --bs-pagination-focus-color: var(--fg);
+  --bs-pagination-focus-bg: var(--bg-elev-2);
+  --bs-pagination-focus-box-shadow: 0 0 0 3px var(--bs-focus-ring-color);
+  --bs-pagination-active-color: var(--accent-ink);
+  --bs-pagination-active-bg: var(--accent);
+  --bs-pagination-active-border-color: var(--accent);
+  --bs-pagination-disabled-color: var(--fg-dim);
+  --bs-pagination-disabled-bg: transparent;
+  --bs-pagination-disabled-border-color: transparent;
+
+  gap: 2px;
+  font-family: $ui-font-mono;
+
+  .page-link {
+    min-width: 1.75rem;
+    text-align: center;
+    border-radius: var(--bs-pagination-border-radius);
+  }
+
+  .active > .page-link {
+    font-weight: 700;
+  }
+}

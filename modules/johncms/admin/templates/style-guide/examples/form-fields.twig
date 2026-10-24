@@ -1,0 +1,28 @@
+<div class="row g-3">
+    <div class="col-md-6">
+        <label class="form-label" for="guide-name">{{ __('Nickname') }}</label>
+        <input type="text" class="form-control" id="guide-name" value="admin">
+    </div>
+    <div class="col-md-6">
+        <label class="form-label" for="guide-email">{{ __('Email') }}</label>
+        <input type="email" class="form-control" id="guide-email" placeholder="name@example.com" aria-describedby="guide-email-help">
+        <div class="form-text" id="guide-email-help">{{ __('Nobody but the administration sees it.') }}</div>
+    </div>
+    <div class="col-md-6">
+        <label class="form-label" for="guide-role">{{ __('Roles') }}</label>
+        <select class="form-select" id="guide-role">
+            <option>{{ __('User') }}</option>
+            <option>{{ __('Moderator') }}</option>
+        </select>
+    </div>
+    <div class="col-md-6">
+        {# An error: is-invalid on the field and the message right below it. #}
+        <label class="form-label" for="guide-title">{{ __('Title') }}</label>
+        <input type="text" class="form-control is-invalid" id="guide-title" aria-describedby="guide-title-error">
+        <div class="invalid-feedback" id="guide-title-error">{{ __('Fill in the title') }}</div>
+    </div>
+    <div class="col-12">
+        <label class="form-label" for="guide-description">{{ __('Description') }}</label>
+        <textarea class="form-control" id="guide-description" rows="3"></textarea>
+    </div>
+</div>

@@ -1,0 +1,40 @@
+// Cards: a raised surface with a hairline border, no shadow.
+
+.card {
+  --bs-card-bg: var(--bg-elev);
+  --bs-card-border-color: var(--border);
+  --bs-card-cap-bg: transparent;
+  --bs-card-cap-color: var(--fg);
+  --bs-card-color: var(--fg);
+  --bs-card-title-color: var(--fg);
+  --bs-card-subtitle-color: var(--fg-muted);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.card-title {
+  font-size: 0.9375rem;
+  font-weight: 700;
+}
+
+.card-subtitle {
+  font-size: 0.75rem;
+  font-weight: 400;
+}
+
+// A table or a list put straight into a card: the card draws the frame, the rows run to its
+// edges.
+.card > .table,
+.card > .table-responsive > .table {
+  margin-bottom: 0;
+
+  > tbody > tr:last-child > * {
+    border-bottom-width: 0;
+  }
+}
