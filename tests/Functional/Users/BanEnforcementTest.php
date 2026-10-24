@@ -8,6 +8,7 @@ use Dom\HTMLDocument;
 use Johncms\Auth\Authorization\SystemRole;
 use Johncms\Config\ConfigRepository;
 use Johncms\Modules\Contacts\Domain\Models\ContactMessage;
+use Johncms\Modules\Guestbook\Application\Services\GuestbookPermissions;
 use Johncms\Users\User;
 use LogicException;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -91,6 +92,48 @@ final class BanEnforcementTest extends FunctionalTestCase
         yield 'a file for the downloads' => ['downloads file', [1]];
         yield 'a photo for an album of their own' => ['album photo', [1]];
         yield 'their own profile' => ['profile', [1]];
+    }
+
+    /**
+     * A ban of a section takes its moderation away too: there the moderator is a member like any
+     * other.
+     */
+    public function testAModeratorBannedFromTheirSectionModeratesNothingThere(): void
+    {
+        $entry = Fixture::insert('guest', ['name' => 'Somebody', 'text' => 'Hello', 'time' => time()]);
+        $moderator = FunctionalUserFactory::createWithPermissions([GuestbookPermissions::ENTRY_MANAGE]);
+        self::assertSame(200, $this->statusOf('/guestbook/edit?id=' . $entry, $moderator));
+
+        $this->ban($moderator, 13);
+
+        // The editor of the guestbook does not exist for whoever may not use it
+        self::assertSame(404, $this->statusOf('/guestbook/edit?id=' . $entry, $moderator));
+    }
+
+    public function testAModeratorOfTheLibraryBannedFromItWritesNoArticle(): void
+    {
+        $moderator = FunctionalUserFactory::create([], [SystemRole::LibraryModerator->value]);
+        self::assertTrue($this->offersForm('library article', $moderator));
+
+        $this->ban($moderator, 15);
+
+        self::assertFalse($this->offersForm('library article', $moderator));
+    }
+
+    public function testAMemberBannedFromTheCommentsUploadsNoPictureForOne(): void
+    {
+        $member = FunctionalUserFactory::create();
+        $upload = fn (): int => $this->handleRequest(
+            '/news/comments/upload_file',
+            'POST',
+            $this->withCsrfToken(),
+            cookies: $this->actingAs($member)
+        )->getStatusCode();
+        self::assertNotSame(403, $upload());
+
+        $this->ban($member, 10);
+
+        self::assertSame(403, $upload());
     }
 
     #[DataProvider('kinds')]

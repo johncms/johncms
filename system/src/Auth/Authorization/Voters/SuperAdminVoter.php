@@ -25,8 +25,9 @@ use Johncms\Auth\Identity;
  * matrix would otherwise be enough to lock a site out of its own settings for good. This is what
  * guarantees there is always a way back in.
  *
- * A Deny elsewhere in the chain still wins — a ban and the abilities of an API token cut down a
- * supervisor like anybody else.
+ * A Deny elsewhere in the chain still wins — the abilities of an API token cut down a supervisor
+ * like anybody else. A ban does not: BanVoter leaves the supervisor alone, or the way back in would
+ * close with it.
  */
 final readonly class SuperAdminVoter implements AccessVoterInterface
 {

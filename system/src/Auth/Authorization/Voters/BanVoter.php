@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Johncms\Auth\Authorization\Voters;
 
 use Johncms\Auth\Authorization\AccessVoterInterface;
+use Johncms\Auth\Authorization\PermissionMatcher;
 use Johncms\Auth\Authorization\PermissionResolver;
 use Johncms\Auth\Authorization\RoleLevels;
 use Johncms\Auth\Authorization\SystemRole;
@@ -22,24 +23,33 @@ use Johncms\Users\Ban;
 use Symfony\Contracts\Service\ResetInterface;
 
 /**
- * Leaves an account under a full ban what a guest may do, and nothing more.
+ * Takes away what a ban is for: the whole site under a full ban, the permissions of one section
+ * under the ban of that section.
  *
- * A Deny rather than the absence of an Allow, which is the difference that matters: a full ban has
- * to outrank whatever the roles say, so a banned moderator moderates nothing. What a guest may do —
- * reading the sections, mostly — stays open, or a banned member would see less of the site than
- * somebody who never signed in.
+ * A Deny rather than the absence of an Allow, which is the difference that matters: a ban has to
+ * outrank whatever the roles say, so a moderator banned from the forum moderates nothing there.
+ * What a guest may do — reading the sections, mostly — stays open under any ban, or a banned
+ * member would see less of the site than somebody who never signed in. Whatever a section lets
+ * a guest do, and whatever asks for no permission at all, the section refuses on its own.
  *
- * A ban of one section is not this voter's business: the section asks for it where it writes, and
- * the rest of the site stays as it was. The supervisor keeps the way back into a site that
- * SuperAdminVoter guarantees.
+ * The supervisor keeps the way back into a site that SuperAdminVoter guarantees.
  */
 final class BanVoter implements AccessVoterInterface, ResetInterface
 {
-    /** The kind of ban that closes the whole site. */
-    private const int FULL_BAN = 1;
+    /**
+     * The permissions each kind of ban takes away, by the kinds the ban form offers. The private
+     * messages ask for no permission, so their ban is the business of the mail alone.
+     */
+    private const array TAKES_AWAY = [
+        1  => ['*'],
+        10 => ['system.comments.*', 'news.comments.*'],
+        11 => ['forum.*'],
+        13 => ['guestbook.*'],
+        15 => ['library.*'],
+    ];
 
-    /** @var array<int, bool> Answered once per request; the identity does not change within one. */
-    private array $banned = [];
+    /** @var array<int, list<int>> Answered once per request; the identity does not change within one. */
+    private array $kinds = [];
 
     private ?Identity $guest = null;
 
@@ -56,30 +66,48 @@ final class BanVoter implements AccessVoterInterface, ResetInterface
 
     public function vote(Identity $identity, string $permission, mixed $subject): Vote
     {
-        if ($identity->isGuest() || ! $this->isBanned($identity->userId)) {
+        if ($identity->isGuest()) {
             return Vote::Abstain;
         }
 
-        if (SystemRole::grantsEverything($this->roleLevels->highest($identity))) {
+        $kinds = $this->activeKinds($identity->userId);
+
+        if (
+            $kinds === []
+            || SystemRole::grantsEverything($this->roleLevels->highest($identity))
+            || $this->guest()->hasPermission($permission)
+        ) {
             return Vote::Abstain;
         }
 
-        return $this->guest()->hasPermission($permission) ? Vote::Abstain : Vote::Deny;
+        foreach ($kinds as $kind) {
+            if (PermissionMatcher::matchesAny(self::TAKES_AWAY[$kind] ?? [], $permission)) {
+                return Vote::Deny;
+            }
+        }
+
+        return Vote::Abstain;
     }
 
     public function reset(): void
     {
-        $this->banned = [];
+        $this->kinds = [];
         $this->guest = null;
     }
 
-    private function isBanned(int $userId): bool
+    /**
+     * @return list<int>
+     */
+    private function activeKinds(int $userId): array
     {
-        return $this->banned[$userId] ??= Ban::query()
+        return $this->kinds[$userId] ??= Ban::query()
             ->where('user_id', '=', $userId)
-            ->where('ban_type', '=', self::FULL_BAN)
             ->where('ban_time', '>', time())
-            ->exists();
+            ->distinct()
+            ->pluck('ban_type')
+            ->map(static fn (mixed $kind): int => (int) $kind)
+            ->values()
+            ->all();
     }
 
     private function guest(): Identity

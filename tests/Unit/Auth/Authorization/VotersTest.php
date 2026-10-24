@@ -103,11 +103,27 @@ final class VotersTest extends TestCase
     }
 
     /**
-     * A ban of the guestbook leaves the forum alone: the section a ban is for asks for it itself.
+     * A ban of the forum takes the forum away, its moderation included, and leaves what a guest may
+     * do there and every other section.
      */
-    public function testABanOfOneSectionIsLeftToThatSection(): void
+    public function testABanOfASectionTakesThePermissionsOfThatSection(): void
     {
-        $this->ban(userId: 7, until: time() + 3600, kind: 13);
+        $this->ban(userId: 7, until: time() + 3600, kind: 11);
+        $voter = $this->banVoter(guestPermissions: ['forum.view']);
+        $moderator = IdentityFactory::user(id: 7);
+
+        self::assertSame(Vote::Deny, $voter->vote($moderator, 'forum.post', null));
+        self::assertSame(Vote::Deny, $voter->vote($moderator, 'forum.topic.moderate', null));
+        self::assertSame(Vote::Abstain, $voter->vote($moderator, 'forum.view', null));
+        self::assertSame(Vote::Abstain, $voter->vote($moderator, 'guestbook.entry.manage', null));
+    }
+
+    /**
+     * The private messages ask for no permission: their ban is the business of the mail alone.
+     */
+    public function testABanOfThePrivateMessagesTakesNoPermission(): void
+    {
+        $this->ban(userId: 7, until: time() + 3600, kind: 3);
 
         self::assertSame(Vote::Abstain, $this->banVoter()->vote(IdentityFactory::user(id: 7), 'forum.post', null));
     }
