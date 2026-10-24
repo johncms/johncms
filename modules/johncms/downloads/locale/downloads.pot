@@ -32,7 +32,7 @@ msgstr ""
 #: modules/johncms/downloads/src/Application/Controllers/FileCommentsController.php:116
 #: modules/johncms/downloads/src/Application/Controllers/FilesModerationController.php:27
 #: modules/johncms/downloads/src/Application/Controllers/FilesModerationController.php:67
-#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:65
+#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:67
 #: modules/johncms/downloads/src/Application/Controllers/ImportFileController.php:49
 #: modules/johncms/downloads/src/Application/Controllers/IndexController.php:44
 #: modules/johncms/downloads/src/Application/Controllers/IndexController.php:46
@@ -108,8 +108,8 @@ msgstr ""
 
 #: modules/johncms/downloads/src/Application/Controllers/AdditionalFilesController.php:198
 #: modules/johncms/downloads/src/Application/Controllers/AdditionalFilesController.php:266
-#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:86
-#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:146
+#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:88
+#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:148
 #: modules/johncms/downloads/src/Application/Controllers/ImportFileController.php:138
 msgid "File not attached"
 msgstr ""
@@ -118,18 +118,18 @@ msgstr ""
 #: modules/johncms/downloads/src/Application/Controllers/CreateCategoryController.php:95
 #: modules/johncms/downloads/src/Application/Controllers/EditCategoryController.php:94
 #: modules/johncms/downloads/src/Application/Controllers/EditFileController.php:77
-#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:115
+#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:117
 #: modules/johncms/downloads/src/Application/Controllers/ImportFileController.php:108
 msgid "The required fields are not filled"
 msgstr ""
 
 #: modules/johncms/downloads/src/Application/Controllers/AdditionalFilesController.php:219
-#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:119
+#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:121
 msgid "The weight of the file exceeds"
 msgstr ""
 
 #: modules/johncms/downloads/src/Application/Controllers/AdditionalFilesController.php:224
-#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:124
+#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:126
 #: modules/johncms/downloads/src/Application/Controllers/ImportFileController.php:113
 msgid "Prohibited file type!<br>To upload allowed files that have the following extensions"
 msgstr ""
@@ -143,7 +143,7 @@ msgstr ""
 
 #: modules/johncms/downloads/src/Application/Controllers/AdditionalFilesController.php:262
 #: modules/johncms/downloads/src/Application/Controllers/EditScreenController.php:145
-#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:242
+#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:244
 #: modules/johncms/downloads/src/Application/Controllers/MoveFileController.php:103
 #: modules/johncms/downloads/src/Application/Controllers/ScanDirectoryController.php:109
 #: modules/johncms/downloads/templates/public/import-result.twig:25
@@ -165,9 +165,9 @@ msgstr ""
 #: modules/johncms/downloads/src/Application/Controllers/EditFileController.php:79
 #: modules/johncms/downloads/src/Application/Controllers/EditScreenController.php:109
 #: modules/johncms/downloads/src/Application/Controllers/EditScreenController.php:136
-#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:86
-#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:135
-#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:146
+#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:88
+#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:137
+#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:148
 #: modules/johncms/downloads/src/Application/Controllers/ImportFileController.php:140
 #: modules/johncms/downloads/src/Application/Controllers/ImportFileController.php:220
 msgid "Repeat"
@@ -219,7 +219,7 @@ msgstr ""
 #: modules/johncms/downloads/src/Application/Controllers/CreateCategoryController.php:48
 #: modules/johncms/downloads/src/Application/Controllers/DeleteCategoryController.php:47
 #: modules/johncms/downloads/src/Application/Controllers/EditCategoryController.php:43
-#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:51
+#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:53
 #: modules/johncms/downloads/src/Application/Controllers/ImportFileController.php:47
 #: modules/johncms/downloads/src/Application/Controllers/NewFilesController.php:47
 #: modules/johncms/downloads/src/Application/Controllers/ScanDirectoryController.php:135
@@ -338,21 +338,21 @@ msgstr ""
 msgid "All files accepted"
 msgstr ""
 
-#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:58
+#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:60
 msgid "Access forbidden"
 msgstr ""
 
-#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:72
-#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:73
-#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:207
-#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:208
+#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:74
+#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:75
+#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:209
+#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:210
 #: modules/johncms/downloads/templates/public/index.twig:117
 #: modules/johncms/downloads/templates/public/index.twig:139
 msgid "Upload File"
 msgstr ""
 
-#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:131
-#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:238
+#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:133
+#: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php:240
 msgid "Upload file"
 msgstr ""
 

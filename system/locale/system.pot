@@ -46,12 +46,12 @@ msgid "Users List"
 msgstr ""
 
 #: config/places.global.php:16
-#: system/src/Comments.php:206
-#: system/src/Comments.php:243
-#: system/src/Comments.php:272
-#: system/src/Comments.php:296
-#: system/src/Comments.php:337
-#: system/src/Comments.php:364
+#: system/src/Comments.php:208
+#: system/src/Comments.php:245
+#: system/src/Comments.php:274
+#: system/src/Comments.php:298
+#: system/src/Comments.php:339
+#: system/src/Comments.php:366
 msgid "Downloads"
 msgstr ""
 
@@ -188,14 +188,14 @@ msgid "Go to Link"
 msgstr ""
 
 #: modules/johncms/redirect/templates/public/index.twig:31
-#: system/src/Comments.php:210
-#: system/src/Comments.php:247
-#: system/src/Comments.php:264
-#: system/src/Comments.php:276
-#: system/src/Comments.php:300
-#: system/src/Comments.php:341
-#: system/src/Comments.php:356
-#: system/src/Comments.php:368
+#: system/src/Comments.php:212
+#: system/src/Comments.php:249
+#: system/src/Comments.php:266
+#: system/src/Comments.php:278
+#: system/src/Comments.php:302
+#: system/src/Comments.php:343
+#: system/src/Comments.php:358
+#: system/src/Comments.php:370
 #: themes/default/templates/admin/pages/result.twig:21
 #: themes/default/templates/pages/comments-list.twig:138
 #: themes/default/templates/pages/result.twig:19
@@ -591,55 +591,55 @@ msgid ""
 "PHP should work with the default driver: <a href=\"https://www.php.net/manual/en/intro.mysqlnd.php\" target=\"_blank\">MySQL Native Driver (mysqlnd)</a>."
 msgstr ""
 
-#: system/src/Comments.php:195
-#: system/src/Comments.php:260
-#: system/src/Comments.php:261
+#: system/src/Comments.php:197
+#: system/src/Comments.php:262
+#: system/src/Comments.php:263
 #: themes/default/templates/pages/comments-list.twig:106
 msgid "Reply"
 msgstr ""
 
-#: system/src/Comments.php:208
+#: system/src/Comments.php:210
 msgid "Administrator already replied to this message"
 msgstr ""
 
-#: system/src/Comments.php:274
-#: system/src/Comments.php:366
+#: system/src/Comments.php:276
+#: system/src/Comments.php:368
 #: system/src/Http/EditorImageUploadResponder.php:60
 msgid "Wrong data"
 msgstr ""
 
-#: system/src/Comments.php:286
-#: system/src/Comments.php:352
-#: system/src/Comments.php:353
+#: system/src/Comments.php:288
+#: system/src/Comments.php:354
+#: system/src/Comments.php:355
 #: themes/default/templates/pages/comments-list.twig:118
 msgid "Edit"
 msgstr ""
 
-#: system/src/Comments.php:298
+#: system/src/Comments.php:300
 msgid "You cannot edit posts of higher administration"
 msgstr ""
 
-#: system/src/Comments.php:378
-#: system/src/Comments.php:412
-#: system/src/Comments.php:413
+#: system/src/Comments.php:380
+#: system/src/Comments.php:414
+#: system/src/Comments.php:415
 #: themes/default/templates/pages/comments-delete.twig:16
 #: themes/default/templates/pages/comments-list.twig:121
 msgid "Delete"
 msgstr ""
 
-#: system/src/Comments.php:676
+#: system/src/Comments.php:678
 msgid "Text is too short"
 msgstr ""
 
-#: system/src/Comments.php:682
+#: system/src/Comments.php:684
 msgid "You cannot add the message so often<br>Please, wait"
 msgstr ""
 
-#: system/src/Comments.php:682
+#: system/src/Comments.php:684
 msgid "seconds"
 msgstr ""
 
-#: system/src/Comments.php:690
+#: system/src/Comments.php:692
 msgid "Message already exists"
 msgstr ""
 

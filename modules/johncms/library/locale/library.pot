@@ -6,7 +6,7 @@ msgstr ""
 #: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php:49
 #: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php:67
 #: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php:71
-#: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php:94
+#: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php:95
 msgid "Comments"
 msgstr ""
 
@@ -15,7 +15,7 @@ msgstr ""
 #: modules/johncms/library/src/Application/Controllers/DeleteArticleController.php:33
 #: modules/johncms/library/src/Application/Controllers/DeleteArticleImageController.php:33
 #: modules/johncms/library/src/Application/Controllers/DeleteSectionController.php:33
-#: modules/johncms/library/src/Application/Controllers/EditArticleController.php:63
+#: modules/johncms/library/src/Application/Controllers/EditArticleController.php:65
 #: modules/johncms/library/src/Application/Controllers/EditSectionController.php:40
 #: modules/johncms/library/src/Application/Controllers/PremodController.php:40
 #: modules/johncms/library/src/Application/Middlewares/LibraryAccessMiddleware.php:31
@@ -25,17 +25,17 @@ msgstr ""
 #: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php:37
 #: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php:53
 #: modules/johncms/library/src/Application/Controllers/ArticleCommentsController.php:67
-#: modules/johncms/library/src/Application/Controllers/ArticleController.php:58
-#: modules/johncms/library/src/Application/Controllers/ArticleController.php:88
-#: modules/johncms/library/src/Application/Controllers/ArticleController.php:95
-#: modules/johncms/library/src/Application/Controllers/CreateArticleController.php:43
-#: modules/johncms/library/src/Application/Controllers/CreateArticleController.php:56
+#: modules/johncms/library/src/Application/Controllers/ArticleController.php:60
+#: modules/johncms/library/src/Application/Controllers/ArticleController.php:90
+#: modules/johncms/library/src/Application/Controllers/ArticleController.php:97
+#: modules/johncms/library/src/Application/Controllers/CreateArticleController.php:45
+#: modules/johncms/library/src/Application/Controllers/CreateArticleController.php:58
 #: modules/johncms/library/src/Application/Controllers/CreateSectionController.php:39
 #: modules/johncms/library/src/Application/Controllers/CreateSectionController.php:48
 #: modules/johncms/library/src/Application/Controllers/DeleteArticleController.php:49
 #: modules/johncms/library/src/Application/Controllers/DeleteArticleImageController.php:41
 #: modules/johncms/library/src/Application/Controllers/DeleteSectionController.php:49
-#: modules/johncms/library/src/Application/Controllers/EditArticleController.php:69
+#: modules/johncms/library/src/Application/Controllers/EditArticleController.php:71
 #: modules/johncms/library/src/Application/Controllers/EditSectionController.php:60
 #: modules/johncms/library/src/Application/Controllers/LatestCommentsController.php:23
 #: modules/johncms/library/src/Application/Controllers/LibraryIndexController.php:30
@@ -62,48 +62,48 @@ msgstr ""
 msgid "Library"
 msgstr ""
 
-#: modules/johncms/library/src/Application/Controllers/ArticleController.php:60
+#: modules/johncms/library/src/Application/Controllers/ArticleController.php:62
 #: modules/johncms/library/src/Application/Controllers/DeleteArticleController.php:45
-#: modules/johncms/library/src/Application/Controllers/EditArticleController.php:47
+#: modules/johncms/library/src/Application/Controllers/EditArticleController.php:49
 msgid "Articles do not exist"
 msgstr ""
 
-#: modules/johncms/library/src/Application/Controllers/CreateArticleController.php:44
-#: modules/johncms/library/src/Application/Controllers/CreateArticleController.php:52
-#: modules/johncms/library/src/Application/Controllers/CreateArticleController.php:179
-#: modules/johncms/library/src/Application/Controllers/CreateArticleController.php:180
+#: modules/johncms/library/src/Application/Controllers/CreateArticleController.php:46
+#: modules/johncms/library/src/Application/Controllers/CreateArticleController.php:54
+#: modules/johncms/library/src/Application/Controllers/CreateArticleController.php:181
+#: modules/johncms/library/src/Application/Controllers/CreateArticleController.php:182
 #: modules/johncms/library/templates/public/articles.twig:49
 msgid "Write Article"
 msgstr ""
 
-#: modules/johncms/library/src/Application/Controllers/CreateArticleController.php:54
+#: modules/johncms/library/src/Application/Controllers/CreateArticleController.php:56
 #: modules/johncms/library/src/Application/Controllers/CreateSectionController.php:37
 msgid "Access denied"
 msgstr ""
 
-#: modules/johncms/library/src/Application/Controllers/CreateArticleController.php:84
+#: modules/johncms/library/src/Application/Controllers/CreateArticleController.php:86
 #, php-format
 msgid "You cannot add the Article so often<br>Please, wait %d sec."
 msgstr ""
 
-#: modules/johncms/library/src/Application/Controllers/CreateArticleController.php:89
+#: modules/johncms/library/src/Application/Controllers/CreateArticleController.php:91
 #: modules/johncms/library/src/Application/Controllers/CreateSectionController.php:67
 msgid "You have not entered the name"
 msgstr ""
 
-#: modules/johncms/library/src/Application/Controllers/CreateArticleController.php:105
+#: modules/johncms/library/src/Application/Controllers/CreateArticleController.php:107
 msgid "The file is invalid encoding, preferably UTF-8"
 msgstr ""
 
-#: modules/johncms/library/src/Application/Controllers/CreateArticleController.php:109
+#: modules/johncms/library/src/Application/Controllers/CreateArticleController.php:111
 msgid "Invalid file format allowed * .txt"
 msgstr ""
 
-#: modules/johncms/library/src/Application/Controllers/CreateArticleController.php:114
+#: modules/johncms/library/src/Application/Controllers/CreateArticleController.php:116
 msgid "You have not entered text"
 msgstr ""
 
-#: modules/johncms/library/src/Application/Controllers/CreateArticleController.php:144
+#: modules/johncms/library/src/Application/Controllers/CreateArticleController.php:146
 msgid "Photo uploading error"
 msgstr ""
 
@@ -170,11 +170,11 @@ msgstr ""
 msgid "Date"
 msgstr ""
 
-#: modules/johncms/library/src/Application/Controllers/EditArticleController.php:45
-#: modules/johncms/library/src/Application/Controllers/EditArticleController.php:61
-#: modules/johncms/library/src/Application/Controllers/EditArticleController.php:74
-#: modules/johncms/library/src/Application/Controllers/EditArticleController.php:77
-#: modules/johncms/library/src/Application/Controllers/EditArticleController.php:78
+#: modules/johncms/library/src/Application/Controllers/EditArticleController.php:47
+#: modules/johncms/library/src/Application/Controllers/EditArticleController.php:63
+#: modules/johncms/library/src/Application/Controllers/EditArticleController.php:76
+#: modules/johncms/library/src/Application/Controllers/EditArticleController.php:79
+#: modules/johncms/library/src/Application/Controllers/EditArticleController.php:80
 msgid "Edit Article"
 msgstr ""
 
