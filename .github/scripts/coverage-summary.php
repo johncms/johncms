@@ -46,11 +46,36 @@ $total = [
     'covered' => array_sum(array_column($areas, 'covered')),
 ];
 
-echo '## Line coverage', PHP_EOL, PHP_EOL;
-echo '| Area | Covered | Lines | % |', PHP_EOL;
-echo '|---|---:|---:|---:|', PHP_EOL;
-printf('| **Total** | %d | %d | **%.1f** |' . PHP_EOL, $total['covered'], $total['lines'], $percent($total));
+$header = ['Area', 'Covered', 'Lines', '%'];
+$rows = [['**Total**', (string) $total['covered'], (string) $total['lines'], sprintf('**%.1f**', $percent($total))]];
 
 foreach ($areas as $name => $area) {
-    printf('| %s | %d | %d | %.1f |' . PHP_EOL, $name, $area['covered'], $area['lines'], $percent($area));
+    $rows[] = [$name, (string) $area['covered'], (string) $area['lines'], sprintf('%.1f', $percent($area))];
+}
+
+// Every cell is padded to the widest one of its column, so the table lines up in a terminal too.
+// The padding changes nothing in how Markdown renders it. A rule needs at least three dashes.
+$widths = array_map(
+    static fn (int $column): int => max(3, ...array_map(static fn (array $row): int => strlen($row[$column]), [$header, ...$rows])),
+    array_keys($header),
+);
+
+// The area is text and is aligned left, the numbers are aligned right.
+$line = static fn (array $cells): string => '| ' . implode(' | ', array_map(
+    static fn (string $cell, int $column): string => str_pad($cell, $widths[$column], ' ', $column === 0 ? STR_PAD_RIGHT : STR_PAD_LEFT),
+    $cells,
+    array_keys($cells),
+)) . ' |' . PHP_EOL;
+
+$rule = array_map(
+    static fn (int $width, int $column): string => $column === 0 ? str_repeat('-', $width) : str_repeat('-', $width - 1) . ':',
+    $widths,
+    array_keys($widths),
+);
+
+echo '## Line coverage', PHP_EOL, PHP_EOL;
+echo $line($header), $line($rule);
+
+foreach ($rows as $row) {
+    echo $line($row);
 }
