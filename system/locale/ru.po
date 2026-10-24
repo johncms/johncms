@@ -1236,3 +1236,9 @@ msgstr "Женский"
 
 msgid "The nickname needs at least one letter or digit"
 msgstr "В нике должна быть хотя бы одна буква или цифра"
+
+msgid "The account has not been approved yet, so nobody can sign in to it"
+msgstr "Аккаунт ещё не одобрен, войти под ним нельзя"
+
+msgid "The account has not confirmed its e-mail, so nobody can sign in to it"
+msgstr "Аккаунт не подтвердил e-mail, войти под ним нельзя"

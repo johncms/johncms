@@ -19,6 +19,7 @@ use Johncms\Auth\CurrentUser;
 use Johncms\Auth\Events\AuthEventLoggerInterface;
 use Johncms\Auth\Events\AuthEventType;
 use Johncms\Auth\Identity;
+use Johncms\Auth\RegistrationSettings;
 use Johncms\Auth\Session\AuthCookieFactory;
 use Johncms\Auth\Session\AuthSessionManager;
 use Johncms\Auth\Session\AuthSessionRepositoryInterface;
@@ -55,6 +56,7 @@ final readonly class ImpersonationManager
         private UserRepositoryInterface $users,
         private AuthEventLoggerInterface $eventLogger,
         private ImpersonationSettings $settings,
+        private RegistrationSettings $registration,
     ) {
     }
 
@@ -164,8 +166,21 @@ final readonly class ImpersonationManager
             throw new ImpersonationNotAllowedException(__('You are already signed in as yourself'));
         }
 
-        if ($this->users->find($targetUserId) === null) {
+        $target = $this->users->find($targetUserId);
+
+        if ($target === null) {
             throw new ImpersonationNotAllowedException(__('User does not exists'));
+        }
+
+        // Browsing as somebody shows the site as they see it once signed in. An account that
+        // cannot sign in yet sees nothing of the kind, and the site would treat the session as a
+        // guest's.
+        if (! $target->preg) {
+            throw new ImpersonationNotAllowedException(__('The account has not been approved yet, so nobody can sign in to it'));
+        }
+
+        if ($this->registration->awaitsEmailConfirmation($target)) {
+            throw new ImpersonationNotAllowedException(__('The account has not confirmed its e-mail, so nobody can sign in to it'));
         }
 
         // The same hierarchy the role editor obeys: without it, browsing as somebody would be the

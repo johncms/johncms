@@ -23,11 +23,13 @@ use Johncms\Auth\Authorization\RoleLevels;
 use Johncms\Auth\Authorization\RoleSeeder;
 use Johncms\Auth\Authorization\SystemRole;
 use Johncms\Auth\AuthTables;
+use Johncms\Auth\RegistrationSettings;
 use Johncms\Auth\Session\AuthCookieFactory;
 use Johncms\Auth\Session\AuthSession;
 use Johncms\Auth\Session\AuthSessionManager;
 use Johncms\Auth\Session\SessionRevocationReason;
 use Johncms\Auth\Session\SessionSettings;
+use Johncms\Config\ConfigRepository;
 use Johncms\Http\CookieQueue;
 use Johncms\Http\Environment;
 use Johncms\Http\Request;
@@ -165,6 +167,37 @@ final class ImpersonationManagerTest extends TestCase
         $this->managerFor($admin, null)->start($target->id, $this->request());
     }
 
+    /**
+     * The site would treat such a session as a guest's: browsing as the account would show a site
+     * nobody sees.
+     */
+    public function testAnAccountNobodyHasApprovedIsRefused(): void
+    {
+        $admin = $this->createAdmin();
+        $target = $this->createUser(['preg' => false]);
+
+        $this->expectException(ImpersonationNotAllowedException::class);
+
+        $this->managerFor($admin, null)->start($target->id, $this->request());
+    }
+
+    public function testAnAccountWithAnUnconfirmedAddressIsRefusedWhileTheSiteRequiresOne(): void
+    {
+        $admin = $this->createAdmin();
+        $target = $this->createUser(['email_confirmed' => null]);
+        $config = ConfigRepository::all();
+        ConfigRepository::init(array_replace_recursive($config, ['johncms' => ['user_email_confirmation' => 1]]));
+
+        try {
+            $this->managerFor($admin, null)->start($target->id, $this->request());
+            self::fail('Browsing as an account that cannot sign in was allowed.');
+        } catch (ImpersonationNotAllowedException) {
+            self::assertSame(0, AuthSession::query()->where('user_id', $target->id)->count());
+        } finally {
+            ConfigRepository::init($config);
+        }
+    }
+
     public function testBrowsingAsOneselfIsRefused(): void
     {
         $admin = $this->createAdmin();
@@ -250,6 +283,7 @@ final class ImpersonationManagerTest extends TestCase
             new FakeUserRepository(User::query()->get()->all()),
             $this->eventLogger,
             $this->settings,
+            new RegistrationSettings(),
         );
     }
 
@@ -321,10 +355,13 @@ final class ImpersonationManagerTest extends TestCase
         $this->roles->grant($user->id, $this->roleId($role), null, time());
     }
 
-    private function createUser(): User
+    /**
+     * @param array<string, mixed> $attributes
+     */
+    private function createUser(array $attributes = []): User
     {
         $user = new User();
-        $user->fill(['name' => 'user-' . uniqid()]);
+        $user->fill(['name' => 'user-' . uniqid()] + $attributes);
         $user->save();
 
         return $user;
@@ -337,6 +374,8 @@ final class ImpersonationManagerTest extends TestCase
             static function (Blueprint $table): void {
                 $table->increments('id');
                 $table->string('name')->default('');
+                $table->boolean('preg')->default(true);
+                $table->boolean('email_confirmed')->nullable()->default(true);
             }
         );
     }

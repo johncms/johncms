@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Johncms\Auth;
 
+use Johncms\Users\User;
+
 /**
  * The settings of registration that are not about who may do it.
  *
@@ -25,5 +27,21 @@ final readonly class RegistrationSettings
         // is what says whether registrations were moderated, and reading it here is what keeps a
         // site that updated yesterday from letting everybody in unchecked.
         return (bool) ($config['registration_moderation'] ?? ((int) ($config['mod_reg'] ?? 0) === 1));
+    }
+
+    /**
+     * Whether an account signs in only once it has confirmed its e-mail.
+     */
+    public function emailConfirmationRequired(): bool
+    {
+        return (bool) config('johncms.user_email_confirmation');
+    }
+
+    /**
+     * The account cannot sign in until it confirms its e-mail.
+     */
+    public function awaitsEmailConfirmation(User $user): bool
+    {
+        return $this->emailConfirmationRequired() && ! $user->email_confirmed;
     }
 }

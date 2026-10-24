@@ -425,21 +425,29 @@ msgstr ""
 msgid "This is the only way to sign in to the account. Set a password first."
 msgstr ""
 
-#: system/src/Auth/Impersonation/ImpersonationManager.php:160
+#: system/src/Auth/Impersonation/ImpersonationManager.php:162
 #: system/src/Http/EditorImageUploadResponder.php:92
 #: system/src/Http/ExceptionResponseFactory.php:128
 msgid "Access denied"
 msgstr ""
 
-#: system/src/Auth/Impersonation/ImpersonationManager.php:164
+#: system/src/Auth/Impersonation/ImpersonationManager.php:166
 msgid "You are already signed in as yourself"
 msgstr ""
 
-#: system/src/Auth/Impersonation/ImpersonationManager.php:168
+#: system/src/Auth/Impersonation/ImpersonationManager.php:172
 msgid "User does not exists"
 msgstr ""
 
-#: system/src/Auth/Impersonation/ImpersonationManager.php:176
+#: system/src/Auth/Impersonation/ImpersonationManager.php:179
+msgid "The account has not been approved yet, so nobody can sign in to it"
+msgstr ""
+
+#: system/src/Auth/Impersonation/ImpersonationManager.php:183
+msgid "The account has not confirmed its e-mail, so nobody can sign in to it"
+msgstr ""
+
+#: system/src/Auth/Impersonation/ImpersonationManager.php:191
 msgid "You cannot browse as somebody who outranks you"
 msgstr ""
 
