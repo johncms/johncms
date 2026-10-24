@@ -2,7 +2,6 @@
     Applying a ban to a user.
 
     @param string form_action
-    @param int    post_id     Forum post the ban refers to, if any.
     @param string user_login
     @param string back_url
     @param int    field_height
@@ -12,9 +11,6 @@
 {% block content %}
     <form action="{{ form_action }}" method="post">
         <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
-        {% if post_id|default(0) %}
-            <input type="hidden" value="{{ post_id }}" name="banref">
-        {% endif %}
 
         <h3>{{ __('Ban:') }} {{ user_login }}</h3>
 

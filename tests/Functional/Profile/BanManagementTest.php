@@ -233,7 +233,6 @@ final class BanManagementTest extends FunctionalTestCase
             'timeval' => $amount,
             'time'    => $unit,
             'reason'  => 'Flood',
-            'banref'  => 0,
         ]);
     }
 

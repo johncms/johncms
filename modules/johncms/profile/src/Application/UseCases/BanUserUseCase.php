@@ -30,7 +30,7 @@ final readonly class BanUserUseCase
     public function execute(BanUserCommand $command, User $target): void
     {
         $reason = trim($command->reason);
-        if ($reason === '' && empty($command->banref)) {
+        if ($reason === '') {
             $reason = __('Reason not specified');
         }
 

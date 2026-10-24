@@ -11,7 +11,6 @@ final readonly class BanUserCommand
         public int $timeval,
         public int $time,
         public string $reason,
-        public int $banref,
     ) {
     }
 }

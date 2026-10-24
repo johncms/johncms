@@ -64,7 +64,7 @@ final readonly class BanController
         return $this->renderHistory($id, $dto, $pagination);
     }
 
-    public function createForm(Request $request, int $id): ViewResponse
+    public function createForm(int $id): ViewResponse
     {
         try {
             $target = $this->getBanFormContextUseCase->execute($id);
@@ -74,7 +74,7 @@ final readonly class BanController
             return $this->renderError($e->getMessage(), 403);
         }
 
-        return $this->renderForm($request, $target);
+        return $this->renderForm($target);
     }
 
     public function create(Request $request, int $id): ViewResponse
@@ -92,7 +92,6 @@ final readonly class BanController
             timeval: $request->bodyInt('timeval'),
             time: $request->bodyInt('time'),
             reason: $request->body('reason', ''),
-            banref: $request->bodyInt('banref'),
         );
 
         try {
@@ -232,7 +231,7 @@ final readonly class BanController
         );
     }
 
-    private function renderForm(Request $request, User $target): ViewResponse
+    private function renderForm(User $target): ViewResponse
     {
         $title = __('Ban the User');
 
@@ -246,7 +245,6 @@ final readonly class BanController
                 'title'        => $title,
                 'page_title'   => $title,
                 'form_action'  => '/profile/' . $target->id . '/bans/new',
-                'post_id'      => $request->queryInt('fid'),
                 'back_url'     => '/profile/' . $target->id,
                 'user_login'   => $target->name,
             ]
