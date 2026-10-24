@@ -62,7 +62,7 @@ msgstr ""
 #: modules/johncms/profile/src/Application/Controllers/AvatarController.php:83
 #: modules/johncms/profile/src/Application/Controllers/EditProfileController.php:167
 #: modules/johncms/profile/src/Application/Controllers/PhotoController.php:83
-#: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:93
+#: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:94
 msgid "My Profile"
 msgstr ""
 
@@ -116,7 +116,7 @@ msgid "Removing ban along with a record in the bans history"
 msgstr ""
 
 #: modules/johncms/profile/src/Application/Controllers/BanController.php:153
-#: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:202
+#: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:203
 #: modules/johncms/profile/templates/public/confirm-delete.twig:18
 #: modules/johncms/profile/templates/public/edit.twig:82
 #: modules/johncms/profile/templates/public/edit.twig:102
@@ -155,7 +155,7 @@ msgstr ""
 #: modules/johncms/profile/src/Application/Controllers/KarmaController.php:220
 #: modules/johncms/profile/src/Application/Controllers/KarmaController.php:241
 #: modules/johncms/profile/src/Application/Controllers/ProfileController.php:28
-#: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:93
+#: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:94
 msgid "User Profile"
 msgstr ""
 
@@ -351,7 +351,7 @@ msgid "Statistic"
 msgstr ""
 
 #: modules/johncms/profile/src/Application/Notifications/BanNotificationProvider.php:29
-#: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:205
+#: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:206
 msgid "Ban"
 msgstr ""
 
@@ -429,24 +429,24 @@ msgstr ""
 msgid "Negative"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:169
+#: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:170
 #: modules/johncms/profile/templates/public/statistics.twig:15
 msgid "Pending confirmation"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:172
+#: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:173
 msgid "E-mail address is not confirmed"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:192
+#: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:193
 msgid "Add to Contacts"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:193
+#: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:194
 msgid "Remove from Contacts"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:199
+#: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:200
 msgid "Edit"
 msgstr ""
 
