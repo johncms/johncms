@@ -108,6 +108,45 @@ final class UserEditTest extends FunctionalTestCase
         self::assertCount(0, $sessions->activeFor($member->id));
     }
 
+    public function testTheOwnerChangesTheirOwnPasswordWithTheCurrentOne(): void
+    {
+        $owner = FunctionalUserFactory::createSupervisor();
+        $sessions = $this->container()->get(AuthSessionManager::class);
+        $elsewhere = $sessions->start($owner->id, true, new ClientInfoDTO('10.0.0.1', '', 'phpunit'));
+        $cookies = $this->actingAs($owner);
+        $uri = '/admin/users/' . $owner->id . '/password';
+
+        $form = (string) $this->handleRequest($uri, cookies: $cookies)->getContent();
+        self::assertStringContainsString('name="current_password"', $form);
+
+        $refused = $this->handleRequest($uri, 'POST', $this->withCsrfToken(['current_password' => 'a guess', 'password' => 'new-secret', 'confirmation' => 'new-secret']), cookies: $cookies);
+        self::assertSame(Response::HTTP_OK, $refused->getStatusCode());
+        self::assertSame($owner->password, User::query()->findOrFail($owner->id)->password);
+
+        $response = $this->handleRequest(
+            $uri,
+            'POST',
+            $this->withCsrfToken(['current_password' => FunctionalUserFactory::PASSWORD, 'password' => 'new-secret', 'confirmation' => 'new-secret', 'sign_out' => '1']),
+            cookies: $cookies
+        );
+
+        self::assertSame(Response::HTTP_FOUND, $response->getStatusCode());
+        self::assertTrue($this->container()->get(PasswordHasherInterface::class)->verify('new-secret', User::query()->findOrFail($owner->id)->password));
+        // Signed out on the other device, and still in on this one.
+        self::assertNull($sessions->find($elsewhere->token));
+        self::assertSame(Response::HTTP_OK, $this->handleRequest($uri, cookies: $cookies)->getStatusCode());
+    }
+
+    public function testTheFormOfSomebodyElsesPasswordAsksForNoCurrentOne(): void
+    {
+        $member = FunctionalUserFactory::create();
+
+        $form = (string) $this->handleRequest('/admin/users/' . $member->id . '/password', cookies: $this->actingAs(FunctionalUserFactory::createSupervisor()))->getContent();
+
+        self::assertStringContainsString('name="password"', $form);
+        self::assertStringNotContainsString('name="current_password"', $form);
+    }
+
     public function testAMistypedConfirmationKeepsTheOldPassword(): void
     {
         $member = FunctionalUserFactory::create();

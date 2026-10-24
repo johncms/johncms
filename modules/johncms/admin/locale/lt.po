@@ -1620,3 +1620,6 @@ msgstr ""
 
 msgid "Users on registration"
 msgstr "Vartotojų registracija"
+
+msgid "Old password entered incorrectly"
+msgstr "Senas slaptažodis įvestas neteisingai"

@@ -282,6 +282,7 @@ Nếu bạn nhấp vào &quot;Xem&quot; và XHTML đã xảy ra lỗi, sau đó 
       'Are you sure that you want to delete this user?' => 'Bạn có chắc chắn rằng bạn muốn xóa người dùng này?',
       'All threads and posts created by the user go in the hidden state' => 'Chủ đề và bài viết được tạo ra bởi những người đi trong nước',
       'Users on registration' => 'Người dùng đăng ký',
+      'Old password entered incorrectly' => 'Mật khẩu cũ đã nhập sai',
     ),
   ),
 );

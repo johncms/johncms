@@ -326,6 +326,7 @@
       'Consents' => 'Макулдуктар',
       'Cookie banner' => 'Куки-баннер',
       'Users on registration' => 'Катталган колдонуучулар',
+      'Old password entered incorrectly' => 'Эски сырсөз туура эмес киргизилген',
     ),
   ),
 );

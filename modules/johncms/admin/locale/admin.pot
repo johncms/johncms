@@ -35,9 +35,9 @@ msgstr ""
 #: modules/johncms/admin/src/Application/Controllers/Users/UserCardController.php:36
 #: modules/johncms/admin/src/Application/Controllers/Users/UserCardController.php:37
 #: modules/johncms/admin/src/Application/Controllers/Users/UserCardController.php:46
-#: modules/johncms/admin/src/Application/Controllers/Users/UserEditController.php:175
-#: modules/johncms/admin/src/Application/Controllers/Users/UserEditController.php:192
-#: modules/johncms/admin/src/Application/Controllers/Users/UserEditController.php:202
+#: modules/johncms/admin/src/Application/Controllers/Users/UserEditController.php:179
+#: modules/johncms/admin/src/Application/Controllers/Users/UserEditController.php:196
+#: modules/johncms/admin/src/Application/Controllers/Users/UserEditController.php:206
 #: modules/johncms/admin/src/Application/Controllers/Users/UserListController.php:67
 #: modules/johncms/admin/src/Application/Services/AdRowMapper.php:121
 #: modules/johncms/admin/templates/style-guide/examples/breadcrumbs.twig:6
@@ -317,7 +317,7 @@ msgstr ""
 #: modules/johncms/admin/templates/user-roles.twig:70
 #: modules/johncms/admin/templates/user/ban-dialog.twig:64
 #: modules/johncms/admin/templates/user/edit.twig:105
-#: modules/johncms/admin/templates/user/password.twig:32
+#: modules/johncms/admin/templates/user/password.twig:41
 #: modules/johncms/admin/templates/users-cleanup.twig:26
 #: modules/johncms/admin/templates/users/delete-dialog.twig:54
 msgid "Cancel"
@@ -901,7 +901,7 @@ msgstr ""
 #: modules/johncms/admin/src/Application/Controllers/Users/UserBansController.php:241
 #: modules/johncms/admin/src/Application/Controllers/Users/UserBansController.php:274
 #: modules/johncms/admin/src/Application/Controllers/Users/UserCardController.php:39
-#: modules/johncms/admin/src/Application/Controllers/Users/UserEditController.php:194
+#: modules/johncms/admin/src/Application/Controllers/Users/UserEditController.php:198
 msgid "User does not exists"
 msgstr ""
 
@@ -1039,7 +1039,7 @@ msgid "Ban"
 msgstr ""
 
 #: modules/johncms/admin/src/Application/Controllers/Users/UserBansController.php:295
-#: modules/johncms/admin/src/Application/Controllers/Users/UserEditController.php:194
+#: modules/johncms/admin/src/Application/Controllers/Users/UserEditController.php:198
 msgid "You cannot change this account"
 msgstr ""
 
@@ -1060,29 +1060,29 @@ msgstr ""
 msgid "The profile is saved"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Users/UserEditController.php:102
+#: modules/johncms/admin/src/Application/Controllers/Users/UserEditController.php:103
 msgid "The password is changed"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Users/UserEditController.php:115
+#: modules/johncms/admin/src/Application/Controllers/Users/UserEditController.php:116
 #: modules/johncms/admin/src/Application/Services/UserActionsMapper.php:73
 msgid "Reset settings"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Users/UserEditController.php:116
+#: modules/johncms/admin/src/Application/Controllers/Users/UserEditController.php:117
 msgid "The settings of the account and of its forum go back to the defaults."
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Users/UserEditController.php:120
+#: modules/johncms/admin/src/Application/Controllers/Users/UserEditController.php:121
 #: modules/johncms/admin/templates/auth-log.twig:37
 msgid "Reset"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Users/UserEditController.php:144
+#: modules/johncms/admin/src/Application/Controllers/Users/UserEditController.php:145
 msgid "The settings are reset"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Users/UserEditController.php:154
+#: modules/johncms/admin/src/Application/Controllers/Users/UserEditController.php:155
 #: modules/johncms/admin/src/Application/Services/UserActionsMapper.php:50
 #: modules/johncms/admin/src/Application/Services/UserCardMapper.php:117
 #: modules/johncms/admin/templates/ads.twig:58
@@ -1101,12 +1101,11 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Users/UserEditController.php:167
+#: modules/johncms/admin/src/Application/Controllers/Users/UserEditController.php:168
 #: modules/johncms/admin/src/Application/Services/UserCardMapper.php:123
 #: modules/johncms/admin/templates/login.twig:35
 #: modules/johncms/admin/templates/login.twig:43
 #: modules/johncms/admin/templates/mail-settings.twig:62
-#: modules/johncms/admin/templates/user/password.twig:16
 msgid "Password"
 msgstr ""
 
@@ -1328,7 +1327,11 @@ msgstr ""
 msgid "In the last year"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/UseCases/ChangeUserPasswordUseCase.php:39
+#: modules/johncms/admin/src/Application/UseCases/ChangeUserPasswordUseCase.php:47
+msgid "Old password entered incorrectly"
+msgstr ""
+
+#: modules/johncms/admin/src/Application/UseCases/ChangeUserPasswordUseCase.php:51
 msgid "The password confirmation you entered is wrong"
 msgstr ""
 
@@ -2828,23 +2831,32 @@ msgstr ""
 msgid "Seen only by the staff who may read the notes."
 msgstr ""
 
-#: modules/johncms/admin/templates/user/password.twig:13
+#: modules/johncms/admin/templates/user/password.twig:15
+#: modules/johncms/admin/templates/user/password.twig:25
 msgid "New password"
 msgstr ""
 
 #: modules/johncms/admin/templates/user/password.twig:19
-msgid "At least 6 characters."
-msgstr ""
-
-#: modules/johncms/admin/templates/user/password.twig:22
-msgid "Repeat the password"
+msgid "Current password"
 msgstr ""
 
 #: modules/johncms/admin/templates/user/password.twig:28
+msgid "At least 6 characters."
+msgstr ""
+
+#: modules/johncms/admin/templates/user/password.twig:31
+msgid "Repeat the password"
+msgstr ""
+
+#: modules/johncms/admin/templates/user/password.twig:37
+msgid "Sign out on my other devices"
+msgstr ""
+
+#: modules/johncms/admin/templates/user/password.twig:37
 msgid "Sign the account out on every device"
 msgstr ""
 
-#: modules/johncms/admin/templates/user/password.twig:33
+#: modules/johncms/admin/templates/user/password.twig:42
 msgid "Change the password"
 msgstr ""
 

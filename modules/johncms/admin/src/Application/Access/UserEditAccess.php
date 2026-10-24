@@ -40,15 +40,13 @@ final readonly class UserEditAccess
     }
 
     /**
-     * The password of somebody else, for whoever holds the permission and does not stand below
-     * them. The owner changes their own in the settings of the account, where the old one is
-     * asked for.
+     * The password is changed by its owner, who is asked for the current one, or by whoever holds
+     * the permission and does not stand below the owner.
      */
     public function mayChangePassword(User $target): bool
     {
-        return ! $this->isSelf($target)
-            && $this->accessChecker->allows(CorePermissions::USERS_PASSWORD_CHANGE)
-            && ! $this->standsBelow($target);
+        return $this->isSelf($target)
+            || ($this->accessChecker->allows(CorePermissions::USERS_PASSWORD_CHANGE) && ! $this->standsBelow($target));
     }
 
     /**
@@ -74,7 +72,10 @@ final readonly class UserEditAccess
         return $this->accessChecker->allows(CorePermissions::USERS_NOTES_VIEW);
     }
 
-    private function isSelf(User $target): bool
+    /**
+     * The account is the visitor's own.
+     */
+    public function isSelf(User $target): bool
     {
         return $target->id === $this->currentUser->id();
     }

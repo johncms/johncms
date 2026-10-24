@@ -258,6 +258,7 @@
       'Are you sure that you want to delete this user?' => 'Na pewno chcesz usunąć tego użytkownika?',
       'All threads and posts created by the user go in the hidden state' => 'Wszystkie tematy i posty, utworzone przez użytkownika, zostaną ukryte',
       'Users on registration' => 'Rejestracja użytkownika',
+      'Old password entered incorrectly' => 'Stare hasło jest nieprawidłowe',
     ),
   ),
 );

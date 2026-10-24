@@ -1621,3 +1621,6 @@ msgstr ""
 
 msgid "Users on registration"
 msgstr "Utilizatori la înregistrare"
+
+msgid "Old password entered incorrectly"
+msgstr "Parola veche nu este corecta"

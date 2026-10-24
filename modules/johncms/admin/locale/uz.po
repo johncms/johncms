@@ -1620,3 +1620,6 @@ msgstr ""
 
 msgid "Users on registration"
 msgstr "Ro'yxatga olish bo'yicha foydalanuvchilar"
+
+msgid "Old password entered incorrectly"
+msgstr "Eski parol noto'g'ri kiritilgan"

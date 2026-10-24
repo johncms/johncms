@@ -276,6 +276,7 @@
       'Are you sure that you want to delete this user?' => 'Haqiqatan ham ushbu foydalanuvchini yo\'q qilmoqchimisiz?',
       'All threads and posts created by the user go in the hidden state' => 'Foydalanuvchi tomonidan yaratilgan barcha mavzular va xabarlar yashirin holatda bo\'ladi',
       'Users on registration' => 'Ro\'yxatga olish bo\'yicha foydalanuvchilar',
+      'Old password entered incorrectly' => 'Eski parol noto\'g\'ri kiritilgan',
     ),
   ),
 );

@@ -91,6 +91,7 @@ final readonly class UserEditController
         try {
             $this->changePassword->execute(
                 $user,
+                $request->body('current_password'),
                 $request->body('password'),
                 $request->body('confirmation'),
                 $request->hasBody('sign_out'),
@@ -164,7 +165,10 @@ final readonly class UserEditController
      */
     private function renderPassword(User $user, array $errors): ViewResponse
     {
-        return $this->page($user, 'password', __('Password'), '@admin/user/password.twig', ['errors' => $errors]);
+        return $this->page($user, 'password', __('Password'), '@admin/user/password.twig', [
+            'errors' => $errors,
+            'self'   => $this->access->isSelf($user),
+        ]);
     }
 
     /**
