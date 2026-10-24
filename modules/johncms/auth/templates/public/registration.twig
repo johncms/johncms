@@ -19,10 +19,6 @@
             <div class="alert alert-warning">{{ __('You can get authorized on the site after confirmation of your registration.') }}</div>
         {% endif %}
 
-        {% if errors.name_lat|default([]) %}
-            <div class="alert alert-danger">{{ errors.name_lat|join(', ') }}</div>
-        {% endif %}
-
         <div class="alert alert-info">
             {{ __('Please, do not register names like 111, shhhh, uuuu, etc. They will be deleted. <br /> Also all the profiles registered via proxy servers will be deleted')|raw }}
         </div>

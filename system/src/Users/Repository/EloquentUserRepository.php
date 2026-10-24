@@ -24,4 +24,14 @@ class EloquentUserRepository implements UserRepositoryInterface
                 ]
             );
     }
+
+    public function findByNameLat(string $nameLat): ?User
+    {
+        return User::query()->where('name_lat', '=', $nameLat)->first();
+    }
+
+    public function findByName(string $name): ?User
+    {
+        return User::query()->where('name', '=', $name)->first();
+    }
 }

@@ -13,6 +13,7 @@ use Johncms\Modules\Profile\Application\DTO\UpdateProfileCommand;
 use Johncms\Modules\Profile\Application\Exceptions\EditProfileException;
 use Johncms\Modules\Profile\Domain\Repository\ProfileUserRepositoryInterface;
 use Johncms\System\i18n\Translator;
+use Johncms\Users\LoginName;
 use Johncms\Users\User;
 use Johncms\Validator\Rules\Between;
 use Johncms\Validator\Rules\EmailAddress;
@@ -71,17 +72,19 @@ final readonly class UpdateProfileUseCase
             $validationRules['mail'][] = new EmailAddress(checkMxRecord: true);
         }
 
+        // A new nickname brings a new name to sign in under, and both have to be free.
         if ($isAdmin) {
-            $validationRules['name'] = [new StringLength(min: 2, max: 25)];
+            $formData['name_lat'] = LoginName::of((string) $formData['name']);
+            $validationRules = LoginName::rules($profileUser->id, 25) + $validationRules;
         }
 
-        $this->validator->validate($formData, $validationRules)->throwIfInvalid(
+        LoginName::errorsAtNickname($this->validator->validate($formData, $validationRules))->throwIfInvalid(
             static fn (array $errors): EditProfileException => new EditProfileException($errors)
         );
 
         // Regular users cannot change administrative fields
         if (! $isAdmin) {
-            unset($formData['name'], $formData['karma_off'], $formData['sex'], $formData['admin_notes']);
+            unset($formData['name'], $formData['name_lat'], $formData['karma_off'], $formData['sex'], $formData['admin_notes']);
         }
 
         // For regular users changing their email, defer the change until it is confirmed by email

@@ -60,18 +60,18 @@ msgstr ""
 #: modules/johncms/auth/src/Application/Controllers/RegistrationController.php:56
 #: modules/johncms/auth/src/Application/Controllers/RegistrationController.php:57
 #: modules/johncms/auth/src/Application/Controllers/RegistrationController.php:62
-#: modules/johncms/auth/src/Application/Controllers/RegistrationController.php:144
-#: modules/johncms/auth/src/Application/Controllers/RegistrationController.php:145
-#: modules/johncms/auth/src/Application/Controllers/RegistrationController.php:161
-#: modules/johncms/auth/src/Application/Controllers/RegistrationController.php:162
+#: modules/johncms/auth/src/Application/Controllers/RegistrationController.php:140
+#: modules/johncms/auth/src/Application/Controllers/RegistrationController.php:141
+#: modules/johncms/auth/src/Application/Controllers/RegistrationController.php:157
+#: modules/johncms/auth/src/Application/Controllers/RegistrationController.php:158
 #: modules/johncms/auth/src/Application/Services/RegistrationPermissions.php:31
 #: modules/johncms/auth/templates/public/login.twig:54
 #: modules/johncms/auth/templates/public/registration.twig:16
-#: modules/johncms/auth/templates/public/registration.twig:113
+#: modules/johncms/auth/templates/public/registration.twig:109
 msgid "Registration"
 msgstr ""
 
-#: modules/johncms/auth/src/Application/Controllers/RegistrationController.php:108
+#: modules/johncms/auth/src/Application/Controllers/RegistrationController.php:104
 msgid "You must accept the consent to continue"
 msgstr ""
 
@@ -134,7 +134,7 @@ msgstr ""
 msgid "Registration on the website"
 msgstr ""
 
-#: modules/johncms/auth/src/Application/UseCases/SendPasswordRecoveryUseCase.php:35
+#: modules/johncms/auth/src/Application/UseCases/SendPasswordRecoveryUseCase.php:34
 msgid "The required fields are not filled"
 msgstr ""
 
@@ -174,7 +174,7 @@ msgstr ""
 
 #: modules/johncms/auth/templates/public/login.twig:18
 #: modules/johncms/auth/templates/public/login.twig:26
-#: modules/johncms/auth/templates/public/registration.twig:40
+#: modules/johncms/auth/templates/public/registration.twig:36
 #: modules/johncms/auth/templates/public/restore-password.twig:12
 #: modules/johncms/auth/templates/public/restore-password.twig:18
 msgid "Username"
@@ -245,46 +245,46 @@ msgstr ""
 msgid "You can get authorized on the site after confirmation of your registration."
 msgstr ""
 
-#: modules/johncms/auth/templates/public/registration.twig:27
+#: modules/johncms/auth/templates/public/registration.twig:23
 msgid "Please, do not register names like 111, shhhh, uuuu, etc. They will be deleted. <br /> Also all the profiles registered via proxy servers will be deleted"
 msgstr ""
 
-#: modules/johncms/auth/templates/public/registration.twig:31
+#: modules/johncms/auth/templates/public/registration.twig:27
 msgid "Choose Nickname"
 msgstr ""
 
-#: modules/johncms/auth/templates/public/registration.twig:44
+#: modules/johncms/auth/templates/public/registration.twig:40
 msgid "Min. 2, Max. 20 characters.<br />Allowed letters of the russian and latin alphabets, numbers and symbols - = @ ! ? ~ _ ( ) [ ] . * (Except zero)"
 msgstr ""
 
-#: modules/johncms/auth/templates/public/registration.twig:48
-#: modules/johncms/auth/templates/public/registration.twig:57
+#: modules/johncms/auth/templates/public/registration.twig:44
+#: modules/johncms/auth/templates/public/registration.twig:53
 msgid "Assign a password"
 msgstr ""
 
-#: modules/johncms/auth/templates/public/registration.twig:63
-#: modules/johncms/auth/templates/public/registration.twig:70
+#: modules/johncms/auth/templates/public/registration.twig:59
+#: modules/johncms/auth/templates/public/registration.twig:66
 msgid "E-mail"
 msgstr ""
 
-#: modules/johncms/auth/templates/public/registration.twig:76
+#: modules/johncms/auth/templates/public/registration.twig:72
 msgid "Select Gender"
 msgstr ""
 
-#: modules/johncms/auth/templates/public/registration.twig:79
+#: modules/johncms/auth/templates/public/registration.twig:75
 msgid "Man"
 msgstr ""
 
-#: modules/johncms/auth/templates/public/registration.twig:80
+#: modules/johncms/auth/templates/public/registration.twig:76
 msgid "Woman"
 msgstr ""
 
-#: modules/johncms/auth/templates/public/registration.twig:85
-#: modules/johncms/auth/templates/public/registration.twig:92
+#: modules/johncms/auth/templates/public/registration.twig:81
+#: modules/johncms/auth/templates/public/registration.twig:88
 msgid "Your name"
 msgstr ""
 
-#: modules/johncms/auth/templates/public/registration.twig:97
+#: modules/johncms/auth/templates/public/registration.twig:93
 msgid "Tell us a little about yourself"
 msgstr ""
 

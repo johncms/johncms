@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Auth\Application\Controllers;
 
-use Illuminate\Support\Str;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\CurrentUser;
 use Johncms\Auth\RegistrationSettings;
@@ -18,6 +17,7 @@ use Johncms\Modules\Auth\Application\Services\RegistrationPermissions;
 use Johncms\Modules\Auth\Application\UseCases\RegisterUserUseCase;
 use Johncms\Modules\Consent\Application\Services\ConsentService;
 use Johncms\NavChain;
+use Johncms\Users\LoginName;
 use Johncms\Users\User;
 use Johncms\Validator\Rules\Captcha;
 use Johncms\Validator\Rules\EmailAddress;
@@ -65,7 +65,7 @@ final readonly class RegistrationController
 
         $fields = [
             'name'     => $request->body('name', ''),
-            'name_lat' => Str::slug($request->body('name', ''), '_'),
+            'name_lat' => LoginName::of($request->body('name', '')),
             'password' => $request->body('password', ''),
             'sex'      => $request->body('sex', ''),
             'imname'   => $request->body('imname', ''),
@@ -82,12 +82,8 @@ final readonly class RegistrationController
 
         if ($request->getMethod() === 'POST') {
             $rules = [
-                'name'     => [
-                    new StringLength(min: 2, max: 20),
-                    new ModelNotExists(model: User::class, field: 'name'),
-                ],
-                // Derived from the name, so it is only checked for being taken.
-                'name_lat' => [new ModelNotExists(model: User::class, field: 'name_lat', allowEmpty: true)],
+                // The nickname and the name it signs in under, by the rules of the whole site.
+                ...LoginName::rules(),
                 'password' => [new StringLength(min: 6)],
                 'sex'      => [new InArray(haystack: ['m', 'zh'])],
                 'captcha'  => [new Captcha(scope: self::CAPTCHA_SCOPE)],
@@ -110,7 +106,7 @@ final readonly class RegistrationController
                 }
             }
 
-            $result = $this->validator->validate($fields, $rules);
+            $result = LoginName::errorsAtNickname($this->validator->validate($fields, $rules));
             if ($result->isValid()) {
                 $dto = new RegistrationFormDTO(
                     name: $fields['name'],

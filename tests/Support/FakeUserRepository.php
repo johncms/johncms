@@ -31,6 +31,16 @@ final class FakeUserRepository implements UserRepositoryInterface
         return $this->users[$id] ?? null;
     }
 
+    public function findByNameLat(string $nameLat): ?User
+    {
+        return array_find($this->users, static fn (User $user): bool => $user->name_lat === $nameLat);
+    }
+
+    public function findByName(string $name): ?User
+    {
+        return array_find($this->users, static fn (User $user): bool => $user->name === $name);
+    }
+
     public function registerGuestbookPost(User $user): void
     {
     }

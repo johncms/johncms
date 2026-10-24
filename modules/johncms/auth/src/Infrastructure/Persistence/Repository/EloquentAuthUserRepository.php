@@ -14,11 +14,6 @@ final class EloquentAuthUserRepository implements AuthUserRepositoryInterface
         return User::query()->find($id);
     }
 
-    public function findByNameLat(string $nameLat): ?User
-    {
-        return User::query()->where('name_lat', '=', $nameLat)->first();
-    }
-
     public function updatePassword(int $id, string $hashedPassword): void
     {
         User::query()->where('id', '=', $id)->update(['password' => $hashedPassword]);

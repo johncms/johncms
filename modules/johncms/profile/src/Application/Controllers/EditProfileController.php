@@ -121,7 +121,8 @@ final readonly class EditProfileController
             jabber: (string) $request->request->filter('jabber', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
             www: (string) $request->request->filter('www', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
             status: (string) $request->request->filter('status', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
-            name: (string) $request->request->filter('name', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            // The nickname as typed: the account signs in under what LoginName makes of it.
+            name: $request->body('name', ''),
             karmaOff: $request->bodyInt('karma_off'),
             sex: (string) $request->request->filter('sex', '', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
             adminNotes: $request->body('admin_notes', ''),

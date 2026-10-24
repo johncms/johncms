@@ -18,4 +18,14 @@ interface UserRepositoryInterface
      * counter and refresh the last post timestamp.
      */
     public function registerGuestbookPost(User $user): void;
+
+    /**
+     * The account signing in under this name (users.name_lat).
+     */
+    public function findByNameLat(string $nameLat): ?User;
+
+    /**
+     * The account with exactly this nickname. Nicknames are unique.
+     */
+    public function findByName(string $name): ?User;
 }

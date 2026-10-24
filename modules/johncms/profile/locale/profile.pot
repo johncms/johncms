@@ -60,14 +60,14 @@ msgid "Continue"
 msgstr ""
 
 #: modules/johncms/profile/src/Application/Controllers/AvatarController.php:83
-#: modules/johncms/profile/src/Application/Controllers/EditProfileController.php:165
+#: modules/johncms/profile/src/Application/Controllers/EditProfileController.php:166
 #: modules/johncms/profile/src/Application/Controllers/PhotoController.php:83
 #: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:93
 msgid "My Profile"
 msgstr ""
 
 #: modules/johncms/profile/src/Application/Controllers/AvatarController.php:83
-#: modules/johncms/profile/src/Application/Controllers/EditProfileController.php:165
+#: modules/johncms/profile/src/Application/Controllers/EditProfileController.php:166
 #: modules/johncms/profile/src/Application/Controllers/GuestbookController.php:44
 #: modules/johncms/profile/src/Application/Controllers/PhotoController.php:83
 #: modules/johncms/profile/templates/public/account.twig:13
@@ -192,8 +192,8 @@ msgstr ""
 msgid "Photo is successfully removed"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/Controllers/EditProfileController.php:163
-#: modules/johncms/profile/src/Application/Controllers/EditProfileController.php:197
+#: modules/johncms/profile/src/Application/Controllers/EditProfileController.php:164
+#: modules/johncms/profile/src/Application/Controllers/EditProfileController.php:198
 #: modules/johncms/profile/templates/public/account.twig:67
 msgid "Edit Profile"
 msgstr ""
@@ -480,11 +480,11 @@ msgstr ""
 msgid "You have exceeded the limit of votes. New voices will be added %s"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/UseCases/UpdateProfileUseCase.php:112
+#: modules/johncms/profile/src/Application/UseCases/UpdateProfileUseCase.php:115
 msgid "Confirm email change"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/UseCases/UpdateProfileUseCase.php:129
+#: modules/johncms/profile/src/Application/UseCases/UpdateProfileUseCase.php:132
 msgid "The procedure for changing the email address was started"
 msgstr ""
 

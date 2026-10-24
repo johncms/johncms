@@ -24,6 +24,7 @@ use Johncms\Console\Commands\ModuleSyncCommand;
 use Johncms\Modules\Installer;
 use Johncms\Modules\ModuleRegistryFactory;
 use Johncms\Http\Request;
+use Johncms\Users\LoginName;
 use Johncms\Users\User;
 use Johncms\Validator\Rules\EmailAddress;
 use Johncms\Validator\Rules\NotEmpty;
@@ -60,10 +61,12 @@ if ($request->getMethod() === 'POST') {
         // address that does not exist.
         'email'          => [new EmailAddress(checkMxRecord: true)],
         'admin_login'    => [new NotEmpty()],
+        // The administrator signs in under this, derived the way the sign-in derives it.
+        'admin_login_name' => [new NotEmpty(message: __('The login needs at least one letter or digit'))],
         'admin_password' => [new NotEmpty()],
     ];
 
-    $result = di(ValidatorInterface::class)->validate($fields, $rules);
+    $result = di(ValidatorInterface::class)->validate($fields + ['admin_login_name' => LoginName::of($fields['admin_login'])], $rules);
     if ($result->isValid()) {
         // Получаем конфиг по умолчанию
         $config = config('johncms');
@@ -90,7 +93,7 @@ if ($request->getMethod() === 'POST') {
             $user->fill(
                 [
                     'name'            => $fields['admin_login'],
-                    'name_lat'        => mb_strtolower($fields['admin_login']),
+                    'name_lat'        => LoginName::of($fields['admin_login']),
                     'mail'            => $fields['email'],
                     'www'             => $fields['homeurl'],
                     'datereg'         => time(),
@@ -147,7 +150,7 @@ if ($request->getMethod() === 'POST') {
                     $demoModel->fill(
                         [
                             'name'            => $demoUser['name'],
-                            'name_lat'        => mb_strtolower($demoUser['name']),
+                            'name_lat'        => LoginName::of($demoUser['name']),
                             'mail'            => $demoUser['mail'],
                             'www'             => '',
                             'datereg'         => time(),
@@ -200,6 +203,11 @@ if ($request->getMethod() === 'POST') {
         $errors['unknown'][] = __("ERROR: Can't write system.local.php");
     } else {
         $errors = $result->getErrors();
+        // Told at the field the login was typed in.
+        if (isset($errors['admin_login_name'])) {
+            $errors['admin_login'] ??= $errors['admin_login_name'];
+            unset($errors['admin_login_name']);
+        }
     }
 }
 

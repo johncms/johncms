@@ -21,6 +21,8 @@ use Johncms\Config\ConfigRepository;
 use Johncms\Http\Environment;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
+use Johncms\Users\AccountByLogin;
+use Johncms\Users\Repository\EloquentUserRepository;
 use Johncms\Users\User;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\NullLogger;
@@ -75,7 +77,8 @@ final class AuthenticateUserUseCaseTest extends TestCase
             $this->hasher,
             $this->throttle,
             new Environment($requestStack),
-            $this->eventLogger
+            $this->eventLogger,
+            new AccountByLogin(new EloquentUserRepository())
         );
     }
 
@@ -101,6 +104,41 @@ final class AuthenticateUserUseCaseTest extends TestCase
 
         // The stored name_lat is 'tester'; the visitor may type it in any case.
         self::assertTrue($this->useCase->execute(new LoginCredentialsDTO('TESTER', self::PASSWORD))->isSuccessful());
+    }
+
+    /**
+     * Older versions derived the login name by a table of their own, keeping the spaces and the
+     * punctuation; the installer only lowercased it. Such an account signs in by its nickname and
+     * gets the login name derived today.
+     */
+    public function testAnAccountWithAnOldLoginNameSignsInByItsNickname(): void
+    {
+        $user = $this->createUser(name: 'Вася Пупкин!', loginName: 'vasya pupkin!');
+
+        self::assertTrue($this->useCase->execute(new LoginCredentialsDTO('Вася Пупкин!', self::PASSWORD))->isSuccessful());
+        self::assertSame('vasia_pupkin', $this->reload($user)->name_lat);
+
+        // From now on it signs in the way any other account does.
+        self::assertTrue($this->useCase->execute(new LoginCredentialsDTO('vasia pupkin', self::PASSWORD))->isSuccessful());
+    }
+
+    public function testALoginNameHeldByAnotherAccountIsLeftWithIt(): void
+    {
+        $this->createUser(name: 'Vasia_Pupkin', loginName: 'vasia_pupkin', storedHash: $this->hasher->hash('another password'));
+        $legacy = $this->createUser(name: 'Вася Пупкин', loginName: 'вася пупкин');
+
+        self::assertTrue($this->useCase->execute(new LoginCredentialsDTO('Вася Пупкин', self::PASSWORD))->isSuccessful());
+        self::assertSame('вася пупкин', $this->reload($legacy)->name_lat);
+    }
+
+    public function testANicknameOfOnlySymbolsSignsInAsItIs(): void
+    {
+        $user = $this->createUser(name: '!!!', loginName: '');
+
+        $result = $this->useCase->execute(new LoginCredentialsDTO('!!!', self::PASSWORD));
+
+        self::assertSame($user->id, $result->userId);
+        self::assertSame('', $this->reload($user)->name_lat);
     }
 
     /**
@@ -366,12 +404,14 @@ final class AuthenticateUserUseCaseTest extends TestCase
         bool $approved = true,
         bool $emailConfirmed = true,
         ?string $storedHash = null,
+        string $name = 'Tester',
+        string $loginName = 'tester',
     ): User {
         $user = new User();
         $user->fill(
             [
-                'name'            => 'Tester',
-                'name_lat'        => 'tester',
+                'name'            => $name,
+                'name_lat'        => $loginName,
                 'preg'            => $approved,
                 'email_confirmed' => $emailConfirmed,
                 'sestime'         => 0,

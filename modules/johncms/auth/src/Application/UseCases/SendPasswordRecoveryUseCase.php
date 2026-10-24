@@ -11,14 +11,13 @@ use Johncms\Mail\Queue\MailQueueInterface;
 use Johncms\Mail\Queue\QueuedEmailDTO;
 use Johncms\Modules\Auth\Application\DTO\SendRecoveryCommand;
 use Johncms\Modules\Auth\Application\Exceptions\PasswordRecoveryException;
-use Johncms\Modules\Auth\Domain\Repository\AuthUserRepositoryInterface;
 use Johncms\System\i18n\Translator;
-use Johncms\Utils\Transliterator;
+use Johncms\Users\AccountByLogin;
 
 final readonly class SendPasswordRecoveryUseCase
 {
     public function __construct(
-        private AuthUserRepositoryInterface $users,
+        private AccountByLogin $accounts,
         private Translator $translator,
         private PasswordResetTokens $resetTokens,
         private AuthEventLoggerInterface $eventLogger,
@@ -28,14 +27,15 @@ final readonly class SendPasswordRecoveryUseCase
 
     public function execute(SendRecoveryCommand $command, string $homeUrl): void
     {
-        $nick = Transliterator::toLatin($command->nick);
+        $nick = trim($command->nick);
         $email = trim($command->email);
 
-        if (! $nick || ! $email) {
+        if ($nick === '' || $email === '') {
             throw new PasswordRecoveryException(__('The required fields are not filled'));
         }
 
-        $user = $this->users->findByNameLat($nick);
+        // The nickname names the account the way the sign-in reads it.
+        $user = $this->accounts->find($nick);
         if ($user === null) {
             throw new PasswordRecoveryException(__('User does not exists'));
         }

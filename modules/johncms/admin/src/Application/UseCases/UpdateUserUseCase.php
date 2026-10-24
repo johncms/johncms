@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Application\UseCases;
 
-use Illuminate\Support\Str;
 use Johncms\Modules\Admin\Application\DTO\UpdateUserCommand;
 use Johncms\Modules\Admin\Application\Exceptions\UserEditException;
 use Johncms\Modules\Admin\Domain\Repository\UserEditRepositoryInterface;
+use Johncms\Users\LoginName;
 use Johncms\Users\User;
 use Johncms\Validator\Rules\Between;
 use Johncms\Validator\Rules\EmailAddress;
@@ -74,13 +74,8 @@ final readonly class UpdateUserUseCase
 
         if ($command->name !== null) {
             $fields['name'] = $command->name;
-            $fields['name_lat'] = Str::slug($command->name, '_');
-            $rules['name'] = [
-                new StringLength(min: 2, max: 25),
-                new ModelNotExists(model: User::class, field: 'name', exclude: $others),
-            ];
-            // Derived from the nickname, so it is only checked for being taken.
-            $rules['name_lat'] = [new ModelNotExists(model: User::class, field: 'name_lat', exclude: $others, allowEmpty: true)];
+            $fields['name_lat'] = LoginName::of($command->name);
+            $rules = LoginName::rules($user->id, 25) + $rules;
         }
 
         if ($command->sex !== null) {
@@ -94,12 +89,7 @@ final readonly class UpdateUserUseCase
             $rules['admin_notes'] = [new StringLength(max: 10000, allowEmpty: true)];
         }
 
-        $result = $this->validator->validate($fields, $rules);
-
-        // The login name is not a field of the form: a taken one is a taken nickname.
-        if ($result->hasError('name_lat') && ! $result->hasError('name')) {
-            $result = $result->withError('name', (string) $result->getFirstError('name_lat'));
-        }
+        $result = LoginName::errorsAtNickname($this->validator->validate($fields, $rules));
 
         $result->throwIfInvalid(static fn (array $errors): UserEditException => new UserEditException($errors));
 

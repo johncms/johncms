@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Johncms\Modules\Community\Application\UseCases;
 
 use Johncms\Modules\Community\Domain\Repository\CommunityUserRepositoryInterface;
+use Johncms\Users\LoginName;
 use Johncms\Users\User;
-use Johncms\Utils\Transliterator;
 
 final readonly class ViewSearchUseCase
 {
@@ -45,6 +45,7 @@ final readonly class ViewSearchUseCase
 
     private function buildSearchLike(string $search): string
     {
-        return '%' . Transliterator::toLatin($search) . '%';
+        // The names are searched the way they are stored: as the login names they sign in under.
+        return '%' . LoginName::of($search) . '%';
     }
 }

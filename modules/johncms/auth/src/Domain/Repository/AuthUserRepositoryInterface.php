@@ -18,11 +18,6 @@ interface AuthUserRepositoryInterface
     public function findById(int $id): ?User;
 
     /**
-     * Find a user by the latinized login (name_lat).
-     */
-    public function findByNameLat(string $nameLat): ?User;
-
-    /**
      * Store the already hashed password for the user.
      */
     public function updatePassword(int $id, string $hashedPassword): void;

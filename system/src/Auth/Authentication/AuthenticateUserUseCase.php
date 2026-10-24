@@ -12,13 +12,13 @@ declare(strict_types=1);
 
 namespace Johncms\Auth\Authentication;
 
-use Illuminate\Support\Str;
 use Johncms\Auth\Events\AuthEventLoggerInterface;
 use Johncms\Auth\Events\AuthEventType;
 use Johncms\Auth\Password\PasswordHasherInterface;
 use Johncms\Auth\Throttling\LoginThrottleInterface;
 use Johncms\Captcha\CaptchaManager;
 use Johncms\Http\Environment;
+use Johncms\Users\AccountByLogin;
 use Johncms\Users\User;
 
 /**
@@ -46,6 +46,7 @@ final readonly class AuthenticateUserUseCase
         private LoginThrottleInterface $throttle,
         private Environment $environment,
         private AuthEventLoggerInterface $eventLogger,
+        private AccountByLogin $accounts,
     ) {
     }
 
@@ -82,7 +83,7 @@ final readonly class AuthenticateUserUseCase
             }
         }
 
-        $user = $this->findUser($credentials->login);
+        $user = $this->accounts->find($credentials->login);
 
         // An unknown login and a wrong password answer the same, so the form cannot be used to
         // find out which accounts exist.
@@ -94,6 +95,7 @@ final readonly class AuthenticateUserUseCase
         }
 
         $this->rehashIfNeeded($user, $credentials->password);
+        $this->accounts->renewLoginName($user);
 
         foreach ($keys as $key) {
             $this->throttle->clear($key);
@@ -189,16 +191,5 @@ final readonly class AuthenticateUserUseCase
             $user->password = $this->hasher->hash($password);
             $user->save();
         }
-    }
-
-    private function findUser(string $login): ?User
-    {
-        $nameLat = Str::slug($login, '_');
-
-        if ($nameLat === '') {
-            return null;
-        }
-
-        return User::query()->where('name_lat', '=', $nameLat)->first();
     }
 }

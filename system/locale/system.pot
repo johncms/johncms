@@ -71,8 +71,8 @@ msgid "Library"
 msgstr ""
 
 #: config/places.global.php:21
-#: system/src/Http/Controller/ExternalAuthController.php:314
-#: system/src/Http/Controller/ExternalAuthController.php:327
+#: system/src/Http/Controller/ExternalAuthController.php:313
+#: system/src/Http/Controller/ExternalAuthController.php:326
 #: themes/default/templates/components/sidebar-user-menu.twig:69
 msgid "Login"
 msgstr ""
@@ -408,7 +408,7 @@ msgstr ""
 #: system/src/Auth/External/OAuthStateStorage.php:104
 #: system/src/Http/Controller/ExternalAuthController.php:131
 #: system/src/Http/Controller/ExternalAuthController.php:142
-#: system/src/Http/Controller/ExternalAuthController.php:218
+#: system/src/Http/Controller/ExternalAuthController.php:217
 msgid "The sign-in attempt has expired, please try again"
 msgstr ""
 
@@ -698,20 +698,20 @@ msgstr ""
 msgid "This sign-in service is not available"
 msgstr ""
 
-#: system/src/Http/Controller/ExternalAuthController.php:183
+#: system/src/Http/Controller/ExternalAuthController.php:182
 #: themes/default/templates/components/sidebar-user-menu.twig:77
 msgid "Registration"
 msgstr ""
 
-#: system/src/Http/Controller/ExternalAuthController.php:183
+#: system/src/Http/Controller/ExternalAuthController.php:182
 msgid "Your account is awaiting approval"
 msgstr ""
 
-#: system/src/Http/Controller/ExternalAuthController.php:201
+#: system/src/Http/Controller/ExternalAuthController.php:200
 msgid "Registration is closed on this site"
 msgstr ""
 
-#: system/src/Http/Controller/ExternalAuthController.php:281
+#: system/src/Http/Controller/ExternalAuthController.php:280
 msgid "Finish signing up"
 msgstr ""
 
@@ -833,6 +833,10 @@ msgstr ""
 
 #: system/src/Users/Bans/BanManager.php:107
 msgid "Ban not active"
+msgstr ""
+
+#: system/src/Users/LoginName.php:58
+msgid "The nickname needs at least one letter or digit"
 msgstr ""
 
 #: system/src/Users/UserPlaceFormatter.php:73

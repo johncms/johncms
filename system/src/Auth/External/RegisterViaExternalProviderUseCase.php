@@ -12,9 +12,9 @@ declare(strict_types=1);
 
 namespace Johncms\Auth\External;
 
-use Illuminate\Support\Str;
 use Johncms\Auth\Events\AuthEventLoggerInterface;
 use Johncms\Security\ClientInfoDTO;
+use Johncms\Users\LoginName;
 use Johncms\Users\User;
 
 /**
@@ -52,7 +52,7 @@ final readonly class RegisterViaExternalProviderUseCase
         $user->fill(
             [
                 'name'            => $name,
-                'name_lat'        => Str::slug($name, '_'),
+                'name_lat'        => LoginName::of($name),
                 'imname'          => $identity->nickname ?? '',
                 'mail'            => $email,
                 'ip'              => $client->ip,

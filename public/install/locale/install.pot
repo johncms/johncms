@@ -18,7 +18,7 @@ msgid "Database"
 msgstr ""
 
 #: public/install/index.php:99
-#: public/install/steps/step_4.php:38
+#: public/install/steps/step_4.php:39
 msgid "Setting"
 msgstr ""
 
@@ -120,7 +120,11 @@ msgstr ""
 msgid "Database does not exist"
 msgstr ""
 
-#: public/install/steps/step_4.php:200
+#: public/install/steps/step_4.php:65
+msgid "The login needs at least one letter or digit"
+msgstr ""
+
+#: public/install/steps/step_4.php:203
 msgid "ERROR: Can't write system.local.php"
 msgstr ""
 

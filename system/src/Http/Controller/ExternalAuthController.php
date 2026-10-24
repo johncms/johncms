@@ -20,10 +20,10 @@ use Johncms\Http\Request;
 use Johncms\Http\Session;
 use Johncms\Http\SiteBaseUrl;
 use Johncms\Http\View\ViewResponse;
+use Johncms\Users\LoginName;
 use Johncms\Users\User;
 use Johncms\Validator\Rules\EmailAddress;
 use Johncms\Validator\Rules\ModelNotExists;
-use Johncms\Validator\Rules\StringLength;
 use Johncms\Validator\ValidatorInterface;
 
 /**
@@ -149,18 +149,17 @@ final readonly class ExternalAuthController
         ];
 
         $result = $this->validator->validate(
-            $fields,
+            $fields + ['name_lat' => LoginName::of($fields['name'])],
             [
-                'name'  => [
-                    new StringLength(min: 2, max: 20),
-                    new ModelNotExists(model: User::class, field: 'name'),
-                ],
+                ...LoginName::rules(),
                 'email' => [
                     new EmailAddress(),
                     new ModelNotExists(model: User::class, field: 'mail'),
                 ],
             ]
         );
+
+        $result = LoginName::errorsAtNickname($result);
 
         if (! $result->isValid()) {
             return $this->profileScreen($identity, $result->getErrors(), $fields);
