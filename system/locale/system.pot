@@ -4,7 +4,7 @@ msgstr ""
 
 #: config/notifications.global.php:14
 #: config/places.global.php:17
-#: system/src/Users/BanKind.php:34
+#: system/src/Users/Bans/BanKind.php:34
 msgid "Forum"
 msgstr ""
 
@@ -57,7 +57,7 @@ msgid "Downloads"
 msgstr ""
 
 #: config/places.global.php:18
-#: system/src/Users/BanKind.php:35
+#: system/src/Users/Bans/BanKind.php:35
 msgid "Guestbook"
 msgstr ""
 
@@ -66,7 +66,7 @@ msgid "Reading the FAQ"
 msgstr ""
 
 #: config/places.global.php:20
-#: system/src/Users/BanKind.php:36
+#: system/src/Users/Bans/BanKind.php:36
 msgid "Library"
 msgstr ""
 
@@ -212,6 +212,7 @@ msgid "Admin panel"
 msgstr ""
 
 #: system/src/Auth/Authorization/CorePermissions.php:99
+#: system/src/Users/Bans/BanManager.php:84
 msgid "System"
 msgstr ""
 
@@ -777,16 +778,61 @@ msgstr ""
 msgid "Home"
 msgstr ""
 
-#: system/src/Users/BanKind.php:31
+#: system/src/Users/Bans/BanDurationUnit.php:42
+msgid "Minutes (60 max.)"
+msgstr ""
+
+#: system/src/Users/Bans/BanDurationUnit.php:43
+msgid "Hours (24 max.)"
+msgstr ""
+
+#: system/src/Users/Bans/BanDurationUnit.php:44
+msgid "Days (30 max.)"
+msgstr ""
+
+#: system/src/Users/Bans/BanDurationUnit.php:45
+msgid "Till cancel"
+msgstr ""
+
+#: system/src/Users/Bans/BanKind.php:31
 msgid "Full block"
 msgstr ""
 
-#: system/src/Users/BanKind.php:32
+#: system/src/Users/Bans/BanKind.php:32
 msgid "Private messages"
 msgstr ""
 
-#: system/src/Users/BanKind.php:33
+#: system/src/Users/Bans/BanKind.php:33
 msgid "Comments"
+msgstr ""
+
+#: system/src/Users/Bans/BanManager.php:54
+msgid "Reason not specified"
+msgstr ""
+
+#: system/src/Users/Bans/BanManager.php:61
+msgid "There is no required data"
+msgstr ""
+
+#: system/src/Users/Bans/BanManager.php:65
+msgid "You have no rights to ban in this section"
+msgstr ""
+
+#: system/src/Users/Bans/BanManager.php:69
+#: modules/johncms/admin/src/Application/Controllers/Users/UserBansController.php:179
+msgid "You do not have enought rights to ban this user"
+msgstr ""
+
+#: system/src/Users/Bans/BanManager.php:73
+msgid "Ban already active"
+msgstr ""
+
+#: system/src/Users/Bans/BanManager.php:84
+msgid "Ban"
+msgstr ""
+
+#: system/src/Users/Bans/BanManager.php:107
+msgid "Ban not active"
 msgstr ""
 
 #: system/src/Users/UserPlaceFormatter.php:73

@@ -74,48 +74,48 @@ msgstr ""
 msgid "Profile"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/Controllers/BanController.php:100
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:93
 msgid "User banned"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/Controllers/BanController.php:112
-#: modules/johncms/profile/src/Application/Controllers/BanController.php:135
-#: modules/johncms/profile/src/Application/Controllers/BanController.php:154
-#: modules/johncms/profile/src/Application/Controllers/BanController.php:175
-#: modules/johncms/profile/src/Application/Controllers/BanController.php:297
-#: modules/johncms/profile/src/Application/Controllers/BanController.php:306
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:105
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:128
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:147
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:168
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:290
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:299
 #: modules/johncms/profile/src/Application/Controllers/KarmaController.php:140
 #: modules/johncms/profile/src/Application/Controllers/KarmaController.php:162
 msgid "Wrong data"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/Controllers/BanController.php:118
-#: modules/johncms/profile/src/Application/Controllers/BanController.php:142
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:111
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:135
 msgid "Ban termination"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/Controllers/BanController.php:119
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:112
 msgid "Ban time is going to the end. Infrigement will be saved in the bans history"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/Controllers/BanController.php:120
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:113
 msgid "Terminate Ban"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/Controllers/BanController.php:142
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:135
 msgid "Ban terminated"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/Controllers/BanController.php:158
-#: modules/johncms/profile/src/Application/Controllers/BanController.php:180
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:151
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:173
 msgid "Delete ban"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/Controllers/BanController.php:159
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:152
 msgid "Removing ban along with a record in the bans history"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/Controllers/BanController.php:160
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:153
 #: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:202
 #: modules/johncms/profile/templates/public/confirm-delete.twig:18
 #: modules/johncms/profile/templates/public/edit.twig:82
@@ -124,33 +124,33 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/Controllers/BanController.php:180
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:173
 msgid "Ban deleted"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/Controllers/BanController.php:190
-#: modules/johncms/profile/src/Application/Controllers/BanController.php:206
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:183
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:199
 msgid "Violations history"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/Controllers/BanController.php:191
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:184
 msgid "Are you sure want to clean entire history of user violations?"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/Controllers/BanController.php:192
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:185
 msgid "Clear"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/Controllers/BanController.php:206
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:199
 msgid "Violations history cleared"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/Controllers/BanController.php:211
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:204
 msgid "Violations History"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/Controllers/BanController.php:213
-#: modules/johncms/profile/src/Application/Controllers/BanController.php:235
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:206
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:228
 #: modules/johncms/profile/src/Application/Controllers/KarmaController.php:198
 #: modules/johncms/profile/src/Application/Controllers/KarmaController.php:220
 #: modules/johncms/profile/src/Application/Controllers/KarmaController.php:241
@@ -159,9 +159,9 @@ msgstr ""
 msgid "User Profile"
 msgstr ""
 
-#: modules/johncms/profile/src/Application/Controllers/BanController.php:233
-#: modules/johncms/profile/src/Application/Controllers/BanController.php:273
-#: modules/johncms/profile/src/Application/Controllers/BanController.php:286
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:226
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:266
+#: modules/johncms/profile/src/Application/Controllers/BanController.php:279
 msgid "Ban the User"
 msgstr ""
 
@@ -351,37 +351,12 @@ msgid "Statistic"
 msgstr ""
 
 #: modules/johncms/profile/src/Application/Notifications/BanNotificationProvider.php:29
-#: modules/johncms/profile/src/Application/UseCases/BanUserUseCase.php:64
 #: modules/johncms/profile/src/Application/UseCases/GetProfileViewUseCase.php:205
 msgid "Ban"
 msgstr ""
 
 #: modules/johncms/profile/src/Application/Services/ProfilePermissions.php:29
 msgid "Delete a karma entry"
-msgstr ""
-
-#: modules/johncms/profile/src/Application/UseCases/BanUserUseCase.php:34
-msgid "Reason not specified"
-msgstr ""
-
-#: modules/johncms/profile/src/Application/UseCases/BanUserUseCase.php:41
-msgid "There is no required data"
-msgstr ""
-
-#: modules/johncms/profile/src/Application/UseCases/BanUserUseCase.php:45
-msgid "You have no rights to ban in this section"
-msgstr ""
-
-#: modules/johncms/profile/src/Application/UseCases/BanUserUseCase.php:49
-msgid "Ban already active"
-msgstr ""
-
-#: modules/johncms/profile/src/Application/UseCases/BanUserUseCase.php:64
-msgid "System"
-msgstr ""
-
-#: modules/johncms/profile/src/Application/UseCases/CancelBanUseCase.php:27
-msgid "Ban not active"
 msgstr ""
 
 #: modules/johncms/profile/src/Application/UseCases/ChangePasswordUseCase.php:38

@@ -896,3 +896,39 @@ msgstr "Приватні повідомлення"
 
 msgid "Comments"
 msgstr "Коментарі"
+
+msgid "Reason not specified"
+msgstr "Причина не вказана"
+
+msgid "There is no required data"
+msgstr "Немає необхідних даних"
+
+msgid "You have no rights to ban in this section"
+msgstr "Ви не маєте права банити у цьому розділі"
+
+msgid "Ban already active"
+msgstr "Бан вже діє"
+
+msgid "System"
+msgstr "Система"
+
+msgid "Ban"
+msgstr "Бан"
+
+msgid "Ban not active"
+msgstr "Бан не активний"
+
+msgid "You do not have enought rights to ban this user"
+msgstr "Ви не маєте достатньо прав, щоб забанити цього користувача"
+
+msgid "Minutes (60 max.)"
+msgstr "Хвилин (макс. 60)"
+
+msgid "Hours (24 max.)"
+msgstr "Годин (макс. 24)"
+
+msgid "Days (30 max.)"
+msgstr "Днів (макс. 30)"
+
+msgid "Till cancel"
+msgstr "До відміни"

@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Johncms\Modules\Profile\Infrastructure\Persistence\Repository;
+namespace Johncms\Users\Repository;
 
 use Illuminate\Database\Eloquent\Collection;
-use Johncms\Modules\Profile\Domain\Repository\BanRepositoryInterface;
 use Johncms\Users\Ban;
+use Johncms\Users\Karma;
+use Johncms\Users\User;
 
 final class EloquentBanRepository implements BanRepositoryInterface
 {
@@ -76,5 +77,39 @@ final class EloquentBanRepository implements BanRepositoryInterface
             ->where('user_id', '=', $userId)
             ->where('ban_time', '<=', $time)
             ->get();
+    }
+
+    public function addKarmaPenalty(int $userId, int $points, int $time, string $voterName, string $reason): void
+    {
+        Karma::query()->create([
+            'user_id'    => 0,
+            'name'       => $voterName,
+            'karma_user' => $userId,
+            'points'     => $points,
+            'type'       => 0,
+            'time'       => $time,
+            'text'       => $reason,
+        ]);
+        User::query()->where('id', $userId)->increment('karma_minus', $points);
+    }
+
+    public function findKarmaPenalty(int $userId, int $time): ?Karma
+    {
+        return Karma::query()
+            ->where('karma_user', $userId)
+            ->where('user_id', 0)
+            ->where('time', $time)
+            ->first();
+    }
+
+    public function removeKarmaPenalty(Karma $penalty): void
+    {
+        Karma::query()->where('id', $penalty->id)->delete();
+
+        $user = User::query()->find($penalty->karma_user);
+        if ($user !== null) {
+            $user->karma_minus = max(0, (int) $user->karma_minus - (int) $penalty->points);
+            $user->save();
+        }
     }
 }

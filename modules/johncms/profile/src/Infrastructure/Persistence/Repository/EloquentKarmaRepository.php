@@ -102,13 +102,4 @@ final class EloquentKarmaRepository implements KarmaRepositoryInterface
     {
         Karma::query()->where('karma_user', '=', $targetId)->delete();
     }
-
-    public function findSystemPenalty(int $targetId, int $time): ?Karma
-    {
-        return Karma::query()
-            ->where('karma_user', '=', $targetId)
-            ->where('user_id', '=', 0)
-            ->where('time', '=', $time)
-            ->first();
-    }
 }

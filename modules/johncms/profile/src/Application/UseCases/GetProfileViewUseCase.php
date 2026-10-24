@@ -10,7 +10,7 @@ use Johncms\Auth\Authorization\RoleLevels;
 use Johncms\Auth\Authorization\StaffTitles;
 use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Mail\Domain\Repository\ContactRepositoryInterface;
-use Johncms\Modules\Profile\Application\Access\BanAccess;
+use Johncms\Users\Bans\BanAccess;
 use Johncms\Modules\Profile\Application\DTO\ProfileViewDTO;
 use Johncms\Modules\Profile\Application\Exceptions\ProfileNotFoundException;
 use Johncms\Modules\Profile\Domain\Repository\KarmaRepositoryInterface;

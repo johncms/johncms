@@ -867,3 +867,39 @@ msgstr "Tin nhắn riêng"
 
 msgid "Comments"
 msgstr "Bình luận"
+
+msgid "Reason not specified"
+msgstr "Lý do không xác định"
+
+msgid "There is no required data"
+msgstr "Không có yêu cầu dữ liệu"
+
+msgid "You have no rights to ban in this section"
+msgstr "Bạn không có quyền cấm thành viên ngoài thẩm quyền"
+
+msgid "Ban already active"
+msgstr "Người dùng đã bị cấm từ trước"
+
+msgid "System"
+msgstr "Hệ thống"
+
+msgid "Ban"
+msgstr "Cấm"
+
+msgid "Ban not active"
+msgstr "Lệnh cấm vô hiệu lực"
+
+msgid "You do not have enought rights to ban this user"
+msgstr "Bạn không có quyền để cấm người dùng này"
+
+msgid "Minutes (60 max.)"
+msgstr "Phút (tối đa 60p)"
+
+msgid "Hours (24 max.)"
+msgstr "Giờ (tối đa 24g)"
+
+msgid "Days (30 max.)"
+msgstr "Ngày (tối đa 30n)"
+
+msgid "Till cancel"
+msgstr "Vô thời hạn (đến khi hủy lệnh cấm)"

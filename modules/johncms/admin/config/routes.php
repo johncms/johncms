@@ -29,6 +29,7 @@ use Johncms\Modules\Admin\Application\Controllers\Users\BanListController;
 use Johncms\Modules\Admin\Application\Controllers\Users\DeleteUserController;
 use Johncms\Modules\Admin\Application\Controllers\Users\KarmaController;
 use Johncms\Modules\Admin\Application\Controllers\Users\RegistrationModerationController;
+use Johncms\Modules\Admin\Application\Controllers\Users\UserBansController;
 use Johncms\Modules\Admin\Application\Controllers\Users\UserCardController;
 use Johncms\Modules\Admin\Application\Controllers\Users\UserCleanupController;
 use Johncms\Modules\Admin\Application\Controllers\Users\UserEditController;
@@ -69,6 +70,16 @@ return static function (RouteCollection $router): void {
         $r->post('/admin/users/{id:number}/password', [UserEditController::class, 'savePassword'])->name('admin.users.password.save');
         $r->get('/admin/users/{id:number}/reset-settings', [UserEditController::class, 'resetConfirm'])->name('admin.users.reset_settings');
         $r->post('/admin/users/{id:number}/reset-settings', [UserEditController::class, 'reset'])->name('admin.users.reset_settings.run');
+        // The bans, by the rules of BanAccess, checked by the controller.
+        $r->get('/admin/users/{id:number}/bans', [UserBansController::class, 'index'])->name('admin.users.bans');
+        $r->get('/admin/users/{id:number}/bans/new', [UserBansController::class, 'createForm'])->name('admin.users.bans.new');
+        $r->post('/admin/users/{id:number}/bans/new', [UserBansController::class, 'create'])->name('admin.users.bans.create');
+        $r->get('/admin/users/{id:number}/bans/clear', [UserBansController::class, 'clearConfirm'])->name('admin.users.bans.clear');
+        $r->post('/admin/users/{id:number}/bans/clear', [UserBansController::class, 'clear'])->name('admin.users.bans.clear.run');
+        $r->get('/admin/users/{id:number}/bans/{banId:number}/lift', [UserBansController::class, 'liftConfirm'])->name('admin.users.bans.lift');
+        $r->post('/admin/users/{id:number}/bans/{banId:number}/lift', [UserBansController::class, 'lift'])->name('admin.users.bans.lift.run');
+        $r->get('/admin/users/{id:number}/bans/{banId:number}/delete', [UserBansController::class, 'deleteConfirm'])->name('admin.users.bans.delete');
+        $r->post('/admin/users/{id:number}/bans/{banId:number}/delete', [UserBansController::class, 'delete'])->name('admin.users.bans.delete.run');
         $r->post('/admin/users/cleanup', [UserCleanupController::class, 'clean'])->name('admin.users.cleanup.run');
         // Who may open these is decided by the admin.roles.manage permission rather than by the
         // group: an administrator holds it, and a role standing above the visitor's own is

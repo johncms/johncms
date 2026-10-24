@@ -383,6 +383,7 @@ return static function (ContainerConfigurator $container): void {
     $services->set(MigrationGenerator::class);
     $services->set(PendingMigrations::class);
     $services->set(\Johncms\Users\Repository\UserRepositoryInterface::class, \Johncms\Users\Repository\EloquentUserRepository::class);
+    $services->set(\Johncms\Users\Repository\BanRepositoryInterface::class, \Johncms\Users\Repository\EloquentBanRepository::class);
 
     // The authenticators are asked in the order they are tagged, and the order is a decision:
     // a request carrying both a bearer token and a session cookie must be answered by the token.

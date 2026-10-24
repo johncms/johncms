@@ -868,3 +868,39 @@ msgstr "Shaxsiy habarlar"
 
 msgid "Comments"
 msgstr "Sharxlar"
+
+msgid "Reason not specified"
+msgstr "Sabab ko'rsatilmagan"
+
+msgid "There is no required data"
+msgstr "Kerakli ma'lumotlar yo'q"
+
+msgid "You have no rights to ban in this section"
+msgstr "Ushbu bo'limda taqiqlash huquqingiz yo'q"
+
+msgid "Ban already active"
+msgstr "To'siq allaqachon faol"
+
+msgid "System"
+msgstr "Tizim"
+
+msgid "Ban"
+msgstr "To'sib qo'yish"
+
+msgid "Ban not active"
+msgstr "To'siq faol emas"
+
+msgid "You do not have enought rights to ban this user"
+msgstr "Sizda ushbu foydalanuvchini to'sish uchun etarli huquqlaringiz yo'q"
+
+msgid "Minutes (60 max.)"
+msgstr "Daqiqa (60 max.)"
+
+msgid "Hours (24 max.)"
+msgstr "Soat (24 max.)"
+
+msgid "Days (30 max.)"
+msgstr "Kun (30 max.)"
+
+msgid "Till cancel"
+msgstr "Bekor qilishgacha"

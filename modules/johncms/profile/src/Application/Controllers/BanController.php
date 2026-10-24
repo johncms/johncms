@@ -9,20 +9,17 @@ use Johncms\Http\View\ViewResponse;
 use Johncms\Http\Pagination\Pagination;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
-use Johncms\Modules\Profile\Application\Access\BanAccess;
 use Johncms\Modules\Profile\Application\DTO\BanHistoryDTO;
-use Johncms\Modules\Profile\Application\DTO\BanUserCommand;
-use Johncms\Modules\Profile\Application\Exceptions\BanException;
 use Johncms\Modules\Profile\Application\Exceptions\ProfileAccessForbiddenException;
 use Johncms\Modules\Profile\Application\Exceptions\ProfileNotFoundException;
-use Johncms\Modules\Profile\Application\UseCases\BanUserUseCase;
-use Johncms\Modules\Profile\Application\UseCases\CancelBanUseCase;
-use Johncms\Modules\Profile\Application\UseCases\ClearBanHistoryUseCase;
-use Johncms\Modules\Profile\Application\UseCases\DeleteBanUseCase;
 use Johncms\Modules\Profile\Application\UseCases\GetBanFormContextUseCase;
 use Johncms\Modules\Profile\Application\UseCases\GetBanHistoryUseCase;
 use Johncms\NavChain;
 use Johncms\Http\Request;
+use Johncms\Users\Bans\BanAccess;
+use Johncms\Users\Bans\BanException;
+use Johncms\Users\Bans\BanManager;
+use Johncms\Users\Bans\BanNotFoundException;
 use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -34,10 +31,7 @@ final readonly class BanController
         private BanAccess $banAccess,
         private GetBanHistoryUseCase $getBanHistoryUseCase,
         private GetBanFormContextUseCase $getBanFormContextUseCase,
-        private BanUserUseCase $banUserUseCase,
-        private CancelBanUseCase $cancelBanUseCase,
-        private DeleteBanUseCase $deleteBanUseCase,
-        private ClearBanHistoryUseCase $clearBanHistoryUseCase,
+        private BanManager $bans,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
     ) {
@@ -84,15 +78,14 @@ final readonly class BanController
             return $this->renderError($e->getMessage(), 403);
         }
 
-        $command = new BanUserCommand(
-            term: $request->bodyInt('term'),
-            timeval: $request->bodyInt('timeval'),
-            time: $request->bodyInt('time'),
-            reason: $request->body('reason', ''),
-        );
-
         try {
-            $this->banUserUseCase->execute($command, $target);
+            $this->bans->apply(
+                $target,
+                $request->bodyInt('term'),
+                $request->bodyInt('time'),
+                $request->bodyInt('timeval'),
+                $request->body('reason', ''),
+            );
         } catch (BanException $e) {
             return $this->renderResult($e->getMessage(), 'alert-danger', '/profile/' . $id);
         }
@@ -107,8 +100,8 @@ final readonly class BanController
         }
 
         try {
-            $this->cancelBanUseCase->getCancelableBan($id, $banId);
-        } catch (ProfileNotFoundException) {
+            $this->bans->findActive($id, $banId);
+        } catch (BanNotFoundException) {
             return $this->renderError(__('Wrong data'));
         } catch (BanException $e) {
             return $this->renderError($e->getMessage());
@@ -130,14 +123,14 @@ final readonly class BanController
         }
 
         try {
-            $ban = $this->cancelBanUseCase->getCancelableBan($id, $banId);
-        } catch (ProfileNotFoundException) {
+            $ban = $this->bans->findActive($id, $banId);
+        } catch (BanNotFoundException) {
             return $this->renderError(__('Wrong data'));
         } catch (BanException $e) {
             return $this->renderError($e->getMessage());
         }
 
-        $this->cancelBanUseCase->cancel($ban);
+        $this->bans->lift($ban);
 
         return $this->renderResult(__('Ban terminated'), 'alert-success', '/profile/' . $id . '/bans', __('Ban termination'));
     }
@@ -149,8 +142,8 @@ final readonly class BanController
         }
 
         try {
-            $this->deleteBanUseCase->getBan($id, $banId);
-        } catch (ProfileNotFoundException) {
+            $this->bans->find($id, $banId);
+        } catch (BanNotFoundException) {
             return $this->renderError(__('Wrong data'));
         }
 
@@ -170,12 +163,12 @@ final readonly class BanController
         }
 
         try {
-            $ban = $this->deleteBanUseCase->getBan($id, $banId);
-        } catch (ProfileNotFoundException) {
+            $ban = $this->bans->find($id, $banId);
+        } catch (BanNotFoundException) {
             return $this->renderError(__('Wrong data'));
         }
 
-        $this->deleteBanUseCase->delete($ban);
+        $this->bans->delete($ban);
 
         return $this->renderResult(__('Ban deleted'), 'alert-success', '/profile/' . $id . '/bans', __('Delete ban'));
     }
@@ -201,7 +194,7 @@ final readonly class BanController
             return $error;
         }
 
-        $this->clearBanHistoryUseCase->execute($id);
+        $this->bans->clearHistory($id);
 
         return $this->renderResult(__('Violations history cleared'), 'alert-success', '/profile/' . $id . '/bans', __('Violations history'));
     }

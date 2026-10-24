@@ -872,3 +872,39 @@ msgstr "الرسائل الخاصة"
 
 msgid "Comments"
 msgstr "التعليقات"
+
+msgid "Reason not specified"
+msgstr "لم يتم تحديد السبب"
+
+msgid "There is no required data"
+msgstr "لا توجد أي بيانات مطلوبة"
+
+msgid "You have no rights to ban in this section"
+msgstr "لديك أية حقوق لحظر في هذا للقسم"
+
+msgid "Ban already active"
+msgstr "الحظر نشط بالفعل"
+
+msgid "System"
+msgstr "نظام"
+
+msgid "Ban"
+msgstr "الحظر"
+
+msgid "Ban not active"
+msgstr "الحظر غير فعال"
+
+msgid "You do not have enought rights to ban this user"
+msgstr "ليس لديك حقوق كافية لحظر هذا المستخدم"
+
+msgid "Minutes (60 max.)"
+msgstr "دقيقة (60 كحد أقصى)."
+
+msgid "Hours (24 max.)"
+msgstr "ساعات (24 كحد أقصى)."
+
+msgid "Days (30 max.)"
+msgstr "يوما (30 كحد أقصى.)"
+
+msgid "Till cancel"
+msgstr "حتى إلغاء الأمر"

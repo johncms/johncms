@@ -869,3 +869,39 @@ msgstr "Asmeninės žinutės"
 
 msgid "Comments"
 msgstr "Komentarai"
+
+msgid "Reason not specified"
+msgstr "Priežastis nenurodyta"
+
+msgid "There is no required data"
+msgstr "Nėra reikiamų duomenų"
+
+msgid "You have no rights to ban in this section"
+msgstr "Jūs neturite teisės uždrausti šiame skyriuje"
+
+msgid "Ban already active"
+msgstr "Jau užblokuotas"
+
+msgid "System"
+msgstr "Sistema"
+
+msgid "Ban"
+msgstr "Blokuoti"
+
+msgid "Ban not active"
+msgstr "Blokas neaktyvus"
+
+msgid "You do not have enought rights to ban this user"
+msgstr "Jūs neturitw teisės blokuoti šį vartotoją"
+
+msgid "Minutes (60 max.)"
+msgstr "Min. (60 maks.)"
+
+msgid "Hours (24 max.)"
+msgstr "Valandos (24 maks.)"
+
+msgid "Days (30 max.)"
+msgstr "Dienų (30 max.)"
+
+msgid "Till cancel"
+msgstr "Iki atšaukimo"

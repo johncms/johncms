@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-namespace Johncms\Users;
+namespace Johncms\Users\Bans;
 
 /**
  * What a ban takes away, as cms_ban_users.ban_type stores it. What each kind forbids is decided

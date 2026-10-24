@@ -11,7 +11,7 @@ use Johncms\Auth\Authorization\Role;
 use Johncms\Modules\Admin\Application\Access\UserEditAccess;
 use Johncms\Modules\Admin\Application\DTO\UserCardDTO;
 use Johncms\System\i18n\Translator;
-use Johncms\Users\BanKind;
+use Johncms\Users\Bans\BanKind;
 use Johncms\Users\IpHistory;
 use Johncms\Users\User;
 
@@ -116,6 +116,8 @@ final readonly class UserCardMapper
         if ($this->access->mayEdit($user)) {
             $tabs['edit'] = [__('Edit'), $url . '/edit'];
         }
+
+        $tabs['bans'] = [__('Bans'), $url . '/bans'];
 
         if ($this->access->mayChangePassword($user)) {
             $tabs['password'] = [__('Password'), $url . '/password'];

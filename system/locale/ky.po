@@ -876,3 +876,39 @@ msgstr "Жеке билдирүү"
 
 msgid "Comments"
 msgstr "Пикирлер"
+
+msgid "Reason not specified"
+msgstr "Себеби көрсөтүлгөн жок"
+
+msgid "There is no required data"
+msgstr "Керектүү маалыматтар жок"
+
+msgid "You have no rights to ban in this section"
+msgstr "Сиздин бөлүмүңүздө тыюу салууга укугуңуз жок"
+
+msgid "Ban already active"
+msgstr "Мындай тыюу салуу буга чейин бар эле "
+
+msgid "System"
+msgstr "Системасы"
+
+msgid "Ban"
+msgstr "Тыюу салуу"
+
+msgid "Ban not active"
+msgstr "Мындан ары тыйуу салуу жок"
+
+msgid "You do not have enought rights to ban this user"
+msgstr "Бул колдонуучуну тыюу салууга жетиштүү укуктарыңыз жок"
+
+msgid "Minutes (60 max.)"
+msgstr "Мүнөттөр (60 макс.)"
+
+msgid "Hours (24 max.)"
+msgstr "Сааттар (24 макс.)"
+
+msgid "Days (30 max.)"
+msgstr "Күндөр (30 макс.)"
+
+msgid "Till cancel"
+msgstr "Жок кылынганга чейин"

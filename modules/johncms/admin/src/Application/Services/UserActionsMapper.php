@@ -8,6 +8,7 @@ use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Auth\CurrentUser;
 use Johncms\Modules\Admin\Application\Access\UserEditAccess;
+use Johncms\Users\Bans\BanAccess;
 use Johncms\Users\User;
 
 /**
@@ -28,6 +29,7 @@ final readonly class UserActionsMapper
         private AccessCheckerInterface $accessChecker,
         private PublicProfileLinks $profiles,
         private UserEditAccess $editAccess,
+        private BanAccess $banAccess,
     ) {
     }
 
@@ -61,8 +63,10 @@ final readonly class UserActionsMapper
             $actions['auth_log'] = $this->link('/admin/auth-log?user=' . $user->id, __('Sign-in log'), 'history');
         }
 
-        if (! $self && $this->accessChecker->allows(CorePermissions::USERS_BAN_MANAGE)) {
-            $actions['ban'] = $this->link('/profile/' . $user->id . '/bans/new', __('Ban'), 'ban');
+        // Whether this account stands low enough to be banned by the visitor is asked by the form:
+        // answering it here would cost a query about the roles of every row of the list.
+        if (! $self && $this->banAccess->mayBanAnything()) {
+            $actions['ban'] = $this->link('/admin/users/' . $user->id . '/bans/new', __('Ban'), 'ban', false, true);
         }
 
         if ($this->editAccess->mayResetSettings($user)) {

@@ -1,0 +1,70 @@
+{#
+    Giving an account a ban: which kind, how long, why. Answered to the modal of the panel as it
+    is, and put into a page of its own (ban-form.twig) for a plain visit or a refused attempt.
+
+    @var int    user_id
+    @var string user_name
+    @var string action
+    @var string back_url
+    @var array  kinds    value, title — the kinds the visitor may give.
+    @var array  units    value, title — what they may count the length in.
+    @var array  values   kind, amount, unit, reason.
+    @var string error    Why the last attempt was refused; empty for a new form.
+#}
+{% embed '@admin/components/ui/dialog.twig' with {
+    title: __('Ban'),
+    action: action,
+    close_url: back_url,
+    user_id: user_id,
+    user_name: user_name,
+    kinds: kinds,
+    units: units,
+    values: values,
+    error: error,
+} only %}
+    {% block body %}
+        <div class="mb-3">
+            {% include '@admin/components/ui/user-cell.twig' with {id: user_id, name: user_name, url: '/admin/users/' ~ user_id, online: false, roles: [], sub: ''} only %}
+        </div>
+        {% if error %}
+            <div class="alert alert-danger">{{ error }}</div>
+        {% endif %}
+        <fieldset class="mb-3">
+            <legend class="form-label">{{ __('What it takes away') }}</legend>
+            <div class="admin-ban-kinds">
+                {% for kind in kinds %}
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="kind" id="ban-kind-{{ kind.value }}" value="{{ kind.value }}"{% if kind.value == values.kind %} checked{% endif %}>
+                        <label class="form-check-label" for="ban-kind-{{ kind.value }}">{{ kind.title }}</label>
+                    </div>
+                {% endfor %}
+            </div>
+        </fieldset>
+        <fieldset class="mb-3">
+            <legend class="form-label">{{ __('How long') }}</legend>
+            <div class="row g-2 align-items-center">
+                <div class="col-4">
+                    <input type="number" class="form-control" name="amount" value="{{ values.amount }}" min="1" aria-label="{{ __('How long') }}">
+                </div>
+                <div class="col-8">
+                    <select class="form-select" name="unit" aria-label="{{ __('Counted in') }}">
+                        {% for unit in units %}
+                            <option value="{{ unit.value }}"{% if unit.value == values.unit %} selected{% endif %}>{{ unit.title }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </fieldset>
+        <div>
+            <label class="form-label" for="ban-reason">{{ __('Reason') }}</label>
+            <textarea class="form-control" id="ban-reason" name="reason" rows="3">{{ values.reason }}</textarea>
+        </div>
+    {% endblock %}
+    {% block footer %}
+        <a href="{{ close_url }}" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('Cancel') }}</a>
+        <button type="submit" class="btn btn-danger">
+            {% include '@admin/components/ui/icon.twig' with {name: 'ban', size: 14} only %}
+            {{ __('Ban') }}
+        </button>
+    {% endblock %}
+{% endembed %}

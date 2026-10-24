@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Johncms\Modules\Profile\Domain\Repository;
+namespace Johncms\Users\Repository;
 
 use Illuminate\Database\Eloquent\Collection;
 use Johncms\Users\Ban;
+use Johncms\Users\Karma;
 
 interface BanRepositoryInterface
 {
@@ -52,4 +53,21 @@ interface BanRepositoryInterface
      * @return Collection<int, Ban>
      */
     public function getFinishedForUser(int $userId, int $time): Collection;
+
+    /**
+     * The karma a ban costs: a vote of the system against the account, and its points taken
+     * from the karma of the account.
+     */
+    public function addKarmaPenalty(int $userId, int $points, int $time, string $voterName, string $reason): void;
+
+    /**
+     * The penalty a ban given at that moment cost, if it cost one.
+     */
+    public function findKarmaPenalty(int $userId, int $time): ?Karma;
+
+    /**
+     * Takes a penalty back: the vote goes, and its points come back to the account, never below
+     * nothing.
+     */
+    public function removeKarmaPenalty(Karma $penalty): void;
 }

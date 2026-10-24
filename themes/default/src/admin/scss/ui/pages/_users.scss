@@ -131,3 +131,16 @@
   justify-content: flex-end;
   gap: 0.5rem;
 }
+
+// The bans of an account (admin::user/bans, user/ban-dialog).
+
+.admin-bans__reason {
+  white-space: normal !important;
+  min-width: 14rem;
+}
+
+.admin-ban-kinds {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.25rem 1rem;
+}

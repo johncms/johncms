@@ -62,9 +62,4 @@ interface KarmaRepositoryInterface
      * Delete all votes received by the target user.
      */
     public function deleteAllForTarget(int $targetId): void;
-
-    /**
-     * The penalty the system (user_id = 0) gave the target user at the given time, if it gave one.
-     */
-    public function findSystemPenalty(int $targetId, int $time): ?Karma;
 }

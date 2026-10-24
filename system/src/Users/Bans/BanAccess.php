@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Johncms\Modules\Profile\Application\Access;
+namespace Johncms\Users\Bans;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\Authorization\CorePermissions;
@@ -13,10 +13,9 @@ use Johncms\Auth\CurrentUser;
  * What the visitor may do to the bans of an account: which kind they may apply, and whether they
  * may lift one or delete its record.
  *
- * The kinds are stored as numbers in cms_ban_users, and the number used to be matched against
- * the number in users.rights — a forum moderator was allowed the forum ban because 3 was 3. Each
- * kind now names the permission it needs, and the one place that knows the mapping is here:
- * the ban form, the guards of the ban screens, the history and the profile buttons all ask this.
+ * Each kind of ban (BanKind) names the permission it needs, and the one place that knows the
+ * mapping is here: the ban forms of the site and of the panel, the guards of their screens, the
+ * histories and the buttons all ask this.
  */
 final readonly class BanAccess
 {
@@ -35,6 +34,16 @@ final readonly class BanAccess
         private RoleLevels $roleLevels,
         private CurrentUser $currentUser,
     ) {
+    }
+
+    /**
+     * The kinds of ban this visitor may apply, in the order a form offers them.
+     *
+     * @return list<BanKind>
+     */
+    public function applicableKinds(): array
+    {
+        return array_values(array_filter(BanKind::cases(), fn (BanKind $kind): bool => $this->mayApply($kind->value)));
     }
 
     /**

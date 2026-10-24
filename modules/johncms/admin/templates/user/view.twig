@@ -65,9 +65,9 @@
             <div class="card">
                 <div class="card-header">
                     <span class="flex-grow-1">{{ __('Bans') }}</span>
-                    {% if user.bans.count %}
-                        <span class="badge text-bg-light">{{ user.bans.count }}</span>
-                    {% endif %}
+                    <a class="small" href="/admin/users/{{ user.id }}/bans">
+                        {{ user.bans.count ? __('History: %s')|format(user.bans.count) : __('History') }}
+                    </a>
                 </div>
                 <div class="card-body">
                     {% if user.bans.active is empty %}

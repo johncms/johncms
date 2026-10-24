@@ -6,10 +6,10 @@ namespace Johncms\Modules\Profile\Application\UseCases;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\Authorization\CorePermissions;
-use Johncms\Modules\Profile\Application\Access\BanAccess;
+use Johncms\Users\Bans\BanAccess;
 use Johncms\Modules\Profile\Application\DTO\BanHistoryDTO;
 use Johncms\Modules\Profile\Application\Exceptions\ProfileNotFoundException;
-use Johncms\Modules\Profile\Domain\Repository\BanRepositoryInterface;
+use Johncms\Users\Repository\BanRepositoryInterface;
 use Johncms\Modules\Profile\Domain\Repository\ProfileUserRepositoryInterface;
 use Johncms\Users\Ban;
 use Johncms\Users\User;

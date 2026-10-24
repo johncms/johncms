@@ -866,3 +866,39 @@ msgstr "Pesan Pribadi"
 
 msgid "Comments"
 msgstr "Komentar"
+
+msgid "Reason not specified"
+msgstr "Tidak ada alasan"
+
+msgid "There is no required data"
+msgstr "Data yang diperlukan tidak ada"
+
+msgid "You have no rights to ban in this section"
+msgstr "Anda tidak memiliki hak untuk memblokir bagian ini"
+
+msgid "Ban already active"
+msgstr "Blokir telah aktif"
+
+msgid "System"
+msgstr "Sistem"
+
+msgid "Ban"
+msgstr "Blokir"
+
+msgid "Ban not active"
+msgstr "Blokir tidak aktif"
+
+msgid "You do not have enought rights to ban this user"
+msgstr "Anda tidak memiliki hak untuk memblokir pengguna ini"
+
+msgid "Minutes (60 max.)"
+msgstr "Menit (maks. 60)"
+
+msgid "Hours (24 max.)"
+msgstr "Jam (maks. 24)"
+
+msgid "Days (30 max.)"
+msgstr "Hari (Maks. 30)"
+
+msgid "Till cancel"
+msgstr "Sampai membatalkan"

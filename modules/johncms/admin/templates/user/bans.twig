@@ -1,0 +1,93 @@
+{#
+    The bans of an account: those in force and the history, the latest first.
+
+    @var array        bans       Rows built by UserBansMapper.
+    @var int          total
+    @var \Twig\Markup pagination
+    @var string       ban_url    The form of a new ban; empty when the visitor may not give one.
+    @var string       clear_url  The clearing of the history; empty when they may not.
+#}
+{% extends '@admin/user/layout.twig' %}
+
+{% block user_content %}
+    <div class="admin-list-tabs">
+        <div class="flex-grow-1 text-body-secondary">
+            {{ total ? __('Found: %s')|format(total|format_number) : '' }}
+        </div>
+        <div class="admin-list-tabs__actions">
+            {% if clear_url and total %}
+                <a class="btn btn-outline-danger btn-sm" href="{{ clear_url }}" data-admin-modal>
+                    {% include '@admin/components/ui/icon.twig' with {name: 'trash-2', size: 14} only %}
+                    {{ __('Clear the history') }}
+                </a>
+            {% endif %}
+            {% if ban_url %}
+                <a class="btn btn-danger btn-sm" href="{{ ban_url }}" data-admin-modal>
+                    {% include '@admin/components/ui/icon.twig' with {name: 'ban', size: 14} only %}
+                    {{ __('Ban') }}
+                </a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="card">
+        {% if bans is empty %}
+            {% include '@admin/components/ui/empty-state.twig' with {icon: 'shield-check', title: __('No bans yet'), description: ''} only %}
+        {% else %}
+            <div class="table-responsive">
+                <table class="table admin-users-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">{{ __('Ban') }}</th>
+                            <th scope="col">{{ __('Reason') }}</th>
+                            <th scope="col">{{ __('Given') }}</th>
+                            <th scope="col">{{ __('Length') }}</th>
+                            <th scope="col"><span class="visually-hidden">{{ __('Actions') }}</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for ban in bans %}
+                            <tr>
+                                <td>
+                                    {% if ban.active %}
+                                        <span class="badge rounded-pill bg-danger-subtle text-danger-emphasis badge-dot">{{ ban.kind }}</span>
+                                        <div class="admin-users-table__sub">{{ __('%s left')|format(ban.remains) }}</div>
+                                    {% else %}
+                                        <span class="badge rounded-pill text-bg-light badge-dot">{{ ban.kind }}</span>
+                                        <div class="admin-users-table__sub">{{ __('until %s')|format(ban.ends|display_date) }}</div>
+                                    {% endif %}
+                                </td>
+                                <td class="admin-bans__reason">
+                                    {{ ban.reason }}
+                                    {% if ban.end_note %}
+                                        <div class="admin-users-table__sub">{{ ban.end_note }}</div>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <div class="admin-users-table__date">{{ ban.started|display_date }}</div>
+                                    {% if ban.author %}
+                                        <div class="admin-users-table__sub">{{ ban.author }}</div>
+                                    {% endif %}
+                                </td>
+                                <td class="admin-users-table__date">{{ ban.length }}</td>
+                                <td>
+                                    {% if ban.actions is not empty %}
+                                        <div class="admin-users-table__actions">
+                                            {% include '@admin/components/ui/row-actions.twig' with {actions: ban.actions, label: __('Actions')} only %}
+                                        </div>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% if pagination|length %}
+                <div class="card-footer admin-list-footer">
+                    <span></span>
+                    <div class="pagination-no-padding">{{ pagination }}</div>
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+{% endblock %}

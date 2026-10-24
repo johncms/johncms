@@ -870,3 +870,36 @@ msgstr "Prywatne wiadomości"
 
 msgid "Comments"
 msgstr "Komentarze"
+
+msgid "Reason not specified"
+msgstr "Nie podano powodu"
+
+msgid "There is no required data"
+msgstr "Nie ma wymaganych danych"
+
+msgid "You have no rights to ban in this section"
+msgstr "Nie masz uprawnień, aby banować w tej sekcji"
+
+msgid "Ban already active"
+msgstr "Ban jest już aktywny"
+
+msgid "Ban"
+msgstr "Banuj"
+
+msgid "Ban not active"
+msgstr "Ban nie jest aktywny"
+
+msgid "You do not have enought rights to ban this user"
+msgstr "Nie masz wystarczających uprawnień do zbanowania tego użytkownika"
+
+msgid "Minutes (60 max.)"
+msgstr "Minut (60 max.)"
+
+msgid "Hours (24 max.)"
+msgstr "Godzin (24 max.)"
+
+msgid "Days (30 max.)"
+msgstr "Dni (30 max.)"
+
+msgid "Till cancel"
+msgstr "Do odwołania"

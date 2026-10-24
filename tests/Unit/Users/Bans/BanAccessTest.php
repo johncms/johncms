@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Modules\Profile;
+namespace Tests\Unit\Users\Bans;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Auth\Authorization\RoleLevels;
 use Johncms\Auth\Identity;
-use Johncms\Modules\Profile\Application\Access\BanAccess;
+use Johncms\Users\Bans\BanAccess;
 use Johncms\Users\User;
 use PHPUnit\Framework\TestCase;
 use Tests\Support\BootsInMemoryDatabase;

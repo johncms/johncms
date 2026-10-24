@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Functional\Admin;
 
 use Johncms\Auth\Authorization\CorePermissions;
-use Johncms\Users\BanKind;
+use Johncms\Users\Bans\BanKind;
 use Johncms\Users\User;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\Functional\FunctionalTestCase;

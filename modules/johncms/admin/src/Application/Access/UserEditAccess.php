@@ -8,7 +8,7 @@ use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\Authorization\CorePermissions;
 use Johncms\Auth\Authorization\RoleLevels;
 use Johncms\Auth\CurrentUser;
-use Johncms\Users\BanKind;
+use Johncms\Users\Bans\BanKind;
 use Johncms\Users\User;
 
 /**

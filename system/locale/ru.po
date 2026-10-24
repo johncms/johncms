@@ -1194,3 +1194,36 @@ msgstr "Личные сообщения"
 
 msgid "Comments"
 msgstr "Комментарии"
+
+msgid "Reason not specified"
+msgstr "Причина не указана"
+
+msgid "There is no required data"
+msgstr "Отсутствуют необходимые данные"
+
+msgid "You have no rights to ban in this section"
+msgstr "Вы не имеете права банить не в своем разделе"
+
+msgid "Ban already active"
+msgstr "Такой бан уже есть"
+
+msgid "Ban"
+msgstr "Бан"
+
+msgid "Ban not active"
+msgstr "Бан уже не активен"
+
+msgid "You do not have enought rights to ban this user"
+msgstr "У Вас не хватает прав, чтобы забанить данного пользователя"
+
+msgid "Minutes (60 max.)"
+msgstr "Минут (60 макс.)"
+
+msgid "Hours (24 max.)"
+msgstr "Часов (24 макс.)"
+
+msgid "Days (30 max.)"
+msgstr "Дней (30 макс.)"
+
+msgid "Till cancel"
+msgstr "До отмены"

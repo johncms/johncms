@@ -1,0 +1,11 @@
+{#
+    Giving an account a ban, as a page: what the link to the dialog leads to without the script,
+    and what a refused attempt comes back to.
+
+    @var array dialog What user/ban-dialog.twig is given.
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    {% include '@admin/components/ui/dialog-page.twig' with {dialog: '@admin/user/ban-dialog.twig', data: dialog} only %}
+{% endblock %}

@@ -867,3 +867,33 @@ msgstr "Жеке хабарламалар"
 
 msgid "Comments"
 msgstr "Пікірлер"
+
+msgid "Reason not specified"
+msgstr "Себебі көрсетілмеген"
+
+msgid "There is no required data"
+msgstr "Қажетті деректер жоқ"
+
+msgid "You have no rights to ban in this section"
+msgstr "Сіздің бұл бөлімде тыйым салуға құқығыңыз жоқ"
+
+msgid "Ban already active"
+msgstr "Мұндай тыйым бұрыннан бар"
+
+msgid "System"
+msgstr "Система"
+
+msgid "Ban"
+msgstr "Тыйым салу"
+
+msgid "Ban not active"
+msgstr "Тыйым салу қолданылмайды"
+
+msgid "You do not have enought rights to ban this user"
+msgstr "Сізде жеткілікті құқықтары жоқ"
+
+msgid "Hours (24 max.)"
+msgstr "Сағат (24 макс.)"
+
+msgid "Till cancel"
+msgstr "Бас тартуға дейін"
