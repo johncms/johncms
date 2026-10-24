@@ -143,6 +143,9 @@ PHP standart drayver bilan ishlashi kerak: <a href="https://www.php.net/manual/e
       'The list is empty' => 'Ro‘yxat bo‘sh',
       'Edited:' => 'Tahrirlagan:',
       'Edited' => 'Tahrirlagan',
+      'Full block' => 'To\'liq blokirovka',
+      'Private messages' => 'Shaxsiy habarlar',
+      'Comments' => 'Sharxlar',
     ),
   ),
 );

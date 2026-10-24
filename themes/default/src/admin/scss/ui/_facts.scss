@@ -1,0 +1,39 @@
+// Facts about something, a label and a value each (components/ui/facts.twig).
+
+.admin-facts {
+  display: grid;
+  gap: 0.625rem;
+  margin: 0;
+}
+
+.admin-facts__row {
+  display: grid;
+  grid-template-columns: minmax(8rem, 12rem) minmax(0, 1fr);
+  gap: 1rem;
+
+  @include media-breakpoint-down(sm) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.125rem;
+  }
+}
+
+.admin-facts__label {
+  font-weight: 400;
+  color: var(--fg-dim);
+}
+
+.admin-facts__value {
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.admin-facts__hint {
+  margin-left: 0.375rem;
+  font-size: 0.75rem;
+  color: var(--fg-dim);
+}

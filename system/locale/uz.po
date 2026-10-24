@@ -860,3 +860,11 @@ msgstr "Tahrirlagan:"
 msgid "Edited"
 msgstr "Tahrirlagan"
 
+msgid "Full block"
+msgstr "To'liq blokirovka"
+
+msgid "Private messages"
+msgstr "Shaxsiy habarlar"
+
+msgid "Comments"
+msgstr "Sharxlar"

@@ -1,0 +1,11 @@
+{# A fact without a value is left out; with none filled in, "empty" is said instead. #}
+<div class="card">
+    <div class="card-body">
+        {% include '@admin/components/ui/facts.twig' with {items: [
+            {label: 'ID', value: '#1024'},
+            {label: __('Email'), value: 'gandalf@example.com', hint: __('hidden')},
+            {label: __('City, Country'), value: ''},
+            {label: __('Registered'), value: 1700000000|display_date},
+        ]} only %}
+    </div>
+</div>

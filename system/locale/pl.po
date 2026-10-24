@@ -862,3 +862,11 @@ msgstr "Edytowane:"
 msgid "Edited"
 msgstr "Edytowane"
 
+msgid "Full block"
+msgstr "Pełna blokada"
+
+msgid "Private messages"
+msgstr "Prywatne wiadomości"
+
+msgid "Comments"
+msgstr "Komentarze"

@@ -154,6 +154,9 @@
       'The list is empty' => 'Siyahı boşdur',
       'Edited:' => 'Redaktə:',
       'Edited' => 'Redaktə',
+      'Full block' => 'Tam bloku',
+      'Private messages' => 'Özəl Mesajlar',
+      'Comments' => 'Şərhlər',
     ),
   ),
 );

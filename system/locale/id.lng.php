@@ -90,6 +90,9 @@
       'The list is empty' => 'Daftar ini kosong',
       'Edited:' => 'Diedit:',
       'Edited' => 'Diedit',
+      'Full block' => 'Blokir penuh',
+      'Private messages' => 'Pesan Pribadi',
+      'Comments' => 'Komentar',
     ),
   ),
 );

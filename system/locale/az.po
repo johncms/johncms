@@ -861,3 +861,11 @@ msgstr "Redaktə:"
 msgid "Edited"
 msgstr "Redaktə"
 
+msgid "Full block"
+msgstr "Tam bloku"
+
+msgid "Private messages"
+msgstr "Özəl Mesajlar"
+
+msgid "Comments"
+msgstr "Şərhlər"

@@ -859,3 +859,11 @@ msgstr "Өзгертілген:"
 msgid "Edited"
 msgstr "Өзгертілген"
 
+msgid "Full block"
+msgstr "Толық құлыптау"
+
+msgid "Private messages"
+msgstr "Жеке хабарламалар"
+
+msgid "Comments"
+msgstr "Пікірлер"

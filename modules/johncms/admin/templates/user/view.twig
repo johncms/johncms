@@ -1,0 +1,169 @@
+{#
+    The overview of one account: who it is, what it told about itself, what it did, what it is
+    under and where it came from.
+
+    @var array user Built by UserCardMapper.
+    @var array tabs
+#}
+{% extends '@admin/user/layout.twig' %}
+
+{% block user_content %}
+    <div class="row g-3">
+        <div class="col-lg-4 d-flex flex-column gap-3">
+            <div class="card admin-user-card">
+                <div class="card-body">
+                    <div class="admin-user-card__avatar">
+                        <img src="{{ avatar(user.id) }}" width="72" height="72" alt="">
+                        {% if user.online %}
+                            <span class="admin-user__online" title="{{ __('Online') }}"></span>
+                        {% endif %}
+                    </div>
+                    <div class="admin-user-card__name">{{ user.name }}</div>
+                    {% if user.custom_status %}
+                        <div class="admin-user-card__status">{{ user.custom_status }}</div>
+                    {% endif %}
+                    <div class="admin-user-card__badges">
+                        {% if user.state == 'pending' %}
+                            <span class="badge rounded-pill bg-warning-subtle text-warning-emphasis badge-dot">{{ __('Awaiting approval') }}</span>
+                        {% elseif user.state == 'banned' %}
+                            <span class="badge rounded-pill bg-danger-subtle text-danger-emphasis badge-dot">{{ __('Banned') }}</span>
+                        {% else %}
+                            <span class="badge rounded-pill text-bg-light badge-dot">{{ __('Active') }}</span>
+                        {% endif %}
+                        {% for role in user.roles %}
+                            <span class="admin-user__role">{{ role }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="admin-user-card__seen">
+                        {% if user.online %}
+                            {{ __('Online now') }}{% if user.account.place %} · {{ user.account.place }}{% endif %}
+                        {% else %}
+                            {{ __('Last visit') }}: {{ user.account.last_visit }}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">{{ __('Activity') }}</div>
+                <div class="card-body">
+                    <div class="admin-user-card__numbers">
+                        <div><span>{{ user.activity.forum|format_number }}</span>{{ __('Forum') }}</div>
+                        <div><span>{{ user.activity.guestbook|format_number }}</span>{{ __('Guestbook') }}</div>
+                        <div><span>{{ user.activity.comments|format_number }}</span>{{ __('Comments') }}</div>
+                        <div>
+                            <span>
+                                <span class="text-success">+{{ user.activity.karma_plus }}</span>
+                                <span class="text-danger">−{{ user.activity.karma_minus }}</span>
+                            </span>
+                            {{ __('Karma') }}{% if user.activity.karma_off %} · {{ __('off') }}{% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="flex-grow-1">{{ __('Bans') }}</span>
+                    {% if user.bans.count %}
+                        <span class="badge text-bg-light">{{ user.bans.count }}</span>
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    {% if user.bans.active is empty %}
+                        <div class="text-body-secondary">{{ __('No bans in force') }}</div>
+                    {% else %}
+                        <ul class="list-unstyled mb-0 d-flex flex-column gap-2">
+                            {% for ban in user.bans.active %}
+                                <li>
+                                    <span class="badge rounded-pill bg-danger-subtle text-danger-emphasis badge-dot">{{ ban.title }}</span>
+                                    <span class="admin-users-table__sub">{{ __('until %s')|format(ban.ends|display_date) }}</span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-8 d-flex flex-column gap-3">
+            <div class="card">
+                <div class="card-header">{{ __('Account') }}</div>
+                <div class="card-body">
+                    {% include '@admin/components/ui/facts.twig' with {items: [
+                        {label: 'ID', value: '#' ~ user.id},
+                        {label: __('Email'), value: user.account.email, hint: user.account.email and user.account.email_hidden ? __('hidden') : ''},
+                        {label: __('Registered'), value: user.account.registered|display_date, hint: user.account.approved_by ? __('approved by %s')|format(user.account.approved_by) : ''},
+                        {label: __('Time on the site'), value: user.account.time_on_site},
+                    ]} only %}
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">{{ __('Profile') }}</div>
+                <div class="card-body">
+                    {% include '@admin/components/ui/facts.twig' with {items: [
+                        {label: __('Name'), value: user.profile.full_name},
+                        {label: __('Gender'), value: user.profile.sex == 'm' ? __('Man') : (user.profile.sex == 'zh' ? __('Woman') : '')},
+                        {label: __('Birthday'), value: user.profile.birthday},
+                        {label: __('City, Country'), value: user.profile.city},
+                        {label: __('Phone number'), value: user.profile.phone},
+                        {label: 'Skype', value: user.profile.skype},
+                        {label: 'Jabber', value: user.profile.jabber},
+                        {label: __('Site'), value: user.profile.site},
+                        {label: __('About'), value: user.profile.about},
+                    ], empty: __('The user has not told anything about themselves')} only %}
+                </div>
+            </div>
+
+            {% if user.origin %}
+                <div class="card">
+                    <div class="card-header">{{ __('Where from') }}</div>
+                    <div class="card-body">
+                        {% include '@admin/components/ui/facts.twig' with {items: [
+                            {label: 'IP', value: user.origin.ip},
+                            {label: __('Through a proxy'), value: user.origin.proxy},
+                            {label: 'User-Agent', value: user.origin.browser},
+                        ]} only %}
+                        <div class="d-flex flex-wrap gap-2 mt-3">
+                            <a class="btn btn-secondary btn-sm" href="{{ user.origin.ip_url }}">
+                                {% include '@admin/components/ui/icon.twig' with {name: 'search', size: 13} only %}
+                                {{ __('Others from this address') }}
+                            </a>
+                        </div>
+                    </div>
+                    {% if user.origin.history is not empty %}
+                        <table class="table mb-0">
+                            <thead>
+                                <tr>
+                                    <th scope="col">{{ __('Earlier addresses') }}</th>
+                                    <th scope="col">{{ __('Through a proxy') }}</th>
+                                    <th scope="col">{{ __('Date') }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for entry in user.origin.history %}
+                                    <tr>
+                                        <td><a class="font-monospace" href="/admin/ip-search?ip={{ entry.ip|url_encode }}">{{ entry.ip }}</a></td>
+                                        <td class="font-monospace text-body-secondary">{{ entry.proxy }}</td>
+                                        <td class="admin-users-table__date">{{ entry.time|display_date }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        {% if user.origin.history_count > user.origin.history|length %}
+                            <div class="card-footer admin-list-footer__total">{{ __('Found: %s')|format(user.origin.history_count|format_number) }}</div>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            {% endif %}
+
+            {% if user.notes %}
+                <div class="card">
+                    <div class="card-header">{{ __('Admin Notes') }}</div>
+                    <div class="card-body admin-user-card__notes">{{ user.notes|nl2br }}</div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

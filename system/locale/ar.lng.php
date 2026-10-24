@@ -164,6 +164,9 @@
       'The list is empty' => 'فارغة',
       'Edited:' => 'تحرير:',
       'Edited' => 'تحرير:',
+      'Full block' => 'حظر دائم',
+      'Private messages' => 'الرسائل الخاصة',
+      'Comments' => 'التعليقات',
     ),
   ),
 );

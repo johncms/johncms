@@ -137,6 +137,9 @@ PHP powinien pracować z domyślnym sterownikiem: <a href="https://www.php.net/m
       'The list is empty' => 'Lista jest pusta',
       'Edited:' => 'Edytowane:',
       'Edited' => 'Edytowane',
+      'Full block' => 'Pełna blokada',
+      'Private messages' => 'Prywatne wiadomości',
+      'Comments' => 'Komentarze',
     ),
   ),
 );

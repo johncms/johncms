@@ -4,6 +4,7 @@ msgstr ""
 
 #: config/notifications.global.php:14
 #: config/places.global.php:17
+#: system/src/Users/BanKind.php:34
 msgid "Forum"
 msgstr ""
 
@@ -56,6 +57,7 @@ msgid "Downloads"
 msgstr ""
 
 #: config/places.global.php:18
+#: system/src/Users/BanKind.php:35
 msgid "Guestbook"
 msgstr ""
 
@@ -64,6 +66,7 @@ msgid "Reading the FAQ"
 msgstr ""
 
 #: config/places.global.php:20
+#: system/src/Users/BanKind.php:36
 msgid "Library"
 msgstr ""
 
@@ -772,6 +775,18 @@ msgstr ""
 #: themes/default/templates/admin/pages/errors/403.twig:21
 #: themes/default/templates/pages/errors/403.twig:16
 msgid "Home"
+msgstr ""
+
+#: system/src/Users/BanKind.php:31
+msgid "Full block"
+msgstr ""
+
+#: system/src/Users/BanKind.php:32
+msgid "Private messages"
+msgstr ""
+
+#: system/src/Users/BanKind.php:33
+msgid "Comments"
 msgstr ""
 
 #: system/src/Users/UserPlaceFormatter.php:73

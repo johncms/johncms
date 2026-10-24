@@ -861,3 +861,11 @@ msgstr "Editat:"
 msgid "Edited"
 msgstr "Editat:"
 
+msgid "Full block"
+msgstr "Blocare totala"
+
+msgid "Private messages"
+msgstr "Mesaje private"
+
+msgid "Comments"
+msgstr "Comentarii"

@@ -31,7 +31,7 @@
                 {% include '@admin/components/ui/user-cell.twig' with {
                     id: user.id,
                     name: user.name,
-                    url: '/profile/' ~ user.id,
+                    url: '/admin/users/' ~ user.id,
                     online: false,
                     roles: [],
                     sub: '',

@@ -864,3 +864,11 @@ msgstr "تحرير:"
 msgid "Edited"
 msgstr "تحرير:"
 
+msgid "Full block"
+msgstr "حظر دائم"
+
+msgid "Private messages"
+msgstr "الرسائل الخاصة"
+
+msgid "Comments"
+msgstr "التعليقات"

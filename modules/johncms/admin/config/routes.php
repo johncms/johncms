@@ -29,6 +29,7 @@ use Johncms\Modules\Admin\Application\Controllers\Users\BanListController;
 use Johncms\Modules\Admin\Application\Controllers\Users\DeleteUserController;
 use Johncms\Modules\Admin\Application\Controllers\Users\KarmaController;
 use Johncms\Modules\Admin\Application\Controllers\Users\RegistrationModerationController;
+use Johncms\Modules\Admin\Application\Controllers\Users\UserCardController;
 use Johncms\Modules\Admin\Application\Controllers\Users\UserCleanupController;
 use Johncms\Modules\Admin\Application\Controllers\Users\UserListController;
 use Johncms\Modules\Admin\Application\Controllers\Users\UsersController;
@@ -58,6 +59,7 @@ return static function (RouteCollection $router): void {
         $r->get('/admin', DashboardController::class)->name('admin.index');
         $r->get('/admin/users', UserListController::class)->name('admin.users');
         $r->get('/admin/users/cleanup', [UserCleanupController::class, 'index'])->name('admin.users.cleanup');
+        $r->get('/admin/users/{id:number}', UserCardController::class)->name('admin.users.view');
         $r->post('/admin/users/cleanup', [UserCleanupController::class, 'clean'])->name('admin.users.cleanup.run');
         // Who may open these is decided by the admin.roles.manage permission rather than by the
         // group: an administrator holds it, and a role standing above the visitor's own is

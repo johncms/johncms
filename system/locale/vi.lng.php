@@ -167,6 +167,9 @@ PHP sẽ hoạt động với trình điều khiển mặc định: <a href="htt
       'The list is empty' => 'Danh sách này trống',
       'Edited:' => 'Chỉnh sửa:',
       'Edited' => 'Chỉnh sửa',
+      'Full block' => 'Thành viên bị chặn',
+      'Private messages' => 'Tin nhắn riêng',
+      'Comments' => 'Bình luận',
     ),
   ),
 );

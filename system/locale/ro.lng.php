@@ -175,6 +175,9 @@ PHP ar trebui să funcționeze cu șoferul implicit: <a href="https://www.php.ne
       'The list is empty' => 'Lista este goala',
       'Edited:' => 'Editat:',
       'Edited' => 'Editat:',
+      'Full block' => 'Blocare totala',
+      'Private messages' => 'Mesaje private',
+      'Comments' => 'Comentarii',
     ),
   ),
 );

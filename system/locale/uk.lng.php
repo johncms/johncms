@@ -205,6 +205,9 @@ Each one is converted automatically the next time its owner signs in — nobody 
 The number is shown so that support for the old scheme is not removed while it is still in use.' => 'Ці облікові записи створено до переходу на поточне хешування паролів, і їхні власники відтоді не заходили.
 Кожен буде переведено автоматично під час наступного входу власника — скидати нічого не потрібно.
 Число показано, щоб підтримку старої схеми не прибрали, поки вона ще використовується.',
+      'Full block' => 'Повний блок',
+      'Private messages' => 'Приватні повідомлення',
+      'Comments' => 'Коментарі',
     ),
   ),
 );

@@ -868,3 +868,11 @@ msgstr "Өзгөртүлгөн"
 msgid "Edited"
 msgstr "Өзгөртүүлөр"
 
+msgid "Full block"
+msgstr "Толук кулпуланды"
+
+msgid "Private messages"
+msgstr "Жеке билдирүү"
+
+msgid "Comments"
+msgstr "Пикирлер"

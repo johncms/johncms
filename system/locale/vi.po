@@ -859,3 +859,11 @@ msgstr "Chỉnh sửa:"
 msgid "Edited"
 msgstr "Chỉnh sửa"
 
+msgid "Full block"
+msgstr "Thành viên bị chặn"
+
+msgid "Private messages"
+msgstr "Tin nhắn riêng"
+
+msgid "Comments"
+msgstr "Bình luận"

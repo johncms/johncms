@@ -858,3 +858,11 @@ msgstr "Diedit:"
 msgid "Edited"
 msgstr "Diedit"
 
+msgid "Full block"
+msgstr "Blokir penuh"
+
+msgid "Private messages"
+msgstr "Pesan Pribadi"
+
+msgid "Comments"
+msgstr "Komentar"

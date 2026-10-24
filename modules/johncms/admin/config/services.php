@@ -21,6 +21,7 @@ use Johncms\Modules\Admin\Domain\Repository\CaptchaConfigRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\MailConfigRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\SystemConfigRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\UserDeletionRepositoryInterface;
+use Johncms\Modules\Admin\Domain\Repository\UserCardRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\UserListRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Services\FileIntegrityScannerInterface;
 use Johncms\Modules\Admin\Domain\Services\LanguageCatalogInterface;
@@ -49,6 +50,7 @@ use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentIpSearch
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentRegistrationModerationRepository;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentUserDeletionRepository;
 use Johncms\Modules\Admin\Infrastructure\Security\CrcFileIntegrityScanner;
+use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentUserCardRepository;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentUserListRepository;
 use Johncms\Modules\Admin\Infrastructure\Theme\FileSystemThemeListProvider;
 use Johncms\Modules\Admin\Infrastructure\Whois\SocketWhoisClient;
@@ -79,6 +81,7 @@ return static function (ContainerConfigurator $container): void {
 
     $services->set(DashboardRepositoryInterface::class, EloquentDashboardRepository::class)->public();
     $services->set(UserListRepositoryInterface::class, EloquentUserListRepository::class)->public();
+    $services->set(UserCardRepositoryInterface::class, EloquentUserCardRepository::class)->public();
     $services->set(WhoisClientInterface::class, SocketWhoisClient::class)->public();
     $services->set(IpSearchRepositoryInterface::class, EloquentIpSearchRepository::class)->public();
     $services->set(BanListRepositoryInterface::class, EloquentBanListRepository::class)->public();

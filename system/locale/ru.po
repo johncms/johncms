@@ -1185,3 +1185,12 @@ msgstr "Блокировать без срока и снимать блокир�
 
 msgid "Delete the record of a ban"
 msgstr "Удалять запись о блокировке"
+
+msgid "Full block"
+msgstr "Полная блокировка"
+
+msgid "Private messages"
+msgstr "Личные сообщения"
+
+msgid "Comments"
+msgstr "Комментарии"

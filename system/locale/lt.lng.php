@@ -102,6 +102,9 @@
       'The list is empty' => 'Sąrašas tuščias',
       'Edited:' => 'Redaguoti:',
       'Edited' => 'Redaguoti:',
+      'Full block' => 'Pilnas blokiravimas',
+      'Private messages' => 'Asmeninės žinutės',
+      'Comments' => 'Komentarai',
     ),
   ),
 );

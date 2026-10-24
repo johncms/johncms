@@ -39,3 +39,74 @@
     margin: 0;
   }
 }
+
+// The page of one account (admin::user/view).
+
+.admin-user-card .card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: center;
+}
+
+.admin-user-card__avatar {
+  position: relative;
+
+  img {
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 50%;
+    background: var(--bg-elev-2);
+    object-fit: cover;
+  }
+
+  .admin-user__online {
+    right: 2px;
+    bottom: 2px;
+    width: 0.875rem;
+    height: 0.875rem;
+  }
+}
+
+.admin-user-card__name {
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+.admin-user-card__status {
+  color: var(--fg-muted);
+  font-style: italic;
+}
+
+.admin-user-card__badges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.375rem;
+}
+
+.admin-user-card__seen {
+  font-size: 0.75rem;
+  color: var(--fg-dim);
+}
+
+.admin-user-card__numbers {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  font-size: 0.75rem;
+  color: var(--fg-dim);
+
+  > div > span {
+    display: block;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--fg);
+    letter-spacing: -0.02em;
+  }
+}
+
+.admin-user-card__notes {
+  white-space: normal;
+}

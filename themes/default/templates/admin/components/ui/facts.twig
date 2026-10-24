@@ -1,0 +1,27 @@
+{#
+    Facts about something, a label and a value each: the fields of an account, the state of a
+    module. A fact without a value is left out, so the caller lists every field and the component
+    shows those that are filled in.
+
+    @param array  items label, value (text, a number, or markup the caller vouches for), hint (a
+                        short note after the value, optional).
+    @param string empty What to say when none of them is filled in.
+#}
+{% set filled = items|filter(item => item.value|length) %}
+{% if filled is empty %}
+    <div class="text-body-secondary">{{ empty|default('') }}</div>
+{% else %}
+    <dl class="admin-facts">
+        {% for item in filled %}
+            <div class="admin-facts__row">
+                <dt class="admin-facts__label">{{ item.label }}</dt>
+                <dd class="admin-facts__value">
+                    {{ item.value }}
+                    {% if item.hint|default('') %}
+                        <span class="admin-facts__hint">{{ item.hint }}</span>
+                    {% endif %}
+                </dd>
+            </div>
+        {% endfor %}
+    </dl>
+{% endif %}

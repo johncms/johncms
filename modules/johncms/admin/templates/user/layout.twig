@@ -1,0 +1,49 @@
+{#
+    The pages of one account: its name over them, what can be done to it, and a tab for each page.
+
+    @var array  user            Built by UserCardMapper: id, name, approve, roles_url, actions.
+    @var array  tabs            title, url, active.
+    @var string success_message Empty unless an action has just been performed.
+
+    A page fills the user_content block.
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block page_actions %}
+    {% if user.approve %}
+        <form method="post" action="{{ user.approve.url }}">
+            <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+            {% for field, value in user.approve.fields %}
+                <input type="hidden" name="{{ field }}" value="{{ value }}">
+            {% endfor %}
+            <button type="submit" class="btn btn-primary">
+                {% include '@admin/components/ui/icon.twig' with {name: 'check', size: 14} only %}
+                {{ user.approve.title }}
+            </button>
+        </form>
+    {% endif %}
+    {% if user.roles_url %}
+        <a class="btn btn-secondary" href="{{ user.roles_url }}">
+            {% include '@admin/components/ui/icon.twig' with {name: 'key-round', size: 14} only %}
+            {{ __('Roles') }}
+        </a>
+    {% endif %}
+    {% if user.actions is not empty %}
+        {% include '@admin/components/ui/row-actions.twig' with {actions: user.actions, label: __('Actions')} only %}
+    {% endif %}
+{% endblock %}
+
+{% block page_tabs %}
+    <ul class="nav nav-tabs">
+        {% for tab in tabs %}
+            <li class="nav-item">
+                <a class="nav-link{{ tab.active ? ' active' }}" href="{{ tab.url }}"{% if tab.active %} aria-current="page"{% endif %}>{{ tab.title }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
+
+{% block content %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success', alert: success_message} only %}
+    {% block user_content %}{% endblock %}
+{% endblock %}

@@ -304,6 +304,9 @@ The number is shown so that support for the old scheme is not removed while it i
       'Ban from the library' => 'Блокировать доступ к библиотеке',
       'Ban without an end date and lift a ban' => 'Блокировать без срока и снимать блокировку',
       'Delete the record of a ban' => 'Удалять запись о блокировке',
+      'Full block' => 'Полная блокировка',
+      'Private messages' => 'Личные сообщения',
+      'Comments' => 'Комментарии',
     ),
   ),
 );

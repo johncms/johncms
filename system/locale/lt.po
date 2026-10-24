@@ -861,3 +861,11 @@ msgstr "Redaguoti:"
 msgid "Edited"
 msgstr "Redaguoti:"
 
+msgid "Full block"
+msgstr "Pilnas blokiravimas"
+
+msgid "Private messages"
+msgstr "Asmeninės žinutės"
+
+msgid "Comments"
+msgstr "Komentarai"

@@ -76,13 +76,16 @@ final readonly class UserListControlsMapper
     }
 
     /**
-     * Where an action taken on the list returns to: the page of the list it was taken from, or
-     * the fallback. An address that is not one of the list is not followed, so a form cannot be
-     * made to lead somewhere else.
+     * Where an action taken on the list or on the page of an account returns to: that page, or the
+     * fallback. An address that is neither is not followed, so a form cannot be made to lead
+     * somewhere else.
      */
     public function returnUrl(string $back, string $fallback): string
     {
-        return $back === self::PATH || str_starts_with($back, self::PATH . '?') ? $back : $fallback;
+        $ofTheList = $back === self::PATH || str_starts_with($back, self::PATH . '?');
+        $ofAnAccount = preg_match('#^' . self::PATH . '/\d+$#', $back) === 1;
+
+        return $ofTheList || $ofAnAccount ? $back : $fallback;
     }
 
     /**
