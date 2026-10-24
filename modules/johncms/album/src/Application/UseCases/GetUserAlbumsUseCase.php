@@ -32,7 +32,7 @@ final readonly class GetUserAlbumsUseCase
 
         $isOwner = $owner->id === $this->currentUser->id();
         $canModerate = $this->accessChecker->allows(AlbumPermissions::MODERATE);
-        $notBanned = empty($this->currentUser->user()->ban);
+        $notBanned = ! isset($this->currentUser->user()->ban['1']);
 
         // Moderators see all albums; regular users only see non-private albums and their own.
         $restrictForViewer = $canModerate ? null : $this->currentUser->id();

@@ -28,7 +28,7 @@ final readonly class GetUploadPhotoContextUseCase
             throw new AlbumNotFoundException();
         }
 
-        $isOwner = $album->user_id === $this->currentUser->id() && empty($this->currentUser->user()->ban);
+        $isOwner = $album->user_id === $this->currentUser->id() && ! isset($this->currentUser->user()->ban['1']);
         $canModerate = $this->accessChecker->allows(AlbumPermissions::MODERATE);
         if (! $isOwner && ! $canModerate) {
             throw new AlbumEditForbiddenException();

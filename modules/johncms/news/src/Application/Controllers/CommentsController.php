@@ -139,7 +139,7 @@ final readonly class CommentsController
     {
         $post_body = $this->decodeJsonBody($request);
 
-        if (! empty($currentUser->user()->ban)) {
+        if (isset($currentUser->user()->ban['1']) || isset($currentUser->user()->ban['10'])) {
             return new JsonResponse(['message' => __('You have a ban!')], Response::HTTP_FORBIDDEN);
         }
 

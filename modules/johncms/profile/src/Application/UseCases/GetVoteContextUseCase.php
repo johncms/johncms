@@ -34,8 +34,8 @@ final readonly class GetVoteContextUseCase
             throw new ProfileNotFoundException();
         }
 
-        // Users who disabled karma for themselves or are banned cannot vote at all
-        if ($this->currentUser->user()->karma_off || ! empty($this->currentUser->user()->ban)) {
+        // Users who disabled karma for themselves or are banned from the whole site cannot vote at all
+        if ($this->currentUser->user()->karma_off || isset($this->currentUser->user()->ban['1'])) {
             throw new KarmaVoteException([__('You are not allowed to vote for users')]);
         }
 

@@ -45,8 +45,8 @@ final readonly class GetEditContextUseCase
             throw new ProfileAccessForbiddenException(__('You cannot edit profile of higher administration'));
         }
 
-        // A banned editor may not change any profile
-        if (! empty($this->currentUser->user()->ban)) {
+        // An editor banned from the whole site may not change any profile
+        if (isset($this->currentUser->user()->ban['1'])) {
             throw new ProfileAccessForbiddenException();
         }
 

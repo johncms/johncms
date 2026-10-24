@@ -53,7 +53,7 @@ final readonly class GetEditAlbumContextUseCase
 
     private function ensureCanManage(int $ownerId): void
     {
-        $isOwner = $ownerId === $this->currentUser->id() && empty($this->currentUser->user()->ban);
+        $isOwner = $ownerId === $this->currentUser->id() && ! isset($this->currentUser->user()->ban['1']);
         $canModerate = $this->accessChecker->allows(AlbumPermissions::MODERATE);
 
         if (! $isOwner && ! $canModerate) {

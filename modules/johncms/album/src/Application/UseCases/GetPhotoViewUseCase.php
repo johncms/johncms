@@ -99,7 +99,7 @@ final readonly class GetPhotoViewUseCase
 
     private function isViewerEligibleToVote(): bool
     {
-        return empty($this->currentUser->user()->ban)
+        return ! isset($this->currentUser->user()->ban['1'])
             && $this->currentUser->user()->postforum > self::VOTE_MIN_POSTS
             && $this->currentUser->user()->datereg < (time() - self::VOTE_MIN_AGE);
     }

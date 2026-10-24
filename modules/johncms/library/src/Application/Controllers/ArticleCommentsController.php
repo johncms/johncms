@@ -83,6 +83,7 @@ final readonly class ArticleCommentsController
             'mod'            => $mod,
             'start'          => $start,
             'comments_table' => 'cms_library_comments',
+            'bans'           => [1, 10, 15],
             'object_table'   => 'library_texts',
             'script'         => '/library/article/' . $id . '/comments',
             'sub_id'         => $id,

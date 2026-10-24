@@ -28,7 +28,7 @@ final readonly class EnsureVoteAccessUseCase
     public function execute(AlbumPhoto $photo): void
     {
         $eligible = $photo->user_id !== $this->currentUser->id()
-            && empty($this->currentUser->user()->ban)
+            && ! isset($this->currentUser->user()->ban['1'])
             && $this->currentUser->user()->postforum > self::VOTE_MIN_POSTS
             && $this->currentUser->user()->datereg < (time() - self::VOTE_MIN_AGE)
             && ! $this->voteRepository->hasUserVote($this->currentUser->id(), $photo->id);

@@ -84,10 +84,11 @@ final class BanEnforcementTest extends FunctionalTestCase
         yield 'the last post of their own on the forum' => ['forum post', [1, 11]];
         yield 'the guestbook' => ['guestbook', [1, 13]];
         yield 'a new article of the library' => ['library article', [1, 15]];
-        yield 'a comment on an article of the library' => ['library comment', self::KINDS];
+        yield 'a comment on an article of the library' => ['library comment', [1, 10, 15]];
+        yield 'a comment on a photo' => ['photo comment', [1, 10]];
         yield 'a file for the downloads' => ['downloads file', [1]];
-        yield 'a photo for an album of their own' => ['album photo', self::KINDS];
-        yield 'their own profile' => ['profile', self::KINDS];
+        yield 'a photo for an album of their own' => ['album photo', [1]];
+        yield 'their own profile' => ['profile', [1]];
     }
 
     public function testAnAdministratorBannedFromTheForumKeepsThePanel(): void
@@ -161,6 +162,7 @@ final class BanEnforcementTest extends FunctionalTestCase
                 'form [name="announce"]',
             ],
             'library comment' => ['/library/article/' . $this->article() . '/comments', 'form [name="code"]'],
+            'photo comment' => ['/album/photo/' . $this->photoOf($member) . '/comments', 'form [name="code"]'],
             'downloads file' => [
                 '/downloads/upload/' . Fixture::insert(
                     'download__category',
@@ -187,6 +189,13 @@ final class BanEnforcementTest extends FunctionalTestCase
         $topic = Fixture::insert('forum_topic', ['section_id' => $section, 'name' => 'A topic', 'user_id' => $member->id]);
 
         return Fixture::insert('forum_messages', ['topic_id' => $topic, 'user_id' => $member->id, 'date' => time(), 'text' => 'Hello']);
+    }
+
+    private function photoOf(User $member): int
+    {
+        $album = Fixture::insert('cms_album_cat', ['user_id' => $member->id, 'name' => 'Mine', 'access' => 4]);
+
+        return Fixture::insert('cms_album_files', ['user_id' => $member->id, 'album_id' => $album, 'img_name' => 'photo.jpg', 'access' => 4]);
     }
 
     private function article(): int

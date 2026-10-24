@@ -167,8 +167,10 @@ class Comments
 
         $this->item = isset($_GET['item']) ? abs((int) ($_GET['item'])) : false;
 
-        // Получаем данные пользователя
-        $this->ban = ! empty($this->systemUser->ban);
+        // The kinds of ban that close the comments: the full one, the ban of the comments, and the
+        // ban of the section they belong to when the caller names one
+        $bans = $arg['bans'] ?? [1, 10];
+        $this->ban = array_intersect_key($this->systemUser->ban, array_flip($bans)) !== [];
 
         // Назначение пользовательских прав
         if (isset($arg['owner'])) {

@@ -40,7 +40,9 @@ final readonly class ArticleController
             $this->metaTagsManager->setForArticle($current_article)->toArray() + [
                 'article'         => $current_article,
                 'current_section' => $section->getLastSection(),
-                'can_write'       => $this->currentUser->isValid() && empty($this->currentUser->user()->ban),
+                'can_write'       => $this->currentUser->isValid()
+                    && ! isset($this->currentUser->user()->ban['1'])
+                    && ! isset($this->currentUser->user()->ban['10']),
             ]
         );
     }

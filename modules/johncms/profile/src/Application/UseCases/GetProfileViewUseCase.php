@@ -140,7 +140,7 @@ final readonly class GetProfileViewUseCase
                     time() - 86400
                 );
                 if (
-                    empty($this->currentUser->user()->ban)
+                    ! isset($this->currentUser->user()->ban['1'])
                     && $this->currentUser->user()->postforum >= $config['karma']['forum']
                     && ($config['karma']['karma_points'] - $sum) > 0
                     && ! $count
