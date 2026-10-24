@@ -8,6 +8,7 @@ use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\CurrentUser;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
+use Johncms\Modules\Library\Application\Access\LibraryAccess;
 use Johncms\Modules\Library\Application\Services\Hashtags;
 use Johncms\Modules\Library\Application\Services\LibraryPermissions;
 use Johncms\Modules\Library\Application\Services\LibrarySlugService;
@@ -31,6 +32,7 @@ final readonly class EditArticleController
         private CurrentUser $currentUser,
         private LibrarySlugService $slugService,
         private LibraryCoverStorage $covers,
+        private LibraryAccess $libraryAccess,
     ) {
     }
 
@@ -51,7 +53,7 @@ final readonly class EditArticleController
         }
 
         $isAdmin = $this->accessChecker->allows(LibraryPermissions::MODERATE);
-        $isOwner = $this->currentUser->isValid()
+        $isOwner = $this->libraryAccess->mayWrite()
             && (int) $article->uploader_id === $this->currentUser->id();
 
         if (! $isAdmin && ! $isOwner) {

@@ -12,6 +12,7 @@ use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Http\Session;
 use Johncms\Http\View\ViewResponse;
+use Johncms\Modules\Library\Application\Access\LibraryAccess;
 use Johncms\Modules\Library\Application\Services\ArticleTextRenderer;
 use Johncms\Modules\Library\Application\Services\Hashtags;
 use Johncms\Modules\Library\Application\Services\LibraryArticlePathService;
@@ -38,6 +39,7 @@ final readonly class ArticleController
         private PaginationGuard $paginationGuard,
         private LibraryCoverStorage $covers,
         private ArticleTextRenderer $textRenderer,
+        private LibraryAccess $libraryAccess,
     ) {
     }
 
@@ -83,7 +85,7 @@ final readonly class ArticleController
         $text = $this->textRenderer->renderPage($pages[$page - 1], $this->accessChecker->allows(CorePermissions::SMILIES_ADMIN_USE));
 
         $isAdmin   = $this->accessChecker->allows(LibraryPermissions::MODERATE);
-        $moderMenu = $isAdmin || ($this->currentUser->isValid() && (int) $article->uploader_id === $this->currentUser->id());
+        $moderMenu = $isAdmin || ($this->libraryAccess->mayWrite() && (int) $article->uploader_id === $this->currentUser->id());
 
         $this->navChain->add(__('Library'), '/library/');
         $dirNav = new Tree($article->cat_id);
@@ -105,7 +107,7 @@ final readonly class ArticleController
             $tags = (new Hashtags($id))->getTagLinks();
 
             $rate     = new Rating($id);
-            $userVote = $this->currentUser->isValid() ? $rate->getUserVote() : null;
+            $userVote = $this->libraryAccess->mayWrite() ? $rate->getUserVote() : null;
             $rating   = ['rate' => $rate->getRate(), 'votes' => $rate->getVotesCount()];
 
             $uploader = [

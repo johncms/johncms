@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Downloads\Application\Controllers;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
-use Johncms\Auth\CurrentUser;
+use Johncms\Modules\Downloads\Application\Access\DownloadsAccess;
 use Johncms\Modules\Downloads\Application\Services\DownloadsPermissions;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
@@ -24,12 +24,12 @@ final readonly class DownloadCategoryController
     public function __construct(
         private AccessCheckerInterface $accessChecker,
         private NavChain $navChain,
-        private CurrentUser $currentUser,
         private FilePresenter $filePresenter,
         private DownloadCategoryPathService $categoryPathService,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
         private Session $session,
+        private DownloadsAccess $downloadsAccess,
     ) {
     }
 
@@ -45,7 +45,7 @@ final readonly class DownloadCategoryController
 
         $title = $category->rus_name;
 
-        $canUpload = (bool) $category->field && $this->currentUser->isValid();
+        $canUpload = $this->downloadsAccess->mayUpload($category);
 
         $old = time() - FilePresenter::NEW_FILE_PERIOD;
 

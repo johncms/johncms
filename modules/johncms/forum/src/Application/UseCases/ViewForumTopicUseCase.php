@@ -131,10 +131,12 @@ final readonly class ViewForumTopicUseCase
 
         $i = 1;
         $canReplyInClosedTopic = $canModerateTopic;
+        $banned = $this->isBannedFromForum();
         $messages = $messagesCollection->map(
-            function (ForumMessage $message) use ($canModerateTopic, $setForum, $access, &$i, $start, $total, $topic, $canReplyInClosedTopic, $page): ForumMessage {
+            function (ForumMessage $message) use ($canModerateTopic, $setForum, $access, &$i, $start, $total, $topic, $canReplyInClosedTopic, $page, $banned): ForumMessage {
                 if (
-                    (
+                    ! $banned
+                    && (
                         $canModerateTopic
                         || ($i === 1 && $access === 2 && $message->user_id === $this->currentUser->id())
                         || ($message->user_id === $this->currentUser->id()
@@ -156,6 +158,7 @@ final readonly class ViewForumTopicUseCase
                 if (
                     $this->currentUser->id() !== $message->user_id
                     && $this->currentUser->isValid()
+                    && ! $banned
                     && (! $topic->closed || $canReplyInClosedTopic)
                 ) {
                     $message->reply_url = '/forum/reply-message/' . $message->id . '/' . ($page > 1 ? '?page=' . $page : '');
@@ -191,8 +194,11 @@ final readonly class ViewForumTopicUseCase
 
         $writeAccess = false;
         if (
-            ($this->currentUser->isValid() && ! $topic->closed && $access !== 4 && $this->accessChecker->allows(ForumPermissions::POST))
-            || $this->accessChecker->allows(ForumPermissions::TOPIC_MODERATE)
+            ! $banned
+            && (
+                ($this->currentUser->isValid() && ! $topic->closed && $access !== 4 && $this->accessChecker->allows(ForumPermissions::POST))
+                || $this->accessChecker->allows(ForumPermissions::TOPIC_MODERATE)
+            )
         ) {
             $writeAccess = true;
         }
@@ -274,10 +280,22 @@ final readonly class ViewForumTopicUseCase
                 ! $topic->closed
                 && ! $showVoteResult
                 && $this->currentUser->isValid()
+                && ! $this->isBannedFromForum()
                 && (int) ($topicVote->vote_user ?? 0) !== 1
             ),
             'results'   => $results,
             'clip'      => $showClip ? '&amp;clip' : '',
         ];
+    }
+
+    /**
+     * An account banned from the forum or from the whole site is offered nothing to write here;
+     * ForumBanMiddleware refuses it the same things behind these links.
+     */
+    private function isBannedFromForum(): bool
+    {
+        $bans = $this->currentUser->user()->ban;
+
+        return isset($bans[1]) || isset($bans[11]);
     }
 }

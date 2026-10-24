@@ -6,6 +6,7 @@ namespace Johncms\Modules\Downloads\Application\Controllers;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\CurrentUser;
+use Johncms\Modules\Downloads\Application\Access\DownloadsAccess;
 use Johncms\Modules\Downloads\Application\Services\DownloadsPermissions;
 use Johncms\FileInfo;
 use Johncms\Image\ImageProcessingException;
@@ -40,6 +41,7 @@ final readonly class FilesUploadController
         private DownloadSlugService $slugService,
         private DownloadFilePathService $filePathService,
         private DownloadCategoryPathService $categoryPathService,
+        private DownloadsAccess $downloadsAccess,
     ) {
     }
 
@@ -52,7 +54,7 @@ final readonly class FilesUploadController
         }
 
         $isAdmin = $this->accessChecker->allows(DownloadsPermissions::MODERATE);
-        $canUpload = $isAdmin || ($category->field && $this->currentUser->isValid());
+        $canUpload = $isAdmin || $this->downloadsAccess->mayUpload($category);
 
         if (! $canUpload) {
             return $this->error(__('Access forbidden'), $this->categoryPathService->getCategoryUrl($category));

@@ -88,48 +88,89 @@ final class VotersTest extends TestCase
         self::assertSame(Vote::Allow, $voter->vote(IdentityFactory::withRoles(['owner']), 'anything', null));
     }
 
-    public function testABanRefusesEverything(): void
+    /**
+     * What a guest may do stays open — a banned member would otherwise see less of the site than
+     * somebody who never signed in. Everything above that is refused.
+     */
+    public function testAFullBanLeavesWhatAGuestMayDo(): void
     {
         $this->ban(userId: 7, until: time() + 3600);
-        $voter = new BanVoter();
+        $voter = $this->banVoter(guestPermissions: ['forum.view']);
 
         self::assertSame(Vote::Deny, $voter->vote(IdentityFactory::user(id: 7), 'forum.post', null));
+        self::assertSame(Vote::Abstain, $voter->vote(IdentityFactory::user(id: 7), 'forum.view', null));
         self::assertSame(Vote::Abstain, $voter->vote(IdentityFactory::user(id: 8), 'forum.post', null));
+    }
+
+    /**
+     * A ban of the guestbook leaves the forum alone: the section a ban is for asks for it itself.
+     */
+    public function testABanOfOneSectionIsLeftToThatSection(): void
+    {
+        $this->ban(userId: 7, until: time() + 3600, kind: 13);
+
+        self::assertSame(Vote::Abstain, $this->banVoter()->vote(IdentityFactory::user(id: 7), 'forum.post', null));
     }
 
     public function testAnExpiredBanRefusesNothing(): void
     {
         $this->ban(userId: 7, until: time() - 10);
 
-        self::assertSame(Vote::Abstain, (new BanVoter())->vote(IdentityFactory::user(id: 7), 'forum.post', null));
+        self::assertSame(Vote::Abstain, $this->banVoter()->vote(IdentityFactory::user(id: 7), 'forum.post', null));
     }
 
     /**
-     * The point of a Deny: it has to outrank what the roles say, for an administrator as much as
-     * for anybody else.
+     * The point of a Deny: it has to outrank what the roles say, so a banned administrator
+     * administers nothing.
      */
-    public function testABanOutranksASupervisor(): void
+    public function testAFullBanOutranksTheRolesOfAnAdministrator(): void
     {
         $this->ban(userId: 7, until: time() + 3600);
 
-        $checker = new AccessChecker(
+        $administrator = IdentityFactory::user(id: 7, permissions: ['*'], roles: [SystemRole::Admin->value]);
+
+        self::assertFalse($this->checker()->allowsFor($administrator, 'admin.access'));
+    }
+
+    /**
+     * The way back into a site that SuperAdminVoter guarantees holds under a ban as well.
+     */
+    public function testTheSupervisorIsNotLockedOutByABan(): void
+    {
+        $this->ban(userId: 7, until: time() + 3600);
+
+        $supervisor = new Identity(userId: 7, roles: [SystemRole::Supervisor->value]);
+
+        self::assertTrue($this->checker()->allowsFor($supervisor, 'admin.access'));
+    }
+
+    /**
+     * @param list<string> $guestPermissions
+     */
+    private function banVoter(array $guestPermissions = []): BanVoter
+    {
+        $roles = new FakeRoleRepository();
+        $roles->add(SystemRole::Guest->value, $guestPermissions, level: 0, isGuest: true);
+
+        return new BanVoter(new PermissionResolver($roles), new RoleLevels($roles));
+    }
+
+    private function checker(): AccessChecker
+    {
+        return new AccessChecker(
             new CurrentUser(
                 new AuthenticatorChain([]),
                 new PermissionResolver(new FakeRoleRepository()),
                 new RequestStack(),
                 new FakeUserRepository()
             ),
-            [new SuperAdminVoter(new RoleLevels(new FakeRoleRepository())), new BanVoter()]
+            [new RolePermissionVoter(), new SuperAdminVoter(new RoleLevels(new FakeRoleRepository())), $this->banVoter()]
         );
-
-        $supervisor = new Identity(userId: 7, roles: [SystemRole::Supervisor->value]);
-
-        self::assertFalse($checker->allowsFor($supervisor, 'admin.access'));
     }
 
-    private function ban(int $userId, int $until): void
+    private function ban(int $userId, int $until, int $kind = 1): void
     {
-        Capsule::table('cms_ban_users')->insert(['user_id' => $userId, 'ban_time' => $until, 'ban_type' => 1]);
+        Capsule::table('cms_ban_users')->insert(['user_id' => $userId, 'ban_time' => $until, 'ban_type' => $kind]);
     }
 
     private function createBansTable(): void

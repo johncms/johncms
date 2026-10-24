@@ -9,6 +9,7 @@ use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\CurrentUser;
 use Johncms\Http\Request;
 use Johncms\Http\View\ViewResponse;
+use Johncms\Modules\Library\Application\Access\LibraryAccess;
 use Johncms\Modules\Library\Application\Services\Hashtags;
 use Johncms\Modules\Library\Application\Services\LibraryArticlePathService;
 use Johncms\Modules\Library\Application\Services\LibraryCategoryPathService;
@@ -32,6 +33,7 @@ final readonly class CreateArticleController
         private LibrarySlugService $slugService,
         private LibraryArticlePathService $articlePathService,
         private LibraryCategoryPathService $categoryPathService,
+        private LibraryAccess $libraryAccess,
     ) {
     }
 
@@ -45,7 +47,7 @@ final readonly class CreateArticleController
 
         $category = LibraryCategory::query()->find($catId);
 
-        if (! $isAdmin && (! $this->currentUser->isValid() || $category === null)) {
+        if (! $isAdmin && (! $this->libraryAccess->mayWrite() || $category === null)) {
             return new ViewResponse(
                 '@theme/pages/result.twig',
                 [

@@ -50,6 +50,7 @@ use Johncms\Modules\Forum\Application\Controllers\UploadFileController;
 use Johncms\Modules\Forum\Application\Controllers\ViewForumVisitorsController;
 use Johncms\Modules\Forum\Application\Controllers\ViewTopicVisitorsController;
 use Johncms\Modules\Forum\Application\Middlewares\ForumAccessMiddleware;
+use Johncms\Modules\Forum\Application\Middlewares\ForumBanMiddleware;
 use Johncms\Router\RouteCollection;
 
 return static function (RouteCollection $router): void {
@@ -106,10 +107,10 @@ return static function (RouteCollection $router): void {
         $r->post('/forum/unread/mark-read', MarkAllTopicsReadController::class)->name('forum.unread_mark_read');
         $r->map(['GET', 'POST'], '/forum/topics-period', TopicsPeriodController::class)->name('forum.topics_period');
 
-        // Everything that writes something down. A guest is sent to sign in; what exactly may be
-        // written is decided by the use cases behind these routes. Declared here rather than in a
-        // group of their own, because a nested group compiles after the catch-all below and would
-        // never be reached.
+        // Everything that writes something down. A guest is sent to sign in and an account banned
+        // from the forum is refused; what exactly may be written is decided by the use cases behind
+        // these routes. Declared here rather than in a group of their own, because a nested group
+        // compiles after the catch-all below and would never be reached.
         $signedIn = [
             $r->map(['GET', 'POST'], '/forum/addfile/{id:number}', AddFileController::class)->name('forum.add_file'),
             $r->map(['GET', 'POST'], '/forum/addvote/{id:number}', AddVoteController::class)->name('forum.add_vote'),
@@ -135,6 +136,7 @@ return static function (RouteCollection $router): void {
 
         foreach ($signedIn as $route) {
             $route->addMiddleware(RequireAuthMiddleware::class);
+            $route->addMiddleware(ForumBanMiddleware::class);
         }
 
         $r->get('/forum/{sectionPath}', ForumPathController::class)->name('forum.section')->requirements(['sectionPath' => '[a-z0-9\\-/]+']);

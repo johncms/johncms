@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Library\Application\Services;
 
 use Johncms\Auth\CurrentUser;
+use Johncms\Modules\Library\Application\Access\LibraryAccess;
 use Johncms\Users\User;
 use PDO;
 
@@ -31,7 +32,7 @@ class Rating
 
     private function check(): void
     {
-        if (isset($_POST['rating_submit'])) {
+        if (isset($_POST['rating_submit']) && di(LibraryAccess::class)->mayWrite()) {
             $this->addVote((int) $_POST['vote']);
         }
     }

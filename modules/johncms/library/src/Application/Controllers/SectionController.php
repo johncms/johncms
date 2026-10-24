@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Johncms\Modules\Library\Application\Controllers;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
-use Johncms\Auth\CurrentUser;
 use Johncms\Http\PageMeta;
 use Johncms\Http\Pagination\PaginationFactory;
 use Johncms\Http\Pagination\PaginationGuard;
 use Johncms\Http\View\ViewResponse;
+use Johncms\Modules\Library\Application\Access\LibraryAccess;
 use Johncms\Modules\Library\Application\Services\LibraryCategoryPathService;
 use Johncms\Modules\Library\Application\Services\LibraryPermissions;
 use Johncms\Modules\Library\Application\Services\Rating;
@@ -27,10 +27,10 @@ final readonly class SectionController
         private AccessCheckerInterface $accessChecker,
         private NavChain $navChain,
         private DateFormatterInterface $dateFormatter,
-        private CurrentUser $currentUser,
         private LibraryCategoryPathService $categoryPathService,
         private PaginationFactory $paginationFactory,
         private PaginationGuard $paginationGuard,
+        private LibraryAccess $libraryAccess,
     ) {
     }
 
@@ -125,7 +125,7 @@ final readonly class SectionController
 
         $meta = new PageMeta($category->name . ' — ' . __('Library'), $pagination->getCurrentPage());
 
-        $moderMenu = $isAdmin || ($this->currentUser->isValid() && (int) $category->user_add > 0);
+        $moderMenu = $isAdmin || ($this->libraryAccess->mayWrite() && (int) $category->user_add > 0);
         $offset    = $pagination->getOffset();
 
         $articles = LibraryText::query()

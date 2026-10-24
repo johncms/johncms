@@ -493,12 +493,6 @@ parameters:
 			path: modules/johncms/downloads/src/Application/Controllers/DownloadCategoryController.php
 
 		-
-			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$field\.$#'
-			identifier: property.notFound
-			count: 2
-			path: modules/johncms/downloads/src/Application/Controllers/DownloadCategoryController.php
-
-		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$id\.$#'
 			identifier: property.notFound
 			count: 10
@@ -542,12 +536,6 @@ parameters:
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$dir\.$#'
-			identifier: property.notFound
-			count: 1
-			path: modules/johncms/downloads/src/Application/Controllers/EditCategoryController.php
-
-		-
-			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$field\.$#'
 			identifier: property.notFound
 			count: 1
 			path: modules/johncms/downloads/src/Application/Controllers/EditCategoryController.php
@@ -661,12 +649,6 @@ parameters:
 			path: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php
 
 		-
-			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$field\.$#'
-			identifier: property.notFound
-			count: 2
-			path: modules/johncms/downloads/src/Application/Controllers/FilesUploadController.php
-
-		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$text\.$#'
 			identifier: property.notFound
 			count: 1
@@ -691,12 +673,6 @@ parameters:
 			path: modules/johncms/downloads/src/Application/Controllers/ImportFileController.php
 
 		-
-			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$field\.$#'
-			identifier: property.notFound
-			count: 1
-			path: modules/johncms/downloads/src/Application/Controllers/ImportFileController.php
-
-		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$text\.$#'
 			identifier: property.notFound
 			count: 1
@@ -710,12 +686,6 @@ parameters:
 
 		-
 			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$desc\.$#'
-			identifier: property.notFound
-			count: 1
-			path: modules/johncms/downloads/src/Application/Controllers/IndexController.php
-
-		-
-			message: '#^Access to an undefined property Johncms\\Modules\\Downloads\\Domain\\Models\\DownloadCategory\:\:\$field\.$#'
 			identifier: property.notFound
 			count: 1
 			path: modules/johncms/downloads/src/Application/Controllers/IndexController.php

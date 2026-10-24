@@ -18,8 +18,8 @@ use Tests\Support\FunctionalUserFactory;
  * they may write in. A place is told open by the form it offers, the same check that guards the
  * submission behind it.
  *
- * Pinned as it is now: a ban of any kind refuses every permission, reading included, so a member
- * banned from the guestbook for an hour cannot open the forum, which a guest can.
+ * No ban takes away what a guest may read. A full ban closes every place a member writes in, a
+ * ban of a section closes the places of that section.
  */
 final class BanEnforcementTest extends FunctionalTestCase
 {
@@ -39,12 +39,12 @@ final class BanEnforcementTest extends FunctionalTestCase
     }
 
     #[DataProvider('kinds')]
-    public function testABanOfAnyKindClosesEverySectionBehindAPermission(int $kind): void
+    public function testNoBanClosesWhatAGuestReads(int $kind): void
     {
         $member = $this->bannedMember($kind);
 
         foreach (self::SECTIONS as $path) {
-            self::assertSame(403, $this->statusOf($path, $member), $path);
+            self::assertSame(200, $this->statusOf($path, $member), $path);
         }
     }
 
@@ -80,22 +80,31 @@ final class BanEnforcementTest extends FunctionalTestCase
      */
     public static function places(): iterable
     {
-        yield 'a new topic of the forum' => ['forum topic', self::KINDS];
-        yield 'the last post of their own on the forum' => ['forum post', self::KINDS];
-        yield 'the guestbook' => ['guestbook', self::KINDS];
-        yield 'a new article of the library' => ['library article', self::KINDS];
+        yield 'a new topic of the forum' => ['forum topic', [1, 11]];
+        yield 'the last post of their own on the forum' => ['forum post', [1, 11]];
+        yield 'the guestbook' => ['guestbook', [1, 13]];
+        yield 'a new article of the library' => ['library article', [1, 15]];
         yield 'a comment on an article of the library' => ['library comment', self::KINDS];
-        yield 'a file for the downloads' => ['downloads file', self::KINDS];
+        yield 'a file for the downloads' => ['downloads file', [1]];
         yield 'a photo for an album of their own' => ['album photo', self::KINDS];
         yield 'their own profile' => ['profile', self::KINDS];
     }
 
-    public function testAnAdministratorBannedFromTheForumLosesThePanel(): void
+    public function testAnAdministratorBannedFromTheForumKeepsThePanel(): void
     {
         $admin = FunctionalUserFactory::create([], [SystemRole::Admin->value]);
-        self::assertSame(200, $this->statusOf('/admin/', $admin));
-
         $this->ban($admin, 11);
+
+        self::assertSame(200, $this->statusOf('/admin/', $admin));
+    }
+
+    /**
+     * A full ban outranks the roles: a banned administrator administers nothing.
+     */
+    public function testAnAdministratorBannedFromTheSiteLosesThePanel(): void
+    {
+        $admin = FunctionalUserFactory::create([], [SystemRole::Admin->value]);
+        $this->ban($admin, 1);
 
         self::assertSame(403, $this->statusOf('/admin/', $admin));
     }

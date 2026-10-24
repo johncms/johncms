@@ -6,6 +6,9 @@ namespace Johncms\Modules\Downloads\Domain\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property int $field Whether the members may upload into the folder.
+ */
 final class DownloadCategory extends Model
 {
     protected $table = 'download__category';
