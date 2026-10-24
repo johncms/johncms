@@ -6,6 +6,7 @@ namespace Johncms\Modules\Forum\Application\UseCases;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\CurrentUser;
+use Johncms\Modules\Forum\Application\Access\ForumAccess;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumPermissions;
@@ -16,6 +17,7 @@ final readonly class GetNewTopicContextUseCase
     public function __construct(
         private AccessCheckerInterface $accessChecker,
         private CurrentUser $currentUser,
+        private ForumAccess $forumAccess,
     ) {
     }
 
@@ -23,8 +25,7 @@ final readonly class GetNewTopicContextUseCase
     {
         if (
             ! $this->currentUser->isValid()
-            || isset($this->currentUser->user()->ban['1'])
-            || isset($this->currentUser->user()->ban['11'])
+            || $this->forumAccess->isBanned()
             || ! $this->accessChecker->allows(ForumPermissions::POST)
         ) {
             throw new ForumAccessDeniedException('Access denied to create topic.');

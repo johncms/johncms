@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Forum\Application\Middlewares;
 
-use Johncms\Auth\CurrentUser;
+use Johncms\Modules\Forum\Application\Access\ForumAccess;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Services\ForumErrorRenderer;
 use Johncms\Router\MiddlewareInterface;
@@ -22,7 +22,7 @@ use Johncms\View\RendererInterface;
 final readonly class ForumBanMiddleware implements MiddlewareInterface
 {
     public function __construct(
-        private CurrentUser $currentUser,
+        private ForumAccess $forumAccess,
         private ForumErrorRenderer $forumErrorRenderer,
         private RendererInterface $renderer,
     ) {
@@ -30,9 +30,7 @@ final readonly class ForumBanMiddleware implements MiddlewareInterface
 
     public function handle(Request $request, callable $next): Response
     {
-        $bans = $this->currentUser->user()->ban;
-
-        if (isset($bans[1]) || isset($bans[11])) {
+        if ($this->forumAccess->isBanned()) {
             return $this->forumErrorRenderer->response($this->renderer, new ForumAccessDeniedException());
         }
 

@@ -6,6 +6,7 @@ namespace Johncms\Modules\Forum\Application\UseCases;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\CurrentUser;
+use Johncms\Modules\Forum\Application\Access\ForumAccess;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Exceptions\ForumNotFoundException;
 use Johncms\Modules\Forum\Application\Services\ForumPermissions;
@@ -18,6 +19,7 @@ final readonly class GetNewMessageContextUseCase
         private AccessCheckerInterface $accessChecker,
         private ForumTopicRepositoryInterface $topicRepository,
         private CurrentUser $currentUser,
+        private ForumAccess $forumAccess,
     ) {
     }
 
@@ -25,8 +27,7 @@ final readonly class GetNewMessageContextUseCase
     {
         if (
             ! $this->currentUser->isValid()
-            || isset($this->currentUser->user()->ban[1])
-            || isset($this->currentUser->user()->ban[11])
+            || $this->forumAccess->isBanned()
             || ! $this->accessChecker->allows(ForumPermissions::POST)
         ) {
             throw new ForumAccessDeniedException('Access denied to post message.');

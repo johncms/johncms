@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Johncms\Modules\Forum\Application\UseCases;
 
 use Johncms\Auth\CurrentUser;
+use Johncms\Modules\Forum\Application\Access\ForumAccess;
 use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Modules\Forum\Application\DTO\ReplyMessageContextDTO;
@@ -20,6 +21,7 @@ final readonly class GetReplyMessageContextUseCase
         private ForumTopicRepositoryInterface $topicRepository,
         private CurrentUser $currentUser,
         private AccessCheckerInterface $accessChecker,
+        private ForumAccess $forumAccess,
     ) {
     }
 
@@ -27,8 +29,7 @@ final readonly class GetReplyMessageContextUseCase
     {
         if (
             ! $this->currentUser->isValid()
-            || isset($this->currentUser->user()->ban[1])
-            || isset($this->currentUser->user()->ban[11])
+            || $this->forumAccess->isBanned()
             || ! $this->accessChecker->allows(ForumPermissions::POST)
         ) {
             throw new ForumAccessDeniedException('Access denied to post message.');

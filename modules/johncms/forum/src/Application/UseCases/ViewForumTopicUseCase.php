@@ -6,6 +6,7 @@ namespace Johncms\Modules\Forum\Application\UseCases;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\CurrentUser;
+use Johncms\Modules\Forum\Application\Access\ForumAccess;
 use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Carbon\Carbon;
 use Johncms\Modules\Forum\Application\DTO\ForumTopicPageResultDTO;
@@ -37,6 +38,7 @@ final readonly class ViewForumTopicUseCase
         private CurrentUser $currentUser,
         private Session $session,
         private AccessCheckerInterface $accessChecker,
+        private ForumAccess $forumAccess,
     ) {
     }
 
@@ -131,7 +133,7 @@ final readonly class ViewForumTopicUseCase
 
         $i = 1;
         $canReplyInClosedTopic = $canModerateTopic;
-        $banned = $this->isBannedFromForum();
+        $banned = $this->forumAccess->isBanned();
         $messages = $messagesCollection->map(
             function (ForumMessage $message) use ($canModerateTopic, $setForum, $access, &$i, $start, $total, $topic, $canReplyInClosedTopic, $page, $banned): ForumMessage {
                 if (
@@ -280,22 +282,11 @@ final readonly class ViewForumTopicUseCase
                 ! $topic->closed
                 && ! $showVoteResult
                 && $this->currentUser->isValid()
-                && ! $this->isBannedFromForum()
+                && ! $this->forumAccess->isBanned()
                 && (int) ($topicVote->vote_user ?? 0) !== 1
             ),
             'results'   => $results,
             'clip'      => $showClip ? '&amp;clip' : '',
         ];
-    }
-
-    /**
-     * An account banned from the forum or from the whole site is offered nothing to write here;
-     * ForumBanMiddleware refuses it the same things behind these links.
-     */
-    private function isBannedFromForum(): bool
-    {
-        $bans = $this->currentUser->user()->ban;
-
-        return isset($bans[1]) || isset($bans[11]);
     }
 }

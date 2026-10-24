@@ -8,6 +8,7 @@ use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Auth\CurrentUser;
 use Johncms\Http\EditorImageUploadResponder;
 use Johncms\Http\Request;
+use Johncms\Modules\Forum\Application\Access\ForumAccess;
 use Johncms\Modules\Forum\Application\Exceptions\ForumAccessDeniedException;
 use Johncms\Modules\Forum\Application\Services\ForumPermissions;
 use Johncms\Modules\Forum\Application\UseCases\EnsureForumAccessUseCase;
@@ -20,6 +21,7 @@ final readonly class UploadFileController
         private EnsureForumAccessUseCase $forumAccessUseCase,
         private CurrentUser $currentUser,
         private EditorImageUploadResponder $responder,
+        private ForumAccess $forumAccess,
     ) {
     }
 
@@ -44,8 +46,6 @@ final readonly class UploadFileController
             return false;
         }
 
-        $bans = $this->currentUser->user()->ban;
-
-        return ! isset($bans[1]) && ! isset($bans[11]) && $this->accessChecker->allows(ForumPermissions::POST);
+        return ! $this->forumAccess->isBanned() && $this->accessChecker->allows(ForumPermissions::POST);
     }
 }
