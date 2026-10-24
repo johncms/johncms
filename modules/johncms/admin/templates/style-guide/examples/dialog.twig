@@ -1,0 +1,18 @@
+{#
+    A dialog opened from a link: data-admin-modal on it, and the controller answers the request of
+    the script (isXmlHttpRequest) with a template that embeds this component. Shown here in the
+    page, as a plain visit to that link shows it.
+#}
+<div class="modal admin-dialog-page" tabindex="-1">
+    <div class="modal-dialog">
+        {% embed '@admin/components/ui/dialog.twig' with {title: __('Delete user'), close_url: '#overlays', action: ''} only %}
+            {% block body %}
+                <div class="alert alert-danger mb-0">{{ __('The account is deleted for good. This cannot be undone.') }}</div>
+            {% endblock %}
+            {% block footer %}
+                <a href="{{ close_url }}" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('Cancel') }}</a>
+                <button type="button" class="btn btn-danger">{{ __('Delete') }}</button>
+            {% endblock %}
+        {% endembed %}
+    </div>
+</div>

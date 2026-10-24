@@ -1,0 +1,37 @@
+{#
+    A dialog of the panel: a title, a body and the buttons under it, with one form around them when
+    it posts. Meant for {% embed %}: the page fills the body and footer blocks.
+
+    The same template serves twice. A link with data-admin-modal opens its address in the modal of
+    the layout (src/admin/js/modal.js), and the controller answers that request with the dialog
+    alone; a plain visit gets it as a page of its own (components/ui/dialog-page.twig). That is why
+    "close" is a link: in the modal data-bs-dismiss closes it, on the page it leads back.
+
+    @param string title
+    @param string close_url Where closing leads when the dialog is a page.
+    @param string action    The address the form posts to, with the token; empty for no form.
+
+    Blocks: body, footer.
+#}
+{% set action = action|default('') %}
+{% if action %}
+    <form class="modal-content" method="post" action="{{ action }}">
+        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+{% else %}
+    <div class="modal-content">
+{% endif %}
+        <div class="modal-header">
+            <h2 class="modal-title">{{ title }}</h2>
+            <a href="{{ close_url }}" class="btn-close" data-bs-dismiss="modal" aria-label="{{ d__('admin', 'Close') }}"></a>
+        </div>
+        <div class="modal-body">
+            {% block body %}{% endblock %}
+        </div>
+        <div class="modal-footer">
+            {% block footer %}{% endblock %}
+        </div>
+{% if action %}
+    </form>
+{% else %}
+    </div>
+{% endif %}

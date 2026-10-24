@@ -4,12 +4,24 @@ declare(strict_types=1);
 
 namespace Johncms\Modules\Admin\Domain\Repository;
 
+use Johncms\Users\User;
+
 interface RegistrationModerationRepositoryInterface
 {
     /**
      * Количество пользователей, ожидающих подтверждения (preg = 0).
      */
     public function countPending(): int;
+
+    /**
+     * The account, if it is still waiting for approval.
+     */
+    public function findPending(int $id): ?User;
+
+    /**
+     * The accounts waiting for approval that registered from this address (ip2long).
+     */
+    public function countPendingByIp(int $ip): int;
 
     public function approve(int $id, string $adminName): void;
 

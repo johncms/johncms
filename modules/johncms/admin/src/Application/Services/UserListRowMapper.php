@@ -41,14 +41,15 @@ final readonly class UserListRowMapper
     }
 
     /**
+     * @param string $listUrl The page of the list the rows are on, for the dialogs to return to.
      * @return list<array<string, mixed>>
      */
-    public function mapPage(UserListPageDTO $page): array
+    public function mapPage(UserListPageDTO $page, string $listUrl): array
     {
         $rows = [];
 
         foreach ($page->users as $user) {
-            $rows[] = $this->map($user, $page->roles[$user->id] ?? [], $page->banEnds[$user->id] ?? 0);
+            $rows[] = $this->map($user, $page->roles[$user->id] ?? [], $page->banEnds[$user->id] ?? 0, $listUrl);
         }
 
         return $rows;
@@ -58,7 +59,7 @@ final readonly class UserListRowMapper
      * @param list<Role> $roles
      * @return array<string, mixed>
      */
-    private function map(User $user, array $roles, int $banEnds): array
+    private function map(User $user, array $roles, int $banEnds, string $listUrl): array
     {
         $showOrigin = $this->showsOrigin();
 
@@ -83,8 +84,8 @@ final readonly class UserListRowMapper
             // The address of a visitor is for the staff only.
             'ip'           => $showOrigin ? (string) $user->ip : '',
             'ip_url'       => $showOrigin ? '/admin/ip-search?ip=' . $user->ip : '',
-            'approve'      => $user->preg ? null : $this->post('/admin/registrations/approve', ['id' => $user->id], __('Approve'), 'check'),
-            'actions'      => $this->actions($user),
+            'approve'      => $user->preg ? null : $this->post('/admin/registrations/approve', ['id' => $user->id, 'back' => $listUrl], __('Approve'), 'check'),
+            'actions'      => $this->actions($user, $listUrl),
         ];
     }
 
@@ -93,7 +94,7 @@ final readonly class UserListRowMapper
      *
      * @return list<array<string, mixed>>
      */
-    private function actions(User $user): array
+    private function actions(User $user, string $listUrl): array
     {
         $self = $user->id === $this->currentUser->id();
 
@@ -121,25 +122,28 @@ final readonly class UserListRowMapper
             return $actions;
         }
 
-        // An account nobody has let in yet is removed on the spot, together with the others that
-        // came from its address if need be; one that has lived on the site goes through the
-        // page that says what will be removed with it.
+        // Every removal goes through a dialog saying what would go: an account nobody has let in
+        // yet alone or with the others that came from its address, one that has lived on the
+        // site with what it leaves behind.
+        $back = 'back=' . rawurlencode($listUrl);
+
         if (! $user->preg) {
-            $actions[] = $this->post('/admin/registrations/delete', ['id' => $user->id], __('Delete'), 'trash-2', true);
-            $actions[] = $this->post('/admin/registrations/delete-by-ip', ['ip' => (int) $user->getRawOriginal('ip')], __('Remove IP'), 'trash-2', true);
+            $actions[] = $this->link('/admin/registrations/' . $user->id . '/delete?' . $back, __('Delete'), 'trash-2', true, true);
+            $actions[] = $this->link('/admin/registrations/delete-by-ip?ip=' . (int) $user->getRawOriginal('ip') . '&' . $back, __('Remove IP'), 'trash-2', true, true);
         } elseif ($this->accessChecker->allows(CorePermissions::ADMIN_SETTINGS_MANAGE)) {
-            $actions[] = $this->link('/admin/users/' . $user->id . '/delete', __('Delete'), 'trash-2', true);
+            $actions[] = $this->link('/admin/users/' . $user->id . '/delete?' . $back, __('Delete'), 'trash-2', true, true);
         }
 
         return $actions;
     }
 
     /**
+     * @param bool $dialog The address is a dialog, opened in the modal of the panel.
      * @return array<string, mixed>
      */
-    private function link(string $url, string $title, string $icon, bool $danger = false): array
+    private function link(string $url, string $title, string $icon, bool $danger = false, bool $dialog = false): array
     {
-        return ['method' => 'get', 'url' => $url, 'title' => $title, 'icon' => $icon, 'danger' => $danger, 'fields' => []];
+        return ['method' => 'get', 'url' => $url, 'title' => $title, 'icon' => $icon, 'danger' => $danger, 'dialog' => $dialog, 'fields' => []];
     }
 
     /**
@@ -148,6 +152,6 @@ final readonly class UserListRowMapper
      */
     private function post(string $url, array $fields, string $title, string $icon, bool $danger = false): array
     {
-        return ['method' => 'post', 'url' => $url, 'title' => $title, 'icon' => $icon, 'danger' => $danger, 'fields' => $fields];
+        return ['method' => 'post', 'url' => $url, 'title' => $title, 'icon' => $icon, 'danger' => $danger, 'dialog' => false, 'fields' => $fields];
     }
 }

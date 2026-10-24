@@ -1,0 +1,11 @@
+{#
+    The confirmation of an action as a page: what a link to the dialog leads to without the script
+    that opens it in the modal.
+
+    @var array dialog What pages/confirm-dialog.twig is given.
+#}
+{% extends '@admin/layouts/default.twig' %}
+
+{% block content %}
+    {% include '@admin/components/ui/dialog-page.twig' with {dialog: '@admin/pages/confirm-dialog.twig', data: dialog} only %}
+{% endblock %}

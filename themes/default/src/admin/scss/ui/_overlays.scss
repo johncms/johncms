@@ -95,3 +95,17 @@
   --bs-popover-body-color: var(--fg-muted);
   --bs-popover-font-size: 0.8125rem;
 }
+
+// A dialog shown as a page of its own (components/ui/dialog-page.twig): the modal without being
+// one, standing in the flow of the page.
+.admin-dialog-page {
+  position: static;
+  display: block;
+  height: auto;
+  overflow: visible;
+  z-index: auto;
+
+  .modal-dialog {
+    margin: 0;
+  }
+}

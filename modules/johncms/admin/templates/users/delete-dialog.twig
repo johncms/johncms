@@ -1,0 +1,60 @@
+{#
+    Deleting an account, with what it leaves behind. Answered to the modal of the panel as it is,
+    and put into a page of its own (user-delete-confirm.twig) for a plain visit.
+
+    @var int    user_id
+    @var string user_name
+    @var int    comments_count
+    @var int    forum_topics
+    @var int    forum_posts
+    @var string form_action
+    @var string back_url       Where the list or the profile was; the form returns there.
+#}
+{% embed '@admin/components/ui/dialog.twig' with {
+    title: __('Delete user'),
+    action: form_action,
+    close_url: back_url,
+    user_id: user_id,
+    user_name: user_name,
+    comments_count: comments_count,
+    forum_topics: forum_topics,
+    forum_posts: forum_posts,
+} only %}
+    {% block body %}
+        <input type="hidden" name="back" value="{{ close_url }}">
+        <div class="mb-3">
+            {% include '@admin/components/ui/user-cell.twig' with {
+                id: user_id,
+                name: user_name,
+                url: '/profile/' ~ user_id,
+                online: false,
+                roles: [],
+                sub: '',
+            } only %}
+        </div>
+        <div class="alert alert-danger">{{ __('The account is deleted for good. This cannot be undone.') }}</div>
+        {% if comments_count > 0 or forum_topics + forum_posts > 0 %}
+            <div class="form-label">{{ __('Also hide what the user wrote') }}</div>
+            {% if comments_count > 0 %}
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" name="comments" value="1" id="delete-user-comments" checked>
+                    <label class="form-check-label" for="delete-user-comments">{{ __('Comments') }} ({{ comments_count }})</label>
+                </div>
+            {% endif %}
+            {% if forum_topics + forum_posts > 0 %}
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" name="forum" value="1" id="delete-user-forum" checked>
+                    <label class="form-check-label" for="delete-user-forum">{{ __('Forum') }} ({{ forum_topics }}&nbsp;/&nbsp;{{ forum_posts }})</label>
+                </div>
+            {% endif %}
+            <div class="form-text">{{ __('All threads and posts created by the user go in the hidden state') }}</div>
+        {% endif %}
+    {% endblock %}
+    {% block footer %}
+        <a href="{{ close_url }}" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('Cancel') }}</a>
+        <button type="submit" class="btn btn-danger">
+            {% include '@admin/components/ui/icon.twig' with {name: 'trash-2', size: 14} only %}
+            {{ __('Delete') }}
+        </button>
+    {% endblock %}
+{% endembed %}

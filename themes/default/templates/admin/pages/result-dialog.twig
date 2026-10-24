@@ -1,0 +1,17 @@
+{#
+    The outcome of an action in the panel, as a dialog: what a controller answers the modal with
+    where a page would get pages/result.twig.
+
+    @var string       title
+    @var string|array message
+    @var string       type     Bootstrap modifier of the alert, e.g. alert-danger.
+    @var string       back_url Where closing leads when the dialog is a page.
+#}
+{% embed '@admin/components/ui/dialog.twig' with {title: title, close_url: back_url, message: message, type: type} only %}
+    {% block body %}
+        {% include '@theme/components/alert.twig' with {alert_type: type ~ ' mb-0', alert: message} only %}
+    {% endblock %}
+    {% block footer %}
+        <a href="{{ close_url }}" class="btn btn-secondary" data-bs-dismiss="modal">{{ d__('admin', 'Close') }}</a>
+    {% endblock %}
+{% endembed %}

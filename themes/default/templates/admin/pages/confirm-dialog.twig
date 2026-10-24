@@ -1,0 +1,50 @@
+{#
+    The confirmation of an action that cannot be taken back: what will happen, and the button that
+    posts it. What a controller answers the modal of the panel with (data-admin-modal); a plain
+    visit gets the same template in pages/confirm.twig.
+
+    @var string title
+    @var string message  What will happen.
+    @var array  user     id, name — the account it is about; empty for none.
+    @var string action   The address the form posts to.
+    @var array  fields   What is posted with it, name => value.
+    @var string confirm  The label of the button.
+    @var string back_url Where cancelling leads on the page; posted as "back" too, for the action
+                         to return to.
+#}
+{% embed '@admin/components/ui/dialog.twig' with {
+    title: title,
+    action: action,
+    close_url: back_url,
+    message: message,
+    user: user,
+    fields: fields,
+    confirm: confirm,
+} only %}
+    {% block body %}
+        <input type="hidden" name="back" value="{{ close_url }}">
+        {% for name, value in fields %}
+            <input type="hidden" name="{{ name }}" value="{{ value }}">
+        {% endfor %}
+        {% if user %}
+            <div class="mb-3">
+                {% include '@admin/components/ui/user-cell.twig' with {
+                    id: user.id,
+                    name: user.name,
+                    url: '/profile/' ~ user.id,
+                    online: false,
+                    roles: [],
+                    sub: '',
+                } only %}
+            </div>
+        {% endif %}
+        <div class="alert alert-danger mb-0">{{ message }}</div>
+    {% endblock %}
+    {% block footer %}
+        <a href="{{ close_url }}" class="btn btn-secondary" data-bs-dismiss="modal">{{ d__('admin', 'Cancel') }}</a>
+        <button type="submit" class="btn btn-danger">
+            {% include '@admin/components/ui/icon.twig' with {name: 'trash-2', size: 14} only %}
+            {{ confirm }}
+        </button>
+    {% endblock %}
+{% endembed %}

@@ -15,6 +15,16 @@ final class EloquentRegistrationModerationRepository implements RegistrationMode
         return User::query()->where('preg', 0)->count();
     }
 
+    public function findPending(int $id): ?User
+    {
+        return User::query()->where('id', $id)->where('preg', 0)->first();
+    }
+
+    public function countPendingByIp(int $ip): int
+    {
+        return User::query()->where('preg', 0)->where('ip', $ip)->count();
+    }
+
     public function approve(int $id, string $adminName): void
     {
         User::query()

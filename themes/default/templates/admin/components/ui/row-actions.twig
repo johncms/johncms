@@ -4,7 +4,8 @@
 
     The menu is positioned fixed, so the scrolling container of a wide table does not cut it off.
 
-    @param array  actions method (get | post), url, title, icon, danger, fields (posted with it).
+    @param array  actions method (get | post), url, title, icon, danger, fields (posted with it),
+                          dialog (the link opens in the modal of the panel, see dialog.twig).
     @param string label   What the button says to a screen reader.
 #}
 <div class="dropdown">
@@ -30,7 +31,7 @@
                         </button>
                     </form>
                 {% else %}
-                    <a class="dropdown-item{{ action.danger ? ' text-danger' }}" href="{{ action.url }}">
+                    <a class="dropdown-item{{ action.danger ? ' text-danger' }}" href="{{ action.url }}"{% if action.dialog|default(false) %} data-admin-modal{% endif %}>
                         {% include '@admin/components/ui/icon.twig' with {name: action.icon, size: 14} only %}
                         {{ action.title }}
                     </a>

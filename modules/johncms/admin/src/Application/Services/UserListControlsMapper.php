@@ -57,6 +57,7 @@ final readonly class UserListControlsMapper
 
         return [
             'action'    => self::PATH,
+            'list_url'  => $this->url($filter),
             'status'    => $filter->status->value,
             'tabs'      => $this->tabs($filter, $stats),
             'filters'   => $filters,
@@ -72,6 +73,16 @@ final readonly class UserListControlsMapper
     public function url(UserListFilter $filter): string
     {
         return $this->filterMapper->url(self::PATH, $filter);
+    }
+
+    /**
+     * Where an action taken on the list returns to: the page of the list it was taken from, or
+     * the fallback. An address that is not one of the list is not followed, so a form cannot be
+     * made to lead somewhere else.
+     */
+    public function returnUrl(string $back, string $fallback): string
+    {
+        return $back === self::PATH || str_starts_with($back, self::PATH . '?') ? $back : $fallback;
     }
 
     /**

@@ -125,6 +125,20 @@ reference:
 * A fragment test asks with `HTTP_X_REQUESTED_WITH`: the page around it carries the query log of
   the whole process when debugging is on.
 
+## Dialogs (the panel)
+
+A confirmation that needs data from the server (what deleting an account leaves behind) is a
+dialog, not a page — `admin::users/delete-dialog` is the reference:
+
+* The link carries `data-admin-modal`; `src/admin/js/modal.js` opens its address in the modal of
+  the layout.
+* The controller answers `isXmlHttpRequest()` with a template that `{% embed %}`s
+  `@admin/components/ui/dialog.twig` (blocks `body` and `footer`), and a plain visit with a page
+  that puts the same template into `@admin/components/ui/dialog-page.twig`. Close and Cancel are
+  links with `data-bs-dismiss="modal"`: they close the modal, and lead back on the page.
+* The form posts as any form does and redirects. Where it returns to comes from the caller
+  (`back`), checked against the pages it may lead to — never followed as it is.
+
 ## Traps
 
 **An Eloquent attribute a guest does not carry.** Twig looks the attribute up, does not find

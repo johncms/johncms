@@ -94,6 +94,10 @@ return static function (RouteCollection $router): void {
         $r->get('/admin/antiflood', [AntifloodSettingsController::class, 'form'])->name('admin.antiflood');
         $r->post('/admin/antiflood', [AntifloodSettingsController::class, 'save'])->name('admin.antiflood.save');
         $r->post('/admin/registrations/approve', [RegistrationModerationController::class, 'approve'])->name('admin.registrations.approve');
+        // Removing is confirmed first: the dialog says what would go (see the controller).
+        $r->get('/admin/registrations/{id:number}/delete', [RegistrationModerationController::class, 'deleteConfirm'])->name('admin.registrations.delete_confirm');
+        $r->get('/admin/registrations/delete-all', [RegistrationModerationController::class, 'deleteAllConfirm'])->name('admin.registrations.delete_all_confirm');
+        $r->get('/admin/registrations/delete-by-ip', [RegistrationModerationController::class, 'deleteByIpConfirm'])->name('admin.registrations.delete_by_ip_confirm');
         $r->post('/admin/registrations/approve-all', [RegistrationModerationController::class, 'approveAll'])->name('admin.registrations.approve_all');
         $r->post('/admin/registrations/delete', [RegistrationModerationController::class, 'delete'])->name('admin.registrations.delete');
         $r->post('/admin/registrations/delete-all', [RegistrationModerationController::class, 'deleteAll'])->name('admin.registrations.delete_all');

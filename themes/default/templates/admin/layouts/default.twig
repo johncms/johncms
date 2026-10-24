@@ -91,6 +91,19 @@
             </footer>
         </div>
     </div>
+    {# The modal the dialogs of the panel open in: see components/ui/dialog.twig. #}
+    <div class="modal fade" id="admin-modal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered"></div>
+        <template data-admin-modal-loading>
+            <div class="modal-content">
+                <div class="modal-body text-center py-5">
+                    <div class="spinner-border text-body-tertiary" role="status">
+                        <span class="visually-hidden">{{ d__('admin', 'Loading') }}</span>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </div>
     <div class="modal fade ajax_modal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content"></div>

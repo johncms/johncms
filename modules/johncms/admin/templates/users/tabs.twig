@@ -22,18 +22,16 @@
         <div class="admin-list-tabs__actions">
             <form method="post" action="/admin/registrations/approve-all">
                 <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                <input type="hidden" name="back" value="{{ controls.list_url }}">
                 <button type="submit" class="btn btn-primary btn-sm">
                     {% include '@admin/components/ui/icon.twig' with {name: 'check', size: 14} only %}
                     {{ __('Confirm all') }}
                 </button>
             </form>
-            <form method="post" action="/admin/registrations/delete-all">
-                <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
-                <button type="submit" class="btn btn-outline-danger btn-sm">
-                    {% include '@admin/components/ui/icon.twig' with {name: 'trash-2', size: 14} only %}
-                    {{ __('Delete all') }}
-                </button>
-            </form>
+            <a class="btn btn-outline-danger btn-sm" href="/admin/registrations/delete-all?back={{ controls.list_url|url_encode }}" data-admin-modal>
+                {% include '@admin/components/ui/icon.twig' with {name: 'trash-2', size: 14} only %}
+                {{ __('Delete all') }}
+            </a>
         </div>
     {% endif %}
 </div>

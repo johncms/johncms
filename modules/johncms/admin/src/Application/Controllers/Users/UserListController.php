@@ -51,7 +51,7 @@ final readonly class UserListController
         $page = $this->getUserList->getPage($filter, $pagination->getPerPage(), $pagination->getOffset());
 
         $data = [
-            'users'      => $this->rowMapper->mapPage($page),
+            'users'      => $this->rowMapper->mapPage($page, $pagination->getUrl($pagination->getCurrentPage())),
             'controls'   => $this->controlsMapper->map($filter, $stats, $this->getUserList->grantableRoles()),
             'search'     => $filter->search,
             'pending'    => $stats->pending,
