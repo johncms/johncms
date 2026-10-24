@@ -47,7 +47,9 @@ interface BanRepositoryInterface
     public function deleteById(int $banId): void;
 
     /**
-     * Delete the whole violation history of the user.
+     * The bans of the user that have run out or were lifted by the given time.
+     *
+     * @return Collection<int, Ban>
      */
-    public function deleteAllForUser(int $userId): void;
+    public function getFinishedForUser(int $userId, int $time): Collection;
 }

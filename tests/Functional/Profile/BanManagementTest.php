@@ -193,18 +193,34 @@ final class BanManagementTest extends FunctionalTestCase
     }
 
     /**
-     * Pinned as it is: clearing the history deletes the bans still in force as well.
+     * The history is what has run out or was lifted. Ending a ban in force is lifting it.
      */
-    public function testClearingTheHistoryDeletesTheBansInForceToo(): void
+    public function testClearingTheHistoryKeepsTheBansInForce(): void
     {
         $supervisor = FunctionalUserFactory::createSupervisor();
         $member = FunctionalUserFactory::create();
-        $this->insertBan($member, kind: 1);
+        $inForce = $this->insertBan($member, kind: 1);
         $this->insertBan($member, kind: 11, until: time() - 60);
 
         $this->post($supervisor, '/profile/' . $member->id . '/bans/clear');
 
+        self::assertSame($inForce, $this->onlyBanOf($member)->id);
+    }
+
+    public function testClearingTheHistoryTakesBackTheKarmaOfTheBansItDeletes(): void
+    {
+        $supervisor = FunctionalUserFactory::createSupervisor();
+        $member = FunctionalUserFactory::create();
+
+        $this->withKarma(function () use ($supervisor, $member): void {
+            $this->give($supervisor, $member, kind: 1);
+            $this->post($supervisor, '/profile/' . $member->id . '/bans/' . $this->onlyBanOf($member)->id . '/cancel');
+            $this->post($supervisor, '/profile/' . $member->id . '/bans/clear');
+        });
+
         self::assertSame([], $this->bansOf($member));
+        self::assertSame([], $this->systemPenaltiesOf($member));
+        self::assertSame(0, $this->karmaMinusOf($member));
     }
 
     /**

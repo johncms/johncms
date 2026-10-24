@@ -67,8 +67,14 @@ final class EloquentBanRepository implements BanRepositoryInterface
         Ban::query()->where('id', '=', $banId)->delete();
     }
 
-    public function deleteAllForUser(int $userId): void
+    /**
+     * @return Collection<int, Ban>
+     */
+    public function getFinishedForUser(int $userId, int $time): Collection
     {
-        Ban::query()->where('user_id', '=', $userId)->delete();
+        return Ban::query()
+            ->where('user_id', '=', $userId)
+            ->where('ban_time', '<=', $time)
+            ->get();
     }
 }
