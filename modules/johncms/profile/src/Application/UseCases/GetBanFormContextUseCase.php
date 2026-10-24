@@ -6,7 +6,6 @@ namespace Johncms\Modules\Profile\Application\UseCases;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Modules\Profile\Application\Access\BanAccess;
-use Johncms\Modules\Profile\Application\Access\BanHierarchy;
 use Johncms\Modules\Profile\Application\Exceptions\ProfileAccessForbiddenException;
 use Johncms\Modules\Profile\Application\Exceptions\ProfileNotFoundException;
 use Johncms\Modules\Profile\Application\Services\ProfilePermissions;
@@ -19,7 +18,6 @@ final readonly class GetBanFormContextUseCase
         private ProfileUserRepositoryInterface $profileUserRepository,
         private AccessCheckerInterface $accessChecker,
         private BanAccess $banAccess,
-        private BanHierarchy $banHierarchy,
     ) {
     }
 
@@ -32,7 +30,7 @@ final readonly class GetBanFormContextUseCase
             throw new ProfileNotFoundException();
         }
 
-        if (! $this->banAccess->mayBanAnything() || ! $this->banHierarchy->outranks($target->id)) {
+        if (! $this->banAccess->mayBanAnything() || ! $this->banAccess->outranks($target->id)) {
             throw new ProfileAccessForbiddenException(__('You do not have enought rights to ban this user'));
         }
 

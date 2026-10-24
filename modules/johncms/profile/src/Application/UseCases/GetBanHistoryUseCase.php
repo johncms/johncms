@@ -6,7 +6,6 @@ namespace Johncms\Modules\Profile\Application\UseCases;
 
 use Johncms\Auth\Authorization\AccessCheckerInterface;
 use Johncms\Modules\Profile\Application\Access\BanAccess;
-use Johncms\Modules\Profile\Application\Access\BanHierarchy;
 use Johncms\Modules\Profile\Application\DTO\BanHistoryDTO;
 use Johncms\Modules\Profile\Application\Exceptions\ProfileNotFoundException;
 use Johncms\Modules\Profile\Application\Services\ProfilePermissions;
@@ -23,7 +22,6 @@ final readonly class GetBanHistoryUseCase
         private BanRepositoryInterface $banRepository,
         private AccessCheckerInterface $accessChecker,
         private BanAccess $banAccess,
-        private BanHierarchy $banHierarchy,
     ) {
     }
 
@@ -52,9 +50,8 @@ final readonly class GetBanHistoryUseCase
 
         $base = '/profile/' . $target->id . '/bans';
         // The buttons ask what the guards behind them ask
-        $outranksTarget = $this->banHierarchy->outranks($target->id);
-        $mayLift = $outranksTarget && $this->accessChecker->allows(ProfilePermissions::BAN_PERMANENT);
-        $mayDestroy = $outranksTarget && $this->accessChecker->allows(ProfilePermissions::BAN_DESTROY);
+        $mayLift = $this->banAccess->mayLift($target->id);
+        $mayDestroy = $this->banAccess->mayDestroy($target->id);
         // Who applied a ban is of interest to whoever applies them
         $maySeeAuthor = $this->banAccess->mayBanAnything();
 

@@ -4,17 +4,42 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Modules\Profile;
 
+use Illuminate\Database\Capsule\Manager as Capsule;
 use Johncms\Auth\Authorization\AccessCheckerInterface;
+use Johncms\Auth\Authorization\RoleLevels;
 use Johncms\Auth\Identity;
 use Johncms\Modules\Profile\Application\Access\BanAccess;
 use Johncms\Modules\Profile\Application\Services\ProfilePermissions;
+use Johncms\Users\User;
 use PHPUnit\Framework\TestCase;
+use Tests\Support\BootsInMemoryDatabase;
+use Tests\Support\CurrentUserFactory;
+use Tests\Support\FakeRoleRepository;
+use Tests\Support\IdentityFactory;
+use Tests\Support\RunsMigrations;
 
 final class BanAccessTest extends TestCase
 {
+    use BootsInMemoryDatabase;
+    use RunsMigrations;
+
+    /** The visitor whose bans the access reads. */
+    private const int VISITOR = 7;
+
+    protected function setUp(): void
+    {
+        $this->bootDatabase();
+        $this->migrate('system', 'initial_core_schema');
+    }
+
+    protected function tearDown(): void
+    {
+        $this->shutdownDatabase();
+    }
+
     public function testAForumModeratorMayOnlyApplyTheForumBan(): void
     {
-        $access = new BanAccess($this->accessChecker([ProfilePermissions::BAN_FORUM]));
+        $access = $this->access([ProfilePermissions::BAN_FORUM]);
 
         self::assertTrue($access->mayBanAnything());
         self::assertTrue($access->mayApply(11), 'The forum ban');
@@ -24,7 +49,7 @@ final class BanAccessTest extends TestCase
 
     public function testTheGeneralPermissionCoversTheBansThatAreNotOfOneSection(): void
     {
-        $access = new BanAccess($this->accessChecker([ProfilePermissions::BAN_MANAGE]));
+        $access = $this->access([ProfilePermissions::BAN_MANAGE]);
 
         foreach ([1, 3, 10, 13] as $banType) {
             self::assertTrue($access->mayApply($banType), 'Ban type ' . $banType);
@@ -39,18 +64,48 @@ final class BanAccessTest extends TestCase
      */
     public function testAKindOfBanNobodyDeclaredIsRefused(): void
     {
-        $access = new BanAccess($this->accessChecker([ProfilePermissions::BAN_MANAGE]));
+        $access = $this->access([ProfilePermissions::BAN_MANAGE]);
 
         self::assertFalse($access->mayApply(0));
         self::assertFalse($access->mayApply(16));
     }
 
+    /**
+     * A moderator banned from the forum keeps the permission to ban from it, and would otherwise
+     * go on moderating the forum through the profiles of its members.
+     */
+    public function testNobodyAppliesTheBanTheyAreUnder(): void
+    {
+        Capsule::table('cms_ban_users')->insert(
+            ['user_id' => self::VISITOR, 'ban_time' => time() + 3600, 'ban_type' => 11, 'ban_reason' => 'Spam']
+        );
+        $access = $this->access([ProfilePermissions::BAN_FORUM]);
+
+        self::assertFalse($access->mayApply(11));
+        self::assertFalse($access->mayBanAnything());
+    }
+
     public function testAVisitorWithoutAnyOfThePermissionsMayNotBanAtAll(): void
     {
-        $access = new BanAccess($this->accessChecker([]));
+        $access = $this->access([]);
 
         self::assertFalse($access->mayBanAnything());
         self::assertFalse($access->mayApply(1));
+    }
+
+    /**
+     * @param list<string> $granted
+     */
+    private function access(array $granted): BanAccess
+    {
+        $profile = new User();
+        $profile->forceFill(['id' => self::VISITOR]);
+
+        return new BanAccess(
+            $this->accessChecker($granted),
+            new RoleLevels(new FakeRoleRepository()),
+            CurrentUserFactory::for(IdentityFactory::user(id: self::VISITOR), $profile)
+        );
     }
 
     /**
