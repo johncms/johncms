@@ -45,10 +45,15 @@ CI measures line coverage on every push and lists it by area in the summary of t
 covered first. It is a map of where tests are missing, not a threshold. The same table locally:
 
 ```bash
+docker exec $(docker ps -q -f name=johncms.php-fpm) composer test:coverage
+```
+
+The report stays in `data/cache/coverage.xml`. To see which lines a test misses, open the HTML
+report in a browser:
+
+```bash
 docker exec -e XDEBUG_MODE=coverage $(docker ps -q -f name=johncms.php-fpm) \
-    vendor/bin/phpunit --coverage-clover=data/cache/coverage.xml
-docker exec $(docker ps -q -f name=johncms.php-fpm) \
-    php .github/scripts/coverage-summary.php data/cache/coverage.xml
+    vendor/bin/phpunit --coverage-html=data/cache/coverage-html
 ```
 
 ### Against MySQL

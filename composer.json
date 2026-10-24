@@ -125,6 +125,11 @@
         "test:unit": "phpunit --testsuite unit --colors=always",
         "test:functional": "phpunit --testsuite functional --colors=always",
         "test:install": "phpunit --testsuite install --colors=always",
+        "test:coverage": [
+            "@putenv XDEBUG_MODE=coverage",
+            "phpunit --colors=always --coverage-clover=data/cache/coverage.xml",
+            "php .github/scripts/coverage-summary.php data/cache/coverage.xml"
+        ],
         "twig-lint": "php system/bin/console twig:lint",
         "twig-ide-check": "php system/bin/console twig:ide-config --check",
         "translate": "php system/bin/console i18n:translate",
