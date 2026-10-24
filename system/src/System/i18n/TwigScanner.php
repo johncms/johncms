@@ -9,6 +9,7 @@ use Gettext\Translations;
 use Twig\Environment;
 use Twig\Node\Expression\ConstantExpression;
 use Twig\Node\Expression\FunctionExpression;
+use Twig\Node\ModuleNode;
 use Twig\Node\Node;
 use Twig\Source;
 
@@ -79,6 +80,14 @@ final class TwigScanner
 
         foreach ($node as $child) {
             $this->walk($child, $file);
+        }
+
+        // The blocks of an {% embed %} are a template of their own, kept beside the tree of the
+        // file rather than in it.
+        if ($node instanceof ModuleNode) {
+            foreach ($node->getAttribute('embedded_templates') as $embedded) {
+                $this->walk($embedded, $file);
+            }
         }
     }
 

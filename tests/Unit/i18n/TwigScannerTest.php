@@ -56,6 +56,16 @@ final class TwigScannerTest extends TestCase
     }
 
     /**
+     * Twig keeps the body of an embed as a template of its own, outside the tree of the file.
+     */
+    public function testTheBlocksOfAnEmbedAreCollected(): void
+    {
+        $translations = $this->scan("{% embed 'dialog.twig' %}{% block body %}{{ __('Inside the embed') }}{% endblock %}{% endembed %}");
+
+        self::assertNotNull($translations['system']->find(null, 'Inside the embed'));
+    }
+
+    /**
      * A call whose message is built at runtime carries no string to extract. The PHP scanner
      * skips those too — the alternative is a .pot full of variable names.
      */
