@@ -6,9 +6,13 @@ namespace Johncms\Sitemap;
 
 final class RobotsTxtUpdater
 {
+    public function __construct(private string $publicPath = PUBLIC_PATH)
+    {
+    }
+
     public function update(string $homeUrl): void
     {
-        $robotsPath = PUBLIC_PATH . 'robots.txt';
+        $robotsPath = $this->publicPath . 'robots.txt';
         $sitemapLine = 'Sitemap: ' . $homeUrl . '/sitemap.xml';
 
         $lines = [];

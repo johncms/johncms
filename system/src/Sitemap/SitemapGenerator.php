@@ -15,12 +15,14 @@ final readonly class SitemapGenerator
         private CoreUrlsProvider $coreUrlsProvider,
         private iterable $moduleProviders,
         private RobotsTxtUpdater $robotsTxtUpdater,
+        private string $publicPath = PUBLIC_PATH,
+        private string $cachePath = CACHE_PATH,
     ) {
     }
 
     public function generate(): void
     {
-        $lockHandle = fopen(CACHE_PATH . 'sitemap.lock', 'c+');
+        $lockHandle = fopen($this->cachePath . 'sitemap.lock', 'c+');
         if ($lockHandle === false) {
             throw new \RuntimeException('Failed to open sitemap lock file.');
         }
@@ -61,7 +63,7 @@ final readonly class SitemapGenerator
             $this->cleanupStaleChunks($generatedChunkFiles);
 
             $indexXml = $this->buildSitemapIndexXml($homeUrl, $generatedChunkFiles);
-            $this->atomicWrite(PUBLIC_PATH . 'sitemap.xml', $indexXml);
+            $this->atomicWrite($this->publicPath . 'sitemap.xml', $indexXml);
 
             $this->robotsTxtUpdater->update($homeUrl);
         } finally {
@@ -106,7 +108,7 @@ final readonly class SitemapGenerator
         $filename = sprintf('sitemap-%s-%d.xml', $groupName, $chunkIndex);
         $xml = $this->buildUrlSetXml($entries);
 
-        $this->atomicWrite(PUBLIC_PATH . $filename, $xml);
+        $this->atomicWrite($this->publicPath . $filename, $xml);
 
         return $filename;
     }
@@ -161,11 +163,11 @@ final readonly class SitemapGenerator
      */
     private function cleanupStaleChunks(array $generatedChunkFiles): void
     {
-        $existingChunkPaths = glob(PUBLIC_PATH . 'sitemap-*.xml') ?: [];
+        $existingChunkPaths = glob($this->publicPath . 'sitemap-*.xml') ?: [];
 
         $expectedPaths = [];
         foreach ($generatedChunkFiles as $filename) {
-            $expectedPaths[] = PUBLIC_PATH . $filename;
+            $expectedPaths[] = $this->publicPath . $filename;
         }
 
         foreach ($existingChunkPaths as $chunkPath) {
