@@ -30,6 +30,7 @@ msgstr ""
 #: themes/default/templates/admin/components/sidebar-admin-menu.twig:38
 #: modules/johncms/admin/src/Application/Controllers/Access/UserRolesController.php:130
 #: modules/johncms/admin/src/Application/Controllers/Settings/AdsController.php:306
+#: modules/johncms/admin/src/Application/Controllers/Users/DeleteUserController.php:64
 #: modules/johncms/admin/src/Application/Controllers/Users/UserBansController.php:217
 #: modules/johncms/admin/src/Application/Controllers/Users/UserBansController.php:303
 #: modules/johncms/admin/src/Application/Controllers/Users/UserCardController.php:36
@@ -522,7 +523,7 @@ msgstr ""
 #: modules/johncms/admin/src/Application/Controllers/Settings/CountersController.php:152
 #: modules/johncms/admin/src/Application/Controllers/System/MaintenanceTasksController.php:44
 #: modules/johncms/admin/src/Application/Controllers/System/MaintenanceTasksController.php:58
-#: modules/johncms/admin/src/Application/Controllers/Users/DeleteUserController.php:102
+#: modules/johncms/admin/src/Application/Controllers/Users/DeleteUserController.php:104
 #: modules/johncms/admin/src/Application/Controllers/Users/UserBansController.php:243
 #: modules/johncms/admin/src/Application/Controllers/Users/UserBansController.php:276
 msgid "Wrong data"
@@ -880,7 +881,7 @@ msgid "Violations"
 msgstr ""
 
 #: modules/johncms/admin/src/Application/Controllers/Users/DeleteUserController.php:41
-#: modules/johncms/admin/src/Application/Controllers/Users/DeleteUserController.php:78
+#: modules/johncms/admin/src/Application/Controllers/Users/DeleteUserController.php:80
 #: modules/johncms/admin/templates/style-guide/examples/dialog.twig:8
 #: modules/johncms/admin/templates/style-guide/examples/dropdown.twig:23
 #: modules/johncms/admin/templates/style-guide/examples/modal.twig:2
@@ -889,12 +890,12 @@ msgstr ""
 msgid "Delete user"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Users/DeleteUserController.php:92
+#: modules/johncms/admin/src/Application/Controllers/Users/DeleteUserController.php:94
 #: modules/johncms/admin/src/Application/Controllers/Users/RegistrationModerationController.php:96
 msgid "User deleted"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Users/DeleteUserController.php:100
+#: modules/johncms/admin/src/Application/Controllers/Users/DeleteUserController.php:102
 #: modules/johncms/admin/src/Application/Controllers/Users/UserBansController.php:53
 #: modules/johncms/admin/src/Application/Controllers/Users/UserBansController.php:79
 #: modules/johncms/admin/src/Application/Controllers/Users/UserBansController.php:92
@@ -905,7 +906,7 @@ msgstr ""
 msgid "User does not exists"
 msgstr ""
 
-#: modules/johncms/admin/src/Application/Controllers/Users/DeleteUserController.php:101
+#: modules/johncms/admin/src/Application/Controllers/Users/DeleteUserController.php:103
 msgid "You cannot delete higher administration"
 msgstr ""
 

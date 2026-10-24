@@ -46,8 +46,9 @@ final class DeleteUserDialogTest extends FunctionalTestCase
 
         self::assertSame(Response::HTTP_OK, $response->getStatusCode());
         self::assertStringContainsString('class="modal admin-dialog-page"', $body);
-        // Opened from the profile, closing leads back there.
-        self::assertStringContainsString('href="/profile/' . $member->id . '" class="btn-close"', $body);
+        // Opened from the page of the account, closing leads back there: the profile of the site
+        // belongs to a module that may be switched off.
+        self::assertStringContainsString('href="/admin/users/' . $member->id . '" class="btn-close"', $body);
     }
 
     public function testTheFormReturnsToThePageOfTheListItCameFrom(): void

@@ -17,8 +17,8 @@ use Johncms\NavChain;
 
 /**
  * Deleting an account. The confirmation is a dialog: the modal of the panel asks for it with
- * X-Requested-With and gets the dialog alone, a plain visit — from the profile, or without the
- * script — gets it as a page.
+ * X-Requested-With and gets the dialog alone, a plain visit — without the script — gets it as a
+ * page, which closes to the page of the account.
  *
  * The list of users sends where it was in "back", so the form returns to the same page of the
  * same filter.
@@ -54,13 +54,15 @@ final readonly class DeleteUserController
             'forum_topics'   => $context->forumTopicsCount,
             'forum_posts'    => $context->forumPostsCount,
             'form_action'    => '/admin/users/' . $context->user->id . '/delete',
-            'back_url'       => $this->controls->returnUrl($request->queryParam('back'), '/profile/' . $context->user->id),
+            'back_url'       => $this->controls->returnUrl($request->queryParam('back'), '/admin/users/' . $context->user->id),
         ];
 
         if ($dialog) {
             return new ViewResponse('@admin/users/delete-dialog.twig', $data);
         }
 
+        $this->navChain->add(__('Users'), self::LIST_URL);
+        $this->navChain->add($context->user->name, '/admin/users/' . $context->user->id);
         $this->navChain->add($title);
 
         return new ViewResponse(
