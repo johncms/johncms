@@ -223,6 +223,23 @@ final class BanManagementTest extends FunctionalTestCase
         self::assertSame(0, $this->karmaMinusOf($member));
     }
 
+    public function testTheHistoryTellsABanTheAmnestyEnded(): void
+    {
+        $member = FunctionalUserFactory::create();
+        Fixture::insert('cms_ban_users', [
+            'user_id'    => $member->id,
+            'ban_time'   => time() - 60,
+            'ban_while'  => time() - 3600,
+            'ban_type'   => 1,
+            'ban_reason' => 'Spam',
+            'ban_raz'    => '--Amnesty--',
+        ]);
+
+        $page = $this->handleRequest('/profile/' . $member->id . '/bans', cookies: $this->actingAs($member));
+
+        self::assertStringContainsString('--Amnesty--', (string) $page->getContent());
+    }
+
     /**
      * Sends the form of a ban the way the profile page does, and answers the status of the reply.
      */

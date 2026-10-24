@@ -78,6 +78,9 @@ final readonly class GetBanHistoryUseCase
                 'ban_type_name'    => $types[$ban->ban_type] ?? '',
                 'ban_started'      => date('d.m.Y / H:i', $ban->ban_while),
                 'reason_formatted' => $ban->ban_reason,
+                // Why the ban ended before its time, when something other than a moderator ended
+                // it: the amnesty writes its mark here
+                'end_note'         => $ban->ban_raz,
                 'time_name'        => $period < 86400000 ? DurationFormatter::format($period) : __('Till cancel'),
                 'remain'           => $remain > 0 ? DurationFormatter::format($remain) : '',
                 'ban_who'          => $maySeeAuthor ? $ban->ban_who : null,

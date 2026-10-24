@@ -28,6 +28,9 @@
                             <div>
                                 {{ item.reason_formatted }}
                             </div>
+                            {% if item.end_note %}
+                                <div class="text-muted">{{ item.end_note }}</div>
+                            {% endif %}
                             <div class="text-muted small mb-2">
                                 {% if item.ban_who %}
                                     <div>
