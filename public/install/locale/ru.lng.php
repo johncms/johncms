@@ -64,6 +64,7 @@
       'If you need help, you can visit <a href="https://johncms.com/forum/" class="text-underline">our forum</a>.' => 'Если вам нужна помощь, вы можете посетить <a href="https://johncms.com/forum/" class="text-underline">наш форум</a>.',
       'Also, if necessary, you can familiarize yourself with <a href="https://docs.johncms.com/" class="text-underline">the documentation</a>' => 'Также, при необходимости, вы можете ознакомиться с <a href="https://docs.johncms.com/" class="text-underline">документацией</a>.',
       'Go to website' => 'Перейти на сайт',
+      'The login needs at least one letter or digit' => 'В логине должна быть хотя бы одна буква или цифра',
     ),
   ),
 );

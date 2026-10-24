@@ -1650,3 +1650,78 @@ msgstr "Куки-баннер"
 
 msgid "Users on registration"
 msgstr "Катталган колдонуучулар"
+
+msgid "Online"
+msgstr "Онлайн"
+
+msgid "User banned"
+msgstr "Колдонуучуга тыюу салынган"
+
+msgid "Ban terminated"
+msgstr "Колдонуучуга тыюу салуу жок кылынды"
+
+msgid "Ban deleted"
+msgstr "Тыюу салуу жок кылынды"
+
+msgid "Violations history cleared"
+msgstr "Тартип бузуулар тарыхы тазаланды"
+
+msgid "Ban"
+msgstr "Тыюу салуу"
+
+msgid "Profile"
+msgstr "Колдонуучунун профили"
+
+msgid "Activity"
+msgstr "Аракетчилдик"
+
+msgid "All"
+msgstr "Бардык"
+
+msgid "The password confirmation you entered is wrong"
+msgstr "Жаңы сырсөздү ырастоо туура эмес киргизилди"
+
+msgid "hidden"
+msgstr "жашыруун"
+
+msgid "City, Country"
+msgstr "Шаар, Өлкө"
+
+msgid "Registered"
+msgstr "Катталган датасы"
+
+msgid "Actions"
+msgstr "Иш-аракеттер"
+
+msgid "Status"
+msgstr "Статус"
+
+msgid "Gender"
+msgstr "Жынысы"
+
+msgid "Birthday"
+msgstr "Туулган күн"
+
+msgid "Month"
+msgstr "Ай"
+
+msgid "Year"
+msgstr "Жыл"
+
+msgid "Phone number"
+msgstr "Телефон номери"
+
+msgid "Site"
+msgstr "Сайт"
+
+msgid "Admin Notes"
+msgstr "Администраторго эскертмелер"
+
+msgid "Active"
+msgstr "Аракеттүү"
+
+msgid "Last visit"
+msgstr "Акыркы көрүү"
+
+msgid "Date"
+msgstr "Датасы"

@@ -281,3 +281,5 @@ msgstr "Также, при необходимости, вы можете озн�
 msgid "Go to website"
 msgstr "Перейти на сайт"
 
+msgid "The login needs at least one letter or digit"
+msgstr "В логине должна быть хотя бы одна буква или цифра"

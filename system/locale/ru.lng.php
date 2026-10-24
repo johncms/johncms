@@ -320,6 +320,7 @@ The number is shown so that support for the old scheme is not removed while it i
       'Till cancel' => 'До отмены',
       'Man' => 'Мужской',
       'Woman' => 'Женский',
+      'The nickname needs at least one letter or digit' => 'В нике должна быть хотя бы одна буква или цифра',
     ),
   ),
 );

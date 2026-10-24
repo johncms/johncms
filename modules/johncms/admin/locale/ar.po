@@ -1620,3 +1620,78 @@ msgstr ""
 
 msgid "Users on registration"
 msgstr "المستخدمون عند التسجيل"
+
+msgid "Online"
+msgstr "متصل"
+
+msgid "User banned"
+msgstr "تم حظر المستخدم"
+
+msgid "Ban terminated"
+msgstr "تم إنهاء الحظر"
+
+msgid "Ban deleted"
+msgstr "تم حذف الحظر"
+
+msgid "Violations history cleared"
+msgstr "تم مسح سجل الانتهاكات"
+
+msgid "Ban"
+msgstr "الحظر"
+
+msgid "Profile"
+msgstr "الملف الشخصي"
+
+msgid "Activity"
+msgstr "النشاط"
+
+msgid "All"
+msgstr "جميع"
+
+msgid "The password confirmation you entered is wrong"
+msgstr "تأكيد كلمة المرور الذي أدخلته خاطئ"
+
+msgid "hidden"
+msgstr "أُخْفِيَتْ"
+
+msgid "City, Country"
+msgstr "المدينة / الدولة"
+
+msgid "Registered"
+msgstr "تم التسجيل"
+
+msgid "Actions"
+msgstr "الإجراءات"
+
+msgid "Status"
+msgstr "الحالة"
+
+msgid "Gender"
+msgstr "نوع الجنس"
+
+msgid "Birthday"
+msgstr "عيد ميلاد"
+
+msgid "Month"
+msgstr "شهر"
+
+msgid "Year"
+msgstr "سنة"
+
+msgid "Phone number"
+msgstr "رقم الهاتف"
+
+msgid "Site"
+msgstr "الموقع"
+
+msgid "Admin Notes"
+msgstr "ملاحظات المشرف"
+
+msgid "Active"
+msgstr "نشط"
+
+msgid "Last visit"
+msgstr "آخر زيارة:"
+
+msgid "Date"
+msgstr "تاريخ"

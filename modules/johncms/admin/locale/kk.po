@@ -1620,3 +1620,66 @@ msgstr ""
 
 msgid "Users on registration"
 msgstr "Пайдаланушыларды тіркеу"
+
+msgid "Online"
+msgstr "Желіде"
+
+msgid "User banned"
+msgstr "Пайдаланушы тыйым салынған"
+
+msgid "Ban terminated"
+msgstr "Пайдаланушыға тыйым салу тоқтатылды"
+
+msgid "Ban deleted"
+msgstr "Тыйым салу жойылды"
+
+msgid "Violations history cleared"
+msgstr "Бұзушылықтар тарихы тазаланды"
+
+msgid "Ban"
+msgstr "Тыйым салу"
+
+msgid "Profile"
+msgstr "Профиль"
+
+msgid "Activity"
+msgstr "Белсенділік"
+
+msgid "All"
+msgstr "Барлығы"
+
+msgid "hidden"
+msgstr "жасырын"
+
+msgid "City, Country"
+msgstr "Қала, Ел"
+
+msgid "Actions"
+msgstr "Іс-әрекеттер"
+
+msgid "Status"
+msgstr "Мәртебе"
+
+msgid "Gender"
+msgstr "Жынысы"
+
+msgid "Birthday"
+msgstr "Туылған күні"
+
+msgid "Month"
+msgstr "Ай"
+
+msgid "Year"
+msgstr "Жыл"
+
+msgid "Phone number"
+msgstr "Телефон нөмірі"
+
+msgid "Site"
+msgstr "Сайт"
+
+msgid "Admin Notes"
+msgstr "Админ Ескертулер"
+
+msgid "Date"
+msgstr "Күні"

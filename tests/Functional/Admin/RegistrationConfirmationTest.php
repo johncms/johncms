@@ -38,7 +38,12 @@ final class RegistrationConfirmationTest extends FunctionalTestCase
 
         $body = $this->dialog('/admin/registrations/delete-by-ip?ip=' . $ip);
 
-        self::assertStringContainsString('2 accounts waiting for approval registered from 10.0.0.66', $body);
+        $message = sprintf(
+            dn__('admin', '%1$d account waiting for approval registered from %2$s is removed for good.', '%1$d accounts waiting for approval registered from %2$s are removed for good.', 2),
+            2,
+            '10.0.0.66'
+        );
+        self::assertStringContainsString($message, $body);
         self::assertStringContainsString('name="ip" value="' . $ip . '"', $body);
     }
 
@@ -48,7 +53,10 @@ final class RegistrationConfirmationTest extends FunctionalTestCase
         FunctionalUserFactory::create(['preg' => 0]);
         FunctionalUserFactory::create(['preg' => 0]);
 
-        self::assertStringContainsString('3 accounts waiting for approval are removed for good', $this->dialog('/admin/registrations/delete-all'));
+        $body = $this->dialog('/admin/registrations/delete-all');
+
+        $message = sprintf(dn__('admin', '%d account waiting for approval is removed for good.', '%d accounts waiting for approval are removed for good.', 3), 3);
+        self::assertStringContainsString($message, $body);
     }
 
     public function testAnAccountLetInMeanwhileHasNothingToConfirm(): void
@@ -57,7 +65,7 @@ final class RegistrationConfirmationTest extends FunctionalTestCase
 
         $body = $this->dialog('/admin/registrations/' . $member->id . '/delete');
 
-        self::assertStringContainsString('The account is not waiting for approval any more', $body);
+        self::assertStringContainsString(d__('admin', 'The account is not waiting for approval any more'), $body);
         self::assertStringNotContainsString('<form', $body);
     }
 

@@ -1233,3 +1233,6 @@ msgstr "Мужской"
 
 msgid "Woman"
 msgstr "Женский"
+
+msgid "The nickname needs at least one letter or digit"
+msgstr "В нике должна быть хотя бы одна буква или цифра"

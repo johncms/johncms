@@ -1631,3 +1631,78 @@ msgstr[3] "%d хвилин"
 
 msgid "Users on registration"
 msgstr "Користувачі на реєстрації"
+
+msgid "Online"
+msgstr "В мережі"
+
+msgid "User banned"
+msgstr "Користувач забанений"
+
+msgid "Ban terminated"
+msgstr "Бан скасовано"
+
+msgid "Ban deleted"
+msgstr "Бан видалений"
+
+msgid "Violations history cleared"
+msgstr "Історію порушень очищено"
+
+msgid "Ban"
+msgstr "Бан"
+
+msgid "Profile"
+msgstr "Профіль"
+
+msgid "Activity"
+msgstr "Активність"
+
+msgid "All"
+msgstr "Всі"
+
+msgid "The password confirmation you entered is wrong"
+msgstr "Підтвердження паролю введено невірно"
+
+msgid "hidden"
+msgstr "прихований"
+
+msgid "City, Country"
+msgstr "Місто, Країна"
+
+msgid "Registered"
+msgstr "Зареєстрований"
+
+msgid "Actions"
+msgstr "Дії"
+
+msgid "Status"
+msgstr "Статус"
+
+msgid "Gender"
+msgstr "Пол"
+
+msgid "Birthday"
+msgstr "День народження"
+
+msgid "Month"
+msgstr "Місяць"
+
+msgid "Year"
+msgstr "Рік"
+
+msgid "Phone number"
+msgstr "Номер телефону"
+
+msgid "Site"
+msgstr "Сайт"
+
+msgid "Admin Notes"
+msgstr "Примітки адміністратора"
+
+msgid "Active"
+msgstr "Активний"
+
+msgid "Last visit"
+msgstr "Останній візит"
+
+msgid "Date"
+msgstr "Дата"

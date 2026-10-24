@@ -2050,3 +2050,357 @@ msgstr "Применяется при уменьшении или перекод
 
 msgid "Users on registration"
 msgstr "Пользователи на регистрации"
+
+msgid "Online"
+msgstr "Онлайн"
+
+msgid "User banned"
+msgstr "Пользователь забанен"
+
+msgid "Ban terminated"
+msgstr "Пользователь разбанен"
+
+msgid "Ban deleted"
+msgstr "Бан удален"
+
+msgid "Violations history cleared"
+msgstr "История нарушений очищена"
+
+msgid "Ban"
+msgstr "Бан"
+
+msgid "Profile"
+msgstr "Профиль"
+
+msgid "Activity"
+msgstr "Активность"
+
+msgid "All"
+msgstr "Все"
+
+msgid "The password confirmation you entered is wrong"
+msgstr "Подтверждение нового пароля введено неверно"
+
+msgid "hidden"
+msgstr "скрыт"
+
+msgid "City, Country"
+msgstr "Город, страна"
+
+msgid "Registered"
+msgstr "Дата регистрации"
+
+msgid "Actions"
+msgstr "Действия"
+
+msgid "Status"
+msgstr "Статус"
+
+msgid "Gender"
+msgstr "Пол"
+
+msgid "Birthday"
+msgstr "День рождения"
+
+msgid "Month"
+msgstr "Месяц"
+
+msgid "Year"
+msgstr "Год"
+
+msgid "Phone number"
+msgstr "Номер телефона"
+
+msgid "Site"
+msgstr "Сайт"
+
+msgid "Admin Notes"
+msgstr "Заметки администрации"
+
+msgid "Active"
+msgstr "Активен"
+
+msgid "Last visit"
+msgstr "Последний визит"
+
+msgid "Date"
+msgstr "Дата"
+
+msgid "Style guide"
+msgstr "Руководство по стилю"
+
+msgid "Menu"
+msgstr "Меню"
+
+msgid "Back to the site"
+msgstr "Вернуться на сайт"
+
+msgid "Close"
+msgstr "Закрыть"
+
+msgid "Remove the filter"
+msgstr "Убрать фильтр"
+
+msgid "Reset filters"
+msgstr "Сбросить фильтры"
+
+msgid "Expand the menu"
+msgstr "Развернуть меню"
+
+msgid "Collapse the menu"
+msgstr "Свернуть меню"
+
+msgid "Loading"
+msgstr "Загрузка"
+
+msgid "The account is not waiting for approval any more"
+msgstr "Аккаунт уже не ждёт подтверждения"
+
+msgid "Delete the registration"
+msgstr "Удалить регистрацию"
+
+msgid "The account is removed for good. Nobody has let it in yet, so it leaves nothing behind."
+msgstr "Аккаунт удаляется навсегда. Его ещё никто не подтвердил, так что после него ничего не останется."
+
+msgid "Nobody is waiting for approval"
+msgstr "Подтверждения никто не ждёт"
+
+msgid "Delete all registrations"
+msgstr "Удалить все регистрации"
+
+msgid "Nobody from this address is waiting for approval"
+msgstr "С этого адреса подтверждения никто не ждёт"
+
+msgid "Delete the registrations from an address"
+msgstr "Удалить регистрации с адреса"
+
+msgid "Nothing to delete"
+msgstr "Удалять нечего"
+
+msgid "Lift the ban"
+msgstr "Снять бан"
+
+msgid "The ban ends now. Its record stays in the history."
+msgstr "Бан закончится сейчас. Запись о нём останется в истории."
+
+msgid "Delete the record of the ban"
+msgstr "Удалить запись о бане"
+
+msgid "The ban goes with its record in the history, and the karma it cost comes back."
+msgstr "Бан удаляется вместе с записью в истории, а снятая за него карма возвращается."
+
+msgid "Clear the history"
+msgstr "Очистить историю"
+
+msgid "Every ban that has run out or was lifted goes, with the karma it cost. The bans in force stay."
+msgstr "Удаляются все истёкшие и снятые баны вместе со снятой за них кармой. Действующие баны остаются."
+
+msgid "You cannot change this account"
+msgstr "Вы не можете изменять этот аккаунт"
+
+msgid "Bans"
+msgstr "Баны"
+
+msgid "The profile is saved"
+msgstr "Профиль сохранён"
+
+msgid "The password is changed"
+msgstr "Пароль изменён"
+
+msgid "Reset settings"
+msgstr "Сбросить настройки"
+
+msgid "The settings of the account and of its forum go back to the defaults."
+msgstr "Настройки аккаунта и его форума вернутся к значениям по умолчанию."
+
+msgid "The settings are reset"
+msgstr "Настройки сброшены"
+
+msgid "Open on the site"
+msgstr "Открыть на сайте"
+
+msgid "Delete the record"
+msgstr "Удалить запись"
+
+msgid "Overview"
+msgstr "Обзор"
+
+msgid "Awaiting approval"
+msgstr "На подтверждении"
+
+msgid "Banned"
+msgstr "В бане"
+
+msgid "Staff"
+msgstr "Администрация"
+
+msgid "Role"
+msgstr "Роль"
+
+msgid "Online now"
+msgstr "Сейчас на сайте"
+
+msgid "In the last 24 hours"
+msgstr "За последние 24 часа"
+
+msgid "In the last 7 days"
+msgstr "За последние 7 дней"
+
+msgid "Not seen for half a year"
+msgstr "Не заходили полгода"
+
+msgid "Any time"
+msgstr "За всё время"
+
+msgid "In the last 30 days"
+msgstr "За последние 30 дней"
+
+msgid "In the last year"
+msgstr "За последний год"
+
+msgid "The account is deleted for good. This cannot be undone."
+msgstr "Аккаунт удаляется навсегда. Это нельзя отменить."
+
+msgid "Nobody found"
+msgstr "Никого не найдено"
+
+msgid "Change the search or reset the filters."
+msgstr "Измените запрос или сбросьте фильтры."
+
+msgid "Email"
+msgstr "E-mail"
+
+msgid "All accounts"
+msgstr "Все аккаунты"
+
+msgid "Search users"
+msgstr "Поиск пользователей"
+
+msgid "Nickname, e-mail, ID or IP"
+msgstr "Ник, e-mail, ID или IP"
+
+msgid "What it takes away"
+msgstr "Что запрещает"
+
+msgid "How long"
+msgstr "На сколько"
+
+msgid "Counted in"
+msgstr "Единица срока"
+
+msgid "Found: %s"
+msgstr "Найдено: %s"
+
+msgid "No bans yet"
+msgstr "Банов пока не было"
+
+msgid "Given"
+msgstr "Выдан"
+
+msgid "Length"
+msgstr "Срок"
+
+msgid "%s left"
+msgstr "осталось %s"
+
+msgid "until %s"
+msgstr "до %s"
+
+msgid "Account"
+msgstr "Аккаунт"
+
+msgid "Show the e-mail to everyone"
+msgstr "Показывать e-mail всем"
+
+msgid "A birthday needs the day, the month and the year"
+msgstr "Для дня рождения нужны день, месяц и год"
+
+msgid "About"
+msgstr "О себе"
+
+msgid "For the staff"
+msgstr "Для администрации"
+
+msgid "Nobody may vote for the karma of the account"
+msgstr "Никто не может голосовать за карму аккаунта"
+
+msgid "Seen only by the staff who may read the notes."
+msgstr "Видят только сотрудники с правом читать заметки."
+
+msgid "New password"
+msgstr "Новый пароль"
+
+msgid "At least 6 characters."
+msgstr "Не меньше 6 символов."
+
+msgid "Repeat the password"
+msgstr "Повторите пароль"
+
+msgid "Sign out on my other devices"
+msgstr "Выйти на других моих устройствах"
+
+msgid "Sign the account out on every device"
+msgstr "Завершить сеансы аккаунта на всех устройствах"
+
+msgid "Change the password"
+msgstr "Сменить пароль"
+
+msgid "off"
+msgstr "выключена"
+
+msgid "History: %s"
+msgstr "История: %s"
+
+msgid "History"
+msgstr "История"
+
+msgid "No bans in force"
+msgstr "Действующих банов нет"
+
+msgid "approved by %s"
+msgstr "подтвердил %s"
+
+msgid "Time on the site"
+msgstr "Время на сайте"
+
+msgid "The user has not told anything about themselves"
+msgstr "Пользователь ничего не рассказал о себе"
+
+msgid "Where from"
+msgstr "Откуда"
+
+msgid "Through a proxy"
+msgstr "Через прокси"
+
+msgid "Others from this address"
+msgstr "Другие с этого адреса"
+
+msgid "Earlier addresses"
+msgstr "Прежние адреса"
+
+msgid "Registered today"
+msgstr "Зарегистрировались сегодня"
+
+msgid "Also hide what the user wrote"
+msgstr "Также скрыть всё, что написал пользователь"
+
+msgid "%d account waiting for approval is removed for good."
+msgid_plural "%d accounts waiting for approval are removed for good."
+msgstr[0] "%d аккаунт, ожидающий подтверждения, удаляется навсегда."
+msgstr[1] "%d аккаунта, ожидающих подтверждения, удаляются навсегда."
+msgstr[2] "%d аккаунтов, ожидающих подтверждения, удаляются навсегда."
+msgstr[3] "%d аккаунтов, ожидающих подтверждения, удаляются навсегда."
+
+msgid "%1$d account waiting for approval registered from %2$s is removed for good."
+msgid_plural "%1$d accounts waiting for approval registered from %2$s are removed for good."
+msgstr[0] "%1$d аккаунт, ожидающий подтверждения и зарегистрированный с %2$s, удаляется навсегда."
+msgstr[1] "%1$d аккаунта, ожидающих подтверждения и зарегистрированных с %2$s, удаляются навсегда."
+msgstr[2] "%1$d аккаунтов, ожидающих подтверждения и зарегистрированных с %2$s, удаляются навсегда."
+msgstr[3] "%1$d аккаунтов, ожидающих подтверждения и зарегистрированных с %2$s, удаляются навсегда."
+
+msgid "%d message"
+msgid_plural "%d messages"
+msgstr[0] "%d сообщение"
+msgstr[1] "%d сообщения"
+msgstr[2] "%d сообщений"
+msgstr[3] "%d сообщений"

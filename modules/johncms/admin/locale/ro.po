@@ -1621,3 +1621,69 @@ msgstr ""
 
 msgid "Users on registration"
 msgstr "Utilizatori la înregistrare"
+
+msgid "User banned"
+msgstr "Utilizator banat"
+
+msgid "Ban terminated"
+msgstr "Banare terminata"
+
+msgid "Ban deleted"
+msgstr "Banare stearsa"
+
+msgid "Violations history cleared"
+msgstr "Istoricul incalcarii sters"
+
+msgid "Profile"
+msgstr "Profil"
+
+msgid "Activity"
+msgstr "Activitate"
+
+msgid "All"
+msgstr "Toate"
+
+msgid "The password confirmation you entered is wrong"
+msgstr "Confirmarea parolei a fost introdusa gresit"
+
+msgid "hidden"
+msgstr "ascuns"
+
+msgid "City, Country"
+msgstr "Oras, Tara"
+
+msgid "Registered"
+msgstr "Inregistrat"
+
+msgid "Actions"
+msgstr "Actiuni"
+
+msgid "Status"
+msgstr "Stare:"
+
+msgid "Gender"
+msgstr "Sex"
+
+msgid "Birthday"
+msgstr "Ziua de nastere"
+
+msgid "Month"
+msgstr "Lună"
+
+msgid "Year"
+msgstr "Anul"
+
+msgid "Phone number"
+msgstr "Numar de telefon"
+
+msgid "Admin Notes"
+msgstr "Note administrative"
+
+msgid "Active"
+msgstr "Activ"
+
+msgid "Last visit"
+msgstr "Ultima vizita"
+
+msgid "Date"
+msgstr "Data"

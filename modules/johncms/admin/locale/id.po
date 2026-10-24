@@ -1620,3 +1620,72 @@ msgstr ""
 
 msgid "Users on registration"
 msgstr "Pengguna pada saat pendaftaran"
+
+msgid "Online"
+msgstr "Aktif"
+
+msgid "User banned"
+msgstr "Pengguna diblokir"
+
+msgid "Ban terminated"
+msgstr "Blokir dihentikan"
+
+msgid "Ban deleted"
+msgstr "Blokir dihapus"
+
+msgid "Violations history cleared"
+msgstr "Riwayat pelanggaran dihapus"
+
+msgid "Ban"
+msgstr "Blokir"
+
+msgid "Profile"
+msgstr "Profil"
+
+msgid "Activity"
+msgstr "Aktivitas"
+
+msgid "All"
+msgstr "Semua"
+
+msgid "The password confirmation you entered is wrong"
+msgstr "Konfirmasi kata sandi salah"
+
+msgid "hidden"
+msgstr "tersembunyi"
+
+msgid "City, Country"
+msgstr "Kota, Negara"
+
+msgid "Registered"
+msgstr "Terdaftar"
+
+msgid "Actions"
+msgstr "Tindakan"
+
+msgid "Gender"
+msgstr "Jenis kelamin"
+
+msgid "Birthday"
+msgstr "Ulang Tahun"
+
+msgid "Month"
+msgstr "Bulan"
+
+msgid "Year"
+msgstr "Tahun"
+
+msgid "Phone number"
+msgstr "Nomor telepon"
+
+msgid "Site"
+msgstr "Situs"
+
+msgid "Active"
+msgstr "Aktif"
+
+msgid "Last visit"
+msgstr "Kunjungan terakhir"
+
+msgid "Date"
+msgstr "Tanggal"

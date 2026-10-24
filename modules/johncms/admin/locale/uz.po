@@ -1620,3 +1620,75 @@ msgstr ""
 
 msgid "Users on registration"
 msgstr "Ro'yxatga olish bo'yicha foydalanuvchilar"
+
+msgid "Online"
+msgstr "Hozir saytda"
+
+msgid "User banned"
+msgstr "Foydalanuvchi to'sib qo'yildi"
+
+msgid "Ban terminated"
+msgstr "To'siqni bekor qilish"
+
+msgid "Ban deleted"
+msgstr "To'siq o'chirildi"
+
+msgid "Violations history cleared"
+msgstr "Qoidabuzilishlar tarixi tozalandi"
+
+msgid "Ban"
+msgstr "To'sib qo'yish"
+
+msgid "Profile"
+msgstr "Profil"
+
+msgid "Activity"
+msgstr "Faollik"
+
+msgid "All"
+msgstr "Barcha"
+
+msgid "The password confirmation you entered is wrong"
+msgstr "Siz kiritgan parol noto‘g‘ri"
+
+msgid "hidden"
+msgstr "berkitilgan"
+
+msgid "City, Country"
+msgstr "Shahar, Mamlakat"
+
+msgid "Registered"
+msgstr "Azo bo'lgan"
+
+msgid "Actions"
+msgstr "Harakatlar"
+
+msgid "Status"
+msgstr "Holati"
+
+msgid "Gender"
+msgstr "Jins"
+
+msgid "Birthday"
+msgstr "Tug‘ilgan kun:"
+
+msgid "Month"
+msgstr "Oy"
+
+msgid "Year"
+msgstr "Yil"
+
+msgid "Phone number"
+msgstr "Telefon raqami"
+
+msgid "Site"
+msgstr "Web Sayt"
+
+msgid "Active"
+msgstr "Faol"
+
+msgid "Last visit"
+msgstr "So'nggi tashrif"
+
+msgid "Date"
+msgstr "Sana"

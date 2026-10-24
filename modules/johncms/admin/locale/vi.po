@@ -1621,3 +1621,78 @@ msgstr ""
 
 msgid "Users on registration"
 msgstr "Người dùng đăng ký"
+
+msgid "Online"
+msgstr "Trực tuyến"
+
+msgid "User banned"
+msgstr "Thành viên đã bị cấm"
+
+msgid "Ban terminated"
+msgstr "Ban chấm dứt"
+
+msgid "Ban deleted"
+msgstr "Lệnh cấm đã được xóa"
+
+msgid "Violations history cleared"
+msgstr "Hành vi vi phạm lịch sử xóa"
+
+msgid "Ban"
+msgstr "Cấm"
+
+msgid "Profile"
+msgstr "Hồ sơ"
+
+msgid "Activity"
+msgstr "Hoạt động"
+
+msgid "All"
+msgstr "Tất cả"
+
+msgid "The password confirmation you entered is wrong"
+msgstr "Mật mã xác nhận bạn nhập là sai"
+
+msgid "hidden"
+msgstr "ẩn"
+
+msgid "City, Country"
+msgstr "Thành phố, quốc gia"
+
+msgid "Registered"
+msgstr "Đã đăng ký"
+
+msgid "Actions"
+msgstr "Các hành động"
+
+msgid "Status"
+msgstr "Tình trạng"
+
+msgid "Gender"
+msgstr "Giới tính"
+
+msgid "Birthday"
+msgstr "Sinh Nhật"
+
+msgid "Month"
+msgstr "Tháng"
+
+msgid "Year"
+msgstr "Năm"
+
+msgid "Phone number"
+msgstr "Điện thọai"
+
+msgid "Site"
+msgstr "Website"
+
+msgid "Admin Notes"
+msgstr "Quản Trị Ghi Chú"
+
+msgid "Active"
+msgstr "Hoạt động"
+
+msgid "Last visit"
+msgstr "Truy cập cuối"
+
+msgid "Date"
+msgstr "Ngày"

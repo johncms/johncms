@@ -1620,3 +1620,75 @@ msgstr ""
 
 msgid "Users on registration"
 msgstr "Qeydiyyatlı istifadəçilər"
+
+msgid "Online"
+msgstr "Xətdə"
+
+msgid "User banned"
+msgstr "istifadəçi ban oldu"
+
+msgid "Ban terminated"
+msgstr "Xitam verilməsi qadağan"
+
+msgid "Ban deleted"
+msgstr "Ban silindi"
+
+msgid "Violations history cleared"
+msgstr "Tarix gömrükdə rəsmiləşdirilmiş pozulması"
+
+msgid "Profile"
+msgstr "Profil"
+
+msgid "Activity"
+msgstr "Fəaliyyəti"
+
+msgid "All"
+msgstr "Hamsı"
+
+msgid "The password confirmation you entered is wrong"
+msgstr "Parolu düzgün təsdiq edin"
+
+msgid "hidden"
+msgstr "gizli"
+
+msgid "City, Country"
+msgstr "Yaşadığım Ölkə"
+
+msgid "Registered"
+msgstr "Qeydiyyatlı"
+
+msgid "Actions"
+msgstr "Fəaliyyət"
+
+msgid "Status"
+msgstr "Vəziyyət"
+
+msgid "Gender"
+msgstr "Cins"
+
+msgid "Birthday"
+msgstr "Doğum tarixi"
+
+msgid "Month"
+msgstr "Ay"
+
+msgid "Year"
+msgstr "İl"
+
+msgid "Phone number"
+msgstr "Telefon nömrəsi ( Yazmayada bilərsiniz) "
+
+msgid "Site"
+msgstr "Sayt"
+
+msgid "Admin Notes"
+msgstr "Admin Qeydi"
+
+msgid "Active"
+msgstr "Aktiv"
+
+msgid "Last visit"
+msgstr "Son Mesaj"
+
+msgid "Date"
+msgstr "Tarix"

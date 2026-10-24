@@ -50,13 +50,13 @@ final class UserCardTest extends FunctionalTestCase
 
         self::assertStringNotContainsString('hidden@example.com', $forModerator);
         self::assertStringNotContainsString('Keeps arguing in the guestbook', $forModerator);
-        self::assertStringNotContainsString('Others from this address', $forModerator);
+        self::assertStringNotContainsString(d__('admin', 'Others from this address'), $forModerator);
 
         $forSupervisor = $this->pageOf($member->id, FunctionalUserFactory::createSupervisor());
 
         self::assertStringContainsString('hidden@example.com', $forSupervisor);
         self::assertStringContainsString('Keeps arguing in the guestbook', $forSupervisor);
-        self::assertStringContainsString('Others from this address', $forSupervisor);
+        self::assertStringContainsString(d__('admin', 'Others from this address'), $forSupervisor);
     }
 
     public function testTheListLeadsToThePageAndThePageToTheSite(): void

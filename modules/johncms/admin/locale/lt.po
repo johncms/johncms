@@ -1620,3 +1620,75 @@ msgstr ""
 
 msgid "Users on registration"
 msgstr "Vartotojų registracija"
+
+msgid "Online"
+msgstr "Prisijungę"
+
+msgid "User banned"
+msgstr "Vartotojas užblokuotas"
+
+msgid "Ban terminated"
+msgstr "Vartotojas atblokotas"
+
+msgid "Ban deleted"
+msgstr "Blokas ištrintas"
+
+msgid "Violations history cleared"
+msgstr "Pažeidimų istorija išvalytą"
+
+msgid "Ban"
+msgstr "Blokuoti"
+
+msgid "Profile"
+msgstr "Profilis"
+
+msgid "Activity"
+msgstr "Aktyvumas"
+
+msgid "All"
+msgstr "Visi"
+
+msgid "The password confirmation you entered is wrong"
+msgstr "Naujo slaptažodžio patvirtinimas įvestas neteisingai"
+
+msgid "hidden"
+msgstr "paslėptas"
+
+msgid "City, Country"
+msgstr "Miestas, Šalis"
+
+msgid "Registered"
+msgstr "Registracijos data"
+
+msgid "Actions"
+msgstr "Veiksmai"
+
+msgid "Status"
+msgstr "Būsena"
+
+msgid "Gender"
+msgstr "Lytis"
+
+msgid "Birthday"
+msgstr "Gimtadienis"
+
+msgid "Month"
+msgstr "Mėnuo"
+
+msgid "Year"
+msgstr "Metai"
+
+msgid "Phone number"
+msgstr "Telefono numeris"
+
+msgid "Site"
+msgstr "Svetainė"
+
+msgid "Active"
+msgstr "Aktyvus"
+
+msgid "Last visit"
+msgstr "Paskutinis apsilankymas"
+
+msgid "Date"
+msgstr "Data"

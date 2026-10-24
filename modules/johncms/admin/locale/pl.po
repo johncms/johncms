@@ -1620,3 +1620,69 @@ msgstr ""
 
 msgid "Users on registration"
 msgstr "Rejestracja użytkownika"
+
+msgid "User banned"
+msgstr "Użytkownik zbanowany"
+
+msgid "Ban terminated"
+msgstr "Zakończenie banu"
+
+msgid "Ban deleted"
+msgstr "Ban usunięty"
+
+msgid "Violations history cleared"
+msgstr "Historia naruszeń została wyczyszczona"
+
+msgid "Ban"
+msgstr "Banuj"
+
+msgid "Profile"
+msgstr "Profil"
+
+msgid "Activity"
+msgstr "Aktywność"
+
+msgid "All"
+msgstr "Wszystko"
+
+msgid "The password confirmation you entered is wrong"
+msgstr "Potwierdzone przez Ciebie hasło jest błędne"
+
+msgid "hidden"
+msgstr "ukryty"
+
+msgid "City, Country"
+msgstr "Miasto, Województwo"
+
+msgid "Registered"
+msgstr "Zarejestrowany"
+
+msgid "Actions"
+msgstr "Akcje"
+
+msgid "Gender"
+msgstr "Płeć"
+
+msgid "Birthday"
+msgstr "Urodziny"
+
+msgid "Month"
+msgstr "Miesiąc"
+
+msgid "Year"
+msgstr "Rok"
+
+msgid "Phone number"
+msgstr "Numer telefonu"
+
+msgid "Site"
+msgstr "Strona"
+
+msgid "Active"
+msgstr "Aktywne"
+
+msgid "Last visit"
+msgstr "Ostatnia wizyta"
+
+msgid "Date"
+msgstr "Data"
