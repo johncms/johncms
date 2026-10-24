@@ -1,0 +1,30 @@
+{#
+    One filter of a list: a button naming the filter and what it is set to, opening the choices.
+    The choices are links, so the filter works without a script; a live list follows them in place.
+
+    @param string label   The name of the filter: "Role".
+    @param string value   The title of the chosen option.
+    @param bool   applied Whether the filter narrows the list: anything but its first option.
+    @param array  options title, url, active.
+#}
+<div class="dropdown">
+    <button type="button" class="admin-filter{{ applied ? ' admin-filter--applied' }}" data-bs-toggle="dropdown" aria-expanded="false">
+        <span class="admin-filter__label">{{ label }}:</span>
+        <span class="admin-filter__value">{{ value }}</span>
+        {% include '@admin/components/ui/icon.twig' with {name: 'chevron-down', size: 12} only %}
+    </button>
+    <ul class="dropdown-menu">
+        {% for option in options %}
+            <li>
+                <a class="dropdown-item{{ option.active ? ' active' }}" href="{{ option.url }}"{% if option.active %} aria-current="true"{% endif %}>
+                    <span class="admin-filter__check">
+                        {% if option.active %}
+                            {% include '@admin/components/ui/icon.twig' with {name: 'check', size: 13} only %}
+                        {% endif %}
+                    </span>
+                    {{ option.title }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>

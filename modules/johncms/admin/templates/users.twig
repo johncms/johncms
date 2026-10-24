@@ -1,40 +1,54 @@
 {#
-    Everyone registered on the site.
+    Every account of the site: searched, filtered and ordered from the query string.
 
-    @var array        users      Rows prepared by AdminUserRowMapper.
-    @var array        sort_links Orders to switch between: name, url, active.
-    @var int          total
-    @var int          per_page
+    The page is a live list (src/admin/js/live-list.js): the regions below are drawn by templates
+    of their own, and as a search is typed or a filter is picked the same address is asked again
+    and admin::users/live puts them back in place.
+
+    @var \Johncms\Modules\Admin\Application\DTO\UserListStatsDTO stats
+    @var array        stat_urls       Where each number leads.
+    @var array        controls        Built by UserListControlsMapper.
+    @var array        users           Rows built by UserListRowMapper.
+    @var string       search
+    @var int          pending         Accounts waiting for approval.
+    @var int          total           Accounts the filter lets through.
+    @var bool         show_ip
     @var \Twig\Markup pagination
+    @var string       success_message Empty unless an action has just been performed.
 #}
 {% extends '@admin/layouts/default.twig' %}
 
 {% block content %}
-    {% if total %}
-        <div class="btn-group btn-group-sm input-group-sm mb-3" role="group">
-            <div class="input-group-prepend">
-                <div class="input-group-text">{{ __('Sort') }}</div>
-            </div>
-            {% for link in sort_links %}
-                <a href="{{ link.url }}" class="btn btn-outline-secondary ps-3 pe-3{% if link.active %} active{% endif %}">{{ link.name }}</a>
-            {% endfor %}
+    {% include '@theme/components/alert.twig' with {alert_type: 'alert-success', alert: success_message} only %}
+
+    <div data-live-list>
+        <div class="admin-stats">
+            {% include '@admin/components/ui/stat-card.twig' with {label: __('All accounts'), value: stats.total, url: stat_urls.total} only %}
+            {% include '@admin/components/ui/stat-card.twig' with {label: __('Online now'), value: stats.online, url: stat_urls.online, tone: 'accent'} only %}
+            {% include '@admin/components/ui/stat-card.twig' with {label: __('Registered today'), value: stats.registeredToday, url: stat_urls.registered} only %}
+            {% include '@admin/components/ui/stat-card.twig' with {label: __('Awaiting approval'), value: stats.pending, url: stat_urls.pending, tone: stats.pending ? 'danger' : ''} only %}
+            {% include '@admin/components/ui/stat-card.twig' with {label: __('Banned'), value: stats.banned, url: stat_urls.banned} only %}
         </div>
 
-        {% for user in users %}
-            {% include '@admin/components/user-row.twig' with {item: user} only %}
-        {% endfor %}
+        {% include '@admin/users/tabs.twig' with {controls: controls, pending: pending} only %}
 
-        <div>
-            <div>{{ __('Total') }}: {{ total }}</div>
-            {% if total > per_page %}
-                <div class="mt-1">{{ pagination }}</div>
-            {% endif %}
-        </div>
-    {% else %}
-        <div class="row">
-            <div class="col-md-6">
-                {% include '@theme/components/alert.twig' with {alert_type: 'alert-info', alert: __('List is empty')} only %}
-            </div>
-        </div>
-    {% endif %}
+        <form class="admin-toolbar" method="get" action="{{ controls.action }}" role="search" data-live-list-form>
+            {% include '@admin/components/ui/search-field.twig' with {
+                name: 'q',
+                value: search,
+                label: __('Search users'),
+                placeholder: __('Nickname, e-mail, ID or IP'),
+            } only %}
+            {% include '@admin/users/state.twig' with {controls: controls} only %}
+            {% include '@admin/users/filters.twig' with {controls: controls} only %}
+        </form>
+
+        {% include '@admin/users/results.twig' with {
+            controls: controls,
+            users: users,
+            total: total,
+            show_ip: show_ip,
+            pagination: pagination,
+        } only %}
+    </div>
 {% endblock %}

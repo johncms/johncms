@@ -5,23 +5,27 @@ declare(strict_types=1);
 namespace Johncms\Modules\Admin\Domain\Enums;
 
 /**
- * Доступные режимы сортировки списка пользователей.
+ * What the list of users can be ordered by. The query maps every case to its column, so a
+ * value from the address never reaches the SQL itself.
  */
 enum UserListSort: string
 {
     case ID = 'id';
     case NICK = 'nick';
     case IP = 'ip';
+    case LAST_VISIT = 'visit';
+    case REGISTERED = 'registered';
+    case KARMA = 'karma';
 
     /**
-     * Колонка БД, по которой выполняется сортировка (только белый список).
+     * The direction the list takes when the column is first clicked: the newest, the most recent
+     * and the highest first, names and addresses from A.
      */
-    public function column(): string
+    public function defaultDirection(): SortDirection
     {
         return match ($this) {
-            self::ID   => 'id',
-            self::NICK => 'name',
-            self::IP   => 'ip',
+            self::NICK, self::IP => SortDirection::ASC,
+            default              => SortDirection::DESC,
         };
     }
 }

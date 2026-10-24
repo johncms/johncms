@@ -10,8 +10,8 @@ use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Johncms\Modules\Admin\Application\DTO\UserRoleRowDTO;
 use Johncms\Modules\Admin\Application\Exceptions\UserNotFoundException;
 use Johncms\Modules\Admin\Application\UseCases\GetUserRolesUseCase;
-use Johncms\Modules\Admin\Domain\Enums\UserListSort;
 use Johncms\Modules\Admin\Domain\Repository\UserListRepositoryInterface;
+use Johncms\Modules\Admin\Domain\ValueObjects\UserListFilter;
 use Johncms\Users\User;
 use PHPUnit\Framework\TestCase;
 use Tests\Support\BootsInMemoryDatabase;
@@ -116,14 +116,19 @@ final class GetUserRolesUseCaseTest extends TestCase
                 return $user;
             }
 
-            public function countApproved(): int
+            public function count(UserListFilter $filter, int $now): int
             {
                 return 1;
             }
 
-            public function getApproved(UserListSort $sort, int $limit, int $offset): EloquentCollection
+            public function getPage(UserListFilter $filter, int $now, int $limit, int $offset): EloquentCollection
             {
                 return new EloquentCollection();
+            }
+
+            public function getBanEnds(array $userIds, int $now): array
+            {
+                return [];
             }
         };
     }

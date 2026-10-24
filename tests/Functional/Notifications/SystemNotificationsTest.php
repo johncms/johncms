@@ -49,7 +49,7 @@ final class SystemNotificationsTest extends FunctionalTestCase
 
         $page = $this->notificationsOf(FunctionalUserFactory::createSupervisor());
 
-        self::assertEqualsCanonicalizing(['/admin/reg/', '/library/premod', '/downloads/moderation'], $this->listed($page));
+        self::assertEqualsCanonicalizing(['/admin/users?status=pending', '/library/premod', '/downloads/moderation'], $this->listed($page));
         self::assertSame('3', $this->badge($page));
     }
 

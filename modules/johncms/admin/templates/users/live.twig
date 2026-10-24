@@ -1,0 +1,21 @@
+{#
+    The regions of the list of users, as the live list asks for them: each replaces the region of
+    the same name on the page. A fragment, so it extends nothing.
+
+    @var array        controls
+    @var array        users
+    @var int          pending
+    @var int          total
+    @var bool         show_ip
+    @var \Twig\Markup pagination
+#}
+{% include '@admin/users/tabs.twig' with {controls: controls, pending: pending} only %}
+{% include '@admin/users/state.twig' with {controls: controls} only %}
+{% include '@admin/users/filters.twig' with {controls: controls} only %}
+{% include '@admin/users/results.twig' with {
+    controls: controls,
+    users: users,
+    total: total,
+    show_ip: show_ip,
+    pagination: pagination,
+} only %}

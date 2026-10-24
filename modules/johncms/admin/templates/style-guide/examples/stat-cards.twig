@@ -1,0 +1,6 @@
+<div class="admin-stats">
+    {% include '@admin/components/ui/stat-card.twig' with {label: __('All accounts'), value: 1384, url: '#lists-kit'} only %}
+    {% include '@admin/components/ui/stat-card.twig' with {label: __('Online now'), value: 47, url: '#lists-kit', tone: 'accent'} only %}
+    {% include '@admin/components/ui/stat-card.twig' with {label: __('Awaiting approval'), value: 5, url: '#lists-kit', tone: 'danger'} only %}
+    {% include '@admin/components/ui/stat-card.twig' with {label: __('Banned'), value: 23} only %}
+</div>

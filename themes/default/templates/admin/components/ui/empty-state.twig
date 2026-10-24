@@ -1,0 +1,16 @@
+{#
+    What a list shows when there is nothing in it.
+
+    @param string icon        A name in the sprite of the panel.
+    @param string title
+    @param string description What to do about it; empty for nothing.
+#}
+<div class="admin-empty">
+    <div class="admin-empty__icon">
+        {% include '@admin/components/ui/icon.twig' with {name: icon, size: 22} only %}
+    </div>
+    <div class="admin-empty__title">{{ title }}</div>
+    {% if description|default('') %}
+        <div class="admin-empty__desc">{{ description }}</div>
+    {% endif %}
+</div>

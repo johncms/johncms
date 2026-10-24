@@ -1,0 +1,106 @@
+{#
+    The accounts the filter lets through: the chips of what is applied, the table and the pages.
+
+    @param array        controls
+    @param array        users      Rows built by UserListRowMapper.
+    @param int          total
+    @param bool         show_ip    Whether the visitor may see where the accounts came from.
+    @param \Twig\Markup pagination
+#}
+<div class="admin-list-results" data-live-list-region="results">
+    {% include '@admin/components/ui/filter-chips.twig' with {chips: controls.chips, clear_url: controls.clear_url} only %}
+
+    <div class="card">
+        {% if users is empty %}
+            {% include '@admin/components/ui/empty-state.twig' with {
+                icon: 'users',
+                title: __('Nobody found'),
+                description: controls.chips is empty ? '' : __('Change the search or reset the filters.'),
+            } only %}
+        {% else %}
+            <div class="table-responsive">
+                <table class="table table-hover admin-users-table">
+                    <thead>
+                        <tr>
+                            {% include '@admin/components/ui/sort-header.twig' with {title: __('User'), link: controls.sort.nick} only %}
+                            {% include '@admin/components/ui/sort-header.twig' with {title: __('Activity'), link: controls.sort.visit} only %}
+                            <th scope="col">{{ __('Status') }}</th>
+                            {% include '@admin/components/ui/sort-header.twig' with {title: __('Karma'), link: controls.sort.karma, class: 'text-end'} only %}
+                            {% include '@admin/components/ui/sort-header.twig' with {title: __('Registration'), link: controls.sort.registered} only %}
+                            {% if show_ip %}
+                                {% include '@admin/components/ui/sort-header.twig' with {title: 'IP', link: controls.sort.ip} only %}
+                            {% endif %}
+                            <th scope="col"><span class="visually-hidden">{{ __('Actions') }}</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                            <tr>
+                                <td>
+                                    {% include '@admin/components/ui/user-cell.twig' with {
+                                        id: user.id,
+                                        name: user.name,
+                                        url: user.profile_url,
+                                        online: user.online,
+                                        roles: user.roles,
+                                        sub: user.email,
+                                        note: user.email and user.email_hidden ? __('hidden') : '',
+                                    } only %}
+                                </td>
+                                <td>
+                                    <div class="admin-users-table__visit">
+                                        {% if user.online %}
+                                            <span class="badge rounded-pill bg-success-subtle text-success-emphasis badge-dot">{{ __('Online') }}</span>
+                                        {% else %}
+                                            {{ user.last_visit }}
+                                        {% endif %}
+                                    </div>
+                                    <div class="admin-users-table__sub">{{ n__('%d message', '%d messages', user.posts)|format(user.posts) }}</div>
+                                </td>
+                                <td>
+                                    {% if user.status == 'pending' %}
+                                        <span class="badge rounded-pill bg-warning-subtle text-warning-emphasis badge-dot">{{ __('Awaiting approval') }}</span>
+                                    {% elseif user.status == 'banned' %}
+                                        <span class="badge rounded-pill bg-danger-subtle text-danger-emphasis badge-dot">{{ __('Banned') }}</span>
+                                        <div class="admin-users-table__sub">{{ __('until %s')|format(user.ban_ends|display_date) }}</div>
+                                    {% else %}
+                                        <span class="badge rounded-pill text-bg-light badge-dot">{{ __('Active') }}</span>
+                                    {% endif %}
+                                </td>
+                                <td class="text-end">
+                                    <span class="admin-users-table__karma{{ user.karma > 0 ? ' text-success' : (user.karma < 0 ? ' text-danger' : ' text-body-tertiary') }}">
+                                        {{- user.karma > 0 ? '+' }}{{ user.karma -}}
+                                    </span>
+                                </td>
+                                <td class="admin-users-table__date">{{ user.registered|display_date }}</td>
+                                {% if show_ip %}
+                                    <td><a class="font-monospace" href="{{ user.ip_url }}">{{ user.ip }}</a></td>
+                                {% endif %}
+                                <td>
+                                    <div class="admin-users-table__actions">
+                                        {% if user.approve %}
+                                            <form method="post" action="{{ user.approve.url }}">
+                                                <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                                                {% for field, value in user.approve.fields %}
+                                                    <input type="hidden" name="{{ field }}" value="{{ value }}">
+                                                {% endfor %}
+                                                <button type="submit" class="btn btn-outline-primary btn-icon btn-sm" aria-label="{{ user.approve.title }}" title="{{ user.approve.title }}">
+                                                    {% include '@admin/components/ui/icon.twig' with {name: 'check', size: 14} only %}
+                                                </button>
+                                            </form>
+                                        {% endif %}
+                                        {% include '@admin/components/ui/row-actions.twig' with {actions: user.actions, label: __('Actions')} only %}
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer admin-list-footer">
+                <span class="admin-list-footer__total">{{ __('Found: %s')|format(total|format_number) }}</span>
+                <div class="pagination-no-padding">{{ pagination }}</div>
+            </div>
+        {% endif %}
+    </div>
+</div>

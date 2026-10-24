@@ -1,0 +1,10 @@
+{#
+    The rest of the filter, submitted with the search field so that typing keeps it.
+
+    @param array controls
+#}
+<div hidden data-live-list-region="state">
+    {% for name, value in controls.state %}
+        <input type="hidden" name="{{ name }}" value="{{ value }}">
+    {% endfor %}
+</div>

@@ -1,0 +1,11 @@
+<div class="card">
+    <table class="table mb-0">
+        <thead>
+            <tr>
+                {% include '@admin/components/ui/sort-header.twig' with {title: __('User'), link: {url: '#lists-kit', active: true, direction: 'asc'}} only %}
+                {% include '@admin/components/ui/sort-header.twig' with {title: __('Registration'), link: {url: '#lists-kit', active: false, direction: ''}} only %}
+                <th scope="col">{{ __('Status') }}</th>
+            </tr>
+        </thead>
+    </table>
+</div>

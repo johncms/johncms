@@ -1,0 +1,7 @@
+{% include '@admin/components/ui/filter-chips.twig' with {
+    chips: [
+        {label: __('Search'), value: 'gandalf', url: '#lists-kit'},
+        {label: __('Role'), value: __('Staff'), url: '#lists-kit'},
+    ],
+    clear_url: '#lists-kit',
+} only %}

@@ -6,7 +6,6 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
 use Johncms\Modules\Admin\Domain\Repository\CounterRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\DashboardRepositoryInterface;
-use Johncms\Modules\Admin\Domain\Repository\StaffRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\AdRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\BanAmnestyRepositoryInterface;
 use Johncms\Modules\Admin\Domain\Repository\AuthConfigRepositoryInterface;
@@ -48,7 +47,6 @@ use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentIpBanRep
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentKarmaRepository;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentIpSearchRepository;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentRegistrationModerationRepository;
-use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentStaffRepository;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentUserDeletionRepository;
 use Johncms\Modules\Admin\Infrastructure\Security\CrcFileIntegrityScanner;
 use Johncms\Modules\Admin\Infrastructure\Persistence\Repository\EloquentUserListRepository;
@@ -80,7 +78,6 @@ return static function (ContainerConfigurator $container): void {
         ->autoconfigure();
 
     $services->set(DashboardRepositoryInterface::class, EloquentDashboardRepository::class)->public();
-    $services->set(StaffRepositoryInterface::class, EloquentStaffRepository::class)->public();
     $services->set(UserListRepositoryInterface::class, EloquentUserListRepository::class)->public();
     $services->set(WhoisClientInterface::class, SocketWhoisClient::class)->public();
     $services->set(IpSearchRepositoryInterface::class, EloquentIpSearchRepository::class)->public();

@@ -28,15 +28,14 @@
     }]) %}
 {% endfor %}
 
+{# The number on the users is the accounts waiting for approval: the list holds them too. #}
 {% set sections = [
     {
         title: d__('admin', 'Users'),
         active: usr_menu,
         items: [
             {key: 'search_ip', url: '/admin/ip-search', icon: 'search', title: d__('admin', 'Search')},
-            {key: 'reg', url: '/admin/registrations', icon: 'user-plus', title: d__('admin', 'On registration'), count: counters.registrations, tone: 'danger', shown: counters.registrations > 0},
-            {key: 'userlist', url: '/admin/users', icon: 'users', title: d__('admin', 'Users'), count: counters.users},
-            {key: 'adminlist', url: '/admin/staff', icon: 'user-cog', title: d__('admin', 'Administration'), count: counters.staff},
+            {key: 'userlist', url: '/admin/users', icon: 'users', title: d__('admin', 'Users'), count: counters.registrations, tone: 'danger'},
             {key: 'roles', url: '/admin/roles', icon: 'key-round', title: d__('admin', 'Roles'), shown: can('admin.roles.manage')},
             {key: 'auth_log', url: '/admin/auth-log', icon: 'history', title: d__('admin', 'Sign-in log'), shown: can('admin.auth_log.view')},
             {key: 'ban_panel', url: '/admin/bans', icon: 'ban', title: d__('admin', 'Ban Panel'), count: counters.bans},

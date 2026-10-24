@@ -29,7 +29,6 @@ use Johncms\Modules\Admin\Application\Controllers\Users\BanListController;
 use Johncms\Modules\Admin\Application\Controllers\Users\DeleteUserController;
 use Johncms\Modules\Admin\Application\Controllers\Users\KarmaController;
 use Johncms\Modules\Admin\Application\Controllers\Users\RegistrationModerationController;
-use Johncms\Modules\Admin\Application\Controllers\Users\StaffListController;
 use Johncms\Modules\Admin\Application\Controllers\Users\UserCleanupController;
 use Johncms\Modules\Admin\Application\Controllers\Users\UserListController;
 use Johncms\Modules\Admin\Application\Controllers\Users\UsersController;
@@ -57,13 +56,9 @@ return static function (RouteCollection $router): void {
     // win on first match (plain UrlMatcher, registration order).
     $adminGroup = $router->group('', function (RouteCollection $r): void {
         $r->get('/admin', DashboardController::class)->name('admin.index');
-        $r->get('/admin/staff', StaffListController::class)->name('admin.staff');
         $r->get('/admin/users', UserListController::class)->name('admin.users');
         $r->get('/admin/users/cleanup', [UserCleanupController::class, 'index'])->name('admin.users.cleanup');
         $r->post('/admin/users/cleanup', [UserCleanupController::class, 'clean'])->name('admin.users.cleanup.run');
-        $r->get('/admin/users/{sort}', UserListController::class)
-            ->name('admin.users.sort')
-            ->requirements(['sort' => 'by-nick|by-ip']);
         // Who may open these is decided by the admin.roles.manage permission rather than by the
         // group: an administrator holds it, and a role standing above the visitor's own is
         // listed but not opened.
@@ -98,7 +93,6 @@ return static function (RouteCollection $router): void {
             ->requirements(['sort' => 'by-violations']);
         $r->get('/admin/antiflood', [AntifloodSettingsController::class, 'form'])->name('admin.antiflood');
         $r->post('/admin/antiflood', [AntifloodSettingsController::class, 'save'])->name('admin.antiflood.save');
-        $r->get('/admin/registrations', [RegistrationModerationController::class, 'index'])->name('admin.registrations');
         $r->post('/admin/registrations/approve', [RegistrationModerationController::class, 'approve'])->name('admin.registrations.approve');
         $r->post('/admin/registrations/approve-all', [RegistrationModerationController::class, 'approveAll'])->name('admin.registrations.approve_all');
         $r->post('/admin/registrations/delete', [RegistrationModerationController::class, 'delete'])->name('admin.registrations.delete');

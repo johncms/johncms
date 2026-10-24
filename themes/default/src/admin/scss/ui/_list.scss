@@ -1,0 +1,98 @@
+// The parts of a list around its table: the row of tabs, the empty state
+// (components/ui/empty-state.twig), the sortable heads (sort-header.twig), the footer with the
+// pages — and the state of a live list waiting for its answer.
+
+.admin-list-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.5rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.admin-list-tabs__actions {
+  display: flex;
+  gap: 0.5rem;
+  padding-bottom: 0.375rem;
+}
+
+.admin-sort {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: inherit;
+
+  &:hover {
+    color: var(--fg);
+    text-decoration: none;
+  }
+}
+
+.admin-sort__icon {
+  opacity: 0.35;
+}
+
+.admin-sort--active {
+  color: var(--fg);
+
+  .admin-sort__icon {
+    opacity: 1;
+    color: var(--accent);
+  }
+}
+
+.admin-empty {
+  padding: 4rem 1.5rem;
+  text-align: center;
+  color: var(--fg-muted);
+}
+
+.admin-empty__icon {
+  display: grid;
+  place-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  margin: 0 auto 0.875rem;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--bg-inset);
+  color: var(--fg-dim);
+}
+
+.admin-empty__title {
+  margin-bottom: 0.375rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.admin-empty__desc {
+  max-width: 20rem;
+  margin: 0 auto;
+  font-size: 0.8125rem;
+}
+
+.admin-list-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+}
+
+.admin-list-footer__total {
+  font-family: $ui-font-mono;
+  font-size: 0.75rem;
+  color: var(--fg-muted);
+}
+
+// A live list fades what is about to change while the answer is on its way; the delay keeps a
+// quick answer from flickering.
+[data-live-list] [data-live-list-region="results"] {
+  transition: opacity 0.15s;
+}
+
+[data-live-list][aria-busy="true"] [data-live-list-region="results"] {
+  opacity: 0.55;
+  transition-delay: 0.15s;
+}

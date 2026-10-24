@@ -30,7 +30,7 @@ final readonly class PendingRegistrationsNotificationProvider implements SystemN
         $count = $this->registrations->countPending();
 
         if ($count > 0) {
-            yield new SystemNotification('reg_total', d__('admin', 'Users on registration'), '/admin/reg/', $count);
+            yield new SystemNotification('reg_total', d__('admin', 'Users on registration'), '/admin/users?status=pending', $count);
         }
     }
 }

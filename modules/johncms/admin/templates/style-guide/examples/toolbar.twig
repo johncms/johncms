@@ -1,0 +1,29 @@
+{# In a live list the form carries data-live-list-form, and the filters sit in a region. #}
+<form class="admin-toolbar mb-0" method="get" action="#lists-kit" role="search">
+    {% include '@admin/components/ui/search-field.twig' with {
+        name: 'q',
+        value: '',
+        label: __('Search users'),
+        placeholder: __('Nickname, e-mail, ID or IP'),
+    } only %}
+    <div class="admin-toolbar__filters">
+        {% include '@admin/components/ui/filter-dropdown.twig' with {
+            label: __('Role'),
+            value: __('Staff'),
+            applied: true,
+            options: [
+                {title: __('Any'), url: '#lists-kit', active: false},
+                {title: __('Staff'), url: '#lists-kit', active: true},
+            ],
+        } only %}
+        {% include '@admin/components/ui/filter-dropdown.twig' with {
+            label: __('Activity'),
+            value: __('Any'),
+            applied: false,
+            options: [
+                {title: __('Any'), url: '#lists-kit', active: true},
+                {title: __('Online now'), url: '#lists-kit', active: false},
+            ],
+        } only %}
+    </div>
+</form>

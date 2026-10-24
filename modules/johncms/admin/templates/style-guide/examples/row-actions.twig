@@ -1,0 +1,9 @@
+{# A destructive action goes last; the menu puts a line before the first of them. #}
+{% include '@admin/components/ui/row-actions.twig' with {
+    label: __('Actions'),
+    actions: [
+        {method: 'get', url: '#lists-kit', title: __('Profile'), icon: 'user', danger: false, fields: {}},
+        {method: 'get', url: '#lists-kit', title: __('Roles'), icon: 'key-round', danger: false, fields: {}},
+        {method: 'get', url: '#lists-kit', title: __('Delete'), icon: 'trash-2', danger: true, fields: {}},
+    ],
+} only %}

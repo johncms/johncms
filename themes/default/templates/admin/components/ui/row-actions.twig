@@ -1,0 +1,41 @@
+{#
+    The menu of a row: a button opening what can be done to it, the destructive actions last and
+    apart. An action that changes something is a form posted with the token; the rest are links.
+
+    The menu is positioned fixed, so the scrolling container of a wide table does not cut it off.
+
+    @param array  actions method (get | post), url, title, icon, danger, fields (posted with it).
+    @param string label   What the button says to a screen reader.
+#}
+<div class="dropdown">
+    <button type="button" class="btn btn-outline-secondary btn-icon btn-sm" data-bs-toggle="dropdown"
+            data-bs-popper-config='{"strategy":"fixed"}' aria-expanded="false" aria-label="{{ label }}" title="{{ label }}">
+        {% include '@admin/components/ui/icon.twig' with {name: 'ellipsis', size: 14} only %}
+    </button>
+    <ul class="dropdown-menu dropdown-menu-end">
+        {% for action in actions %}
+            {% if action.danger and not loop.first and not actions[loop.index0 - 1].danger %}
+                <li><hr class="dropdown-divider"></li>
+            {% endif %}
+            <li>
+                {% if action.method == 'post' %}
+                    <form method="post" action="{{ action.url }}">
+                        <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                        {% for field, value in action.fields %}
+                            <input type="hidden" name="{{ field }}" value="{{ value }}">
+                        {% endfor %}
+                        <button type="submit" class="dropdown-item{{ action.danger ? ' text-danger' }}">
+                            {% include '@admin/components/ui/icon.twig' with {name: action.icon, size: 14} only %}
+                            {{ action.title }}
+                        </button>
+                    </form>
+                {% else %}
+                    <a class="dropdown-item{{ action.danger ? ' text-danger' }}" href="{{ action.url }}">
+                        {% include '@admin/components/ui/icon.twig' with {name: action.icon, size: 14} only %}
+                        {{ action.title }}
+                    </a>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+</div>

@@ -1,0 +1,15 @@
+{#
+    The dropdowns of the filters beside the search field.
+
+    @param array controls
+#}
+<div class="admin-toolbar__filters" data-live-list-region="filters">
+    {% for filter in controls.filters %}
+        {% include '@admin/components/ui/filter-dropdown.twig' with {
+            label: filter.label,
+            value: filter.value,
+            applied: filter.applied,
+            options: filter.options,
+        } only %}
+    {% endfor %}
+</div>

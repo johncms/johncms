@@ -1,0 +1,12 @@
+<div class="d-flex flex-column gap-3">
+    {% include '@admin/components/ui/user-cell.twig' with {
+        id: 0,
+        name: 'gandalf',
+        url: '#lists-kit',
+        online: true,
+        roles: [__('Moderator')],
+        sub: 'gandalf@example.com',
+        note: __('hidden'),
+    } only %}
+    {% include '@admin/components/ui/user-cell.twig' with {id: 0, name: 'frodo', url: '#lists-kit', online: false, roles: [], sub: ''} only %}
+</div>

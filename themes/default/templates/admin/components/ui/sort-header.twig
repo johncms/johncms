@@ -1,0 +1,18 @@
+{#
+    The head of a column the list can be ordered by: a link to the list ordered by it, or, for the
+    column it is ordered by already, to the reverse order.
+
+    @param string title
+    @param array  link  url, active, direction (asc | desc, empty unless active).
+    @param string class More classes for the cell.
+#}
+<th scope="col" class="{{ class|default('') }}" aria-sort="{{ link.active ? (link.direction == 'asc' ? 'ascending' : 'descending') : 'none' }}">
+    <a class="admin-sort{{ link.active ? ' admin-sort--active' }}" href="{{ link.url }}">
+        {{ title }}
+        {% include '@admin/components/ui/icon.twig' with {
+            name: link.direction == 'asc' ? 'chevron-up' : 'chevron-down',
+            size: 11,
+            class: 'admin-sort__icon',
+        } only %}
+    </a>
+</th>

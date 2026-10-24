@@ -1,0 +1,160 @@
+// What a list is steered with: the toolbar with the search field and the dropdowns of the filters
+// (components/ui/search-field.twig, filter-dropdown.twig), and the chips of what is applied
+// (filter-chips.twig).
+
+.admin-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.625rem;
+  margin-bottom: 0.875rem;
+  padding: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 0.625rem;
+  background: var(--bg-elev);
+}
+
+.admin-toolbar__filters {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.admin-search {
+  display: flex;
+  flex: 0 1 18rem;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 12rem;
+  margin: 0;
+  padding: 0.4375rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 0.4375rem;
+  background: var(--bg-inset);
+  color: var(--fg-dim);
+  cursor: text;
+  transition: border-color 0.12s, box-shadow 0.12s;
+
+  &:focus-within {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--bs-focus-ring-color);
+  }
+}
+
+.admin-search__input {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: none;
+  color: var(--fg);
+  font-size: 0.8125rem;
+
+  &::placeholder {
+    color: var(--fg-dim);
+  }
+
+  @include media-breakpoint-down(md) {
+    font-size: 1rem;
+  }
+}
+
+.admin-filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.375rem 0.625rem;
+  border: 1px solid var(--border);
+  border-radius: 0.375rem;
+  background: var(--bg-inset);
+  color: var(--fg-muted);
+  font-size: 0.78125rem;
+  transition: border-color 0.12s, color 0.12s;
+
+  &:hover,
+  &[aria-expanded="true"] {
+    border-color: var(--border-strong);
+    color: var(--fg);
+  }
+}
+
+.admin-filter__label {
+  color: var(--fg-dim);
+}
+
+.admin-filter__value {
+  font-weight: 500;
+  color: var(--fg);
+}
+
+.admin-filter--applied {
+  border-color: color-mix(in oklab, var(--accent) 50%, var(--border));
+  background: color-mix(in oklab, var(--accent) 8%, var(--bg-inset));
+
+  .admin-filter__label {
+    color: var(--fg-muted);
+  }
+
+  .admin-filter__value {
+    color: var(--accent);
+  }
+}
+
+// The mark of the chosen option keeps its place in the others, so the titles line up.
+.admin-filter__check {
+  display: inline-grid;
+  place-items: center;
+  width: 0.875rem;
+  color: var(--accent);
+}
+
+.admin-chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.375rem;
+  margin-bottom: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px dashed color-mix(in oklab, var(--accent) 30%, var(--border));
+  border-radius: 0.5rem;
+  background: color-mix(in oklab, var(--accent) 5%, var(--bg-elev));
+}
+
+.admin-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3125rem;
+  padding: 0.1875rem 0.375rem 0.1875rem 0.5625rem;
+  border: 1px solid color-mix(in oklab, var(--accent) 40%, var(--border));
+  border-radius: 0.3125rem;
+  background: var(--bg-elev);
+  color: var(--fg);
+  font-size: 0.71875rem;
+  font-weight: 500;
+
+  &:hover {
+    background: var(--bg-elev-2);
+    color: var(--fg);
+    text-decoration: none;
+
+    .admin-chip__remove {
+      color: var(--fg);
+    }
+  }
+}
+
+.admin-chip__label {
+  color: var(--fg-dim);
+}
+
+.admin-chip__remove {
+  color: var(--fg-dim);
+}
+
+.admin-chips__clear {
+  margin-left: auto;
+  font-size: 0.75rem;
+}

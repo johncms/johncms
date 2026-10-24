@@ -1,0 +1,14 @@
+{#
+    The search field of a list: a magnifier and an input without a frame of its own, meant for the
+    toolbar above the list. In a live list typing into it asks for the list again.
+
+    @param string name
+    @param string value
+    @param string label       What the field is for, for a screen reader.
+    @param string placeholder
+#}
+<label class="admin-search">
+    {% include '@admin/components/ui/icon.twig' with {name: 'search', size: 14, class: 'admin-search__icon'} only %}
+    <input type="search" class="admin-search__input" name="{{ name }}" value="{{ value }}"
+           placeholder="{{ placeholder|default('') }}" aria-label="{{ label }}" autocomplete="off" spellcheck="false">
+</label>

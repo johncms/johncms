@@ -1,0 +1,41 @@
+// The list of users (admin::users).
+
+.admin-users-table {
+  td {
+    white-space: nowrap;
+  }
+
+  td:first-child {
+    width: 100%;
+    min-width: 14rem;
+    white-space: normal;
+  }
+}
+
+.admin-users-table__sub {
+  margin-top: 2px;
+  font-family: $ui-font-mono;
+  font-size: 0.6875rem;
+  color: var(--fg-dim);
+}
+
+.admin-users-table__karma {
+  font-family: $ui-font-mono;
+  font-weight: 700;
+}
+
+.admin-users-table__date {
+  font-family: $ui-font-mono;
+  font-size: 0.75rem;
+  color: var(--fg-muted);
+}
+
+.admin-users-table__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.25rem;
+
+  form {
+    margin: 0;
+  }
+}

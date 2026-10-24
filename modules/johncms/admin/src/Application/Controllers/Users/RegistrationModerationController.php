@@ -5,65 +5,30 @@ declare(strict_types=1);
 namespace Johncms\Modules\Admin\Application\Controllers\Users;
 
 use Johncms\Auth\CurrentUser;
-use Johncms\Http\PageMeta;
-use Johncms\Http\Pagination\PaginationFactory;
-use Johncms\Http\Pagination\PaginationGuard;
-use Johncms\Modules\Admin\Application\Services\RegistrationRowMapper;
 use Johncms\Modules\Admin\Application\UseCases\ApproveRegistrationUseCase;
 use Johncms\Modules\Admin\Application\UseCases\DeleteRegistrationUseCase;
-use Johncms\Modules\Admin\Application\UseCases\GetPendingRegistrationsUseCase;
 use Johncms\Http\View\ViewResponse;
-use Johncms\NavChain;
 use Johncms\Http\Request;
 use Johncms\Http\Session;
 
+/**
+ * What is done to the accounts waiting for an administrator to let them in. They are listed by
+ * the list of users (status=pending), where the menu of each row and the head of the list post
+ * here.
+ */
 final readonly class RegistrationModerationController
 {
-    private const URL = '/admin/registrations';
+    /**
+     * Where an action returns to: the list of users narrowed to the accounts still waiting.
+     */
+    private const URL = '/admin/users?status=pending';
 
     public function __construct(
-        private NavChain $navChain,
         private CurrentUser $currentUser,
-        private GetPendingRegistrationsUseCase $getPendingRegistrations,
         private ApproveRegistrationUseCase $approveRegistration,
         private DeleteRegistrationUseCase $deleteRegistration,
-        private RegistrationRowMapper $rowMapper,
-        private PaginationFactory $paginationFactory,
-        private PaginationGuard $paginationGuard,
         private Session $session,
     ) {
-    }
-
-    public function index(): ViewResponse
-    {
-        $pagination = $this->paginationFactory->create($this->getPendingRegistrations->count());
-
-        $redirectUrl = $this->paginationGuard->redirectUrl($pagination);
-        if ($redirectUrl !== null) {
-            redirect($redirectUrl);
-        }
-
-        $registrations = $this->getPendingRegistrations->getPage($pagination->getPerPage(), $pagination->getOffset());
-
-        $title = __('Registration confirmation');
-        $this->navChain->add($title);
-
-        $meta = new PageMeta($title, $pagination->getCurrentPage());
-
-        return new ViewResponse(
-            '@admin/registrations.twig',
-            [
-                'title'           => $meta->title,
-                'page_title'      => $title,
-                'usr_menu'        => ['reg' => true],
-                'items'           => $this->rowMapper->mapMany($registrations),
-                'total'           => $pagination->getTotal(),
-                'per_page'        => $pagination->getPerPage(),
-                'form_action'     => self::URL,
-                'success_message' => (string) $this->session->getFlash('success_message'),
-                'pagination'      => $pagination->render(),
-            ]
-        );
     }
 
     public function approve(Request $request): ViewResponse

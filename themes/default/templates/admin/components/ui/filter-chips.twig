@@ -1,0 +1,21 @@
+{#
+    What a list is narrowed by, one chip per filter: a click on a chip drops that filter, the link
+    at the end drops them all.
+
+    @param array  chips     label, value, url — the list without this filter.
+    @param string clear_url The list without any of them.
+#}
+{% if chips is not empty %}
+    <div class="admin-chips">
+        {% for chip in chips %}
+            <a class="admin-chip" href="{{ chip.url }}" aria-label="{{ d__('admin', 'Remove the filter') }}: {{ chip.label }} {{ chip.value }}">
+                <span class="admin-chip__label">{{ chip.label }}:</span>
+                <span class="admin-chip__value">{{ chip.value }}</span>
+                {% include '@admin/components/ui/icon.twig' with {name: 'x', size: 12, class: 'admin-chip__remove'} only %}
+            </a>
+        {% endfor %}
+        {% if clear_url %}
+            <a class="admin-chips__clear" href="{{ clear_url }}">{{ d__('admin', 'Reset filters') }}</a>
+        {% endif %}
+    </div>
+{% endif %}

@@ -1,0 +1,23 @@
+{#
+    A number above a list, leading to the list it counts.
+
+    @param string label
+    @param int    value
+    @param string url   Where the card leads; without one it is not a link.
+    @param string tone  danger | accent — the colour of a number that asks for attention.
+#}
+{% set url = url|default('') %}
+{% set tone = tone|default('') %}
+{% set class = 'admin-stat' ~ (tone ? ' admin-stat--' ~ tone) %}
+{% if url %}
+    <a class="{{ class }}" href="{{ url }}">
+{% else %}
+    <div class="{{ class }}">
+{% endif %}
+        <span class="admin-stat__label">{{ label }}</span>
+        <span class="admin-stat__value">{{ value|format_number }}</span>
+{% if url %}
+    </a>
+{% else %}
+    </div>
+{% endif %}

@@ -12,6 +12,7 @@ import '../scss/app.scss';
 
 import './jquery.magnific-popup';
 import './shell';
+import './live-list';
 import './prism';
 import './forum';
 import './modals';

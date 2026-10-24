@@ -88,6 +88,43 @@ module lives in `modules/<vendor>/<module>/templates/*/components/`.
 Before writing a wrapper for something, look for an existing component: the ckeditor wrapper
 was copied into five modules before it became `@theme/components/editor.twig`.
 
+The components of the panel — stat cards, the search field and the filter dropdowns, the chips
+of applied filters, sortable column heads, the user cell, the menu of a row, the empty state —
+live in `themes/<theme>/templates/admin/components/ui/` and are shown with their markup on
+`/admin/style-guide`. A component added there gets an example in
+`modules/johncms/admin/templates/style-guide/examples/` at once.
+
+## Live lists (the panel)
+
+A list of the panel can follow its search and filters without reloading the page —
+`src/admin/js/live-list.js` does it for any markup that asks, and `admin::users` is the
+reference:
+
+```twig
+<div data-live-list>
+    <form method="get" action="/admin/users" data-live-list-form>
+        {% include '@admin/components/ui/search-field.twig' with {…} only %}
+        {% include '@admin/users/state.twig' with {…} only %}   {# data-live-list-region="state" #}
+    </form>
+    {% include '@admin/users/results.twig' with {…} only %}     {# data-live-list-region="results" #}
+</div>
+```
+
+* **Every changing part is a region** — an element with `data-live-list-region="<name>"`, drawn
+  by a template of its own. The page includes them; a second template (`users/live.twig`)
+  includes all of them and nothing else.
+* **The controller answers the script with the fragment**: `$request->isXmlHttpRequest()` picks
+  the second template, with the same data. Same address, same pagination guard.
+* **Links and the form are the API.** Typing into a text field reloads after a pause, a link of
+  the list to the same path reloads at once, and the address follows (`history`). Without the
+  script the same links and form work as plain pages, so build every link from the filter
+  (`UserListFilterMapper` is the pattern) and never only from JavaScript.
+* **The search field stays outside the regions**, so it keeps the focus and the caret while the
+  list changes around it; the rest of the filter rides along as hidden fields in a region inside
+  the form.
+* A fragment test asks with `HTTP_X_REQUESTED_WITH`: the page around it carries the query log of
+  the whole process when debugging is on.
+
 ## Traps
 
 **An Eloquent attribute a guest does not carry.** Twig looks the attribute up, does not find

@@ -1,0 +1,36 @@
+{#
+    A person in a row of a table: the avatar with the mark of being online, the name leading to the
+    profile, the roles beside it and a line under it.
+
+    @param int    id     The account, for its avatar.
+    @param string name
+    @param string url    The profile.
+    @param bool   online
+    @param array  roles  The titles of the roles granted to the account.
+    @param string sub    The line under the name, an e-mail for instance; empty for none.
+    @param string note   A short mark after that line: "hidden".
+#}
+<div class="admin-user">
+    <span class="admin-user__avatar">
+        <img src="{{ avatar(id) }}" width="32" height="32" alt="" loading="lazy">
+        {% if online %}
+            <span class="admin-user__online" title="{{ d__('admin', 'Online') }}"></span>
+        {% endif %}
+    </span>
+    <span class="admin-user__main">
+        <span class="admin-user__name">
+            <a class="admin-user__link" href="{{ url }}">{{ name }}</a>
+            {% for role in roles|default([]) %}
+                <span class="admin-user__role">{{ role }}</span>
+            {% endfor %}
+        </span>
+        {% if sub|default('') %}
+            <span class="admin-user__sub">
+                <span class="admin-user__sub-text">{{ sub }}</span>
+                {% if note|default('') %}
+                    <span class="admin-user__note">{{ note }}</span>
+                {% endif %}
+            </span>
+        {% endif %}
+    </span>
+</div>

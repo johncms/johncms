@@ -1,0 +1,39 @@
+{#
+    The status the list is narrowed to, and what can be done to all the accounts waiting for
+    approval while they are listed.
+
+    @param array controls
+    @param int   pending
+#}
+<div class="admin-list-tabs" data-live-list-region="tabs">
+    <ul class="nav nav-tabs flex-grow-1">
+        {% for tab in controls.tabs %}
+            <li class="nav-item">
+                <a class="nav-link{{ tab.active ? ' active' }}" href="{{ tab.url }}"{% if tab.active %} aria-current="page"{% endif %}>
+                    {{ tab.title }}
+                    {% if tab.count %}
+                        <span class="badge {{ tab.tone == 'danger' ? 'text-bg-danger' : 'text-bg-light' }}">{{ tab.count|format_number }}</span>
+                    {% endif %}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+    {% if controls.status == 'pending' and pending %}
+        <div class="admin-list-tabs__actions">
+            <form method="post" action="/admin/registrations/approve-all">
+                <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                <button type="submit" class="btn btn-primary btn-sm">
+                    {% include '@admin/components/ui/icon.twig' with {name: 'check', size: 14} only %}
+                    {{ __('Confirm all') }}
+                </button>
+            </form>
+            <form method="post" action="/admin/registrations/delete-all">
+                <input type="hidden" name="csrf_token" value="{{ app.csrf_token }}">
+                <button type="submit" class="btn btn-outline-danger btn-sm">
+                    {% include '@admin/components/ui/icon.twig' with {name: 'trash-2', size: 14} only %}
+                    {{ __('Delete all') }}
+                </button>
+            </form>
+        </div>
+    {% endif %}
+</div>
